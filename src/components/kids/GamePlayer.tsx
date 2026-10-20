@@ -291,7 +291,7 @@ function MemoryMatch({ onAnswer }: { onAnswer: (ok: boolean) => void }) {
               className={clsx("grid aspect-square place-items-center rounded-2xl border-2 border-b-4 text-4xl", shown ? "border-line bg-surface" : "border-accent-shade bg-accent text-white")}
               aria-label={shown ? c : "Hidden card"}
             >
-              {shown ? c : <span className="text-3xl font-black">?</span>}
+              {shown ? c : <span className="text-3xl font-black [transform:scaleX(-1)]">?</span>}
             </motion.button>
           );
         })}
