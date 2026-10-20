@@ -55,7 +55,7 @@ export default function CountObjects(input: Record<string, unknown>) {
   };
 
   return (
-    <div className="font-kids">
+    <div className="font-bold">
       <WidgetTitle title="Let's count!" hint={`Tap each ${emoji} once to count it.`} />
 
       <div className="flex min-h-[180px] flex-wrap content-center items-center justify-center gap-3 rounded-3xl bg-surface-2 p-4 sm:gap-4">
@@ -73,7 +73,7 @@ export default function CountObjects(input: Record<string, unknown>) {
               whileTap={{ scale: 0.85 }}
               onClick={() => tap(i)}
               className={`relative grid h-16 w-16 place-items-center rounded-2xl text-4xl transition sm:h-20 sm:w-20 sm:text-5xl ${
-                isTapped ? "bg-accent/15 ring-2 ring-accent" : "bg-surface shadow-soft hover:-translate-y-0.5"
+                isTapped ? "bg-accent/15 ring-2 ring-accent" : "border-2 border-line bg-surface hover:-translate-y-0.5"
               }`}
             >
               <motion.span animate={isTapped ? { y: [0, -10, 0] } : {}} transition={{ duration: 0.35 }}>
@@ -84,7 +84,7 @@ export default function CountObjects(input: Record<string, unknown>) {
                   <motion.span
                     initial={{ scale: 0 }}
                     animate={{ scale: 1 }}
-                    className="absolute -right-2 -top-2 grid h-7 w-7 place-items-center rounded-full bg-accent font-sans text-sm font-bold text-white shadow-glow"
+                    className="absolute -right-2 -top-2 grid h-7 w-7 place-items-center rounded-full bg-accent font-sans text-sm font-bold text-white"
                   >
                     {order + 1}
                   </motion.span>

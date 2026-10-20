@@ -1,8 +1,8 @@
 "use client";
 
 import Link from "next/link";
-import { AnimatePresence, motion } from "framer-motion";
-import { ArrowLeft, RotateCcw, Volume2 } from "lucide-react";
+import { motion } from "framer-motion";
+import { Check, RotateCcw, Star, Volume2, X } from "lucide-react";
 import { useCallback, useEffect, useMemo, useState } from "react";
 import clsx from "clsx";
 import { GAMES, type GameId } from "./games";
@@ -10,6 +10,8 @@ import { useLearner } from "@/lib/store";
 import { sfx, speak } from "@/lib/sound";
 import { burst } from "@/lib/confetti";
 import { useHydrated } from "@/components/providers";
+import { Mascot } from "@/components/brand/Mascot";
+import { ProgressBar } from "@/components/ui/Progress";
 
 const ROUNDS = 8;
 
@@ -26,7 +28,7 @@ function shuffle<T>(a: T[]) {
 
 const say = (t: string) => speak(t, { pitch: 1.3, rate: 0.95 });
 
-/** Shell: rounds, score, celebration. Each game reports right/wrong via onAnswer. */
+/** Full-screen game session: rounds, progress, feedback footer and a results screen. */
 export function GamePlayer({ id }: { id: GameId }) {
   const meta = GAMES.find((g) => g.id === id)!;
   // Rounds are randomised, so only render them on the client.
@@ -37,6 +39,7 @@ export function GamePlayer({ id }: { id: GameId }) {
   const [score, setScore] = useState(0);
   const [session, setSession] = useState(0);
   const [flash, setFlash] = useState<"good" | "bad" | null>(null);
+  const [xp, setXp] = useState(0);
   const done = round >= ROUNDS;
 
   const onAnswer = useCallback((ok: boolean) => {
@@ -46,71 +49,97 @@ export function GamePlayer({ id }: { id: GameId }) {
     setTimeout(() => {
       setFlash(null);
       setRound((r) => r + 1);
-    }, ok ? 700 : 1100);
+    }, ok ? 900 : 1400);
   }, []);
 
   useEffect(() => {
     if (!done) return;
+    const earned = 10 + score * 2;
+    setXp(earned);
     bump("games");
-    award(10 + score * 2, `${meta.title} finished`);
+    award(earned, `${meta.title} finished`);
     burst({ big: score >= 6 });
     say(score >= 6 ? "Amazing! You are a superstar!" : "Well played! Let's play again!");
   }, [done]); // eslint-disable-line react-hooks/exhaustive-deps
 
   const stars = score >= 7 ? 3 : score >= 5 ? 2 : 1;
+  const restart = () => {
+    setRound(0);
+    setScore(0);
+    setSession((s) => s + 1);
+  };
 
   return (
-    <div data-world="kids" className="min-h-screen bg-bg font-kids text-ink">
-      <div className="mx-auto max-w-3xl px-4 py-6">
-        <div className="flex items-center gap-3">
-          <Link href="/kids" className="grid h-12 w-12 place-items-center rounded-2xl bg-surface shadow-pop" aria-label="Back to Wonder Woods">
-            <ArrowLeft className="h-6 w-6" />
-          </Link>
-          <h1 className="text-2xl font-bold">
-            {meta.emoji} {meta.title}
-          </h1>
-          <div className="ml-auto flex gap-1">
-            {Array.from({ length: ROUNDS }, (_, i) => (
-              <span key={i} className={clsx("h-3 w-3 rounded-full sm:h-4 sm:w-4", i < round ? "bg-accent" : "bg-surface-2")} />
-            ))}
-          </div>
-        </div>
+    <div className="flex min-h-screen flex-col bg-bg text-ink">
+      {/* top bar */}
+      <div className="mx-auto flex w-full max-w-[1000px] items-center gap-4 px-5 pt-6">
+        <Link href="/kids/play" className="grid h-10 w-10 shrink-0 place-items-center rounded-xl text-muted hover:bg-surface-2" aria-label="Close game">
+          <X className="h-7 w-7" strokeWidth={2.6} />
+        </Link>
+        <ProgressBar value={round / ROUNDS} height={16} color="rgb(var(--good))" label="Game progress" />
+        <span className="flex shrink-0 items-center gap-1 text-lg font-black text-warn-shade" aria-label={`${score} correct`}>
+          <Star className="h-6 w-6 fill-warn text-warn" /> {score}
+        </span>
+      </div>
 
-        <div className={clsx("relative mt-6 min-h-[480px] rounded-[2.5rem] border-4 bg-surface p-6 shadow-soft transition", flash === "good" ? "border-good" : flash === "bad" ? "border-bad" : "border-line")}>
-          <AnimatePresence>
-            {flash && (
-              <motion.div initial={{ scale: 0, opacity: 0 }} animate={{ scale: 1, opacity: 1 }} exit={{ scale: 0, opacity: 0 }} className="pointer-events-none absolute inset-0 z-10 grid place-items-center text-[8rem]">
-                {flash === "good" ? "🎉" : "🙈"}
-              </motion.div>
-            )}
-          </AnimatePresence>
+      <div className="mx-auto w-full max-w-[640px] flex-1 px-5 pb-10 pt-8">
+        {done ? (
+          <div className="flex flex-col items-center py-6 text-center">
+            <Mascot pose={score >= 5 ? "cheer" : "think"} size={150} />
+            <div className="mt-4 flex gap-2">
+              {[0, 1, 2].map((i) => (
+                <Star key={i} className={clsx("h-12 w-12", i < stars ? "fill-warn text-warn" : "fill-line text-line")} strokeWidth={1.5} />
+              ))}
+            </div>
+            <h1 className="mt-4 text-3xl font-black text-warn-shade">{score >= 6 ? "Superstar!" : "Great playing!"}</h1>
+            <p className="mt-1 font-semibold text-muted">{meta.title}</p>
+            <div className="mt-8 grid w-full grid-cols-3 gap-3">
+              <GameStat label="Correct" value={`${score}/${ROUNDS}`} color="#2EBE70" />
+              <GameStat label="Stars" value={String(stars)} color="#FFB800" />
+              <GameStat label="XP" value={`+${xp}`} color="#2F6BFF" />
+            </div>
+          </div>
+        ) : (
+          hydrated && <Game key={`${session}-${round}`} id={id} onAnswer={onAnswer} locked={flash !== null} />
+        )}
+      </div>
+
+      {/* footer */}
+      <div className={clsx("border-t-2 transition-colors", flash === "good" ? "border-transparent bg-good-soft" : flash === "bad" ? "border-transparent bg-bad-soft" : "border-line")}>
+        <div className="mx-auto flex min-h-[96px] w-full max-w-[1000px] items-center justify-between gap-4 px-5 py-5">
           {done ? (
-            <div className="flex flex-col items-center py-10 text-center">
-              <div className="text-7xl">{"⭐".repeat(stars)}{"☆".repeat(3 - stars)}</div>
-              <h2 className="mt-4 text-4xl font-bold">{score >= 6 ? "Superstar!" : "Great playing!"}</h2>
-              <p className="mt-2 text-xl text-muted">
-                You got {score} out of {ROUNDS}!
-              </p>
-              <div className="mt-8 flex gap-3">
-                <button
-                  className="btn-pop h-14 px-8 text-xl"
-                  onClick={() => {
-                    setRound(0);
-                    setScore(0);
-                    setSession((s) => s + 1);
-                  }}
-                >
-                  <RotateCcw className="h-6 w-6" /> Play again
-                </button>
-                <Link href="/kids/play" className="btn-ghost h-14 px-6 text-xl">
-                  More games
-                </Link>
-              </div>
+            <>
+              <Link href="/kids/play" className="btn-ghost">
+                More games
+              </Link>
+              <button className="btn-primary sm:min-w-[160px]" onClick={restart} autoFocus>
+                <RotateCcw className="h-5 w-5" /> Play again
+              </button>
+            </>
+          ) : flash ? (
+            <div className="flex items-center gap-4">
+              <span className={clsx("grid h-14 w-14 place-items-center rounded-full bg-surface", flash === "good" ? "text-good" : "text-bad")}>
+                {flash === "good" ? <Check className="h-8 w-8" strokeWidth={4} /> : <X className="h-8 w-8" strokeWidth={4} />}
+              </span>
+              <span className={clsx("text-2xl font-black", flash === "good" ? "text-good-shade" : "text-bad-shade")}>{flash === "good" ? "Great job!" : "Not quite — next one!"}</span>
             </div>
           ) : (
-            hydrated && <Game key={`${session}-${round}`} id={id} onAnswer={onAnswer} locked={flash !== null} />
+            <span className="font-bold text-muted">
+              Round {round + 1} of {ROUNDS}
+            </span>
           )}
         </div>
+      </div>
+    </div>
+  );
+}
+
+function GameStat({ label, value, color }: { label: string; value: string; color: string }) {
+  return (
+    <div className="overflow-hidden rounded-2xl border-2" style={{ borderColor: color, background: color }}>
+      <div className="py-1.5 text-xs font-black uppercase tracking-wide text-white">{label}</div>
+      <div className="rounded-xl bg-surface py-4 text-2xl font-black" style={{ color }}>
+        {value}
       </div>
     </div>
   );
@@ -138,10 +167,13 @@ function Prompt({ text, speech }: { text: string; speech?: string }) {
     say(speech ?? text);
   }, [text, speech]);
   return (
-    <div className="flex items-center justify-center gap-3">
-      <span className="text-5xl">🦉</span>
-      <p className="rounded-3xl bg-surface-2 px-5 py-3 text-center text-2xl font-bold">{text}</p>
-      <button onClick={() => say(speech ?? text)} className="grid h-12 w-12 shrink-0 place-items-center rounded-2xl bg-accent text-white" aria-label="Say it again">
+    <div className="flex items-end gap-3">
+      <Mascot pose="wave" size={80} />
+      <div className="relative mb-4 flex-1 rounded-2xl border-2 border-line bg-surface px-5 py-3 text-2xl font-black">
+        <span className="absolute -left-[9px] bottom-4 h-4 w-4 rotate-45 border-b-2 border-l-2 border-line bg-surface" />
+        {text}
+      </div>
+      <button onClick={() => say(speech ?? text)} className="btn-primary mb-4 h-12 w-12 shrink-0 !p-0" aria-label="Say it again">
         <Volume2 className="h-6 w-6" />
       </button>
     </div>
@@ -205,7 +237,7 @@ function LetterHunt({ onAnswer, locked }: { onAnswer: (ok: boolean) => void; loc
       <p className="mt-3 text-center text-muted">Listen carefully, then tap it! (Hint: {LETTER_WORDS[target]})</p>
       <div className="mx-auto mt-8 grid max-w-md grid-cols-3 gap-4">
         {options.map((l) => (
-          <motion.button whileTap={{ scale: 0.9 }} key={l} disabled={locked} onClick={() => onAnswer(l === target)} className="aspect-square rounded-3xl bg-surface-2 text-6xl font-bold shadow-pop transition hover:bg-accent/15">
+          <motion.button whileTap={{ scale: 0.9 }} key={l} disabled={locked} onClick={() => onAnswer(l === target)} className="aspect-square rounded-2xl border-2 border-b-4 border-line bg-surface transition hover:bg-surface-2 active:translate-y-[2px] active:border-b-2 text-6xl font-black">
             {l}
           </motion.button>
         ))}
@@ -286,7 +318,7 @@ function ShapeSafari({ onAnswer, locked }: { onAnswer: (ok: boolean) => void; lo
       <Prompt text={`Tap the ${target.name}!`} />
       <div className="mx-auto mt-8 grid max-w-md grid-cols-2 gap-5">
         {options.map((o) => (
-          <motion.button whileTap={{ scale: 0.9 }} key={o.name} disabled={locked} onClick={() => onAnswer(o.name === target.name)} className="grid aspect-square place-items-center rounded-3xl bg-surface-2 p-6 shadow-pop hover:bg-accent/10" aria-label={o.name}>
+          <motion.button whileTap={{ scale: 0.9 }} key={o.name} disabled={locked} onClick={() => onAnswer(o.name === target.name)} className="grid aspect-square place-items-center rounded-2xl border-2 border-b-4 border-line bg-surface transition hover:bg-surface-2 active:translate-y-[2px] active:border-b-2 p-6" aria-label={o.name}>
             <svg viewBox="0 0 100 100" className="h-full w-full" fill={o.color}>
               {o.svg}
             </svg>
@@ -319,7 +351,7 @@ function MathPop({ onAnswer, locked }: { onAnswer: (ok: boolean) => void; locked
     <div>
       <Prompt text={`${a} ${op} ${b} = ?`} speech={`What is ${a} ${op === "+" ? "plus" : "minus"} ${b}?`} />
       <div className="mx-auto mt-4 h-3 max-w-md overflow-hidden rounded-full bg-surface-2">
-        <motion.div className="h-full bg-gradient-to-r from-good to-warn" animate={{ width: `${time * 10}%` }} transition={{ ease: "linear", duration: 1 }} />
+        <motion.div className="h-full rounded-full bg-good" animate={{ width: `${time * 10}%` }} transition={{ ease: "linear", duration: 1 }} />
       </div>
       <div className="mt-6 text-center text-5xl">
         {Array.from({ length: a }, () => "🍎").join("")}
@@ -328,7 +360,7 @@ function MathPop({ onAnswer, locked }: { onAnswer: (ok: boolean) => void; locked
       </div>
       <div className="mx-auto mt-8 grid max-w-md grid-cols-2 gap-4">
         {options.map((o) => (
-          <motion.button whileTap={{ scale: 0.9 }} key={o} disabled={locked} onClick={() => onAnswer(o === ans)} className="h-24 rounded-3xl bg-surface-2 text-5xl font-bold shadow-pop hover:bg-accent/15">
+          <motion.button whileTap={{ scale: 0.9 }} key={o} disabled={locked} onClick={() => onAnswer(o === ans)} className="h-24 rounded-2xl border-2 border-b-4 border-line bg-surface transition hover:bg-surface-2 active:translate-y-[2px] active:border-b-2 text-5xl font-black">
             {o}
           </motion.button>
         ))}
@@ -357,7 +389,7 @@ function OddOneOut({ onAnswer, locked }: { onAnswer: (ok: boolean) => void; lock
       <Prompt text="Which one doesn’t belong?" />
       <div className="mx-auto mt-8 grid max-w-md grid-cols-2 gap-5">
         {options.map((o) => (
-          <motion.button whileTap={{ scale: 0.9 }} key={o} disabled={locked} onClick={() => onAnswer(o === odd)} className="grid aspect-square place-items-center rounded-3xl bg-surface-2 text-7xl shadow-pop hover:bg-accent/10">
+          <motion.button whileTap={{ scale: 0.9 }} key={o} disabled={locked} onClick={() => onAnswer(o === odd)} className="grid aspect-square place-items-center rounded-2xl border-2 border-b-4 border-line bg-surface transition hover:bg-surface-2 active:translate-y-[2px] active:border-b-2 text-7xl">
             {o}
           </motion.button>
         ))}

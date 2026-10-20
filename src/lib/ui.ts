@@ -15,13 +15,17 @@ export interface Celebration {
   kind: "level" | "badge" | "goal" | "lesson";
   title: string;
   subtitle?: string;
-  emoji: string;
+  /** Badge medallion to show (badges only). */
+  badge?: { icon: string; color: string };
 }
 
 interface UiState {
   toasts: Toast[];
   celebrations: Celebration[];
   paletteOpen: boolean;
+  /** While true (e.g. during a lesson session) celebrations queue up silently. */
+  focusMode: boolean;
+  setFocusMode: (v: boolean) => void;
   toast: (t: Omit<Toast, "id">) => void;
   dismissToast: (id: number) => void;
   celebrate: (c: Omit<Celebration, "id">) => void;
@@ -35,16 +39,18 @@ export const useUi = create<UiState>((set, get) => ({
   toasts: [],
   celebrations: [],
   paletteOpen: false,
+  focusMode: false,
+  setFocusMode: (v) => set({ focusMode: v }),
   toast: (t) => {
     const id = seq++;
     set((s) => ({ toasts: [...s.toasts.slice(-3), { ...t, id }] }));
-    if (t.xp || t.coins) sfx("coin");
+    if ((t.xp || t.coins) && !get().focusMode) sfx("coin");
     setTimeout(() => get().dismissToast(id), 2600);
   },
   dismissToast: (id) => set((s) => ({ toasts: s.toasts.filter((t) => t.id !== id) })),
   celebrate: (c) => {
     set((s) => ({ celebrations: [...s.celebrations, { ...c, id: seq++ }] }));
-    sfx(c.kind === "level" ? "levelup" : "fanfare");
+    if (!get().focusMode) sfx(c.kind === "level" ? "levelup" : "fanfare");
   },
   dismissCelebration: () => set((s) => ({ celebrations: s.celebrations.slice(1) })),
   setPalette: (open) => set({ paletteOpen: open }),

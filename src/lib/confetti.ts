@@ -5,7 +5,7 @@ import confetti from "canvas-confetti";
 export function burst(opts: { big?: boolean; emoji?: boolean } = {}) {
   if (typeof window === "undefined") return;
   if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
-  const colors = ["#7c3aed", "#ec4899", "#f59e0b", "#22d3ee", "#10b981"];
+  const colors = ["#2F6BFF", "#2EBE70", "#FFB800", "#FF8A00", "#7C4DFF"];
   if (opts.big) {
     const end = Date.now() + 900;
     const frame = () => {

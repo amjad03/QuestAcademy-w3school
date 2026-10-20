@@ -158,7 +158,7 @@ export default function Clock() {
         </svg>
 
         <div className="flex w-full max-w-xs flex-col items-center gap-4">
-          <div className="w-full rounded-3xl bg-ink/90 px-6 py-4 text-center shadow-soft" aria-live="polite">
+          <div className="w-full rounded-3xl bg-ink/90 px-6 py-4 text-center" aria-live="polite">
             <div className="font-mono text-5xl font-bold tracking-wider text-bg">{label(time)}</div>
             <div className="mt-1 text-sm font-medium text-bg/70">{words(time)}</div>
           </div>

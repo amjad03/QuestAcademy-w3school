@@ -2,7 +2,7 @@
 
 import dynamic from "next/dynamic";
 import { useCallback, useEffect, useState } from "react";
-import { Download, Loader2, Play, RotateCcw, Share2 } from "lucide-react";
+import { Download, Loader2, Play, RotateCcw, Share2, SquareTerminal } from "lucide-react";
 import clsx from "clsx";
 import type { CodeLang } from "@/content/types";
 import { useLearner } from "@/lib/store";
@@ -19,7 +19,7 @@ const STARTERS: Record<CodeLang, string> = {
 <head>
   <style>
     body { font-family: system-ui; display: grid; place-items: center; min-height: 90vh;
-           background: linear-gradient(135deg, #22d3ee, #a3e635); margin: 0; }
+           background: #2F6BFF; margin: 0; }
     .card { background: white; padding: 2rem 3rem; border-radius: 24px; text-align: center;
             box-shadow: 0 20px 50px rgb(0 0 0 / .2); }
     button { font-size: 1.1rem; padding: .6rem 1.4rem; border-radius: 12px; border: 0;
@@ -37,7 +37,7 @@ const STARTERS: Record<CodeLang, string> = {
   css: `/* CSS-only mode: styles apply to the demo markup */
 .box {
   width: 120px; height: 120px; border-radius: 24px;
-  background: linear-gradient(135deg, #f472b6, #8b5cf6);
+  background: #7C4DFF;
   animation: spin 3s ease-in-out infinite;
 }
 @keyframes spin { 50% { transform: rotate(180deg) scale(.7); border-radius: 50%; } }`,
@@ -142,41 +142,53 @@ export function Playground() {
   const visual = lang === "html" || lang === "css";
 
   return (
-    <div data-world="code" className="flex h-[calc(100vh-4rem)] flex-col bg-bg text-ink">
-      <div className="flex flex-wrap items-center gap-2 border-b border-line bg-surface px-3 py-2">
-        <div className="flex rounded-xl border border-line bg-bg p-0.5">
+    <div className="flex h-[calc(100dvh-58px-66px)] flex-col bg-bg text-ink md:h-screen">
+      <div className="flex flex-wrap items-center gap-3 border-b-2 border-line bg-surface px-4 py-3">
+        <div className="mr-1 hidden items-center gap-2 lg:flex">
+          <span className="grid h-9 w-9 place-items-center rounded-xl bg-[#334155] text-white shadow-[inset_0_-3px_0_#1E293B]">
+            <SquareTerminal className="h-5 w-5" strokeWidth={2.4} />
+          </span>
+          <h1 className="text-lg font-black">Code lab</h1>
+        </div>
+        <div className="flex overflow-x-auto rounded-xl border-2 border-line bg-surface-2 p-1" role="tablist" aria-label="Language">
           {(Object.keys(STARTERS) as CodeLang[]).map((l) => (
-            <button key={l} onClick={() => setLang(l)} className={clsx("rounded-lg px-3 py-1.5 font-mono text-xs font-semibold transition", lang === l ? "bg-accent text-slate-900" : "text-muted hover:text-ink")}>
+            <button
+              key={l}
+              role="tab"
+              aria-selected={lang === l}
+              onClick={() => setLang(l)}
+              className={clsx("shrink-0 rounded-lg px-3 py-1.5 text-sm font-extrabold transition", lang === l ? "bg-surface text-accent shadow-[0_2px_0_rgb(var(--line))]" : "text-muted hover:text-ink")}
+            >
               {LANG_LABEL[l]}
             </button>
           ))}
         </div>
         {isWeb(lang) && lang !== "javascript" && (
-          <label className="flex items-center gap-2 text-xs text-muted">
-            <input type="checkbox" checked={live} onChange={(e) => setLive(e.target.checked)} className="accent-cyan-400" /> Live preview
+          <label className="flex cursor-pointer items-center gap-2 text-sm font-bold text-muted">
+            <input type="checkbox" checked={live} onChange={(e) => setLive(e.target.checked)} className="h-4 w-4 accent-[rgb(var(--accent))]" /> Live preview
           </label>
         )}
-        <div className="ml-auto flex items-center gap-1">
-          <button onClick={() => setCodes((x) => ({ ...x, [lang]: STARTERS[lang] }))} className="btn-ghost !px-3 !py-1.5 text-xs">
-            <RotateCcw className="h-3.5 w-3.5" /> Reset
+        <div className="ml-auto flex items-center gap-1.5">
+          <button onClick={() => setCodes((x) => ({ ...x, [lang]: STARTERS[lang] }))} className="btn-flat !text-muted" title="Reset to starter code">
+            <RotateCcw className="h-4 w-4" /> <span className="hidden xl:inline">Reset</span>
           </button>
-          <button onClick={download} className="btn-ghost !px-3 !py-1.5 text-xs">
-            <Download className="h-3.5 w-3.5" /> <span className="hidden sm:inline">Download</span>
+          <button onClick={download} className="btn-flat !text-muted" title="Download file">
+            <Download className="h-4 w-4" /> <span className="hidden xl:inline">Download</span>
           </button>
-          <button onClick={share} className="btn-ghost !px-3 !py-1.5 text-xs">
-            <Share2 className="h-3.5 w-3.5" /> {copied ? "Link copied!" : <span className="hidden sm:inline">Share</span>}
+          <button onClick={share} className="btn-flat !text-muted" title="Copy share link">
+            <Share2 className="h-4 w-4" /> <span className="hidden sm:inline">{copied ? "Copied!" : "Share"}</span>
           </button>
-          <button onClick={run} className="btn !px-4 !py-1.5 bg-gradient-to-r from-cyan-400 to-lime-400 text-xs font-bold text-slate-900">
-            {runner.running ? <Loader2 className="h-3.5 w-3.5 animate-spin" /> : <Play className="h-3.5 w-3.5 fill-slate-900" />} Run
+          <button onClick={run} className="btn-good !py-2 text-sm" title="Run (⌘/Ctrl + Enter)">
+            {runner.running ? <Loader2 className="h-4 w-4 animate-spin" /> : <Play className="h-4 w-4 fill-white" />} Run
           </button>
         </div>
       </div>
       <div className="grid min-h-0 flex-1 grid-rows-2 lg:grid-cols-2 lg:grid-rows-1">
-        <div className="min-h-0 overflow-auto border-b border-line lg:border-b-0 lg:border-r">
+        <div className="min-h-0 overflow-auto border-b-2 border-line bg-[#1a1b26] lg:border-b-0 lg:border-r-2">
           <CodeEditor key={lang} value={code} onChange={(v) => setCodes((x) => ({ ...x, [lang]: v }))} lang={lang} onRun={run} minHeight="100%" />
         </div>
         <div className="flex min-h-0 flex-col">
-          {runner.status && <div className="bg-surface px-3 py-1.5 text-xs text-amber-300">{runner.status}</div>}
+          {runner.status && <div className="border-b-2 border-line bg-warn/10 px-4 py-2 text-sm font-bold text-warn-shade">{runner.status}</div>}
           {isWeb(lang) && (
             <div className={clsx(visual ? "min-h-0 flex-1" : "hidden")}>
               <Preview ref={runner.frameRef} doc={runner.doc} className="h-full" />
@@ -188,7 +200,7 @@ export function Playground() {
             </div>
           )}
           {(!visual || runner.logs.length > 0) && (
-            <div className={clsx("min-h-0 overflow-auto border-t border-line", visual ? "max-h-40" : lang === "sql" && runner.sql ? "max-h-32" : "flex-1")}>
+            <div className={clsx("min-h-0 overflow-auto border-t-2 border-line", visual ? "max-h-40" : lang === "sql" && runner.sql ? "max-h-32" : "flex-1")}>
               <ConsoleView lines={runner.logs} empty={lang === "sql" ? "Run a query to see results." : "Press Run to see output."} />
             </div>
           )}

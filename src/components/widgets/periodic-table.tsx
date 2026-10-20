@@ -240,7 +240,7 @@ export default function PeriodicTable() {
                 aria-label={`${el.name}, atomic number ${el.z}`}
                 aria-pressed={active}
                 className={`relative aspect-square rounded-md border text-center transition hover:z-10 hover:scale-125 focus-visible:z-10 focus-visible:scale-125 focus-visible:outline-none ${
-                  active ? "z-10 scale-110 border-ink shadow-soft" : "border-transparent"
+                  active ? "z-10 scale-110 border-ink" : "border-transparent"
                 }`}
                 style={{
                   gridRow: el.row,

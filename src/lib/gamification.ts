@@ -37,12 +37,12 @@ export function levelInfo(xp: number) {
 }
 
 export const LEAGUES = [
-  { id: "bronze", name: "Bronze", emoji: "🥉", min: 0, color: "#c2773a" },
-  { id: "silver", name: "Silver", emoji: "🥈", min: 150, color: "#94a3b8" },
-  { id: "gold", name: "Gold", emoji: "🥇", min: 400, color: "#eab308" },
-  { id: "sapphire", name: "Sapphire", emoji: "💎", min: 800, color: "#3b82f6" },
-  { id: "ruby", name: "Ruby", emoji: "❤️‍🔥", min: 1400, color: "#e11d48" },
-  { id: "diamond", name: "Diamond", emoji: "👑", min: 2200, color: "#a855f7" },
+  { id: "bronze", name: "Bronze", min: 0, color: "#C2773A" },
+  { id: "silver", name: "Silver", min: 150, color: "#94A3B8" },
+  { id: "gold", name: "Gold", min: 400, color: "#FFB800" },
+  { id: "sapphire", name: "Sapphire", min: 800, color: "#2F6BFF" },
+  { id: "ruby", name: "Ruby", min: 1400, color: "#E11D48" },
+  { id: "amethyst", name: "Amethyst", min: 2200, color: "#7C4DFF" },
 ] as const;
 
 export function leagueFor(weeklyXp: number) {
@@ -119,32 +119,33 @@ export interface BadgeContext {
 export interface BadgeDef {
   id: string;
   name: string;
-  emoji: string;
+  icon: string;
+  color: string;
   description: string;
   test: (c: BadgeContext) => boolean;
 }
 
 export const BADGES: BadgeDef[] = [
-  { id: "first-steps", name: "First Steps", emoji: "👣", description: "Complete your first lesson", test: (c) => c.totals.lessons >= 1 },
-  { id: "bookworm", name: "Bookworm", emoji: "🐛", description: "Complete 10 lessons", test: (c) => c.totals.lessons >= 10 },
-  { id: "scholar", name: "Scholar", emoji: "🎓", description: "Complete 50 lessons", test: (c) => c.totals.lessons >= 50 },
-  { id: "on-fire", name: "On Fire", emoji: "🔥", description: "Reach a 3-day streak", test: (c) => c.streak >= 3 },
-  { id: "week-warrior", name: "Week Warrior", emoji: "⚔️", description: "Reach a 7-day streak", test: (c) => c.streak >= 7 },
-  { id: "unstoppable", name: "Unstoppable", emoji: "🌋", description: "Reach a 30-day streak", test: (c) => c.streak >= 30 },
-  { id: "quiz-whiz", name: "Quiz Whiz", emoji: "🧠", description: "Ace a quiz with 100%", test: (c) => c.totals.perfectQuizzes >= 1 },
-  { id: "sharpshooter", name: "Sharpshooter", emoji: "🎯", description: "Answer 100 questions correctly", test: (c) => c.totals.correctAnswers >= 100 },
-  { id: "flipper", name: "Card Shark", emoji: "🃏", description: "Flip 50 flashcards", test: (c) => c.totals.flashcards >= 50 },
-  { id: "hello-world", name: "Hello, World", emoji: "👋", description: "Run your first piece of code", test: (c) => c.totals.codeRuns >= 1 },
-  { id: "code-ninja", name: "Code Ninja", emoji: "🥷", description: "Pass 5 coding challenges", test: (c) => c.totals.challenges >= 5 },
-  { id: "arena-ready", name: "Arena Ready", emoji: "🛡️", description: "Finish a full mock test", test: (c) => c.totals.mockTests >= 1 },
-  { id: "player-one", name: "Player One", emoji: "🎮", description: "Play 5 Wonder Woods games", test: (c) => c.totals.games >= 5 },
-  { id: "memory-palace", name: "Memory Palace", emoji: "🏰", description: "Do 25 spaced-repetition reviews", test: (c) => c.totals.reviews >= 25 },
-  { id: "globetrotter", name: "Globetrotter", emoji: "🌍", description: "Learn in 3 different worlds", test: (c) => c.worldsVisited >= 3 },
-  { id: "polymath", name: "Polymath", emoji: "🦉", description: "Start 6 different subjects", test: (c) => c.subjectsStarted >= 6 },
-  { id: "night-owl", name: "Night Owl", emoji: "🌙", description: "Learn after 10 pm", test: (c) => c.hour >= 22 || c.hour < 4 },
-  { id: "early-bird", name: "Early Bird", emoji: "🐦", description: "Learn before 7 am", test: (c) => c.hour >= 4 && c.hour < 7 },
-  { id: "level-10", name: "Double Digits", emoji: "🔟", description: "Reach level 10", test: (c) => c.level >= 10 },
-  { id: "xp-1000", name: "Kilo-learner", emoji: "⚡", description: "Earn 1,000 XP", test: (c) => c.xp >= 1000 },
+  { id: "first-steps", name: "First Steps", icon: "footprints", color: "#2EBE70", description: "Complete your first lesson", test: (c) => c.totals.lessons >= 1 },
+  { id: "bookworm", name: "Bookworm", icon: "book-open", color: "#2F6BFF", description: "Complete 10 lessons", test: (c) => c.totals.lessons >= 10 },
+  { id: "scholar", name: "Scholar", icon: "graduation-cap", color: "#7C4DFF", description: "Complete 50 lessons", test: (c) => c.totals.lessons >= 50 },
+  { id: "on-fire", name: "On Fire", icon: "flame", color: "#FF8A00", description: "Reach a 3-day streak", test: (c) => c.streak >= 3 },
+  { id: "week-warrior", name: "Week Warrior", icon: "calendar-check", color: "#FF4B4B", description: "Reach a 7-day streak", test: (c) => c.streak >= 7 },
+  { id: "unstoppable", name: "Unstoppable", icon: "rocket", color: "#E11D48", description: "Reach a 30-day streak", test: (c) => c.streak >= 30 },
+  { id: "quiz-whiz", name: "Quiz Whiz", icon: "brain", color: "#EC4899", description: "Ace a quiz with 100%", test: (c) => c.totals.perfectQuizzes >= 1 },
+  { id: "sharpshooter", name: "Sharpshooter", icon: "target", color: "#FF4B4B", description: "Answer 100 questions correctly", test: (c) => c.totals.correctAnswers >= 100 },
+  { id: "flipper", name: "Card Shark", icon: "layers", color: "#14B8A6", description: "Flip 50 flashcards", test: (c) => c.totals.flashcards >= 50 },
+  { id: "hello-world", name: "Hello, World", icon: "terminal", color: "#334155", description: "Run your first piece of code", test: (c) => c.totals.codeRuns >= 1 },
+  { id: "code-ninja", name: "Code Ninja", icon: "code", color: "#1CB0F6", description: "Pass 5 coding challenges", test: (c) => c.totals.challenges >= 5 },
+  { id: "arena-ready", name: "Arena Ready", icon: "shield", color: "#FFB800", description: "Finish a mock test", test: (c) => c.totals.mockTests >= 1 },
+  { id: "player-one", name: "Player One", icon: "gamepad", color: "#7C4DFF", description: "Play 5 learning games", test: (c) => c.totals.games >= 5 },
+  { id: "memory-palace", name: "Memory Palace", icon: "repeat", color: "#14B8A6", description: "Do 25 spaced reviews", test: (c) => c.totals.reviews >= 25 },
+  { id: "globetrotter", name: "Globetrotter", icon: "globe", color: "#2EBE70", description: "Learn in 3 different categories", test: (c) => c.worldsVisited >= 3 },
+  { id: "polymath", name: "Polymath", icon: "sparkles", color: "#7C4DFF", description: "Start 6 different courses", test: (c) => c.subjectsStarted >= 6 },
+  { id: "night-owl", name: "Night Owl", icon: "moon", color: "#334155", description: "Learn after 10 pm", test: (c) => c.hour >= 22 || c.hour < 4 },
+  { id: "early-bird", name: "Early Bird", icon: "sunrise", color: "#FFB800", description: "Learn before 7 am", test: (c) => c.hour >= 4 && c.hour < 7 },
+  { id: "level-10", name: "Double Digits", icon: "crown", color: "#FFB800", description: "Reach level 10", test: (c) => c.level >= 10 },
+  { id: "xp-1000", name: "Kilo-learner", icon: "zap", color: "#2F6BFF", description: "Earn 1,000 XP", test: (c) => c.xp >= 1000 },
 ];
 
 /* ------------------------------------------------------------------ */
@@ -156,24 +157,24 @@ export type QuestMetric = keyof Counters | "xp";
 export interface QuestDef {
   id: string;
   title: string;
-  emoji: string;
+  icon: string;
   metric: QuestMetric;
   target: number;
   coins: number;
 }
 
 const QUEST_POOL: QuestDef[] = [
-  { id: "xp-30", title: "Earn 30 XP", emoji: "⚡", metric: "xp", target: 30, coins: 10 },
-  { id: "xp-80", title: "Earn 80 XP", emoji: "⚡", metric: "xp", target: 80, coins: 20 },
-  { id: "lessons-1", title: "Complete a lesson", emoji: "📘", metric: "lessons", target: 1, coins: 10 },
-  { id: "lessons-3", title: "Complete 3 lessons", emoji: "📚", metric: "lessons", target: 3, coins: 25 },
-  { id: "correct-5", title: "Get 5 answers right", emoji: "✅", metric: "correctAnswers", target: 5, coins: 10 },
-  { id: "correct-15", title: "Get 15 answers right", emoji: "🎯", metric: "correctAnswers", target: 15, coins: 25 },
-  { id: "cards-10", title: "Flip 10 flashcards", emoji: "🃏", metric: "flashcards", target: 10, coins: 10 },
-  { id: "runs-3", title: "Run code 3 times", emoji: "▶️", metric: "codeRuns", target: 3, coins: 10 },
-  { id: "quiz-2", title: "Finish 2 quizzes", emoji: "🧩", metric: "quizzes", target: 2, coins: 15 },
-  { id: "review-5", title: "Review 5 cards", emoji: "🔁", metric: "reviews", target: 5, coins: 15 },
-  { id: "games-2", title: "Play 2 games", emoji: "🎈", metric: "games", target: 2, coins: 10 },
+  { id: "xp-30", title: "Earn 30 XP", icon: "zap", metric: "xp", target: 30, coins: 10 },
+  { id: "xp-80", title: "Earn 80 XP", icon: "zap", metric: "xp", target: 80, coins: 20 },
+  { id: "lessons-1", title: "Complete a lesson", icon: "book-open", metric: "lessons", target: 1, coins: 10 },
+  { id: "lessons-3", title: "Complete 3 lessons", icon: "library", metric: "lessons", target: 3, coins: 25 },
+  { id: "correct-5", title: "Get 5 answers right", icon: "circle-check", metric: "correctAnswers", target: 5, coins: 10 },
+  { id: "correct-15", title: "Get 15 answers right", icon: "target", metric: "correctAnswers", target: 15, coins: 25 },
+  { id: "cards-10", title: "Flip 10 flashcards", icon: "layers", metric: "flashcards", target: 10, coins: 10 },
+  { id: "runs-3", title: "Run code 3 times", icon: "play", metric: "codeRuns", target: 3, coins: 10 },
+  { id: "quiz-2", title: "Finish 2 quizzes", icon: "puzzle", metric: "quizzes", target: 2, coins: 15 },
+  { id: "review-5", title: "Review 5 cards", icon: "repeat", metric: "reviews", target: 5, coins: 15 },
+  { id: "games-2", title: "Play 2 games", icon: "gamepad", metric: "games", target: 2, coins: 10 },
 ];
 
 function hash(s: string) {
@@ -247,27 +248,26 @@ export function reviewCard(prev: CardState | undefined, grade: 0 | 1 | 2 | 3, to
 /* Shop                                                                */
 /* ------------------------------------------------------------------ */
 
+/** Profile colours. The first five are free; the rest are unlocked in the shop. */
 export const AVATARS = [
-  { id: "owl", emoji: "🦉", price: 0 },
-  { id: "fox", emoji: "🦊", price: 0 },
-  { id: "panda", emoji: "🐼", price: 0 },
-  { id: "cat", emoji: "🐱", price: 0 },
-  { id: "rocket", emoji: "🚀", price: 40 },
-  { id: "unicorn", emoji: "🦄", price: 60 },
-  { id: "dragon", emoji: "🐉", price: 80 },
-  { id: "alien", emoji: "👽", price: 80 },
-  { id: "robot", emoji: "🤖", price: 100 },
-  { id: "wizard", emoji: "🧙", price: 120 },
-  { id: "astronaut", emoji: "🧑‍🚀", price: 150 },
-  { id: "crown", emoji: "👑", price: 300 },
+  { id: "blue", price: 0 },
+  { id: "green", price: 0 },
+  { id: "purple", price: 0 },
+  { id: "orange", price: 0 },
+  { id: "red", price: 0 },
+  { id: "teal", price: 40 },
+  { id: "pink", price: 40 },
+  { id: "sky", price: 60 },
+  { id: "navy", price: 80 },
+  { id: "gold", price: 150 },
 ];
 
 export const FRAMES = [
-  { id: "none", name: "Classic", price: 0, ring: "from-line to-line" },
-  { id: "sunset", name: "Sunset", price: 50, ring: "from-orange-400 to-pink-500" },
-  { id: "ocean", name: "Ocean", price: 50, ring: "from-sky-400 to-emerald-400" },
-  { id: "aurora", name: "Aurora", price: 120, ring: "from-violet-500 via-fuchsia-500 to-cyan-400" },
-  { id: "gold", name: "Gold", price: 250, ring: "from-yellow-300 via-amber-500 to-yellow-600" },
+  { id: "none", name: "None", price: 0, color: "transparent" },
+  { id: "leaf", name: "Leaf", price: 50, color: "#2EBE70" },
+  { id: "flame", name: "Flame", price: 80, color: "#FF8A00" },
+  { id: "royal", name: "Royal", price: 120, color: "#7C4DFF" },
+  { id: "gold", name: "Gold", price: 250, color: "#FFB800" },
 ];
 
 export const STREAK_FREEZE_PRICE = 50;

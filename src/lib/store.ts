@@ -20,6 +20,7 @@ import {
   weekKey,
 } from "./gamification";
 import { useUi } from "./ui";
+import { afterAssessmentAnswer, afterPractice, type AssessmentKind, type MasteryLevel } from "./mastery";
 
 export interface Profile {
   name: string;
@@ -27,6 +28,8 @@ export interface Profile {
   frame: string;
   stage: Stage | null;
   worlds: WorldId[];
+  /** The course shown on the Learn path. */
+  course: string | null;
   style: LearningStyle;
   dailyGoal: number;
   onboarded: boolean;
@@ -73,6 +76,12 @@ export interface LearnerState {
   mockResults: MockResult[];
   owned: string[];
   settings: { theme: "system" | "light" | "dark"; sound: boolean };
+  /** lessonId → mastery level (0–4). */
+  mastery: Record<string, MasteryLevel>;
+  /** Completed learning items (videos, articles, practice, cards…), keyed by item id. */
+  items: Record<string, string>;
+  /** Best score (0–1) per assessment key, e.g. "physics-school/motion:test". */
+  assessments: Record<string, number>;
   updatedAt: number;
 }
 
@@ -91,6 +100,10 @@ interface Actions {
   buy: (itemId: string, price: number) => boolean;
   buyFreeze: () => boolean;
   setSettings: (s: Partial<LearnerState["settings"]>) => void;
+  markItem: (itemId: string, xp?: number) => void;
+  claimCoins: (coins: number, text?: string) => void;
+  applyPractice: (lessonId: string, correct: number, total: number) => void;
+  applyAssessment: (key: string, kind: Exclude<AssessmentKind, "practice">, answers: { lessonId: string; ok: boolean }[]) => void;
   replaceState: (s: LearnerState) => void;
   reset: () => void;
 }
@@ -98,13 +111,14 @@ interface Actions {
 export const initialState = (): LearnerState => ({
   profile: {
     name: "",
-    avatar: "🦉",
+    avatar: "blue",
     frame: "none",
     stage: null,
     worlds: [],
     style: "visual",
     dailyGoal: 50,
     onboarded: false,
+    course: null,
     createdAt: new Date().toISOString(),
   },
   xp: 0,
@@ -123,7 +137,10 @@ export const initialState = (): LearnerState => ({
   challengesPassed: [],
   mockResults: [],
   owned: [...AVATARS.filter((a) => a.price === 0).map((a) => a.id), "none"],
-  settings: { theme: "system", sound: true },
+  settings: { theme: "light", sound: true },
+  mastery: {},
+  items: {},
+  assessments: {},
   updatedAt: Date.now(),
 });
 
@@ -175,7 +192,7 @@ function finalize(prev: LearnerState, next: LearnerState): LearnerState {
   const prevLevel = levelInfo(prev.xp).level;
   const lvl = levelInfo(next.xp);
   if (lvl.level > prevLevel) {
-    ui.celebrate({ kind: "level", title: `Level ${lvl.level}!`, subtitle: `You are now a ${lvl.title}`, emoji: "🌟" });
+    ui.celebrate({ kind: "level", title: `Level ${lvl.level}!`, subtitle: `You are now a ${lvl.title}` });
     next = { ...next, coins: next.coins + 20 };
   }
   const ctx = {
@@ -192,7 +209,7 @@ function finalize(prev: LearnerState, next: LearnerState): LearnerState {
     const badges = { ...next.badges };
     for (const b of earned) {
       badges[b.id] = new Date().toISOString();
-      ui.celebrate({ kind: "badge", title: b.name, subtitle: b.description, emoji: b.emoji });
+      ui.celebrate({ kind: "badge", title: b.name, subtitle: b.description, badge: { icon: b.icon, color: b.color } });
     }
     next = { ...next, badges, coins: next.coins + 15 * earned.length };
   }
@@ -201,7 +218,7 @@ function finalize(prev: LearnerState, next: LearnerState): LearnerState {
   const before = prev.daily[d]?.xp ?? 0;
   const after = next.daily[d]?.xp ?? 0;
   if (before < next.profile.dailyGoal && after >= next.profile.dailyGoal) {
-    ui.celebrate({ kind: "goal", title: "Daily goal smashed!", subtitle: `${liveStreak(next)}-day streak 🔥 keep it going`, emoji: "🏆" });
+    ui.celebrate({ kind: "goal", title: "Daily goal smashed!", subtitle: `${liveStreak(next)}-day streak — keep it going` });
   }
   return { ...next, updatedAt: Date.now() };
 }
@@ -360,7 +377,29 @@ export const useLearner = create<Store>()(
 
         setSettings: (st) => set((s) => ({ settings: { ...s.settings, ...st } })),
 
-        replaceState: (st) => set({ ...st }),
+        markItem: (itemId, xp = 0) => {
+          if (get().items[itemId]) return;
+          update((st) => ({ ...addXp(st, xp), items: { ...st.items, [itemId]: new Date().toISOString() } }));
+          if (xp) useUi.getState().toast({ xp });
+        },
+
+        claimCoins: (coins, text) => {
+          set((st) => ({ coins: st.coins + coins, updatedAt: Date.now() }));
+          useUi.getState().toast({ coins, text });
+        },
+
+        applyPractice: (lessonId, correct, total) =>
+          update((st) => ({ ...st, mastery: { ...st.mastery, [lessonId]: afterPractice(st.mastery[lessonId] ?? 0, correct, total) } })),
+
+        applyAssessment: (key, kind, answers) =>
+          update((st) => {
+            const mastery = { ...st.mastery };
+            for (const a of answers) mastery[a.lessonId] = afterAssessmentAnswer(mastery[a.lessonId] ?? 0, a.ok, kind);
+            const score = answers.length ? answers.filter((a) => a.ok).length / answers.length : 0;
+            return { ...st, mastery, assessments: { ...st.assessments, [key]: Math.max(st.assessments[key] ?? 0, score) } };
+          }),
+
+        replaceState: (st) => set({ ...initialState(), ...st }),
 
         reset: () => set({ ...initialState() }),
       };
@@ -415,6 +454,13 @@ export function mergeStates(a: LearnerState, b: LearnerState): LearnerState {
       .sort((x, y) => y.date.localeCompare(x.date))
       .slice(0, 30),
     owned: Array.from(new Set([...a.owned, ...b.owned])),
+    mastery: Object.fromEntries(
+      Array.from(new Set([...Object.keys(a.mastery ?? {}), ...Object.keys(b.mastery ?? {})])).map((k) => [k, Math.max(a.mastery?.[k] ?? 0, b.mastery?.[k] ?? 0) as MasteryLevel]),
+    ),
+    items: { ...(older.items ?? {}), ...(newer.items ?? {}) },
+    assessments: Object.fromEntries(
+      Array.from(new Set([...Object.keys(a.assessments ?? {}), ...Object.keys(b.assessments ?? {})])).map((k) => [k, Math.max(a.assessments?.[k] ?? 0, b.assessments?.[k] ?? 0)]),
+    ),
     updatedAt: Date.now(),
   };
 }

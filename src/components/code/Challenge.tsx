@@ -62,16 +62,16 @@ export function Challenge({ challenge, lessonId }: { challenge: CodeChallenge; l
     <div className="space-y-4">
       <div className="card overflow-hidden">
         <div className="flex items-start gap-4 p-6">
-          <span className="grid h-12 w-12 shrink-0 place-items-center rounded-2xl bg-gradient-to-br from-cyan-400 to-lime-400 text-slate-900">
+          <span className="grid h-12 w-12 shrink-0 place-items-center rounded-xl bg-[#334155] text-white shadow-[inset_0_-4px_0_#1E293B]">
             <FlaskConical className="h-6 w-6" />
           </span>
           <div className="min-w-0 flex-1">
             <div className="flex flex-wrap items-center gap-2">
-              <h3 className="font-display text-xl font-bold">{challenge.title}</h3>
+              <h3 className="text-xl font-black">{challenge.title}</h3>
               <span className="chip">{LANG_LABEL[challenge.lang]}</span>
-              <span className="chip !text-accent">+50 XP</span>
+              <span className="chip !text-warn-shade">+50 XP</span>
               {passed && (
-                <span className="chip !border-good/40 !bg-good/10 !text-good">
+                <span className="chip !bg-good-soft !text-good-shade">
                   <Trophy className="h-3 w-3" /> Solved
                 </span>
               )}
@@ -79,13 +79,13 @@ export function Challenge({ challenge, lessonId }: { challenge: CodeChallenge; l
             <Md text={challenge.prompt} className="prose-quest mt-2 space-y-3" />
           </div>
         </div>
-        <div className="border-t border-line bg-surface-2/50 px-6 py-3">
-          <div className="text-xs font-semibold uppercase tracking-wider text-muted">Tests to pass</div>
+        <div className="border-t-2 border-line bg-surface-2 px-6 py-4">
+          <div className="eyebrow">Tests to pass</div>
           <ul className="mt-2 grid gap-1.5 sm:grid-cols-2">
             {challenge.tests.map((t, i) => {
               const res = r.tests?.[i];
               return (
-                <li key={i} className="flex items-start gap-2 text-sm">
+                <li key={i} className="flex items-start gap-2 text-sm font-semibold">
                   {res ? res.pass ? <CheckCircle2 className="mt-0.5 h-4 w-4 shrink-0 text-good" /> : <XCircle className="mt-0.5 h-4 w-4 shrink-0 text-bad" /> : <span className="mt-1.5 h-2 w-2 shrink-0 rounded-full bg-line" />}
                   <span className={clsx(res && !res.pass && "text-bad")}>
                     <MdInline text={t.label} />
@@ -98,15 +98,15 @@ export function Challenge({ challenge, lessonId }: { challenge: CodeChallenge; l
         </div>
       </div>
 
-      <div className="overflow-hidden rounded-3xl border border-line bg-[#1a1b26]">
-        <div className="flex items-center gap-2 border-b border-white/10 bg-[#13141c] px-3 py-2">
-          <span className="font-mono text-xs text-slate-400">solution.{challenge.lang === "javascript" ? "js" : challenge.lang === "python" ? "py" : challenge.lang}</span>
+      <div className="overflow-hidden rounded-2xl border-2 border-line bg-[#1a1b26]">
+        <div className="flex items-center gap-2 border-b-2 border-line bg-surface px-3 py-2">
+          <span className="font-mono text-xs font-semibold text-muted">solution.{challenge.lang === "javascript" ? "js" : challenge.lang === "python" ? "py" : challenge.lang}</span>
           <div className="ml-auto flex items-center gap-1">
-            <button onClick={() => setCode(challenge.starter)} className="flex items-center gap-1 rounded-lg px-2 py-1 text-xs text-slate-400 hover:bg-white/10 hover:text-white">
+            <button onClick={() => setCode(challenge.starter)} className="btn-flat !px-2.5 !py-1.5 text-xs !text-muted">
               <RotateCcw className="h-3.5 w-3.5" /> Reset
             </button>
-            <button onClick={runTests} className="flex items-center gap-1.5 rounded-xl bg-gradient-to-r from-cyan-400 to-lime-400 px-4 py-1.5 text-xs font-bold text-slate-900 hover:brightness-110">
-              {r.running ? <Loader2 className="h-3.5 w-3.5 animate-spin" /> : <Play className="h-3.5 w-3.5 fill-slate-900" />} Run tests
+            <button onClick={runTests} className="btn-good !rounded-xl !px-4 !py-1.5 text-xs">
+              {r.running ? <Loader2 className="h-3.5 w-3.5 animate-spin" /> : <Play className="h-3.5 w-3.5 fill-white" />} Run tests
             </button>
           </div>
         </div>
@@ -133,12 +133,14 @@ export function Challenge({ challenge, lessonId }: { challenge: CodeChallenge; l
         <motion.div
           initial={{ opacity: 0, y: 10 }}
           animate={{ opacity: 1, y: 0 }}
-          className={clsx("flex items-center gap-3 rounded-3xl border p-4", allPass ? "border-good/40 bg-good/10" : "border-bad/30 bg-bad/5")}
+          className={clsx("flex items-center gap-4 rounded-2xl p-4", allPass ? "bg-good-soft" : "bg-bad-soft")}
         >
-          <span className="text-3xl">{allPass ? "🎉" : "🧐"}</span>
+          <span className={clsx("grid h-12 w-12 shrink-0 place-items-center rounded-full bg-surface", allPass ? "text-good" : "text-bad")}>
+            {allPass ? <CheckCircle2 className="h-7 w-7" strokeWidth={2.6} /> : <XCircle className="h-7 w-7" strokeWidth={2.6} />}
+          </span>
           <div>
-            <div className="font-semibold">{allPass ? "All tests passed — brilliant!" : `${r.tests.filter((t) => t.pass).length} / ${r.tests.length} tests passing`}</div>
-            <div className="text-sm text-muted">{allPass ? "Challenge complete. Try refactoring it to be even cleaner." : "Read the failing test, tweak, and run again. Hints below if you're stuck."}</div>
+            <div className={clsx("text-lg font-black", allPass ? "text-good-shade" : "text-bad-shade")}>{allPass ? "All tests passed — brilliant!" : `${r.tests.filter((t) => t.pass).length} / ${r.tests.length} tests passing`}</div>
+            <div className="text-sm font-semibold text-muted">{allPass ? "Challenge complete. Try refactoring it to be even cleaner." : "Read the failing test, tweak, and run again. Hints below if you're stuck."}</div>
           </div>
         </motion.div>
       )}
@@ -146,7 +148,7 @@ export function Challenge({ challenge, lessonId }: { challenge: CodeChallenge; l
       <div className="flex flex-wrap gap-2">
         {challenge.hints?.length ? (
           <button className="btn-ghost" onClick={() => setHints((h) => Math.min(challenge.hints!.length, h + 1))} disabled={hints >= challenge.hints.length}>
-            <Lightbulb className="h-4 w-4 text-amber-400" /> {hints >= challenge.hints.length ? "No more hints" : `Hint ${hints + 1} of ${challenge.hints.length}`}
+            <Lightbulb className="h-4 w-4 text-warn-shade" /> {hints >= challenge.hints.length ? "No more hints" : `Hint ${hints + 1} of ${challenge.hints.length}`}
           </button>
         ) : null}
         {(attempts >= 2 || passed) && (
@@ -156,16 +158,16 @@ export function Challenge({ challenge, lessonId }: { challenge: CodeChallenge; l
         )}
       </div>
       {challenge.hints?.slice(0, hints).map((h, i) => (
-        <div key={i} className="flex gap-3 rounded-2xl border border-amber-400/30 bg-amber-400/10 p-4 text-sm">
-          <Lightbulb className="h-5 w-5 shrink-0 text-amber-400" />
+        <div key={i} className="flex gap-3 rounded-2xl border-2 border-warn/50 bg-warn/10 p-4 text-sm font-semibold">
+          <Lightbulb className="h-5 w-5 shrink-0 text-warn-shade" />
           <MdInline text={h} />
         </div>
       ))}
       {showSolution && (
-        <div className="overflow-hidden rounded-3xl border border-line">
-          <div className="flex items-center justify-between bg-[#13141c] px-3 py-2 text-xs text-slate-400">
-            Reference solution
-            <button className="rounded-lg px-2 py-1 hover:bg-white/10 hover:text-white" onClick={() => setCode(challenge.solution)}>
+        <div className="overflow-hidden rounded-2xl border-2 border-line">
+          <div className="flex items-center justify-between bg-surface px-3 py-2">
+            <span className="eyebrow">Reference solution</span>
+            <button className="btn-flat !px-2.5 !py-1.5 text-xs" onClick={() => setCode(challenge.solution)}>
               Load into editor
             </button>
           </div>

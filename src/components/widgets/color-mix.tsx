@@ -76,7 +76,7 @@ export default function ColorMix() {
   const name = colourName(drops);
 
   return (
-    <div className="font-kids">
+    <div className="font-bold">
       <WidgetTitle title="Mix the colours" hint="Tap a paint pot to drop paint into the bowl." right={<button type="button" onClick={reset} className="btn-ghost !px-3 !py-1.5"><RotateCcw size={14} /> Clean bowl</button>} />
 
       <div className="flex flex-col items-center gap-6 sm:flex-row sm:justify-center">
@@ -91,8 +91,8 @@ export default function ColorMix() {
               aria-label={`Add a drop of ${p.label}`}
               className="flex flex-col items-center gap-1"
             >
-              <span className="relative grid h-16 w-16 place-items-center rounded-2xl border-2 border-line shadow-soft" style={{ background: p.css }}>
-                <span className="absolute -bottom-2 -right-2 grid h-6 w-6 place-items-center rounded-full bg-surface font-mono text-xs font-bold text-ink shadow-soft">{drops[p.id]}</span>
+              <span className="relative grid h-16 w-16 place-items-center rounded-2xl border-2 border-line" style={{ background: p.css }}>
+                <span className="absolute -bottom-2 -right-2 grid h-6 w-6 place-items-center rounded-full bg-surface font-mono text-xs font-bold text-ink">{drops[p.id]}</span>
               </span>
               <span className="text-xs font-bold text-muted">{p.label}</span>
             </motion.button>

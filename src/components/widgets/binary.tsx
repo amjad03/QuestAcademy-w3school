@@ -99,7 +99,7 @@ export default function Binary() {
                 onClick={() => toggle(place)}
                 whileTap={{ scale: 0.88 }}
                 className={`relative flex h-16 w-full max-w-[56px] items-center justify-center rounded-2xl border-2 font-mono text-2xl font-black transition-colors sm:h-20 ${
-                  on ? "border-accent bg-accent text-white shadow-glow" : "border-line bg-surface-2 text-muted"
+                  on ? "border-accent bg-accent text-white" : "border-line bg-surface-2 text-muted"
                 }`}
               >
                 <AnimatePresence mode="popLayout" initial={false}>

@@ -66,7 +66,7 @@ export default function Phonics(input: Record<string, unknown>) {
   const [word, emoji] = WORDS[active] ?? WORDS.A;
 
   return (
-    <div className="font-kids">
+    <div className="font-bold">
       <WidgetTitle
         title="Letter sounds"
         hint={canSpeak ? "Tap a letter to hear it!" : "Tap a letter to see its word (sound isn't available on this device)."}
@@ -82,7 +82,7 @@ export default function Phonics(input: Record<string, unknown>) {
             transition={{ type: "spring", stiffness: 350, damping: 18 }}
             className="flex items-center gap-4"
           >
-            <span className="text-gradient text-7xl font-black sm:text-8xl">
+            <span className="text-accent text-7xl font-black sm:text-8xl">
               {active}
               <span className="text-5xl sm:text-6xl">{active.toLowerCase()}</span>
             </span>
@@ -111,7 +111,7 @@ export default function Phonics(input: Record<string, unknown>) {
             onClick={() => speak(l)}
             aria-label={`${l} is for ${WORDS[l][0]}`}
             className={`h-14 rounded-2xl text-2xl font-black transition ${
-              l === active ? "bg-accent text-white shadow-[0_4px_0_0_rgb(0_0_0/0.2)]" : "bg-surface text-ink shadow-soft hover:bg-accent/10"
+              l === active ? "bg-accent text-white shadow-[inset_0_-4px_0_rgb(var(--accent-shade))]" : "border-2 border-b-4 border-line bg-surface text-ink hover:bg-accent/10"
             }`}
           >
             {l}

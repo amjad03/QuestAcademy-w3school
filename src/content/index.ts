@@ -82,7 +82,7 @@ export function lessonId(subject: string, topic: string, lesson: string) {
 }
 
 export function lessonHref(subject: string, topic: string, lesson: string) {
-  return `/learn/${subject}/${topic}/${lesson}`;
+  return `/course/${subject}/${topic}/${lesson}`;
 }
 
 export interface LessonRef {
@@ -164,6 +164,8 @@ export interface SearchItem {
   href: string;
   icon: string;
   world: WorldId;
+  /** Course slug (for the course icon). */
+  course: string;
   keywords: string;
 }
 
@@ -177,9 +179,10 @@ export function searchIndex(): SearchItem[] {
       kind: "subject",
       title: s.title,
       subtitle: s.tagline,
-      href: `/learn/${s.slug}`,
+      href: `/course/${s.slug}`,
       icon: s.icon,
       world: s.world,
+      course: s.slug,
       keywords: [s.title, s.tagline, s.domain ?? "", ...s.levels].join(" ").toLowerCase(),
     });
     for (const t of s.topics) {
@@ -187,9 +190,10 @@ export function searchIndex(): SearchItem[] {
         kind: "topic",
         title: t.title,
         subtitle: s.title,
-        href: `/learn/${s.slug}#${t.slug}`,
+        href: `/course/${s.slug}/${t.slug}`,
         icon: t.icon,
         world: s.world,
+        course: s.slug,
         keywords: [t.title, t.description, s.title].join(" ").toLowerCase(),
       });
       for (const l of t.lessons) {
@@ -200,6 +204,7 @@ export function searchIndex(): SearchItem[] {
           href: lessonHref(s.slug, t.slug, l.slug),
           icon: t.icon,
           world: s.world,
+          course: s.slug,
           keywords: [l.title, l.summary, t.title, s.title].join(" ").toLowerCase(),
         });
       }

@@ -1,76 +1,101 @@
 # Quest Academy
 
-**Learn anything, any age, your way.** Quest Academy is a gamified, interactive learning platform in the spirit of w3schools, for everyone from pre-primary kids to postgraduates. Each learner group gets its own *world* with a different look, pace, mascot and set of tools.
+**The free, fun and effective way to learn anything.** Quest Academy combines Khan Academy-style course structure (videos, articles, practice, unit tests, mastery) with Duolingo-style motivation (a lesson path, XP, streaks, quests, leagues). It covers everything from first letters to NEET/JEE, coding and university courses.
 
-| World | For | What makes it different |
-|---|---|---|
-| 🌳 **Wonder Woods** (`/kids`) | Ages 3–10 | Story-card lessons read aloud by Questy the owl 🦉, big tap targets, stickers & stars, 6 learning games |
-| 🧭 **Explorer's Atlas** (`/school`) | Grades 6–12 | Maths, physics, chemistry, biology, English, social studies with live simulations and a simulation lab |
-| ⚔️ **The Arena** (`/exam`) | NEET / JEE | Dark focus mode, CBT mock-test simulator, adaptive chapter drills, formula vault, percentile/rank estimate, exam countdown |
-| ⌨️ **Code Lab** (`/code`) | Coders | HTML, CSS, JS, Python, SQL with a *Try it yourself* editor in every lesson, auto-graded challenges and a full playground |
-| 🏛️ **The Campus** (`/campus`) | UG / PG / professionals | CS (DSA), machine learning, electrical engineering, anatomy, finance, economics, psychology, UX design |
+## What's inside
 
-## Content
+**Learning**
+- **Course → Unit → Lesson.** Each lesson has a **video** from the Quest Academy YouTube channel, an **article**, a **practice** set, **flashcards**, and a **coding challenge** where relevant.
+- **Assessments:** a unit quiz (first half of the unit), a unit test (whole unit) and a course challenge.
+- **Mastery levels:** each lesson is a skill (Attempted → Familiar → Proficient → Mastered), with mastery points per unit and per course, and Khan-style skill squares.
+- **Learn path:** the course as a winding path of nodes, with unit banners, a guidebook link per unit, treasure chests and unit-test trophies.
+- **Session player:** full-screen practice with a check/continue footer, explanations, missed questions repeated at the end, combo streaks and a results screen showing XP, accuracy, time and skill changes.
+- **Practice hub:** spaced-repetition review of flashcards from completed lessons, plus your weakest skills.
+- **Exam prep (NEET/JEE):** computer-based mock tests in the real exam format, adaptive chapter drills, a formula vault and score analytics.
+- **Code lab:** live editors for HTML/CSS/JS, Python (Pyodide) and SQL (SQLite), with auto-graded challenges.
+- **Early learning:** story-mode lessons read aloud, plus learning games.
 
-- **29 subjects, 321 lessons**, each with flashcards, an end-of-lesson quiz and inline checkpoints
-- **~1,270 lesson quiz questions** in 6 types: MCQ, multi-select, true/false, numeric, fill-in, ordering
-- **305 NEET/JEE exam questions** with step-by-step solutions, plus **283 formulas** across 37 formula sheets
-- **50 auto-graded code challenges** and **20 interactive simulations**: projectile, pendulum, circuits, waves, periodic table, cell explorer, perceptron, sorting, Big-O, supply & demand, compound interest, fractions, clock, phonics and more
+**Motivation:** XP and levels, daily streaks with freezes, daily goal, daily quests, weekly leagues, achievements, coins and a shop.
 
-## Learn your way
-
-Every lesson can be **read**, **played with** (simulations), **flipped** (flashcards), **quizzed**, **listened to** (text-to-speech narration that highlights each block as it reads) or **built** (live code). The learning style chosen during onboarding sets the default mode.
-
-## Gamification
-
-XP and levels, daily streaks with streak freezes, a daily XP goal, 3 daily quests, weekly leagues (Bronze → Diamond), 20 badges, coins and a shop (avatars, frames, freezes), spaced-repetition review (SM-2), an activity heatmap, and level-up/badge celebrations.
-
-## Tech
-
-- Next.js 15 (App Router, statically generated) · React 19 · TypeScript · Tailwind CSS · Framer Motion
-- CodeMirror 6 editors. JavaScript/HTML/CSS run in a sandboxed iframe, Python runs in **Pyodide** in a Web Worker (loaded from the jsDelivr CDN on first run), and SQL runs in **SQLite (sql.js)**, served from `public/vendor`
-- KaTeX for maths
-- State: Zustand, persisted to `localStorage`, with optional **Supabase** auth and cloud sync
+**Content:** 29 courses, 321 lessons, ~1,500 practice questions, 305 NEET/JEE questions, 283 formulas, 50 coding challenges and 20 interactive simulations.
 
 ## Getting started
 
 ```bash
 npm install
 npm run dev        # http://localhost:3000
-npm run build && npm start
 ```
 
-Without any configuration the app runs in **guest mode**: all progress is saved in the browser and the leaderboard is a practice league with simulated rivals.
+Without any configuration the app runs in guest mode, saving progress in the browser.
 
-### Enable accounts, cloud sync and live leagues (Supabase)
+## Videos from the YouTube channel
+
+Lesson videos come from the Quest Academy YouTube channel and are matched to lessons automatically.
+
+1. Create a YouTube Data API key: Google Cloud Console → enable **YouTube Data API v3** → Credentials → API key.
+2. Run:
+   ```bash
+   YOUTUBE_API_KEY=your-key YOUTUBE_CHANNEL=@YourChannelHandle npm run sync-videos
+   ```
+   The script:
+   - downloads every upload, with titles, descriptions, durations and playlists, into `src/content/videos/channel.json`;
+   - matches videos to lessons by title, using topic, subject and playlist as context;
+   - writes the matches to `src/content/videos/matches.json`.
+3. Open **/studio/videos** to review the matches. Each lesson shows its matched video, a confidence score and other candidates as copy-ready lines.
+4. Pin, fix or hide any lesson's video in `src/content/videos/overrides.ts`:
+   ```ts
+   export const videoOverrides = {
+     "physics-school/motion/projectile-motion": "dQw4w9WgXcQ", // use this video
+     "english/grammar/parts-of-speech": null,                   // never show a video
+   };
+   ```
+5. Commit the updated JSON and overrides files, then rebuild.
+
+To re-match without calling the API again (for example after editing lessons), run `npm run sync-videos -- --offline`.
+
+How videos behave in the app:
+- They play in a privacy-enhanced embed (youtube-nocookie).
+- A video ticks off automatically when it ends or the learner passes 90%.
+- Lessons without a video show the article, practice and other items only.
+
+## Accounts, sync and live leagues (Supabase)
 
 1. Create a project at [supabase.com](https://supabase.com).
-2. Open **SQL editor**, paste in [`supabase/schema.sql`](supabase/schema.sql) and run it. It creates the `profiles` and `learner_state` tables with row-level security.
-3. Copy `.env.example` to `.env.local` and fill in `NEXT_PUBLIC_SUPABASE_URL` and `NEXT_PUBLIC_SUPABASE_ANON_KEY` (Project Settings → API).
-4. Optional: enable the Google provider under **Authentication → Providers**, and add your site URL to the redirect URLs.
+2. Run [`supabase/schema.sql`](supabase/schema.sql) in the SQL editor.
+3. Copy `.env.example` to `.env.local` and set `NEXT_PUBLIC_SUPABASE_URL` and `NEXT_PUBLIC_SUPABASE_ANON_KEY`.
+4. Optional: enable the Google provider in Supabase Auth.
 
-Learners can then sign in with email/password, a magic link or Google. Guest progress is merged into the account on first sign-in.
+Guest progress is merged into the account on first sign-in.
+
+## Design system
+
+The design is flat, bold and friendly:
+- **Typeface:** one rounded face (Nunito).
+- **Colour:** solid colours from a single palette (`src/app/globals.css`).
+- **Shape:** 2px borders and chunky buttons with a darker bottom edge (`.btn-primary`, `.btn-good`, `.btn-gold`, `.btn-ghost`).
+- **Mascot:** Questy the owl (`src/components/brand/Mascot.tsx`) is a code-drawn SVG with poses: idle, wave, cheer, think, sad and read.
+- **Course icons:** each course gets a solid icon tile from a curated palette (`src/components/brand/CourseIcon.tsx`).
 
 ## Project structure
 
 ```
-src/
-  app/                 routes (landing, onboarding, dashboard, worlds, learn, exam, code, review, leaderboard, profile, auth)
-  components/
-    learn/             lesson players (standard + kids story mode), blocks, quiz, flashcards, narration
-    code/              editor, runners, Try-it, challenges, playground
-    exam/              CBT simulator, scorecard, arena hub, chapter drill, formula vault
-    widgets/           20 interactive simulations
-    kids/              Wonder Woods games
-    dashboard/ subject/ world/ review/ leaderboard/ profile/ shell/ landing/
-  content/
-    types.ts           content model (Subject → Topic → Lesson → Block)
-    subjects/<world>/  lesson content
-    exam/              question bank + formula sheets
-  lib/                 store (progress & gamification), gamification rules, runners, exam logic, supabase, sounds
-supabase/schema.sql
+src/app/
+  (marketing)/        landing page
+  (app)/              sidebar shell: learn, courses, course/[subject]/[unit]/[lesson], practice,
+                      exam, code/playground, leaderboard, quests, shop, profile, settings, studio/videos
+  (focus)/            full-screen: session/[...key], onboarding, auth, exam mock tests, kids games
+src/content/          lessons (subjects/*), exam bank, course structure (course.ts), videos/
+src/components/       brand, shell, learn (path, blocks, questions), lesson, session, course, exam, code, widgets…
+src/lib/              store (progress), mastery, gamification, progress, video matcher, runners, supabase
+scripts/sync-videos.ts
 ```
 
 ## Adding content
 
-Lessons are plain TypeScript objects typed by `src/content/types.ts`. To add a subject, create a file under `src/content/subjects/<world>/` and register it in `src/content/index.ts`. It then gets static pages, a quest map, search, flashcards in the review deck, and progress tracking automatically.
+Lessons are TypeScript objects typed by `src/content/types.ts`. Add a file under `src/content/subjects/<category>/` and register it in `src/content/index.ts`. It automatically gets:
+- a course page and unit pages
+- path nodes
+- practice sessions, unit quizzes and tests, and a course challenge
+- search entries
+- video matching
+- mastery tracking

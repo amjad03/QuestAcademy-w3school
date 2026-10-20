@@ -2,27 +2,28 @@
 
 import { motion } from "framer-motion";
 import { ChevronLeft, ChevronRight, RotateCw, Shuffle, Volume2 } from "lucide-react";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import clsx from "clsx";
 import type { Flashcard } from "@/content/types";
 import { Md, plain } from "@/components/Md";
 import { useLearner } from "@/lib/store";
 import { sfx, speak } from "@/lib/sound";
+import { ProgressBar } from "@/components/ui/Progress";
 
 export function FlipCard({ card, flipped, onFlip, kids, footer }: { card: Flashcard; flipped: boolean; onFlip: () => void; kids?: boolean; footer?: string }) {
   return (
     <button onClick={onFlip} className="group relative block h-72 w-full [perspective:1400px] sm:h-80" aria-label={flipped ? "Show front" : "Reveal answer"}>
-      <motion.div className="relative h-full w-full [transform-style:preserve-3d]" animate={{ rotateY: flipped ? 180 : 0 }} transition={{ type: "spring", stiffness: 220, damping: 22 }}>
-        <div className="card absolute inset-0 flex flex-col items-center justify-center p-8 text-center [backface-visibility:hidden]">
-          <span className="absolute left-5 top-4 text-[11px] font-semibold uppercase tracking-widest text-muted">Front</span>
-          <div className={clsx("font-semibold", kids ? "font-kids text-5xl" : "font-display text-2xl leading-snug")}>
+      <motion.div className="relative h-full w-full [transform-style:preserve-3d]" animate={{ rotateY: flipped ? 180 : 0 }} transition={{ type: "spring", stiffness: 240, damping: 24 }}>
+        <div className="absolute inset-0 flex flex-col items-center justify-center rounded-3xl border-2 border-b-[6px] border-line bg-surface p-8 text-center [backface-visibility:hidden]">
+          <span className="eyebrow absolute left-6 top-5">Question</span>
+          <div className={clsx("font-extrabold", kids ? "text-5xl" : "text-2xl leading-snug")}>
             <Md text={card.front} className="space-y-2" />
           </div>
-          <span className="absolute bottom-4 text-xs text-muted">{footer ?? "Tap to flip"}</span>
+          <span className="absolute bottom-5 text-sm font-bold text-muted">{footer ?? "Tap to flip"}</span>
         </div>
-        <div className="absolute inset-0 flex flex-col items-center justify-center rounded-3xl border border-accent/30 bg-gradient-to-br from-accent/15 to-accent-2/15 p-8 text-center shadow-soft [backface-visibility:hidden] [transform:rotateY(180deg)]">
-          <span className="absolute left-5 top-4 text-[11px] font-semibold uppercase tracking-widest text-accent">Back</span>
-          <div className={clsx(kids ? "font-kids text-3xl font-semibold" : "text-lg leading-8")}>
+        <div className="absolute inset-0 flex flex-col items-center justify-center rounded-3xl border-2 border-b-[6px] border-accent-shade bg-accent p-8 text-center text-white [backface-visibility:hidden] [transform:rotateY(180deg)]">
+          <span className="absolute left-6 top-5 text-xs font-extrabold uppercase tracking-[0.12em] text-white/70">Answer</span>
+          <div className={clsx("font-bold [&_code]:bg-white/20 [&_code]:text-white", kids ? "text-3xl" : "text-xl leading-8")}>
             <Md text={card.back} className="space-y-2" />
           </div>
         </div>
@@ -31,13 +32,17 @@ export function FlipCard({ card, flipped, onFlip, kids, footer }: { card: Flashc
   );
 }
 
-export function Flashcards({ cards, kids }: { cards: Flashcard[]; kids?: boolean }) {
+export function Flashcards({ cards, kids, onAllSeen }: { cards: Flashcard[]; kids?: boolean; onAllSeen?: () => void }) {
   const [order, setOrder] = useState(cards.map((_, i) => i));
   const [pos, setPos] = useState(0);
   const [flipped, setFlipped] = useState(false);
   const [seen, setSeen] = useState<Set<number>>(new Set());
   const bump = useLearner((s) => s.bump);
   const card = cards[order[pos]];
+
+  useEffect(() => {
+    if (seen.size === cards.length && cards.length) onAllSeen?.();
+  }, [seen.size, cards.length]); // eslint-disable-line react-hooks/exhaustive-deps
 
   const flip = () => {
     sfx("flip");
@@ -56,40 +61,39 @@ export function Flashcards({ cards, kids }: { cards: Flashcard[]; kids?: boolean
 
   return (
     <div className="mx-auto max-w-xl">
-      <div className="mb-4 flex items-center justify-between text-sm text-muted">
-        <span>
-          Card {pos + 1} / {cards.length} · {seen.size} flipped
+      <div className="mb-4 flex items-center gap-3">
+        <ProgressBar value={seen.size / cards.length} height={12} color="rgb(var(--good))" />
+        <span className="shrink-0 text-sm font-bold text-muted">
+          {seen.size}/{cards.length}
         </span>
-        <span className="flex gap-1">
-          <button className="grid h-9 w-9 place-items-center rounded-xl hover:bg-surface-2" aria-label="Read aloud" onClick={() => speak(plain(flipped ? card.back : card.front))}>
-            <Volume2 className="h-4 w-4" />
-          </button>
-          <button
-            className="grid h-9 w-9 place-items-center rounded-xl hover:bg-surface-2"
-            aria-label="Shuffle"
-            onClick={() => {
-              setOrder((o) => [...o].sort(() => Math.random() - 0.5));
-              setPos(0);
-              setFlipped(false);
-            }}
-          >
-            <Shuffle className="h-4 w-4" />
-          </button>
-        </span>
+        <button className="grid h-9 w-9 shrink-0 place-items-center rounded-xl text-muted hover:bg-surface-2" aria-label="Read aloud" onClick={() => speak(plain(flipped ? card.back : card.front))}>
+          <Volume2 className="h-5 w-5" />
+        </button>
+        <button
+          className="grid h-9 w-9 shrink-0 place-items-center rounded-xl text-muted hover:bg-surface-2"
+          aria-label="Shuffle"
+          onClick={() => {
+            setOrder((o) => [...o].sort(() => Math.random() - 0.5));
+            setPos(0);
+            setFlipped(false);
+          }}
+        >
+          <Shuffle className="h-5 w-5" />
+        </button>
       </div>
-      <FlipCard card={card} flipped={flipped} onFlip={flip} kids={kids} />
-      <div className="mt-5 flex items-center justify-center gap-3">
+      <FlipCard card={card} flipped={flipped} onFlip={flip} kids={kids} footer={`Card ${pos + 1} of ${cards.length} · tap to flip`} />
+      <div className="mt-6 flex items-center justify-center gap-3">
         <button className="btn-ghost h-12 w-12 !p-0" onClick={() => go(-1)} aria-label="Previous card">
           <ChevronLeft className="h-5 w-5" />
         </button>
-        <button className="btn-primary h-12 px-6" onClick={flip}>
+        <button className="btn-primary h-12 px-8" onClick={flip}>
           <RotateCw className="h-4 w-4" /> Flip
         </button>
         <button className="btn-ghost h-12 w-12 !p-0" onClick={() => go(1)} aria-label="Next card">
           <ChevronRight className="h-5 w-5" />
         </button>
       </div>
-      <p className="mt-4 text-center text-xs text-muted">Finish the lesson to add these cards to your spaced-repetition review deck.</p>
+      <p className="mt-5 text-center text-sm font-semibold text-muted">Completed lessons add their cards to your Practice review deck.</p>
     </div>
   );
 }

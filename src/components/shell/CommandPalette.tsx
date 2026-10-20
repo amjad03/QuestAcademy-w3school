@@ -7,13 +7,16 @@ import { CornerDownLeft, Search } from "lucide-react";
 import clsx from "clsx";
 import { useUi } from "@/lib/ui";
 import type { SearchItem } from "@/content";
-import { worldById, worlds } from "@/content/worlds";
+import { worldById } from "@/content/worlds";
+import { CourseIcon } from "@/components/brand/CourseIcon";
+import { LogoMark } from "@/components/brand/Mascot";
 
 const QUICK: SearchItem[] = [
-  ...worlds.map((w) => ({ kind: "subject" as const, title: w.name, subtitle: w.tagline, href: w.href, icon: w.emoji, world: w.id, keywords: "" })),
-  { kind: "subject", title: "Code playground", subtitle: "HTML · CSS · JS · Python · SQL", href: "/code/playground", icon: "🧪", world: "code", keywords: "" },
-  { kind: "subject", title: "Mock tests", subtitle: "NEET & JEE CBT simulator", href: "/exam/mock", icon: "⏱️", world: "exam", keywords: "" },
-  { kind: "subject", title: "Formula vault", subtitle: "Every formula, one place", href: "/exam/formulas", icon: "📜", world: "exam", keywords: "" },
+  { kind: "subject", title: "Learn", subtitle: "Your path", href: "/learn", icon: "", world: "school", course: "", keywords: "" },
+  { kind: "subject", title: "All courses", subtitle: "Browse every course", href: "/courses", icon: "", world: "school", course: "", keywords: "" },
+  { kind: "subject", title: "Practice", subtitle: "Spaced review & weak skills", href: "/practice", icon: "", world: "school", course: "", keywords: "" },
+  { kind: "subject", title: "Exam prep", subtitle: "NEET & JEE mock tests and drills", href: "/exam", icon: "", world: "exam", course: "", keywords: "" },
+  { kind: "subject", title: "Code lab", subtitle: "HTML · CSS · JS · Python · SQL playground", href: "/code/playground", icon: "", world: "code", course: "", keywords: "" },
 ];
 
 function score(item: SearchItem, terms: string[]) {
@@ -76,7 +79,7 @@ export function CommandPalette() {
     <AnimatePresence>
       {open && (
         <motion.div
-          className="fixed inset-0 z-[80] flex items-start justify-center bg-black/40 p-4 pt-[12vh] backdrop-blur-sm"
+          className="fixed inset-0 z-[80] flex items-start justify-center bg-ink/40 p-4 pt-[12vh]"
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
@@ -86,12 +89,12 @@ export function CommandPalette() {
             initial={{ y: -12, scale: 0.98 }}
             animate={{ y: 0, scale: 1 }}
             exit={{ y: -12, scale: 0.98 }}
-            className="card w-full max-w-xl overflow-hidden"
+            className="card w-full max-w-xl overflow-hidden shadow-lift"
             onClick={(e) => e.stopPropagation()}
             role="dialog"
             aria-label="Search"
           >
-            <div className="flex items-center gap-3 border-b border-line px-4">
+            <div className="flex items-center gap-3 border-b-2 border-line px-4">
               <Search className="h-5 w-5 text-muted" />
               <input
                 ref={inputRef}
@@ -109,26 +112,26 @@ export function CommandPalette() {
                   }
                   if (e.key === "Enter") go(results[active]);
                 }}
-                placeholder="Search lessons, topics, subjects…  try “flexbox”, “photosynthesis”, “NPV”"
-                className="h-14 w-full bg-transparent text-base outline-none placeholder:text-muted"
+                placeholder="Search courses and lessons — try “flexbox” or “photosynthesis”"
+                className="h-14 w-full bg-transparent text-base font-bold outline-none placeholder:font-semibold placeholder:text-muted"
               />
               <kbd className="rounded-md border border-line px-1.5 py-0.5 font-mono text-[10px] text-muted">ESC</kbd>
             </div>
             <ul className="max-h-[50vh] overflow-y-auto p-2">
-              {!q && <li className="px-3 pb-1 pt-2 text-[11px] font-semibold uppercase tracking-wider text-muted">Jump to</li>}
+              {!q && <li className="eyebrow px-3 pb-1 pt-2">Jump to</li>}
               {results.map((r, i) => (
                 <li key={r.href + i}>
                   <button
                     onMouseEnter={() => setActive(i)}
                     onClick={() => go(r)}
-                    className={clsx("flex w-full items-center gap-3 rounded-2xl px-3 py-2.5 text-left transition", i === active ? "bg-accent/10" : "hover:bg-surface-2")}
+                    className={clsx("flex w-full items-center gap-3 rounded-2xl px-3 py-2.5 text-left transition", i === active ? "bg-accent-soft" : "hover:bg-surface-2")}
                   >
-                    <span className="grid h-9 w-9 shrink-0 place-items-center rounded-xl bg-surface-2 text-lg">{r.icon}</span>
+                    {r.course ? <CourseIcon slug={r.course} size={36} /> : <LogoMark size={36} />}
                     <span className="min-w-0 flex-1">
-                      <span className="block truncate font-medium">{r.title}</span>
-                      <span className="block truncate text-xs text-muted">{r.subtitle}</span>
+                      <span className="block truncate font-extrabold">{r.title}</span>
+                      <span className="block truncate text-xs font-semibold text-muted">{r.subtitle}</span>
                     </span>
-                    <span className="chip hidden sm:inline-flex">{r.kind === "subject" ? worldById[r.world].short : r.kind}</span>
+                    <span className="chip hidden capitalize sm:inline-flex">{r.kind === "subject" ? (r.course ? worldById[r.world].name : "Go to") : r.kind === "topic" ? "Unit" : "Lesson"}</span>
                     {i === active && <CornerDownLeft className="h-4 w-4 text-muted" />}
                   </button>
                 </li>

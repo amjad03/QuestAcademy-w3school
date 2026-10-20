@@ -3,7 +3,7 @@
 import Link from "next/link";
 import { useCallback, useEffect, useMemo, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
-import { AlertTriangle, ArrowLeft, Bookmark, ChevronLeft, ChevronRight, Clock, Eraser, Flag, LayoutGrid, X } from "lucide-react";
+import { AlertTriangle, ArrowLeft, Atom, Bookmark, ChevronLeft, ChevronRight, Clock, Dna, Eraser, Flag, FlaskConical, LayoutGrid, Pi, Stethoscope, Timer, Wrench, X, type LucideIcon } from "lucide-react";
 import clsx from "clsx";
 import type { ExamQuestion, ExamSubject } from "@/content/types";
 import { Md, MdInline } from "@/components/Md";
@@ -25,6 +25,16 @@ interface Session {
 }
 
 const KEY = (id: string) => `qa-cbt:${id}`;
+
+const SUBJECT_ICON: Record<ExamSubject, LucideIcon> = { physics: Atom, chemistry: FlaskConical, biology: Dna, maths: Pi };
+const MOCK_ICON: Record<string, { icon: LucideIcon; color: string }> = {
+  "neet-full": { icon: Stethoscope, color: "#2EBE70" },
+  "jee-main": { icon: Wrench, color: "#2F6BFF" },
+  "physics-sprint": { icon: Atom, color: "#1CB0F6" },
+  "chemistry-sprint": { icon: FlaskConical, color: "#14B8A6" },
+  "biology-sprint": { icon: Dna, color: "#2EBE70" },
+  "maths-sprint": { icon: Pi, color: "#7C4DFF" },
+};
 
 export function CbtExam({ test, pool }: { test: MockTest; pool: ExamQuestion[] }) {
   const hydrated = useHydrated();
@@ -168,62 +178,81 @@ export function CbtExam({ test, pool }: { test: MockTest; pool: ExamQuestion[] }
     return c;
   }, [questions, session]); // eslint-disable-line react-hooks/exhaustive-deps
 
-  if (!hydrated) return <div data-world="exam" className="min-h-screen bg-bg" />;
+  if (!hydrated) return <div className="min-h-screen bg-bg" />;
+
+  const meta = MOCK_ICON[test.id] ?? { icon: Timer, color: "#2F6BFF" };
+  const TestIcon = meta.icon;
 
   /* ---------------- INTRO ---------------- */
   if (phase === "intro") {
     const total = test.sections.reduce((a, s) => a + s.count, 0);
     return (
-      <div data-world="exam" className="min-h-screen bg-bg text-ink">
-        <div className="mx-auto max-w-3xl px-4 py-10">
-          <Link href="/exam/mock" className="flex items-center gap-1 text-sm text-muted hover:text-ink">
+      <div className="min-h-screen bg-bg text-ink">
+        <div className="mx-auto max-w-3xl px-5 py-8">
+          <Link href="/exam/mock" className="flex items-center gap-1 text-sm font-extrabold uppercase tracking-wide text-muted hover:text-accent">
             <ArrowLeft className="h-4 w-4" /> All mock tests
           </Link>
-          <div className="card mt-6 overflow-hidden">
-            <div className="border-b border-line bg-gradient-to-r from-accent/20 to-accent-2/10 p-8">
-              <div className="text-5xl">{test.emoji}</div>
-              <h1 className="mt-3 font-display text-3xl font-bold">{test.title}</h1>
-              <p className="mt-1 text-muted">{test.blurb}</p>
+          <div className="mt-8 flex items-center gap-5">
+            <span className="grid h-16 w-16 shrink-0 place-items-center rounded-2xl text-white" style={{ background: meta.color }}>
+              <TestIcon className="h-8 w-8" strokeWidth={2.5} />
+            </span>
+            <div className="min-w-0">
+              <p className="eyebrow">Mock test · {test.exam === "Mixed" ? "NEET · JEE" : test.exam}</p>
+              <h1 className="mt-1 text-3xl font-black">{test.title}</h1>
+              <p className="mt-1 font-semibold text-muted">{test.blurb}</p>
             </div>
-            <div className="grid gap-6 p-8 sm:grid-cols-3">
-              <Info label="Questions" value={String(total)} />
-              <Info label="Duration" value={`${test.minutes} min`} />
-              <Info label="Max marks" value={String(total * test.marking.correct)} />
+          </div>
+
+          <div className="mt-8 grid grid-cols-3 gap-3">
+            <Info label="Questions" value={String(total)} />
+            <Info label="Duration" value={`${test.minutes} min`} />
+            <Info label="Max marks" value={String(total * test.marking.correct)} />
+          </div>
+
+          <div className="card mt-6 p-6">
+            <h2 className="text-lg font-black">Instructions</h2>
+            <ul className="mt-3 space-y-2 font-semibold leading-7 text-muted">
+              <li>
+                <b className="text-ink">Sections:</b> {test.sections.map((s) => `${SUBJECT_META[s.subject].name} (${s.count})`).join(" · ")}
+              </li>
+              <li>
+                <b className="text-ink">Marking:</b> <span className="font-black text-good">+{test.marking.correct}</span> correct, <span className="font-black text-bad">{test.marking.wrong}</span> wrong MCQ,{" "}
+                {test.marking.numericWrong} wrong numerical, 0 unattempted.
+              </li>
+              <li>Use the palette to jump between questions. “Mark for review” flags a question to revisit — marked answers are still evaluated.</li>
+              <li>The timer keeps running if you refresh; your attempt is saved and resumes automatically. The test auto-submits at 00:00.</li>
+            </ul>
+            <div className="mt-5 grid grid-cols-2 gap-3 border-t-2 border-line pt-5 sm:grid-cols-3">
+              {(["unvisited", "unanswered", "answered", "marked", "answered-marked"] as Status[]).map((st) => (
+                <span key={st} className="flex items-center gap-2 text-sm font-bold text-muted">
+                  <PaletteDot status={st} /> {LEGEND[st]}
+                </span>
+              ))}
             </div>
-            <div className="space-y-4 border-t border-line p-8 text-sm leading-7">
-              <h2 className="font-semibold">Instructions</h2>
-              <ul className="list-disc space-y-1 pl-5 text-muted">
-                <li>Sections: {test.sections.map((s) => `${SUBJECT_META[s.subject].name} (${s.count})`).join(" · ")}.</li>
-                <li>
-                  Marking: <b className="text-good">+{test.marking.correct}</b> correct, <b className="text-bad">{test.marking.wrong}</b> wrong MCQ, {test.marking.numericWrong} wrong numerical, 0 unattempted.
-                </li>
-                <li>Use the palette to jump between questions. “Mark for review” flags a question to revisit — marked answers are still evaluated.</li>
-                <li>The timer runs even if you refresh — your attempt is saved and resumes automatically. The test auto-submits at 00:00.</li>
-              </ul>
-              <div className="grid grid-cols-2 gap-2 pt-2 sm:grid-cols-5">
-                {(["unvisited", "unanswered", "answered", "marked", "answered-marked"] as Status[]).map((s) => (
-                  <span key={s} className="flex items-center gap-2 text-xs text-muted">
-                    <PaletteDot status={s} /> {LEGEND[s]}
-                  </span>
-                ))}
-              </div>
-            </div>
-            <div className="flex flex-wrap gap-3 border-t border-line p-8">
-              {session ? (
-                <>
-                  <button className="btn-primary px-8" onClick={() => start(true)}>
-                    Resume attempt ({Math.floor(remaining / 60)} min left)
-                  </button>
-                  <button className="btn-ghost" onClick={() => { localStorage.removeItem(KEY(test.id)); setSession(null); start(false); }}>
-                    Start fresh
-                  </button>
-                </>
-              ) : (
-                <button className="btn-primary px-10 py-3 text-base" onClick={() => start(false)}>
-                  I’m ready — begin test
+          </div>
+
+          <div className="mt-8 flex flex-col gap-3 sm:flex-row">
+            {session ? (
+              <>
+                <button className="btn-primary sm:min-w-[240px]" onClick={() => start(true)}>
+                  Resume · {Math.floor(remaining / 60)} min left
                 </button>
-              )}
-            </div>
+                <button
+                  className="btn-ghost"
+                  onClick={() => {
+                    localStorage.removeItem(KEY(test.id));
+                    setSession(null);
+                    start(false);
+                  }}
+                >
+                  Start fresh
+                </button>
+              </>
+            ) : (
+              <button className="btn-primary sm:min-w-[240px]" onClick={() => start(false)}>
+                Begin test
+              </button>
+            )}
           </div>
         </div>
       </div>
@@ -232,7 +261,18 @@ export function CbtExam({ test, pool }: { test: MockTest; pool: ExamQuestion[] }
 
   /* ---------------- RESULT ---------------- */
   if (phase === "result" && result) {
-    return <MockReport test={test} result={result} questions={questions} onRetry={() => { setResult(null); setSession(null); setPhase("intro"); }} />;
+    return (
+      <MockReport
+        test={test}
+        result={result}
+        questions={questions}
+        onRetry={() => {
+          setResult(null);
+          setSession(null);
+          setPhase("intro");
+        }}
+      />
+    );
   }
 
   if (!session || !current) return null;
@@ -245,33 +285,45 @@ export function CbtExam({ test, pool }: { test: MockTest; pool: ExamQuestion[] }
 
   const palette = (
     <div className="flex h-full flex-col">
-      <div className="grid grid-cols-2 gap-2 border-b border-line p-4 text-xs">
-        {(["answered", "unanswered", "unvisited", "marked", "answered-marked"] as Status[]).map((s) => (
-          <span key={s} className="flex items-center gap-2 text-muted">
-            <PaletteDot status={s} label={String(counts[s])} /> {LEGEND[s]}
+      <div className="grid grid-cols-2 gap-2.5 border-b-2 border-line p-4 text-xs">
+        {(["answered", "unanswered", "unvisited", "marked", "answered-marked"] as Status[]).map((st) => (
+          <span key={st} className="flex items-center gap-2 font-bold text-muted">
+            <PaletteDot status={st} label={String(counts[st])} /> {LEGEND[st]}
           </span>
         ))}
       </div>
-      <div className="flex-1 space-y-4 overflow-y-auto p-4">
-        {sections.map((sub) => (
-          <div key={sub}>
-            <div className="mb-2 text-xs font-bold uppercase tracking-wider text-muted">
-              {SUBJECT_META[sub].emoji} {SUBJECT_META[sub].name}
+      <div className="flex-1 space-y-5 overflow-y-auto p-4">
+        {sections.map((sub) => {
+          const I = SUBJECT_ICON[sub];
+          return (
+            <div key={sub}>
+              <div className="mb-2 flex items-center gap-2 text-xs font-extrabold uppercase tracking-wider text-muted">
+                <I className="h-4 w-4" style={{ color: SUBJECT_META[sub].color }} /> {SUBJECT_META[sub].name}
+              </div>
+              <div className="grid grid-cols-6 gap-2">
+                {questions.map((q, i) =>
+                  q.subject !== sub ? null : (
+                    <button
+                      key={q.id}
+                      onClick={() => {
+                        commitDraft();
+                        go(i);
+                        setPaletteOpen(false);
+                      }}
+                      className={clsx("rounded-lg", i === session.current && "ring-2 ring-ink ring-offset-2 ring-offset-surface")}
+                      aria-label={`Question ${i + 1}: ${LEGEND[statusOf(q.id)]}`}
+                    >
+                      <PaletteDot status={statusOf(q.id)} label={String(i + 1)} big />
+                    </button>
+                  ),
+                )}
+              </div>
             </div>
-            <div className="grid grid-cols-6 gap-2">
-              {questions.map((q, i) =>
-                q.subject !== sub ? null : (
-                  <button key={q.id} onClick={() => { commitDraft(); go(i); setPaletteOpen(false); }} className={clsx("rounded-lg", i === session.current && "ring-2 ring-accent ring-offset-2 ring-offset-surface")}>
-                    <PaletteDot status={statusOf(q.id)} label={String(i + 1)} big />
-                  </button>
-                ),
-              )}
-            </div>
-          </div>
-        ))}
+          );
+        })}
       </div>
-      <div className="border-t border-line p-4">
-        <button className="btn w-full bg-good text-white hover:brightness-110" onClick={() => setConfirm(true)}>
+      <div className="border-t-2 border-line p-4">
+        <button className="btn-good w-full" onClick={() => setConfirm(true)}>
           <Flag className="h-4 w-4" /> Submit test
         </button>
       </div>
@@ -279,34 +331,51 @@ export function CbtExam({ test, pool }: { test: MockTest; pool: ExamQuestion[] }
   );
 
   return (
-    <div data-world="exam" className="fixed inset-0 z-50 flex flex-col bg-bg text-ink">
+    <div className="fixed inset-0 z-50 flex flex-col bg-bg text-ink">
       {/* top bar */}
-      <header className="flex items-center gap-3 border-b border-line bg-surface px-4 py-2.5">
-        <span className="text-2xl">{test.emoji}</span>
+      <header className="flex items-center gap-3 border-b-2 border-line bg-surface px-4 py-3">
+        <span className="grid h-10 w-10 shrink-0 place-items-center rounded-xl text-white" style={{ background: meta.color }}>
+          <TestIcon className="h-5 w-5" strokeWidth={2.5} />
+        </span>
         <div className="min-w-0">
-          <div className="truncate font-semibold">{test.title}</div>
-          <div className="text-xs text-muted">Quest Academy CBT</div>
+          <div className="truncate font-black">{test.title}</div>
+          <div className="text-xs font-bold text-muted">
+            Question {session.current + 1} of {questions.length}
+          </div>
         </div>
-        <div className={clsx("ml-auto flex items-center gap-2 rounded-xl px-3 py-1.5 font-mono text-lg font-bold", low ? "animate-pulse bg-bad/20 text-bad" : "bg-accent/15 text-accent")} aria-live="polite" aria-label="Time remaining">
+        <div
+          className={clsx("ml-auto flex items-center gap-2 rounded-xl border-2 px-3 py-1.5 font-mono text-lg font-black", low ? "animate-pulse border-bad bg-bad-soft text-bad" : "border-line bg-surface-2 text-ink")}
+          aria-live="polite"
+          aria-label="Time remaining"
+        >
           <Clock className="h-4 w-4" />
           {String(Math.floor(remaining / 3600)).padStart(2, "0")}:{String(Math.floor((remaining % 3600) / 60)).padStart(2, "0")}:{String(remaining % 60).padStart(2, "0")}
         </div>
-        <button className="grid h-10 w-10 place-items-center rounded-xl border border-line lg:hidden" onClick={() => setPaletteOpen(true)} aria-label="Question palette">
+        <button className="grid h-10 w-10 place-items-center rounded-xl border-2 border-line lg:hidden" onClick={() => setPaletteOpen(true)} aria-label="Question palette">
           <LayoutGrid className="h-5 w-5" />
         </button>
       </header>
 
       {/* section tabs */}
-      <div className="flex gap-1 overflow-x-auto border-b border-line bg-surface/60 px-4">
-        {sections.map((sub) => (
-          <button
-            key={sub}
-            onClick={() => { commitDraft(); go(sectionStart(sub)); }}
-            className={clsx("shrink-0 border-b-2 px-4 py-2.5 text-sm font-semibold transition", current.subject === sub ? "border-accent text-accent" : "border-transparent text-muted hover:text-ink")}
-          >
-            {SUBJECT_META[sub].emoji} {SUBJECT_META[sub].name}
-          </button>
-        ))}
+      <div className="flex gap-1 overflow-x-auto border-b-2 border-line bg-surface px-4" role="tablist">
+        {sections.map((sub) => {
+          const I = SUBJECT_ICON[sub];
+          const active = current.subject === sub;
+          return (
+            <button
+              key={sub}
+              role="tab"
+              aria-selected={active}
+              onClick={() => {
+                commitDraft();
+                go(sectionStart(sub));
+              }}
+              className={clsx("-mb-[2px] flex shrink-0 items-center gap-2 border-b-4 px-4 py-3 text-sm font-extrabold uppercase tracking-wide transition", active ? "border-accent text-accent" : "border-transparent text-muted hover:text-ink")}
+            >
+              <I className="h-4 w-4" /> {SUBJECT_META[sub].name}
+            </button>
+          );
+        })}
       </div>
 
       <div className="flex min-h-0 flex-1">
@@ -314,69 +383,98 @@ export function CbtExam({ test, pool }: { test: MockTest; pool: ExamQuestion[] }
         <main className="flex min-w-0 flex-1 flex-col">
           <div className="flex-1 overflow-y-auto p-5 sm:p-8">
             <div className="mx-auto max-w-3xl">
-              <div className="flex flex-wrap items-center gap-2 text-sm">
-                <span className="rounded-lg bg-surface-2 px-2.5 py-1 font-bold">Q {session.current + 1}</span>
+              <div className="flex flex-wrap items-center gap-2">
+                <span className="rounded-lg bg-ink px-2.5 py-1 text-sm font-black text-bg">Q{session.current + 1}</span>
                 <span className="chip">{current.chapter}</span>
                 <span className="chip">{current.kind === "numeric" ? "Numerical value" : "Single correct"}</span>
-                <span className="chip !text-good">+{test.marking.correct}</span>
-                <span className="chip !text-bad">{current.kind === "numeric" ? test.marking.numericWrong : test.marking.wrong}</span>
+                <span className="chip !bg-good-soft !text-good-shade">+{test.marking.correct}</span>
+                <span className="chip !bg-bad-soft !text-bad-shade">{current.kind === "numeric" ? test.marking.numericWrong : test.marking.wrong}</span>
               </div>
-              <div className="mt-5 text-lg leading-8">
+              <div className="mt-6 text-xl font-bold leading-9">
                 <Md text={current.q} className="space-y-3" />
               </div>
-              <div className="mt-6">
+              <div className="mt-7">
                 {current.kind === "mcq" ? (
                   <div className="space-y-3">
                     {current.options.map((o, i) => (
                       <button
                         key={i}
                         onClick={() => setAnswer(i)}
-                        className={clsx("flex w-full items-center gap-3 rounded-2xl border-2 p-4 text-left transition", ans === i ? "border-accent bg-accent/10" : "border-line bg-surface hover:border-accent/40")}
+                        aria-pressed={ans === i}
+                        className={clsx(
+                          "flex w-full items-center gap-4 rounded-2xl border-2 border-b-4 p-4 text-left text-[17px] font-bold transition active:translate-y-[2px] active:border-b-2",
+                          ans === i ? "border-accent bg-accent-soft" : "border-line bg-surface hover:bg-surface-2",
+                        )}
                       >
-                        <span className={clsx("grid h-8 w-8 shrink-0 place-items-center rounded-full border-2 text-sm font-bold", ans === i ? "border-accent bg-accent text-black" : "border-line text-muted")}>
+                        <span className={clsx("grid h-8 w-8 shrink-0 place-items-center rounded-lg border-2 text-sm font-black", ans === i ? "border-accent bg-accent text-white" : "border-line text-muted")}>
                           {String.fromCharCode(65 + i)}
                         </span>
-                        <MdInline text={o} />
+                        <span className="min-w-0 flex-1">
+                          <MdInline text={o} />
+                        </span>
                       </button>
                     ))}
                   </div>
                 ) : (
                   <div>
-                    <label className="text-sm text-muted" htmlFor="num-answer">
+                    <label className="eyebrow" htmlFor="num-answer">
                       Enter your numerical answer{current.unit ? ` (${current.unit})` : ""}
                     </label>
-                    <input id="num-answer" value={draft} onChange={(e) => setDraft(e.target.value.replace(/[^0-9.\-]/g, ""))} onBlur={commitDraft} inputMode="decimal" className="input mt-2 h-14 max-w-xs font-mono text-2xl" placeholder="0" />
+                    <input
+                      id="num-answer"
+                      value={draft}
+                      onChange={(e) => setDraft(e.target.value.replace(/[^0-9.\-]/g, ""))}
+                      onBlur={commitDraft}
+                      inputMode="decimal"
+                      className="input mt-2 max-w-xs py-4 font-mono text-2xl"
+                      placeholder="0"
+                    />
                   </div>
                 )}
               </div>
             </div>
           </div>
           {/* action bar */}
-          <div className="flex flex-wrap items-center gap-2 border-t border-line bg-surface p-3">
-            <button className="btn-ghost" onClick={() => { commitDraft(); go(Math.max(0, session.current - 1)); }} disabled={session.current === 0}>
+          <div className="flex flex-wrap items-center gap-2 border-t-2 border-line bg-surface px-4 py-3">
+            <button
+              className="btn-ghost !px-4"
+              onClick={() => {
+                commitDraft();
+                go(Math.max(0, session.current - 1));
+              }}
+              disabled={session.current === 0}
+              aria-label="Previous question"
+            >
               <ChevronLeft className="h-4 w-4" /> <span className="hidden sm:inline">Previous</span>
             </button>
-            <button className="btn-ghost" onClick={() => { setAnswer(null); setDraft(""); }}>
+            <button
+              className="btn-ghost !px-4"
+              onClick={() => {
+                setAnswer(null);
+                setDraft("");
+              }}
+              aria-label="Clear response"
+            >
               <Eraser className="h-4 w-4" /> <span className="hidden sm:inline">Clear</span>
             </button>
-            <button className="btn border border-violet-500/50 bg-violet-500/15 text-violet-300 hover:bg-violet-500/25" onClick={() => saveNext(true)}>
-              <Bookmark className="h-4 w-4" /> <span className="hidden sm:inline">Mark for review &amp; next</span>
+            <button className="btn-purple !px-4" onClick={() => saveNext(true)} aria-label="Mark for review and next">
+              <Bookmark className="h-4 w-4" /> <span className="hidden sm:inline">Mark &amp; next</span>
             </button>
-            <button className="btn-primary ml-auto text-black" onClick={() => (session.current === questions.length - 1 ? (commitDraft(), setConfirm(true)) : saveNext(false))}>
+            <button className="btn-primary ml-auto" onClick={() => (session.current === questions.length - 1 ? (commitDraft(), setConfirm(true)) : saveNext(false))}>
               {session.current === questions.length - 1 ? "Save & submit" : "Save & next"} <ChevronRight className="h-4 w-4" />
             </button>
           </div>
         </main>
 
-        <aside className="hidden w-80 shrink-0 border-l border-line bg-surface lg:block">{palette}</aside>
+        <aside className="hidden w-80 shrink-0 border-l-2 border-line bg-surface lg:block">{palette}</aside>
       </div>
 
       {/* mobile palette */}
       <AnimatePresence>
         {paletteOpen && (
-          <motion.div className="fixed inset-0 z-[60] bg-black/60 lg:hidden" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} onClick={() => setPaletteOpen(false)}>
+          <motion.div className="fixed inset-0 z-[60] bg-ink/40 lg:hidden" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} onClick={() => setPaletteOpen(false)}>
             <motion.div className="absolute inset-y-0 right-0 w-[86%] max-w-sm bg-surface" initial={{ x: "100%" }} animate={{ x: 0 }} exit={{ x: "100%" }} onClick={(e) => e.stopPropagation()}>
-              <button className="absolute right-3 top-3 grid h-9 w-9 place-items-center rounded-xl hover:bg-surface-2" onClick={() => setPaletteOpen(false)} aria-label="Close">
+              <button className="absolute right-3 top-3 z-10 grid h-9 w-9 place-items-center rounded-xl hover:bg-surface-2" onClick={() => setPaletteOpen(false)} aria-label="Close">
                 <X className="h-5 w-5" />
               </button>
               {palette}
@@ -388,23 +486,25 @@ export function CbtExam({ test, pool }: { test: MockTest; pool: ExamQuestion[] }
       {/* submit confirm */}
       <AnimatePresence>
         {confirm && (
-          <motion.div className="fixed inset-0 z-[70] grid place-items-center bg-black/60 p-4" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}>
-            <motion.div className="card w-full max-w-md p-6" initial={{ scale: 0.9 }} animate={{ scale: 1 }} role="alertdialog" aria-modal="true">
+          <motion.div className="fixed inset-0 z-[70] grid place-items-center bg-ink/40 p-4" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}>
+            <motion.div className="w-full max-w-md rounded-3xl bg-surface p-7" initial={{ scale: 0.92 }} animate={{ scale: 1 }} role="alertdialog" aria-modal="true" aria-labelledby="submit-title">
               <div className="flex items-center gap-3">
-                <AlertTriangle className="h-6 w-6 text-accent" />
-                <h2 className="font-display text-xl font-bold">Submit your test?</h2>
+                <AlertTriangle className="h-6 w-6 text-warn-shade" />
+                <h2 id="submit-title" className="text-xl font-black">
+                  Submit your test?
+                </h2>
               </div>
-              <div className="mt-4 grid grid-cols-2 gap-2 text-sm">
+              <div className="mt-5 grid grid-cols-2 gap-2.5">
                 <Info label="Answered" value={String(counts.answered + counts["answered-marked"])} />
                 <Info label="Not answered" value={String(counts.unanswered + counts.unvisited + counts.marked)} />
                 <Info label="Marked" value={String(counts.marked + counts["answered-marked"])} />
                 <Info label="Time left" value={`${Math.floor(remaining / 60)}m ${remaining % 60}s`} />
               </div>
-              <div className="mt-6 flex justify-end gap-2">
-                <button className="btn-ghost" onClick={() => setConfirm(false)}>
+              <div className="mt-7 flex flex-col-reverse gap-2 sm:flex-row sm:justify-end">
+                <button className="btn-ghost" onClick={() => setConfirm(false)} autoFocus>
                   Keep going
                 </button>
-                <button className="btn bg-good text-white" onClick={submit}>
+                <button className="btn-good" onClick={submit}>
                   Submit
                 </button>
               </div>
@@ -428,26 +528,25 @@ function PaletteDot({ status, label, big }: { status: Status; label?: string; bi
   return (
     <span
       className={clsx(
-        "relative grid place-items-center font-bold",
-        big ? "h-10 w-full text-sm" : "h-6 w-6 text-[10px]",
-        status === "unvisited" && "rounded-lg border border-line bg-surface-2 text-muted",
+        "relative grid place-items-center font-black",
+        big ? "h-10 w-full text-sm" : "h-6 w-6 shrink-0 text-[10px]",
+        status === "unvisited" && "rounded-lg border-2 border-line bg-surface text-muted",
         status === "unanswered" && "rounded-b-xl rounded-t-md bg-bad text-white",
-        status === "answered" && "rounded-t-xl rounded-b-md bg-good text-black",
-        status === "marked" && "rounded-full bg-violet-500 text-white",
-        status === "answered-marked" && "rounded-full bg-violet-500 text-white",
+        status === "answered" && "rounded-t-xl rounded-b-md bg-good text-white",
+        (status === "marked" || status === "answered-marked") && "rounded-full bg-accent-2 text-white",
       )}
     >
       {label}
-      {status === "answered-marked" && <span className="absolute -bottom-0.5 -right-0.5 h-2.5 w-2.5 rounded-full border-2 border-surface bg-good" />}
+      {status === "answered-marked" && <span className="absolute -bottom-0.5 -right-0.5 h-3 w-3 rounded-full border-2 border-surface bg-good" />}
     </span>
   );
 }
 
 function Info({ label, value }: { label: string; value: string }) {
   return (
-    <div className="rounded-2xl bg-surface-2 p-3">
-      <div className="text-xs text-muted">{label}</div>
-      <div className="font-display text-xl font-bold">{value}</div>
+    <div className="rounded-2xl border-2 border-line bg-surface p-3.5">
+      <div className="text-xs font-extrabold uppercase tracking-wide text-muted">{label}</div>
+      <div className="mt-0.5 text-xl font-black">{value}</div>
     </div>
   );
 }

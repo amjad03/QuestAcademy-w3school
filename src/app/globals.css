@@ -3,110 +3,59 @@
 @tailwind utilities;
 
 /*
- * Design tokens. Values are space-separated RGB so Tailwind can apply alpha.
- * Each world overrides --accent/--accent-2 (and sometimes the surfaces) via
- * [data-world="..."] on a wrapper element.
+ * Quest Academy design tokens.
+ * Flat, bold and friendly: solid colours, 2px borders, chunky "3D" buttons
+ * (a darker bottom edge), one rounded typeface. No gradients, no glows.
+ * Values are space-separated RGB so Tailwind can apply alpha.
  */
 :root {
-  --bg: 248 247 252;
+  --bg: 255 255 255;
   --surface: 255 255 255;
-  --surface-2: 241 240 248;
-  --line: 226 224 238;
-  --ink: 23 20 43;
-  --muted: 104 100 130;
-  --accent: 124 58 237;
-  --accent-2: 236 72 153;
-  --good: 22 163 74;
-  --bad: 220 38 38;
-  --warn: 217 119 6;
+  --surface-2: 246 247 251;
+  --line: 229 232 240;
+  --ink: 28 35 51;
+  --muted: 107 115 133;
+
+  --accent: 47 107 255; /* Quest Blue */
+  --accent-shade: 30 80 214;
+  --accent-soft: 230 238 255;
+  --accent-2: 124 77 255; /* Mastery Purple */
+  --accent-2-shade: 94 53 217;
+  --good: 46 190 112; /* Leaf */
+  --good-shade: 31 155 88;
+  --good-soft: 224 247 234;
+  --bad: 255 75 75;
+  --bad-shade: 217 54 54;
+  --bad-soft: 255 231 231;
+  --warn: 255 184 0; /* Gold */
+  --warn-shade: 224 150 0;
+  --streak: 255 138 0;
   color-scheme: light;
 }
 
 .dark {
-  --bg: 11 10 20;
-  --surface: 20 18 34;
-  --surface-2: 30 27 48;
-  --line: 45 41 70;
-  --ink: 240 238 252;
-  --muted: 160 155 190;
-  --accent: 167 139 250;
-  --accent-2: 244 114 182;
-  --good: 74 222 128;
-  --bad: 248 113 113;
-  --warn: 251 191 36;
+  --bg: 16 21 33;
+  --surface: 22 28 43;
+  --surface-2: 30 37 55;
+  --line: 44 52 71;
+  --ink: 238 241 247;
+  --muted: 154 163 181;
+
+  --accent: 84 136 255;
+  --accent-shade: 47 107 255;
+  --accent-soft: 30 42 77;
+  --accent-2: 151 117 255;
+  --accent-2-shade: 124 77 255;
+  --good: 74 210 135;
+  --good-shade: 46 170 100;
+  --good-soft: 22 52 40;
+  --bad: 255 110 110;
+  --bad-shade: 217 70 70;
+  --bad-soft: 66 28 34;
+  --warn: 255 196 46;
+  --warn-shade: 224 160 0;
+  --streak: 255 150 30;
   color-scheme: dark;
-}
-
-/* ---------- World palettes ---------- */
-[data-world="kids"] {
-  --accent: 249 115 22;
-  --accent-2: 236 72 153;
-  --bg: 255 251 240;
-  --surface-2: 255 243 214;
-  --line: 253 224 160;
-}
-.dark [data-world="kids"] {
-  --accent: 251 146 60;
-  --accent-2: 244 114 182;
-  --bg: 26 18 12;
-  --surface: 38 27 18;
-  --surface-2: 52 37 24;
-  --line: 80 58 36;
-}
-
-[data-world="school"] {
-  --accent: 14 165 233;
-  --accent-2: 16 185 129;
-}
-.dark [data-world="school"] {
-  --accent: 56 189 248;
-  --accent-2: 52 211 153;
-}
-
-/* The exam arena is always dark and focused. */
-[data-world="exam"] {
-  --bg: 9 11 18;
-  --surface: 17 20 31;
-  --surface-2: 25 29 44;
-  --line: 40 46 66;
-  --ink: 236 240 250;
-  --muted: 140 150 178;
-  --accent: 245 158 11;
-  --accent-2: 239 68 68;
-  --good: 52 211 153;
-  --bad: 248 113 113;
-  color-scheme: dark;
-}
-
-/* The code lab is always dark with neon. */
-[data-world="code"] {
-  --bg: 8 10 16;
-  --surface: 14 17 26;
-  --surface-2: 21 25 38;
-  --line: 36 42 60;
-  --ink: 226 232 240;
-  --muted: 130 140 165;
-  --accent: 34 211 238;
-  --accent-2: 163 230 53;
-  --good: 74 222 128;
-  --bad: 248 113 113;
-  color-scheme: dark;
-}
-
-[data-world="campus"] {
-  --accent: 79 70 229;
-  --accent-2: 192 38 211;
-  --bg: 250 249 246;
-  --surface-2: 243 241 236;
-  --line: 228 225 216;
-}
-.dark [data-world="campus"] {
-  --accent: 129 140 248;
-  --accent-2: 232 121 249;
-  --bg: 14 13 20;
-  --surface: 22 21 31;
-  --surface-2: 32 30 44;
-  --line: 50 47 66;
 }
 
 html,
@@ -116,69 +65,99 @@ body {
 }
 
 body {
-  font-feature-settings: "ss01", "cv11";
   -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
 ::selection {
-  background: rgb(var(--accent) / 0.3);
+  background: rgb(var(--accent) / 0.25);
+}
+
+:focus-visible {
+  outline: 3px solid rgb(var(--accent) / 0.5);
+  outline-offset: 2px;
 }
 
 @layer components {
+  /* ---------- surfaces ---------- */
   .card {
-    @apply rounded-3xl border border-line bg-surface shadow-soft;
+    @apply rounded-2xl border-2 border-line bg-surface;
   }
+  .tile {
+    @apply rounded-2xl border-2 border-b-4 border-line bg-surface transition hover:bg-surface-2 active:translate-y-[2px] active:border-b-2;
+  }
+
+  /* ---------- buttons: chunky, flat, uppercase ---------- */
   .btn {
-    @apply inline-flex select-none items-center justify-center gap-2 rounded-2xl px-5 py-2.5 text-sm font-semibold transition active:translate-y-[1px] disabled:pointer-events-none disabled:opacity-50;
+    @apply relative inline-flex select-none items-center justify-center gap-2 whitespace-nowrap rounded-2xl border-b-4 px-5 py-2.5 text-[15px] font-extrabold uppercase tracking-wide transition-[filter,transform] duration-75 active:translate-y-[2px] active:border-b-2 disabled:pointer-events-none disabled:border-b-4;
   }
   .btn-primary {
-    @apply btn bg-accent text-white shadow-glow hover:brightness-110;
-  }
-  .btn-ghost {
-    @apply btn border border-line bg-surface text-ink hover:bg-surface-2;
+    @apply btn border-accent-shade bg-accent text-white hover:brightness-105 disabled:border-line disabled:bg-line disabled:text-muted;
   }
   .btn-pop {
-    @apply btn bg-accent text-white shadow-[0_5px_0_0_rgb(0_0_0/0.2)] hover:brightness-110 active:translate-y-[4px] active:shadow-[0_1px_0_0_rgb(0_0_0/0.2)];
+    @apply btn-primary;
   }
+  .btn-good {
+    @apply btn border-good-shade bg-good text-white hover:brightness-105 disabled:border-line disabled:bg-line disabled:text-muted;
+  }
+  .btn-bad {
+    @apply btn border-bad-shade bg-bad text-white hover:brightness-105;
+  }
+  .btn-gold {
+    @apply btn border-warn-shade bg-warn text-[#4a3500] hover:brightness-105;
+  }
+  .btn-purple {
+    @apply btn border-accent-2-shade bg-accent-2 text-white hover:brightness-105;
+  }
+  .btn-ghost {
+    @apply btn border-2 border-b-4 border-line bg-surface text-accent hover:bg-surface-2 disabled:text-muted;
+  }
+  .btn-flat {
+    @apply inline-flex items-center justify-center gap-2 rounded-xl px-3 py-2 text-sm font-extrabold uppercase tracking-wide text-accent transition hover:bg-accent-soft;
+  }
+
   .chip {
-    @apply inline-flex items-center gap-1 rounded-full border border-line bg-surface-2 px-2.5 py-0.5 text-xs font-medium text-muted;
+    @apply inline-flex items-center gap-1 rounded-lg bg-surface-2 px-2 py-0.5 text-xs font-bold text-muted;
   }
   .input {
-    @apply w-full rounded-2xl border border-line bg-surface px-4 py-2.5 text-ink outline-none transition placeholder:text-muted focus:border-accent focus:ring-4 focus:ring-accent/15;
+    @apply w-full rounded-2xl border-2 border-line bg-surface-2 px-4 py-3 font-semibold text-ink outline-none transition placeholder:font-medium placeholder:text-muted focus:border-accent focus:bg-surface;
+  }
+  .eyebrow {
+    @apply text-xs font-extrabold uppercase tracking-[0.12em] text-muted;
   }
   .text-gradient {
-    @apply bg-gradient-to-r from-accent to-accent-2 bg-clip-text text-transparent;
+    @apply text-accent;
   }
+
+  /* ---------- long-form reading ---------- */
+  .prose-quest {
+    @apply text-[1.05rem] font-medium leading-8 text-ink/90;
+  }
+  .prose-quest code {
+    @apply rounded-md bg-surface-2 px-1.5 py-0.5 font-mono text-[0.86em] font-semibold text-accent-shade dark:text-accent;
+  }
+  .prose-quest a {
+    @apply font-bold text-accent underline decoration-2 underline-offset-4;
+  }
+  .prose-quest strong {
+    @apply font-extrabold text-ink;
+  }
+
   .grid-bg {
-    background-image: linear-gradient(rgb(var(--line) / 0.5) 1px, transparent 1px),
-      linear-gradient(90deg, rgb(var(--line) / 0.5) 1px, transparent 1px);
+    background-image: linear-gradient(rgb(var(--line) / 0.6) 1px, transparent 1px), linear-gradient(90deg, rgb(var(--line) / 0.6) 1px, transparent 1px);
     background-size: 32px 32px;
   }
   .dot-bg {
     background-image: radial-gradient(rgb(var(--line)) 1.2px, transparent 1.2px);
     background-size: 22px 22px;
   }
-  .prose-quest {
-    @apply text-[1.02rem] leading-8 text-ink/90;
-  }
-  .prose-quest code {
-    @apply rounded-md bg-surface-2 px-1.5 py-0.5 font-mono text-[0.88em] text-accent;
-  }
-  .prose-quest a {
-    @apply font-medium text-accent underline decoration-accent/40 underline-offset-4 hover:decoration-accent;
-  }
-  .prose-quest strong {
-    @apply font-semibold text-ink;
-  }
 }
 
-/* Scrollbars */
 * {
   scrollbar-width: thin;
   scrollbar-color: rgb(var(--line)) transparent;
 }
 
-/* KaTeX tweaks */
 .katex-display {
   margin: 0 !important;
   overflow-x: auto;
@@ -186,7 +165,6 @@ body {
   padding: 0.25rem 0;
 }
 
-/* CodeMirror */
 .cm-editor {
   height: 100%;
   font-size: 14px;
