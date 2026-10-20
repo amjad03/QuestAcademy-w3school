@@ -2,11 +2,13 @@
 
 import Link from "next/link";
 import { useMemo, useState } from "react";
-import { Eye, EyeOff, Search } from "lucide-react";
+import { Atom, ChevronLeft, Dna, Eye, EyeOff, FlaskConical, Pi, ScrollText, Search, type LucideIcon } from "lucide-react";
 import clsx from "clsx";
 import type { ExamSubject, FormulaSheet } from "@/content/types";
 import { SUBJECT_META } from "@/lib/exam";
 import { MdInline } from "@/components/Md";
+
+const SUBJECT_ICON: Record<ExamSubject, LucideIcon> = { physics: Atom, chemistry: FlaskConical, biology: Dna, maths: Pi };
 
 type Sheet = Omit<FormulaSheet, "items"> & { items: (FormulaSheet["items"][number] & { html: string })[] };
 

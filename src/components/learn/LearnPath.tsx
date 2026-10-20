@@ -117,9 +117,9 @@ export function LearnPath({ outline }: { outline: CourseOutline }) {
                 const mascotHere = ni === 2 || (ni === 6 && nodes.length > 8);
                 const chestUnlocked = nodes.slice(0, ni).every((x) => x.kind !== "lesson" || lessonProgress(s, x.lesson).complete);
                 return (
-                  <div key={n.key} className="relative" style={{ transform: `translateX(${off}px)` }} ref={n.kind === "lesson" && n.lesson.id === currentId ? currentRef : undefined}>
+                  <div key={n.key} className="relative" style={{ transform: `translateX(${off}px)`, zIndex: open === n.key ? 40 : 1 }} ref={n.kind === "lesson" && n.lesson.id === currentId ? currentRef : undefined}>
                     {mascotHere && (
-                      <div className="pointer-events-none absolute top-1/2 hidden -translate-y-1/2 sm:block" style={off <= 0 ? { left: 150 } : { right: 150 }}>
+                      <div className="pointer-events-none absolute top-1/2 -z-10 hidden -translate-y-1/2 sm:block" style={off <= 0 ? { left: 170 } : { right: 170 }}>
                         <Mascot pose={(["read", "think", "wave", "idle"] as MascotPose[])[(ui + ni) % 4]} size={110} />
                       </div>
                     )}
