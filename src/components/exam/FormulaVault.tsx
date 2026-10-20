@@ -26,53 +26,80 @@ export function FormulaVault({ sheets }: { sheets: Sheet[] }) {
   }, [sheets, subject, q]);
 
   return (
-    <div data-world="exam" className="min-h-screen bg-bg text-ink">
-      <div className="mx-auto max-w-6xl px-4 py-10 sm:px-6">
-        <Link href="/exam" className="text-sm text-muted hover:text-ink">
-          ← The Arena
-        </Link>
-        <h1 className="mt-4 font-display text-4xl font-bold">📜 Formula vault</h1>
-        <p className="mt-2 text-muted">Every must-know formula, chapter by chapter. Turn on self-test mode to hide them and recall from memory.</p>
-
-        <div className="sticky top-16 z-10 -mx-4 mt-6 flex flex-col gap-3 border-b border-line bg-bg/90 px-4 py-3 backdrop-blur sm:flex-row sm:items-center">
-          <div className="flex flex-wrap gap-2">
-            {(["all", ...subjects] as const).map((s) => (
-              <button key={s} onClick={() => setSubject(s)} className={clsx("rounded-full border px-4 py-1.5 text-sm font-medium", subject === s ? "border-accent bg-accent text-black" : "border-line text-muted hover:text-ink")}>
-                {s === "all" ? "All" : `${SUBJECT_META[s].emoji} ${SUBJECT_META[s].name}`}
-              </button>
-            ))}
-          </div>
-          <label className="relative sm:ml-auto sm:w-64">
-            <Search className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted" />
-            <input value={q} onChange={(e) => setQ(e.target.value)} placeholder="Search formulas…" className="input !py-2 pl-9" />
-          </label>
-          <button onClick={() => { setQuiz((x) => !x); setRevealed(new Set()); }} className={clsx("btn", quiz ? "bg-accent text-black" : "btn-ghost")}>
-            {quiz ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />} Self-test {quiz ? "on" : "off"}
-          </button>
+    <div className="mx-auto max-w-[1180px] px-4 py-8 sm:px-6">
+      <Link href="/exam" className="flex items-center gap-1 text-sm font-extrabold uppercase tracking-wide text-muted hover:text-accent">
+        <ChevronLeft className="h-4 w-4" /> Exam prep
+      </Link>
+      <div className="mt-4 flex items-center gap-4">
+        <span className="grid h-14 w-14 shrink-0 place-items-center rounded-2xl bg-accent-2 text-white">
+          <ScrollText className="h-7 w-7" strokeWidth={2.5} />
+        </span>
+        <div>
+          <h1 className="text-3xl font-black">Formula vault</h1>
+          <p className="mt-1 font-semibold text-muted">Every must-know formula, chapter by chapter. Turn on self-test to hide them and recall from memory.</p>
         </div>
+      </div>
 
-        <div className="mt-8 space-y-10">
-          {shown.map((s) => (
-            <section key={s.subject + s.chapter}>
-              <h2 className="mb-4 flex items-center gap-2 font-display text-xl font-bold">
-                <span>{SUBJECT_META[s.subject].emoji}</span> {s.chapter}
-                <span className="chip ml-2">{s.items.length}</span>
+      <div className="sticky top-[58px] z-10 -mx-4 mt-6 flex flex-col gap-3 border-b-2 border-line bg-bg px-4 py-3 sm:flex-row sm:items-center md:top-0">
+        <div className="flex flex-wrap gap-2">
+          {(["all", ...subjects] as const).map((sub) => {
+            const I = sub === "all" ? null : SUBJECT_ICON[sub];
+            return (
+              <button
+                key={sub}
+                onClick={() => setSubject(sub)}
+                aria-pressed={subject === sub}
+                className={clsx("flex items-center gap-1.5 rounded-xl border-2 border-b-4 px-3.5 py-1.5 text-sm font-extrabold transition", subject === sub ? "border-accent bg-accent-soft text-accent" : "border-line bg-surface text-muted hover:bg-surface-2")}
+              >
+                {I && <I className="h-4 w-4" />}
+                {sub === "all" ? "All" : SUBJECT_META[sub].name}
+              </button>
+            );
+          })}
+        </div>
+        <label className="relative sm:ml-auto sm:w-64">
+          <Search className="absolute left-4 top-1/2 h-4 w-4 -translate-y-1/2 text-muted" />
+          <input value={q} onChange={(e) => setQ(e.target.value)} placeholder="Search formulas" className="input !py-2 pl-10" aria-label="Search formulas" />
+        </label>
+        <button
+          onClick={() => {
+            setQuiz((x) => !x);
+            setRevealed(new Set());
+          }}
+          aria-pressed={quiz}
+          className={clsx(quiz ? "btn-purple" : "btn-ghost", "!py-2")}
+        >
+          {quiz ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />} Self-test {quiz ? "on" : "off"}
+        </button>
+      </div>
+
+      <div className="mt-8 space-y-10">
+        {shown.map((sh) => {
+          const I = SUBJECT_ICON[sh.subject];
+          return (
+            <section key={sh.subject + sh.chapter}>
+              <h2 className="mb-4 flex items-center gap-2 text-xl font-black">
+                <I className="h-5 w-5" style={{ color: SUBJECT_META[sh.subject].color }} strokeWidth={2.5} /> {sh.chapter}
+                <span className="chip ml-1">{sh.items.length}</span>
               </h2>
               <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
-                {s.items.map((i) => {
-                  const key = s.chapter + i.name;
+                {sh.items.map((i) => {
+                  const key = sh.chapter + i.name;
                   const hidden = quiz && !revealed.has(key);
                   return (
                     <button
                       key={key}
                       onClick={() => quiz && setRevealed((r) => new Set(r).add(key))}
-                      className={clsx("card flex flex-col p-4 text-left transition", quiz && "cursor-pointer hover:border-accent/50")}
+                      className={clsx("flex flex-col rounded-2xl border-2 border-b-4 border-line bg-surface p-4 text-left transition", quiz && "cursor-pointer hover:bg-surface-2")}
+                      aria-label={hidden ? `Reveal ${i.name}` : i.name}
                     >
-                      <span className="text-sm font-semibold">{i.name}</span>
-                      <span className={clsx("relative my-3 overflow-x-auto rounded-2xl bg-surface-2 px-3 py-4 text-center transition", hidden && "select-none blur-md")} dangerouslySetInnerHTML={{ __html: i.html }} />
-                      {hidden && <span className="-mt-14 mb-6 text-center text-xs font-bold text-accent">Tap to reveal</span>}
+                      <span className="text-sm font-extrabold">{i.name}</span>
+                      <span className="relative my-3 block">
+                        <span className={clsx("block overflow-x-auto rounded-xl bg-surface-2 px-3 py-4 text-center transition", hidden && "select-none blur-md")} dangerouslySetInnerHTML={{ __html: i.html }} />
+                        {hidden && <span className="absolute inset-0 grid place-items-center text-xs font-extrabold uppercase tracking-wide text-accent-2">Tap to reveal</span>}
+                      </span>
                       {i.note && (
-                        <span className="text-xs leading-5 text-muted">
+                        <span className="text-xs font-semibold leading-5 text-muted">
                           <MdInline text={i.note} />
                         </span>
                       )}
@@ -81,8 +108,9 @@ export function FormulaVault({ sheets }: { sheets: Sheet[] }) {
                 })}
               </div>
             </section>
-          ))}
-        </div>
+          );
+        })}
+        {shown.length === 0 && <p className="py-16 text-center font-bold text-muted">No formulas match “{q}”.</p>}
       </div>
     </div>
   );

@@ -2,17 +2,20 @@
 
 import Link from "next/link";
 import { useEffect, useMemo, useState } from "react";
-import { motion } from "framer-motion";
-import { ChevronDown, ChevronUp, Flame, Info } from "lucide-react";
+import { ChevronDown, ChevronUp, Info, ShieldHalf } from "lucide-react";
 import clsx from "clsx";
 import { useLearner } from "@/lib/store";
-import { LEAGUES, leagueFor, weekKey } from "@/lib/gamification";
+import { AVATARS, LEAGUES, leagueFor, weekKey } from "@/lib/gamification";
 import { fetchLeaderboard, type LeaderRow } from "@/lib/supabase";
 import { useAuth, useHydrated } from "@/components/providers";
 import { Avatar } from "@/components/shell/Avatar";
+import { PageColumns } from "@/components/shell/AppShell";
+import { QuestsCard, RailCard, RailFooter, SaveProgressCard } from "@/components/shell/RailCards";
 
 const NAMES = ["Aarav", "Sofia", "Kenji", "Amara", "Lucas", "Priya", "Noah", "Zara", "Mateo", "Ishaan", "Chloe", "Omar", "Ananya", "Leo", "Fatima", "Ethan", "Meera", "Yuki", "Diego", "Sara", "Arjun", "Nia", "Felix", "Riya", "Kai", "Elif", "Tomás", "Aditi"];
-const EMOJIS = ["🦊", "🐼", "🐯", "🦁", "🐨", "🐸", "🦄", "🐙", "🐧", "🦉", "🐲", "🤖", "👽", "🧙", "🚀"];
+const COLORS = AVATARS.map((a) => a.id);
+const PROMOTE = 5;
+const DEMOTE = 3;
 
 function rng(seed: string) {
   let h = 1779033703 ^ seed.length;
@@ -29,12 +32,11 @@ function practiceLeague(myXp: number, week: string): LeaderRow[] {
   const r = rng(week);
   const tier = leagueFor(myXp);
   const base = Math.max(40, tier.min + 60);
-  // progress through the week makes rivals' XP grow too
   const dow = ((new Date().getDay() + 6) % 7) + 1;
   return Array.from({ length: 19 }, (_, i) => ({
     id: `bot-${i}`,
     display_name: NAMES[Math.floor(r() * NAMES.length)] + " " + String.fromCharCode(65 + Math.floor(r() * 26)) + ".",
-    avatar: EMOJIS[Math.floor(r() * EMOJIS.length)],
+    avatar: COLORS[Math.floor(r() * COLORS.length)],
     weekly_xp: Math.round(base * (0.2 + r() * 1.6) * (dow / 7)),
     xp: 0,
     level: 1 + Math.floor(r() * 12),
@@ -54,98 +56,109 @@ export function Leaderboard() {
     if (user) void fetchLeaderboard().then(setRemote);
   }, [user]);
 
+  const meId = user?.id ?? "me";
   const rows = useMemo(() => {
-    const me: LeaderRow = { id: user?.id ?? "me", display_name: profile.name || "You", avatar: profile.avatar, weekly_xp: weekly, xp: 0, level: 0, streak };
+    const me: LeaderRow = { id: meId, display_name: profile.name || "You", avatar: profile.avatar, weekly_xp: weekly, xp: 0, level: 0, streak };
     const others = remote ? remote.filter((r) => r.id !== me.id) : practiceLeague(weekly, weekKey());
     return [...others, me].sort((a, b) => b.weekly_xp - a.weekly_xp);
-  }, [remote, weekly, profile, streak, user]);
+  }, [remote, weekly, profile, streak, meId]);
 
-  if (!hydrated) return <div className="mx-auto max-w-3xl px-4 py-12"><div className="h-96 animate-pulse rounded-4xl bg-surface-2" /></div>;
+  const rail = (
+    <>
+      <SaveProgressCard />
+      <RailCard title="How leagues work">
+        <ul className="space-y-2 text-sm font-semibold leading-6 text-muted">
+          <li>Earn XP from lessons, practice and tests to climb the board.</li>
+          <li>The top {PROMOTE} move up a league when the week ends on Sunday.</li>
+          <li>The bottom {DEMOTE} drop down a league.</li>
+        </ul>
+      </RailCard>
+      <QuestsCard limit={2} />
+      <RailFooter />
+    </>
+  );
+
+  if (!hydrated) return <PageColumns rail={rail}><div className="h-96 animate-pulse rounded-2xl bg-surface-2" /></PageColumns>;
 
   const league = leagueFor(weekly);
-  const myRank = rows.findIndex((r) => r.id === (user?.id ?? "me")) + 1;
   const end = new Date(weekKey() + "T00:00:00");
   end.setDate(end.getDate() + 7);
-  const daysLeft = Math.ceil((end.getTime() - Date.now()) / 86_400_000);
-  const top3 = rows.slice(0, 3);
+  const daysLeft = Math.max(1, Math.ceil((end.getTime() - Date.now()) / 86_400_000));
 
   return (
-    <div className="mx-auto max-w-3xl px-4 py-10 sm:px-6">
-      <div className="text-center">
-        <div className="flex justify-center gap-2 text-3xl">
-          {LEAGUES.map((l) => (
-            <span key={l.id} className={clsx("transition", l.id === league.id ? "scale-125" : "opacity-30 grayscale")} title={l.name}>
-              {l.emoji}
-            </span>
-          ))}
+    <PageColumns rail={rail}>
+      <div className="mx-auto max-w-[600px]">
+        {/* league shields */}
+        <div className="flex items-end justify-center gap-2 sm:gap-4">
+          {LEAGUES.map((l) => {
+            const current = l.id === league.id;
+            const reached = weekly >= l.min;
+            return (
+              <ShieldHalf
+                key={l.id}
+                className={clsx("shrink-0 transition", current ? "h-16 w-16" : "h-10 w-10")}
+                style={{ color: reached ? l.color : "rgb(var(--line))", fill: reached ? l.color : "rgb(var(--line))" }}
+                strokeWidth={1.4}
+                aria-label={l.name}
+              />
+            );
+          })}
         </div>
-        <h1 className="mt-4 font-display text-4xl font-bold">{league.name} League</h1>
-        <p className="mt-1 text-muted">
-          Top 5 get promoted · {daysLeft} day{daysLeft === 1 ? "" : "s"} left this week · you’re <b className="text-ink">#{myRank}</b>
+        <h1 className="mt-5 text-center text-3xl font-black">{league.name} League</h1>
+        <p className="mt-1 text-center font-bold text-muted">
+          Top {PROMOTE} advance to the next league · {daysLeft} day{daysLeft === 1 ? "" : "s"} left
         </p>
+
+        {!remote && (
+          <div className="mt-6 flex items-start gap-3 rounded-2xl bg-surface-2 p-4 text-sm font-semibold text-muted">
+            <Info className="mt-0.5 h-4 w-4 shrink-0" />
+            <span>
+              This is a practice league with simulated learners.{" "}
+              {enabled ? (
+                <>
+                  <Link href="/auth" className="font-extrabold text-accent">
+                    Sign in
+                  </Link>{" "}
+                  to compete with real learners.
+                </>
+              ) : (
+                "Connect Supabase (see README) to enable live leagues."
+              )}
+            </span>
+          </div>
+        )}
+
+        <ol className="mt-6">
+          {rows.map((r, i) => {
+            const me = r.id === meId;
+            const zone = i < PROMOTE ? "up" : i >= rows.length - DEMOTE ? "down" : null;
+            return (
+              <li key={r.id}>
+                {i === PROMOTE && <ZoneDivider label="Promotion zone" color="rgb(var(--good))" />}
+                {i === rows.length - DEMOTE && <ZoneDivider label="Demotion zone" color="rgb(var(--bad))" />}
+                <div className={clsx("flex items-center gap-4 rounded-2xl px-4 py-3", me && "bg-accent-soft")}>
+                  <span className={clsx("w-7 text-center text-lg font-black", i === 0 ? "text-[#E0A100]" : i === 1 ? "text-[#94A3B8]" : i === 2 ? "text-[#C2773A]" : zone === "up" ? "text-good" : zone === "down" ? "text-bad" : "text-muted")}>{i + 1}</span>
+                  <Avatar name={r.display_name} color={r.avatar} size={44} />
+                  <span className={clsx("min-w-0 flex-1 truncate text-[17px] font-extrabold", me && "text-accent")}>{me ? `${r.display_name} (you)` : r.display_name}</span>
+                  {zone === "up" && <ChevronUp className="h-5 w-5 shrink-0 text-good" aria-label="Promotion zone" />}
+                  {zone === "down" && <ChevronDown className="h-5 w-5 shrink-0 text-bad" aria-label="Demotion zone" />}
+                  <span className="w-20 shrink-0 text-right font-bold text-muted">{r.weekly_xp} XP</span>
+                </div>
+              </li>
+            );
+          })}
+        </ol>
       </div>
+    </PageColumns>
+  );
+}
 
-      {!remote && (
-        <div className="mt-6 flex items-start gap-3 rounded-2xl border border-line bg-surface-2/60 p-4 text-sm text-muted">
-          <Info className="mt-0.5 h-4 w-4 shrink-0" />
-          <span>
-            This is a <b>practice league</b> with simulated rivals.{" "}
-            {enabled ? (
-              <>
-                <Link href="/auth" className="font-semibold text-accent">
-                  Sign in
-                </Link>{" "}
-                to compete with real learners.
-              </>
-            ) : (
-              <>Connect Supabase (see README) to enable live leagues with real learners.</>
-            )}
-          </span>
-        </div>
-      )}
-
-      {/* podium */}
-      <div className="mt-10 grid grid-cols-3 items-end gap-3">
-        {[1, 0, 2].map((i) => {
-          const r = top3[i];
-          if (!r) return <div key={i} />;
-          const h = ["h-36", "h-28", "h-20"][i];
-          return (
-            <motion.div key={r.id} initial={{ y: 30, opacity: 0 }} animate={{ y: 0, opacity: 1 }} transition={{ delay: 0.1 * (3 - i) }} className="flex flex-col items-center">
-              <Avatar emoji={r.avatar} size={i === 0 ? 72 : 56} frame={i === 0 ? "gold" : "none"} />
-              <div className="mt-2 max-w-full truncate text-sm font-semibold">{r.display_name}</div>
-              <div className="font-mono text-xs text-muted">{r.weekly_xp} XP</div>
-              <div className={clsx("mt-2 flex w-full items-start justify-center rounded-t-2xl pt-2 text-2xl", h, i === 0 ? "bg-gradient-to-b from-amber-300 to-amber-500" : i === 1 ? "bg-gradient-to-b from-slate-200 to-slate-400" : "bg-gradient-to-b from-orange-300 to-orange-500")}>
-                {["🥇", "🥈", "🥉"][i]}
-              </div>
-            </motion.div>
-          );
-        })}
-      </div>
-
-      <ol className="card mt-0 divide-y divide-line overflow-hidden rounded-t-none">
-        {rows.map((r, i) => {
-          const me = r.id === (user?.id ?? "me");
-          const zone = i < 5 ? "up" : i >= rows.length - 3 ? "down" : null;
-          return (
-            <li key={r.id} className={clsx("flex items-center gap-3 px-4 py-3", me && "bg-accent/10")}>
-              <span className={clsx("w-7 text-center font-mono text-sm font-bold", i < 3 ? "text-amber-500" : "text-muted")}>{i + 1}</span>
-              <Avatar emoji={r.avatar} size={36} />
-              <span className="min-w-0 flex-1">
-                <span className={clsx("block truncate font-medium", me && "font-bold text-accent")}>{me ? `${r.display_name} (you)` : r.display_name}</span>
-                {r.streak > 0 && (
-                  <span className="flex items-center gap-1 text-[11px] text-muted">
-                    <Flame className="h-3 w-3 text-orange-500" /> {r.streak}-day streak
-                  </span>
-                )}
-              </span>
-              {zone === "up" && <ChevronUp className="h-4 w-4 text-good" aria-label="Promotion zone" />}
-              {zone === "down" && <ChevronDown className="h-4 w-4 text-bad" aria-label="Demotion zone" />}
-              <span className="w-20 text-right font-mono text-sm font-bold">{r.weekly_xp} XP</span>
-            </li>
-          );
-        })}
-      </ol>
+function ZoneDivider({ label, color }: { label: string; color: string }) {
+  return (
+    <div className="my-2 flex items-center gap-3 px-4 text-xs font-extrabold uppercase tracking-wide" style={{ color }}>
+      <span className="h-0.5 flex-1" style={{ background: color, opacity: 0.4 }} />
+      {label}
+      <span className="h-0.5 flex-1" style={{ background: color, opacity: 0.4 }} />
     </div>
   );
 }

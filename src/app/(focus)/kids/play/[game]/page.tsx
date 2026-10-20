@@ -9,7 +9,7 @@ export function generateStaticParams() {
 export async function generateMetadata({ params }: { params: Promise<{ game: string }> }) {
   const { game } = await params;
   const g = GAMES.find((x) => x.id === game);
-  return { title: g ? `${g.title} — Wonder Woods` : "Game" };
+  return { title: g ? `${g.title} · Learning games` : "Game" };
 }
 
 export default async function Page({ params }: { params: Promise<{ game: string }> }) {

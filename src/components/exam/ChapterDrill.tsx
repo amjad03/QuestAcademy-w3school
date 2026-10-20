@@ -4,16 +4,19 @@ import Link from "next/link";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useMemo, useState } from "react";
 import { motion } from "framer-motion";
-import { Gauge, RotateCcw } from "lucide-react";
+import { Atom, ChevronLeft, Crosshair, Dna, FlaskConical, Gauge, Pi, RotateCcw, type LucideIcon } from "lucide-react";
 import clsx from "clsx";
 import type { ExamQuestion, ExamSubject } from "@/content/types";
 import { SUBJECT_META } from "@/lib/exam";
 import { useLearner } from "@/lib/store";
 import { QuestionCard } from "@/components/learn/QuestionCard";
-import { ScoreRing } from "@/components/learn/Quiz";
+import { Mascot } from "@/components/brand/Mascot";
+import { ProgressRing } from "@/components/ui/Progress";
 import { burst } from "@/lib/confetti";
 
 const LENGTH = 8;
+
+const SUBJECT_ICON: Record<ExamSubject, LucideIcon> = { physics: Atom, chemistry: FlaskConical, biology: Dna, maths: Pi };
 
 /**
  * Adaptive drill: starts at medium difficulty, steps up after a correct answer
@@ -78,82 +81,94 @@ export function ChapterDrill({ pool }: { pool: ExamQuestion[] }) {
   const correct = results.filter(Boolean).length;
 
   return (
-    <div data-world="exam" className="min-h-screen bg-bg text-ink">
-      <div className="mx-auto grid max-w-6xl gap-6 px-4 py-10 sm:px-6 lg:grid-cols-[280px_1fr]">
-        <aside className="space-y-4">
-          <Link href="/exam" className="text-sm text-muted hover:text-ink">
-            ← The Arena
-          </Link>
-          {[...chapters.entries()].map(([sub, list]) => (
+    <div className="mx-auto grid max-w-[1180px] gap-8 px-4 py-8 sm:px-6 lg:grid-cols-[280px_1fr]">
+      <aside className="space-y-4">
+        <Link href="/exam" className="flex items-center gap-1 text-sm font-extrabold uppercase tracking-wide text-muted hover:text-accent">
+          <ChevronLeft className="h-4 w-4" /> Exam prep
+        </Link>
+        {[...chapters.entries()].map(([sub, list]) => {
+          const I = SUBJECT_ICON[sub];
+          return (
             <div key={sub} className="card p-4">
-              <div className="mb-2 font-semibold">
-                {SUBJECT_META[sub].emoji} {SUBJECT_META[sub].name}
+              <div className="mb-3 flex items-center gap-2 font-black">
+                <I className="h-4 w-4" style={{ color: SUBJECT_META[sub].color }} strokeWidth={2.5} /> {SUBJECT_META[sub].name}
               </div>
               <div className="flex flex-wrap gap-1.5">
-                {list.map((c) => (
-                  <button
-                    key={c}
-                    onClick={() => {
-                      router.push(`/exam/practice?subject=${sub}&chapter=${encodeURIComponent(c)}`);
-                      restart();
-                    }}
-                    className={clsx("rounded-lg border px-2 py-1 text-[11px] font-medium transition", c === chapter && sub === subject ? "border-accent bg-accent text-black" : "border-line text-muted hover:text-ink")}
-                  >
-                    {c}
-                  </button>
-                ))}
-              </div>
-            </div>
-          ))}
-        </aside>
-
-        <main>
-          {!chapter ? (
-            <div className="card grid min-h-[400px] place-items-center p-10 text-center">
-              <div>
-                <div className="text-6xl">🎯</div>
-                <h1 className="mt-4 font-display text-3xl font-bold">Pick a chapter to drill</h1>
-                <p className="mt-2 text-muted">Adaptive {LENGTH}-question sets that get harder as you get them right.</p>
-              </div>
-            </div>
-          ) : (
-            <div>
-              <div className="flex flex-wrap items-center gap-3">
-                <h1 className="font-display text-3xl font-bold">{chapter}</h1>
-                {subject && <span className="chip">{SUBJECT_META[subject].name}</span>}
-                <span className="chip ml-auto">
-                  <Gauge className="h-3.5 w-3.5" /> Difficulty: {["", "Easy", "Medium", "Hard"][level]}
-                </span>
-              </div>
-              <div className="mt-4 flex gap-1">
-                {Array.from({ length }, (_, i) => (
-                  <span key={i} className={clsx("h-2 flex-1 rounded-full", results[i] === true ? "bg-good" : results[i] === false ? "bg-bad" : i === results.length ? "bg-accent" : "bg-surface-2")} />
-                ))}
-              </div>
-              <div className="card mt-6 p-6 sm:p-8">
-                {done ? (
-                  <div className="py-6 text-center">
-                    <ScoreRing pct={correct / length} />
-                    <h2 className="mt-4 font-display text-2xl font-bold">{correct === length ? "Chapter crushed! 🔥" : correct / length >= 0.6 ? "Solid work." : "Keep drilling — this is where marks hide."}</h2>
-                    <p className="mt-1 text-muted">
-                      {correct}/{length} correct · {correct * 4 - (length - correct)} marks on the +4/−1 scale
-                    </p>
-                    <button className="btn-primary mt-6 text-black" onClick={restart}>
-                      <RotateCcw className="h-4 w-4" /> Another set
+                {list.map((c) => {
+                  const active = c === chapter && sub === subject;
+                  return (
+                    <button
+                      key={c}
+                      onClick={() => {
+                        router.push(`/exam/practice?subject=${sub}&chapter=${encodeURIComponent(c)}`);
+                        restart();
+                      }}
+                      aria-pressed={active}
+                      className={clsx("rounded-lg border-2 px-2 py-1 text-xs font-bold transition", active ? "border-accent bg-accent text-white" : "border-line text-muted hover:bg-surface-2 hover:text-ink")}
+                    >
+                      {c}
                     </button>
-                  </div>
-                ) : current ? (
-                  <motion.div key={`${run}-${current.id}`} initial={{ opacity: 0, x: 20 }} animate={{ opacity: 1, x: 0 }}>
-                    <QuestionCard question={current} onDone={answer} index={results.length} total={length} continueLabel={results.length + 1 < length ? "Next question" : "See results"} />
-                  </motion.div>
-                ) : (
-                  <p className="text-muted">No questions found for this chapter yet.</p>
-                )}
+                  );
+                })}
               </div>
             </div>
-          )}
-        </main>
-      </div>
+          );
+        })}
+      </aside>
+
+      <main className="min-w-0">
+        {!chapter ? (
+          <div className="card grid min-h-[420px] place-items-center p-10 text-center">
+            <div className="flex flex-col items-center">
+              <Mascot pose="think" size={120} />
+              <h1 className="mt-5 text-3xl font-black">Pick a chapter to drill</h1>
+              <p className="mt-2 max-w-sm font-semibold text-muted">Adaptive {LENGTH}-question sets that get harder as you get them right — and easier when you need a reset.</p>
+            </div>
+          </div>
+        ) : (
+          <div>
+            <div className="flex flex-wrap items-center gap-3">
+              <span className="grid h-11 w-11 place-items-center rounded-xl bg-accent text-white">
+                <Crosshair className="h-6 w-6" strokeWidth={2.5} />
+              </span>
+              <div className="min-w-0 flex-1">
+                {subject && <p className="eyebrow">{SUBJECT_META[subject].name} · chapter drill</p>}
+                <h1 className="text-2xl font-black sm:text-3xl">{chapter}</h1>
+              </div>
+              <span className="chip !px-3 !py-1">
+                <Gauge className="h-3.5 w-3.5" /> {["", "Easy", "Medium", "Hard"][level]}
+              </span>
+            </div>
+            <div className="mt-5 flex gap-1.5" aria-label={`${results.length} of ${length} answered`}>
+              {Array.from({ length }, (_, i) => (
+                <span key={i} className={clsx("h-3 flex-1 rounded-full", results[i] === true ? "bg-good" : results[i] === false ? "bg-bad" : i === results.length ? "bg-accent" : "bg-line")} />
+              ))}
+            </div>
+            <div className="card mt-6 p-6 sm:p-8">
+              {done ? (
+                <div className="flex flex-col items-center py-6 text-center">
+                  <ProgressRing value={correct / length} size={130} stroke={11} color={correct / length >= 0.75 ? "rgb(var(--good))" : correct / length >= 0.5 ? "rgb(var(--accent))" : "rgb(var(--bad))"}>
+                    <span className="text-3xl font-black">{Math.round((correct / length) * 100)}%</span>
+                  </ProgressRing>
+                  <h2 className="mt-5 text-2xl font-black">{correct === length ? "Chapter crushed!" : correct / length >= 0.6 ? "Solid work." : "Keep drilling — this is where marks hide."}</h2>
+                  <p className="mt-1 font-semibold text-muted">
+                    {correct}/{length} correct · {correct * 4 - (length - correct)} marks on the +4 / −1 scale
+                  </p>
+                  <button className="btn-primary mt-6" onClick={restart}>
+                    <RotateCcw className="h-4 w-4" /> Another set
+                  </button>
+                </div>
+              ) : current ? (
+                <motion.div key={`${run}-${current.id}`} initial={{ opacity: 0, x: 20 }} animate={{ opacity: 1, x: 0 }}>
+                  <QuestionCard question={current} onDone={answer} index={results.length} total={length} continueLabel={results.length + 1 < length ? "Next question" : "See results"} />
+                </motion.div>
+              ) : (
+                <p className="font-semibold text-muted">No questions for this chapter yet.</p>
+              )}
+            </div>
+          </div>
+        )}
+      </main>
     </div>
   );
 }

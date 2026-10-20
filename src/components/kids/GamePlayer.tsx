@@ -205,17 +205,20 @@ function BalloonPop({ onAnswer, locked }: { onAnswer: (ok: boolean) => void; loc
                 sfx("pop");
                 setPopped((p) => [...p, b.i]);
               }}
-              className="mx-auto h-20 w-16 rounded-[50%] shadow-lg"
-              style={{ background: `radial-gradient(circle at 30% 30%, #fff8, ${b.color} 45%)` }}
+              className="relative mx-auto h-20 w-16 rounded-[50%]"
+              style={{ background: b.color }}
               aria-label="Balloon"
-            />
+            >
+              <span className="absolute left-3 top-3 h-5 w-3 -rotate-12 rounded-full bg-white/45" />
+              <span className="absolute -bottom-1.5 left-1/2 h-3 w-3 -translate-x-1/2 rotate-45" style={{ background: b.color }} />
+            </motion.button>
           ),
         )}
       </div>
       <div className="mt-4 flex items-center justify-center gap-4">
-        <span className="text-3xl font-bold">Popped: {popped.length}</span>
-        <button className="btn-pop h-14 px-8 text-xl" disabled={locked || popped.length === 0} onClick={() => onAnswer(popped.length === target)}>
-          Done ✓
+        <span className="text-2xl font-black">Popped: {popped.length}</span>
+        <button className="btn-good h-14 px-8 text-lg" disabled={locked || popped.length === 0} onClick={() => onAnswer(popped.length === target)}>
+          Check
         </button>
       </div>
     </div>
@@ -234,7 +237,7 @@ function LetterHunt({ onAnswer, locked }: { onAnswer: (ok: boolean) => void; loc
   return (
     <div>
       <Prompt text="Which letter is this?" speech={`Find the letter ${target}. ${target} is for ${LETTER_WORDS[target]}.`} />
-      <p className="mt-3 text-center text-muted">Listen carefully, then tap it! (Hint: {LETTER_WORDS[target]})</p>
+      <p className="mt-3 text-center font-semibold text-muted">Listen carefully, then tap it! (Hint: {LETTER_WORDS[target]})</p>
       <div className="mx-auto mt-8 grid max-w-md grid-cols-3 gap-4">
         {options.map((l) => (
           <motion.button whileTap={{ scale: 0.9 }} key={l} disabled={locked} onClick={() => onAnswer(l === target)} className="aspect-square rounded-2xl border-2 border-b-4 border-line bg-surface transition hover:bg-surface-2 active:translate-y-[2px] active:border-b-2 text-6xl font-black">
@@ -272,7 +275,7 @@ function MemoryMatch({ onAnswer }: { onAnswer: (ok: boolean) => void }) {
   return (
     <div>
       <Prompt text="Find the matching pairs!" />
-      <p className="mt-2 text-center text-muted">Moves: {moves} · match all in 8 moves for a star</p>
+      <p className="mt-2 text-center font-semibold text-muted">Moves: {moves} · match all in 8 moves for a star</p>
       <div className="mx-auto mt-6 grid max-w-sm grid-cols-4 gap-3">
         {cards.map((c, i) => {
           const shown = open.includes(i) || found.includes(c);
@@ -285,10 +288,10 @@ function MemoryMatch({ onAnswer }: { onAnswer: (ok: boolean) => void }) {
                 setOpen((o) => [...o, i]);
               }}
               animate={{ rotateY: shown ? 0 : 180 }}
-              className={clsx("grid aspect-square place-items-center rounded-2xl text-4xl shadow-pop", shown ? "bg-surface-2" : "bg-gradient-to-br from-accent to-accent-2")}
+              className={clsx("grid aspect-square place-items-center rounded-2xl border-2 border-b-4 text-4xl", shown ? "border-line bg-surface" : "border-accent-shade bg-accent text-white")}
               aria-label={shown ? c : "Hidden card"}
             >
-              {shown ? c : "❔"}
+              {shown ? c : <span className="text-3xl font-black">?</span>}
             </motion.button>
           );
         })}
@@ -394,7 +397,7 @@ function OddOneOut({ onAnswer, locked }: { onAnswer: (ok: boolean) => void; lock
           </motion.button>
         ))}
       </div>
-      {locked && <p className="mt-4 text-center text-xl text-muted">The others are all {group}!</p>}
+      {locked && <p className="mt-4 text-center text-xl font-bold text-muted">The others are all {group}!</p>}
     </div>
   );
 }
