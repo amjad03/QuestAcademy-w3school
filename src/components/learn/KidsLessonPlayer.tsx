@@ -106,7 +106,7 @@ export function KidsLessonPlayer(p: LessonPayload) {
       <div className="dot-bg fixed inset-0 opacity-50" />
       <div className="relative mx-auto flex min-h-screen max-w-3xl flex-col px-4 pb-8 pt-4">
         {/* top bar: home, progress path, voice */}
-        <div className="flex items-center gap-3">
+        <div className="sticky top-16 z-30 -mx-4 flex items-center gap-3 bg-bg/90 px-4 py-2 backdrop-blur">
           <Link href={`/learn/${p.subject.slug}`} className="grid h-12 w-12 shrink-0 place-items-center rounded-2xl bg-surface shadow-pop" aria-label="Back to map">
             <Home className="h-6 w-6" />
           </Link>

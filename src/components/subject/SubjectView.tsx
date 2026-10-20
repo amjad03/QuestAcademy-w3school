@@ -214,7 +214,7 @@ function QuestMap({ subject, topics, done, nextId, kids }: { subject: CatalogSub
                     whileInView={{ opacity: 1, scale: 1 }}
                     viewport={{ once: true }}
                     transition={{ type: "spring", stiffness: 260, damping: 20, delay: li * 0.04 }}
-                    style={{ transform: `translateX(${offset}px)` }}
+                    style={{ x: offset }}
                     className="relative flex flex-col items-center"
                   >
                     {isNext && (

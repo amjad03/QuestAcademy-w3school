@@ -285,7 +285,7 @@ function Heatmap({ daily }: { daily: Record<string, { xp: number }> }) {
           {activeDays} active days · {total} XP
         </span>
       </div>
-      <div className="grid grid-flow-col grid-rows-7 gap-1 overflow-x-auto">
+      <div className="grid auto-cols-[14px] grid-flow-col grid-rows-7 gap-1 overflow-x-auto">
         {cells.map((c) => (
           <span
             key={c.k}

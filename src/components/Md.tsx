@@ -89,3 +89,13 @@ export function plain(text: string) {
     .replace(/\$([^$]+)\$/g, "$1")
     .replace(/\[([^\]]+)\]\([^)]+\)/g, "$1");
 }
+
+/** Shorten markdown without leaving an unclosed `$tex$`, `**bold**` or `code` span. */
+export function truncateMd(text: string, max: number) {
+  if (text.length <= max) return text;
+  let cut = text.slice(0, max).replace(/\s+\S*$/, "");
+  for (const mark of ["$", "`", "**"]) {
+    if (cut.split(mark).length % 2 === 0) cut = cut.slice(0, cut.lastIndexOf(mark));
+  }
+  return cut.trimEnd() + "…";
+}

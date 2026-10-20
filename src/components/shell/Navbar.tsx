@@ -25,10 +25,21 @@ export function Navbar() {
   const setSettings = useLearner((s) => s.setSettings);
   const setPalette = useUi((s) => s.setPalette);
   const [menu, setMenu] = useState(false);
+  const [world, setWorld] = useState<string | undefined>();
   const menuRef = useRef<HTMLDivElement>(null);
   const lvl = levelInfo(xp);
 
   useEffect(() => setMenu(false), [pathname]);
+  // Adopt the theme of the world the current page belongs to.
+  useEffect(() => {
+    const main = document.querySelector("main");
+    if (!main) return;
+    const read = () => setWorld(main.querySelector("[data-world]")?.getAttribute("data-world") ?? undefined);
+    read();
+    const obs = new MutationObserver(read);
+    obs.observe(main, { childList: true, subtree: true });
+    return () => obs.disconnect();
+  }, []);
   useEffect(() => {
     const onKey = (e: KeyboardEvent) => {
       if ((e.metaKey || e.ctrlKey) && e.key.toLowerCase() === "k") {
@@ -61,7 +72,7 @@ export function Navbar() {
   ];
 
   return (
-    <header className="sticky top-0 z-40 border-b border-line/70 bg-bg/75 backdrop-blur-xl">
+    <header data-world={world === "exam" || world === "code" ? world : undefined} className="sticky top-0 z-40 border-b border-line/70 bg-bg/90 text-ink backdrop-blur-xl">
       <div className="mx-auto flex h-16 max-w-7xl items-center gap-3 px-4 sm:px-6">
         <Logo />
 

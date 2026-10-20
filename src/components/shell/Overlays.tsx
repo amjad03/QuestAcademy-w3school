@@ -13,8 +13,12 @@ export function Overlays() {
   const dismiss = useUi((s) => s.dismissCelebration);
 
   useEffect(() => {
-    if (celebration) burst({ big: celebration.kind === "level" });
-  }, [celebration]);
+    if (!celebration) return;
+    burst({ big: celebration.kind === "level" });
+    const onKey = (e: KeyboardEvent) => e.key === "Escape" && dismiss();
+    window.addEventListener("keydown", onKey);
+    return () => window.removeEventListener("keydown", onKey);
+  }, [celebration, dismiss]);
 
   return (
     <>

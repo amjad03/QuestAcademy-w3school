@@ -7,7 +7,7 @@ import { useEffect, useMemo, useRef, useState } from "react";
 import clsx from "clsx";
 import { useLearner } from "@/lib/store";
 import { useUi } from "@/lib/ui";
-import { tex, MdInline } from "@/components/Md";
+import { tex, MdInline, truncateMd } from "@/components/Md";
 import { useHydrated } from "@/components/providers";
 import { Challenge } from "@/components/code/Challenge";
 import { BlockView } from "./Blocks";
@@ -130,7 +130,7 @@ export function LessonPlayer(p: LessonPayload) {
 
               {/* mode tabs */}
               {modes.length > 1 && (
-                <div className="sticky top-16 z-20 -mx-4 mt-6 border-b border-line bg-bg/85 px-4 backdrop-blur-xl sm:mx-0 sm:px-0">
+                <div className="sticky top-16 z-20 -mx-4 mt-6 border-b border-line bg-bg/95 px-4 backdrop-blur-xl sm:mx-0 sm:px-0">
                   <div className="flex gap-1 overflow-x-auto py-2" role="tablist">
                     {modes.map((m) => (
                       <button
@@ -239,7 +239,7 @@ export function LessonPlayer(p: LessonPayload) {
                         <div className="mb-3 text-xs font-bold uppercase tracking-wider text-accent">⚡ Formula quick-ref</div>
                         <div className="space-y-3">
                           {formulas.map((f, i) => (
-                            <div key={i} className="overflow-x-auto rounded-2xl bg-surface-2 p-3 text-sm" dangerouslySetInnerHTML={{ __html: tex(f.type === "formula" ? f.tex : "", false) }} />
+                            <div key={i} className="overflow-x-auto rounded-2xl bg-surface-2 px-3 py-1 text-[13px]" dangerouslySetInnerHTML={{ __html: tex(f.type === "formula" ? f.tex : "", true) }} />
                           ))}
                         </div>
                       </div>
@@ -248,11 +248,16 @@ export function LessonPlayer(p: LessonPayload) {
                       <div className="card p-4">
                         <div className="mb-3 text-xs font-bold uppercase tracking-wider text-accent">🎯 Exam insights</div>
                         <ul className="space-y-2 text-sm leading-6">
-                          {examTips.map((t, i) => (
-                            <li key={i}>
-                              <b>{t.type === "callout" && t.title}</b>
-                            </li>
-                          ))}
+                          {examTips.map((t, i) =>
+                            t.type === "callout" ? (
+                              <li key={i} className="rounded-2xl bg-surface-2 p-3">
+                                <b className="block text-accent">{t.title ?? "Exam insight"}</b>
+                                <span className="text-muted">
+                                  <MdInline text={truncateMd(t.md, 220)} />
+                                </span>
+                              </li>
+                            ) : null,
+                          )}
                         </ul>
                       </div>
                     )}

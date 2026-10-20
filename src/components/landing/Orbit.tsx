@@ -16,13 +16,11 @@ export function Orbit() {
       <div className="absolute inset-[38%] rounded-full bg-accent/10 blur-2xl" />
 
       {/* core */}
-      <motion.div
-        className="absolute left-1/2 top-1/2 grid h-[26%] w-[26%] -translate-x-1/2 -translate-y-1/2 place-items-center"
-        animate={{ rotate: [0, 6, -6, 0] }}
-        transition={{ duration: 8, repeat: Infinity, ease: "easeInOut" }}
-      >
-        <LogoMark className="h-full w-full drop-shadow-[0_20px_40px_rgb(124_58_237/0.45)]" />
-      </motion.div>
+      <div className="absolute left-[37%] top-[37%] h-[26%] w-[26%]">
+        <motion.div className="h-full w-full" animate={{ rotate: [0, 6, -6, 0] }} transition={{ duration: 8, repeat: Infinity, ease: "easeInOut" }}>
+          <LogoMark className="h-full w-full drop-shadow-[0_20px_40px_rgb(124_58_237/0.45)]" />
+        </motion.div>
+      </div>
 
       {/* orbiting planets */}
       <div className="absolute inset-0 animate-spin-slow">
