@@ -1,6 +1,5 @@
 "use client";
 
-import clsx from "clsx";
 import { Check, Circle, Printer } from "lucide-react";
 import Link from "next/link";
 import { useState } from "react";
