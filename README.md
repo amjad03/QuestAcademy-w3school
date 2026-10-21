@@ -19,6 +19,38 @@
 
 **Content:** 29 courses, 321 lessons, ~1,500 practice questions, 305 NEET/JEE questions, 283 formulas, 50 coding challenges and 20 interactive simulations.
 
+## Five experience profiles
+
+The same content and design system, tuned for each age group. The mode is picked from the learner's age during onboarding and can be changed any time in **Settings → Experience** (leaving Explore needs a grown-up check).
+
+| Mode | Ages | Home | Feel |
+|---|---|---|---|
+| **01 Explore** | ~6–10 | Course pictures, island map, sticker book, games | Big buttons, Questy reads everything aloud, stickers for trying, finishing and improving. No leagues. |
+| **02 Adventure** | ~11–14 | Mission control: current mission, topic map with unlockable units, experiments, challenges | Ranks, quests, opt-in leagues with a nickname only, friend challenge links. |
+| **03 Focus** | ~15–18 | Syllabus dashboard for CBSE 9–12, Karnataka PUC, ICSE/ISC, NEET/JEE | Chapter progress, weightage, exam countdown, weak chapters, formulas, simulations, revision planner. Rewards become quiet toasts. |
+| **04 Mastery** | ~18–24+ | Competency dashboard | Competency radar, coding workspace, case studies, curated research readings, assessments due. Subtle rewards. |
+| **05 Professional** | Adults | My goals | Career pathways with practical assignments, rubrics, schedules and certificates of completion (not accredited). No game elements. |
+
+**Study planner** (`/plan`): pick a syllabus, pathway or course, a finish date, hours per week and study days. The plan schedules lessons, revision days and mock tests, re-plans automatically as you progress, tells you how many extra hours you need when you fall behind, and exports to your calendar (.ics).
+
+Syllabus chapter lists live in `src/content/syllabus/` and map chapters to existing lessons; chapters without lessons yet are marked “practice only” or “coming soon”. Check them against the current official editions before relying on them for exams.
+
+## Questy's voice (Kokoro)
+
+Explore mode speaks with the Kokoro-82M **af_heart** voice:
+
+1. **Pre-rendered clips** in `public/voice/<key>.mp3`, listed in `public/voice/manifest.json`. Every sentence a young learner hears (story pages, questions, flashcards, game prompts, phonics, counting, Questy's lines) is collected by `scripts/voice-corpus.ts`.
+2. **Live fallback:** text without a clip is synthesised in the browser with kokoro-js in a worker (model downloaded once and cached).
+3. **Device voice** if neither is available.
+
+After adding or editing kids content, render the new clips:
+
+```bash
+npm i --no-save kokoro-js   # one-time
+npm run generate-voice      # renders only missing clips; needs ffmpeg
+npm run generate-voice -- --prune   # also removes clips no longer used
+```
+
 ## Getting started
 
 ```bash
@@ -84,10 +116,13 @@ src/app/
   (app)/              sidebar shell: learn, courses, course/[subject]/[unit]/[lesson], practice,
                       exam, code/playground, leaderboard, quests, shop, profile, settings, studio/videos
   (focus)/            full-screen: session/[...key], onboarding, auth, exam mock tests, kids games
-src/content/          lessons (subjects/*), exam bank, course structure (course.ts), videos/
+src/content/          lessons (subjects/*), exam bank, course structure (course.ts), videos/,
+                      syllabus/ (boards), pathways/ (career pathways), resources/ (case studies, readings, competencies),
+                      voice-lines.ts
 src/components/       brand, shell, learn (path, blocks, questions), lesson, session, course, exam, code, widgets…
 src/lib/              store (progress), mastery, gamification, progress, video matcher, runners, supabase
-scripts/sync-videos.ts
+src/lib/modes.ts      experience profiles; planner.ts + plan-sources/ for the study planner; voice.ts for Questy's voice
+scripts/sync-videos.ts, scripts/generate-voice.ts, scripts/voice-corpus.ts
 ```
 
 ## Adding content

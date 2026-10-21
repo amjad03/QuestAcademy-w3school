@@ -79,7 +79,7 @@ function Dashboard({ primary, enrolled }: { primary: Pathway; enrolled: Pathway[
             <p className="mt-4 text-sm text-muted">
               {sched.plan.finishDate
                 ? sched.plan.onTrack
-                  ? `On track for ${formatDate(sched.schedule.targetDate)} at ${sched.schedule.hoursPerWeek} h a week.`
+                  ? `On track for your ${formatDate(sched.schedule.targetDate)} target at ${sched.schedule.hoursPerWeek} h a week.`
                   : `About ${sched.plan.extraHoursNeeded} more hour${sched.plan.extraHoursNeeded === 1 ? "" : "s"} a week would get you there by ${formatDate(sched.schedule.targetDate)} — or move your date.`
                 : "All coursework is done."}{" "}
               <Link href={`/pathways/${primary.slug}#schedule`} className="font-semibold text-accent hover:underline">

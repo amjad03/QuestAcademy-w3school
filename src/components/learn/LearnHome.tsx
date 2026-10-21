@@ -28,7 +28,7 @@ export function useOutline(slug: string | null | undefined) {
     if (outlines.has(slug)) return setOutline(outlines.get(slug)!);
     let live = true;
     fetch(`/course-data/${slug}`)
-      .then((r) => r.json())
+      .then((r) => (r.ok ? r.json() : Promise.reject()))
       .then((o: CourseOutline) => {
         outlines.set(slug, o);
         if (live) setOutline(o);

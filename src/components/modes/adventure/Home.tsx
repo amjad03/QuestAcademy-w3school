@@ -23,19 +23,20 @@ import { SocialOptInCard } from "./SocialOptIn";
 
 const outlineCache = new Map<string, CourseOutline>();
 
+/** null while loading, undefined when the course doesn't exist. */
 function useCourseOutline(slug: string | null) {
-  const [o, setO] = useState<CourseOutline | null>(slug ? (outlineCache.get(slug) ?? null) : null);
+  const [o, setO] = useState<CourseOutline | null | undefined>(slug ? (outlineCache.get(slug) ?? null) : null);
   useEffect(() => {
     if (!slug) return setO(null);
     if (outlineCache.has(slug)) return setO(outlineCache.get(slug)!);
     let live = true;
     fetch(`/course-data/${slug}`)
-      .then((r) => r.json())
+      .then((r) => (r.ok ? r.json() : Promise.reject()))
       .then((d: CourseOutline) => {
         outlineCache.set(slug, d);
         if (live) setO(d);
       })
-      .catch(() => live && setO(null));
+      .catch(() => live && setO(undefined));
     return () => {
       live = false;
     };
@@ -51,7 +52,7 @@ function useJson<T>(url: string) {
   useEffect(() => {
     let live = true;
     fetch(url)
-      .then((r) => r.json())
+      .then((r) => (r.ok ? r.json() : Promise.reject()))
       .then((x: T) => live && setD(x))
       .catch(() => live && setD(null));
     return () => {
@@ -116,7 +117,7 @@ export function AdventureHome() {
     </>
   );
 
-  if (!course) {
+  if (!course || outline === undefined) {
     return (
       <PageColumns rail={rail}>
         <div className="mx-auto max-w-md py-10 text-center">
