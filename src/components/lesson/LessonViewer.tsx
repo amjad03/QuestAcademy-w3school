@@ -24,6 +24,7 @@ import { currentMode } from "@/lib/useMode";
 import { useUi } from "@/lib/ui";
 import { awardExploreSticker } from "@/components/modes/explore/stickers";
 import { VideoPlayer } from "./VideoPlayer";
+import { NotebookDock } from "@/components/notebook/NotebookDock";
 
 export interface LessonViewerPayload {
   id: string;
@@ -107,6 +108,7 @@ export function LessonViewer(p: LessonViewerPayload) {
 
           <h1 className="mt-5 text-3xl font-black leading-tight sm:text-[2.4rem]">{p.lesson.title}</h1>
           <p className="mt-2 text-lg font-semibold text-muted">{p.lesson.summary}</p>
+          <NotebookDock lessonId={p.id} title={p.lesson.title} href={`/course/${p.id}`} />
 
           {/* item tabs */}
           <div className="mt-6 flex gap-2 overflow-x-auto pb-1">
