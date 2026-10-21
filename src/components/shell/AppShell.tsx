@@ -4,35 +4,50 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
 import clsx from "clsx";
-import { Dumbbell, Ellipsis, House, Library, Moon, ScrollText, Search, Settings, ShieldHalf, SquareTerminal, Store, Sun, Target, UserRound, Video } from "lucide-react";
+import { CalendarDays, Dumbbell, Ellipsis, Gamepad2, House, Library, Moon, Route, ScrollText, Search, Settings, ShieldHalf, Sigma, SquareTerminal, Sticker, Store, Sun, Target, UserRound, Video } from "lucide-react";
+import { useMode } from "@/lib/useMode";
 import { LogoMark } from "@/components/brand/Mascot";
 import { Wordmark } from "@/components/brand/Logo";
 import { useLearner } from "@/lib/store";
 import { useUi } from "@/lib/ui";
 import { StatsBar } from "./StatsBar";
 
-const NAV = [
+const NAV_ITEMS = [
   { href: "/learn", label: "Learn", icon: House, color: "#2F6BFF" },
   { href: "/courses", label: "Courses", icon: Library, color: "#7C4DFF" },
+  { href: "/pathways", label: "Pathways", icon: Route, color: "#7C4DFF" },
+  { href: "/plan", label: "Study plan", icon: CalendarDays, color: "#2EBE70" },
   { href: "/practice", label: "Practice", icon: Dumbbell, color: "#2EBE70" },
   { href: "/exam", label: "Exam prep", icon: Target, color: "#FF4B4B" },
+  { href: "/exam/formulas", label: "Formulas", icon: Sigma, color: "#FF8A00" },
   { href: "/code/playground", label: "Code lab", icon: SquareTerminal, color: "#334155" },
+  { href: "/kids/play", label: "Games", icon: Gamepad2, color: "#EC4899" },
+  { href: "/stickers", label: "Stickers", icon: Sticker, color: "#FF8A00" },
   { href: "/leaderboard", label: "Leagues", icon: ShieldHalf, color: "#FFB800" },
   { href: "/quests", label: "Quests", icon: ScrollText, color: "#FF8A00" },
   { href: "/shop", label: "Shop", icon: Store, color: "#14B8A6" },
   { href: "/profile", label: "Profile", icon: UserRound, color: "#1CB0F6" },
 ];
 
-const MOBILE = ["/learn", "/courses", "/practice", "/leaderboard", "/profile"];
+/** Nav items for the current experience profile, in the mode's order. */
+function useNav() {
+  const mode = useMode();
+  return mode.nav
+    .map((href) => NAV_ITEMS.find((n) => n.href === href))
+    .filter(Boolean)
+    .map((n) => (n!.href === "/learn" ? { ...n!, label: mode.homeLabel } : n!));
+}
 
 function isActive(pathname: string, href: string) {
   if (href === "/learn") return pathname === "/learn";
   if (href === "/courses") return pathname.startsWith("/courses") || pathname.startsWith("/course/");
+  if (href === "/exam") return pathname.startsWith("/exam") && !pathname.startsWith("/exam/formulas");
   return pathname.startsWith(href);
 }
 
 export function AppShell({ children }: { children: React.ReactNode }) {
   const pathname = usePathname();
+  const nav = useNav();
   return (
     <div className="min-h-screen bg-bg">
       <Sidebar pathname={pathname} />
@@ -41,7 +56,7 @@ export function AppShell({ children }: { children: React.ReactNode }) {
         <main className="pb-24 md:pb-0">{children}</main>
       </div>
       <nav className="fixed inset-x-0 bottom-0 z-40 flex border-t-2 border-line bg-surface md:hidden" aria-label="Primary">
-        {NAV.filter((n) => MOBILE.includes(n.href)).map((n) => {
+        {nav.slice(0, 5).map((n) => {
           const active = isActive(pathname, n.href);
           return (
             <Link key={n.href} href={n.href} className="flex flex-1 flex-col items-center gap-0.5 py-2" aria-current={active ? "page" : undefined}>
@@ -62,6 +77,7 @@ function Sidebar({ pathname }: { pathname: string }) {
   const theme = useLearner((s) => s.settings.theme);
   const setSettings = useLearner((s) => s.setSettings);
   const setPalette = useUi((s) => s.setPalette);
+  const nav = useNav();
 
   useEffect(() => setMore(false), [pathname]);
   useEffect(() => {
@@ -89,7 +105,7 @@ function Sidebar({ pathname }: { pathname: string }) {
         <Wordmark className="hidden lg:block" />
       </Link>
       <nav className="flex flex-1 flex-col gap-1" aria-label="Primary">
-        {NAV.map((n) => {
+        {nav.map((n) => {
           const active = isActive(pathname, n.href);
           return (
             <Link
@@ -117,7 +133,11 @@ function Sidebar({ pathname }: { pathname: string }) {
             <span className="hidden lg:inline">More</span>
           </button>
           {more && (
-            <div className="card absolute bottom-14 left-0 w-60 overflow-hidden p-1.5 shadow-lift">
+            <div className="card absolute bottom-14 left-0 max-h-[70vh] w-60 overflow-y-auto p-1.5 shadow-lift">
+              {NAV_ITEMS.filter((n) => !nav.some((x) => x.href === n.href) && n.href !== "/stickers" && n.href !== "/kids/play").map((n) => (
+                <MenuLink key={n.href} href={n.href} icon={<n.icon className="h-5 w-5" style={{ color: n.color }} />} label={n.label} />
+              ))}
+              <div className="my-1 border-t-2 border-line" />
               <MenuLink href="/settings" icon={<Settings className="h-5 w-5" />} label="Settings" />
               <MenuLink href="/studio/videos" icon={<Video className="h-5 w-5" />} label="Video mapping" />
               <button onClick={() => setSettings({ theme: dark ? "light" : "dark" })} className="flex w-full items-center gap-3 rounded-xl px-3 py-2.5 text-sm font-bold text-ink hover:bg-surface-2">

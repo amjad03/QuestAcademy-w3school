@@ -5,7 +5,8 @@ import { ArrowLeft, ArrowRight, Volume2, VolumeX } from "lucide-react";
 import { useEffect, useMemo, useState } from "react";
 import clsx from "clsx";
 import type { Block, Lesson } from "@/content/types";
-import { speak, stopSpeaking, sfx } from "@/lib/sound";
+import { stopSpeaking, sfx } from "@/lib/sound";
+import { sayQueue } from "@/lib/voice";
 import { Mascot } from "@/components/brand/Mascot";
 import { BlockView } from "@/components/learn/Blocks";
 import { blockSpeech } from "@/components/learn/useNarration";
@@ -40,8 +41,8 @@ export function KidsStory({ lesson, id, onComplete, done }: { lesson: Lesson; id
 
   useEffect(() => {
     if (!voice) return stopSpeaking();
-    const text = pages[i].map(blockSpeech).filter(Boolean).join(". ");
-    if (text) speak(text, { rate: 0.92, pitch: 1.2 });
+    // One clip per block, so each has its own pre-rendered recording.
+    sayQueue(pages[i].map(blockSpeech).filter((t): t is string => Boolean(t)), { rate: 0.92, pitch: 1.2 });
     return () => stopSpeaking();
   }, [i, voice, pages]);
 

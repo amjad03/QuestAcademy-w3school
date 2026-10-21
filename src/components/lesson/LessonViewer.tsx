@@ -20,6 +20,9 @@ import { Flashcards } from "@/components/learn/Flashcards";
 import { useNarration } from "@/components/learn/useNarration";
 import { Challenge } from "@/components/code/Challenge";
 import { KidsStory } from "./KidsStory";
+import { currentMode } from "@/lib/useMode";
+import { useUi } from "@/lib/ui";
+import { awardExploreSticker } from "@/components/modes/explore/stickers";
 import { VideoPlayer } from "./VideoPlayer";
 
 export interface LessonViewerPayload {
@@ -56,6 +59,10 @@ export function LessonViewer(p: LessonViewerPayload) {
   useEffect(() => {
     visitLesson({ id: p.id, subject: p.course.slug, world: p.world });
     if (!useLearner.getState().profile.course) setProfile({ course: p.course.slug });
+    if (currentMode().id === "explore") {
+      const sticker = awardExploreSticker("first-try", p.id, { silent: true });
+      if (sticker) useUi.getState().toast({ text: `New sticker: ${sticker.name}!` });
+    }
   }, [p.id]); // eslint-disable-line react-hooks/exhaustive-deps
 
   useEffect(() => window.scrollTo({ top: 0 }), [item.kind, p.id]);
@@ -72,6 +79,7 @@ export function LessonViewer(p: LessonViewerPayload) {
   const finishArticle = () => {
     completeLesson({ id: p.id, subject: p.course.slug, world: p.world, xp: p.lesson.xp, flashcards: p.lesson.flashcards?.length ?? 0 });
     markItem(`${p.id}:article`);
+    if (currentMode().id === "explore") awardExploreSticker("lesson-complete", p.id);
   };
 
   const sidebar = <UnitNav {...p} currentItem={item.id} onNavigate={() => setNavOpen(false)} />;

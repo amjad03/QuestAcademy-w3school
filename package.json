@@ -2,14 +2,15 @@
   "name": "quest-academy",
   "version": "1.0.0",
   "private": true,
-  "description": "Quest Academy — learn anything, anytime, your way. Interactive lessons, quizzes and gamification from pre-primary to PG.",
+  "description": "Quest Academy \u2014 learn anything, anytime, your way. Interactive lessons, quizzes and gamification from pre-primary to PG.",
   "scripts": {
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
     "typecheck": "tsc --noEmit",
-    "sync-videos": "tsx --tsconfig tsconfig.json scripts/sync-videos.ts"
+    "sync-videos": "tsx --tsconfig tsconfig.json scripts/sync-videos.ts",
+    "generate-voice": "tsx --tsconfig tsconfig.json scripts/generate-voice.ts"
   },
   "dependencies": {
     "@codemirror/lang-css": "^6.3.1",

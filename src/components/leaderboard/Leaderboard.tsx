@@ -11,6 +11,9 @@ import { useAuth, useHydrated } from "@/components/providers";
 import { Avatar } from "@/components/shell/Avatar";
 import { PageColumns } from "@/components/shell/AppShell";
 import { QuestsCard, RailCard, RailFooter, SaveProgressCard } from "@/components/shell/RailCards";
+import { Mascot } from "@/components/brand/Mascot";
+import { useMode } from "@/lib/useMode";
+import { SocialOptInCard } from "@/components/modes/adventure/SocialOptIn";
 
 const NAMES = ["Aarav", "Sofia", "Kenji", "Amara", "Lucas", "Priya", "Noah", "Zara", "Mateo", "Ishaan", "Chloe", "Omar", "Ananya", "Leo", "Fatima", "Ethan", "Meera", "Yuki", "Diego", "Sara", "Arjun", "Nia", "Felix", "Riya", "Kai", "Elif", "Tomás", "Aditi"];
 const COLORS = AVATARS.map((a) => a.id);
@@ -56,16 +59,20 @@ export function Leaderboard() {
     if (user) void fetchLeaderboard().then(setRemote);
   }, [user]);
 
+  const mode = useMode();
   const meId = user?.id ?? "me";
+  // Adventure learners appear by nickname only — never their real name.
+  const publicName = mode.id === "adventure" ? profile.nickname || "Explorer" : profile.name || "You";
   const rows = useMemo(() => {
-    const me: LeaderRow = { id: meId, display_name: profile.name || "You", avatar: profile.avatar, weekly_xp: weekly, xp: 0, level: 0, streak };
+    const me: LeaderRow = { id: meId, display_name: publicName, avatar: profile.avatar, weekly_xp: weekly, xp: 0, level: 0, streak };
     const others = remote ? remote.filter((r) => r.id !== me.id) : practiceLeague(weekly, weekKey());
     return [...others, me].sort((a, b) => b.weekly_xp - a.weekly_xp);
-  }, [remote, weekly, profile, streak, meId]);
+  }, [remote, weekly, profile, streak, meId, publicName]);
 
   const rail = (
     <>
       <SaveProgressCard />
+      {mode.social === "opt-in" && profile.socialOptIn && <SocialOptInCard />}
       <RailCard title="How leagues work">
         <ul className="space-y-2 text-sm font-semibold leading-6 text-muted">
           <li>Earn XP from lessons, practice and tests to climb the board.</li>
@@ -79,6 +86,34 @@ export function Leaderboard() {
   );
 
   if (!hydrated) return <PageColumns rail={rail}><div className="h-96 animate-pulse rounded-2xl bg-surface-2" /></PageColumns>;
+
+  if (mode.social === "off")
+    return (
+      <PageColumns rail={rail}>
+        <div className="mx-auto flex max-w-md flex-col items-center py-10 text-center">
+          <Mascot pose="wave" size={140} />
+          <h1 className="mt-6 text-3xl font-black">Leagues are for older explorers</h1>
+          <p className="mt-2 font-semibold text-muted">Here, every star you earn is just for you. Keep learning and filling your sticker book!</p>
+          <Link href="/learn" className="btn-primary mt-8">
+            Back to learning
+          </Link>
+        </div>
+      </PageColumns>
+    );
+
+  if (mode.social === "opt-in" && !profile.socialOptIn)
+    return (
+      <PageColumns rail={rail}>
+        <div className="mx-auto max-w-md py-6">
+          <div className="mb-6 flex justify-center">
+            <ShieldHalf className="h-20 w-20 fill-warn text-warn" strokeWidth={1.4} />
+          </div>
+          <h1 className="text-center text-3xl font-black">Weekly leagues</h1>
+          <p className="mt-2 text-center font-semibold text-muted">Leagues are optional. Join with a nickname to race other explorers for the top spot each week.</p>
+          <SocialOptInCard className="mt-8" />
+        </div>
+      </PageColumns>
+    );
 
   const league = leagueFor(weekly);
   const end = new Date(weekKey() + "T00:00:00");

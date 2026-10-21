@@ -3,9 +3,10 @@
 import { useEffect, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import { Volume2 } from "lucide-react";
+import { say } from "@/lib/voice";
 import { bag, readStrArray, WidgetTitle } from "./_shared";
 
-const WORDS: Record<string, [word: string, emoji: string]> = {
+export const WORDS: Record<string, [word: string, emoji: string]> = {
   A: ["Apple", "🍎"],
   B: ["Ball", "⚽"],
   C: ["Cat", "🐱"],
@@ -36,6 +37,8 @@ const WORDS: Record<string, [word: string, emoji: string]> = {
 
 const ALL = Object.keys(WORDS);
 
+export const phonicsLine = (letter: string, word: string) => `${letter}. ${letter} is for ${word}.`;
+
 export default function Phonics(input: Record<string, unknown>) {
   const p = bag(input);
   const letters = (readStrArray(p, "letters") ?? ALL).map((l) => l.trim().charAt(0).toUpperCase()).filter((l) => l in WORDS);
@@ -45,22 +48,14 @@ export default function Phonics(input: Record<string, unknown>) {
   const [canSpeak, setCanSpeak] = useState(false);
 
   useEffect(() => {
-    setCanSpeak(typeof window !== "undefined" && "speechSynthesis" in window);
+    setCanSpeak(typeof window !== "undefined" && ("speechSynthesis" in window || "Audio" in window));
   }, []);
 
   const speak = (letter: string) => {
     setActive(letter);
     if (!canSpeak) return;
     const [word] = WORDS[letter];
-    try {
-      window.speechSynthesis.cancel();
-      const u = new SpeechSynthesisUtterance(`${letter}. ${letter} is for ${word}.`);
-      u.rate = 0.85;
-      u.pitch = 1.15;
-      window.speechSynthesis.speak(u);
-    } catch {
-      /* ignore */
-    }
+    say(phonicsLine(letter, word), { rate: 0.85, pitch: 1.15 });
   };
 
   const [word, emoji] = WORDS[active] ?? WORDS.A;

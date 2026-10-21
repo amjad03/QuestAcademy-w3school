@@ -8,22 +8,36 @@ import { burst } from "@/lib/confetti";
 import { sfx } from "@/lib/sound";
 import { Mascot } from "@/components/brand/Mascot";
 import { BadgeMedal } from "@/components/ui/GameIcon";
+import { useMode } from "@/lib/useMode";
+import { say } from "@/lib/voice";
+import { PRAISE } from "@/content/voice-lines";
 
 /** XP toasts + celebration dialogs (level up, badge, daily goal). Held back during focused sessions. */
 export function Overlays() {
   const toasts = useUi((s) => s.toasts);
   const focus = useUi((s) => s.focusMode);
-  const celebration = useUi((s) => (s.focusMode ? undefined : s.celebrations[0]));
+  const queued = useUi((s) => (s.focusMode ? undefined : s.celebrations[0]));
   const dismiss = useUi((s) => s.dismissCelebration);
+  const toast = useUi((s) => s.toast);
+  const mode = useMode();
+  // Calmer modes turn celebrations into a quiet toast instead of a dialog.
+  const celebration = mode.dialogs ? queued : undefined;
+
+  useEffect(() => {
+    if (!queued || mode.dialogs) return;
+    toast({ text: queued.kind === "badge" ? `Achievement: ${queued.title}` : queued.title });
+    dismiss();
+  }, [queued, mode.dialogs, toast, dismiss]);
 
   useEffect(() => {
     if (!celebration) return;
-    burst({ big: celebration.kind === "level" });
+    if (mode.confetti) burst({ big: celebration.kind === "level" });
     sfx(celebration.kind === "level" ? "levelup" : "fanfare");
+    if (mode.autoVoice) say(celebration.kind === "badge" ? PRAISE[3] : PRAISE[0]);
     const onKey = (e: KeyboardEvent) => (e.key === "Escape" || e.key === "Enter") && dismiss();
     window.addEventListener("keydown", onKey);
     return () => window.removeEventListener("keydown", onKey);
-  }, [celebration, dismiss]);
+  }, [celebration, dismiss, mode.confetti, mode.autoVoice]);
 
   return (
     <>

@@ -9,6 +9,8 @@ import { useAuth, useHydrated } from "@/components/providers";
 import { ProgressBar } from "@/components/ui/Progress";
 import { GameIcon } from "@/components/ui/GameIcon";
 import { Mascot } from "@/components/brand/Mascot";
+import { useMode } from "@/lib/useMode";
+import { SocialOptInCard } from "@/components/modes/adventure/SocialOptIn";
 
 export function RailCard({ title, action, children, className }: { title?: string; action?: { href: string; label: string }; children: React.ReactNode; className?: string }) {
   return (
@@ -30,8 +32,13 @@ export function RailCard({ title, action, children, className }: { title?: strin
 
 export function LeagueCard() {
   const hydrated = useHydrated();
+  const mode = useMode();
+  const optedIn = useLearner((s) => Boolean(s.profile.socialOptIn));
   const weekly = useLearner((s) => (s.weekly.week === weekKey() ? s.weekly.xp : 0));
   if (!hydrated) return null;
+  // Explore: no leagues at all. Adventure: leagues are opt-in.
+  if (mode.social === "off") return null;
+  if (mode.social === "opt-in" && !optedIn) return <SocialOptInCard compact />;
   const league = leagueFor(weekly);
   const next = LEAGUES[LEAGUES.findIndex((l) => l.id === league.id) + 1];
   return (

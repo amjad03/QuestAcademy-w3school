@@ -6,23 +6,49 @@ import { useRouter, useSearchParams } from "next/navigation";
 import { useState } from "react";
 import clsx from "clsx";
 import type { Stage, WorldId } from "@/content/types";
-import { dailyGoals, stageById, stages, worlds } from "@/content/worlds";
+import { dailyGoals, stageById, worlds } from "@/content/worlds";
 import { useLearner } from "@/lib/store";
 import { useCatalog } from "@/components/shell/CatalogContext";
 import { CourseIcon } from "@/components/brand/CourseIcon";
 import { Mascot } from "@/components/brand/Mascot";
 import { ProgressBar } from "@/components/ui/Progress";
 import { sfx } from "@/lib/sound";
+import { MODES, modeForAge, modeForStage, type ModeId } from "@/lib/modes";
+import { ModePicker } from "@/components/modes/ModePicker";
 
-const STEPS = ["category", "course", "stage", "goal", "name", "done"] as const;
+const STEPS = ["age", "mode", "category", "course", "goal", "name", "done"] as const;
+
+const AGES = [
+  { label: "5 or under", age: 5 },
+  { label: "6–8", age: 7 },
+  { label: "9–10", age: 10 },
+  { label: "11–12", age: 12 },
+  { label: "13–14", age: 14 },
+  { label: "15–16", age: 16 },
+  { label: "17–18", age: 18 },
+  { label: "19–24", age: 21 },
+  { label: "25 or over", age: 30 },
+];
+
+function stageFromAge(age: number, category: WorldId | null): Stage {
+  if (age <= 5) return "preprimary";
+  if (age <= 10) return "primary";
+  if (age <= 14) return "middle";
+  if (age <= 18) return category === "exam" ? "aspirant" : "secondary";
+  if (age <= 24) return "ug";
+  return "lifelong";
+}
+
+const MODE_CATEGORY: Record<ModeId, WorldId> = { explore: "kids", adventure: "school", focus: "school", mastery: "campus", professional: "code" };
 
 const CATEGORY_ICON: Record<WorldId, typeof Baby> = { kids: Baby, school: GraduationCap, exam: Target, code: Laptop, campus: Sparkles };
 const CATEGORY_COLOR: Record<WorldId, string> = { kids: "#EC4899", school: "#2F6BFF", exam: "#FF4B4B", code: "#334155", campus: "#7C4DFF" };
 
 const PROMPT: Record<(typeof STEPS)[number], string> = {
+  age: "Hi there! I’m Questy. How old are you?",
+  mode: "Here’s the experience I picked for you. You can choose another any time.",
   category: "Hi there! I’m Questy. What would you like to learn?",
   course: "Great choice! Which course should we start with?",
-  stage: "Which of these describes you best?",
   goal: "What’s your daily learning goal?",
   name: "Last thing — what should I call you?",
   done: "You’re all set! Let’s start your first lesson.",
@@ -39,19 +65,26 @@ export function Onboarding() {
   const [step, setStep] = useState(0);
   const [category, setCategory] = useState<WorldId | null>(stageParam && stageById[stageParam] ? stageById[stageParam].world : null);
   const [course, setCourse] = useState<string | null>(null);
-  const [stage, setStage] = useState<Stage | null>(stageParam && stageById[stageParam] ? stageParam : profile.stage);
+  const [age, setAge] = useState<number | null>(profile.age ?? null);
+  const [mode, setMode] = useState<ModeId | null>(stageParam && stageById[stageParam] ? modeForStage(stageParam) : null);
   const [goal, setGoal] = useState(profile.dailyGoal || 50);
   const [name, setName] = useState(profile.name);
 
   const id = STEPS[step];
-  const canNext = id === "category" ? Boolean(category) : id === "course" ? Boolean(course) : id === "stage" ? Boolean(stage) : true;
+  const recommended = age !== null ? modeForAge(age) : undefined;
+  const canNext = id === "age" ? age !== null : id === "mode" ? Boolean(mode) : id === "category" ? Boolean(category) : id === "course" ? Boolean(course) : true;
   const courses = catalog.filter((c) => c.world === category);
 
   const next = () => {
     if (!canNext) return;
     sfx("tap");
+    if (id === "age" && age !== null && !mode) setMode(modeForAge(age));
+    if (id === "mode" && mode && !category) setCategory(MODE_CATEGORY[mode]);
     if (id === "name") {
-      setProfile({ name: name.trim() || "Learner", stage, worlds: category ? [category] : [], course, dailyGoal: goal, onboarded: true, style: profile.style });
+      const m = mode ?? modeForAge(age ?? 12);
+      const stage = stageParam && stageById[stageParam] ? stageParam : stageFromAge(age ?? 12, category);
+      setProfile({ name: name.trim() || "Learner", age, stage, mode: m, worlds: category ? [category] : [], course, dailyGoal: goal, onboarded: true, style: profile.style });
+      useLearner.getState().setSettings({ sound: MODES[m].sound });
       sfx("fanfare");
     }
     if (id === "done") return router.push("/learn");
@@ -80,6 +113,18 @@ export function Onboarding() {
 
         <AnimatePresence mode="wait">
           <motion.div key={id} initial={{ opacity: 0, y: 14 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -10 }} transition={{ duration: 0.18 }} className="mt-8">
+            {id === "age" && (
+              <div className="grid grid-cols-3 gap-3">
+                {AGES.map((a) => (
+                  <Option key={a.label} active={age === a.age} onClick={() => { setAge(a.age); setMode(null); }}>
+                    <span className="w-full text-center text-lg font-extrabold">{a.label}</span>
+                  </Option>
+                ))}
+              </div>
+            )}
+
+            {id === "mode" && <ModePicker value={mode} recommended={recommended} onChange={(m) => { setMode(m); setCategory(MODE_CATEGORY[m]); sfx("tap"); }} />}
+
             {id === "category" && (
               <div className="grid gap-3">
                 {worlds.map((w) => {
@@ -113,19 +158,6 @@ export function Onboarding() {
               </div>
             )}
 
-            {id === "stage" && (
-              <div className="grid gap-3 sm:grid-cols-2">
-                {stages.map((s) => (
-                  <Option key={s.id} active={stage === s.id} onClick={() => setStage(s.id)}>
-                    <span className="min-w-0">
-                      <span className="block font-extrabold">{s.label}</span>
-                      <span className="block text-sm font-semibold text-muted">{s.hint}</span>
-                    </span>
-                  </Option>
-                ))}
-              </div>
-            )}
-
             {id === "goal" && (
               <div className="card divide-y-2 divide-line overflow-hidden">
                 {dailyGoals.map((g) => (
@@ -145,8 +177,8 @@ export function Onboarding() {
               <div className="grid gap-3 sm:grid-cols-3">
                 {[
                   ["Your course", catalog.find((c) => c.slug === course)?.title ?? "—"],
+                  ["Experience", mode ? `${MODES[mode].name} mode` : "—"],
                   ["Daily goal", `${goal} XP`],
-                  ["Welcome bonus", "50 coins"],
                 ].map(([a, b]) => (
                   <div key={a} className="card p-4">
                     <div className="eyebrow">{a}</div>

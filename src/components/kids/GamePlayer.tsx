@@ -8,6 +8,11 @@ import clsx from "clsx";
 import { GAMES, type GameId } from "./games";
 import { useLearner } from "@/lib/store";
 import { sfx, speak } from "@/lib/sound";
+import { GAME_LINES, LETTER_WORDS, SHAPE_NAMES } from "@/content/voice-lines";
+import { currentMode } from "@/lib/useMode";
+import { dayKey } from "@/lib/gamification";
+import { useUi } from "@/lib/ui";
+import { awardExploreSticker } from "@/components/modes/explore/stickers";
 import { burst } from "@/lib/confetti";
 import { useHydrated } from "@/components/providers";
 import { Mascot } from "@/components/brand/Mascot";
@@ -58,8 +63,17 @@ export function GamePlayer({ id }: { id: GameId }) {
     setXp(earned);
     bump("games");
     award(earned, `${meta.title} finished`);
+    if (currentMode().id === "explore") {
+      // Previous best is remembered as `game-best:<id>:<score>` items.
+      const items = useLearner.getState().items;
+      const prefix = `game-best:${id}:`;
+      const best = Math.max(-1, ...Object.keys(items).filter((k) => k.startsWith(prefix)).map((k) => Number(k.slice(prefix.length))));
+      useLearner.getState().markItem(`${prefix}${score}`);
+      const sticker = (best >= 0 && score > best && awardExploreSticker("improved", `${id}:${score}`, { silent: true })) || awardExploreSticker("game-finish", `${id}:${dayKey()}`, { silent: true });
+      if (sticker) useUi.getState().toast({ text: `New sticker: ${sticker.name}!` });
+    }
     burst({ big: score >= 6 });
-    say(score >= 6 ? "Amazing! You are a superstar!" : "Well played! Let's play again!");
+    say(score >= 6 ? GAME_LINES.great : GAME_LINES.again);
   }, [done]); // eslint-disable-line react-hooks/exhaustive-deps
 
   const stars = score >= 7 ? 3 : score >= 5 ? 2 : 1;
@@ -188,7 +202,7 @@ function BalloonPop({ onAnswer, locked }: { onAnswer: (ok: boolean) => void; loc
   const [popped, setPopped] = useState<number[]>([]);
   return (
     <div>
-      <Prompt text={`Pop ${target} balloon${target > 1 ? "s" : ""}!`} />
+      <Prompt text={GAME_LINES.balloons(target)} />
       <div className="relative mx-auto mt-6 grid h-72 max-w-md grid-cols-3 gap-4">
         {balloons.map((b) =>
           popped.includes(b.i) ? (
@@ -225,7 +239,6 @@ function BalloonPop({ onAnswer, locked }: { onAnswer: (ok: boolean) => void; loc
   );
 }
 
-const LETTER_WORDS: Record<string, string> = { A: "Apple", B: "Ball", C: "Cat", D: "Dog", E: "Egg", F: "Fish", G: "Goat", H: "Hat", I: "Igloo", J: "Jam", K: "Kite", L: "Lion", M: "Moon", N: "Nest", O: "Owl", P: "Pig", Q: "Queen", R: "Rain", S: "Sun", T: "Tree", U: "Umbrella", V: "Van", W: "Whale", X: "Xylophone", Y: "Yak", Z: "Zebra" };
 
 function LetterHunt({ onAnswer, locked }: { onAnswer: (ok: boolean) => void; locked: boolean }) {
   const { target, options } = useMemo(() => {
@@ -236,7 +249,7 @@ function LetterHunt({ onAnswer, locked }: { onAnswer: (ok: boolean) => void; loc
   }, []);
   return (
     <div>
-      <Prompt text="Which letter is this?" speech={`Find the letter ${target}. ${target} is for ${LETTER_WORDS[target]}.`} />
+      <Prompt text="Which letter is this?" speech={GAME_LINES.letter(target, LETTER_WORDS[target])} />
       <p className="mt-3 text-center font-semibold text-muted">Listen carefully, then tap it! (Hint: {LETTER_WORDS[target]})</p>
       <div className="mx-auto mt-8 grid max-w-md grid-cols-3 gap-4">
         {options.map((l) => (
@@ -274,7 +287,7 @@ function MemoryMatch({ onAnswer }: { onAnswer: (ok: boolean) => void }) {
   }, [found.length]); // eslint-disable-line react-hooks/exhaustive-deps
   return (
     <div>
-      <Prompt text="Find the matching pairs!" />
+      <Prompt text={GAME_LINES.pairs} />
       <p className="mt-2 text-center font-semibold text-muted">Moves: {moves} · match all in 8 moves for a star</p>
       <div className="mx-auto mt-6 grid max-w-sm grid-cols-4 gap-3">
         {cards.map((c, i) => {
@@ -300,7 +313,7 @@ function MemoryMatch({ onAnswer }: { onAnswer: (ok: boolean) => void }) {
   );
 }
 
-const SHAPES = [
+const SHAPES: { name: (typeof SHAPE_NAMES)[number]; svg: React.ReactNode }[] = [
   { name: "circle", svg: <circle cx="50" cy="50" r="40" /> },
   { name: "square", svg: <rect x="12" y="12" width="76" height="76" rx="4" /> },
   { name: "triangle", svg: <polygon points="50,8 92,88 8,88" /> },
@@ -318,7 +331,7 @@ function ShapeSafari({ onAnswer, locked }: { onAnswer: (ok: boolean) => void; lo
   }, []);
   return (
     <div>
-      <Prompt text={`Tap the ${target.name}!`} />
+      <Prompt text={GAME_LINES.shape(target.name)} />
       <div className="mx-auto mt-8 grid max-w-md grid-cols-2 gap-5">
         {options.map((o) => (
           <motion.button whileTap={{ scale: 0.9 }} key={o.name} disabled={locked} onClick={() => onAnswer(o.name === target.name)} className="grid aspect-square place-items-center rounded-2xl border-2 border-b-4 border-line bg-surface transition hover:bg-surface-2 active:translate-y-[2px] active:border-b-2 p-6" aria-label={o.name}>
@@ -352,7 +365,7 @@ function MathPop({ onAnswer, locked }: { onAnswer: (ok: boolean) => void; locked
   }, [time, locked]); // eslint-disable-line react-hooks/exhaustive-deps
   return (
     <div>
-      <Prompt text={`${a} ${op} ${b} = ?`} speech={`What is ${a} ${op === "+" ? "plus" : "minus"} ${b}?`} />
+      <Prompt text={`${a} ${op} ${b} = ?`} speech={GAME_LINES.sum(a, op as "+" | "−", b)} />
       <div className="mx-auto mt-4 h-3 max-w-md overflow-hidden rounded-full bg-surface-2">
         <motion.div className="h-full rounded-full bg-good" animate={{ width: `${time * 10}%` }} transition={{ ease: "linear", duration: 1 }} />
       </div>
@@ -389,7 +402,7 @@ function OddOneOut({ onAnswer, locked }: { onAnswer: (ok: boolean) => void; lock
   }, []);
   return (
     <div>
-      <Prompt text="Which one doesn’t belong?" />
+      <Prompt text={GAME_LINES.odd} />
       <div className="mx-auto mt-8 grid max-w-md grid-cols-2 gap-5">
         {options.map((o) => (
           <motion.button whileTap={{ scale: 0.9 }} key={o} disabled={locked} onClick={() => onAnswer(o === odd)} className="grid aspect-square place-items-center rounded-2xl border-2 border-b-4 border-line bg-surface transition hover:bg-surface-2 active:translate-y-[2px] active:border-b-2 text-7xl">

@@ -16,6 +16,11 @@ import { plain, Md, MdInline } from "@/components/Md";
 import { Mascot } from "@/components/brand/Mascot";
 import { ProgressBar } from "@/components/ui/Progress";
 import { useHydrated } from "@/components/providers";
+import { useMode } from "@/lib/useMode";
+import { say } from "@/lib/voice";
+import { dayKey } from "@/lib/gamification";
+import { awardExploreSticker } from "@/components/modes/explore/stickers";
+import { ENCOURAGE, EXPLORE_LINES, PRAISE as VOICE_PRAISE } from "@/content/voice-lines";
 import { QuestionInput, correctAnswerText, emptyAnswer, gradeAnswer, isAnswered, type Answer } from "@/components/learn/QuestionCard";
 
 export interface SessionPayload {
@@ -81,7 +86,10 @@ export function Session(p: SessionPayload) {
   const [startedAt] = useState(() => Date.now());
   const [elapsed, setElapsed] = useState(0);
   const [xpEarned, setXpEarned] = useState(0);
-  const kids = p.world === "kids";
+  const mode = useMode();
+  const explore = mode.id === "explore";
+  const kids = p.world === "kids" || explore;
+  const calm = mode.rewards === "subtle" || mode.rewards === "minimal";
   const assessment = p.kind !== "practice";
 
   // Build the question queue on the client (randomised per attempt).
@@ -104,7 +112,7 @@ export function Session(p: SessionPayload) {
   const total = queue.filter((q) => !q.retry).length;
 
   useEffect(() => {
-    if (kids && current) speak(plain(current.question.q), { rate: 0.92, pitch: 1.15 });
+    if ((kids || mode.autoVoice) && current) speak(plain(current.question.q), { rate: 0.92, pitch: 1.15 });
   }, [kids, current]);
 
   const check = useCallback(() => {
@@ -112,6 +120,8 @@ export function Session(p: SessionPayload) {
     const ok = gradeAnswer(current.question, answer);
     setResult(ok);
     sfx(ok ? "correct" : "wrong");
+    // Explore: Questy praises every answer and encourages after a miss.
+    if (explore) say(ok ? VOICE_PRAISE[idx % VOICE_PRAISE.length] : ENCOURAGE[idx % ENCOURAGE.length]);
     setCombo((c) => (ok ? c + 1 : 0));
     if (!current.retry) {
       setFirst((f) => ({ ...f, [current.uid]: ok }));
@@ -125,6 +135,7 @@ export function Session(p: SessionPayload) {
     const answers = queue.filter((q) => !q.retry).map((q) => ({ lessonId: q.lessonId, ok: Boolean(first[q.uid]) }));
     const correct = answers.filter((a) => a.ok).length;
     const xpBefore = useLearner.getState().xp;
+    const bestBefore = useLearner.getState().assessments[p.key];
     recordQuiz(correct, answers.length);
     if (assessment) applyAssessment(p.key, p.kind as "quiz" | "test" | "challenge", answers);
     else {
@@ -136,7 +147,17 @@ export function Session(p: SessionPayload) {
     setDone(true);
     setFocusMode(false);
     sfx("fanfare");
-    if (correct / Math.max(1, answers.length) >= 0.8) burst({ big: true });
+    if (mode.confetti && (explore || correct / Math.max(1, answers.length) >= 0.8)) burst({ big: true });
+    if (explore) {
+      // Stickers reward effort: improving, sticking with it after mistakes, finishing.
+      const bestAfter = useLearner.getState().assessments[p.key];
+      const sticker =
+        (bestBefore !== undefined && bestAfter !== undefined && bestAfter > bestBefore && awardExploreSticker("improved", `${p.key}:${bestAfter}`, { silent: true })) ||
+        (correct < answers.length && awardExploreSticker("brave-try", `${p.key}:${dayKey()}`, { silent: true })) ||
+        awardExploreSticker("lesson-complete", p.key, { silent: true });
+      if (sticker) useUi.getState().toast({ text: `New sticker: ${sticker.name}!` });
+      say(sticker ? EXPLORE_LINES.lessonDone : VOICE_PRAISE[correct % VOICE_PRAISE.length]);
+    }
   }, [queue, first, recordQuiz, assessment, applyAssessment, applyPractice, markItem, p.key, p.kind, startedAt, setFocusMode]);
 
   const next = useCallback(() => {
@@ -186,7 +207,17 @@ export function Session(p: SessionPayload) {
         <div className="mx-auto flex w-full max-w-[640px] flex-1 flex-col items-center px-5 py-12 text-center">
           <Mascot pose={acc >= 0.7 ? "cheer" : "think"} size={150} />
           <h1 className="mt-6 text-3xl font-black text-warn-shade">
-            {acc === 1 ? "Perfect!" : acc >= 0.7 ? `${p.kind === "practice" ? "Practice" : p.kind === "test" ? "Unit test" : p.kind === "quiz" ? "Quiz" : "Challenge"} complete!` : "Good effort — keep going!"}
+            {explore
+              ? acc === 1
+                ? "Wow, all correct!"
+                : acc >= 0.5
+                  ? "Great job! You’re learning!"
+                  : "You tried so hard — well done!"
+              : acc === 1
+                ? "Perfect!"
+                : acc >= 0.7
+                  ? `${p.kind === "practice" ? "Practice" : p.kind === "test" ? "Unit test" : p.kind === "quiz" ? "Quiz" : "Challenge"} complete!`
+                  : "Good effort — keep going!"}
           </h1>
           <p className="mt-2 font-semibold text-muted">{p.title}</p>
 
@@ -251,7 +282,7 @@ export function Session(p: SessionPayload) {
           <X className="h-7 w-7" strokeWidth={2.6} />
         </button>
         <ProgressBar value={progress} height={16} color="rgb(var(--good))" label="Session progress" />
-        <span className={clsx("flex shrink-0 items-center gap-1 text-lg font-black transition", combo >= 2 ? "text-streak" : "text-transparent")} aria-hidden={combo < 2}>
+        <span className={clsx("flex shrink-0 items-center gap-1 text-lg font-black transition", combo >= 2 && !calm ? "text-streak" : "text-transparent")} aria-hidden={combo < 2 || calm}>
           <Flame className="h-6 w-6 fill-current" /> {combo}
         </span>
       </div>

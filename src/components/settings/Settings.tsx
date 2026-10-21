@@ -1,5 +1,7 @@
 "use client";
 
+import { ModeSettings } from "@/components/modes/ModeSettings";
+
 import Link from "next/link";
 import { useRef, useState } from "react";
 import { Download, LogOut, Upload } from "lucide-react";
@@ -62,6 +64,11 @@ export function Settings() {
   return (
     <PageColumns rail={rail}>
       <h1 className="text-3xl font-black">Settings</h1>
+
+      <Section id="experience" title="Experience">
+        <p className="mb-4 text-sm font-semibold text-muted">Quest Academy adapts its look, pace and rewards to you. Every course works in every mode.</p>
+        <ModeSettings />
+      </Section>
 
       <Section id="preferences" title="Preferences">
         <Row label="Name" hint="Shown on your profile and leaderboards">
