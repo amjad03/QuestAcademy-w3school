@@ -19,8 +19,14 @@ export function MarketingHeader() {
           <Link href="/exam" className="btn-flat !text-muted hover:!text-accent">
             Exam prep
           </Link>
-          <Link href="/code/playground" className="btn-flat !text-muted hover:!text-accent">
-            Code lab
+          <Link href="/pathways" className="btn-flat !text-muted hover:!text-accent">
+            Pathways
+          </Link>
+          <Link href="/for-schools" className="btn-flat !text-muted hover:!text-accent">
+            For schools
+          </Link>
+          <Link href="/about" className="btn-flat !text-muted hover:!text-accent">
+            About
           </Link>
         </nav>
         <div className="ml-auto flex items-center gap-3">
