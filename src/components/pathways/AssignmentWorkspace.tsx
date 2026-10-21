@@ -43,7 +43,7 @@ export function AssignmentWorkspace({ pathway: p, assignment: a, moduleIndex, me
   const [draft, setDraft] = useState<Draft>(initial);
   const [loaded, setLoaded] = useState(false);
   const [justSubmitted, setJustSubmitted] = useState(false);
-  const module = p.modules[moduleIndex];
+  const mod = p.modules[moduleIndex];
   const nextModule = p.modules[moduleIndex + 1];
 
   // Load the saved submission, or an unsent draft, once the store has hydrated.
@@ -53,7 +53,9 @@ export function AssignmentWorkspace({ pathway: p, assignment: a, moduleIndex, me
     try {
       const raw = localStorage.getItem(draftKey(a.id));
       if (raw) d = JSON.parse(raw) as Draft;
-    } catch {}
+    } catch {
+      // storage unavailable (private mode)
+    }
     if (!d && existing) d = { text: existing.text, link: existing.link ?? "", checklist: existing.checklist };
     if (d) setDraft(d);
     setLoaded(true);
@@ -63,7 +65,9 @@ export function AssignmentWorkspace({ pathway: p, assignment: a, moduleIndex, me
     if (!loaded) return;
     try {
       localStorage.setItem(draftKey(a.id), JSON.stringify(draft));
-    } catch {}
+    } catch {
+      // storage unavailable (private mode)
+    }
   }, [draft, loaded, a.id]);
 
   const total = a.rubric.reduce((t, r) => t + r.points, 0);
@@ -78,7 +82,9 @@ export function AssignmentWorkspace({ pathway: p, assignment: a, moduleIndex, me
     submitAssignment(a.id, { text: draft.text, link: a.submission === "link" ? draft.link.trim() : undefined, checklist: [...draft.checklist].sort((x, y) => x - y) });
     try {
       localStorage.removeItem(draftKey(a.id));
-    } catch {}
+    } catch {
+      // storage unavailable (private mode)
+    }
     setJustSubmitted(true);
     window.scrollTo({ top: 0, behavior: "smooth" });
   };
@@ -101,7 +107,7 @@ export function AssignmentWorkspace({ pathway: p, assignment: a, moduleIndex, me
         </div>
       </div>
 
-      {hydrated && existing && (justSubmitted || !loaded || true) && (
+      {hydrated && existing && (
         <div className={clsx("mt-6 rounded-xl border-2 p-5", score >= CERTIFICATE_RUBRIC_THRESHOLD ? "border-good/40 bg-good-soft" : "border-warn/40 bg-warn/10")}>
           <div className="flex flex-wrap items-center justify-between gap-3">
             <div>
@@ -155,7 +161,7 @@ export function AssignmentWorkspace({ pathway: p, assignment: a, moduleIndex, me
         <aside>
           <h2 className="text-sm font-bold uppercase tracking-wide text-muted">Lessons for this module</h2>
           <ul className="mt-2 space-y-1">
-            {module.lessonIds.map((id) => (
+            {mod.lessonIds.map((id) => (
               <li key={id}>
                 <Link href={meta[id]?.href ?? `/course/${id}`} className="flex items-center gap-2 rounded-lg px-2 py-1.5 text-sm hover:bg-surface-2">
                   <span className={clsx("h-2 w-2 shrink-0 rounded-full", hydrated && lessonDone(s, id) ? "bg-good" : "bg-line")} />

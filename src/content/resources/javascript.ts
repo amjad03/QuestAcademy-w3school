@@ -81,7 +81,7 @@ The fix combined three ideas: a ~300 ms **debounce** so a request fires only whe
 
 \`controller?.abort(); controller = new AbortController();\`
 \`const res = await fetch(url, { signal: controller.signal });\`
-\`if (!res.ok) throw new Error(\\\`HTTP \${res.status}\\\`);\`
+\`if (!res.ok) throw new Error("HTTP " + res.status);\`
 
 Requests per search fell from ~5 to 1, and the widget always showed the latest city.`,
       takeaways: [
