@@ -106,7 +106,7 @@ export interface LearnerState {
   challengesPassed: string[];
   mockResults: MockResult[];
   owned: string[];
-  settings: { theme: "system" | "light" | "dark"; sound: boolean };
+  settings: { theme: "system" | "light" | "dark"; sound: boolean; /** Visual skin: "classic" (default) or "studio". */ skin?: "classic" | "studio" };
   /** lessonId → mastery level (0–4). */
   mastery: Record<string, MasteryLevel>;
   /** Completed learning items (videos, articles, practice, cards…), keyed by item id. */

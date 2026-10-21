@@ -25,7 +25,7 @@ export const viewport: Viewport = {
 };
 
 // Applies the saved theme before first paint to avoid a flash.
-const themeScript = `try{var s=JSON.parse(localStorage.getItem('quest-academy')||'{}').state;var t=s&&s.settings&&s.settings.theme||'light';if(t==='dark'||(t==='system'&&matchMedia('(prefers-color-scheme: dark)').matches))document.documentElement.classList.add('dark');var p=s&&s.profile||{};var st=p.stage;var m=p.mode||({preprimary:'explore',primary:'explore',middle:'adventure',secondary:'focus',aspirant:'focus',ug:'mastery',pg:'mastery',lifelong:'professional'})[st]||'adventure';document.documentElement.dataset.mode=m}catch(e){}`;
+const themeScript = `try{var s=JSON.parse(localStorage.getItem('quest-academy')||'{}').state;var t=s&&s.settings&&s.settings.theme||'light';if(t==='dark'||(t==='system'&&matchMedia('(prefers-color-scheme: dark)').matches))document.documentElement.classList.add('dark');var p=s&&s.profile||{};var st=p.stage;var m=p.mode||({preprimary:'explore',primary:'explore',middle:'adventure',secondary:'focus',aspirant:'focus',ug:'mastery',pg:'mastery',lifelong:'professional'})[st]||'adventure';document.documentElement.dataset.mode=m;document.documentElement.dataset.skin=(s&&s.settings&&s.settings.skin)||'classic'}catch(e){}`;
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (

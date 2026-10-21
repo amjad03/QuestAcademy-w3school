@@ -17,9 +17,11 @@ export function useHydrated() {
 
 function ModeSync() {
   const mode = useLearner((s) => resolveMode(s.profile));
+  const skin = useLearner((s) => s.settings.skin ?? "classic");
   useEffect(() => {
     document.documentElement.dataset.mode = mode;
-  }, [mode]);
+    document.documentElement.dataset.skin = skin;
+  }, [mode, skin]);
   return null;
 }
 

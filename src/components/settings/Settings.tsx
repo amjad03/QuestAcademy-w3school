@@ -1,6 +1,7 @@
 "use client";
 
 import { ModeSettings } from "@/components/modes/ModeSettings";
+import { SkinPicker } from "@/components/settings/SkinPicker";
 
 import Link from "next/link";
 import { useRef, useState } from "react";
@@ -64,6 +65,10 @@ export function Settings() {
   return (
     <PageColumns rail={rail}>
       <h1 className="text-3xl font-black">Settings</h1>
+
+      <Section id="design" title="Design">
+        <SkinPicker />
+      </Section>
 
       <Section id="experience" title="Experience">
         <p className="mb-4 text-sm font-semibold text-muted">Quest Academy adapts its look, pace and rewards to you. Every course works in every mode.</p>
