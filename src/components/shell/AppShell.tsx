@@ -4,7 +4,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
 import clsx from "clsx";
-import { CalendarDays, Dumbbell, Ellipsis, Gamepad2, House, Library, Moon, Route, ScrollText, Search, Settings, ShieldHalf, Sigma, SquareTerminal, Sticker, Store, Sun, Target, UserRound, Video } from "lucide-react";
+import { CalendarDays, Dumbbell, Ellipsis, Gamepad2, House, LayoutGrid, Library, Moon, NotebookPen, Printer, Route, ScrollText, Search, Settings, ShieldHalf, Sigma, SquareTerminal, Sticker, Store, Sun, Target, TrendingUp, Trophy, UserRound, Users, Video } from "lucide-react";
 import { useMode } from "@/lib/useMode";
 import { LogoMark } from "@/components/brand/Mascot";
 import { Wordmark } from "@/components/brand/Logo";
@@ -26,6 +26,12 @@ const NAV_ITEMS = [
   { href: "/leaderboard", label: "Leagues", icon: ShieldHalf, color: "#FFB800" },
   { href: "/quests", label: "Quests", icon: ScrollText, color: "#FF8A00" },
   { href: "/shop", label: "Shop", icon: Store, color: "#14B8A6" },
+  { href: "/library", label: "Library", icon: LayoutGrid, color: "#2F6BFF" },
+  { href: "/notebook", label: "Notebook", icon: NotebookPen, color: "#7C4DFF" },
+  { href: "/insights", label: "Insights", icon: TrendingUp, color: "#14B8A6" },
+  { href: "/worksheets", label: "Worksheets", icon: Printer, color: "#334155" },
+  { href: "/competitions", label: "Competitions", icon: Trophy, color: "#FFB800" },
+  { href: "/parent", label: "For parents", icon: Users, color: "#EC4899" },
   { href: "/profile", label: "Profile", icon: UserRound, color: "#1CB0F6" },
 ];
 

@@ -51,6 +51,22 @@ npm run generate-voice      # renders only missing clips; needs ffmpeg
 npm run generate-voice -- --prune   # also removes clips no longer used
 ```
 
+## Two design systems
+
+**Classic** (default) is the original Quest look: rounded, chunky, Quest Blue, Nunito. **Studio** is a second, editorial system on the same components: hairline borders, indigo and teal, Inter, calmer surfaces for long study sessions. Switch in **Settings → Design**; both are instant and rollback to Classic is one tap. Technically the skin is a `data-skin` attribute on `<html>` that swaps the CSS tokens and a handful of component rules at the end of `src/app/globals.css`, so every page and both colour themes (light/dark) work in either skin.
+
+## Platform layer
+
+Beyond lessons, the platform has the tools a one-stop learning product needs:
+
+- **Library** (`/library`): browse by class (pre-primary to lifelong), by board/exam, or by goal.
+- **Parent dashboard** (`/parent`): grown-up gated weekly summary, progress by subject, stickers, suggested next steps, parent controls and a printable weekly report.
+- **Insights** (`/insights`): 12-week activity heatmap, accuracy and mastery by subject, study patterns, strongest/weakest skills, milestones.
+- **Worksheets** (`/worksheets`): printable question sets with answer keys for every unit, for teachers and tutors.
+- **Notebook** (`/notebook`): notes, bookmarks and a doubts list attached to lessons, exportable as Markdown.
+- **Competitions** (`/competitions`): a hub for Olympiads, NEET/JEE, CUET, KCET, BITSAT, NDA, CLAT, GATE, CAT, UPSC and scholarships, with preparation plans linking to courses.
+- **Public site**: landing page, About, For schools, Privacy and Terms, plus `sitemap.xml` and `robots.txt`.
+
 ## Getting started
 
 ```bash

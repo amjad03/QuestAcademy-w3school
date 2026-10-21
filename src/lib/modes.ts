@@ -48,7 +48,7 @@ export const MODES: Record<ModeId, ModeConfig> = {
     autoVoice: true,
     social: "off",
     sound: true,
-    nav: ["/learn", "/kids/play", "/stickers", "/profile"],
+    nav: ["/learn", "/kids/play", "/stickers", "/parent", "/profile"],
     homeLabel: "Home",
   },
   adventure: {
@@ -65,7 +65,7 @@ export const MODES: Record<ModeId, ModeConfig> = {
     autoVoice: false,
     social: "opt-in",
     sound: true,
-    nav: ["/learn", "/courses", "/practice", "/leaderboard", "/quests", "/shop", "/profile"],
+    nav: ["/learn", "/courses", "/library", "/practice", "/leaderboard", "/notebook", "/insights", "/quests", "/shop", "/parent", "/profile"],
     homeLabel: "Missions",
   },
   focus: {
@@ -82,7 +82,7 @@ export const MODES: Record<ModeId, ModeConfig> = {
     autoVoice: false,
     social: "on",
     sound: false,
-    nav: ["/learn", "/plan", "/courses", "/practice", "/exam", "/exam/formulas", "/profile"],
+    nav: ["/learn", "/plan", "/library", "/practice", "/exam", "/courses", "/exam/formulas", "/worksheets", "/notebook", "/insights", "/competitions", "/profile"],
     homeLabel: "Syllabus",
   },
   mastery: {
@@ -99,7 +99,7 @@ export const MODES: Record<ModeId, ModeConfig> = {
     autoVoice: false,
     social: "on",
     sound: false,
-    nav: ["/learn", "/courses", "/practice", "/code/playground", "/plan", "/profile"],
+    nav: ["/learn", "/courses", "/library", "/practice", "/code/playground", "/notebook", "/insights", "/plan", "/competitions", "/worksheets", "/profile"],
     homeLabel: "Dashboard",
   },
   professional: {
@@ -116,7 +116,7 @@ export const MODES: Record<ModeId, ModeConfig> = {
     autoVoice: false,
     social: "off",
     sound: false,
-    nav: ["/learn", "/pathways", "/plan", "/courses", "/code/playground", "/profile"],
+    nav: ["/learn", "/pathways", "/plan", "/library", "/courses", "/code/playground", "/notebook", "/insights", "/worksheets", "/profile"],
     homeLabel: "My goals",
   },
 };
