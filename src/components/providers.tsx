@@ -3,6 +3,7 @@
 import type { User } from "@supabase/supabase-js";
 import { createContext, useContext, useEffect, useState, useSyncExternalStore, type ReactNode } from "react";
 import { useLearner } from "@/lib/store";
+import { resolveMode } from "@/lib/modes";
 import { pushState, supabase, supabaseEnabled, syncOnLogin } from "@/lib/supabase";
 
 /** True after the first client render — use to avoid hydration mismatches with persisted state. */
@@ -12,6 +13,14 @@ export function useHydrated() {
     () => true,
     () => false,
   );
+}
+
+function ModeSync() {
+  const mode = useLearner((s) => resolveMode(s.profile));
+  useEffect(() => {
+    document.documentElement.dataset.mode = mode;
+  }, [mode]);
+  return null;
 }
 
 function ThemeSync() {
@@ -86,6 +95,7 @@ export function Providers({ children }: { children: ReactNode }) {
   return (
     <AuthProvider>
       <ThemeSync />
+      <ModeSync />
       {children}
     </AuthProvider>
   );

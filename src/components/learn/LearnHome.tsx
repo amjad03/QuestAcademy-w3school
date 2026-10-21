@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import { useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
 import type { CourseOutline } from "@/content/course";
 import { useLearner } from "@/lib/store";
@@ -11,6 +12,12 @@ import { useCatalog } from "@/components/shell/CatalogContext";
 import { CourseIcon } from "@/components/brand/CourseIcon";
 import { Mascot } from "@/components/brand/Mascot";
 import { LearnPath } from "./LearnPath";
+import { useMode } from "@/lib/useMode";
+import { ExploreHome } from "@/components/modes/explore/Home";
+import { AdventureHome } from "@/components/modes/adventure/Home";
+import { FocusHome } from "@/components/modes/focus/Home";
+import { MasteryHome } from "@/components/modes/mastery/Home";
+import { ProfessionalHome } from "@/components/modes/professional/Home";
 
 const outlines = new Map<string, CourseOutline>();
 
@@ -34,7 +41,29 @@ export function useOutline(slug: string | null | undefined) {
   return outline;
 }
 
+/** Learn home: each experience profile has its own home screen. */
 export function LearnHome() {
+  const hydrated = useHydrated();
+  const mode = useMode();
+  const view = useSearchParams().get("view");
+  if (!hydrated) return <PageColumns>{null}</PageColumns>;
+  if (view === "path") return <PathHome />;
+  switch (mode.id) {
+    case "explore":
+      return <ExploreHome />;
+    case "adventure":
+      return <AdventureHome />;
+    case "focus":
+      return <FocusHome />;
+    case "mastery":
+      return <MasteryHome />;
+    case "professional":
+      return <ProfessionalHome />;
+  }
+}
+
+/** The Duolingo-style course path (used directly and inside mode homes). */
+export function PathHome() {
   const hydrated = useHydrated();
   const course = useLearner((s) => s.profile.course);
   const outline = useOutline(hydrated ? course : null);
@@ -70,7 +99,7 @@ function PathSkeleton() {
   );
 }
 
-function PickCourse() {
+export function PickCourse() {
   const catalog = useCatalog();
   const setProfile = useLearner((s) => s.setProfile);
   const popular = ["math-middle", "python", "exam-physics", "abc-adventures", "machine-learning", "biology-school"]

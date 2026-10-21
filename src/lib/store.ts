@@ -20,6 +20,7 @@ import {
   weekKey,
 } from "./gamification";
 import { useUi } from "./ui";
+import type { Board, ModeId } from "./modes";
 import { afterAssessmentAnswer, afterPractice, type AssessmentKind, type MasteryLevel } from "./mastery";
 
 export interface Profile {
@@ -34,6 +35,36 @@ export interface Profile {
   dailyGoal: number;
   onboarded: boolean;
   createdAt: string;
+  /** Experience profile. null = derive from stage. */
+  mode: ModeId | null;
+  /** Age given at onboarding (optional). */
+  age: number | null;
+  /** Syllabus board for Focus mode. */
+  board: Board | null;
+  /** Class / year within the board, e.g. "10", "PUC-1", "12". */
+  grade: string | null;
+  /** Public nickname for opt-in social features (never the real name). */
+  nickname: string;
+  /** Opted in to leagues / challenges (Adventure is opt-in; Explore never). */
+  socialOptIn: boolean;
+}
+
+/** Study plan used by Focus (syllabus) and Professional (pathway) modes. */
+export interface StudyPlan {
+  scope: { type: "syllabus" | "pathway" | "course"; id: string };
+  targetDate: string;
+  hoursPerWeek: number;
+  /** 0 = Sunday … 6 = Saturday */
+  studyDays: number[];
+  createdAt: string;
+}
+
+export interface AssignmentSubmission {
+  submittedAt: string;
+  text: string;
+  link?: string;
+  /** Indices of rubric criteria the learner self-checked. */
+  checklist: number[];
 }
 
 export interface LessonProgress {
@@ -82,6 +113,17 @@ export interface LearnerState {
   items: Record<string, string>;
   /** Best score (0–1) per assessment key, e.g. "physics-school/motion:test". */
   assessments: Record<string, number>;
+  plan: StudyPlan | null;
+  /** Plan task id → date completed (manual ticks, e.g. revision/mock days). */
+  planDone: Record<string, string>;
+  /** Explore-mode sticker collection: sticker id → date earned. */
+  stickers: Record<string, string>;
+  /** Professional pathways. */
+  pathways: {
+    enrolled: string[];
+    assignments: Record<string, AssignmentSubmission>;
+    certificates: Record<string, { issuedAt: string; code: string }>;
+  };
   updatedAt: number;
 }
 
@@ -104,6 +146,12 @@ interface Actions {
   claimCoins: (coins: number, text?: string) => void;
   applyPractice: (lessonId: string, correct: number, total: number) => void;
   applyAssessment: (key: string, kind: Exclude<AssessmentKind, "practice">, answers: { lessonId: string; ok: boolean }[]) => void;
+  setPlan: (plan: StudyPlan | null) => void;
+  togglePlanTask: (taskId: string) => void;
+  awardSticker: (id: string) => boolean;
+  enrollPathway: (id: string) => void;
+  submitAssignment: (id: string, sub: Omit<AssignmentSubmission, "submittedAt">) => void;
+  issueCertificate: (pathwayId: string) => { issuedAt: string; code: string };
   replaceState: (s: LearnerState) => void;
   reset: () => void;
 }
@@ -119,6 +167,12 @@ export const initialState = (): LearnerState => ({
     dailyGoal: 50,
     onboarded: false,
     course: null,
+    mode: null,
+    age: null,
+    board: null,
+    grade: null,
+    nickname: "",
+    socialOptIn: false,
     createdAt: new Date().toISOString(),
   },
   xp: 0,
@@ -141,6 +195,10 @@ export const initialState = (): LearnerState => ({
   mastery: {},
   items: {},
   assessments: {},
+  plan: null,
+  planDone: {},
+  stickers: {},
+  pathways: { enrolled: [], assignments: {}, certificates: {} },
   updatedAt: Date.now(),
 });
 
@@ -399,6 +457,47 @@ export const useLearner = create<Store>()(
             return { ...st, mastery, assessments: { ...st.assessments, [key]: Math.max(st.assessments[key] ?? 0, score) } };
           }),
 
+        setPlan: (plan) => set({ plan, updatedAt: Date.now() }),
+
+        togglePlanTask: (taskId) =>
+          set((st) => {
+            const planDone = { ...st.planDone };
+            if (planDone[taskId]) delete planDone[taskId];
+            else planDone[taskId] = new Date().toISOString();
+            return { planDone, updatedAt: Date.now() };
+          }),
+
+        awardSticker: (id) => {
+          if (get().stickers[id]) return false;
+          set((st) => ({ stickers: { ...st.stickers, [id]: new Date().toISOString() }, updatedAt: Date.now() }));
+          return true;
+        },
+
+        enrollPathway: (id) =>
+          set((st) => (st.pathways.enrolled.includes(id) ? st : { pathways: { ...st.pathways, enrolled: [...st.pathways.enrolled, id] }, updatedAt: Date.now() })),
+
+        submitAssignment: (id, sub) => {
+          const first = !get().pathways.assignments[id];
+          update((st) => {
+            const n = first ? addXp(st, 60) : st;
+            return { ...n, pathways: { ...n.pathways, assignments: { ...n.pathways.assignments, [id]: { ...sub, submittedAt: new Date().toISOString() } } } };
+          });
+          if (first) useUi.getState().toast({ xp: 60, text: "Assignment submitted" });
+        },
+
+        issueCertificate: (pathwayId) => {
+          const existing = get().pathways.certificates[pathwayId];
+          if (existing) return existing;
+          const issuedAt = new Date().toISOString();
+          // Short verification code derived from learner + pathway + date.
+          let h = 2166136261;
+          for (const ch of `${get().profile.name}|${pathwayId}|${issuedAt}`) h = Math.imul(h ^ ch.charCodeAt(0), 16777619);
+          const code = `QA-${(h >>> 0).toString(36).toUpperCase().padStart(7, "0")}`;
+          const cert = { issuedAt, code };
+          set((st) => ({ pathways: { ...st.pathways, certificates: { ...st.pathways.certificates, [pathwayId]: cert } }, updatedAt: Date.now() }));
+          return cert;
+        },
+
         replaceState: (st) => set({ ...initialState(), ...st }),
 
         reset: () => set({ ...initialState() }),
@@ -408,6 +507,11 @@ export const useLearner = create<Store>()(
       name: "quest-academy",
       version: 1,
       storage: createJSONStorage(() => localStorage),
+      // Older saves lack newer profile fields: merge the profile one level deep.
+      merge: (persisted, current) => {
+        const p = (persisted ?? {}) as Partial<LearnerState>;
+        return { ...current, ...p, profile: { ...current.profile, ...(p.profile ?? {}) }, pathways: { ...current.pathways, ...(p.pathways ?? {}) } };
+      },
       // Persist data only; actions are recreated on load.
       partialize: (s) => Object.fromEntries(Object.entries(s).filter(([, v]) => typeof v !== "function")) as unknown as Store,
     },
@@ -458,6 +562,14 @@ export function mergeStates(a: LearnerState, b: LearnerState): LearnerState {
       Array.from(new Set([...Object.keys(a.mastery ?? {}), ...Object.keys(b.mastery ?? {})])).map((k) => [k, Math.max(a.mastery?.[k] ?? 0, b.mastery?.[k] ?? 0) as MasteryLevel]),
     ),
     items: { ...(older.items ?? {}), ...(newer.items ?? {}) },
+    plan: newer.plan ?? older.plan ?? null,
+    planDone: { ...(older.planDone ?? {}), ...(newer.planDone ?? {}) },
+    stickers: { ...(older.stickers ?? {}), ...(newer.stickers ?? {}) },
+    pathways: {
+      enrolled: Array.from(new Set([...(a.pathways?.enrolled ?? []), ...(b.pathways?.enrolled ?? [])])),
+      assignments: { ...(older.pathways?.assignments ?? {}), ...(newer.pathways?.assignments ?? {}) },
+      certificates: { ...(older.pathways?.certificates ?? {}), ...(newer.pathways?.certificates ?? {}) },
+    },
     assessments: Object.fromEntries(
       Array.from(new Set([...Object.keys(a.assessments ?? {}), ...Object.keys(b.assessments ?? {})])).map((k) => [k, Math.max(a.assessments?.[k] ?? 0, b.assessments?.[k] ?? 0)]),
     ),

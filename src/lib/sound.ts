@@ -1,5 +1,7 @@
 "use client";
 
+import { say, stopVoice } from "./voice";
+
 /**
  * Tiny synthesised sound effects (no audio files). Respects the learner's
  * "sound" setting, which is read lazily from localStorage to avoid a circular
@@ -77,16 +79,11 @@ export function sfx(kind: Sfx) {
 
 /** Read text aloud with the Web Speech API. Returns false if unsupported. */
 export function speak(text: string, opts: { rate?: number; pitch?: number; onEnd?: () => void } = {}) {
-  if (typeof window === "undefined" || !("speechSynthesis" in window)) return false;
-  window.speechSynthesis.cancel();
-  const u = new SpeechSynthesisUtterance(text);
-  u.rate = opts.rate ?? 1;
-  u.pitch = opts.pitch ?? 1;
-  if (opts.onEnd) u.onend = opts.onEnd;
-  window.speechSynthesis.speak(u);
+  if (typeof window === "undefined") return false;
+  say(text, opts);
   return true;
 }
 
 export function stopSpeaking() {
-  if (typeof window !== "undefined" && "speechSynthesis" in window) window.speechSynthesis.cancel();
+  stopVoice();
 }
