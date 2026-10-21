@@ -13,6 +13,7 @@ import { CourseIcon, courseStyle } from "@/components/brand/CourseIcon";
 import { ProgressBar } from "@/components/ui/Progress";
 import { ITEM_ICON } from "@/components/learn/LearnPath";
 import { MasteryGrid } from "./MasteryGrid";
+import { ResourcesPanel } from "@/components/mastery/ResourcesPanel";
 
 export function UnitOverview({ outline, unitSlug }: { outline: CourseOutline; unitSlug: string }) {
   const hydrated = useHydrated();
@@ -108,6 +109,8 @@ export function UnitOverview({ outline, unitSlug }: { outline: CourseOutline; un
           );
         })}
       </div>
+
+      <ResourcesPanel course={outline.slug} unit={u.slug} />
 
       <nav className="mt-10 flex justify-between gap-3">
         {prev ? (

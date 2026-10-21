@@ -10,6 +10,7 @@ import { CourseIcon, courseStyle } from "@/components/brand/CourseIcon";
 import { ProgressBar } from "@/components/ui/Progress";
 import { MasteryGrid, MasteryLegend } from "./MasteryGrid";
 import { ITEM_ICON } from "@/components/learn/LearnPath";
+import { ResourcesPanel } from "@/components/mastery/ResourcesPanel";
 
 export function CourseOverview({ outline }: { outline: CourseOutline }) {
   const hydrated = useHydrated();
@@ -163,6 +164,8 @@ export function CourseOverview({ outline }: { outline: CourseOutline }) {
           );
         })}
       </div>
+      <ResourcesPanel course={outline.slug} unitTitles={Object.fromEntries(outline.units.map((u, i) => [u.slug, `Unit ${i + 1}: ${u.title}`]))} />
+
       {outline.stats.videos === 0 && (
         <p className="mt-8 flex items-center gap-2 text-sm font-semibold text-muted">
           <PlayCircle className="h-4 w-4" /> Videos from the Quest Academy channel appear here as they’re linked.
