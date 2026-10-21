@@ -6,6 +6,12 @@ import { plain } from "@/components/Md";
 
 /** Spoken text for a block, or null if it shouldn't be narrated. */
 export function blockSpeech(b: Block): string | null {
+  const t = rawSpeech(b);
+  // Joining parts with ". " can double up punctuation ("Did you know?. …").
+  return t ? t.replace(/(?<!\.)([.!?…])\s*\.(?!\.)/g, "$1").replace(/^\.\s*/, "").trim() || null : null;
+}
+
+function rawSpeech(b: Block): string | null {
   switch (b.type) {
     case "heading":
       return b.text;

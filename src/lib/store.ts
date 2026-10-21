@@ -20,7 +20,7 @@ import {
   weekKey,
 } from "./gamification";
 import { useUi } from "./ui";
-import type { Board, ModeId } from "./modes";
+import { resolveMode, type Board, type ModeId } from "./modes";
 import { afterAssessmentAnswer, afterPractice, type AssessmentKind, type MasteryLevel } from "./mastery";
 
 export interface Profile {
@@ -261,6 +261,7 @@ function finalize(prev: LearnerState, next: LearnerState): LearnerState {
     worldsVisited: next.worldsVisited.length,
     subjectsStarted: next.subjectsStarted.length,
     hour: new Date().getHours(),
+    young: resolveMode(next.profile) === "explore",
   };
   const earned = BADGES.filter((b) => !next.badges[b.id] && b.test(ctx));
   if (earned.length) {

@@ -342,9 +342,19 @@ function ExperimentsShelf({ outline }: { outline: CourseOutline }) {
   const done = useLearner((s) => s.lessons);
   const list = useMemo(() => {
     if (!ex) return null;
-    const own = Object.entries(ex).filter(([, v]) => v.course === outline.slug);
+    // One card per experiment: the same widget often appears in several lessons.
+    const unique = (list: [string, Experiments[string]][]) => {
+      const seen = new Set<string>();
+      return list.filter(([, v]) => {
+        const key = v.widgets[0]?.id;
+        if (!key || seen.has(key)) return false;
+        seen.add(key);
+        return true;
+      });
+    };
+    const own = unique(Object.entries(ex).filter(([, v]) => v.course === outline.slug));
     if (own.length) return { own: true, items: own.slice(0, 6) };
-    return { own: false, items: Object.entries(ex).filter(([id]) => id.includes("-school/") || id.startsWith("math-")).slice(0, 4) };
+    return { own: false, items: unique(Object.entries(ex).filter(([id]) => id.includes("-school/") || id.startsWith("math-"))).slice(0, 4) };
   }, [ex, outline.slug]);
 
   return (

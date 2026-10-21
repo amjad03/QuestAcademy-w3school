@@ -114,6 +114,8 @@ export interface BadgeContext {
   worldsVisited: number;
   subjectsStarted: number;
   hour: number;
+  /** Explore-mode learner: time-of-day badges would reward late nights, so they're off. */
+  young: boolean;
 }
 
 export interface BadgeDef {
@@ -142,8 +144,8 @@ export const BADGES: BadgeDef[] = [
   { id: "memory-palace", name: "Memory Palace", icon: "repeat", color: "#14B8A6", description: "Do 25 spaced reviews", test: (c) => c.totals.reviews >= 25 },
   { id: "globetrotter", name: "Globetrotter", icon: "globe", color: "#2EBE70", description: "Learn in 3 different categories", test: (c) => c.worldsVisited >= 3 },
   { id: "polymath", name: "Polymath", icon: "sparkles", color: "#7C4DFF", description: "Start 6 different courses", test: (c) => c.subjectsStarted >= 6 },
-  { id: "night-owl", name: "Night Owl", icon: "moon", color: "#334155", description: "Learn after 10 pm", test: (c) => c.hour >= 22 || c.hour < 4 },
-  { id: "early-bird", name: "Early Bird", icon: "sunrise", color: "#FFB800", description: "Learn before 7 am", test: (c) => c.hour >= 4 && c.hour < 7 },
+  { id: "night-owl", name: "Night Owl", icon: "moon", color: "#334155", description: "Learn after 10 pm", test: (c) => !c.young && (c.hour >= 22 || c.hour < 4) },
+  { id: "early-bird", name: "Early Bird", icon: "sunrise", color: "#FFB800", description: "Learn before 7 am", test: (c) => !c.young && c.hour >= 4 && c.hour < 7 },
   { id: "level-10", name: "Double Digits", icon: "crown", color: "#FFB800", description: "Reach level 10", test: (c) => c.level >= 10 },
   { id: "xp-1000", name: "Kilo-learner", icon: "zap", color: "#2F6BFF", description: "Earn 1,000 XP", test: (c) => c.xp >= 1000 },
 ];
