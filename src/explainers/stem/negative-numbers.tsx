@@ -96,7 +96,7 @@ function SceneCounting() {
       <Ticks from={0} to={5} />
       <HopArcs start={0} count={3} dir={1} />
       <HoppingFrog start={0} count={3} dir={1} />
-      <text x={NX(2.5)} y="50" textAnchor="middle" fontSize="18" fontWeight="900" fill={INK}>
+      <text x="200" y="50" textAnchor="middle" fontSize="17" fontWeight="900" fill={INK}>
         0, 1, 2, 3 … counting to the right
       </text>
     </Svg>
@@ -110,12 +110,18 @@ function SceneOtherSide() {
       <Ticks from={-5} to={5} delayNeg={0.3} />
       <motion.g initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 1.1 }}>
         <rect x={NX(-5) - 14} y="56" width={NX(0) - NX(-5) + 10} height="40" rx="12" fill={COLD} opacity="0.14" />
-        <text x={(NX(-5) + NX(0)) / 2 - 2} y="82" textAnchor="middle" fontSize="16" fontWeight="900" fill={COLD}>
-          negative: less than zero
+        <text x={(NX(-5) + NX(0)) / 2 - 2} y="74" textAnchor="middle" fontSize="17" fontWeight="900" fill={COLD}>
+          negative
+        </text>
+        <text x={(NX(-5) + NX(0)) / 2 - 2} y="90" textAnchor="middle" fontSize="12" fontWeight="800" fill={COLD}>
+          less than zero
         </text>
         <rect x={NX(0) + 4} y="56" width={NX(5) - NX(0) + 10} height="40" rx="12" fill={WARM} opacity="0.12" />
-        <text x={(NX(5) + NX(0)) / 2 + 6} y="82" textAnchor="middle" fontSize="16" fontWeight="900" fill={WARM}>
-          positive: more than zero
+        <text x={(NX(5) + NX(0)) / 2 + 6} y="74" textAnchor="middle" fontSize="17" fontWeight="900" fill={WARM}>
+          positive
+        </text>
+        <text x={(NX(5) + NX(0)) / 2 + 6} y="90" textAnchor="middle" fontSize="12" fontWeight="800" fill={WARM}>
+          more than zero
         </text>
       </motion.g>
       <g transform={`translate(${NX(0)} ${NY - 4})`}>
@@ -237,10 +243,13 @@ function SceneCompare() {
         −4 &lt; −1
       </motion.text>
       <motion.g initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 1.4 }}>
-        <path d={`M ${NX(-1)} 240 L ${NX(-5)} 240`} stroke={COLD} strokeWidth="3" markerEnd="url(#nn-l)" />
-        <path d={`M ${NX(1)} 240 L ${NX(5)} 240`} stroke={WARM} strokeWidth="3" markerEnd="url(#nn-r)" />
-        <text x="200" y="245" textAnchor="middle" fontSize="13" fontWeight="900" fill={INK}>
-          smaller · bigger
+        <path d={`M ${NX(-0.4)} 246 L ${NX(-5)} 246`} stroke={COLD} strokeWidth="3" markerEnd="url(#nn-l)" />
+        <path d={`M ${NX(0.4)} 246 L ${NX(5)} 246`} stroke={WARM} strokeWidth="3" markerEnd="url(#nn-r)" />
+        <text x={NX(-2.7)} y="236" textAnchor="middle" fontSize="13" fontWeight="900" fill={COLD}>
+          smaller
+        </text>
+        <text x={NX(2.7)} y="236" textAnchor="middle" fontSize="13" fontWeight="900" fill={WARM}>
+          bigger
         </text>
       </motion.g>
       <defs>
@@ -281,10 +290,10 @@ function SceneTakeNegative() {
       <text x="160" y="50" textAnchor="middle" fontSize="15" fontWeight="800" fill={INK}>
         5 warm + 2 icy = 3
       </text>
-      <motion.text x="335" y="210" textAnchor="middle" fontSize="22" fontWeight="900" fill={INK} initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 2.4 }}>
+      <motion.text x="318" y="200" textAnchor="middle" fontSize="21" fontWeight="900" fill={INK} initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 2.4 }}>
         3 − (−2) = 5
       </motion.text>
-      <motion.text x="335" y="236" textAnchor="middle" fontSize="13" fontWeight="800" fill={WARM} initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 2.6 }}>
+      <motion.text x="318" y="246" textAnchor="middle" fontSize="13" fontWeight="800" fill={WARM} initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 2.6 }}>
         take away cold → warmer!
       </motion.text>
     </Svg>
@@ -319,14 +328,13 @@ function NegativeTry() {
 
   useEffect(() => {
     if (hops < 0 || hops >= n) return;
-    const id = setTimeout(() => setHops((h) => h + 1), 330);
+    const id = setTimeout(() => {
+      if (hops + 1 === n && pos === r.start + r.change) setScore((s) => s + 1);
+      setHops(hops + 1);
+    }, 330);
     return () => clearTimeout(id);
-  }, [hops, n]);
+  }, [hops, n, pos, r.start, r.change]);
 
-  useEffect(() => {
-    if (done && pos === target) setScore((s) => s + 1);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [done]);
 
   const drag = useSvgDrag(svgRef, (p) => {
     if (hops >= 0) return;
@@ -465,7 +473,7 @@ function NegativeTry() {
 /* ---------------- Story + analogy art ---------------- */
 
 function Pond({ frozen }: { frozen?: boolean }) {
-  return <ellipse cx="170" cy="146" rx="62" ry="10" fill={frozen ? "#bfdbfe" : "#60a5fa"} stroke={frozen ? "#93c5fd" : "#2563eb"} strokeWidth="2" />;
+  return <ellipse cx="145" cy="146" rx="48" ry="9" fill={frozen ? "#bfdbfe" : "#60a5fa"} stroke={frozen ? "#93c5fd" : "#2563eb"} strokeWidth="2" />;
 }
 
 function MiniThermo({ x, y, t }: { x: number; y: number; t: number }) {
@@ -533,16 +541,16 @@ const story = [
     art: (
       <Svg label="Maya and Leo skating on the frozen pond with a number line" vb="0 0 240 160" maxH={170}>
         <rect width="240" height="160" fill="#f0f9ff" />
-        <line x1="20" y1="150" x2="220" y2="150" stroke={DARK} strokeWidth="2" />
+        <line x1="20" y1="134" x2="220" y2="134" stroke={DARK} strokeWidth="2" />
         {[-4, -3, -2, -1, 0, 1, 2, 3, 4].map((v) => (
           <g key={v}>
-            <line x1={120 + v * 22} y1="145" x2={120 + v * 22} y2="155" stroke={DARK} strokeWidth="1.5" />
-            <text x={120 + v * 22} y="134" textAnchor="middle" fontSize="10" fontWeight="900" fill={v < 0 ? COLD : v > 0 ? WARM : DARK}>
+            <line x1={120 + v * 22} y1="129" x2={120 + v * 22} y2="139" stroke={DARK} strokeWidth="1.5" />
+            <text x={120 + v * 22} y="154" textAnchor="middle" fontSize="10" fontWeight="900" fill={v < 0 ? COLD : v > 0 ? WARM : DARK}>
               {minus(v)}
             </text>
           </g>
         ))}
-        <path d={`M ${120 + 4 * 22} 120 Q ${120 + 0.5 * 22} 70 ${120 - 3 * 22} 120`} fill="none" stroke={COLD} strokeWidth="2.5" strokeDasharray="5 4" />
+        <path d={`M ${120 + 4 * 22} 128 Q ${120 + 0.5 * 22} 70 ${120 - 3 * 22} 128`} fill="none" stroke={COLD} strokeWidth="2.5" strokeDasharray="5 4" />
         <Kid x={45} y={118} s={0.8} shirt="#f97316" longHair hair="#7c2d12" pose="cheer" />
         <Kid x={200} y={118} s={0.8} shirt="#22c55e" pose="point" flip />
       </Svg>
@@ -570,7 +578,7 @@ const like = {
           </g>
         ))}
         <rect x="110" y={12 + 4 * 25 + 3} width="26" height="19" rx="3" fill="#facc15" stroke={DARK} strokeWidth="1.5" />
-        <text x="170" y="86" fontSize="11" fontWeight="800" fill={DARK}>
+        <text x="153" y="86" fontSize="10" fontWeight="800" fill={DARK}>
           ground
         </text>
       </Svg>

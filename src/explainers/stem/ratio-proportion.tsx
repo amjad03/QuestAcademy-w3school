@@ -15,7 +15,7 @@ const YELLOW = "#facc15";
 
 type RGB = [number, number, number];
 const lerp = (a: RGB, b: RGB, t: number): RGB => [0, 1, 2].map((i) => Math.round(a[i] + (b[i] - a[i]) * t)) as RGB;
-const css = (c: RGB) => `rgb(${c[0]} ${c[1]} ${c[2]})`;
+const css = (c: RGB) => `rgb(${c[0]}, ${c[1]}, ${c[2]})`;
 
 /** Blue + yellow paint → a green whose shade depends only on the ratio. */
 export function paintMix(b: number, y: number): string {
@@ -30,7 +30,7 @@ export function paintMix(b: number, y: number): string {
 /** Lemonade gets more yellow (and sourer) as the lemon share grows. */
 function lemonade(l: number, w: number): string {
   const f = l / (l + w);
-  return css(lerp([224, 242, 254], [234, 179, 8], Math.min(1, f / 0.45)));
+  return css(lerp([224, 242, 254], [234, 179, 8], Math.max(0, Math.min(1, (f - 0.12) / 0.26))));
 }
 
 function Glass({ x, y, fill, delay = 0, s = 1 }: { x: number; y: number; fill: string; delay?: number; s?: number }) {
@@ -69,12 +69,12 @@ function Legend() {
   );
 }
 
-function GlassRow({ lemon, water, y, x0 = 40, delay = 0 }: { lemon: number; water: number; y: number; x0?: number; delay?: number }) {
+function GlassRow({ lemon, water, y, x0 = 40, delay = 0, gap = 34 }: { lemon: number; water: number; y: number; x0?: number; delay?: number; gap?: number }) {
   const items = [...Array(lemon).fill(LEMON), ...Array(water).fill(WATER)] as string[];
   return (
     <>
       {items.map((f, i) => (
-        <Glass key={i} x={x0 + i * 34} y={y} fill={f} delay={delay + i * 0.1} s={0.9} />
+        <Glass key={i} x={x0 + i * gap} y={y} fill={f} delay={delay + i * 0.1} s={0.9} />
       ))}
     </>
   );
@@ -111,11 +111,11 @@ function SceneDouble() {
       <text x="24" y="98" fontSize="14" fontWeight="900" fill={MUTED}>
         ×1
       </text>
-      <GlassRow lemon={1} water={3} y={110} x0={70} />
+      <GlassRow lemon={1} water={3} y={110} x0={66} gap={29} />
       <text x="24" y="188" fontSize="14" fontWeight="900" fill={C}>
         ×2
       </text>
-      <GlassRow lemon={2} water={6} y={200} x0={70} delay={0.4} />
+      <GlassRow lemon={2} water={6} y={200} x0={66} gap={29} delay={0.4} />
       <text x="120" y="40" textAnchor="middle" fontSize="26" fontWeight="900" fill={INK}>
         1 : 3 → 2 : 6
       </text>
@@ -240,7 +240,7 @@ function SceneGraph() {
       {pts.map((p, i) => (
         <motion.g key={p} initial={{ opacity: 0, y: -16 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.3 + i * 0.35, type: "spring" }}>
           <circle cx={X(p)} cy={Y(p * 3)} r="8" fill={C} stroke="white" strokeWidth="2" />
-          <text x={X(p) + 12} y={Y(p * 3) - 8} fontSize="13" fontWeight="900" fill={INK}>
+          <text x={X(p) + 12} y={Y(p * 3) + 20} fontSize="13" fontWeight="900" fill={INK}>
             {p} : {p * 3}
           </text>
         </motion.g>

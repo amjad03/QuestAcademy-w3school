@@ -66,13 +66,12 @@ function SceneZoom() {
       <motion.g initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.8 }}>
         <circle cx="270" cy="140" r="90" fill="#e0f2fe" stroke={INK} strokeWidth="3" />
         {[
-          [235, 100, -20],
-          [295, 92, 15],
-          [250, 150, 30],
-          [312, 150, -10],
-          [270, 198, 0],
-          [215, 165, 60],
-          [325, 200, 40],
+          [235, 95, -20],
+          [300, 92, 15],
+          [250, 148, 30],
+          [315, 145, -10],
+          [278, 200, 0],
+          [222, 190, 60],
         ].map(([x, y, rot], i) => (
           <motion.g key={i} animate={{ x: [0, 3, -2, 0], y: [0, -2, 3, 0] }} transition={{ duration: 2 + i * 0.3, repeat: Infinity }}>
             <g transform={`rotate(${rot} ${x} ${y})`}>
@@ -230,7 +229,7 @@ function SceneCount() {
       <Molecule m={MOLS.H2O} x={300} y={72} s={1.5} />
       <Molecule m={MOLS.H2O} x={300} y={142} s={1.5} />
       <line x1="20" y1="180" x2="380" y2="180" stroke="rgb(var(--line))" strokeWidth="2" />
-      <g transform="translate(56 200)">
+      <g transform="translate(66 200)">
         <Tally x={0} n={4} el="H" delay={0.3} />
         <Tally x={0} n={2} el="O" delay={0.6} />
       </g>
@@ -254,13 +253,13 @@ function SceneCount() {
 function Flask({ x, y, after, ink = INK }: { x: number; y: number; after: boolean; ink?: string }) {
   return (
     <g transform={`translate(${x} ${y})`}>
-      <path d="M -14 -96 L -14 -60 L -44 -6 Q -48 0 -40 0 L 40 0 Q 48 0 44 -6 L 14 -60 L 14 -96 Z" fill="rgb(255 255 255 / 0.55)" stroke={ink} strokeWidth="2.5" />
+      <path d="M -14 -96 L -14 -60 L -44 -6 Q -48 0 -40 0 L 40 0 Q 48 0 44 -6 L 14 -60 L 14 -96 Z" fill="rgba(255, 255, 255, 0.55)" stroke={ink} strokeWidth="2.5" />
       <rect x="-17" y="-104" width="34" height="10" rx="3" fill="#94a3b8" stroke={ink} strokeWidth="2" />
       {!after ? (
         <g>
-          <Molecule m={MOLS.H2} x={-16} y={-22} />
-          <Molecule m={MOLS.H2} x={14} y={-36} />
-          <Molecule m={MOLS.O2} x={6} y={-14} s={0.9} />
+          <Molecule m={MOLS.H2} x={-18} y={-14} />
+          <Molecule m={MOLS.H2} x={6} y={-40} />
+          <Molecule m={MOLS.O2} x={16} y={-14} s={0.85} />
         </g>
       ) : (
         <g>
@@ -478,7 +477,7 @@ function AtomsTry() {
 function Bag({ x, y, puffed, open }: { x: number; y: number; puffed: boolean; open?: boolean }) {
   return (
     <g transform={`translate(${x} ${y})`}>
-      <path d={puffed ? "M -40 0 Q -52 -40 -34 -66 L 34 -66 Q 52 -40 40 0 Z" : "M -34 0 L -30 -60 L 30 -60 L 34 0 Z"} fill="rgb(224 242 254 / 0.8)" stroke={DARK} strokeWidth="2" />
+      <path d={puffed ? "M -40 0 Q -52 -40 -34 -66 L 34 -66 Q 52 -40 40 0 Z" : "M -34 0 L -30 -60 L 30 -60 L 34 0 Z"} fill="rgba(224, 242, 254, 0.8)" stroke={DARK} strokeWidth="2" />
       {!open && <rect x="-36" y="-70" width="72" height="6" rx="2" fill="#2563eb" />}
       {open && <path d="M -20 -78 Q -10 -90 0 -78 Q 10 -90 20 -78" fill="none" stroke="#94a3b8" strokeWidth="2" strokeDasharray="3 3" />}
       <rect x="-22" y="-16" width="44" height="14" rx="3" fill={puffed ? "#fef3c7" : "#fef9c3"} />

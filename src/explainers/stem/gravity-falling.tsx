@@ -79,20 +79,17 @@ function Arrow({ x1, y1, x2, y2, color = C, w = 3, id }: { x1: number; y1: numbe
 
 function SceneEarth() {
   const cx = 200;
-  const cy = 150;
+  const cy = 140;
+  const top = cy - 72;
   return (
-    <Svg label="Earth with arrows from objects all around pointing to its centre; an apple falls from a tree">
-      <circle cx={cx} cy={cy} r="78" fill="#3b82f6" stroke={INK} strokeWidth="2.5" />
-      <path d="M 150 110 Q 175 90 200 110 Q 215 125 195 140 Q 170 150 160 135 Z M 215 170 Q 240 160 250 185 Q 235 205 215 195 Z" fill="#22c55e" />
-      {[0, 45, 90, 135, 180, 225, 270, 315].map((deg, i) => {
+    <Svg label="Earth with arrows from all around pointing to its centre; an apple falls from a tree">
+      <circle cx={cx} cy={cy} r="72" fill="#3b82f6" stroke={INK} strokeWidth="2.5" />
+      <path d="M 155 105 Q 178 88 200 105 Q 214 120 196 134 Q 172 144 163 130 Z M 214 158 Q 236 150 246 172 Q 232 190 214 182 Z" fill="#22c55e" />
+      {[0, 45, 135, 180, 225, 315, 90].map((deg, i) => {
         const a = (deg * Math.PI) / 180;
-        const x1 = cx + Math.cos(a) * 128;
-        const y1 = cy + Math.sin(a) * 128;
-        const x2 = cx + Math.cos(a) * 92;
-        const y2 = cy + Math.sin(a) * 92;
         return (
           <motion.g key={deg} initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.2 + i * 0.12 }}>
-            <Arrow x1={x1} y1={y1} x2={x2} y2={y2} id={`gf-e${i}`} />
+            <Arrow x1={cx + Math.cos(a) * 116} y1={cy + Math.sin(a) * 116} x2={cx + Math.cos(a) * 84} y2={cy + Math.sin(a) * 84} id={`gf-e${i}`} />
           </motion.g>
         );
       })}
@@ -101,18 +98,21 @@ function SceneEarth() {
         centre
       </text>
       {/* little tree on top with an apple falling */}
-      <rect x="196" y="56" width="6" height="18" fill="#92400e" transform="rotate(0)" />
-      <circle cx="199" cy="48" r="14" fill="#16a34a" />
-      <motion.g initial={{ y: 0 }} animate={{ y: [0, 16] }} transition={fallT(0.5, 1, 1.5)}>
-        <g transform="translate(208 52) scale(0.5)">
+      <rect x={cx - 3} y={top - 20} width="6" height="21" fill="#92400e" />
+      <circle cx={cx} cy={top - 28} r="15" fill="#16a34a" />
+      <motion.g initial={{ y: 0 }} animate={{ y: [0, 18] }} transition={fallT(0.5, 1, 1.5)}>
+        <g transform={`translate(${cx + 12} ${top - 22}) scale(0.5)`}>
           <ObjArt id="apple" />
         </g>
       </motion.g>
-      <text x="40" y="40" fontSize="14" fontWeight="900" fill={C}>
+      <text x="20" y="34" fontSize="16" fontWeight="900" fill={C}>
         gravity
       </text>
-      <text x="40" y="58" fontSize="12" fontWeight="800" fill={MUTED}>
-        pulls towards Earth&apos;s centre
+      <text x="20" y="52" fontSize="12" fontWeight="800" fill={MUTED}>
+        pulls everything
+      </text>
+      <text x="20" y="67" fontSize="12" fontWeight="800" fill={MUTED}>
+        towards the centre
       </text>
     </Svg>
   );
@@ -165,36 +165,36 @@ function SceneSameTime() {
 }
 
 function SceneStrobe() {
-  const ys = [0, 1, 2, 3, 4, 5].map((t) => 34 + 8 * t * t);
+  const ys = [1, 2, 3, 4, 5, 6].map((t) => 24 + 6 * (t * t - 1) + 6);
   return (
     <Svg label="Snapshots of a falling ball taken at equal times: the gaps get bigger because it speeds up">
       {ys.map((y, i) => (
         <motion.g key={i} initial={{ opacity: 0 }} animate={{ opacity: i === 5 ? 1 : 0.55 }} transition={{ delay: 0.3 + i * 0.45 }}>
           <circle cx="160" cy={y} r="12" fill={C} stroke={INK} strokeWidth="2" />
           <text x="190" y={y + 5} fontSize="13" fontWeight="900" fill={INK}>
-            {i * 0.1 === 0 ? "0 s" : `${fmt(i * 0.1, 1)} s`}
+            {fmt((i + 1) * 0.1, 1)} s
           </text>
           <text x="248" y={y + 5} fontSize="13" fontWeight="800" fill={C}>
-            ≈ {i} m/s
+            ≈ {i + 1} m/s
           </text>
           {i > 0 && <line x1="120" y1={ys[i - 1]} x2="120" y2={y} stroke={MUTED} strokeWidth="2" />}
           {i > 0 && <line x1="114" y1={y} x2="126" y2={y} stroke={MUTED} strokeWidth="2" />}
         </motion.g>
       ))}
-      <text x="70" y="140" textAnchor="middle" fontSize="12" fontWeight="800" fill={MUTED}>
+      <text x="60" y="170" textAnchor="middle" fontSize="12" fontWeight="800" fill={MUTED}>
         gaps
       </text>
-      <text x="70" y="156" textAnchor="middle" fontSize="12" fontWeight="800" fill={MUTED}>
+      <text x="60" y="186" textAnchor="middle" fontSize="12" fontWeight="800" fill={MUTED}>
         grow
       </text>
-      <text x="330" y="40" textAnchor="middle" fontSize="13" fontWeight="900" fill={INK}>
-        speed grows
+      <text x="60" y="40" textAnchor="middle" fontSize="13" fontWeight="900" fill={INK}>
+        speeds up
       </text>
-      <text x="330" y="58" textAnchor="middle" fontSize="13" fontWeight="900" fill={INK}>
-        ≈ 10 m/s
+      <text x="60" y="58" textAnchor="middle" fontSize="13" fontWeight="900" fill={C}>
+        +1 m/s
       </text>
-      <text x="330" y="76" textAnchor="middle" fontSize="13" fontWeight="900" fill={INK}>
-        every second
+      <text x="60" y="76" textAnchor="middle" fontSize="13" fontWeight="900" fill={INK}>
+        every 0.1 s
       </text>
     </Svg>
   );
@@ -277,7 +277,7 @@ function Block({ x, m, n }: { x: number; m: number; n: number }) {
           <Arrow x1={x - (n - 1) * 9 + i * 18} y1={110 + w / 2} x2={x - (n - 1) * 9 + i * 18} y2={110 + w / 2 + 44} id={`gf-b${m}${i}`} />
         </motion.g>
       ))}
-      <text x={x} y={110 + w / 2 + 64} textAnchor="middle" fontSize="13" fontWeight="900" fill={C}>
+      <text x={x} y={110 + w / 2 + 76} textAnchor="middle" fontSize="13" fontWeight="900" fill={C}>
         pull = {m * 10} N
       </text>
       <motion.text x={x} y={36} textAnchor="middle" fontSize="13" fontWeight="900" fill={INK} initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 1.4 }}>
@@ -394,7 +394,7 @@ function GravityTry() {
       <div className="grid gap-3 md:grid-cols-[1fr_1.1fr]">
         <div className="rounded-2xl border-2 border-line p-1">
           <Svg label={`Drop tubes. Left: ${oL.name}. Right: ${oR.name}. ${air ? "With air." : "No air."}`} vb="0 0 300 290" maxH={340}>
-            <rect x="0" y="0" width="300" height="290" rx="12" fill={air ? "rgb(125 211 252 / 0.12)" : "rgb(15 23 42 / 0.85)"} />
+            <rect x="0" y="0" width="300" height="290" rx="12" fill={air ? "rgba(125, 211, 252, 0.12)" : "rgba(15, 23, 42, 0.85)"} />
             {air && Array.from({ length: 26 }, (_, i) => <circle key={i} cx={20 + ((i * 89) % 260)} cy={30 + ((i * 47) % 230)} r="2" fill="#7dd3fc" opacity="0.6" />)}
             {[0, 0.5, 1, 1.5, 2].map((m) => (
               <g key={m}>

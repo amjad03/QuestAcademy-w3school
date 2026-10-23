@@ -77,7 +77,7 @@ function Triangle({ labels = true }: { labels?: boolean }) {
 function SceneTriangle() {
   return (
     <Svg label="A right-angled triangle with legs a equals 3 and b equals 4 and hypotenuse c equals 5">
-      <g transform="translate(40 20)">
+      <g transform="translate(-100 -70) scale(1.5)">
         <Triangle />
         <text x={R[0] - 26} y={(R[1] + TA[1]) / 2 + 5} textAnchor="end" fontSize="14" fontWeight="800" fill={MUTED}>
           3
@@ -178,10 +178,10 @@ function SceneTiles() {
       {tiles.map((t, k) => (
         <motion.rect key={k} width={U - 2} height={U - 2} rx="3" fill={t.color} stroke="white" strokeWidth="1" initial={{ x: t.sx + 1, y: t.sy + 1 }} animate={{ x: t.tx + 1, y: t.ty + 1 }} transition={{ delay: t.d, duration: 0.7, ease: "easeInOut" }} />
       ))}
-      <motion.text x={345} y={34} textAnchor="middle" fontSize="22" fontWeight="900" fill={INK} initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 2.8 }}>
+      <motion.text x={328} y={34} textAnchor="middle" fontSize="20" fontWeight="900" fill={INK} initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 2.8 }}>
         <tspan fill={SA}>9</tspan> + <tspan fill={SB}>16</tspan> = <tspan fill={SC}>25</tspan>
       </motion.text>
-      <motion.text x={350} y={60} textAnchor="middle" fontSize="16" fontWeight="900" fill={INK} fontStyle="italic" initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 3.2 }}>
+      <motion.text x={336} y={60} textAnchor="middle" fontSize="16" fontWeight="900" fill={INK} fontStyle="italic" initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 3.2 }}>
         a² + b² = c²
       </motion.text>
     </Svg>
@@ -329,14 +329,14 @@ function SceneLadder() {
   const top: P = [270, 60];
   return (
     <Svg label="A ladder leans against a wall: its foot is 3 metres from the wall and it reaches 4 metres high, so it is 5 metres long">
-      <rect x="270" y="20" width="40" height="200" fill="#fca5a5" stroke={INK} strokeWidth="2" />
-      {[40, 80, 120, 160, 200].map((y) => (
-        <line key={y} x1="270" y1={y} x2="310" y2={y} stroke="#b91c1c" strokeWidth="1" opacity="0.6" />
-      ))}
       <line x1="20" y1="220" x2="380" y2="220" stroke={INK} strokeWidth="3" />
       <motion.g initial={{ y: -30, opacity: 0 }} animate={{ y: 0, opacity: 1 }} transition={{ duration: 0.9 }}>
         <Ladder foot={foot} top={top} />
       </motion.g>
+      <rect x="270" y="20" width="40" height="200" fill="#fca5a5" stroke={INK} strokeWidth="2" />
+      {[40, 80, 120, 160, 200].map((y) => (
+        <line key={y} x1="270" y1={y} x2="310" y2={y} stroke="#b91c1c" strokeWidth="1" opacity="0.6" />
+      ))}
       <RightMark at={[258, 220]} s={12} />
       <line x1="150" y1="236" x2="270" y2="236" stroke={SB} strokeWidth="2" />
       <text x="210" y="252" textAnchor="middle" fontSize="14" fontWeight="900" fill={SB}>
@@ -363,15 +363,15 @@ function SceneLadder() {
 
 /* ---------------- Try: drag the triangle ---------------- */
 
-const U = 15;
-const OX = 180;
-const OY = 300;
+const U = 18;
+const OX = 216;
+const OY = 288;
 const gx = (v: number) => OX + v * U;
 const gy = (v: number) => OY - v * U;
 
 const DOTS = (
   <g aria-hidden>
-    {Array.from({ length: 30 }, (_, i) => Array.from({ length: 30 }, (_, j) => <circle key={`${i}-${j}`} cx={i * U} cy={j * U} r="1.2" fill="rgb(var(--muted))" opacity="0.35" />))}
+    {Array.from({ length: 25 }, (_, i) => Array.from({ length: 25 }, (_, j) => <circle key={`${i}-${j}`} cx={i * U} cy={j * U} r="1.2" fill="rgb(var(--muted))" opacity="0.35" />))}
   </g>
 );
 

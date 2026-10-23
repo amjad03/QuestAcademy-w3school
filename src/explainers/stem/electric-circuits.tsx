@@ -37,7 +37,7 @@ function Bulb({ x, y, glow, dark }: { x: number; y: number; glow: number; dark?:
     <g>
       <motion.circle cx={x} cy={y - 22} animate={{ r: 18 + glow * 22, opacity: glow * 0.45 }} fill="#fde047" />
       <path d={`M ${x - 9} ${y - 4} L ${x - 9} ${y + 6} L ${x + 9} ${y + 6} L ${x + 9} ${y - 4}`} fill="#94a3b8" stroke={ink} strokeWidth="2" />
-      <motion.circle cx={x} cy={y - 22} r="17" stroke={ink} strokeWidth="2.5" animate={{ fill: glow > 0.02 ? `rgb(253 224 71 / ${0.25 + glow * 0.75})` : "rgb(255 255 255 / 0.85)" }} />
+      <motion.circle cx={x} cy={y - 22} r="17" stroke={ink} strokeWidth="2.5" animate={{ fill: glow > 0.02 ? `rgba(253, 224, 71, ${0.25 + glow * 0.75})` : "rgba(255, 255, 255, 0.85)" }} />
       <path d={`M ${x - 6} ${y - 4} L ${x - 4} ${y - 24} L ${x} ${y - 18} L ${x + 4} ${y - 24} L ${x + 6} ${y - 4}`} fill="none" stroke={glow > 0.02 ? "#b45309" : ink} strokeWidth="1.8" />
     </g>
   );
@@ -159,18 +159,19 @@ function SceneCounter() {
   );
 }
 
+const OHM_STATES = [
+  { V: 6, R: 3 },
+  { V: 12, R: 3 },
+  { V: 12, R: 6 },
+];
+
 function SceneOhm() {
-  const STATES = [
-    { V: 6, R: 3 },
-    { V: 12, R: 3 },
-    { V: 12, R: 6 },
-  ];
+  const STATES = OHM_STATES;
   const [k, setK] = useState(0);
   useEffect(() => {
     const id = setInterval(() => setK((v) => (v + 1) % STATES.length), 2600);
     return () => clearInterval(id);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [STATES.length]);
   const { V, R } = STATES[k];
   const I = V / R;
   return (
@@ -252,7 +253,7 @@ function CircuitTry() {
               narrow pipe = R
             </text>
             <text x="170" y="110" textAnchor="middle" fontSize="13" fontWeight="900" fill={INK}>
-              pump push = {V}
+              pump push = {V} V
             </text>
           </Svg>
         </div>
@@ -453,11 +454,11 @@ export const electricCircuits: Explainer = {
       say: "A narrow pipe makes it harder for water to get through, so less flows. That's resistance, R, measured in ohms. A bulb's thin wire works like this.",
       scene: (
         <WaterLoop speed={24} narrow={14} label="A narrow section of pipe at the top slows the flow all the way round">
-          <text x="200" y="96" textAnchor="middle" fontSize="15" fontWeight="900" fill={INK}>
+          <text x="210" y="100" textAnchor="middle" fontSize="15" fontWeight="900" fill={INK}>
             ↑ narrow pipe = resistance (R)
           </text>
-          <text x="200" y="138" textAnchor="middle" fontSize="14" fontWeight="800" fill={MUTED}>
-            the flow slows down everywhere in the loop
+          <text x="210" y="140" textAnchor="middle" fontSize="14" fontWeight="800" fill={MUTED}>
+            less flows all the way round
           </text>
         </WaterLoop>
       ),
