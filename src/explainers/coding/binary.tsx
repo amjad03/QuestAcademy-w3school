@@ -428,7 +428,7 @@ const story: Explainer["story"] = [
       </Art>
     ),
     speech: "Can you read it?",
-    caption: "Mia switches on the 4 and the 2 lamps: on, on — off, off — 0110.",
+    caption: "Mia switches on the 4 and the 2 lamps: off, on, on, off — 0110.",
   },
   {
     art: (
