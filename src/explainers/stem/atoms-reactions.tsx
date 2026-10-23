@@ -215,33 +215,38 @@ function Tally({ x, n, el, delay }: { x: number; n: number; el: El; delay: numbe
 function SceneCount() {
   return (
     <Svg label="Counting atoms: 4 hydrogen and 2 oxygen before, and 4 hydrogen and 2 oxygen after">
-      <g transform="translate(-30 -20) scale(0.8)">
-        <g transform="translate(0 0)">
-          {OLD.map(([i, j], k) => (
-            <line key={k} x1={RX[i].from[0]} y1={RX[i].from[1]} x2={RX[j].from[0]} y2={RX[j].from[1]} stroke={INK} strokeWidth="6" />
-          ))}
-          {RX.map((a, i) => (
-            <Atom key={i} el={a.el} x={a.from[0] + 40} y={a.from[1]} s={S} />
-          ))}
-        </g>
-      </g>
-      <g transform="translate(60 -20) scale(0.8)">
-        <Rearrange counts />
-      </g>
-      <g transform="translate(36 200)">
+      <text x="200" y="22" textAnchor="middle" fontSize="15" fontWeight="900" fill={INK}>
+        count the atoms on each side
+      </text>
+      <Molecule m={MOLS.H2} x={60} y={70} s={1.5} />
+      <Molecule m={MOLS.H2} x={60} y={140} s={1.5} />
+      <Molecule m={MOLS.O2} x={140} y={105} s={1.4} />
+      <path d="M 186 105 L 222 105" stroke={INK} strokeWidth="3" markerEnd="url(#ar-c)" />
+      <defs>
+        <marker id="ar-c" markerWidth="8" markerHeight="8" refX="4" refY="4" orient="auto">
+          <path d="M0,0 L8,4 L0,8 Z" fill={INK} />
+        </marker>
+      </defs>
+      <Molecule m={MOLS.H2O} x={300} y={72} s={1.5} />
+      <Molecule m={MOLS.H2O} x={300} y={142} s={1.5} />
+      <line x1="20" y1="180" x2="380" y2="180" stroke="rgb(var(--line))" strokeWidth="2" />
+      <g transform="translate(56 200)">
         <Tally x={0} n={4} el="H" delay={0.3} />
         <Tally x={0} n={2} el="O" delay={0.6} />
       </g>
-      <g transform="translate(250 200)">
+      <g transform="translate(270 200)">
         <Tally x={0} n={4} el="H" delay={0.9} />
         <Tally x={0} n={2} el="O" delay={1.2} />
       </g>
-      <motion.text x="200" y="214" textAnchor="middle" fontSize="20" fontWeight="900" fill="#16a34a" initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 1.6 }}>
+      <text x="40" y="205" textAnchor="end" fontSize="12" fontWeight="900" fill={INK}>
+        4 H
+      </text>
+      <text x="40" y="235" textAnchor="end" fontSize="12" fontWeight="900" fill={INK}>
+        2 O
+      </text>
+      <motion.text x="200" y="224" textAnchor="middle" fontSize="22" fontWeight="900" fill="#16a34a" initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 1.6 }}>
         = ✓
       </motion.text>
-      <text x="200" y="20" textAnchor="middle" fontSize="15" fontWeight="900" fill={INK}>
-        count the atoms on each side
-      </text>
     </Svg>
   );
 }
@@ -490,7 +495,7 @@ const story = [
   {
     art: (
       <Svg label="Maya puts vinegar and baking soda in a sealed bag on a kitchen scale reading 250 grams" vb="0 0 240 160" maxH={170}>
-        <Bag x={150} y={100} puffed={false} />
+        <Bag x={150} y={124} puffed={false} />
         <g transform="scale(0.8) translate(38 30)">
           <KitchenScale x={150} y={125} reading="250 g" />
         </g>
@@ -503,7 +508,7 @@ const story = [
   {
     art: (
       <Svg label="The bag fizzes and puffs up with gas" vb="0 0 240 160" maxH={170}>
-        <Bag x={150} y={100} puffed />
+        <Bag x={150} y={124} puffed />
         <g transform="scale(0.8) translate(38 30)">
           <KitchenScale x={150} y={125} reading="250 g" />
         </g>
@@ -519,7 +524,7 @@ const story = [
   {
     art: (
       <Svg label="Leo looks closely at the scale which still reads 250 grams" vb="0 0 240 160" maxH={170}>
-        <Bag x={150} y={100} puffed />
+        <Bag x={150} y={124} puffed />
         <g transform="scale(0.8) translate(38 30)">
           <KitchenScale x={150} y={125} reading="250 g" />
         </g>
@@ -532,7 +537,7 @@ const story = [
   {
     art: (
       <Svg label="The bag is opened, gas escapes and the scale now reads 248 grams" vb="0 0 240 160" maxH={170}>
-        <Bag x={150} y={100} puffed={false} open />
+        <Bag x={150} y={124} puffed={false} open />
         <g transform="scale(0.8) translate(38 30)">
           <KitchenScale x={150} y={125} reading="248 g" />
         </g>

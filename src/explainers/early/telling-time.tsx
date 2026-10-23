@@ -157,7 +157,7 @@ function DayScene() {
           <Emo x={it.x} y={190} size={40}>
             {it.e}
           </Emo>
-          <T x={it.x} y={236} size={18}>
+          <T x={it.x} y={236} size={18} color={C}>
             {`${it.h} o'clock`}
           </T>
         </motion.g>

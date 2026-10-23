@@ -73,7 +73,7 @@ function CookieScene({ stage }: { stage: number }) {
             </T>
           </motion.g>
           <motion.g {...rise(1.3)}>
-            <T x={200} y={222} size={17} color="#475569">
+            <T x={200} y={222} size={17} color={C}>
               3 groups of 4
             </T>
           </motion.g>
