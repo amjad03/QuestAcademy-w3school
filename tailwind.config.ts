@@ -51,6 +51,7 @@ const config: Config = {
         "spin-slow": { to: { transform: "rotate(360deg)" } },
         blink: { "0%,100%": { opacity: "1" }, "50%": { opacity: "0" } },
         shimmer: { "0%": { backgroundPosition: "-200% 0" }, "100%": { backgroundPosition: "200% 0" } },
+        marquee: { to: { transform: "translateX(-50%)" } },
       },
       animation: {
         float: "float 3.2s ease-in-out infinite",
@@ -59,6 +60,7 @@ const config: Config = {
         "spin-slow": "spin-slow 40s linear infinite",
         blink: "blink 1s step-end infinite",
         shimmer: "shimmer 2.4s linear infinite",
+        marquee: "marquee 60s linear infinite",
       },
     },
   },

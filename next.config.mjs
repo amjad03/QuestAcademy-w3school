@@ -1,6 +1,8 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   reactStrictMode: true,
+  // A second dev server can build into its own folder: NEXT_DIST_DIR=.next-dev next dev -p 3300
+  distDir: process.env.NEXT_DIST_DIR || ".next",
   eslint: { ignoreDuringBuilds: true },
   async redirects() {
     return [
