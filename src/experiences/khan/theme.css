@@ -155,7 +155,7 @@ html[data-skin="modes"]:is([data-mode="adventure"], [data-mode="focus"], [data-m
 html[data-skin="modes"]:is([data-mode="adventure"], [data-mode="focus"], [data-mode="mastery"], [data-mode="research"], [data-mode="professional"]) .border-2 {
   border-width: 1px;
 }
-html[data-skin="modes"]:is([data-mode="adventure"], [data-mode="focus"], [data-mode="mastery"], [data-mode="research"], [data-mode="professional"]) :is(.border-b-2, .border-b-4) {
+html[data-skin="modes"]:is([data-mode="adventure"], [data-mode="focus"], [data-mode="mastery"], [data-mode="research"], [data-mode="professional"]) :is(.border-b-2, .border-b-4, .border-b-\[3px\], .border-b-\[6px\]) {
   border-bottom-width: 1px;
 }
 html[data-skin="modes"]:is([data-mode="adventure"], [data-mode="focus"], [data-mode="mastery"], [data-mode="research"], [data-mode="professional"]) .border-t-2 {

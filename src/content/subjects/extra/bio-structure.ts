@@ -97,7 +97,7 @@ export const topics: Topic[] = [
           },
           {
             type: "text",
-            md: "**Leaf modifications**: tendrils (pea), spines (cacti), fleshy storage leaves (onion, garlic), **phyllodes** where the petiole becomes flat and green (Australian Acacia), and insect-trapping leaves (pitcher plant, Venus fly trap).",
+            md: "**Worked example: name the organ.** A green, flattened, leaf-like structure of Opuntia bears spines and arises with buds at nodes. Nodes mean it is a **stem**, so it is a phylloclade; its spines, which sit where leaves should be, are modified **leaves**.\n\n**Leaf modifications**: tendrils (pea), spines (cacti), fleshy storage leaves (onion, garlic), **phyllodes** where the petiole becomes flat and green (Australian Acacia), and insect-trapping leaves (pitcher plant, Venus fly trap).",
           },
           {
             type: "keypoints",
@@ -341,21 +341,21 @@ export const topics: Topic[] = [
           { type: "heading", text: "Floral formula" },
           {
             type: "text",
-            md: "A floral formula packs a whole flower into one line: Br = bracteate, K = calyx, C = corolla, P = perianth, A = androecium, G = gynoecium. Brackets mean fusion, a line joining C and A means epipetalous stamens, and a line **above** G means an inferior ovary, a line **below** G a superior ovary. ⊕ is actinomorphic, % zygomorphic, ⚥ bisexual.",
+            md: "A floral formula packs a whole flower into one line: Br = bracteate, K = calyx, C = corolla, P = perianth, A = androecium, G = gynoecium. Brackets mean fusion, a line joining C and A means epipetalous stamens, and a line **above** G means an inferior ovary, a line **below** G a superior ovary. ⊕ is actinomorphic and % zygomorphic; all three families below have bisexual flowers.",
           },
           {
             type: "formula",
-            tex: t`\text{Fabaceae: } \%\ \text{⚥}\ K_{(5)}\ C_{1+2+(2)}\ A_{(9)+1}\ \underline{G_1}`,
+            tex: t`\text{Fabaceae: } \%\ K_{(5)}\ C_{1+2+(2)}\ A_{(9)+1}\ \underline{G_1}`,
             caption: "Pea family: standard 1, wings 2, keel 2 fused; nine stamens fused plus one free; monocarpellary superior ovary.",
           },
           {
             type: "formula",
-            tex: t`\text{Solanaceae: } \oplus\ \text{⚥}\ K_{(5)}\ \overset{\frown}{C_{(5)}\ A_5}\ \underline{G_{(2)}}`,
+            tex: t`\text{Solanaceae: } \oplus\ K_{(5)}\ \overset{\frown}{C_{(5)}\ A_5}\ \underline{G_{(2)}}`,
             caption: "Potato family: five epipetalous stamens; bicarpellary syncarpous superior ovary.",
           },
           {
             type: "formula",
-            tex: t`\text{Liliaceae: } Br\ \oplus\ \text{⚥}\ P_{(3+3)}\ A_{3+3}\ \underline{G_{(3)}}`,
+            tex: t`\text{Liliaceae: } Br\ \oplus\ \overset{\frown}{P_{(3+3)}\ A_{3+3}}\ \underline{G_{(3)}}`,
             caption: "Lily family: six tepals, six epiphyllous stamens, tricarpellary syncarpous superior ovary.",
           },
           {
