@@ -25,7 +25,7 @@ export function NotebookDock({ lessonId, title, href }: Props) {
   const toggleBookmark = useNotebook((s) => s.toggleBookmark);
   const [panel, setPanel] = useState<"notes" | "doubt" | null>(null);
 
-  const explore = mode.id === "explore";
+  const explore = mode.young;
   const isMarked = hydrated && bookmarked;
 
   useEffect(() => setPanel(null), [lessonId]);

@@ -20,7 +20,7 @@ import {
   weekKey,
 } from "./gamification";
 import { useUi } from "./ui";
-import { resolveMode, type Board, type ModeId } from "./modes";
+import { MODES, resolveMode, type Board, type ModeId } from "./modes";
 import { afterAssessmentAnswer, afterPractice, type AssessmentKind, type MasteryLevel } from "./mastery";
 
 export interface Profile {
@@ -106,7 +106,7 @@ export interface LearnerState {
   challengesPassed: string[];
   mockResults: MockResult[];
   owned: string[];
-  settings: { theme: "system" | "light" | "dark"; sound: boolean; /** Visual skin: "classic" (default) or "studio". */ skin?: "classic" | "studio" };
+  settings: { theme: "system" | "light" | "dark"; sound: boolean; /** Visual design: "modes" (default — one design per age group), "classic" (the original) or "studio". */ skin?: "modes" | "classic" | "studio" };
   /** lessonId → mastery level (0–4). */
   mastery: Record<string, MasteryLevel>;
   /** Completed learning items (videos, articles, practice, cards…), keyed by item id. */
@@ -261,7 +261,7 @@ function finalize(prev: LearnerState, next: LearnerState): LearnerState {
     worldsVisited: next.worldsVisited.length,
     subjectsStarted: next.subjectsStarted.length,
     hour: new Date().getHours(),
-    young: resolveMode(next.profile) === "explore",
+    young: MODES[resolveMode(next.profile)].young,
   };
   const earned = BADGES.filter((b) => !next.badges[b.id] && b.test(ctx));
   if (earned.length) {

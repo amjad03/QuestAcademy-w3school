@@ -12,12 +12,7 @@ import { useCatalog } from "@/components/shell/CatalogContext";
 import { CourseIcon } from "@/components/brand/CourseIcon";
 import { Mascot } from "@/components/brand/Mascot";
 import { LearnPath } from "./LearnPath";
-import { useMode } from "@/lib/useMode";
-import { ExploreHome } from "@/components/modes/explore/Home";
-import { AdventureHome } from "@/components/modes/adventure/Home";
-import { FocusHome } from "@/components/modes/focus/Home";
-import { MasteryHome } from "@/components/modes/mastery/Home";
-import { ProfessionalHome } from "@/components/modes/professional/Home";
+import { useExperience } from "@/experiences";
 
 const outlines = new Map<string, CourseOutline>();
 
@@ -44,22 +39,12 @@ export function useOutline(slug: string | null | undefined) {
 /** Learn home: each experience profile has its own home screen. */
 export function LearnHome() {
   const hydrated = useHydrated();
-  const mode = useMode();
+  const exp = useExperience();
   const view = useSearchParams().get("view");
   if (!hydrated) return <PageColumns>{null}</PageColumns>;
   if (view === "path") return <PathHome />;
-  switch (mode.id) {
-    case "explore":
-      return <ExploreHome />;
-    case "adventure":
-      return <AdventureHome />;
-    case "focus":
-      return <FocusHome />;
-    case "mastery":
-      return <MasteryHome />;
-    case "professional":
-      return <ProfessionalHome />;
-  }
+  const Home = exp.Home;
+  return <Home />;
 }
 
 /** The Duolingo-style course path (used directly and inside mode homes). */

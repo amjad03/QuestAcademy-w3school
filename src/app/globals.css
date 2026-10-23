@@ -190,10 +190,12 @@ body {
 /* ------------------------------------------------------------------ */
 
 /* 01 Explore — big, round, friendly */
-html[data-mode="explore"] {
+html[data-mode="explore"] ,
+html[data-mode="sprout"]  {
   font-size: 18.5px;
 }
-html[data-mode="explore"] .btn {
+html[data-mode="explore"] .btn ,
+html[data-mode="sprout"] .btn  {
   @apply rounded-[1.25rem] px-6 py-3 text-base;
 }
 
@@ -212,40 +214,50 @@ html[data-mode="focus"] .btn {
 
 /* 04 Mastery & 05 Professional — professional typography (Inter), sentence-case controls */
 html[data-mode="mastery"],
+html[data-mode="research"],
 html[data-mode="professional"] {
   font-size: 16px;
   --font-sans: var(--font-pro);
 }
 html[data-mode="mastery"] .btn,
+html[data-mode="research"] .btn,
 html[data-mode="professional"] .btn {
   @apply rounded-xl border-b-2 py-2 text-sm font-semibold normal-case tracking-normal active:border-b-2;
 }
 html[data-mode="mastery"] .btn-flat,
+html[data-mode="research"] .btn-flat,
 html[data-mode="professional"] .btn-flat,
 html[data-mode="mastery"] .eyebrow,
+html[data-mode="research"] .eyebrow,
 html[data-mode="professional"] .eyebrow {
   @apply font-semibold;
 }
 html[data-mode="mastery"] .font-black,
+html[data-mode="research"] .font-black,
 html[data-mode="professional"] .font-black {
   font-weight: 700;
   letter-spacing: -0.02em;
 }
 html[data-mode="mastery"] .font-extrabold,
+html[data-mode="research"] .font-extrabold,
 html[data-mode="professional"] .font-extrabold {
   font-weight: 600;
 }
 html[data-mode="mastery"] .tile,
+html[data-mode="research"] .tile,
 html[data-mode="professional"] .tile,
 html[data-mode="mastery"] .card,
+html[data-mode="research"] .card,
 html[data-mode="professional"] .card {
   @apply rounded-xl;
 }
 html[data-mode="mastery"] .tile,
+html[data-mode="research"] .tile,
 html[data-mode="professional"] .tile {
   @apply border-b-2 active:translate-y-0;
 }
 html[data-mode="mastery"] .prose-quest,
+html[data-mode="research"] .prose-quest,
 html[data-mode="professional"] .prose-quest {
   @apply font-normal leading-[1.8];
 }

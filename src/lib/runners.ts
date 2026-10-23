@@ -75,11 +75,13 @@ const PYODIDE_VERSION = "0.27.2";
 const PYODIDE_URL = `https://cdn.jsdelivr.net/pyodide/v${PYODIDE_VERSION}/full/`;
 
 const WORKER_SRC = `
-importScripts("${PYODIDE_URL}pyodide.js");
+let loadError = null;
+try { importScripts("${PYODIDE_URL}pyodide.js"); } catch (e) { loadError = "Could not download Python. Check your internet connection and try again."; }
 let py = null;
 async function boot(){ if (!py) { py = await loadPyodide({ indexURL: "${PYODIDE_URL}" }); } return py; }
 self.onmessage = async (e) => {
   const { id, code, checks } = e.data;
+  if (loadError) { self.postMessage({ id, ok: false, error: loadError, fatal: true }); return; }
   try {
     const pyodide = await boot();
     let out = "";
@@ -153,7 +155,14 @@ export function runPython(code: string, checks?: { label: string; check: string 
       if (e.data?.id !== id) return;
       clearTimeout(timer);
       w.removeEventListener("message", onMsg);
-      if (!e.data.ok) return resolve({ out: "", error: e.data.error });
+      if (!e.data.ok) {
+        // A failed download leaves the worker useless; start fresh next time.
+        if (e.data.fatal) {
+          w.terminate();
+          worker = null;
+        }
+        return resolve({ out: "", error: e.data.error });
+      }
       warm = true;
       resolve({
         out: e.data.out,

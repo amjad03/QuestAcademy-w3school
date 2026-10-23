@@ -4,20 +4,21 @@ import { Check } from "lucide-react";
 import clsx from "clsx";
 import { useLearner } from "@/lib/store";
 
-type Skin = "classic" | "studio";
+type Skin = "modes" | "classic" | "studio";
 
 const SKINS: { id: Skin; name: string; blurb: string; swatch: string[] }[] = [
-  { id: "classic", name: "Classic", blurb: "The original Quest look: rounded, chunky buttons, Quest Blue and Nunito. Best for younger learners.", swatch: ["#2F6BFF", "#2EBE70", "#FFB800", "#FF4B4B"] },
+  { id: "modes", name: "Age designs", blurb: "Each age group gets its own app: navigation, lesson pages, practice and rewards made for that stage, from pre-primary to professional.", swatch: ["#FF6B9A", "#2EBE70", "#2F6BFF", "#0F172A"] },
+  { id: "classic", name: "Classic", blurb: "The original Quest look for everyone: rounded, chunky buttons, Quest Blue and Nunito.", swatch: ["#2F6BFF", "#2EBE70", "#FFB800", "#FF4B4B"] },
   { id: "studio", name: "Studio", blurb: "An editorial system: hairline borders, indigo and teal, Inter typography and calmer surfaces. Built for long study sessions.", swatch: ["#4F46E5", "#0D9488", "#D97706", "#DC2626"] },
 ];
 
-/** Switch between the two design systems. Classic is always one tap away. */
+/** Switch between age designs and the two shared design systems. Classic is always one tap away. */
 export function SkinPicker() {
-  const skin = useLearner((s) => s.settings.skin ?? "classic");
+  const skin = useLearner((s) => s.settings.skin ?? "modes");
   const setSettings = useLearner((s) => s.setSettings);
   return (
     <div>
-      <div className="grid gap-3 sm:grid-cols-2">
+      <div className="grid gap-3 sm:grid-cols-3">
         {SKINS.map((k) => {
           const active = skin === k.id;
           return (
@@ -34,7 +35,7 @@ export function SkinPicker() {
               </span>
               <span className="flex items-center gap-2 text-lg font-extrabold">
                 {k.name}
-                {k.id === "classic" && <span className="chip">Default</span>}
+                {k.id === "modes" && <span className="chip">Default</span>}
               </span>
               <span className="text-sm font-semibold leading-6 text-muted">{k.blurb}</span>
               {active && (
@@ -46,7 +47,7 @@ export function SkinPicker() {
           );
         })}
       </div>
-      <p className="mt-3 text-sm font-semibold text-muted">Both skins share the same components and content; switching is instant and you can roll back to Classic any time.</p>
+      <p className="mt-3 text-sm font-semibold text-muted">All three share the same courses and progress; switching is instant, and Classic restores the original look any time.</p>
     </div>
   );
 }

@@ -8,7 +8,8 @@ import { plain } from "@/components/Md";
 export function blockSpeech(b: Block): string | null {
   const t = rawSpeech(b);
   // Joining parts with ". " can double up punctuation ("Did you know?. …").
-  return t ? t.replace(/(?<!\.)([.!?…])\s*\.(?!\.)/g, "$1").replace(/^\.\s*/, "").trim() || null : null;
+  // No regex lookbehind here: older Safari (before 16.4) fails to parse it.
+  return t ? t.replace(/(^|[^.])([.!?…])\s*\.(?!\.)/g, "$1$2").replace(/^\.\s*/, "").trim() || null : null;
 }
 
 function rawSpeech(b: Block): string | null {

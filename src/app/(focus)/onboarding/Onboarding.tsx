@@ -18,16 +18,18 @@ import { ModePicker } from "@/components/modes/ModePicker";
 
 const STEPS = ["age", "mode", "category", "course", "goal", "name", "done"] as const;
 
-const AGES = [
-  { label: "5 or under", age: 5 },
+/** Ages for children; stages for adults (age alone can't tell college from postgraduate). */
+const AGES: { label: string; age: number; mode?: ModeId; stage?: Stage }[] = [
+  { label: "3–5", age: 4 },
   { label: "6–8", age: 7 },
   { label: "9–10", age: 10 },
   { label: "11–12", age: 12 },
   { label: "13–14", age: 14 },
   { label: "15–16", age: 16 },
   { label: "17–18", age: 18 },
-  { label: "19–24", age: 21 },
-  { label: "25 or over", age: 30 },
+  { label: "In college", age: 20, mode: "mastery", stage: "ug" },
+  { label: "Postgraduate or research", age: 24, mode: "research", stage: "pg" },
+  { label: "Working or lifelong learner", age: 30, mode: "professional", stage: "lifelong" },
 ];
 
 function stageFromAge(age: number, category: WorldId | null): Stage {
@@ -35,17 +37,17 @@ function stageFromAge(age: number, category: WorldId | null): Stage {
   if (age <= 10) return "primary";
   if (age <= 14) return "middle";
   if (age <= 18) return category === "exam" ? "aspirant" : "secondary";
-  if (age <= 24) return "ug";
+  if (age <= 22) return "ug";
   return "lifelong";
 }
 
-const MODE_CATEGORY: Record<ModeId, WorldId> = { explore: "kids", adventure: "school", focus: "school", mastery: "campus", professional: "code" };
+const MODE_CATEGORY: Record<ModeId, WorldId> = { sprout: "kids", research: "campus", explore: "kids", adventure: "school", focus: "school", mastery: "campus", professional: "code" };
 
 const CATEGORY_ICON: Record<WorldId, typeof Baby> = { kids: Baby, school: GraduationCap, exam: Target, code: Laptop, campus: Sparkles };
 const CATEGORY_COLOR: Record<WorldId, string> = { kids: "#EC4899", school: "#2F6BFF", exam: "#FF4B4B", code: "#334155", campus: "#7C4DFF" };
 
 const PROMPT: Record<(typeof STEPS)[number], string> = {
-  age: "Hi there! I’m Questy. How old are you?",
+  age: "Hi there! I’m Questy. How old are you — or where are you in your studies?",
   mode: "Here’s the experience I picked for you. You can choose another any time.",
   category: "Hi there! I’m Questy. What would you like to learn?",
   course: "Great choice! Which course should we start with?",
@@ -71,18 +73,19 @@ export function Onboarding() {
   const [name, setName] = useState(profile.name);
 
   const id = STEPS[step];
-  const recommended = age !== null ? modeForAge(age) : undefined;
+  const choice = AGES.find((a) => a.age === age);
+  const recommended = age !== null ? (choice?.mode ?? modeForAge(age)) : undefined;
   const canNext = id === "age" ? age !== null : id === "mode" ? Boolean(mode) : id === "category" ? Boolean(category) : id === "course" ? Boolean(course) : true;
   const courses = catalog.filter((c) => c.world === category);
 
   const next = () => {
     if (!canNext) return;
     sfx("tap");
-    if (id === "age" && age !== null && !mode) setMode(modeForAge(age));
+    if (id === "age" && age !== null && !mode) setMode(recommended ?? modeForAge(age));
     if (id === "mode" && mode && !category) setCategory(MODE_CATEGORY[mode]);
     if (id === "name") {
-      const m = mode ?? modeForAge(age ?? 12);
-      const stage = stageParam && stageById[stageParam] ? stageParam : stageFromAge(age ?? 12, category);
+      const m = mode ?? recommended ?? modeForAge(age ?? 12);
+      const stage = stageParam && stageById[stageParam] ? stageParam : (choice?.stage ?? stageFromAge(age ?? 12, category));
       setProfile({ name: name.trim() || "Learner", age, stage, mode: m, worlds: category ? [category] : [], course, dailyGoal: goal, onboarded: true, style: profile.style });
       useLearner.getState().setSettings({ sound: MODES[m].sound });
       sfx("fanfare");
@@ -114,7 +117,7 @@ export function Onboarding() {
         <AnimatePresence mode="wait">
           <motion.div key={id} initial={{ opacity: 0, y: 14 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -10 }} transition={{ duration: 0.18 }} className="mt-8">
             {id === "age" && (
-              <div className="grid grid-cols-3 gap-3">
+              <div className="grid grid-cols-2 gap-3 sm:grid-cols-3">
                 {AGES.map((a) => (
                   <Option key={a.label} active={age === a.age} onClick={() => { setAge(a.age); setMode(null); }}>
                     <span className="w-full text-center text-lg font-extrabold">{a.label}</span>

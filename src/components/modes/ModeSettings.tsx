@@ -26,7 +26,7 @@ export function ModeSettings() {
 
   const choose = (m: ModeId) => {
     if (m === current) return;
-    if (current === "explore") {
+    if (MODES[current].young && !MODES[m].young) {
       setPending(m);
       say(EXPLORE_LINES.grownUp);
     } else apply(m);

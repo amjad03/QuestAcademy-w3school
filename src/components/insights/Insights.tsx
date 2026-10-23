@@ -23,7 +23,7 @@ export function Insights() {
   const hydrated = useHydrated();
   const mode = useMode();
   const s = useLearner();
-  const friendly = mode.id === "explore";
+  const friendly = mode.young;
 
   const data = useMemo(() => {
     const st: InsightState = s;

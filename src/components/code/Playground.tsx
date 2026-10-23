@@ -10,6 +10,7 @@ import { isWeb } from "@/lib/runners";
 import { ConsoleView, Preview, SqlTable } from "./Output";
 import { useRunner } from "./useRunner";
 import { LANG_LABEL } from "./TryIt";
+import { copyText } from "@/lib/clipboard";
 
 const CodeEditor = dynamic(() => import("./CodeEditor"), { ssr: false, loading: () => <div className="h-full animate-pulse bg-[#1a1b26]" /> });
 
@@ -126,7 +127,7 @@ export function Playground() {
   const share = () => {
     const hash = btoa(unescape(encodeURIComponent(JSON.stringify({ lang, code }))));
     const url = `${window.location.origin}/code/playground#${hash}`;
-    void navigator.clipboard?.writeText(url);
+    void copyText(url);
     setCopied(true);
     setTimeout(() => setCopied(false), 1500);
   };

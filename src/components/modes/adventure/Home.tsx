@@ -16,6 +16,7 @@ import { ProgressBar } from "@/components/ui/Progress";
 import { BadgeMedal } from "@/components/ui/GameIcon";
 import { MdInline } from "@/components/Md";
 import { SocialOptInCard } from "./SocialOptIn";
+import { copyText } from "@/lib/clipboard";
 
 /* ------------------------------------------------------------------ */
 /* Data helpers                                                        */
@@ -404,7 +405,7 @@ function Challenges({ outline }: { outline: CourseOutline }) {
   const share = () => {
     const pct = Math.round((bossBest ?? 0) * 100);
     const url = `${window.location.origin}/challenge?course=${encodeURIComponent(outline.slug)}&score=${pct}&by=${encodeURIComponent(s.profile.nickname || "Explorer")}`;
-    void navigator.clipboard?.writeText(url);
+    void copyText(url);
     setCopied(true);
     setTimeout(() => setCopied(false), 1800);
   };

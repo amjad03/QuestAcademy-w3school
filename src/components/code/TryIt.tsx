@@ -10,6 +10,7 @@ import { useLearner } from "@/lib/store";
 import { isWeb } from "@/lib/runners";
 import { ConsoleView, Preview, SqlTable } from "./Output";
 import { useRunner } from "./useRunner";
+import { copyText } from "@/lib/clipboard";
 
 const CodeEditor = dynamic(() => import("./CodeEditor"), {
   ssr: false,
@@ -57,7 +58,7 @@ export function TryIt({ lang, code: initial, caption }: { lang: CodeLang; code: 
           <IconBtn
             label="Copy"
             onClick={() => {
-              void navigator.clipboard?.writeText(code);
+              void copyText(code);
               setCopied(true);
               setTimeout(() => setCopied(false), 1200);
             }}

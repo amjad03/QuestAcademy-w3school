@@ -63,7 +63,7 @@ export function GamePlayer({ id }: { id: GameId }) {
     setXp(earned);
     bump("games");
     award(earned, `${meta.title} finished`);
-    if (currentMode().id === "explore") {
+    if (currentMode().young) {
       // Previous best is remembered as `game-best:<id>:<score>` items.
       const items = useLearner.getState().items;
       const prefix = `game-best:${id}:`;

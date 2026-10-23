@@ -1,11 +1,11 @@
 "use client";
 
-import { Check, Compass, GraduationCap, Map, Sparkles, Target } from "lucide-react";
+import { Check, Compass, FlaskConical, GraduationCap, Map, Sparkles, Sprout, Target } from "lucide-react";
 import clsx from "clsx";
 import { MODE_LIST, type ModeId } from "@/lib/modes";
 
-const ICON: Record<ModeId, typeof Map> = { explore: Sparkles, adventure: Map, focus: Target, mastery: GraduationCap, professional: Compass };
-export const MODE_COLOR: Record<ModeId, string> = { explore: "#EC4899", adventure: "#2EBE70", focus: "#2F6BFF", mastery: "#7C4DFF", professional: "#334155" };
+const ICON: Record<ModeId, typeof Map> = { sprout: Sprout, research: FlaskConical, explore: Sparkles, adventure: Map, focus: Target, mastery: GraduationCap, professional: Compass };
+export const MODE_COLOR: Record<ModeId, string> = { sprout: "#FF8A3D", research: "#0F766E", explore: "#EC4899", adventure: "#2EBE70", focus: "#2F6BFF", mastery: "#7C4DFF", professional: "#334155" };
 
 /** Five selectable experience-profile cards. */
 export function ModePicker({ value, recommended, onChange }: { value: ModeId | null; recommended?: ModeId; onChange: (m: ModeId) => void }) {

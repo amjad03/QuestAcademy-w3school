@@ -2,8 +2,8 @@
 
 import Link from "next/link";
 import { useRouter, useSearchParams } from "next/navigation";
-import { useEffect, useMemo, useState } from "react";
-import { ArrowRight, BookOpenCheck, Check, ChevronDown, ChevronLeft, Headphones, Pause, Trophy } from "lucide-react";
+import { useEffect, useMemo } from "react";
+import { BookOpenCheck, Check, Headphones, Pause, Trophy } from "lucide-react";
 import clsx from "clsx";
 import type { Assessment, CourseItem, CourseLesson, ItemKind } from "@/content/course";
 import type { Lesson, WorldId } from "@/content/types";
@@ -12,7 +12,6 @@ import { useLearner } from "@/lib/store";
 import { EMPTY_PROGRESS, itemDone, lessonProgress } from "@/lib/progress";
 import { MASTERY } from "@/lib/mastery";
 import { useHydrated } from "@/components/providers";
-import { CourseIcon } from "@/components/brand/CourseIcon";
 import { Mascot } from "@/components/brand/Mascot";
 import { ITEM_ICON } from "@/components/learn/LearnPath";
 import { BlockView } from "@/components/learn/Blocks";
@@ -25,6 +24,11 @@ import { useUi } from "@/lib/ui";
 import { awardExploreSticker } from "@/components/modes/explore/stickers";
 import { VideoPlayer } from "./VideoPlayer";
 import { NotebookDock } from "@/components/notebook/NotebookDock";
+import { useExperience } from "@/experiences";
+import type { LessonTab } from "@/experiences/types";
+import dynamic from "next/dynamic";
+
+const LessonExplainers = dynamic(() => import("@/explainers/LessonExplainers"), { ssr: false });
 
 export interface LessonViewerPayload {
   id: string;
@@ -50,7 +54,7 @@ export function LessonViewer(p: LessonViewerPayload) {
   const markItem = useLearner((st) => st.markItem);
   const completeLesson = useLearner((st) => st.completeLesson);
   const setProfile = useLearner((st) => st.setProfile);
-  const [navOpen, setNavOpen] = useState(false);
+  const exp = useExperience();
 
   const viewable = p.items.filter((i) => i.kind !== "practice");
   const requested = params.get("item") as ItemKind | null;
@@ -60,7 +64,7 @@ export function LessonViewer(p: LessonViewerPayload) {
   useEffect(() => {
     visitLesson({ id: p.id, subject: p.course.slug, world: p.world });
     if (!useLearner.getState().profile.course) setProfile({ course: p.course.slug });
-    if (currentMode().id === "explore") {
+    if (currentMode().young) {
       const sticker = awardExploreSticker("first-try", p.id, { silent: true });
       if (sticker) useUi.getState().toast({ text: `New sticker: ${sticker.name}!` });
     }
@@ -80,107 +84,60 @@ export function LessonViewer(p: LessonViewerPayload) {
   const finishArticle = () => {
     completeLesson({ id: p.id, subject: p.course.slug, world: p.world, xp: p.lesson.xp, flashcards: p.lesson.flashcards?.length ?? 0 });
     markItem(`${p.id}:article`);
-    if (currentMode().id === "explore") awardExploreSticker("lesson-complete", p.id);
+    if (currentMode().young) awardExploreSticker("lesson-complete", p.id);
   };
 
-  const sidebar = <UnitNav {...p} currentItem={item.id} onNavigate={() => setNavOpen(false)} />;
+  const sidebar = <UnitNav {...p} currentItem={item.id} onNavigate={() => {}} />;
 
-  return (
-    <div className="mx-auto flex max-w-[1240px]">
-      <aside className="sticky top-0 hidden h-screen w-[300px] shrink-0 overflow-y-auto border-r-2 border-line px-4 py-6 xl:block">{sidebar}</aside>
+  const tabs: LessonTab[] = p.items.map((it) => ({
+    kind: it.kind,
+    label: TAB_LABEL[it.kind],
+    icon: ITEM_ICON[it.kind],
+    active: it.id === item.id,
+    done: itemDone(st, p.id, it),
+    ...(it.kind === "practice" ? { href: it.href } : { onSelect: () => router.replace(`?item=${it.kind}`, { scroll: false }) }),
+  }));
 
-      <div className="min-w-0 flex-1 px-4 py-6 sm:px-8 lg:py-8">
-        <div className="mx-auto max-w-[760px]">
-          {/* breadcrumb */}
-          <div className="flex items-center gap-2 text-sm font-extrabold text-muted">
-            <Link href={p.course.href} className="flex items-center gap-2 hover:text-accent">
-              <CourseIcon slug={p.course.slug} size={24} /> <span className="hidden sm:inline">{p.course.title}</span>
-            </Link>
-            <span>/</span>
-            <Link href={p.unit.href} className="truncate hover:text-accent">
-              Unit {p.unit.index + 1}: {p.unit.title}
-            </Link>
-            <button onClick={() => setNavOpen((o) => !o)} className="ml-auto flex items-center gap-1 rounded-xl border-2 border-line px-3 py-1.5 text-xs uppercase tracking-wide xl:hidden">
-              Lessons <ChevronDown className={clsx("h-4 w-4 transition", navOpen && "rotate-180")} />
-            </button>
-          </div>
-          {navOpen && <div className="card mt-3 p-4 xl:hidden">{sidebar}</div>}
-
-          <h1 className="mt-5 text-3xl font-black leading-tight sm:text-[2.4rem]">{p.lesson.title}</h1>
-          <p className="mt-2 text-lg font-semibold text-muted">{p.lesson.summary}</p>
-          <NotebookDock lessonId={p.id} title={p.lesson.title} href={`/course/${p.id}`} />
-
-          {/* item tabs */}
-          <div className="mt-6 flex gap-2 overflow-x-auto pb-1">
-            {p.items.map((it) => {
-              const I = ITEM_ICON[it.kind];
-              const active = it.id === item.id;
-              const done = itemDone(st, p.id, it);
-              const cls = clsx(
-                "flex shrink-0 items-center gap-2 rounded-xl border-2 border-b-4 px-3.5 py-2 text-sm font-extrabold transition active:translate-y-[2px] active:border-b-2",
-                active ? "border-accent bg-accent-soft text-accent" : "border-line bg-surface text-muted hover:bg-surface-2",
-              );
-              const inner = (
-                <>
-                  <I className="h-[18px] w-[18px]" strokeWidth={2.6} />
-                  {TAB_LABEL[it.kind]}
-                  {done && <Check className="h-4 w-4 text-good" strokeWidth={3.5} />}
-                </>
-              );
-              return it.kind === "practice" ? (
-                <Link key={it.id} href={it.href} className={cls}>
-                  {inner}
-                </Link>
-              ) : (
-                <button key={it.id} onClick={() => router.replace(`?item=${it.kind}`, { scroll: false })} className={cls} aria-pressed={active}>
-                  {inner}
-                </button>
-              );
-            })}
-          </div>
-
-          {/* content */}
-          <div className="mt-8">
-            {item.kind === "video" && p.video && (
-              <div>
-                <VideoPlayer id={p.video.id} title={p.video.title || p.lesson.title} watched={itemDone(st, p.id, item)} onWatched={() => markItem(item.id, item.xp)} />
-                <h2 className="mt-4 text-xl font-black">{p.video.title || p.lesson.title}</h2>
-                {p.channel && (
-                  <a href={p.channel.url} target="_blank" rel="noreferrer" className="mt-1 inline-block text-sm font-bold text-muted hover:text-accent">
-                    {p.channel.title} on YouTube
-                  </a>
-                )}
-              </div>
-            )}
-
-            {item.kind === "article" &&
-              (p.world === "kids" ? (
-                <KidsStory lesson={p.lesson} id={p.id} onComplete={finishArticle} done={Boolean(st.lessons[p.id])} />
-              ) : (
-                <Article lesson={p.lesson} id={p.id} world={p.world} done={Boolean(st.lessons[p.id])} onComplete={finishArticle} />
-              ))}
-
-            {item.kind === "cards" && p.lesson.flashcards && <Flashcards cards={p.lesson.flashcards} kids={p.world === "kids"} onAllSeen={() => markItem(item.id, item.xp)} />}
-
-            {item.kind === "challenge" && p.lesson.challenge && <Challenge challenge={p.lesson.challenge} lessonId={p.id} />}
-          </div>
-
-          {/* up next */}
-          <div className="mt-12 flex flex-col gap-3 border-t-2 border-line pt-6 sm:flex-row sm:items-center sm:justify-between">
-            {p.prev ? (
-              <Link href={p.prev.href} className="flex items-center gap-2 text-sm font-extrabold text-muted hover:text-accent">
-                <ChevronLeft className="h-4 w-4" /> {p.prev.title}
-              </Link>
-            ) : (
-              <span />
-            )}
-            <Link href={upNext.href} className="btn-primary">
-              Up next: {upNext.label} <ArrowRight className="h-4 w-4" />
-            </Link>
-          </div>
+  const content = (
+    <>
+      {item.kind === "video" && p.video && (
+        <div>
+          <VideoPlayer id={p.video.id} title={p.video.title || p.lesson.title} watched={itemDone(st, p.id, item)} onWatched={() => markItem(item.id, item.xp)} />
+          <h2 className="mt-4 text-xl font-black">{p.video.title || p.lesson.title}</h2>
+          {p.channel && (
+            <a href={p.channel.url} target="_blank" rel="noreferrer" className="mt-1 inline-block text-sm font-bold text-muted hover:text-accent">
+              {p.channel.title} on YouTube
+            </a>
+          )}
         </div>
-      </div>
-    </div>
+      )}
+      {item.kind === "article" && <LessonExplainers lessonId={p.id} />}
+      {item.kind === "article" &&
+        (p.world === "kids" ? (
+          <KidsStory lesson={p.lesson} id={p.id} onComplete={finishArticle} done={Boolean(st.lessons[p.id])} />
+        ) : (
+          <Article lesson={p.lesson} id={p.id} world={p.world} done={Boolean(st.lessons[p.id])} onComplete={finishArticle} />
+        ))}
+      {item.kind === "cards" && p.lesson.flashcards && <Flashcards cards={p.lesson.flashcards} kids={p.world === "kids"} onAllSeen={() => markItem(item.id, item.xp)} />}
+      {item.kind === "challenge" && p.lesson.challenge && <Challenge challenge={p.lesson.challenge} lessonId={p.id} />}
+    </>
+  );
+
+  const Layout = exp.LessonLayout;
+  return (
+    <Layout
+      world={p.world}
+      course={p.course}
+      unit={{ title: p.unit.title, href: p.unit.href, index: p.unit.index }}
+      lesson={{ id: p.id, title: p.lesson.title, summary: p.lesson.summary, minutes: p.lesson.minutes, xp: p.lesson.xp }}
+      tabs={tabs}
+      content={content}
+      unitNav={sidebar}
+      notebook={<NotebookDock lessonId={p.id} title={p.lesson.title} href={`/course/${p.id}`} />}
+      prev={p.prev}
+      upNext={upNext}
+      unitProgress={{ done: p.unit.lessons.filter((l) => Boolean(st.lessons[l.id])).length, total: p.unit.lessons.length }}
+    />
   );
 }
 
