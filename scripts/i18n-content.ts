@@ -13,17 +13,33 @@ import path from "node:path";
 import { subjects } from "@/content";
 import { SKIP_FIELDS, translatable } from "@/i18n/content-fields";
 import { EXPLAINERS } from "@/explainers";
+import { SYLLABI } from "@/content/syllabus";
 
 const ROOT = path.resolve(__dirname, "..");
 const LOCALES = ["hi", "kn", "ta", "te", "mr", "bn"];
 /** Courses taught in English on purpose. */
 const ENGLISH_ONLY = new Set(["english"]);
 
-/** The visual explainers are translated like one more course, "explainers". */
-const EXPLAINER_SKIP = new Set(["lessons", "ages", "color"]);
+/**
+ * Besides courses, three shared dictionaries: "explainers" (the visual
+ * explainers), "syllabus" (board chapter lists) and "catalog" (course names,
+ * taglines and descriptions shown on homes, menus and the catalog).
+ */
+const EXTRA_SKIP: Record<string, Set<string>> = {
+  explainers: new Set(["lessons", "ages", "color"]),
+  syllabus: new Set(["lessonIds", "examChapters", "examSubject", "formulaChapter", "board", "examId"]),
+};
+const SHARED = ["explainers", "syllabus", "catalog"];
+
+function rootOf(course: string): unknown {
+  if (course === "explainers") return EXPLAINERS;
+  if (course === "syllabus") return SYLLABI;
+  if (course === "catalog") return subjects.map((s) => ({ title: s.title, tagline: s.tagline, description: s.description, levels: s.levels, domain: s.domain }));
+  return subjects.find((x) => x.slug === course);
+}
 
 function strings(course: string): string[] {
-  const root = course === "explainers" ? EXPLAINERS : subjects.find((x) => x.slug === course);
+  const root = rootOf(course);
   if (!root) throw new Error(`No course "${course}"`);
   const out = new Set<string>();
   const walk = (v: unknown) => {
@@ -31,7 +47,7 @@ function strings(course: string): string[] {
     if (Array.isArray(v)) return v.forEach(walk);
     // Skip React elements (explainer artwork) and components.
     if (v && typeof v === "object" && !("$$typeof" in v))
-      for (const [k, x] of Object.entries(v)) if (!SKIP_FIELDS.has(k) && !(course === "explainers" && EXPLAINER_SKIP.has(k))) walk(x);
+      for (const [k, x] of Object.entries(v)) if ((!SKIP_FIELDS.has(k) || (course === "catalog" && k === "domain")) && !EXTRA_SKIP[course]?.has(k)) walk(x);
   };
   walk(root);
   return [...out];
@@ -72,7 +88,7 @@ if (cmd === "--strings") {
   console.log(`${course} ${locale}: ${Object.keys(d).length} translated, ${missing} missing, ${bad} with problems`);
   process.exitCode = bad ? 1 : 0;
 } else {
-  for (const s of [...subjects, { slug: "explainers" }]) {
+  for (const s of [...subjects, ...SHARED.map((slug) => ({ slug }))]) {
     if (ENGLISH_ONLY.has(s.slug)) continue;
     const all = strings(s.slug);
     const cols = LOCALES.map((l) => {

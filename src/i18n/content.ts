@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { useLearner } from "@/lib/store";
 import { useLocale, type Locale } from "./index";
 import { SKIP_FIELDS } from "./content-fields";
@@ -84,4 +84,17 @@ export function localize<T>(value: T, dict: ContentDict | null): T {
     return out;
   };
   return walk(value) as T;
+}
+
+/**
+ * Shared text in the learner's language: course names, taglines and
+ * descriptions ("catalog") and board syllabus chapters ("syllabus").
+ *
+ *   const tx = useSharedText();
+ *   tx(course.title) // "School Physics" → "स्कूल भौतिकी"
+ */
+export function useSharedText() {
+  const catalog = useContentDict("catalog");
+  const syllabus = useContentDict("syllabus");
+  return useCallback((s: string) => (s && (catalog?.[s] ?? syllabus?.[s])) || s, [catalog, syllabus]);
 }
