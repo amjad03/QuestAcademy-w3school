@@ -242,7 +242,6 @@ export function TryFrame({ color, prompt, picture, status, children, onAnother, 
     }
     say(prompt, { rate: 0.95 });
     // Only on a new round.
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [round]);
   const [burstKey, setBurstKey] = useState(0);
   useEffect(() => {

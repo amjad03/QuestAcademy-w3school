@@ -1,0 +1,446 @@
+/*
+ * Research (postgraduate & research) — "a quiet reading room".
+ * Paper-like off-white with warm charcoal ink, one deep oxblood accent,
+ * Source Serif 4 for headings and long-form reading, Inter for chrome.
+ * Hairline borders, 4–6px radii, no shadows, no game decoration.
+ * Every rule is scoped to the research profile under the "Age designs" skin.
+ */
+
+html[data-skin="modes"][data-mode="research"] {
+  --bg: 251 250 247;
+  --surface: 253 252 250;
+  --surface-2: 244 241 235;
+  --line: 224 219 209;
+  --ink: 38 34 30;
+  --muted: 110 102 93;
+
+  --accent: 128 29 42; /* oxblood */
+  --accent-shade: 101 21 32;
+  --accent-soft: 244 232 230;
+  --accent-2: 22 94 99; /* deep teal, used sparingly */
+  --accent-2-shade: 15 72 77;
+  --good: 46 108 70;
+  --good-shade: 34 86 54;
+  --good-soft: 233 240 232;
+  --bad: 160 45 36;
+  --bad-shade: 130 33 26;
+  --bad-soft: 248 233 228;
+  --warn: 160 108 22;
+  --warn-shade: 128 84 14;
+  --streak: 150 92 30;
+
+  --font-sans: var(--font-pro);
+  --rs-serif: var(--font-serif), "Source Serif 4", Georgia, "Times New Roman", serif;
+  font-size: 17px;
+  color-scheme: light;
+}
+
+html.dark[data-skin="modes"][data-mode="research"] {
+  /* sepia-charcoal */
+  --bg: 29 26 23;
+  --surface: 34 31 27;
+  --surface-2: 43 39 34;
+  --line: 66 60 52;
+  --ink: 233 225 211;
+  --muted: 163 152 137;
+
+  --accent: 222 140 136;
+  --accent-shade: 200 112 110;
+  --accent-soft: 63 38 37;
+  --accent-2: 120 186 184;
+  --accent-2-shade: 94 160 158;
+  --good: 140 190 145;
+  --good-shade: 116 166 122;
+  --good-soft: 37 50 39;
+  --bad: 232 136 118;
+  --bad-shade: 206 108 92;
+  --bad-soft: 66 37 32;
+  --warn: 216 174 98;
+  --warn-shade: 190 148 70;
+  --streak: 212 156 88;
+  color-scheme: dark;
+}
+
+html[data-skin="modes"][data-mode="research"],
+html[data-skin="modes"][data-mode="research"] body {
+  background: rgb(var(--bg));
+  color: rgb(var(--ink));
+  font-family: var(--font-pro), ui-sans-serif, system-ui, sans-serif;
+  font-feature-settings: "kern", "liga";
+}
+
+html[data-skin="modes"][data-mode="research"] ::selection {
+  background: rgb(var(--accent) / 0.16);
+}
+
+html[data-skin="modes"][data-mode="research"] :focus-visible {
+  outline: 2px solid rgb(var(--accent) / 0.7);
+  outline-offset: 2px;
+}
+
+/* ---------- typography ---------- */
+html[data-skin="modes"][data-mode="research"] h1,
+html[data-skin="modes"][data-mode="research"] h2,
+html[data-skin="modes"][data-mode="research"] .rs-serif {
+  font-family: var(--rs-serif);
+  font-optical-sizing: auto;
+}
+html[data-skin="modes"][data-mode="research"] h1,
+html[data-skin="modes"][data-mode="research"] h2 {
+  font-weight: 600;
+  letter-spacing: -0.01em;
+}
+html[data-skin="modes"][data-mode="research"] .font-black {
+  font-weight: 600;
+  letter-spacing: -0.005em;
+}
+html[data-skin="modes"][data-mode="research"] .font-extrabold {
+  font-weight: 600;
+}
+html[data-skin="modes"][data-mode="research"] .font-bold {
+  font-weight: 500;
+}
+html[data-skin="modes"][data-mode="research"] .rs-sc {
+  font-variant-caps: all-small-caps;
+  letter-spacing: 0.07em;
+}
+html[data-skin="modes"][data-mode="research"] .rs-num {
+  font-variant-numeric: tabular-nums oldstyle-nums;
+}
+
+/* Links underline on hover (text links only, not cards or buttons). */
+html[data-skin="modes"][data-mode="research"] main a:not(.btn):not(.btn-primary):not(.btn-ghost):not(.btn-good):not(.btn-bad):not(.btn-flat):not(.tile):not(.card):hover {
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 3px;
+}
+html[data-skin="modes"][data-mode="research"] .rs-link {
+  color: rgb(var(--accent));
+  text-decoration: underline;
+  text-decoration-color: rgb(var(--accent) / 0.35);
+  text-decoration-thickness: 1px;
+  text-underline-offset: 3px;
+}
+html[data-skin="modes"][data-mode="research"] .rs-link:hover {
+  text-decoration-color: currentColor;
+}
+
+/* ---------- quiet geometry: hairlines, small radii, no shadows ---------- */
+html[data-skin="modes"][data-mode="research"] .rounded-3xl,
+html[data-skin="modes"][data-mode="research"] .rounded-2xl,
+html[data-skin="modes"][data-mode="research"] .rounded-xl {
+  border-radius: 6px;
+}
+html[data-skin="modes"][data-mode="research"] .rounded-lg {
+  border-radius: 4px;
+}
+html[data-skin="modes"][data-mode="research"] .border-2 {
+  border-width: 1px;
+}
+html[data-skin="modes"][data-mode="research"] .border-b-4,
+html[data-skin="modes"][data-mode="research"] .border-b-2 {
+  border-bottom-width: 1px;
+}
+html[data-skin="modes"][data-mode="research"] .border-t-2 {
+  border-top-width: 1px;
+}
+html[data-skin="modes"][data-mode="research"] .border-l-2 {
+  border-left-width: 1px;
+}
+html[data-skin="modes"][data-mode="research"] .border-r-2 {
+  border-right-width: 1px;
+}
+html[data-skin="modes"][data-mode="research"] .divide-y-2 > :not([hidden]) ~ :not([hidden]) {
+  border-top-width: 1px;
+  border-bottom-width: 0;
+}
+html[data-skin="modes"][data-mode="research"] .shadow-lift,
+html[data-skin="modes"][data-mode="research"] .shadow-soft,
+html[data-skin="modes"][data-mode="research"] .shadow-pop,
+html[data-skin="modes"][data-mode="research"] .shadow-lg,
+html[data-skin="modes"][data-mode="research"] .shadow-xl,
+html[data-skin="modes"][data-mode="research"] .shadow-md,
+html[data-skin="modes"][data-mode="research"] .shadow {
+  box-shadow: none;
+}
+
+/* No mascot in the reading room. */
+html[data-skin="modes"][data-mode="research"] svg[aria-label="Questy the owl"] {
+  display: none;
+}
+
+/* ---------- surfaces ---------- */
+html[data-skin="modes"][data-mode="research"] .card {
+  border-radius: 6px;
+  border-width: 1px;
+  border-color: rgb(var(--line));
+  background: rgb(var(--surface));
+  box-shadow: none;
+}
+html[data-skin="modes"][data-mode="research"] .tile {
+  border-radius: 6px;
+  border-width: 1px;
+  border-bottom-width: 1px;
+  border-color: rgb(var(--line));
+  background: rgb(var(--surface));
+  box-shadow: none;
+}
+html[data-skin="modes"][data-mode="research"] .tile:hover {
+  background: rgb(var(--surface));
+  border-color: rgb(var(--ink) / 0.35);
+}
+html[data-skin="modes"][data-mode="research"] .tile:active {
+  transform: none;
+  border-bottom-width: 1px;
+}
+
+/* ---------- buttons: text-weight, sentence case ---------- */
+html[data-skin="modes"][data-mode="research"] .btn,
+html[data-skin="modes"][data-mode="research"] .btn-primary,
+html[data-skin="modes"][data-mode="research"] .btn-pop,
+html[data-skin="modes"][data-mode="research"] .btn-good,
+html[data-skin="modes"][data-mode="research"] .btn-bad,
+html[data-skin="modes"][data-mode="research"] .btn-gold,
+html[data-skin="modes"][data-mode="research"] .btn-purple,
+html[data-skin="modes"][data-mode="research"] .btn-ghost {
+  border-radius: 4px;
+  border-width: 1px;
+  border-bottom-width: 1px;
+  padding: 0.45rem 1rem;
+  font-size: 0.9rem;
+  font-weight: 500;
+  text-transform: none;
+  letter-spacing: 0;
+  box-shadow: none;
+  transition: background-color 120ms, border-color 120ms, color 120ms;
+}
+html[data-skin="modes"][data-mode="research"] .btn:active,
+html[data-skin="modes"][data-mode="research"] .btn-primary:active,
+html[data-skin="modes"][data-mode="research"] .btn-good:active,
+html[data-skin="modes"][data-mode="research"] .btn-bad:active,
+html[data-skin="modes"][data-mode="research"] .btn-ghost:active {
+  transform: none;
+  border-bottom-width: 1px;
+}
+html[data-skin="modes"][data-mode="research"] .btn-primary,
+html[data-skin="modes"][data-mode="research"] .btn-pop {
+  background: rgb(var(--accent));
+  border-color: rgb(var(--accent));
+  color: rgb(var(--bg));
+}
+html[data-skin="modes"][data-mode="research"] .btn-primary:hover {
+  background: rgb(var(--accent-shade));
+  border-color: rgb(var(--accent-shade));
+  filter: none;
+}
+html[data-skin="modes"][data-mode="research"] .btn-good {
+  background: rgb(var(--ink));
+  border-color: rgb(var(--ink));
+  color: rgb(var(--bg));
+}
+html[data-skin="modes"][data-mode="research"] .btn-good:hover,
+html[data-skin="modes"][data-mode="research"] .btn-bad:hover {
+  filter: none;
+  opacity: 0.9;
+}
+html[data-skin="modes"][data-mode="research"] .btn-bad {
+  background: rgb(var(--bad));
+  border-color: rgb(var(--bad));
+  color: rgb(var(--bg));
+}
+html[data-skin="modes"][data-mode="research"] .btn-primary:disabled,
+html[data-skin="modes"][data-mode="research"] .btn-good:disabled {
+  background: transparent;
+  border-color: rgb(var(--line));
+  color: rgb(var(--muted));
+}
+html[data-skin="modes"][data-mode="research"] .btn-ghost {
+  background: transparent;
+  border-color: rgb(var(--line));
+  color: rgb(var(--ink));
+}
+html[data-skin="modes"][data-mode="research"] .btn-ghost:hover {
+  background: transparent;
+  border-color: rgb(var(--ink) / 0.5);
+}
+html[data-skin="modes"][data-mode="research"] .btn-flat {
+  border-radius: 4px;
+  padding: 0.25rem 0.5rem;
+  font-weight: 500;
+  text-transform: none;
+  letter-spacing: 0;
+  color: rgb(var(--accent));
+  background: transparent;
+}
+html[data-skin="modes"][data-mode="research"] .btn-flat:hover {
+  background: transparent;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+/* ---------- small controls ---------- */
+html[data-skin="modes"][data-mode="research"] .chip {
+  border-radius: 3px;
+  border: 1px solid rgb(var(--line));
+  background: transparent;
+  padding: 0.1rem 0.45rem;
+  font-weight: 500;
+  color: rgb(var(--muted));
+}
+html[data-skin="modes"][data-mode="research"] .input {
+  border-radius: 4px;
+  border-width: 1px;
+  border-color: rgb(var(--line));
+  background: rgb(var(--surface));
+  padding: 0.55rem 0.8rem;
+  font-weight: 400;
+}
+html[data-skin="modes"][data-mode="research"] .input:focus {
+  border-color: rgb(var(--accent));
+  background: rgb(var(--surface));
+}
+html[data-skin="modes"][data-mode="research"] .input::placeholder {
+  font-weight: 400;
+}
+html[data-skin="modes"][data-mode="research"] .eyebrow {
+  font-size: 0.82rem;
+  font-weight: 500;
+  font-variant-caps: all-small-caps;
+  text-transform: none;
+  letter-spacing: 0.08em;
+  color: rgb(var(--muted));
+}
+
+/* ---------- long-form reading: a well-typeset journal ---------- */
+html[data-skin="modes"][data-mode="research"] .prose-quest {
+  max-width: 68ch;
+  font-family: var(--rs-serif);
+  font-size: 1.06rem;
+  font-weight: 400;
+  line-height: 1.75;
+  color: rgb(var(--ink));
+  hyphens: auto;
+  text-wrap: pretty;
+  font-variant-numeric: oldstyle-nums proportional-nums;
+}
+html[data-skin="modes"][data-mode="research"] .prose-quest p + p {
+  margin-top: 0.9em;
+}
+html[data-skin="modes"][data-mode="research"] .prose-quest strong {
+  font-weight: 600;
+  color: rgb(var(--ink));
+}
+html[data-skin="modes"][data-mode="research"] .prose-quest em {
+  font-style: italic;
+}
+html[data-skin="modes"][data-mode="research"] .prose-quest a {
+  font-weight: inherit;
+  color: rgb(var(--accent));
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-decoration-color: rgb(var(--accent) / 0.4);
+  text-underline-offset: 3px;
+}
+html[data-skin="modes"][data-mode="research"] .prose-quest a:hover {
+  text-decoration-color: currentColor;
+}
+html[data-skin="modes"][data-mode="research"] .prose-quest code {
+  border-radius: 3px;
+  background: rgb(var(--surface-2));
+  padding: 0.05em 0.35em;
+  font-family: var(--font-mono), ui-monospace, monospace;
+  font-size: 0.84em;
+  font-weight: 500;
+  color: rgb(var(--ink));
+  font-variant-numeric: normal;
+}
+html[data-skin="modes"][data-mode="research"] .prose-quest blockquote {
+  border-left: 2px solid rgb(var(--line));
+  padding-left: 1em;
+  font-style: italic;
+  color: rgb(var(--muted));
+}
+
+/* ---------- research-only pieces ---------- */
+html[data-skin="modes"][data-mode="research"] .rs-rule {
+  border-top: 1px solid rgb(var(--line));
+}
+html[data-skin="modes"][data-mode="research"] .rs-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.9rem;
+}
+html[data-skin="modes"][data-mode="research"] .rs-table th {
+  border-bottom: 1px solid rgb(var(--ink) / 0.6);
+  padding: 0.35rem 0.75rem 0.35rem 0;
+  text-align: left;
+  font-weight: 500;
+  font-variant-caps: all-small-caps;
+  letter-spacing: 0.06em;
+  color: rgb(var(--muted));
+}
+html[data-skin="modes"][data-mode="research"] .rs-table td {
+  border-bottom: 1px solid rgb(var(--line));
+  padding: 0.5rem 0.75rem 0.5rem 0;
+  vertical-align: top;
+}
+html[data-skin="modes"][data-mode="research"] .rs-table tr:last-child td {
+  border-bottom-color: rgb(var(--ink) / 0.6);
+}
+html[data-skin="modes"][data-mode="research"] .rs-table .rs-r {
+  text-align: right;
+  padding-right: 0;
+  font-variant-numeric: tabular-nums;
+}
+html[data-skin="modes"][data-mode="research"] .rs-textbtn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  border-radius: 4px;
+  padding: 0.3rem 0.1rem;
+  font-weight: 500;
+  color: rgb(var(--accent));
+  text-decoration: underline;
+  text-decoration-color: transparent;
+  text-underline-offset: 4px;
+  transition: text-decoration-color 120ms, color 120ms;
+}
+html[data-skin="modes"][data-mode="research"] .rs-textbtn:hover {
+  text-decoration-color: currentColor;
+}
+html[data-skin="modes"][data-mode="research"] .rs-textbtn:disabled {
+  color: rgb(var(--muted));
+  cursor: not-allowed;
+  text-decoration-color: transparent;
+}
+html[data-skin="modes"][data-mode="research"] .rs-textbtn-muted {
+  color: rgb(var(--muted));
+}
+html[data-skin="modes"][data-mode="research"] .rs-textbtn-muted:hover {
+  color: rgb(var(--ink));
+}
+
+/* Lesson margins: make the shared unit list and notebook dock read quietly. */
+html[data-skin="modes"][data-mode="research"] .rs-margin {
+  font-size: 0.85rem;
+}
+html[data-skin="modes"][data-mode="research"] .rs-margin .text-lg {
+  font-size: 1rem;
+}
+html[data-skin="modes"][data-mode="research"] .rs-margin .text-\[15px\] {
+  font-size: 0.86rem;
+}
+html[data-skin="modes"][data-mode="research"] .rs-margin .bg-accent-soft {
+  background: transparent;
+  box-shadow: inset 2px 0 0 rgb(var(--accent));
+}
+html[data-skin="modes"][data-mode="research"] .rs-margin .hover\:bg-surface-2:hover {
+  background: transparent;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+/* Lesson content column: explainers and blocks stay within the measure. */
+html[data-skin="modes"][data-mode="research"] .rs-article .space-y-7 > * + * {
+  margin-top: 1.6rem;
+}

@@ -1,17 +1,17 @@
 "use client";
 
 import type { Experience } from "../types";
-import { ClassicShell } from "../shared/ClassicShell";
-import { ClassicHome } from "../shared/ClassicHome";
-import { ClassicLessonLayout } from "../shared/ClassicLessonLayout";
-import { ClassicSessionLayout, ClassicSessionResults } from "../shared/ClassicSession";
+import { SproutShell } from "./Shell";
+import { SproutHome } from "./Home";
+import { SproutLessonLayout } from "./Lesson";
+import { SproutSessionLayout, SproutSessionResults } from "./Session";
 
-/** sprout: placeholder — replace each piece with this profile's own design. */
+/** Sprout (ages ~3–5): picture-only, voice-first, one giant thing at a time. */
 export const experience: Experience = {
   id: "sprout",
-  Shell: ClassicShell,
-  Home: ClassicHome,
-  LessonLayout: ClassicLessonLayout,
-  SessionLayout: ClassicSessionLayout,
-  SessionResults: ClassicSessionResults,
+  Shell: SproutShell,
+  Home: SproutHome,
+  LessonLayout: SproutLessonLayout,
+  SessionLayout: SproutSessionLayout,
+  SessionResults: SproutSessionResults,
 };

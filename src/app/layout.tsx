@@ -1,5 +1,5 @@
 import type { Metadata, Viewport } from "next";
-import { Baloo_2, IBM_Plex_Sans, Inter, JetBrains_Mono, Lexend, Manrope, Nunito, Source_Serif_4 } from "next/font/google";
+import { Baloo_2, IBM_Plex_Mono, IBM_Plex_Sans, Inter, JetBrains_Mono, Lexend, Manrope, Nunito, Source_Serif_4 } from "next/font/google";
 import "katex/dist/katex.min.css";
 import "./globals.css";
 import "@/experiences/sprout/theme.css";
@@ -20,6 +20,7 @@ const mono = JetBrains_Mono({ subsets: ["latin"], variable: "--font-mono", displ
 const sprout = Baloo_2({ subsets: ["latin"], variable: "--font-sprout", weight: ["500", "600", "700", "800"], display: "swap", preload: false });
 const adventure = Lexend({ subsets: ["latin"], variable: "--font-adventure", display: "swap", preload: false });
 const campus = IBM_Plex_Sans({ subsets: ["latin"], variable: "--font-campus", weight: ["400", "500", "600", "700"], display: "swap", preload: false });
+const campusMono = IBM_Plex_Mono({ subsets: ["latin"], variable: "--font-mono-campus", weight: ["400", "500", "600"], display: "swap", preload: false });
 const serif = Source_Serif_4({ subsets: ["latin"], variable: "--font-serif", display: "swap", preload: false });
 const work = Manrope({ subsets: ["latin"], variable: "--font-work", display: "swap", preload: false });
 
@@ -42,7 +43,7 @@ const themeScript = `try{var s=JSON.parse(localStorage.getItem('quest-academy')|
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en" suppressHydrationWarning className={`${sans.variable} ${pro.variable} ${mono.variable} ${sprout.variable} ${adventure.variable} ${campus.variable} ${serif.variable} ${work.variable}`}>
+    <html lang="en" suppressHydrationWarning className={`${sans.variable} ${pro.variable} ${mono.variable} ${sprout.variable} ${adventure.variable} ${campus.variable} ${campusMono.variable} ${serif.variable} ${work.variable}`}>
       <head>
         <script dangerouslySetInnerHTML={{ __html: themeScript }} />
       </head>

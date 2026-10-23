@@ -137,6 +137,8 @@ export function LessonViewer(p: LessonViewerPayload) {
       prev={p.prev}
       upNext={upNext}
       unitProgress={{ done: p.unit.lessons.filter((l) => Boolean(st.lessons[l.id])).length, total: p.unit.lessons.length }}
+      onComplete={finishArticle}
+      completed={Boolean(st.lessons[p.id])}
     />
   );
 }

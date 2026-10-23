@@ -1,17 +1,26 @@
 "use client";
 
+import { ProfessionalHome } from "@/components/modes/professional/Home";
 import type { Experience } from "../types";
-import { ClassicShell } from "../shared/ClassicShell";
-import { ClassicHome } from "../shared/ClassicHome";
-import { ClassicLessonLayout } from "../shared/ClassicLessonLayout";
-import { ClassicSessionLayout, ClassicSessionResults } from "../shared/ClassicSession";
+import { ProfessionalShell } from "./Shell";
+import { ProfessionalLessonLayout } from "./Lesson";
+import { ProfessionalSessionLayout, ProfessionalSessionResults } from "./Session";
 
-/** professional: placeholder — replace each piece with this profile's own design. */
+/** Home: the goal dashboard (pathways, schedule, certificates) inside the professional frame. */
+function Home() {
+  return (
+    <div className="pro-home">
+      <ProfessionalHome />
+    </div>
+  );
+}
+
+/** Professional: a modern career-learning product for working adults. */
 export const experience: Experience = {
   id: "professional",
-  Shell: ClassicShell,
-  Home: ClassicHome,
-  LessonLayout: ClassicLessonLayout,
-  SessionLayout: ClassicSessionLayout,
-  SessionResults: ClassicSessionResults,
+  Shell: ProfessionalShell,
+  Home,
+  LessonLayout: ProfessionalLessonLayout,
+  SessionLayout: ProfessionalSessionLayout,
+  SessionResults: ProfessionalSessionResults,
 };

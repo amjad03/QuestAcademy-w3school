@@ -1,17 +1,17 @@
 "use client";
 
 import type { Experience } from "../types";
-import { ClassicShell } from "../shared/ClassicShell";
-import { ClassicHome } from "../shared/ClassicHome";
-import { ClassicLessonLayout } from "../shared/ClassicLessonLayout";
-import { ClassicSessionLayout, ClassicSessionResults } from "../shared/ClassicSession";
+import { AdventureShell } from "./Shell";
+import { AdventureHome } from "./Home";
+import { AdventureLessonLayout } from "./Lesson";
+import { AdventureSessionLayout, AdventureSessionResults } from "./Session";
 
-/** adventure: placeholder — replace each piece with this profile's own design. */
+/** Adventure (ages 11–14): "mission control" — game-HUD frame, missions, challenge runs and debriefs. */
 export const experience: Experience = {
   id: "adventure",
-  Shell: ClassicShell,
-  Home: ClassicHome,
-  LessonLayout: ClassicLessonLayout,
-  SessionLayout: ClassicSessionLayout,
-  SessionResults: ClassicSessionResults,
+  Shell: AdventureShell,
+  Home: AdventureHome,
+  LessonLayout: AdventureLessonLayout,
+  SessionLayout: AdventureSessionLayout,
+  SessionResults: AdventureSessionResults,
 };

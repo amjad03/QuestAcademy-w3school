@@ -118,7 +118,7 @@ const watch: Explainer["watch"] = [
       <Stage label="A yellow decision diamond at the fork asks: raining? Yes goes left, no goes right">
         <Road />
         <Signs />
-        <motion.g initial={{ scale: 0 }} animate={{ scale: 1 }} transition={{ type: "spring", stiffness: 200, damping: 12 }} style={{ originX: "200px", originY: "140px" }}>
+        <motion.g initial={{ scale: 0 }} animate={{ scale: 1 }} transition={{ type: "spring", stiffness: 200, damping: 12 }}>
           <Diamond x={200} y={140} text="raining?" />
         </motion.g>
         <text x={118} y={130} textAnchor="middle" fontSize={15} fontWeight={900} fill="#16A34A">
@@ -166,7 +166,7 @@ const watch: Explainer["watch"] = [
       <Stage label="The sun shines. Bolt drives up the right road and puts on sunglasses">
         <Road />
         <Sun x={70} y={40} r={18} />
-        <g transform="translate(62 96)">
+        <g transform="translate(62 46)">
           <Umbrella s={0.9} />
         </g>
         <motion.g initial={{ x: 200, y: 215 }} animate={RIGHT_KF} transition={{ duration: 1.6, times: [0, 0.4, 1] }}>

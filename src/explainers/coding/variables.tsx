@@ -448,7 +448,7 @@ const story: Explainer["story"] = [
           <Cookie x={140} y={70} />
           <Cookie x={155} y={72} />
         </LabelBox>
-        <text x={140} y={40} textAnchor="middle" fontFamily="ui-monospace, Menlo, monospace" fontWeight={800} fontSize={13} fill={INK}>
+        <text x={140} y={139} textAnchor="middle" fontFamily="ui-monospace, Menlo, monospace" fontWeight={800} fontSize={11} fill={INK}>
           snacks = 3
         </text>
       </Art>
@@ -467,7 +467,7 @@ const story: Explainer["story"] = [
           <Cookie x={132} y={72} />
           <Cookie x={148} y={72} />
         </LabelBox>
-        <text x={140} y={40} textAnchor="middle" fontFamily="ui-monospace, Menlo, monospace" fontWeight={800} fontSize={12} fill={INK}>
+        <text x={132} y={139} textAnchor="middle" fontFamily="ui-monospace, Menlo, monospace" fontWeight={800} fontSize={10} fill={INK}>
           snacks = snacks - 1
         </text>
       </Art>
@@ -505,9 +505,9 @@ const like: Explainer["like"] = {
         <text x={100} y={77} textAnchor="middle" fontWeight={900} fontSize={15} fill={INK}>
           Mia
         </text>
-        <text x={170} y={60} fontSize={26}>
-          🥪
-        </text>
+        {/* a sandwich peeking out of the lid */}
+        <path d="M118 44 L146 22 L150 46 Z" fill="#FDE68A" stroke={INK} strokeWidth={2} strokeLinejoin="round" />
+        <path d="M122 42 L146 24" stroke="#22C55E" strokeWidth={3} />
       </Art>
     ),
   },

@@ -45,12 +45,12 @@ function Face({ cx, cy, r, numbersDelay, mark, shadeHalf }: { cx: number; cy: nu
       {Array.from({ length: 12 }, (_, k) => {
         const n = k + 1;
         const a = (n / 12) * Math.PI * 2;
-        const x = cx + Math.sin(a) * r * 0.74;
-        const y = cy - Math.cos(a) * r * 0.74;
+        const x = cx + Math.sin(a) * r * 0.79;
+        const y = cy - Math.cos(a) * r * 0.79;
         return (
           <motion.g key={n} {...(numbersDelay !== undefined ? pop(numbersDelay + k * 0.18) : {})}>
             {mark === n && <motion.circle cx={x} cy={y} r={r * 0.15} fill="#FECDD3" {...pop(0.9)} />}
-            <T x={x} y={y + 1} size={r * 0.2}>
+            <T x={x} y={y + 1} size={r * 0.19}>
               {n}
             </T>
           </motion.g>
@@ -70,10 +70,10 @@ function MiniClock({ cx, cy, r, h, m = 0 }: { cx: number; cy: number; r: number;
     <g>
       <Face cx={cx} cy={cy} r={r} />
       <g transform={`rotate(${(h % 12) * 30 + m * 0.5} ${cx} ${cy})`}>
-        <line x1={cx} y1={cy} x2={cx} y2={cy - r * 0.5} stroke={HOUR} strokeWidth={r * 0.1} strokeLinecap="round" />
+        <line x1={cx} y1={cy} x2={cx} y2={cy - r * 0.42} stroke={HOUR} strokeWidth={r * 0.1} strokeLinecap="round" />
       </g>
       <g transform={`rotate(${m * 6} ${cx} ${cy})`}>
-        <line x1={cx} y1={cy} x2={cx} y2={cy - r * 0.8} stroke={MIN} strokeWidth={r * 0.06} strokeLinecap="round" />
+        <line x1={cx} y1={cy} x2={cx} y2={cy - r * 0.64} stroke={MIN} strokeWidth={r * 0.06} strokeLinecap="round" />
       </g>
       <circle cx={cx} cy={cy} r={r * 0.07} fill="#1c2333" />
     </g>
@@ -125,8 +125,8 @@ function ClockScene({ stage }: { stage: ClockStage }) {
   return (
     <Stage label={label}>
       <Face {...K} numbersDelay={stage === "face" ? 0.2 : undefined} mark={stage === "hour" ? 3 : undefined} shadeHalf={stage === "half"} />
-      {stage !== "face" && <Hand {...K} len={K.r * 0.48} w={11} color={HOUR} angle={hourAngle} from={stage === "sweep" ? 90 : stage === "half" ? 120 : undefined} grow={stage === "hour" ? 0.3 : undefined} transition={stage === "sweep" ? { duration: 4, ease: "linear", delay: 0.6 } : stage === "half" ? { duration: 2, ease: "linear", delay: 0.6 } : undefined} />}
-      {(stage === "three" || stage === "sweep" || stage === "half") && <Hand {...K} len={K.r * 0.78} w={7} color={MIN} angle={stage === "sweep" ? 360 : stage === "half" ? 180 : 0} from={stage === "three" ? undefined : 0} grow={stage === "three" ? 0.3 : undefined} transition={stage === "sweep" ? { duration: 4, ease: "linear", delay: 0.6 } : stage === "half" ? { duration: 2, ease: "linear", delay: 0.6 } : undefined} />}
+      {stage !== "face" && <Hand {...K} len={K.r * 0.4} w={11} color={HOUR} angle={hourAngle} from={stage === "sweep" ? 90 : stage === "half" ? 120 : undefined} grow={stage === "hour" ? 0.3 : undefined} transition={stage === "sweep" ? { duration: 4, ease: "linear", delay: 0.6 } : stage === "half" ? { duration: 2, ease: "linear", delay: 0.6 } : undefined} />}
+      {(stage === "three" || stage === "sweep" || stage === "half") && <Hand {...K} len={K.r * 0.6} w={7} color={MIN} angle={stage === "sweep" ? 360 : stage === "half" ? 180 : 0} from={stage === "three" ? undefined : 0} grow={stage === "three" ? 0.3 : undefined} transition={stage === "sweep" ? { duration: 4, ease: "linear", delay: 0.6 } : stage === "half" ? { duration: 2, ease: "linear", delay: 0.6 } : undefined} />}
       {stage !== "face" && <Pin cx={K.cx} cy={K.cy} />}
       {stage === "hour" && <Label x={56} y={130} text="short hand" color={HOUR} delay={0.8} />}
       {stage === "hour" && <Label x={56} y={170} text="= hour" color={HOUR} delay={1.2} />}
@@ -252,10 +252,10 @@ function TimeTry() {
         <svg ref={svg} viewBox="0 0 300 300" className="mx-auto block h-auto w-full max-w-[320px]" role="img" aria-label={`Clock showing ${words(total)}. Drag the long blue hand or the short red hand.`}>
           <Face {...TK} />
           <g {...handlers(dragHour)} role="slider" aria-label="Short hour hand" aria-valuetext={words(total)}>
-            {hand(ha, TK.r * 0.5, 12, HOUR, 13)}
+            {hand(ha, TK.r * 0.38, 12, HOUR, 13)}
           </g>
           <g {...handlers(dragMinute)} role="slider" aria-label="Long minute hand" aria-valuetext={words(total)}>
-            {hand(ma, TK.r * 0.8, 8, MIN, 15)}
+            {hand(ma, TK.r * 0.6, 8, MIN, 15)}
           </g>
           <circle cx={TK.cx} cy={TK.cy} r={8} fill="#1c2333" pointerEvents="none" />
         </svg>

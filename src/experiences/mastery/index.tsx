@@ -1,17 +1,17 @@
 "use client";
 
 import type { Experience } from "../types";
-import { ClassicShell } from "../shared/ClassicShell";
-import { ClassicHome } from "../shared/ClassicHome";
-import { ClassicLessonLayout } from "../shared/ClassicLessonLayout";
-import { ClassicSessionLayout, ClassicSessionResults } from "../shared/ClassicSession";
+import { MasteryShell } from "./Shell";
+import { MasteryHome } from "./Home";
+import { MasteryLessonLayout } from "./LessonLayout";
+import { MasterySessionLayout, MasterySessionResults } from "./Session";
 
-/** mastery: placeholder — replace each piece with this profile's own design. */
+/** Mastery (undergraduate): an academic workspace that feels like an IDE. */
 export const experience: Experience = {
   id: "mastery",
-  Shell: ClassicShell,
-  Home: ClassicHome,
-  LessonLayout: ClassicLessonLayout,
-  SessionLayout: ClassicSessionLayout,
-  SessionResults: ClassicSessionResults,
+  Shell: MasteryShell,
+  Home: MasteryHome,
+  LessonLayout: MasteryLessonLayout,
+  SessionLayout: MasterySessionLayout,
+  SessionResults: MasterySessionResults,
 };

@@ -86,6 +86,7 @@ export function SproutShell({ children, nav, more, isActive, openSearch }: Shell
               setPanel(true);
             }}
             onCancel={() => setGate(false)}
+            message="To open the grown-up corner, please answer:"
           />
         )}
       </AnimatePresence>

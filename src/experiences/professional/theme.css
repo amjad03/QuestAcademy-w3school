@@ -1,0 +1,368 @@
+/*
+ * Professional — modern career-learning SaaS.
+ * Manrope, neutral-50 canvas with white cards, one deep-emerald accent,
+ * 1px hairlines + soft elevation instead of chunky borders, 12px radii,
+ * sentence-case controls and tabular numbers.
+ */
+
+/* ---------- tokens ---------- */
+html[data-skin="modes"][data-mode="professional"] {
+  --bg: 250 250 250;
+  --surface: 255 255 255;
+  --surface-2: 245 245 244;
+  --line: 229 229 228;
+  --ink: 23 23 23;
+  --muted: 107 107 112;
+
+  --accent: 4 120 87;
+  --accent-shade: 6 95 70;
+  --accent-soft: 236 253 245;
+  --accent-2: 37 99 235;
+  --accent-2-shade: 29 78 216;
+  --good: 22 163 74;
+  --good-shade: 21 128 61;
+  --good-soft: 240 253 244;
+  --bad: 220 38 38;
+  --bad-shade: 185 28 28;
+  --bad-soft: 254 242 242;
+  --warn: 217 119 6;
+  --warn-shade: 180 83 9;
+  --streak: 217 119 6;
+  --on-accent: 255 255 255;
+
+  --pro-shadow-sm: 0 1px 2px rgb(16 24 40 / 0.05);
+  --pro-shadow: 0 1px 2px rgb(16 24 40 / 0.04), 0 2px 8px -2px rgb(16 24 40 / 0.06);
+  --pro-shadow-md: 0 2px 4px rgb(16 24 40 / 0.04), 0 8px 24px -6px rgb(16 24 40 / 0.1);
+  --pro-shadow-lg: 0 4px 8px -2px rgb(16 24 40 / 0.06), 0 16px 40px -8px rgb(16 24 40 / 0.16);
+
+  --font-sans: var(--font-work);
+  font-size: 16px;
+  font-feature-settings: "cv11", "ss01";
+}
+
+html.dark[data-skin="modes"][data-mode="professional"] {
+  --bg: 12 12 13;
+  --surface: 23 23 25;
+  --surface-2: 32 32 35;
+  --line: 48 48 52;
+  --ink: 236 236 238;
+  --muted: 160 160 168;
+
+  --accent: 20 170 120;
+  --accent-shade: 16 140 99;
+  --accent-soft: 14 46 36;
+  --accent-2: 96 165 250;
+  --accent-2-shade: 59 130 246;
+  --good: 52 199 120;
+  --good-shade: 74 222 128;
+  --good-soft: 16 44 30;
+  --bad: 248 113 113;
+  --bad-shade: 252 140 140;
+  --bad-soft: 56 22 24;
+  --warn: 245 158 11;
+  --warn-shade: 251 191 36;
+  --streak: 245 158 11;
+  --on-accent: 255 255 255;
+
+  --pro-shadow-sm: 0 1px 2px rgb(0 0 0 / 0.4);
+  --pro-shadow: 0 1px 2px rgb(0 0 0 / 0.35), 0 0 0 1px rgb(255 255 255 / 0.02);
+  --pro-shadow-md: 0 4px 16px -4px rgb(0 0 0 / 0.5);
+  --pro-shadow-lg: 0 16px 40px -8px rgb(0 0 0 / 0.65);
+}
+
+html[data-skin="modes"][data-mode="professional"],
+html[data-skin="modes"][data-mode="professional"] body {
+  font-family: var(--font-work), ui-sans-serif, system-ui, sans-serif;
+  background: rgb(var(--bg));
+  color: rgb(var(--ink));
+  letter-spacing: -0.005em;
+}
+
+html[data-skin="modes"][data-mode="professional"] :focus-visible {
+  outline: 2px solid rgb(var(--accent));
+  outline-offset: 2px;
+}
+html[data-skin="modes"][data-mode="professional"] ::selection {
+  background: rgb(var(--accent) / 0.18);
+}
+
+/* Numbers line up everywhere. */
+html[data-skin="modes"][data-mode="professional"] .tabular-nums,
+html[data-skin="modes"][data-mode="professional"] table,
+html[data-skin="modes"][data-mode="professional"] [role="progressbar"],
+html[data-skin="modes"][data-mode="professional"] dd {
+  font-variant-numeric: tabular-nums;
+}
+
+/* ---------- weights & case ---------- */
+html[data-skin="modes"][data-mode="professional"] .font-black {
+  font-weight: 700;
+  letter-spacing: -0.02em;
+}
+html[data-skin="modes"][data-mode="professional"] .font-extrabold {
+  font-weight: 600;
+}
+html[data-skin="modes"][data-mode="professional"] .font-bold {
+  font-weight: 650;
+}
+
+/* ---------- hairlines instead of chunky borders ---------- */
+html[data-skin="modes"][data-mode="professional"] .border-2 {
+  border-width: 1px;
+}
+html[data-skin="modes"][data-mode="professional"] .border-b-4,
+html[data-skin="modes"][data-mode="professional"] .border-b-2 {
+  border-bottom-width: 1px;
+}
+html[data-skin="modes"][data-mode="professional"] .border-t-2 {
+  border-top-width: 1px;
+}
+html[data-skin="modes"][data-mode="professional"] .border-r-2 {
+  border-right-width: 1px;
+}
+html[data-skin="modes"][data-mode="professional"] .border-l-2 {
+  border-left-width: 1px;
+}
+html[data-skin="modes"][data-mode="professional"] .divide-y-2 > :not([hidden]) ~ :not([hidden]) {
+  border-top-width: 1px;
+  border-bottom-width: 0;
+}
+html[data-skin="modes"][data-mode="professional"] .rounded-2xl {
+  border-radius: 12px;
+}
+html[data-skin="modes"][data-mode="professional"] .rounded-3xl,
+html[data-skin="modes"][data-mode="professional"] .rounded-4xl {
+  border-radius: 16px;
+}
+html[data-skin="modes"][data-mode="professional"] .shadow-lift,
+html[data-skin="modes"][data-mode="professional"] .pro-menu {
+  box-shadow: var(--pro-shadow-lg);
+}
+html[data-skin="modes"][data-mode="professional"] .shadow-soft {
+  box-shadow: var(--pro-shadow);
+}
+
+/* ---------- surfaces ---------- */
+html[data-skin="modes"][data-mode="professional"] .card {
+  border-radius: 12px;
+  border: 1px solid rgb(var(--line) / 0.75);
+  background: rgb(var(--surface));
+  box-shadow: var(--pro-shadow);
+}
+html[data-skin="modes"][data-mode="professional"] .tile {
+  border-radius: 12px;
+  border: 1px solid rgb(var(--line) / 0.85);
+  background: rgb(var(--surface));
+  box-shadow: var(--pro-shadow-sm);
+  transition: box-shadow 0.15s ease, border-color 0.15s ease, background-color 0.15s ease;
+}
+html[data-skin="modes"][data-mode="professional"] .tile:hover {
+  background: rgb(var(--surface));
+  border-color: rgb(var(--ink) / 0.16);
+  box-shadow: var(--pro-shadow-md);
+}
+html[data-skin="modes"][data-mode="professional"] .tile:active {
+  transform: none;
+  border-bottom-width: 1px;
+}
+html[data-skin="modes"][data-mode="professional"] a.card:hover,
+html[data-skin="modes"][data-mode="professional"] button.card:hover {
+  box-shadow: var(--pro-shadow-md);
+}
+
+/* ---------- buttons: quiet, sentence case ---------- */
+html[data-skin="modes"][data-mode="professional"] .btn,
+html[data-skin="modes"][data-mode="professional"] .btn-primary,
+html[data-skin="modes"][data-mode="professional"] .btn-pop,
+html[data-skin="modes"][data-mode="professional"] .btn-good,
+html[data-skin="modes"][data-mode="professional"] .btn-bad,
+html[data-skin="modes"][data-mode="professional"] .btn-gold,
+html[data-skin="modes"][data-mode="professional"] .btn-purple,
+html[data-skin="modes"][data-mode="professional"] .btn-ghost {
+  border-radius: 10px;
+  border-width: 1px;
+  border-style: solid;
+  border-color: transparent;
+  padding: 0.55rem 1rem;
+  font-size: 0.875rem;
+  line-height: 1.25rem;
+  font-weight: 600;
+  text-transform: none;
+  letter-spacing: 0;
+  transition: background-color 0.15s ease, border-color 0.15s ease, box-shadow 0.15s ease, color 0.15s ease;
+  box-shadow: var(--pro-shadow-sm);
+}
+html[data-skin="modes"][data-mode="professional"] .btn:active,
+html[data-skin="modes"][data-mode="professional"] .btn-primary:active,
+html[data-skin="modes"][data-mode="professional"] .btn-good:active,
+html[data-skin="modes"][data-mode="professional"] .btn-bad:active,
+html[data-skin="modes"][data-mode="professional"] .btn-ghost:active {
+  transform: none;
+  border-bottom-width: 1px;
+}
+html[data-skin="modes"][data-mode="professional"] .btn-primary,
+html[data-skin="modes"][data-mode="professional"] .btn-pop,
+html[data-skin="modes"][data-mode="professional"] .btn-purple {
+  background: rgb(var(--accent));
+  color: rgb(var(--on-accent));
+}
+html[data-skin="modes"][data-mode="professional"] .btn-primary:hover,
+html[data-skin="modes"][data-mode="professional"] .btn-pop:hover,
+html[data-skin="modes"][data-mode="professional"] .btn-purple:hover {
+  background: rgb(var(--accent-shade));
+  filter: none;
+}
+html[data-skin="modes"][data-mode="professional"] .btn-good {
+  background: rgb(var(--accent));
+  color: rgb(var(--on-accent));
+}
+html[data-skin="modes"][data-mode="professional"] .btn-good:hover {
+  background: rgb(var(--accent-shade));
+  filter: none;
+}
+html[data-skin="modes"][data-mode="professional"] .btn-bad {
+  background: rgb(var(--bad));
+  color: #fff;
+}
+html[data-skin="modes"][data-mode="professional"] .btn-gold {
+  background: rgb(var(--warn));
+  color: #1c1300;
+}
+html[data-skin="modes"][data-mode="professional"] .btn-ghost {
+  background: rgb(var(--surface));
+  border-color: rgb(var(--line));
+  color: rgb(var(--ink));
+}
+html[data-skin="modes"][data-mode="professional"] .btn-ghost:hover {
+  background: rgb(var(--surface-2));
+  border-color: rgb(var(--ink) / 0.18);
+}
+html[data-skin="modes"][data-mode="professional"] .btn-ghost.pro-btn-on {
+  background: rgb(var(--accent-soft));
+  border-color: rgb(var(--accent) / 0.4);
+  color: rgb(var(--accent));
+}
+html[data-skin="modes"][data-mode="professional"] .btn-primary:disabled,
+html[data-skin="modes"][data-mode="professional"] .btn-good:disabled,
+html[data-skin="modes"][data-mode="professional"] .btn-bad:disabled,
+html[data-skin="modes"][data-mode="professional"] .btn-ghost:disabled {
+  background: rgb(var(--surface-2));
+  border-color: rgb(var(--line));
+  color: rgb(var(--muted));
+  box-shadow: none;
+  opacity: 1;
+}
+html[data-skin="modes"][data-mode="professional"] .btn-flat {
+  border-radius: 8px;
+  font-size: 0.875rem;
+  font-weight: 600;
+  text-transform: none;
+  letter-spacing: 0;
+  color: rgb(var(--accent));
+}
+html[data-skin="modes"][data-mode="professional"] .btn-flat:hover {
+  background: rgb(var(--accent-soft));
+}
+
+/* ---------- chips, inputs, labels ---------- */
+html[data-skin="modes"][data-mode="professional"] .chip {
+  border-radius: 999px;
+  border: 1px solid rgb(var(--line));
+  background: rgb(var(--surface));
+  padding: 0.2rem 0.65rem;
+  font-size: 0.75rem;
+  font-weight: 500;
+  color: rgb(var(--muted));
+}
+html[data-skin="modes"][data-mode="professional"] .input {
+  border-radius: 10px;
+  border: 1px solid rgb(var(--line));
+  background: rgb(var(--surface));
+  padding: 0.6rem 0.85rem;
+  font-weight: 500;
+  font-size: 0.9375rem;
+  box-shadow: var(--pro-shadow-sm);
+}
+html[data-skin="modes"][data-mode="professional"] .input:focus {
+  border-color: rgb(var(--accent));
+  background: rgb(var(--surface));
+  box-shadow: 0 0 0 3px rgb(var(--accent) / 0.15);
+}
+html[data-skin="modes"][data-mode="professional"] .eyebrow {
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: rgb(var(--muted));
+}
+
+/* ---------- long-form reading ---------- */
+html[data-skin="modes"][data-mode="professional"] .prose-quest {
+  font-size: 1.03rem;
+  font-weight: 400;
+  line-height: 1.75;
+  color: rgb(var(--ink) / 0.88);
+}
+html[data-skin="modes"][data-mode="professional"] .prose-quest strong {
+  font-weight: 650;
+}
+html[data-skin="modes"][data-mode="professional"] .prose-quest a {
+  font-weight: 600;
+  text-decoration-thickness: 1px;
+}
+html[data-skin="modes"][data-mode="professional"] .prose-quest code {
+  border-radius: 6px;
+  border: 1px solid rgb(var(--line));
+  font-weight: 500;
+}
+
+/* ---------- frame ---------- */
+html[data-skin="modes"][data-mode="professional"] .pro-topbar {
+  box-shadow: 0 1px 0 rgb(var(--line) / 0.4);
+}
+html[data-skin="modes"][data-mode="professional"] .pro-bottombar {
+  box-shadow: 0 -4px 16px -8px rgb(16 24 40 / 0.12);
+}
+
+/* ---------- course player ---------- */
+/* No mascot in a work context. */
+html[data-skin="modes"][data-mode="professional"] .pro-lesson svg[aria-label="Questy the owl"],
+html[data-skin="modes"][data-mode="professional"] .pro-session svg[aria-label="Questy the owl"] {
+  display: none;
+}
+html[data-skin="modes"][data-mode="professional"] .pro-content iframe {
+  border-radius: 12px;
+}
+html[data-skin="modes"][data-mode="professional"] .pro-content .aspect-video {
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: var(--pro-shadow-md);
+}
+html[data-skin="modes"][data-mode="professional"] .pro-curriculum nav .eyebrow {
+  font-size: 0.6875rem;
+}
+html[data-skin="modes"][data-mode="professional"] .pro-curriculum nav .text-lg {
+  font-size: 0.975rem;
+  font-weight: 650;
+}
+html[data-skin="modes"][data-mode="professional"] .pro-curriculum nav a {
+  border-radius: 8px;
+}
+html[data-skin="modes"][data-mode="professional"] .pro-curriculum nav ol > li > a {
+  font-size: 0.875rem;
+  font-weight: 500;
+}
+html[data-skin="modes"][data-mode="professional"] .pro-curriculum nav ul a {
+  font-weight: 500;
+}
+html[data-skin="modes"][data-mode="professional"] .pro-curriculum nav ol > li > a span:first-child {
+  border-radius: 999px;
+}
+html[data-skin="modes"][data-mode="professional"] .pro-curriculum nav .text-\[15px\] {
+  font-size: 0.875rem;
+  font-weight: 500;
+}
+/* The notes row sits inside its own panel in the player. */
+html[data-skin="modes"][data-mode="professional"] #pro-notes > div:first-child {
+  margin-top: 0.75rem;
+}

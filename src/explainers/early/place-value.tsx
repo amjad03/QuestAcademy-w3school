@@ -347,9 +347,10 @@ const story = [
     art: (
       <Panel label="Rosa puts eggs into a box that holds ten">
         <rect x={0} y={130} width={240} height={20} fill="#BBF7D0" />
-        <EggBox x={110} y={84} eggs={7} />
-        {EGGS.slice(0, 16).map((p, i) => (
-          <Egg key={i} x={120 + (i % 8) * 13} y={132 - Math.floor(i / 8) * 9} s={0.8} />
+        <EggBox x={100} y={62} eggs={7} />
+        <Egg x={150} y={50} />
+        {EGGS.slice(0, 13).map((p, i) => (
+          <Egg key={i} x={186 + (i % 4) * 12 + (Math.floor(i / 4) % 2) * 5} y={134 - Math.floor(i / 4) * 11} s={0.85} />
         ))}
         <Kid x={56} y={145} s={0.85} shirt="#F59E0B" bow arms="point" />
       </Panel>

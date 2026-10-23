@@ -41,7 +41,7 @@ export function ModeSettings() {
 }
 
 /** Simple parental gate: a multiplication young children can't easily solve. */
-export function GrownUpGate({ onPass, onCancel }: { onPass: () => void; onCancel: () => void }) {
+export function GrownUpGate({ onPass, onCancel, message = "To change the experience, please answer:" }: { onPass: () => void; onCancel: () => void; message?: string }) {
   const [a, b] = useMemo(() => [12 + Math.floor(Math.random() * 8), 6 + Math.floor(Math.random() * 7)], []);
   const [v, setV] = useState("");
   const [wrong, setWrong] = useState(false);
@@ -52,7 +52,7 @@ export function GrownUpGate({ onPass, onCancel }: { onPass: () => void; onCancel
           <Lock className="h-7 w-7" />
         </span>
         <h2 className="mt-4 text-xl font-black">Grown-ups only</h2>
-        <p className="mt-1 text-sm font-semibold text-muted">To change the experience, please answer:</p>
+        <p className="mt-1 text-sm font-semibold text-muted">{message}</p>
         <form
           onSubmit={(e) => {
             e.preventDefault();

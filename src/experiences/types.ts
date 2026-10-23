@@ -58,6 +58,10 @@ export interface LessonLayoutProps {
   upNext: { href: string; label: string; title: string };
   /** Lessons completed in this unit. */
   unitProgress: { done: number; total: number };
+  /** Marks the reading done (same as the article's own "Mark complete"). */
+  onComplete: () => void;
+  /** Whether the lesson's reading is already complete. */
+  completed: boolean;
 }
 
 export interface SessionLayoutProps {

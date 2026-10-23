@@ -371,13 +371,13 @@ const story = [
   {
     art: (
       <Panel label="Both sisters are happy, each with one half of the cake">
-        <g transform="translate(-40 0) scale(0.8)">
+        <g transform="translate(-28 8)">
           <Slice cx={120} cy={60} r={40} a0={0.5} a1={1} food="cake" />
         </g>
-        <g transform="translate(88 0) scale(0.8)">
+        <g transform="translate(28 8)">
           <Slice cx={120} cy={60} r={40} a0={0} a1={0.5} food="cake" />
         </g>
-        <Frac x={120} y={52} d={2} size={20} color={C} />
+        <Frac x={120} y={68} d={2} size={18} color={C} />
         <TwoSisters moods={["happy", "happy"]} />
       </Panel>
     ),

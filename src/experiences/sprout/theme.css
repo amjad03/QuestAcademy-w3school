@@ -1,0 +1,391 @@
+/*
+ * Sprout (ages ~3–5) — "a sunny playroom".
+ * Warm sunshine palette (peach, butter, mint, sky), very round shapes,
+ * soft drop shadows instead of borders, Baloo 2 everywhere, big type.
+ * Every rule is scoped to the sprout profile under the "Age designs" skin.
+ */
+
+html[data-skin="modes"][data-mode="sprout"] {
+  --bg: 255 247 234;
+  --surface: 255 255 255;
+  --surface-2: 255 240 220;
+  --line: 244 222 196;
+  --ink: 74 50 38;
+  --muted: 146 116 96;
+
+  --accent: 245 124 84; /* peach */
+  --accent-shade: 219 96 58;
+  --accent-soft: 255 232 218;
+  --accent-2: 160 128 240; /* lilac */
+  --accent-2-shade: 128 98 214;
+  --good: 52 196 145; /* mint */
+  --good-shade: 34 160 116;
+  --good-soft: 220 246 235;
+  --bad: 242 140 108; /* gentle coral, never alarm red */
+  --bad-shade: 214 110 80;
+  --bad-soft: 255 236 226;
+  --warn: 255 201 60; /* butter */
+  --warn-shade: 227 165 28;
+  --streak: 255 150 100;
+
+  --sp-sky: 85 183 245;
+  --sp-shadow: 0 14px 30px -14px rgb(196 120 70 / 0.35), 0 3px 8px -2px rgb(196 120 70 / 0.12);
+  --sp-shadow-lg: 0 26px 50px -20px rgb(196 120 70 / 0.45), 0 4px 12px -4px rgb(196 120 70 / 0.14);
+
+  --font-sans: var(--font-sprout), "Baloo 2", ui-rounded, system-ui, sans-serif;
+  font-family: var(--font-sans);
+  font-size: 20px;
+  color-scheme: light;
+}
+
+html.dark[data-skin="modes"][data-mode="sprout"] {
+  /* a cosy bedtime room */
+  --bg: 38 30 44;
+  --surface: 52 42 60;
+  --surface-2: 64 52 74;
+  --line: 86 72 98;
+  --ink: 255 241 228;
+  --muted: 204 182 176;
+
+  --accent: 255 158 122;
+  --accent-shade: 232 120 90;
+  --accent-soft: 80 52 58;
+  --accent-2: 186 160 255;
+  --accent-2-shade: 150 124 230;
+  --good: 84 214 166;
+  --good-shade: 52 176 132;
+  --good-soft: 34 70 62;
+  --bad: 250 160 130;
+  --bad-shade: 226 128 100;
+  --bad-soft: 82 50 50;
+  --warn: 255 206 84;
+  --warn-shade: 230 172 40;
+  --streak: 255 170 120;
+
+  --sp-shadow: 0 14px 30px -14px rgb(0 0 0 / 0.55), 0 3px 8px -2px rgb(0 0 0 / 0.25);
+  --sp-shadow-lg: 0 26px 50px -20px rgb(0 0 0 / 0.65), 0 4px 12px -4px rgb(0 0 0 / 0.3);
+  color-scheme: dark;
+}
+
+html[data-skin="modes"][data-mode="sprout"] body {
+  font-family: var(--font-sans);
+  background: rgb(var(--bg));
+}
+
+html[data-skin="modes"][data-mode="sprout"] :focus-visible {
+  outline: 4px solid rgb(var(--sp-sky) / 0.8);
+  outline-offset: 4px;
+}
+
+/* ---------- typography: friendly, never shouty ---------- */
+html[data-skin="modes"][data-mode="sprout"] .font-black {
+  font-weight: 800;
+}
+html[data-skin="modes"][data-mode="sprout"] h1,
+html[data-skin="modes"][data-mode="sprout"] h2,
+html[data-skin="modes"][data-mode="sprout"] h3 {
+  letter-spacing: -0.005em;
+  line-height: 1.15;
+}
+html[data-skin="modes"][data-mode="sprout"] .eyebrow {
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: none;
+  color: rgb(var(--muted));
+}
+
+/* ---------- surfaces: soft shadows, no borders ---------- */
+html[data-skin="modes"][data-mode="sprout"] .card {
+  border: 0;
+  border-radius: 2rem;
+  background: rgb(var(--surface));
+  box-shadow: var(--sp-shadow);
+}
+html[data-skin="modes"][data-mode="sprout"] .tile {
+  border: 0;
+  border-radius: 2rem;
+  background: rgb(var(--surface));
+  box-shadow: var(--sp-shadow);
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+}
+html[data-skin="modes"][data-mode="sprout"] .tile:hover {
+  background: rgb(var(--surface));
+  transform: translateY(-3px);
+  box-shadow: var(--sp-shadow-lg);
+}
+html[data-skin="modes"][data-mode="sprout"] .tile:active {
+  transform: translateY(1px) scale(0.98);
+}
+html[data-skin="modes"][data-mode="sprout"] .shadow-lift {
+  box-shadow: var(--sp-shadow-lg);
+}
+html[data-skin="modes"][data-mode="sprout"] .rounded-xl {
+  border-radius: 1.1rem;
+}
+html[data-skin="modes"][data-mode="sprout"] .rounded-2xl {
+  border-radius: 1.6rem;
+}
+html[data-skin="modes"][data-mode="sprout"] .rounded-3xl {
+  border-radius: 2rem;
+}
+
+/* ---------- buttons: big, round, soft ---------- */
+html[data-skin="modes"][data-mode="sprout"] .btn,
+html[data-skin="modes"][data-mode="sprout"] .btn-primary,
+html[data-skin="modes"][data-mode="sprout"] .btn-good,
+html[data-skin="modes"][data-mode="sprout"] .btn-bad,
+html[data-skin="modes"][data-mode="sprout"] .btn-gold,
+html[data-skin="modes"][data-mode="sprout"] .btn-purple,
+html[data-skin="modes"][data-mode="sprout"] .btn-ghost {
+  min-height: 3.2rem;
+  border-radius: 9999px;
+  padding: 0.75rem 1.6rem;
+  font-size: 1rem;
+  font-weight: 800;
+  letter-spacing: 0.01em;
+  text-transform: none;
+  border-bottom-width: 0;
+  transition: transform 0.12s ease, box-shadow 0.12s ease, filter 0.12s ease;
+}
+html[data-skin="modes"][data-mode="sprout"] .btn-primary {
+  box-shadow: inset 0 -5px 0 rgb(var(--accent-shade)), 0 12px 22px -12px rgb(var(--accent-shade));
+}
+html[data-skin="modes"][data-mode="sprout"] .btn-good {
+  box-shadow: inset 0 -5px 0 rgb(var(--good-shade)), 0 12px 22px -12px rgb(var(--good-shade));
+}
+html[data-skin="modes"][data-mode="sprout"] .btn-bad {
+  box-shadow: inset 0 -5px 0 rgb(var(--bad-shade)), 0 12px 22px -12px rgb(var(--bad-shade));
+}
+html[data-skin="modes"][data-mode="sprout"] .btn-gold {
+  box-shadow: inset 0 -5px 0 rgb(var(--warn-shade)), 0 12px 22px -12px rgb(var(--warn-shade));
+}
+html[data-skin="modes"][data-mode="sprout"] .btn-purple {
+  box-shadow: inset 0 -5px 0 rgb(var(--accent-2-shade)), 0 12px 22px -12px rgb(var(--accent-2-shade));
+}
+html[data-skin="modes"][data-mode="sprout"] .btn-ghost {
+  border: 0;
+  background: rgb(var(--surface));
+  color: rgb(var(--accent-shade));
+  box-shadow: var(--sp-shadow);
+}
+html.dark[data-skin="modes"][data-mode="sprout"] .btn-ghost {
+  color: rgb(var(--accent));
+}
+html[data-skin="modes"][data-mode="sprout"] :is(.btn, .btn-primary, .btn-good, .btn-bad, .btn-gold, .btn-purple, .btn-ghost):active {
+  transform: translateY(2px) scale(0.98);
+}
+html[data-skin="modes"][data-mode="sprout"] :is(.btn-primary, .btn-good):disabled {
+  box-shadow: none;
+}
+html[data-skin="modes"][data-mode="sprout"] .btn-flat {
+  border-radius: 9999px;
+  font-size: 0.85rem;
+  font-weight: 800;
+  text-transform: none;
+  letter-spacing: 0.01em;
+}
+
+html[data-skin="modes"][data-mode="sprout"] .chip {
+  border-radius: 9999px;
+  padding: 0.2rem 0.7rem;
+  font-size: 0.72rem;
+  font-weight: 700;
+  background: rgb(var(--surface-2));
+}
+
+html[data-skin="modes"][data-mode="sprout"] .input {
+  border: 0;
+  border-radius: 1.6rem;
+  min-height: 3.2rem;
+  padding: 0.8rem 1.2rem;
+  background: rgb(var(--surface-2));
+  box-shadow: inset 0 2px 6px rgb(160 100 60 / 0.12);
+  font-size: 1rem;
+}
+html[data-skin="modes"][data-mode="sprout"] .input:focus {
+  background: rgb(var(--surface));
+  box-shadow: 0 0 0 4px rgb(var(--sp-sky) / 0.45);
+}
+
+html[data-skin="modes"][data-mode="sprout"] .prose-quest {
+  font-size: 1.15rem;
+  line-height: 1.75;
+  font-weight: 500;
+}
+
+/* ------------------------------------------------------------------ */
+/* Sprout frame pieces                                                 */
+/* ------------------------------------------------------------------ */
+
+html[data-skin="modes"][data-mode="sprout"] .sprout-band {
+  background: linear-gradient(180deg, #ffe1cc 0%, rgb(var(--bg)) 100%);
+}
+html.dark[data-skin="modes"][data-mode="sprout"] .sprout-band {
+  background: linear-gradient(180deg, #4a3350 0%, rgb(var(--bg)) 100%);
+}
+html[data-skin="modes"][data-mode="sprout"] .sprout-owl-ring {
+  width: 76px;
+  height: 76px;
+  background: #fff3c4;
+  box-shadow: var(--sp-shadow);
+}
+html.dark[data-skin="modes"][data-mode="sprout"] .sprout-owl-ring {
+  background: #5a4668;
+}
+
+html[data-skin="modes"][data-mode="sprout"] .sprout-dock {
+  background: linear-gradient(0deg, rgb(var(--bg)) 55%, rgb(var(--bg) / 0));
+}
+html[data-skin="modes"][data-mode="sprout"] .sprout-dock > div {
+  position: relative;
+}
+html[data-skin="modes"][data-mode="sprout"] .sprout-dock > div::before {
+  content: "";
+  position: absolute;
+  inset: 22px 6px 6px;
+  z-index: -1;
+  border-radius: 3rem;
+  background: rgb(var(--surface));
+  box-shadow: var(--sp-shadow-lg);
+}
+
+html[data-skin="modes"][data-mode="sprout"] .sprout-caption {
+  font-size: 0.8rem;
+  font-weight: 700;
+  line-height: 1.2;
+  color: rgb(var(--muted));
+}
+
+html[data-skin="modes"][data-mode="sprout"] .sprout-press {
+  -webkit-tap-highlight-color: transparent;
+  touch-action: manipulation;
+}
+html[data-skin="modes"][data-mode="sprout"] .sprout-press:hover .sprout-bubble {
+  transform: translateY(-3px) scale(1.03);
+}
+html[data-skin="modes"][data-mode="sprout"] .sprout-press:active .sprout-bubble {
+  transform: translateY(2px) scale(0.95);
+}
+html[data-skin="modes"][data-mode="sprout"] .sprout-bubble-on {
+  outline: 5px solid rgb(var(--surface));
+  outline-offset: 0;
+  box-shadow: 0 0 0 10px rgb(var(--warn) / 0.55) !important;
+  transform: translateY(-4px);
+}
+html[data-skin="modes"][data-mode="sprout"] [aria-current="page"] .sprout-caption,
+html[data-skin="modes"][data-mode="sprout"] [aria-pressed="true"] .sprout-caption {
+  color: rgb(var(--ink));
+}
+
+/* Home */
+html[data-skin="modes"][data-mode="sprout"] .sprout-hero {
+  background: radial-gradient(120% 90% at 50% 10%, #fff6d8 0%, rgb(var(--surface)) 70%);
+  box-shadow: var(--sp-shadow-lg);
+}
+html.dark[data-skin="modes"][data-mode="sprout"] .sprout-hero {
+  background: radial-gradient(120% 90% at 50% 10%, #5c4a3e 0%, rgb(var(--surface)) 70%);
+}
+html[data-skin="modes"][data-mode="sprout"] .sprout-hero:active {
+  transform: scale(0.985);
+}
+html[data-skin="modes"][data-mode="sprout"] .sprout-card {
+  background: rgb(var(--surface));
+  box-shadow: var(--sp-shadow);
+}
+html[data-skin="modes"][data-mode="sprout"] .sprout-card:hover {
+  transform: translateY(-3px);
+}
+html[data-skin="modes"][data-mode="sprout"] .sprout-card:active,
+html[data-skin="modes"][data-mode="sprout"] .sprout-card-on:active {
+  transform: scale(0.97);
+}
+html[data-skin="modes"][data-mode="sprout"] .sprout-carousel {
+  scrollbar-width: none;
+}
+html[data-skin="modes"][data-mode="sprout"] .sprout-carousel::-webkit-scrollbar {
+  display: none;
+}
+html[data-skin="modes"][data-mode="sprout"] .sprout-shelf {
+  background: linear-gradient(180deg, #e3f7ee 0%, #f0fbf6 100%);
+  box-shadow: var(--sp-shadow);
+}
+html.dark[data-skin="modes"][data-mode="sprout"] .sprout-shelf {
+  background: linear-gradient(180deg, #2f4a48 0%, rgb(var(--surface)) 100%);
+}
+html[data-skin="modes"][data-mode="sprout"] .sprout-shelf-board {
+  background: #e7b98a;
+  box-shadow: inset 0 -5px 0 #c99366;
+}
+
+/* Lesson: a storybook page */
+html[data-skin="modes"][data-mode="sprout"] .sprout-page {
+  background: rgb(var(--surface));
+  box-shadow: var(--sp-shadow-lg);
+}
+html[data-skin="modes"][data-mode="sprout"] .sprout-page h2 {
+  font-size: 1.4rem;
+}
+
+/* Session */
+html[data-skin="modes"][data-mode="sprout"] .sprout-question {
+  background: rgb(var(--surface));
+  box-shadow: var(--sp-shadow-lg);
+}
+html[data-skin="modes"][data-mode="sprout"] .sprout-question .eyebrow {
+  display: none;
+}
+html[data-skin="modes"][data-mode="sprout"] .sprout-question :is(button, label).border-b-4 {
+  border-bottom-width: 2px;
+  border-radius: 1.8rem;
+  box-shadow: var(--sp-shadow);
+  min-height: 4rem;
+}
+/* Picked but not right: a soft peach, no alarm red. */
+html[data-skin="modes"][data-mode="sprout"] .sprout-question .border-bad {
+  background: rgb(var(--surface-2));
+  color: rgb(var(--muted));
+  opacity: 0.75;
+  box-shadow: none;
+}
+/* The right answer glows like sunshine. */
+html[data-skin="modes"][data-mode="sprout"] .sprout-question .border-good {
+  background: rgb(var(--good-soft));
+  box-shadow: 0 0 0 5px rgb(var(--good) / 0.55), 0 0 0 12px rgb(var(--warn) / 0.35);
+  animation: sprout-glow 1.4s ease-in-out 2;
+}
+@keyframes sprout-glow {
+  50% {
+    transform: scale(1.03);
+  }
+}
+html[data-skin="modes"][data-mode="sprout"] .sprout-question .text-bad,
+html[data-skin="modes"][data-mode="sprout"] .sprout-question .text-bad-shade {
+  color: rgb(var(--muted));
+}
+
+html[data-skin="modes"][data-mode="sprout"] .sprout-footer {
+  background: rgb(var(--bg));
+}
+html[data-skin="modes"][data-mode="sprout"] .sprout-footer-yay {
+  background: rgb(var(--good-soft));
+  border-radius: 2.5rem 2.5rem 0 0;
+}
+html[data-skin="modes"][data-mode="sprout"] .sprout-footer-try {
+  background: #fff1cc;
+  border-radius: 2.5rem 2.5rem 0 0;
+}
+html.dark[data-skin="modes"][data-mode="sprout"] .sprout-footer-try {
+  background: #4a3c22;
+}
+
+/* Quiet down game chrome that isn't for this age. */
+html[data-skin="modes"][data-mode="sprout"] .text-streak {
+  color: rgb(var(--warn-shade));
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html[data-skin="modes"][data-mode="sprout"] .sprout-question .border-good {
+    animation: none;
+  }
+}
