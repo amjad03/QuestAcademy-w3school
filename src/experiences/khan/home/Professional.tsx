@@ -6,6 +6,7 @@ import clsx from "clsx";
 import { ArrowRight, Award, BookOpen, Briefcase, CalendarDays, Clock, Target } from "lucide-react";
 import { getPathway, pathways, type Pathway } from "@/content/pathways";
 import { useT } from "@/i18n";
+import { useContentDict } from "@/i18n/content";
 import { useLearner } from "@/lib/store";
 import { dayKey } from "@/lib/gamification";
 import { pathwayProgress } from "@/lib/plan-sources/pathway";
@@ -60,6 +61,7 @@ function Goal({ primary }: { primary: Pathway }) {
   const next = sched?.next;
   const done = Boolean(progress.certificate) || progress.eligible || (sched && !next);
   const isAssignment = next?.id.startsWith("assignment:");
+  const dict = useContentDict(next && !isAssignment ? next.id.split("/")[0] : "");
 
   return (
     <section className="kh-hero" aria-labelledby="kh-goal">
@@ -105,7 +107,7 @@ function Goal({ primary }: { primary: Pathway }) {
                   {t("khan.pro.nextUp", "Next up")}
                   {next.group ? ` · ${next.group}` : ""}
                 </p>
-                <p className="truncate font-semibold">{next.title}</p>
+                <p className="truncate font-semibold">{dict?.[next.title] ?? next.title}</p>
                 <p className="kh-hero-muted flex items-center gap-1.5 text-xs">
                   <Clock className="h-3.5 w-3.5" aria-hidden /> {t("khan.minShort", "{n} min", { n: f.n(next.minutes) })}
                 </p>

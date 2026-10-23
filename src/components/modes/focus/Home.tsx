@@ -16,6 +16,7 @@ import { usePlan } from "@/components/plan/usePlan";
 import { TaskRow } from "@/components/plan/PlanView";
 import { SYLLABI, chapterProgress, drillHref, examDateFor, getGrade, lessonHref, resolveBoardGrade, type SyllabusChapter, type SyllabusGrade } from "@/content/syllabus";
 import { SIMULATIONS } from "./sims";
+import { useSharedText } from "@/i18n/content";
 
 const daysUntil = (d: Date) => Math.max(0, Math.ceil((d.getTime() - Date.now()) / 86_400_000));
 const SENIOR = new Set(["11", "12", "PUC-1", "PUC-2"]);
@@ -30,6 +31,7 @@ export function FocusHome() {
   const { board, grade: gradeId } = resolveBoardGrade(profile.board, profile.grade, profile.stage);
   const grade = getGrade(board, gradeId)!;
   const [tab, setTab] = useState<string | null>(null);
+  const tx = useSharedText();
   const subject = grade.subjects.find((s) => s.id === tab) ?? grade.subjects[0];
 
   const progress = useMemo(() => {
@@ -50,22 +52,22 @@ export function FocusHome() {
       {/* header */}
       <div className="flex flex-wrap items-end justify-between gap-4">
         <div>
-          <p className="eyebrow">{SYLLABI[board].name}</p>
-          <h1 className="mt-1 text-2xl font-black">{grade.name} syllabus</h1>
-          <p className="mt-1 text-sm font-semibold text-muted">{SYLLABI[board].note}</p>
+          <p className="eyebrow">{tx(SYLLABI[board].name)}</p>
+          <h1 className="mt-1 text-2xl font-black">{tx(grade.name)} syllabus</h1>
+          <p className="mt-1 text-sm font-semibold text-muted">{tx(SYLLABI[board].note)}</p>
         </div>
         <div className="flex gap-2">
           <select className="input !w-auto !py-2 text-sm" value={board} onChange={(e) => pickBoard(e.target.value as Board)} aria-label="Board">
             {BOARDS.map((b) => (
               <option key={b.id} value={b.id}>
-                {b.name}
+                {tx(b.name)}
               </option>
             ))}
           </select>
           <select className="input !w-auto !py-2 text-sm" value={grade.id} onChange={(e) => (setProfile({ board, grade: e.target.value }), setTab(null))} aria-label="Class">
             {SYLLABI[board].grades.map((g) => (
               <option key={g.id} value={g.id}>
-                {g.name}
+                {tx(g.name)}
               </option>
             ))}
           </select>
@@ -87,7 +89,7 @@ export function FocusHome() {
             onClick={() => setTab(s.id)}
             className={clsx("-mb-[2px] shrink-0 border-b-2 px-4 py-2.5 text-sm font-extrabold transition", s.id === subject.id ? "border-accent text-accent" : "border-transparent text-muted hover:text-ink")}
           >
-            {s.name}
+            {tx(s.name)}
           </button>
         ))}
       </div>
@@ -114,20 +116,21 @@ export function FocusHome() {
 function ChapterRow({ n, chapter: c, p }: { n: number; chapter: SyllabusChapter; p: ReturnType<typeof chapterProgress> }) {
   const drill = drillHref(c);
   const m = MASTERY[p.level];
+  const tx = useSharedText();
   return (
     <li className="flex flex-col gap-3 p-4 sm:flex-row sm:items-center">
       <div className="flex min-w-0 flex-1 items-start gap-3">
         <span className="mt-0.5 w-6 shrink-0 text-right text-sm font-black text-muted">{n}</span>
         <div className="min-w-0 flex-1">
           <div className="flex flex-wrap items-center gap-2">
-            <span className="font-extrabold">{c.title}</span>
+            <span className="font-extrabold">{tx(c.title)}</span>
             {c.weightage ? <span className="chip !py-0.5 text-xs">~{c.weightage}%</span> : null}
             {p.status === "practice" && <span className="chip !py-0.5 text-xs">Practice only</span>}
             {p.status === "soon" && <span className="chip !py-0.5 text-xs text-muted">Coming soon</span>}
           </div>
           {p.status === "learn" ? (
             <div className="mt-2 flex items-center gap-3">
-              <ProgressBar value={p.completed} height={8} className="max-w-[220px]" color={m.color} label={`${c.title} progress`} />
+              <ProgressBar value={p.completed} height={8} className="max-w-[220px]" color={m.color} label={`${tx(c.title)} progress`} />
               <span className="flex shrink-0 items-center gap-1.5 text-xs font-bold text-muted">
                 <span className="h-2.5 w-2.5 rounded-full" style={{ background: m.color }} />
                 {p.done ? "Done" : m.name}
@@ -231,6 +234,7 @@ function TodayCard() {
 }
 
 function WeakChapters({ grade, progress }: { grade: SyllabusGrade; progress: Map<string, ReturnType<typeof chapterProgress>> }) {
+  const tx = useSharedText();
   const weak = grade.subjects
     .flatMap((s) => s.chapters.map((c) => ({ c, s, p: progress.get(c.id)! })))
     .filter(({ p }) => p.status === "learn" && !p.done && (p.completed > 0 || p.level > 0) && p.mastery < 0.8)
@@ -247,9 +251,9 @@ function WeakChapters({ grade, progress }: { grade: SyllabusGrade; progress: Map
           {weak.map(({ c, s, p }) => (
             <Link key={c.id} href={drillHref(c) ?? lessonHref(p.nextLesson ?? c.lessonIds[0])} className="tile flex items-center gap-3 p-4">
               <div className="min-w-0 flex-1">
-                <p className="truncate font-extrabold">{c.title}</p>
+                <p className="truncate font-extrabold">{tx(c.title)}</p>
                 <p className="text-xs font-bold text-muted">
-                  {s.name} · {MASTERY[p.level].name}
+                  {tx(s.name)} · {MASTERY[p.level].name}
                 </p>
               </div>
               <span className="text-sm font-black text-warn-shade">{Math.round(p.mastery * 100)}%</span>
@@ -301,6 +305,7 @@ function FocusRail({ grade, board }: { grade: SyllabusGrade; board: Board }) {
   const mastery = useLearner((s) => s.mastery);
   const planDone = useLearner((s) => s.planDone);
   const { live } = usePlan();
+  const tx = useSharedText();
   const chapters = grade.subjects.flatMap((s) => s.chapters);
   const done = chapters.filter((c) => chapterProgress(c, { lessons, mastery, planDone }).done).length;
   return (
@@ -315,7 +320,7 @@ function FocusRail({ grade, board }: { grade: SyllabusGrade; board: Board }) {
             {live.result.onTrack ? "Plan on track" : `Behind · +${live.result.extraHoursNeeded} h/week needed`}
           </p>
         )}
-        <p className="mt-2 text-xs font-semibold text-muted">{SYLLABI[board].name} · {grade.name}</p>
+        <p className="mt-2 text-xs font-semibold text-muted">{tx(SYLLABI[board].name)} · {tx(grade.name)}</p>
       </RailCard>
       <QuestsCard limit={2} />
       <RailFooter />

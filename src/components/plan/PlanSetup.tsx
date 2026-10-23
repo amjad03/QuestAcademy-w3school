@@ -11,6 +11,7 @@ import { pathways } from "@/content/pathways";
 import { SYLLABI, examDateFor, getGrade, resolveBoardGrade } from "@/content/syllabus";
 import type { Board } from "@/lib/modes";
 import { useT } from "@/i18n";
+import { useSharedText } from "@/i18n/content";
 
 const DAYS = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
 
@@ -40,6 +41,7 @@ function defaultTarget(scope: Scope) {
 /** Scope picker + target date + weekly hours + study days. */
 export function PlanSetup({ initial, onDone }: { initial?: StudyPlan | null; onDone?: () => void }) {
   const t = useT();
+  const tx = useSharedText();
   const DAY_LABEL = [
     t("plan.day.sun", "Sun"),
     t("plan.day.mon", "Mon"),
@@ -105,7 +107,7 @@ export function PlanSetup({ initial, onDone }: { initial?: StudyPlan | null; onD
               {Object.values(SYLLABI).flatMap((b) =>
                 b.grades.map((g) => (
                   <option key={`${b.id}:${g.id}`} value={`syllabus|${b.id}:${g.id}`}>
-                    {b.name} · {g.name}
+                    {tx(b.name)} · {tx(g.name)}
                   </option>
                 )),
               )}
@@ -121,7 +123,7 @@ export function PlanSetup({ initial, onDone }: { initial?: StudyPlan | null; onD
             <optgroup label={t("plan.setup.group.course", "Course")}>
               {catalog.map((c) => (
                 <option key={c.slug} value={`course|${c.slug}`}>
-                  {c.title}
+                  {tx(c.title)}
                 </option>
               ))}
             </optgroup>

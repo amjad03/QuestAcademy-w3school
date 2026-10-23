@@ -12,6 +12,7 @@ import { dayKey, questsForDay, type QuestDef } from "@/lib/gamification";
 import { preloadLiveVoice, say } from "@/lib/voice";
 import { EXPLORE_LINES } from "@/content/voice-lines";
 import { useBcp47, useT } from "@/i18n";
+import { localize, useContentDict, useSharedText } from "@/i18n/content";
 import { useHydrated } from "@/components/providers";
 import { useCatalog } from "@/components/shell/CatalogContext";
 import { useOutline } from "@/components/learn/LearnHome";
@@ -40,9 +41,12 @@ export function ExploreHomeV2() {
   const [picker, setPicker] = useState(false);
 
   // Primary-school courses, plus whatever course the learner already picked.
-  const courses = useMemo(() => catalog.filter((c) => c.world === "kids" || c.slug === profileCourse), [catalog, profileCourse]);
+  const tx = useSharedText();
+  const courses = useMemo(() => catalog.filter((c) => c.world === "kids" || c.slug === profileCourse).map((c) => ({ ...c, title: tx(c.title) })), [catalog, profileCourse, tx]);
   const course = hydrated ? (courses.find((c) => c.slug === profileCourse)?.slug ?? null) : null;
-  const outline = useOutline(course);
+  const rawOutline = useOutline(course);
+  const dict = useContentDict(course ?? "");
+  const outline = useMemo(() => localize(rawOutline, dict), [rawOutline, dict]);
 
   const hello = course ? t("explore.voice.welcome", EXPLORE_LINES.welcome) : t("explore.voice.chooseCourse", EXPLORE_LINES.chooseCourse);
 

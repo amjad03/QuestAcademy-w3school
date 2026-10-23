@@ -5,6 +5,7 @@ import { useMemo, useState } from "react";
 import clsx from "clsx";
 import { Atom, BookOpen, CalendarClock, CalendarDays, ClipboardList, FlaskConical, Printer, Sigma, Target, TriangleAlert } from "lucide-react";
 import { useT } from "@/i18n";
+import { useSharedText } from "@/i18n/content";
 import { useLearner } from "@/lib/store";
 import { BOARDS, type Board } from "@/lib/modes";
 import type { MasteryLevel } from "@/lib/mastery";
@@ -31,6 +32,7 @@ export function FocusHome() {
   const { board, grade: gradeId } = resolveBoardGrade(profile.board, profile.grade, profile.stage);
   const grade = getGrade(board, gradeId)!;
   const exam = useExamCountdown();
+  const tx = useSharedText();
 
   const progress = useMemo(() => {
     const st = { lessons, mastery, planDone };
@@ -51,7 +53,7 @@ export function FocusHome() {
     <HomeFrame
       top={
         <Greeting
-          sub={t("khan.focus.sub", "Your {board} {grade} syllabus, chapter by chapter — with lessons, drills and formula sheets mapped to each one.", { board: SYLLABI[board].name, grade: grade.name })}
+          sub={t("khan.focus.sub", "Your {board} {grade} syllabus, chapter by chapter — with lessons, drills and formula sheets mapped to each one.", { board: tx(SYLLABI[board].name), grade: tx(grade.name) })}
           aside={
             exam && (
               <Link href="/plan" className="card flex items-center gap-3 px-4 py-3 hover:border-accent">
@@ -89,7 +91,7 @@ export function FocusHome() {
         <UpNextHero
           lessonId={next.lessonId}
           eyebrow={t("khan.focus.nextInSyllabus", "Up next in your syllabus")}
-          context={t("khan.focus.chapterCtx", "{subject} · Chapter {n}: {title}", { subject: next.subject, n: f.n(next.n), title: next.chapter.title })}
+          context={t("khan.focus.chapterCtx", "{subject} · Chapter {n}: {title}", { subject: tx(next.subject), n: f.n(next.n), title: tx(next.chapter.title) })}
           secondary={drillHref(next.chapter) ? { href: drillHref(next.chapter)!, label: t("khan.focus.drill", "Chapter drill") } : undefined}
         />
       ) : (
@@ -112,6 +114,7 @@ function SyllabusDashboard({ board, grade, progress }: { board: Board; grade: Sy
   const f = useFmt();
   const setProfile = useLearner((s) => s.setProfile);
   const [tab, setTab] = useState<string | null>(null);
+  const tx = useSharedText();
   const subject = grade.subjects.find((s) => s.id === tab) ?? grade.subjects[0];
   const chapters = grade.subjects.flatMap((s) => s.chapters);
   const done = chapters.filter((c) => progress.get(c.id)?.done).length;
@@ -131,9 +134,9 @@ function SyllabusDashboard({ board, grade, progress }: { board: Board; grade: Sy
           <div className="min-w-0">
             <p className="eyebrow">{t("khan.focus.syllabusEyebrow", "Syllabus · mapped to lessons")}</p>
             <h2 id="kh-syllabus" className="kh-h2 mt-1 !text-[1.375rem]">
-              {t("khan.focus.syllabusTitle", "{board} · {grade}", { board: SYLLABI[board].name, grade: grade.name })}
+              {t("khan.focus.syllabusTitle", "{board} · {grade}", { board: tx(SYLLABI[board].name), grade: tx(grade.name) })}
             </h2>
-            <p className="mt-1 text-sm text-muted">{SYLLABI[board].note}</p>
+            <p className="mt-1 text-sm text-muted">{tx(SYLLABI[board].note)}</p>
           </div>
           <div className="flex flex-wrap gap-2">
             <label className="flex flex-col gap-1 text-xs font-semibold text-muted">
@@ -141,7 +144,7 @@ function SyllabusDashboard({ board, grade, progress }: { board: Board; grade: Sy
               <select className="input !w-auto !py-1.5 text-sm" value={board} onChange={(e) => pickBoard(e.target.value as Board)}>
                 {BOARDS.map((b) => (
                   <option key={b.id} value={b.id}>
-                    {b.name}
+                    {tx(b.name)}
                   </option>
                 ))}
               </select>
@@ -151,7 +154,7 @@ function SyllabusDashboard({ board, grade, progress }: { board: Board; grade: Sy
               <select className="input !w-auto !py-1.5 text-sm" value={grade.id} onChange={(e) => (setProfile({ board, grade: e.target.value }), setTab(null))}>
                 {SYLLABI[board].grades.map((g) => (
                   <option key={g.id} value={g.id}>
-                    {g.name}
+                    {tx(g.name)}
                   </option>
                 ))}
               </select>
@@ -173,7 +176,7 @@ function SyllabusDashboard({ board, grade, progress }: { board: Board; grade: Sy
           const sDone = s.chapters.filter((c) => progress.get(c.id)?.done).length;
           return (
             <button key={s.id} type="button" role="tab" aria-selected={s.id === subject.id} aria-controls="kh-chapters" onClick={() => setTab(s.id)} className="kh-tab">
-              {s.name}
+              {tx(s.name)}
               <span className="text-xs font-normal text-muted tabular-nums">
                 {f.n(sDone)}/{f.n(s.chapters.length)}
               </span>
@@ -182,7 +185,7 @@ function SyllabusDashboard({ board, grade, progress }: { board: Board; grade: Sy
         })}
       </div>
 
-      <div id="kh-chapters" role="tabpanel" aria-label={subject.name}>
+      <div id="kh-chapters" role="tabpanel" aria-label={tx(subject.name)}>
         <p className="sr-only">{t("khan.focus.subjectDone", "{done} of {total} chapters done", { done: subjectDone, total: subject.chapters.length })}</p>
         <ol className="divide-y divide-line">
           {subject.chapters.map((c, i) => (
@@ -199,6 +202,7 @@ function ChapterRow({ n, chapter: c, p }: { n: number; chapter: SyllabusChapter;
   const f = useFmt();
   const name = useMasteryName();
   const drill = drillHref(c);
+  const tx = useSharedText();
   return (
     <li className="flex flex-col gap-3 px-5 py-4 sm:flex-row sm:items-center sm:px-6">
       <div className="flex min-w-0 flex-1 items-start gap-3">
@@ -207,10 +211,10 @@ function ChapterRow({ n, chapter: c, p }: { n: number; chapter: SyllabusChapter;
           <div className="flex flex-wrap items-center gap-x-2 gap-y-1">
             {p.nextLesson || c.lessonIds[0] ? (
               <Link href={lessonHref(p.nextLesson ?? c.lessonIds[0])} className="font-semibold leading-snug hover:text-accent hover:underline hover:underline-offset-2">
-                {c.title}
+                {tx(c.title)}
               </Link>
             ) : (
-              <span className="font-semibold leading-snug">{c.title}</span>
+              <span className="font-semibold leading-snug">{tx(c.title)}</span>
             )}
             {c.weightage ? (
               <span className="chip !py-0 text-[0.6875rem]" title={t("khan.focus.weightageHint", "Approximate share of marks")}>
@@ -257,6 +261,7 @@ function WeakChapters({ grade, progress }: { grade: SyllabusGrade; progress: Map
   const t = useT();
   const f = useFmt();
   const name = useMasteryName();
+  const tx = useSharedText();
   const weak = grade.subjects
     .flatMap((s) => s.chapters.map((c) => ({ c, s, p: progress.get(c.id)! })))
     .filter(({ p }) => p.status === "learn" && !p.done && (p.completed > 0 || p.level > 0) && p.mastery < 0.8)
@@ -279,9 +284,9 @@ function WeakChapters({ grade, progress }: { grade: SyllabusGrade; progress: Map
             <Link key={c.id} href={drillHref(c) ?? lessonHref(p.nextLesson ?? c.lessonIds[0])} className="tile flex items-center gap-3 p-4">
               <MasterySquare level={p.level} size={16} />
               <span className="min-w-0 flex-1">
-                <span className="block truncate font-semibold">{c.title}</span>
+                <span className="block truncate font-semibold">{tx(c.title)}</span>
                 <span className="block text-xs text-muted">
-                  {s.name} · {name(p.level)}
+                  {tx(s.name)} · {name(p.level)}
                 </span>
               </span>
               <span className="shrink-0 text-sm font-bold tabular-nums text-warn-shade">{f.pct(p.mastery)}</span>

@@ -19,6 +19,7 @@ import { useHydrated } from "@/components/providers";
 import { STICKERS } from "@/components/modes/explore/stickers";
 import { StickerTile } from "@/components/modes/explore/StickerTile";
 import { useT } from "@/i18n";
+import { localize, useContentDict, useSharedText } from "@/i18n/content";
 import { ChunkyLink, SUN, type SunHue } from "./ui";
 
 const GREET_KEY = "qa-sprout-greeted";
@@ -78,6 +79,9 @@ export function SproutHome() {
   const wanted = hydrated ? profileCourse : null;
   const course = kids.find((c) => c.slug === wanted)?.slug ?? kids.find((c) => c.slug === DEFAULT_COURSE)?.slug ?? kids[0]?.slug ?? null;
   const outline = useOutline(course);
+  const tx = useSharedText();
+  const dict = useContentDict(course ?? "");
+  const shown = useMemo(() => localize(outline, dict), [outline, dict]);
   const s = useLearner();
   const st = hydrated ? s : EMPTY_PROGRESS;
   const assessments = hydrated ? s.assessments : {};
@@ -144,15 +148,15 @@ export function SproutHome() {
                 key={c.slug}
                 onClick={() => {
                   setProfile({ course: c.slug });
-                  say(c.title);
+                  say(tx(c.title));
                 }}
                 aria-pressed={active}
-                aria-label={c.title}
+                aria-label={tx(c.title)}
                 className={clsx("sprout-press flex w-[118px] shrink-0 snap-start flex-col items-center gap-2 rounded-[1.8rem] p-3 transition", active ? "sprout-card-on" : "sprout-card")}
                 style={active ? { background: `${cs.color}22`, boxShadow: `0 0 0 4px ${cs.color}, 0 16px 30px -16px ${cs.shade}` } : undefined}
               >
                 <CourseIcon slug={c.slug} size={76} />
-                <span className="sprout-caption line-clamp-2 text-center leading-tight">{c.title}</span>
+                <span className="sprout-caption line-clamp-2 text-center leading-tight">{tx(c.title)}</span>
               </button>
             );
           })}
@@ -160,8 +164,8 @@ export function SproutHome() {
       </section>
 
       {/* The path */}
-      {outline && cp ? (
-        <CoursePath outline={outline} nextId={cp.next?.id ?? null} st={st} assessments={assessments} />
+      {shown && cp ? (
+        <CoursePath outline={shown} nextId={cp.next?.id ?? null} st={st} assessments={assessments} />
       ) : (
         <div className="mt-6 flex flex-col items-center gap-8" aria-hidden>
           <div className="h-24 w-full animate-pulse rounded-[2rem] bg-surface-2" />

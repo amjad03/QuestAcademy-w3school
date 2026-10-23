@@ -6,6 +6,7 @@ import { ArrowRight, ArrowUpRight, CalendarCheck, Code2, FileCheck2, Terminal } 
 import type { CourseOutline } from "@/content/course";
 import { RESOURCES, allCaseStudies, readingsForUnit, type Competency } from "@/content/resources";
 import { useT } from "@/i18n";
+import { useContentDict, useSharedText } from "@/i18n/content";
 import { useLearner, type LearnerState } from "@/lib/store";
 import { MASTERY, type MasteryLevel } from "@/lib/mastery";
 import { weekKey } from "@/lib/gamification";
@@ -100,6 +101,7 @@ function PlanCard({ hasPlan }: { hasPlan: boolean }) {
 
 function CodeLab({ outline, s }: { outline: CourseOutline | null; s: S }) {
   const t = useT();
+  const dict = useContentDict(outline?.slug ?? "");
   const nextChallenge = outline?.units
     .flatMap((u) => u.lessons)
     .flatMap((l) => l.items.filter((i) => i.kind === "challenge").map((i) => ({ lesson: l, item: i })))
@@ -121,7 +123,7 @@ function CodeLab({ outline, s }: { outline: CourseOutline | null; s: S }) {
       {nextChallenge && (
         <Link href={nextChallenge.item.href} className="mt-4 flex items-center gap-3 rounded-md border border-line px-3 py-2.5 hover:border-accent">
           <Code2 className="h-4 w-4 shrink-0 text-muted" aria-hidden />
-          <span className="min-w-0 flex-1 truncate text-sm font-semibold">{t("khan.mastery.nextChallenge", "Next challenge: {title}", { title: nextChallenge.item.title })}</span>
+          <span className="min-w-0 flex-1 truncate text-sm font-semibold">{t("khan.mastery.nextChallenge", "Next challenge: {title}", { title: dict?.[nextChallenge.item.title] ?? nextChallenge.item.title })}</span>
           <ArrowRight className="h-4 w-4 shrink-0 text-muted" aria-hidden />
         </Link>
       )}
@@ -156,6 +158,8 @@ function CodeLab({ outline, s }: { outline: CourseOutline | null; s: S }) {
 function AssessmentsDue({ outline, s }: { outline: CourseOutline | null; s: S }) {
   const t = useT();
   const f = useFmt();
+  const tx = useSharedText();
+  const dict = useContentDict(outline?.slug ?? "");
   if (!outline) return <section className="card h-48 animate-pulse" aria-busy />;
   const due = outline.units.filter((u) => u.lessons.some((l) => levelOf(s, l.id) > 0) && s.assessments[u.test.key] === undefined).slice(0, 3);
   const allTaken = outline.units.every((u) => s.assessments[u.test.key] !== undefined);
@@ -164,14 +168,14 @@ function AssessmentsDue({ outline, s }: { outline: CourseOutline | null; s: S })
       <h2 id="kh-due" className="font-bold">
         {t("khan.mastery.due", "Assessments due")}
       </h2>
-      <p className="text-[0.8125rem] text-muted">{outline.title}</p>
+      <p className="text-[0.8125rem] text-muted">{dict?.[outline.title] ?? tx(outline.title)}</p>
       {due.length ? (
         <ul className="mt-3 divide-y divide-line">
           {due.map((u) => (
             <li key={u.slug} className="flex items-center gap-3 py-2.5">
               <FileCheck2 className="h-4 w-4 shrink-0 text-muted" aria-hidden />
               <span className="min-w-0 flex-1">
-                <span className="block truncate text-sm font-semibold">{t("khan.mastery.unitTest", "Unit test: {title}", { title: u.title })}</span>
+                <span className="block truncate text-sm font-semibold">{t("khan.mastery.unitTest", "Unit test: {title}", { title: dict?.[u.title] ?? u.title })}</span>
                 <span className="block text-xs text-muted">{t("khan.mastery.unitTestSub", "{n} questions · can level skills up to Mastered", { n: f.n(u.test.questions) })}</span>
               </span>
               <Link href={u.test.href} className="kh-link shrink-0 text-sm">
@@ -198,6 +202,7 @@ function Competencies({ s, course, courses, onPick }: { s: S; course: string; co
   const t = useT();
   const f = useFmt();
   const name = useMasteryName();
+  const tx = useSharedText();
   const res = RESOURCES[course];
   const rows = useMemo(() => res.competencies.map((c) => ({ c, ...scoreCompetency(s, course, c) })), [res, s, course]);
   const avg = rows.length ? rows.reduce((a, r) => a + r.score, 0) / rows.length : 0;
@@ -209,7 +214,7 @@ function Competencies({ s, course, courses, onPick }: { s: S; course: string; co
           <div className="kh-seg" role="tablist" aria-label={t("khan.mastery.course", "Course")}>
             {courses.map((c) => (
               <button key={c.slug} type="button" role="tab" aria-selected={c.slug === course} className={c.slug === course ? "is-on" : undefined} onClick={() => onPick(c.slug)}>
-                {c.title}
+                {tx(c.title)}
               </button>
             ))}
           </div>
@@ -278,6 +283,7 @@ function Radar({ values, label }: { values: number[]; label: string }) {
 function ReadingQueue({ outline }: { outline: CourseOutline | null }) {
   const t = useT();
   const state = useCourseState(outline);
+  const dict = useContentDict(outline?.slug ?? "");
   if (!outline || !state) return null;
   const list = readingsForUnit(outline.slug, state.unit.slug).slice(0, 4);
   if (!list.length) return null;
@@ -286,7 +292,7 @@ function ReadingQueue({ outline }: { outline: CourseOutline | null }) {
       <h2 id="kh-reading" className="font-bold">
         {t("khan.mastery.readingQueue", "Reading queue")}
       </h2>
-      <p className="text-[0.8125rem] text-muted">{state.unit.title}</p>
+      <p className="text-[0.8125rem] text-muted">{dict?.[state.unit.title] ?? state.unit.title}</p>
       <ul className="mt-3 space-y-3">
         {list.map((r) => {
           const I = READING_ICON[r.type];
@@ -314,13 +320,15 @@ function ReadingQueue({ outline }: { outline: CourseOutline | null }) {
 function CaseOfTheWeek({ courses }: { courses: string[] }) {
   const t = useT();
   const catalog = useCatalog();
+  const tx = useSharedText();
   const all = allCaseStudies();
   const pool = all.filter((c) => courses.includes(c.course));
   const list = pool.length ? pool : all;
   if (!list.length) return null;
   const week = Math.floor(new Date(weekKey()).getTime() / (7 * 86_400_000));
   const pick = list[((week % list.length) + list.length) % list.length];
-  const title = catalog.find((c) => c.slug === pick.course)?.title;
+  const raw = catalog.find((c) => c.slug === pick.course)?.title;
+  const title = raw && tx(raw);
   return (
     <section aria-labelledby="kh-case">
       <SectionHeader id="kh-case" title={t("khan.mastery.caseWeek", "Case study of the week")} sub={title} />

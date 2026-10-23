@@ -17,6 +17,7 @@ import { CLASS_ICON } from "./LibraryHome";
 import { LibrarySearch, type LibrarySearchItem } from "./LibrarySearch";
 import { useLibrary } from "./libraryStore";
 import { useT } from "@/i18n";
+import { useSharedText } from "@/i18n/content";
 
 export interface ClassSubject {
   slug: string;
@@ -148,6 +149,7 @@ export function ClassView({ data }: { data: ClassViewData }) {
 
 function SubjectCard({ s, done, next, levels }: { s: ClassSubject; done: number; next: string | null; levels: string[] }) {
   const t = useT();
+  const tx = useSharedText();
   const pct = s.lessons ? done / s.lessons : 0;
   const complete = s.lessons > 0 && done === s.lessons;
   const cta = complete ? t("library.subject.review", "Review") : done > 0 ? t("library.subject.continue", "Continue") : t("library.subject.start", "Start");
@@ -159,21 +161,21 @@ function SubjectCard({ s, done, next, levels }: { s: ClassSubject; done: number;
         <CourseIcon slug={s.slug} size={44} />
         <div className="min-w-0 flex-1">
           <Link href={`/course/${s.slug}`} className="block truncate font-black hover:text-accent">
-            {s.title}
+            {tx(s.title)}
           </Link>
-          <p className="text-sm font-semibold text-muted">{s.tagline}</p>
+          <p className="text-sm font-semibold text-muted">{tx(s.tagline)}</p>
         </div>
         <span className={clsx("chip shrink-0 !py-0.5 text-xs", complete ? "!border-good bg-good-soft text-good" : done > 0 ? "!border-accent text-accent" : "text-muted")}>{complete ? t("library.subject.complete", "Complete") : done > 0 ? t("library.subject.doneOf", "{done} of {total}", { done, total: s.lessons }) : t("library.subject.notStarted", "Not started")}</span>
       </div>
       <div className="mt-3 flex flex-wrap gap-1.5">
         {levels.slice(0, 4).map((l) => (
           <span key={l} className="chip !py-0.5 text-xs text-muted">
-            {l}
+            {tx(l)}
           </span>
         ))}
-        {s.domain && <span className="chip !py-0.5 text-xs text-muted">{s.domain}</span>}
+        {s.domain && <span className="chip !py-0.5 text-xs text-muted">{tx(s.domain)}</span>}
       </div>
-      <ProgressBar value={pct} height={8} className="mt-3" color={complete ? "rgb(var(--good))" : undefined} label={t("library.subject.progressLabel", "{title} progress", { title: s.title })} />
+      <ProgressBar value={pct} height={8} className="mt-3" color={complete ? "rgb(var(--good))" : undefined} label={t("library.subject.progressLabel", "{title} progress", { title: tx(s.title) })} />
       <p className="mt-2 flex flex-wrap items-center gap-x-3 gap-y-1 text-xs font-bold text-muted">
         <span>{t("library.subject.units", "{n} units", { n: s.topics })}</span>
         <span>{t("library.lessonsCount", "{n} lessons", { n: s.lessons })}</span>
@@ -199,6 +201,7 @@ function BoardSyllabi({ boards }: { boards: ClassBoard[] }) {
   const params = useSearchParams();
   const router = useRouter();
   const setProfile = useLearner((s) => s.setProfile);
+  const tx = useSharedText();
   const wantBoard = params.get("board");
   const wantGrade = params.get("grade");
   const [tab, setTab] = useState<Board>(() => (boards.some((b) => b.id === wantBoard) ? (wantBoard as Board) : boards[0].id));
@@ -221,7 +224,7 @@ function BoardSyllabi({ boards }: { boards: ClassBoard[] }) {
         <div className="flex gap-1 overflow-x-auto border-b-2 border-line px-2" role="tablist" aria-label={t("library.boards.tablist", "Board")}>
           {boards.map((b) => (
             <button key={b.id} role="tab" aria-selected={b.id === board.id} onClick={() => setTab(b.id)} className={clsx("-mb-[2px] shrink-0 border-b-2 px-3 py-2.5 text-sm font-extrabold transition", b.id === board.id ? "border-accent text-accent" : "border-transparent text-muted hover:text-ink")}>
-              {b.name}
+              {tx(b.name)}
             </button>
           ))}
         </div>
@@ -233,9 +236,9 @@ function BoardSyllabi({ boards }: { boards: ClassBoard[] }) {
             return (
               <div key={gr.id} className={clsx("flex flex-col gap-3 p-4 sm:flex-row sm:items-center", highlighted && "bg-accent-soft/40")}>
                 <div className="min-w-0 flex-1">
-                  <p className="font-extrabold">{gr.name}</p>
+                  <p className="font-extrabold">{tx(gr.name)}</p>
                   <p className="text-xs font-bold text-muted">
-                    {t("library.gradeLine", "{chapters} chapters · {withLessons} with lessons", { chapters, withLessons })} · {gr.subjects.map((s) => s.name).join(", ")}
+                    {t("library.gradeLine", "{chapters} chapters · {withLessons} with lessons", { chapters, withLessons })} · {gr.subjects.map((s) => tx(s.name)).join(", ")}
                   </p>
                 </div>
                 <button onClick={() => study(gr.id)} className="btn-ghost shrink-0 !px-3 !py-1.5 text-sm">
@@ -245,7 +248,7 @@ function BoardSyllabi({ boards }: { boards: ClassBoard[] }) {
             );
           })}
         </div>
-        <p className="px-4 py-3 text-xs font-semibold text-muted">{board.note} {t("library.boards.note", "Choosing a syllabus switches your home to the Focus view with chapter progress and a revision plan.")}</p>
+        <p className="px-4 py-3 text-xs font-semibold text-muted">{tx(board.note)} {t("library.boards.note", "Choosing a syllabus switches your home to the Focus view with chapter progress and a revision plan.")}</p>
       </div>
     </section>
   );

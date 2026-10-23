@@ -6,6 +6,7 @@ import type { CourseOutline } from "@/content/course";
 import { RESOURCES, caseStudiesForUnit, caseStudyHref, readingsForUnit, type CaseStudy, type Reading } from "@/content/resources";
 import { getPathway } from "@/content/pathways";
 import { useT } from "@/i18n";
+import { useContentDict, useSharedText } from "@/i18n/content";
 import { useLearner } from "@/lib/store";
 import { unitProgress } from "@/lib/progress";
 import { useNotebook, titleCase } from "@/lib/notebook-store";
@@ -56,9 +57,10 @@ export function ResearchHome() {
 function ReadingList({ outline }: { outline: CourseOutline | null }) {
   const t = useT();
   const state = useCourseState(outline);
+  const dict = useContentDict(outline?.slug ?? "");
   if (!outline || !state) return <section className="card h-48 animate-pulse" aria-busy />;
   let list = readingsForUnit(outline.slug, state.unit.slug);
-  let scope = t("khan.research.unitScope", "Unit {n}: {title}", { n: state.unit.index + 1, title: state.unit.title });
+  let scope = t("khan.research.unitScope", "Unit {n}: {title}", { n: state.unit.index + 1, title: dict?.[state.unit.title] ?? state.unit.title });
   if (!list.length && RESOURCES[outline.slug]) {
     list = Object.values(RESOURCES[outline.slug].readings).flat();
     scope = t("khan.research.courseScope", "Whole course");
@@ -128,6 +130,7 @@ function CompetencyTable({ outline, course }: { outline: CourseOutline | null; c
   const f = useFmt();
   const name = useMasteryName();
   const s = useLearner();
+  const dict = useContentDict(outline?.slug ?? "");
   const res = RESOURCES[course];
   if (res?.competencies.length) {
     const rows = res.competencies.map((c) => ({ c, ...scoreCompetency(s, course, c) }));
@@ -177,7 +180,7 @@ function CompetencyTable({ outline, course }: { outline: CourseOutline | null; c
           return (
             <li key={u.slug} className="grid gap-2 p-4 sm:grid-cols-[minmax(0,1fr)_200px] sm:items-center">
               <Link href={u.href} className="min-w-0 truncate font-semibold hover:text-accent">
-                {f.n(u.index + 1)}. {u.title}
+                {f.n(u.index + 1)}. {dict?.[u.title] ?? u.title}
               </Link>
               <div>
                 <MasteryBar levels={u.lessons.map((l) => (s.mastery[l.id] ?? (s.lessons[l.id] ? 1 : 0)) as 0 | 1 | 2 | 3 | 4)} height={8} />
@@ -261,6 +264,7 @@ function PlanSummary() {
   const f = useFmt();
   const plan = useLearner((s) => s.plan);
   const catalog = useCatalog();
+  const tx = useSharedText();
   if (!plan)
     return (
       <Link href="/plan" className="tile flex items-center gap-4 p-4">
@@ -273,7 +277,7 @@ function PlanSummary() {
     );
   const scope =
     plan.scope.type === "course"
-      ? (catalog.find((c) => c.slug === plan.scope.id)?.title ?? titleCase(plan.scope.id))
+      ? (tx(catalog.find((c) => c.slug === plan.scope.id)?.title ?? "") || titleCase(plan.scope.id))
       : plan.scope.type === "pathway"
         ? (getPathway(plan.scope.id)?.title ?? titleCase(plan.scope.id))
         : plan.scope.id.replace(":", " · ");

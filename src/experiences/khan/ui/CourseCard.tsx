@@ -6,6 +6,7 @@ import clsx from "clsx";
 import { ArrowRight } from "lucide-react";
 import type { CourseCard as CourseMeta, CourseOutline } from "@/content/course";
 import { useT } from "@/i18n";
+import { useContentDict, useSharedText } from "@/i18n/content";
 import { useLearner } from "@/lib/store";
 import { courseProgress, lessonProgress } from "@/lib/progress";
 import { useOutline } from "@/components/learn/LearnHome";
@@ -39,6 +40,10 @@ export function CourseCard({ course, current, className }: { course: CourseMeta;
   const outline = useOutline(course.slug);
   const state = useCourseState(outline);
   const setProfile = useLearner((s) => s.setProfile);
+  const tx = useSharedText();
+  const dict = useContentDict(course.slug);
+  const title = tx(course.title);
+  const skills = useMemo(() => (state && dict ? state.skills.map((s) => ({ ...s, title: dict[s.title] ?? s.title })) : state?.skills), [state, dict]);
 
   return (
     <article className={clsx("card flex min-w-0 flex-col p-5", className)}>
@@ -47,7 +52,7 @@ export function CourseCard({ course, current, className }: { course: CourseMeta;
         <div className="min-w-0 flex-1">
           <h3 className="font-bold leading-snug">
             <Link href={course.href} className="hover:text-accent hover:underline hover:underline-offset-2">
-              {course.title}
+              {title}
             </Link>
           </h3>
           <p className="mt-0.5 text-[0.8125rem] text-muted">
@@ -70,13 +75,13 @@ export function CourseCard({ course, current, className }: { course: CourseMeta;
           </div>
           <MasteryBar levels={state.skills.map((s) => s.level)} className="mt-1.5" />
           <div className="mt-3 flex-1">
-            <SkillSquares skills={state.skills} max={36} size={12} label={t("khan.course.skillsOf", "Skills in {course}", { course: course.title })} />
+            <SkillSquares skills={skills ?? state.skills} max={36} size={12} label={t("khan.course.skillsOf", "Skills in {course}", { course: title })} />
           </div>
           {state.next && state.nextItem && (
             <div className="mt-4 flex flex-wrap items-center gap-x-3 gap-y-2 border-t border-line pt-4">
               <p className="min-w-0 flex-1 text-[0.8125rem] text-muted">
                 <span className="eyebrow block !text-[0.6875rem]">{t("khan.course.upNext", "Up next")}</span>
-                <span className="line-clamp-1 font-medium text-ink">{state.next.title}</span>
+                <span className="line-clamp-1 font-medium text-ink">{dict?.[state.next.title] ?? state.next.title}</span>
               </p>
               <Link href={state.nextItem.href} className="btn-ghost !min-h-[2.25rem] !px-3 !py-1.5 !text-sm" onClick={() => !current && setProfile({ course: course.slug })}>
                 {state.started ? t("khan.continue", "Continue") : t("khan.start", "Start")} <ArrowRight className="h-4 w-4" aria-hidden />

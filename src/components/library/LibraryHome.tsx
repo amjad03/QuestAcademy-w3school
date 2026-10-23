@@ -14,6 +14,7 @@ import { CLASS_GROUPS, GOALS, classById, classForStage, type ClassGroupId, type 
 import { LibrarySearch, type LibrarySearchItem } from "./LibrarySearch";
 import { useLibrary } from "./libraryStore";
 import { useT } from "@/i18n";
+import { useSharedText } from "@/i18n/content";
 
 export const CLASS_ICON: Record<ClassIcon, LucideIcon> = {
   baby: Baby,
@@ -73,6 +74,7 @@ export function LibraryHome({ data }: { data: LibraryHomeData }) {
   const stage = useLearner((s) => s.profile.stage);
   const mine = hydrated ? classForStage(stage) : null;
   const progress = useCourseProgress();
+  const tx = useSharedText();
 
   const done = (c: ClassSummary) => c.courses.reduce((a, slug) => a + (progress.get(slug)?.done ?? 0), 0);
 
@@ -136,15 +138,15 @@ export function LibraryHome({ data }: { data: LibraryHomeData }) {
         <div className="grid gap-3 md:grid-cols-2">
           {data.boards.map((b) => (
             <article key={b.id} className="card p-5">
-              <h3 className="font-black">{b.name}</h3>
-              <p className="text-xs font-bold text-muted">{b.full}</p>
+              <h3 className="font-black">{tx(b.name)}</h3>
+              <p className="text-xs font-bold text-muted">{tx(b.full)}</p>
               <ul className="mt-3 divide-y-2 divide-line">
                 {b.grades.map((g) => {
                   const href = g.classId ? `/library/class/${g.classId}?board=${b.id}&grade=${encodeURIComponent(g.id)}` : "/learn";
                   return (
                     <li key={g.id}>
                       <Link href={href} className="group flex items-center gap-3 py-2 text-sm">
-                        <span className="min-w-0 flex-1 truncate font-extrabold group-hover:text-accent">{g.name}</span>
+                        <span className="min-w-0 flex-1 truncate font-extrabold group-hover:text-accent">{tx(g.name)}</span>
                         <span className="shrink-0 text-xs font-semibold text-muted">
                           {t("library.gradeLine", "{chapters} chapters · {withLessons} with lessons", { chapters: g.chapters, withLessons: g.withLessons })}
                         </span>
@@ -154,7 +156,7 @@ export function LibraryHome({ data }: { data: LibraryHomeData }) {
                   );
                 })}
               </ul>
-              <p className="mt-3 text-xs font-semibold text-muted">{b.note}</p>
+              <p className="mt-3 text-xs font-semibold text-muted">{tx(b.note)}</p>
             </article>
           ))}
         </div>

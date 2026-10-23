@@ -39,14 +39,14 @@ export function useContentDict(course: string): ContentDict | null {
   const [dict, setDict] = useState<{ k: string; d: ContentDict | null } | null>(null);
   const k = `${locale}/${course}`;
   useEffect(() => {
-    if (locale === "en") return;
+    if (locale === "en" || !course) return;
     let live = true;
     loadContentDict(locale, course).then((d) => live && setDict({ k, d }));
     return () => {
       live = false;
     };
   }, [locale, course, k]);
-  if (locale === "en" || original || dict?.k !== k) return null;
+  if (locale === "en" || !course || original || dict?.k !== k) return null;
   return dict.d && Object.keys(dict.d).length ? dict.d : null;
 }
 
@@ -55,7 +55,7 @@ export function useHasContentTranslation(course: string) {
   const locale = useLocale();
   const [has, setHas] = useState(false);
   useEffect(() => {
-    if (locale === "en") return setHas(false);
+    if (locale === "en" || !course) return setHas(false);
     let live = true;
     loadContentDict(locale, course).then((d) => live && setHas(Boolean(d && Object.keys(d).length)));
     return () => {

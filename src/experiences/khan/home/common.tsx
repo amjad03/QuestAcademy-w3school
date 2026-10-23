@@ -6,6 +6,7 @@ import clsx from "clsx";
 import { ArrowRight, BookOpen, Code2, Eye, FileText, Languages, Layers, Map as MapIcon, Plus, SquarePen, Video, X } from "lucide-react";
 import type { ItemKind } from "@/content/course";
 import { LOCALES, translate, useT, type Locale } from "@/i18n";
+import { useContentDict, useSharedText } from "@/i18n/content";
 import { useLearner, liveStreak } from "@/lib/store";
 import { dayKey } from "@/lib/gamification";
 import { itemDone, lessonProgress } from "@/lib/progress";
@@ -83,6 +84,9 @@ export function UpNextHero({ lessonId, context, eyebrow, secondary }: { lessonId
   const outline = useOutline(slug);
   const state = useCourseState(outline);
   const explainers = useExplainerIndex();
+  const tx = useSharedText();
+  const dict = useContentDict(slug ?? "");
+  const tc = (s: string) => dict?.[s] ?? s;
 
   if (!slug) return <StartCourse />;
   if (!outline || !state) return <div className="kh-hero h-[236px] animate-pulse" aria-busy aria-label={t("khan.loading", "Loading")} />;
@@ -93,7 +97,7 @@ export function UpNextHero({ lessonId, context, eyebrow, secondary }: { lessonId
   const unit = outline.units.find((u) => u.slug === lesson.unitSlug) ?? state.unit;
   const lp = lessonProgress(state.st, lesson);
   const started = lp.itemsDone > 0 || lp.level > 0;
-  const unitSkills: Skill[] = unit.lessons.map((l) => ({ id: l.id, title: l.title, level: state.cp.levels[l.id] ?? 0, href: l.href }));
+  const unitSkills: Skill[] = unit.lessons.map((l) => ({ id: l.id, title: tc(l.title), level: state.cp.levels[l.id] ?? 0, href: l.href }));
   const unitDone = unit.lessons.filter((l) => lessonProgress(state.st, l).complete).length;
   const seeIt = explainers?.byLesson[lesson.id]?.[0];
   const seeItMeta = seeIt ? explainers?.all.find((e) => e.id === seeIt) : null;
@@ -108,16 +112,16 @@ export function UpNextHero({ lessonId, context, eyebrow, secondary }: { lessonId
             {context ?? (
               <>
                 <Link href={outline.href} className="font-semibold text-white hover:underline">
-                  {outline.title}
+                  {dict?.[outline.title] ?? tx(outline.title)}
                 </Link>{" "}
-                · {t("khan.unitN", "Unit {n}", { n: f.n(unit.index + 1) })}: {unit.title}
+                · {t("khan.unitN", "Unit {n}", { n: f.n(unit.index + 1) })}: {tc(unit.title)}
               </>
             )}
           </p>
           <h2 id="kh-upnext" className="mt-1.5 text-[1.5rem] font-bold leading-snug sm:text-[1.75rem]">
-            {lesson.title}
+            {tc(lesson.title)}
           </h2>
-          {lesson.summary && <p className="kh-hero-muted mt-2 line-clamp-2 max-w-[62ch] text-[0.9375rem]">{lesson.summary}</p>}
+          {lesson.summary && <p className="kh-hero-muted mt-2 line-clamp-2 max-w-[62ch] text-[0.9375rem]">{tc(lesson.summary)}</p>}
           <ul className="mt-4 flex flex-wrap gap-2" aria-label={t("khan.inThisLesson", "In this lesson")}>
             {lesson.items.map((it) => {
               const I = ITEM_ICON[it.kind];
@@ -187,6 +191,7 @@ export function StartCourse() {
   const mode = useMode();
   const catalog = useCatalog();
   const setProfile = useLearner((s) => s.setProfile);
+  const tx = useSharedText();
   const list = STARTERS[mode.id].map((s) => catalog.find((c) => c.slug === s)).filter((c): c is NonNullable<typeof c> => Boolean(c));
   return (
     <section className="card p-5 sm:p-7" aria-labelledby="kh-start">
@@ -201,7 +206,7 @@ export function StartCourse() {
             <button type="button" onClick={() => setProfile({ course: c.slug })} className="tile flex w-full items-center gap-3 p-3.5 text-left">
               <CourseIcon slug={c.slug} size={40} flat />
               <span className="min-w-0">
-                <span className="block font-semibold leading-snug">{c.title}</span>
+                <span className="block font-semibold leading-snug">{tx(c.title)}</span>
                 <span className="block text-[0.8125rem] text-muted">{t("khan.course.meta", "{units} units · {lessons} lessons", { units: f.n(c.units), lessons: f.n(c.lessons) })}</span>
               </span>
             </button>

@@ -11,6 +11,7 @@ import { LanguagePicker } from "@/components/i18n/LanguagePicker";
 import { useCatalog } from "@/components/shell/CatalogContext";
 import { useHydrated } from "@/components/providers";
 import { useT } from "@/i18n";
+import { useSharedText } from "@/i18n/content";
 import { useLearner, liveStreak } from "@/lib/store";
 import { useMode } from "@/lib/useMode";
 import type { ModeId } from "@/lib/modes";
@@ -214,6 +215,7 @@ function CoursesMenu({ pathname }: { pathname: string }) {
   const t = useT();
   const mode = useMode();
   const catalog = useCatalog();
+  const tx = useSharedText();
   const [open, setOpen] = useState(false);
   const close = useCallback(() => setOpen(false), []);
   const box = useRef<HTMLDivElement>(null);
@@ -274,7 +276,7 @@ function CoursesMenu({ pathname }: { pathname: string }) {
                     <li key={c.slug}>
                       <Link href={c.href} className="kh-courselink">
                         <CourseIcon slug={c.slug} size={20} flat />
-                        <span className="min-w-0 truncate">{c.title}</span>
+                        <span className="min-w-0 truncate">{tx(c.title)}</span>
                       </Link>
                     </li>
                   ))}

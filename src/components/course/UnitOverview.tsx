@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import { useMemo } from "react";
 import { BookOpenCheck, Check, ChevronLeft, ChevronRight, Trophy } from "lucide-react";
 import clsx from "clsx";
 import type { CourseOutline } from "@/content/course";
@@ -14,8 +15,15 @@ import { ProgressBar } from "@/components/ui/Progress";
 import { ITEM_ICON } from "@/components/learn/LearnPath";
 import { MasteryGrid } from "./MasteryGrid";
 import { ResourcesPanel } from "@/components/mastery/ResourcesPanel";
+import { localize, useContentDict, useSharedText } from "@/i18n/content";
 
-export function UnitOverview({ outline, unitSlug }: { outline: CourseOutline; unitSlug: string }) {
+export function UnitOverview({ outline: raw, unitSlug }: { outline: CourseOutline; unitSlug: string }) {
+  const tx = useSharedText();
+  const dict = useContentDict(raw.slug);
+  const outline = useMemo(() => {
+    const o = localize(raw, dict);
+    return { ...o, title: tx(o.title) };
+  }, [raw, dict, tx]);
   const hydrated = useHydrated();
   const s = useLearner();
   const st = hydrated ? s : EMPTY_PROGRESS;

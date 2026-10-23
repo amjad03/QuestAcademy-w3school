@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import { useMemo } from "react";
 import { ArrowRight, BookOpenCheck, Clock, PlayCircle, Trophy } from "lucide-react";
 import type { CourseOutline } from "@/content/course";
 import { useLearner } from "@/lib/store";
@@ -12,9 +13,16 @@ import { MasteryGrid, MasteryLegend } from "./MasteryGrid";
 import { ITEM_ICON } from "@/components/learn/LearnPath";
 import { ResourcesPanel } from "@/components/mastery/ResourcesPanel";
 import { useT } from "@/i18n";
+import { localize, useContentDict, useSharedText } from "@/i18n/content";
 
-export function CourseOverview({ outline }: { outline: CourseOutline }) {
+export function CourseOverview({ outline: raw }: { outline: CourseOutline }) {
   const t = useT();
+  const tx = useSharedText();
+  const dict = useContentDict(raw.slug);
+  const outline = useMemo(() => {
+    const o = localize(raw, dict);
+    return { ...o, title: tx(o.title), description: tx(o.description), levels: o.levels.map(tx) };
+  }, [raw, dict, tx]);
   const hydrated = useHydrated();
   const s = useLearner();
   const setProfile = useLearner((st) => st.setProfile);
@@ -33,7 +41,7 @@ export function CourseOverview({ outline }: { outline: CourseOutline }) {
       <header className="flex flex-col gap-6 sm:flex-row sm:items-center">
         <CourseIcon slug={outline.slug} size={88} />
         <div className="min-w-0 flex-1">
-          <p className="eyebrow">{outline.domain ?? outline.levels.join(" · ")}</p>
+          <p className="eyebrow">{outline.domain ? tx(outline.domain) : outline.levels.join(" · ")}</p>
           <h1 className="mt-1 text-3xl font-black sm:text-4xl">{outline.title}</h1>
           <p className="mt-2 max-w-2xl font-semibold leading-7 text-muted">{outline.description}</p>
           <div className="mt-3 flex flex-wrap gap-1.5">

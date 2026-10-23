@@ -14,6 +14,7 @@ import { CourseIcon, courseStyle } from "@/components/brand/CourseIcon";
 import { ProgressBar } from "@/components/ui/Progress";
 import { masteryPoints } from "@/lib/mastery";
 import { useT } from "@/i18n";
+import { useSharedText } from "@/i18n/content";
 
 type Card = CourseCard & { description: string };
 
@@ -82,19 +83,20 @@ function CourseTile({ c }: { c: Card }) {
   const current = useLearner((s) => s.profile.course);
   const mp = hydrated ? masteryPoints(c.lessonIds.map((id) => mastery[id])) : { pct: 0 };
   const { color } = courseStyle(c.slug);
+  const tx = useSharedText();
   return (
     <div className="tile group flex flex-col p-5">
       <Link href={c.href} className="flex items-start gap-4">
         <CourseIcon slug={c.slug} size={56} />
         <div className="min-w-0 flex-1">
-          <h3 className="text-lg font-black group-hover:text-accent">{c.title}</h3>
-          <p className="mt-0.5 line-clamp-2 text-sm font-semibold leading-6 text-muted">{c.tagline}</p>
+          <h3 className="text-lg font-black group-hover:text-accent">{tx(c.title)}</h3>
+          <p className="mt-0.5 line-clamp-2 text-sm font-semibold leading-6 text-muted">{tx(c.tagline)}</p>
         </div>
       </Link>
       <div className="mt-4 flex flex-wrap gap-1.5">
         {c.levels.slice(0, 3).map((l) => (
           <span key={l} className="chip">
-            {l}
+            {tx(l)}
           </span>
         ))}
         <span className="chip">{t("course.stats.units", "{n} units", { n: c.units })}</span>
