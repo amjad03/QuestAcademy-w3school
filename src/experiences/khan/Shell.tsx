@@ -371,7 +371,7 @@ function MenuContent({ nav, more, isActive, full }: { nav: NavItem[]; more: NavI
   const all = [...nav, ...more];
   const pinned = PROFILE_LINKS.map((h) => all.find((n) => n.href === h)).filter((n): n is NavItem => Boolean(n));
   // On phones the sheet also lists every destination not in the tab bar.
-  const rest = full ? [...nav.slice(TABBAR_ITEMS), ...more].filter((n) => n.href !== "/profile" && !PROFILE_LINKS.includes(n.href)) : [];
+  const rest = full ? [...nav.slice(TABBAR_ITEMS), ...more].filter((n) => n.href !== "/profile" && n.href !== "/courses" && !PROFILE_LINKS.includes(n.href)) : [];
   const name = hydrated && profile.name ? profile.name : t("khan.guest", "Guest learner");
 
   return (

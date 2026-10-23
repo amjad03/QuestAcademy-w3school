@@ -31,6 +31,7 @@ html[data-skin="modes"][data-mode="explore"] {
   --ex-cloud: 255 255 255;
   --ex-dot: 186 216 245;
   --ex-bar: 255 255 255;
+  --ex-node-shade: 168 190 220;
 }
 
 html.dark[data-skin="modes"][data-mode="explore"] {
@@ -59,6 +60,7 @@ html.dark[data-skin="modes"][data-mode="explore"] {
   --ex-cloud: 40 62 104;
   --ex-dot: 44 66 108;
   --ex-bar: 22 37 66;
+  --ex-node-shade: 30 47 80;
 }
 
 /* Nunito is already the default --font-sans (set by next/font on <html>). */
@@ -80,31 +82,60 @@ html[data-skin="modes"][data-mode="explore"] .ex-sky {
   background-repeat: repeat-y, repeat-y, repeat-y, repeat-y, repeat;
 }
 
-/* ---------- bars ---------- */
-html[data-skin="modes"][data-mode="explore"] .ex-topbar {
-  border-radius: 1.75rem;
-  background: rgb(var(--ex-bar) / 0.92);
-  backdrop-filter: blur(10px);
-  border: 3px solid rgb(var(--line));
-  box-shadow: 0 6px 0 rgb(var(--line)), 0 14px 30px -18px rgb(26 95 214 / 0.45);
+/* ---------- frame: sidebar + phone tab bar ---------- */
+html[data-skin="modes"][data-mode="explore"] .ex-sidebar {
+  background: rgb(var(--ex-bar));
+  border-right: 3px solid rgb(var(--line));
+}
+html[data-skin="modes"][data-mode="explore"] .ex-side-item {
+  border: 2px solid transparent;
+  color: rgb(var(--muted));
+  transition: background-color 0.15s, border-color 0.15s;
+}
+html[data-skin="modes"][data-mode="explore"] .ex-side-item:hover {
+  background: rgb(var(--surface-2));
+}
+html[data-skin="modes"][data-mode="explore"] .ex-side-active,
+html[data-skin="modes"][data-mode="explore"] .ex-tab-active {
+  background: rgb(var(--accent-soft));
+  border-color: #84d8ff;
+  color: rgb(var(--ink));
+}
+html.dark[data-skin="modes"][data-mode="explore"] .ex-side-active,
+html.dark[data-skin="modes"][data-mode="explore"] .ex-tab-active {
+  border-color: #3f8fd0;
 }
 html[data-skin="modes"][data-mode="explore"] .ex-bottombar {
-  border-radius: 1.75rem;
-  background: rgb(var(--ex-bar) / 0.96);
+  background: rgb(var(--ex-bar) / 0.97);
   backdrop-filter: blur(10px);
-  border: 3px solid rgb(var(--line));
-  box-shadow: 0 -4px 0 rgb(var(--line)) inset, 0 12px 30px -10px rgb(26 95 214 / 0.4);
+  border-top: 3px solid rgb(var(--line));
   padding-bottom: max(0.375rem, env(safe-area-inset-bottom));
 }
-html[data-skin="modes"][data-mode="explore"] .ex-counter {
-  background: rgb(var(--surface-2));
-  box-shadow: inset 0 -3px 0 rgb(var(--line));
+html[data-skin="modes"][data-mode="explore"] .ex-statsbar {
+  background: rgb(var(--bg) / 0.94);
+  backdrop-filter: blur(8px);
+  border-bottom: 3px solid rgb(var(--line));
 }
-html[data-skin="modes"][data-mode="explore"] .ex-menu {
+html[data-skin="modes"][data-mode="explore"] .ex-chip {
+  border: 2px solid transparent;
+}
+html[data-skin="modes"][data-mode="explore"] .ex-chip:hover {
+  background: rgb(var(--surface-2));
+}
+html[data-skin="modes"][data-mode="explore"] .ex-menu,
+html[data-skin="modes"][data-mode="explore"] .ex-dialog {
   border-radius: 1.75rem;
   background: rgb(var(--surface));
   border: 3px solid rgb(var(--line));
   box-shadow: 0 6px 0 rgb(var(--line)), 0 22px 40px -16px rgb(16 40 90 / 0.4);
+}
+html[data-skin="modes"][data-mode="explore"] .ex-dialog {
+  border: none;
+}
+@media (max-width: 639px) {
+  html[data-skin="modes"][data-mode="explore"] .ex-dialog {
+    border-radius: 1.75rem 1.75rem 0 0;
+  }
 }
 
 /* ---------- bouncy press / hover ---------- */
@@ -135,24 +166,17 @@ html[data-skin="modes"][data-mode="explore"] .ex-bounce:hover {
 
 /* ---------- shared surfaces ---------- */
 html[data-skin="modes"][data-mode="explore"] .ex-card,
-html[data-skin="modes"][data-mode="explore"] .ex-shelf,
-html[data-skin="modes"][data-mode="explore"] .ex-pagehead,
-html[data-skin="modes"][data-mode="explore"] .ex-stage,
-html[data-skin="modes"][data-mode="explore"] .ex-lights {
-  border-radius: 1.75rem;
-  background: rgb(var(--surface));
-  border: 3px solid rgb(var(--line));
-  box-shadow: 0 6px 0 rgb(var(--line));
-}
-html[data-skin="modes"][data-mode="explore"] .ex-lights {
-  border-radius: 999px;
-  box-shadow: 0 4px 0 rgb(var(--line));
-}
+html[data-skin="modes"][data-mode="explore"] .ex-rail,
 html[data-skin="modes"][data-mode="explore"] .ex-bubble {
   border-radius: 1.75rem;
   background: rgb(var(--surface));
   border: 3px solid rgb(var(--line));
   box-shadow: 0 6px 0 rgb(var(--line));
+}
+html[data-skin="modes"][data-mode="explore"] .ex-tile {
+  background: rgb(var(--surface));
+  border-color: rgb(var(--line));
+  box-shadow: 0 5px 0 rgb(var(--line));
 }
 html[data-skin="modes"][data-mode="explore"] .ex-bubble::before {
   content: "";
@@ -178,34 +202,8 @@ html[data-skin="modes"][data-mode="explore"] .ex-readaloud:hover {
 html[data-skin="modes"][data-mode="explore"] .ex-readaloud:active {
   transform: translateY(2px) scale(0.96);
 }
-
-/* ---------- home ---------- */
-html[data-skin="modes"][data-mode="explore"] .ex-today {
-  border-radius: 2rem;
-  background:
-    radial-gradient(circle at 92% 110%, rgb(255 255 255 / 0.22) 0 70px, transparent 71px),
-    radial-gradient(circle at 78% -20%, rgb(255 255 255 / 0.16) 0 90px, transparent 91px),
-    linear-gradient(135deg, #2f80ff 0%, #8b5cf6 100%);
-  box-shadow: inset 0 -8px 0 rgb(0 0 0 / 0.16), 0 18px 30px -18px rgb(47 128 255 / 0.8);
-}
-html[data-skin="modes"][data-mode="explore"] .ex-sea {
-  border-radius: 2.25rem;
-  background:
-    radial-gradient(rgb(255 255 255 / 0.35) 2px, transparent 2.5px) 0 0 / 34px 34px,
-    linear-gradient(180deg, #7cc6ff 0%, #4ea8f5 100%);
-  box-shadow: inset 0 -8px 0 #2f8be0;
-}
-html.dark[data-skin="modes"][data-mode="explore"] .ex-sea {
-  background:
-    radial-gradient(rgb(255 255 255 / 0.12) 2px, transparent 2.5px) 0 0 / 34px 34px,
-    linear-gradient(180deg, #17407a 0%, #10305e 100%);
-  box-shadow: inset 0 -8px 0 #0a2448;
-}
-html[data-skin="modes"][data-mode="explore"] .ex-island {
-  border-radius: 2.5rem 3rem 2.25rem 3.25rem / 3rem 2.25rem 3.25rem 2.5rem;
-}
-html[data-skin="modes"][data-mode="explore"] .ex-shelf {
-  background: linear-gradient(180deg, rgb(var(--surface)) 0%, rgb(var(--surface-2)) 100%);
+html[data-skin="modes"][data-mode="explore"] .ex-fatbar {
+  background: rgb(var(--line));
 }
 html[data-skin="modes"][data-mode="explore"] .ex-shelf-board {
   border-radius: 1.5rem;
@@ -217,17 +215,90 @@ html.dark[data-skin="modes"][data-mode="explore"] .ex-shelf-board {
   box-shadow: inset 0 -8px 0 #5c4320;
 }
 
+/* ---------- home: the path ---------- */
+html[data-skin="modes"][data-mode="explore"] .ex-node {
+  width: 76px;
+  height: 70px;
+  border-radius: 50%;
+  background: var(--n);
+  box-shadow: 0 8px 0 var(--ns);
+  margin-bottom: 8px;
+  transition: transform 0.12s ease-out, box-shadow 0.12s ease-out, filter 0.12s;
+  -webkit-tap-highlight-color: transparent;
+}
+html[data-skin="modes"][data-mode="explore"] .ex-node:hover {
+  filter: brightness(1.06);
+}
+html[data-skin="modes"][data-mode="explore"] .ex-node:active,
+html[data-skin="modes"][data-mode="explore"] .ex-node[aria-expanded="true"] {
+  transform: translateY(6px);
+  box-shadow: 0 2px 0 var(--ns);
+}
+html[data-skin="modes"][data-mode="explore"] .ex-node-trophy {
+  width: 84px;
+  border-radius: 1.6rem;
+}
+html[data-skin="modes"][data-mode="explore"] .ex-chest {
+  transition: transform 0.16s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+html[data-skin="modes"][data-mode="explore"] .ex-chest:hover {
+  transform: scale(1.06);
+}
+html[data-skin="modes"][data-mode="explore"] .ex-wiggle {
+  animation: ex-chest-wiggle 2.4s ease-in-out infinite;
+}
+@keyframes ex-chest-wiggle {
+  0%, 70%, 100% { transform: rotate(0); }
+  76% { transform: rotate(-7deg); }
+  82% { transform: rotate(7deg); }
+  88% { transform: rotate(-5deg); }
+  94% { transform: rotate(4deg); }
+}
+html[data-skin="modes"][data-mode="explore"] .ex-start {
+  background: rgb(var(--surface));
+  border: 3px solid rgb(var(--line));
+  box-shadow: 0 4px 0 rgb(var(--line));
+}
+html[data-skin="modes"][data-mode="explore"] .ex-start::after {
+  content: "";
+  position: absolute;
+  left: 50%;
+  bottom: -9px;
+  width: 14px;
+  height: 14px;
+  transform: translateX(-50%) rotate(45deg);
+  background: rgb(var(--surface));
+  border-right: 3px solid rgb(var(--line));
+  border-bottom: 3px solid rgb(var(--line));
+}
+html[data-skin="modes"][data-mode="explore"] .ex-unit {
+  scroll-margin-top: 5rem;
+}
+
 /* ---------- lesson ---------- */
-html[data-skin="modes"][data-mode="explore"] .ex-pagehead {
-  background:
-    linear-gradient(90deg, transparent 0 14px, rgb(255 90 95 / 0.25) 14px 17px, transparent 17px),
-    rgb(var(--surface));
+html[data-skin="modes"][data-mode="explore"] .ex-lessonbar {
+  background: rgb(var(--bg) / 0.94);
+  backdrop-filter: blur(8px);
 }
 html[data-skin="modes"][data-mode="explore"] .ex-page {
   border-radius: 2rem;
   background: rgb(var(--surface));
   border: 3px solid rgb(var(--line));
   box-shadow: 0 8px 0 rgb(var(--line)), 0 24px 40px -28px rgb(26 95 214 / 0.5);
+}
+/* Storybook pages: the story's own page card gets the big, friendly look. */
+html[data-skin="modes"][data-mode="explore"] .ex-story .card {
+  border-radius: 2rem;
+  border: 3px solid rgb(var(--line));
+  box-shadow: 0 8px 0 rgb(var(--line)), 0 24px 40px -28px rgb(26 95 214 / 0.5);
+  background:
+    linear-gradient(90deg, transparent 0 18px, rgb(255 90 95 / 0.22) 18px 21px, transparent 21px),
+    rgb(var(--surface));
+  padding-left: 2.25rem;
+}
+html[data-skin="modes"][data-mode="explore"] .ex-page .card {
+  box-shadow: none;
+  background: rgb(var(--surface-2));
 }
 html[data-skin="modes"][data-mode="explore"] .ex-drawer {
   background: linear-gradient(180deg, #14b8a6 0%, #0e8c7e 100%);
@@ -243,38 +314,60 @@ html[data-skin="modes"][data-mode="explore"] .ex-drawer-body a {
 }
 
 /* ---------- session ---------- */
-html[data-skin="modes"][data-mode="explore"] .ex-stage {
-  border-radius: 2rem;
-  box-shadow: 0 8px 0 rgb(var(--line));
-}
 html[data-skin="modes"][data-mode="explore"] .ex-answerbar {
-  background: rgb(var(--surface) / 0.94);
+  background: rgb(var(--surface) / 0.96);
   backdrop-filter: blur(8px);
   border-top: 3px solid rgb(var(--line));
-  border-radius: 2rem 2rem 0 0;
   padding-bottom: env(safe-area-inset-bottom);
 }
 html[data-skin="modes"][data-mode="explore"] .ex-answerbar-good {
-  background: #d9f6e5;
-  border-top-color: #8fdcae;
+  background: #d7ffb8;
+  border-top-color: transparent;
 }
 html[data-skin="modes"][data-mode="explore"] .ex-answerbar-bad {
-  background: #fff1de;
-  border-top-color: #ffcb66;
+  background: #ffe3c4;
+  border-top-color: transparent;
 }
 html.dark[data-skin="modes"][data-mode="explore"] .ex-answerbar-good {
   background: #143a2a;
-  border-top-color: #1f9b58;
 }
 html.dark[data-skin="modes"][data-mode="explore"] .ex-answerbar-bad {
   background: #3a2a14;
-  border-top-color: #b35a00;
 }
-html[data-skin="modes"][data-mode="explore"] .ex-feedback {
-  border-radius: 1.5rem;
-  background: rgb(var(--surface));
-  border: 3px solid rgb(var(--line));
+html[data-skin="modes"][data-mode="explore"] .ex-combo {
+  background: linear-gradient(135deg, #ff9600 0%, #ff5a5f 100%);
+  box-shadow: inset 0 -6px 0 rgb(0 0 0 / 0.18), 0 20px 40px -16px rgb(255 120 0 / 0.7);
 }
+/* Big answer tiles (the shared question input, made chunky). */
+html[data-skin="modes"][data-mode="explore"] .ex-stage button[aria-pressed] {
+  min-height: 4.5rem;
+  border-radius: 1.25rem;
+  border-width: 3px;
+  border-bottom-width: 6px;
+  font-weight: 800;
+  transition: transform 0.12s ease-out, border-bottom-width 0.12s, background-color 0.12s;
+}
+html[data-skin="modes"][data-mode="explore"] .ex-stage button[aria-pressed]:not(:disabled):active {
+  transform: translateY(3px);
+  border-bottom-width: 3px;
+}
+html[data-skin="modes"][data-mode="explore"] .ex-stage button[aria-pressed="true"]:not(:disabled) {
+  border-color: #84d8ff;
+  border-bottom-color: #1cb0f6;
+  background: #ddf4ff;
+  color: #1899d6;
+}
+html.dark[data-skin="modes"][data-mode="explore"] .ex-stage button[aria-pressed="true"]:not(:disabled) {
+  border-color: #3f8fd0;
+  background: #17345a;
+  color: #8fd3ff;
+}
+html[data-skin="modes"][data-mode="explore"] .ex-stage input {
+  min-height: 4rem;
+  font-size: 1.5rem;
+  font-weight: 800;
+}
+
 
 /* ================================================================== */
 /* Shared component classes, restyled for Explore                      */
@@ -439,7 +532,17 @@ html[data-skin="modes"][data-mode="explore"] ::selection {
   }
 }
 
-/* Shared pages' sticky right rail sits below Explore's sticky top bar. */
+
+/* Shared pages' sticky right rail: no top bar in Explore, so sit near the top. */
 html[data-skin="modes"][data-mode="explore"] #ex-main aside.sticky {
-  top: 6.75rem;
+  top: 1.5rem;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html[data-skin="modes"][data-mode="explore"] .ex-wiggle,
+  html[data-skin="modes"][data-mode="explore"] .ex-chest,
+  html[data-skin="modes"][data-mode="explore"] .ex-node {
+    animation: none;
+    transition: none;
+  }
 }

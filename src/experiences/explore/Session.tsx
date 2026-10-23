@@ -1,110 +1,163 @@
 "use client";
 
 import Link from "next/link";
-import { useEffect, useMemo, useState } from "react";
-import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
+import { useEffect, useState } from "react";
+import { AnimatePresence, animate, motion, useReducedMotion } from "framer-motion";
 import clsx from "clsx";
-import { ArrowRight, Check, Flame, RotateCcw, Sparkles, Star, TrendingUp, X } from "lucide-react";
+import { ArrowRight, Check, ChevronDown, Flame, RotateCcw, Sparkles, Star, Target, Timer, TrendingUp, X, Zap } from "lucide-react";
 import { Mascot } from "@/components/brand/Mascot";
-import { useLearner } from "@/lib/store";
+import { useLearner, liveStreak } from "@/lib/store";
+import { dayKey } from "@/lib/gamification";
 import { say } from "@/lib/voice";
-import { stickerById } from "@/components/modes/explore/stickers";
+import { useBcp47, useT } from "@/i18n";
+import { stickerById, type Sticker } from "@/components/modes/explore/stickers";
 import { StickerTile } from "@/components/modes/explore/StickerTile";
+import { formatTime } from "../shared/ClassicSession";
 import type { SessionLayoutProps, SessionResultsProps } from "../types";
-import { EX, ReadAloud, StarRow, chunky } from "./ui";
+import { Chest, EX, FatBar, ReadAloud, chunky, type Col } from "./ui";
 
-const KIND_NAME: Record<SessionLayoutProps["kind"], string> = { practice: "Quiz time", quiz: "Quiz", test: "Treasure quiz", challenge: "Big challenge" };
+function kindName(t: ReturnType<typeof useT>, kind: SessionLayoutProps["kind"]) {
+  if (kind === "quiz") return t("explore.session.quiz", "Star quiz");
+  if (kind === "test") return t("explore.session.test", "Unit trophy");
+  if (kind === "challenge") return t("explore.session.challenge", "Big challenge");
+  return t("explore.session.practice", "Quiz time");
+}
 
-/** Explore session: a playful quiz show with lights, Questy reactions and big buttons. */
+/** Combo milestones that get a celebration. */
+const isMilestone = (n: number) => n === 3 || n === 5 || (n >= 10 && n % 5 === 0);
+
+/** Explore exercise screen: thick progress bar, answer flame, big tiles, Duolingo-style feedback banner. */
 export function ExploreSessionLayout(p: SessionLayoutProps) {
+  const t = useT();
+  const reduce = useReducedMotion();
   const fb = p.feedback;
-  const answered = p.index + (fb ? 1 : 0);
-  const showLights = p.total <= 16;
+  const [why, setWhy] = useState(false);
+  const [party, setParty] = useState<number | null>(null);
+
+  useEffect(() => setWhy(false), [p.index, fb]);
+
+  useEffect(() => {
+    if (!fb?.correct || !isMilestone(p.combo)) return;
+    setParty(p.combo);
+    const tm = setTimeout(() => setParty(null), 1900);
+    return () => clearTimeout(tm);
+  }, [fb, p.combo]);
+
+  const hot = p.combo >= 2;
+  const good = fb?.correct;
 
   return (
     <div className="ex-sky flex min-h-screen flex-col">
-      {/* Show header */}
-      <div className="mx-auto flex w-full max-w-[920px] items-center gap-3 px-4 pt-4 sm:px-6 sm:pt-6">
-        <button type="button" onClick={p.onQuit} className="ex-press grid h-12 w-12 shrink-0 place-items-center rounded-full bg-surface text-muted" style={{ boxShadow: "inset 0 -4px 0 rgb(var(--line))" }} aria-label="Stop playing">
-          <X className="h-7 w-7" strokeWidth={3} />
+      {/* Top: quit, thick progress, answer flame */}
+      <div className="mx-auto flex w-full max-w-[1000px] items-center gap-3 px-4 pt-5 sm:gap-4 sm:px-6 sm:pt-8">
+        <button type="button" onClick={p.onQuit} className="ex-press grid h-11 w-11 shrink-0 place-items-center rounded-full text-muted hover:bg-surface-2" aria-label={t("explore.session.quit", "Stop playing")}>
+          <X className="h-8 w-8" strokeWidth={3} />
         </button>
-        <div className="ex-lights flex min-w-0 flex-1 items-center gap-2 px-3 py-2" role="progressbar" aria-label="Questions done" aria-valuemin={0} aria-valuemax={p.total} aria-valuenow={answered}>
-          {showLights ? (
-            <StarRow filled={answered} total={p.total} size={p.total > 10 ? 20 : 26} className="flex-1 justify-center" />
-          ) : (
-            <div className="h-5 flex-1 overflow-hidden rounded-full bg-surface-2">
-              <div className="h-full rounded-full bg-[#FFC21A] transition-all duration-500" style={{ width: `${Math.round(p.progress * 100)}%`, boxShadow: "inset 0 -4px 0 #D99A00" }} />
-            </div>
-          )}
-          <span className="shrink-0 text-base font-black tabular-nums text-muted">
-            {Math.min(answered, p.total)}/{p.total}
-          </span>
-        </div>
-        <AnimatePresence>
-          {p.combo >= 2 && (
-            <motion.span initial={{ scale: 0 }} animate={{ scale: 1 }} exit={{ scale: 0 }} className="hidden shrink-0 items-center gap-1 rounded-full px-3 py-2 text-base font-black text-white sm:flex" style={chunky(EX.orange, 4)} aria-label={`${p.combo} right in a row`}>
-              <Flame className="h-5 w-5 fill-current" aria-hidden /> {p.combo}
-            </motion.span>
-          )}
-        </AnimatePresence>
+        <FatBar value={p.progress} height={20} label={t("explore.session.progress", "Questions done")} />
+        <motion.span
+          key={p.combo}
+          initial={reduce || !hot ? false : { scale: 1.5 }}
+          animate={{ scale: 1 }}
+          className={clsx("flex shrink-0 items-center gap-1 text-xl font-black tabular-nums", hot ? "text-[#FF7A00]" : "text-[rgb(var(--line))]")}
+          aria-label={t("explore.session.combo", "{n} right in a row", { n: p.combo })}
+          role="status"
+        >
+          <Flame className={clsx("h-8 w-8", hot && "fill-[#FF9600]")} strokeWidth={2.4} aria-hidden />
+          {p.combo}
+        </motion.span>
       </div>
 
-      {/* Stage */}
-      <div className="mx-auto w-full max-w-[760px] flex-1 px-4 pb-8 pt-5 sm:px-6">
-        <div className="mb-3 flex flex-wrap items-center gap-2">
-          <span className="rounded-full px-3 py-1 text-sm font-black text-white" style={chunky(EX.purple, 3)}>
-            {KIND_NAME[p.kind]}
+      {/* Question */}
+      <div className="mx-auto w-full max-w-[680px] flex-1 px-4 pb-10 pt-6 sm:px-6 sm:pt-10">
+        <div className="mb-4 flex flex-wrap items-center gap-2">
+          <span className="rounded-full px-3 py-1 text-sm font-black uppercase tracking-wide text-white" style={chunky(EX.purple, 3)}>
+            {kindName(t, p.kind)}
           </span>
-          <span className="min-w-0 truncate text-base font-extrabold text-muted">{p.title}</span>
-          {p.retry && <span className="rounded-full bg-[#FFF1DE] px-3 py-1 text-sm font-black text-[#B35A00]">Let’s try this one again!</span>}
-          {p.combo >= 3 && !fb && <span className="rounded-full bg-[#FFF6D6] px-3 py-1 text-sm font-black text-[#8a5a00]">{p.combo} in a row!</span>}
+          {p.retry && (
+            <span className="flex items-center gap-1 rounded-full bg-[#FFF1DE] px-3 py-1 text-sm font-black text-[#B35A00] dark:bg-[#3a2a14] dark:text-[#FFB866]">
+              <RotateCcw className="h-4 w-4" strokeWidth={3} aria-hidden /> {t("explore.session.retry", "Let’s try this one again!")}
+            </span>
+          )}
         </div>
-        <div className="ex-stage p-5 sm:p-8">{p.question}</div>
+        <div className="ex-stage">{p.question}</div>
       </div>
 
-      {/* Answer bar */}
-      <div className={clsx("ex-answerbar sticky bottom-0 z-10 transition-colors", fb ? (fb.correct ? "ex-answerbar-good" : "ex-answerbar-bad") : "")}>
-        <div className="mx-auto w-full max-w-[920px] px-4 py-4 sm:px-6 sm:py-5">
+      {/* Bottom: Check, then the feedback banner */}
+      <div className={clsx("ex-answerbar sticky bottom-0 z-10 transition-colors duration-200", fb ? (good ? "ex-answerbar-good" : "ex-answerbar-bad") : "")}>
+        <div className="mx-auto w-full max-w-[1000px] px-4 py-4 sm:px-6 sm:py-6">
           {!fb ? (
-            <div className="flex items-center gap-3">
-              <button type="button" onClick={p.onSkip} className="ex-press shrink-0 rounded-[1.25rem] bg-surface px-4 py-4 text-base font-black text-muted" style={{ boxShadow: "inset 0 -5px 0 rgb(var(--line))" }}>
-                Not sure
+            <div className="flex items-center justify-between gap-3">
+              <button type="button" onClick={p.onSkip} className="ex-press shrink-0 rounded-[1.25rem] bg-surface px-5 py-4 text-base font-black uppercase tracking-wide text-muted" style={{ boxShadow: "inset 0 0 0 3px rgb(var(--line)), inset 0 -6px 0 rgb(var(--line))" }}>
+                {t("explore.session.skip", "Not sure")}
               </button>
-              <button type="button" onClick={p.onCheck} disabled={!p.canCheck} className="ex-press ex-bigbtn flex-1 rounded-[1.5rem] px-6 py-4 text-2xl font-black text-white disabled:cursor-not-allowed" style={p.canCheck ? chunky(EX.green, 7) : { background: "rgb(var(--line))", color: "rgb(var(--muted))" }}>
-                Check
+              <button type="button" onClick={p.onCheck} disabled={!p.canCheck} className="ex-press ex-bigbtn min-w-0 flex-1 rounded-[1.25rem] px-6 py-4 text-xl font-black uppercase tracking-wide text-white disabled:cursor-not-allowed sm:max-w-[300px] sm:text-2xl" style={p.canCheck ? chunky(EX.green, 6) : { background: "rgb(var(--line))", color: "rgb(var(--muted))" }}>
+                {t("explore.session.check", "Check")}
               </button>
             </div>
           ) : (
-            <motion.div initial={{ y: 30, opacity: 0 }} animate={{ y: 0, opacity: 1 }} transition={{ type: "spring", stiffness: 420, damping: 28 }} className="flex flex-col gap-4 sm:flex-row sm:items-end">
-              <div className="flex min-w-0 flex-1 items-end gap-3" role="status" aria-live="polite">
-                <motion.div className="shrink-0" initial={{ rotate: -10, scale: 0.7 }} animate={{ rotate: 0, scale: 1 }} transition={{ type: "spring", stiffness: 300, damping: 12 }}>
-                  <Mascot pose={fb.correct ? "cheer" : "think"} size={84} animate={false} />
-                </motion.div>
-                <div className="ex-feedback min-w-0 flex-1 px-4 py-3">
-                  <p className={clsx("flex items-center gap-2 text-2xl font-black", fb.correct ? "text-[#167A45] dark:text-[#6BE3A2]" : "text-[#B35A00] dark:text-[#FFB866]")}>
-                    {fb.correct ? <Check className="h-7 w-7" strokeWidth={4} aria-hidden /> : <Sparkles className="h-7 w-7" strokeWidth={2.8} aria-hidden />}
-                    {fb.correct ? fb.praise : "Nearly!"}
+            <motion.div initial={reduce ? false : { y: 40, opacity: 0 }} animate={{ y: 0, opacity: 1 }} transition={{ type: "spring", stiffness: 420, damping: 30 }} className="flex flex-col gap-4 sm:flex-row sm:items-center">
+              <div className="flex min-w-0 flex-1 items-start gap-3" role="status" aria-live="polite">
+                <motion.span
+                  className="grid h-16 w-16 shrink-0 place-items-center rounded-full bg-white dark:bg-white/10"
+                  initial={reduce ? false : { scale: 0.4, rotate: -30 }}
+                  animate={{ scale: 1, rotate: 0 }}
+                  transition={{ type: "spring", stiffness: 320, damping: 12 }}
+                  aria-hidden
+                >
+                  {good ? <Check className="h-10 w-10 text-[#1F9B58]" strokeWidth={4} /> : <Sparkles className="h-9 w-9 text-[#E07A00]" strokeWidth={2.8} />}
+                </motion.span>
+                <div className="min-w-0 flex-1">
+                  <p className={clsx("text-2xl font-black leading-tight", good ? "text-[#167A45] dark:text-[#6BE3A2]" : "text-[#B35A00] dark:text-[#FFB866]")}>
+                    {good ? t("explore.fb.good", "Nicely done!") : t("explore.fb.answer", "Correct answer:")}
                   </p>
-                  {!fb.correct && (
-                    <div className="mt-1 text-lg font-bold">
-                      The answer is <span className="font-black">{fb.answer}</span>
-                    </div>
-                  )}
+                  {!good && <div className="mt-0.5 text-lg font-bold text-[#8A4500] dark:text-[#FFD9A8]">{fb.answer}</div>}
+                  {good && <p className="mt-0.5 font-bold text-[#1F7A48] dark:text-[#9BEBC0]">{fb.praise}</p>}
                   {fb.explain && (
-                    <details className="mt-1.5">
-                      <summary className="cursor-pointer text-base font-black text-[#2F80FF]">Tell me why</summary>
-                      <div className="mt-2 max-h-48 overflow-y-auto">{fb.explain}</div>
-                    </details>
+                    <>
+                      <button
+                        type="button"
+                        onClick={() => setWhy((w) => !w)}
+                        aria-expanded={why}
+                        className={clsx("mt-1.5 inline-flex items-center gap-1 rounded-full text-base font-black uppercase tracking-wide", good ? "text-[#1F9B58] dark:text-[#6BE3A2]" : "text-[#D97000] dark:text-[#FFB866]")}
+                      >
+                        {t("explore.fb.why", "Why?")}
+                        <ChevronDown className={clsx("h-5 w-5 transition-transform", why && "rotate-180")} strokeWidth={3} aria-hidden />
+                      </button>
+                      <AnimatePresence initial={false}>
+                        {why && (
+                          <motion.div initial={{ height: 0, opacity: 0 }} animate={{ height: "auto", opacity: 1 }} exit={{ height: 0, opacity: 0 }} className="overflow-hidden">
+                            <div className="mt-2 max-h-[34vh] overflow-y-auto rounded-2xl bg-surface p-3">{fb.explain}</div>
+                          </motion.div>
+                        )}
+                      </AnimatePresence>
+                    </>
                   )}
                 </div>
               </div>
-              <button type="button" onClick={p.onContinue} autoFocus className="ex-press ex-bigbtn flex shrink-0 items-center justify-center gap-2 rounded-[1.5rem] px-8 py-4 text-2xl font-black text-white sm:min-w-[220px]" style={chunky(fb.correct ? EX.green : EX.blue, 7)}>
-                Continue <ArrowRight className="h-7 w-7" strokeWidth={3} aria-hidden />
+              <button type="button" onClick={p.onContinue} autoFocus className="ex-press ex-bigbtn flex shrink-0 items-center justify-center gap-2 rounded-[1.25rem] px-8 py-4 text-xl font-black uppercase tracking-wide text-white sm:min-w-[260px] sm:text-2xl" style={chunky(good ? EX.green : EX.orange, 6)}>
+                {t("explore.continue", "Continue")}
               </button>
             </motion.div>
           )}
         </div>
       </div>
+
+      {/* Combo celebration */}
+      <AnimatePresence>
+        {party !== null && (
+          <motion.div className="pointer-events-none fixed inset-x-0 top-[18%] z-40 flex justify-center px-4" initial={{ opacity: 0, scale: 0.6, y: 20 }} animate={{ opacity: 1, scale: 1, y: 0 }} exit={{ opacity: 0, scale: 0.8, y: -20 }} transition={{ type: "spring", stiffness: 380, damping: 18 }} aria-live="polite">
+            <div className="ex-combo flex items-center gap-3 rounded-[2rem] px-6 py-4 text-white">
+              <Mascot pose="cheer" size={72} animate={false} />
+              <div>
+                <p className="flex items-center gap-1 text-3xl font-black">
+                  <Flame className="h-9 w-9 fill-white" strokeWidth={2} aria-hidden /> {party}
+                </p>
+                <p className="text-xl font-black">{party >= 10 ? t("explore.combo.fire", "You’re on fire!") : t("explore.combo.row", "{n} in a row!", { n: party })}</p>
+              </div>
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
       {p.quitDialog}
     </div>
   );
@@ -112,115 +165,137 @@ export function ExploreSessionLayout(p: SessionLayoutProps) {
 
 /* ------------------------------------------------------------------ */
 
-function starsFor(accuracy: number) {
-  if (accuracy >= 0.9) return 3;
-  if (accuracy >= 0.6) return 2;
-  return 1; // finishing always earns a star
-}
-
-/** Explore results: 1–3 stars, a treasure reveal, simple numbers and friendly skill lines. */
+/** Explore results: XP, accuracy and time tiles, a streak flame update, a sticker reveal and Continue. */
 export function ExploreSessionResults(r: SessionResultsProps) {
+  const t = useT();
+  const bcp = useBcp47();
   const reduce = useReducedMotion();
-  const stars = starsFor(r.accuracy);
-  const heading = stars === 3 ? (r.correct === r.total ? "Wow! All right!" : "Super star!") : stars === 2 ? "Great job!" : "You did it!";
-  const sub = stars === 3 ? "You are a quiz champion." : stars === 2 ? "You are getting so good at this." : "Every try makes your brain stronger.";
+  const fmt = (n: number) => new Intl.NumberFormat(bcp).format(n);
+  const pct = Math.round(r.accuracy * 100);
   const better = r.changes.filter((c) => c.to > c.from);
 
-  // A sticker the session just awarded (the store records when each was won).
-  const stickers = useLearner((s) => s.stickers);
-  const [mountedAt] = useState(() => Date.now());
-  const fresh = useMemo(() => {
-    const recent = Object.entries(stickers)
-      .filter(([, at]) => mountedAt - new Date(at).getTime() < 15000)
-      .sort((a, b) => b[1].localeCompare(a[1]))[0];
-    return recent ? stickerById[recent[0]] : undefined;
-  }, [stickers, mountedAt]);
+  const heading =
+    r.kind === "test" ? t("explore.res.test", "Unit trophy done!") : r.kind === "quiz" ? t("explore.res.quiz", "Star quiz done!") : r.kind === "challenge" ? t("explore.res.challenge", "Challenge done!") : t("explore.res.practice", "Lesson complete!");
+  const accWord = r.accuracy >= 0.9 ? t("explore.res.amazing", "Amazing") : r.accuracy >= 0.7 ? t("explore.res.goodAcc", "Good") : t("explore.res.niceTry", "Nice try");
+  const speedy = r.total > 0 && r.seconds / r.total <= 12;
+
+  // Snapshot store numbers once, when the results appear.
+  const [snap] = useState(() => {
+    const s = useLearner.getState();
+    const today = dayKey();
+    const count = liveStreak(s);
+    const todayXp = s.daily[today]?.xp ?? 0;
+    const grew = s.streak.lastDay === today && r.xp > 0 && todayXp - r.xp <= 0;
+    const mountedAt = Date.now();
+    const entries = Object.entries(s.stickers).sort((a, b) => b[1].localeCompare(a[1]));
+    const newest = entries[0];
+    const fresh = newest && mountedAt - new Date(newest[1]).getTime() < 20000;
+    return { count, from: grew ? Math.max(0, count - 1) : count, grew, sticker: newest ? (stickerById[newest[0]] as Sticker | undefined) : undefined, fresh: Boolean(fresh) };
+  });
+
+  const [xpShown, setXpShown] = useState(reduce ? r.xp : 0);
+  useEffect(() => {
+    if (reduce) return;
+    const c = animate(0, r.xp, { duration: 1.1, delay: 0.4, ease: "easeOut", onUpdate: (v) => setXpShown(Math.round(v)) });
+    return () => c.stop();
+  }, [r.xp, reduce]);
+
+  const [streakShown, setStreakShown] = useState(reduce ? snap.count : snap.from);
+  useEffect(() => {
+    if (reduce || !snap.grew) return;
+    const tm = setTimeout(() => setStreakShown(snap.count), 1500);
+    return () => clearTimeout(tm);
+  }, [reduce, snap]);
 
   const [opened, setOpened] = useState(Boolean(reduce));
   useEffect(() => {
     if (reduce) return;
-    const t = setTimeout(() => setOpened(true), 900);
-    return () => clearTimeout(t);
+    const tm = setTimeout(() => setOpened(true), 2200);
+    return () => clearTimeout(tm);
   }, [reduce]);
 
-  const spoken = `${heading} You got ${r.correct} of ${r.total} right. You earned ${stars} ${stars === 1 ? "star" : "stars"}.`;
+  const spoken = t("explore.res.spoken", "{heading} You earned {xp} XP. You got {correct} of {total} right.", { heading, xp: r.xp, correct: r.correct, total: r.total });
+  const streakMsg = snap.grew
+    ? snap.count === 1
+      ? t("explore.res.streakStart", "You lit your flame! Come back tomorrow to make it grow.")
+      : t("explore.res.streakGrew", "Your streak grew! Come back tomorrow for {n}.", { n: snap.count + 1 })
+    : snap.count > 0
+      ? t("explore.res.streakKeep", "Your flame is safe for today.")
+      : t("explore.res.streakNone", "Earn XP to light your flame!");
 
   return (
     <div className="ex-sky flex min-h-screen flex-col">
-      <div className="mx-auto flex w-full max-w-[640px] flex-1 flex-col items-center px-4 pb-8 pt-8 text-center sm:pt-12">
-        {/* Stars */}
-        <div className="flex items-end justify-center gap-2" aria-label={`${stars} of 3 stars`} role="img">
-          {[0, 1, 2].map((i) => {
-            const won = i < stars;
-            return (
-              <motion.span
-                key={i}
-                initial={reduce ? false : { scale: 0, rotate: -40 }}
-                animate={{ scale: 1, rotate: 0 }}
-                transition={{ delay: reduce ? 0 : 0.25 + i * 0.25, type: "spring", stiffness: 260, damping: 12 }}
-                className={clsx(i === 1 && "-translate-y-4")}
-              >
-                <Star className={clsx(i === 1 ? "h-24 w-24" : "h-[4.5rem] w-[4.5rem]", won ? "fill-[#FFC21A] text-[#D99A00] drop-shadow-[0_4px_0_#D99A00]" : "fill-surface-2 text-line")} strokeWidth={1.8} aria-hidden />
-              </motion.span>
-            );
-          })}
+      <div className="mx-auto flex w-full max-w-[640px] flex-1 flex-col items-center px-4 pb-10 pt-8 text-center sm:pt-12">
+        <motion.div initial={reduce ? false : { scale: 0.4, y: 30 }} animate={{ scale: 1, y: 0 }} transition={{ type: "spring", stiffness: 260, damping: 12 }}>
+          <Mascot pose="cheer" size={150} />
+        </motion.div>
+        <div className="mt-2 flex items-center gap-2">
+          <h1 className="text-[2.2rem] font-black leading-tight text-[#E08A00] dark:text-[#FFC21A]">{heading}</h1>
+          <ReadAloud text={spoken} />
         </div>
 
-        <div className="mt-4 flex items-center gap-2">
-          <h1 className="text-[2.2rem] font-black leading-tight">{heading}</h1>
-          <ReadAloud text={spoken} label="Read to me" />
+        {/* XP · accuracy · time */}
+        <div className="mt-6 grid w-full grid-cols-3 gap-2.5 sm:gap-4">
+          <StatTile col={EX.yellow} label={t("explore.res.totalXp", "Total XP")} icon={<Zap className="h-6 w-6 fill-current" aria-hidden />} value={fmt(xpShown)} delay={0.15} />
+          <StatTile col={EX.green} label={accWord} icon={<Target className="h-6 w-6" strokeWidth={2.8} aria-hidden />} value={`${fmt(pct)}%`} delay={0.3} />
+          <StatTile col={EX.blue} label={speedy ? t("explore.res.speedy", "Speedy") : t("explore.res.time", "Time")} icon={<Timer className="h-6 w-6" strokeWidth={2.8} aria-hidden />} value={formatTime(r.seconds)} delay={0.45} />
         </div>
-        <p className="mt-1 text-lg font-bold text-muted">{sub}</p>
+        <p className="mt-3 text-lg font-bold text-muted">{t("explore.res.right", "{correct} of {total} right", { correct: fmt(r.correct), total: fmt(r.total) })}</p>
 
-        {/* Simple numbers */}
-        <div className="ex-card mt-6 flex w-full items-center justify-center gap-4 px-5 py-4">
-          <span className="grid h-14 w-14 shrink-0 place-items-center rounded-full text-white" style={chunky(r.correct ? EX.green : EX.orange, 5)}>
-            {r.correct ? <Check className="h-8 w-8" strokeWidth={4} aria-hidden /> : <Sparkles className="h-8 w-8" strokeWidth={3} aria-hidden />}
-          </span>
-          <p className="text-left text-2xl font-black">
-            {r.correct} of {r.total} right
-          </p>
-        </div>
+        {/* Streak */}
+        <motion.div className="ex-card mt-5 flex w-full items-center gap-4 p-4 text-left" initial={reduce ? false : { opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.9 }}>
+          <motion.span
+            key={streakShown}
+            initial={reduce || streakShown === snap.from ? false : { scale: 1.6, rotate: -12 }}
+            animate={{ scale: 1, rotate: 0 }}
+            transition={{ type: "spring", stiffness: 300, damping: 10 }}
+            className={clsx("relative grid h-20 w-20 shrink-0 place-items-center rounded-full", snap.count > 0 ? "bg-[#FFF0DB] dark:bg-[#3a2a14]" : "bg-surface-2")}
+          >
+            <Flame className={clsx("h-12 w-12", snap.count > 0 ? "fill-[#FF9600] text-[#FF7A00]" : "text-[rgb(var(--line))]")} strokeWidth={2} aria-hidden />
+            <span className="absolute -bottom-1 -right-1 grid h-9 min-w-9 place-items-center rounded-full bg-[#FF7A00] px-1.5 text-lg font-black tabular-nums text-white ring-4 ring-[rgb(var(--surface))]">{fmt(streakShown)}</span>
+          </motion.span>
+          <div className="min-w-0">
+            <p className="text-xl font-black leading-tight">{t("explore.stats.streak", "{n} day streak", { n: fmt(streakShown) })}</p>
+            <p className="mt-0.5 font-bold text-muted">{streakMsg}</p>
+          </div>
+        </motion.div>
 
-        {/* Treasure reveal */}
-        <div className="ex-card mt-4 flex w-full flex-col items-center p-6">
+        {/* Sticker reveal */}
+        <div className="ex-card mt-4 flex w-full flex-col items-center p-5">
           <div className="relative grid h-36 w-full place-items-center">
             <AnimatePresence mode="wait">
               {!opened ? (
-                <motion.div key="chest" exit={{ scale: 1.3, opacity: 0 }} animate={reduce ? undefined : { rotate: [0, -6, 6, -6, 6, 0] }} transition={{ duration: 0.8 }}>
-                  <TreasureChest />
+                <motion.div key="chest" exit={{ scale: 1.3, opacity: 0 }} animate={reduce ? undefined : { rotate: [0, -6, 6, -6, 6, 0] }} transition={{ duration: 0.8, delay: 1.3 }}>
+                  <Chest size={132} />
                 </motion.div>
               ) : (
                 <motion.div key="prize" initial={reduce ? false : { scale: 0.2, y: 30 }} animate={{ scale: 1, y: 0 }} transition={{ type: "spring", stiffness: 240, damping: 12 }} className="flex flex-col items-center">
-                  {fresh ? (
-                    <StickerTile sticker={fresh} owned size={110} />
-                  ) : (
-                    <span className="flex items-center gap-1" aria-hidden>
-                      {Array.from({ length: stars }).map((_, i) => (
-                        <Star key={i} className="h-16 w-16 fill-[#FFC21A] text-[#D99A00]" strokeWidth={1.8} />
-                      ))}
-                    </span>
-                  )}
+                  {snap.sticker ? <StickerTile sticker={snap.sticker} owned size={112} /> : <Star className="h-24 w-24 fill-[#FFC21A] text-[#D99A00]" strokeWidth={1.6} aria-hidden />}
                 </motion.div>
               )}
             </AnimatePresence>
             {opened && !reduce && <Sparkle />}
           </div>
           <p className="mt-3 text-xl font-black" aria-live="polite">
-            {opened ? (fresh ? `New sticker: ${fresh.name}!` : `You won ${stars} ${stars === 1 ? "star" : "stars"}!`) : "Opening your treasure…"}
+            {!opened
+              ? t("explore.res.opening", "Opening your treasure…")
+              : snap.sticker
+                ? snap.fresh
+                  ? t("explore.res.newSticker", "New sticker: {name}!", { name: t(`explore.sticker.${snap.sticker.id}`, snap.sticker.name) })
+                  : t("explore.res.latestSticker", "Your newest sticker: {name}", { name: t(`explore.sticker.${snap.sticker.id}`, snap.sticker.name) })
+                : t("explore.res.noSticker", "Keep playing to win your first sticker!")}
           </p>
-          {opened && fresh && (
+          {opened && snap.sticker && (
             <Link href="/stickers" className="mt-1 font-black text-[#C02677] underline decoration-2 underline-offset-4 dark:text-[#FF8CC6]">
-              Look in my sticker book
+              {t("explore.stickers.open", "Open my sticker book")}
             </Link>
           )}
         </div>
 
-        {/* You got better at */}
         {better.length > 0 && (
           <div className="ex-card mt-4 w-full p-5 text-left">
             <h2 className="flex items-center gap-2 text-xl font-black">
-              <TrendingUp className="h-6 w-6 text-[#2EBE70]" strokeWidth={2.8} aria-hidden /> You got better at…
+              <TrendingUp className="h-6 w-6 text-[#2EBE70]" strokeWidth={2.8} aria-hidden /> {t("explore.res.better", "You got better at…")}
             </h2>
             <ul className="mt-3 space-y-2">
               {better.map((c) => (
@@ -233,17 +308,18 @@ export function ExploreSessionResults(r: SessionResultsProps) {
           </div>
         )}
 
-        {/* Gentle review */}
         {r.missed.length > 0 && (
           <details className="ex-card mt-4 w-full p-5 text-left">
             <summary className="cursor-pointer text-lg font-black text-[#2F80FF]">
-              Let’s look at {r.missed.length === 1 ? "the tricky one" : `the ${r.missed.length} tricky ones`}
+              {r.missed.length === 1 ? t("explore.res.trickyOne", "Let’s look at the tricky one") : t("explore.res.tricky", "Let’s look at the {n} tricky ones", { n: r.missed.length })}
             </summary>
             <ul className="mt-4 space-y-4">
               {r.missed.map((m) => (
                 <li key={m.uid} className="rounded-2xl bg-surface-2 p-4">
                   <div className="space-y-2 font-bold">{m.question}</div>
-                  <p className="mt-2 font-black text-[#167A45] dark:text-[#6BE3A2]">The answer is {m.answer}</p>
+                  <div className="mt-2 font-black text-[#167A45] dark:text-[#6BE3A2]">
+                    {t("explore.fb.answer", "Correct answer:")} {m.answer}
+                  </div>
                   {m.explain && <div className="mt-1 text-sm text-muted">{m.explain}</div>}
                 </li>
               ))}
@@ -253,12 +329,12 @@ export function ExploreSessionResults(r: SessionResultsProps) {
       </div>
 
       <div className="ex-answerbar sticky bottom-0">
-        <div className="mx-auto flex w-full max-w-[760px] flex-col-reverse gap-3 px-4 py-4 sm:flex-row sm:px-6">
-          <button type="button" onClick={r.onRetry} className="ex-press flex items-center justify-center gap-2 rounded-[1.5rem] bg-surface px-6 py-4 text-xl font-black text-[#2F80FF]" style={{ boxShadow: "inset 0 -6px 0 rgb(var(--line))" }}>
-            <RotateCcw className="h-6 w-6" strokeWidth={3} aria-hidden /> Play again
+        <div className="mx-auto flex w-full max-w-[1000px] flex-col-reverse gap-3 px-4 py-4 sm:flex-row sm:justify-between sm:px-6 sm:py-6">
+          <button type="button" onClick={r.onRetry} className="ex-press flex items-center justify-center gap-2 rounded-[1.25rem] bg-surface px-6 py-4 text-lg font-black uppercase tracking-wide text-[#2F80FF]" style={{ boxShadow: "inset 0 0 0 3px rgb(var(--line)), inset 0 -6px 0 rgb(var(--line))" }}>
+            <RotateCcw className="h-6 w-6" strokeWidth={3} aria-hidden /> {t("explore.res.again", "Play again")}
           </button>
-          <Link href={r.exitHref} onClick={() => say("Let’s go!")} className="ex-press flex flex-1 items-center justify-center gap-2 rounded-[1.5rem] px-6 py-4 text-xl font-black text-white" style={chunky(EX.green, 7)}>
-            Next adventure <ArrowRight className="h-6 w-6" strokeWidth={3} aria-hidden />
+          <Link href={r.exitHref} onClick={() => say(t("explore.voice.letsGoShort", "Let’s go!"))} autoFocus className="ex-press ex-bigbtn flex items-center justify-center gap-2 rounded-[1.25rem] px-10 py-4 text-xl font-black uppercase tracking-wide text-white sm:min-w-[300px]" style={chunky(EX.green, 6)}>
+            {t("explore.continue", "Continue")} <ArrowRight className="h-6 w-6" strokeWidth={3} aria-hidden />
           </Link>
         </div>
       </div>
@@ -266,29 +342,28 @@ export function ExploreSessionResults(r: SessionResultsProps) {
   );
 }
 
-function TreasureChest() {
+function StatTile({ col, label, icon, value, delay }: { col: Col; label: string; icon: React.ReactNode; value: string; delay: number }) {
+  const reduce = useReducedMotion();
   return (
-    <svg width="132" height="112" viewBox="0 0 132 112" aria-hidden>
-      <ellipse cx="66" cy="104" rx="52" ry="7" fill="rgb(0 0 0 / 0.1)" />
-      <rect x="12" y="46" width="108" height="56" rx="10" fill="#C7772A" />
-      <rect x="12" y="88" width="108" height="14" rx="7" fill="#9E5A1C" />
-      <path d="M12 50 C12 18 120 18 120 50 Z" fill="#E08E3C" />
-      <rect x="12" y="44" width="108" height="10" fill="#FFC21A" />
-      <rect x="56" y="40" width="20" height="28" rx="5" fill="#FFC21A" />
-      <circle cx="66" cy="54" r="4" fill="#9E5A1C" />
-      <rect x="26" y="54" width="8" height="48" fill="#FFC21A" opacity="0.85" />
-      <rect x="98" y="54" width="8" height="48" fill="#FFC21A" opacity="0.85" />
-    </svg>
+    <motion.div initial={reduce ? false : { opacity: 0, y: 20, scale: 0.9 }} animate={{ opacity: 1, y: 0, scale: 1 }} transition={{ delay, type: "spring", stiffness: 300, damping: 18 }} className="overflow-hidden rounded-[1.25rem] border-[3px]" style={{ borderColor: col.c, background: col.c }}>
+      <div className="truncate px-1 py-1.5 text-xs font-black uppercase tracking-wide text-white sm:text-sm">{label}</div>
+      <div className="flex items-center justify-center gap-1 rounded-[1rem] bg-surface px-1 py-4 text-xl font-black tabular-nums sm:text-2xl" style={{ color: col.s }}>
+        {icon}
+        {value}
+      </div>
+    </motion.div>
   );
 }
 
 function Sparkle() {
   const dots = [
-    [-70, -30, "#FF5A5F"],
-    [70, -40, "#2F80FF"],
-    [-55, 40, "#2EBE70"],
-    [60, 35, "#8B5CF6"],
-    [0, -60, "#FFC21A"],
+    [-80, -30, "#FF5A5F"],
+    [80, -40, "#2F80FF"],
+    [-60, 40, "#2EBE70"],
+    [66, 35, "#8B5CF6"],
+    [0, -64, "#FFC21A"],
+    [-30, -55, "#EC4899"],
+    [34, -58, "#14B8A6"],
   ] as const;
   return (
     <div className="pointer-events-none absolute inset-0 grid place-items-center" aria-hidden>

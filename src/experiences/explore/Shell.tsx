@@ -18,11 +18,11 @@ import { EX, type Col } from "./ui";
 const GROWN_UPS = "/parent";
 
 /** The four places a child goes, each with its own colour and word. */
-const KID_TABS: { href: string; key: string; en: string; icon: LucideIcon; col: Col }[] = [
-  { href: "/learn", key: "explore.nav.learn", en: "Learn", icon: House, col: EX.green },
-  { href: "/kids/play", key: "explore.nav.games", en: "Games", icon: Gamepad2, col: EX.pink },
-  { href: "/stickers", key: "explore.nav.stickers", en: "Stickers", icon: Sticker, col: EX.orange },
-  { href: "/profile", key: "explore.nav.me", en: "Me", icon: UserRound, col: EX.blue },
+const KID_TABS: { href: string; word: (t: ReturnType<typeof useT>) => string; icon: LucideIcon; col: Col }[] = [
+  { href: "/learn", word: (t) => t("explore.nav.learn", "Learn"), icon: House, col: EX.green },
+  { href: "/kids/play", word: (t) => t("explore.nav.games", "Games"), icon: Gamepad2, col: EX.pink },
+  { href: "/stickers", word: (t) => t("explore.nav.stickers", "Stickers"), icon: Sticker, col: EX.orange },
+  { href: "/profile", word: (t) => t("explore.nav.me", "Me"), icon: UserRound, col: EX.blue },
 ];
 
 /** A lesson page (/course/subject/unit/lesson) is full-focus: no sidebar, no tab bar. */
@@ -92,7 +92,7 @@ export function ExploreShell({ children, pathname, nav, more, isActive, openSear
         </Link>
         <nav className="flex flex-1 flex-col gap-2" aria-label={t("explore.nav.label", "Main")}>
           {KID_TABS.map((k) => (
-            <SideItem key={k.href} href={k.href} label={t(k.key, k.en)} icon={k.icon} col={k.col} active={isActive(k.href)} />
+            <SideItem key={k.href} href={k.href} label={k.word(t)} icon={k.icon} col={k.col} active={isActive(k.href)} />
           ))}
           <div className="relative">
             <button
@@ -135,7 +135,7 @@ export function ExploreShell({ children, pathname, nav, more, isActive, openSear
               className={clsx("ex-press flex min-w-0 flex-1 flex-col items-center gap-0.5 rounded-2xl border-2 px-0.5 py-1", active ? "ex-tab-active" : "border-transparent")}
             >
               <k.icon className="h-7 w-7" strokeWidth={2.6} style={{ color: k.col.c }} aria-hidden />
-              <span className="max-w-full truncate text-[12px] font-black leading-tight">{t(k.key, k.en)}</span>
+              <span className="max-w-full truncate text-[12px] font-black leading-tight">{k.word(t)}</span>
             </Link>
           );
         })}

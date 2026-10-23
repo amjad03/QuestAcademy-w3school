@@ -13,25 +13,37 @@ import { say } from "@/lib/voice";
 import { EXPLORE_LINES } from "@/content/voice-lines";
 import { useT } from "@/i18n";
 import type { LessonLayoutProps, LessonTab } from "../types";
-import { EX, FatBar, ReadAloud, chunky, type Col } from "./ui";
+import { EX, FatBar, ReadAloud, chunky, kindWord, type Col } from "./ui";
 
-const TAB_LOOK: Record<ItemKind, { key: string; en: string; col: Col }> = {
-  video: { key: "explore.kind.video", en: "Watch", col: EX.red },
-  article: { key: "explore.kind.article", en: "Story", col: EX.blue },
-  cards: { key: "explore.kind.cards", en: "Flip cards", col: EX.purple },
-  practice: { key: "explore.kind.practice", en: "Quiz time", col: EX.green },
-  challenge: { key: "explore.kind.challenge", en: "Challenge", col: EX.orange },
+const TAB_COL: Record<ItemKind, Col> = {
+  video: EX.red,
+  article: EX.blue,
+  cards: EX.purple,
+  practice: EX.green,
+  challenge: EX.orange,
 };
 
-const NEXT_WORD: Record<string, [string, string]> = {
-  Practice: ["explore.next.practice", "Quiz time"],
-  Lesson: ["explore.next.story", "Story"],
-  Video: ["explore.next.video", "Watch"],
-  Flashcards: ["explore.next.cards", "Flip cards"],
-  Challenge: ["explore.next.challenge", "Challenge"],
-  "Next lesson": ["explore.next.lesson", "Next lesson"],
-  "Unit test": ["explore.next.test", "Unit trophy"],
-};
+/** What comes next, in kid words (literal t() calls for the extractor). */
+function nextWord(t: ReturnType<typeof useT>, label: string) {
+  switch (label) {
+    case "Practice":
+      return t("explore.next.practice", "Quiz time");
+    case "Lesson":
+      return t("explore.next.story", "Story");
+    case "Video":
+      return t("explore.next.video", "Watch");
+    case "Flashcards":
+      return t("explore.next.cards", "Flip cards");
+    case "Challenge":
+      return t("explore.next.challenge", "Challenge");
+    case "Next lesson":
+      return t("explore.next.lesson", "Next lesson");
+    case "Unit test":
+      return t("explore.next.test", "Unit trophy");
+    default:
+      return label;
+  }
+}
 
 /** Explore lesson: full-focus, bite-size — X + progress on top, one big card, a big Continue at the bottom. */
 export function ExploreLessonLayout(p: LessonLayoutProps) {
@@ -42,7 +54,6 @@ export function ExploreLessonLayout(p: LessonLayoutProps) {
   const story = p.world === "kids" && active?.kind === "article";
   const waitingOnStory = story && !p.completed;
   const read = `${p.lesson.title}. ${p.lesson.summary}`;
-  const [nk, nen] = NEXT_WORD[p.upNext.label] ?? ["explore.next.other", p.upNext.label];
 
   const onContinue = () => {
     // A plain article counts as read when the child moves on (same as "Mark complete").
@@ -111,7 +122,7 @@ export function ExploreLessonLayout(p: LessonLayoutProps) {
             </Link>
           ) : null}
           <p className="hidden min-w-0 flex-1 truncate text-lg font-black text-muted sm:block">
-            {waitingOnStory ? t("explore.lesson.finishStory", "Finish the story to win your star!") : t("explore.lesson.upNext", "Next: {what} · {title}", { what: t(nk, nen), title: p.upNext.title })}
+            {waitingOnStory ? t("explore.lesson.finishStory", "Finish the story to win your star!") : t("explore.lesson.upNext", "Next: {what} · {title}", { what: nextWord(t, p.upNext.label), title: p.upNext.title })}
           </p>
           <Link
             href={p.upNext.href}
@@ -135,7 +146,7 @@ export function ExploreLessonLayout(p: LessonLayoutProps) {
 
 function PillTab({ tab: x }: { tab: LessonTab }) {
   const t = useT();
-  const look = TAB_LOOK[x.kind];
+  const look = { col: TAB_COL[x.kind] };
   const cls = clsx("ex-press flex shrink-0 items-center gap-2 rounded-full border-[3px] px-4 py-2.5 text-[1.05rem] font-black", x.active ? "text-white" : "bg-surface");
   const style = x.active ? { background: look.col.c, borderColor: look.col.c, boxShadow: `inset 0 -5px 0 ${look.col.s}` } : { borderColor: `${look.col.c}55`, color: look.col.s, boxShadow: `0 4px 0 ${look.col.c}40` };
   const inner = (
@@ -143,7 +154,7 @@ function PillTab({ tab: x }: { tab: LessonTab }) {
       <span className="grid h-9 w-9 place-items-center rounded-full" style={{ background: x.active ? "rgb(255 255 255 / 0.25)" : `${look.col.c}1f` }}>
         <x.icon className="h-5 w-5" strokeWidth={2.6} aria-hidden />
       </span>
-      {t(look.key, look.en)}
+      {kindWord(t, x.kind)}
       {x.done && (
         <span className="grid h-6 w-6 place-items-center rounded-full bg-[#FFC21A]" aria-label={t("explore.done", "done")}>
           <Check className="h-4 w-4 text-white" strokeWidth={4} aria-hidden />

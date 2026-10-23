@@ -4,8 +4,8 @@ import Link from "next/link";
 import { useEffect, useMemo, useRef, useState } from "react";
 import { motion, useReducedMotion } from "framer-motion";
 import clsx from "clsx";
-import { BookOpen, Check, ChevronDown, Coins, Dumbbell, Flame, Gamepad2, Layers, Lock, PlayCircle, Star, Target, Trophy, Zap, type LucideIcon } from "lucide-react";
-import type { Assessment, CourseLesson, CourseOutline, CourseUnit, ItemKind } from "@/content/course";
+import { BookOpen, Check, ChevronDown, Coins, Dumbbell, Flame, Gamepad2, Layers, PlayCircle, Star, Target, Trophy, Zap, type LucideIcon } from "lucide-react";
+import type { Assessment, CourseLesson, CourseOutline, CourseUnit } from "@/content/course";
 import { useLearner } from "@/lib/store";
 import { courseProgress, lessonProgress } from "@/lib/progress";
 import { dayKey, questsForDay, type QuestDef } from "@/lib/gamification";
@@ -20,20 +20,12 @@ import { CourseIcon } from "@/components/brand/CourseIcon";
 import { Mascot } from "@/components/brand/Mascot";
 import { STICKERS, awardExploreSticker, checkStreakSticker, type Sticker } from "@/components/modes/explore/stickers";
 import { StickerTile } from "@/components/modes/explore/StickerTile";
-import { Chest, EX, EX_ROTATION, FatBar, KidDialog, ReadAloud, chunky, useExploreStats, type Col } from "./ui";
+import { Chest, EX, EX_ROTATION, FatBar, KidDialog, ReadAloud, chunky, kindWord, useExploreStats, type Col } from "./ui";
 
 const GREET_KEY = "qa-explore-greeted";
 
 /** Winding path offsets (px), like Duolingo's snake. */
 const OFFSETS = [0, 46, 72, 46, 0, -46, -72, -46];
-
-const KIND_WORD: Record<ItemKind, [string, string]> = {
-  video: ["explore.kind.video", "Watch"],
-  article: ["explore.kind.article", "Story"],
-  cards: ["explore.kind.cards", "Flip cards"],
-  practice: ["explore.kind.practice", "Quiz time"],
-  challenge: ["explore.kind.challenge", "Challenge"],
-};
 
 /* ------------------------------------------------------------------ */
 
@@ -309,10 +301,10 @@ function PathView({ outline }: { outline: CourseOutline }) {
                 const off = OFFSETS[i % OFFSETS.length];
                 const isCurrent = node.state === "current";
                 return (
-                  <li key={node.key} ref={isCurrent ? currentRef : undefined} className="relative flex w-full justify-center" data-ex-node>
+                  <li key={node.key} ref={isCurrent ? currentRef : undefined} className={clsx("relative flex w-full justify-center", isCurrent && "mt-10")} data-ex-node>
                     <PathNodeButton node={node} col={col} off={off} open={open === node.key} onToggle={() => setOpen((o) => (o === node.key ? null : node.key))} />
                     {isCurrent && (
-                      <div className="pointer-events-none absolute top-1/2 -translate-y-1/2" style={{ left: `calc(50% + ${off + (off > 0 ? -150 : 82)}px)` }} aria-hidden>
+                      <div className="pointer-events-none absolute top-1/2 -translate-y-1/2" style={{ left: `calc(50% + ${off > 0 ? off - 118 : off + 50}px)` }} aria-hidden>
                         <Mascot pose="cheer" size={68} />
                       </div>
                     )}
@@ -599,11 +591,10 @@ function GuideDialog({ unit, onClose }: { unit: CourseUnit | null; onClose: () =
                       <span className="mt-2 flex flex-wrap gap-1.5">
                         {l.items.map((it) => {
                           const Icon = ITEM_ICON[it.kind];
-                          const [k, en] = KIND_WORD[it.kind];
                           return (
                             <span key={it.id} className="inline-flex items-center gap-1 rounded-full bg-surface-2 px-2.5 py-1 text-sm font-black">
                               <Icon className="h-4 w-4" style={{ color: c.c }} strokeWidth={2.6} aria-hidden />
-                              {t(k, en)}
+                              {kindWord(t, it.kind)}
                             </span>
                           );
                         })}

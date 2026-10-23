@@ -184,3 +184,21 @@ export function Chest({ size = 64, open = false, grey = false }: { size?: number
     </svg>
   );
 }
+
+type T = ReturnType<typeof useT>;
+
+/** Kid words for each lesson part (literal t() calls so the extractor finds them). */
+export function kindWord(t: T, kind: "video" | "article" | "cards" | "practice" | "challenge") {
+  switch (kind) {
+    case "video":
+      return t("explore.kind.video", "Watch");
+    case "article":
+      return t("explore.kind.article", "Story");
+    case "cards":
+      return t("explore.kind.cards", "Flip cards");
+    case "practice":
+      return t("explore.kind.practice", "Quiz time");
+    default:
+      return t("explore.kind.challenge", "Challenge");
+  }
+}

@@ -14,4 +14,5 @@ export const experience: Experience = {
   LessonLayout: ExploreLessonLayout,
   SessionLayout: ExploreSessionLayout,
   SessionResults: ExploreSessionResults,
+  ownsComplete: true,
 };
