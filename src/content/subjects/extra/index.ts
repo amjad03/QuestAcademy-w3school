@@ -33,11 +33,17 @@ export function extraTopics(course: string): Topic[] {
   return BATCHES.filter((b) => b.course === course).flatMap((b) => b.topics);
 }
 
-/** Syllabus chapter title → lesson ids written for it. */
+/** Subject family of a course slug, matching the syllabus topic-key prefix. */
+const family = (course: string) => (course.startsWith("physics") ? "phy" : course.startsWith("chemistry") ? "che" : course.startsWith("biology") ? "bio" : "mat");
+
+/** `${family}|${syllabus chapter title}` → lesson ids written for it. */
 export const CHAPTER_LESSONS: Record<string, string[]> = {};
 for (const b of BATCHES) {
   for (const [title, slug] of Object.entries(b.links)) {
     const t = b.topics.find((x) => x.slug === slug);
-    if (t) CHAPTER_LESSONS[title] = [...(CHAPTER_LESSONS[title] ?? []), ...t.lessons.map((l) => `${b.course}/${t.slug}/${l.slug}`)];
+    if (t) {
+      const k = `${family(b.course)}|${title}`;
+      CHAPTER_LESSONS[k] = [...(CHAPTER_LESSONS[k] ?? []), ...t.lessons.map((l) => `${b.course}/${t.slug}/${l.slug}`)];
+    }
   }
 }

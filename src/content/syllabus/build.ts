@@ -17,7 +17,7 @@ export function subject(prefix: string, id: string, name: string, rows: readonly
         title,
         unitNo: i + 1,
         weightage,
-        lessonIds: [...new Set([...(CHAPTER_LESSONS[title] ?? []), ...t.lessons])],
+        lessonIds: [...new Set([...(CHAPTER_LESSONS[`${key.split(".")[0]}|${title}`] ?? []), ...t.lessons])],
         examChapters: t.exam ? [...t.exam.chapters] : [],
         examSubject: t.exam?.subject,
         formulaChapter: t.formula,
