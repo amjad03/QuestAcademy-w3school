@@ -21,7 +21,9 @@
  *   kh-h2              section heading
  *   kh-kbd             keyboard hint
  * Tokens: --kh-m1…--kh-m4 (RGB mastery colours), --kh-navy, --kh-header-h,
- *         --kh-tabbar-h (bottom tab bar height on phones, 0 on desktop).
+ *         --kh-tabbar-h (bottom tab bar height on phones, 0 on desktop; the
+ *         bar is hidden on lesson pages), --kh-sticky-top (on .kh-shell: full
+ *         sticky header height incl. the desktop tab row — use for sticky rails).
  */
 
 /* ------------------------------------------------------------------ */
@@ -694,8 +696,20 @@ html[data-skin="modes"]:is([data-mode="adventure"], [data-mode="focus"], [data-m
 }
 
 /* shared page rails sit below the sticky header */
+html[data-skin="modes"]:is([data-mode="adventure"], [data-mode="focus"], [data-mode="mastery"], [data-mode="research"], [data-mode="professional"]) .kh-shell {
+  /* height of the sticky header; use for sticky rails and lesson navigation */
+  --kh-sticky-top: var(--kh-header-h);
+}
+@media (min-width: 1024px) {
+  html[data-skin="modes"]:is([data-mode="adventure"], [data-mode="focus"], [data-mode="mastery"], [data-mode="research"], [data-mode="professional"]) .kh-shell[data-subnav="true"] {
+    --kh-sticky-top: calc(var(--kh-header-h) + 45px);
+  }
+}
+html[data-skin="modes"]:is([data-mode="adventure"], [data-mode="focus"], [data-mode="mastery"], [data-mode="research"], [data-mode="professional"]) .kh-subnav .kh-tab {
+  padding-block: 0;
+}
 html[data-skin="modes"]:is([data-mode="adventure"], [data-mode="focus"], [data-mode="mastery"], [data-mode="research"], [data-mode="professional"]) .kh-shell main aside.sticky.top-6 {
-  top: calc(var(--kh-header-h) + 1.5rem);
+  top: calc(var(--kh-sticky-top) + 1.5rem);
 }
 
 @media (prefers-reduced-motion: reduce) {

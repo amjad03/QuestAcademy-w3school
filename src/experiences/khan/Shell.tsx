@@ -77,7 +77,7 @@ export function KhanShell({ children, pathname, nav, more, isActive, openSearch 
   useEffect(() => setSheet(false), [pathname]);
 
   return (
-    <div className="kh-shell min-h-screen bg-bg">
+    <div className="kh-shell min-h-screen bg-bg" data-subnav={lesson ? undefined : "true"}>
       <a href="#kh-main" className="kh-skip">
         {t("khan.skip", "Skip to content")}
       </a>
@@ -286,8 +286,8 @@ function SubNav({ pathname, nav, more, isActive }: { pathname: string; nav: NavI
   const overflowActive = overflow.some((n) => isActive(n.href));
 
   return (
-    <nav className="hidden border-t border-line lg:block" aria-label={t("khan.primaryNav", "Primary")}>
-      <div className="mx-auto flex max-w-[1280px] items-center gap-5 px-8">
+    <nav className="kh-subnav hidden border-t border-line lg:block" aria-label={t("khan.primaryNav", "Primary")}>
+      <div className="mx-auto flex h-11 max-w-[1280px] items-stretch gap-5 px-8">
         {shown.map((n) => {
           const active = isActive(n.href);
           return (
@@ -298,7 +298,7 @@ function SubNav({ pathname, nav, more, isActive }: { pathname: string; nav: NavI
           );
         })}
         {overflow.length > 0 && (
-          <div className="relative">
+          <div className="relative flex">
             <button ref={trigger} type="button" className="kh-tab" aria-expanded={open} aria-haspopup="true" aria-current={overflowActive ? "page" : undefined} onClick={() => setOpen((o) => !o)}>
               {t("khan.more", "More")}
               <ChevronDown className={clsx("h-4 w-4 transition-transform", open && "rotate-180")} aria-hidden />

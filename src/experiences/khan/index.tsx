@@ -12,7 +12,6 @@ import { KhanSessionResults } from "./session/KhanSessionResults";
  * The Khan Academy-style experience shared by every learner from Class 6 up
  * (adventure, focus, mastery, research, professional). One structure, tuned
  * per stage through the home screen and stage-specific tools.
- * Placeholder: pieces are replaced by the Khan build.
  */
 export function khanExperience(id: ModeId): Experience {
   return {
@@ -22,5 +21,6 @@ export function khanExperience(id: ModeId): Experience {
     LessonLayout: KhanLessonLayout,
     SessionLayout: KhanSessionLayout,
     SessionResults: KhanSessionResults,
+    ownsComplete: true,
   };
 }
