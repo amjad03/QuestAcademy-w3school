@@ -64,7 +64,8 @@ function sample(pool: SessionPayload["pool"], count: number): Item[] {
   return out;
 }
 
-export function Session(raw: SessionPayload) {
+// The payload is passed as one prop: spreading it would drop `key`, which React reserves.
+export function Session({ payload: raw }: { payload: SessionPayload }) {
   // Titles in the learner's language when the course is translated; questions are swapped per item below.
   const dict = useContentDict(raw.course.slug);
   const p = useMemo(() => (dict ? { ...raw, title: dict[raw.title] ?? raw.title, course: { ...raw.course, title: dict[raw.course.title] ?? raw.course.title }, lessons: localize(raw.lessons, dict) } : raw), [raw, dict]);
@@ -155,7 +156,8 @@ export function Session(raw: SessionPayload) {
     if (assessment) applyAssessment(p.key, p.kind as "quiz" | "test" | "challenge", answers);
     else {
       applyPractice(p.key, correct, answers.length);
-      if (correct / Math.max(1, answers.length) >= 0.7) markItem(`${p.key}:practice`);
+      // Finishing the set completes the practice item; the score sets the mastery level.
+      markItem(`${p.key}:practice`);
     }
     setXpEarned(useLearner.getState().xp - xpBefore);
     setElapsed(Math.round((Date.now() - startedAt) / 1000));

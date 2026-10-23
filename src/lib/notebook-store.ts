@@ -20,6 +20,7 @@ export interface Doubt {
   title: string;
   text: string;
   createdAt: string;
+  updatedAt?: string;
   resolved: boolean;
 }
 
@@ -33,6 +34,7 @@ export interface NotebookState {
   removeNote: (lessonId: string) => void;
   toggleBookmark: (lessonId: string, meta: { title: string; href: string }) => boolean;
   addDoubt: (input: { lessonId: string; title: string; text: string }) => Doubt;
+  updateDoubt: (id: string, patch: { title?: string; text?: string }) => void;
   setDoubtResolved: (id: string, resolved: boolean) => void;
   removeDoubt: (id: string) => void;
 }
@@ -80,6 +82,13 @@ export const useNotebook = create<NotebookState>()(
         set((s) => ({ doubts: [doubt, ...s.doubts] }));
         return doubt;
       },
+
+      updateDoubt: (id, patch) =>
+        set((s) => ({
+          doubts: s.doubts.map((d) =>
+            d.id === id ? { ...d, ...(patch.title !== undefined && patch.title.trim() ? { title: patch.title.trim() } : {}), ...(patch.text !== undefined ? { text: patch.text.trim() } : {}), updatedAt: now() } : d,
+          ),
+        })),
 
       setDoubtResolved: (id, resolved) => set((s) => ({ doubts: s.doubts.map((d) => (d.id === id ? { ...d, resolved } : d)) })),
 

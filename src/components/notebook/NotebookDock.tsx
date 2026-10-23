@@ -3,9 +3,10 @@
 import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
-import { Bookmark, BookmarkCheck, CircleHelp, NotebookPen, X } from "lucide-react";
+import { Bookmark, BookmarkCheck, CircleHelp, NotebookPen, Plus, X } from "lucide-react";
 import clsx from "clsx";
 import { useNotebook } from "@/lib/notebook-store";
+import { DoubtFields, DoubtItem } from "./DoubtItem";
 import { useMode } from "@/lib/useMode";
 import { useHydrated } from "@/components/providers";
 import { useT } from "@/i18n";
@@ -24,6 +25,7 @@ export function NotebookDock({ lessonId, title, href }: Props) {
   const bookmarked = useNotebook((s) => Boolean(s.bookmarks[lessonId]));
   const hasNote = useNotebook((s) => Boolean(s.notes[lessonId]?.text));
   const openDoubts = useNotebook((s) => s.doubts.filter((d) => d.lessonId === lessonId && !d.resolved).length);
+  const anyDoubts = useNotebook((s) => s.doubts.some((d) => d.lessonId === lessonId));
   const toggleBookmark = useNotebook((s) => s.toggleBookmark);
   const [panel, setPanel] = useState<"notes" | "doubt" | null>(null);
 
@@ -55,7 +57,7 @@ export function NotebookDock({ lessonId, title, href }: Props) {
           </button>
           <button type="button" onClick={() => setPanel((p) => (p === "doubt" ? null : "doubt"))} aria-expanded={panel === "doubt"} className={clsx("chip flex items-center gap-1.5 transition", panel === "doubt" ? "!border-accent !text-accent" : "hover:text-accent")}>
             <CircleHelp className="h-4 w-4" />
-            {t("notebook.dock.addDoubt", "Add a doubt")}
+            {hydrated && anyDoubts ? t("notebook.dock.doubts", "Doubts") : t("notebook.dock.addDoubt", "Add a doubt")}
             {hydrated && openDoubts > 0 && <span className="rounded-full bg-accent-soft px-1.5 text-[11px] font-bold text-accent tabular-nums">{openDoubts}</span>}
           </button>
           <Link href="/notebook" className="ml-auto text-xs font-bold text-muted hover:text-accent">
@@ -67,7 +69,7 @@ export function NotebookDock({ lessonId, title, href }: Props) {
       {!explore && (
         <AnimatePresence>
           {panel === "notes" && <NotesPanel key="notes" lessonId={lessonId} title={title} onClose={() => setPanel(null)} />}
-          {panel === "doubt" && <DoubtForm key="doubt" lessonId={lessonId} onClose={() => setPanel(null)} />}
+          {panel === "doubt" && <DoubtsPanel key="doubt" lessonId={lessonId} onClose={() => setPanel(null)} />}
         </AnimatePresence>
       )}
     </div>
@@ -135,17 +137,14 @@ function NotesPanel({ lessonId, title, onClose }: { lessonId: string; title: str
   );
 }
 
-function DoubtForm({ lessonId, onClose }: { lessonId: string; onClose: () => void }) {
+function DoubtsPanel({ lessonId, onClose }: { lessonId: string; onClose: () => void }) {
   const t = useT();
+  const all = useNotebook((s) => s.doubts);
   const addDoubt = useNotebook((s) => s.addDoubt);
+  const doubts = all.filter((d) => d.lessonId === lessonId);
+  const [adding, setAdding] = useState(doubts.length === 0);
   const [title, setTitle] = useState("");
   const [text, setText] = useState("");
-  const [done, setDone] = useState(false);
-  const ref = useRef<HTMLInputElement>(null);
-
-  useEffect(() => {
-    ref.current?.focus();
-  }, []);
 
   const submit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -153,47 +152,52 @@ function DoubtForm({ lessonId, onClose }: { lessonId: string; onClose: () => voi
     addDoubt({ lessonId, title, text });
     setTitle("");
     setText("");
-    setDone(true);
+    setAdding(false);
   };
 
   return (
-    <motion.form
-      onSubmit={submit}
-      initial={{ height: 0, opacity: 0 }}
-      animate={{ height: "auto", opacity: 1 }}
-      exit={{ height: 0, opacity: 0 }}
-      transition={{ duration: 0.18 }}
-      className="basis-full overflow-hidden"
-    >
-      <div className="card mt-1 p-4">
-        {done ? (
-          <div className="flex flex-wrap items-center gap-3">
-            <p className="min-w-0 flex-1 text-sm font-semibold text-muted">{t("notebook.doubt.added", "Added to your doubts. Come back to it once the idea clicks.")}</p>
-            <button type="button" onClick={() => setDone(false)} className="btn-ghost !px-3 !py-1.5 text-xs">
-              {t("notebook.doubt.addAnother", "Add another")}
-            </button>
-            <button type="button" onClick={onClose} className="btn-flat !px-3 !py-1.5 text-xs">
-              {t("notebook.doubt.close", "Close")}
-            </button>
-          </div>
-        ) : (
-          <>
-            <label className="block text-sm font-bold" htmlFor="doubt-title">
-              {t("notebook.doubt.titleLabel", "What is unclear?")}
-            </label>
-            <input id="doubt-title" ref={ref} value={title} onChange={(e) => setTitle(e.target.value)} placeholder={t("notebook.doubt.titlePlaceholder", "One line, e.g. Why does the loop stop at n-1?")} className="input mt-1.5 w-full text-sm" maxLength={120} required />
-            <textarea value={text} onChange={(e) => setText(e.target.value)} placeholder={t("notebook.doubt.textPlaceholder", "Optional: add what you tried or where you got stuck.")} className="input mt-2 w-full resize-none text-sm" rows={2} />
+    <motion.div initial={{ height: 0, opacity: 0 }} animate={{ height: "auto", opacity: 1 }} exit={{ height: 0, opacity: 0 }} transition={{ duration: 0.18 }} className="basis-full overflow-hidden">
+      <section className="card mt-1 p-4" aria-label={t("notebook.doubt.panelLabel", "Doubts for this lesson")}>
+        <div className="mb-3 flex items-center gap-2">
+          <h3 className="flex-1 text-sm font-bold">
+            {doubts.length ? t("notebook.doubt.listTitle", "Your doubts on this lesson ({n})", { n: doubts.length }) : t("notebook.doubt.firstTitle", "Add a doubt")}
+          </h3>
+          <button type="button" onClick={onClose} className="btn-flat !p-1.5" aria-label={t("notebook.doubt.close", "Close")}>
+            <X className="h-4 w-4" />
+          </button>
+        </div>
+
+        {doubts.length > 0 && (
+          <ul className="space-y-2">
+            {doubts.map((d) => (
+              <DoubtItem key={d.id} d={d} compact meta={new Date(d.updatedAt ?? d.createdAt).toLocaleDateString()} />
+            ))}
+          </ul>
+        )}
+
+        {adding ? (
+          <form onSubmit={submit} className={clsx(doubts.length > 0 && "mt-3 border-t border-line pt-3")}>
+            <DoubtFields title={title} text={text} onTitle={setTitle} onText={setText} autoFocus />
             <div className="mt-3 flex items-center gap-2">
               <button type="submit" className="btn-primary !py-2 text-sm" disabled={!title.trim()}>
                 {t("notebook.doubt.save", "Save doubt")}
               </button>
-              <button type="button" onClick={onClose} className="btn-flat !py-2 text-sm">
+              <button type="button" onClick={() => (doubts.length ? setAdding(false) : onClose())} className="btn-flat !py-2 text-sm">
                 {t("notebook.doubt.cancel", "Cancel")}
               </button>
             </div>
-          </>
+          </form>
+        ) : (
+          <div className="mt-3 flex flex-wrap items-center gap-2">
+            <button type="button" onClick={() => setAdding(true)} className="btn-ghost !px-3 !py-1.5 text-xs">
+              <Plus className="h-3.5 w-3.5" /> {t("notebook.doubt.addAnother", "Add another")}
+            </button>
+            <Link href="/notebook?tab=doubts" className="ml-auto text-xs font-bold text-muted hover:text-accent">
+              {t("notebook.doubt.allDoubts", "All doubts")}
+            </Link>
+          </div>
         )}
-      </div>
-    </motion.form>
+      </section>
+    </motion.div>
   );
 }

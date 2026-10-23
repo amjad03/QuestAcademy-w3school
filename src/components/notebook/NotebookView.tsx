@@ -9,6 +9,7 @@ import { courseOf, notebookToMarkdown, titleCase, useNotebook, type Doubt } from
 import { useHydrated } from "@/components/providers";
 import { CourseIcon } from "@/components/brand/CourseIcon";
 import { useT } from "@/i18n";
+import { DoubtItem } from "./DoubtItem";
 
 type Tab = "notes" | "bookmarks" | "doubts";
 const TABS: { id: Tab; label: string; icon: typeof NotebookPen }[] = [
@@ -229,41 +230,23 @@ function DoubtsTab() {
 
 function DoubtRow({ d }: { d: Doubt }) {
   const t = useT();
-  const setResolved = useNotebook((s) => s.setDoubtResolved);
-  const remove = useNotebook((s) => s.removeDoubt);
   return (
-    <li className={clsx("card p-5", d.resolved && "opacity-80")}>
-      <div className="flex items-start gap-3">
-        <CourseIcon slug={courseOf(d.lessonId)} size={28} />
-        <div className="min-w-0 flex-1">
-          <h3 className={clsx("font-black leading-snug", d.resolved && "line-through decoration-2 decoration-line")}>{d.title}</h3>
-          <p className="text-xs font-semibold text-muted">
-            <Link href={lessonHref(d.lessonId)} className="hover:text-accent">
-              {lessonTitle(d.lessonId)}
-            </Link>
-            {" · "}
-            {courseTitle(courseOf(d.lessonId))} · {when(d.createdAt)}
-          </p>
-          {d.text && <p className="mt-2 whitespace-pre-wrap text-sm leading-relaxed">{d.text}</p>}
-        </div>
-      </div>
-      <div className="mt-3 flex flex-wrap items-center gap-2">
-        {d.resolved ? (
-          <button type="button" onClick={() => setResolved(d.id, false)} className="btn-ghost !px-3 !py-1.5 text-xs">
-            <RotateCcw className="h-3.5 w-3.5" /> {t("notebook.doubts.reopen", "Reopen")}
-          </button>
-        ) : (
-          <button type="button" onClick={() => setResolved(d.id, true)} className="btn-good !px-3 !py-1.5 text-xs">
-            <CheckCircle2 className="h-3.5 w-3.5" /> {t("notebook.doubts.markResolved", "Mark resolved")}
-          </button>
-        )}
+    <DoubtItem
+      d={d}
+      meta={
+        <>
+          <Link href={lessonHref(d.lessonId)} className="hover:text-accent">
+            {lessonTitle(d.lessonId)}
+          </Link>
+          {" · "}
+          {courseTitle(courseOf(d.lessonId))} · {when(d.updatedAt ?? d.createdAt)}
+        </>
+      }
+      actions={
         <Link href={lessonHref(d.lessonId)} className="btn-ghost !px-3 !py-1.5 text-xs">
           {t("notebook.doubts.revisit", "Revisit lesson")} <ArrowRight className="h-3.5 w-3.5" />
         </Link>
-        <button type="button" onClick={() => remove(d.id)} className="btn-flat ml-auto !p-1.5 text-muted hover:text-ink" aria-label={t("notebook.doubts.delete", "Delete doubt {title}", { title: d.title })}>
-          <Trash2 className="h-4 w-4" />
-        </button>
-      </div>
-    </li>
+      }
+    />
   );
 }

@@ -73,11 +73,11 @@ export function UnitOverview({ outline: raw, unitSlug }: { outline: CourseOutlin
                 </Link>
               </div>
               <ul className="grid gap-px border-t-2 border-line bg-line sm:grid-cols-2">
-                {l.items.map((it) => {
+                {l.items.map((it, ii) => {
                   const I = ITEM_ICON[it.kind];
                   const done = itemDone(st, l.id, it);
                   return (
-                    <li key={it.id} className="bg-surface">
+                    <li key={it.id} className={clsx("bg-surface", ii === l.items.length - 1 && l.items.length % 2 === 1 && "sm:col-span-2")}>
                       <Link href={it.href} className="flex items-center gap-3 px-5 py-3 transition hover:bg-surface-2">
                         <I className={clsx("h-5 w-5 shrink-0", done ? "text-good" : "text-muted")} strokeWidth={2.4} />
                         <span className="min-w-0 flex-1">

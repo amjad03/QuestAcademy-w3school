@@ -34,7 +34,9 @@ function trimHistory(list: TutorMessage[]) {
 }
 
 function useIsDesktop() {
-  const [desk, setDesk] = useState(false);
+  // The panel only mounts on the client, so read the width up front: starting
+  // from the mobile layout would leave the desktop panel shifted off-screen.
+  const [desk, setDesk] = useState(() => typeof window !== "undefined" && window.matchMedia("(min-width: 768px)").matches);
   useEffect(() => {
     const mq = window.matchMedia("(min-width: 768px)");
     const on = () => setDesk(mq.matches);
@@ -175,7 +177,9 @@ export function TutorPanel(p: Props) {
       : t("tutor.hello.question", "Stuck? I won’t just tell you the answer — but I’ll help you get there, one step at a time.")
     : t("tutor.hello.lesson", "Hi! I’m Questy. Ask me anything about “{lesson}”.", { lesson: p.lessonTitle });
 
-  const panelMotion = desktop ? { initial: { x: 40, opacity: 0 }, animate: { x: 0, opacity: 1 }, exit: { x: 40, opacity: 0 } } : { initial: { y: "100%" }, animate: { y: 0 }, exit: { y: "100%" } };
+  const panelMotion = desktop
+    ? { initial: { x: 40, y: 0, opacity: 0 }, animate: { x: 0, y: 0, opacity: 1 }, exit: { x: 40, y: 0, opacity: 0 } }
+    : { initial: { x: 0, y: "100%", opacity: 1 }, animate: { x: 0, y: 0, opacity: 1 }, exit: { x: 0, y: "100%", opacity: 1 } };
 
   return (
     <motion.div
