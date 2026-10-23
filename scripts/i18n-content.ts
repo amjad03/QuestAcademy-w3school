@@ -12,22 +12,28 @@ import fs from "node:fs";
 import path from "node:path";
 import { subjects } from "@/content";
 import { SKIP_FIELDS, translatable } from "@/i18n/content-fields";
+import { EXPLAINERS } from "@/explainers";
 
 const ROOT = path.resolve(__dirname, "..");
 const LOCALES = ["hi", "kn", "ta", "te", "mr", "bn"];
 /** Courses taught in English on purpose. */
 const ENGLISH_ONLY = new Set(["english"]);
 
+/** The visual explainers are translated like one more course, "explainers". */
+const EXPLAINER_SKIP = new Set(["lessons", "ages", "color"]);
+
 function strings(course: string): string[] {
-  const s = subjects.find((x) => x.slug === course);
-  if (!s) throw new Error(`No course "${course}"`);
+  const root = course === "explainers" ? EXPLAINERS : subjects.find((x) => x.slug === course);
+  if (!root) throw new Error(`No course "${course}"`);
   const out = new Set<string>();
   const walk = (v: unknown) => {
     if (typeof v === "string") return void (translatable(v) && out.add(v));
     if (Array.isArray(v)) return v.forEach(walk);
-    if (v && typeof v === "object") for (const [k, x] of Object.entries(v)) if (!SKIP_FIELDS.has(k)) walk(x);
+    // Skip React elements (explainer artwork) and components.
+    if (v && typeof v === "object" && !("$$typeof" in v))
+      for (const [k, x] of Object.entries(v)) if (!SKIP_FIELDS.has(k) && !(course === "explainers" && EXPLAINER_SKIP.has(k))) walk(x);
   };
-  walk(s);
+  walk(root);
   return [...out];
 }
 
@@ -66,7 +72,7 @@ if (cmd === "--strings") {
   console.log(`${course} ${locale}: ${Object.keys(d).length} translated, ${missing} missing, ${bad} with problems`);
   process.exitCode = bad ? 1 : 0;
 } else {
-  for (const s of subjects) {
+  for (const s of [...subjects, { slug: "explainers" }]) {
     if (ENGLISH_ONLY.has(s.slug)) continue;
     const all = strings(s.slug);
     const cols = LOCALES.map((l) => {

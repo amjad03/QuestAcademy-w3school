@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import { ArrowLeft, ArrowRight, BookImage, Hand, Lightbulb, Play, RotateCcw, Volume2, VolumeX } from "lucide-react";
 import clsx from "clsx";
@@ -8,33 +8,42 @@ import type { Explainer } from "./types";
 import { say, stopVoice } from "@/lib/voice";
 import { useMode } from "@/lib/useMode";
 import { Mascot } from "@/components/brand/Mascot";
+import { useT } from "@/i18n";
+import { localize, useContentDict } from "@/i18n/content";
 
 type Tab = "watch" | "try" | "story" | "like";
 
-const TABS: { id: Tab; label: string; young: string; icon: typeof Play }[] = [
-  { id: "watch", label: "Watch it", young: "Watch", icon: Play },
-  { id: "try", label: "Try it", young: "Play", icon: Hand },
-  { id: "story", label: "Story", young: "Story", icon: BookImage },
-  { id: "like", label: "It’s like…", young: "It’s like", icon: Lightbulb },
+const TABS: { id: Tab; icon: typeof Play }[] = [
+  { id: "watch", icon: Play },
+  { id: "try", icon: Hand },
+  { id: "story", icon: BookImage },
+  { id: "like", icon: Lightbulb },
 ];
 
 /** One concept, four ways in. Used inside lessons and on /explain. */
-export function ExplainerView({ explainer: e, compact }: { explainer: Explainer; compact?: boolean }) {
+export function ExplainerView({ explainer: raw, compact }: { explainer: Explainer; compact?: boolean }) {
+  // Explainer text in the learner's language; artwork and the hands-on activity stay as they are.
+  const dict = useContentDict("explainers");
+  const e = useMemo(() => localize(raw, dict), [raw, dict]);
   const mode = useMode();
   const young = mode.young;
-  const tabs = TABS.filter((t) => (t.id === "watch" ? e.watch?.length : t.id === "try" ? e.try : t.id === "story" ? e.story?.length : e.like));
+  const t = useT();
+  const tabLabel: Record<Tab, string> = young
+    ? { watch: t("explain.tab.watchYoung", "Watch"), try: t("explain.tab.tryYoung", "Play"), story: t("explain.tab.story", "Story"), like: t("explain.tab.likeYoung", "It’s like") }
+    : { watch: t("explain.tab.watch", "Watch it"), try: t("explain.tab.try", "Try it"), story: t("explain.tab.story", "Story"), like: t("explain.tab.like", "It’s like…") };
+  const tabs = TABS.filter((x) => (x.id === "watch" ? e.watch?.length : x.id === "try" ? e.try : x.id === "story" ? e.story?.length : e.like));
   const [tab, setTab] = useState<Tab>(tabs[0]?.id ?? "watch");
   useEffect(() => () => stopVoice(), []);
 
   return (
-    <section className="explainer overflow-hidden rounded-3xl border-2 border-line bg-surface" style={{ ["--ex" as string]: e.color }} aria-label={`Visual explainer: ${e.title}`}>
+    <section className="explainer overflow-hidden rounded-3xl border-2 border-line bg-surface" style={{ ["--ex" as string]: e.color }} aria-label={t("explain.aria", "Visual explainer: {title}", { title: e.title })}>
       <header className="flex flex-wrap items-center gap-3 border-b-2 border-line px-5 py-4" style={{ background: `color-mix(in srgb, ${e.color} 10%, transparent)` }}>
         <span className="grid h-11 w-11 shrink-0 place-items-center rounded-2xl text-2xl" style={{ background: `color-mix(in srgb, ${e.color} 22%, white)` }} aria-hidden>
           {e.icon}
         </span>
         <div className="min-w-0 flex-1">
           <p className="eyebrow" style={{ color: e.color }}>
-            See it · {e.area}
+            {t("explain.seeIt", "See it")} · {e.area}
           </p>
           <h3 className={clsx("font-black leading-tight", compact ? "text-lg" : "text-xl")}>{e.title}</h3>
           {!compact && <p className="text-sm font-semibold text-muted">{e.tagline}</p>}
@@ -43,19 +52,19 @@ export function ExplainerView({ explainer: e, compact }: { explainer: Explainer;
 
       {tabs.length > 1 && (
         <div className="flex gap-1.5 overflow-x-auto border-b-2 border-line px-4 py-2.5" role="tablist">
-          {tabs.map((t) => (
+          {tabs.map((tab_) => (
             <button
-              key={t.id}
+              key={tab_.id}
               role="tab"
-              aria-selected={tab === t.id}
+              aria-selected={tab === tab_.id}
               onClick={() => {
                 stopVoice();
-                setTab(t.id);
+                setTab(tab_.id);
               }}
-              className={clsx("flex shrink-0 items-center gap-1.5 rounded-xl px-3 py-1.5 text-sm font-extrabold transition", tab === t.id ? "text-white" : "text-muted hover:bg-surface-2")}
-              style={tab === t.id ? { background: e.color } : undefined}
+              className={clsx("flex shrink-0 items-center gap-1.5 rounded-xl px-3 py-1.5 text-sm font-extrabold transition", tab === tab_.id ? "text-white" : "text-muted hover:bg-surface-2")}
+              style={tab === tab_.id ? { background: e.color } : undefined}
             >
-              <t.icon className="h-4 w-4" /> {young ? t.young : t.label}
+              <tab_.icon className="h-4 w-4" /> {tabLabel[tab_.id]}
             </button>
           ))}
         </div>
@@ -72,6 +81,7 @@ export function ExplainerView({ explainer: e, compact }: { explainer: Explainer;
 }
 
 function StepPlayer({ steps, color, autoVoice, owl }: { steps: NonNullable<Explainer["watch"]>; color: string; autoVoice: boolean; owl: boolean }) {
+  const t = useT();
   const [i, setI] = useState(0);
   const [voice, setVoice] = useState(autoVoice);
   const step = steps[i];
@@ -101,13 +111,13 @@ function StepPlayer({ steps, color, autoVoice, owl }: { steps: NonNullable<Expla
           <p className="text-lg font-black leading-snug">{step.title}</p>
           <p className="mt-1 font-semibold leading-relaxed text-ink/80">{step.say}</p>
         </div>
-        <button onClick={() => setVoice((v) => !v)} className="grid h-10 w-10 shrink-0 place-items-center rounded-xl border-2 border-line text-muted hover:bg-surface-2" aria-label={voice ? "Turn narration off" : "Read this aloud"}>
+        <button onClick={() => setVoice((v) => !v)} className="grid h-10 w-10 shrink-0 place-items-center rounded-xl border-2 border-line text-muted hover:bg-surface-2" aria-label={voice ? t("explain.voiceOff", "Turn narration off") : t("explain.voiceOn", "Read this aloud")}>
           {voice ? <Volume2 className="h-5 w-5" /> : <VolumeX className="h-5 w-5" />}
         </button>
       </div>
 
       <div className="mt-4 flex items-center gap-3">
-        <button onClick={() => setI((x) => Math.max(0, x - 1))} disabled={i === 0} className="btn-ghost h-12 w-12 !p-0 disabled:opacity-40" aria-label="Previous step">
+        <button onClick={() => setI((x) => Math.max(0, x - 1))} disabled={i === 0} className="btn-ghost h-12 w-12 !p-0 disabled:opacity-40" aria-label={t("explain.prev", "Previous step")}>
           <ArrowLeft className="h-5 w-5" />
         </button>
         <div className="flex flex-1 justify-center gap-1.5" aria-hidden>
@@ -116,12 +126,12 @@ function StepPlayer({ steps, color, autoVoice, owl }: { steps: NonNullable<Expla
           ))}
         </div>
         {last ? (
-          <button onClick={() => setI(0)} className="btn-ghost h-12 !px-4" aria-label="Watch again">
+          <button onClick={() => setI(0)} className="btn-ghost h-12 !px-4" aria-label={t("explain.again", "Watch again")}>
             <RotateCcw className="h-5 w-5" />
           </button>
         ) : (
-          <button onClick={() => setI((x) => x + 1)} className="btn h-12 !px-5 text-white" style={{ background: color, borderColor: `color-mix(in srgb, ${color} 75%, black)` }} aria-label="Next step">
-            Next <ArrowRight className="h-5 w-5" />
+          <button onClick={() => setI((x) => x + 1)} className="btn h-12 !px-5 text-white" style={{ background: color, borderColor: `color-mix(in srgb, ${color} 75%, black)` }} aria-label={t("explain.nextAria", "Next step")}>
+            {t("explain.next", "Next")} <ArrowRight className="h-5 w-5" />
           </button>
         )}
       </div>
@@ -147,6 +157,7 @@ function Comic({ panels, color }: { panels: NonNullable<Explainer["story"]>; col
 }
 
 function AnalogyView({ a, color, young }: { a: NonNullable<Explainer["like"]>; color: string; young: boolean }) {
+  const t = useT();
   return (
     <div>
       <p className="text-xl font-black leading-snug">{a.headline}</p>
@@ -166,7 +177,7 @@ function AnalogyView({ a, color, young }: { a: NonNullable<Explainer["like"]>; c
           </li>
         ))}
       </ul>
-      {a.limits && !young && <p className="mt-3 text-sm font-semibold text-muted">Where the comparison stops working: {a.limits}</p>}
+      {a.limits && !young && <p className="mt-3 text-sm font-semibold text-muted">{t("explain.limits", "Where the comparison stops working:")} {a.limits}</p>}
     </div>
   );
 }

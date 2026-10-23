@@ -71,7 +71,8 @@ export function localize<T>(value: T, dict: ContentDict | null): T {
   const walk = (v: unknown): unknown => {
     if (typeof v === "string") return dict[v] ?? v;
     if (Array.isArray(v)) return v.map(walk);
-    if (!v || typeof v !== "object" || Object.getPrototypeOf(v) !== Object.prototype) return v;
+    // Leave non-plain objects and React elements (explainer artwork) untouched.
+    if (!v || typeof v !== "object" || Object.getPrototypeOf(v) !== Object.prototype || "$$typeof" in v) return v;
     const o = v as Record<string, unknown>;
     const out: Record<string, unknown> = {};
     for (const [k, x] of Object.entries(o)) {
