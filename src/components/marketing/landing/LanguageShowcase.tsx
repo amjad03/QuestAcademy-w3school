@@ -91,11 +91,8 @@ export function LanguageShowcase() {
           </button>
         ))}
       </div>
-      <div className="mt-5 overflow-hidden rounded-3xl border-2 border-line bg-surface shadow-lift" lang={l.id} aria-live="polite">
-        <div className="flex items-center gap-3 border-b-2 border-line bg-good-soft px-5 py-3">
-          <span className="text-2xl" aria-hidden>
-            🌱
-          </span>
+      <div className="mt-5 overflow-hidden rounded-2xl border border-line bg-surface" lang={l.id} aria-live="polite">
+        <div className="flex items-center gap-3 border-b border-line bg-surface-2/60 px-5 py-3">
           <p className="min-w-0 flex-1 truncate text-lg font-black text-ink">{l.title}</p>
           <span className="grid h-9 w-9 place-items-center rounded-xl bg-white text-good shadow-soft" aria-hidden>
             <Volume2 className="h-5 w-5" />

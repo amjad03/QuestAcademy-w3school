@@ -70,15 +70,12 @@ export function AgeSwitcher() {
               </li>
             ))}
           </ul>
-          <Link href="/onboarding" className="btn mt-7 text-white" style={{ background: tint, borderColor: `color-mix(in srgb, ${tint} 70%, black)` }}>
+          <Link href="/onboarding" className="btn btn-primary mt-7">
             Try {mode.name} <ArrowRight className="h-4 w-4" />
           </Link>
         </div>
-        <div className="relative min-w-0">
-          <div className="absolute -inset-6 rounded-[36px] opacity-60 blur-2xl" style={{ background: `radial-gradient(60% 60% at 50% 50%, color-mix(in srgb, ${tint} 22%, transparent), transparent)` }} aria-hidden />
-          <div className="relative">
-            <Preview id={id} tint={tint} />
-          </div>
+        <div className="min-w-0">
+          <Preview id={id} tint={tint} />
         </div>
       </div>
     </div>
