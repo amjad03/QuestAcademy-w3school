@@ -9,18 +9,26 @@ import { GrownUpGate } from "@/components/modes/ModeSettings";
 import { useLearner } from "@/lib/store";
 import { say } from "@/lib/voice";
 import { EXPLORE_LINES } from "@/content/voice-lines";
+import { useT } from "@/i18n";
 import type { NavItem, ShellProps } from "../types";
 import { BubbleLink, type SunHue } from "./ui";
 
 /** Picture + voice for each child-facing destination. */
-const KID_NAV: Record<string, { icon: LucideIcon; hue: SunHue; speak: string; label: string }> = {
-  "/learn": { icon: House, hue: "butter", speak: "Home! Let’s play and learn.", label: "Home" },
-  "/kids/play": { icon: Gamepad2, hue: "berry", speak: EXPLORE_LINES.games, label: "Games" },
-  "/stickers": { icon: Sticker, hue: "mint", speak: EXPLORE_LINES.stickerBook, label: "Stickers" },
+const KID_NAV: Record<string, { icon: LucideIcon; hue: SunHue; key: string; speak: string; label: string }> = {
+  "/learn": { icon: House, hue: "butter", key: "home", speak: "Home! Let’s play and learn.", label: "Home" },
+  "/kids/play": { icon: Gamepad2, hue: "berry", key: "games", speak: EXPLORE_LINES.games, label: "Games" },
+  "/stickers": { icon: Sticker, hue: "mint", key: "stickers", speak: EXPLORE_LINES.stickerBook, label: "Stickers" },
 };
 
+/** Lesson pages are full-screen, Duolingo style: no band, no dock. */
+function isImmersive(pathname: string) {
+  const parts = pathname.split("/").filter(Boolean);
+  return parts[0] === "course" && parts.length === 4 && parts[2] !== "case-studies";
+}
+
 /** Sprout frame: sunny top band with Questy, giant picture buttons at the bottom, grown-up corner. */
-export function SproutShell({ children, nav, more, isActive, openSearch }: ShellProps) {
+export function SproutShell({ children, nav, more, isActive, openSearch, pathname }: ShellProps) {
+  const t = useT();
   const name = useLearner((s) => s.profile.name);
   const first = name?.trim().split(" ")[0] ?? "";
   const kidNav = nav.filter((n) => KID_NAV[n.href]);
@@ -33,9 +41,11 @@ export function SproutShell({ children, nav, more, isActive, openSearch }: Shell
     if (passed) setPanel(true);
     else {
       setGate(true);
-      say(EXPLORE_LINES.grownUp);
+      say(t("sprout.grownUpAsk", EXPLORE_LINES.grownUp));
     }
   };
+
+  if (isImmersive(pathname)) return <main className="sprout-frame sprout-immersive min-h-screen bg-bg">{children}</main>;
 
   return (
     <div className="sprout-frame min-h-screen bg-bg">
@@ -43,23 +53,23 @@ export function SproutShell({ children, nav, more, isActive, openSearch }: Shell
         <div className="mx-auto flex max-w-[1100px] items-center gap-3 px-4 py-2.5 sm:px-6">
           <button
             type="button"
-            onClick={() => say(first ? `Hi ${first}! I’m Questy. Let’s have fun!` : EXPLORE_LINES.welcome)}
+            onClick={() => say(first ? t("sprout.hiName", "Hi {name}! I’m Questy. Let’s have fun!", { name: first }) : t("sprout.welcome", EXPLORE_LINES.welcome))}
             className="sprout-press flex min-w-0 items-center gap-3 rounded-[2rem] pr-3 text-left"
-            aria-label="Say hello to Questy"
+            aria-label={t("sprout.sayHello", "Say hello to Questy")}
           >
             <span className="sprout-owl-ring grid shrink-0 place-items-center rounded-full">
               <Mascot pose="wave" size={64} />
             </span>
             <span className="min-w-0">
-              <span className="block truncate text-[1.6rem] font-extrabold leading-tight text-ink">{first ? `Hi, ${first}!` : "Hi, friend!"}</span>
+              <span className="block truncate text-[1.6rem] font-extrabold leading-tight text-ink">{first ? t("sprout.hiShort", "Hi, {name}!", { name: first }) : t("sprout.hiFriend", "Hi, friend!")}</span>
             </span>
           </button>
           <button
             type="button"
             onClick={openGrownUps}
             className="ml-auto grid h-12 w-12 shrink-0 place-items-center rounded-full bg-surface/80 text-muted shadow-soft transition hover:text-ink"
-            aria-label="Grown-ups: settings, parents and search"
-            title="Grown-ups"
+            aria-label={t("sprout.grownUpsAria", "Grown-ups: settings, parents and search")}
+            title={t("sprout.grownUps", "Grown-ups")}
           >
             <Lock className="h-5 w-5" strokeWidth={2.6} />
           </button>
@@ -68,11 +78,11 @@ export function SproutShell({ children, nav, more, isActive, openSearch }: Shell
 
       <main className="sprout-main pb-[176px]">{children}</main>
 
-      <nav className="sprout-dock fixed inset-x-0 bottom-0 z-40" aria-label="Primary">
+      <nav className="sprout-dock fixed inset-x-0 bottom-0 z-40" aria-label={t("nav.primary", "Primary")}>
         <div className="mx-auto flex max-w-[560px] items-end justify-around gap-2 px-4 pb-[max(14px,env(safe-area-inset-bottom))] pt-3">
           {kidNav.map((n) => {
             const k = KID_NAV[n.href];
-            return <BubbleLink key={n.href} href={n.href} label={k.label} speak={k.speak} icon={k.icon} hue={k.hue} size={92} caption current={isActive(n.href)} />;
+            return <BubbleLink key={n.href} href={n.href} label={t(`sprout.nav.${k.key}`, k.label)} speak={t(`sprout.nav.${k.key}Say`, k.speak)} icon={k.icon} hue={k.hue} size={84} caption current={isActive(n.href)} />;
           })}
         </div>
       </nav>
@@ -86,7 +96,7 @@ export function SproutShell({ children, nav, more, isActive, openSearch }: Shell
               setPanel(true);
             }}
             onCancel={() => setGate(false)}
-            message="To open the grown-up corner, please answer:"
+            message={t("sprout.gateMessage", "To open the grown-up corner, please answer:")}
           />
         )}
       </AnimatePresence>
@@ -96,6 +106,7 @@ export function SproutShell({ children, nav, more, isActive, openSearch }: Shell
 }
 
 function GrownUpPanel({ items, onClose, openSearch, isActive }: { items: NavItem[]; onClose: () => void; openSearch: () => void; isActive: (href: string) => boolean }) {
+  const t = useT();
   const theme = useLearner((s) => s.settings.theme);
   const setSettings = useLearner((s) => s.setSettings);
   const dark = theme === "dark";
@@ -116,7 +127,7 @@ function GrownUpPanel({ items, onClose, openSearch, isActive }: { items: NavItem
       <motion.div
         role="dialog"
         aria-modal="true"
-        aria-label="Grown-ups"
+        aria-label={t("sprout.grownUps", "Grown-ups")}
         initial={{ x: 40, opacity: 0 }}
         animate={{ x: 0, opacity: 1 }}
         exit={{ x: 40, opacity: 0 }}
@@ -126,19 +137,19 @@ function GrownUpPanel({ items, onClose, openSearch, isActive }: { items: NavItem
       >
         <div className="flex items-center justify-between px-5 pb-2 pt-5">
           <div>
-            <p className="eyebrow">Grown-ups</p>
-            <p className="text-lg font-extrabold">Settings and more</p>
+            <p className="eyebrow">{t("sprout.grownUps", "Grown-ups")}</p>
+            <p className="text-lg font-extrabold">{t("sprout.settingsMore", "Settings and more")}</p>
           </div>
-          <button ref={closeRef} onClick={onClose} className="grid h-11 w-11 place-items-center rounded-full bg-surface-2 text-muted hover:text-ink" aria-label="Close">
+          <button ref={closeRef} onClick={onClose} className="grid h-11 w-11 place-items-center rounded-full bg-surface-2 text-muted hover:text-ink" aria-label={t("sprout.close", "Close")}>
             <X className="h-5 w-5" strokeWidth={2.6} />
           </button>
         </div>
         <div className="flex-1 overflow-y-auto px-3 pb-4">
           <div className="grid grid-cols-2 gap-2 px-2 py-2">
             {parent && (
-              <PanelTile href={parent.href} onClose={onClose} icon={Users} label="For parents" color={parent.color} />
+              <PanelTile href={parent.href} onClose={onClose} icon={Users} label={t("sprout.forParents", "For parents")} color={parent.color} />
             )}
-            <PanelTile href="/settings" onClose={onClose} icon={Settings} label="Settings" color="#6B7385" />
+            <PanelTile href="/settings" onClose={onClose} icon={Settings} label={t("nav.settings", "Settings")} color="#6B7385" />
             <button
               onClick={() => {
                 onClose();
@@ -146,17 +157,17 @@ function GrownUpPanel({ items, onClose, openSearch, isActive }: { items: NavItem
               }}
               className="flex flex-col items-start gap-2 rounded-[1.4rem] bg-surface-2 p-3.5 text-left text-sm font-bold hover:brightness-[0.98]"
             >
-              <Search className="h-6 w-6 text-accent" /> Search
+              <Search className="h-6 w-6 text-accent" /> {t("nav.search", "Search")}
             </button>
             <button
               onClick={() => setSettings({ theme: dark ? "light" : "dark" })}
               className="flex flex-col items-start gap-2 rounded-[1.4rem] bg-surface-2 p-3.5 text-left text-sm font-bold hover:brightness-[0.98]"
               aria-pressed={dark}
             >
-              {dark ? <Sun className="h-6 w-6 text-warn-shade" /> : <Moon className="h-6 w-6 text-accent-2" />} {dark ? "Light mode" : "Dark mode"}
+              {dark ? <Sun className="h-6 w-6 text-warn-shade" /> : <Moon className="h-6 w-6 text-accent-2" />} {dark ? t("sprout.lightMode", "Light mode") : t("sprout.darkMode", "Dark mode")}
             </button>
           </div>
-          <p className="eyebrow mt-3 px-4">More places</p>
+          <p className="eyebrow mt-3 px-4">{t("sprout.morePlaces", "More places")}</p>
           <ul className="mt-1">
             {rest.map((n) => (
               <li key={n.href}>

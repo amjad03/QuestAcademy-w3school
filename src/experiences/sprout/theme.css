@@ -384,6 +384,186 @@ html[data-skin="modes"][data-mode="sprout"] .text-streak {
   color: rgb(var(--warn-shade));
 }
 
+/* ------------------------------------------------------------------ */
+/* Duolingo-style pieces                                               */
+/* ------------------------------------------------------------------ */
+
+/* Chunky 3D pill: a darker base under the face; pressing sinks it. */
+html[data-skin="modes"][data-mode="sprout"] .sprout-chunky {
+  box-shadow: inset 0 -6px 0 var(--chunky-base), 0 14px 24px -16px var(--chunky-base);
+  -webkit-tap-highlight-color: transparent;
+  touch-action: manipulation;
+}
+html[data-skin="modes"][data-mode="sprout"] .sprout-chunky:hover:not(:disabled) {
+  filter: brightness(1.04);
+}
+html[data-skin="modes"][data-mode="sprout"] .sprout-chunky:active:not(:disabled) {
+  transform: translateY(3px);
+  box-shadow: inset 0 -2px 0 var(--chunky-base);
+}
+html[data-skin="modes"][data-mode="sprout"] .sprout-chunky:disabled {
+  box-shadow: inset 0 0 0 3px rgb(var(--line)), inset 0 -6px 0 rgb(var(--line));
+}
+
+/* Thick progress bar with a shine */
+html[data-skin="modes"][data-mode="sprout"] .sprout-progress {
+  background: rgb(var(--line));
+}
+html[data-skin="modes"][data-mode="sprout"] .sprout-progress-fill {
+  background: #3ccb98;
+  box-shadow: inset 0 -4px 0 #25a87b;
+  transition: width 0.5s cubic-bezier(0.34, 1.4, 0.64, 1);
+}
+html[data-skin="modes"][data-mode="sprout"] .sprout-progress-shine {
+  position: absolute;
+  left: 10px;
+  right: 10px;
+  top: 4px;
+  height: 5px;
+  border-radius: 9999px;
+  background: rgb(255 255 255 / 0.45);
+}
+
+/* Home path */
+html[data-skin="modes"][data-mode="sprout"] .sprout-start-tag {
+  background: rgb(var(--surface));
+  color: #25a87b;
+  box-shadow: 0 0 0 3px rgb(var(--line)), var(--sp-shadow);
+}
+html.dark[data-skin="modes"][data-mode="sprout"] .sprout-start-tag {
+  color: #6ee0b4;
+}
+html[data-skin="modes"][data-mode="sprout"] .sprout-start-tag::after {
+  content: "";
+  position: absolute;
+  left: 50%;
+  bottom: -7px;
+  width: 12px;
+  height: 12px;
+  transform: translateX(-50%) rotate(45deg);
+  background: rgb(var(--surface));
+  box-shadow: 3px 3px 0 0 rgb(var(--line));
+}
+html[data-skin="modes"][data-mode="sprout"] .sprout-node {
+  -webkit-tap-highlight-color: transparent;
+  touch-action: manipulation;
+}
+html[data-skin="modes"][data-mode="sprout"] .sprout-node:active .sprout-node-face {
+  transform: translateY(4px);
+}
+html[data-skin="modes"][data-mode="sprout"] .sprout-node:hover .sprout-node-face {
+  filter: brightness(1.04);
+}
+html[data-skin="modes"][data-mode="sprout"] .sprout-node-glow {
+  background: rgb(var(--warn) / 0.35);
+  animation: sprout-glow-ring 2.2s ease-out infinite;
+}
+@keyframes sprout-glow-ring {
+  0% {
+    transform: scale(0.9);
+    opacity: 0.9;
+  }
+  100% {
+    transform: scale(1.45);
+    opacity: 0;
+  }
+}
+html.dark[data-skin="modes"][data-mode="sprout"] .sprout-banner {
+  filter: saturate(0.9) brightness(0.92);
+}
+
+/* Lesson player */
+html[data-skin="modes"][data-mode="sprout"] .sprout-player-top {
+  background: linear-gradient(180deg, rgb(var(--bg)) 75%, rgb(var(--bg) / 0));
+}
+html[data-skin="modes"][data-mode="sprout"] .sprout-player .sprout-page {
+  background: transparent;
+  box-shadow: none;
+  padding: 0;
+}
+html[data-skin="modes"][data-mode="sprout"] .sprout-player .sprout-page > * + * {
+  margin-top: 1.25rem;
+}
+html[data-skin="modes"][data-mode="sprout"] .sprout-player .sprout-page .card.min-h-\[280px\] {
+  min-height: 46vh;
+  border-radius: 2.5rem;
+  box-shadow: var(--sp-shadow-lg);
+}
+html[data-skin="modes"][data-mode="sprout"] .sprout-player .sprout-page .h-3.flex-1.rounded-full {
+  height: 0.85rem;
+}
+html[data-skin="modes"][data-mode="sprout"] .sprout-player .sprout-page :is(.btn-primary, .btn-good) {
+  min-height: 4rem;
+  padding-inline: 2.4rem;
+  border-radius: 1.6rem;
+  font-size: 1.3rem;
+}
+html[data-skin="modes"][data-mode="sprout"] .sprout-continue {
+  background: rgb(var(--good-soft));
+  border-radius: 2rem 2rem 0 0;
+  box-shadow: 0 -12px 30px -18px rgb(var(--good-shade) / 0.6);
+}
+
+/* Session feedback sheet */
+html[data-skin="modes"][data-mode="sprout"] .sprout-sheet {
+  border-radius: 2.2rem 2.2rem 0 0;
+}
+html[data-skin="modes"][data-mode="sprout"] .sprout-sheet-yay {
+  background: rgb(var(--good-soft));
+  box-shadow: 0 -12px 30px -18px rgb(var(--good-shade) / 0.6);
+}
+html[data-skin="modes"][data-mode="sprout"] .sprout-sheet-yay .sprout-sheet-title {
+  color: #1f8a64;
+}
+html.dark[data-skin="modes"][data-mode="sprout"] .sprout-sheet-yay .sprout-sheet-title {
+  color: #8fe8c4;
+}
+html[data-skin="modes"][data-mode="sprout"] .sprout-sheet-try {
+  background: #fff0d6;
+  box-shadow: 0 -12px 30px -18px rgb(224 142 27 / 0.6);
+}
+html.dark[data-skin="modes"][data-mode="sprout"] .sprout-sheet-try {
+  background: #4a3a22;
+}
+html[data-skin="modes"][data-mode="sprout"] .sprout-sheet-try .sprout-sheet-title {
+  color: #b86b00;
+}
+html.dark[data-skin="modes"][data-mode="sprout"] .sprout-sheet-try .sprout-sheet-title {
+  color: #ffcf87;
+}
+html[data-skin="modes"][data-mode="sprout"] .sprout-answer {
+  background: rgb(var(--surface));
+  color: rgb(var(--ink));
+  box-shadow: 0 0 0 3px #ffc93c;
+}
+
+/* Results */
+html[data-skin="modes"][data-mode="sprout"] .sprout-burst {
+  background: repeating-conic-gradient(from 0deg, rgb(255 201 60 / 0.28) 0deg 12deg, transparent 12deg 30deg);
+  -webkit-mask: radial-gradient(circle, #000 35%, transparent 70%);
+  mask: radial-gradient(circle, #000 35%, transparent 70%);
+  animation: sprout-spin 18s linear infinite;
+}
+@keyframes sprout-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+html[data-skin="modes"][data-mode="sprout"] .sprout-sticker-won {
+  background: rgb(var(--surface));
+  box-shadow: var(--sp-shadow-lg);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html[data-skin="modes"][data-mode="sprout"] .sprout-node-glow,
+  html[data-skin="modes"][data-mode="sprout"] .sprout-burst {
+    animation: none;
+  }
+  html[data-skin="modes"][data-mode="sprout"] .sprout-progress-fill {
+    transition: none;
+  }
+}
+
 @media (prefers-reduced-motion: reduce) {
   html[data-skin="modes"][data-mode="sprout"] .sprout-question .border-good {
     animation: none;
