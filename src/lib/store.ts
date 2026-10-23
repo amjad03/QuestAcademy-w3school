@@ -21,6 +21,7 @@ import {
 } from "./gamification";
 import { useUi } from "./ui";
 import { MODES, resolveMode, type Board, type ModeId } from "./modes";
+import type { Locale } from "@/i18n/locales";
 import { afterAssessmentAnswer, afterPractice, type AssessmentKind, type MasteryLevel } from "./mastery";
 
 export interface Profile {
@@ -106,7 +107,7 @@ export interface LearnerState {
   challengesPassed: string[];
   mockResults: MockResult[];
   owned: string[];
-  settings: { theme: "system" | "light" | "dark"; sound: boolean; /** Visual design: "modes" (default — one design per age group), "classic" (the original) or "studio". */ skin?: "modes" | "classic" | "studio" };
+  settings: { theme: "system" | "light" | "dark"; sound: boolean; /** Visual design: "modes" (default — one design per age group), "classic" (the original) or "studio". */ skin?: "modes" | "classic" | "studio"; /** Interface and lesson language (see src/i18n/locales.ts). */ locale?: Locale };
   /** lessonId → mastery level (0–4). */
   mastery: Record<string, MasteryLevel>;
   /** Completed learning items (videos, articles, practice, cards…), keyed by item id. */

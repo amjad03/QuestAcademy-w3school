@@ -3,6 +3,7 @@
 import type { User } from "@supabase/supabase-js";
 import { createContext, useContext, useEffect, useState, useSyncExternalStore, type ReactNode } from "react";
 import { useLearner } from "@/lib/store";
+import { localeInfo } from "@/i18n/locales";
 import { resolveMode } from "@/lib/modes";
 import { pushState, supabase, supabaseEnabled, syncOnLogin } from "@/lib/supabase";
 
@@ -18,10 +19,12 @@ export function useHydrated() {
 function ModeSync() {
   const mode = useLearner((s) => resolveMode(s.profile));
   const skin = useLearner((s) => s.settings.skin ?? "modes");
+  const locale = useLearner((s) => s.settings.locale ?? "en");
   useEffect(() => {
     document.documentElement.dataset.mode = mode;
     document.documentElement.dataset.skin = skin;
-  }, [mode, skin]);
+    document.documentElement.lang = localeInfo(locale).bcp47;
+  }, [mode, skin, locale]);
   return null;
 }
 

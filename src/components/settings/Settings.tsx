@@ -2,6 +2,7 @@
 
 import { ModeSettings } from "@/components/modes/ModeSettings";
 import { SkinPicker } from "@/components/settings/SkinPicker";
+import { LanguagePicker } from "@/components/i18n/LanguagePicker";
 
 import Link from "next/link";
 import { useRef, useState } from "react";
@@ -65,6 +66,10 @@ export function Settings() {
   return (
     <PageColumns rail={rail}>
       <h1 className="text-3xl font-black">Settings</h1>
+
+      <Section id="language" title="Language · भाषा · ಭಾಷೆ">
+        <LanguagePicker />
+      </Section>
 
       <Section id="design" title="Design">
         <SkinPicker />

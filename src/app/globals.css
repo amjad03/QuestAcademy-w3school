@@ -347,3 +347,8 @@ html[data-skin="studio"] .font-black {
 html[data-skin="studio"] .font-extrabold {
   font-weight: 700;
 }
+
+/* Indian scripts fall back to Noto Sans for their glyphs in every profile's typeface. */
+html {
+  --font-indic: var(--font-deva), var(--font-knda), var(--font-taml), var(--font-telu), var(--font-beng);
+}
