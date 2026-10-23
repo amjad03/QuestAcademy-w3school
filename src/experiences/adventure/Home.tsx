@@ -113,9 +113,9 @@ export function AdventureHome() {
     <Frame side={side}>
       <header className="flex flex-wrap items-center gap-4">
         <CourseIcon slug={outline.slug} size={52} />
-        <div className="min-w-0 flex-1">
+        <div className="min-w-[12rem] flex-1">
           <p className="eyebrow">Mission control{s.profile.nickname ? ` · Pilot ${s.profile.nickname}` : ""}</p>
-          <h1 className="truncate text-2xl font-bold sm:text-[1.9rem]">{outline.title}</h1>
+          <h1 className="text-2xl font-bold leading-tight sm:text-[1.9rem]">{outline.title}</h1>
         </div>
         <div className="flex gap-2">
           <Link href="/learn?view=path" className="btn-ghost !px-3 !py-2 text-xs">
