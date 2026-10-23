@@ -1,9 +1,1718 @@
 import type { Topic } from "@/content/types";
 
+/** String.raw keeps TeX backslashes intact. */
+const t = String.raw;
+
 /** Course these chapters belong to. */
 export const course = "math-high";
 
-export const topics: Topic[] = [];
+export const topics: Topic[] = [
+  /* ------------------------------------------------------------------ */
+  {
+    slug: "euclid-geometry",
+    title: "Introduction to Euclid's Geometry",
+    icon: "📐",
+    description: "Definitions, axioms and postulates: how Euclid built all of geometry from a handful of self-evident truths.",
+    lessons: [
+      {
+        slug: "euclid-definitions-axioms",
+        title: "Definitions, Axioms and Postulates",
+        summary: "Undefined terms, Euclid's definitions, his seven common notions (axioms) and why proofs need them.",
+        minutes: 14,
+        xp: 30,
+        blocks: [
+          {
+            type: "text",
+            md: "Long before textbooks, Indian priests were already using geometry. The **Sulbasutras** (c. 800–500 BCE) give rope-and-peg rules for building fire altars of exact shapes and areas. Around 300 BCE in Alexandria, the Greek mathematician **Euclid** collected the geometry known in his time into a 13-book work called the **Elements** and did something new: he started from a few basic assumptions and *proved* everything else from them.",
+          },
+          { type: "illustration", emoji: "📜", caption: "Euclid's Elements: 13 books, 465 propositions, all proved from 5 postulates and a few axioms." },
+          { type: "heading", text: "Undefined terms and definitions" },
+          {
+            type: "text",
+            md: "Euclid tried to define everything, e.g. *\"A point is that which has no part\"* and *\"A line is breadthless length\"*. But these definitions use other words (part, breadth, length) that themselves need defining, which leads to an endless chain. So today **point, line and plane are taken as undefined terms**: we understand them intuitively and build everything else on them.",
+          },
+          {
+            type: "list",
+            items: [
+              "A **point** has no part (no length, breadth or thickness).",
+              "A **line** is breadthless length; the ends of a line are points.",
+              "A **straight line** lies evenly with the points on itself.",
+              "A **surface** has length and breadth only; the edges of a surface are lines.",
+              "A **plane surface** lies evenly with the straight lines on itself.",
+            ],
+          },
+          { type: "heading", text: "Axioms vs postulates" },
+          {
+            type: "table",
+            headers: ["Axioms (common notions)", "Postulates"],
+            rows: [
+              ["Assumptions used throughout mathematics", "Assumptions specific to geometry"],
+              ["e.g. the whole is greater than the part", "e.g. a straight line may be drawn from any point to any other point"],
+              ["Not proved; accepted as obvious", "Not proved; accepted as obvious"],
+            ],
+          },
+          {
+            type: "text",
+            md: "Statements that **are** proved using definitions, axioms and earlier results are called **propositions** or **theorems**.",
+          },
+          { type: "heading", text: "Euclid's seven axioms" },
+          {
+            type: "list",
+            ordered: true,
+            items: [
+              "Things which are equal to the same thing are equal to one another.",
+              "If equals are added to equals, the wholes are equal.",
+              "If equals are subtracted from equals, the remainders are equal.",
+              "Things which coincide with one another are equal to one another.",
+              "The whole is greater than the part.",
+              "Things which are double of the same things are equal to one another.",
+              "Things which are halves of the same things are equal to one another.",
+            ],
+          },
+          {
+            type: "callout",
+            tone: "tip",
+            title: "Axioms are not only about geometry",
+            md: "Axiom 1 works for money too: if Riya's pocket money equals Aman's, and Aman's equals ₹500, then Riya's is ₹500. Euclid stated these for *magnitudes of the same kind* — lengths with lengths, areas with areas.",
+          },
+          {
+            type: "text",
+            md: "**Worked example.** Points A, B, C, D lie on a line in that order and AC = BD. Prove that AB = CD.",
+          },
+          {
+            type: "list",
+            ordered: true,
+            items: [
+              "From the figure, AC = AB + BC and BD = BC + CD.",
+              "Given AC = BD, so AB + BC = BC + CD.",
+              "Subtract BC from both sides. By **Axiom 3** (equals subtracted from equals give equal remainders), AB = CD. ∎",
+            ],
+          },
+          {
+            type: "checkpoint",
+            questions: [
+              {
+                kind: "mcq",
+                q: "If $x + y = 10$ and $x = z$, then $z + y = 10$. Which axiom is used?",
+                options: [
+                  "Things equal to the same thing are equal to one another",
+                  "The whole is greater than the part",
+                  "Things which coincide are equal",
+                  "Halves of the same things are equal",
+                ],
+                answer: 0,
+                explain: "Replacing $x$ by its equal $z$ relies on Axiom 1 (an equal can be substituted for an equal).",
+              },
+            ],
+          },
+          {
+            type: "callout",
+            tone: "exam",
+            title: "Board trap",
+            md: "When asked *\"which axiom is used\"*, quote the axiom in Euclid's words, not a vague phrase like \"by algebra\". Also remember: **point, line and plane are undefined terms** — writing a \"definition\" of a point as the answer to \"define a point\" loses marks if the question asks which terms are undefined.",
+          },
+          {
+            type: "keypoints",
+            items: [
+              "Point, line and plane are undefined terms.",
+              "Axioms are general assumptions; postulates are assumptions specific to geometry.",
+              "Theorems (propositions) are proved from definitions, axioms, postulates and earlier theorems.",
+              "Axiom 3 (equals minus equals) and Axiom 1 (substitution) are the most used in proofs.",
+              "The whole is greater than the part (Axiom 5) explains why AB < AC when B lies between A and C.",
+            ],
+          },
+        ],
+        flashcards: [
+          { front: "Undefined terms in geometry", back: "Point, line and plane" },
+          { front: "Axiom vs postulate", back: "Axioms are common to all of mathematics; postulates are specific to geometry. Neither is proved." },
+          { front: "Euclid's Axiom 5", back: "The whole is greater than the part." },
+          { front: "What is a theorem?", back: "A statement proved using definitions, axioms, postulates and previously proved results." },
+          { front: "Ancient Indian geometry manuals for altars", back: "The Sulbasutras (c. 800–500 BCE)" },
+        ],
+        quiz: [
+          {
+            kind: "truefalse",
+            q: "Euclid's axioms are proved using his postulates.",
+            answer: false,
+            explain: "Axioms and postulates are both assumed without proof; theorems are what get proved.",
+          },
+          {
+            kind: "mcq",
+            q: "Ram and Shyam each weigh the same as Mohan. Which axiom lets us conclude Ram and Shyam weigh the same?",
+            options: ["Axiom 2", "Axiom 1", "Axiom 4", "Axiom 5"],
+            answer: 1,
+            explain: "Things which are equal to the same thing are equal to one another (Axiom 1).",
+          },
+          {
+            kind: "fill",
+            q: "Euclid's famous 13-book work on geometry is called the ___.",
+            answer: ["Elements", "The Elements"],
+            explain: "Written around 300 BCE in Alexandria.",
+          },
+          {
+            kind: "numeric",
+            q: "How many axioms (common notions) of Euclid are listed in the NCERT Class 9 textbook?",
+            answer: 7,
+            explain: "Seven axioms, from \"things equal to the same thing\" to \"halves of the same things\".",
+          },
+          {
+            kind: "mcq",
+            q: "Points P, Q, R lie on a line with Q between P and R. Which statement follows from Axiom 5?",
+            options: ["PQ = QR", "PR > PQ", "PQ + QR > PR", "PR < QR"],
+            answer: 1,
+            explain: "PR is the whole, PQ is a part of it, and the whole is greater than the part.",
+            difficulty: 2,
+          },
+          {
+            kind: "truefalse",
+            q: "If AB = PQ and PQ = XY, then AB = XY.",
+            answer: true,
+            explain: "Axiom 1: things equal to the same thing (PQ) are equal to one another.",
+          },
+        ],
+      },
+      {
+        slug: "euclid-postulates-fifth",
+        title: "Euclid's Five Postulates",
+        summary: "The five postulates, the famous fifth (parallel) postulate, Playfair's axiom and the first theorems built on them.",
+        minutes: 15,
+        xp: 35,
+        blocks: [
+          {
+            type: "text",
+            md: "Axioms tell us how *equal things* behave. To do geometry, Euclid also needed rules about drawing lines and circles. He stated just **five postulates**, and from them proved everything in the Elements.",
+          },
+          { type: "heading", text: "The five postulates" },
+          {
+            type: "list",
+            ordered: true,
+            items: [
+              "A straight line may be drawn from any one point to any other point.",
+              "A terminated line (line segment) can be produced indefinitely.",
+              "A circle can be drawn with any centre and any radius.",
+              "All right angles are equal to one another.",
+              "If a straight line falling on two straight lines makes the interior angles on the same side together **less than two right angles**, then the two lines, if produced indefinitely, meet on that side.",
+            ],
+          },
+          { type: "illustration", emoji: "🛤️", caption: "Railway tracks: the interior angles on each side add up to exactly 180°, so by the fifth postulate they never meet." },
+          {
+            type: "callout",
+            tone: "note",
+            title: "Hidden assumption in Postulate 1",
+            md: "Euclid assumed that the line through two distinct points is **unique**. This is stated as an axiom today: *Given two distinct points, there is a unique line that passes through them.*",
+          },
+          { type: "heading", text: "Equivalent versions of the fifth postulate" },
+          {
+            type: "list",
+            items: [
+              "**Playfair's axiom:** For every line $l$ and every point P not on $l$, there is a **unique** line through P parallel to $l$.",
+              "Two distinct intersecting lines cannot both be parallel to the same line.",
+            ],
+          },
+          {
+            type: "callout",
+            tone: "fact",
+            title: "Non-Euclidean geometry",
+            md: "For 2000 years mathematicians tried to prove the fifth postulate from the other four and failed. In the 1800s Gauss, Bolyai and Lobachevsky showed it cannot be proved: dropping it gives new, consistent geometries. On a sphere (like the Earth), lines of longitude are \"straight\" yet all meet at the poles. Pilots flying Delhi to New York use this curved geometry.",
+          },
+          { type: "heading", text: "Worked example 1: a first theorem" },
+          {
+            type: "text",
+            md: "**Theorem:** Two distinct lines cannot have more than one point in common.",
+          },
+          {
+            type: "list",
+            ordered: true,
+            items: [
+              "Suppose lines $l$ and $m$ are distinct and have two common points P and Q.",
+              "Then both $l$ and $m$ pass through P and Q.",
+              "But only one line passes through two distinct points (the uniqueness axiom). So $l$ and $m$ are the same line — a contradiction.",
+              "Hence two distinct lines meet in at most one point. ∎",
+            ],
+          },
+          { type: "heading", text: "Worked example 2: Euclid's Proposition 1" },
+          {
+            type: "text",
+            md: "**Construct an equilateral triangle on a given segment AB.** Draw a circle with centre A and radius AB (Postulate 3). Draw another with centre B and radius BA. Let them meet at C and join CA, CB (Postulate 1). Now AC = AB (radii of the first circle) and BC = AB (radii of the second). By Axiom 1, AC = BC. So AB = BC = CA and triangle ABC is equilateral. ∎",
+          },
+          {
+            type: "checkpoint",
+            questions: [
+              {
+                kind: "mcq",
+                q: "Through a point P not on line $l$, how many lines can be drawn parallel to $l$ (Euclidean geometry)?",
+                options: ["None", "Exactly one", "Exactly two", "Infinitely many"],
+                answer: 1,
+                explain: "Playfair's axiom: exactly one parallel through an external point.",
+              },
+            ],
+          },
+          {
+            type: "callout",
+            tone: "exam",
+            title: "Board trap",
+            md: "Through **one** point, infinitely many lines can be drawn; through **two** distinct points, exactly one. Students often swap these in 1-mark questions. Also, \"Postulate 5\" is about lines *meeting* when interior angles sum to **less than** 180°, not equal to 180°.",
+          },
+          {
+            type: "keypoints",
+            items: [
+              "Five postulates: join two points, extend a segment, draw any circle, all right angles are equal, the parallel postulate.",
+              "Playfair's axiom is the modern form of the fifth postulate.",
+              "Exactly one line passes through two distinct points; infinitely many pass through one point.",
+              "Two distinct lines intersect in at most one point.",
+              "Rejecting the fifth postulate gives non-Euclidean geometry.",
+            ],
+          },
+        ],
+        flashcards: [
+          { front: "Euclid's fifth postulate (key idea)", back: "If co-interior angles on one side sum to less than 180°, the lines meet on that side." },
+          { front: "Playfair's axiom", back: "Through a point not on a line there is exactly one parallel to that line." },
+          { front: "Lines through two distinct points", back: "Exactly one" },
+          { front: "Lines through a single point", back: "Infinitely many" },
+          { front: "Euclid's Proposition 1", back: "Constructing an equilateral triangle on a given segment using two circles" },
+        ],
+        quiz: [
+          {
+            kind: "numeric",
+            q: "What is the maximum number of points two distinct straight lines can have in common?",
+            answer: 1,
+            explain: "If they shared two points, they would be the same line.",
+          },
+          {
+            kind: "mcq",
+            q: "\"All right angles are equal to one another\" is Euclid's postulate number:",
+            options: ["2", "3", "4", "5"],
+            answer: 2,
+            explain: "Postulate 4.",
+          },
+          {
+            kind: "truefalse",
+            q: "Euclid's fifth postulate was eventually proved from the first four postulates.",
+            answer: false,
+            explain: "It is independent; denying it leads to consistent non-Euclidean geometries.",
+          },
+          {
+            kind: "fill",
+            q: "A line segment can be extended indefinitely to form a line. This is Euclid's postulate number ___.",
+            answer: ["2", "two"],
+            explain: "Postulate 2: a terminated line can be produced indefinitely.",
+          },
+          {
+            kind: "order",
+            q: "Arrange the steps of Euclid's construction of an equilateral triangle on AB.",
+            items: [
+              "Draw a circle with centre A and radius AB",
+              "Draw a circle with centre B and radius BA",
+              "Mark C where the circles intersect",
+              "Join CA and CB",
+              "Use radii and Axiom 1 to show AB = BC = CA",
+            ],
+            explain: "Postulate 3 twice, then Postulate 1, then Axiom 1.",
+            difficulty: 2,
+          },
+          {
+            kind: "mcq",
+            q: "Two lines are cut by a transversal and the interior angles on one side are 85° and 90°. By Postulate 5 the lines:",
+            options: ["are parallel", "meet on that side", "meet on the other side", "coincide"],
+            answer: 1,
+            explain: "85° + 90° = 175° < 180°, so the lines meet on the side of these angles.",
+            difficulty: 2,
+          },
+        ],
+      },
+    ],
+  },
+
+  /* ------------------------------------------------------------------ */
+  {
+    slug: "quadrilaterals-9",
+    title: "Quadrilaterals",
+    icon: "🔷",
+    description: "Angle sums of polygons, types of quadrilaterals and the theorems on parallelograms, rectangles, rhombuses and squares.",
+    lessons: [
+      {
+        slug: "polygons-angle-sum",
+        title: "Rectilinear Figures and Angle Sums",
+        summary: "Angle sum of a quadrilateral and any polygon, exterior angles, regular polygons and the family of quadrilaterals.",
+        minutes: 15,
+        xp: 35,
+        blocks: [
+          {
+            type: "text",
+            md: "A figure bounded only by straight line segments is a **rectilinear figure** or **polygon**. A quadrilateral has 4 sides, a pentagon 5, a hexagon 6. The tiles in a Jaipur courtyard or the cells of a honeycomb are all polygons, and their angles obey simple rules.",
+          },
+          { type: "heading", text: "Angle sum of a quadrilateral" },
+          {
+            type: "text",
+            md: "Draw diagonal AC in quadrilateral ABCD. It splits the figure into two triangles, each with angle sum 180°. So $\\angle A + \\angle B + \\angle C + \\angle D = 360^\\circ$.",
+          },
+          { type: "heading", text: "Any polygon" },
+          {
+            type: "formula",
+            tex: t`\text{Sum of interior angles} = (n-2)\times 180^\circ \qquad \text{Sum of exterior angles} = 360^\circ`,
+            caption: "n = number of sides; the exterior sum is 360° for every convex polygon",
+          },
+          {
+            type: "formula",
+            tex: t`\text{Regular polygon: each exterior angle} = \frac{360^\circ}{n}, \quad \text{each interior angle} = 180^\circ - \frac{360^\circ}{n}`,
+          },
+          {
+            type: "table",
+            headers: ["Polygon", "n", "Interior sum", "Each interior angle (regular)"],
+            rows: [
+              ["Triangle", "3", "180°", "60°"],
+              ["Quadrilateral", "4", "360°", "90°"],
+              ["Pentagon", "5", "540°", "108°"],
+              ["Hexagon", "6", "720°", "120°"],
+              ["Octagon", "8", "1080°", "135°"],
+            ],
+          },
+          { type: "heading", text: "Worked example 1" },
+          {
+            type: "text",
+            md: "**The angles of a quadrilateral are in the ratio 3 : 5 : 9 : 13. Find them.** Total parts $= 3+5+9+13 = 30$, so one part $= 360^\\circ/30 = 12^\\circ$. The angles are $36^\\circ, 60^\\circ, 108^\\circ, 156^\\circ$ (check: sum $= 360^\\circ$).",
+          },
+          { type: "heading", text: "Worked example 2" },
+          {
+            type: "text",
+            md: t`**Each exterior angle of a regular polygon is $24^\circ$. How many sides?** $n = 360^\circ/24^\circ = 15$. Each interior angle $= 180^\circ - 24^\circ = 156^\circ$.`,
+          },
+          {
+            type: "checkpoint",
+            questions: [
+              {
+                kind: "numeric",
+                q: "Find the sum of the interior angles of a decagon (10 sides), in degrees.",
+                answer: 1440,
+                unit: "°",
+                explain: t`$(10-2)\times 180^\circ = 1440^\circ$.`,
+              },
+            ],
+          },
+          { type: "heading", text: "The quadrilateral family" },
+          {
+            type: "table",
+            headers: ["Type", "Defining property"],
+            rows: [
+              ["Trapezium", "One pair of opposite sides parallel"],
+              ["Kite", "Two pairs of adjacent sides equal"],
+              ["Parallelogram", "Both pairs of opposite sides parallel"],
+              ["Rectangle", "Parallelogram with one angle 90°"],
+              ["Rhombus", "Parallelogram with all sides equal"],
+              ["Square", "Rectangle with all sides equal (also a rhombus with a right angle)"],
+            ],
+          },
+          {
+            type: "callout",
+            tone: "exam",
+            title: "ICSE / CBSE trap",
+            md: "Use $(n-2)\\times180^\\circ$ for the **interior** sum, but $360^\\circ$ for the **exterior** sum regardless of $n$. To find $n$ from an interior angle, first convert to the exterior angle ($180^\\circ -$ interior), then use $n = 360^\\circ/\\text{exterior}$. If $n$ is not a whole number, no such regular polygon exists.",
+          },
+          {
+            type: "keypoints",
+            items: [
+              "Angle sum of a quadrilateral is 360°.",
+              "Interior angle sum of an n-gon is (n − 2) × 180°.",
+              "Exterior angles of any convex polygon add to 360°.",
+              "Regular polygon: exterior = 360°/n, interior = 180° − exterior.",
+              "Every square is a rectangle and a rhombus; every rectangle and rhombus is a parallelogram.",
+            ],
+          },
+        ],
+        flashcards: [
+          { front: "Interior angle sum of an n-sided polygon", back: t`$(n-2)\times 180^\circ$` },
+          { front: "Exterior angle sum of a convex polygon", back: "360°, for any number of sides" },
+          { front: "Each interior angle of a regular hexagon", back: "120°" },
+          { front: "Parallelogram with all sides equal", back: "Rhombus" },
+          { front: "Find n from exterior angle e", back: t`$n = 360^\circ / e$` },
+        ],
+        quiz: [
+          {
+            kind: "numeric",
+            q: "Three angles of a quadrilateral are 75°, 90° and 75°. Find the fourth angle in degrees.",
+            answer: 120,
+            unit: "°",
+            explain: "360° − 240° = 120°.",
+          },
+          {
+            kind: "numeric",
+            q: "Each interior angle of a regular polygon is 140°. How many sides does it have?",
+            answer: 9,
+            explain: "Exterior angle = 40°, so n = 360/40 = 9.",
+            difficulty: 2,
+          },
+          {
+            kind: "mcq",
+            q: "Can a regular polygon have each exterior angle 50°?",
+            options: ["Yes, with 7 sides", "Yes, with 8 sides", "No, 360/50 is not a whole number", "Yes, with 5 sides"],
+            answer: 2,
+            explain: "360/50 = 7.2, which is not a whole number of sides.",
+            difficulty: 2,
+          },
+          {
+            kind: "truefalse",
+            q: "Every rhombus is a square.",
+            answer: false,
+            explain: "A rhombus needs a right angle to be a square. Every square is a rhombus, not the other way round.",
+          },
+          {
+            kind: "fill",
+            q: "A quadrilateral with exactly one pair of opposite sides parallel is called a ___.",
+            answer: ["trapezium", "trapezoid"],
+            explain: "In Indian textbooks it is called a trapezium.",
+          },
+          {
+            kind: "numeric",
+            q: "The angles of a pentagon are x°, (x + 20)°, (x + 40)°, (x + 60)° and (x + 80)°. Find x.",
+            answer: 68,
+            explain: "Sum = 5x + 200 = 540, so 5x = 340 and x = 68.",
+            difficulty: 3,
+          },
+        ],
+      },
+      {
+        slug: "parallelogram-theorems",
+        title: "Theorems on Parallelograms",
+        summary: "Opposite sides and angles, diagonals bisecting each other, the converses, and special parallelograms.",
+        minutes: 16,
+        xp: 40,
+        blocks: [
+          {
+            type: "text",
+            md: "The parallelogram is the workhorse of Class 9 geometry. Its properties are proved by one trick: draw a diagonal and show the two triangles are **congruent** (usually by ASA, using alternate angles).",
+          },
+          { type: "heading", text: "Properties of a parallelogram" },
+          {
+            type: "list",
+            ordered: true,
+            items: [
+              "A diagonal divides it into two congruent triangles.",
+              "Opposite sides are equal.",
+              "Opposite angles are equal.",
+              "Diagonals bisect each other.",
+              "Adjacent (consecutive) angles are supplementary, i.e. add to 180°.",
+            ],
+          },
+          {
+            type: "text",
+            md: "**Proof sketch of (1):** In parallelogram ABCD with diagonal AC, $\\angle BAC = \\angle DCA$ (alternate angles, AB ∥ DC) and $\\angle BCA = \\angle DAC$ (alternate angles, BC ∥ AD). AC is common, so $\\triangle ABC \\cong \\triangle CDA$ (ASA). Results (2) and (3) follow by CPCT.",
+          },
+          { type: "heading", text: "Converses: when is a quadrilateral a parallelogram?" },
+          {
+            type: "list",
+            items: [
+              "Both pairs of opposite sides are equal, **or**",
+              "Both pairs of opposite angles are equal, **or**",
+              "The diagonals bisect each other, **or**",
+              "**One** pair of opposite sides is both equal **and** parallel.",
+            ],
+          },
+          { type: "heading", text: "Special parallelograms" },
+          {
+            type: "table",
+            headers: ["Property of diagonals", "Parallelogram", "Rectangle", "Rhombus", "Square"],
+            rows: [
+              ["Bisect each other", "✓", "✓", "✓", "✓"],
+              ["Are equal", "✗", "✓", "✗", "✓"],
+              ["Are perpendicular", "✗", "✗", "✓", "✓"],
+              ["Bisect the vertex angles", "✗", "✗", "✓", "✓"],
+            ],
+          },
+          { type: "heading", text: "Worked example 1" },
+          {
+            type: "text",
+            md: "**Two opposite angles of a parallelogram are $(3x - 2)^\\circ$ and $(50 - x)^\\circ$. Find all angles.** Opposite angles are equal: $3x - 2 = 50 - x \\Rightarrow 4x = 52 \\Rightarrow x = 13$. So these angles are $37^\\circ$ each, and the other two are $180^\\circ - 37^\\circ = 143^\\circ$ each.",
+          },
+          { type: "heading", text: "Worked example 2" },
+          {
+            type: "text",
+            md: "**Diagonals of parallelogram ABCD meet at O, with AO = (2x + 1) cm and OC = (3x − 4) cm. Find AC.** Diagonals bisect each other, so $2x + 1 = 3x - 4 \\Rightarrow x = 5$. AO = OC = 11 cm, so AC = 22 cm.",
+          },
+          {
+            type: "checkpoint",
+            questions: [
+              {
+                kind: "numeric",
+                q: "In a parallelogram, one angle is 70°. Find the adjacent angle in degrees.",
+                answer: 110,
+                unit: "°",
+                explain: "Adjacent angles are supplementary: 180° − 70° = 110°.",
+              },
+            ],
+          },
+          {
+            type: "callout",
+            tone: "exam",
+            title: "Board trap",
+            md: "\"One pair of opposite sides **equal**\" alone does **not** make a parallelogram (an isosceles trapezium has equal legs). You need that pair to be equal **and parallel**. Also, equal diagonals alone do not make a rectangle — the quadrilateral must already be a parallelogram.",
+          },
+          {
+            type: "keypoints",
+            items: [
+              "Parallelogram: opposite sides equal, opposite angles equal, diagonals bisect each other.",
+              "Adjacent angles of a parallelogram add to 180°.",
+              "A quadrilateral with one pair of opposite sides equal and parallel is a parallelogram.",
+              "Rectangle: equal diagonals. Rhombus: perpendicular diagonals. Square: both.",
+              "Most proofs use a diagonal plus ASA or SSS congruence.",
+            ],
+          },
+        ],
+        flashcards: [
+          { front: "Diagonals of a parallelogram", back: "Bisect each other" },
+          { front: "Diagonals of a rhombus", back: "Bisect each other at right angles and bisect the vertex angles" },
+          { front: "Diagonals of a rectangle", back: "Equal and bisect each other" },
+          { front: "Shortest test for a parallelogram", back: "One pair of opposite sides equal and parallel" },
+          { front: "Adjacent angles of a parallelogram", back: "Supplementary (sum 180°)" },
+        ],
+        quiz: [
+          {
+            kind: "numeric",
+            q: "The angles of a parallelogram are in the ratio 2 : 3 (adjacent angles). Find the larger angle in degrees.",
+            answer: 108,
+            unit: "°",
+            explain: "Adjacent angles sum to 180°: 5 parts = 180°, part = 36°, larger = 108°.",
+          },
+          {
+            kind: "mcq",
+            q: "The diagonals of a quadrilateral are equal and bisect each other at right angles. It is a:",
+            options: ["Rhombus", "Rectangle", "Square", "Kite"],
+            answer: 2,
+            explain: "Bisect each other → parallelogram; equal → rectangle; perpendicular → rhombus. Both → square.",
+          },
+          {
+            kind: "numeric",
+            q: "The diagonals of a rhombus are 10 cm and 24 cm. Find the length of one side in cm.",
+            answer: 13,
+            unit: "cm",
+            explain: "Half-diagonals 5 and 12 meet at 90°, so side = √(25 + 144) = 13 cm.",
+            difficulty: 2,
+          },
+          {
+            kind: "truefalse",
+            q: "A quadrilateral whose diagonals bisect each other must be a parallelogram.",
+            answer: true,
+            explain: "This is the converse theorem on diagonals.",
+          },
+          {
+            kind: "fill",
+            q: "In parallelogram PQRS, ∠P = 65°. Then ∠R = ___ degrees.",
+            answer: ["65", "65°"],
+            explain: "∠P and ∠R are opposite angles, so they are equal.",
+          },
+          {
+            kind: "mcq",
+            q: "In rhombus ABCD, ∠ABC = 120°. What is ∠ABD (angle between side AB and diagonal BD)?",
+            options: ["30°", "60°", "90°", "120°"],
+            answer: 1,
+            explain: "Diagonals of a rhombus bisect the vertex angles: 120°/2 = 60°.",
+            difficulty: 2,
+          },
+        ],
+      },
+    ],
+  },
+
+  /* ------------------------------------------------------------------ */
+  {
+    slug: "circles-9",
+    title: "Circles",
+    icon: "⭕",
+    description: "Chords and their distance from the centre, angles subtended by arcs, angles in a semicircle and cyclic quadrilaterals.",
+    lessons: [
+      {
+        slug: "circle-chords",
+        title: "Chords and Their Properties",
+        summary: "Equal chords and central angles, the perpendicular from the centre, distance of a chord from the centre, and circles through three points.",
+        minutes: 15,
+        xp: 35,
+        blocks: [
+          {
+            type: "text",
+            md: "A circle is the set of all points in a plane at a fixed distance (the **radius**) from a fixed point (the **centre**). The rangoli circles drawn with a string and chalk at Diwali are perfect examples. Any segment joining two points on the circle is a **chord**; the longest chord, through the centre, is the **diameter**.",
+          },
+          { type: "heading", text: "Key terms" },
+          {
+            type: "table",
+            headers: ["Term", "Meaning"],
+            rows: [
+              ["Arc", "A piece of the circle between two points; minor arc < semicircle < major arc"],
+              ["Segment", "Region between a chord and its arc"],
+              ["Sector", "Region between two radii and an arc"],
+              ["Concentric circles", "Circles with the same centre, different radii"],
+              ["Congruent circles", "Circles with equal radii"],
+            ],
+          },
+          { type: "heading", text: "The chord theorems" },
+          {
+            type: "list",
+            ordered: true,
+            items: [
+              "Equal chords subtend equal angles at the centre (and conversely).",
+              "The perpendicular from the centre to a chord **bisects** the chord.",
+              "The line from the centre to the mid-point of a chord is **perpendicular** to the chord.",
+              "There is exactly **one** circle through three non-collinear points.",
+              "Equal chords are equidistant from the centre (and conversely).",
+            ],
+          },
+          {
+            type: "formula",
+            tex: t`r^2 = d^2 + \left(\tfrac{c}{2}\right)^2`,
+            caption: "r = radius, d = distance of the chord from the centre, c = chord length",
+          },
+          { type: "heading", text: "Worked example 1" },
+          {
+            type: "text",
+            md: t`**A chord of length 24 cm is drawn in a circle of radius 13 cm. Find its distance from the centre.** The perpendicular from the centre bisects the chord, giving half-chord 12 cm. Then $d = \sqrt{13^2 - 12^2} = \sqrt{169 - 144} = \sqrt{25} = 5$ cm.`,
+          },
+          { type: "heading", text: "Worked example 2" },
+          {
+            type: "text",
+            md: t`**Two parallel chords of lengths 6 cm and 8 cm lie on opposite sides of the centre of a circle of radius 5 cm. Find the distance between them.** Distance of the 6 cm chord $= \sqrt{25 - 9} = 4$ cm; of the 8 cm chord $= \sqrt{25 - 16} = 3$ cm. Opposite sides, so distance $= 4 + 3 = 7$ cm. (Same side would give $4 - 3 = 1$ cm.)`,
+          },
+          {
+            type: "checkpoint",
+            questions: [
+              {
+                kind: "numeric",
+                q: "A chord is 3 cm from the centre of a circle of radius 5 cm. Find its length in cm.",
+                answer: 8,
+                unit: "cm",
+                explain: t`Half-chord $= \sqrt{25 - 9} = 4$ cm, so chord $= 8$ cm.`,
+              },
+            ],
+          },
+          {
+            type: "callout",
+            tone: "exam",
+            title: "Board trap",
+            md: "Pythagoras uses **half** the chord, not the full chord. Forgetting to halve (or forgetting to double at the end) is the most common error. For two parallel chords, always check whether they are on the **same** side or **opposite** sides of the centre.",
+          },
+          {
+            type: "callout",
+            tone: "fact",
+            title: "Why one circle through three points?",
+            md: "The centre must be equidistant from all three points, so it lies on the perpendicular bisectors of both joining segments. Two such lines meet in exactly one point. This is how archaeologists rebuild the full size of a broken circular pot from just a curved fragment.",
+          },
+          {
+            type: "keypoints",
+            items: [
+              "Perpendicular from centre bisects a chord; the line to the mid-point is perpendicular.",
+              "Equal chords subtend equal central angles and are equidistant from the centre.",
+              t`$r^2 = d^2 + (c/2)^2$ links radius, distance and chord.`,
+              "A unique circle passes through any three non-collinear points.",
+              "The diameter is the longest chord.",
+            ],
+          },
+        ],
+        flashcards: [
+          { front: "Perpendicular from the centre to a chord", back: "Bisects the chord" },
+          { front: "Equal chords and the centre", back: "Equidistant from the centre; subtend equal angles at the centre" },
+          { front: "Circles through 3 non-collinear points", back: "Exactly one" },
+          { front: "Radius–chord relation", back: t`$r^2 = d^2 + (c/2)^2$` },
+          { front: "Longest chord of a circle", back: "The diameter" },
+        ],
+        quiz: [
+          {
+            kind: "numeric",
+            q: "Find the length of a chord 8 cm from the centre of a circle of radius 17 cm (in cm).",
+            answer: 30,
+            unit: "cm",
+            explain: "Half-chord = √(289 − 64) = √225 = 15, so chord = 30 cm.",
+          },
+          {
+            kind: "mcq",
+            q: "How many circles can pass through three collinear points?",
+            options: ["None", "One", "Two", "Infinitely many"],
+            answer: 0,
+            explain: "The perpendicular bisectors of collinear segments are parallel and never meet, so no circle exists.",
+            difficulty: 2,
+          },
+          {
+            kind: "truefalse",
+            q: "If two chords of a circle are equidistant from the centre, they are equal in length.",
+            answer: true,
+            explain: "Converse of the theorem: chords equidistant from the centre are equal.",
+          },
+          {
+            kind: "numeric",
+            q: "A chord of length 16 cm is 6 cm from the centre. Find the radius in cm.",
+            answer: 10,
+            unit: "cm",
+            explain: "r = √(8² + 6²) = √100 = 10 cm.",
+          },
+          {
+            kind: "fill",
+            q: "The region between a chord and its arc is called a ___.",
+            answer: ["segment"],
+            explain: "A sector is bounded by two radii; a segment by a chord.",
+          },
+          {
+            kind: "numeric",
+            q: "Two parallel chords of 10 cm and 24 cm lie on the same side of the centre of a circle of radius 13 cm. Find the distance between them in cm.",
+            answer: 7,
+            unit: "cm",
+            explain: "Distances: √(169 − 25) = 12 and √(169 − 144) = 5. Same side: 12 − 5 = 7 cm.",
+            difficulty: 3,
+          },
+        ],
+      },
+      {
+        slug: "circle-angles-cyclic",
+        title: "Angles in a Circle and Cyclic Quadrilaterals",
+        summary: "Angle at the centre is twice the angle at the circumference, angles in the same segment, the semicircle and cyclic quadrilaterals.",
+        minutes: 16,
+        xp: 40,
+        blocks: [
+          {
+            type: "text",
+            md: "Stand anywhere on the boundary of a circular cricket ground and look at the two ends of the pitch-side boundary rope. A beautiful fact: from every point on the same arc you see that rope under the **same angle**. This lesson collects the angle theorems that make such facts true.",
+          },
+          { type: "heading", text: "The angle theorems" },
+          {
+            type: "list",
+            ordered: true,
+            items: [
+              "The angle subtended by an arc at the **centre** is **double** the angle it subtends at any point on the remaining part of the circle.",
+              "Angles in the **same segment** are equal.",
+              "The angle in a **semicircle** is a right angle.",
+              "If a segment joining two points subtends equal angles at two other points on the same side, all four points are **concyclic**.",
+            ],
+          },
+          { type: "formula", tex: t`\angle AOB = 2\,\angle ACB`, caption: "O is the centre; C is on the major arc" },
+          { type: "heading", text: "Cyclic quadrilaterals" },
+          {
+            type: "text",
+            md: "A quadrilateral whose four vertices lie on one circle is **cyclic**. Its opposite angles are supplementary, and conversely a quadrilateral with a pair of opposite angles supplementary is cyclic.",
+          },
+          { type: "formula", tex: t`\angle A + \angle C = 180^\circ, \qquad \angle B + \angle D = 180^\circ` },
+          {
+            type: "text",
+            md: "**Corollary:** an exterior angle of a cyclic quadrilateral equals the interior opposite angle.",
+          },
+          { type: "heading", text: "Worked example 1" },
+          {
+            type: "text",
+            md: t`**O is the centre, $\angle BOC = 130^\circ$ and A lies on the major arc. Find $\angle BAC$.** $\angle BAC = \tfrac12 \angle BOC = 65^\circ$. If instead a point D lies on the minor arc BC, then ABDC is cyclic and $\angle BDC = 180^\circ - 65^\circ = 115^\circ$.`,
+          },
+          { type: "heading", text: "Worked example 2" },
+          {
+            type: "text",
+            md: t`**In cyclic quadrilateral ABCD, $\angle A = (2x + 10)^\circ$ and $\angle C = (3x + 20)^\circ$. Find both.** Opposite angles: $5x + 30 = 180 \Rightarrow x = 30$. So $\angle A = 70^\circ$ and $\angle C = 110^\circ$.`,
+          },
+          {
+            type: "checkpoint",
+            questions: [
+              {
+                kind: "numeric",
+                q: "AB is a diameter and C is a point on the circle with ∠CAB = 35°. Find ∠CBA in degrees.",
+                answer: 55,
+                unit: "°",
+                explain: "∠ACB = 90° (angle in a semicircle), so ∠CBA = 180° − 90° − 35° = 55°.",
+              },
+            ],
+          },
+          {
+            type: "table",
+            headers: ["Given", "Use"],
+            rows: [
+              ["Centre and an arc", "Central angle = 2 × inscribed angle"],
+              ["Diameter", "Angle in semicircle = 90°"],
+              ["Two angles on the same chord, same side", "They are equal"],
+              ["Four points on a circle", "Opposite angles sum to 180°"],
+            ],
+          },
+          {
+            type: "callout",
+            tone: "exam",
+            title: "Board trap",
+            md: "The \"double angle\" theorem needs the inscribed angle on the **remaining** (opposite) arc. If the point is on the same side as the minor arc, the inscribed angle is half the **reflex** central angle. Also, cyclic quadrilateral opposite angles are **supplementary**, not equal — that is a parallelogram property.",
+          },
+          {
+            type: "keypoints",
+            items: [
+              "Central angle = 2 × angle at the circumference on the same arc.",
+              "Angles in the same segment are equal; angle in a semicircle = 90°.",
+              "Cyclic quadrilateral: opposite angles add to 180°.",
+              "Exterior angle of a cyclic quadrilateral = interior opposite angle.",
+              "A parallelogram that is cyclic must be a rectangle.",
+            ],
+          },
+        ],
+        flashcards: [
+          { front: "Angle at centre vs angle at circumference", back: "Angle at centre = 2 × angle at circumference (same arc)" },
+          { front: "Angle in a semicircle", back: "90°" },
+          { front: "Opposite angles of a cyclic quadrilateral", back: "Supplementary (sum 180°)" },
+          { front: "Exterior angle of a cyclic quadrilateral", back: "Equals the interior opposite angle" },
+          { front: "Angles in the same segment", back: "Are equal" },
+        ],
+        quiz: [
+          {
+            kind: "numeric",
+            q: "An arc subtends 50° at a point on the remaining part of the circle. Find the angle it subtends at the centre in degrees.",
+            answer: 100,
+            unit: "°",
+            explain: "Central angle = 2 × 50° = 100°.",
+          },
+          {
+            kind: "numeric",
+            q: "ABCD is cyclic with ∠B = 72°. Find ∠D in degrees.",
+            answer: 108,
+            unit: "°",
+            explain: "∠B + ∠D = 180°, so ∠D = 108°.",
+          },
+          {
+            kind: "mcq",
+            q: "A parallelogram is inscribed in a circle. It must be a:",
+            options: ["Rhombus", "Rectangle", "Trapezium", "Kite"],
+            answer: 1,
+            explain: "Opposite angles are equal (parallelogram) and supplementary (cyclic), so each is 90°: a rectangle.",
+            difficulty: 2,
+          },
+          {
+            kind: "truefalse",
+            q: "Angles in the same segment of a circle are supplementary.",
+            answer: false,
+            explain: "They are equal. Supplementary is for opposite angles of a cyclic quadrilateral.",
+          },
+          {
+            kind: "numeric",
+            q: "In a circle with centre O, chord AB subtends ∠AOB = 100°. Find ∠OAB in degrees.",
+            answer: 40,
+            unit: "°",
+            explain: "OA = OB (radii), so the base angles are equal: (180° − 100°)/2 = 40°.",
+            difficulty: 2,
+          },
+          {
+            kind: "fill",
+            q: "Side AB of cyclic quadrilateral ABCD is produced to E. If ∠ADC = 95°, then ∠CBE = ___ degrees.",
+            answer: ["95", "95°"],
+            explain: "The exterior angle equals the interior opposite angle.",
+            difficulty: 2,
+          },
+        ],
+      },
+    ],
+  },
+
+  /* ------------------------------------------------------------------ */
+  {
+    slug: "mid-point-theorem",
+    title: "Mid-point Theorem",
+    icon: "📏",
+    description: "The mid-point theorem, its converse and the equal intercept theorem, with applications to triangles, trapeziums and quadrilaterals.",
+    lessons: [
+      {
+        slug: "midpoint-theorem-converse",
+        title: "The Mid-point Theorem and Its Converse",
+        summary: "Statement and proof of the mid-point theorem, its converse, and the triangle formed by joining mid-points.",
+        minutes: 15,
+        xp: 35,
+        blocks: [
+          {
+            type: "text",
+            md: "Join the mid-points of two sides of any triangle and something neat appears: the joining segment is **parallel** to the third side and exactly **half** as long. This one fact solves a surprising number of problems.",
+          },
+          { type: "heading", text: "Mid-point theorem" },
+          {
+            type: "callout",
+            tone: "note",
+            title: "Statement",
+            md: "The line segment joining the mid-points of any two sides of a triangle is parallel to the third side and equal to half of it.",
+          },
+          { type: "formula", tex: t`E, F \text{ mid-points of } AB, AC \;\Rightarrow\; EF \parallel BC,\; EF = \tfrac12 BC` },
+          { type: "heading", text: "Proof outline" },
+          {
+            type: "list",
+            ordered: true,
+            items: [
+              "In △ABC, E and F are mid-points of AB and AC. Draw CD ∥ BA through C, meeting EF produced at D.",
+              "In △AEF and △CDF: AF = CF (F is the mid-point), ∠AFE = ∠CFD (vertically opposite), ∠EAF = ∠DCF (alternate angles). So △AEF ≅ △CDF (ASA).",
+              "By CPCT, AE = CD and EF = FD. Since AE = BE, we get BE = CD.",
+              "BE ∥ CD and BE = CD, so EBCD is a parallelogram. Hence ED ∥ BC and ED = BC.",
+              "EF = ½ ED = ½ BC, and EF ∥ BC. ∎",
+            ],
+          },
+          { type: "heading", text: "Converse" },
+          {
+            type: "text",
+            md: "A line drawn through the mid-point of one side of a triangle, **parallel** to another side, **bisects** the third side.",
+          },
+          { type: "heading", text: "Worked example 1" },
+          {
+            type: "text",
+            md: "**The sides of △ABC are AB = 6 cm, BC = 8 cm and CA = 10 cm. D, E, F are mid-points of AB, BC, CA. Find the perimeter of △DEF.** Each side of △DEF is half the side it is parallel to: EF = 3, DF = 4, DE = 5 cm. Perimeter = 12 cm, which is half of 24 cm.",
+          },
+          { type: "heading", text: "Worked example 2" },
+          {
+            type: "text",
+            md: "**In △PQR, M is the mid-point of PQ. A line through M parallel to QR meets PR at N. If PR = 9 cm, find PN.** By the converse, N is the mid-point of PR, so PN = 4.5 cm.",
+          },
+          {
+            type: "checkpoint",
+            questions: [
+              {
+                kind: "numeric",
+                q: "In △ABC, D and E are mid-points of AB and AC. If DE = 7 cm, find BC in cm.",
+                answer: 14,
+                unit: "cm",
+                explain: "DE = ½ BC, so BC = 14 cm.",
+              },
+            ],
+          },
+          {
+            type: "callout",
+            tone: "tip",
+            title: "Four congruent triangles",
+            md: "Joining all three mid-points splits a triangle into **4 congruent triangles**, each with one-quarter of the area. The middle triangle's perimeter is half the original perimeter.",
+          },
+          {
+            type: "callout",
+            tone: "exam",
+            title: "Board trap",
+            md: "In the converse, the line must be drawn through a **mid-point** *and* be **parallel** to a side. A line through a mid-point that is not parallel does not bisect the third side. Name which theorem you use: \"by mid-point theorem\" vs \"by converse of mid-point theorem\" carries a mark.",
+          },
+          {
+            type: "keypoints",
+            items: [
+              "Mid-point segment is parallel to the third side and half its length.",
+              "Converse: a line through a mid-point parallel to a side bisects the third side.",
+              "Proof uses ASA congruence and a parallelogram.",
+              "The mid-point triangle has half the perimeter and one-quarter the area.",
+            ],
+          },
+        ],
+        flashcards: [
+          { front: "Mid-point theorem", back: "Segment joining mid-points of two sides is parallel to the third side and half of it." },
+          { front: "Converse of the mid-point theorem", back: "A line through the mid-point of one side, parallel to another, bisects the third side." },
+          { front: "Perimeter of the mid-point triangle", back: "Half the perimeter of the original triangle" },
+          { front: "Area of the mid-point triangle", back: "One-quarter of the original triangle" },
+        ],
+        quiz: [
+          {
+            kind: "numeric",
+            q: "The perimeter of a triangle is 30 cm. Find the perimeter (cm) of the triangle formed by joining the mid-points of its sides.",
+            answer: 15,
+            unit: "cm",
+            explain: "Each side is halved, so the perimeter is halved.",
+          },
+          {
+            kind: "mcq",
+            q: "Joining the mid-points of the sides of a triangle divides it into how many congruent triangles?",
+            options: ["2", "3", "4", "6"],
+            answer: 2,
+            explain: "Four congruent triangles, each similar to the original.",
+          },
+          {
+            kind: "truefalse",
+            q: "Any line through the mid-point of one side of a triangle bisects another side.",
+            answer: false,
+            explain: "It must also be parallel to the remaining side.",
+          },
+          {
+            kind: "numeric",
+            q: "The area of △ABC is 64 cm². Find the area (cm²) of the triangle formed by joining the mid-points of its sides.",
+            answer: 16,
+            unit: "cm²",
+            explain: "The four small triangles are congruent, so each has 64/4 = 16 cm².",
+            difficulty: 2,
+          },
+          {
+            kind: "order",
+            q: "Arrange the steps of the proof of the mid-point theorem.",
+            items: [
+              "Draw CD parallel to BA meeting EF produced at D",
+              "Prove △AEF ≅ △CDF by ASA",
+              "Get AE = CD, so BE = CD",
+              "Show EBCD is a parallelogram",
+              "Conclude EF ∥ BC and EF = ½ BC",
+            ],
+            explain: "Construction → congruence → equal sides → parallelogram → conclusion.",
+            difficulty: 2,
+          },
+        ],
+      },
+      {
+        slug: "midpoint-intercept-applications",
+        title: "Equal Intercept Theorem and Applications",
+        summary: "Intercepts made by parallel lines, mid-segments of trapeziums, and quadrilaterals formed by joining mid-points.",
+        minutes: 16,
+        xp: 40,
+        blocks: [
+          {
+            type: "text",
+            md: "Look at ruled notebook paper: the lines are parallel and equally spaced. Draw any slanted line across them and it is cut into **equal** pieces, however steep you draw it. That is the equal intercept theorem, the big brother of the mid-point theorem.",
+          },
+          { type: "heading", text: "Equal intercept theorem" },
+          {
+            type: "callout",
+            tone: "note",
+            title: "Statement (ICSE)",
+            md: "If there are three or more parallel lines and the intercepts made by them on one transversal are equal, then the corresponding intercepts on any other transversal are also equal.",
+          },
+          { type: "illustration", emoji: "📓", caption: "Ruled lines cut every slanted line into equal parts." },
+          { type: "heading", text: "Trapezium mid-segment" },
+          {
+            type: "text",
+            md: "In trapezium ABCD with AB ∥ DC, the line through the mid-point of leg AD parallel to the bases bisects the other leg BC. The segment joining the mid-points of the legs is parallel to the bases and equals half their sum.",
+          },
+          { type: "formula", tex: t`EF = \frac{AB + DC}{2}`, caption: "E, F = mid-points of the non-parallel sides" },
+          { type: "heading", text: "Worked example 1" },
+          {
+            type: "text",
+            md: "**The parallel sides of a trapezium are 10 cm and 16 cm. Find the length of the segment joining the mid-points of the non-parallel sides.** $EF = (10 + 16)/2 = 13$ cm. *Why:* join AC, meeting EF at G. In △ADC, EG = ½ DC = 8; in △CAB, GF = ½ AB = 5; so EF = 13 cm.",
+          },
+          { type: "heading", text: "Quadrilaterals from mid-points" },
+          {
+            type: "table",
+            headers: ["Original quadrilateral", "Joining mid-points of sides gives"],
+            rows: [
+              ["Any quadrilateral", "Parallelogram"],
+              ["Rectangle", "Rhombus"],
+              ["Rhombus", "Rectangle"],
+              ["Square", "Square"],
+            ],
+          },
+          { type: "heading", text: "Worked example 2" },
+          {
+            type: "text",
+            md: "**P, Q, R, S are mid-points of sides AB, BC, CD, DA of quadrilateral ABCD. Show PQRS is a parallelogram.** In △ABC, PQ ∥ AC and PQ = ½ AC (mid-point theorem). In △ADC, SR ∥ AC and SR = ½ AC. So PQ ∥ SR and PQ = SR, making PQRS a parallelogram (one pair of opposite sides equal and parallel). ∎ If the diagonals are 12 cm and 8 cm, the perimeter of PQRS = 12 + 8 = 20 cm.",
+          },
+          {
+            type: "checkpoint",
+            questions: [
+              {
+                kind: "mcq",
+                q: "The mid-points of the sides of a rhombus are joined in order. The figure formed is a:",
+                options: ["Rhombus", "Rectangle", "Square", "Kite"],
+                answer: 1,
+                explain: "Its sides are parallel to the diagonals of the rhombus, which are perpendicular, so the angles are 90°.",
+              },
+            ],
+          },
+          {
+            type: "callout",
+            tone: "exam",
+            title: "ICSE trap",
+            md: "The perimeter of the mid-point parallelogram equals the **sum of the diagonals** of the original quadrilateral, not the sum of its sides. In the trapezium result, use the **parallel** sides only: $(a + b)/2$.",
+          },
+          {
+            type: "keypoints",
+            items: [
+              "Parallel lines that cut equal intercepts on one transversal cut equal intercepts on every transversal.",
+              "Mid-segment of a trapezium = half the sum of the parallel sides.",
+              "Joining mid-points of any quadrilateral gives a parallelogram (Varignon's theorem).",
+              "Perimeter of that parallelogram = sum of the diagonals.",
+              "Rectangle → rhombus, rhombus → rectangle, square → square.",
+            ],
+          },
+        ],
+        flashcards: [
+          { front: "Equal intercept theorem", back: "Parallel lines making equal intercepts on one transversal make equal intercepts on any transversal." },
+          { front: "Trapezium mid-segment length", back: t`$\tfrac12$(sum of parallel sides)` },
+          { front: "Mid-points of any quadrilateral joined", back: "A parallelogram" },
+          { front: "Mid-points of a rectangle joined", back: "A rhombus" },
+          { front: "Perimeter of the mid-point parallelogram", back: "Sum of the diagonals of the original quadrilateral" },
+        ],
+        quiz: [
+          {
+            kind: "numeric",
+            q: "A trapezium has parallel sides 14 cm and 22 cm. Find the length (cm) of the line joining the mid-points of its legs.",
+            answer: 18,
+            unit: "cm",
+            explain: "(14 + 22)/2 = 18 cm.",
+          },
+          {
+            kind: "mcq",
+            q: "The figure formed by joining the mid-points of the sides of a rectangle in order is a:",
+            options: ["Rectangle", "Rhombus", "Trapezium", "Kite"],
+            answer: 1,
+            explain: "Its sides are halves of the equal diagonals of the rectangle, so all four sides are equal.",
+          },
+          {
+            kind: "numeric",
+            q: "The diagonals of a quadrilateral are 10 cm and 14 cm. Find the perimeter (cm) of the quadrilateral formed by joining the mid-points of its sides.",
+            answer: 24,
+            unit: "cm",
+            explain: "Perimeter = sum of the diagonals = 24 cm.",
+            difficulty: 2,
+          },
+          {
+            kind: "truefalse",
+            q: "Three parallel lines make intercepts of 3 cm and 3 cm on one transversal. They make equal intercepts on every other transversal.",
+            answer: true,
+            explain: "Equal intercept theorem.",
+          },
+          {
+            kind: "fill",
+            q: "Joining the mid-points of the sides of any quadrilateral, in order, always gives a ___.",
+            answer: ["parallelogram"],
+            explain: "Opposite sides are each parallel to and half of the same diagonal.",
+          },
+          {
+            kind: "numeric",
+            q: "In trapezium ABCD (AB ∥ DC), the mid-segment EF is 15 cm and AB = 18 cm. Find DC in cm.",
+            answer: 12,
+            unit: "cm",
+            explain: "(18 + DC)/2 = 15, so DC = 12 cm.",
+            difficulty: 2,
+          },
+        ],
+      },
+    ],
+  },
+
+  /* ------------------------------------------------------------------ */
+  {
+    slug: "pythagoras-theorem",
+    title: "Pythagoras Theorem",
+    icon: "📐",
+    description: "Proof of Baudhayana–Pythagoras theorem and its converse, Pythagorean triplets and problems on heights, distances and figures.",
+    lessons: [
+      {
+        slug: "pythagoras-proof-triplets",
+        title: "The Theorem, Its Proof and Triplets",
+        summary: "Statement, proof using similar triangles, the converse, and generating Pythagorean triplets.",
+        minutes: 15,
+        xp: 35,
+        blocks: [
+          {
+            type: "text",
+            md: "Around 800 BCE, the **Baudhayana Sulbasutra** stated: *\"The rope stretched along the diagonal of a rectangle produces an area which the vertical and horizontal sides make together.\"* That is the Pythagoras theorem, recorded in India centuries before Pythagoras. Masons still use a 3–4–5 rope to set out right-angled corners of a house plot.",
+          },
+          { type: "heading", text: "Statement" },
+          {
+            type: "callout",
+            tone: "note",
+            title: "Theorem",
+            md: "In a right-angled triangle, the square of the hypotenuse is equal to the sum of the squares of the other two sides.",
+          },
+          { type: "formula", tex: t`AC^2 = AB^2 + BC^2 \qquad (\angle B = 90^\circ)` },
+          { type: "heading", text: "Proof using similar triangles" },
+          {
+            type: "list",
+            ordered: true,
+            items: [
+              "In △ABC with ∠B = 90°, draw BD ⊥ AC.",
+              "△ADB ~ △ABC (common ∠A, both have a right angle), so AD/AB = AB/AC, giving $AB^2 = AD \\cdot AC$.",
+              "△BDC ~ △ABC (common ∠C), so CD/BC = BC/AC, giving $BC^2 = CD \\cdot AC$.",
+              "Adding: $AB^2 + BC^2 = AC(AD + CD) = AC \\cdot AC = AC^2$. ∎",
+            ],
+          },
+          { type: "heading", text: "Converse" },
+          {
+            type: "text",
+            md: "If in a triangle the square of one side equals the sum of the squares of the other two, the angle opposite the first side is a **right angle**.",
+          },
+          { type: "heading", text: "Pythagorean triplets" },
+          {
+            type: "formula",
+            tex: t`(2m,\; m^2 - 1,\; m^2 + 1) \quad \text{is a triplet for every integer } m > 1`,
+          },
+          {
+            type: "table",
+            headers: ["m", "2m", "m² − 1", "m² + 1"],
+            rows: [
+              ["2", "4", "3", "5"],
+              ["3", "6", "8", "10"],
+              ["4", "8", "15", "17"],
+              ["5", "10", "24", "26"],
+            ],
+          },
+          { type: "heading", text: "Worked example" },
+          {
+            type: "text",
+            md: t`**A 13 m ladder leans against a wall in a Mumbai housing society. Its foot is 5 m from the wall. How high up the wall does it reach?** $h = \sqrt{13^2 - 5^2} = \sqrt{169 - 25} = \sqrt{144} = 12$ m.`,
+          },
+          {
+            type: "checkpoint",
+            questions: [
+              {
+                kind: "mcq",
+                q: "Which of these is a Pythagorean triplet?",
+                options: ["(5, 11, 12)", "(7, 24, 25)", "(6, 8, 11)", "(9, 12, 14)"],
+                answer: 1,
+                explain: "49 + 576 = 625 = 25².",
+              },
+            ],
+          },
+          {
+            type: "callout",
+            tone: "exam",
+            title: "Board trap",
+            md: "The hypotenuse is always the **longest** side, opposite the right angle. When checking a triplet, square the largest number and compare with the sum of the squares of the other two. And remember to subtract when finding a leg: $\\text{leg} = \\sqrt{h^2 - \\text{other}^2}$.",
+          },
+          {
+            type: "keypoints",
+            items: [
+              t`Hypotenuse$^2$ = sum of squares of the other two sides.`,
+              "Known in India as the Baudhayana theorem (Sulbasutras).",
+              "Converse: if c² = a² + b², the angle opposite c is 90°.",
+              "Triplets: (3,4,5), (5,12,13), (8,15,17), (7,24,25); multiples also work.",
+              "(2m, m² − 1, m² + 1) generates triplets.",
+            ],
+          },
+        ],
+        flashcards: [
+          { front: "Pythagoras theorem", back: "In a right triangle, hypotenuse² = sum of squares of the other two sides." },
+          { front: "Converse of Pythagoras", back: "If c² = a² + b², the angle opposite c is a right angle." },
+          { front: "Triplet generator", back: "(2m, m² − 1, m² + 1)" },
+          { front: "Ancient Indian source of the theorem", back: "Baudhayana Sulbasutra" },
+          { front: "Four common triplets", back: "(3,4,5), (5,12,13), (8,15,17), (7,24,25)" },
+        ],
+        quiz: [
+          {
+            kind: "numeric",
+            q: "The legs of a right triangle are 9 cm and 12 cm. Find the hypotenuse in cm.",
+            answer: 15,
+            unit: "cm",
+            explain: "√(81 + 144) = √225 = 15 cm.",
+          },
+          {
+            kind: "truefalse",
+            q: "A triangle with sides 6 cm, 8 cm and 10 cm is right-angled.",
+            answer: true,
+            explain: "36 + 64 = 100 = 10².",
+          },
+          {
+            kind: "numeric",
+            q: "Using (2m, m² − 1, m² + 1) with 2m = 12, find the largest number of the triplet.",
+            answer: 37,
+            explain: "m = 6: triplet is (12, 35, 37).",
+            difficulty: 2,
+          },
+          {
+            kind: "mcq",
+            q: "In △PQR, PR² = PQ² + QR². The right angle is at:",
+            options: ["P", "Q", "R", "Cannot say"],
+            answer: 1,
+            explain: "PR is the hypotenuse; the right angle is opposite it, at Q.",
+          },
+          {
+            kind: "numeric",
+            q: "A 10 m ladder reaches a window 8 m high. How far (m) is its foot from the wall?",
+            answer: 6,
+            unit: "m",
+            explain: "√(100 − 64) = √36 = 6 m.",
+          },
+          {
+            kind: "order",
+            q: "Arrange the steps of the similar-triangles proof of Pythagoras theorem (∠B = 90°).",
+            items: [
+              "Draw BD perpendicular to AC",
+              "Show △ADB ~ △ABC to get AB² = AD·AC",
+              "Show △BDC ~ △ABC to get BC² = CD·AC",
+              "Add: AB² + BC² = AC(AD + CD) = AC²",
+            ],
+            explain: "Construct, two similarity results, then add.",
+            difficulty: 2,
+          },
+        ],
+      },
+      {
+        slug: "pythagoras-applications",
+        title: "Applications of Pythagoras Theorem",
+        summary: "Diagonals, altitudes, distances between poles, classifying triangles and the ICSE proof-style results.",
+        minutes: 16,
+        xp: 40,
+        blocks: [
+          {
+            type: "text",
+            md: "Pythagoras turns many geometry problems into one line of arithmetic: spot a right angle, label the hypotenuse, and square. This lesson collects the patterns that board papers repeat.",
+          },
+          { type: "heading", text: "Standard results" },
+          {
+            type: "table",
+            headers: ["Figure", "Result"],
+            rows: [
+              ["Rectangle l × b", t`Diagonal $= \sqrt{l^2 + b^2}$`],
+              ["Square of side a", t`Diagonal $= a\sqrt2$`],
+              ["Equilateral triangle of side a", t`Altitude $= \tfrac{\sqrt3}{2}a$`],
+              [t`Rhombus with diagonals $d_1, d_2$`, t`Side $= \tfrac12\sqrt{d_1^2 + d_2^2}$`],
+            ],
+          },
+          { type: "heading", text: "Classifying a triangle by its sides" },
+          {
+            type: "text",
+            md: "Let $c$ be the longest side. If $c^2 = a^2 + b^2$ the triangle is right-angled; if $c^2 < a^2 + b^2$ it is acute-angled; if $c^2 > a^2 + b^2$ it is obtuse-angled.",
+          },
+          { type: "heading", text: "Worked example 1: two poles" },
+          {
+            type: "text",
+            md: t`**Two vertical poles of heights 6 m and 11 m stand 12 m apart on level ground. Find the distance between their tops.** The difference in heights is 5 m; the horizontal gap is 12 m. Distance $= \sqrt{12^2 + 5^2} = \sqrt{169} = 13$ m.`,
+          },
+          { type: "heading", text: "Worked example 2: a flight path" },
+          {
+            type: "text",
+            md: t`**An aeroplane leaves Bengaluru and flies 300 km due north, then 400 km due east. How far is it from Bengaluru?** $\sqrt{300^2 + 400^2} = \sqrt{250000} = 500$ km (a 3–4–5 triangle scaled by 100).`,
+          },
+          {
+            type: "checkpoint",
+            questions: [
+              {
+                kind: "numeric",
+                q: "Find the altitude (cm) of an equilateral triangle of side 10√3 cm.",
+                answer: 15,
+                unit: "cm",
+                explain: t`$\tfrac{\sqrt3}{2}\times 10\sqrt3 = \tfrac{30}{2} = 15$ cm.`,
+              },
+            ],
+          },
+          { type: "heading", text: "ICSE proof pattern" },
+          {
+            type: "text",
+            md: "**If AD ⊥ BC in △ABC, prove that $AB^2 - BD^2 = AC^2 - CD^2$.** In right △ADB, $AD^2 = AB^2 - BD^2$. In right △ADC, $AD^2 = AC^2 - CD^2$. Both equal $AD^2$, so they are equal. ∎ A similar idea gives: if the diagonals of a quadrilateral are perpendicular, then $AB^2 + CD^2 = BC^2 + DA^2$.",
+          },
+          {
+            type: "callout",
+            tone: "exam",
+            title: "Board trap",
+            md: "In the two-poles problem, the vertical side of the right triangle is the **difference** of heights, not either height. In classification questions, always compare the square of the **longest** side — comparing a shorter side gives a wrong conclusion.",
+          },
+          {
+            type: "keypoints",
+            items: [
+              "Diagonal of a square = a√2; altitude of an equilateral triangle = (√3/2)a.",
+              "Rhombus side = ½√(d₁² + d₂²) because diagonals bisect at 90°.",
+              "Compare c² with a² + b² to classify a triangle as right, acute or obtuse.",
+              "Perpendicular drop: AB² − BD² = AC² − CD² (both equal AD²).",
+              "Look for hidden right angles: walls and ground, north and east, poles and level ground.",
+            ],
+          },
+        ],
+        flashcards: [
+          { front: "Diagonal of a square of side a", back: t`$a\sqrt2$` },
+          { front: "Altitude of an equilateral triangle of side a", back: t`$\tfrac{\sqrt3}{2}a$` },
+          { front: "c² > a² + b² (c longest)", back: "Obtuse-angled triangle" },
+          { front: "Side of a rhombus from diagonals", back: t`$\tfrac12\sqrt{d_1^2 + d_2^2}$` },
+          { front: "Distance between tops of poles h₁, h₂, gap d", back: t`$\sqrt{d^2 + (h_1 - h_2)^2}$` },
+        ],
+        quiz: [
+          {
+            kind: "numeric",
+            q: "The diagonals of a rhombus are 16 cm and 30 cm. Find its side in cm.",
+            answer: 17,
+            unit: "cm",
+            explain: "Half-diagonals 8 and 15: side = √(64 + 225) = 17 cm.",
+          },
+          {
+            kind: "mcq",
+            q: "A triangle has sides 5, 6 and 8 cm. It is:",
+            options: ["Right-angled", "Acute-angled", "Obtuse-angled", "Not possible"],
+            answer: 2,
+            explain: "8² = 64 > 25 + 36 = 61, so the angle opposite 8 cm is obtuse.",
+            difficulty: 2,
+          },
+          {
+            kind: "numeric",
+            q: "A rectangular field in Punjab is 40 m long and 30 m wide. Find the length of its diagonal in m.",
+            answer: 50,
+            unit: "m",
+            explain: "√(1600 + 900) = √2500 = 50 m.",
+          },
+          {
+            kind: "numeric",
+            q: "Two poles of heights 9 m and 14 m stand 12 m apart. Find the distance (m) between their tops.",
+            answer: 13,
+            unit: "m",
+            explain: "Height difference 5 m, gap 12 m: √(144 + 25) = 13 m.",
+            difficulty: 2,
+          },
+          {
+            kind: "truefalse",
+            q: "The diagonal of a square of side 5 cm is 10 cm.",
+            answer: false,
+            explain: "Diagonal = 5√2 ≈ 7.07 cm.",
+          },
+          {
+            kind: "fill",
+            q: "In △ABC, AD ⊥ BC. Then AB² − BD² = AC² − ___.",
+            answer: ["CD²", "CD^2", "DC²", "DC^2"],
+            explain: "Both sides equal AD².",
+            difficulty: 2,
+          },
+        ],
+      },
+    ],
+  },
+
+  /* ------------------------------------------------------------------ */
+  {
+    slug: "area-theorems",
+    title: "Theorems on Area",
+    icon: "🟦",
+    description: "Parallelograms and triangles on the same base and between the same parallels, medians and equal-area proofs.",
+    lessons: [
+      {
+        slug: "area-parallelograms",
+        title: "Parallelograms on the Same Base",
+        summary: "Figures on the same base and between the same parallels, area of a parallelogram, and the triangle–parallelogram half-area theorem.",
+        minutes: 15,
+        xp: 35,
+        blocks: [
+          {
+            type: "text",
+            md: "Push a stack of notebooks so it leans sideways: its shape changes from a rectangle to a slanted parallelogram, but the amount of space it covers stays the same. That idea, made precise, is the first area theorem.",
+          },
+          { type: "heading", text: "\"Same base and between the same parallels\"" },
+          {
+            type: "text",
+            md: "Two figures lie on the same base and between the same parallels if they share a base (a side) and the vertices opposite to that base lie on a line parallel to it. Then they have the **same height**.",
+          },
+          { type: "heading", text: "Theorem 1" },
+          {
+            type: "callout",
+            tone: "note",
+            title: "Statement",
+            md: "Parallelograms on the same base (or equal bases) and between the same parallels are equal in area.",
+          },
+          {
+            type: "text",
+            md: "**Proof idea:** Let ABCD and ABEF be parallelograms on base AB between parallels AB and FC. Then △ADF ≅ △BCE (AD = BC, AF = BE, ∠DAF = ∠CBE by corresponding angles). Area ABCD = area(ABED) + area(△BCE) = area(ABED) + area(△ADF) = area ABEF. ∎",
+          },
+          { type: "formula", tex: t`\text{Area of parallelogram} = \text{base} \times \text{corresponding height}` },
+          { type: "heading", text: "Theorem 2" },
+          {
+            type: "callout",
+            tone: "note",
+            title: "Statement",
+            md: "If a triangle and a parallelogram are on the same base and between the same parallels, the area of the triangle is **half** the area of the parallelogram.",
+          },
+          { type: "heading", text: "Worked example 1" },
+          {
+            type: "text",
+            md: "**In parallelogram ABCD, AB = 12 cm, the height to AB is 7 cm and AD = 14 cm. Find the area and the height to AD.** Area = 12 × 7 = 84 cm². Using base AD: 14 × h = 84, so h = 6 cm.",
+          },
+          { type: "heading", text: "Worked example 2" },
+          {
+            type: "text",
+            md: "**ABCD is a parallelogram of area 48 cm² and E is any point on side CD. Find the area of △ABE.** △ABE and ABCD share base AB and lie between AB ∥ DC, so area(△ABE) = ½ × 48 = 24 cm². Consequently area(△ADE) + area(△BCE) = 48 − 24 = 24 cm² too.",
+          },
+          {
+            type: "checkpoint",
+            questions: [
+              {
+                kind: "numeric",
+                q: "A triangle and a parallelogram are on the same base and between the same parallels. The triangle's area is 18 cm². Find the parallelogram's area in cm².",
+                answer: 36,
+                unit: "cm²",
+                explain: "Triangle = ½ parallelogram, so parallelogram = 36 cm².",
+              },
+            ],
+          },
+          {
+            type: "callout",
+            tone: "exam",
+            title: "Board trap",
+            md: "Height must be **perpendicular** to the base you use. A common mistake is multiplying two adjacent sides (12 × 14) for a parallelogram — that only works for a rectangle. And the theorems need **both** conditions: same (or equal) base **and** same parallels.",
+          },
+          {
+            type: "keypoints",
+            items: [
+              "Same base + same parallels ⇒ same height.",
+              "Parallelograms on the same base and between the same parallels have equal area.",
+              "Area of a parallelogram = base × corresponding height.",
+              "A triangle on the same base and between the same parallels as a parallelogram has half its area.",
+              "A rectangle and a parallelogram on the same base and between the same parallels have equal area.",
+            ],
+          },
+        ],
+        flashcards: [
+          { front: "Parallelograms on the same base and between the same parallels", back: "Equal in area" },
+          { front: "Triangle and parallelogram on the same base, same parallels", back: "Triangle = ½ parallelogram" },
+          { front: "Area of a parallelogram", back: "Base × corresponding (perpendicular) height" },
+          { front: "What does 'between the same parallels' guarantee?", back: "Equal heights" },
+        ],
+        quiz: [
+          {
+            kind: "numeric",
+            q: "A parallelogram has base 15 cm and corresponding height 8 cm. Find its area in cm².",
+            answer: 120,
+            unit: "cm²",
+            explain: "15 × 8 = 120 cm².",
+          },
+          {
+            kind: "numeric",
+            q: "In parallelogram PQRS, PQ = 16 cm, the height to PQ is 9 cm and QR = 12 cm. Find the height (cm) to QR.",
+            answer: 12,
+            unit: "cm",
+            explain: "Area = 16 × 9 = 144 cm²; height to QR = 144/12 = 12 cm.",
+            difficulty: 2,
+          },
+          {
+            kind: "truefalse",
+            q: "Two parallelograms on the same base always have equal area.",
+            answer: false,
+            explain: "They must also lie between the same parallels (equal heights).",
+          },
+          {
+            kind: "mcq",
+            q: "A rectangle and a parallelogram lie on the same base between the same parallels. Compared with the parallelogram, the rectangle's perimeter is:",
+            options: ["Greater", "Smaller", "Equal", "Cannot be compared"],
+            answer: 1,
+            explain: "Areas are equal, but the slanted sides of the parallelogram are longer than the height, so the rectangle has a smaller perimeter.",
+            difficulty: 3,
+          },
+          {
+            kind: "fill",
+            q: "If a triangle and a parallelogram are on the same base and between the same parallels, the triangle's area is ___ of the parallelogram's area.",
+            answer: ["half", "1/2", "one-half", "one half"],
+            explain: "Theorem 2.",
+          },
+          {
+            kind: "numeric",
+            q: "ABCD is a parallelogram with area 60 cm². P is a point on AB. Find area(△PCD) in cm².",
+            answer: 30,
+            unit: "cm²",
+            explain: "△PCD and ABCD share base DC and lie between DC ∥ AB: half of 60 = 30 cm².",
+          },
+        ],
+      },
+      {
+        slug: "area-triangles-medians",
+        title: "Triangles on the Same Base and Medians",
+        summary: "Triangles between the same parallels, the median theorem, the converse, and multi-step equal-area proofs.",
+        minutes: 16,
+        xp: 40,
+        blocks: [
+          {
+            type: "text",
+            md: "A farmer in Maharashtra wants to straighten the bent boundary between two fields without changing either field's area. The trick is the triangle area theorem: slide a vertex along a parallel line and the area does not change.",
+          },
+          { type: "heading", text: "Theorem 3" },
+          {
+            type: "callout",
+            tone: "note",
+            title: "Statement",
+            md: "Triangles on the same base (or equal bases) and between the same parallels are equal in area.",
+          },
+          {
+            type: "text",
+            md: "**Converse:** Triangles on the same base and of equal area, lying on the same side of it, lie between the same parallels.",
+          },
+          { type: "formula", tex: t`\text{Area of triangle} = \tfrac12 \times \text{base} \times \text{height}` },
+          { type: "heading", text: "The median theorem" },
+          {
+            type: "text",
+            md: "A **median** joins a vertex to the mid-point of the opposite side. If AD is a median of △ABC, then BD = DC and △ABD, △ADC have the same height from A, so they have **equal area**.",
+          },
+          { type: "formula", tex: t`\text{ar}(\triangle ABD) = \text{ar}(\triangle ADC) = \tfrac12\,\text{ar}(\triangle ABC)` },
+          { type: "heading", text: "Worked example 1" },
+          {
+            type: "text",
+            md: "**In △ABC of area 36 cm², AD is a median and E is the mid-point of AD. Find ar(△BED).** AD is a median, so ar(△ABD) = 18 cm². In △ABD, BE is a median (E is the mid-point of AD), so ar(△BED) = ½ × 18 = **9 cm²**, i.e. one-quarter of ar(△ABC).",
+          },
+          { type: "heading", text: "Worked example 2" },
+          {
+            type: "text",
+            md: "**The diagonals of trapezium ABCD (AB ∥ DC) meet at O. Prove ar(△AOD) = ar(△BOC).** △ABD and △ABC are on base AB between AB ∥ DC, so ar(△ABD) = ar(△ABC). Subtract the common ar(△AOB) from both: ar(△AOD) = ar(△BOC). ∎",
+          },
+          {
+            type: "checkpoint",
+            questions: [
+              {
+                kind: "numeric",
+                q: "AD is a median of △ABC and ar(△ABD) = 25 cm². Find ar(△ABC) in cm².",
+                answer: 50,
+                unit: "cm²",
+                explain: "A median halves the area, so ar(△ABC) = 2 × 25 = 50 cm².",
+              },
+            ],
+          },
+          {
+            type: "list",
+            items: [
+              "Spot the common **base** and the pair of **parallels**.",
+              "Write the equal-area statement from the theorem.",
+              "Add or subtract a **common** region to reach the required pair.",
+              "Name each reason: \"same base and between the same parallels\", \"median divides into equal areas\".",
+            ],
+          },
+          {
+            type: "callout",
+            tone: "exam",
+            title: "Board trap",
+            md: "Equal area does **not** mean congruent: triangles on the same base between the same parallels usually have different shapes. Don't write \"△ABD ≅ △ABC\" in an area proof. Also, the median theorem halves area, **not** the angle at the vertex.",
+          },
+          {
+            type: "keypoints",
+            items: [
+              "Triangles on the same base and between the same parallels have equal area.",
+              "Converse: equal-area triangles on the same base, same side, lie between the same parallels.",
+              "A median divides a triangle into two triangles of equal area.",
+              "Diagonals of a trapezium make ar(△AOD) = ar(△BOC).",
+              "Each diagonal of a parallelogram divides it into two triangles of equal area.",
+            ],
+          },
+        ],
+        flashcards: [
+          { front: "Triangles on the same base and between the same parallels", back: "Equal in area" },
+          { front: "Median of a triangle (area)", back: "Divides it into two triangles of equal area" },
+          { front: "Trapezium ABCD (AB ∥ DC), diagonals meet at O", back: "ar(△AOD) = ar(△BOC)" },
+          { front: "Equal area vs congruent", back: "Equal area does not imply congruence" },
+          { front: "Converse of the triangle area theorem", back: "Equal-area triangles on the same base, same side, lie between the same parallels" },
+        ],
+        quiz: [
+          {
+            kind: "numeric",
+            q: "△ABC has area 48 cm². D is the mid-point of BC and E is the mid-point of AD. Find ar(△BED) in cm².",
+            answer: 12,
+            unit: "cm²",
+            explain: "ar(△ABD) = 24; BE is a median of △ABD, so ar(△BED) = 12 cm².",
+            difficulty: 2,
+          },
+          {
+            kind: "truefalse",
+            q: "Two triangles on the same base and between the same parallels must be congruent.",
+            answer: false,
+            explain: "They have equal areas but can have different shapes.",
+          },
+          {
+            kind: "mcq",
+            q: "In parallelogram ABCD, the diagonals meet at O. What fraction of ar(ABCD) is ar(△AOB)?",
+            options: ["1/2", "1/3", "1/4", "1/8"],
+            answer: 2,
+            explain: "Diagonal AC halves the area; BO is a median of △ABC, halving again: 1/4.",
+            difficulty: 2,
+          },
+          {
+            kind: "numeric",
+            q: "A triangle has base 14 cm and height 9 cm. Find its area in cm².",
+            answer: 63,
+            unit: "cm²",
+            explain: "½ × 14 × 9 = 63 cm².",
+          },
+          {
+            kind: "fill",
+            q: "A ___ of a triangle divides it into two triangles of equal area.",
+            answer: ["median"],
+            explain: "It joins a vertex to the mid-point of the opposite side, giving equal bases and the same height.",
+          },
+          {
+            kind: "order",
+            q: "Arrange the steps to prove ar(△AOD) = ar(△BOC) in trapezium ABCD (AB ∥ DC), diagonals meeting at O.",
+            items: [
+              "Note △ABD and △ABC share base AB",
+              "They lie between parallels AB and DC",
+              "So ar(△ABD) = ar(△ABC)",
+              "Subtract ar(△AOB) from both sides",
+              "Conclude ar(△AOD) = ar(△BOC)",
+            ],
+            explain: "Same base, same parallels, then subtract the common part.",
+            difficulty: 2,
+          },
+        ],
+      },
+    ],
+  },
+];
 
 /** Syllabus chapter title (and its synonyms) → topic slug in `topics`. */
-export const links: Record<string, string> = {};
+export const links: Record<string, string> = {
+  "Introduction to Euclid's Geometry": "euclid-geometry",
+  Quadrilaterals: "quadrilaterals-9",
+  "Rectilinear Figures": "quadrilaterals-9",
+  Circles: "circles-9",
+  "Mid-point Theorem": "mid-point-theorem",
+  "Pythagoras Theorem": "pythagoras-theorem",
+  "Theorems on Area": "area-theorems",
+};

@@ -1,9 +1,1533 @@
 import type { Topic } from "@/content/types";
 
+/** String.raw keeps TeX backslashes intact. */
+const t = String.raw;
+
 /** Course these chapters belong to. */
 export const course = "math-high";
 
-export const topics: Topic[] = [];
+export const topics: Topic[] = [
+  /* ------------------------------------------------------------------ */
+  {
+    slug: "icse10-gst",
+    title: "Goods and Services Tax (GST)",
+    icon: "🧾",
+    description: "How GST is charged on a bill, CGST + SGST versus IGST, and how input tax credit works along a supply chain.",
+    lessons: [
+      {
+        slug: "gst-on-a-bill",
+        title: "GST on a bill: CGST, SGST and IGST",
+        summary: "Compute GST on a sale, split it correctly for intra-state and inter-state supply, and work backwards from a GST-inclusive price.",
+        minutes: 15,
+        xp: 35,
+        blocks: [
+          {
+            type: "text",
+            md: "Since **1 July 2017**, India has one indirect tax on the supply of goods and services: the **Goods and Services Tax (GST)**. It replaced VAT, service tax, excise duty and many state taxes. Whether you buy a phone in Chennai or a train ticket in Lucknow, the bill shows GST.",
+          },
+          { type: "heading", text: "Who gets the tax?" },
+          {
+            type: "table",
+            headers: ["Type of supply", "Tax charged", "Split"],
+            rows: [
+              ["**Intra-state** (seller and buyer in the same state)", "CGST + SGST", "Half the GST rate each: e.g. 18% = 9% CGST + 9% SGST"],
+              ["**Inter-state** (seller and buyer in different states)", "IGST", "The full rate as one tax: e.g. 18% IGST"],
+            ],
+          },
+          {
+            type: "text",
+            md: "CGST goes to the Central Government, SGST to the State Government. IGST is collected by the Centre and shared with the destination state. For union territories without a legislature, UTGST replaces SGST.",
+          },
+          { type: "formula", tex: t`\text{GST} = \frac{\text{rate}}{100}\times\text{taxable value}, \qquad \text{Amount of bill} = \text{taxable value} + \text{GST}` },
+          {
+            type: "callout",
+            tone: "tip",
+            title: "Taxable value",
+            md: "The taxable value is the price **after any discount**. Discount first, then GST on what is actually charged.",
+          },
+          { type: "heading", text: "Worked example" },
+          {
+            type: "list",
+            ordered: true,
+            items: [
+              "A shop in Pune sells a TV with marked price ₹30,000 at 10% discount to a customer in Pune. GST is 18%. Find the CGST, SGST and the bill amount.",
+              "Discount = 10% of ₹30,000 = ₹3,000, so taxable value = ₹27,000.",
+              "Intra-state supply: CGST = 9% of ₹27,000 = ₹2,430 and SGST = ₹2,430.",
+              "Bill amount = ₹27,000 + ₹2,430 + ₹2,430 = **₹31,860**.",
+              "If the buyer were in Bengaluru (Karnataka), the shop would charge IGST = 18% of ₹27,000 = ₹4,860. The bill total is the same ₹31,860; only the split changes.",
+            ],
+          },
+          {
+            type: "checkpoint",
+            questions: [
+              {
+                kind: "numeric",
+                q: "A shop in Jaipur sells shoes worth ₹2,500 to a customer in Jaipur at 12% GST. What is the SGST charged (in ₹)?",
+                answer: 150,
+                unit: "₹",
+                explain: "Intra-state: SGST = 6% of ₹2,500 = ₹150 (and CGST is also ₹150).",
+              },
+            ],
+          },
+          { type: "heading", text: "Working backwards from the bill" },
+          { type: "formula", tex: t`\text{taxable value} = \frac{\text{bill amount}\times 100}{100 + \text{rate}}` },
+          {
+            type: "text",
+            md: t`**Example:** A bill of ₹2,360 includes 18% GST. Taxable value $= \dfrac{2360\times100}{118} = 2000$, so the GST is ₹360.`,
+          },
+          {
+            type: "callout",
+            tone: "exam",
+            title: "Board trap",
+            md: "Never take 18% of the GST-inclusive amount to find the tax. 18% of ₹2,360 is ₹424.80, which is wrong. Divide by 1.18 first. Also, students often write IGST as 9% + 9%: IGST is one tax at the full rate.",
+          },
+          {
+            type: "callout",
+            tone: "fact",
+            title: "Rates",
+            md: "ICSE textbook problems use the slabs 0%, 5%, 12%, 18% and 28%. In September 2025 the GST Council merged most items into 5% and 18% (with 40% for luxury and sin goods). In an exam, always use the rate given in the question.",
+          },
+          {
+            type: "keypoints",
+            items: [
+              "GST is charged on the taxable value, i.e. the price after discount.",
+              "Intra-state: CGST = SGST = half the rate. Inter-state: IGST = full rate.",
+              "The customer's total bill is the same in both cases.",
+              t`From a GST-inclusive bill: taxable value = bill $\times \dfrac{100}{100+r}$.`,
+            ],
+          },
+        ],
+        flashcards: [
+          { front: "Intra-state supply at 18% GST", back: "9% CGST + 9% SGST" },
+          { front: "Inter-state supply at 18% GST", back: "18% IGST" },
+          { front: "Taxable value when there is a discount", back: "Marked price minus discount (GST is charged after the discount)" },
+          { front: "Taxable value from a bill of ₹B at r% GST", back: "B × 100 / (100 + r)" },
+          { front: "When was GST introduced in India?", back: "1 July 2017" },
+        ],
+        quiz: [
+          {
+            kind: "mcq",
+            q: "A dealer in Kolkata sells goods to a dealer in Patna. Which tax is charged?",
+            options: ["CGST only", "SGST only", "CGST and SGST", "IGST"],
+            answer: 3,
+            explain: "West Bengal to Bihar is an inter-state supply, so IGST is charged at the full rate.",
+          },
+          {
+            kind: "numeric",
+            q: "An article with marked price ₹5,000 is sold at 20% discount with 12% GST. Find the amount the customer pays (₹).",
+            answer: 4480,
+            unit: "₹",
+            explain: "Taxable value = ₹4,000. GST = 12% of 4,000 = ₹480. Bill = ₹4,480.",
+          },
+          {
+            kind: "numeric",
+            q: "A customer pays ₹1,180 for a service including 18% GST. What was the GST amount (₹)?",
+            answer: 180,
+            unit: "₹",
+            difficulty: 2,
+            explain: "Taxable value = 1180 × 100/118 = ₹1,000, so GST = ₹180.",
+          },
+          {
+            kind: "truefalse",
+            q: "For the same article and the same GST rate, a customer pays more in an inter-state sale than in an intra-state sale.",
+            answer: false,
+            explain: "IGST at r% equals CGST (r/2)% + SGST (r/2)%, so the bill total is the same.",
+          },
+          {
+            kind: "fill",
+            q: "At 28% GST on an intra-state sale, the CGST rate is ___ %.",
+            answer: ["14", "14%"],
+            explain: "CGST is half the GST rate: 28 ÷ 2 = 14%.",
+          },
+        ],
+      },
+      {
+        slug: "gst-input-tax-credit",
+        title: "Input tax credit along a supply chain",
+        summary: "Why GST is a tax on value added, and how to find the tax each dealer pays to the government.",
+        minutes: 18,
+        xp: 45,
+        blocks: [
+          {
+            type: "text",
+            md: "A shirt passes from a mill in Surat to a wholesaler in Mumbai, then to a retailer in Delhi, then to you. If each sale were taxed in full, tax would pile on tax. GST avoids this with **Input Tax Credit (ITC)**: every dealer gets credit for the GST already paid on purchases.",
+          },
+          {
+            type: "list",
+            items: [
+              "**Input tax**: GST a dealer pays when buying goods.",
+              "**Output tax**: GST a dealer collects when selling goods.",
+              "**Net GST payable** to the government = output tax − input tax.",
+            ],
+          },
+          { type: "formula", tex: t`\text{Net GST} = \text{Output GST} - \text{Input GST} = \frac{r}{100}\times(\text{S.P.} - \text{C.P.})`, caption: "When the rate r is the same at every stage, tax is paid only on the value added." },
+          { type: "illustration", emoji: "🏭➡️🏬➡️🛍️➡️🧑", caption: "Each dealer pays GST only on the value they add; the consumer bears the whole tax." },
+          { type: "heading", text: "Worked example: a three-stage chain at 12%" },
+          {
+            type: "text",
+            md: "A manufacturer in Mumbai sells goods to a wholesaler in Mumbai for ₹10,000. The wholesaler sells them to a retailer in Delhi for ₹12,000. The retailer sells them to a consumer in Delhi for ₹15,000. GST is 12% throughout. Find the tax paid to the government at each stage.",
+          },
+          {
+            type: "table",
+            headers: ["Stage", "Supply", "Output tax", "Input tax", "Net tax paid"],
+            rows: [
+              ["Manufacturer → wholesaler", "Intra-state (Maharashtra)", "₹1,200 (CGST 600 + SGST 600)", "₹0", "₹1,200"],
+              ["Wholesaler → retailer", "Inter-state", "IGST ₹1,440", "₹1,200", "₹240 (IGST)"],
+              ["Retailer → consumer", "Intra-state (Delhi)", "₹1,800 (CGST 900 + SGST 900)", "₹1,440", "₹360 (CGST 180 + SGST 180)"],
+            ],
+          },
+          {
+            type: "text",
+            md: "Total tax reaching the government = ₹1,200 + ₹240 + ₹360 = **₹1,800**, which is exactly 12% of the final price ₹15,000 paid by the consumer.",
+          },
+          {
+            type: "checkpoint",
+            questions: [
+              {
+                kind: "numeric",
+                q: "A retailer buys goods for ₹8,000 and sells them for ₹10,000, GST 18% at both stages. Net GST payable by the retailer (₹)?",
+                answer: 360,
+                unit: "₹",
+                explain: "Output 1,800 − input 1,440 = ₹360, which is 18% of the ₹2,000 value added.",
+              },
+            ],
+          },
+          {
+            type: "callout",
+            tone: "exam",
+            title: "Board trap",
+            md: "Questions ask for \"tax paid by the dealer to the government\", not the tax the dealer collects. Always subtract input tax. When the buyer is a final consumer, the consumer gets no credit: the full GST on the final price is their cost.",
+          },
+          {
+            type: "callout",
+            tone: "tip",
+            title: "Splitting the net tax",
+            md: "If the last sale is intra-state, split the net tax equally into CGST and SGST (₹360 = ₹180 + ₹180 above). If ICSE asks for the IGST, CGST or SGST paid separately, show each.",
+          },
+          {
+            type: "checkpoint",
+            questions: [
+              {
+                kind: "mcq",
+                q: "With the same GST rate at every stage, the total tax collected by the government along the chain equals:",
+                options: ["GST on the first sale only", "GST on the final selling price", "Sum of GST on every sale", "Zero"],
+                answer: 1,
+                explain: "Each stage pays tax only on value added, and the value added sums to the final price.",
+              },
+            ],
+          },
+          {
+            type: "keypoints",
+            items: [
+              "Net GST payable = output GST − input GST (input tax credit).",
+              "With one rate, net GST = rate × value added.",
+              "Total tax to the government = GST on the final price paid by the consumer.",
+              "Use CGST + SGST or IGST according to where each seller and buyer are located.",
+            ],
+          },
+        ],
+        flashcards: [
+          { front: "Input tax credit", back: "The GST paid on purchases, set off against GST collected on sales" },
+          { front: "Net GST payable by a dealer", back: "Output GST − Input GST" },
+          { front: "Who finally bears GST?", back: "The final consumer" },
+          { front: "Net GST at a single rate r%", back: "r% of (selling price − cost price)" },
+        ],
+        quiz: [
+          {
+            kind: "numeric",
+            q: "A wholesaler buys an item for ₹6,000 and sells it for ₹7,500 at 5% GST. Net GST paid by the wholesaler (₹)?",
+            answer: 75,
+            unit: "₹",
+            explain: "5% of (7,500 − 6,000) = 5% of 1,500 = ₹75.",
+          },
+          {
+            kind: "numeric",
+            q: "A, B and C are in the same state. A sells to B for ₹20,000, B sells to C for ₹25,000, C sells to a consumer for ₹30,000, all at 18% GST. What is the total GST received by the government (₹)?",
+            answer: 5400,
+            unit: "₹",
+            difficulty: 2,
+            explain: "Total tax = 18% of the final price ₹30,000 = ₹5,400 (3,600 + 900 + 900).",
+          },
+          {
+            kind: "numeric",
+            q: "In the question above, how much SGST does C pay to the government (₹)?",
+            answer: 450,
+            unit: "₹",
+            difficulty: 2,
+            explain: "C's net GST = 18% of ₹5,000 = ₹900, split equally: SGST = ₹450.",
+          },
+          {
+            kind: "truefalse",
+            q: "Input tax credit means the dealer can deduct GST paid on purchases from GST collected on sales.",
+            answer: true,
+            explain: "That is the definition of input tax credit.",
+          },
+          {
+            kind: "order",
+            q: "Put the steps for finding a dealer's net GST in order.",
+            items: [
+              "Find the taxable values of purchase and sale",
+              "Compute input GST on the purchase",
+              "Compute output GST on the sale",
+              "Subtract: output GST − input GST",
+              "Split into CGST/SGST or IGST as required",
+            ],
+            explain: "Taxable values first, then both taxes, then the difference, then the split.",
+          },
+        ],
+      },
+    ],
+  },
+
+  /* ------------------------------------------------------------------ */
+  {
+    slug: "icse10-banking",
+    title: "Banking",
+    icon: "🏦",
+    description: "Recurring deposit accounts: the ICSE interest formula, maturity value, and finding the instalment, rate or time.",
+    lessons: [
+      {
+        slug: "recurring-deposit-interest",
+        title: "Recurring deposits and the interest formula",
+        summary: "Understand where the RD interest formula comes from and compute interest and maturity value.",
+        minutes: 16,
+        xp: 40,
+        blocks: [
+          {
+            type: "text",
+            md: "Meera, a college student in Kochi, can save ₹1,500 from her pocket money every month. A **Recurring Deposit (RD)** account lets her deposit a fixed sum every month for a fixed period (6 months to 10 years). At the end she gets her deposits plus interest: the **maturity value**.",
+          },
+          { type: "heading", text: "Where the formula comes from" },
+          {
+            type: "text",
+            md: "Suppose ₹P is deposited monthly for n months. The first instalment stays for n months, the second for (n − 1) months, …, the last for 1 month. ICSE uses **simple interest** on this total.",
+          },
+          { type: "formula", tex: t`\text{Equivalent principal for 1 month} = P\,[\,n + (n-1) + \cdots + 1\,] = P\cdot\frac{n(n+1)}{2}` },
+          { type: "formula", tex: t`I = P\times\frac{n(n+1)}{2\times 12}\times\frac{r}{100}`, caption: "P = monthly instalment, n = number of months, r = rate % per annum" },
+          { type: "formula", tex: t`\text{Maturity value} = P\times n + I` },
+          { type: "heading", text: "Worked example" },
+          {
+            type: "list",
+            ordered: true,
+            items: [
+              "Meera deposits ₹1,500 per month for 2 years at 8% per annum. Find the interest and maturity value.",
+              "n = 24 months, so $\\dfrac{n(n+1)}{2\\times12} = \\dfrac{24\\times25}{24} = 25$.",
+              "$I = 1500 \\times 25 \\times \\dfrac{8}{100} = 3000$, i.e. ₹3,000.",
+              "Total deposited = 1500 × 24 = ₹36,000.",
+              "Maturity value = ₹36,000 + ₹3,000 = **₹39,000**.",
+            ],
+          },
+          {
+            type: "checkpoint",
+            questions: [
+              {
+                kind: "numeric",
+                q: "₹500 is deposited every month for 12 months at 6% p.a. in an RD. Find the interest (₹).",
+                answer: 195,
+                unit: "₹",
+                explain: "n(n+1)/24 = 12×13/24 = 6.5. I = 500 × 6.5 × 6/100 = ₹195.",
+              },
+            ],
+          },
+          {
+            type: "callout",
+            tone: "exam",
+            title: "Board trap",
+            md: "n is always in **months** and the 12 in the denominator converts months to years. If the question says \"3 years\", use n = 36, not 3. And the maturity value adds interest to **P × n**, not to P.",
+          },
+          {
+            type: "callout",
+            tone: "fact",
+            title: "Real banks",
+            md: "Indian banks actually compound RD interest quarterly, so the bank's figure is slightly higher. ICSE questions always use the simple-interest formula above unless told otherwise.",
+          },
+          {
+            type: "keypoints",
+            items: [
+              "Equivalent principal for one month = P·n(n+1)/2.",
+              t`$I = P\cdot\dfrac{n(n+1)}{24}\cdot\dfrac{r}{100}$ with n in months.`,
+              "Maturity value = Pn + I.",
+              "Compute n(n+1)/24 first: it is usually a neat number.",
+            ],
+          },
+        ],
+        flashcards: [
+          { front: "RD interest formula (ICSE)", back: "I = P × n(n+1)/(2×12) × r/100" },
+          { front: "Maturity value of an RD", back: "P × n + I" },
+          { front: "n(n+1)/24 for n = 24", back: "25" },
+          { front: "n(n+1)/24 for n = 12", back: "6.5" },
+          { front: "Unit of n in the RD formula", back: "Months" },
+        ],
+        quiz: [
+          {
+            kind: "numeric",
+            q: "Find the maturity value of an RD of ₹2,000 per month for 1 year at 9% p.a. (₹).",
+            answer: 25170,
+            unit: "₹",
+            explain: "I = 2000 × 6.5 × 9/100 = ₹1,170. MV = 24,000 + 1,170 = ₹25,170.",
+          },
+          {
+            kind: "mcq",
+            q: "For an RD of 3 years, the value of n in the formula is:",
+            options: ["3", "12", "36", "37"],
+            answer: 2,
+            explain: "n counts months: 3 × 12 = 36.",
+          },
+          {
+            kind: "numeric",
+            q: "₹800 per month for 18 months at 10% p.a. Find the interest (₹).",
+            answer: 1140,
+            unit: "₹",
+            difficulty: 2,
+            explain: "n(n+1)/24 = 18×19/24 = 14.25. I = 800 × 14.25 × 0.1 = ₹1,140.",
+          },
+          {
+            kind: "truefalse",
+            q: "In the RD formula, the first instalment earns interest for n months and the last for 1 month.",
+            answer: true,
+            explain: "That is why the equivalent principal is P(n + (n−1) + … + 1).",
+          },
+          {
+            kind: "fill",
+            q: "The sum 1 + 2 + … + n used in the RD formula equals n(n+1)/___ .",
+            answer: ["2"],
+            explain: "Sum of the first n natural numbers = n(n+1)/2.",
+          },
+        ],
+      },
+      {
+        slug: "recurring-deposit-reverse",
+        title: "Finding the instalment, rate or time",
+        summary: "Use the RD formula backwards to find P, r or n from the interest or maturity value.",
+        minutes: 16,
+        xp: 45,
+        blocks: [
+          {
+            type: "text",
+            md: "Board papers love the reverse question: you are told the maturity value or interest and must find the monthly instalment, the rate, or the number of months. The method is always the same: write the formula, substitute what you know, solve for the unknown.",
+          },
+          { type: "heading", text: "1. Finding the rate" },
+          {
+            type: "list",
+            ordered: true,
+            items: [
+              "Rohit deposits ₹600 per month for 20 months and receives ₹12,840 at maturity. Find the rate.",
+              "Total deposit = 600 × 20 = ₹12,000, so I = ₹840.",
+              "n(n+1)/24 = 20 × 21/24 = 17.5.",
+              "840 = 600 × 17.5 × r/100 = 105r, so **r = 8% p.a.**",
+            ],
+          },
+          { type: "heading", text: "2. Finding the instalment" },
+          {
+            type: "list",
+            ordered: true,
+            items: [
+              "An RD for 1 year at 6% p.a. has maturity value ₹9,912. Find the monthly instalment.",
+              "With n = 12: I = P × 6.5 × 6/100 = 0.39P.",
+              "MV = 12P + 0.39P = 12.39P = 9,912.",
+              "**P = ₹800.**",
+            ],
+          },
+          {
+            type: "callout",
+            tone: "tip",
+            title: "Keep P as a letter",
+            md: "When P is unknown, write both parts of the maturity value in terms of P (Pn and I) and add them. Do not try to guess the interest first.",
+          },
+          { type: "heading", text: "3. Finding the time" },
+          {
+            type: "text",
+            md: t`₹1,000 per month at 9% p.a. earns ₹2,250 interest. Then $2250 = 1000\times\dfrac{n(n+1)}{24}\times\dfrac{9}{100} = 3.75\,n(n+1)$, so $n(n+1) = 600 = 24\times25$, giving **n = 24 months (2 years)**.`,
+          },
+          {
+            type: "checkpoint",
+            questions: [
+              {
+                kind: "numeric",
+                q: "An RD of ₹400 per month for 2 years earns ₹1,000 interest. Find the rate % p.a.",
+                answer: 10,
+                unit: "%",
+                explain: "n(n+1)/24 = 25. 1000 = 400 × 25 × r/100 = 100r, so r = 10%.",
+              },
+            ],
+          },
+          {
+            type: "callout",
+            tone: "exam",
+            title: "Board trap",
+            md: "When the maturity value is given, subtract **P × n** to get the interest before using the formula. Many students subtract only P. When solving for n, you get a quadratic: reject the negative root.",
+          },
+          {
+            type: "table",
+            headers: ["Unknown", "Equation to solve"],
+            rows: [
+              ["r", "I = P · n(n+1)/24 · r/100, with I = MV − Pn"],
+              ["P", "MV = Pn + P · n(n+1)/24 · r/100"],
+              ["n", "Quadratic in n from I, or from MV"],
+            ],
+          },
+          {
+            type: "checkpoint",
+            questions: [
+              {
+                kind: "truefalse",
+                q: "If the maturity value is ₹12,840 for an RD of ₹600 over 20 months, the interest is ₹12,240.",
+                answer: false,
+                explain: "Interest = MV − Pn = 12,840 − 12,000 = ₹840.",
+              },
+            ],
+          },
+          {
+            type: "keypoints",
+            items: [
+              "Interest = maturity value − (P × n).",
+              "To find P, express MV entirely in terms of P.",
+              "To find n, solve n(n+1) = value; keep the positive root.",
+              "Answer rates as % per annum and time in months or years as asked.",
+            ],
+          },
+        ],
+        flashcards: [
+          { front: "Interest when maturity value is known", back: "I = MV − P × n" },
+          { front: "MV for n = 12 at r% in terms of P", back: "12P + 6.5P × r/100" },
+          { front: "n(n+1) = 600 gives n =", back: "24" },
+          { front: "n(n+1)/24 for n = 20", back: "17.5" },
+        ],
+        quiz: [
+          {
+            kind: "numeric",
+            q: "Mr. Sharma deposits ₹1,200 per month for 15 months at 8% p.a. Find his maturity value (₹).",
+            answer: 18960,
+            unit: "₹",
+            explain: "n(n+1)/24 = 15×16/24 = 10. I = 1200 × 10 × 0.08 = ₹960. MV = 18,000 + 960 = ₹18,960.",
+          },
+          {
+            kind: "numeric",
+            q: "An RD for 2 years at 8% p.a. matures to ₹10,400. Find the monthly instalment (₹).",
+            answer: 400,
+            unit: "₹",
+            difficulty: 2,
+            explain: "MV = 24P + P × 25 × 0.08 = 24P + 2P = 26P = 10,400, so P = ₹400.",
+          },
+          {
+            kind: "numeric",
+            q: "₹250 per month at 10% p.a. earns ₹162.50 interest. Find n (months).",
+            answer: 12,
+            difficulty: 3,
+            explain: "162.5 = 250 × n(n+1)/24 × 0.1, so n(n+1) = 156 = 12 × 13, n = 12.",
+          },
+          {
+            kind: "mcq",
+            q: "₹600 per month for 20 months matures to ₹12,840. The rate is:",
+            options: ["7%", "8%", "9%", "10%"],
+            answer: 1,
+            explain: "I = 840 = 600 × 17.5 × r/100 = 105r, so r = 8%.",
+          },
+          {
+            kind: "order",
+            q: "Order the steps for finding the rate of an RD from its maturity value.",
+            items: [
+              "Compute the total deposit P × n",
+              "Interest = maturity value − P × n",
+              "Compute n(n+1)/24",
+              "Solve I = P × n(n+1)/24 × r/100 for r",
+            ],
+            explain: "Get the interest first, then the time factor, then solve for r.",
+          },
+        ],
+      },
+    ],
+  },
+
+  /* ------------------------------------------------------------------ */
+  {
+    slug: "icse10-shares-dividends",
+    title: "Shares and Dividends",
+    icon: "📈",
+    description: "Face value, market value, dividend and return; number of shares, annual income and comparing investments.",
+    lessons: [
+      {
+        slug: "shares-basics",
+        title: "Face value, market value and dividend",
+        summary: "The vocabulary of shares and the four formulas that solve every ICSE shares question.",
+        minutes: 16,
+        xp: 40,
+        blocks: [
+          {
+            type: "text",
+            md: "A company raises money by dividing its capital into small units called **shares**. Each share has a printed price, the **nominal (face) value**, but on the stock exchange in Mumbai (BSE or NSE) it trades at its **market value**, which goes up and down with demand.",
+          },
+          {
+            type: "table",
+            headers: ["Term", "Meaning"],
+            rows: [
+              ["Nominal / face value (NV)", "Printed value of a share, e.g. ₹10 or ₹100"],
+              ["Market value (MV)", "Price at which the share is bought or sold"],
+              ["At par", "MV = NV"],
+              ["At a premium", "MV > NV (e.g. ₹100 share at ₹20 premium costs ₹120)"],
+              ["At a discount", "MV < NV (e.g. ₹100 share at ₹10 discount costs ₹90)"],
+              ["Dividend", "Profit paid per year, as a % of the **face value**"],
+            ],
+          },
+          { type: "formula", tex: t`\text{No. of shares} = \frac{\text{Investment}}{\text{MV of 1 share}} \qquad \text{Annual income} = \text{No. of shares}\times\frac{\text{rate}}{100}\times\text{NV}` },
+          { type: "formula", tex: t`\text{Return}\;\% = \frac{\text{Annual income}}{\text{Investment}}\times100 = \frac{\text{Dividend on 1 share}}{\text{MV of 1 share}}\times100` },
+          { type: "heading", text: "Worked example" },
+          {
+            type: "list",
+            ordered: true,
+            items: [
+              "Anjali invests ₹20,000 in ₹100 shares quoted at ₹125 that pay a 10% dividend. Find the number of shares, her annual income and her rate of return.",
+              "Number of shares = 20,000 ÷ 125 = 160.",
+              "Dividend on one share = 10% of ₹100 = ₹10, so annual income = 160 × ₹10 = **₹1,600**.",
+              "Return = 1,600 ÷ 20,000 × 100 = **8%** (check: 10 ÷ 125 × 100 = 8%).",
+            ],
+          },
+          {
+            type: "callout",
+            tone: "exam",
+            title: "Board trap",
+            md: "Dividend is **always** calculated on the face value, never on the market value. Return % uses the market value (what you actually paid). Mixing these up is the most common error in this chapter.",
+          },
+          {
+            type: "checkpoint",
+            questions: [
+              {
+                kind: "numeric",
+                q: "How many ₹50 shares at ₹15 premium can be bought for ₹13,000?",
+                answer: 200,
+                explain: "MV = 50 + 15 = ₹65. Number = 13,000 ÷ 65 = 200.",
+              },
+            ],
+          },
+          {
+            type: "callout",
+            tone: "tip",
+            title: "Brokerage",
+            md: "ICSE questions now ignore brokerage unless it is stated. If it is given, add it to the buying price and subtract it from the selling price.",
+          },
+          {
+            type: "keypoints",
+            items: [
+              "Shares bought = investment ÷ MV.",
+              "Dividend per share = rate % × NV.",
+              "Return % = dividend per share ÷ MV × 100.",
+              "Premium: MV above NV; discount: MV below NV.",
+            ],
+          },
+        ],
+        flashcards: [
+          { front: "Dividend is calculated on", back: "Face (nominal) value" },
+          { front: "Return % on an investment", back: "Annual income ÷ investment × 100" },
+          { front: "₹100 share at 25% premium costs", back: "₹125" },
+          { front: "Number of shares bought", back: "Investment ÷ market value of one share" },
+          { front: "At par", back: "Market value = face value" },
+        ],
+        quiz: [
+          {
+            kind: "numeric",
+            q: "A man buys 400 shares of ₹10 each at ₹12.50 that pay 15% dividend. Find his annual income (₹).",
+            answer: 600,
+            unit: "₹",
+            explain: "Dividend per share = 15% of ₹10 = ₹1.50. Income = 400 × 1.50 = ₹600.",
+          },
+          {
+            kind: "numeric",
+            q: "In the question above, find his rate of return (%).",
+            answer: 12,
+            unit: "%",
+            explain: "Return = 1.50 ÷ 12.50 × 100 = 12%.",
+          },
+          {
+            kind: "mcq",
+            q: "A ₹100 share is quoted at ₹90. It is said to be at:",
+            options: ["Par", "10% premium", "10% discount", "90% discount"],
+            answer: 2,
+            explain: "MV is ₹10 below NV: a 10% discount.",
+          },
+          {
+            kind: "truefalse",
+            q: "If a share is bought at a premium, the rate of return is less than the dividend rate.",
+            answer: true,
+            explain: "Return = rate × NV ÷ MV, and NV ÷ MV < 1 when MV > NV.",
+          },
+          {
+            kind: "fill",
+            q: "Dividend is always calculated on the ___ value of a share.",
+            answer: ["face", "nominal", "face value", "nominal value"],
+            explain: "Dividend is a percentage of the face (nominal) value.",
+          },
+        ],
+      },
+      {
+        slug: "shares-comparing-reinvesting",
+        title: "Comparing investments and reinvesting",
+        summary: "Find the investment needed for a target income, compare two shares, and handle sell-and-reinvest problems.",
+        minutes: 18,
+        xp: 45,
+        blocks: [
+          {
+            type: "text",
+            md: "Once the four basic formulas are second nature, longer questions are just chains of them. Three patterns cover almost every board question.",
+          },
+          { type: "heading", text: "Pattern 1: investment for a target income" },
+          {
+            type: "text",
+            md: "To earn ₹2,400 a year from 8% ₹100 shares at ₹110: dividend per share = ₹8, so shares needed = 2,400 ÷ 8 = 300, and investment = 300 × ₹110 = **₹33,000**.",
+          },
+          { type: "heading", text: "Pattern 2: which is the better investment?" },
+          {
+            type: "table",
+            headers: ["Share", "Dividend per share", "Return %"],
+            rows: [
+              ["9% ₹100 shares at ₹120", "₹9", "9 ÷ 120 × 100 = 7.5%"],
+              ["12% ₹50 shares at ₹75", "₹6", "6 ÷ 75 × 100 = 8%"],
+            ],
+          },
+          {
+            type: "text",
+            md: "The second gives the higher return, so it is the better investment, even though its share price and dividend look smaller. **Compare return %, not dividend rates.**",
+          },
+          {
+            type: "checkpoint",
+            questions: [
+              {
+                kind: "mcq",
+                q: "Which is better: 10% ₹100 shares at ₹125, or 6% ₹10 shares at ₹8?",
+                options: ["The first (8% return)", "The second (7.5% return)", "Both equal", "The second (8% return)"],
+                answer: 0,
+                explain: "First: 10/125 = 8%. Second: 0.60/8 = 7.5%. The first is better.",
+              },
+            ],
+          },
+          { type: "heading", text: "Pattern 3: sell and reinvest" },
+          {
+            type: "list",
+            ordered: true,
+            items: [
+              "Ravi holds 300 shares of ₹50 paying 12%. He sells them at ₹80 each and invests the proceeds in ₹20 shares at ₹16 paying 10%. Find the change in his annual income.",
+              "Old income = 300 × (12% of ₹50) = 300 × ₹6 = ₹1,800.",
+              "Sale proceeds = 300 × ₹80 = ₹24,000.",
+              "New shares = 24,000 ÷ 16 = 1,500. New income = 1,500 × (10% of ₹20) = 1,500 × ₹2 = ₹3,000.",
+              "Income **increases by ₹1,200**.",
+            ],
+          },
+          {
+            type: "callout",
+            tone: "exam",
+            title: "Board trap",
+            md: "In reinvestment questions, the new number of shares comes from the **sale money ÷ new market value**. Do not carry over the old number of shares, and do not use the face value for buying.",
+          },
+          {
+            type: "checkpoint",
+            questions: [
+              {
+                kind: "numeric",
+                q: "How much must be invested in 15% ₹100 shares at ₹150 to earn ₹1,500 a year (₹)?",
+                answer: 15000,
+                unit: "₹",
+                explain: "Shares needed = 1,500 ÷ 15 = 100. Investment = 100 × 150 = ₹15,000.",
+              },
+            ],
+          },
+          {
+            type: "keypoints",
+            items: [
+              "Target income ÷ dividend per share = number of shares needed.",
+              "Compare investments by return %, i.e. dividend per share ÷ MV.",
+              "Reinvest: sale money ÷ new MV = new shares.",
+              "Change in income = new income − old income.",
+            ],
+          },
+        ],
+        flashcards: [
+          { front: "Shares needed for a target income", back: "Target income ÷ dividend per share" },
+          { front: "Better investment", back: "The one with the higher return %" },
+          { front: "New shares after selling", back: "Sale proceeds ÷ market value of new share" },
+          { front: "Return on 12% ₹50 shares at ₹75", back: "8%" },
+        ],
+        quiz: [
+          {
+            kind: "numeric",
+            q: "A man invests ₹9,600 in ₹100 shares at ₹120 paying 8% and gets a certain income. Find that annual income (₹).",
+            answer: 640,
+            unit: "₹",
+            explain: "Shares = 9,600 ÷ 120 = 80. Income = 80 × ₹8 = ₹640.",
+          },
+          {
+            kind: "numeric",
+            q: "Shares of ₹100 pay 12% dividend. At what market price will they give a 10% return (₹)?",
+            answer: 120,
+            unit: "₹",
+            difficulty: 2,
+            explain: "Dividend ₹12 = 10% of MV, so MV = ₹120.",
+          },
+          {
+            kind: "numeric",
+            q: "Priya sells 200 shares of ₹10 at ₹18 and buys ₹100 shares at ₹90 with all the money. How many new shares does she get?",
+            answer: 40,
+            difficulty: 2,
+            explain: "Sale = 200 × 18 = ₹3,600. New shares = 3,600 ÷ 90 = 40.",
+          },
+          {
+            kind: "truefalse",
+            q: "A share with a higher dividend rate is always the better investment.",
+            answer: false,
+            explain: "What matters is return % = dividend ÷ market value, which depends on the price paid.",
+          },
+          {
+            kind: "mcq",
+            q: "To earn ₹2,400 a year from 8% ₹100 shares at ₹110, the investment needed is:",
+            options: ["₹30,000", "₹26,400", "₹33,000", "₹24,000"],
+            answer: 2,
+            explain: "2,400 ÷ 8 = 300 shares; 300 × 110 = ₹33,000.",
+          },
+        ],
+      },
+    ],
+  },
+
+  /* ------------------------------------------------------------------ */
+  {
+    slug: "icse10-linear-inequations",
+    title: "Linear Inequations",
+    icon: "⚖️",
+    description: "Solving linear inequations in one variable over N, W, Z and R, and showing solution sets on a number line.",
+    lessons: [
+      {
+        slug: "inequation-rules",
+        title: "Rules and replacement sets",
+        summary: "Solve a linear inequation, flip the sign correctly, and write the solution set from a given replacement set.",
+        minutes: 15,
+        xp: 35,
+        blocks: [
+          {
+            type: "text",
+            md: "An auto-rickshaw in Hyderabad charges ₹30 plus ₹15 per km. If you have at most ₹150, how far can you go? $30 + 15x \\le 150$ is a **linear inequation**: like an equation, but with $<, >, \\le$ or $\\ge$ instead of $=$.",
+          },
+          { type: "heading", text: "Replacement set and solution set" },
+          {
+            type: "list",
+            items: [
+              "**Replacement set**: the set from which x may be chosen, e.g. N = {1, 2, 3, …}, W = {0, 1, 2, …}, Z = integers, R = real numbers.",
+              "**Solution set**: the members of the replacement set that satisfy the inequation.",
+            ],
+          },
+          { type: "heading", text: "The rules" },
+          {
+            type: "table",
+            headers: ["Operation", "Effect on the sign"],
+            rows: [
+              ["Add or subtract the same number on both sides", "Unchanged"],
+              ["Multiply or divide by a **positive** number", "Unchanged"],
+              ["Multiply or divide by a **negative** number", "**Reversed** ($<$ becomes $>$)"],
+              ["Take reciprocals of two positive numbers", "Reversed"],
+            ],
+          },
+          {
+            type: "callout",
+            tone: "exam",
+            title: "Board trap",
+            md: "Forgetting to reverse the sign after dividing by a negative number is the commonest error. From $-2x < 6$ you get $x > -3$, **not** $x < -3$. Check by substituting a value.",
+          },
+          { type: "heading", text: "Worked example" },
+          {
+            type: "list",
+            ordered: true,
+            items: [
+              "Solve $3x - 5 < 10$ for x ∈ W.",
+              "Add 5: $3x < 15$. Divide by 3: $x < 5$.",
+              "Whole numbers less than 5: solution set **{0, 1, 2, 3, 4}**.",
+              "If x ∈ N, the solution set is {1, 2, 3, 4}; if x ∈ R, it is {x : x < 5, x ∈ R}.",
+            ],
+          },
+          {
+            type: "checkpoint",
+            questions: [
+              {
+                kind: "mcq",
+                q: "Solve $5 - 2x \\ge -3$ for x ∈ N.",
+                options: ["{1, 2, 3, 4}", "{4, 5, 6, …}", "{0, 1, 2, 3, 4}", "{1, 2, 3}"],
+                answer: 0,
+                explain: "$-2x \\ge -8$, so $x \\le 4$ (sign reversed). Natural numbers: {1, 2, 3, 4}.",
+              },
+            ],
+          },
+          {
+            type: "text",
+            md: "Back to the auto: $15x \\le 120$, so $x \\le 8$. You can travel at most 8 km.",
+          },
+          {
+            type: "keypoints",
+            items: [
+              "Solve exactly like an equation, but watch the sign.",
+              "Multiplying or dividing by a negative number reverses the inequality.",
+              "The replacement set decides which values appear in the answer.",
+              "N starts at 1, W starts at 0, Z includes negatives.",
+            ],
+          },
+        ],
+        flashcards: [
+          { front: "Dividing an inequation by −3", back: "Reverses the inequality sign" },
+          { front: "Replacement set", back: "The set from which values of the variable are chosen" },
+          { front: "W (whole numbers)", back: "{0, 1, 2, 3, …}" },
+          { front: "Solve −2x < 6", back: "x > −3" },
+          { front: "Solution of 3x − 5 < 10, x ∈ W", back: "{0, 1, 2, 3, 4}" },
+        ],
+        quiz: [
+          {
+            kind: "mcq",
+            q: "Solve $2x + 7 > 1$ for x ∈ Z, x < 2.",
+            options: ["{−3, −2, −1, 0, 1}", "{−2, −1, 0, 1}", "{−2, −1, 0, 1, 2}", "{0, 1}"],
+            answer: 1,
+            explain: "$2x > -6$ gives $x > -3$. Integers with −3 < x < 2: {−2, −1, 0, 1}.",
+          },
+          {
+            kind: "truefalse",
+            q: "If $a < b$ and both are positive, then $\\dfrac{1}{a} < \\dfrac{1}{b}$.",
+            answer: false,
+            explain: "Taking reciprocals of positive numbers reverses the sign: 1/a > 1/b (e.g. 2 < 4 but 1/2 > 1/4).",
+          },
+          {
+            kind: "numeric",
+            q: "What is the largest natural number x with $4x - 3 \\le 2x + 11$?",
+            answer: 7,
+            explain: "$2x \\le 14$, so $x \\le 7$.",
+          },
+          {
+            kind: "fill",
+            q: "From $-x > 4$ we get $x$ ___ $-4$ (write < or >).",
+            answer: ["<"],
+            explain: "Multiplying by −1 reverses the sign: x < −4.",
+          },
+          {
+            kind: "numeric",
+            q: "How many whole numbers satisfy $\\dfrac{x}{2} + 1 < 4$?",
+            answer: 6,
+            difficulty: 2,
+            explain: "$x/2 < 3$, so $x < 6$. Whole numbers: 0, 1, 2, 3, 4, 5 — six of them.",
+          },
+        ],
+      },
+      {
+        slug: "combined-inequations",
+        title: "Combined inequations and the number line",
+        summary: "Solve double inequations, intersect two solution sets, and draw the answer on a number line.",
+        minutes: 17,
+        xp: 45,
+        blocks: [
+          {
+            type: "text",
+            md: "ICSE questions often join two inequations, e.g. $-3 \\le 2x - 1 < 7$, and ask you to graph the solution. The answer is the set of values that satisfy **both** parts: the intersection.",
+          },
+          { type: "heading", text: "Drawing on a number line" },
+          {
+            type: "table",
+            headers: ["Symbol", "End-point on the graph"],
+            rows: [
+              ["$<$ or $>$", "Open (hollow) circle: the point is excluded"],
+              ["$\\le$ or $\\ge$", "Closed (filled) circle: the point is included"],
+              ["x ∈ R", "Shade the whole stretch between end-points"],
+              ["x ∈ Z, W or N", "Mark separate dots only at the members"],
+            ],
+          },
+          { type: "heading", text: "Worked example 1 (two separate parts)" },
+          {
+            type: "list",
+            ordered: true,
+            items: [
+              "Solve $2x - 3 < x + 2 \\le 3x + 5$, x ∈ R.",
+              "Left part: $2x - 3 < x + 2 \\Rightarrow x < 5$.",
+              "Right part: $x + 2 \\le 3x + 5 \\Rightarrow -3 \\le 2x \\Rightarrow x \\ge -1.5$.",
+              "Solution: $\\{x : -1.5 \\le x < 5,\\ x \\in R\\}$. Graph: filled circle at −1.5, hollow circle at 5, shade between.",
+            ],
+          },
+          { type: "heading", text: "Worked example 2 (the classic)" },
+          {
+            type: "text",
+            md: t`Solve $-2 \le \dfrac12 - \dfrac{2x}{3} \le 1\dfrac56$, $x \in N$. Subtract $\tfrac12$: $-\tfrac52 \le -\tfrac{2x}{3} \le \tfrac43$. Multiply by $-\tfrac32$ and **reverse both signs**: $\tfrac{15}{4} \ge x \ge -2$. So $-2 \le x \le 3.75$ and the solution set is **{1, 2, 3}**.`,
+          },
+          {
+            type: "callout",
+            tone: "exam",
+            title: "Board trap",
+            md: "When you multiply a double inequation by a negative number, **both** signs flip. Rewrite it with the smaller number on the left before graphing. Also check whether the replacement set is R (continuous shading) or integers (dots): marks are lost for shading when dots are needed.",
+          },
+          {
+            type: "checkpoint",
+            questions: [
+              {
+                kind: "mcq",
+                q: "Solve $-3 \\le 2x - 1 < 7$, x ∈ Z.",
+                options: ["{−1, 0, 1, 2, 3}", "{−1, 0, 1, 2, 3, 4}", "{0, 1, 2, 3}", "{−2, −1, 0, 1, 2, 3}"],
+                answer: 0,
+                explain: "Add 1: $-2 \\le 2x < 8$; divide by 2: $-1 \\le x < 4$. Integers: −1, 0, 1, 2, 3.",
+              },
+            ],
+          },
+          { type: "illustration", emoji: "●━━━━━━━━○", caption: "−1.5 ≤ x < 5 on a real number line: closed at −1.5, open at 5." },
+          {
+            type: "callout",
+            tone: "tip",
+            title: "Intersection of two solution sets",
+            md: "If A = {x : x > −2} and B = {x : x ≤ 3}, then A ∩ B = {x : −2 < x ≤ 3}: the overlap of the two shaded rays.",
+          },
+          {
+            type: "checkpoint",
+            questions: [
+              {
+                kind: "truefalse",
+                q: "On a real number line, the solution of $x \\ge 2$ starts with a hollow circle at 2.",
+                answer: false,
+                explain: "≥ includes 2, so a filled circle is used.",
+              },
+            ],
+          },
+          {
+            type: "keypoints",
+            items: [
+              "A combined inequation's solution is the intersection of both parts.",
+              "Multiplying a double inequation by a negative flips both signs.",
+              "Filled circle for ≤ or ≥, hollow for < or >.",
+              "Shade for R; separate dots for N, W or Z.",
+            ],
+          },
+        ],
+        flashcards: [
+          { front: "Hollow circle on a number line means", back: "End-point not included (< or >)" },
+          { front: "Solution of a combined inequation", back: "Intersection of the two solution sets" },
+          { front: "−3 ≤ 2x − 1 < 7", back: "−1 ≤ x < 4" },
+          { front: "Graph for x ∈ Z", back: "Separate dots at the integer solutions" },
+        ],
+        quiz: [
+          {
+            kind: "mcq",
+            q: "Solve $-2 \\le \\tfrac12 - \\tfrac{2x}{3} \\le 1\\tfrac56$, x ∈ N.",
+            options: ["{1, 2, 3}", "{0, 1, 2, 3}", "{1, 2, 3, 4}", "{−2, −1, 0, 1, 2, 3}"],
+            answer: 0,
+            difficulty: 3,
+            explain: "It simplifies to −2 ≤ x ≤ 3.75; natural numbers 1, 2, 3.",
+          },
+          {
+            kind: "numeric",
+            q: "How many integers satisfy $-4 < 3x + 2 \\le 11$?",
+            answer: 5,
+            difficulty: 2,
+            explain: "$-6 < 3x \\le 9$, so $-2 < x \\le 3$: the integers −1, 0, 1, 2, 3 — five of them.",
+          },
+          {
+            kind: "truefalse",
+            q: "The solution of $x > 1$ and $x < -1$ together (x ∈ R) is the empty set.",
+            answer: true,
+            explain: "No real number is both greater than 1 and less than −1.",
+          },
+          {
+            kind: "fill",
+            q: "Solving $2x - 3 < x + 2 \\le 3x + 5$ gives $-1.5 \\le x <$ ___ .",
+            answer: ["5"],
+            explain: "Left part gives x < 5, right part gives x ≥ −1.5.",
+          },
+          {
+            kind: "order",
+            q: "Order the steps to solve and graph a combined inequation over R.",
+            items: [
+              "Split it into two simple inequations",
+              "Solve each part, reversing signs where needed",
+              "Take the intersection of the two solution sets",
+              "Mark the end-points with filled or hollow circles",
+              "Shade the part of the line between them",
+            ],
+            explain: "Solve, intersect, then graph.",
+          },
+        ],
+      },
+    ],
+  },
+
+  /* ------------------------------------------------------------------ */
+  {
+    slug: "icse10-matrices",
+    title: "Matrices",
+    icon: "🔢",
+    description: "Order and types of matrices, addition, subtraction, scalar multiplication and the product of matrices.",
+    lessons: [
+      {
+        slug: "matrix-basics",
+        title: "Order, types, addition and scalar multiplication",
+        summary: "Read the order of a matrix, recognise special matrices, and solve simple matrix equations.",
+        minutes: 15,
+        xp: 35,
+        blocks: [
+          {
+            type: "text",
+            md: "A cricket scorer in Ahmedabad records runs and wickets for two bowlers over two matches. A rectangular arrangement of numbers like this is a **matrix**. A matrix with m rows and n columns has **order m × n**.",
+          },
+          { type: "formula", tex: t`A = \begin{bmatrix} 3 & 1 \\ -1 & 2 \end{bmatrix}\ (2\times2), \qquad C = \begin{bmatrix} 4 & 0 & 7 \end{bmatrix}\ (1\times3)` },
+          {
+            type: "table",
+            headers: ["Type", "Description", "Example"],
+            rows: [
+              ["Row matrix", "Only one row", "order 1 × 3"],
+              ["Column matrix", "Only one column", "order 2 × 1"],
+              ["Square matrix", "Rows = columns", "order 2 × 2"],
+              ["Zero (null) matrix O", "Every element 0", "—"],
+              ["Identity matrix I", "Square; 1s on the leading diagonal, 0 elsewhere", t`$\begin{bmatrix}1&0\\0&1\end{bmatrix}$`],
+            ],
+          },
+          { type: "heading", text: "Adding, subtracting and scaling" },
+          {
+            type: "list",
+            items: [
+              "Matrices can be added or subtracted **only if they have the same order**: add corresponding elements.",
+              "Multiplying by a number k multiplies **every** element by k.",
+              "Two matrices are **equal** if they have the same order and all corresponding elements are equal.",
+            ],
+          },
+          { type: "heading", text: "Worked example" },
+          { type: "formula", tex: t`A = \begin{bmatrix} 3 & 1 \\ -1 & 2 \end{bmatrix},\quad B = \begin{bmatrix} 1 & 4 \\ 2 & 0 \end{bmatrix}` },
+          { type: "formula", tex: t`2A - B = \begin{bmatrix} 6 & 2 \\ -2 & 4 \end{bmatrix} - \begin{bmatrix} 1 & 4 \\ 2 & 0 \end{bmatrix} = \begin{bmatrix} 5 & -2 \\ -4 & 4 \end{bmatrix}` },
+          { type: "formula", tex: t`X + A = 2B \;\Rightarrow\; X = 2B - A = \begin{bmatrix} 2 & 8 \\ 4 & 0 \end{bmatrix} - \begin{bmatrix} 3 & 1 \\ -1 & 2 \end{bmatrix} = \begin{bmatrix} -1 & 7 \\ 5 & -2 \end{bmatrix}`, caption: "Solve matrix equations like ordinary ones, element by element." },
+          {
+            type: "checkpoint",
+            questions: [
+              {
+                kind: "numeric",
+                q: "If $\\begin{bmatrix} x+2 & 5 \\\\ 3 & y \\end{bmatrix} = \\begin{bmatrix} 7 & 5 \\\\ 3 & -1 \\end{bmatrix}$, find $x + y$.",
+                answer: 4,
+                explain: "Equal matrices: x + 2 = 7 gives x = 5, and y = −1. So x + y = 4.",
+              },
+            ],
+          },
+          {
+            type: "callout",
+            tone: "exam",
+            title: "Board trap",
+            md: "Order is written **rows × columns**. A matrix with 3 rows and 2 columns is 3 × 2, not 2 × 3. And you cannot add a 2 × 2 matrix to a 2 × 1 matrix: say \"not defined\".",
+          },
+          {
+            type: "keypoints",
+            items: [
+              "Order = rows × columns.",
+              "Add or subtract only matrices of the same order, element by element.",
+              "kA multiplies every element by k.",
+              "Equal matrices give one equation per element.",
+            ],
+          },
+        ],
+        flashcards: [
+          { front: "Order of a matrix with 3 rows, 2 columns", back: "3 × 2" },
+          { front: "Identity matrix of order 2", back: "1s on the leading diagonal, 0s elsewhere" },
+          { front: "When can A + B be found?", back: "Only when A and B have the same order" },
+          { front: "Square matrix", back: "Number of rows = number of columns" },
+          { front: "Scalar multiple kA", back: "Every element of A multiplied by k" },
+        ],
+        quiz: [
+          {
+            kind: "mcq",
+            q: "A matrix has 6 elements. Which order is NOT possible?",
+            options: ["1 × 6", "2 × 3", "3 × 2", "4 × 2"],
+            answer: 3,
+            explain: "4 × 2 = 8 elements, not 6.",
+          },
+          {
+            kind: "numeric",
+            q: "If $A = \\begin{bmatrix} 2 & -1 \\\\ 0 & 3 \\end{bmatrix}$, what is the element in row 2, column 2 of $3A - 2I$?",
+            answer: 7,
+            explain: "3 × 3 − 2 × 1 = 9 − 2 = 7.",
+          },
+          {
+            kind: "truefalse",
+            q: "A row matrix of order 1 × 3 can be added to a column matrix of order 3 × 1.",
+            answer: false,
+            explain: "Addition needs the same order; 1 × 3 and 3 × 1 are different.",
+          },
+          {
+            kind: "numeric",
+            q: "Solve $2X = \\begin{bmatrix} 6 & -4 \\\\ 2 & 8 \\end{bmatrix}$. What is the sum of all elements of X?",
+            answer: 6,
+            difficulty: 2,
+            explain: "X = [[3, −2], [1, 4]]; sum = 3 − 2 + 1 + 4 = 6.",
+          },
+          {
+            kind: "fill",
+            q: "A matrix in which every element is zero is called a ___ matrix.",
+            answer: ["zero", "null"],
+            explain: "It is the zero (null) matrix O.",
+          },
+        ],
+      },
+      {
+        slug: "matrix-multiplication",
+        title: "Multiplication of matrices",
+        summary: "Row-by-column multiplication, when a product exists, and why AB is usually not BA.",
+        minutes: 18,
+        xp: 45,
+        blocks: [
+          {
+            type: "text",
+            md: "A sweet shop in Kolkata sells rasgullas at ₹20 and sandesh at ₹30. On Monday it sells 10 and 5; on Tuesday 8 and 12. Matrix multiplication finds both days' takings at once: each row of quantities times the column of prices.",
+          },
+          { type: "formula", tex: t`\begin{bmatrix} 10 & 5 \\ 8 & 12 \end{bmatrix}\begin{bmatrix} 20 \\ 30 \end{bmatrix} = \begin{bmatrix} 10(20)+5(30) \\ 8(20)+12(30) \end{bmatrix} = \begin{bmatrix} 350 \\ 520 \end{bmatrix}`, caption: "Monday ₹350, Tuesday ₹520" },
+          { type: "heading", text: "When does AB exist?" },
+          { type: "formula", tex: t`A_{m\times n}\;B_{n\times p} = (AB)_{m\times p}`, caption: "Columns of A must equal rows of B." },
+          { type: "heading", text: "Worked example" },
+          { type: "formula", tex: t`A = \begin{bmatrix} 2 & 1 \\ 3 & 4 \end{bmatrix},\; B = \begin{bmatrix} 1 & 0 \\ -1 & 2 \end{bmatrix}` },
+          { type: "formula", tex: t`AB = \begin{bmatrix} 2-1 & 0+2 \\ 3-4 & 0+8 \end{bmatrix} = \begin{bmatrix} 1 & 2 \\ -1 & 8 \end{bmatrix},\qquad BA = \begin{bmatrix} 2 & 1 \\ 4 & 7 \end{bmatrix}` },
+          {
+            type: "text",
+            md: "So $AB \\ne BA$: matrix multiplication is **not commutative**. It is associative, $(AB)C = A(BC)$, and distributive, $A(B + C) = AB + AC$. Also $AI = IA = A$.",
+          },
+          {
+            type: "callout",
+            tone: "exam",
+            title: "Board trap",
+            md: "Because $AB \\ne BA$ in general, $(A + B)^2 = A^2 + AB + BA + B^2$, **not** $A^2 + 2AB + B^2$. Similarly $A^2 - B^2 \\ne (A+B)(A-B)$ in general. Expand matrix products carefully.",
+          },
+          {
+            type: "checkpoint",
+            questions: [
+              {
+                kind: "mcq",
+                q: "A is 2 × 3 and B is 3 × 1. The order of AB is:",
+                options: ["3 × 3", "2 × 1", "1 × 2", "AB is not defined"],
+                answer: 1,
+                explain: "(2 × 3)(3 × 1) = 2 × 1.",
+              },
+            ],
+          },
+          { type: "heading", text: "Solving for unknowns" },
+          { type: "formula", tex: t`\begin{bmatrix} 2 & 1 \\ 1 & -1 \end{bmatrix}\begin{bmatrix} x \\ y \end{bmatrix} = \begin{bmatrix} 5 \\ 1 \end{bmatrix} \;\Rightarrow\; 2x + y = 5,\; x - y = 1 \;\Rightarrow\; x = 2,\; y = 1` },
+          {
+            type: "text",
+            md: t`**Squares:** for $A = \begin{bmatrix}1&2\\3&4\end{bmatrix}$, $A^2 = \begin{bmatrix}7&10\\15&22\end{bmatrix}$. You can verify that $A^2 - 5A - 2I = O$.`,
+          },
+          {
+            type: "checkpoint",
+            questions: [
+              {
+                kind: "truefalse",
+                q: "If AB is defined, then BA is always defined too.",
+                answer: false,
+                explain: "A 2 × 3 times 3 × 1 works, but 3 × 1 times 2 × 3 does not.",
+              },
+            ],
+          },
+          {
+            type: "keypoints",
+            items: [
+              "Multiply row by column and add.",
+              "AB exists only if columns of A = rows of B; order of AB is m × p.",
+              "AB ≠ BA in general; AI = IA = A.",
+              "(A + B)² = A² + AB + BA + B².",
+            ],
+          },
+        ],
+        flashcards: [
+          { front: "Condition for AB to exist", back: "Number of columns of A = number of rows of B" },
+          { front: "Order of (2 × 3)(3 × 4)", back: "2 × 4" },
+          { front: "Is matrix multiplication commutative?", back: "No: AB ≠ BA in general" },
+          { front: "(A + B)² for matrices", back: "A² + AB + BA + B²" },
+          { front: "AI equals", back: "A (and so does IA)" },
+        ],
+        quiz: [
+          {
+            kind: "numeric",
+            q: "For $A = \\begin{bmatrix} 1 & 2 \\\\ 3 & 4 \\end{bmatrix}$, find the element in row 2, column 1 of $A^2$.",
+            answer: 15,
+            explain: "Row 2 of A times column 1 of A: 3 × 1 + 4 × 3 = 15.",
+          },
+          {
+            kind: "numeric",
+            q: "If $\\begin{bmatrix} 3 & 2 \\\\ 1 & 4 \\end{bmatrix}\\begin{bmatrix} x \\\\ 1 \\end{bmatrix} = \\begin{bmatrix} 8 \\\\ y \\end{bmatrix}$, find $y$.",
+            answer: 6,
+            difficulty: 2,
+            explain: "3x + 2 = 8 gives x = 2; y = 1 × 2 + 4 × 1 = 6.",
+          },
+          {
+            kind: "mcq",
+            q: "If A is 3 × 2, for which order of B is AB a square matrix?",
+            options: ["2 × 2", "3 × 3", "2 × 3", "3 × 2"],
+            answer: 2,
+            explain: "(3 × 2)(2 × 3) = 3 × 3, a square matrix.",
+          },
+          {
+            kind: "truefalse",
+            q: "For any square matrices A and B of the same order, $(A+B)^2 = A^2 + 2AB + B^2$.",
+            answer: false,
+            explain: "It holds only when AB = BA; in general the middle term is AB + BA.",
+          },
+          {
+            kind: "numeric",
+            q: "If $A = \\begin{bmatrix} 2 & 0 \\\\ 0 & 2 \\end{bmatrix}$, find the element in row 1, column 1 of $A^3$.",
+            answer: 8,
+            difficulty: 2,
+            explain: "A = 2I, so A³ = 8I; the (1,1) element is 8.",
+          },
+        ],
+      },
+    ],
+  },
+
+  /* ------------------------------------------------------------------ */
+  {
+    slug: "icse10-reflection",
+    title: "Reflection",
+    icon: "🪞",
+    description: "Reflecting points in the axes, the origin and lines x = a, y = b; invariant points and reflected figures.",
+    lessons: [
+      {
+        slug: "reflection-rules",
+        title: "Reflection in the axes, origin and lines",
+        summary: "The coordinate rules for every ICSE reflection, invariant points, and finding the mirror line.",
+        minutes: 15,
+        xp: 35,
+        blocks: [
+          {
+            type: "text",
+            md: "The Taj Mahal looks perfect in the long pool in front of it because its reflection is the same distance behind the water line as the building is in front. On a graph, the mirror is a line, and a **reflection** sends each point to the same distance on the other side, along a perpendicular.",
+          },
+          {
+            type: "table",
+            headers: ["Mirror", "Image of (x, y)", "Notation"],
+            rows: [
+              ["x-axis (y = 0)", "(x, −y)", "$M_x$"],
+              ["y-axis (x = 0)", "(−x, y)", "$M_y$"],
+              ["Origin", "(−x, −y)", "$M_O$"],
+              ["Line x = a", "(2a − x, y)", "—"],
+              ["Line y = b", "(x, 2b − y)", "—"],
+            ],
+          },
+          {
+            type: "callout",
+            tone: "tip",
+            title: "Memory trick",
+            md: "In the x-axis, the **x stays** and y changes sign. In the y-axis, the **y stays** and x changes sign. The coordinate named by the mirror is the one that does not change.",
+          },
+          { type: "heading", text: "Worked examples" },
+          {
+            type: "list",
+            ordered: true,
+            items: [
+              "P(3, −2) in the x-axis: P′(3, 2). Then P′ in the y-axis: P″(−3, 2). Two reflections in the axes equal one reflection in the origin.",
+              "A(5, 1) in the line x = 2: image (2 × 2 − 5, 1) = (−1, 1).",
+              "B(2, 3) in the line y = −1: image (2, 2 × (−1) − 3) = (2, −5).",
+            ],
+          },
+          {
+            type: "checkpoint",
+            questions: [
+              {
+                kind: "mcq",
+                q: "The image of (−4, 7) on reflection in the origin is:",
+                options: ["(4, 7)", "(−4, −7)", "(4, −7)", "(7, −4)"],
+                answer: 2,
+                explain: "In the origin both coordinates change sign: (4, −7).",
+              },
+            ],
+          },
+          { type: "heading", text: "Invariant points" },
+          {
+            type: "text",
+            md: "A point that maps to itself is **invariant**. Under a reflection, the invariant points are exactly the points **on the mirror line**. E.g. (0, 5) is invariant under reflection in the y-axis; (4, 0) under reflection in the x-axis.",
+          },
+          { type: "heading", text: "Finding the mirror line" },
+          {
+            type: "text",
+            md: "If P(3, 4) has image P′(3, −6), x is unchanged, so the mirror is horizontal and passes through the midpoint: $y = \\dfrac{4 + (-6)}{2} = -1$. The mirror is **y = −1**.",
+          },
+          {
+            type: "callout",
+            tone: "exam",
+            title: "Board trap",
+            md: "Students often swap the rules and write the x-axis image of (3, −2) as (−3, −2). Always ask: which coordinate is measured *along* the mirror? That one stays.",
+          },
+          {
+            type: "keypoints",
+            items: [
+              "$M_x$: (x, y) → (x, −y); $M_y$: (x, y) → (−x, y); $M_O$: (x, y) → (−x, −y).",
+              "x = a: (x, y) → (2a − x, y); y = b: (x, y) → (x, 2b − y).",
+              "Points on the mirror are invariant.",
+              "The mirror is the perpendicular bisector of PP′.",
+            ],
+          },
+        ],
+        flashcards: [
+          { front: "Reflection of (x, y) in the x-axis", back: "(x, −y)" },
+          { front: "Reflection of (x, y) in the y-axis", back: "(−x, y)" },
+          { front: "Reflection of (x, y) in the origin", back: "(−x, −y)" },
+          { front: "Reflection of (x, y) in x = a", back: "(2a − x, y)" },
+          { front: "Invariant points of a reflection", back: "Points lying on the mirror line" },
+        ],
+        quiz: [
+          {
+            kind: "mcq",
+            q: "The image of (6, −3) on reflection in the y-axis is:",
+            options: ["(6, 3)", "(−6, −3)", "(−6, 3)", "(−3, 6)"],
+            answer: 1,
+            explain: "y stays, x changes sign: (−6, −3).",
+          },
+          {
+            kind: "numeric",
+            q: "The point (7, 2) is reflected in the line x = 3. What is the x-coordinate of the image?",
+            answer: -1,
+            explain: "2a − x = 6 − 7 = −1.",
+          },
+          {
+            kind: "numeric",
+            q: "A point P is reflected in the x-axis to P′(−2, 5). What is the y-coordinate of P?",
+            answer: -5,
+            explain: "Reflecting P′ back in the x-axis gives P(−2, −5).",
+          },
+          {
+            kind: "truefalse",
+            q: "The point (0, −3) is invariant under reflection in the y-axis.",
+            answer: true,
+            explain: "It lies on the y-axis (x = 0), so it maps to itself.",
+          },
+          {
+            kind: "fill",
+            q: "P(1, 4) has image P′(1, −2) in a mirror. The mirror line is y = ___ .",
+            answer: ["1"],
+            difficulty: 2,
+            explain: "Midpoint y = (4 − 2)/2 = 1, so the mirror is y = 1.",
+          },
+        ],
+      },
+      {
+        slug: "reflection-figures",
+        title: "Reflecting figures and successive reflections",
+        summary: "Reflect polygons, combine two reflections, and find the name and area of the figure formed.",
+        minutes: 17,
+        xp: 45,
+        blocks: [
+          {
+            type: "text",
+            md: "In a typical ICSE graph-paper question, you plot a point, reflect it once, reflect the image again, join the points, name the figure and find its area. Reflection keeps lengths and angles the same: it is an **isometry**, so a reflected figure is congruent to the original.",
+          },
+          { type: "heading", text: "Successive reflections" },
+          {
+            type: "table",
+            headers: ["First", "Then", "Combined effect on (x, y)"],
+            rows: [
+              ["x-axis", "y-axis", "(−x, −y): same as reflection in the origin"],
+              ["y-axis", "x-axis", "(−x, −y): same as reflection in the origin"],
+              ["Origin", "x-axis", "(−x, y): same as reflection in the y-axis"],
+              ["x-axis", "x-axis", "(x, y): back to the start"],
+            ],
+          },
+          { type: "heading", text: "Worked example" },
+          {
+            type: "list",
+            ordered: true,
+            items: [
+              "A(2, 3) is reflected in the x-axis to A′, and A′ in the y-axis to A″. Name the figure AA′A″ and find its area.",
+              "A′ = (2, −3) and A″ = (−2, −3).",
+              "AA′ is vertical (x = 2) with length 6; A′A″ is horizontal (y = −3) with length 4.",
+              "So AA′A″ is a **right-angled triangle** with the right angle at A′.",
+              "Area = ½ × 6 × 4 = **12 square units**.",
+            ],
+          },
+          { type: "illustration", emoji: "📐", caption: "Plot A(2, 3), A′(2, −3), A″(−2, −3) on graph paper: a right triangle with legs 6 and 4." },
+          {
+            type: "checkpoint",
+            questions: [
+              {
+                kind: "numeric",
+                q: "B(4, 1) is reflected in the y-axis to B′. Find the length BB′ (units).",
+                answer: 8,
+                explain: "B′ = (−4, 1). Both have y = 1, so BB′ = 4 − (−4) = 8.",
+              },
+            ],
+          },
+          { type: "heading", text: "Reflecting a figure" },
+          {
+            type: "text",
+            md: "To reflect △PQR in a line, reflect each vertex and join the images. If P(1, 1), Q(4, 1) and R(4, 3) are reflected in the y-axis, the images are P′(−1, 1), Q′(−4, 1), R′(−4, 3). The figure QRR′Q′ is a **rectangle** of sides 8 and 2, area 16 square units.",
+          },
+          {
+            type: "callout",
+            tone: "exam",
+            title: "Board trap",
+            md: "Use a scale (e.g. 1 cm = 1 unit) and label every point with its coordinates on the graph. ICSE examiners deduct marks for unlabelled images. When asked for an invariant point, check which given points actually lie on the mirror.",
+          },
+          {
+            type: "checkpoint",
+            questions: [
+              {
+                kind: "mcq",
+                q: "A point reflected first in the origin and then in the x-axis ends up as its reflection in:",
+                options: ["The x-axis", "The y-axis", "The origin", "Itself"],
+                answer: 1,
+                explain: "(x, y) → (−x, −y) → (−x, y): reflection in the y-axis.",
+              },
+            ],
+          },
+          {
+            type: "keypoints",
+            items: [
+              "Reflection preserves lengths, angles and areas.",
+              "Reflecting in both axes (either order) = reflecting in the origin.",
+              "Reflect a figure vertex by vertex, then join the images.",
+              "Use horizontal and vertical lengths from coordinates to find areas.",
+            ],
+          },
+        ],
+        flashcards: [
+          { front: "Reflection in x-axis then y-axis equals", back: "Reflection in the origin" },
+          { front: "Is a reflected figure congruent to the original?", back: "Yes — reflection is an isometry" },
+          { front: "Distance between (a, b) and its x-axis image", back: "2|b|" },
+          { front: "Area of A(2,3), A′(2,−3), A″(−2,−3)", back: "12 square units" },
+        ],
+        quiz: [
+          {
+            kind: "numeric",
+            q: "P(3, 2) is reflected in the x-axis to P′ and P′ in the origin to P″. What is the x-coordinate of P″?",
+            answer: -3,
+            explain: "P′ = (3, −2); P″ = (−3, 2).",
+          },
+          {
+            kind: "numeric",
+            q: "A(3, 4) is reflected in the x-axis to B and in the y-axis to C. Find the area of △ABC (square units).",
+            answer: 24,
+            difficulty: 2,
+            explain: "B(3, −4), C(−3, 4). AB = 8 (vertical), AC = 6 (horizontal), right angle at A. Area = ½ × 8 × 6 = 24.",
+          },
+          {
+            kind: "truefalse",
+            q: "Reflecting a point twice in the same line brings it back to its original position.",
+            answer: true,
+            explain: "The second reflection undoes the first.",
+          },
+          {
+            kind: "mcq",
+            q: "M(−2, 5) is reflected in the line y = 2. The image is:",
+            options: ["(−2, −1)", "(6, 5)", "(−2, −5)", "(2, 5)"],
+            answer: 0,
+            explain: "(x, 2b − y) = (−2, 4 − 5) = (−2, −1).",
+          },
+          {
+            kind: "order",
+            q: "Order the steps to answer a reflection graph question.",
+            items: [
+              "Choose a scale and draw the axes",
+              "Plot and label the given point",
+              "Apply the reflection rule to find each image",
+              "Plot and label the images",
+              "Join the points and name the figure",
+            ],
+            explain: "Set up the graph, plot, reflect, plot images, then interpret.",
+          },
+        ],
+      },
+    ],
+  },
+];
 
 /** Syllabus chapter title (and its synonyms) → topic slug in `topics`. */
-export const links: Record<string, string> = {};
+export const links: Record<string, string> = {
+  "Goods and Services Tax (GST)": "icse10-gst",
+  Banking: "icse10-banking",
+  "Shares and Dividends": "icse10-shares-dividends",
+  "Linear Inequations": "icse10-linear-inequations",
+  Matrices: "icse10-matrices",
+  Reflection: "icse10-reflection",
+};
