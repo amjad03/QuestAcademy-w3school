@@ -134,7 +134,6 @@ html[data-skin="modes"][data-mode="adventure"] .btn {
   border-bottom-width: 3px;
   font-weight: 600;
   letter-spacing: 0.07em;
-  font-size: 0.86rem;
 }
 html[data-skin="modes"][data-mode="adventure"] .btn:active {
   border-bottom-width: 1px;
@@ -204,7 +203,6 @@ html[data-skin="modes"][data-mode="adventure"] .chip {
   border: 1px solid rgb(var(--line));
   background-color: rgb(var(--surface));
   font-weight: 500;
-  padding: 0.2rem 0.5rem;
 }
 html[data-skin="modes"][data-mode="adventure"] .input {
   border-radius: 6px;
@@ -218,7 +216,6 @@ html[data-skin="modes"][data-mode="adventure"] .eyebrow {
   color: rgb(var(--accent));
   font-weight: 600;
   letter-spacing: 0.16em;
-  font-size: 0.7rem;
 }
 html[data-skin="modes"][data-mode="adventure"] .prose-quest {
   font-weight: 400;
