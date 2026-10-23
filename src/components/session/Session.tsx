@@ -24,6 +24,7 @@ import { AskQuesty } from "@/components/tutor/AskQuesty";
 import { questionForTutor } from "@/lib/tutor/question";
 import { localize, useContentDict } from "@/i18n/content";
 import { QuestionInput, correctAnswerText, emptyAnswer, gradeAnswer, isAnswered, type Answer } from "@/components/learn/QuestionCard";
+import { useT } from "@/i18n";
 
 export interface SessionPayload {
   kind: "practice" | "quiz" | "test" | "challenge";
@@ -63,12 +64,19 @@ function sample(pool: SessionPayload["pool"], count: number): Item[] {
   return out;
 }
 
-const PRAISE = ["Nice!", "Great job!", "Correct!", "Excellent!", "You got it!", "Amazing!"];
-
 export function Session(raw: SessionPayload) {
   // Titles in the learner's language when the course is translated; questions are swapped per item below.
   const dict = useContentDict(raw.course.slug);
   const p = useMemo(() => (dict ? { ...raw, title: dict[raw.title] ?? raw.title, lessons: localize(raw.lessons, dict) } : raw), [raw, dict]);
+  const t = useT();
+  const PRAISE = [
+    t("practice.session.praise.nice", "Nice!"),
+    t("practice.session.praise.greatJob", "Great job!"),
+    t("practice.session.praise.correct", "Correct!"),
+    t("practice.session.praise.excellent", "Excellent!"),
+    t("practice.session.praise.gotIt", "You got it!"),
+    t("practice.session.praise.amazing", "Amazing!"),
+  ];
   const hydrated = useHydrated();
   const router = useRouter();
   const setFocusMode = useUi((s) => s.setFocusMode);
@@ -162,10 +170,10 @@ export function Session(raw: SessionPayload) {
         (bestBefore !== undefined && bestAfter !== undefined && bestAfter > bestBefore && awardExploreSticker("improved", `${p.key}:${bestAfter}`, { silent: true })) ||
         (correct < answers.length && awardExploreSticker("brave-try", `${p.key}:${dayKey()}`, { silent: true })) ||
         awardExploreSticker("lesson-complete", p.key, { silent: true });
-      if (sticker) useUi.getState().toast({ text: `New sticker: ${sticker.name}!` });
+      if (sticker) useUi.getState().toast({ text: t("practice.session.newSticker", "New sticker: {name}!", { name: sticker.name }) });
       say(sticker ? EXPLORE_LINES.lessonDone : VOICE_PRAISE[correct % VOICE_PRAISE.length]);
     }
-  }, [queue, first, recordQuiz, assessment, applyAssessment, applyPractice, markItem, p.key, p.kind, startedAt, setFocusMode]);
+  }, [queue, first, recordQuiz, assessment, applyAssessment, applyPractice, markItem, p.key, p.kind, startedAt, setFocusMode, t]);
 
   const next = useCallback(() => {
     if (result === null) return;
@@ -224,7 +232,7 @@ export function Session(raw: SessionPayload) {
         missed={missed.map((m) => ({
           uid: m.uid,
           question: <Md text={m.question.q} className="space-y-2" />,
-          answer: <MdInline text={correctAnswerText(m.question)} />,
+          answer: <MdInline text={correctAnswerText(m.question, t)} />,
           explain: m.question.explain ? <Md text={m.question.explain} className="prose-quest space-y-1 !text-sm !leading-6" /> : null,
         }))}
         exitHref={p.exitHref}
@@ -259,7 +267,7 @@ export function Session(raw: SessionPayload) {
           : {
               correct: result,
               praise: PRAISE[idx % PRAISE.length],
-              answer: <MdInline text={correctAnswerText(current.question)} />,
+              answer: <MdInline text={correctAnswerText(current.question, t)} />,
               explain: current.question.explain ? <Md text={current.question.explain} className="prose-quest space-y-2 !text-[0.96rem] !leading-7" /> : null,
             }
       }
@@ -278,13 +286,13 @@ export function Session(raw: SessionPayload) {
                     <Mascot pose="sad" size={110} animate={false} />
                   </div>
                 )}
-                <h2 className="mt-4 text-2xl font-black">{explore ? "Wait, don’t go!" : "Leave this session?"}</h2>
-                <p className="mt-2 font-semibold text-muted">You’ll lose your progress in this {p.kind === "practice" ? "practice" : "session"} if you quit now.</p>
+                <h2 className="mt-4 text-2xl font-black">{explore ? t("practice.session.quit.titleExplore", "Wait, don’t go!") : t("practice.session.quit.title", "Leave this session?")}</h2>
+                <p className="mt-2 font-semibold text-muted">{p.kind === "practice" ? t("practice.session.quit.bodyPractice", "You’ll lose your progress in this practice if you quit now.") : t("practice.session.quit.bodySession", "You’ll lose your progress in this session if you quit now.")}</p>
                 <button className="btn-primary mt-6 w-full" onClick={() => setQuit(false)} autoFocus>
-                  Keep going
+                  {t("practice.session.quit.keepGoing", "Keep going")}
                 </button>
                 <button className="btn-flat mt-2 w-full !text-bad" onClick={() => router.push(p.exitHref)}>
-                  <Flag className="h-4 w-4" /> End session
+                  <Flag className="h-4 w-4" /> {t("practice.session.quit.end", "End session")}
                 </button>
               </motion.div>
             </motion.div>
@@ -300,7 +308,7 @@ export function Session(raw: SessionPayload) {
       questionText={questionForTutor(current.question)}
       answered={result !== null}
       correct={result ?? undefined}
-      answerText={result !== null ? correctAnswerText(current.question) : undefined}
+      answerText={result !== null ? correctAnswerText(current.question, t) : undefined}
     />}
     </>
   );
