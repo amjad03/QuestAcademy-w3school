@@ -19,6 +19,7 @@ import { ProgressBar } from "@/components/ui/Progress";
 import { MdInline } from "@/components/Md";
 import { sfx } from "@/lib/sound";
 import { burst } from "@/lib/confetti";
+import { useT } from "@/i18n";
 
 type CardData = { front: string; back: string; lesson: string; href: string; subject: string; icon: string; world: string };
 type LessonInfo = { title: string; href: string; course: string; practice: string };
@@ -31,6 +32,7 @@ const GRADES = [
 ];
 
 export function PracticeHub() {
+  const t = useT();
   const hydrated = useHydrated();
   const cards = useLearner((s) => s.cards);
   const mastery = useLearner((s) => s.mastery);
@@ -70,8 +72,8 @@ export function PracticeHub() {
       <div className="flex items-center gap-5">
         <Mascot pose="read" size={96} />
         <div>
-          <h1 className="text-3xl font-black">Practice</h1>
-          <p className="mt-1 font-semibold text-muted">Strengthen what you’ve learned before it fades.</p>
+          <h1 className="text-3xl font-black">{t("practice.hub.title", "Practice")}</h1>
+          <p className="mt-1 font-semibold text-muted">{t("practice.hub.subtitle", "Strengthen what you’ve learned before it fades.")}</p>
         </div>
       </div>
 
@@ -82,26 +84,28 @@ export function PracticeHub() {
             <Brain className="h-8 w-8" />
           </span>
           <div className="flex-1">
-            <h2 className="text-xl font-black">Spaced review</h2>
+            <h2 className="text-xl font-black">{t("review.spaced.title", "Spaced review")}</h2>
             <p className="mt-1 font-semibold text-muted">
               {!hydrated || !data
-                ? "Loading your deck…"
+                ? t("review.spaced.loading", "Loading your deck…")
                 : due.length
-                  ? `${due.length} card${due.length === 1 ? "" : "s"} ready — review them right before you’d forget.`
+                  ? due.length === 1
+                    ? t("review.spaced.due.one", "{n} card ready — review them right before you’d forget.", { n: due.length })
+                    : t("review.spaced.due.other", "{n} cards ready — review them right before you’d forget.", { n: due.length })
                   : ids.length
-                    ? "All caught up! Come back tomorrow."
-                    : "Complete lessons to build your review deck."}
+                    ? t("review.spaced.caughtUp", "All caught up! Come back tomorrow.")
+                    : t("review.spaced.empty", "Complete lessons to build your review deck.")}
             </p>
           </div>
           <div className="flex gap-2">
             {ids.length > 0 && !due.length && (
               <button className="btn-ghost" onClick={() => setQueue([...ids].sort(() => Math.random() - 0.5).slice(0, 15))}>
-                Practice anyway
+                {t("review.spaced.practiceAnyway", "Practice anyway")}
               </button>
             )}
             {due.length > 0 && (
               <button className="btn-purple" onClick={() => setQueue([...due].sort(() => Math.random() - 0.5))}>
-                Start review
+                {t("review.spaced.start", "Start review")}
               </button>
             )}
           </div>
@@ -109,9 +113,9 @@ export function PracticeHub() {
         {hydrated && ids.length > 0 && (
           <div className="grid grid-cols-3 border-t-2 border-line text-center">
             {[
-              ["Due now", due.length],
-              ["In deck", ids.length],
-              ["Mastered", ids.filter((id) => cards[id].interval >= 21).length],
+              [t("review.stats.due", "Due now"), due.length],
+              [t("review.stats.deck", "In deck"), ids.length],
+              [t("review.stats.mastered", "Mastered"), ids.filter((id) => cards[id].interval >= 21).length],
             ].map(([l, n]) => (
               <div key={l as string} className="border-r-2 border-line py-4 last:border-0">
                 <div className="text-2xl font-black">{n as number}</div>
@@ -124,8 +128,8 @@ export function PracticeHub() {
 
       {/* weak skills */}
       <section className="mt-8">
-        <h2 className="text-xl font-black">Level up your weakest skills</h2>
-        <p className="mt-1 font-semibold text-muted">Skills you’ve started but haven’t made proficient yet.</p>
+        <h2 className="text-xl font-black">{t("practice.hub.weak.title", "Level up your weakest skills")}</h2>
+        <p className="mt-1 font-semibold text-muted">{t("practice.hub.weak.subtitle", "Skills you’ve started but haven’t made proficient yet.")}</p>
         {hydrated && weak.length > 0 ? (
           <ul className="card mt-4 divide-y-2 divide-line overflow-hidden">
             {weak.map(([id, level]) => {
@@ -142,14 +146,14 @@ export function PracticeHub() {
                     </span>
                   </div>
                   <Link href={l.practice} className="btn-good !px-4 !py-2 text-xs">
-                    <Dumbbell className="h-4 w-4" /> Practice
+                    <Dumbbell className="h-4 w-4" /> {t("practice.hub.title", "Practice")}
                   </Link>
                 </li>
               );
             })}
           </ul>
         ) : (
-          <div className="card mt-4 p-6 text-center font-semibold text-muted">Nothing to fix yet — practice a lesson and any shaky skills will show up here.</div>
+          <div className="card mt-4 p-6 text-center font-semibold text-muted">{t("practice.hub.weak.empty", "Nothing to fix yet — practice a lesson and any shaky skills will show up here.")}</div>
         )}
       </section>
 
@@ -160,8 +164,8 @@ export function PracticeHub() {
             <Gamepad2 className="h-6 w-6" />
           </span>
           <span className="flex-1">
-            <span className="block font-black">Learning games</span>
-            <span className="text-sm font-semibold text-muted">Quick games for early learners</span>
+            <span className="block font-black">{t("practice.hub.games.title", "Learning games")}</span>
+            <span className="text-sm font-semibold text-muted">{t("practice.hub.games.body", "Quick games for early learners")}</span>
           </span>
           <ChevronRight className="h-5 w-5 text-muted" />
         </Link>
@@ -170,8 +174,8 @@ export function PracticeHub() {
             <Layers className="h-6 w-6" />
           </span>
           <span className="flex-1">
-            <span className="block font-black">Chapter drills</span>
-            <span className="text-sm font-semibold text-muted">Adaptive NEET / JEE practice</span>
+            <span className="block font-black">{t("practice.hub.drills.title", "Chapter drills")}</span>
+            <span className="text-sm font-semibold text-muted">{t("practice.hub.drills.body", "Adaptive NEET / JEE practice")}</span>
           </span>
           <ChevronRight className="h-5 w-5 text-muted" />
         </Link>
@@ -181,6 +185,8 @@ export function PracticeHub() {
 }
 
 function ReviewSession({ queue: initial, data, onExit }: { queue: string[]; data: Record<string, CardData>; onExit: () => void }) {
+  const t = useT();
+  const gradeLabel = [t("review.grade.again", "Again"), t("review.grade.hard", "Hard"), t("review.grade.good", "Good"), t("review.grade.easy", "Easy")];
   const cards = useLearner((s) => s.cards);
   const gradeCard = useLearner((s) => s.gradeCard);
   const setFocusMode = useUi((s) => s.setFocusMode);
@@ -228,7 +234,7 @@ function ReviewSession({ queue: initial, data, onExit }: { queue: string[]; data
   return (
     <div className="fixed inset-0 z-50 flex flex-col bg-bg">
       <div className="mx-auto flex w-full max-w-[1000px] items-center gap-4 px-5 pt-6">
-        <button onClick={onExit} className="grid h-10 w-10 place-items-center rounded-xl text-muted hover:bg-surface-2" aria-label="Exit review">
+        <button onClick={onExit} className="grid h-10 w-10 place-items-center rounded-xl text-muted hover:bg-surface-2" aria-label={t("review.exit", "Exit review")}>
           <X className="h-7 w-7" strokeWidth={2.6} />
         </button>
         <ProgressBar value={reviewed / Math.max(1, reviewed + queue.length)} height={16} color="rgb(var(--accent-2))" />
@@ -240,14 +246,14 @@ function ReviewSession({ queue: initial, data, onExit }: { queue: string[]; data
               {data[current].subject} · <MdInline text={data[current].lesson} />
             </Link>
             <div className="mt-4">
-              <FlipCard card={data[current]} flipped={flipped} onFlip={() => { sfx("flip"); setFlipped((f) => !f); }} kids={data[current].world === "kids"} footer="Tap or press space to flip" />
+              <FlipCard card={data[current]} flipped={flipped} onFlip={() => { sfx("flip"); setFlipped((f) => !f); }} kids={data[current].world === "kids"} footer={t("review.flipHint", "Tap or press space to flip")} />
             </div>
           </>
         ) : (
           <div className="flex flex-col items-center py-10 text-center">
             <Mascot pose="cheer" size={140} />
-            <h2 className="mt-6 text-3xl font-black">Review complete!</h2>
-            <p className="mt-2 font-semibold text-muted">{reviewed} cards strengthened. See you at the next review.</p>
+            <h2 className="mt-6 text-3xl font-black">{t("review.complete.title", "Review complete!")}</h2>
+            <p className="mt-2 font-semibold text-muted">{t("review.complete.body", "{n} cards strengthened. See you at the next review.", { n: reviewed })}</p>
           </div>
         )}
       </div>
@@ -257,16 +263,16 @@ function ReviewSession({ queue: initial, data, onExit }: { queue: string[]; data
             {!current ? (
               <motion.div key="done" className="flex justify-end">
                 <button className="btn-primary min-w-[160px]" onClick={onExit}>
-                  Continue
+                  {t("review.continue", "Continue")}
                 </button>
               </motion.div>
             ) : flipped ? (
               <motion.div key="g" initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} className="grid grid-cols-4 gap-2 sm:gap-3">
-                {GRADES.map(({ g, label, cls, key }) => (
+                {GRADES.map(({ g, cls, key }) => (
                   <button key={g} onClick={() => grade(g)} className={clsx(cls, "flex-col !gap-0 !px-2 !py-2")}>
-                    {label}
+                    {gradeLabel[g]}
                     <span className="text-[11px] normal-case opacity-80">
-                      {reviewCard(cards[current], g).interval}d · {key}
+                      {t("review.grade.interval", "{n}d · {key}", { n: reviewCard(cards[current], g).interval, key })}
                     </span>
                   </button>
                 ))}
@@ -274,7 +280,7 @@ function ReviewSession({ queue: initial, data, onExit }: { queue: string[]; data
             ) : (
               <motion.div key="f" className="flex justify-end">
                 <button className="btn-primary w-full sm:w-auto sm:min-w-[160px]" onClick={() => setFlipped(true)}>
-                  Show answer
+                  {t("review.showAnswer", "Show answer")}
                 </button>
               </motion.div>
             )}

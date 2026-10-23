@@ -17,6 +17,7 @@ import { burst } from "@/lib/confetti";
 import { useHydrated } from "@/components/providers";
 import { Mascot } from "@/components/brand/Mascot";
 import { ProgressBar } from "@/components/ui/Progress";
+import { useT } from "@/i18n";
 
 const ROUNDS = 8;
 
@@ -35,6 +36,7 @@ const say = (t: string) => speak(t, { pitch: 1.3, rate: 0.95 });
 
 /** Full-screen game session: rounds, progress, feedback footer and a results screen. */
 export function GamePlayer({ id }: { id: GameId }) {
+  const t = useT();
   const meta = GAMES.find((g) => g.id === id)!;
   // Rounds are randomised, so only render them on the client.
   const hydrated = useHydrated();
@@ -70,7 +72,7 @@ export function GamePlayer({ id }: { id: GameId }) {
       const best = Math.max(-1, ...Object.keys(items).filter((k) => k.startsWith(prefix)).map((k) => Number(k.slice(prefix.length))));
       useLearner.getState().markItem(`${prefix}${score}`);
       const sticker = (best >= 0 && score > best && awardExploreSticker("improved", `${id}:${score}`, { silent: true })) || awardExploreSticker("game-finish", `${id}:${dayKey()}`, { silent: true });
-      if (sticker) useUi.getState().toast({ text: `New sticker: ${sticker.name}!` });
+      if (sticker) useUi.getState().toast({ text: t("kids.toast.newSticker", "New sticker: {name}!", { name: sticker.name }) });
     }
     burst({ big: score >= 6 });
     say(score >= 6 ? GAME_LINES.great : GAME_LINES.again);
@@ -87,11 +89,11 @@ export function GamePlayer({ id }: { id: GameId }) {
     <div className="flex min-h-screen flex-col bg-bg text-ink">
       {/* top bar */}
       <div className="mx-auto flex w-full max-w-[1000px] items-center gap-4 px-5 pt-6">
-        <Link href="/kids/play" className="grid h-10 w-10 shrink-0 place-items-center rounded-xl text-muted hover:bg-surface-2" aria-label="Close game">
+        <Link href="/kids/play" className="grid h-10 w-10 shrink-0 place-items-center rounded-xl text-muted hover:bg-surface-2" aria-label={t("kids.game.close", "Close game")}>
           <X className="h-7 w-7" strokeWidth={2.6} />
         </Link>
-        <ProgressBar value={round / ROUNDS} height={16} color="rgb(var(--good))" label="Game progress" />
-        <span className="flex shrink-0 items-center gap-1 text-lg font-black text-warn-shade" aria-label={`${score} correct`}>
+        <ProgressBar value={round / ROUNDS} height={16} color="rgb(var(--good))" label={t("kids.game.progress", "Game progress")} />
+        <span className="flex shrink-0 items-center gap-1 text-lg font-black text-warn-shade" aria-label={t("kids.game.correctCount", "{n} correct", { n: score })}>
           <Star className="h-6 w-6 fill-warn text-warn" /> {score}
         </span>
       </div>
@@ -105,11 +107,11 @@ export function GamePlayer({ id }: { id: GameId }) {
                 <Star key={i} className={clsx("h-12 w-12", i < stars ? "fill-warn text-warn" : "fill-line text-line")} strokeWidth={1.5} />
               ))}
             </div>
-            <h1 className="mt-4 text-3xl font-black text-warn-shade">{score >= 6 ? "Superstar!" : "Great playing!"}</h1>
+            <h1 className="mt-4 text-3xl font-black text-warn-shade">{score >= 6 ? t("kids.game.superstar", "Superstar!") : t("kids.game.greatPlaying", "Great playing!")}</h1>
             <p className="mt-1 font-semibold text-muted">{meta.title}</p>
             <div className="mt-8 grid w-full grid-cols-3 gap-3">
-              <GameStat label="Correct" value={`${score}/${ROUNDS}`} color="#2EBE70" />
-              <GameStat label="Stars" value={String(stars)} color="#FFB800" />
+              <GameStat label={t("kids.game.stat.correct", "Correct")} value={`${score}/${ROUNDS}`} color="#2EBE70" />
+              <GameStat label={t("kids.game.stat.stars", "Stars")} value={String(stars)} color="#FFB800" />
               <GameStat label="XP" value={`+${xp}`} color="#2F6BFF" />
             </div>
           </div>
@@ -124,10 +126,10 @@ export function GamePlayer({ id }: { id: GameId }) {
           {done ? (
             <>
               <Link href="/kids/play" className="btn-ghost">
-                More games
+                {t("kids.game.moreGames", "More games")}
               </Link>
               <button className="btn-primary sm:min-w-[160px]" onClick={restart} autoFocus>
-                <RotateCcw className="h-5 w-5" /> Play again
+                <RotateCcw className="h-5 w-5" /> {t("kids.game.playAgain", "Play again")}
               </button>
             </>
           ) : flash ? (
@@ -135,11 +137,11 @@ export function GamePlayer({ id }: { id: GameId }) {
               <span className={clsx("grid h-14 w-14 place-items-center rounded-full bg-surface", flash === "good" ? "text-good" : "text-bad")}>
                 {flash === "good" ? <Check className="h-8 w-8" strokeWidth={4} /> : <X className="h-8 w-8" strokeWidth={4} />}
               </span>
-              <span className={clsx("text-2xl font-black", flash === "good" ? "text-good-shade" : "text-bad-shade")}>{flash === "good" ? "Great job!" : "Not quite — next one!"}</span>
+              <span className={clsx("text-2xl font-black", flash === "good" ? "text-good-shade" : "text-bad-shade")}>{flash === "good" ? t("kids.game.greatJob", "Great job!") : t("kids.game.notQuite", "Not quite — next one!")}</span>
             </div>
           ) : (
             <span className="font-bold text-muted">
-              Round {round + 1} of {ROUNDS}
+              {t("kids.game.round", "Round {n} of {total}", { n: round + 1, total: ROUNDS })}
             </span>
           )}
         </div>
@@ -177,6 +179,7 @@ function Game({ id, onAnswer, locked }: { id: GameId; onAnswer: (ok: boolean) =>
 }
 
 function Prompt({ text, speech }: { text: string; speech?: string }) {
+  const t = useT();
   useEffect(() => {
     say(speech ?? text);
   }, [text, speech]);
@@ -187,7 +190,7 @@ function Prompt({ text, speech }: { text: string; speech?: string }) {
         <span className="absolute -left-[9px] bottom-4 h-4 w-4 rotate-45 border-b-2 border-l-2 border-line bg-surface" />
         {text}
       </div>
-      <button onClick={() => say(speech ?? text)} className="btn-primary mb-4 h-12 w-12 shrink-0 !p-0" aria-label="Say it again">
+      <button onClick={() => say(speech ?? text)} className="btn-primary mb-4 h-12 w-12 shrink-0 !p-0" aria-label={t("kids.game.sayAgain", "Say it again")}>
         <Volume2 className="h-6 w-6" />
       </button>
     </div>
@@ -197,6 +200,7 @@ function Prompt({ text, speech }: { text: string; speech?: string }) {
 const COLORS = ["#f43f5e", "#f59e0b", "#22c55e", "#3b82f6", "#a855f7", "#ec4899", "#14b8a6", "#f97316"];
 
 function BalloonPop({ onAnswer, locked }: { onAnswer: (ok: boolean) => void; locked: boolean }) {
+  const t = useT();
   const target = useMemo(() => 1 + rand(6), []);
   const balloons = useMemo(() => Array.from({ length: 9 }, (_, i) => ({ i, color: pick(COLORS), x: (i % 3) * 33 + 6 + rand(10), delay: Math.random() })), []);
   const [popped, setPopped] = useState<number[]>([]);
@@ -221,7 +225,7 @@ function BalloonPop({ onAnswer, locked }: { onAnswer: (ok: boolean) => void; loc
               }}
               className="relative mx-auto h-20 w-16 rounded-[50%]"
               style={{ background: b.color }}
-              aria-label="Balloon"
+              aria-label={t("kids.game.balloon", "Balloon")}
             >
               <span className="absolute left-3 top-3 h-5 w-3 -rotate-12 rounded-full bg-white/45" />
               <span className="absolute -bottom-1.5 left-1/2 h-3 w-3 -translate-x-1/2 rotate-45" style={{ background: b.color }} />
@@ -230,9 +234,9 @@ function BalloonPop({ onAnswer, locked }: { onAnswer: (ok: boolean) => void; loc
         )}
       </div>
       <div className="mt-4 flex items-center justify-center gap-4">
-        <span className="text-2xl font-black">Popped: {popped.length}</span>
+        <span className="text-2xl font-black">{t("kids.game.popped", "Popped: {n}", { n: popped.length })}</span>
         <button className="btn-good h-14 px-8 text-lg" disabled={locked || popped.length === 0} onClick={() => onAnswer(popped.length === target)}>
-          Check
+          {t("kids.game.check", "Check")}
         </button>
       </div>
     </div>
@@ -241,6 +245,7 @@ function BalloonPop({ onAnswer, locked }: { onAnswer: (ok: boolean) => void; loc
 
 
 function LetterHunt({ onAnswer, locked }: { onAnswer: (ok: boolean) => void; locked: boolean }) {
+  const t = useT();
   const { target, options } = useMemo(() => {
     const letters = Object.keys(LETTER_WORDS);
     const target = pick(letters);
@@ -249,8 +254,8 @@ function LetterHunt({ onAnswer, locked }: { onAnswer: (ok: boolean) => void; loc
   }, []);
   return (
     <div>
-      <Prompt text="Which letter is this?" speech={GAME_LINES.letter(target, LETTER_WORDS[target])} />
-      <p className="mt-3 text-center font-semibold text-muted">Listen carefully, then tap it! (Hint: {LETTER_WORDS[target]})</p>
+      <Prompt text={t("kids.game.whichLetter", "Which letter is this?")} speech={GAME_LINES.letter(target, LETTER_WORDS[target])} />
+      <p className="mt-3 text-center font-semibold text-muted">{t("kids.game.letterHint", "Listen carefully, then tap it! (Hint: {word})", { word: LETTER_WORDS[target] })}</p>
       <div className="mx-auto mt-8 grid max-w-md grid-cols-3 gap-4">
         {options.map((l) => (
           <motion.button whileTap={{ scale: 0.9 }} key={l} disabled={locked} onClick={() => onAnswer(l === target)} className="aspect-square rounded-2xl border-2 border-b-4 border-line bg-surface transition hover:bg-surface-2 active:translate-y-[2px] active:border-b-2 text-6xl font-black">
@@ -265,6 +270,7 @@ function LetterHunt({ onAnswer, locked }: { onAnswer: (ok: boolean) => void; loc
 const PAIRS = ["🐶", "🐱", "🦁", "🐸", "🐵", "🐧", "🦄", "🐙", "🐢", "🦋", "🍓", "🍌"];
 
 function MemoryMatch({ onAnswer }: { onAnswer: (ok: boolean) => void }) {
+  const t = useT();
   const cards = useMemo(() => shuffle([...shuffle(PAIRS).slice(0, 4)].flatMap((e) => [e, e])), []);
   const [open, setOpen] = useState<number[]>([]);
   const [found, setFound] = useState<string[]>([]);
@@ -273,14 +279,14 @@ function MemoryMatch({ onAnswer }: { onAnswer: (ok: boolean) => void }) {
     if (open.length !== 2) return;
     const [a, b] = open;
     setMoves((m) => m + 1);
-    const t = setTimeout(() => {
+    const timer = setTimeout(() => {
       if (cards[a] === cards[b]) {
         sfx("correct");
         setFound((f) => [...f, cards[a]]);
       }
       setOpen([]);
     }, 650);
-    return () => clearTimeout(t);
+    return () => clearTimeout(timer);
   }, [open, cards]);
   useEffect(() => {
     if (found.length === 4) setTimeout(() => onAnswer(moves <= 8), 400);
@@ -288,7 +294,7 @@ function MemoryMatch({ onAnswer }: { onAnswer: (ok: boolean) => void }) {
   return (
     <div>
       <Prompt text={GAME_LINES.pairs} />
-      <p className="mt-2 text-center font-semibold text-muted">Moves: {moves} · match all in 8 moves for a star</p>
+      <p className="mt-2 text-center font-semibold text-muted">{t("kids.game.moves", "Moves: {n} · match all in {max} moves for a star", { n: moves, max: 8 })}</p>
       <div className="mx-auto mt-6 grid max-w-sm grid-cols-4 gap-3">
         {cards.map((c, i) => {
           const shown = open.includes(i) || found.includes(c);
@@ -302,7 +308,7 @@ function MemoryMatch({ onAnswer }: { onAnswer: (ok: boolean) => void }) {
               }}
               animate={{ rotateY: shown ? 0 : 180 }}
               className={clsx("grid aspect-square place-items-center rounded-2xl border-2 border-b-4 text-4xl", shown ? "border-line bg-surface" : "border-accent-shade bg-accent text-white")}
-              aria-label={shown ? c : "Hidden card"}
+              aria-label={shown ? c : t("kids.game.hiddenCard", "Hidden card")}
             >
               {shown ? c : <span className="text-3xl font-black [transform:scaleX(-1)]">?</span>}
             </motion.button>
@@ -395,6 +401,15 @@ const GROUPS = [
 ];
 
 function OddOneOut({ onAnswer, locked }: { onAnswer: (ok: boolean) => void; locked: boolean }) {
+  const t = useT();
+  const groupName: Record<string, string> = {
+    fruits: t("kids.game.group.fruits", "fruits"),
+    animals: t("kids.game.group.animals", "animals"),
+    vehicles: t("kids.game.group.vehicles", "vehicles"),
+    "sea creatures": t("kids.game.group.sea", "sea creatures"),
+    weather: t("kids.game.group.weather", "weather"),
+    clothes: t("kids.game.group.clothes", "clothes"),
+  };
   const { options, odd, group } = useMemo(() => {
     const [g, h] = shuffle(GROUPS);
     const odd = pick(h.items);
@@ -410,7 +425,7 @@ function OddOneOut({ onAnswer, locked }: { onAnswer: (ok: boolean) => void; lock
           </motion.button>
         ))}
       </div>
-      {locked && <p className="mt-4 text-center text-xl font-bold text-muted">The others are all {group}!</p>}
+      {locked && <p className="mt-4 text-center text-xl font-bold text-muted">{t("kids.game.othersAre", "The others are all {group}!", { group: groupName[group] ?? group })}</p>}
     </div>
   );
 }

@@ -4,6 +4,7 @@ import { useRef, useState } from "react";
 import { motion } from "framer-motion";
 import { RotateCcw } from "lucide-react";
 import { clamp, fmt, useSvgDrag, WidgetTitle } from "./_shared";
+import { useT } from "@/i18n";
 
 type Pt = { x: number; y: number };
 const W = 400;
@@ -41,9 +42,10 @@ function rightMark(p: Pt, q: Pt, r: Pt, s = 14) {
 }
 
 function Handle({ i, p, svg, onMove }: { i: number; p: Pt; svg: React.RefObject<SVGSVGElement | null>; onMove: (i: number, p: Pt) => void }) {
+  const t = useT();
   const drag = useSvgDrag(svg, (pt) => onMove(i, { x: clamp(pt.x, 12, W - 12), y: clamp(pt.y, 12, H - 12) }));
   return (
-    <g {...drag} role="slider" aria-label={`Vertex ${NAMES[i]}`} aria-valuetext={`${Math.round(p.x)}, ${Math.round(p.y)}`}>
+    <g {...drag} role="slider" aria-label={t("widget.triangle.vertex", "Vertex {name}", { name: NAMES[i] })} aria-valuetext={`${Math.round(p.x)}, ${Math.round(p.y)}`}>
       <circle cx={p.x} cy={p.y} r="22" fill="transparent" />
       <motion.circle cx={p.x} cy={p.y} r="10" fill={COLORS[i]} stroke="rgb(var(--surface))" strokeWidth="3" whileHover={{ scale: 1.3 }} whileTap={{ scale: 1.4 }} style={{ transformOrigin: `${p.x}px ${p.y}px` }} />
     </g>
@@ -51,6 +53,7 @@ function Handle({ i, p, svg, onMove }: { i: number; p: Pt; svg: React.RefObject<
 }
 
 export default function Triangle() {
+  const t = useT();
   const [pts, setPts] = useState<Pt[]>(START);
   const svgRef = useRef<SVGSVGElement>(null);
   const move = (i: number, p: Pt) => setPts((prev) => prev.map((q, j) => (j === i ? p : q)));
@@ -63,9 +66,9 @@ export default function Triangle() {
 
   const near = (x: number, y: number, tol: number) => Math.abs(x - y) <= tol * Math.max(x, y);
   const eqCount = [near(sides[0], sides[1], 0.03), near(sides[1], sides[2], 0.03), near(sides[0], sides[2], 0.03)].filter(Boolean).length;
-  const bySides = eqCount >= 2 ? "Equilateral" : eqCount === 1 ? "Isosceles" : "Scalene";
+  const bySides = eqCount >= 2 ? t("widget.triangle.equilateral", "Equilateral") : eqCount === 1 ? t("widget.triangle.isosceles", "Isosceles") : t("widget.triangle.scalene", "Scalene");
   const maxAngle = Math.max(...angles);
-  const byAngles = Math.abs(maxAngle - 90) < 1.5 ? "Right" : maxAngle > 90 ? "Obtuse" : "Acute";
+  const byAngles = Math.abs(maxAngle - 90) < 1.5 ? t("widget.triangle.right", "Right-angled") : maxAngle > 90 ? t("widget.triangle.obtuse", "Obtuse-angled") : t("widget.triangle.acute", "Acute-angled");
 
   // Rounded display that still adds to exactly 180.
   const shown = angles.map((a) => Math.round(a));
@@ -96,11 +99,11 @@ export default function Triangle() {
   return (
     <div>
       <WidgetTitle
-        title="Triangle explorer"
-        hint="Drag the coloured corners. The angles always add up to 180°."
+        title={t("widget.triangle.title", "Triangle explorer")}
+        hint={t("widget.triangle.hint", "Drag the coloured corners. The angles always add up to 180°.")}
         right={
           <button type="button" className="btn-ghost !px-3 !py-1.5" onClick={() => setPts(START)}>
-            <RotateCcw size={14} /> Reset
+            <RotateCcw size={14} /> {t("widget.reset", "Reset")}
           </button>
         }
       />
@@ -153,18 +156,18 @@ export default function Triangle() {
               {semi}
               <line x1="4" y1="68" x2="136" y2="68" stroke="rgb(var(--ink))" strokeWidth="2" />
             </svg>
-            <p className="text-center text-xs text-muted">Tear off the corners and they make a straight line!</p>
+            <p className="text-center text-xs text-muted">{t("widget.triangle.tear", "Tear off the corners and they make a straight line!")}</p>
           </div>
           <div className="flex flex-wrap gap-2">
             {degenerate ? (
-              <span className="chip !text-warn">Too flat to be a triangle!</span>
+              <span className="chip !text-warn">{t("widget.triangle.flat", "Too flat to be a triangle!")}</span>
             ) : (
               <>
                 <motion.span key={bySides} initial={{ scale: 0.7 }} animate={{ scale: 1 }} className="chip !bg-accent/10 !text-accent text-sm">
                   {bySides}
                 </motion.span>
                 <motion.span key={byAngles} initial={{ scale: 0.7 }} animate={{ scale: 1 }} className="chip !bg-accent/10 !text-accent text-sm">
-                  {byAngles}-angled
+                  {byAngles}
                 </motion.span>
               </>
             )}
