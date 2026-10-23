@@ -270,7 +270,7 @@ function CoursesMenu({ pathname }: { pathname: string }) {
 /* Desktop tab row                                                     */
 /* ------------------------------------------------------------------ */
 
-const SUBNAV_MAX = 7;
+const SUBNAV_MAX = 6;
 
 function SubNav({ pathname, nav, more, isActive }: { pathname: string; nav: NavItem[]; more: NavItem[]; isActive: (h: string) => boolean }) {
   const t = useT();
@@ -287,7 +287,7 @@ function SubNav({ pathname, nav, more, isActive }: { pathname: string; nav: NavI
 
   return (
     <nav className="hidden border-t border-line lg:block" aria-label={t("khan.primaryNav", "Primary")}>
-      <div className="mx-auto flex max-w-[1280px] items-center gap-6 px-8">
+      <div className="mx-auto flex max-w-[1280px] items-center gap-5 px-8">
         {shown.map((n) => {
           const active = isActive(n.href);
           return (

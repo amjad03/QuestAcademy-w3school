@@ -1770,7 +1770,7 @@ export const topics: Topic[] = [
             kind: "truefalse",
             q: "Concentrated sulphuric acid is a deliquescent substance.",
             answer: false,
-            explain: "It is hygroscopic: it absorbs moisture but does not 'dissolve' in it as a solid would.",
+            explain: "It is hygroscopic: it absorbs moisture from the air without changing state. Deliquescence describes solids that absorb moisture and dissolve in it.",
           },
           {
             kind: "fill",
@@ -1854,7 +1854,7 @@ export const topics: Topic[] = [
               "Granulated zinc is used because its larger surface area and traces of copper speed up the reaction.",
               "The thistle funnel's end must dip below the acid, so gas cannot escape through it.",
               "The first few jars are rejected: they contain air, and a hydrogen–air mixture explodes when lit.",
-              "Hydrogen is collected over water because it is almost insoluble; it is not collected by displacement of air in this method because it forms an explosive mixture.",
+              "Hydrogen is collected over water because it is almost insoluble; collecting it over air is avoided because it easily mixes with air to form an explosive mixture.",
             ],
           },
           {

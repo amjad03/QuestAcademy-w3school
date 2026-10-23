@@ -2,8 +2,8 @@
 
 import type { ModeId } from "@/lib/modes";
 import type { Experience } from "../types";
-import { ClassicShell } from "../shared/ClassicShell";
-import { ClassicHome } from "../shared/ClassicHome";
+import { KhanShell } from "./Shell";
+import { KhanHome } from "./home";
 import { KhanLessonLayout } from "./lesson/KhanLessonLayout";
 import { KhanSessionLayout } from "./session/KhanSessionLayout";
 import { KhanSessionResults } from "./session/KhanSessionResults";
@@ -17,8 +17,8 @@ import { KhanSessionResults } from "./session/KhanSessionResults";
 export function khanExperience(id: ModeId): Experience {
   return {
     id,
-    Shell: ClassicShell,
-    Home: ClassicHome,
+    Shell: KhanShell,
+    Home: KhanHome,
     LessonLayout: KhanLessonLayout,
     SessionLayout: KhanSessionLayout,
     SessionResults: KhanSessionResults,

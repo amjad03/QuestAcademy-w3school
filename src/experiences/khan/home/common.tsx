@@ -92,7 +92,7 @@ export function UpNextHero({ lessonId, context, eyebrow, secondary }: { lessonId
       <HeroArt />
       <div className="relative grid gap-6 p-5 sm:p-7 md:grid-cols-[minmax(0,1fr)_minmax(0,240px)] md:gap-10">
         <div className="min-w-0">
-          <p className="text-xs font-bold uppercase tracking-[0.08em] text-white/70">{eyebrow ?? t("khan.upNextForYou", "Up next for you")}</p>
+          <p className="kh-keep-case text-xs font-bold uppercase tracking-[0.08em] text-white/70">{eyebrow ?? t("khan.upNextForYou", "Up next for you")}</p>
           <p className="kh-hero-muted mt-3 text-sm">
             {context ?? (
               <>
