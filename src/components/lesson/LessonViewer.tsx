@@ -27,6 +27,7 @@ import { NotebookDock } from "@/components/notebook/NotebookDock";
 import { useExperience } from "@/experiences";
 import type { LessonTab } from "@/experiences/types";
 import dynamic from "next/dynamic";
+import { AskQuesty } from "@/components/tutor/AskQuesty";
 
 const LessonExplainers = dynamic(() => import("@/explainers/LessonExplainers"), { ssr: false });
 
@@ -125,6 +126,7 @@ export function LessonViewer(p: LessonViewerPayload) {
 
   const Layout = exp.LessonLayout;
   return (
+    <>
     <Layout
       world={p.world}
       course={p.course}
@@ -140,6 +142,8 @@ export function LessonViewer(p: LessonViewerPayload) {
       onComplete={finishArticle}
       completed={Boolean(st.lessons[p.id])}
     />
+    <AskQuesty placement="lesson" courseTitle={p.course.title} lessonTitle={p.lesson.title} lessonSummary={p.lesson.summary} />
+    </>
   );
 }
 

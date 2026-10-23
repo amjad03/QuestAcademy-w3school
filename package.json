@@ -2,7 +2,7 @@
   "name": "quest-academy",
   "version": "1.0.0",
   "private": true,
-  "description": "Quest Academy \u2014 learn anything, anytime, your way. Interactive lessons, quizzes and gamification from pre-primary to PG.",
+  "description": "Quest Academy — learn anything, anytime, your way. Interactive lessons, quizzes and gamification from pre-primary to PG.",
   "scripts": {
     "dev": "next dev",
     "build": "next build",
@@ -13,6 +13,7 @@
     "generate-voice": "tsx --tsconfig tsconfig.json scripts/generate-voice.ts"
   },
   "dependencies": {
+    "@anthropic-ai/sdk": "^1.2.0",
     "@codemirror/lang-css": "^6.3.1",
     "@codemirror/lang-html": "^6.4.12",
     "@codemirror/lang-javascript": "^6.2.5",

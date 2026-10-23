@@ -3,6 +3,7 @@
 import { ModeSettings } from "@/components/modes/ModeSettings";
 import { SkinPicker } from "@/components/settings/SkinPicker";
 import { LanguagePicker } from "@/components/i18n/LanguagePicker";
+import { TutorToggle } from "@/components/tutor/TutorToggle";
 
 import Link from "next/link";
 import { useRef, useState } from "react";
@@ -78,6 +79,10 @@ export function Settings() {
       <Section id="experience" title="Experience">
         <p className="mb-4 text-sm font-semibold text-muted">Quest Academy adapts its look, pace and rewards to you. Every course works in every mode.</p>
         <ModeSettings />
+      </Section>
+
+      <Section id="tutor" title="Ask Questy (AI tutor)">
+        <TutorToggle />
       </Section>
 
       <Section id="preferences" title="Preferences">

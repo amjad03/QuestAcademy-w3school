@@ -20,6 +20,8 @@ import { say } from "@/lib/voice";
 import { dayKey } from "@/lib/gamification";
 import { awardExploreSticker } from "@/components/modes/explore/stickers";
 import { ENCOURAGE, EXPLORE_LINES, PRAISE as VOICE_PRAISE } from "@/content/voice-lines";
+import { AskQuesty } from "@/components/tutor/AskQuesty";
+import { questionForTutor } from "@/lib/tutor/question";
 import { QuestionInput, correctAnswerText, emptyAnswer, gradeAnswer, isAnswered, type Answer } from "@/components/learn/QuestionCard";
 
 export interface SessionPayload {
@@ -230,6 +232,7 @@ export function Session(p: SessionPayload) {
   /* ---------------- QUESTION ---------------- */
   const Layout = exp.SessionLayout;
   return (
+    <>
     <Layout
       kind={p.kind}
       title={p.title}
@@ -285,5 +288,16 @@ export function Session(p: SessionPayload) {
         </AnimatePresence>
       }
     />
+    {/* Graded quizzes/tests: the tutor opens only after the learner has answered. */}
+    {(!assessment || result !== null) && <AskQuesty
+      placement="session"
+      courseTitle={p.course.title}
+      lessonTitle={p.lessons.find((l) => l.id === current.lessonId)?.title ?? p.title}
+      questionText={questionForTutor(current.question)}
+      answered={result !== null}
+      correct={result ?? undefined}
+      answerText={result !== null ? correctAnswerText(current.question) : undefined}
+    />}
+    </>
   );
 }

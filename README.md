@@ -55,6 +55,16 @@ npm run generate-voice      # renders only missing clips; needs ffmpeg
 npm run generate-voice -- --prune   # also removes clips no longer used
 ```
 
+## Ask Questy (AI tutor)
+
+A Socratic tutor powered by Claude Haiku: it answers with hints and guiding questions and doesn't give away the answer to a question the learner hasn't tried yet. It opens from any lesson and from practice; in quizzes and tests it opens only after the learner has answered.
+
+1. Create an API key at https://console.anthropic.com → API Keys.
+2. Put it in `.env.local` (and in your host's environment variables): `ANTHROPIC_API_KEY=sk-ant-...`
+3. Restart the server. Only the server route `/api/tutor` reads the key.
+
+Without a key the rest of the app works normally. Built-in limits: 30 requests per 10 minutes per IP (in memory, per server instance) and at most 20 messages of up to 4,000 characters each. The tutor is never shown to Sprout learners (ages 3–5), and **Settings → Ask Questy** turns it off on a device. Set a monthly spend limit in the Anthropic Console.
+
 ## Design rollback
 
 **Settings → Design** has three choices: **Age designs** (default, one design per profile, above), **Classic** (the original Quest look for everyone — the rollback) and **Studio** (an editorial variant of Classic: hairline borders, indigo and teal, Inter). The choice is a `data-skin` attribute on `<html>`; switching is instant and never touches progress.
