@@ -97,7 +97,7 @@ export const topics: Topic[] = [
           },
           {
             type: "text",
-            md: "**Worked example: name the organ.** A green, flattened, leaf-like structure of Opuntia bears spines and arises with buds at nodes. Nodes mean it is a **stem**, so it is a phylloclade; its spines, which sit where leaves should be, are modified **leaves**.\n\n**Leaf modifications**: tendrils (pea), spines (cacti), fleshy storage leaves (onion, garlic), **phyllodes** where the petiole becomes flat and green (Australian Acacia), and insect-trapping leaves (pitcher plant, Venus fly trap).",
+            md: "**Worked example: name the organ.** A green, flattened, leaf-like structure of Opuntia bears nodes with buds, and spines at those nodes. Nodes mean it is a **stem**, so it is a phylloclade; its spines, which sit where leaves should be, are modified **leaves**.\n\n**Leaf modifications**: tendrils (pea), spines (cacti), fleshy storage leaves (onion, garlic), **phyllodes** where the petiole becomes flat and green (Australian Acacia), and insect-trapping leaves (pitcher plant, Venus fly trap).",
           },
           {
             type: "keypoints",
@@ -1091,10 +1091,9 @@ export const topics: Topic[] = [
             headers: ["B-DNA parameter", "Value"],
             rows: [["Base pairs per turn", "10"], ["Pitch (one turn)", "3.4 nm"], ["Rise per base pair", "0.34 nm"], ["Rotation per base pair", "36°"]],
           },
-          { type: "heading", text: "Worked example" },
           {
             type: "text",
-            md: "**Problem.** A double-stranded DNA sample has 20% adenine. (a) What are the percentages of T, G and C? (b) A human diploid cell has about 6.6 × 10⁹ bp. How long is its DNA?\n\n**Solution.** (a) By base pairing A = T = 20%, so A + T = 40%. G + C = 60%, and G = C = **30%** each.\n\n(b) Length = number of bp × distance per bp:",
+            md: "**Worked example.** A double-stranded DNA sample has 20% adenine. (a) What are the percentages of T, G and C? (b) A human diploid cell has about 6.6 × 10⁹ bp. How long is its DNA?\n\n**Solution.** (a) By base pairing A = T = 20%, so A + T = 40%. G + C = 60%, and G = C = **30%** each.\n\n(b) Length = number of bp × distance per bp:",
           },
           {
             type: "formula",

@@ -793,6 +793,7 @@ So $d = \frac{10}{\sqrt{59}}$.`,
               t`$\vec a \cdot \vec a = |\vec a|^2$; $|\vec a + \vec b|^2 = |\vec a|^2 + |\vec b|^2 + 2\,\vec a \cdot \vec b$.`,
             ],
           },
+          { type: "illustration", emoji: "🔦", caption: "Projection is the shadow of a on the line of b when light falls perpendicular to b." },
           { type: "formula", tex: t`\text{Projection of } \vec a \text{ on } \vec b = \frac{\vec a \cdot \vec b}{|\vec b|}` },
           {
             type: "text",
@@ -1006,6 +1007,7 @@ $\overrightarrow{AB} \times \overrightarrow{AC} = -4\hat i + 2\hat j - \hat k$, 
         minutes: 14,
         xp: 35,
         blocks: [
+          { type: "heading", text: "What is a differential equation?" },
           { type: "text", md: "A **differential equation** (DE) relates a function to its derivatives. \"Population grows at a rate proportional to its size\" becomes $\\frac{dP}{dt} = kP$." },
           {
             type: "list",
@@ -1347,6 +1349,7 @@ Check: $y' + \frac{y}{x} = \frac{3x^2}{4} - \frac{C}{x^2} + \frac{x^2}{4} + \fra
 - Money: $2500x + 500y \le 50\,000$, i.e. $5x + y \le 100$.
 - Non-negativity: $x, y \ge 0$.`,
           },
+          { type: "heading", text: "A four-step recipe" },
           { type: "illustration", emoji: "🪑", caption: "Every feasible stock plan is a point inside the region bounded by the lines x + y = 60, 5x + y = 100 and the axes." },
           {
             type: "list",
@@ -1357,6 +1360,12 @@ Check: $y' + \frac{y}{x} = \frac{3x^2}{4} - \frac{C}{x^2} + \frac{x^2}{4} + \fra
               "Turn each resource limit into an inequality.",
               "Add x ≥ 0, y ≥ 0.",
             ],
+          },
+          {
+            type: "callout",
+            tone: "tip",
+            title: "Writing the objective",
+            md: "Profit per item × number of items gives the objective. If the question gives selling and cost prices, use **profit = selling price − cost price** per item, not the selling price.",
           },
           {
             type: "callout",
@@ -1464,6 +1473,7 @@ The lines $x + y = 60$ and $5x + y = 100$ meet where $4x = 40$, i.e. $(10, 50)$.
               ["(0, 60)", "4500"],
             ],
           },
+          { type: "illustration", emoji: "📊", caption: "Slide the line 250x + 75y = k outward: the last feasible point it touches is the corner (10, 50)." },
           {
             type: "text",
             md: "So he should stock **10 tables and 50 chairs** for a maximum profit of **₹6,250**.",
@@ -1670,6 +1680,7 @@ The lines meet where $2x + y = 8$ and $x + 2y = 10$: $x = 2$, $y = 4$.`,
 export const links: Record<string, string> = {
   "Introduction to Three Dimensional Geometry": "intro-3d-geometry",
   "Three Dimensional Geometry": "three-d-geometry",
+  "Three-dimensional Geometry": "three-d-geometry",
   "Vector Algebra": "vector-algebra",
   Vectors: "vector-algebra",
   "Differential Equations": "differential-equations",

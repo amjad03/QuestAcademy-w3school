@@ -1722,6 +1722,7 @@ export const links: Record<string, string> = {
   "s-Block Elements": "s-block-elements",
   "p-Block Elements (Groups 13 and 14)": "p-block-13-14",
   "p-Block Elements": "p-block-13-14",
+  "d- and f-Block Elements": "d-and-f-block",
   "The d- and f-Block Elements": "d-and-f-block",
   "Coordination Compounds": "coordination-compounds",
   "Co-ordination Compounds": "coordination-compounds",
