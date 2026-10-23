@@ -1,6 +1,6 @@
 import Link from "next/link";
 import type { Metadata } from "next";
-import { ArrowRight, BarChart3, BookOpen, CalendarDays, ClipboardList, Code2, MessageCircleQuestion, School, Target, Users } from "lucide-react";
+import { ArrowRight, BarChart3, BookOpen, CalendarDays, Check, ClipboardList, MessageCircleQuestion, School, Users } from "lucide-react";
 import { platformStats, subjects } from "@/content";
 import { syllabusStats } from "@/content/syllabus";
 import { pathways } from "@/content/pathways";
@@ -8,9 +8,7 @@ import { BOARDS } from "@/lib/modes";
 import { CourseIcon } from "@/components/brand/CourseIcon";
 import { Faq, type FaqItem } from "@/components/marketing/Faq";
 import { AgeSwitcher } from "@/components/marketing/landing/AgeSwitcher";
-import { LanguageShowcase } from "@/components/marketing/landing/LanguageShowcase";
-import { HeroPlayground } from "@/components/marketing/landing/HeroPlayground";
-import { LiveExplainer } from "@/components/marketing/landing/LiveExplainer";
+import { ProductShot } from "@/components/marketing/landing/ProductShot";
 
 export const metadata: Metadata = {
   title: "Quest Academy: free lessons and practice from pre-school to college",
@@ -33,6 +31,75 @@ const faq: FaqItem[] = [
   { q: "Are the certificates accredited?", a: "No. Pathway certificates are certificates of completion from Quest Academy. They are not recognised by any university or examination board." },
 ];
 
+const TOUR = [
+  {
+    eyebrow: "Lessons and practice",
+    title: "Learn a concept, then practise it straight away",
+    body: "Each lesson has a short article or video, a practice set and flashcards. Practice gives a hint after a wrong answer instead of the solution, and brings missed questions back at the end.",
+    points: ["Mastery levels for every skill, from Attempted to Mastered", "Unit quizzes, unit tests and a course challenge", "Notes, bookmarks and doubts saved with each lesson"],
+    href: "/courses",
+    cta: "Browse courses",
+    shot: "unit",
+    url: "Unit 1: Motion · School Physics",
+    alt: "A unit page listing lessons, practice sets and their completion",
+  },
+  {
+    eyebrow: "Syllabus",
+    title: "Your board and class, chapter by chapter",
+    body: "Choose CBSE, ICSE, ISC, Karnataka PUC or NEET and JEE, then your class. Every chapter is linked to its lessons, practice drills and formula sheet, with progress shown against the full syllabus.",
+    points: ["Chapter weightage and exam countdown", "Classes from pre-primary to undergraduate", "Printable worksheets with answer keys"],
+    href: "/library",
+    cta: "Browse by class",
+    shot: "syllabus",
+    url: "Library",
+    alt: "The library, organised by class from pre-primary to professional",
+  },
+  {
+    eyebrow: "Explainers",
+    title: "Difficult ideas shown four ways",
+    body: "Key concepts come with a step-by-step animation, a hands-on activity, a short comic and an everyday comparison. They sit inside the lessons and can be opened on their own.",
+    points: ["Thirty explainers across maths, science and coding", "Narrated, with captions", "Work on phones and tablets"],
+    href: "/explain",
+    cta: "View all explainers",
+    shot: "explainer",
+    url: "Electric circuits · Explainers",
+    alt: "An animated explainer showing current in a circuit",
+  },
+  {
+    eyebrow: "Exam preparation",
+    title: "Mock tests in the real exam format",
+    body: "Full-length and short mock tests in the computer-based format used by NTA, with section tabs, a question palette, negative marking and a detailed report afterwards.",
+    points: ["Chapter-wise adaptive drills", "A formula vault with self-test mode", "A revision plan that adjusts when you fall behind"],
+    href: "/exam",
+    cta: "Open exam prep",
+    shot: "exam",
+    url: "Exam prep",
+    alt: "The exam preparation page with mock tests, drills and a countdown",
+  },
+  {
+    eyebrow: "Code lab",
+    title: "Write and run code in the browser",
+    body: "Python, JavaScript, HTML, CSS and SQL run in the browser with nothing to install. Coding lessons include challenges that are checked automatically.",
+    points: ["Live preview for web pages", "Five languages, one editor", "Download or share your work"],
+    href: "/code/playground",
+    cta: "Open the code lab",
+    shot: "code",
+    url: "Code lab",
+    alt: "The code lab with an HTML editor and live preview",
+  },
+  {
+    eyebrow: "Seven languages",
+    title: "Study in the language you think in",
+    body: "The interface, course names and syllabus chapters are available in English, Hindi, Kannada, Tamil, Telugu, Marathi and Bengali. Lessons up to Class 10 are available in Hindi and Kannada, with more in progress.",
+    points: ["Formulas and code are never altered", "Fill-in answers accepted in either language", "Switch any translated lesson back to English"],
+    href: "/onboarding",
+    cta: "Choose your language",
+    shot: "lesson-hi",
+    url: "दूरी, चाल और वेग",
+    alt: "A physics lesson shown in Hindi",
+  },
+];
+
 const CATEGORIES: { label: string; slugs: string[] }[] = [
   { label: "Early learning", slugs: ["abc-adventures", "number-land", "shapes-colors", "my-world", "math-magic"] },
   { label: "School", slugs: ["math-middle", "math-high", "physics-school", "chemistry-school", "biology-school", "social-studies"] },
@@ -53,26 +120,23 @@ export default function Home() {
   return (
     <main className="font-landing">
       {/* Hero */}
-      <section className="border-b border-line">
-        <div className="mx-auto grid max-w-[1200px] grid-cols-1 items-center gap-12 px-5 py-16 lg:grid-cols-[minmax(0,1fr)_minmax(0,1fr)] lg:gap-16 lg:py-24">
-          <div>
-            <h1 className="text-[2.5rem] font-extrabold leading-[1.08] tracking-[-0.025em] text-ink sm:text-[3.25rem]">Learn anything from pre-school to college, in your language.</h1>
-            <p className="mt-6 max-w-[34rem] text-lg leading-8 text-muted">
-              Lessons, practice and mock tests mapped to CBSE, ICSE, Karnataka PUC, NEET and JEE, plus college subjects and career skills. Available in English and six Indian languages. Free, and no account is needed.
-            </p>
-            <div className="mt-9 flex flex-col gap-3 sm:flex-row">
-              <Link href="/onboarding" className="btn-primary px-7 py-3.5 text-base">
-                Start learning
-              </Link>
-              <Link href="/courses" className="btn-ghost px-7 py-3.5 text-base">
-                Browse courses
-              </Link>
-            </div>
+      <section className="overflow-hidden border-b border-line bg-gradient-to-b from-surface to-surface-2/60">
+        <div className="mx-auto max-w-[1200px] px-5 pt-16 text-center lg:pt-24">
+          <h1 className="mx-auto max-w-[17ch] text-[2.5rem] font-extrabold leading-[1.06] tracking-[-0.03em] text-ink sm:text-[3.5rem]">Learn anything from pre-school to college, in your language.</h1>
+          <p className="mx-auto mt-6 max-w-[40rem] text-lg leading-8 text-muted">
+            Lessons, practice and mock tests mapped to CBSE, ICSE, Karnataka PUC, NEET and JEE, plus college subjects and career skills. In English and six Indian languages. Free to use.
+          </p>
+          <div className="mt-9 flex flex-col justify-center gap-3 sm:flex-row">
+            <Link href="/onboarding" className="btn-primary px-7 py-3.5 text-base">
+              Start learning
+            </Link>
+            <Link href="/courses" className="btn-ghost px-7 py-3.5 text-base">
+              Browse courses
+            </Link>
           </div>
-          <div>
-            <p className="mb-3 text-sm font-semibold text-muted">Try a question from one of the courses:</p>
-            <HeroPlayground />
-          </div>
+        </div>
+        <div className="mx-auto mt-14 max-w-[1120px] px-5 lg:mt-16">
+          <ProductShot src="/landing/lesson.webp" alt="A Class 10 physics lesson with its table of contents, practice and flashcards" url="Distance, Speed & Velocity · School Physics" priority className="-mb-px rounded-b-none border-b-0" />
         </div>
       </section>
 
@@ -94,68 +158,60 @@ export default function Home() {
       </section>
 
       {/* Profiles */}
-      <section id="profiles" className="mx-auto max-w-[1200px] px-5 py-20">
-        <SectionHead title="Designed for each stage of learning" body="Each age group gets its own interface: navigation, lesson pages, practice and rewards. Select a profile to see it." />
+      <section id="profiles" className="mx-auto max-w-[1200px] px-5 py-20 lg:py-28">
+        <SectionHead title="One platform, designed for each stage" body="A four-year-old and a working engineer need different things. Each age profile has its own home, navigation, lesson pages and practice, built on the same courses and progress." />
         <AgeSwitcher />
       </section>
 
-      {/* Explainers */}
-      <section className="border-y border-line bg-surface-2/50">
-        <div className="mx-auto max-w-[1200px] px-5 py-20">
-          <SectionHead title="Interactive explainers" body="Key concepts are explained in four ways: a step-by-step animation, a hands-on activity, a short comic and an everyday comparison. The example below is the same component used in the lessons." />
-          <div className="mt-10">
-            <LiveExplainer />
-          </div>
-          <p className="mt-6">
-            <Link href="/explain" className="inline-flex items-center gap-1.5 font-bold text-accent hover:underline">
-              View all explainers <ArrowRight className="h-4 w-4" />
-            </Link>
-          </p>
-        </div>
-      </section>
-
-      {/* Languages */}
-      <section className="mx-auto grid max-w-[1200px] grid-cols-1 items-center gap-12 px-5 py-20 lg:grid-cols-[minmax(0,1fr)_minmax(0,1fr)]">
-        <div>
-          <h2 className="text-3xl font-extrabold tracking-[-0.02em] text-ink sm:text-[2.25rem]">Seven languages</h2>
-          <p className="mt-4 text-lg leading-8 text-muted">
-            English, Hindi, Kannada, Tamil, Telugu, Marathi and Bengali. The interface, course names and syllabus chapters are translated in all seven. Lessons up to Class 10 are available in Hindi and Kannada, with more in progress.
-          </p>
-          <ul className="mt-6 list-disc space-y-2 pl-5 text-[15px] leading-7 text-ink marker:text-muted">
-            <li>Mathematical notation, formulas and code are never altered.</li>
-            <li>Fill-in answers are accepted in English or the selected language.</li>
-            <li>Every translated lesson can be switched back to the original English.</li>
-            <li>Translations are machine-generated and are being reviewed by teachers.</li>
-          </ul>
-        </div>
-        <LanguageShowcase />
-      </section>
-
-      {/* Features */}
+      {/* Product tour */}
       <section className="border-y border-line bg-surface">
-        <div className="mx-auto max-w-[1200px] px-5 py-20">
-          <SectionHead title="What is included" />
-          <div className="mt-12 grid gap-x-10 gap-y-10 sm:grid-cols-2 lg:grid-cols-3">
-            {[
-              { icon: MessageCircleQuestion, title: "Ask Questy", body: "A tutor inside every lesson and practice set. It gives hints and asks guiding questions instead of giving the answer. In tests it is available only after you answer.", href: "/learn" },
-              { icon: Target, title: "Exam preparation", body: "Chapter drills, a formula reference and full-length mock tests in the computer-based format, with negative marking and a performance report.", href: "/exam" },
-              { icon: BarChart3, title: "Mastery tracking", body: "Each skill moves through Attempted, Familiar, Proficient and Mastered as you practise. Spaced review brings back topics before they are forgotten.", href: "/insights" },
-              { icon: CalendarDays, title: "Study planner", body: "Enter your exam date and available hours. The planner schedules the remaining chapters and adjusts when you fall behind.", href: "/plan" },
-              { icon: Code2, title: "Code lab", body: "Python, JavaScript, HTML, CSS and SQL run in the browser with no installation. Coding challenges are checked automatically.", href: "/code/playground" },
-              { icon: Users, title: "Parent dashboard", body: "Time spent, chapters completed and topics that need attention, with a setting to turn the tutor off.", href: "/parent" },
-            ].map((f) => (
-              <Link key={f.title} href={f.href} className="group block">
-                <f.icon className="h-6 w-6 text-accent" strokeWidth={2} />
-                <h3 className="mt-4 text-lg font-bold text-ink group-hover:text-accent">{f.title}</h3>
-                <p className="mt-2 text-[15px] leading-7 text-muted">{f.body}</p>
-              </Link>
-            ))}
-          </div>
+        <div className="mx-auto max-w-[1200px] space-y-24 px-5 py-20 lg:space-y-32 lg:py-28">
+          {TOUR.map((f, i) => (
+            <div key={f.title} className="grid grid-cols-1 items-center gap-10 lg:grid-cols-[minmax(0,5fr)_minmax(0,7fr)] lg:gap-16">
+              <div className={i % 2 ? "lg:order-2" : ""}>
+                <p className="text-sm font-semibold text-accent">{f.eyebrow}</p>
+                <h2 className="mt-2 text-3xl font-extrabold tracking-[-0.02em] text-ink sm:text-[2.1rem]">{f.title}</h2>
+                <p className="mt-4 text-lg leading-8 text-muted">{f.body}</p>
+                <ul className="mt-6 space-y-2.5">
+                  {f.points.map((pt) => (
+                    <li key={pt} className="flex items-start gap-2.5 text-[15px] leading-7 text-ink">
+                      <Check className="mt-1.5 h-4 w-4 shrink-0 text-accent" strokeWidth={2.5} />
+                      {pt}
+                    </li>
+                  ))}
+                </ul>
+                <Link href={f.href} className="mt-6 inline-flex items-center gap-1.5 font-bold text-accent hover:underline">
+                  {f.cta} <ArrowRight className="h-4 w-4" />
+                </Link>
+              </div>
+              <ProductShot src={`/landing/${f.shot}.webp`} alt={f.alt} url={f.url} className={i % 2 ? "lg:order-1" : ""} sizes="(min-width: 1200px) 680px, 100vw" />
+            </div>
+          ))}
+        </div>
+      </section>
+
+      {/* More tools */}
+      <section className="mx-auto max-w-[1200px] px-5 py-20">
+        <SectionHead title="Also included" />
+        <div className="mt-12 grid gap-x-10 gap-y-10 sm:grid-cols-2 lg:grid-cols-4">
+          {[
+            { icon: MessageCircleQuestion, title: "Ask Questy", body: "A tutor inside every lesson and practice set. It gives hints and asks guiding questions instead of giving the answer. In tests it is available only after you answer.", href: "/learn" },
+            { icon: BarChart3, title: "Mastery tracking", body: "Each skill moves through Attempted, Familiar, Proficient and Mastered as you practise. Spaced review brings back topics before they are forgotten.", href: "/insights" },
+            { icon: CalendarDays, title: "Study planner", body: "Enter your exam date and available hours. The planner schedules the remaining chapters and adjusts when you fall behind.", href: "/plan" },
+            { icon: Users, title: "Accounts and sync", body: "Start as a guest. Create a free account to keep your progress, notes and doubts on every device.", href: "/auth?mode=signup" },
+          ].map((f) => (
+            <Link key={f.title} href={f.href} className="group block">
+              <f.icon className="h-6 w-6 text-accent" strokeWidth={2} />
+              <h3 className="mt-4 text-lg font-bold text-ink group-hover:text-accent">{f.title}</h3>
+              <p className="mt-2 text-[15px] leading-7 text-muted">{f.body}</p>
+            </Link>
+          ))}
         </div>
       </section>
 
       {/* Syllabus */}
-      <section id="syllabus" className="mx-auto max-w-[1200px] px-5 py-20">
+      <section id="syllabus" className="border-t border-line">
+        <div className="mx-auto max-w-[1200px] px-5 py-20">
         <SectionHead title="Mapped to your syllabus" body="Choose your board and class to see every chapter with its weightage, linked lessons, practice drills and formula sheets." />
         <div className="mt-10 overflow-hidden rounded-2xl border border-line">
           <table className="w-full text-left text-[15px]">
@@ -187,6 +243,7 @@ export default function Home() {
             Browse by class <ArrowRight className="h-4 w-4" />
           </Link>
         </p>
+        </div>
       </section>
 
       {/* Courses */}

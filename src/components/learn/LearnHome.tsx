@@ -28,15 +28,22 @@ export function useOutline(slug: string | null | undefined) {
       return;
     }
     let live = true;
-    fetch(`/course-data/${slug}`)
-      .then((r) => (r.ok ? r.json() : Promise.reject()))
-      .then((o: CourseOutline) => {
-        outlines.set(slug, o);
-        if (live) setOutline(o);
-      })
-      .catch(() => live && setOutline(null));
+    let timer: ReturnType<typeof setTimeout> | undefined;
+    // A dropped request shouldn't leave the page on a loading placeholder: retry with backoff.
+    const load = (attempt: number) =>
+      fetch(`/course-data/${slug}`)
+        .then((r) => (r.ok ? r.json() : Promise.reject(new Error(String(r.status)))))
+        .then((o: CourseOutline) => {
+          outlines.set(slug, o);
+          if (live) setOutline(o);
+        })
+        .catch(() => {
+          if (live && attempt < 4) timer = setTimeout(() => void load(attempt + 1), 800 * 2 ** attempt);
+        });
+    void load(0);
     return () => {
       live = false;
+      clearTimeout(timer);
     };
   }, [slug]);
   return outline;
