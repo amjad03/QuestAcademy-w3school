@@ -29,6 +29,11 @@ export interface NotebookState {
   notes: Record<string, Note>;
   bookmarks: Record<string, Bookmark>;
   doubts: Doubt[];
+  /**
+   * When something was deleted, keyed "note:<lesson>", "bm:<lesson>" or
+   * "doubt:<id>". Sync uses it so another device can't bring the item back.
+   */
+  removed: Record<string, string>;
 
   setNote: (lessonId: string, text: string) => void;
   removeNote: (lessonId: string) => void;
@@ -37,7 +42,11 @@ export interface NotebookState {
   updateDoubt: (id: string, patch: { title?: string; text?: string }) => void;
   setDoubtResolved: (id: string, resolved: boolean) => void;
   removeDoubt: (id: string) => void;
+  replaceNotebook: (data: NotebookData) => void;
+  resetNotebook: () => void;
 }
+
+export type NotebookData = Pick<NotebookState, "notes" | "bookmarks" | "doubts" | "removed">;
 
 const now = () => new Date().toISOString();
 const newId = () => `d_${Date.now().toString(36)}_${Math.random().toString(36).slice(2, 7)}`;
@@ -48,13 +57,14 @@ export const useNotebook = create<NotebookState>()(
       notes: {},
       bookmarks: {},
       doubts: [],
+      removed: {},
 
       setNote: (lessonId, text) =>
         set((s) => {
           if (!text.trim()) {
             const rest = { ...s.notes };
             delete rest[lessonId];
-            return { notes: rest };
+            return { notes: rest, removed: { ...s.removed, [`note:${lessonId}`]: now() } };
           }
           return { notes: { ...s.notes, [lessonId]: { text, updatedAt: now() } } };
         }),
@@ -63,7 +73,7 @@ export const useNotebook = create<NotebookState>()(
         set((s) => {
           const rest = { ...s.notes };
           delete rest[lessonId];
-          return { notes: rest };
+          return { notes: rest, removed: { ...s.removed, [`note:${lessonId}`]: now() } };
         }),
 
       toggleBookmark: (lessonId, meta) => {
@@ -72,7 +82,7 @@ export const useNotebook = create<NotebookState>()(
           const next = { ...s.bookmarks };
           if (has) delete next[lessonId];
           else next[lessonId] = { title: meta.title, href: meta.href, addedAt: now() };
-          return { bookmarks: next };
+          return has ? { bookmarks: next, removed: { ...s.removed, [`bm:${lessonId}`]: now() } } : { bookmarks: next };
         });
         return !has;
       },
@@ -90,9 +100,13 @@ export const useNotebook = create<NotebookState>()(
           ),
         })),
 
-      setDoubtResolved: (id, resolved) => set((s) => ({ doubts: s.doubts.map((d) => (d.id === id ? { ...d, resolved } : d)) })),
+      setDoubtResolved: (id, resolved) => set((s) => ({ doubts: s.doubts.map((d) => (d.id === id ? { ...d, resolved, updatedAt: now() } : d)) })),
 
-      removeDoubt: (id) => set((s) => ({ doubts: s.doubts.filter((d) => d.id !== id) })),
+      removeDoubt: (id) => set((s) => ({ doubts: s.doubts.filter((d) => d.id !== id), removed: { ...s.removed, [`doubt:${id}`]: now() } })),
+
+      replaceNotebook: (data) => set({ notes: data.notes, bookmarks: data.bookmarks, doubts: data.doubts, removed: data.removed }),
+
+      resetNotebook: () => set({ notes: {}, bookmarks: {}, doubts: [], removed: {} }),
     }),
     {
       name: "qa-notebook",
@@ -103,6 +117,41 @@ export const useNotebook = create<NotebookState>()(
     },
   ),
 );
+
+export const notebookSnapshot = (): NotebookData => {
+  const { notes, bookmarks, doubts, removed } = useNotebook.getState();
+  return { notes, bookmarks, doubts, removed: removed ?? {} };
+};
+
+const later = (a?: string, b?: string) => ((a ?? "") >= (b ?? "") ? a : b);
+
+/** Combine two copies of the notebook: newest edit wins, deletions stick. */
+export function mergeNotebooks(a: Partial<NotebookData>, b: Partial<NotebookData>): NotebookData {
+  const cutoff = new Date(Date.now() - 180 * 864e5).toISOString();
+  const removed: Record<string, string> = {};
+  for (const src of [a.removed ?? {}, b.removed ?? {}]) for (const [k, v] of Object.entries(src)) if (v >= cutoff) removed[k] = later(removed[k], v)!;
+  const alive = (key: string, at: string) => !removed[key] || removed[key] < at;
+
+  const notes: Record<string, Note> = {};
+  for (const src of [a.notes ?? {}, b.notes ?? {}]) for (const [k, n] of Object.entries(src)) if (!notes[k] || n.updatedAt > notes[k].updatedAt) notes[k] = n;
+  for (const k of Object.keys(notes)) if (!alive(`note:${k}`, notes[k].updatedAt)) delete notes[k];
+
+  const bookmarks: Record<string, Bookmark> = {};
+  for (const src of [a.bookmarks ?? {}, b.bookmarks ?? {}]) for (const [k, m] of Object.entries(src)) if (!bookmarks[k] || m.addedAt > bookmarks[k].addedAt) bookmarks[k] = m;
+  for (const k of Object.keys(bookmarks)) if (!alive(`bm:${k}`, bookmarks[k].addedAt)) delete bookmarks[k];
+
+  const stamp = (d: Doubt) => d.updatedAt ?? d.createdAt;
+  const byId = new Map<string, Doubt>();
+  for (const d of [...(a.doubts ?? []), ...(b.doubts ?? [])]) {
+    const cur = byId.get(d.id);
+    if (!cur || stamp(d) > stamp(cur)) byId.set(d.id, d);
+  }
+  const doubts = Array.from(byId.values())
+    .filter((d) => alive(`doubt:${d.id}`, stamp(d)))
+    .sort((x, y) => y.createdAt.localeCompare(x.createdAt));
+
+  return { notes, bookmarks, doubts, removed };
+}
 
 /** Course slug from a lesson id. */
 export const courseOf = (lessonId: string) => lessonId.split("/")[0] ?? lessonId;

@@ -10,7 +10,7 @@ import { useAuth } from "@/components/providers";
 import { LogoMark } from "@/components/brand/Mascot";
 import { useT } from "@/i18n";
 
-type Mode = "signin" | "signup" | "magic";
+type Mode = "signin" | "signup" | "magic" | "forgot";
 
 export function AuthForm() {
   const t = useT();
@@ -33,7 +33,16 @@ export function AuthForm() {
     if (!sb) return;
     setBusy(true);
     setMsg(null);
-    const redirect = `${window.location.origin}/learn`;
+    const origin = window.location.origin;
+    const redirect = `${origin}/learn`;
+    if (mode === "forgot") {
+      const { error } = await sb.auth.resetPasswordForEmail(email, { redirectTo: `${origin}/auth/reset` });
+      setBusy(false);
+      // Same message either way, so the form can't be used to find out who has an account.
+      if (error && error.status !== 400) setMsg({ ok: false, text: friendly(error.message) });
+      else setMsg({ ok: true, text: t("auth.msg.resetSent", "If an account exists for that email, we have sent a link to choose a new password.") });
+      return;
+    }
     const res =
       mode === "magic"
         ? await sb.auth.signInWithOtp({ email, options: { emailRedirectTo: redirect } })
@@ -41,16 +50,25 @@ export function AuthForm() {
           ? await sb.auth.signUp({ email, password, options: { emailRedirectTo: redirect } })
           : await sb.auth.signInWithPassword({ email, password });
     setBusy(false);
-    if (res.error) setMsg({ ok: false, text: res.error.message });
+    if (res.error) setMsg({ ok: false, text: friendly(res.error.message) });
     else if (mode === "magic") setMsg({ ok: true, text: t("auth.msg.magicSent", "Check your inbox — we sent you a sign-in link.") });
+    else if (mode === "signup" && res.data.user && (res.data.user.identities?.length ?? 0) === 0) setMsg({ ok: false, text: t("auth.msg.exists", "An account with this email already exists. Log in instead, or reset your password.") });
     else if (mode === "signup" && !res.data.session) setMsg({ ok: true, text: t("auth.msg.confirmEmail", "Almost there! Confirm your email to finish creating your profile.") });
   };
 
-  const google = async () => {
-    await supabase()?.auth.signInWithOAuth({ provider: "google", options: { redirectTo: `${window.location.origin}/learn` } });
-  };
+  const friendly = (m: string) =>
+    /invalid login credentials/i.test(m)
+      ? t("auth.err.credentials", "That email and password don’t match. Check them, or reset your password.")
+      : /email not confirmed/i.test(m)
+        ? t("auth.err.unconfirmed", "Please confirm your email first. We sent you a link when you signed up.")
+        : /rate limit|too many/i.test(m)
+          ? t("auth.err.rate", "Too many attempts. Please wait a minute and try again.")
+          : /password should be/i.test(m)
+            ? t("auth.err.weak", "Choose a longer password (at least 8 characters).")
+            : m;
 
-  const title = mode === "signup" ? t("auth.title.signup", "Create your profile") : mode === "magic" ? t("auth.title.magic", "Sign in with email") : t("auth.title.signin", "Log in");
+  const title =
+    mode === "signup" ? t("auth.title.signup", "Create your profile") : mode === "magic" ? t("auth.title.magic", "Sign in with email") : mode === "forgot" ? t("auth.title.forgot", "Reset your password") : t("auth.title.signin", "Log in");
 
   return (
     <div className="flex min-h-screen flex-col bg-bg">
@@ -85,14 +103,14 @@ export function AuthForm() {
           <>
             <form onSubmit={submit} className="mt-8 space-y-3">
               <input type="email" required value={email} onChange={(e) => setEmail(e.target.value)} placeholder={t("auth.email", "Email")} className="input" autoComplete="email" aria-label={t("auth.email", "Email")} />
-              {mode !== "magic" && (
+              {(mode === "signin" || mode === "signup") && (
                 <input
                   type="password"
                   required
-                  minLength={6}
+                  minLength={mode === "signup" ? 8 : 1}
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
-                  placeholder={mode === "signup" ? t("auth.passwordNew", "Password (6+ characters)") : t("auth.password", "Password")}
+                  placeholder={mode === "signup" ? t("auth.passwordNew", "Password (8+ characters)") : t("auth.password", "Password")}
                   className="input"
                   autoComplete={mode === "signup" ? "new-password" : "current-password"}
                   aria-label={t("auth.password", "Password")}
@@ -100,26 +118,28 @@ export function AuthForm() {
               )}
               <button className="btn-primary w-full" disabled={busy}>
                 {busy && <Loader2 className="h-4 w-4 animate-spin" />}
-                {mode === "signin" ? t("auth.submit.signin", "Log in") : mode === "signup" ? t("auth.submit.signup", "Create profile") : t("auth.submit.magic", "Email me a link")}
+                {mode === "signin" ? t("auth.submit.signin", "Log in") : mode === "signup" ? t("auth.submit.signup", "Create profile") : mode === "forgot" ? t("auth.submit.reset", "Send reset link") : t("auth.submit.magic", "Email me a link")}
               </button>
             </form>
 
             {msg && <p className={clsx("mt-4 rounded-2xl p-3 text-center text-sm font-bold", msg.ok ? "bg-good-soft text-good-shade" : "bg-bad-soft text-bad-shade")}>{msg.text}</p>}
 
-            <button onClick={() => { setMode(mode === "magic" ? "signin" : "magic"); setMsg(null); }} className="btn-flat mx-auto mt-3 flex">
-              {mode === "magic" ? t("auth.toggle.password", "Use a password instead") : t("auth.toggle.magic", "Email me a sign-in link")}
-            </button>
-
-            <div className="my-6 flex items-center gap-3 text-sm font-extrabold uppercase tracking-wide text-muted">
-              <span className="h-0.5 flex-1 bg-line" /> {t("auth.or", "or")} <span className="h-0.5 flex-1 bg-line" />
+            <div className="mt-4 flex flex-col items-center gap-1">
+              {mode === "signin" && (
+                <button type="button" onClick={() => { setMode("forgot"); setMsg(null); }} className="btn-flat text-sm">
+                  {t("auth.toggle.forgot", "Forgot password?")}
+                </button>
+              )}
+              {mode === "magic" || mode === "forgot" ? (
+                <button type="button" onClick={() => { setMode("signin"); setMsg(null); }} className="btn-flat text-sm">
+                  {t("auth.toggle.password", "Use a password instead")}
+                </button>
+              ) : (
+                <button type="button" onClick={() => { setMode("magic"); setMsg(null); }} className="btn-flat text-sm">
+                  {t("auth.toggle.magic", "Email me a sign-in link")}
+                </button>
+              )}
             </div>
-
-            <button onClick={() => void google()} className="btn-ghost w-full !text-ink">
-              <svg viewBox="0 0 24 24" className="h-5 w-5" aria-hidden>
-                <path fill="#EA4335" d="M12 10.2v3.9h5.5c-.2 1.3-1.6 3.9-5.5 3.9-3.3 0-6-2.7-6-6.1s2.7-6.1 6-6.1c1.9 0 3.1.8 3.8 1.5l2.6-2.5C16.8 3.3 14.6 2.3 12 2.3 6.6 2.3 2.3 6.6 2.3 12s4.3 9.7 9.7 9.7c5.6 0 9.3-3.9 9.3-9.5 0-.6-.1-1.1-.2-1.6H12z" />
-              </svg>
-              Google
-            </button>
 
             <p className="mt-8 text-center text-sm font-semibold leading-6 text-muted">{t("auth.mergeNote", "Your guest progress is merged into your profile automatically when you sign in.")}</p>
           </>

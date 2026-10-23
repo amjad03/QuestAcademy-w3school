@@ -1,6 +1,7 @@
 import Anthropic from "@anthropic-ai/sdk";
 import { SYSTEM_PROMPT, contextTurn } from "@/lib/tutor/prompt";
 import { rateLimit } from "@/lib/tutor/rateLimit";
+import { hashIp, supabaseAdmin, userFromRequest } from "@/lib/supabase-server";
 import { STREAM_MARK, TUTOR_LIMITS, TUTOR_STAGES, type TutorContext, type TutorErrorCode, type TutorMessage } from "@/lib/tutor/types";
 
 export const runtime = "nodejs";
@@ -17,6 +18,35 @@ const hasCredential = () => Boolean(process.env.ANTHROPIC_API_KEY || process.env
 function clientIp(req: Request) {
   const fwd = req.headers.get("x-forwarded-for");
   return (fwd?.split(",")[0] || req.headers.get("x-real-ip") || "unknown").trim();
+}
+
+const envInt = (name: string, fallback: number) => {
+  const n = Number(process.env[name]);
+  return Number.isFinite(n) && n >= 0 ? Math.floor(n) : fallback;
+};
+
+/**
+ * Daily allowance shared by every server instance, kept in Supabase. Signed-in
+ * learners get a larger allowance than guests; TUTOR_DAILY_BUDGET caps the
+ * whole site (0 = no cap). Without Supabase only the per-instance limiter applies.
+ */
+async function takeDaily(req: Request, ip: string): Promise<"ok" | "limited" | "budget"> {
+  const sb = supabaseAdmin();
+  if (!sb) return "ok";
+  const user = await userFromRequest(req);
+  const key = user ? `u:${user.id}` : `ip:${hashIp(ip)}`;
+  const limit = user ? envInt("TUTOR_DAILY_LIMIT_USER", 60) : envInt("TUTOR_DAILY_LIMIT_GUEST", 15);
+  const budget = envInt("TUTOR_DAILY_BUDGET", 3000);
+  const { data, error } = await sb.rpc("tutor_take", { p_key: key, p_limit: limit, p_global_limit: budget });
+  if (error) {
+    // Fail open on a database hiccup; the per-instance limiter still applies.
+    console.error("[tutor] usage check failed", error.message);
+    return "ok";
+  }
+  if (data === true) return "ok";
+  // Tell the two cases apart for the message: is the whole site over budget?
+  const { data: all } = await sb.from("tutor_usage").select("count").eq("key", "__all__").eq("day", new Date().toISOString().slice(0, 10)).maybeSingle();
+  return budget > 0 && (all?.count ?? 0) > budget ? "budget" : "limited";
 }
 
 const str = (v: unknown, max: number) => (typeof v === "string" ? v.slice(0, max).trim() : "");
@@ -60,7 +90,8 @@ function parseMessages(raw: unknown): TutorMessage[] | null {
 export async function POST(req: Request) {
   if (!hasCredential()) return fail(503, "tutor_unavailable");
 
-  const limited = rateLimit(clientIp(req));
+  const ip = clientIp(req);
+  const limited = rateLimit(ip);
   if (!limited.ok) return fail(429, "rate_limited", { retryAfter: limited.retryAfter }, { "Retry-After": String(limited.retryAfter) });
 
   let body: unknown;
@@ -73,6 +104,10 @@ export async function POST(req: Request) {
   const context = parseContext(b.context);
   const messages = parseMessages(b.messages);
   if (!context || !messages) return fail(400, "bad_request", { detail: `Send context {stage, lessonTitle…} and 1–${TUTOR_LIMITS.maxMessages} alternating messages of at most ${TUTOR_LIMITS.maxChars} characters, ending with the learner.` });
+
+  // Count only well-formed requests against the daily allowance.
+  const daily = await takeDaily(req, ip);
+  if (daily !== "ok") return fail(429, daily === "budget" ? "upstream_busy" : "daily_limit");
 
   // Per-request context rides in the first user turn so the system prompt stays cacheable.
   const apiMessages: Anthropic.MessageParam[] = messages.map((m, i) =>

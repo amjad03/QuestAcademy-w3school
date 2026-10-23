@@ -47,4 +47,4 @@ export const STREAM_MARK = {
   error: "\u0000QA_ERROR\u0000",
 } as const;
 
-export type TutorErrorCode = "tutor_unavailable" | "rate_limited" | "bad_request" | "auth_failed" | "upstream_busy" | "upstream_error";
+export type TutorErrorCode = "tutor_unavailable" | "rate_limited" | "daily_limit" | "bad_request" | "auth_failed" | "upstream_busy" | "upstream_error";

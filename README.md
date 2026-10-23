@@ -135,11 +135,20 @@ How videos behave in the app:
 ## Accounts, sync and live leagues (Supabase)
 
 1. Create a project at [supabase.com](https://supabase.com).
-2. Run [`supabase/schema.sql`](supabase/schema.sql) in the SQL editor.
-3. Copy `.env.example` to `.env.local` and set `NEXT_PUBLIC_SUPABASE_URL` and `NEXT_PUBLIC_SUPABASE_ANON_KEY`.
-4. Optional: enable the Google provider in Supabase Auth.
+2. Run [`supabase/schema.sql`](supabase/schema.sql) in the SQL editor (it is safe to run again after updates).
+3. Copy `.env.example` to `.env.local` and set `NEXT_PUBLIC_SUPABASE_URL`, `NEXT_PUBLIC_SUPABASE_ANON_KEY` and `SUPABASE_SERVICE_ROLE_KEY`.
+4. In Supabase → Authentication → URL Configuration, set **Site URL** to your domain and add `https://your-domain.com/**` to **Redirect URLs** (sign-in links and password resets return there).
+5. Email + password and email links are on by default. For launch, set up a custom SMTP sender in Authentication → Emails; Supabase's built-in sender is limited to a few emails an hour.
 
-Guest progress is merged into the account on first sign-in.
+What is stored in the account: progress, mastery, streaks and rewards; notes, bookmarks and doubts; parent controls and the Ask Questy switch. Guest progress is merged in on first sign-in, and later changes sync across devices (on change, when the tab regains focus, and every few minutes). Signing out clears the device, so a shared computer doesn't keep someone's progress. Learners can change their password and delete their account in Settings → Account.
+
+## Deploying to Vercel
+
+1. Import the repository in Vercel (framework: Next.js; build command and output are the defaults).
+2. Add the environment variables from `.env.example` under Project → Settings → Environment Variables: the three Supabase keys, `ANTHROPIC_API_KEY`, `NEXT_PUBLIC_SITE_URL`, and optionally the `TUTOR_DAILY_*` limits.
+3. Deploy, then add your domain under Project → Settings → Domains and use the same address in `NEXT_PUBLIC_SITE_URL` and in Supabase's Site URL.
+
+Ask Questy usage is limited per learner per day (signed-in learners get more than guests) and capped for the whole site by `TUTOR_DAILY_BUDGET`, so a leaked link can't run up the API bill. Set a monthly spend limit in the Anthropic console as well.
 
 ## Design system
 

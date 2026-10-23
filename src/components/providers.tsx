@@ -2,11 +2,14 @@
 
 import type { User } from "@supabase/supabase-js";
 import { createContext, useContext, useEffect, useState, useSyncExternalStore, type ReactNode } from "react";
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import { useLearner } from "@/lib/store";
 import { localeInfo } from "@/i18n/locales";
 import { resolveMode } from "@/lib/modes";
-import { pushState, supabase, supabaseEnabled, syncOnLogin } from "@/lib/supabase";
+import { clearDeviceData, pushAccount, supabase, supabaseEnabled, syncAccount, touchSettings } from "@/lib/supabase";
+import { useNotebook } from "@/lib/notebook-store";
+import { useTutorPrefs } from "@/lib/tutor/store";
+import { useParent } from "@/components/parent/store";
 
 /** True after the first client render — use to avoid hydration mismatches with persisted state. */
 export function useHydrated() {
@@ -63,6 +66,7 @@ export const useAuth = () => useContext(Auth);
 function AuthProvider({ children }: { children: ReactNode }) {
   const [user, setUser] = useState<User | null>(null);
   const [loading, setLoading] = useState(supabaseEnabled);
+  const router = useRouter();
 
   useEffect(() => {
     const sb = supabase();
@@ -70,33 +74,67 @@ function AuthProvider({ children }: { children: ReactNode }) {
     sb.auth.getSession().then(({ data }) => {
       setUser(data.session?.user ?? null);
       setLoading(false);
-      if (data.session?.user) void syncOnLogin(data.session.user);
+      if (data.session?.user) void syncAccount(data.session.user);
     });
     const { data: sub } = sb.auth.onAuthStateChange((event, session) => {
       setUser(session?.user ?? null);
-      if (event === "SIGNED_IN" && session?.user) void syncOnLogin(session.user);
+      if (event === "SIGNED_IN" && session?.user) void syncAccount(session.user);
+      // The reset link signs the learner in; send them to choose a new password.
+      if (event === "PASSWORD_RECOVERY") router.push("/auth/reset");
     });
     return () => sub.subscription.unsubscribe();
-  }, []);
+  }, [router]);
 
-  // Debounced cloud save whenever progress changes.
   useEffect(() => {
     if (!user) return;
     let t: ReturnType<typeof setTimeout> | undefined;
-    const unsub = useLearner.subscribe((s, prev) => {
-      if (s.updatedAt === prev.updatedAt && s.profile === prev.profile) return;
+    const schedule = () => {
       clearTimeout(t);
-      t = setTimeout(() => void pushState(user.id), 2500);
-    });
+      t = setTimeout(() => void pushAccount(user.id), 2500);
+    };
+    // Debounced cloud save whenever progress, notes or settings change.
+    const unsubs = [
+      useLearner.subscribe((s, prev) => {
+        if (s.updatedAt !== prev.updatedAt || s.profile !== prev.profile) schedule();
+      }),
+      useNotebook.subscribe((s, prev) => {
+        if (s.notes !== prev.notes || s.bookmarks !== prev.bookmarks || s.doubts !== prev.doubts) schedule();
+      }),
+      useParent.subscribe((s, prev) => {
+        if (s.timeLimit !== prev.timeLimit || s.quietHours !== prev.quietHours) (touchSettings(), schedule());
+      }),
+      useTutorPrefs.subscribe((s, prev) => {
+        if (s.tutorAllowed !== prev.tutorAllowed) (touchSettings(), schedule());
+      }),
+    ];
+    // Pick up work done on another device.
+    const pull = () => {
+      if (document.visibilityState === "visible") void syncAccount(user);
+    };
+    document.addEventListener("visibilitychange", pull);
+    const every = setInterval(pull, 3 * 60 * 1000);
+    // Don't lose the last change when the tab closes.
+    const flush = () => {
+      if (t) void pushAccount(user.id);
+    };
+    window.addEventListener("pagehide", flush);
     return () => {
       clearTimeout(t);
-      unsub();
+      clearInterval(every);
+      unsubs.forEach((u) => u());
+      document.removeEventListener("visibilitychange", pull);
+      window.removeEventListener("pagehide", flush);
     };
   }, [user]);
 
   const signOut = async () => {
-    await supabase()?.auth.signOut();
+    const sb = supabase();
+    if (user) await pushAccount(user.id);
+    await sb?.auth.signOut();
     setUser(null);
+    // Progress is safe in the account; don't leave it on a shared device.
+    clearDeviceData();
+    router.push("/");
   };
 
   return <Auth.Provider value={{ enabled: supabaseEnabled, user, loading, signOut }}>{children}</Auth.Provider>;

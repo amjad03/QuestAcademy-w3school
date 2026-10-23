@@ -1,5 +1,6 @@
 "use client";
 
+import { supabase } from "@/lib/supabase";
 import { STREAM_MARK, type TutorErrorCode, type TutorRequest } from "./types";
 
 export type TutorOutcome = { ok: true; refused: boolean; broken: boolean } | { ok: false; code: TutorErrorCode | "network"; retryAfter?: number };
@@ -8,7 +9,11 @@ export type TutorOutcome = { ok: true; refused: boolean; broken: boolean } | { o
 export async function askTutor(req: TutorRequest, onText: (text: string) => void, signal?: AbortSignal): Promise<TutorOutcome> {
   let res: Response;
   try {
-    res = await fetch("/api/tutor", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify(req), signal });
+    // Signed-in learners get their own (larger) daily allowance.
+    const token = (await supabase()?.auth.getSession())?.data.session?.access_token;
+    const headers: Record<string, string> = { "Content-Type": "application/json" };
+    if (token) headers.Authorization = `Bearer ${token}`;
+    res = await fetch("/api/tutor", { method: "POST", headers, body: JSON.stringify(req), signal });
   } catch {
     return { ok: false, code: "network" };
   }

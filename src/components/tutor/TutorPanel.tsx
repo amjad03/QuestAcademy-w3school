@@ -7,6 +7,7 @@ import clsx from "clsx";
 import { Mascot } from "@/components/brand/Mascot";
 import { Md, plain } from "@/components/Md";
 import { useLocale, localeInfo, useT } from "@/i18n";
+import { useAuth } from "@/components/providers";
 import { say, stopVoice } from "@/lib/voice";
 import type { ModeId } from "@/lib/modes";
 import { askTutor } from "@/lib/tutor/client";
@@ -24,7 +25,7 @@ interface Props {
   onClose: () => void;
 }
 
-type Status = "idle" | "streaming" | "unavailable" | "error" | "busy" | "network";
+type Status = "idle" | "streaming" | "unavailable" | "error" | "busy" | "network" | "daily";
 
 /** Keep at most `maxMessages`, always starting with a learner turn. */
 function trimHistory(list: TutorMessage[]) {
@@ -51,6 +52,7 @@ export function TutorPanel(p: Props) {
   const t = useT();
   const locale = useLocale();
   const desktop = useIsDesktop();
+  const { user } = useAuth();
   const stage = p.stage as TutorStage;
   const young = stage === "explore" || stage === "adventure";
   const kid = stage === "explore";
@@ -129,7 +131,7 @@ export function TutorPanel(p: Props) {
       // Drop the empty reply and give the learner their text back.
       setMessages(history.slice(0, -1));
       setDraft(content);
-      setStatus(res.code === "tutor_unavailable" || res.code === "auth_failed" ? "unavailable" : res.code === "rate_limited" || res.code === "upstream_busy" ? "busy" : res.code === "network" ? "network" : "error");
+      setStatus(res.code === "tutor_unavailable" || res.code === "auth_failed" ? "unavailable" : res.code === "daily_limit" ? "daily" : res.code === "rate_limited" || res.code === "upstream_busy" ? "busy" : res.code === "network" ? "network" : "error");
       return;
     }
     if (res.refused) {
@@ -260,7 +262,11 @@ export function TutorPanel(p: Props) {
               ))}
               {status !== "idle" && status !== "streaming" && (
                 <p role="alert" className="rounded-xl bg-bad-soft px-3 py-2 text-sm font-bold text-bad-shade">
-                  {status === "busy"
+                  {status === "daily"
+                    ? user
+                      ? t("tutor.err.dailyUser", "You have used today’s questions for Questy. It will be available again tomorrow.")
+                      : t("tutor.err.dailyGuest", "You have used today’s free questions. Log in to get more, or come back tomorrow.")
+                    : status === "busy"
                     ? t("tutor.err.busy", "Questy needs a short break — lots of questions right now. Try again in a few minutes.")
                     : status === "network"
                       ? t("tutor.err.network", "You seem to be offline. Check your connection and try again.")

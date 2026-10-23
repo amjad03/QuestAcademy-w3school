@@ -6,6 +6,8 @@ import { LanguagePicker } from "@/components/i18n/LanguagePicker";
 import { TutorToggle } from "@/components/tutor/TutorToggle";
 
 import Link from "next/link";
+import { useRouter } from "next/navigation";
+import { deleteAccount, pushAccount } from "@/lib/supabase";
 import { useRef, useState } from "react";
 import { Download, LogOut, Upload } from "lucide-react";
 import clsx from "clsx";
@@ -21,6 +23,7 @@ export function Settings() {
   const hydrated = useHydrated();
   const s = useLearner();
   const { enabled, user, signOut } = useAuth();
+  const router = useRouter();
   const toast = useUi((u) => u.toast);
   const fileRef = useRef<HTMLInputElement>(null);
   const [name, setName] = useState<string | null>(null);
@@ -172,6 +175,28 @@ export function Settings() {
             </Link>
           ) : null}
         </Row>
+        {user && (
+          <>
+            <Row label={t("settings.account.password", "Password")} hint={t("settings.account.passwordHint", "Set or change the password for this account")}>
+              <Link href="/auth/reset" className="btn-ghost">
+                {t("settings.account.changePassword", "Change password")}
+              </Link>
+            </Row>
+            <Row label={t("settings.account.delete", "Delete account")} hint={t("settings.account.deleteHint", "Permanently removes your account and the progress saved in it")}>
+              <button
+                className="btn-bad"
+                onClick={async () => {
+                  if (!confirm(t("settings.account.deleteConfirm", "Delete your account and all saved progress? This cannot be undone."))) return;
+                  const r = await deleteAccount();
+                  if (r.ok) router.push("/");
+                  else alert(r.error);
+                }}
+              >
+                {t("settings.account.deleteButton", "Delete account")}
+              </button>
+            </Row>
+          </>
+        )}
       </Section>
 
       <Section id="data" title={t("settings.section.data", "Your data")}>
@@ -190,7 +215,10 @@ export function Settings() {
           <button
             className="btn-bad"
             onClick={() => {
-              if (confirm(t("settings.data.resetConfirm", "Reset ALL progress on this device? This cannot be undone."))) s.reset();
+              if (!confirm(user ? t("settings.data.resetConfirmAccount", "Reset ALL progress on this device and in your account? This cannot be undone.") : t("settings.data.resetConfirm", "Reset ALL progress on this device? This cannot be undone."))) return;
+              s.reset();
+              // Overwrite the cloud copy too, or the next sync would merge the old progress back.
+              if (user) void pushAccount(user.id);
             }}
           >
             {t("settings.data.resetButton", "Reset")}
