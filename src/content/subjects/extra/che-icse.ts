@@ -3,7 +3,2113 @@ import type { Topic } from "@/content/types";
 /** Course these chapters belong to. */
 export const course = "chemistry-school";
 
-export const topics: Topic[] = [];
+const tx = String.raw;
+
+export const topics: Topic[] = [
+  /* ------------------------------------------------------------------ */
+  {
+    slug: "icse-chemical-bonding",
+    title: "Chemical Bonding",
+    icon: "🔗",
+    description: "Why atoms combine: electrovalent, covalent and coordinate bonds, and the properties they give compounds.",
+    lessons: [
+      {
+        slug: "electrovalent-bonding",
+        title: "Electrovalent (Ionic) Bonding",
+        summary: "The octet rule, electron transfer, electron-dot structures of NaCl, MgCl₂ and CaO, and the properties of ionic compounds.",
+        minutes: 15,
+        xp: 35,
+        blocks: [
+          {
+            type: "text",
+            md: "Noble gases such as neon (2,8) and argon (2,8,8) hardly react at all. Their outer shells are full. Other atoms react so that they end up with the same stable arrangement: **8 electrons in the outer shell** (or 2 for the first shell). This is the **octet rule**, and the attraction that holds the atoms together afterwards is a **chemical bond**.",
+          },
+          {
+            type: "heading",
+            text: "Electron transfer",
+          },
+          {
+            type: "text",
+            md: "A metal atom with 1–3 valence electrons **loses** them and becomes a positive ion (cation). A non-metal atom with 5–7 valence electrons **gains** electrons and becomes a negative ion (anion). The strong electrostatic attraction between the oppositely charged ions is an **electrovalent** or **ionic bond**. The number of electrons an atom loses or gains is its **electrovalency**.",
+          },
+          {
+            type: "formula",
+            tex: tx`\mathrm{Na}\,(2,8,1) \xrightarrow{-\,e^-} \mathrm{Na^+}\,(2,8) \qquad \mathrm{Cl}\,(2,8,7) \xrightarrow{+\,e^-} \mathrm{Cl^-}\,(2,8,8)`,
+            caption: "Sodium gives one electron to chlorine; both reach a noble-gas configuration.",
+          },
+          {
+            type: "heading",
+            text: "Worked example: magnesium chloride",
+          },
+          {
+            type: "list",
+            ordered: true,
+            items: [
+              "Mg (Z = 12) is 2,8,2. It has 2 valence electrons to lose.",
+              "Cl (Z = 17) is 2,8,7. Each Cl atom needs only 1 electron.",
+              "So **one** Mg atom gives one electron to **each of two** Cl atoms.",
+              "Mg → Mg²⁺ (2,8) + 2e⁻ and 2Cl + 2e⁻ → 2Cl⁻ (2,8,8).",
+              "Formula: **MgCl₂**. Electrovalency of Mg = 2, of Cl = 1.",
+            ],
+          },
+          {
+            type: "illustration",
+            emoji: "🧂",
+            caption: "A grain of common salt is a giant lattice: every Na⁺ ion is surrounded by six Cl⁻ ions and vice versa. There are no separate NaCl molecules.",
+          },
+          {
+            type: "checkpoint",
+            questions: [
+              {
+                kind: "numeric",
+                q: "Aluminium (2,8,3) combines with oxygen (2,6) to form Al₂O₃. How many electrons are transferred in total to form one formula unit of Al₂O₃?",
+                answer: 6,
+                explain: "Each Al loses 3 electrons, so 2 Al lose 6. Each O gains 2, so 3 O gain 6. Six electrons move.",
+              },
+            ],
+          },
+          {
+            type: "heading",
+            text: "Properties of electrovalent compounds",
+          },
+          {
+            type: "table",
+            headers: ["Property", "Ionic compounds", "Reason"],
+            rows: [
+              ["Physical state", "Hard crystalline solids", "Strong forces between ions in a lattice"],
+              ["Melting / boiling point", "High (NaCl melts at 801 °C)", "Much energy needed to break the lattice"],
+              ["Solubility", "Soluble in water, insoluble in kerosene, petrol", "Polar water molecules pull ions apart"],
+              ["Electrical conductivity", "Conduct when molten or dissolved, not as solids", "Ions are free to move only in the liquid or solution"],
+            ],
+          },
+          {
+            type: "callout",
+            tone: "exam",
+            title: "Board trap",
+            md: "\"Solid NaCl conducts electricity\" is **false**. Solid NaCl *contains* ions, but they are locked in place. Write: ions are present but not free to move. Also remember that ionic compounds are written as **formula units**, not molecules.",
+          },
+          {
+            type: "callout",
+            tone: "tip",
+            title: "Which atoms form ionic bonds?",
+            md: "Ionic bonds form most easily between a metal with **low ionisation potential** (Na, K, Ca) and a non-metal with **high electron affinity** (Cl, O, F). The bigger the difference in electronegativity, the more ionic the bond.",
+          },
+          {
+            type: "keypoints",
+            items: [
+              "Atoms combine to attain a stable octet (duplet for H, He).",
+              "An ionic bond forms by complete transfer of electrons from a metal to a non-metal.",
+              "Electrovalency = number of electrons lost or gained.",
+              "Ionic compounds: high melting points, soluble in water, conduct only when molten or in solution.",
+            ],
+          },
+        ],
+        flashcards: [
+          { front: "Octet rule", back: "Atoms gain, lose or share electrons to get 8 electrons in their outermost shell." },
+          { front: "Electrovalent bond", back: "The electrostatic attraction between oppositely charged ions formed by electron transfer." },
+          { front: "Electrovalency of calcium in CaO", back: "2 (Ca loses two electrons to become Ca²⁺)." },
+          { front: "Why does molten NaCl conduct?", back: "Its Na⁺ and Cl⁻ ions are free to move and carry charge." },
+          { front: "Cation vs anion", back: "Cation = positive ion (formed by losing electrons); anion = negative ion (formed by gaining electrons)." },
+        ],
+        quiz: [
+          {
+            kind: "mcq",
+            q: "Which pair of elements is most likely to form an ionic bond?",
+            options: ["Carbon and hydrogen", "Potassium and fluorine", "Nitrogen and oxygen", "Chlorine and chlorine"],
+            answer: 1,
+            explain: "K is a reactive metal that loses one electron easily; F is the most electronegative non-metal. The others share electrons.",
+          },
+          {
+            kind: "truefalse",
+            q: "Ionic compounds conduct electricity in the solid state.",
+            answer: false,
+            explain: "Ions in the solid lattice cannot move. Conduction needs the molten state or an aqueous solution.",
+          },
+          {
+            kind: "fill",
+            q: "The number of electrons an atom loses or gains to form an ion is called its ___.",
+            answer: ["electrovalency", "electrovalence"],
+            explain: "Electrovalency, e.g. 2 for Mg in MgCl₂.",
+          },
+          {
+            kind: "numeric",
+            q: "In the formation of calcium chloride, how many chlorine atoms receive an electron from one calcium atom (Ca = 2,8,8,2)?",
+            answer: 2,
+            explain: "Ca loses 2 electrons; each Cl needs 1. So two Cl atoms are needed: CaCl₂.",
+          },
+          {
+            kind: "mcq",
+            q: "The electronic configuration of the oxide ion O²⁻ is:",
+            options: ["2,6", "2,8", "2,8,2", "2,4"],
+            answer: 1,
+            explain: "O is 2,6 and gains 2 electrons to become 2,8, like neon.",
+            difficulty: 2,
+          },
+        ],
+      },
+      {
+        slug: "covalent-and-coordinate",
+        title: "Covalent and Coordinate Bonds",
+        summary: "Sharing electron pairs: single, double and triple bonds, polar and non-polar molecules, lone pairs, and coordinate bonds in H₃O⁺ and NH₄⁺.",
+        minutes: 17,
+        xp: 40,
+        blocks: [
+          {
+            type: "text",
+            md: "Two chlorine atoms each need one more electron. Neither can pull an electron away from the other, so they **share** a pair. The shared pair counts towards both octets. A bond formed by mutual sharing of electron pairs is a **covalent bond**, and the number of electrons an atom shares is its **covalency**.",
+          },
+          {
+            type: "table",
+            headers: ["Molecule", "Pairs shared", "Bond", "Lone pairs on central atom"],
+            rows: [
+              ["H₂ (H–H)", "1", "single", "–"],
+              ["Cl₂ (Cl–Cl)", "1", "single", "3 on each Cl"],
+              ["O₂ (O=O)", "2", "double", "2 on each O"],
+              ["N₂ (N≡N)", "3", "triple", "1 on each N"],
+              ["CH₄", "4 (one per C–H)", "four single", "0"],
+              ["NH₃", "3", "three single", "1"],
+              ["H₂O", "2", "two single", "2"],
+            ],
+          },
+          {
+            type: "heading",
+            text: "Polar and non-polar covalent compounds",
+          },
+          {
+            type: "text",
+            md: "When the two atoms are the same (H₂, Cl₂) the pair is shared equally: a **non-polar** bond. When one atom is more electronegative, it pulls the shared pair closer and gets a small negative charge (δ⁻), leaving the other δ⁺. HCl and H₂O are **polar** covalent molecules. CCl₄ and CH₄ are non-polar overall because their symmetrical shape cancels the bond polarities.",
+          },
+          {
+            type: "heading",
+            text: "Coordinate bond",
+          },
+          {
+            type: "text",
+            md: "In a **coordinate (dative) bond**, both electrons of the shared pair come from **one** atom, the donor, which must have a **lone pair**. The acceptor must be short of a pair. It is shown by an arrow from donor to acceptor.",
+          },
+          {
+            type: "heading",
+            text: "Worked example: the ammonium ion",
+          },
+          {
+            type: "list",
+            ordered: true,
+            items: [
+              "N in NH₃ has three bond pairs and **one lone pair**.",
+              "H⁺ has no electrons at all; it can accept a pair.",
+              "The lone pair on N is donated to H⁺: H₃N → H⁺.",
+              "The product NH₄⁺ has **3 covalent + 1 coordinate** bond. Once formed, all four N–H bonds are identical.",
+              "In the same way H₂O + H⁺ → H₃O⁺ (hydronium ion): O donates one of its two lone pairs.",
+            ],
+          },
+          {
+            type: "formula",
+            tex: tx`\mathrm{NH_3 + H^+ \rightarrow NH_4^+} \qquad \mathrm{H_2O + H^+ \rightarrow H_3O^+}`,
+          },
+          {
+            type: "checkpoint",
+            questions: [
+              {
+                kind: "numeric",
+                q: "How many lone pairs remain on the oxygen atom in the hydronium ion H₃O⁺?",
+                answer: 1,
+                explain: "Water's oxygen has 2 lone pairs. It donates one to H⁺, leaving 1.",
+              },
+              {
+                kind: "mcq",
+                q: "Which molecule contains a triple bond?",
+                options: ["O₂", "N₂", "CH₄", "Cl₂"],
+                answer: 1,
+                explain: "Each N (2,5) shares three electrons: N≡N.",
+              },
+            ],
+          },
+          {
+            type: "table",
+            headers: ["Property", "Ionic", "Covalent"],
+            rows: [
+              ["State", "Crystalline solids", "Mostly gases, liquids or soft solids"],
+              ["Melting point", "High", "Low (weak forces between molecules)"],
+              ["Solubility", "Water", "Organic solvents (benzene, alcohol)"],
+              ["Conductivity", "Conduct when molten / in solution", "Generally non-conductors (no ions)"],
+            ],
+          },
+          {
+            type: "callout",
+            tone: "exam",
+            title: "ICSE favourite",
+            md: "\"Why does HCl gas not conduct electricity but its aqueous solution does?\" HCl is a polar covalent molecule with no ions. In water it ionises: HCl + H₂O → H₃O⁺ + Cl⁻. Also, students often write NH₄⁺ with four coordinate bonds; only **one** is coordinate.",
+          },
+          {
+            type: "keypoints",
+            items: [
+              "Covalent bond = shared pair of electrons; single, double or triple.",
+              "Unequal sharing gives a polar bond (HCl, H₂O); equal sharing gives a non-polar one (H₂, Cl₂).",
+              "A coordinate bond needs a lone-pair donor and an electron-pair acceptor.",
+              "NH₄⁺ and H₃O⁺ each contain one coordinate bond.",
+            ],
+          },
+        ],
+        flashcards: [
+          { front: "Covalent bond", back: "A bond formed by mutual sharing of one or more pairs of electrons." },
+          { front: "Lone pair", back: "A pair of valence electrons not involved in bonding, e.g. 1 on N in NH₃, 2 on O in H₂O." },
+          { front: "Coordinate bond", back: "A covalent bond in which both shared electrons are donated by the same atom." },
+          { front: "Is CCl₄ polar?", back: "No. The C–Cl bonds are polar, but the tetrahedral shape makes the molecule non-polar." },
+          { front: "Bonds in NH₄⁺", back: "Three covalent and one coordinate bond." },
+        ],
+        quiz: [
+          {
+            kind: "mcq",
+            q: "Which of these is a polar covalent molecule?",
+            options: ["H₂", "CH₄", "H₂O", "Cl₂"],
+            answer: 2,
+            explain: "O is more electronegative than H and water is bent, so the polarities do not cancel.",
+          },
+          {
+            kind: "numeric",
+            q: "How many electrons are shared in total between the two atoms of an oxygen molecule O₂?",
+            answer: 4,
+            explain: "O₂ has a double bond: 2 shared pairs = 4 electrons.",
+          },
+          {
+            kind: "truefalse",
+            q: "For a coordinate bond to form, the donor atom must have at least one lone pair of electrons.",
+            answer: true,
+            explain: "The donor supplies both electrons of the bond pair.",
+          },
+          {
+            kind: "fill",
+            q: "The ion formed when water accepts a proton is called the ___ ion.",
+            answer: ["hydronium", "oxonium"],
+            explain: "H₂O + H⁺ → H₃O⁺, the hydronium ion.",
+          },
+          {
+            kind: "mcq",
+            q: "Covalent compounds generally have low melting points because:",
+            options: [
+              "their atoms are held by weak covalent bonds",
+              "the forces between their molecules are weak",
+              "they contain free ions",
+              "they are always gases",
+            ],
+            answer: 1,
+            explain: "Covalent bonds inside a molecule are strong; it is the intermolecular forces that are weak.",
+            difficulty: 2,
+          },
+          {
+            kind: "numeric",
+            q: "How many lone pairs of electrons are on the central atom of an ammonia molecule?",
+            answer: 1,
+            explain: "N has 5 valence electrons: 3 are used in N–H bonds, leaving one lone pair.",
+          },
+        ],
+      },
+    ],
+  },
+  /* ------------------------------------------------------------------ */
+  {
+    slug: "icse-metallurgy",
+    title: "Metals and Non-metals",
+    icon: "⛏️",
+    description: "Properties and the reactivity series of metals, ores, and the extraction of aluminium; alloys.",
+    lessons: [
+      {
+        slug: "properties-and-reactivity",
+        title: "Properties of Metals and the Reactivity Series",
+        summary: "Physical and chemical differences between metals and non-metals, the reactivity series, displacement reactions and amphoteric oxides.",
+        minutes: 15,
+        xp: 35,
+        blocks: [
+          {
+            type: "text",
+            md: "Metals are **electropositive**: they lose electrons to form positive ions. Non-metals are **electronegative**: they gain electrons (or share them). Nearly every difference between the two groups follows from this.",
+          },
+          {
+            type: "table",
+            headers: ["Property", "Metals", "Non-metals"],
+            rows: [
+              ["Lustre", "Shiny (iodine and graphite are non-metal exceptions)", "Dull"],
+              ["Malleable / ductile", "Yes", "No, brittle"],
+              ["Conductivity", "Good conductors (Ag best)", "Poor (graphite is the exception)"],
+              ["Oxides", "Basic (Na₂O, CaO); some amphoteric (ZnO, Al₂O₃)", "Acidic (CO₂, SO₂) or neutral (CO, N₂O)"],
+              ["With dilute acids", "Reactive ones give H₂", "No hydrogen"],
+            ],
+          },
+          {
+            type: "heading",
+            text: "The reactivity series",
+          },
+          {
+            type: "list",
+            items: [
+              "**K, Na, Ca** react with cold water (K and Na violently).",
+              "**Mg** reacts with hot water and steam; **Al, Zn, Fe** with steam.",
+              "**Pb** reacts very slowly with acids; it is placed just above hydrogen.",
+              "**Cu, Hg, Ag, Au** are below hydrogen and do not liberate H₂ from dilute acids.",
+            ],
+          },
+          {
+            type: "formula",
+            tex: tx`\mathrm{K > Na > Ca > Mg > Al > Zn > Fe > Pb > [H] > Cu > Hg > Ag > Au}`,
+            caption: "Order of reactivity. A metal displaces any metal below it from a solution of its salt.",
+          },
+          {
+            type: "heading",
+            text: "Worked example: a displacement reaction",
+          },
+          {
+            type: "list",
+            ordered: true,
+            items: [
+              "A zinc strip is dipped in blue copper(II) sulphate solution.",
+              "Zn is above Cu, so it displaces Cu: Zn + CuSO₄ → ZnSO₄ + Cu.",
+              "Observation: reddish-brown copper coats the strip and the blue colour fades (ZnSO₄ is colourless).",
+              "Ionic view: Zn → Zn²⁺ + 2e⁻ (oxidation); Cu²⁺ + 2e⁻ → Cu (reduction).",
+              "A copper strip in ZnSO₄ shows **no** change, because Cu is below Zn.",
+            ],
+          },
+          {
+            type: "checkpoint",
+            questions: [
+              {
+                kind: "mcq",
+                q: "Which metal will NOT displace hydrogen from dilute hydrochloric acid?",
+                options: ["Magnesium", "Zinc", "Iron", "Copper"],
+                answer: 3,
+                explain: "Copper is below hydrogen in the reactivity series.",
+              },
+            ],
+          },
+          {
+            type: "callout",
+            tone: "fact",
+            title: "Amphoteric oxides",
+            md: "ZnO and Al₂O₃ react with both acids and alkalis. ZnO + 2HCl → ZnCl₂ + H₂O and ZnO + 2NaOH → Na₂ZnO₂ + H₂O. Lead(II) oxide PbO behaves the same way.",
+          },
+          {
+            type: "callout",
+            tone: "exam",
+            title: "Common slip",
+            md: "Aluminium is high in the series but seems unreactive with water and air in daily life (pressure cookers, kadhais). The reason is a thin, protective **layer of Al₂O₃** on its surface. Do not conclude that Al is less reactive than iron.",
+          },
+          {
+            type: "illustration",
+            emoji: "🥇",
+            caption: "Gold sits at the bottom of the series. That is why it is found native (uncombined) and why centuries-old temple jewellery still shines.",
+          },
+          {
+            type: "keypoints",
+            items: [
+              "Metals are electropositive; non-metals are electronegative.",
+              "Metal oxides are basic (some amphoteric); non-metal oxides are acidic or neutral.",
+              "A more reactive metal displaces a less reactive one from its salt solution.",
+              "Metals above hydrogen liberate H₂ from dilute HCl and H₂SO₄.",
+            ],
+          },
+        ],
+        flashcards: [
+          { front: "Most reactive common metal in the ICSE series", back: "Potassium (K)." },
+          { front: "Amphoteric oxide", back: "An oxide that reacts with both acids and bases, e.g. ZnO, Al₂O₃, PbO." },
+          { front: "Neutral oxides", back: "CO, N₂O, H₂O: neither acidic nor basic." },
+          { front: "Zn + CuSO₄ observation", back: "Blue colour fades, reddish-brown Cu deposits on zinc." },
+          { front: "Non-metal that conducts electricity", back: "Graphite (a form of carbon)." },
+        ],
+        quiz: [
+          {
+            kind: "order",
+            q: "Arrange these metals from most reactive to least reactive.",
+            items: ["Potassium", "Magnesium", "Zinc", "Iron", "Copper"],
+            explain: "K > Mg > Zn > Fe > Cu, following the reactivity series.",
+          },
+          {
+            kind: "mcq",
+            q: "Which of these is an acidic oxide?",
+            options: ["CaO", "Na₂O", "SO₂", "ZnO"],
+            answer: 2,
+            explain: "SO₂ dissolves in water to give sulphurous acid. CaO and Na₂O are basic; ZnO is amphoteric.",
+          },
+          {
+            kind: "truefalse",
+            q: "Copper displaces silver from silver nitrate solution.",
+            answer: true,
+            explain: "Cu is above Ag: Cu + 2AgNO₃ → Cu(NO₃)₂ + 2Ag. The solution turns blue.",
+          },
+          {
+            kind: "fill",
+            q: "An oxide that reacts with both acids and alkalis is called ___.",
+            answer: ["amphoteric", "amphoteric oxide"],
+            explain: "Examples: ZnO, Al₂O₃, PbO.",
+          },
+          {
+            kind: "mcq",
+            q: "Iron nails are placed in four solutions. In which will a reaction occur?",
+            options: ["ZnSO₄", "MgSO₄", "CuSO₄", "Al₂(SO₄)₃"],
+            answer: 2,
+            explain: "Iron is above copper only. Fe + CuSO₄ → FeSO₄ + Cu.",
+            difficulty: 2,
+          },
+        ],
+      },
+      {
+        slug: "extraction-of-aluminium",
+        title: "Metallurgy: Extracting Aluminium",
+        summary: "Minerals and ores, steps of metallurgy, Baeyer's process, the Hall–Héroult electrolytic cell, and common alloys.",
+        minutes: 18,
+        xp: 45,
+        blocks: [
+          {
+            type: "text",
+            md: "**Metallurgy** is the science of extracting metals from their ores and refining them. A **mineral** is any naturally occurring compound of a metal; an **ore** is a mineral from which the metal can be extracted **profitably**. All ores are minerals, but not all minerals are ores. The earthy impurities in an ore are called **gangue** or matrix.",
+          },
+          {
+            type: "table",
+            headers: ["Metal", "Ore", "Formula"],
+            rows: [
+              ["Aluminium", "Bauxite", "Al₂O₃·2H₂O"],
+              ["Aluminium", "Cryolite", "Na₃AlF₆"],
+              ["Iron", "Haematite", "Fe₂O₃"],
+              ["Zinc", "Zinc blende", "ZnS"],
+              ["Zinc", "Calamine", "ZnCO₃"],
+            ],
+          },
+          {
+            type: "heading",
+            text: "Step 1: concentrating bauxite (Baeyer's process)",
+          },
+          {
+            type: "list",
+            ordered: true,
+            items: [
+              "Powdered bauxite is heated under pressure with **concentrated NaOH**. Al₂O₃ (amphoteric) dissolves as sodium aluminate; Fe₂O₃ and silica impurities are filtered off.",
+              "The sodium aluminate solution is diluted and **seeded** with a little freshly prepared Al(OH)₃, which precipitates Al(OH)₃.",
+              "The precipitate is ignited at about 1000 °C to give pure alumina.",
+            ],
+          },
+          {
+            type: "formula",
+            tex: tx`\mathrm{Al_2O_3 + 2NaOH \rightarrow 2NaAlO_2 + H_2O} \\ \mathrm{NaAlO_2 + 2H_2O \rightarrow NaOH + Al(OH)_3\downarrow} \\ \mathrm{2Al(OH)_3 \xrightarrow{1000^\circ C} Al_2O_3 + 3H_2O}`,
+          },
+          {
+            type: "heading",
+            text: "Step 2: electrolytic reduction (Hall–Héroult)",
+          },
+          {
+            type: "table",
+            headers: ["Part of the cell", "What it is", "Why"],
+            rows: [
+              ["Electrolyte", "Pure alumina dissolved in molten **cryolite** with a little **fluorspar** (CaF₂)", "Cryolite lowers the fusion temperature from about 2050 °C to about 950 °C and increases conductivity; fluorspar increases fluidity"],
+              ["Cathode", "Carbon lining of the steel tank", "Al³⁺ ions are reduced here; molten Al collects at the bottom"],
+              ["Anode", "Thick graphite rods dipping into the melt", "Oxygen liberated here burns the rods to CO₂, so they must be replaced periodically"],
+              ["Surface crust", "Powdered coke sprinkled on top", "Reduces heat loss and stops the anodes burning in air"],
+            ],
+          },
+          {
+            type: "formula",
+            tex: tx`\text{Cathode: } \mathrm{4Al^{3+} + 12e^- \rightarrow 4Al} \qquad \text{Anode: } \mathrm{6O^{2-} - 12e^- \rightarrow 3O_2}`,
+          },
+          {
+            type: "heading",
+            text: "Worked example: how much aluminium?",
+          },
+          {
+            type: "list",
+            ordered: true,
+            items: [
+              "Molar mass of Al₂O₃ = 2(27) + 3(16) = 102 g/mol.",
+              "102 g of Al₂O₃ contains 2 × 27 = 54 g of Al.",
+              "So 1 tonne of pure alumina gives 54/102 × 1000 kg ≈ **529 kg** of aluminium.",
+              "A smelter in Odisha processing 204 tonnes of alumina in a day can produce at most 204 × 54/102 = **108 tonnes** of Al.",
+            ],
+          },
+          {
+            type: "checkpoint",
+            questions: [
+              {
+                kind: "numeric",
+                q: "What mass of aluminium (in kg) can be obtained from 51 kg of pure alumina? (Al = 27, O = 16)",
+                answer: 27,
+                unit: "kg",
+                explain: "51 × 54/102 = 27 kg.",
+              },
+            ],
+          },
+          {
+            type: "callout",
+            tone: "exam",
+            title: "Board trap",
+            md: "Aluminium cannot be extracted by reducing its oxide with carbon (coke), because Al has a greater affinity for oxygen than carbon. Also note: the **anode** is replaced, not the cathode. Students often swap them.",
+          },
+          {
+            type: "table",
+            headers: ["Alloy", "Composition", "Use"],
+            rows: [
+              ["Duralumin", "Al, Cu, Mg, Mn", "Aircraft bodies, pressure cookers"],
+              ["Magnalium", "Al, Mg", "Light balance beams, instruments"],
+              ["Brass", "Cu, Zn", "Utensils, electrical fittings"],
+              ["Bronze", "Cu, Sn", "Statues, medals, coins"],
+              ["Solder", "Pb, Sn", "Joining electrical wires"],
+              ["Stainless steel", "Fe, Cr, Ni, C", "Utensils, surgical tools"],
+            ],
+          },
+          {
+            type: "keypoints",
+            items: [
+              "Ore = mineral from which a metal is extracted profitably; impurities are gangue.",
+              "Baeyer's process concentrates bauxite using NaOH because Al₂O₃ is amphoteric.",
+              "In the Hall–Héroult cell, alumina in molten cryolite is electrolysed; Al forms at the carbon cathode.",
+              "Graphite anodes burn away and are replaced periodically.",
+            ],
+          },
+        ],
+        flashcards: [
+          { front: "Chief ore of aluminium", back: "Bauxite, Al₂O₃·2H₂O." },
+          { front: "Role of cryolite", back: "Lowers the fusion temperature of alumina to about 950 °C and makes the melt a better conductor." },
+          { front: "Gangue", back: "The earthy and rocky impurities present in an ore." },
+          { front: "Duralumin", back: "Alloy of Al with Cu, Mg and Mn; light and strong, used for aircraft." },
+          { front: "Why are anodes replaced?", back: "Oxygen released at the anode oxidises the graphite to CO₂." },
+        ],
+        quiz: [
+          {
+            kind: "mcq",
+            q: "In Baeyer's process, bauxite is treated with:",
+            options: ["concentrated H₂SO₄", "concentrated NaOH", "molten cryolite", "coke"],
+            answer: 1,
+            explain: "Al₂O₃ is amphoteric and dissolves in hot concentrated NaOH as sodium aluminate.",
+          },
+          {
+            kind: "fill",
+            q: "Zinc blende is the ore of zinc with formula ___.",
+            answer: ["ZnS"],
+            explain: "Zinc blende is zinc sulphide; calamine is ZnCO₃.",
+          },
+          {
+            kind: "truefalse",
+            q: "In the electrolytic extraction of aluminium, the cathode is made of thick graphite rods that burn away.",
+            answer: false,
+            explain: "The graphite rods are the anode. The cathode is the carbon lining of the tank.",
+          },
+          {
+            kind: "numeric",
+            q: "Calculate the percentage of aluminium in Al₂O₃ to the nearest whole number. (Al = 27, O = 16)",
+            answer: 53,
+            tolerance: 0.5,
+            unit: "%",
+            explain: "54/102 × 100 = 52.9% ≈ 53%.",
+            difficulty: 2,
+          },
+          {
+            kind: "order",
+            q: "Put the steps of extracting aluminium from bauxite in order.",
+            items: [
+              "Heat bauxite with concentrated NaOH",
+              "Filter off insoluble impurities",
+              "Dilute and seed to precipitate Al(OH)₃",
+              "Ignite Al(OH)₃ to get alumina",
+              "Electrolyse alumina dissolved in molten cryolite",
+            ],
+            explain: "Baeyer's process (first four steps) concentrates the ore; the Hall–Héroult process reduces it.",
+          },
+          {
+            kind: "mcq",
+            q: "Which alloy contains copper and tin?",
+            options: ["Brass", "Bronze", "Solder", "Duralumin"],
+            answer: 1,
+            explain: "Bronze is Cu + Sn. Brass is Cu + Zn; solder is Pb + Sn.",
+          },
+        ],
+      },
+    ],
+  },
+  /* ------------------------------------------------------------------ */
+  {
+    slug: "icse-electrolysis",
+    title: "Electrolysis",
+    icon: "⚡",
+    description: "Electrolytes, the selective discharge of ions, and electrolysis at work in electroplating and refining.",
+    lessons: [
+      {
+        slug: "electrolytes-and-discharge",
+        title: "Electrolytes and Selective Discharge",
+        summary: "Strong, weak and non-electrolytes, what happens at each electrode, the order of discharge of ions, and electrolysis of molten lead bromide and acidified water.",
+        minutes: 16,
+        xp: 40,
+        blocks: [
+          {
+            type: "text",
+            md: "**Electrolysis** is the decomposition of a chemical compound in the molten state or in aqueous solution by passing a direct current through it. The compound that conducts and decomposes is an **electrolyte**. The current enters through the **anode** (positive electrode) and leaves through the **cathode** (negative electrode).",
+          },
+          {
+            type: "table",
+            headers: ["Type", "Ionisation", "Examples"],
+            rows: [
+              ["Strong electrolyte", "Almost completely ionised", "NaCl, NaOH, KOH, HCl, H₂SO₄, HNO₃"],
+              ["Weak electrolyte", "Only partly ionised; ions and molecules both present", "Acetic acid, carbonic acid, NH₄OH"],
+              ["Non-electrolyte", "No ions", "Sugar, alcohol, kerosene, distilled water (practically)"],
+            ],
+          },
+          {
+            type: "callout",
+            tone: "tip",
+            title: "Remember the ions' journey",
+            md: "**Cations** (positive) move to the **cathode** and **gain** electrons: reduction. **Anions** (negative) move to the **anode** and **lose** electrons: oxidation. Memory aid: *An Ox, Red Cat*.",
+          },
+          {
+            type: "heading",
+            text: "Electrolysis of molten lead bromide",
+          },
+          {
+            type: "formula",
+            tex: tx`\text{Cathode: } \mathrm{Pb^{2+} + 2e^- \rightarrow Pb} \qquad \text{Anode: } \mathrm{2Br^- - 2e^- \rightarrow Br_2}`,
+            caption: "Silvery-grey lead collects at the cathode; reddish-brown bromine vapour comes off at the anode. The salt must be molten: solid PbBr₂ does not conduct.",
+          },
+          {
+            type: "heading",
+            text: "Which ion is discharged?",
+          },
+          {
+            type: "text",
+            md: "When an aqueous solution contains more than one cation or anion, they do not all discharge together. The one discharged first depends on (1) its position in the **electrochemical series**, (2) its **concentration** and (3) the **nature of the electrodes**.",
+          },
+          {
+            type: "list",
+            items: [
+              "Cations (most easily discharged first): Ag⁺ > Cu²⁺ > H⁺ > Pb²⁺ > … > Na⁺ > K⁺ (the reverse of reactivity).",
+              "Anions (most easily discharged first): OH⁻ > I⁻ > Br⁻ > Cl⁻ > NO₃⁻ > SO₄²⁻.",
+            ],
+          },
+          {
+            type: "heading",
+            text: "Worked example: acidified water",
+          },
+          {
+            type: "list",
+            ordered: true,
+            items: [
+              "Pure water barely conducts, so a few drops of dilute H₂SO₄ are added. Ions present: H⁺, OH⁻, SO₄²⁻. Platinum electrodes are used.",
+              "Cathode: 4H⁺ + 4e⁻ → 2H₂.",
+              "Anode: OH⁻ is discharged before SO₄²⁻: 4OH⁻ − 4e⁻ → 2H₂O + O₂.",
+              "For every 4 electrons, 2 molecules of H₂ and 1 of O₂ form, so the volume ratio H₂ : O₂ = **2 : 1**.",
+              "If 30 cm³ of hydrogen collects at the cathode, the oxygen at the anode is 30 ÷ 2 = **15 cm³**.",
+            ],
+          },
+          {
+            type: "checkpoint",
+            questions: [
+              {
+                kind: "numeric",
+                q: "In the electrolysis of acidified water, 12 cm³ of oxygen collects at the anode. What volume of hydrogen (cm³) collects at the cathode at the same temperature and pressure?",
+                answer: 24,
+                unit: "cm³",
+                explain: "H₂ : O₂ = 2 : 1, so 2 × 12 = 24 cm³.",
+              },
+            ],
+          },
+          {
+            type: "callout",
+            tone: "exam",
+            title: "Board trap",
+            md: "The acid is **not** a catalyst; it is added to make water a better conductor. And the sulphate ion is not discharged: OH⁻ is discharged in preference. Write the reason ('OH⁻ is lower in the electrochemical series'), not just the answer.",
+          },
+          {
+            type: "keypoints",
+            items: [
+              "Electrolysis needs direct current and an electrolyte that is molten or dissolved.",
+              "Reduction happens at the cathode, oxidation at the anode.",
+              "Selective discharge depends on the electrochemical series, concentration and the electrodes.",
+              "Acidified water gives H₂ and O₂ in the volume ratio 2 : 1.",
+            ],
+          },
+        ],
+        flashcards: [
+          { front: "Electrolyte", back: "A compound that conducts electricity when molten or in aqueous solution and is decomposed by it." },
+          { front: "Weak electrolyte example", back: "Acetic acid or ammonium hydroxide: only partly ionised." },
+          { front: "Product at anode for molten PbBr₂", back: "Bromine (reddish-brown vapour)." },
+          { front: "Which anion is discharged most easily?", back: "OH⁻ (then I⁻, Br⁻, Cl⁻, NO₃⁻, SO₄²⁻)." },
+          { front: "Cathode reaction: definition", back: "Gain of electrons by cations, i.e. reduction." },
+        ],
+        quiz: [
+          {
+            kind: "mcq",
+            q: "Which of these is a non-electrolyte?",
+            options: ["Dilute HCl", "Molten NaCl", "Sugar solution", "Acetic acid"],
+            answer: 2,
+            explain: "Sugar is covalent and does not form ions in water.",
+          },
+          {
+            kind: "truefalse",
+            q: "Oxidation takes place at the anode during electrolysis.",
+            answer: true,
+            explain: "Anions lose electrons at the anode, which is oxidation.",
+          },
+          {
+            kind: "fill",
+            q: "During electrolysis of molten lead bromide, ___ is deposited at the cathode.",
+            answer: ["lead", "Pb"],
+            explain: "Pb²⁺ + 2e⁻ → Pb.",
+          },
+          {
+            kind: "order",
+            q: "Arrange these anions in the order in which they are discharged, easiest first.",
+            items: ["OH⁻", "I⁻", "Br⁻", "Cl⁻", "SO₄²⁻"],
+            explain: "The anion series is OH⁻ > I⁻ > Br⁻ > Cl⁻ > NO₃⁻ > SO₄²⁻.",
+            difficulty: 2,
+          },
+          {
+            kind: "numeric",
+            q: "When acidified water is electrolysed, how many electrons are transferred to produce one molecule of oxygen?",
+            answer: 4,
+            explain: "4OH⁻ − 4e⁻ → 2H₂O + O₂: four electrons per O₂ molecule.",
+            difficulty: 2,
+          },
+        ],
+      },
+      {
+        slug: "electroplating-and-refining",
+        title: "Electrolysis of Copper Sulphate, Electroplating and Refining",
+        summary: "How the electrodes change the products, the rules of electroplating, and electrorefining of copper, with a mass calculation.",
+        minutes: 17,
+        xp: 45,
+        blocks: [
+          {
+            type: "text",
+            md: "Copper sulphate solution contains Cu²⁺, H⁺, SO₄²⁻ and OH⁻ ions. What you get depends on whether the electrodes are **inert** (platinum) or **active** (copper).",
+          },
+          {
+            type: "table",
+            headers: ["", "Platinum electrodes", "Copper electrodes"],
+            rows: [
+              ["Cathode", "Cu²⁺ + 2e⁻ → Cu (copper deposits)", "Cu²⁺ + 2e⁻ → Cu (copper deposits)"],
+              ["Anode", "4OH⁻ − 4e⁻ → 2H₂O + O₂ (gas bubbles)", "Cu − 2e⁻ → Cu²⁺ (anode dissolves)"],
+              ["Colour of solution", "Blue fades as Cu²⁺ is used up", "Stays blue (Cu²⁺ replaced from anode)"],
+              ["Solution becomes", "Acidic (H⁺ and SO₄²⁻ remain)", "Unchanged"],
+            ],
+          },
+          {
+            type: "heading",
+            text: "Electroplating",
+          },
+          {
+            type: "list",
+            items: [
+              "**Cathode:** the article to be plated (cleaned well).",
+              "**Anode:** a block of the plating metal.",
+              "**Electrolyte:** a solution of a salt of the plating metal, e.g. NiSO₄ for nickel, sodium argentocyanide Na[Ag(CN)₂] for silver.",
+              "Use a **low current** for a long time and **direct current** only, for a smooth, even coat.",
+            ],
+          },
+          {
+            type: "illustration",
+            emoji: "🥄",
+            caption: "Silver-plated spoons and the chrome shine on a scooter handle are both electroplated.",
+          },
+          {
+            type: "callout",
+            tone: "warning",
+            title: "Why not silver nitrate?",
+            md: "With AgNO₃ the silver deposits too fast and forms a rough, non-sticking coat. The complex salt sodium argentocyanide releases Ag⁺ slowly, giving a smooth, bright layer.",
+          },
+          {
+            type: "heading",
+            text: "Electrorefining of copper",
+          },
+          {
+            type: "text",
+            md: "Impure copper is made the **anode**, a thin sheet of pure copper the **cathode**, and acidified copper sulphate the electrolyte. Copper dissolves from the anode and deposits on the cathode. Less reactive impurities such as silver and gold fall below the anode as **anode mud**, which is collected for its value.",
+          },
+          {
+            type: "heading",
+            text: "Worked example: mass of copper deposited",
+          },
+          {
+            type: "list",
+            ordered: true,
+            items: [
+              "Cathode reaction: Cu²⁺ + 2e⁻ → Cu. So 2 mol of electrons deposit 1 mol (63.5 g) of copper.",
+              "Suppose 0.4 mol of electrons flow through the cell.",
+              "Moles of Cu = 0.4 ÷ 2 = 0.2 mol.",
+              "Mass = 0.2 × 63.5 = **12.7 g** of copper on the cathode.",
+              "With copper electrodes, the anode loses the same 12.7 g.",
+            ],
+          },
+          {
+            type: "checkpoint",
+            questions: [
+              {
+                kind: "numeric",
+                q: "How many grams of silver are deposited when 0.5 mol of electrons pass through a silver-plating cell? (Ag⁺ + e⁻ → Ag; Ag = 108)",
+                answer: 54,
+                unit: "g",
+                explain: "One electron per Ag⁺, so 0.5 mol Ag = 0.5 × 108 = 54 g.",
+              },
+              {
+                kind: "mcq",
+                q: "In electroplating a brass key with nickel, the key is made the:",
+                options: ["anode", "cathode", "electrolyte", "salt bridge"],
+                answer: 1,
+                explain: "Ni²⁺ ions are reduced on the article, so it must be the cathode.",
+              },
+            ],
+          },
+          {
+            type: "callout",
+            tone: "exam",
+            title: "ICSE trap",
+            md: "\"Electrolysis of CuSO₄ with copper electrodes: the solution turns colourless.\" **Wrong.** The colour stays the same because the anode replaces every Cu²⁺ ion that deposits. Only with inert (Pt) electrodes does the blue fade.",
+          },
+          {
+            type: "keypoints",
+            items: [
+              "Inert electrodes: O₂ at anode, blue colour fades. Active copper electrodes: anode dissolves, colour stays.",
+              "Electroplating: article = cathode, plating metal = anode, its salt = electrolyte; low DC current.",
+              "Electrorefining: impure metal anode, pure metal cathode; noble impurities form anode mud.",
+              "Mass deposited = (mol electrons ÷ charge on ion) × molar mass.",
+            ],
+          },
+        ],
+        flashcards: [
+          { front: "Electrolyte for silver plating", back: "Sodium argentocyanide, Na[Ag(CN)₂]." },
+          { front: "Anode mud", back: "Insoluble impurities (Ag, Au) that collect below the anode during electrorefining." },
+          { front: "CuSO₄ with Pt electrodes: anode product", back: "Oxygen gas." },
+          { front: "Why use low current in electroplating?", back: "For a slow, smooth, even and firmly adhering deposit." },
+          { front: "Electrodes in copper refining", back: "Impure copper anode; thin pure copper cathode." },
+        ],
+        quiz: [
+          {
+            kind: "mcq",
+            q: "During electrolysis of copper sulphate using copper electrodes, the anode:",
+            options: ["gains mass", "loses mass", "releases oxygen", "stays unchanged"],
+            answer: 1,
+            explain: "Cu − 2e⁻ → Cu²⁺: copper atoms leave the anode as ions.",
+          },
+          {
+            kind: "truefalse",
+            q: "Alternating current is preferred for electroplating.",
+            answer: false,
+            explain: "DC is required; AC would keep reversing the electrodes.",
+          },
+          {
+            kind: "numeric",
+            q: "What mass of copper (g) is deposited by 1 mol of electrons? (Cu = 63.5)",
+            answer: 31.75,
+            tolerance: 0.05,
+            unit: "g",
+            explain: "Cu²⁺ needs 2 electrons, so 1 mol e⁻ gives 0.5 mol Cu = 31.75 g.",
+            difficulty: 3,
+          },
+          {
+            kind: "fill",
+            q: "In electrorefining of copper, the electrolyte is acidified ___ solution.",
+            answer: ["copper sulphate", "copper(II) sulphate", "CuSO4", "CuSO₄", "copper sulfate"],
+            explain: "It supplies Cu²⁺ ions; the acid improves conductivity.",
+          },
+          {
+            kind: "mcq",
+            q: "Electrolysis of CuSO₄ with platinum electrodes leaves a solution that is:",
+            options: ["basic", "neutral", "acidic", "deep blue"],
+            answer: 2,
+            explain: "Cu²⁺ and OH⁻ are removed; H⁺ and SO₄²⁻ remain, i.e. sulphuric acid.",
+            difficulty: 2,
+          },
+        ],
+      },
+    ],
+  },
+  /* ------------------------------------------------------------------ */
+  {
+    slug: "icse-analytical-chemistry",
+    title: "Analytical Chemistry",
+    icon: "🧪",
+    description: "Identifying cations with NaOH and NH₄OH, and the action of alkalis on amphoteric metals, oxides and ammonium salts.",
+    lessons: [
+      {
+        slug: "identifying-cations",
+        title: "Identifying Cations with Alkalis",
+        summary: "Colours of salt solutions and the precipitates formed with sodium hydroxide and ammonium hydroxide, a few drops and in excess.",
+        minutes: 16,
+        xp: 40,
+        blocks: [
+          {
+            type: "text",
+            md: "In the lab, a colourless solution in an unlabelled bottle can be identified with just two reagents: **sodium hydroxide** and **ammonium hydroxide**. Both supply OH⁻ ions, which form insoluble hydroxides with many metal ions. The **colour** of the precipitate, and whether it **dissolves in excess**, tells you the metal.",
+          },
+          {
+            type: "table",
+            headers: ["Ion", "Colour of solution"],
+            rows: [
+              ["Cu²⁺", "Blue"],
+              ["Fe²⁺", "Pale green"],
+              ["Fe³⁺", "Yellowish brown"],
+              ["Ca²⁺, Zn²⁺, Pb²⁺, Na⁺, K⁺, NH₄⁺", "Colourless"],
+            ],
+          },
+          {
+            type: "heading",
+            text: "Adding NaOH and NH₄OH",
+          },
+          {
+            type: "table",
+            headers: ["Ion", "NaOH, few drops", "NaOH, in excess", "NH₄OH, few drops", "NH₄OH, in excess"],
+            rows: [
+              ["Ca²⁺", "White ppt (sparingly soluble)", "Insoluble", "No ppt", "No ppt"],
+              ["Fe²⁺", "Dirty green ppt", "Insoluble", "Dirty green ppt", "Insoluble"],
+              ["Fe³⁺", "Reddish-brown ppt", "Insoluble", "Reddish-brown ppt", "Insoluble"],
+              ["Cu²⁺", "Pale blue ppt", "Insoluble", "Pale blue ppt", "Dissolves: **deep (inky) blue** solution"],
+              ["Zn²⁺", "White gelatinous ppt", "Dissolves (colourless)", "White gelatinous ppt", "Dissolves (colourless)"],
+              ["Pb²⁺", "White chalky ppt", "Dissolves (colourless)", "White chalky ppt", "Insoluble"],
+            ],
+          },
+          {
+            type: "formula",
+            tex: tx`\mathrm{CuSO_4 + 2NaOH \rightarrow Cu(OH)_2\downarrow + Na_2SO_4} \\ \mathrm{Cu(OH)_2 + (NH_4)_2SO_4 + 2NH_4OH \rightarrow [Cu(NH_3)_4]SO_4 + 4H_2O}`,
+            caption: "The deep blue colour is tetraamminecopper(II) sulphate.",
+          },
+          {
+            type: "heading",
+            text: "Worked example: name the cation",
+          },
+          {
+            type: "list",
+            ordered: true,
+            items: [
+              "Solution X is colourless, so it is not Cu²⁺, Fe²⁺ or Fe³⁺.",
+              "NaOH gives a white precipitate that dissolves in excess. That narrows it to Zn²⁺ or Pb²⁺.",
+              "NH₄OH gives a white precipitate that does **not** dissolve in excess.",
+              "Zn(OH)₂ would dissolve in excess NH₄OH; Pb(OH)₂ does not. So the cation is **Pb²⁺**.",
+            ],
+          },
+          {
+            type: "checkpoint",
+            questions: [
+              {
+                kind: "mcq",
+                q: "A pale green solution gives a dirty green precipitate with NaOH, insoluble in excess. The cation is:",
+                options: ["Cu²⁺", "Fe²⁺", "Fe³⁺", "Zn²⁺"],
+                answer: 1,
+                explain: "Pale green solution and dirty green Fe(OH)₂ precipitate point to iron(II).",
+              },
+            ],
+          },
+          {
+            type: "callout",
+            tone: "exam",
+            title: "The most-asked pair",
+            md: "\"Distinguish between Zn²⁺ and Pb²⁺ using NH₄OH.\" Both give white precipitates; only **Zn(OH)₂ dissolves in excess NH₄OH**. With NaOH both dissolve, so NaOH cannot tell them apart. Many students choose the wrong reagent.",
+          },
+          {
+            type: "callout",
+            tone: "tip",
+            title: "Fe²⁺ turns brown on standing",
+            md: "The dirty green Fe(OH)₂ slowly turns reddish brown at its surface because air oxidises it to Fe(OH)₃. Note the colour as soon as the precipitate forms.",
+          },
+          {
+            type: "keypoints",
+            items: [
+              "Colour of the solution gives the first clue: blue Cu²⁺, pale green Fe²⁺, yellow-brown Fe³⁺.",
+              "Zn(OH)₂ and Pb(OH)₂ dissolve in excess NaOH; Zn(OH)₂ also dissolves in excess NH₄OH.",
+              "Cu(OH)₂ dissolves in excess NH₄OH to give an inky blue solution.",
+              "Ca²⁺ gives no precipitate with NH₄OH.",
+            ],
+          },
+        ],
+        flashcards: [
+          { front: "Precipitate of Fe³⁺ with NaOH", back: "Reddish-brown Fe(OH)₃, insoluble in excess." },
+          { front: "Cu²⁺ + excess NH₄OH", back: "Pale blue ppt dissolves to an inky blue solution of [Cu(NH₃)₄]SO₄." },
+          { front: "Reagent to distinguish Zn²⁺ from Pb²⁺", back: "Ammonium hydroxide: Zn(OH)₂ dissolves in excess, Pb(OH)₂ does not." },
+          { front: "Ca²⁺ with NH₄OH", back: "No precipitate." },
+          { front: "Colour of Fe(OH)₂", back: "Dirty green." },
+        ],
+        quiz: [
+          {
+            kind: "mcq",
+            q: "Which hydroxide is soluble in excess sodium hydroxide?",
+            options: ["Fe(OH)₃", "Cu(OH)₂", "Zn(OH)₂", "Fe(OH)₂"],
+            answer: 2,
+            explain: "Zn(OH)₂ is amphoteric and forms soluble sodium zincate.",
+          },
+          {
+            kind: "fill",
+            q: "Copper(II) hydroxide dissolves in excess ammonium hydroxide to form a deep ___ solution.",
+            answer: ["blue", "inky blue"],
+            explain: "Tetraamminecopper(II) sulphate is deep (inky) blue.",
+          },
+          {
+            kind: "truefalse",
+            q: "Calcium nitrate solution gives a white precipitate with ammonium hydroxide.",
+            answer: false,
+            explain: "Ca²⁺ gives no precipitate with NH₄OH (the OH⁻ concentration is too low).",
+          },
+          {
+            kind: "mcq",
+            q: "A colourless solution gives a white ppt with NH₄OH that dissolves in excess. The cation is:",
+            options: ["Pb²⁺", "Ca²⁺", "Zn²⁺", "Fe²⁺"],
+            answer: 2,
+            explain: "Only Zn(OH)₂ dissolves in excess NH₄OH among these.",
+            difficulty: 2,
+          },
+          {
+            kind: "mcq",
+            q: "A yellowish-brown solution gives a reddish-brown precipitate with NaOH. The salt could be:",
+            options: ["FeSO₄", "FeCl₃", "CuSO₄", "ZnSO₄"],
+            answer: 1,
+            explain: "Fe³⁺ solutions are yellowish brown and form reddish-brown Fe(OH)₃.",
+          },
+        ],
+      },
+      {
+        slug: "amphoteric-reactions",
+        title: "Action of Alkalis on Metals, Oxides and Ammonium Salts",
+        summary: "How Zn, Al and Pb, their oxides and hydroxides react with hot NaOH, and how ammonium salts release ammonia, with a gas-volume calculation.",
+        minutes: 15,
+        xp: 40,
+        blocks: [
+          {
+            type: "text",
+            md: "Most metals do not react with alkalis. Three in the ICSE syllabus do: **zinc, aluminium and lead**. With hot concentrated NaOH (or KOH) they form a soluble salt and release **hydrogen**. Their oxides and hydroxides also dissolve in alkalis, which is why they are called **amphoteric**.",
+          },
+          {
+            type: "formula",
+            tex: tx`\mathrm{Zn + 2NaOH \rightarrow Na_2ZnO_2 + H_2\uparrow} \\ \mathrm{2Al + 2NaOH + 2H_2O \rightarrow 2NaAlO_2 + 3H_2\uparrow} \\ \mathrm{Pb + 2NaOH \rightarrow Na_2PbO_2 + H_2\uparrow}`,
+            caption: "Products: sodium zincate, sodium meta-aluminate, sodium plumbite.",
+          },
+          {
+            type: "table",
+            headers: ["Oxide / hydroxide", "With NaOH", "Salt formed"],
+            rows: [
+              ["ZnO", "ZnO + 2NaOH → Na₂ZnO₂ + H₂O", "Sodium zincate"],
+              ["Al₂O₃", "Al₂O₃ + 2NaOH → 2NaAlO₂ + H₂O", "Sodium meta-aluminate"],
+              ["PbO", "PbO + 2NaOH → Na₂PbO₂ + H₂O", "Sodium plumbite"],
+              ["Zn(OH)₂", "Zn(OH)₂ + 2NaOH → Na₂ZnO₂ + 2H₂O", "Sodium zincate"],
+            ],
+          },
+          {
+            type: "heading",
+            text: "Ammonium salts and alkalis",
+          },
+          {
+            type: "text",
+            md: "Any ammonium salt warmed with NaOH gives off **ammonia**, a gas with a sharp, pungent smell. It turns **moist red litmus blue** and forms **dense white fumes** of NH₄Cl with a glass rod dipped in concentrated HCl. This is the standard test for the NH₄⁺ ion.",
+          },
+          {
+            type: "formula",
+            tex: tx`\mathrm{NH_4Cl + NaOH \xrightarrow{\Delta} NaCl + H_2O + NH_3\uparrow}`,
+          },
+          {
+            type: "heading",
+            text: "Worked example: hydrogen from aluminium foil",
+          },
+          {
+            type: "list",
+            ordered: true,
+            items: [
+              "2.7 g of aluminium foil is warmed with excess NaOH solution. (Al = 27)",
+              "Moles of Al = 2.7 ÷ 27 = 0.1 mol.",
+              "From the equation, 2 mol Al → 3 mol H₂, so 0.1 mol Al → 0.15 mol H₂.",
+              "Volume at STP = 0.15 × 22.4 L = **3.36 L** of hydrogen.",
+            ],
+          },
+          {
+            type: "checkpoint",
+            questions: [
+              {
+                kind: "numeric",
+                q: "What volume of hydrogen (in litres at STP) is produced when 6.5 g of zinc reacts completely with hot NaOH? (Zn = 65)",
+                answer: 2.24,
+                tolerance: 0.02,
+                unit: "L",
+                explain: "6.5/65 = 0.1 mol Zn → 0.1 mol H₂ → 0.1 × 22.4 = 2.24 L.",
+              },
+            ],
+          },
+          {
+            type: "callout",
+            tone: "exam",
+            title: "Board trap",
+            md: "Write the aluminium equation with **water** on the left: 2Al + 2NaOH + 2H₂O → 2NaAlO₂ + 3H₂. Leaving out water makes the equation unbalanced in H and O, a common loss of marks. Also, iron and copper do **not** react with NaOH.",
+          },
+          {
+            type: "illustration",
+            emoji: "🧻",
+            caption: "Never store alkaline cleaners in aluminium vessels: the metal slowly dissolves and hydrogen bubbles out.",
+          },
+          {
+            type: "keypoints",
+            items: [
+              "Zn, Al and Pb react with hot concentrated NaOH to give hydrogen.",
+              "ZnO, Al₂O₃, PbO and their hydroxides are amphoteric.",
+              "Ammonium salt + alkali + heat → ammonia (moist red litmus turns blue).",
+              "Use mole ratios from the balanced equation for gas volumes (22.4 L/mol at STP).",
+            ],
+          },
+        ],
+        flashcards: [
+          { front: "Zinc + hot NaOH", back: "Zn + 2NaOH → Na₂ZnO₂ (sodium zincate) + H₂." },
+          { front: "Test for NH₄⁺ ion", back: "Warm with NaOH; NH₃ turns moist red litmus blue and gives white fumes with conc. HCl." },
+          { front: "Name of Na₂PbO₂", back: "Sodium plumbite." },
+          { front: "Molar volume at STP", back: "22.4 L per mole of any gas." },
+        ],
+        quiz: [
+          {
+            kind: "mcq",
+            q: "Which metal does NOT liberate hydrogen with hot concentrated NaOH?",
+            options: ["Zinc", "Aluminium", "Lead", "Iron"],
+            answer: 3,
+            explain: "Only the amphoteric metals Zn, Al and Pb react with alkalis.",
+          },
+          {
+            kind: "fill",
+            q: "Aluminium oxide reacts with sodium hydroxide to form sodium ___ and water.",
+            answer: ["meta-aluminate", "metaaluminate", "aluminate"],
+            explain: "Al₂O₃ + 2NaOH → 2NaAlO₂ + H₂O.",
+          },
+          {
+            kind: "truefalse",
+            q: "Ammonia turns moist blue litmus red.",
+            answer: false,
+            explain: "Ammonia is alkaline: it turns moist red litmus blue.",
+          },
+          {
+            kind: "numeric",
+            q: "How many moles of hydrogen are formed when 0.4 mol of aluminium reacts with excess NaOH and water?",
+            answer: 0.6,
+            tolerance: 0.01,
+            unit: "mol",
+            explain: "2 Al → 3 H₂, so 0.4 × 3/2 = 0.6 mol.",
+            difficulty: 2,
+          },
+          {
+            kind: "numeric",
+            q: "What volume of ammonia (L at STP) is released when 5.35 g of NH₄Cl is heated with excess NaOH? (N = 14, H = 1, Cl = 35.5)",
+            answer: 2.24,
+            tolerance: 0.02,
+            unit: "L",
+            explain: "M(NH₄Cl) = 53.5, so 5.35 g = 0.1 mol → 0.1 mol NH₃ = 2.24 L.",
+            difficulty: 3,
+          },
+        ],
+      },
+    ],
+  },
+  /* ------------------------------------------------------------------ */
+  {
+    slug: "icse-study-of-compounds",
+    title: "Study of Compounds (HCl, Ammonia, Nitric Acid, Sulphuric Acid)",
+    icon: "⚗️",
+    description: "Preparation, properties and tests of hydrogen chloride and ammonia, and the manufacture and reactions of nitric and sulphuric acids.",
+    lessons: [
+      {
+        slug: "hcl-and-ammonia",
+        title: "Hydrogen Chloride and Ammonia",
+        summary: "Laboratory preparation, drying and collection of HCl and NH₃, the fountain experiment, the Haber process, and key reactions.",
+        minutes: 18,
+        xp: 45,
+        blocks: [
+          {
+            type: "text",
+            md: "Hydrogen chloride and ammonia are both colourless, pungent and **extremely soluble in water**. One is acidic, the other basic; when they meet, they form white fumes of ammonium chloride. The way each is prepared, dried and collected is a classic ICSE question.",
+          },
+          {
+            type: "table",
+            headers: ["", "Hydrogen chloride", "Ammonia"],
+            rows: [
+              ["Reactants", "NaCl + conc. H₂SO₄, below 200 °C", "NH₄Cl + Ca(OH)₂ (slaked lime), heated"],
+              ["Drying agent", "Conc. H₂SO₄", "Quicklime (CaO)"],
+              ["Collection", "Upward displacement of air (heavier than air)", "Downward displacement of air (lighter than air)"],
+              ["Test", "White fumes with NH₃; white curdy ppt with AgNO₃", "Turns moist red litmus blue; white fumes with HCl"],
+            ],
+          },
+          {
+            type: "formula",
+            tex: tx`\mathrm{NaCl + H_2SO_4 \xrightarrow{<200^\circ C} NaHSO_4 + HCl\uparrow} \\ \mathrm{2NH_4Cl + Ca(OH)_2 \xrightarrow{\Delta} CaCl_2 + 2H_2O + 2NH_3\uparrow}`,
+          },
+          {
+            type: "callout",
+            tone: "warning",
+            title: "Why not other drying agents for ammonia?",
+            md: "Ammonia is basic, so it reacts with conc. H₂SO₄ and P₂O₅ (acidic). It also forms an addition compound with anhydrous CaCl₂ (CaCl₂·8NH₃). Only quicklime is used.",
+          },
+          {
+            type: "heading",
+            text: "Fountain experiment",
+          },
+          {
+            type: "text",
+            md: "A dry flask filled with HCl is fitted with a jet tube dipping into blue litmus solution. The first drops of water dissolve so much gas that the pressure in the flask drops; the solution rushes up and sprays as a **red fountain**. With ammonia and red litmus (or phenolphthalein) the fountain is **blue** (or pink). The experiment shows very high solubility and the acidic or basic nature of the gas.",
+          },
+          {
+            type: "heading",
+            text: "Haber process",
+          },
+          {
+            type: "formula",
+            tex: tx`\mathrm{N_2 + 3H_2 \rightleftharpoons 2NH_3} + \text{heat}`,
+            caption: "Conditions: 450–500 °C, 200–900 atm, finely divided iron catalyst with molybdenum as promoter. Ammonia is liquefied and removed; unreacted gases are recycled.",
+          },
+          {
+            type: "heading",
+            text: "Worked example: volumes in the Haber process",
+          },
+          {
+            type: "list",
+            ordered: true,
+            items: [
+              "By Gay-Lussac's law, gas volumes react in the ratio of their coefficients: N₂ : H₂ : NH₃ = 1 : 3 : 2.",
+              "Take 20 L of nitrogen. Hydrogen needed = 3 × 20 = **60 L**.",
+              "Ammonia formed (if conversion were complete) = 2 × 20 = **40 L**.",
+              "In mass terms, 28 g of N₂ (1 mol) gives 2 mol = 34 g of NH₃, which occupies 44.8 L at STP.",
+            ],
+          },
+          {
+            type: "checkpoint",
+            questions: [
+              {
+                kind: "numeric",
+                q: "What volume of hydrogen (L) is needed to react completely with 15 L of nitrogen in the Haber process, at the same temperature and pressure?",
+                answer: 45,
+                unit: "L",
+                explain: "N₂ : H₂ = 1 : 3, so 15 × 3 = 45 L.",
+              },
+            ],
+          },
+          {
+            type: "table",
+            headers: ["Reaction of ammonia", "Equation", "Observation"],
+            rows: [
+              ["Burning in oxygen", "4NH₃ + 3O₂ → 2N₂ + 6H₂O", "Burns with a yellowish-green flame"],
+              ["Reducing hot CuO", "3CuO + 2NH₃ → 3Cu + 3H₂O + N₂", "Black CuO turns reddish brown"],
+              ["With HCl", "NH₃ + HCl → NH₄Cl", "Dense white fumes"],
+            ],
+          },
+          {
+            type: "callout",
+            tone: "exam",
+            title: "Board trap",
+            md: "HCl is dried with conc. H₂SO₄, but **ammonia is never** dried with it. And in HCl preparation the temperature is kept **below 200 °C**: above that, the less useful Na₂SO₄ forms and the glass apparatus can crack.",
+          },
+          {
+            type: "keypoints",
+            items: [
+              "HCl: NaCl + conc. H₂SO₄; dried by conc. H₂SO₄; upward displacement of air.",
+              "NH₃: NH₄Cl + slaked lime; dried by quicklime; downward displacement of air.",
+              "Both are very soluble, shown by the fountain experiment.",
+              "Haber process: 1 : 3 N₂ : H₂, 450–500 °C, 200–900 atm, iron catalyst, Mo promoter.",
+            ],
+          },
+        ],
+        flashcards: [
+          { front: "Drying agent for HCl", back: "Concentrated sulphuric acid." },
+          { front: "Drying agent for NH₃", back: "Quicklime (CaO)." },
+          { front: "Catalyst in the Haber process", back: "Finely divided iron, with molybdenum as promoter." },
+          { front: "What does the fountain experiment show?", back: "The gas is highly soluble in water (and its acidic/basic nature)." },
+          { front: "Test for HCl with AgNO₃", back: "White curdy precipitate of AgCl, soluble in NH₄OH." },
+        ],
+        quiz: [
+          {
+            kind: "mcq",
+            q: "Ammonia is collected by downward displacement of air because it is:",
+            options: ["heavier than air and insoluble", "lighter than air and very soluble in water", "heavier than air and soluble", "lighter than air and insoluble"],
+            answer: 1,
+            explain: "It cannot be collected over water (very soluble) and rises because it is lighter than air.",
+          },
+          {
+            kind: "truefalse",
+            q: "Concentrated sulphuric acid can be used to dry ammonia gas.",
+            answer: false,
+            explain: "Ammonia reacts with it: 2NH₃ + H₂SO₄ → (NH₄)₂SO₄.",
+          },
+          {
+            kind: "fill",
+            q: "In the Haber process, ___ is used as the promoter.",
+            answer: ["molybdenum", "Mo"],
+            explain: "Molybdenum improves the iron catalyst's efficiency.",
+          },
+          {
+            kind: "numeric",
+            q: "What volume (L at STP) of ammonia can be formed from 14 g of nitrogen in the Haber process, assuming complete conversion? (N = 14)",
+            answer: 22.4,
+            tolerance: 0.1,
+            unit: "L",
+            explain: "14 g N₂ = 0.5 mol → 1 mol NH₃ → 22.4 L.",
+            difficulty: 2,
+          },
+          {
+            kind: "mcq",
+            q: "When ammonia is passed over heated copper(II) oxide, the products are:",
+            options: ["Cu, H₂O and N₂", "Cu(OH)₂ and N₂", "CuO and NH₄OH", "Cu₂O and H₂"],
+            answer: 0,
+            explain: "3CuO + 2NH₃ → 3Cu + 3H₂O + N₂: ammonia acts as a reducing agent.",
+          },
+        ],
+      },
+      {
+        slug: "nitric-and-sulphuric-acid",
+        title: "Nitric Acid and Sulphuric Acid",
+        summary: "Laboratory and industrial preparation (Ostwald and Contact processes), and the oxidising, dehydrating and non-volatile nature of these acids.",
+        minutes: 19,
+        xp: 50,
+        blocks: [
+          {
+            type: "text",
+            md: "Nitric acid makes fertilisers and explosives; sulphuric acid is called the **king of chemicals** because a country's consumption of it is a measure of its industrial activity. Both are made from simple raw materials in a few catalytic steps.",
+          },
+          {
+            type: "heading",
+            text: "Nitric acid",
+          },
+          {
+            type: "text",
+            md: "In the lab, potassium (or sodium) nitrate is heated with conc. H₂SO₄ below 200 °C in an **all-glass retort**: the acid vapour attacks rubber and cork. Industrially it is made by the **Ostwald process**.",
+          },
+          {
+            type: "formula",
+            tex: tx`\mathrm{KNO_3 + H_2SO_4 \xrightarrow{<200^\circ C} KHSO_4 + HNO_3} \\ \mathrm{4NH_3 + 5O_2 \xrightarrow[800^\circ C]{Pt} 4NO + 6H_2O} \\ \mathrm{2NO + O_2 \rightarrow 2NO_2} \\ \mathrm{4NO_2 + 2H_2O + O_2 \rightarrow 4HNO_3}`,
+            caption: "Lab preparation, then the three steps of the Ostwald process.",
+          },
+          {
+            type: "list",
+            items: [
+              "Concentrated HNO₃ is often **yellow**: it decomposes in light, 4HNO₃ → 4NO₂ + 2H₂O + O₂, and the brown NO₂ dissolves in it.",
+              "It is a strong **oxidising agent**: Cu + 4HNO₃ (conc.) → Cu(NO₃)₂ + 2H₂O + 2NO₂ (reddish-brown gas).",
+              "Dilute: 3Cu + 8HNO₃ → 3Cu(NO₃)₂ + 4H₂O + 2NO (colourless NO turns brown in air).",
+            ],
+          },
+          {
+            type: "heading",
+            text: "Sulphuric acid: the Contact process",
+          },
+          {
+            type: "formula",
+            tex: tx`\mathrm{S + O_2 \rightarrow SO_2} \\ \mathrm{2SO_2 + O_2 \underset{V_2O_5,\ 450^\circ C}{\rightleftharpoons} 2SO_3} + \text{heat} \\ \mathrm{SO_3 + H_2SO_4 \rightarrow H_2S_2O_7} \\ \mathrm{H_2S_2O_7 + H_2O \rightarrow 2H_2SO_4}`,
+            caption: "SO₃ is absorbed in conc. H₂SO₄ to give oleum, which is then diluted. Pressure: 1–2 atm.",
+          },
+          {
+            type: "callout",
+            tone: "exam",
+            title: "Why not dissolve SO₃ directly in water?",
+            md: "The reaction is so exothermic that it forms a dense **fog** of acid droplets that is hard to condense. Answer this every year in the same words: *SO₃ is absorbed in conc. H₂SO₄ to form oleum*. Also, never write \"water is added to concentrated acid\". Always add **acid to water**, slowly, with stirring.",
+          },
+          {
+            type: "table",
+            headers: ["Property of conc. H₂SO₄", "Example"],
+            rows: [
+              ["Dehydrating agent", "C₁₂H₂₂O₁₁ → 12C + 11H₂O (sugar chars black)"],
+              ["Oxidising agent", "C + 2H₂SO₄ → CO₂ + 2SO₂ + 2H₂O; Cu + 2H₂SO₄ → CuSO₄ + SO₂ + 2H₂O"],
+              ["Non-volatile acid", "Prepares volatile acids: NaCl → HCl, KNO₃ → HNO₃"],
+              ["Hygroscopic", "Dries gases such as HCl, Cl₂, SO₂"],
+              ["Dibasic acid (dilute)", "Forms two salts: NaHSO₄ and Na₂SO₄"],
+            ],
+          },
+          {
+            type: "heading",
+            text: "Worked example: sulphuric acid from sulphur",
+          },
+          {
+            type: "list",
+            ordered: true,
+            items: [
+              "Follow the sulphur atom: S → SO₂ → SO₃ → H₂SO₄. One S gives one H₂SO₄.",
+              "M(S) = 32; M(H₂SO₄) = 2 + 32 + 64 = 98.",
+              "So 32 kg of sulphur gives at most 98 kg of acid.",
+              "A plant burning 160 kg of sulphur produces 160 × 98/32 = **490 kg** of H₂SO₄.",
+            ],
+          },
+          {
+            type: "checkpoint",
+            questions: [
+              {
+                kind: "numeric",
+                q: "What mass of sulphuric acid (kg) can be made from 64 kg of sulphur? (S = 32, H₂SO₄ = 98)",
+                answer: 196,
+                unit: "kg",
+                explain: "64/32 = 2 kmol S → 2 kmol H₂SO₄ = 196 kg.",
+              },
+              {
+                kind: "mcq",
+                q: "Which catalyst is used in the Contact process?",
+                options: ["Platinum gauze", "Iron", "Vanadium pentoxide", "Nickel"],
+                answer: 2,
+                explain: "V₂O₅ catalyses 2SO₂ + O₂ ⇌ 2SO₃. Pt is used in the Ostwald process.",
+              },
+            ],
+          },
+          {
+            type: "keypoints",
+            items: [
+              "Lab HNO₃: KNO₃ + conc. H₂SO₄ in an all-glass apparatus below 200 °C.",
+              "Ostwald: NH₃ → NO (Pt, 800 °C) → NO₂ → HNO₃.",
+              "Contact: S → SO₂ → SO₃ (V₂O₅, 450 °C) → oleum → H₂SO₄.",
+              "Conc. H₂SO₄ is dehydrating, oxidising, non-volatile and hygroscopic.",
+            ],
+          },
+        ],
+        flashcards: [
+          { front: "Catalyst in the Ostwald process", back: "Platinum gauze (about 800 °C)." },
+          { front: "Oleum", back: "Pyrosulphuric acid H₂S₂O₇, formed by dissolving SO₃ in conc. H₂SO₄." },
+          { front: "Why is conc. HNO₃ yellow?", back: "Dissolved NO₂ from its decomposition in light." },
+          { front: "Sugar + conc. H₂SO₄", back: "Black spongy carbon: the acid removes water (dehydration)." },
+          { front: "Gas from Cu + conc. HNO₃", back: "Reddish-brown nitrogen dioxide, NO₂." },
+          { front: "Gas from Cu + conc. H₂SO₄", back: "Sulphur dioxide, SO₂." },
+        ],
+        quiz: [
+          {
+            kind: "mcq",
+            q: "Nitric acid is prepared in the laboratory in an all-glass apparatus because:",
+            options: ["glass is a catalyst", "nitric acid vapour attacks rubber and cork", "glass absorbs NO₂", "it needs light"],
+            answer: 1,
+            explain: "HNO₃ is a strong oxidising agent that corrodes rubber and cork.",
+          },
+          {
+            kind: "truefalse",
+            q: "In the Contact process, sulphur trioxide is dissolved directly in water.",
+            answer: false,
+            explain: "It is absorbed in conc. H₂SO₄ to form oleum, which is then diluted.",
+          },
+          {
+            kind: "fill",
+            q: "Concentrated sulphuric acid turns sugar black because it acts as a ___ agent.",
+            answer: ["dehydrating"],
+            explain: "It removes the elements of water, leaving carbon.",
+          },
+          {
+            kind: "order",
+            q: "Put the steps of the Ostwald process in order.",
+            items: [
+              "Catalytic oxidation of ammonia to nitric oxide",
+              "Oxidation of nitric oxide to nitrogen dioxide",
+              "Absorption of NO₂ in water with oxygen to form nitric acid",
+            ],
+            explain: "NH₃ → NO → NO₂ → HNO₃.",
+          },
+          {
+            kind: "numeric",
+            q: "How many moles of SO₂ are produced when 2 mol of copper react with excess conc. sulphuric acid? (Cu + 2H₂SO₄ → CuSO₄ + SO₂ + 2H₂O)",
+            answer: 2,
+            unit: "mol",
+            explain: "1 mol Cu gives 1 mol SO₂, so 2 mol Cu gives 2 mol SO₂.",
+            difficulty: 2,
+          },
+          {
+            kind: "mcq",
+            q: "Which property of sulphuric acid is used to prepare HCl from NaCl?",
+            options: ["Dehydrating", "Oxidising", "Non-volatile", "Dibasic"],
+            answer: 2,
+            explain: "Being non-volatile (high boiling), it displaces the more volatile HCl.",
+          },
+        ],
+      },
+    ],
+  },
+  /* ------------------------------------------------------------------ */
+  {
+    slug: "icse-water",
+    title: "Water",
+    icon: "💧",
+    description: "Water as the universal solvent, solubility and its curves, water of crystallisation, and hard and soft water.",
+    lessons: [
+      {
+        slug: "water-as-solvent",
+        title: "Water as a Solvent and Solubility",
+        summary: "Solutions, saturated and unsaturated solutions, solubility and how temperature and pressure affect it, with solubility-curve reading.",
+        minutes: 15,
+        xp: 35,
+        blocks: [
+          {
+            type: "text",
+            md: "Water dissolves more substances than any other common liquid, so it is called the **universal solvent**. Its molecules are polar: the slightly negative oxygen end and slightly positive hydrogen ends attract ions and other polar molecules and pull them into solution. That is why rivers carry dissolved minerals and why sea water tastes of salt.",
+          },
+          {
+            type: "table",
+            headers: ["Term", "Meaning"],
+            rows: [
+              ["Solution", "A homogeneous mixture of solute and solvent"],
+              ["Unsaturated", "Can dissolve more solute at that temperature"],
+              ["Saturated", "Cannot dissolve more solute at that temperature"],
+              ["Supersaturated", "Holds more solute than a saturated solution; unstable, crystallises on disturbance"],
+            ],
+          },
+          {
+            type: "heading",
+            text: "Solubility",
+          },
+          {
+            type: "formula",
+            tex: tx`\text{Solubility} = \frac{\text{mass of solute in saturated solution}}{\text{mass of solvent}} \times 100`,
+            caption: "Expressed in grams of solute per 100 g of water at a stated temperature.",
+          },
+          {
+            type: "heading",
+            text: "Worked example",
+          },
+          {
+            type: "list",
+            ordered: true,
+            items: [
+              "At 30 °C, 36 g of a saturated solution of potassium chloride is evaporated to dryness and leaves 9 g of KCl.",
+              "Mass of water = 36 − 9 = 27 g.",
+              "Solubility = 9 ÷ 27 × 100 = **33.3 g per 100 g water** at 30 °C.",
+              "Note the trap: divide by the mass of **water**, not the mass of solution.",
+            ],
+          },
+          {
+            type: "checkpoint",
+            questions: [
+              {
+                kind: "numeric",
+                q: "20 g of a salt saturates 80 g of water at 25 °C. What is its solubility in g per 100 g of water?",
+                answer: 25,
+                unit: "g",
+                explain: "20 ÷ 80 × 100 = 25 g per 100 g water.",
+              },
+            ],
+          },
+          {
+            type: "heading",
+            text: "What affects solubility?",
+          },
+          {
+            type: "list",
+            items: [
+              "**Solids:** solubility usually rises with temperature. KNO₃ rises steeply; NaCl barely changes; Ca(OH)₂ actually decreases.",
+              "**Gases:** solubility **decreases** as temperature rises and **increases** with pressure. Soda bottles are filled with CO₂ under pressure, and it fizzes out when opened.",
+            ],
+          },
+          {
+            type: "illustration",
+            emoji: "🐟",
+            caption: "Warm water holds less dissolved oxygen. In hot Indian summers, fish in shallow ponds come up to gulp air.",
+          },
+          {
+            type: "callout",
+            tone: "tip",
+            title: "Reading a solubility curve",
+            md: "A point on the curve is a saturated solution. A point below is unsaturated; above is supersaturated. To find how much crystallises on cooling, subtract the solubility at the lower temperature from that at the higher one.",
+          },
+          {
+            type: "callout",
+            tone: "exam",
+            title: "Board trap",
+            md: "If KNO₃ has solubility 110 g at 60 °C and 32 g at 20 °C, cooling a saturated solution containing **100 g of water** deposits 110 − 32 = **78 g** of crystals. For 50 g of water it is half of that, 39 g. Always scale to the mass of water given.",
+          },
+          {
+            type: "keypoints",
+            items: [
+              "Water is called the universal solvent because of its polar molecules.",
+              "Solubility = g of solute per 100 g of solvent in a saturated solution at a fixed temperature.",
+              "Solubility of most solids increases with temperature; of gases it decreases.",
+              "Gas solubility increases with pressure.",
+            ],
+          },
+        ],
+        flashcards: [
+          { front: "Solubility", back: "Maximum grams of solute that dissolve in 100 g of solvent at a given temperature." },
+          { front: "Saturated solution", back: "One that can dissolve no more solute at that temperature." },
+          { front: "Effect of temperature on gas solubility", back: "Solubility decreases as temperature rises." },
+          { front: "A solid whose solubility decreases on heating", back: "Calcium hydroxide." },
+          { front: "Why is water a universal solvent?", back: "Its polar molecules attract and separate ions and polar molecules." },
+        ],
+        quiz: [
+          {
+            kind: "mcq",
+            q: "Which change increases the solubility of carbon dioxide in water?",
+            options: ["Raising temperature", "Raising pressure", "Stirring", "Adding more water only"],
+            answer: 1,
+            explain: "Gas solubility increases with pressure (Henry's law) and decreases with temperature.",
+          },
+          {
+            kind: "truefalse",
+            q: "A supersaturated solution is stable and does not crystallise when a crystal is dropped in.",
+            answer: false,
+            explain: "It is unstable; a seed crystal causes the extra solute to crystallise out.",
+          },
+          {
+            kind: "numeric",
+            q: "12 g of NaCl is left on evaporating 46 g of its saturated solution. Find the solubility in g per 100 g water, to one decimal place.",
+            answer: 35.3,
+            tolerance: 0.1,
+            unit: "g",
+            explain: "Water = 46 − 12 = 34 g. Solubility = 12/34 × 100 = 35.3 g.",
+            difficulty: 2,
+          },
+          {
+            kind: "fill",
+            q: "A solution that can dissolve more solute at the given temperature is called ___.",
+            answer: ["unsaturated", "an unsaturated solution"],
+            explain: "It has not yet reached saturation.",
+          },
+          {
+            kind: "numeric",
+            q: "A salt's solubility is 80 g at 70 °C and 30 g at 20 °C. How many grams crystallise when a saturated solution in 200 g of water is cooled from 70 °C to 20 °C?",
+            answer: 100,
+            unit: "g",
+            explain: "Per 100 g water: 80 − 30 = 50 g. For 200 g water: 100 g.",
+            difficulty: 3,
+          },
+        ],
+      },
+      {
+        slug: "crystallisation-and-hardness",
+        title: "Water of Crystallisation and Hard Water",
+        summary: "Hydrated salts, efflorescent, deliquescent and hygroscopic substances, and temporary and permanent hardness and their removal.",
+        minutes: 16,
+        xp: 40,
+        blocks: [
+          {
+            type: "text",
+            md: "Blue copper sulphate crystals turn into a **white powder** when heated, and the white powder turns blue again when a drop of water falls on it. The crystals contain a fixed number of water molecules locked into their structure: **water of crystallisation**. Salts with it are **hydrated**; without it, **anhydrous**.",
+          },
+          {
+            type: "table",
+            headers: ["Hydrated salt", "Common name", "Molecules of water"],
+            rows: [
+              ["CuSO₄·5H₂O", "Blue vitriol", "5"],
+              ["FeSO₄·7H₂O", "Green vitriol", "7"],
+              ["ZnSO₄·7H₂O", "White vitriol", "7"],
+              ["MgSO₄·7H₂O", "Epsom salt", "7"],
+              ["Na₂CO₃·10H₂O", "Washing soda", "10"],
+              ["CaSO₄·2H₂O", "Gypsum", "2"],
+            ],
+          },
+          {
+            type: "heading",
+            text: "Worked example: percentage of water",
+          },
+          {
+            type: "list",
+            ordered: true,
+            items: [
+              "Find the % of water of crystallisation in CuSO₄·5H₂O. (Cu = 63.5, S = 32, O = 16, H = 1)",
+              "M(CuSO₄) = 63.5 + 32 + 64 = 159.5; M(5H₂O) = 5 × 18 = 90.",
+              "M(CuSO₄·5H₂O) = 159.5 + 90 = 249.5.",
+              "% water = 90 ÷ 249.5 × 100 = **36.1 %**.",
+            ],
+          },
+          {
+            type: "table",
+            headers: ["Term", "Behaviour in air", "Examples"],
+            rows: [
+              ["Efflorescent", "Loses water of crystallisation to the air, becomes powdery", "Washing soda Na₂CO₃·10H₂O"],
+              ["Deliquescent", "Absorbs so much moisture that it dissolves", "CaCl₂, MgCl₂, NaOH, FeCl₃"],
+              ["Hygroscopic", "Absorbs moisture but does not dissolve", "Conc. H₂SO₄, quicklime CaO, P₂O₅"],
+            ],
+          },
+          {
+            type: "callout",
+            tone: "fact",
+            title: "Why table salt gets sticky in the monsoon",
+            md: "Pure NaCl is not deliquescent. Common salt contains traces of MgCl₂ and CaCl₂, which are. In humid Mumbai or Kolkata monsoons, these impurities pull in moisture and make salt damp.",
+          },
+          {
+            type: "heading",
+            text: "Hard and soft water",
+          },
+          {
+            type: "text",
+            md: "**Soft water** lathers easily with soap. **Hard water** does not; instead it forms a sticky **scum**, because Ca²⁺ and Mg²⁺ ions react with soap. Hardness caused by **bicarbonates** of Ca and Mg is **temporary**; that caused by their **sulphates and chlorides** is **permanent**.",
+          },
+          {
+            type: "table",
+            headers: ["Method", "Removes", "Equation"],
+            rows: [
+              ["Boiling", "Temporary", "Ca(HCO₃)₂ → CaCO₃↓ + H₂O + CO₂"],
+              ["Clark's method (slaked lime)", "Temporary", "Ca(HCO₃)₂ + Ca(OH)₂ → 2CaCO₃↓ + 2H₂O"],
+              ["Washing soda", "Temporary and permanent", "CaSO₄ + Na₂CO₃ → CaCO₃↓ + Na₂SO₄"],
+              ["Ion exchange", "Temporary and permanent", "Ca²⁺ and Mg²⁺ swapped for Na⁺ on a resin"],
+            ],
+          },
+          {
+            type: "checkpoint",
+            questions: [
+              {
+                kind: "mcq",
+                q: "Which salt causes permanent hardness?",
+                options: ["Calcium bicarbonate", "Magnesium bicarbonate", "Magnesium sulphate", "Sodium chloride"],
+                answer: 2,
+                explain: "Sulphates and chlorides of Ca and Mg cause permanent hardness; bicarbonates cause temporary.",
+              },
+              {
+                kind: "numeric",
+                q: "Find the percentage of water of crystallisation in Na₂CO₃·10H₂O to the nearest whole number. (Na = 23, C = 12, O = 16, H = 1)",
+                answer: 63,
+                tolerance: 0.5,
+                unit: "%",
+                explain: "M(Na₂CO₃) = 106; 10H₂O = 180; total 286. 180/286 × 100 = 62.9 % ≈ 63 %.",
+              },
+            ],
+          },
+          {
+            type: "callout",
+            tone: "exam",
+            title: "Board trap",
+            md: "Boiling removes only **temporary** hardness. A kettle in a hard-water city builds up white CaCO₃ scale, which is proof of bicarbonates. Also, do not confuse **hygroscopic** (absorbs, stays solid or liquid) with **deliquescent** (absorbs and dissolves).",
+          },
+          {
+            type: "keypoints",
+            items: [
+              "Water of crystallisation gives crystals their shape and often colour.",
+              "Efflorescent salts lose water; deliquescent ones absorb and dissolve; hygroscopic ones absorb without dissolving.",
+              "Temporary hardness: bicarbonates; removed by boiling or Clark's method.",
+              "Permanent hardness: sulphates and chlorides; removed by washing soda or ion exchange.",
+            ],
+          },
+        ],
+        flashcards: [
+          { front: "Water of crystallisation", back: "A fixed number of water molecules chemically combined in a crystal, e.g. 5 in blue vitriol." },
+          { front: "Efflorescence", back: "Loss of water of crystallisation on exposure to air, e.g. washing soda." },
+          { front: "Deliquescent example", back: "Calcium chloride (CaCl₂) or NaOH." },
+          { front: "Cause of temporary hardness", back: "Bicarbonates of calcium and magnesium." },
+          { front: "Chemical used to remove permanent hardness", back: "Washing soda, Na₂CO₃·10H₂O." },
+        ],
+        quiz: [
+          {
+            kind: "mcq",
+            q: "Anhydrous copper sulphate is used to test for water because:",
+            options: ["it turns white with water", "it turns blue with water", "it dissolves explosively", "it gives a gas"],
+            answer: 1,
+            explain: "White anhydrous CuSO₄ takes up water and turns into blue CuSO₄·5H₂O.",
+          },
+          {
+            kind: "truefalse",
+            q: "Concentrated sulphuric acid is a deliquescent substance.",
+            answer: false,
+            explain: "It is hygroscopic: it absorbs moisture but does not 'dissolve' in it as a solid would.",
+          },
+          {
+            kind: "fill",
+            q: "Clark's method removes temporary hardness by adding calculated amounts of ___.",
+            answer: ["slaked lime", "calcium hydroxide", "Ca(OH)2", "Ca(OH)₂", "lime water"],
+            explain: "Ca(OH)₂ converts soluble Ca(HCO₃)₂ to insoluble CaCO₃.",
+          },
+          {
+            kind: "mcq",
+            q: "Which substance is efflorescent?",
+            options: ["Calcium chloride", "Washing soda crystals", "Quicklime", "Sodium hydroxide"],
+            answer: 1,
+            explain: "Na₂CO₃·10H₂O loses 9 molecules of water in air and turns powdery.",
+          },
+          {
+            kind: "numeric",
+            q: "What is the percentage of water in gypsum, CaSO₄·2H₂O, to the nearest whole number? (Ca = 40, S = 32, O = 16, H = 1)",
+            answer: 21,
+            tolerance: 0.5,
+            unit: "%",
+            explain: "M(CaSO₄) = 136; 2H₂O = 36; total 172. 36/172 × 100 = 20.9 % ≈ 21 %.",
+            difficulty: 3,
+          },
+        ],
+      },
+    ],
+  },
+  /* ------------------------------------------------------------------ */
+  {
+    slug: "icse-hydrogen",
+    title: "Study of the First Element – Hydrogen",
+    icon: "🎈",
+    description: "Hydrogen's unique position, its preparation from water, acids and alkalis, industrial manufacture, properties and uses.",
+    lessons: [
+      {
+        slug: "position-and-preparation",
+        title: "Position and Preparation of Hydrogen",
+        summary: "Why hydrogen resembles both alkali metals and halogens, and how it is prepared from water, dilute acids and alkalis, including the laboratory method.",
+        minutes: 16,
+        xp: 40,
+        blocks: [
+          {
+            type: "text",
+            md: "Hydrogen is the first element of the periodic table and the most abundant in the universe: the Sun is mostly hydrogen. Its atom is just 1 proton and 1 electron (configuration 1). This single electron makes its position in the table a puzzle.",
+          },
+          {
+            type: "table",
+            headers: ["Resembles alkali metals (Group 1)", "Resembles halogens (Group 17)"],
+            rows: [
+              ["One electron in the valence shell", "Needs one electron to complete its shell"],
+              ["Forms a positive ion H⁺", "Forms a negative hydride ion H⁻ (NaH)"],
+              ["Acts as a reducing agent", "Exists as diatomic molecules H₂"],
+              ["Combines with non-metals (H₂O, HCl)", "Is a non-metal, a gas"],
+            ],
+          },
+          {
+            type: "heading",
+            text: "From water",
+          },
+          {
+            type: "list",
+            items: [
+              "**K, Na:** react violently with cold water: 2Na + 2H₂O → 2NaOH + H₂.",
+              "**Ca:** reacts less vigorously with cold water: Ca + 2H₂O → Ca(OH)₂ + H₂.",
+              "**Mg:** with boiling water or steam: Mg + H₂O → MgO + H₂.",
+              "**Zn, Fe:** with steam. Iron's reaction is reversible: 3Fe + 4H₂O ⇌ Fe₃O₄ + 4H₂.",
+            ],
+          },
+          {
+            type: "heading",
+            text: "Laboratory preparation",
+          },
+          {
+            type: "formula",
+            tex: tx`\mathrm{Zn + 2HCl \rightarrow ZnCl_2 + H_2\uparrow}`,
+            caption: "Granulated zinc and dilute HCl (or dilute H₂SO₄) in a Woulfe bottle with a thistle funnel; hydrogen is collected by downward displacement of water.",
+          },
+          {
+            type: "list",
+            items: [
+              "Granulated zinc is used because its larger surface area and traces of copper speed up the reaction.",
+              "The thistle funnel's end must dip below the acid, so gas cannot escape through it.",
+              "The first few jars are rejected: they contain air, and a hydrogen–air mixture explodes when lit.",
+              "Hydrogen is collected over water because it is almost insoluble; it is not collected by displacement of air in this method because it forms an explosive mixture.",
+            ],
+          },
+          {
+            type: "callout",
+            tone: "warning",
+            title: "Metals that are NOT used",
+            md: "**Na, K** react explosively. **Ca** is expensive. **Pb** forms an insoluble coating of PbCl₂ or PbSO₄ that stops the reaction. **Cu** is below hydrogen. **Nitric acid** is not used because it oxidises the hydrogen to water (except very dilute 1% HNO₃ with Mg or Mn).",
+          },
+          {
+            type: "heading",
+            text: "Worked example: hydrogen from zinc",
+          },
+          {
+            type: "list",
+            ordered: true,
+            items: [
+              "13 g of zinc reacts with excess dilute HCl. (Zn = 65)",
+              "Moles of Zn = 13 ÷ 65 = 0.2 mol.",
+              "1 mol Zn → 1 mol H₂, so 0.2 mol H₂ forms.",
+              "Volume at STP = 0.2 × 22.4 = **4.48 L**; mass = 0.2 × 2 = **0.4 g**.",
+            ],
+          },
+          {
+            type: "checkpoint",
+            questions: [
+              {
+                kind: "numeric",
+                q: "What volume of hydrogen (L at STP) is produced when 4.8 g of magnesium reacts with excess dilute HCl? (Mg = 24)",
+                answer: 4.48,
+                tolerance: 0.02,
+                unit: "L",
+                explain: "4.8/24 = 0.2 mol Mg → 0.2 mol H₂ → 0.2 × 22.4 = 4.48 L.",
+              },
+            ],
+          },
+          {
+            type: "callout",
+            tone: "exam",
+            title: "Board trap",
+            md: "Hydrogen can also be made from **alkalis**: Zn + 2NaOH → Na₂ZnO₂ + H₂. Examiners ask for this alongside the acid method. And remember the iron–steam reaction is **reversible**; write ⇌, not →.",
+          },
+          {
+            type: "keypoints",
+            items: [
+              "Hydrogen resembles both alkali metals and halogens, so its position is unique.",
+              "Active metals give H₂ from water; reactivity decides cold water, hot water or steam.",
+              "Lab method: granulated Zn + dilute HCl; collected over water.",
+              "Na, K, Ca, Pb, Cu and HNO₃ are unsuitable for the lab preparation.",
+            ],
+          },
+        ],
+        flashcards: [
+          { front: "Electronic configuration of hydrogen", back: "1 (one electron in the K shell)." },
+          { front: "Hydride ion", back: "H⁻, formed when hydrogen gains an electron (e.g. in NaH)." },
+          { front: "Why granulated zinc?", back: "Larger surface area and copper impurities that speed up the reaction." },
+          { front: "Fe + steam", back: "3Fe + 4H₂O ⇌ Fe₃O₄ + 4H₂ (reversible)." },
+          { front: "Why is lead unsuitable for preparing H₂?", back: "It forms an insoluble layer of PbCl₂/PbSO₄ that stops the reaction." },
+        ],
+        quiz: [
+          {
+            kind: "mcq",
+            q: "Hydrogen resembles the halogens because it:",
+            options: ["forms H⁺ ions", "is a reducing agent", "forms diatomic molecules and H⁻ ions", "has one electron"],
+            answer: 2,
+            explain: "Like Cl₂, it is diatomic, and like Cl⁻, it can form the hydride ion H⁻.",
+          },
+          {
+            kind: "truefalse",
+            q: "Hydrogen is collected by downward displacement of water because it is almost insoluble in water.",
+            answer: true,
+            explain: "Its low solubility allows collection over water.",
+          },
+          {
+            kind: "fill",
+            q: "In the lab preparation of hydrogen, the end of the ___ funnel must dip below the acid level.",
+            answer: ["thistle"],
+            explain: "Otherwise the gas escapes through the funnel.",
+          },
+          {
+            kind: "mcq",
+            q: "Which metal reacts with steam but not with cold water to give hydrogen?",
+            options: ["Sodium", "Potassium", "Iron", "Copper"],
+            answer: 2,
+            explain: "Iron reacts reversibly with steam; Na and K react with cold water; Cu does not react.",
+          },
+          {
+            kind: "numeric",
+            q: "What mass of zinc (g) is needed to produce 1.12 L of hydrogen at STP with dilute H₂SO₄? (Zn = 65)",
+            answer: 3.25,
+            tolerance: 0.02,
+            unit: "g",
+            explain: "1.12/22.4 = 0.05 mol H₂ = 0.05 mol Zn = 0.05 × 65 = 3.25 g.",
+            difficulty: 3,
+          },
+        ],
+      },
+      {
+        slug: "properties-and-uses",
+        title: "Bosch Process, Properties and Uses of Hydrogen",
+        summary: "Industrial manufacture from water gas, physical and chemical properties, hydrogen as a reducing agent, oxidation–reduction, and uses from vanaspati to rockets.",
+        minutes: 16,
+        xp: 40,
+        blocks: [
+          {
+            type: "heading",
+            text: "Bosch process",
+          },
+          {
+            type: "list",
+            ordered: true,
+            items: [
+              "Steam is passed over white-hot coke (about 1000 °C) to make **water gas**: C + H₂O → CO + H₂.",
+              "Water gas is mixed with excess steam and passed over **Fe₂O₃** (catalyst) with **Cr₂O₃** (promoter) at about 450 °C: CO + H₂ + H₂O → CO₂ + 2H₂.",
+              "CO₂ is removed by dissolving it in water under pressure (30 atm).",
+              "Any CO left is absorbed in **ammoniacal cuprous chloride**.",
+            ],
+          },
+          {
+            type: "table",
+            headers: ["Physical property", "Value / note"],
+            rows: [
+              ["Colour, smell, taste", "None"],
+              ["Density", "Lightest gas; 14.4 times lighter than air"],
+              ["Solubility", "Almost insoluble in water"],
+              ["Combustion", "Burns with a pale blue flame; does not support combustion"],
+            ],
+          },
+          {
+            type: "heading",
+            text: "Chemical properties",
+          },
+          {
+            type: "formula",
+            tex: tx`\mathrm{2H_2 + O_2 \rightarrow 2H_2O} \qquad \mathrm{N_2 + 3H_2 \rightleftharpoons 2NH_3} \qquad \mathrm{H_2 + Cl_2 \xrightarrow{\text{sunlight}} 2HCl}`,
+          },
+          {
+            type: "text",
+            md: "Hydrogen is a good **reducing agent**: it removes oxygen from hot oxides of less reactive metals. Black copper(II) oxide turns reddish-brown copper: CuO + H₂ → Cu + H₂O. It does **not** reduce oxides of very active metals such as Na₂O, CaO, Al₂O₃.",
+          },
+          {
+            type: "callout",
+            tone: "tip",
+            title: "Oxidation and reduction",
+            md: "**Oxidation:** addition of oxygen, removal of hydrogen, or loss of electrons. **Reduction:** removal of oxygen, addition of hydrogen, or gain of electrons. In CuO + H₂ → Cu + H₂O, hydrogen is oxidised and CuO is reduced; H₂ is the reducing agent.",
+          },
+          {
+            type: "heading",
+            text: "Worked example: reducing copper oxide",
+          },
+          {
+            type: "list",
+            ordered: true,
+            items: [
+              "15.9 g of CuO is completely reduced by hydrogen. (Cu = 63.5, O = 16)",
+              "M(CuO) = 79.5, so moles = 15.9 ÷ 79.5 = 0.2 mol.",
+              "1 mol CuO needs 1 mol H₂ and gives 1 mol Cu.",
+              "Copper formed = 0.2 × 63.5 = **12.7 g**; hydrogen used = 0.2 × 22.4 = **4.48 L** at STP.",
+            ],
+          },
+          {
+            type: "checkpoint",
+            questions: [
+              {
+                kind: "numeric",
+                q: "What mass of copper (g) is obtained by reducing 7.95 g of CuO with hydrogen? (Cu = 63.5, O = 16)",
+                answer: 6.35,
+                tolerance: 0.02,
+                unit: "g",
+                explain: "7.95/79.5 = 0.1 mol CuO → 0.1 mol Cu = 6.35 g.",
+              },
+            ],
+          },
+          {
+            type: "list",
+            items: [
+              "**Hydrogenation of oils:** vegetable oil + H₂ (nickel catalyst, about 200 °C) → solid fat (vanaspati ghee).",
+              "Manufacture of ammonia (Haber process) and HCl.",
+              "**Rocket fuel:** liquid hydrogen with liquid oxygen powers ISRO's cryogenic CE-20 engine on the LVM3 launch vehicle.",
+              "Oxy-hydrogen torch for welding (flame about 2800 °C); fuel cells that give only water as exhaust.",
+            ],
+          },
+          {
+            type: "callout",
+            tone: "exam",
+            title: "Board trap",
+            md: "The **pop test**: a burning splint brought to a test tube of hydrogen goes out with a 'pop'. Hydrogen *burns*, but does not *support* burning, so the splint goes out. Students often write 'hydrogen supports combustion'. It does not.",
+          },
+          {
+            type: "keypoints",
+            items: [
+              "Bosch process: water gas + steam over Fe₂O₃/Cr₂O₃; CO₂ and CO are removed.",
+              "Hydrogen is the lightest gas, burns with a pale blue flame and gives the pop test.",
+              "It reduces oxides of less reactive metals (CuO, PbO) but not of Na, Ca, Al.",
+              "Uses: hydrogenation (vanaspati), ammonia, rocket fuel, fuel cells.",
+            ],
+          },
+        ],
+        flashcards: [
+          { front: "Water gas", back: "A mixture of CO and H₂, made by passing steam over white-hot coke." },
+          { front: "Catalyst and promoter in the Bosch process", back: "Fe₂O₃ catalyst, Cr₂O₃ promoter." },
+          { front: "Absorbent for CO in the Bosch process", back: "Ammoniacal cuprous chloride." },
+          { front: "Hydrogenation of oils", back: "Oil + H₂ over nickel at about 200 °C gives vanaspati (solid fat)." },
+          { front: "Reduction (electron definition)", back: "Gain of electrons." },
+        ],
+        quiz: [
+          {
+            kind: "mcq",
+            q: "In the Bosch process, carbon dioxide is removed by:",
+            options: ["passing through ammoniacal cuprous chloride", "dissolving in water under pressure", "burning", "passing over hot iron"],
+            answer: 1,
+            explain: "CO₂ is fairly soluble in water under 30 atm pressure; CO is removed by ammoniacal cuprous chloride.",
+          },
+          {
+            kind: "truefalse",
+            q: "Hydrogen reduces hot aluminium oxide to aluminium.",
+            answer: false,
+            explain: "Aluminium is too reactive; its oxide is not reduced by hydrogen.",
+          },
+          {
+            kind: "fill",
+            q: "Vegetable oils are converted to vanaspati ghee by hydrogenation using ___ as catalyst.",
+            answer: ["nickel", "Ni"],
+            explain: "Finely divided nickel at about 200 °C.",
+          },
+          {
+            kind: "mcq",
+            q: "In CuO + H₂ → Cu + H₂O, the substance oxidised is:",
+            options: ["CuO", "H₂", "Cu", "H₂O"],
+            answer: 1,
+            explain: "Hydrogen gains oxygen to become water, so it is oxidised (and acts as the reducing agent).",
+            difficulty: 2,
+          },
+          {
+            kind: "numeric",
+            q: "How many litres of hydrogen at STP are needed to reduce 0.5 mol of lead(II) oxide? (PbO + H₂ → Pb + H₂O)",
+            answer: 11.2,
+            tolerance: 0.05,
+            unit: "L",
+            explain: "1 : 1 ratio, so 0.5 mol H₂ = 0.5 × 22.4 = 11.2 L.",
+            difficulty: 2,
+          },
+        ],
+      },
+    ],
+  },
+];
 
 /** Syllabus chapter title (and its synonyms) → topic slug in `topics`. */
-export const links: Record<string, string> = {};
+export const links: Record<string, string> = {
+  "Chemical Bonding": "icse-chemical-bonding",
+  "Metals and Non-metals": "icse-metallurgy",
+  Metallurgy: "icse-metallurgy",
+  Electrolysis: "icse-electrolysis",
+  "Analytical Chemistry": "icse-analytical-chemistry",
+  "Study of Compounds (HCl, Ammonia, Nitric Acid, Sulphuric Acid)": "icse-study-of-compounds",
+  Water: "icse-water",
+  "Study of the First Element – Hydrogen": "icse-hydrogen",
+};

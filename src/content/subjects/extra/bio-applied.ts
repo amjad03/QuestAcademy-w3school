@@ -479,7 +479,7 @@ export const topics: Topic[] = [
             type: "callout",
             tone: "tip",
             title: "Memory hook",
-            md: "**C**ulex → **C**hronic swelling (filariasis). **A**nopheles → m**A**laria. **A**edes → dengue & chikungunya (both start with a 'day-biting' mosquito).",
+            md: "**C**ulex → **C**hronic swelling (filariasis). **A**nopheles → m**A**laria. **A**edes → dengue & chikungunya (*Aedes* bites mainly during the day, so nets alone at night are not enough).",
           },
           {
             type: "keypoints",
