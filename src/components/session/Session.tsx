@@ -22,6 +22,7 @@ import { awardExploreSticker } from "@/components/modes/explore/stickers";
 import { ENCOURAGE, EXPLORE_LINES, PRAISE as VOICE_PRAISE } from "@/content/voice-lines";
 import { AskQuesty } from "@/components/tutor/AskQuesty";
 import { questionForTutor } from "@/lib/tutor/question";
+import { localize, useContentDict } from "@/i18n/content";
 import { QuestionInput, correctAnswerText, emptyAnswer, gradeAnswer, isAnswered, type Answer } from "@/components/learn/QuestionCard";
 
 export interface SessionPayload {
@@ -64,7 +65,10 @@ function sample(pool: SessionPayload["pool"], count: number): Item[] {
 
 const PRAISE = ["Nice!", "Great job!", "Correct!", "Excellent!", "You got it!", "Amazing!"];
 
-export function Session(p: SessionPayload) {
+export function Session(raw: SessionPayload) {
+  // Titles in the learner's language when the course is translated; questions are swapped per item below.
+  const dict = useContentDict(raw.course.slug);
+  const p = useMemo(() => (dict ? { ...raw, title: dict[raw.title] ?? raw.title, lessons: localize(raw.lessons, dict) } : raw), [raw, dict]);
   const hydrated = useHydrated();
   const router = useRouter();
   const setFocusMode = useUi((s) => s.setFocusMode);
@@ -111,7 +115,7 @@ export function Session(p: SessionPayload) {
     };
   }, [setFocusMode]);
 
-  const current = queue[idx];
+  const current = useMemo(() => queue[idx] && (dict ? { ...queue[idx], question: localize(queue[idx].question, dict) } : queue[idx]), [queue, idx, dict]);
   const total = queue.filter((q) => !q.retry).length;
 
   useEffect(() => {
@@ -204,7 +208,7 @@ export function Session(p: SessionPayload) {
   if (done) {
     const acc = total ? correctFirst / total : 0;
     const changes = p.lessons.map((l) => ({ ...l, from: before[l.id] ?? 0, to: (mastery[l.id] ?? 0) as MasteryLevel })).filter((c) => c.from !== c.to);
-    const missed = queue.filter((q) => !q.retry && !first[q.uid]);
+    const missed = queue.filter((q) => !q.retry && !first[q.uid]).map((q) => (dict ? { ...q, question: localize(q.question, dict) } : q));
     const Results = exp.SessionResults;
     return (
       <Results

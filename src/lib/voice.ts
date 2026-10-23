@@ -46,8 +46,17 @@ function device(text: string, opts: SayOptions) {
   const u = new SpeechSynthesisUtterance(text);
   u.rate = opts.rate ?? 1;
   u.pitch = opts.pitch ?? 1.05;
-  const female = window.speechSynthesis.getVoices().find((v) => /en(-|_)(US|GB|IN)/i.test(v.lang) && /female|samantha|zira|aria|jenny|google us english/i.test(v.name));
-  if (female) u.voice = female;
+  const voices = window.speechSynthesis.getVoices();
+  if (opts.lang) {
+    // Indian-language text: the device's voice for that language (Kokoro speaks English only).
+    u.lang = opts.lang;
+    const base = opts.lang.split("-")[0];
+    const match = voices.find((v) => v.lang.replace("_", "-") === opts.lang) ?? voices.find((v) => v.lang.toLowerCase().startsWith(base));
+    if (match) u.voice = match;
+  } else {
+    const female = voices.find((v) => /en(-|_)(US|GB|IN)/i.test(v.lang) && /female|samantha|zira|aria|jenny|google us english/i.test(v.name));
+    if (female) u.voice = female;
+  }
   u.onend = () => opts.onEnd?.();
   window.speechSynthesis.speak(u);
 }
@@ -125,12 +134,32 @@ export interface SayOptions {
   onEnd?: () => void;
   /** Allow the live Kokoro model for text without a clip (default true). */
   allowLive?: boolean;
+  /** BCP-47 language of the text; set automatically for Indian scripts. */
+  lang?: string;
+}
+
+/** Language of text written in an Indian script, or null for Latin text. */
+const SCRIPTS: [RegExp, string][] = [
+  [/[\u0900-\u097F]/, "hi-IN"],
+  [/[\u0980-\u09FF]/, "bn-IN"],
+  [/[\u0B80-\u0BFF]/, "ta-IN"],
+  [/[\u0C00-\u0C7F]/, "te-IN"],
+  [/[\u0C80-\u0CFF]/, "kn-IN"],
+];
+function scriptLang(text: string) {
+  const hit = SCRIPTS.find(([re]) => re.test(text));
+  if (!hit) return null;
+  // Devanagari is shared by Hindi and Marathi; follow the page language.
+  if (hit[1] === "hi-IN" && document.documentElement.lang.startsWith("mr")) return "mr-IN";
+  return hit[1];
 }
 
 /** Speak text in Questy's voice. Returns immediately; audio plays async. */
 export function say(text: string, opts: SayOptions = {}) {
   if (typeof window === "undefined" || !text.trim()) return;
   stopVoice();
+  const lang = opts.lang ?? scriptLang(text);
+  if (lang) return device(text, { ...opts, lang });
   const my = token;
   const run = async () => {
     const m = manifest ?? (await loadManifest());

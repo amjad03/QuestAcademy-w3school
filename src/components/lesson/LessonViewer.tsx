@@ -28,6 +28,8 @@ import { useExperience } from "@/experiences";
 import type { LessonTab } from "@/experiences/types";
 import dynamic from "next/dynamic";
 import { AskQuesty } from "@/components/tutor/AskQuesty";
+import { localize, useContentDict } from "@/i18n/content";
+import { TranslationNote } from "@/components/i18n/TranslationNote";
 
 const LessonExplainers = dynamic(() => import("@/explainers/LessonExplainers"), { ssr: false });
 
@@ -46,7 +48,10 @@ export interface LessonViewerPayload {
 
 const TAB_LABEL: Record<ItemKind, string> = { video: "Video", article: "Lesson", practice: "Practice", cards: "Flashcards", challenge: "Challenge" };
 
-export function LessonViewer(p: LessonViewerPayload) {
+export function LessonViewer(raw: LessonViewerPayload) {
+  // Lesson text in the learner's language when a translation exists.
+  const dict = useContentDict(raw.course.slug);
+  const p = useMemo(() => localize(raw, dict), [raw, dict]);
   const params = useSearchParams();
   const router = useRouter();
   const hydrated = useHydrated();
@@ -101,6 +106,7 @@ export function LessonViewer(p: LessonViewerPayload) {
 
   const content = (
     <>
+      <TranslationNote course={p.course.slug} />
       {item.kind === "video" && p.video && (
         <div>
           <VideoPlayer id={p.video.id} title={p.video.title || p.lesson.title} watched={itemDone(st, p.id, item)} onWatched={() => markItem(item.id, item.xp)} />
