@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import clsx from "clsx";
 import { ArrowRight, Check } from "lucide-react";
 import { MODE_LIST, type ModeId } from "@/lib/modes";
@@ -21,9 +21,16 @@ const HIGHLIGHTS: Record<ModeId, string[]> = {
 export function AgeSwitcher() {
   const [id, setId] = useState<ModeId>("focus");
   const mode = MODE_LIST.find((m) => m.id === id)!;
+  const strip = useRef<HTMLDivElement>(null);
+  // On phones the tab strip scrolls sideways: keep the selected tab in view without moving the page.
+  useEffect(() => {
+    const el = strip.current;
+    const tab = el?.querySelector<HTMLElement>('[aria-selected="true"]');
+    if (el && tab) el.scrollLeft = tab.offsetLeft - (el.clientWidth - tab.offsetWidth) / 2;
+  }, [id]);
   return (
     <div className="mt-10">
-      <div role="tablist" aria-label="Age profiles" className="-mx-5 flex gap-1 overflow-x-auto border-b border-line px-5 sm:mx-0 sm:px-0">
+      <div ref={strip} role="tablist" aria-label="Age profiles" className="relative -mx-5 flex gap-1 overflow-x-auto border-b border-line px-5 sm:mx-0 sm:px-0">
         {MODE_LIST.map((m) => (
           <button
             key={m.id}
