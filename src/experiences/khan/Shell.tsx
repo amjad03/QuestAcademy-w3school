@@ -15,6 +15,7 @@ import { useLearner, liveStreak } from "@/lib/store";
 import { useMode } from "@/lib/useMode";
 import type { ModeId } from "@/lib/modes";
 import { worldById } from "@/content/worlds";
+import type { WorldId } from "@/content/types";
 import type { NavItem, ShellProps } from "../types";
 import { useExamCountdown, useFmt, worldOrder } from "./ui/hooks";
 
@@ -22,15 +23,45 @@ import { useExamCountdown, useFmt, worldOrder } from "./ui/hooks";
 /* Helpers                                                             */
 /* ------------------------------------------------------------------ */
 
+// i18n: every key the nav label lookup below can build, so the extractor sees them.
+const NAV_KEYS = [
+  ["nav.home.sprout", "Play"],
+  ["nav.home.explore", "Home"],
+  ["nav.home.adventure", "Missions"],
+  ["nav.home.focus", "Syllabus"],
+  ["nav.home.mastery", "Dashboard"],
+  ["nav.home.research", "Workspace"],
+  ["nav.home.professional", "My goals"],
+  ["nav.courses", "Courses"],
+  ["nav.pathways", "Pathways"],
+  ["nav.plan", "Study plan"],
+  ["nav.practice", "Practice"],
+  ["nav.exam", "Exam prep"],
+  ["nav.exam.formulas", "Formulas"],
+  ["nav.code.playground", "Code lab"],
+  ["nav.kids.play", "Games"],
+  ["nav.stickers", "Stickers"],
+  ["nav.leaderboard", "Leagues"],
+  ["nav.quests", "Quests"],
+  ["nav.shop", "Shop"],
+  ["nav.library", "Library"],
+  ["nav.notebook", "Notebook"],
+  ["nav.insights", "Insights"],
+  ["nav.worksheets", "Worksheets"],
+  ["nav.competitions", "Competitions"],
+  ["nav.parent", "For parents"],
+  ["nav.profile", "Profile"],
+] as const;
+const NAV_EN: Record<string, string> = Object.fromEntries(NAV_KEYS);
+
 /** Translated label for a nav destination (the home label differs per profile). */
 function useNavLabel() {
   const t = useT();
   const mode = useMode();
   return useCallback(
     (n: NavItem) => {
-      if (n.href === "/learn") return t(`nav.home.${mode.id}`, n.label);
-      const key = n.href.replace(/^\//, "").replace(/\//g, ".");
-      return t(`nav.${key}`, n.label);
+      const key = n.href === "/learn" ? `nav.home.${mode.id}` : `nav.${n.href.replace(/^\//, "").replace(/\//g, ".")}`;
+      return NAV_EN[key] !== undefined ? t(key, n.label) : n.label;
     },
     [t, mode.id],
   );
@@ -192,6 +223,20 @@ function CoursesMenu({ pathname }: { pathname: string }) {
   useEffect(() => {
     if (open) box.current?.querySelector<HTMLElement>("a")?.focus();
   }, [open]);
+  const worldName: Record<WorldId, string> = {
+    kids: t("khan.world.kids", "Early learning"),
+    school: t("khan.world.school", "School"),
+    exam: t("khan.world.exam", "Exam prep"),
+    code: t("khan.world.code", "Coding"),
+    campus: t("khan.world.campus", "College"),
+  };
+  const worldShort: Record<WorldId, string> = {
+    kids: t("khan.world.kids.short", "Ages 3–10"),
+    school: t("khan.world.school.short", "Grades 6–12"),
+    exam: t("khan.world.exam.short", "NEET · JEE"),
+    code: t("khan.world.code.short", "Beginner → Pro"),
+    campus: t("khan.world.campus.short", "UG · PG"),
+  };
 
   const groups = useMemo(
     () =>
@@ -221,8 +266,8 @@ function CoursesMenu({ pathname }: { pathname: string }) {
             {groups.map(({ world, courses }) => (
               <section key={world.id} aria-labelledby={`${id}-${world.id}`} className="min-w-0">
                 <h3 id={`${id}-${world.id}`} className="flex items-baseline justify-between gap-2 border-b border-line pb-2">
-                  <span className="text-sm font-bold">{t(`khan.world.${world.id}`, world.name)}</span>
-                  <span className="text-xs text-muted">{t(`khan.world.${world.id}.short`, world.short)}</span>
+                  <span className="text-sm font-bold">{worldName[world.id] ?? world.name}</span>
+                  <span className="text-xs text-muted">{worldShort[world.id] ?? world.short}</span>
                 </h3>
                 <ul className="mt-2 space-y-0.5">
                   {courses.slice(0, 9).map((c) => (
@@ -380,7 +425,7 @@ function MenuContent({ nav, more, isActive, full }: { nav: NavItem[]; more: NavI
         <Avatar name={hydrated ? profile.name : ""} color={hydrated ? profile.avatar : "blue"} size={40} />
         <span className="min-w-0">
           <span className="block truncate font-semibold">{name}</span>
-          <span className="block truncate text-xs text-muted">{t(`khan.stage.${mode.id}`, STAGE_LABEL[mode.id])}</span>
+          <span className="block truncate text-xs text-muted">{stageLabel(t, mode.id)}</span>
         </span>
       </Link>
       <div className="my-1.5 border-t border-line" />
@@ -419,15 +464,19 @@ function MenuContent({ nav, more, isActive, full }: { nav: NavItem[]; more: NavI
   );
 }
 
-const STAGE_LABEL: Record<ModeId, string> = {
-  sprout: "Pre-primary",
-  explore: "Primary school",
-  adventure: "Middle school · Class 6–8",
-  focus: "High school & PUC",
-  mastery: "Undergraduate",
-  research: "Postgraduate & research",
-  professional: "Professional learning",
-};
+/** The learner's stage, shown under their name in the profile menu. */
+function stageLabel(t: ReturnType<typeof useT>, id: ModeId) {
+  const labels: Record<ModeId, string> = {
+    sprout: t("khan.stage.sprout", "Pre-primary"),
+    explore: t("khan.stage.explore", "Primary school"),
+    adventure: t("khan.stage.adventure", "Middle school · Class 6–8"),
+    focus: t("khan.stage.focus", "High school & PUC"),
+    mastery: t("khan.stage.mastery", "Undergraduate"),
+    research: t("khan.stage.research", "Postgraduate & research"),
+    professional: t("khan.stage.professional", "Professional learning"),
+  };
+  return labels[id];
+}
 
 function ThemeToggle() {
   const t = useT();

@@ -27,6 +27,81 @@ export type Col = { c: string; s: string };
 
 export const EX_ROTATION: Col[] = [EX.green, EX.purple, EX.blue, EX.orange, EX.pink, EX.teal, EX.red];
 
+// i18n: every sticker name, keyed by sticker id (see STICKERS).
+const STICKER_NAMES = [
+  ["explore.sticker.garden-1", "Sunflower"],
+  ["explore.sticker.garden-2", "Ladybug"],
+  ["explore.sticker.garden-3", "Busy bee"],
+  ["explore.sticker.garden-4", "Butterfly"],
+  ["explore.sticker.garden-5", "Snail"],
+  ["explore.sticker.garden-6", "Mushroom"],
+  ["explore.sticker.garden-7", "Tulip"],
+  ["explore.sticker.animals-1", "Lion"],
+  ["explore.sticker.animals-2", "Elephant"],
+  ["explore.sticker.animals-3", "Giraffe"],
+  ["explore.sticker.animals-4", "Panda"],
+  ["explore.sticker.animals-5", "Tiger"],
+  ["explore.sticker.animals-6", "Zebra"],
+  ["explore.sticker.animals-7", "Koala"],
+  ["explore.sticker.ocean-1", "Dolphin"],
+  ["explore.sticker.ocean-2", "Octopus"],
+  ["explore.sticker.ocean-3", "Turtle"],
+  ["explore.sticker.ocean-4", "Crab"],
+  ["explore.sticker.ocean-5", "Whale"],
+  ["explore.sticker.ocean-6", "Clownfish"],
+  ["explore.sticker.ocean-7", "Seal"],
+  ["explore.sticker.space-1", "Rocket"],
+  ["explore.sticker.space-2", "Planet"],
+  ["explore.sticker.space-3", "Moon"],
+  ["explore.sticker.space-4", "Star"],
+  ["explore.sticker.space-5", "Comet"],
+  ["explore.sticker.space-6", "Alien friend"],
+  ["explore.sticker.space-7", "Space ship"],
+  ["explore.sticker.treats-1", "Ice cream"],
+  ["explore.sticker.treats-2", "Doughnut"],
+  ["explore.sticker.treats-3", "Strawberry"],
+  ["explore.sticker.treats-4", "Cupcake"],
+  ["explore.sticker.treats-5", "Watermelon"],
+  ["explore.sticker.treats-6", "Cookie"],
+  ["explore.sticker.treats-7", "Lollipop"],
+  ["explore.sticker.rainbow-1", "Rainbow"],
+  ["explore.sticker.rainbow-2", "Lightning"],
+  ["explore.sticker.rainbow-3", "Fire"],
+  ["explore.sticker.rainbow-4", "Diamond"],
+  ["explore.sticker.rainbow-5", "Crown"],
+  ["explore.sticker.rainbow-6", "Trophy"],
+  ["explore.sticker.rainbow-7", "Unicorn"],
+] as const;
+const STICKER_KEYS: ReadonlySet<string> = new Set(STICKER_NAMES.map(([k]) => k));
+
+/** A sticker's name in the learner's language. */
+export function stickerName(t: ReturnType<typeof useT>, sticker: Pick<Sticker, "id" | "name">) {
+  const key = `explore.sticker.${sticker.id}`;
+  return STICKER_KEYS.has(key) ? t(key, sticker.name) : sticker.name;
+}
+
+// i18n: every daily quest title, keyed by quest id (see QUEST_POOL in lib/gamification).
+const QUEST_TITLES = [
+  ["explore.quest.xp-30", "Earn 30 XP"],
+  ["explore.quest.xp-80", "Earn 80 XP"],
+  ["explore.quest.lessons-1", "Complete a lesson"],
+  ["explore.quest.lessons-3", "Complete 3 lessons"],
+  ["explore.quest.correct-5", "Get 5 answers right"],
+  ["explore.quest.correct-15", "Get 15 answers right"],
+  ["explore.quest.cards-10", "Flip 10 flashcards"],
+  ["explore.quest.runs-3", "Run code 3 times"],
+  ["explore.quest.quiz-2", "Finish 2 quizzes"],
+  ["explore.quest.review-5", "Review 5 cards"],
+  ["explore.quest.games-2", "Play 2 games"],
+] as const;
+const QUEST_KEYS: ReadonlySet<string> = new Set(QUEST_TITLES.map(([k]) => k));
+
+/** A daily quest's title in the learner's language. */
+export function questTitle(t: ReturnType<typeof useT>, quest: { id: string; title: string }) {
+  const key = `explore.quest.${quest.id}`;
+  return QUEST_KEYS.has(key) ? t(key, quest.title) : quest.title;
+}
+
 /** Small round speaker button: Questy reads `text` aloud. */
 export function ReadAloud({ text, label, size = "md", className, withWord }: { text: string; label?: string; size?: "sm" | "md" | "lg"; className?: string; withWord?: boolean }) {
   const t = useT();

@@ -27,7 +27,17 @@ export function SproutSessionLayout(p: SessionLayoutProps) {
   const reduce = useReducedMotion();
   const fb = p.feedback;
   const praiseIdx = fb ? PRAISE.indexOf(fb.praise) : -1;
-  const headline = fb?.correct ? (praiseIdx >= 0 ? t(`sprout.praise.${praiseIdx}`, fb.praise) : t("sprout.session.great", "Great!")) : t("sprout.session.tryAgain", "Let’s try again!");
+  // One entry per PRAISE line, same order.
+  const praise = [
+    t("sprout.praise.0", "Great job!"),
+    t("sprout.praise.1", "You did it!"),
+    t("sprout.praise.2", "Wow, well done!"),
+    t("sprout.praise.3", "Super star!"),
+    t("sprout.praise.4", "Amazing work!"),
+    t("sprout.praise.5", "You’re so clever!"),
+    t("sprout.praise.6", "Hooray! That’s right!"),
+  ];
+  const headline = fb?.correct ? (praiseIdx >= 0 ? (praise[praiseIdx] ?? fb.praise) : t("sprout.session.great", "Great!")) : t("sprout.session.tryAgain", "Let’s try again!");
 
   return (
     <div className="sprout-session flex min-h-[100dvh] flex-col bg-bg">

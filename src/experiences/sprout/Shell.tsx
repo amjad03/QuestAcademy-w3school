@@ -32,6 +32,11 @@ export function SproutShell({ children, nav, more, isActive, openSearch, pathnam
   const name = useLearner((s) => s.profile.name);
   const first = name?.trim().split(" ")[0] ?? "";
   const kidNav = nav.filter((n) => KID_NAV[n.href]);
+  const kidWords: Record<string, { label: string; speak: string }> = {
+    home: { label: t("sprout.nav.home", "Home"), speak: t("sprout.nav.homeSay", "Home! Let’s play and learn.") },
+    games: { label: t("sprout.nav.games", "Games"), speak: t("sprout.nav.gamesSay", "Let’s play a game!") },
+    stickers: { label: t("sprout.nav.stickers", "Stickers"), speak: t("sprout.nav.stickersSay", "This is your sticker book. Try new things to collect them all!") },
+  };
   const grownNav = [...nav.filter((n) => !KID_NAV[n.href]), ...more];
   const [gate, setGate] = useState(false);
   const [panel, setPanel] = useState(false);
@@ -82,7 +87,7 @@ export function SproutShell({ children, nav, more, isActive, openSearch, pathnam
         <div className="mx-auto flex max-w-[560px] items-end justify-around gap-2 px-4 pb-[max(14px,env(safe-area-inset-bottom))] pt-3">
           {kidNav.map((n) => {
             const k = KID_NAV[n.href];
-            return <BubbleLink key={n.href} href={n.href} label={t(`sprout.nav.${k.key}`, k.label)} speak={t(`sprout.nav.${k.key}Say`, k.speak)} icon={k.icon} hue={k.hue} size={84} caption current={isActive(n.href)} />;
+            return <BubbleLink key={n.href} href={n.href} label={kidWords[k.key]?.label ?? k.label} speak={kidWords[k.key]?.speak ?? k.speak} icon={k.icon} hue={k.hue} size={84} caption current={isActive(n.href)} />;
           })}
         </div>
       </nav>

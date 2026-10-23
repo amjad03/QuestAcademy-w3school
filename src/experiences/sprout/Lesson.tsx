@@ -106,14 +106,21 @@ export function SproutLessonLayout(p: LessonLayoutProps) {
 function PictureTab({ tab }: { tab: LessonTab }) {
   const t = useT();
   const pic = TAB_PICTURE[tab.kind];
+  const words: Record<ItemKind, { label: string; speak: string }> = {
+    video: { label: t("sprout.lesson.tab.watch", "Watch"), speak: t("sprout.lesson.tab.watchSay", "Let’s watch!") },
+    article: { label: t("sprout.lesson.tab.story", "Story"), speak: t("sprout.lesson.tab.storySay", "Story time!") },
+    cards: { label: t("sprout.lesson.tab.cards", "Cards"), speak: t("sprout.lesson.tab.cardsSay", "Let’s play flip cards!") },
+    practice: { label: t("sprout.lesson.tab.play", "Play"), speak: t("sprout.lesson.tab.playSay", "Your turn! Let’s play.") },
+    challenge: { label: t("sprout.lesson.tab.game", "Play"), speak: t("sprout.lesson.tab.gameSay", "Let’s play!") },
+  };
   const badge = tab.done ? (
     <span className="absolute -right-1 -top-1 grid h-7 w-7 place-items-center rounded-full bg-[#3CCB98] text-white shadow-soft ring-4 ring-[rgb(var(--bg))]">
       <Check className="h-4 w-4" strokeWidth={3.5} />
     </span>
   ) : null;
   const common = {
-    label: t(`sprout.lesson.tab.${pic.key}`, pic.label),
-    speak: t(`sprout.lesson.tab.${pic.key}Say`, pic.speak),
+    label: words[tab.kind]?.label ?? pic.label,
+    speak: words[tab.kind]?.speak ?? pic.speak,
     icon: pic.icon,
     hue: pic.hue,
     size: 68,

@@ -13,16 +13,16 @@ import type { LessonLayoutProps, LessonTab } from "../../types";
 const FONT = "[font-family:var(--font-pro),var(--font-indic),system-ui,sans-serif]";
 
 /** Up-next labels coming from the lesson viewer → icon + translation key. */
-const NEXT_KIND: Record<string, { icon: typeof PlayCircle; key: string }> = {
-  Video: { icon: PlayCircle, key: "khan.kind.video" },
-  Lesson: { icon: FileText, key: "khan.kind.article" },
-  Article: { icon: FileText, key: "khan.kind.article" },
-  Flashcards: { icon: Layers, key: "khan.kind.cards" },
-  Practice: { icon: Dumbbell, key: "khan.kind.practice" },
-  Challenge: { icon: FlaskConical, key: "khan.kind.challenge" },
-  "Next lesson": { icon: ChevronRight, key: "khan.kind.nextLesson" },
-  "Unit test": { icon: Trophy, key: "khan.kind.unitTest" },
-  Quiz: { icon: BookOpenCheck, key: "khan.kind.quiz" },
+const NEXT_KIND: Record<string, { icon: typeof PlayCircle; key: string; en: string }> = {
+  Video: { icon: PlayCircle, key: "khan.kind.video", en: "Video" },
+  Lesson: { icon: FileText, key: "khan.kind.article", en: "Article" },
+  Article: { icon: FileText, key: "khan.kind.article", en: "Article" },
+  Flashcards: { icon: Layers, key: "khan.kind.cards", en: "Flashcards" },
+  Practice: { icon: Dumbbell, key: "khan.kind.practice", en: "Practice" },
+  Challenge: { icon: FlaskConical, key: "khan.kind.challenge", en: "Challenge" },
+  "Next lesson": { icon: ChevronRight, key: "khan.kind.nextLesson", en: "Next lesson" },
+  "Unit test": { icon: Trophy, key: "khan.kind.unitTest", en: "Unit test" },
+  Quiz: { icon: BookOpenCheck, key: "khan.kind.quiz", en: "Quiz" },
 };
 
 function useTabLabel() {
@@ -81,7 +81,7 @@ export function KhanLessonLayout(p: LessonLayoutProps) {
     if ((e.target as HTMLElement).closest("a")) setDrawer(false);
   };
 
-  const nextKind = NEXT_KIND[p.upNext.label] ?? { icon: ArrowRight, key: "" };
+  const nextKind = NEXT_KIND[p.upNext.label] ?? { icon: ArrowRight, key: "", en: "" };
   const NextIcon = nextKind.icon;
   const nextLabel = nextKind.key ? t(nextKind.key, p.upNext.label) : p.upNext.label;
 

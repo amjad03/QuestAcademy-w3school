@@ -25,6 +25,31 @@ const KID_TABS: { href: string; word: (t: ReturnType<typeof useT>) => string; ic
   { href: "/profile", word: (t) => t("explore.nav.me", "Me"), icon: UserRound, col: EX.blue },
 ];
 
+// i18n: every "More places" key the grown-up menu can build (href without punctuation).
+const PLACE_NAMES = [
+  ["explore.place.courses", "Courses"],
+  ["explore.place.pathways", "Pathways"],
+  ["explore.place.plan", "Study plan"],
+  ["explore.place.practice", "Practice"],
+  ["explore.place.exam", "Exam prep"],
+  ["explore.place.examformulas", "Formulas"],
+  ["explore.place.codeplayground", "Code lab"],
+  ["explore.place.leaderboard", "Leagues"],
+  ["explore.place.quests", "Quests"],
+  ["explore.place.shop", "Shop"],
+  ["explore.place.library", "Library"],
+  ["explore.place.notebook", "Notebook"],
+  ["explore.place.insights", "Insights"],
+  ["explore.place.worksheets", "Worksheets"],
+  ["explore.place.competitions", "Competitions"],
+] as const;
+const PLACE_KEYS: ReadonlySet<string> = new Set(PLACE_NAMES.map(([k]) => k));
+
+function placeName(t: ReturnType<typeof useT>, href: string, label: string) {
+  const key = `explore.place.${href.replace(/\W+/g, "")}`;
+  return PLACE_KEYS.has(key) ? t(key, label) : label;
+}
+
 /** A lesson page (/course/subject/unit/lesson) is full-focus: no sidebar, no tab bar. */
 function isLessonPath(pathname: string) {
   const m = pathname.match(/^\/course\/([^/]+)\/([^/]+)\/([^/]+)/);
@@ -209,7 +234,7 @@ function MoreMenu({ onClose, extra, openSearch, openGrownUps, placement }: { onC
                   <span className="grid h-9 w-9 shrink-0 place-items-center rounded-full" style={{ background: `${n.color}22` }}>
                     <n.icon className="h-5 w-5" style={{ color: n.color }} strokeWidth={2.5} aria-hidden />
                   </span>
-                  {t(`explore.place.${n.href.replace(/\W+/g, "")}`, n.label)}
+                  {placeName(t, n.href, n.label)}
                 </Link>
               </li>
             ))}

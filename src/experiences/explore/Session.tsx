@@ -14,7 +14,7 @@ import { stickerById, type Sticker } from "@/components/modes/explore/stickers";
 import { StickerTile } from "@/components/modes/explore/StickerTile";
 import { formatTime } from "../shared/ClassicSession";
 import type { SessionLayoutProps, SessionResultsProps } from "../types";
-import { Chest, EX, FatBar, ReadAloud, chunky, type Col } from "./ui";
+import { Chest, EX, FatBar, ReadAloud, chunky, stickerName, type Col } from "./ui";
 
 function kindName(t: ReturnType<typeof useT>, kind: SessionLayoutProps["kind"]) {
   if (kind === "quiz") return t("explore.session.quiz", "Star quiz");
@@ -281,8 +281,8 @@ export function ExploreSessionResults(r: SessionResultsProps) {
               ? t("explore.res.opening", "Opening your treasure…")
               : snap.sticker
                 ? snap.fresh
-                  ? t("explore.res.newSticker", "New sticker: {name}!", { name: t(`explore.sticker.${snap.sticker.id}`, snap.sticker.name) })
-                  : t("explore.res.latestSticker", "Your newest sticker: {name}", { name: t(`explore.sticker.${snap.sticker.id}`, snap.sticker.name) })
+                  ? t("explore.res.newSticker", "New sticker: {name}!", { name: stickerName(t, snap.sticker) })
+                  : t("explore.res.latestSticker", "Your newest sticker: {name}", { name: stickerName(t, snap.sticker) })
                 : t("explore.res.noSticker", "Keep playing to win your first sticker!")}
           </p>
           {opened && snap.sticker && (

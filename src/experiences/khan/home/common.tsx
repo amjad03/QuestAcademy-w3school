@@ -5,7 +5,6 @@ import { useEffect, useMemo, useState, type ReactNode } from "react";
 import clsx from "clsx";
 import { ArrowRight, BookOpen, Code2, Eye, FileText, Languages, Layers, Map as MapIcon, Plus, SquarePen, Video, X } from "lucide-react";
 import type { ItemKind } from "@/content/course";
-import { ITEM_LABEL } from "@/content/course";
 import { LOCALES, translate, useT, type Locale } from "@/i18n";
 import { useLearner, liveStreak } from "@/lib/store";
 import { dayKey } from "@/lib/gamification";
@@ -16,6 +15,18 @@ import { useCatalog } from "@/components/shell/CatalogContext";
 import { useOutline } from "@/components/learn/LearnHome";
 import { CourseIcon } from "@/components/brand/CourseIcon";
 import { CourseCard, MasteryLegend, SectionHeader, SkillSquares, explainerMaxAge, useCourseState, useExplainerIndex, useFmt, useGreeting, useMyCourses, type Skill } from "../ui";
+
+/** Lesson item kind in the learner's language. */
+function itemLabel(t: ReturnType<typeof useT>, kind: ItemKind) {
+  const labels: Record<ItemKind, string> = {
+    video: t("lesson.item.video", "Video"),
+    article: t("lesson.item.article", "Article"),
+    practice: t("lesson.item.practice", "Practice"),
+    cards: t("lesson.item.cards", "Flashcards"),
+    challenge: t("lesson.item.challenge", "Coding challenge"),
+  };
+  return labels[kind];
+}
 
 /* ------------------------------------------------------------------ */
 /* Page frame                                                          */
@@ -114,7 +125,7 @@ export function UpNextHero({ lessonId, context, eyebrow, secondary }: { lessonId
               return (
                 <li key={it.id} className={clsx("inline-flex items-center gap-1.5 rounded-full border px-2.5 py-1 text-xs font-medium", done ? "border-white/20 text-white/60 line-through" : "border-white/30 text-white")}>
                   <I className="h-3.5 w-3.5" aria-hidden />
-                  {t(`lesson.item.${it.kind}`, ITEM_LABEL[it.kind])}
+                  {itemLabel(t, it.kind)}
                   <span className="text-white/60">· {t("khan.minShort", "{n} min", { n: f.n(it.minutes) })}</span>
                 </li>
               );

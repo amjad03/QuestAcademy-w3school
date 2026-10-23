@@ -20,7 +20,7 @@ import { CourseIcon } from "@/components/brand/CourseIcon";
 import { Mascot } from "@/components/brand/Mascot";
 import { STICKERS, awardExploreSticker, checkStreakSticker, type Sticker } from "@/components/modes/explore/stickers";
 import { StickerTile } from "@/components/modes/explore/StickerTile";
-import { Chest, EX, EX_ROTATION, FatBar, KidDialog, ReadAloud, chunky, kindWord, useExploreStats, type Col } from "./ui";
+import { Chest, EX, EX_ROTATION, FatBar, KidDialog, ReadAloud, chunky, kindWord, questTitle, stickerName, useExploreStats, type Col } from "./ui";
 
 const GREET_KEY = "qa-explore-greeted";
 
@@ -342,7 +342,7 @@ function PathView({ outline }: { outline: CourseOutline }) {
               <motion.div initial={{ scale: 0.2, rotate: -20 }} animate={{ scale: 1, rotate: 0 }} transition={{ type: "spring", stiffness: 240, damping: 11 }}>
                 <StickerTile sticker={prize.sticker} owned size={128} />
               </motion.div>
-              <p className="text-2xl font-black">{t(`explore.sticker.${prize.sticker.id}`, prize.sticker.name)}</p>
+              <p className="text-2xl font-black">{stickerName(t, prize.sticker)}</p>
               <Link href="/stickers" className="font-black text-[#C02677] underline decoration-2 underline-offset-4 dark:text-[#FF8CC6]">
                 {t("explore.stickers.open", "Open my sticker book")}
               </Link>
@@ -722,7 +722,7 @@ function QuestCard() {
           const done = v >= q.target;
           const isClaimed = claimed.includes(q.id);
           const Icon = QUEST_ICON[q.icon] ?? Star;
-          const title = t(`explore.quest.${q.id}`, q.title);
+          const title = questTitle(t, q);
           return (
             <li key={q.id} className="flex items-center gap-3">
               <span className="grid h-11 w-11 shrink-0 place-items-center rounded-xl" style={chunky(done ? EX.yellow : EX.purple, 4)}>
@@ -766,7 +766,7 @@ function StickerCard() {
       <Link href="/stickers" className="ex-shelf-board ex-press flex items-center gap-4 p-4" aria-label={t("explore.stickers.open", "Open my sticker book")}>
         {st.newest ? <StickerTile sticker={st.newest} owned size={76} /> : <StickerTile sticker={STICKERS[0]} owned={false} size={76} />}
         <div className="min-w-0 text-[#6B4300] dark:text-[#FFD9A0]">
-          <p className="text-lg font-black leading-tight">{st.newest ? t("explore.stickers.newest", "Newest: {name}", { name: t(`explore.sticker.${st.newest.id}`, st.newest.name) }) : t("explore.stickers.none", "Your first sticker is waiting!")}</p>
+          <p className="text-lg font-black leading-tight">{st.newest ? t("explore.stickers.newest", "Newest: {name}", { name: stickerName(t, st.newest) }) : t("explore.stickers.none", "Your first sticker is waiting!")}</p>
           <p className="mt-0.5 font-bold">{t("explore.stickers.count", "{n} of {total} stickers", { n: st.stickers, total: STICKERS.length })}</p>
         </div>
       </Link>
