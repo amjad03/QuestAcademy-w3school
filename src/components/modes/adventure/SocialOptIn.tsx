@@ -5,13 +5,17 @@ import { useState } from "react";
 import { ShieldHalf, Users } from "lucide-react";
 import clsx from "clsx";
 import { useLearner } from "@/lib/store";
+import { translate, useT } from "@/i18n";
+
+type Translate = (key: string, english: string, vars?: Record<string, string | number>) => string;
+const english: Translate = (key, en, vars) => translate("en", key, en, vars);
 
 /** 3–16 letters/digits, single spaces/_/- between words; never a real name is required. */
-export function validNickname(raw: string): string | null {
+export function validNickname(raw: string, t: Translate = english): string | null {
   const n = raw.trim().replace(/\s+/g, " ");
-  if (n.length < 3) return "Use at least 3 characters.";
-  if (n.length > 16) return "Keep it to 16 characters or fewer.";
-  if (!/^[A-Za-z0-9]+([ _-][A-Za-z0-9]+)*$/.test(n)) return "Letters and numbers only, with single spaces, _ or - between words.";
+  if (n.length < 3) return t("social.nick.tooShort", "Use at least 3 characters.");
+  if (n.length > 16) return t("social.nick.tooLong", "Keep it to 16 characters or fewer.");
+  if (!/^[A-Za-z0-9]+([ _-][A-Za-z0-9]+)*$/.test(n)) return t("social.nick.invalid", "Letters and numbers only, with single spaces, _ or - between words.");
   return null;
 }
 
@@ -25,9 +29,10 @@ export function SocialOptInCard({ compact, className }: { compact?: boolean; cla
   const current = useLearner((s) => s.profile.nickname ?? "");
   const [nick, setNick] = useState(current);
   const [error, setError] = useState<string | null>(null);
+  const t = useT();
 
   const join = () => {
-    const e = validNickname(nick);
+    const e = validNickname(nick, t);
     setError(e);
     if (e) return;
     setProfile({ nickname: nick.trim().replace(/\s+/g, " "), socialOptIn: true });
@@ -39,11 +44,11 @@ export function SocialOptInCard({ compact, className }: { compact?: boolean; cla
         <div className="flex items-center gap-3">
           <ShieldHalf className="h-8 w-8 fill-warn text-warn" strokeWidth={1.5} />
           <div className="min-w-0 flex-1">
-            <p className="text-sm font-bold text-muted">Competing as</p>
-            <p className="truncate text-lg font-black">{current || "Explorer"}</p>
+            <p className="text-sm font-bold text-muted">{t("social.competingAs", "Competing as")}</p>
+            <p className="truncate text-lg font-black">{current || t("social.defaultNick", "Explorer")}</p>
           </div>
           <button onClick={() => setProfile({ socialOptIn: false })} className="btn-flat !text-muted">
-            Leave
+            {t("social.leave", "Leave")}
           </button>
         </div>
       </section>
@@ -57,16 +62,16 @@ export function SocialOptInCard({ compact, className }: { compact?: boolean; cla
           <Users className="h-6 w-6" strokeWidth={2.4} />
         </span>
         <div>
-          <h2 className="text-lg font-black">Join the leagues?</h2>
+          <h2 className="text-lg font-black">{t("social.join.title", "Join the leagues?")}</h2>
           <p className="mt-1 text-sm font-semibold leading-6 text-muted">
-            Compete with other explorers and challenge friends. It’s optional — only your nickname is shown, never your real name.
+            {t("social.join.body", "Compete with other explorers and challenge friends. It’s optional — only your nickname is shown, never your real name.")}
           </p>
         </div>
       </div>
       {!compact && (
         <>
           <label htmlFor="adv-nick" className="eyebrow mt-4 block">
-            Pick a nickname
+            {t("social.nick.label", "Pick a nickname")}
           </label>
           <input
             id="adv-nick"
@@ -76,7 +81,7 @@ export function SocialOptInCard({ compact, className }: { compact?: boolean; cla
               setError(null);
             }}
             onKeyDown={(e) => e.key === "Enter" && join()}
-            placeholder="e.g. RocketFox"
+            placeholder={t("social.nick.placeholder", "e.g. RocketFox")}
             maxLength={20}
             className="input mt-2"
             aria-invalid={Boolean(error)}
@@ -86,11 +91,11 @@ export function SocialOptInCard({ compact, className }: { compact?: boolean; cla
       )}
       {compact ? (
         <Link href="/leaderboard" className="btn-primary mt-4 w-full">
-          Set up my nickname
+          {t("social.nick.setUp", "Set up my nickname")}
         </Link>
       ) : (
         <button onClick={join} className="btn-primary mt-4 w-full">
-          Join the leagues
+          {t("social.join.button", "Join the leagues")}
         </button>
       )}
     </section>

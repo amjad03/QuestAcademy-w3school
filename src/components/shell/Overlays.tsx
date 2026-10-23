@@ -11,6 +11,7 @@ import { BadgeMedal } from "@/components/ui/GameIcon";
 import { useMode } from "@/lib/useMode";
 import { say } from "@/lib/voice";
 import { PRAISE } from "@/content/voice-lines";
+import { useT } from "@/i18n";
 
 /** XP toasts + celebration dialogs (level up, badge, daily goal). Held back during focused sessions. */
 export function Overlays() {
@@ -20,6 +21,7 @@ export function Overlays() {
   const dismiss = useUi((s) => s.dismissCelebration);
   const toast = useUi((s) => s.toast);
   const mode = useMode();
+  const t = useT();
   // Calmer modes turn celebrations into a quiet toast instead of a dialog.
   const celebration = mode.dialogs ? queued : undefined;
   // Points are a game layer for 11–22-year-olds; young children see stars, and
@@ -28,9 +30,9 @@ export function Overlays() {
 
   useEffect(() => {
     if (!queued || mode.dialogs) return;
-    toast({ text: queued.kind === "badge" ? `Achievement: ${queued.title}` : queued.title });
+    toast({ text: queued.kind === "badge" ? t("shell.celebrate.achievementToast", "Achievement: {title}", { title: queued.title }) : queued.title });
     dismiss();
-  }, [queued, mode.dialogs, toast, dismiss]);
+  }, [queued, mode.dialogs, toast, dismiss, t]);
 
   useEffect(() => {
     if (!celebration) return;
@@ -98,12 +100,12 @@ export function Overlays() {
                 {celebration.badge ? <BadgeMedal icon={celebration.badge.icon} color={celebration.badge.color} size={112} /> : <Mascot pose="cheer" size={120} />}
               </div>
               <p className="eyebrow mt-5 !text-accent">
-                {celebration.kind === "badge" ? "Achievement unlocked" : celebration.kind === "level" ? "Level up" : celebration.kind === "goal" ? "Daily goal complete" : "Lesson complete"}
+                {celebration.kind === "badge" ? t("shell.celebrate.badge", "Achievement unlocked") : celebration.kind === "level" ? t("shell.celebrate.level", "Level up") : celebration.kind === "goal" ? t("shell.celebrate.goal", "Daily goal complete") : t("shell.celebrate.lesson", "Lesson complete")}
               </p>
               <h2 className="mt-2 text-2xl font-black">{celebration.title}</h2>
               {celebration.subtitle && <p className="mt-2 font-semibold text-muted">{celebration.subtitle}</p>}
               <button className="btn-primary mt-7 w-full" onClick={dismiss} autoFocus>
-                Continue
+                {t("shell.celebrate.continue", "Continue")}
               </button>
             </motion.div>
           </motion.div>

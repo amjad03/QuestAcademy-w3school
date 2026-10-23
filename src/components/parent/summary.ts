@@ -1,5 +1,10 @@
 import { getSubject, getLessonById, flatLessons, type LessonRef } from "@/content";
 import type { LearnerState } from "@/lib/store";
+import { translate } from "@/i18n";
+
+/** Translator passed in from a component's `useT()`; English when omitted. */
+export type Translate = (key: string, english: string, vars?: Record<string, string | number>) => string;
+const english: Translate = (key, en, vars) => translate("en", key, en, vars);
 
 export const MINUTES_PER_LESSON = 15;
 
@@ -100,14 +105,21 @@ export interface RecentItem {
 }
 
 /** Most recently completed learning item, described in parent-friendly words. */
-export function latestItem(items: Record<string, string>): RecentItem | null {
+export function latestItem(items: Record<string, string>, t: Translate = english): RecentItem | null {
   let best: [string, string] | null = null;
   for (const e of Object.entries(items)) if (!best || e[1] > best[1]) best = e;
   if (!best) return null;
   const [id, at] = best;
   const [path, suffix] = id.split(":");
-  const kindMap: Record<string, string> = { article: "Reading", practice: "Practice", video: "Video", quiz: "Quiz", test: "Test", challenge: "Challenge" };
-  const kind = kindMap[suffix ?? ""] ?? (id.startsWith("sticker") ? "Sticker" : id.includes("game") ? "Game" : "Activity");
+  const kindMap: Record<string, string> = {
+    article: t("parent.kind.reading", "Reading"),
+    practice: t("parent.kind.practice", "Practice"),
+    video: t("parent.kind.video", "Video"),
+    quiz: t("parent.kind.quiz", "Quiz"),
+    test: t("parent.kind.test", "Test"),
+    challenge: t("parent.kind.challenge", "Challenge"),
+  };
+  const kind = kindMap[suffix ?? ""] ?? (id.startsWith("sticker") ? t("parent.kind.sticker", "Sticker") : id.includes("game") ? t("parent.kind.game", "Game") : t("parent.kind.activity", "Activity"));
   const ref = getLessonById(path);
   if (ref) return { id, at, kind, label: `${ref.lesson.title} (${ref.subject.title})`, href: ref.href };
   const subj = getSubject(path.split("/")[0]);
@@ -122,25 +134,25 @@ export interface Suggestion {
 }
 
 /** Three concrete next steps for the parent to encourage. */
-export function suggestions(opts: { course: string | null; lessons: Record<string, unknown>; summary: WeekSummary; streak: number }): Suggestion[] {
+export function suggestions(opts: { course: string | null; lessons: Record<string, unknown>; summary: WeekSummary; streak: number }, t: Translate = english): Suggestion[] {
   const out: Suggestion[] = [];
   const subj = opts.course ? getSubject(opts.course) : undefined;
   if (subj) {
     const next = flatLessons(subj).find((l) => !opts.lessons[l.id]);
-    if (next) out.push({ title: `Next lesson: ${next.lesson.title}`, detail: `About ${next.lesson.minutes} minutes in ${subj.title}, topic "${next.topic.title}".`, href: next.href });
-    else out.push({ title: `${subj.title} is complete`, detail: "Choose a new course together on the courses page.", href: "/courses" });
+    if (next) out.push({ title: t("parent.suggest.nextLesson", "Next lesson: {title}", { title: next.lesson.title }), detail: t("parent.suggest.nextLessonDetail", "About {n} minutes in {subject}, topic \"{topic}\".", { n: next.lesson.minutes, subject: subj.title, topic: next.topic.title }), href: next.href });
+    else out.push({ title: t("parent.suggest.courseDone", "{subject} is complete", { subject: subj.title }), detail: t("parent.suggest.courseDoneDetail", "Choose a new course together on the courses page."), href: "/courses" });
   } else {
-    out.push({ title: "Choose a first course together", detail: "Explore works best with one course on the go at a time.", href: "/courses" });
+    out.push({ title: t("parent.suggest.chooseCourse", "Choose a first course together"), detail: t("parent.suggest.chooseCourseDetail", "Explore works best with one course on the go at a time."), href: "/courses" });
   }
   const weakest = [...opts.summary.subjects].filter((s) => s.done < s.total).sort((a, b) => a.done / a.total - b.done / b.total)[0];
   if (weakest && weakest.slug !== opts.course) {
-    out.push({ title: `Revisit ${weakest.title}`, detail: `${weakest.done} of ${weakest.total} lessons done. A short review keeps it fresh.`, href: `/course/${weakest.slug}` });
+    out.push({ title: t("parent.suggest.revisit", "Revisit {subject}", { subject: weakest.title }), detail: t("parent.suggest.revisitDetail", "{done} of {total} lessons done. A short review keeps it fresh.", { done: weakest.done, total: weakest.total }), href: `/course/${weakest.slug}` });
   }
   if (opts.summary.accuracy !== null && opts.summary.accuracy < 0.7) {
-    out.push({ title: "Try a gentle practice session", detail: `Practice accuracy is ${Math.round(opts.summary.accuracy * 100)}%. Short, repeated practice helps more than long sessions.`, href: "/practice" });
+    out.push({ title: t("parent.suggest.practice", "Try a gentle practice session"), detail: t("parent.suggest.practiceDetail", "Practice accuracy is {pct}%. Short, repeated practice helps more than long sessions.", { pct: Math.round(opts.summary.accuracy * 100) }), href: "/practice" });
   }
-  if (out.length < 3) out.push({ title: opts.streak > 0 ? `Keep the ${opts.streak}-day streak going` : "Start a daily habit", detail: "One short lesson a day, ideally at the same time, builds the habit.", href: "/learn" });
-  if (out.length < 3) out.push({ title: "Play a learning game", detail: "Games revisit letters, numbers and shapes in a playful way.", href: "/kids/play" });
-  if (out.length < 3) out.push({ title: "Look at the sticker book together", detail: "Celebrate effort: stickers are earned for trying, not only for getting things right.", href: "/stickers" });
+  if (out.length < 3) out.push({ title: opts.streak > 0 ? t("parent.suggest.keepStreak", "Keep the {n}-day streak going", { n: opts.streak }) : t("parent.suggest.startHabit", "Start a daily habit"), detail: t("parent.suggest.habitDetail", "One short lesson a day, ideally at the same time, builds the habit."), href: "/learn" });
+  if (out.length < 3) out.push({ title: t("parent.suggest.game", "Play a learning game"), detail: t("parent.suggest.gameDetail", "Games revisit letters, numbers and shapes in a playful way."), href: "/kids/play" });
+  if (out.length < 3) out.push({ title: t("parent.suggest.stickers", "Look at the sticker book together"), detail: t("parent.suggest.stickersDetail", "Celebrate effort: stickers are earned for trying, not only for getting things right."), href: "/stickers" });
   return out.slice(0, 3);
 }

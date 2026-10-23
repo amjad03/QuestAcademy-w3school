@@ -9,6 +9,7 @@ import { useHydrated } from "@/components/providers";
 import { CourseIcon } from "@/components/brand/CourseIcon";
 import { useCatalog } from "./CatalogContext";
 import { useMode } from "@/lib/useMode";
+import { useT } from "@/i18n";
 
 /** Course switcher + streak + coins + XP, like the top of Duolingo's right column. */
 export function StatsBar({ compact }: { compact?: boolean }) {
@@ -24,6 +25,7 @@ export function StatsBar({ compact }: { compact?: boolean }) {
   const ref = useRef<HTMLDivElement>(null);
   // Postgraduate and professional profiles have no game layer: just the course switcher.
   const gameless = useMode().rewards === "minimal";
+  const t = useT();
 
   useEffect(() => {
     const close = (e: MouseEvent) => ref.current && !ref.current.contains(e.target as Node) && setOpen(false);
@@ -39,12 +41,12 @@ export function StatsBar({ compact }: { compact?: boolean }) {
   return (
     <div className={clsx("flex items-center", compact ? "justify-between" : "justify-between gap-2")}>
       <div className="relative" ref={ref}>
-        <button onClick={() => setOpen((o) => !o)} className="flex items-center gap-2 rounded-xl px-2 py-1.5 hover:bg-surface-2" aria-label="Switch course" aria-expanded={open}>
+        <button onClick={() => setOpen((o) => !o)} className="flex items-center gap-2 rounded-xl px-2 py-1.5 hover:bg-surface-2" aria-label={t("shell.stats.switchCourse", "Switch course")} aria-expanded={open}>
           {current ? <CourseIcon slug={current.slug} size={compact ? 30 : 34} /> : <span className="grid h-8 w-8 place-items-center rounded-lg border-2 border-dashed border-line text-muted"><Plus className="h-4 w-4" /></span>}
         </button>
         {open && (
           <div className="card absolute left-0 top-12 z-50 w-72 overflow-hidden p-2 shadow-lift">
-            <p className="eyebrow px-3 pb-1 pt-2">My courses</p>
+            <p className="eyebrow px-3 pb-1 pt-2">{t("shell.stats.myCourses", "My courses")}</p>
             {mine.map((c) => (
               <button
                 key={c.slug}
@@ -62,16 +64,16 @@ export function StatsBar({ compact }: { compact?: boolean }) {
               <span className="grid h-8 w-8 place-items-center rounded-lg border-2 border-dashed border-line">
                 <Plus className="h-4 w-4" />
               </span>
-              Add a new course
+              {t("shell.stats.addCourse", "Add a new course")}
             </Link>
           </div>
         )}
       </div>
       {!gameless && (
         <>
-          <Stat href="/quests" title="Day streak" icon={<Flame className={clsx("h-6 w-6", streak ? "fill-streak text-streak" : "text-line")} />} value={streak} color={streak ? "rgb(var(--streak))" : "rgb(var(--muted))"} />
-          <Stat href="/shop" title="Coins" icon={<Coins className="h-6 w-6 text-warn-shade" strokeWidth={2.5} />} value={coins} color="rgb(var(--warn-shade))" />
-          <Stat href="/profile" title="Total XP" icon={<Zap className="h-6 w-6 fill-accent text-accent" />} value={xp} color="rgb(var(--accent))" />
+          <Stat href="/quests" title={t("shell.stats.streak", "Day streak")} icon={<Flame className={clsx("h-6 w-6", streak ? "fill-streak text-streak" : "text-line")} />} value={streak} color={streak ? "rgb(var(--streak))" : "rgb(var(--muted))"} />
+          <Stat href="/shop" title={t("shell.stats.coins", "Coins")} icon={<Coins className="h-6 w-6 text-warn-shade" strokeWidth={2.5} />} value={coins} color="rgb(var(--warn-shade))" />
+          <Stat href="/profile" title={t("shell.stats.totalXp", "Total XP")} icon={<Zap className="h-6 w-6 fill-accent text-accent" />} value={xp} color="rgb(var(--accent))" />
         </>
       )}
     </div>

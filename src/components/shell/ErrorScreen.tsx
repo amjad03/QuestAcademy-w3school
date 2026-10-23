@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import { RefreshCw } from "lucide-react";
+import { useT } from "@/i18n";
 
 /** A chunk from an older build can't be found (the app was updated while this tab was open). */
 function isStaleBuild(error: Error) {
@@ -16,6 +17,7 @@ function isStaleBuild(error: Error) {
  */
 export function ErrorScreen({ error, reset }: { error: Error & { digest?: string }; reset: () => void }) {
   const [details, setDetails] = useState(false);
+  const t = useT();
 
   useEffect(() => {
     console.error(error);
@@ -33,7 +35,7 @@ export function ErrorScreen({ error, reset }: { error: Error & { digest?: string
   }, [error]);
 
   const resetData = () => {
-    if (!window.confirm("This clears progress saved on this device (signed-in progress stays in your account). Continue?")) return;
+    if (!window.confirm(t("error.resetConfirm", "This clears progress saved on this device (signed-in progress stays in your account). Continue?"))) return;
     try {
       Object.keys(localStorage)
         .filter((k) => k === "quest-academy" || k.startsWith("qa-"))
@@ -50,24 +52,24 @@ export function ErrorScreen({ error, reset }: { error: Error & { digest?: string
         <span className="mx-auto grid h-16 w-16 place-items-center rounded-2xl bg-surface-2 text-muted">
           <RefreshCw className="h-8 w-8" />
         </span>
-        <h1 className="mt-5 text-2xl font-black">{isStaleBuild(error) ? "Quest Academy was updated" : "This page hit a problem"}</h1>
-        <p className="mt-2 font-semibold text-muted">{isStaleBuild(error) ? "Reload to get the latest version." : "Your progress is safe. Try again, or head back home."}</p>
+        <h1 className="mt-5 text-2xl font-black">{isStaleBuild(error) ? t("error.updated.title", "Quest Academy was updated") : t("error.title", "This page hit a problem")}</h1>
+        <p className="mt-2 font-semibold text-muted">{isStaleBuild(error) ? t("error.updated.body", "Reload to get the latest version.") : t("error.body", "Your progress is safe. Try again, or head back home.")}</p>
         <div className="mt-6 grid gap-2 sm:grid-cols-2">
           <button onClick={() => (isStaleBuild(error) ? window.location.reload() : reset())} className="btn-primary">
-            Try again
+            {t("error.tryAgain", "Try again")}
           </button>
           <Link href="/learn" className="btn-ghost">
-            Go home
+            {t("error.goHome", "Go home")}
           </Link>
         </div>
         <button onClick={() => setDetails((d) => !d)} className="mt-6 text-sm font-bold text-muted underline-offset-2 hover:underline">
-          {details ? "Hide details" : "Show details"}
+          {details ? t("error.hideDetails", "Hide details") : t("error.showDetails", "Show details")}
         </button>
         {details && (
           <div className="mt-3 text-left">
             <pre className="max-h-40 overflow-auto rounded-xl bg-surface-2 p-3 text-xs text-muted">{`${error.name}: ${error.message}${error.digest ? `\n${error.digest}` : ""}`}</pre>
             <button onClick={resetData} className="mt-3 text-sm font-bold text-bad hover:underline">
-              Still broken? Reset data saved on this device
+              {t("error.resetData", "Still broken? Reset data saved on this device")}
             </button>
           </div>
         )}

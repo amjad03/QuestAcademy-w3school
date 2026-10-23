@@ -15,6 +15,7 @@ import { ProgressBar } from "@/components/ui/Progress";
 import { sfx } from "@/lib/sound";
 import { MODES, modeForAge, modeForStage, type ModeId } from "@/lib/modes";
 import { ModePicker } from "@/components/modes/ModePicker";
+import { useT } from "@/i18n";
 
 const STEPS = ["age", "mode", "category", "course", "goal", "name", "done"] as const;
 
@@ -46,16 +47,6 @@ const MODE_CATEGORY: Record<ModeId, WorldId> = { sprout: "kids", research: "camp
 const CATEGORY_ICON: Record<WorldId, typeof Baby> = { kids: Baby, school: GraduationCap, exam: Target, code: Laptop, campus: Sparkles };
 const CATEGORY_COLOR: Record<WorldId, string> = { kids: "#EC4899", school: "#2F6BFF", exam: "#FF4B4B", code: "#334155", campus: "#7C4DFF" };
 
-const PROMPT: Record<(typeof STEPS)[number], string> = {
-  age: "Hi there! I’m Questy. How old are you — or where are you in your studies?",
-  mode: "Here’s the experience I picked for you. You can choose another any time.",
-  category: "Hi there! I’m Questy. What would you like to learn?",
-  course: "Great choice! Which course should we start with?",
-  goal: "What’s your daily learning goal?",
-  name: "Last thing — what should I call you?",
-  done: "You’re all set! Let’s start your first lesson.",
-};
-
 export function Onboarding() {
   const params = useSearchParams();
   const router = useRouter();
@@ -71,6 +62,44 @@ export function Onboarding() {
   const [mode, setMode] = useState<ModeId | null>(stageParam && stageById[stageParam] ? modeForStage(stageParam) : null);
   const [goal, setGoal] = useState(profile.dailyGoal || 50);
   const [name, setName] = useState(profile.name);
+  const t = useT();
+
+  const PROMPT: Record<(typeof STEPS)[number], string> = {
+    age: t("onboard.prompt.age", "Hi there! I’m Questy. How old are you — or where are you in your studies?"),
+    mode: t("onboard.prompt.mode", "Here’s the experience I picked for you. You can choose another any time."),
+    category: t("onboard.prompt.category", "Hi there! I’m Questy. What would you like to learn?"),
+    course: t("onboard.prompt.course", "Great choice! Which course should we start with?"),
+    goal: t("onboard.prompt.goal", "What’s your daily learning goal?"),
+    name: t("onboard.prompt.name", "Last thing — what should I call you?"),
+    done: t("onboard.prompt.done", "You’re all set! Let’s start your first lesson."),
+  };
+  const ageLabel: Record<number, string> = {
+    20: t("onboard.age.college", "In college"),
+    24: t("onboard.age.postgrad", "Postgraduate or research"),
+    30: t("onboard.age.working", "Working or lifelong learner"),
+  };
+  const worldText: Record<string, { name: string; tagline: string }> = {
+    kids: { name: t("shell.world.kids", "Early learning"), tagline: t("onboard.world.kidsTagline", "Letters, numbers and the world — read aloud and full of play.") },
+    school: { name: t("shell.world.school", "School"), tagline: t("onboard.world.schoolTagline", "Maths, science, English and social studies with interactive labs.") },
+    exam: { name: t("shell.world.exam", "Exam prep"), tagline: t("onboard.world.examTagline", "Concepts, chapter drills and full mock tests in the real exam format.") },
+    code: { name: t("shell.world.code", "Coding"), tagline: t("onboard.world.codeTagline", "HTML, CSS, JavaScript, Python and SQL with live code on every page.") },
+    campus: { name: t("shell.world.campus", "College"), tagline: t("onboard.world.campusTagline", "University courses in CS, AI, engineering, medicine, finance and more.") },
+  };
+  const goalText: Record<number, { label: string; hint: string }> = {
+    20: { label: t("onboard.goal.casual", "Casual"), hint: t("onboard.goal.casualHint", "5 min / day") },
+    50: { label: t("onboard.goal.regular", "Regular"), hint: t("onboard.goal.regularHint", "10 min / day") },
+    100: { label: t("onboard.goal.serious", "Serious"), hint: t("onboard.goal.seriousHint", "20 min / day") },
+    200: { label: t("onboard.goal.beast", "Beast mode"), hint: t("onboard.goal.beastHint", "40+ min / day") },
+  };
+  const modeName: Record<ModeId, string> = {
+    sprout: t("shell.mode.sprout", "Sprout"),
+    explore: t("shell.mode.explore", "Explore"),
+    adventure: t("shell.mode.adventure", "Adventure"),
+    focus: t("shell.mode.focus", "Focus"),
+    mastery: t("shell.mode.mastery", "Mastery"),
+    research: t("shell.mode.research", "Research"),
+    professional: t("shell.mode.professional", "Professional"),
+  };
 
   const id = STEPS[step];
   const choice = AGES.find((a) => a.age === age);
@@ -86,7 +115,7 @@ export function Onboarding() {
     if (id === "name") {
       const m = mode ?? recommended ?? modeForAge(age ?? 12);
       const stage = stageParam && stageById[stageParam] ? stageParam : (choice?.stage ?? stageFromAge(age ?? 12, category));
-      setProfile({ name: name.trim() || "Learner", age, stage, mode: m, worlds: category ? [category] : [], course, dailyGoal: goal, onboarded: true, style: profile.style });
+      setProfile({ name: name.trim() || t("settings.name.default", "Learner"), age, stage, mode: m, worlds: category ? [category] : [], course, dailyGoal: goal, onboarded: true, style: profile.style });
       useLearner.getState().setSettings({ sound: MODES[m].sound });
       sfx("fanfare");
     }
@@ -98,7 +127,7 @@ export function Onboarding() {
     <div className="flex min-h-screen flex-col bg-bg">
       {/* top bar */}
       <div className="mx-auto flex w-full max-w-[1000px] items-center gap-4 px-5 pt-6">
-        <button onClick={() => (step ? setStep(step - 1) : router.push("/"))} className="grid h-10 w-10 place-items-center rounded-xl text-muted hover:bg-surface-2" aria-label="Back">
+        <button onClick={() => (step ? setStep(step - 1) : router.push("/"))} className="grid h-10 w-10 place-items-center rounded-xl text-muted hover:bg-surface-2" aria-label={t("onboard.back", "Back")}>
           <ArrowLeft className="h-6 w-6" strokeWidth={2.6} />
         </button>
         <ProgressBar value={step / (STEPS.length - 1)} height={16} />
@@ -120,7 +149,7 @@ export function Onboarding() {
               <div className="grid grid-cols-2 gap-3 sm:grid-cols-3">
                 {AGES.map((a) => (
                   <Option key={a.label} active={age === a.age} onClick={() => { setAge(a.age); setMode(null); }}>
-                    <span className="w-full text-center text-lg font-extrabold">{a.label}</span>
+                    <span className="w-full text-center text-lg font-extrabold">{ageLabel[a.age] ?? a.label}</span>
                   </Option>
                 ))}
               </div>
@@ -138,8 +167,8 @@ export function Onboarding() {
                         <I className="h-6 w-6" strokeWidth={2.5} />
                       </span>
                       <span className="min-w-0">
-                        <span className="block text-lg font-extrabold">{w.name}</span>
-                        <span className="block text-sm font-semibold text-muted">{w.tagline}</span>
+                        <span className="block text-lg font-extrabold">{worldText[w.id]?.name ?? w.name}</span>
+                        <span className="block text-sm font-semibold text-muted">{worldText[w.id]?.tagline ?? w.tagline}</span>
                       </span>
                     </Option>
                   );
@@ -165,23 +194,23 @@ export function Onboarding() {
               <div className="card divide-y-2 divide-line overflow-hidden">
                 {dailyGoals.map((g) => (
                   <button key={g.xp} onClick={() => { setGoal(g.xp); sfx("tap"); }} className={clsx("flex w-full items-center justify-between px-5 py-4 text-left transition", goal === g.xp ? "bg-accent-soft" : "hover:bg-surface-2")}>
-                    <span className={clsx("text-lg font-extrabold", goal === g.xp && "text-accent")}>{g.label}</span>
-                    <span className={clsx("font-bold", goal === g.xp ? "text-accent" : "text-muted")}>{g.hint}</span>
+                    <span className={clsx("text-lg font-extrabold", goal === g.xp && "text-accent")}>{goalText[g.xp]?.label ?? g.label}</span>
+                    <span className={clsx("font-bold", goal === g.xp ? "text-accent" : "text-muted")}>{goalText[g.xp]?.hint ?? g.hint}</span>
                   </button>
                 ))}
               </div>
             )}
 
             {id === "name" && (
-              <input autoFocus value={name} onChange={(e) => setName(e.target.value)} onKeyDown={(e) => e.key === "Enter" && next()} placeholder="Your name" maxLength={30} className="input py-4 text-xl" />
+              <input autoFocus value={name} onChange={(e) => setName(e.target.value)} onKeyDown={(e) => e.key === "Enter" && next()} placeholder={t("onboard.namePlaceholder", "Your name")} maxLength={30} className="input py-4 text-xl" />
             )}
 
             {id === "done" && (
               <div className="grid gap-3 sm:grid-cols-3">
                 {[
-                  ["Your course", catalog.find((c) => c.slug === course)?.title ?? "—"],
-                  ["Experience", mode ? `${MODES[mode].name} mode` : "—"],
-                  ["Daily goal", `${goal} XP`],
+                  [t("onboard.summary.course", "Your course"), catalog.find((c) => c.slug === course)?.title ?? "—"],
+                  [t("onboard.summary.experience", "Experience"), mode ? t("onboard.summary.modeName", "{name} mode", { name: modeName[mode] ?? MODES[mode].name }) : "—"],
+                  [t("onboard.summary.goal", "Daily goal"), t("onboard.summary.goalXp", "{n} XP", { n: goal })],
                 ].map(([a, b]) => (
                   <div key={a} className="card p-4">
                     <div className="eyebrow">{a}</div>
@@ -198,7 +227,7 @@ export function Onboarding() {
       <div className="border-t-2 border-line">
         <div className="mx-auto flex w-full max-w-[1000px] justify-end px-5 py-5">
           <button onClick={next} disabled={!canNext} className="btn-primary w-full sm:w-auto sm:min-w-[160px]">
-            {id === "done" ? "Start learning" : "Continue"}
+            {id === "done" ? t("onboard.start", "Start learning") : t("onboard.continue", "Continue")}
           </button>
         </div>
       </div>

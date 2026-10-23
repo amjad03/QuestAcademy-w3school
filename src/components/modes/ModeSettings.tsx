@@ -9,6 +9,7 @@ import { modeForStage } from "@/lib/modes";
 import { say } from "@/lib/voice";
 import { EXPLORE_LINES } from "@/content/voice-lines";
 import { ModePicker } from "./ModePicker";
+import { useT } from "@/i18n";
 
 /** Experience-profile switcher. Leaving Explore needs a grown-up check. */
 export function ModeSettings() {
@@ -41,18 +42,19 @@ export function ModeSettings() {
 }
 
 /** Simple parental gate: a multiplication young children can't easily solve. */
-export function GrownUpGate({ onPass, onCancel, message = "To change the experience, please answer:" }: { onPass: () => void; onCancel: () => void; message?: string }) {
+export function GrownUpGate({ onPass, onCancel, message }: { onPass: () => void; onCancel: () => void; message?: string }) {
+  const t = useT();
   const [a, b] = useMemo(() => [12 + Math.floor(Math.random() * 8), 6 + Math.floor(Math.random() * 7)], []);
   const [v, setV] = useState("");
   const [wrong, setWrong] = useState(false);
   return (
     <motion.div className="fixed inset-0 z-[90] grid place-items-center bg-ink/40 p-4" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} onClick={onCancel}>
-      <motion.div initial={{ scale: 0.95 }} animate={{ scale: 1 }} className="card w-full max-w-sm p-6 text-center" onClick={(e) => e.stopPropagation()} role="dialog" aria-modal="true" aria-label="Grown-up check">
+      <motion.div initial={{ scale: 0.95 }} animate={{ scale: 1 }} className="card w-full max-w-sm p-6 text-center" onClick={(e) => e.stopPropagation()} role="dialog" aria-modal="true" aria-label={t("settings.gate.label", "Grown-up check")}>
         <span className="mx-auto grid h-14 w-14 place-items-center rounded-2xl bg-surface-2 text-muted">
           <Lock className="h-7 w-7" />
         </span>
-        <h2 className="mt-4 text-xl font-black">Grown-ups only</h2>
-        <p className="mt-1 text-sm font-semibold text-muted">{message}</p>
+        <h2 className="mt-4 text-xl font-black">{t("settings.gate.title", "Grown-ups only")}</h2>
+        <p className="mt-1 text-sm font-semibold text-muted">{message ?? t("settings.gate.message", "To change the experience, please answer:")}</p>
         <form
           onSubmit={(e) => {
             e.preventDefault();
@@ -67,13 +69,13 @@ export function GrownUpGate({ onPass, onCancel, message = "To change the experie
             {a} × {b} = ?
           </label>
           <input id="gate" autoFocus inputMode="numeric" value={v} onChange={(e) => setV(e.target.value.replace(/\D/g, ""))} className="input mt-3 text-center text-xl" />
-          {wrong && <p className="mt-2 text-sm font-bold text-bad">That’s not right — try again.</p>}
+          {wrong && <p className="mt-2 text-sm font-bold text-bad">{t("settings.gate.wrong", "That’s not right — try again.")}</p>}
           <div className="mt-5 grid grid-cols-2 gap-2">
             <button type="button" className="btn-ghost" onClick={onCancel}>
-              Cancel
+              {t("settings.gate.cancel", "Cancel")}
             </button>
             <button className="btn-primary" disabled={!v}>
-              Confirm
+              {t("settings.gate.confirm", "Confirm")}
             </button>
           </div>
         </form>

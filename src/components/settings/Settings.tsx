@@ -15,6 +15,7 @@ import { useAuth, useHydrated } from "@/components/providers";
 import { useUi } from "@/lib/ui";
 import { PageColumns } from "@/components/shell/AppShell";
 import { RailCard, RailFooter } from "@/components/shell/RailCards";
+import { useT } from "@/i18n";
 
 export function Settings() {
   const hydrated = useHydrated();
@@ -23,16 +24,49 @@ export function Settings() {
   const toast = useUi((u) => u.toast);
   const fileRef = useRef<HTMLInputElement>(null);
   const [name, setName] = useState<string | null>(null);
+  const t = useT();
+  const stageLabel: Record<string, string> = {
+    preprimary: t("onboard.stage.preprimary", "Pre-primary"),
+    primary: t("onboard.stage.primary", "Primary"),
+    middle: t("onboard.stage.middle", "Middle school"),
+    secondary: t("onboard.stage.secondary", "High school"),
+    aspirant: t("onboard.stage.aspirant", "NEET / JEE aspirant"),
+    ug: t("onboard.stage.ug", "Undergraduate"),
+    pg: t("onboard.stage.pg", "Postgraduate"),
+    lifelong: t("onboard.stage.lifelong", "Lifelong learner"),
+  };
+  const stageHint: Record<string, string> = {
+    preprimary: t("onboard.stage.preprimaryHint", "Ages 3–5"),
+    primary: t("onboard.stage.primaryHint", "Grades 1–5"),
+    middle: t("onboard.stage.middleHint", "Grades 6–8"),
+    secondary: t("onboard.stage.secondaryHint", "Grades 9–12"),
+    aspirant: t("onboard.stage.aspirantHint", "Competitive exams"),
+    ug: t("onboard.stage.ugHint", "College / university"),
+    pg: t("onboard.stage.pgHint", "Masters / PhD"),
+    lifelong: t("onboard.stage.lifelongHint", "Professionals & the curious"),
+  };
+  const goalLabel: Record<number, string> = {
+    20: t("onboard.goal.casual", "Casual"),
+    50: t("onboard.goal.regular", "Regular"),
+    100: t("onboard.goal.serious", "Serious"),
+    200: t("onboard.goal.beast", "Beast mode"),
+  };
+  const styleLabel: Record<string, string> = {
+    visual: t("onboard.style.visual", "Show me"),
+    reading: t("onboard.style.reading", "Let me read"),
+    doing: t("onboard.style.doing", "Let me try"),
+    listening: t("onboard.style.listening", "Talk to me"),
+  };
 
   const rail = (
     <>
-      <RailCard title="Settings">
+      <RailCard title={t("settings.title", "Settings")}>
         <nav className="space-y-1 text-[15px] font-extrabold">
           {[
-            ["#preferences", "Preferences"],
-            ["#learning", "Learning"],
-            ["#account", "Account"],
-            ["#data", "Your data"],
+            ["#preferences", t("settings.section.preferences", "Preferences")],
+            ["#learning", t("settings.section.learning", "Learning")],
+            ["#account", t("settings.section.account", "Account")],
+            ["#data", t("settings.section.data", "Your data")],
           ].map(([h, l]) => (
             <a key={h} href={h} className="block rounded-xl px-3 py-2 text-muted hover:bg-surface-2 hover:text-ink">
               {l}
@@ -58,108 +92,108 @@ export function Settings() {
       const data = JSON.parse(await f.text()) as LearnerState;
       if (!data.profile || typeof data.xp !== "number") throw new Error("bad file");
       s.replaceState(mergeStates(learnerSnapshot(), data));
-      toast({ text: "Progress imported and merged" });
+      toast({ text: t("settings.data.imported", "Progress imported and merged") });
     } catch {
-      toast({ text: "That file isn’t Quest Academy progress" });
+      toast({ text: t("settings.data.importBad", "That file isn’t Quest Academy progress") });
     }
   };
 
   return (
     <PageColumns rail={rail}>
-      <h1 className="text-3xl font-black">Settings</h1>
+      <h1 className="text-3xl font-black">{t("settings.title", "Settings")}</h1>
 
       <Section id="language" title="Language · भाषा · ಭಾಷೆ">
         <LanguagePicker />
       </Section>
 
-      <Section id="design" title="Design">
+      <Section id="design" title={t("settings.section.design", "Design")}>
         <SkinPicker />
       </Section>
 
-      <Section id="experience" title="Experience">
-        <p className="mb-4 text-sm font-semibold text-muted">Quest Academy adapts its look, pace and rewards to you. Every course works in every mode.</p>
+      <Section id="experience" title={t("settings.section.experience", "Experience")}>
+        <p className="mb-4 text-sm font-semibold text-muted">{t("settings.experience.intro", "Quest Academy adapts its look, pace and rewards to you. Every course works in every mode.")}</p>
         <ModeSettings />
       </Section>
 
-      <Section id="tutor" title="Ask Questy (AI tutor)">
+      <Section id="tutor" title={t("settings.section.tutor", "Ask Questy (AI tutor)")}>
         <TutorToggle />
       </Section>
 
-      <Section id="preferences" title="Preferences">
-        <Row label="Name" hint="Shown on your profile and leaderboards">
+      <Section id="preferences" title={t("settings.section.preferences", "Preferences")}>
+        <Row label={t("settings.name.label", "Name")} hint={t("settings.name.hint", "Shown on your profile and leaderboards")}>
           <input
             value={name ?? s.profile.name}
             onChange={(e) => setName(e.target.value)}
             onBlur={() => {
-              if (name !== null) s.setProfile({ name: name.trim() || "Learner" });
+              if (name !== null) s.setProfile({ name: name.trim() || t("settings.name.default", "Learner") });
               setName(null);
             }}
             maxLength={30}
             className="input sm:w-64"
-            aria-label="Name"
+            aria-label={t("settings.name.label", "Name")}
           />
         </Row>
-        <Row label="Appearance">
-          <Segmented value={s.settings.theme} options={[["light", "Light"], ["dark", "Dark"], ["system", "System"]]} onChange={(v) => s.setSettings({ theme: v as LearnerState["settings"]["theme"] })} />
+        <Row label={t("settings.appearance.label", "Appearance")}>
+          <Segmented value={s.settings.theme} options={[["light", t("settings.appearance.light", "Light")], ["dark", t("settings.appearance.dark", "Dark")], ["system", t("settings.appearance.system", "System")]]} onChange={(v) => s.setSettings({ theme: v as LearnerState["settings"]["theme"] })} />
         </Row>
-        <Row label="Sound effects">
-          <Toggle on={s.settings.sound} onChange={(v) => s.setSettings({ sound: v })} label="Sound effects" />
+        <Row label={t("settings.sound.label", "Sound effects")}>
+          <Toggle on={s.settings.sound} onChange={(v) => s.setSettings({ sound: v })} label={t("settings.sound.label", "Sound effects")} />
         </Row>
       </Section>
 
-      <Section id="learning" title="Learning">
-        <Row label="I am a…">
+      <Section id="learning" title={t("settings.section.learning", "Learning")}>
+        <Row label={t("settings.stage.label", "I am a…")}>
           <select value={s.profile.stage ?? ""} onChange={(e) => s.setProfile({ stage: (e.target.value || null) as LearnerState["profile"]["stage"] })} className="input sm:w-64">
-            <option value="">Not set</option>
+            <option value="">{t("settings.stage.notSet", "Not set")}</option>
             {stages.map((st) => (
               <option key={st.id} value={st.id}>
-                {st.label} ({st.hint})
+                {stageLabel[st.id] ?? st.label} ({stageHint[st.id] ?? st.hint})
               </option>
             ))}
           </select>
         </Row>
-        <Row label="Daily goal">
-          <Segmented value={String(s.profile.dailyGoal)} options={dailyGoals.map((g) => [String(g.xp), `${g.label} · ${g.xp} XP`])} onChange={(v) => s.setProfile({ dailyGoal: Number(v) })} />
+        <Row label={t("settings.goal.label", "Daily goal")}>
+          <Segmented value={String(s.profile.dailyGoal)} options={dailyGoals.map((g) => [String(g.xp), t("settings.goal.option", "{label} · {xp} XP", { label: goalLabel[g.xp] ?? g.label, xp: g.xp })])} onChange={(v) => s.setProfile({ dailyGoal: Number(v) })} />
         </Row>
-        <Row label="Learning style" hint="Sets the mode lessons open in">
-          <Segmented value={s.profile.style} options={learningStyles.map((l) => [l.id, l.label])} onChange={(v) => s.setProfile({ style: v as LearnerState["profile"]["style"] })} />
+        <Row label={t("settings.style.label", "Learning style")} hint={t("settings.style.hint", "Sets the mode lessons open in")}>
+          <Segmented value={s.profile.style} options={learningStyles.map((l) => [l.id, styleLabel[l.id] ?? l.label])} onChange={(v) => s.setProfile({ style: v as LearnerState["profile"]["style"] })} />
         </Row>
       </Section>
 
-      <Section id="account" title="Account">
-        <Row label={user ? `Signed in as ${user.email}` : "Cloud sync"} hint={user ? "Your progress syncs across devices" : enabled ? "Sign in to sync progress and join live leagues" : "Guest mode — progress is saved on this device"}>
+      <Section id="account" title={t("settings.section.account", "Account")}>
+        <Row label={user ? t("settings.account.signedInAs", "Signed in as {email}", { email: user.email ?? "" }) : t("settings.account.cloudSync", "Cloud sync")} hint={user ? t("settings.account.syncing", "Your progress syncs across devices") : enabled ? t("settings.account.signInHint", "Sign in to sync progress and join live leagues") : t("settings.account.guest", "Guest mode — progress is saved on this device")}>
           {user ? (
             <button className="btn-ghost" onClick={() => void signOut()}>
-              <LogOut className="h-4 w-4" /> Sign out
+              <LogOut className="h-4 w-4" /> {t("settings.account.signOut", "Sign out")}
             </button>
           ) : enabled ? (
             <Link href="/auth" className="btn-primary">
-              Sign in
+              {t("settings.account.signIn", "Sign in")}
             </Link>
           ) : null}
         </Row>
       </Section>
 
-      <Section id="data" title="Your data">
-        <Row label="Backup" hint="Download or restore all your progress">
+      <Section id="data" title={t("settings.section.data", "Your data")}>
+        <Row label={t("settings.data.backup", "Backup")} hint={t("settings.data.backupHint", "Download or restore all your progress")}>
           <div className="flex gap-2">
             <button className="btn-ghost" onClick={exportData}>
-              <Download className="h-4 w-4" /> Export
+              <Download className="h-4 w-4" /> {t("settings.data.export", "Export")}
             </button>
             <button className="btn-ghost" onClick={() => fileRef.current?.click()}>
-              <Upload className="h-4 w-4" /> Import
+              <Upload className="h-4 w-4" /> {t("settings.data.import", "Import")}
             </button>
             <input ref={fileRef} type="file" accept="application/json" className="hidden" onChange={(e) => e.target.files?.[0] && void importData(e.target.files[0])} />
           </div>
         </Row>
-        <Row label="Reset progress" hint="Deletes XP, mastery, streaks, coins and badges on this device">
+        <Row label={t("settings.data.reset", "Reset progress")} hint={t("settings.data.resetHint", "Deletes XP, mastery, streaks, coins and badges on this device")}>
           <button
             className="btn-bad"
             onClick={() => {
-              if (confirm("Reset ALL progress on this device? This cannot be undone.")) s.reset();
+              if (confirm(t("settings.data.resetConfirm", "Reset ALL progress on this device? This cannot be undone."))) s.reset();
             }}
           >
-            Reset
+            {t("settings.data.resetButton", "Reset")}
           </button>
         </Row>
       </Section>

@@ -10,6 +10,7 @@ import type { SearchItem } from "@/content";
 import { worldById } from "@/content/worlds";
 import { CourseIcon } from "@/components/brand/CourseIcon";
 import { LogoMark } from "@/components/brand/Mascot";
+import { useT } from "@/i18n";
 
 const QUICK: SearchItem[] = [
   { kind: "subject", title: "Learn", subtitle: "Your path", href: "/learn", icon: "", world: "school", course: "", keywords: "" },
@@ -39,6 +40,21 @@ export function CommandPalette() {
   const [active, setActive] = useState(0);
   const inputRef = useRef<HTMLInputElement>(null);
   const [index, setIndex] = useState<SearchItem[] | null>(null);
+  const t = useT();
+  const quickText: Record<string, { title: string; subtitle: string }> = {
+    "/learn": { title: t("shell.quick.learn", "Learn"), subtitle: t("shell.quick.learnSub", "Your path") },
+    "/courses": { title: t("shell.quick.courses", "All courses"), subtitle: t("shell.quick.coursesSub", "Browse every course") },
+    "/practice": { title: t("shell.quick.practice", "Practice"), subtitle: t("shell.quick.practiceSub", "Spaced review & weak skills") },
+    "/exam": { title: t("shell.quick.exam", "Exam prep"), subtitle: t("shell.quick.examSub", "NEET & JEE mock tests and drills") },
+    "/code/playground": { title: t("shell.quick.code", "Code lab"), subtitle: t("shell.quick.codeSub", "HTML · CSS · JS · Python · SQL playground") },
+  };
+  const worldName: Record<string, string> = {
+    kids: t("shell.world.kids", "Early learning"),
+    school: t("shell.world.school", "School"),
+    exam: t("shell.world.exam", "Exam prep"),
+    code: t("shell.world.code", "Coding"),
+    campus: t("shell.world.campus", "College"),
+  };
 
   // The full index is fetched lazily so content never bloats the page bundle.
   useEffect(() => {
@@ -92,7 +108,7 @@ export function CommandPalette() {
             className="card w-full max-w-xl overflow-hidden shadow-lift"
             onClick={(e) => e.stopPropagation()}
             role="dialog"
-            aria-label="Search"
+            aria-label={t("shell.search.label", "Search")}
           >
             <div className="flex items-center gap-3 border-b-2 border-line px-4">
               <Search className="h-5 w-5 text-muted" />
@@ -112,13 +128,13 @@ export function CommandPalette() {
                   }
                   if (e.key === "Enter") go(results[active]);
                 }}
-                placeholder="Search courses and lessons — try “flexbox” or “photosynthesis”"
+                placeholder={t("shell.search.placeholder", "Search courses and lessons — try “flexbox” or “photosynthesis”")}
                 className="h-14 w-full bg-transparent text-base font-bold outline-none placeholder:font-semibold placeholder:text-muted"
               />
               <kbd className="rounded-md border border-line px-1.5 py-0.5 font-mono text-[10px] text-muted">ESC</kbd>
             </div>
             <ul className="max-h-[50vh] overflow-y-auto p-2">
-              {!q && <li className="eyebrow px-3 pb-1 pt-2">Jump to</li>}
+              {!q && <li className="eyebrow px-3 pb-1 pt-2">{t("shell.search.jumpTo", "Jump to")}</li>}
               {results.map((r, i) => (
                 <li key={r.href + i}>
                   <button
@@ -128,16 +144,16 @@ export function CommandPalette() {
                   >
                     {r.course ? <CourseIcon slug={r.course} size={36} /> : <LogoMark size={36} />}
                     <span className="min-w-0 flex-1">
-                      <span className="block truncate font-extrabold">{r.title}</span>
-                      <span className="block truncate text-xs font-semibold text-muted">{r.subtitle}</span>
+                      <span className="block truncate font-extrabold">{(!q && quickText[r.href]?.title) || r.title}</span>
+                      <span className="block truncate text-xs font-semibold text-muted">{(!q && quickText[r.href]?.subtitle) || r.subtitle}</span>
                     </span>
-                    <span className="chip hidden capitalize sm:inline-flex">{r.kind === "subject" ? (r.course ? worldById[r.world].name : "Go to") : r.kind === "topic" ? "Unit" : "Lesson"}</span>
+                    <span className="chip hidden capitalize sm:inline-flex">{r.kind === "subject" ? (r.course ? (worldName[r.world] ?? worldById[r.world].name) : t("shell.search.goTo", "Go to")) : r.kind === "topic" ? t("shell.search.unit", "Unit") : t("shell.search.lesson", "Lesson")}</span>
                     {i === active && <CornerDownLeft className="h-4 w-4 text-muted" />}
                   </button>
                 </li>
               ))}
-              {results.length === 0 && q && !index && <li className="p-8 text-center text-sm text-muted">Loading the library…</li>}
-              {results.length === 0 && (index || !q) && <li className="p-8 text-center text-sm text-muted">No matches. Try a broader word.</li>}
+              {results.length === 0 && q && !index && <li className="p-8 text-center text-sm text-muted">{t("shell.search.loading", "Loading the library…")}</li>}
+              {results.length === 0 && (index || !q) && <li className="p-8 text-center text-sm text-muted">{t("shell.search.noMatches", "No matches. Try a broader word.")}</li>}
             </ul>
           </motion.div>
         </motion.div>

@@ -2,6 +2,7 @@
 
 import { Printer, X } from "lucide-react";
 import type { WeekSummary } from "./summary";
+import { useT } from "@/i18n";
 
 export interface ReportData {
   childName: string;
@@ -19,6 +20,7 @@ export interface ReportData {
 /** Printable one-page weekly report. Uses an inline stylesheet so it prints cleanly without the app shell. */
 export function WeeklyReport({ data, onClose }: { data: ReportData; onClose: () => void }) {
   const { summary } = data;
+  const t = useT();
   const pct = (n: number, d: number) => (d ? Math.round((n / d) * 100) : 0);
   return (
     <div className="qa-report fixed inset-0 z-[80] overflow-y-auto bg-bg">
@@ -42,31 +44,31 @@ export function WeeklyReport({ data, onClose }: { data: ReportData; onClose: () 
         }
       `}</style>
       <div className="no-print sticky top-0 z-10 flex items-center justify-between gap-3 border-b border-line bg-surface px-4 py-3 sm:px-6">
-        <p className="text-sm font-extrabold text-muted">Weekly report preview</p>
+        <p className="text-sm font-extrabold text-muted">{t("parent.report.preview", "Weekly report preview")}</p>
         <div className="flex gap-2">
           <button className="btn-primary !py-2 text-sm" onClick={() => window.print()}>
-            <Printer className="mr-1.5 inline h-4 w-4" /> Print or save as PDF
+            <Printer className="mr-1.5 inline h-4 w-4" /> {t("parent.report.print", "Print or save as PDF")}
           </button>
-          <button className="btn-ghost !py-2 text-sm" onClick={onClose} aria-label="Close report">
+          <button className="btn-ghost !py-2 text-sm" onClick={onClose} aria-label={t("parent.report.close", "Close report")}>
             <X className="h-4 w-4" />
           </button>
         </div>
       </div>
 
       <div className="sheet">
-        <p className="text-xs font-extrabold uppercase tracking-wide text-muted">Quest Academy · Weekly report</p>
-        <h1 className="mt-1 text-3xl font-black">{data.childName || "Your learner"}</h1>
+        <p className="text-xs font-extrabold uppercase tracking-wide text-muted">{t("parent.report.eyebrow", "Quest Academy · Weekly report")}</p>
+        <h1 className="mt-1 text-3xl font-black">{data.childName || t("parent.report.yourLearner", "Your learner")}</h1>
         <p className="mt-1 text-sm font-semibold text-muted">
           {data.range}
-          {data.courseTitle ? ` · Current course: ${data.courseTitle}` : ""}
+          {data.courseTitle ? ` · ${t("parent.report.currentCourse", "Current course: {title}", { title: data.courseTitle })}` : ""}
         </p>
 
         <div className="mt-6 grid grid-cols-2 gap-3 sm:grid-cols-4">
           {[
-            ["Lessons completed", String(summary.lessonsThisWeek)],
-            ["Estimated minutes", String(summary.minutesThisWeek)],
-            ["Practice accuracy", summary.accuracy === null ? "—" : `${Math.round(summary.accuracy * 100)}%`],
-            ["Streak", `${data.streak} day${data.streak === 1 ? "" : "s"}`],
+            [t("parent.report.lessons", "Lessons completed"), String(summary.lessonsThisWeek)],
+            [t("parent.stat.minutes", "Estimated minutes"), String(summary.minutesThisWeek)],
+            [t("parent.stat.accuracy", "Practice accuracy"), summary.accuracy === null ? "—" : `${Math.round(summary.accuracy * 100)}%`],
+            [t("parent.stat.streak", "Streak"), data.streak === 1 ? t("parent.days.one", "{n} day", { n: data.streak }) : t("parent.days.other", "{n} days", { n: data.streak })],
           ].map(([k, v]) => (
             <div key={k} className="stat rounded-2xl border border-line bg-surface p-4">
               <p className="text-xs font-extrabold uppercase tracking-wide text-muted">{k}</p>
@@ -75,17 +77,17 @@ export function WeeklyReport({ data, onClose }: { data: ReportData; onClose: () 
           ))}
         </div>
 
-        <h2 className="mt-8 text-lg font-black">Progress by subject</h2>
+        <h2 className="mt-8 text-lg font-black">{t("parent.progress.title", "Progress by subject")}</h2>
         {summary.subjects.length === 0 ? (
-          <p className="mt-2 text-sm font-semibold text-muted">No lessons completed yet.</p>
+          <p className="mt-2 text-sm font-semibold text-muted">{t("parent.report.noLessons", "No lessons completed yet.")}</p>
         ) : (
           <table className="mt-3">
             <thead>
               <tr>
-                <th>Subject</th>
-                <th className="num">This week</th>
-                <th className="num">Completed</th>
-                <th className="num">Course</th>
+                <th>{t("parent.report.subject", "Subject")}</th>
+                <th className="num">{t("parent.report.thisWeek", "This week")}</th>
+                <th className="num">{t("parent.report.completed", "Completed")}</th>
+                <th className="num">{t("parent.report.course", "Course")}</th>
               </tr>
             </thead>
             <tbody>
@@ -103,9 +105,9 @@ export function WeeklyReport({ data, onClose }: { data: ReportData; onClose: () 
           </table>
         )}
 
-        <h2 className="mt-8 text-lg font-black">Recently completed</h2>
+        <h2 className="mt-8 text-lg font-black">{t("parent.report.recent", "Recently completed")}</h2>
         {summary.recentLessons.length === 0 ? (
-          <p className="mt-2 text-sm font-semibold text-muted">Nothing yet. The first lesson will appear here.</p>
+          <p className="mt-2 text-sm font-semibold text-muted">{t("parent.report.recentEmpty", "Nothing yet. The first lesson will appear here.")}</p>
         ) : (
           <ul className="mt-2 space-y-1 text-sm font-semibold">
             {summary.recentLessons.map((l) => (
@@ -116,20 +118,19 @@ export function WeeklyReport({ data, onClose }: { data: ReportData; onClose: () 
           </ul>
         )}
 
-        <h2 className="mt-8 text-lg font-black">Achievements and settings</h2>
+        <h2 className="mt-8 text-lg font-black">{t("parent.report.achievements", "Achievements and settings")}</h2>
         <ul className="mt-2 space-y-1 text-sm font-semibold">
           <li>
-            Stickers earned: {data.stickers} of {data.stickersTotal}
+            {t("parent.report.stickers", "Stickers earned: {n} of {total}", { n: data.stickers, total: data.stickersTotal })}
           </li>
-          <li>Best streak: {data.streakBest} days</li>
-          <li>Daily time limit: {data.timeLimit ? `${data.timeLimit} minutes` : "off"}</li>
-          <li>Quiet hours: {data.quietHours ?? "off"}</li>
-          <li>Leagues and social features: off (Explore mode)</li>
+          <li>{t("parent.report.bestStreak", "Best streak: {n} days", { n: data.streakBest })}</li>
+          <li>{t("parent.report.timeLimit", "Daily time limit: {value}", { value: data.timeLimit ? t("parent.controls.minutes", "{n} minutes", { n: data.timeLimit }) : t("parent.report.off", "off") })}</li>
+          <li>{t("parent.report.quietHours", "Quiet hours: {value}", { value: data.quietHours ?? t("parent.report.off", "off") })}</li>
+          <li>{t("parent.report.social", "Leagues and social features: off (Explore mode)")}</li>
         </ul>
 
         <p className="mt-10 text-xs font-semibold text-muted">
-          Minutes are estimated at 15 per completed lesson. Practice accuracy is the average best score across quizzes and tests. Generated{" "}
-          {new Date().toLocaleDateString(undefined, { day: "numeric", month: "long", year: "numeric" })}.
+          {t("parent.report.footnote", "Minutes are estimated at 15 per completed lesson. Practice accuracy is the average best score across quizzes and tests. Generated {date}.", { date: new Date().toLocaleDateString(undefined, { day: "numeric", month: "long", year: "numeric" }) })}
         </p>
       </div>
     </div>
