@@ -4,10 +4,12 @@ import { useEffect, useId, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import { Check, RotateCcw, Trophy } from "lucide-react";
 import { Readout, WidgetTitle } from "./_shared";
+import { useT } from "@/i18n";
 
 const PLACES = [128, 64, 32, 16, 8, 4, 2, 1];
 
 export default function Binary() {
+  const t = useT();
   const [value, setValue] = useState(0);
   const [target, setTarget] = useState<number | null>(null);
   const [score, setScore] = useState(0);
@@ -25,9 +27,9 @@ export default function Binary() {
   }, [solved, streakDone]);
 
   const nextChallenge = () => {
-    let t = 1 + Math.floor(Math.random() * 255);
-    if (t === value) t = (t + 37) % 256 || 1;
-    setTarget(t);
+    let next = 1 + Math.floor(Math.random() * 255);
+    if (next === value) next = (next + 37) % 256 || 1;
+    setTarget(next);
     setValue(0);
     setStreakDone(false);
   };
@@ -39,8 +41,8 @@ export default function Binary() {
   return (
     <div>
       <WidgetTitle
-        title="Binary bits"
-        hint="Each switch is a bit. Turn bits on to add up their place values."
+        title={t("widget.binary.title", "Binary bits")}
+        hint={t("widget.binary.hint", "Each switch is a bit. Turn bits on to add up their place values.")}
         right={
           <div className="flex items-center gap-2">
             {target !== null && (
@@ -49,7 +51,7 @@ export default function Binary() {
               </span>
             )}
             <button type="button" onClick={target === null ? nextChallenge : () => setTarget(null)} className={target === null ? "btn-pop !px-4 !py-2" : "btn-ghost !px-4 !py-2"}>
-              {target === null ? "Challenge mode" : "Free play"}
+              {target === null ? t("widget.binary.challengeMode", "Challenge mode") : t("widget.binary.freePlay", "Free play")}
             </button>
           </div>
         }
@@ -67,17 +69,17 @@ export default function Binary() {
               <span className="font-semibold text-ink">
                 {solved ? (
                   <span className="flex items-center gap-1 text-good">
-                    <Check size={18} /> Correct! {target} = {target.toString(2).padStart(8, "0")}
+                    <Check size={18} /> {t("widget.binary.correct", "Correct!")} {target} = {target.toString(2).padStart(8, "0")}
                   </span>
                 ) : (
                   <>
-                    Make the number <span className="font-mono text-2xl text-accent">{target}</span>
+                    {t("widget.binary.makeNumber", "Make the number")} <span className="font-mono text-2xl text-accent">{target}</span>
                   </>
                 )}
               </span>
               {solved && (
                 <button type="button" onClick={nextChallenge} className="btn-primary !py-1.5">
-                  Next
+                  {t("widget.next", "Next")}
                 </button>
               )}
             </div>
@@ -95,7 +97,7 @@ export default function Binary() {
                 type="button"
                 role="switch"
                 aria-checked={on}
-                aria-label={`Bit worth ${place}`}
+                aria-label={t("widget.binary.bitWorth", "Bit worth {n}", { n: place })}
                 onClick={() => toggle(place)}
                 whileTap={{ scale: 0.88 }}
                 className={`relative flex h-16 w-full max-w-[56px] items-center justify-center rounded-2xl border-2 font-mono text-2xl font-black transition-colors sm:h-20 ${
@@ -120,20 +122,20 @@ export default function Binary() {
             {sum.join(" + ")} = <span className="font-bold text-ink">{value}</span>
           </>
         ) : (
-          "All bits off = 0"
+          t("widget.binary.allOff", "All bits off = 0")
         )}
       </div>
 
       <div className="mt-3 grid grid-cols-3 gap-2">
-        <Readout label="Binary" value={<span className="tracking-widest">{bits}</span>} />
-        <Readout label="Decimal" value={value} />
-        <Readout label="Hex" value={`0x${hex}`} />
+        <Readout label={t("widget.binary.binary", "Binary")} value={<span className="tracking-widest">{bits}</span>} />
+        <Readout label={t("widget.binary.decimal", "Decimal")} value={value} />
+        <Readout label={t("widget.binary.hex", "Hex")} value={`0x${hex}`} />
       </div>
 
       {target === null && (
         <div className="mt-3 flex items-center gap-2">
           <label htmlFor={inputId} className="shrink-0 text-sm font-medium text-muted">
-            Type a number (0–255)
+            {t("widget.binary.typeNumber", "Type a number (0–255)")}
           </label>
           <input
             id={inputId}
@@ -147,7 +149,7 @@ export default function Binary() {
             }}
             className="input !py-1.5 font-mono"
           />
-          <button type="button" className="btn-ghost !px-3" aria-label="Reset to zero" onClick={() => setValue(0)}>
+          <button type="button" className="btn-ghost !px-3" aria-label={t("widget.binary.resetZero", "Reset to zero")} onClick={() => setValue(0)}>
             <RotateCcw size={16} />
           </button>
         </div>

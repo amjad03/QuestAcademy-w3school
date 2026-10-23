@@ -14,6 +14,8 @@ import { useCatalog } from "@/components/shell/CatalogContext";
 import { CourseIcon } from "@/components/brand/CourseIcon";
 import { Mascot } from "@/components/brand/Mascot";
 import { ProgressBar } from "@/components/ui/Progress";
+import { useT } from "@/i18n";
+import { useSubjectNames } from "./labels";
 
 export const SUBJECT_ICON: Record<ExamSubject, LucideIcon> = { physics: Atom, chemistry: FlaskConical, biology: Dna, maths: Pi };
 
@@ -48,6 +50,8 @@ export function useExamChoice() {
 }
 
 export function ExamHub({ questionCount, formulaCount, chapters }: { questionCount: number; formulaCount: number; chapters: Record<string, string[]> }) {
+  const t = useT();
+  const subjectName = useSubjectNames();
   const [exam, choose] = useExamChoice();
   const catalog = useCatalog();
   const courses = catalog.filter((c) => c.world === "exam" && c.levels.some((l) => (exam === "NEET" ? l === "NEET" : l.startsWith("JEE"))));
@@ -68,13 +72,13 @@ export function ExamHub({ questionCount, formulaCount, chapters }: { questionCou
       <div className="flex flex-col gap-5 sm:flex-row sm:items-center">
         <Mascot pose="think" size={96} />
         <div className="min-w-0 flex-1">
-          <p className="eyebrow">Exam prep</p>
-          <h1 className="mt-1 text-3xl font-black">Get exam-ready for {exam}</h1>
+          <p className="eyebrow">{t("exam.hub.eyebrow", "Exam prep")}</p>
+          <h1 className="mt-1 text-3xl font-black">{t("exam.hub.title", "Get exam-ready for {exam}", { exam })}</h1>
           <p className="mt-1 font-semibold text-muted">
-            {questionCount} exam-style questions, {formulaCount} formulas and full mock tests in the real computer-based format.
+            {t("exam.hub.subtitle", "{questions} exam-style questions, {formulas} formulas and full mock tests in the real computer-based format.", { questions: questionCount, formulas: formulaCount })}
           </p>
         </div>
-        <div className="flex shrink-0 rounded-2xl border-2 border-line p-1" role="tablist" aria-label="Exam">
+        <div className="flex shrink-0 rounded-2xl border-2 border-line p-1" role="tablist" aria-label={t("exam.hub.examTabs", "Exam")}>
           {(["NEET", "JEE"] as const).map((e) => (
             <button
               key={e}
@@ -92,12 +96,12 @@ export function ExamHub({ questionCount, formulaCount, chapters }: { questionCou
       {/* actions */}
       <section className="mt-8 grid gap-3 sm:grid-cols-2">
         {[
-          { href: `/exam/mock/${exam === "NEET" ? "neet-full" : "jee-main"}`, icon: Timer, color: "#FF4B4B", t: "Full mock test", d: "Exam-day simulation with timer and palette" },
-          { href: "/exam/practice", icon: Crosshair, color: "#2F6BFF", t: "Chapter drill", d: "Adaptive questions, one chapter at a time" },
-          { href: "/exam/formulas", icon: ScrollText, color: "#7C4DFF", t: "Formula vault", d: "Revise and self-test every formula" },
-          { href: "/exam/mock", icon: BookMarked, color: "#FF8A00", t: "All tests", d: "Subject sprints and full mocks" },
+          { href: `/exam/mock/${exam === "NEET" ? "neet-full" : "jee-main"}`, icon: Timer, color: "#FF4B4B", t: t("exam.hub.action.mock.title", "Full mock test"), d: t("exam.hub.action.mock.desc", "Exam-day simulation with timer and palette") },
+          { href: "/exam/practice", icon: Crosshair, color: "#2F6BFF", t: t("exam.hub.action.drill.title", "Chapter drill"), d: t("exam.hub.action.drill.desc", "Adaptive questions, one chapter at a time") },
+          { href: "/exam/formulas", icon: ScrollText, color: "#7C4DFF", t: t("exam.hub.action.formulas.title", "Formula vault"), d: t("exam.hub.action.formulas.desc", "Revise and self-test every formula") },
+          { href: "/exam/mock", icon: BookMarked, color: "#FF8A00", t: t("exam.hub.action.all.title", "All tests"), d: t("exam.hub.action.all.desc", "Subject sprints and full mocks") },
         ].map((a) => (
-          <Link key={a.t} href={a.href} className="tile group flex items-center gap-4 p-4">
+          <Link key={a.href} href={a.href} className="tile group flex items-center gap-4 p-4">
             <span className="grid h-12 w-12 shrink-0 place-items-center rounded-xl text-white" style={{ background: a.color }}>
               <a.icon className="h-6 w-6" strokeWidth={2.5} />
             </span>
@@ -112,14 +116,14 @@ export function ExamHub({ questionCount, formulaCount, chapters }: { questionCou
 
       {/* chapter drills */}
       <section className="mt-10">
-        <h2 className="text-xl font-black">Chapter-wise drills</h2>
+        <h2 className="text-xl font-black">{t("exam.hub.drills", "Chapter-wise drills")}</h2>
         <div className="mt-4 space-y-3">
           {subjects.map((sub) => {
             const I = SUBJECT_ICON[sub];
             return (
               <div key={sub} className="card p-5">
                 <div className="mb-3 flex items-center gap-2 font-black">
-                  <I className="h-5 w-5" style={{ color: SUBJECT_META[sub].color }} strokeWidth={2.5} /> {SUBJECT_META[sub].name}
+                  <I className="h-5 w-5" style={{ color: SUBJECT_META[sub].color }} strokeWidth={2.5} /> {subjectName[sub]}
                 </div>
                 <div className="flex flex-wrap gap-2">
                   {(chapters[sub] ?? []).map((c) => (
@@ -137,9 +141,9 @@ export function ExamHub({ questionCount, formulaCount, chapters }: { questionCou
       {/* mocks */}
       <section className="mt-10">
         <div className="flex items-baseline justify-between">
-          <h2 className="text-xl font-black">Mock tests for {exam}</h2>
+          <h2 className="text-xl font-black">{t("exam.hub.mocksFor", "Mock tests for {exam}", { exam })}</h2>
           <Link href="/exam/mock" className="text-sm font-extrabold uppercase tracking-wide text-accent">
-            View all
+            {t("exam.hub.viewAll", "View all")}
           </Link>
         </div>
         <div className="mt-4 grid gap-3 sm:grid-cols-2">
@@ -151,7 +155,7 @@ export function ExamHub({ questionCount, formulaCount, chapters }: { questionCou
 
       {/* courses */}
       <section className="mt-10">
-        <h2 className="text-xl font-black">Concept courses</h2>
+        <h2 className="text-xl font-black">{t("exam.hub.courses", "Concept courses")}</h2>
         <div className="mt-4 grid gap-3 sm:grid-cols-2">
           {courses.map((c) => (
             <Link key={c.slug} href={c.href} className="tile flex items-center gap-4 p-4">
@@ -159,7 +163,7 @@ export function ExamHub({ questionCount, formulaCount, chapters }: { questionCou
               <span className="min-w-0">
                 <span className="block truncate font-black">{c.title}</span>
                 <span className="block truncate text-sm font-semibold text-muted">
-                  {c.units} units · {c.lessons} lessons
+                  {t("exam.hub.courseMeta", "{units} units · {lessons} lessons", { units: c.units, lessons: c.lessons })}
                 </span>
               </span>
             </Link>
@@ -171,22 +175,23 @@ export function ExamHub({ questionCount, formulaCount, chapters }: { questionCou
 }
 
 function CountdownCard({ exam }: { exam: ExamId }) {
+  const t = useT();
   const [now, setNow] = useState<Date | null>(null);
   useEffect(() => {
     setNow(new Date());
-    const t = setInterval(() => setNow(new Date()), 1000);
-    return () => clearInterval(t);
+    const timer = setInterval(() => setNow(new Date()), 1000);
+    return () => clearInterval(timer);
   }, []);
   const target = now ? nextExamDate(exam, now) : null;
   const diff = target && now ? target.getTime() - now.getTime() : 0;
   const parts: [number, string][] = [
-    [Math.floor(diff / 86_400_000), "days"],
-    [Math.floor((diff % 86_400_000) / 3_600_000), "hrs"],
-    [Math.floor((diff % 3_600_000) / 60_000), "min"],
-    [Math.floor((diff % 60_000) / 1000), "sec"],
+    [Math.floor(diff / 86_400_000), t("exam.countdown.days", "days")],
+    [Math.floor((diff % 86_400_000) / 3_600_000), t("exam.countdown.hrs", "hrs")],
+    [Math.floor((diff % 3_600_000) / 60_000), t("exam.countdown.min", "min")],
+    [Math.floor((diff % 60_000) / 1000), t("exam.countdown.sec", "sec")],
   ];
   return (
-    <RailCard title={exam === "NEET" ? "NEET UG countdown" : "JEE Main countdown"}>
+    <RailCard title={exam === "NEET" ? t("exam.countdown.neet", "NEET UG countdown") : t("exam.countdown.jee", "JEE Main countdown")}>
       <div className="grid grid-cols-4 gap-2 text-center">
         {parts.map(([n, l]) => (
           <div key={l} className="rounded-xl bg-surface-2 py-2.5">
@@ -197,7 +202,7 @@ function CountdownCard({ exam }: { exam: ExamId }) {
       </div>
       {target && (
         <p className="mt-3 text-center text-xs font-semibold text-muted">
-          Approx. {target.toLocaleDateString(undefined, { day: "numeric", month: "long", year: "numeric" })} — check the official schedule.
+          {t("exam.countdown.approx", "Approx. {date} — check the official schedule.", { date: target.toLocaleDateString(undefined, { day: "numeric", month: "long", year: "numeric" }) })}
         </p>
       )}
     </RailCard>
@@ -205,12 +210,13 @@ function CountdownCard({ exam }: { exam: ExamId }) {
 }
 
 function RecentResultsCard() {
+  const t = useT();
   const hydrated = useHydrated();
   const results = useLearner((s) => s.mockResults);
   if (!hydrated) return null;
   const recent = results.slice(0, 6).reverse();
   return (
-    <RailCard title="Recent results" action={results.length ? { href: "/exam/mock", label: "Tests" } : undefined}>
+    <RailCard title={t("exam.recent.title", "Recent results")} action={results.length ? { href: "/exam/mock", label: t("exam.recent.tests", "Tests") } : undefined}>
       {recent.length ? (
         <div className="flex h-32 items-end gap-2">
           {recent.map((r) => {
@@ -225,13 +231,14 @@ function RecentResultsCard() {
           })}
         </div>
       ) : (
-        <p className="text-sm font-semibold leading-6 text-muted">Take your first mock test to unlock score trends, accuracy and chapter analysis.</p>
+        <p className="text-sm font-semibold leading-6 text-muted">{t("exam.recent.empty", "Take your first mock test to unlock score trends, accuracy and chapter analysis.")}</p>
       )}
     </RailCard>
   );
 }
 
 export function MockCard({ id }: { id: string }) {
+  const t = useT();
   const m = MOCK_TESTS.find((x) => x.id === id)!;
   const hydrated = useHydrated();
   const best = useLearner((s) => s.mockResults.filter((r) => r.testId === id).reduce<number | null>((a, r) => (a === null || r.score > a ? r.score : a), null));
@@ -249,13 +256,13 @@ export function MockCard({ id }: { id: string }) {
       <h3 className="mt-4 text-lg font-black group-hover:text-accent">{m.title}</h3>
       <p className="mt-1 flex-1 text-sm font-semibold leading-6 text-muted">{m.blurb}</p>
       <div className="mt-4 flex items-center gap-2 text-xs font-bold text-muted">
-        <span>{total} questions</span>·<span>{m.minutes} min</span>·<span>{max} marks</span>
+        <span>{t("exam.mockCard.questions", "{n} questions", { n: total })}</span>·<span>{t("exam.mockCard.minutes", "{n} min", { n: m.minutes })}</span>·<span>{t("exam.mockCard.marks", "{n} marks", { n: max })}</span>
       </div>
       {hydrated && best !== null && (
         <div className="mt-3 flex items-center gap-2">
-          <ProgressBar value={Math.max(0, best) / max} height={10} color={color} label="Best score" />
+          <ProgressBar value={Math.max(0, best) / max} height={10} color={color} label={t("exam.mockCard.bestScore", "Best score")} />
           <span className="shrink-0 text-xs font-black" style={{ color }}>
-            Best {best}
+            {t("exam.mockCard.best", "Best {n}", { n: best })}
           </span>
         </div>
       )}

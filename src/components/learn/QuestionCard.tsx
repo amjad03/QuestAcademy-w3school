@@ -7,6 +7,7 @@ import clsx from "clsx";
 import type { Question } from "@/content/types";
 import { Md, MdInline, plain } from "@/components/Md";
 import { sfx, speak } from "@/lib/sound";
+import { useT } from "@/i18n";
 
 /* ------------------------------------------------------------------ */
 /* Helpers                                                             */
@@ -39,14 +40,18 @@ export function checkNumeric(q: Extract<Question, { kind: "numeric" }>, value: n
 
 const norm = (s: string) => s.trim().toLowerCase().replace(/\s+/g, " ").replace(/[.,!]$/, "");
 
-export function correctAnswerText(q: Question): string {
+/** Translator signature (from `useT()`); defaults to English passthrough. */
+type TFn = (key: string, english: string, vars?: Record<string, string | number>) => string;
+const english: TFn = (_key, text) => text;
+
+export function correctAnswerText(q: Question, t: TFn = english): string {
   switch (q.kind) {
     case "mcq":
       return q.options[q.answer];
     case "multi":
       return q.answers.map((i) => q.options[i]).join(", ");
     case "truefalse":
-      return q.answer ? "True" : "False";
+      return q.answer ? t("learn.question.true", "True") : t("learn.question.false", "False");
     case "numeric":
       return `${q.answer}${q.unit ? " " + q.unit : ""}`;
     case "fill":
@@ -93,20 +98,20 @@ export function gradeAnswer(q: Question, a: Answer): boolean {
   }
 }
 
-export function promptLabel(q: Question) {
+export function promptLabel(q: Question, t: TFn = english) {
   switch (q.kind) {
     case "mcq":
-      return "Select the correct answer";
+      return t("learn.question.prompt.mcq", "Select the correct answer");
     case "multi":
-      return "Select all that apply";
+      return t("learn.question.prompt.multi", "Select all that apply");
     case "truefalse":
-      return "True or false?";
+      return t("learn.question.prompt.truefalse", "True or false?");
     case "numeric":
-      return "Type the answer";
+      return t("learn.question.prompt.numeric", "Type the answer");
     case "fill":
-      return "Fill in the blank";
+      return t("learn.question.prompt.fill", "Fill in the blank");
     case "order":
-      return "Put these in the right order";
+      return t("learn.question.prompt.order", "Put these in the right order");
   }
 }
 
@@ -135,6 +140,7 @@ export function QuestionInput({
   onSubmit?: () => void;
   hideLabel?: boolean;
 }) {
+  const t = useT();
   const locked = result !== null;
 
   // Number keys pick options, like Duolingo.
@@ -167,12 +173,12 @@ export function QuestionInput({
 
   return (
     <div>
-      {!hideLabel && <p className="eyebrow mb-3">{promptLabel(q)}</p>}
+      {!hideLabel && <p className="eyebrow mb-3">{promptLabel(q, t)}</p>}
       <div className="flex items-start gap-3">
         <div className={clsx("min-w-0 flex-1 font-extrabold leading-snug", big ? "text-[1.7rem]" : "text-[1.45rem]")}>
           <Md text={q.q} className="space-y-3" />
         </div>
-        <button onClick={() => speak(plain(q.q), { rate: 0.95 })} className="grid h-11 w-11 shrink-0 place-items-center rounded-xl border-2 border-b-4 border-line text-accent hover:bg-surface-2" aria-label="Read question aloud">
+        <button onClick={() => speak(plain(q.q), { rate: 0.95 })} className="grid h-11 w-11 shrink-0 place-items-center rounded-xl border-2 border-b-4 border-line text-accent hover:bg-surface-2" aria-label={t("learn.question.readAloud", "Read question aloud")}>
           <Volume2 className="h-5 w-5" strokeWidth={2.5} />
         </button>
       </div>
@@ -226,7 +232,7 @@ export function QuestionInput({
                   aria-pressed={selected}
                 >
                   <span className="grid h-7 w-7 place-items-center rounded-lg border-2 border-line text-xs font-black text-muted">{i + 1}</span>
-                  {v ? "True" : "False"}
+                  {v ? t("learn.question.true", "True") : t("learn.question.false", "False")}
                 </button>
               );
             })}
@@ -242,9 +248,9 @@ export function QuestionInput({
               onChange={(e) => onChange({ ...answer, text: e.target.value })}
               onKeyDown={(e) => e.key === "Enter" && onSubmit?.()}
               inputMode={q.kind === "numeric" ? "decimal" : "text"}
-              placeholder={q.kind === "numeric" ? "Type a number" : "Type your answer"}
+              placeholder={q.kind === "numeric" ? t("learn.question.placeholder.number", "Type a number") : t("learn.question.placeholder.text", "Type your answer")}
               className={clsx("input py-4 text-xl", locked && (result ? "!border-good !bg-good-soft" : "!border-bad !bg-bad-soft"))}
-              aria-label="Your answer"
+              aria-label={t("learn.question.yourAnswer", "Your answer")}
             />
             {q.kind === "numeric" && q.unit && <span className="shrink-0 text-lg font-bold text-muted">{q.unit}</span>}
           </div>
@@ -268,7 +274,7 @@ export function QuestionInput({
                 {!locked && (
                   <span className="flex gap-1">
                     <button
-                      aria-label="Move up"
+                      aria-label={t("learn.question.moveUp", "Move up")}
                       disabled={pos === 0}
                       onClick={() => {
                         const n = [...answer.order];
@@ -280,7 +286,7 @@ export function QuestionInput({
                       <ArrowUp className="h-4 w-4" />
                     </button>
                     <button
-                      aria-label="Move down"
+                      aria-label={t("learn.question.moveDown", "Move down")}
                       disabled={pos === answer.order.length - 1}
                       onClick={() => {
                         const n = [...answer.order];
@@ -312,7 +318,7 @@ export function QuestionCard({
   variant = "default",
   index,
   total,
-  continueLabel = "Continue",
+  continueLabel,
 }: {
   question: Question;
   onDone?: (correct: boolean) => void;
@@ -321,6 +327,7 @@ export function QuestionCard({
   total?: number;
   continueLabel?: string;
 }) {
+  const t = useT();
   const initial = useMemo(() => emptyAnswer(q), [q]);
   const [answer, setAnswer] = useState<Answer>(initial);
   const [result, setResult] = useState<boolean | null>(null);
@@ -336,7 +343,7 @@ export function QuestionCard({
     <div>
       {index !== undefined && total !== undefined && (
         <p className="eyebrow mb-2">
-          Question {index + 1} of {total}
+          {t("learn.question.counter", "Question {n} of {total}", { n: index + 1, total })}
         </p>
       )}
       <QuestionInput question={q} answer={answer} onChange={setAnswer} result={result} big={variant === "kids"} onSubmit={check} />
@@ -344,7 +351,7 @@ export function QuestionCard({
         {result === null ? (
           <motion.div key="check" className="mt-6 flex justify-end" initial={{ opacity: 0 }} animate={{ opacity: 1 }}>
             <button className="btn-good px-8" disabled={!isAnswered(q, answer)} onClick={check}>
-              Check
+              {t("learn.question.check", "Check")}
             </button>
           </motion.div>
         ) : (
@@ -352,10 +359,10 @@ export function QuestionCard({
             <div className="flex items-start gap-3">
               {result ? <CheckCircle2 className="h-7 w-7 shrink-0 text-good" /> : <XCircle className="h-7 w-7 shrink-0 text-bad" />}
               <div className="min-w-0 flex-1">
-                <div className={clsx("text-xl font-black", result ? "text-good-shade" : "text-bad-shade")}>{result ? "Nice!" : "Correct solution:"}</div>
+                <div className={clsx("text-xl font-black", result ? "text-good-shade" : "text-bad-shade")}>{result ? t("learn.question.nice", "Nice!") : t("learn.question.correctSolution", "Correct solution:")}</div>
                 {!result && (
                   <div className="mt-1 font-bold text-bad-shade">
-                    <MdInline text={correctAnswerText(q)} />
+                    <MdInline text={correctAnswerText(q, t)} />
                   </div>
                 )}
                 {q.explain && <Md text={q.explain} className="prose-quest mt-2 space-y-2 !text-[0.98rem] !leading-7" />}
@@ -364,7 +371,7 @@ export function QuestionCard({
             {onDone && (
               <div className="mt-4 flex justify-end">
                 <button className={result ? "btn-good" : "btn-bad"} autoFocus onClick={() => onDone(result)}>
-                  {continueLabel}
+                  {continueLabel ?? t("learn.question.continue", "Continue")}
                 </button>
               </div>
             )}

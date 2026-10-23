@@ -10,6 +10,7 @@ import { sayQueue } from "@/lib/voice";
 import { Mascot } from "@/components/brand/Mascot";
 import { BlockView } from "@/components/learn/Blocks";
 import { blockSpeech } from "@/components/learn/useNarration";
+import { useT } from "@/i18n";
 
 /** Groups blocks into short story pages: interactive blocks get their own page. */
 function paginate(blocks: Block[]): Block[][] {
@@ -34,6 +35,7 @@ function paginate(blocks: Block[]): Block[][] {
 
 /** Early-learning lesson: one page at a time, read aloud by Questy, big friendly controls. */
 export function KidsStory({ lesson, id, onComplete, done }: { lesson: Lesson; id: string; onComplete: () => void; done: boolean }) {
+  const t = useT();
   const pages = useMemo(() => paginate(lesson.blocks), [lesson]);
   const [i, setI] = useState(0);
   const [voice, setVoice] = useState(true);
@@ -54,7 +56,7 @@ export function KidsStory({ lesson, id, onComplete, done }: { lesson: Lesson; id
             <span key={k} className={clsx("h-3 flex-1 rounded-full transition", k <= i ? "bg-good" : "bg-line")} />
           ))}
         </div>
-        <button onClick={() => setVoice((v) => !v)} className={clsx("grid h-11 w-11 place-items-center rounded-xl border-2 border-b-4", voice ? "border-accent-shade bg-accent text-white" : "border-line text-muted")} aria-label={voice ? "Stop reading aloud" : "Read aloud"}>
+        <button onClick={() => setVoice((v) => !v)} className={clsx("grid h-11 w-11 place-items-center rounded-xl border-2 border-b-4", voice ? "border-accent-shade bg-accent text-white" : "border-line text-muted")} aria-label={voice ? t("kids.story.stopReading", "Stop reading aloud") : t("kids.story.readAloud", "Read aloud")}>
           {voice ? <Volume2 className="h-5 w-5" /> : <VolumeX className="h-5 w-5" />}
         </button>
       </div>
@@ -63,7 +65,9 @@ export function KidsStory({ lesson, id, onComplete, done }: { lesson: Lesson; id
         <Mascot pose={last ? "cheer" : i % 3 === 1 ? "read" : "wave"} size={84} />
         <div className="relative mb-4 rounded-2xl border-2 border-line bg-surface px-4 py-2.5 text-lg font-extrabold">
           <span className="absolute -left-[9px] bottom-3 h-4 w-4 rotate-45 border-b-2 border-l-2 border-line bg-surface" />
-          {last ? "You did it! Tap “Finish” for your star." : ["Let’s find out!", "Look at this!", "You’re doing great!", "Ooh, try this!"][i % 4]}
+          {last
+            ? t("kids.story.lastPage", "You did it! Tap “Finish” for your star.")
+            : [t("kids.story.cheer.findOut", "Let’s find out!"), t("kids.story.cheer.look", "Look at this!"), t("kids.story.cheer.great", "You’re doing great!"), t("kids.story.cheer.try", "Ooh, try this!")][i % 4]}
         </div>
       </div>
 
@@ -76,7 +80,7 @@ export function KidsStory({ lesson, id, onComplete, done }: { lesson: Lesson; id
       </AnimatePresence>
 
       <div className="mt-6 flex items-center justify-between">
-        <button onClick={() => setI((x) => Math.max(0, x - 1))} disabled={i === 0} className="btn-ghost h-14 w-14 !p-0 disabled:opacity-40" aria-label="Previous page">
+        <button onClick={() => setI((x) => Math.max(0, x - 1))} disabled={i === 0} className="btn-ghost h-14 w-14 !p-0 disabled:opacity-40" aria-label={t("kids.story.previousPage", "Previous page")}>
           <ArrowLeft className="h-6 w-6" />
         </button>
         {last ? (
@@ -87,11 +91,11 @@ export function KidsStory({ lesson, id, onComplete, done }: { lesson: Lesson; id
             }}
             className="btn-good h-14 px-10 text-lg"
           >
-            {done ? "Done!" : "Finish"}
+            {done ? t("kids.story.done", "Done!") : t("kids.story.finish", "Finish")}
           </button>
         ) : (
           <button onClick={() => { sfx("pop"); setI((x) => x + 1); }} className="btn-primary h-14 px-10 text-lg">
-            Next <ArrowRight className="h-6 w-6" />
+            {t("kids.story.next", "Next")} <ArrowRight className="h-6 w-6" />
           </button>
         )}
       </div>

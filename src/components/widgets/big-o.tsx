@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { motion } from "framer-motion";
 import { fmt, Readout, Segmented, Slider, WidgetTitle } from "./_shared";
+import { useT } from "@/i18n";
 
 const CURVES = [
   { id: "1", label: "O(1)", f: () => 1, color: "rgb(var(--good))" },
@@ -18,7 +19,7 @@ const H = 260;
 const PAD = { l: 44, r: 12, t: 12, b: 28 };
 const NMAX = 64;
 
-function human(ops: number) {
+function human(ops: number, years: (n: string) => string) {
   // time if one operation takes one microsecond
   const s = ops / 1e6;
   if (s < 1e-3) return `${fmt(s * 1e6, 0)} µs`;
@@ -27,7 +28,7 @@ function human(ops: number) {
   if (s < 3600) return `${fmt(s / 60, 1)} min`;
   if (s < 86400 * 365) return `${fmt(s / 3600, 1)} h`;
   const y = s / (86400 * 365);
-  return y > 1e6 ? `${y.toExponential(1)} years` : `${fmt(y, 0)} years`;
+  return years(y > 1e6 ? y.toExponential(1) : fmt(y, 0));
 }
 
 function opsText(v: number) {
@@ -35,6 +36,8 @@ function opsText(v: number) {
 }
 
 export default function BigO() {
+  const t = useT();
+  const years = (v: string) => t("widget.bigO.years", "{n} years", { n: v });
   const [n, setN] = useState(16);
   const [scale, setScale] = useState<"linear" | "log">("linear");
   const [hidden, setHidden] = useState<Set<string>>(new Set());
@@ -78,16 +81,16 @@ export default function BigO() {
   return (
     <div>
       <WidgetTitle
-        title="Big-O growth rates"
-        hint="How does the work grow as the input size n gets bigger?"
+        title={t("widget.bigO.title", "Big-O growth rates")}
+        hint={t("widget.bigO.hint", "How does the work grow as the input size n gets bigger?")}
         right={
           <Segmented
-            label="Y axis scale"
+            label={t("widget.bigO.scale", "Y axis scale")}
             value={scale}
             onChange={setScale}
             options={[
-              { value: "linear", label: "Linear" },
-              { value: "log", label: "Log" },
+              { value: "linear", label: t("widget.bigO.linear", "Linear") },
+              { value: "log", label: t("widget.bigO.log", "Log") },
             ]}
           />
         }
@@ -96,7 +99,7 @@ export default function BigO() {
       <div className="grid gap-5 lg:grid-cols-[1.3fr_1fr]">
         <div>
           <div className="overflow-hidden rounded-3xl border border-line bg-surface">
-            <svg viewBox={`0 0 ${W} ${H}`} className="w-full" role="img" aria-label="Growth curves">
+            <svg viewBox={`0 0 ${W} ${H}`} className="w-full" role="img" aria-label={t("widget.bigO.curves", "Growth curves")}>
               <defs>
                 <clipPath id="bigo-clip">
                   <rect x={PAD.l} y={PAD.t} width={W - PAD.l - PAD.r} height={H - PAD.t - PAD.b} />
@@ -130,7 +133,7 @@ export default function BigO() {
             </svg>
           </div>
           <div className="mt-3">
-            <Slider label="Input size n" value={n} min={1} max={NMAX} onChange={setN} />
+            <Slider label={t("widget.bigO.inputSize", "Input size n")} value={n} min={1} max={NMAX} onChange={setN} />
           </div>
         </div>
 
@@ -152,16 +155,16 @@ export default function BigO() {
                     <span className="h-2.5 w-2.5 rounded-full" style={{ background: c.color }} />
                     {c.label}
                   </span>
-                  <span className="font-mono text-xs text-ink">{opsText(v)} ops</span>
+                  <span className="font-mono text-xs text-ink">{t("widget.bigO.ops", "{n} ops", { n: opsText(v) })}</span>
                 </div>
                 <div className="mt-1 h-1.5 overflow-hidden rounded-full bg-surface">
                   <motion.div className="h-full rounded-full" style={{ background: c.color }} animate={{ width: `${Math.max(2, w * 100)}%` }} />
                 </div>
-                <div className="mt-0.5 text-right text-[10px] text-muted">≈ {human(v)} at 1 µs/op</div>
+                <div className="mt-0.5 text-right text-[10px] text-muted">{t("widget.bigO.time", "≈ {time} at 1 µs/op", { time: human(v, years) })}</div>
               </button>
             );
           })}
-          <Readout label="2ⁿ ÷ n² at this n" value={opsText(Math.pow(2, n) / (n * n))} unit="×" tone="bad" />
+          <Readout label={t("widget.bigO.ratio", "2ⁿ ÷ n² at this n")} value={opsText(Math.pow(2, n) / (n * n))} unit="×" tone="bad" />
         </div>
       </div>
     </div>

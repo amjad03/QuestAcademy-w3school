@@ -13,10 +13,12 @@ import { sfx } from "@/lib/sound";
 import { ConsoleView, Preview, SqlTable } from "./Output";
 import { useRunner } from "./useRunner";
 import { LANG_LABEL } from "./TryIt";
+import { useT } from "@/i18n";
 
 const CodeEditor = dynamic(() => import("./CodeEditor"), { ssr: false, loading: () => <div className="h-[260px] animate-pulse bg-[#1a1b26]" /> });
 
 export function Challenge({ challenge, lessonId }: { challenge: CodeChallenge; lessonId: string }) {
+  const t = useT();
   const key = `qa-challenge:${lessonId}`;
   const [code, setCode] = useState(challenge.starter);
   const [hints, setHints] = useState(0);
@@ -72,7 +74,7 @@ export function Challenge({ challenge, lessonId }: { challenge: CodeChallenge; l
               <span className="chip !text-warn-shade">+50 XP</span>
               {passed && (
                 <span className="chip !bg-good-soft !text-good-shade">
-                  <Trophy className="h-3 w-3" /> Solved
+                  <Trophy className="h-3 w-3" /> {t("code.challenge.solved", "Solved")}
                 </span>
               )}
             </div>
@@ -80,15 +82,15 @@ export function Challenge({ challenge, lessonId }: { challenge: CodeChallenge; l
           </div>
         </div>
         <div className="border-t-2 border-line bg-surface-2 px-6 py-4">
-          <div className="eyebrow">Tests to pass</div>
+          <div className="eyebrow">{t("code.challenge.testsToPass", "Tests to pass")}</div>
           <ul className="mt-2 grid gap-1.5 sm:grid-cols-2">
-            {challenge.tests.map((t, i) => {
+            {challenge.tests.map((test, i) => {
               const res = r.tests?.[i];
               return (
                 <li key={i} className="flex items-start gap-2 text-sm font-semibold">
                   {res ? res.pass ? <CheckCircle2 className="mt-0.5 h-4 w-4 shrink-0 text-good" /> : <XCircle className="mt-0.5 h-4 w-4 shrink-0 text-bad" /> : <span className="mt-1.5 h-2 w-2 shrink-0 rounded-full bg-line" />}
                   <span className={clsx(res && !res.pass && "text-bad")}>
-                    <MdInline text={t.label} />
+                    <MdInline text={test.label} />
                     {res?.error && <span className="block font-mono text-[11px] text-muted">{res.error}</span>}
                   </span>
                 </li>
@@ -103,10 +105,10 @@ export function Challenge({ challenge, lessonId }: { challenge: CodeChallenge; l
           <span className="font-mono text-xs font-semibold text-muted">solution.{challenge.lang === "javascript" ? "js" : challenge.lang === "python" ? "py" : challenge.lang}</span>
           <div className="ml-auto flex items-center gap-1">
             <button onClick={() => setCode(challenge.starter)} className="btn-flat !px-2.5 !py-1.5 text-xs !text-muted">
-              <RotateCcw className="h-3.5 w-3.5" /> Reset
+              <RotateCcw className="h-3.5 w-3.5" /> {t("code.reset", "Reset")}
             </button>
             <button onClick={runTests} className="btn-good !rounded-xl !px-4 !py-1.5 text-xs">
-              {r.running ? <Loader2 className="h-3.5 w-3.5 animate-spin" /> : <Play className="h-3.5 w-3.5 fill-white" />} Run tests
+              {r.running ? <Loader2 className="h-3.5 w-3.5 animate-spin" /> : <Play className="h-3.5 w-3.5 fill-white" />} {t("code.challenge.runTests", "Run tests")}
             </button>
           </div>
         </div>
@@ -122,7 +124,7 @@ export function Challenge({ challenge, lessonId }: { challenge: CodeChallenge; l
             {challenge.lang === "sql" && r.sql && <SqlTable {...r.sql} />}
             {(!visual || r.logs.length > 0) && (
               <div className="max-h-[220px]">
-                <ConsoleView lines={r.logs} empty={r.running ? "Running tests…" : "Press “Run tests” to check your solution."} />
+                <ConsoleView lines={r.logs} empty={r.running ? t("code.challenge.running", "Running tests…") : t("code.challenge.consoleEmpty", "Press “Run tests” to check your solution.")} />
               </div>
             )}
           </div>
@@ -139,8 +141,8 @@ export function Challenge({ challenge, lessonId }: { challenge: CodeChallenge; l
             {allPass ? <CheckCircle2 className="h-7 w-7" strokeWidth={2.6} /> : <XCircle className="h-7 w-7" strokeWidth={2.6} />}
           </span>
           <div>
-            <div className={clsx("text-lg font-black", allPass ? "text-good-shade" : "text-bad-shade")}>{allPass ? "All tests passed — brilliant!" : `${r.tests.filter((t) => t.pass).length} / ${r.tests.length} tests passing`}</div>
-            <div className="text-sm font-semibold text-muted">{allPass ? "Challenge complete. Try refactoring it to be even cleaner." : "Read the failing test, tweak, and run again. Hints below if you're stuck."}</div>
+            <div className={clsx("text-lg font-black", allPass ? "text-good-shade" : "text-bad-shade")}>{allPass ? t("code.challenge.allPassed", "All tests passed — brilliant!") : t("code.challenge.passing", "{n} / {total} tests passing", { n: r.tests.filter((x) => x.pass).length, total: r.tests.length })}</div>
+            <div className="text-sm font-semibold text-muted">{allPass ? t("code.challenge.completeBody", "Challenge complete. Try refactoring it to be even cleaner.") : t("code.challenge.failBody", "Read the failing test, tweak, and run again. Hints below if you're stuck.")}</div>
           </div>
         </motion.div>
       )}
@@ -148,12 +150,12 @@ export function Challenge({ challenge, lessonId }: { challenge: CodeChallenge; l
       <div className="flex flex-wrap gap-2">
         {challenge.hints?.length ? (
           <button className="btn-ghost" onClick={() => setHints((h) => Math.min(challenge.hints!.length, h + 1))} disabled={hints >= challenge.hints.length}>
-            <Lightbulb className="h-4 w-4 text-warn-shade" /> {hints >= challenge.hints.length ? "No more hints" : `Hint ${hints + 1} of ${challenge.hints.length}`}
+            <Lightbulb className="h-4 w-4 text-warn-shade" /> {hints >= challenge.hints.length ? t("code.challenge.noMoreHints", "No more hints") : t("code.challenge.hintOf", "Hint {n} of {total}", { n: hints + 1, total: challenge.hints.length })}
           </button>
         ) : null}
         {(attempts >= 2 || passed) && (
           <button className="btn-ghost" onClick={() => setShowSolution((s) => !s)}>
-            <Eye className="h-4 w-4" /> {showSolution ? "Hide solution" : "Reveal solution"}
+            <Eye className="h-4 w-4" /> {showSolution ? t("code.challenge.hideSolution", "Hide solution") : t("code.challenge.revealSolution", "Reveal solution")}
           </button>
         )}
       </div>
@@ -166,9 +168,9 @@ export function Challenge({ challenge, lessonId }: { challenge: CodeChallenge; l
       {showSolution && (
         <div className="overflow-hidden rounded-2xl border-2 border-line">
           <div className="flex items-center justify-between bg-surface px-3 py-2">
-            <span className="eyebrow">Reference solution</span>
+            <span className="eyebrow">{t("code.challenge.referenceSolution", "Reference solution")}</span>
             <button className="btn-flat !px-2.5 !py-1.5 text-xs" onClick={() => setCode(challenge.solution)}>
-              Load into editor
+              {t("code.challenge.loadIntoEditor", "Load into editor")}
             </button>
           </div>
           <CodeEditor value={challenge.solution} lang={challenge.lang} readOnly />

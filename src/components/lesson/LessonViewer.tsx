@@ -30,6 +30,7 @@ import dynamic from "next/dynamic";
 import { AskQuesty } from "@/components/tutor/AskQuesty";
 import { localize, useContentDict } from "@/i18n/content";
 import { TranslationNote } from "@/components/i18n/TranslationNote";
+import { useT } from "@/i18n";
 
 const LessonExplainers = dynamic(() => import("@/explainers/LessonExplainers"), { ssr: false });
 
@@ -46,7 +47,16 @@ export interface LessonViewerPayload {
   next: { href: string; title: string } | null;
 }
 
-const TAB_LABEL: Record<ItemKind, string> = { video: "Video", article: "Lesson", practice: "Practice", cards: "Flashcards", challenge: "Challenge" };
+function useTabLabels(): Record<ItemKind, string> {
+  const t = useT();
+  return {
+    video: t("lesson.tab.video", "Video"),
+    article: t("lesson.tab.article", "Lesson"),
+    practice: t("lesson.tab.practice", "Practice"),
+    cards: t("lesson.tab.cards", "Flashcards"),
+    challenge: t("lesson.tab.challenge", "Challenge"),
+  };
+}
 
 export function LessonViewer(raw: LessonViewerPayload) {
   // Lesson text in the learner's language when a translation exists.
@@ -61,6 +71,8 @@ export function LessonViewer(raw: LessonViewerPayload) {
   const completeLesson = useLearner((st) => st.completeLesson);
   const setProfile = useLearner((st) => st.setProfile);
   const exp = useExperience();
+  const t = useT();
+  const TAB_LABEL = useTabLabels();
 
   const viewable = p.items.filter((i) => i.kind !== "practice");
   const requested = params.get("item") as ItemKind | null;
@@ -72,7 +84,7 @@ export function LessonViewer(raw: LessonViewerPayload) {
     if (!useLearner.getState().profile.course) setProfile({ course: p.course.slug });
     if (currentMode().young) {
       const sticker = awardExploreSticker("first-try", p.id, { silent: true });
-      if (sticker) useUi.getState().toast({ text: `New sticker: ${sticker.name}!` });
+      if (sticker) useUi.getState().toast({ text: t("lesson.toast.newSticker", "New sticker: {name}!", { name: sticker.name }) });
     }
   }, [p.id]); // eslint-disable-line react-hooks/exhaustive-deps
 
@@ -82,10 +94,10 @@ export function LessonViewer(raw: LessonViewerPayload) {
   const upNext = useMemo(() => {
     const i = p.items.findIndex((x) => x.id === item.id);
     const after = p.items[i + 1];
-    if (after) return { href: after.href, label: after.kind === "practice" ? "Practice" : TAB_LABEL[after.kind], title: after.kind === "practice" ? `Practice · ${p.lesson.quiz?.length ?? 0}+ questions` : after.title };
-    if (p.next) return { href: p.next.href, label: "Next lesson", title: p.next.title };
-    return { href: p.unit.test.href, label: "Unit test", title: p.unit.title };
-  }, [p, item]);
+    if (after) return { href: after.href, label: after.kind === "practice" ? t("lesson.tab.practice", "Practice") : TAB_LABEL[after.kind], title: after.kind === "practice" ? t("lesson.upNext.practiceTitle", "Practice · {n}+ questions", { n: p.lesson.quiz?.length ?? 0 }) : after.title };
+    if (p.next) return { href: p.next.href, label: t("lesson.upNext.nextLesson", "Next lesson"), title: p.next.title };
+    return { href: p.unit.test.href, label: t("lesson.upNext.unitTest", "Unit test"), title: p.unit.title };
+  }, [p, item, t]); // eslint-disable-line react-hooks/exhaustive-deps
 
   const finishArticle = () => {
     completeLesson({ id: p.id, subject: p.course.slug, world: p.world, xp: p.lesson.xp, flashcards: p.lesson.flashcards?.length ?? 0 });
@@ -113,7 +125,7 @@ export function LessonViewer(raw: LessonViewerPayload) {
           <h2 className="mt-4 text-xl font-black">{p.video.title || p.lesson.title}</h2>
           {p.channel && (
             <a href={p.channel.url} target="_blank" rel="noreferrer" className="mt-1 inline-block text-sm font-bold text-muted hover:text-accent">
-              {p.channel.title} on YouTube
+              {t("lesson.video.channelOnYoutube", "{channel} on YouTube", { channel: p.channel.title })}
             </a>
           )}
         </div>
@@ -154,6 +166,7 @@ export function LessonViewer(raw: LessonViewerPayload) {
 }
 
 function Article({ lesson, id, world, done, onComplete, endCard }: { lesson: Lesson; id: string; world: WorldId; done: boolean; onComplete: () => void; endCard: boolean }) {
+  const t = useT();
   const narration = useNarration(lesson.blocks);
   const rewards = useMode().rewards;
   const playful = rewards === "celebrate" || rewards === "playful";
@@ -161,7 +174,7 @@ function Article({ lesson, id, world, done, onComplete, endCard }: { lesson: Les
     <div>
       {narration.supported && (
         <button onClick={() => (narration.playing ? narration.stop() : narration.play())} className="btn-ghost mb-6 !py-2 text-xs">
-          {narration.playing ? <Pause className="h-4 w-4" /> : <Headphones className="h-4 w-4" />} {narration.playing ? "Stop reading" : "Listen to this lesson"}
+          {narration.playing ? <Pause className="h-4 w-4" /> : <Headphones className="h-4 w-4" />} {narration.playing ? t("lesson.narration.stop", "Stop reading") : t("lesson.narration.listen", "Listen to this lesson")}
         </button>
       )}
       <div className="space-y-7">
@@ -175,12 +188,12 @@ function Article({ lesson, id, world, done, onComplete, endCard }: { lesson: Les
         <div className="card mt-10 flex flex-col items-center gap-4 p-8 text-center sm:flex-row sm:text-left">
           {playful && <Mascot pose={done ? "cheer" : "read"} size={90} animate={false} />}
           <div className="flex-1">
-            <h3 className="text-xl font-black">{done ? "Lesson complete" : "Finished reading?"}</h3>
-            <p className="mt-1 font-semibold text-muted">{done ? "Now lock it in with practice — that’s what builds mastery." : `Mark it complete to earn ${lesson.xp} XP and unlock practice.`}</p>
+            <h3 className="text-xl font-black">{done ? t("lesson.end.complete", "Lesson complete") : t("lesson.end.finished", "Finished reading?")}</h3>
+            <p className="mt-1 font-semibold text-muted">{done ? t("lesson.end.practiceNext", "Now lock it in with practice — that’s what builds mastery.") : t("lesson.end.markToEarn", "Mark it complete to earn {xp} XP and unlock practice.", { xp: lesson.xp })}</p>
           </div>
           {!done && (
             <button onClick={onComplete} className="btn-good">
-              Mark complete
+              {t("lesson.markComplete", "Mark complete")}
             </button>
           )}
         </div>
@@ -190,13 +203,15 @@ function Article({ lesson, id, world, done, onComplete, endCard }: { lesson: Les
 }
 
 function UnitNav(p: LessonViewerPayload & { currentItem: string; onNavigate: () => void }) {
+  const t = useT();
+  const TAB_LABEL = useTabLabels();
   const hydrated = useHydrated();
   const s = useLearner();
   const st = hydrated ? s : EMPTY_PROGRESS;
   return (
-    <nav aria-label="Unit lessons">
+    <nav aria-label={t("lesson.unitNav.label", "Unit lessons")}>
       <Link href={p.unit.href} className="block" onClick={p.onNavigate}>
-        <p className="eyebrow">Unit {p.unit.index + 1}</p>
+        <p className="eyebrow">{t("lesson.unitNav.unit", "Unit {n}", { n: p.unit.index + 1 })}</p>
         <p className="mt-1 text-lg font-black leading-snug hover:text-accent">{p.unit.title}</p>
       </Link>
       <ol className="mt-5 space-y-1">
@@ -218,7 +233,7 @@ function UnitNav(p: LessonViewerPayload & { currentItem: string; onNavigate: () 
                       <li key={it.id}>
                         <Link href={it.href} onClick={p.onNavigate} className={clsx("flex items-center gap-2.5 rounded-lg px-2 py-1.5 text-sm font-bold", it.id === p.currentItem ? "text-accent" : "text-muted hover:text-ink")}>
                           <I className="h-4 w-4 shrink-0" strokeWidth={2.5} />
-                          <span className="flex-1 truncate">{it.kind === "practice" ? "Practice" : TAB_LABEL[it.kind]}</span>
+                          <span className="flex-1 truncate">{it.kind === "practice" ? t("lesson.tab.practice", "Practice") : TAB_LABEL[it.kind]}</span>
                           {done && <Check className="h-3.5 w-3.5 text-good" strokeWidth={3.5} />}
                         </Link>
                       </li>
@@ -233,11 +248,11 @@ function UnitNav(p: LessonViewerPayload & { currentItem: string; onNavigate: () 
       <div className="mt-4 space-y-1 border-t-2 border-line pt-4">
         {p.unit.quiz && (
           <Link href={p.unit.quiz.href} className="flex items-center gap-3 rounded-xl px-2.5 py-2 text-[15px] font-bold hover:bg-surface-2">
-            <BookOpenCheck className="h-4 w-4 text-accent-2" /> Quiz 1
+            <BookOpenCheck className="h-4 w-4 text-accent-2" /> {t("lesson.unitNav.quiz", "Quiz {n}", { n: 1 })}
           </Link>
         )}
         <Link href={p.unit.test.href} className="flex items-center gap-3 rounded-xl px-2.5 py-2 text-[15px] font-bold hover:bg-surface-2">
-          <Trophy className="h-4 w-4 text-warn" /> Unit test
+          <Trophy className="h-4 w-4 text-warn" /> {t("lesson.upNext.unitTest", "Unit test")}
         </Link>
       </div>
     </nav>

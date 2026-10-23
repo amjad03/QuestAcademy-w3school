@@ -13,6 +13,7 @@ import { ProgressBar } from "@/components/ui/Progress";
 import { CLASS_GROUPS, GOALS, classById, classForStage, type ClassGroupId, type ClassIcon, type Goal } from "./classes";
 import { LibrarySearch, type LibrarySearchItem } from "./LibrarySearch";
 import { useLibrary } from "./libraryStore";
+import { useT } from "@/i18n";
 
 export const CLASS_ICON: Record<ClassIcon, LucideIcon> = {
   baby: Baby,
@@ -67,6 +68,7 @@ function useCourseProgress() {
 }
 
 export function LibraryHome({ data }: { data: LibraryHomeData }) {
+  const t = useT();
   const hydrated = useHydrated();
   const stage = useLearner((s) => s.profile.stage);
   const mine = hydrated ? classForStage(stage) : null;
@@ -77,9 +79,9 @@ export function LibraryHome({ data }: { data: LibraryHomeData }) {
   return (
     <PageColumns rail={<LibraryRail data={data} mineId={mine?.id ?? null} />}>
       <header>
-        <p className="eyebrow">Library</p>
-        <h1 className="mt-1 text-2xl font-black sm:text-3xl">Browse everything</h1>
-        <p className="mt-1 max-w-2xl font-semibold text-muted">One place for every class, board and goal — from pre-primary to university and beyond. Pick the way in that suits you.</p>
+        <p className="eyebrow">{t("library.eyebrow", "Library")}</p>
+        <h1 className="mt-1 text-2xl font-black sm:text-3xl">{t("library.title", "Browse everything")}</h1>
+        <p className="mt-1 max-w-2xl font-semibold text-muted">{t("library.subtitle", "One place for every class, board and goal — from pre-primary to university and beyond. Pick the way in that suits you.")}</p>
       </header>
 
       <div className="mt-5">
@@ -90,9 +92,9 @@ export function LibraryHome({ data }: { data: LibraryHomeData }) {
       <section className="mt-8" aria-labelledby="by-class">
         <div className="mb-3 flex items-baseline justify-between">
           <h2 id="by-class" className="text-lg font-black">
-            By class
+            {t("library.byClass", "By class")}
           </h2>
-          <span className="text-sm font-bold text-muted">{data.stats.subjects} subjects · {data.stats.lessons} lessons</span>
+          <span className="text-sm font-bold text-muted">{t("library.statsLine", "{subjects} subjects · {lessons} lessons", { subjects: data.stats.subjects, lessons: data.stats.lessons })}</span>
         </div>
         <div className="grid gap-3 sm:grid-cols-2">
           {data.classes.map((c) => {
@@ -108,12 +110,12 @@ export function LibraryHome({ data }: { data: LibraryHomeData }) {
                 <span className="min-w-0 flex-1">
                   <span className="flex flex-wrap items-center gap-2">
                     <span className="font-black">{g.label}</span>
-                    {isMine && <span className="chip !border-accent !py-0.5 text-xs text-accent">Your class</span>}
+                    {isMine && <span className="chip !border-accent !py-0.5 text-xs text-accent">{t("library.yourClass", "Your class")}</span>}
                   </span>
                   <span className="block truncate text-xs font-bold text-muted">{g.hint}</span>
                   <span className="mt-1 block text-sm font-semibold text-muted">
-                    {c.subjects} subject{c.subjects === 1 ? "" : "s"} · {c.lessons} lessons
-                    {d > 0 && <span className="text-good"> · {d} done</span>}
+                    {c.subjects === 1 ? t("library.subjects.one", "{n} subject", { n: c.subjects }) : t("library.subjects.other", "{n} subjects", { n: c.subjects })} · {t("library.lessonsCount", "{n} lessons", { n: c.lessons })}
+                    {d > 0 && <span className="text-good"> · {t("library.doneCount", "{n} done", { n: d })}</span>}
                   </span>
                 </span>
                 <ArrowRight className="h-4 w-4 shrink-0 text-muted" aria-hidden />
@@ -127,9 +129,9 @@ export function LibraryHome({ data }: { data: LibraryHomeData }) {
       <section className="mt-8" aria-labelledby="by-board">
         <div className="mb-3 flex items-baseline justify-between">
           <h2 id="by-board" className="text-lg font-black">
-            By board or exam
+            {t("library.byBoard", "By board or exam")}
           </h2>
-          <span className="text-sm font-bold text-muted">Chapter-by-chapter syllabi</span>
+          <span className="text-sm font-bold text-muted">{t("library.byBoardHint", "Chapter-by-chapter syllabi")}</span>
         </div>
         <div className="grid gap-3 md:grid-cols-2">
           {data.boards.map((b) => (
@@ -144,7 +146,7 @@ export function LibraryHome({ data }: { data: LibraryHomeData }) {
                       <Link href={href} className="group flex items-center gap-3 py-2 text-sm">
                         <span className="min-w-0 flex-1 truncate font-extrabold group-hover:text-accent">{g.name}</span>
                         <span className="shrink-0 text-xs font-semibold text-muted">
-                          {g.chapters} chapters · {g.withLessons} with lessons
+                          {t("library.gradeLine", "{chapters} chapters · {withLessons} with lessons", { chapters: g.chapters, withLessons: g.withLessons })}
                         </span>
                         <ArrowRight className="h-3.5 w-3.5 shrink-0 text-muted" aria-hidden />
                       </Link>
@@ -161,7 +163,7 @@ export function LibraryHome({ data }: { data: LibraryHomeData }) {
       {/* By goal */}
       <section className="mt-8" aria-labelledby="by-goal">
         <h2 id="by-goal" className="mb-3 text-lg font-black">
-          By goal
+          {t("library.byGoal", "By goal")}
         </h2>
         <div className="grid gap-3 sm:grid-cols-2">
           {GOALS.map((goal) => {
@@ -187,6 +189,7 @@ export function LibraryHome({ data }: { data: LibraryHomeData }) {
 }
 
 function LibraryRail({ data, mineId }: { data: LibraryHomeData; mineId: ClassGroupId | null }) {
+  const t = useT();
   const hydrated = useHydrated();
   const recent = useLibrary((s) => s.recent);
   const progress = useCourseProgress();
@@ -196,21 +199,21 @@ function LibraryRail({ data, mineId }: { data: LibraryHomeData; mineId: ClassGro
 
   return (
     <>
-      <RailCard title="Your class" action={mine ? { href: `/library/class/${mine.id}`, label: "Open" } : { href: "/profile", label: "Set up" }}>
+      <RailCard title={t("library.yourClass", "Your class")} action={mine ? { href: `/library/class/${mine.id}`, label: t("library.rail.open", "Open") } : { href: "/profile", label: t("library.rail.setUp", "Set up") }}>
         {mine ? (
           <>
             <p className="font-extrabold">{classById[mine.id].label}</p>
             <p className="text-sm font-semibold text-muted">
-              {mineDone} of {mine.lessons} lessons done
+              {t("library.rail.lessonsDone", "{done} of {total} lessons done", { done: mineDone, total: mine.lessons })}
             </p>
-            <ProgressBar value={mine.lessons ? mineDone / mine.lessons : 0} height={10} className="mt-2" color="rgb(var(--good))" label="Class progress" />
+            <ProgressBar value={mine.lessons ? mineDone / mine.lessons : 0} height={10} className="mt-2" color="rgb(var(--good))" label={t("library.rail.classProgress", "Class progress")} />
           </>
         ) : (
-          <p className="text-sm font-semibold text-muted">Tell us your class or stage and the library will put the right subjects first.</p>
+          <p className="text-sm font-semibold text-muted">{t("library.rail.setUpHint", "Tell us your class or stage and the library will put the right subjects first.")}</p>
         )}
       </RailCard>
       {recentShown.length > 0 && (
-        <RailCard title="Recently viewed">
+        <RailCard title={t("library.rail.recent", "Recently viewed")}>
           <ul className="space-y-1.5">
             {recentShown.map((id) => (
               <li key={id}>
@@ -223,13 +226,13 @@ function LibraryRail({ data, mineId }: { data: LibraryHomeData; mineId: ClassGro
           </ul>
         </RailCard>
       )}
-      <RailCard title="In the library">
+      <RailCard title={t("library.rail.inLibrary", "In the library")}>
         <dl className="space-y-2 text-sm">
           {[
-            ["Subjects", data.stats.subjects],
-            ["Lessons", data.stats.lessons],
-            ["Practice questions", data.stats.questions],
-            ["Boards and exams", data.boards.length],
+            [t("library.rail.subjects", "Subjects"), data.stats.subjects],
+            [t("library.rail.lessons", "Lessons"), data.stats.lessons],
+            [t("library.rail.questions", "Practice questions"), data.stats.questions],
+            [t("library.rail.boards", "Boards and exams"), data.boards.length],
           ].map(([k, v]) => (
             <div key={k} className="flex items-center justify-between gap-3">
               <dt className="font-semibold text-muted">{k}</dt>
@@ -237,7 +240,7 @@ function LibraryRail({ data, mineId }: { data: LibraryHomeData; mineId: ClassGro
             </div>
           ))}
         </dl>
-        <p className="mt-3 text-xs font-semibold text-muted">{CLASS_GROUPS.length} class groups from pre-primary to professional.</p>
+        <p className="mt-3 text-xs font-semibold text-muted">{t("library.rail.classGroups", "{n} class groups from pre-primary to professional.", { n: CLASS_GROUPS.length })}</p>
       </RailCard>
       <RailFooter />
     </>

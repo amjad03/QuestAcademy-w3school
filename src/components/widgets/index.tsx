@@ -3,12 +3,14 @@
 import dynamic from "next/dynamic";
 import type { ComponentType } from "react";
 import type { WidgetId } from "@/content/types";
+import { useT } from "@/i18n";
 
 type WidgetComponent = ComponentType<Record<string, unknown>>;
 
 function WidgetSkeleton() {
+  const t = useT();
   return (
-    <div className="animate-pulse space-y-3" aria-busy="true" aria-label="Loading interactive widget">
+    <div className="animate-pulse space-y-3" aria-busy="true" aria-label={t("widget.loading", "Loading interactive widget")}>
       <div className="h-5 w-1/3 rounded-full bg-surface-2" />
       <div className="h-48 rounded-3xl bg-surface-2" />
       <div className="grid grid-cols-3 gap-2">
@@ -45,9 +47,10 @@ const WIDGETS: Record<WidgetId, WidgetComponent> = {
 };
 
 export function WidgetRenderer({ widget, props }: { widget: WidgetId; props?: Record<string, unknown> }) {
+  const t = useT();
   const Widget = WIDGETS[widget];
   if (!Widget) {
-    return <div className="rounded-2xl border border-dashed border-line p-4 text-sm text-muted">Unknown widget “{String(widget)}”.</div>;
+    return <div className="rounded-2xl border border-dashed border-line p-4 text-sm text-muted">{t("widget.unknown", "Unknown widget “{id}”.", { id: String(widget) })}</div>;
   }
   return <Widget {...(props ?? {})} />;
 }

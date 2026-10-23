@@ -2,6 +2,7 @@
 
 import { useEffect, useRef, useState } from "react";
 import { Check } from "lucide-react";
+import { useT } from "@/i18n";
 
 interface YTPlayer {
   destroy: () => void;
@@ -40,6 +41,7 @@ function loadApi(): Promise<YTNamespace> {
  * learner passes 90% — so the lesson item ticks off automatically.
  */
 export function VideoPlayer({ id, title, onWatched, watched }: { id: string; title: string; onWatched: () => void; watched: boolean }) {
+  const t = useT();
   const host = useRef<HTMLDivElement>(null);
   const [failed, setFailed] = useState(false);
   const watchedRef = useRef(watched);
@@ -101,11 +103,11 @@ export function VideoPlayer({ id, title, onWatched, watched }: { id: string; tit
       <div className="mt-3 flex items-center justify-end">
         {watched ? (
           <span className="flex items-center gap-1.5 text-sm font-extrabold uppercase tracking-wide text-good">
-            <Check className="h-4 w-4" strokeWidth={3.5} /> Watched
+            <Check className="h-4 w-4" strokeWidth={3.5} /> {t("lesson.video.watched", "Watched")}
           </span>
         ) : (
           <button onClick={onWatched} className="btn-flat">
-            Mark as watched
+            {t("lesson.video.markWatched", "Mark as watched")}
           </button>
         )}
       </div>

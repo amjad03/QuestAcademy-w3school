@@ -11,6 +11,7 @@ import { isWeb } from "@/lib/runners";
 import { ConsoleView, Preview, SqlTable } from "./Output";
 import { useRunner } from "./useRunner";
 import { copyText } from "@/lib/clipboard";
+import { useT } from "@/i18n";
 
 const CodeEditor = dynamic(() => import("./CodeEditor"), {
   ssr: false,
@@ -30,6 +31,7 @@ export function openInPlayground(router: ReturnType<typeof useRouter>, lang: Cod
 
 /** "Try it yourself" — an editable, runnable code block. */
 export function TryIt({ lang, code: initial, caption }: { lang: CodeLang; code: string; caption?: string }) {
+  const t = useT();
   const router = useRouter();
   const [code, setCode] = useState(initial);
   const [ran, setRan] = useState(false);
@@ -48,15 +50,15 @@ export function TryIt({ lang, code: initial, caption }: { lang: CodeLang; code: 
   return (
     <figure className="overflow-hidden rounded-2xl border-2 border-line bg-[#1a1b26]">
       <div className="flex items-center gap-2 border-b-2 border-line bg-surface px-3 py-2">
-        <span className="text-xs font-extrabold uppercase tracking-[0.12em] text-muted">Try it</span>
+        <span className="text-xs font-extrabold uppercase tracking-[0.12em] text-muted">{t("code.tryIt.title", "Try it")}</span>
         <span className="chip">{LANG_LABEL[lang]}</span>
         {caption && <span className="hidden truncate text-xs font-semibold text-muted sm:inline">{caption}</span>}
         <div className="ml-auto flex items-center gap-1">
-          <IconBtn label="Reset" onClick={() => setCode(initial)}>
+          <IconBtn label={t("code.reset", "Reset")} onClick={() => setCode(initial)}>
             <RotateCcw className="h-3.5 w-3.5" />
           </IconBtn>
           <IconBtn
-            label="Copy"
+            label={t("code.copy", "Copy")}
             onClick={() => {
               void copyText(code);
               setCopied(true);
@@ -65,12 +67,12 @@ export function TryIt({ lang, code: initial, caption }: { lang: CodeLang; code: 
           >
             {copied ? <Check className="h-3.5 w-3.5 text-green-400" /> : <Copy className="h-3.5 w-3.5" />}
           </IconBtn>
-          <IconBtn label="Open in playground" onClick={() => openInPlayground(router, lang, code)}>
+          <IconBtn label={t("code.tryIt.openPlayground", "Open in playground")} onClick={() => openInPlayground(router, lang, code)}>
             <ExternalLink className="h-3.5 w-3.5" />
           </IconBtn>
-          <button onClick={run} className="btn-good ml-1 !rounded-xl !px-3 !py-1.5 text-xs" title="Run (⌘/Ctrl + Enter)">
+          <button onClick={run} className="btn-good ml-1 !rounded-xl !px-3 !py-1.5 text-xs" title={t("code.runShortcut", "Run (⌘/Ctrl + Enter)")}>
             {r.running ? <Loader2 className="h-3.5 w-3.5 animate-spin" /> : <Play className="h-3.5 w-3.5 fill-white" />}
-            Run
+            {t("code.run", "Run")}
           </button>
         </div>
       </div>
@@ -81,7 +83,7 @@ export function TryIt({ lang, code: initial, caption }: { lang: CodeLang; code: 
         {ran && (
           <div className={clsx("min-w-0 border-white/10", preview ? "border-t lg:border-l lg:border-t-0" : "border-t")}>
             <div className="flex items-center justify-between bg-[#13141c] px-3 py-1.5 text-[11px] font-semibold uppercase tracking-wider text-slate-400">
-              {preview ? "Result" : lang === "sql" ? "Result set" : "Output"}
+              {preview ? t("code.output.result", "Result") : lang === "sql" ? t("code.output.resultSet", "Result set") : t("code.output.output", "Output")}
               {r.status && <span className="normal-case tracking-normal text-amber-300">{r.status}</span>}
             </div>
             {isWeb(lang) && (
@@ -92,7 +94,7 @@ export function TryIt({ lang, code: initial, caption }: { lang: CodeLang; code: 
             {lang === "sql" && r.sql && <SqlTable {...r.sql} />}
             {lang === "javascript" || lang === "python" || r.logs.length || (lang === "sql" && r.running) ? (
               <div className="max-h-[240px]">
-                <ConsoleView lines={r.logs} empty={r.running ? "Running…" : "No output. Use print() / console.log() to show values."} />
+                <ConsoleView lines={r.logs} empty={r.running ? t("code.output.running", "Running…") : t("code.output.empty", "No output. Use print() / console.log() to show values.")} />
               </div>
             ) : null}
           </div>

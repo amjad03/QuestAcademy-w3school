@@ -4,6 +4,9 @@ import { useEffect, useRef, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import { Check, Minus, Plus, Target } from "lucide-react";
 import { svgPoint, WidgetTitle } from "./_shared";
+import { useT } from "@/i18n";
+
+type TFn = ReturnType<typeof useT>;
 
 /** Time is stored as minutes since 12:00 (0..719). */
 const DAY = 720;
@@ -15,21 +18,22 @@ function label(m: number) {
   return `${h}:${String(mm).padStart(2, "0")}`;
 }
 
-function words(m: number) {
+function words(m: number, t: TFn) {
   const h = Math.floor(m / 60) || 12;
   const mm = m % 60;
   const next = (h % 12) + 1;
-  if (mm === 0) return `${h} o'clock`;
-  if (mm === 15) return `quarter past ${h}`;
-  if (mm === 30) return `half past ${h}`;
-  if (mm === 45) return `quarter to ${next}`;
-  if (mm < 30) return `${mm} minute${mm === 1 ? "" : "s"} past ${h}`;
-  return `${60 - mm} minute${60 - mm === 1 ? "" : "s"} to ${next}`;
+  if (mm === 0) return t("widget.clock.oclock", "{h} o'clock", { h });
+  if (mm === 15) return t("widget.clock.quarterPast", "quarter past {h}", { h });
+  if (mm === 30) return t("widget.clock.halfPast", "half past {h}", { h });
+  if (mm === 45) return t("widget.clock.quarterTo", "quarter to {h}", { h: next });
+  if (mm < 30) return mm === 1 ? t("widget.clock.minutePast.one", "{n} minute past {h}", { n: mm, h }) : t("widget.clock.minutePast.other", "{n} minutes past {h}", { n: mm, h });
+  return 60 - mm === 1 ? t("widget.clock.minuteTo.one", "{n} minute to {h}", { n: 60 - mm, h: next }) : t("widget.clock.minuteTo.other", "{n} minutes to {h}", { n: 60 - mm, h: next });
 }
 
 const TARGETS = [210, 60, 270, 525, 15, 405, 345, 600, 495, 165, 690, 120];
 
 export default function Clock() {
+  const t = useT();
   const [time, setTime] = useState(180); // 3:00
   const [target, setTarget] = useState<number | null>(null);
   const [score, setScore] = useState(0);
@@ -43,9 +47,9 @@ export default function Clock() {
   }, [solved]);
 
   const startChallenge = () => {
-    let t = TARGETS[Math.floor(Math.random() * TARGETS.length)];
-    if (t === time) t = wrap(t + 75);
-    setTarget(t);
+    let next = TARGETS[Math.floor(Math.random() * TARGETS.length)];
+    if (next === time) next = wrap(next + 75);
+    setTarget(next);
   };
 
   const minuteAngle = (time % 60) * 6;
@@ -69,9 +73,9 @@ export default function Clock() {
     const a = angleFrom(e.clientX, e.clientY);
     if (dragging.current === "minute") {
       const m = Math.round(a / 6) % 60;
-      setTime((t) => {
-        const prev = t % 60;
-        let hourBase = t - prev;
+      setTime((cur) => {
+        const prev = cur % 60;
+        let hourBase = cur - prev;
         // crossing 12 forwards / backwards moves the hour
         if (prev > 45 && m < 15) hourBase += 60;
         else if (prev < 15 && m > 45) hourBase -= 60;
@@ -89,16 +93,16 @@ export default function Clock() {
     if (svgRef.current?.hasPointerCapture(e.pointerId)) svgRef.current.releasePointerCapture(e.pointerId);
   };
 
-  const step = (d: number) => setTime((t) => wrap(t + d));
+  const step = (d: number) => setTime((cur) => wrap(cur + d));
 
   return (
     <div>
       <WidgetTitle
-        title="Tell the time"
-        hint="Drag the hands or use the buttons."
+        title={t("widget.clock.title", "Tell the time")}
+        hint={t("widget.clock.hint", "Drag the hands or use the buttons.")}
         right={
           <button type="button" onClick={startChallenge} className="btn-pop !px-4 !py-2">
-            <Target size={16} /> Challenge
+            <Target size={16} /> {t("widget.clock.challenge", "Challenge")}
           </button>
         }
       />
@@ -113,7 +117,7 @@ export default function Clock() {
           onPointerCancel={onUp}
           style={{ touchAction: "none" }}
           role="img"
-          aria-label={`Clock showing ${label(time)}`}
+          aria-label={t("widget.clock.showing", "Clock showing {time}", { time: label(time) })}
         >
           <circle cx="100" cy="100" r="94" fill="rgb(var(--surface))" stroke="rgb(var(--accent))" strokeWidth="6" />
           <circle cx="100" cy="100" r="86" fill="rgb(var(--surface-2))" />
@@ -160,24 +164,24 @@ export default function Clock() {
         <div className="flex w-full max-w-xs flex-col items-center gap-4">
           <div className="w-full rounded-3xl bg-ink/90 px-6 py-4 text-center" aria-live="polite">
             <div className="font-mono text-5xl font-bold tracking-wider text-bg">{label(time)}</div>
-            <div className="mt-1 text-sm font-medium text-bg/70">{words(time)}</div>
+            <div className="mt-1 text-sm font-medium text-bg/70">{words(time, t)}</div>
           </div>
           <div className="grid w-full grid-cols-2 gap-2">
             <div className="flex items-center justify-between rounded-2xl border border-line bg-surface-2 p-1">
-              <button type="button" aria-label="Hour back" onClick={() => step(-60)} className="grid h-10 w-10 place-items-center rounded-xl hover:bg-surface active:scale-90">
+              <button type="button" aria-label={t("widget.clock.hourBack", "Hour back")} onClick={() => step(-60)} className="grid h-10 w-10 place-items-center rounded-xl hover:bg-surface active:scale-90">
                 <Minus size={16} />
               </button>
-              <span className="text-sm font-semibold text-muted">hour</span>
-              <button type="button" aria-label="Hour forward" onClick={() => step(60)} className="grid h-10 w-10 place-items-center rounded-xl hover:bg-surface active:scale-90">
+              <span className="text-sm font-semibold text-muted">{t("widget.clock.hour", "hour")}</span>
+              <button type="button" aria-label={t("widget.clock.hourForward", "Hour forward")} onClick={() => step(60)} className="grid h-10 w-10 place-items-center rounded-xl hover:bg-surface active:scale-90">
                 <Plus size={16} />
               </button>
             </div>
             <div className="flex items-center justify-between rounded-2xl border border-line bg-surface-2 p-1">
-              <button type="button" aria-label="Five minutes back" onClick={() => step(-5)} className="grid h-10 w-10 place-items-center rounded-xl hover:bg-surface active:scale-90">
+              <button type="button" aria-label={t("widget.clock.fiveBack", "Five minutes back")} onClick={() => step(-5)} className="grid h-10 w-10 place-items-center rounded-xl hover:bg-surface active:scale-90">
                 <Minus size={16} />
               </button>
               <span className="text-sm font-semibold text-muted">5 min</span>
-              <button type="button" aria-label="Five minutes forward" onClick={() => step(5)} className="grid h-10 w-10 place-items-center rounded-xl hover:bg-surface active:scale-90">
+              <button type="button" aria-label={t("widget.clock.fiveForward", "Five minutes forward")} onClick={() => step(5)} className="grid h-10 w-10 place-items-center rounded-xl hover:bg-surface active:scale-90">
                 <Plus size={16} />
               </button>
             </div>
@@ -198,16 +202,16 @@ export default function Clock() {
                 {solved ? (
                   <span className="flex flex-col items-center gap-2">
                     <span className="flex items-center gap-1">
-                      <Check size={16} /> Brilliant! That's {label(target)}. Score: {score}
+                      <Check size={16} /> {t("widget.clock.solved", "Brilliant! That's {time}. Score: {score}", { time: label(target), score })}
                     </span>
                     <button type="button" onClick={startChallenge} className="btn-primary !py-1.5">
-                      Next time
+                      {t("widget.clock.nextTime", "Next time")}
                     </button>
                   </span>
                 ) : (
                   <>
-                    Set the clock to <span className="font-mono text-lg text-accent">{label(target)}</span>
-                    <div className="text-xs font-normal text-muted">({words(target)})</div>
+                    {t("widget.clock.setTo", "Set the clock to")} <span className="font-mono text-lg text-accent">{label(target)}</span>
+                    <div className="text-xs font-normal text-muted">({words(target, t)})</div>
                   </>
                 )}
               </motion.div>

@@ -16,6 +16,7 @@ import { CLASS_GROUPS, classById, classForStage, type ClassGroupId } from "./cla
 import { CLASS_ICON } from "./LibraryHome";
 import { LibrarySearch, type LibrarySearchItem } from "./LibrarySearch";
 import { useLibrary } from "./libraryStore";
+import { useT } from "@/i18n";
 
 export interface ClassSubject {
   slug: string;
@@ -48,6 +49,7 @@ export interface ClassViewData {
 const lessonHref = (id: string) => `/course/${id}`;
 
 export function ClassView({ data }: { data: ClassViewData }) {
+  const t = useT();
   const g = classById[data.id];
   const I = CLASS_ICON[g.icon];
   const hydrated = useHydrated();
@@ -75,7 +77,7 @@ export function ClassView({ data }: { data: ClassViewData }) {
   return (
     <PageColumns rail={<ClassRail id={g.id} totalDone={totalDone} totalLessons={totalLessons} started={started.length} subjects={data.subjects.length} />}>
       <Link href="/library" className="inline-flex items-center gap-1.5 text-sm font-extrabold text-muted hover:text-accent">
-        <ArrowLeft className="h-4 w-4" aria-hidden /> Library
+        <ArrowLeft className="h-4 w-4" aria-hidden /> {t("library.eyebrow", "Library")}
       </Link>
 
       <header className="mt-3 flex items-start gap-4">
@@ -85,7 +87,7 @@ export function ClassView({ data }: { data: ClassViewData }) {
         <div className="min-w-0">
           <div className="flex flex-wrap items-center gap-2">
             <h1 className="text-2xl font-black">{g.label}</h1>
-            {isMine && <span className="chip !border-accent !py-0.5 text-xs text-accent">Your class</span>}
+            {isMine && <span className="chip !border-accent !py-0.5 text-xs text-accent">{t("library.yourClass", "Your class")}</span>}
           </div>
           <p className="text-sm font-bold text-muted">{g.hint}</p>
           <p className="mt-2 max-w-2xl font-semibold text-muted">{g.description}</p>
@@ -93,17 +95,17 @@ export function ClassView({ data }: { data: ClassViewData }) {
       </header>
 
       <div className="mt-5">
-        <LibrarySearch items={data.search} placeholder={`Search ${g.label} lessons`} />
+        <LibrarySearch items={data.search} placeholder={t("library.class.searchPlaceholder", "Search {label} lessons", { label: g.label })} />
       </div>
 
       {/* Subjects */}
       <section className="mt-8" aria-labelledby="subjects-h">
         <div className="mb-3 flex items-baseline justify-between">
           <h2 id="subjects-h" className="text-lg font-black">
-            Subjects
+            {t("library.class.subjects", "Subjects")}
           </h2>
           <span className="text-sm font-bold text-muted">
-            {data.subjects.length} available · {totalLessons} lessons
+            {t("library.class.available", "{n} available · {lessons} lessons", { n: data.subjects.length, lessons: totalLessons })}
           </span>
         </div>
         {data.subjects.length ? (
@@ -113,7 +115,7 @@ export function ClassView({ data }: { data: ClassViewData }) {
             ))}
           </div>
         ) : (
-          <p className="card p-5 text-sm font-semibold text-muted">No subjects are published for this class yet. See what is coming below.</p>
+          <p className="card p-5 text-sm font-semibold text-muted">{t("library.class.noSubjects", "No subjects are published for this class yet. See what is coming below.")}</p>
         )}
       </section>
 
@@ -124,19 +126,19 @@ export function ClassView({ data }: { data: ClassViewData }) {
         <div className="mb-3 flex items-center gap-2">
           <Hourglass className="h-4 w-4 text-muted" strokeWidth={2.5} aria-hidden />
           <h2 id="soon-h" className="text-lg font-black">
-            Coming soon
+            {t("library.class.comingSoon", "Coming soon")}
           </h2>
         </div>
         <div className="card p-5">
           <div className="flex flex-wrap gap-2">
-            {g.comingSoon.map((t) => (
-              <span key={t} className="chip text-muted">
-                {t}
+            {g.comingSoon.map((name) => (
+              <span key={name} className="chip text-muted">
+                {name}
               </span>
             ))}
           </div>
           <p className="mt-3 text-sm font-semibold text-muted">
-            These subjects are being written for {g.label.toLowerCase()}. Chapters without lessons in the syllabi above can still be practised and ticked off in your plan.
+            {t("library.class.comingSoonBody", "These subjects are being written for {label}. Chapters without lessons in the syllabi above can still be practised and ticked off in your plan.", { label: g.label.toLowerCase() })}
           </p>
         </div>
       </section>
@@ -145,9 +147,10 @@ export function ClassView({ data }: { data: ClassViewData }) {
 }
 
 function SubjectCard({ s, done, next, levels }: { s: ClassSubject; done: number; next: string | null; levels: string[] }) {
+  const t = useT();
   const pct = s.lessons ? done / s.lessons : 0;
   const complete = s.lessons > 0 && done === s.lessons;
-  const cta = complete ? "Review" : done > 0 ? "Continue" : "Start";
+  const cta = complete ? t("library.subject.review", "Review") : done > 0 ? t("library.subject.continue", "Continue") : t("library.subject.start", "Start");
   const href = next ? lessonHref(next) : s.lessonIds[0] ? lessonHref(s.lessonIds[0]) : `/course/${s.slug}`;
   const hours = Math.max(1, Math.round(s.minutes / 60));
   return (
@@ -160,7 +163,7 @@ function SubjectCard({ s, done, next, levels }: { s: ClassSubject; done: number;
           </Link>
           <p className="text-sm font-semibold text-muted">{s.tagline}</p>
         </div>
-        <span className={clsx("chip shrink-0 !py-0.5 text-xs", complete ? "!border-good bg-good-soft text-good" : done > 0 ? "!border-accent text-accent" : "text-muted")}>{complete ? "Complete" : done > 0 ? `${done} of ${s.lessons}` : "Not started"}</span>
+        <span className={clsx("chip shrink-0 !py-0.5 text-xs", complete ? "!border-good bg-good-soft text-good" : done > 0 ? "!border-accent text-accent" : "text-muted")}>{complete ? t("library.subject.complete", "Complete") : done > 0 ? t("library.subject.doneOf", "{done} of {total}", { done, total: s.lessons }) : t("library.subject.notStarted", "Not started")}</span>
       </div>
       <div className="mt-3 flex flex-wrap gap-1.5">
         {levels.slice(0, 4).map((l) => (
@@ -170,21 +173,21 @@ function SubjectCard({ s, done, next, levels }: { s: ClassSubject; done: number;
         ))}
         {s.domain && <span className="chip !py-0.5 text-xs text-muted">{s.domain}</span>}
       </div>
-      <ProgressBar value={pct} height={8} className="mt-3" color={complete ? "rgb(var(--good))" : undefined} label={`${s.title} progress`} />
+      <ProgressBar value={pct} height={8} className="mt-3" color={complete ? "rgb(var(--good))" : undefined} label={t("library.subject.progressLabel", "{title} progress", { title: s.title })} />
       <p className="mt-2 flex flex-wrap items-center gap-x-3 gap-y-1 text-xs font-bold text-muted">
-        <span>{s.topics} units</span>
-        <span>{s.lessons} lessons</span>
+        <span>{t("library.subject.units", "{n} units", { n: s.topics })}</span>
+        <span>{t("library.lessonsCount", "{n} lessons", { n: s.lessons })}</span>
         <span className="inline-flex items-center gap-1">
-          <Clock className="h-3.5 w-3.5" aria-hidden /> about {hours} h
+          <Clock className="h-3.5 w-3.5" aria-hidden /> {t("library.subject.hours", "about {n} h", { n: hours })}
         </span>
-        {s.challenges > 0 && <span>{s.challenges} coding challenges</span>}
+        {s.challenges > 0 && <span>{t("library.subject.challenges", "{n} coding challenges", { n: s.challenges })}</span>}
       </p>
       <div className="mt-auto flex gap-2 pt-4">
         <Link href={href} className="btn-primary !px-3 !py-1.5 text-sm">
           <BookOpen className="h-4 w-4" aria-hidden /> {cta}
         </Link>
         <Link href={`/course/${s.slug}`} className="btn-ghost !px-3 !py-1.5 text-sm">
-          Outline <ArrowRight className="h-4 w-4" aria-hidden />
+          {t("library.subject.outline", "Outline")} <ArrowRight className="h-4 w-4" aria-hidden />
         </Link>
       </div>
     </article>
@@ -192,6 +195,7 @@ function SubjectCard({ s, done, next, levels }: { s: ClassSubject; done: number;
 }
 
 function BoardSyllabi({ boards }: { boards: ClassBoard[] }) {
+  const t = useT();
   const params = useSearchParams();
   const router = useRouter();
   const setProfile = useLearner((s) => s.setProfile);
@@ -210,11 +214,11 @@ function BoardSyllabi({ boards }: { boards: ClassBoard[] }) {
       <div className="mb-3 flex items-center gap-2">
         <Target className="h-4 w-4 text-accent" strokeWidth={2.5} aria-hidden />
         <h2 id="boards-h" className="text-lg font-black">
-          Board and exam syllabi
+          {t("library.boards.title", "Board and exam syllabi")}
         </h2>
       </div>
       <div className="card overflow-hidden">
-        <div className="flex gap-1 overflow-x-auto border-b-2 border-line px-2" role="tablist" aria-label="Board">
+        <div className="flex gap-1 overflow-x-auto border-b-2 border-line px-2" role="tablist" aria-label={t("library.boards.tablist", "Board")}>
           {boards.map((b) => (
             <button key={b.id} role="tab" aria-selected={b.id === board.id} onClick={() => setTab(b.id)} className={clsx("-mb-[2px] shrink-0 border-b-2 px-3 py-2.5 text-sm font-extrabold transition", b.id === board.id ? "border-accent text-accent" : "border-transparent text-muted hover:text-ink")}>
               {b.name}
@@ -231,36 +235,37 @@ function BoardSyllabi({ boards }: { boards: ClassBoard[] }) {
                 <div className="min-w-0 flex-1">
                   <p className="font-extrabold">{gr.name}</p>
                   <p className="text-xs font-bold text-muted">
-                    {chapters} chapters · {withLessons} with lessons · {gr.subjects.map((s) => s.name).join(", ")}
+                    {t("library.gradeLine", "{chapters} chapters · {withLessons} with lessons", { chapters, withLessons })} · {gr.subjects.map((s) => s.name).join(", ")}
                   </p>
                 </div>
                 <button onClick={() => study(gr.id)} className="btn-ghost shrink-0 !px-3 !py-1.5 text-sm">
-                  Study this syllabus <ArrowRight className="h-4 w-4" aria-hidden />
+                  {t("library.boards.study", "Study this syllabus")} <ArrowRight className="h-4 w-4" aria-hidden />
                 </button>
               </div>
             );
           })}
         </div>
-        <p className="px-4 py-3 text-xs font-semibold text-muted">{board.note} Choosing a syllabus switches your home to the Focus view with chapter progress and a revision plan.</p>
+        <p className="px-4 py-3 text-xs font-semibold text-muted">{board.note} {t("library.boards.note", "Choosing a syllabus switches your home to the Focus view with chapter progress and a revision plan.")}</p>
       </div>
     </section>
   );
 }
 
 function ClassRail({ id, totalDone, totalLessons, started, subjects }: { id: ClassGroupId; totalDone: number; totalLessons: number; started: number; subjects: number }) {
+  const t = useT();
   const others = CLASS_GROUPS.filter((g) => g.id !== id);
   return (
     <>
-      <RailCard title="Progress">
+      <RailCard title={t("library.class.rail.progress", "Progress")}>
         <p className="text-sm font-bold">
-          {totalDone} of {totalLessons} lessons done
+          {t("library.rail.lessonsDone", "{done} of {total} lessons done", { done: totalDone, total: totalLessons })}
         </p>
-        <ProgressBar value={totalLessons ? totalDone / totalLessons : 0} height={10} className="mt-2" color="rgb(var(--good))" label="Class progress" />
+        <ProgressBar value={totalLessons ? totalDone / totalLessons : 0} height={10} className="mt-2" color="rgb(var(--good))" label={t("library.rail.classProgress", "Class progress")} />
         <p className="mt-2 text-xs font-semibold text-muted">
-          {started} of {subjects} subjects started
+          {t("library.class.rail.started", "{started} of {total} subjects started", { started, total: subjects })}
         </p>
       </RailCard>
-      <RailCard title="Other classes" action={{ href: "/library", label: "Library" }}>
+      <RailCard title={t("library.class.rail.others", "Other classes")} action={{ href: "/library", label: t("library.eyebrow", "Library") }}>
         <ul className="space-y-1.5">
           {others.map((g) => (
             <li key={g.id}>

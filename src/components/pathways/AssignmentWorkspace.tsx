@@ -12,6 +12,7 @@ import { useLearner } from "@/lib/store";
 import { useHydrated } from "@/components/providers";
 import { ConsoleView, Preview, SqlTable } from "@/components/code/Output";
 import { useRunner } from "@/components/code/useRunner";
+import { useT } from "@/i18n";
 import { formatDate, usePathwayState } from "./hooks";
 
 const CodeEditor = dynamic(() => import("@/components/code/CodeEditor"), { ssr: false, loading: () => <div className="h-[320px] animate-pulse bg-[#1a1b26]" /> });
@@ -33,6 +34,7 @@ interface Draft {
 }
 
 export function AssignmentWorkspace({ pathway: p, assignment: a, moduleIndex, meta }: { pathway: Pathway; assignment: Assignment; moduleIndex: number; meta: LessonMetaMap }) {
+  const t = useT();
   const hydrated = useHydrated();
   const s = usePathwayState();
   const submitAssignment = useLearner((st) => st.submitAssignment);
@@ -70,8 +72,8 @@ export function AssignmentWorkspace({ pathway: p, assignment: a, moduleIndex, me
     }
   }, [draft, loaded, a.id]);
 
-  const total = a.rubric.reduce((t, r) => t + r.points, 0);
-  const selfScore = draft.checklist.reduce((t, i) => t + (a.rubric[i]?.points ?? 0), 0) / total;
+  const total = a.rubric.reduce((sum, r) => sum + r.points, 0);
+  const selfScore = draft.checklist.reduce((sum, i) => sum + (a.rubric[i]?.points ?? 0), 0) / total;
   const linkOk = a.submission !== "link" || /^https?:\/\/\S+\.\S+/.test(draft.link.trim());
   const textOk = a.submission === "link" ? true : draft.text.trim().length >= (a.submission === "code" ? 20 : 80);
   const canSubmit = linkOk && textOk;
@@ -98,12 +100,21 @@ export function AssignmentWorkspace({ pathway: p, assignment: a, moduleIndex, me
         ← {p.title}
       </Link>
       <div className="mt-4">
-        <span className="eyebrow">Module {moduleIndex + 1} · Practical assignment</span>
+        <span className="eyebrow">{t("path.assignment.eyebrow", "Module {n} · Practical assignment", { n: moduleIndex + 1 })}</span>
         <h1 className="mt-2 text-3xl font-bold tracking-tight">{a.title}</h1>
         <div className="mt-2 flex flex-wrap gap-x-5 gap-y-1 text-sm text-muted">
-          <span className="flex items-center gap-1.5"><Clock className="h-4 w-4" /> About {a.estimatedHours} hours</span>
-          <span>Submission: {a.submission === "code" ? `${lang.toUpperCase()} code` : a.submission === "link" ? "link + notes" : "written response"}</span>
-          {hydrated && existing && <span className="font-semibold text-ink">Submitted {formatDate(existing.submittedAt)}</span>}
+          <span className="flex items-center gap-1.5"><Clock className="h-4 w-4" /> {t("path.assignment.hours", "About {n} hours", { n: a.estimatedHours })}</span>
+          <span>
+            {t("path.assignment.submissionType", "Submission: {type}", {
+              type:
+                a.submission === "code"
+                  ? t("path.assignment.type.code", "{lang} code", { lang: lang.toUpperCase() })
+                  : a.submission === "link"
+                    ? t("path.assignment.type.link", "link + notes")
+                    : t("path.assignment.type.text", "written response"),
+            })}
+          </span>
+          {hydrated && existing && <span className="font-semibold text-ink">{t("path.assignment.submittedOn", "Submitted {date}", { date: formatDate(existing.submittedAt) })}</span>}
         </div>
       </div>
 
@@ -111,20 +122,23 @@ export function AssignmentWorkspace({ pathway: p, assignment: a, moduleIndex, me
         <div className={clsx("mt-6 rounded-xl border-2 p-5", score >= CERTIFICATE_RUBRIC_THRESHOLD ? "border-good/40 bg-good-soft" : "border-warn/40 bg-warn/10")}>
           <div className="flex flex-wrap items-center justify-between gap-3">
             <div>
-              <p className="font-bold">{justSubmitted ? "Submission saved." : "You’ve submitted this assignment."} Self-assessment: {Math.round(score * 100)}%</p>
+              <p className="font-bold">
+                {justSubmitted ? t("path.assignment.saved", "Submission saved.") : t("path.assignment.alreadySubmitted", "You’ve submitted this assignment.")}{" "}
+                {t("path.assignment.selfAssessment", "Self-assessment: {pct}%", { pct: Math.round(score * 100) })}
+              </p>
               <p className="mt-1 text-sm text-muted">
                 {score >= CERTIFICATE_RUBRIC_THRESHOLD
-                  ? "This meets the 70% bar for your certificate. You can keep improving it and resubmit at any time."
-                  : "Reach at least 70% of the rubric to count towards your certificate. Revise your work and resubmit."}
+                  ? t("path.assignment.meetsBar", "This meets the 70% bar for your certificate. You can keep improving it and resubmit at any time.")
+                  : t("path.assignment.belowBar", "Reach at least 70% of the rubric to count towards your certificate. Revise your work and resubmit.")}
               </p>
             </div>
             <div className="flex flex-wrap gap-2">
               {progress.eligible ? (
-                <Link href={`/certificate/${p.slug}`} className="btn-primary">Claim certificate</Link>
+                <Link href={`/certificate/${p.slug}`} className="btn-primary">{t("path.assignment.claim", "Claim certificate")}</Link>
               ) : nextModule ? (
-                <Link href={nextModule.lessonIds[0] ? (meta[nextModule.lessonIds[0]]?.href ?? `/course/${nextModule.lessonIds[0]}`) : assignmentHref(p.slug, nextModule.assignment.id)} className="btn-primary">Next module: {nextModule.title}</Link>
+                <Link href={nextModule.lessonIds[0] ? (meta[nextModule.lessonIds[0]]?.href ?? `/course/${nextModule.lessonIds[0]}`) : assignmentHref(p.slug, nextModule.assignment.id)} className="btn-primary">{t("path.assignment.nextModule", "Next module: {title}", { title: nextModule.title })}</Link>
               ) : (
-                <Link href={`/pathways/${p.slug}`} className="btn-primary">Back to pathway</Link>
+                <Link href={`/pathways/${p.slug}`} className="btn-primary">{t("path.assignment.backToPathway", "Back to pathway")}</Link>
               )}
             </div>
           </div>
@@ -133,9 +147,9 @@ export function AssignmentWorkspace({ pathway: p, assignment: a, moduleIndex, me
 
       <div className="mt-8 grid gap-8 lg:grid-cols-[1fr_300px]">
         <section>
-          <h2 className="text-sm font-bold uppercase tracking-wide text-muted">The brief</h2>
+          <h2 className="text-sm font-bold uppercase tracking-wide text-muted">{t("path.assignment.brief", "The brief")}</h2>
           <p className="mt-2 text-[17px] leading-relaxed">{renderInline(a.scenario)}</p>
-          <h3 className="mt-6 text-sm font-bold uppercase tracking-wide text-muted">Deliverables</h3>
+          <h3 className="mt-6 text-sm font-bold uppercase tracking-wide text-muted">{t("path.assignment.deliverables", "Deliverables")}</h3>
           <ul className="mt-2 space-y-2">
             {a.deliverables.map((d) => (
               <li key={d} className="flex gap-3">
@@ -147,7 +161,7 @@ export function AssignmentWorkspace({ pathway: p, assignment: a, moduleIndex, me
           {a.hints.length > 0 && (
             <details className="group mt-6 rounded-xl border-2 border-line p-4">
               <summary className="flex cursor-pointer list-none items-center gap-2 text-sm font-semibold">
-                <Lightbulb className="h-4 w-4 text-warn" /> Hints ({a.hints.length})
+                <Lightbulb className="h-4 w-4 text-warn" /> {t("path.assignment.hints", "Hints ({n})", { n: a.hints.length })}
                 <ChevronDown className="ml-auto h-4 w-4 transition group-open:rotate-180" />
               </summary>
               <ul className="mt-3 space-y-2 text-sm text-muted">
@@ -159,7 +173,7 @@ export function AssignmentWorkspace({ pathway: p, assignment: a, moduleIndex, me
           )}
         </section>
         <aside>
-          <h2 className="text-sm font-bold uppercase tracking-wide text-muted">Lessons for this module</h2>
+          <h2 className="text-sm font-bold uppercase tracking-wide text-muted">{t("path.assignment.lessons", "Lessons for this module")}</h2>
           <ul className="mt-2 space-y-1">
             {mod.lessonIds.map((id) => (
               <li key={id}>
@@ -175,8 +189,8 @@ export function AssignmentWorkspace({ pathway: p, assignment: a, moduleIndex, me
 
       {/* Workspace */}
       <section className="mt-10">
-        <h2 className="text-xl font-bold">Your work</h2>
-        <p className="mt-1 text-sm text-muted">Drafts save on this device automatically.</p>
+        <h2 className="text-xl font-bold">{t("path.assignment.yourWork", "Your work")}</h2>
+        <p className="mt-1 text-sm text-muted">{t("path.assignment.draftsSave", "Drafts save on this device automatically.")}</p>
         <div className="mt-4">
           {a.submission === "code" ? (
             <CodeWorkspace lang={lang} setup={a.setup} value={draft.text} onChange={(text) => setDraft((d) => ({ ...d, text }))} />
@@ -184,21 +198,25 @@ export function AssignmentWorkspace({ pathway: p, assignment: a, moduleIndex, me
             <div className="space-y-3">
               {a.submission === "link" && (
                 <label className="block">
-                  <span className="flex items-center gap-1.5 text-sm font-semibold text-muted"><Link2 className="h-4 w-4" /> Link to your work (Figma, Google Doc, Notion, GitHub…)</span>
+                  <span className="flex items-center gap-1.5 text-sm font-semibold text-muted"><Link2 className="h-4 w-4" /> {t("path.assignment.linkLabel", "Link to your work (Figma, Google Doc, Notion, GitHub…)")}</span>
                   <input type="url" inputMode="url" placeholder="https://" value={draft.link} onChange={(e) => setDraft((d) => ({ ...d, link: e.target.value }))} className="input mt-1" />
-                  {draft.link && !linkOk && <span className="mt-1 block text-xs text-bad">Enter a full link starting with https://</span>}
+                  {draft.link && !linkOk && <span className="mt-1 block text-xs text-bad">{t("path.assignment.linkInvalid", "Enter a full link starting with https://")}</span>}
                 </label>
               )}
               <label className="block">
-                <span className="text-sm font-semibold text-muted">{a.submission === "link" ? "Notes for a reviewer (optional)" : "Your response"}</span>
+                <span className="text-sm font-semibold text-muted">{a.submission === "link" ? t("path.assignment.notesLabel", "Notes for a reviewer (optional)") : t("path.assignment.responseLabel", "Your response")}</span>
                 <textarea
                   value={draft.text}
                   onChange={(e) => setDraft((d) => ({ ...d, text: e.target.value }))}
                   rows={a.submission === "link" ? 5 : 14}
-                  placeholder={a.submission === "link" ? "What should someone look at first? What would you do next?" : "Write your response here. Use headings for each deliverable."}
+                  placeholder={
+                    a.submission === "link"
+                      ? t("path.assignment.notesPlaceholder", "What should someone look at first? What would you do next?")
+                      : t("path.assignment.responsePlaceholder", "Write your response here. Use headings for each deliverable.")
+                  }
                   className="input mt-1 font-normal leading-relaxed"
                 />
-                {a.submission === "text" && <span className="mt-1 block text-xs text-muted">{wordCount(draft.text)} words</span>}
+                {a.submission === "text" && <span className="mt-1 block text-xs text-muted">{t("path.assignment.words", "{n} words", { n: wordCount(draft.text) })}</span>}
               </label>
             </div>
           )}
@@ -207,8 +225,8 @@ export function AssignmentWorkspace({ pathway: p, assignment: a, moduleIndex, me
 
       {/* Self-assessment */}
       <section className="mt-10">
-        <h2 className="text-xl font-bold">Check your work against the rubric</h2>
-        <p className="mt-1 text-sm text-muted">Tick each criterion your work fully meets. Be honest — this is how you, and anyone you share it with, know it’s ready.</p>
+        <h2 className="text-xl font-bold">{t("path.assignment.rubricTitle", "Check your work against the rubric")}</h2>
+        <p className="mt-1 text-sm text-muted">{t("path.assignment.rubricHint", "Tick each criterion your work fully meets. Be honest — this is how you, and anyone you share it with, know it’s ready.")}</p>
         <div className="card mt-4 divide-y-2 divide-line overflow-hidden">
           {a.rubric.map((r, i) => {
             const on = draft.checklist.includes(i);
@@ -224,14 +242,14 @@ export function AssignmentWorkspace({ pathway: p, assignment: a, moduleIndex, me
                   <span className="block font-semibold">{r.criterion}</span>
                   <span className="block text-sm text-muted">{r.description}</span>
                 </span>
-                <span className="shrink-0 text-sm font-semibold text-muted">{r.points} pts</span>
+                <span className="shrink-0 text-sm font-semibold text-muted">{t("path.assignment.points", "{n} pts", { n: r.points })}</span>
               </label>
             );
           })}
           <div className="flex items-center justify-between bg-surface-2/60 p-4 text-sm">
-            <span className="font-semibold">Self-assessed score</span>
+            <span className="font-semibold">{t("path.assignment.selfScore", "Self-assessed score")}</span>
             <span className={clsx("font-bold", selfScore >= CERTIFICATE_RUBRIC_THRESHOLD ? "text-good" : "text-muted")}>
-              {Math.round(selfScore * 100)}% <span className="font-normal text-muted">(70% needed for the certificate)</span>
+              {Math.round(selfScore * 100)}% <span className="font-normal text-muted">{t("path.assignment.needed", "(70% needed for the certificate)")}</span>
             </span>
           </div>
         </div>
@@ -239,10 +257,14 @@ export function AssignmentWorkspace({ pathway: p, assignment: a, moduleIndex, me
 
       <div className="mt-8 flex flex-wrap items-center gap-4 border-t-2 border-line pt-6">
         <button onClick={submit} disabled={!canSubmit || !hydrated} className="btn-primary">
-          {existing ? "Resubmit" : "Submit assignment"}
+          {existing ? t("path.assignment.resubmit", "Resubmit") : t("path.assignment.submit", "Submit assignment")}
         </button>
         {!canSubmit && (
-          <span className="text-sm text-muted">{!linkOk ? "Add a link to your work to submit." : a.submission === "code" ? "Write your solution to submit." : "Write at least a few sentences to submit."}</span>
+          <span className="text-sm text-muted">{!linkOk
+              ? t("path.assignment.needLink", "Add a link to your work to submit.")
+              : a.submission === "code"
+                ? t("path.assignment.needCode", "Write your solution to submit.")
+                : t("path.assignment.needText", "Write at least a few sentences to submit.")}</span>
         )}
       </div>
     </div>
@@ -250,6 +272,7 @@ export function AssignmentWorkspace({ pathway: p, assignment: a, moduleIndex, me
 }
 
 function CodeWorkspace({ lang, setup, value, onChange }: { lang: CodeLang; setup?: string; value: string; onChange: (v: string) => void }) {
+  const t = useT();
   const r = useRunner(lang);
   const web = lang === "html" || lang === "css" || lang === "javascript";
   const run = () => r.run(value, { setup });
@@ -258,7 +281,7 @@ function CodeWorkspace({ lang, setup, value, onChange }: { lang: CodeLang; setup
       <div className="flex items-center justify-between border-b-2 border-line bg-surface px-3 py-2">
         <span className="font-mono text-xs font-semibold uppercase text-muted">{lang}</span>
         <button onClick={run} className="btn-good px-3 py-1.5 text-sm">
-          <Play className="h-4 w-4" /> {r.running ? "Running…" : "Run"}
+          <Play className="h-4 w-4" /> {r.running ? t("path.code.running", "Running…") : t("path.code.run", "Run")}
         </button>
       </div>
       <div className={clsx("grid", lang === "html" ? "lg:grid-cols-2" : "")}>
@@ -271,7 +294,7 @@ function CodeWorkspace({ lang, setup, value, onChange }: { lang: CodeLang; setup
             <>
               {web && <Preview ref={r.frameRef} doc={r.doc} className="hidden" />}
               {lang === "sql" && r.sql && <SqlTable columns={r.sql.columns} rows={r.sql.rows} />}
-              <ConsoleView lines={r.logs} empty={lang === "sql" ? "Run your query to see results (sample tables are loaded for you)." : "Run the code to see output here."} />
+              <ConsoleView lines={r.logs} empty={lang === "sql" ? t("path.code.emptySql", "Run your query to see results (sample tables are loaded for you).") : t("path.code.empty", "Run the code to see output here.")} />
             </>
           )}
         </div>

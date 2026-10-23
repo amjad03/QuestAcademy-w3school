@@ -6,6 +6,7 @@ import { dayKey } from "@/lib/gamification";
 import { buildPlan } from "@/lib/planner";
 import { loadLessonMeta, pathwayItems, pathwayProgress, type LessonMetaMap } from "@/lib/plan-sources/pathway";
 import { useLearner, type StudyPlan } from "@/lib/store";
+import { useT } from "@/i18n";
 
 export function addDays(d: string, n: number) {
   const x = new Date(d + "T00:00:00");
@@ -18,6 +19,20 @@ export function formatDate(d: string, opts: Intl.DateTimeFormatOptions = { day: 
 }
 
 export const WEEKDAYS = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
+
+/** Translated short weekday names, Sunday first (same order as WEEKDAYS). */
+export function useWeekdayLabels() {
+  const t = useT();
+  return [
+    t("path.weekday.sun", "Sun"),
+    t("path.weekday.mon", "Mon"),
+    t("path.weekday.tue", "Tue"),
+    t("path.weekday.wed", "Wed"),
+    t("path.weekday.thu", "Thu"),
+    t("path.weekday.fri", "Fri"),
+    t("path.weekday.sat", "Sat"),
+  ];
+}
 
 /** Lesson titles/minutes for pathway lessons (null while loading). */
 export function useLessonMeta(initial?: LessonMetaMap) {

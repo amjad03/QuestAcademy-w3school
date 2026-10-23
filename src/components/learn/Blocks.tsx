@@ -8,6 +8,7 @@ import { Md, MdInline, tex } from "@/components/Md";
 import { TryIt, LANG_LABEL } from "@/components/code/TryIt";
 import { WidgetRenderer } from "@/components/widgets";
 import { useLearner } from "@/lib/store";
+import { useT } from "@/i18n";
 import { QuestionCard } from "./QuestionCard";
 
 const CALLOUT = {
@@ -19,6 +20,14 @@ const CALLOUT = {
 } as const;
 
 export function BlockView({ block, world, id }: { block: Block; world: WorldId; id: string }) {
+  const t = useT();
+  const calloutLabel = {
+    tip: t("learn.callout.tip", "Pro tip"),
+    note: t("learn.callout.note", "Note"),
+    warning: t("learn.callout.warning", "Watch out"),
+    fact: t("learn.callout.fact", "Did you know?"),
+    exam: t("learn.callout.exam", "Exam insight"),
+  };
   const kids = world === "kids";
   switch (block.type) {
     case "heading":
@@ -26,11 +35,12 @@ export function BlockView({ block, world, id }: { block: Block; world: WorldId; 
     case "text":
       return <Md text={block.md} className={clsx("prose-quest space-y-4", kids && "!text-2xl !font-bold !leading-relaxed")} />;
     case "callout": {
-      const c = CALLOUT[block.tone] ?? CALLOUT.note;
+      const tone = block.tone in CALLOUT ? block.tone : "note";
+      const c = CALLOUT[tone];
       return (
         <aside className={clsx("rounded-2xl border-2 p-5", c.cls)}>
           <div className={clsx("mb-1.5 flex items-center gap-2 text-sm font-extrabold uppercase tracking-wide", c.ic)}>
-            <c.icon className="h-4 w-4" /> {block.title ?? c.label}
+            <c.icon className="h-4 w-4" /> {block.title ?? calloutLabel[tone]}
           </div>
           <Md text={block.md} className={clsx("prose-quest space-y-2 !text-[0.97rem] !leading-7", kids && "!text-xl")} />
         </aside>
@@ -117,7 +127,7 @@ export function BlockView({ block, world, id }: { block: Block; world: WorldId; 
       return (
         <figure className="overflow-hidden rounded-3xl border-2 border-line bg-surface">
           <div className="flex items-center gap-2 border-b-2 border-line bg-surface-2 px-5 py-2.5 text-xs font-extrabold uppercase tracking-wider text-accent">
-            <Target className="h-4 w-4" /> Interactive · play with it
+            <Target className="h-4 w-4" /> {t("learn.block.interactive", "Interactive · play with it")}
           </div>
           <div className="p-4 sm:p-6">
             <WidgetRenderer widget={block.widget} props={block.props} />
@@ -135,7 +145,7 @@ export function BlockView({ block, world, id }: { block: Block; world: WorldId; 
       return (
         <aside className="rounded-2xl border-2 border-line bg-surface-2 p-5">
           <div className="mb-3 flex items-center gap-2 text-sm font-bold text-accent">
-            <Sparkles className="h-4 w-4" /> Key points
+            <Sparkles className="h-4 w-4" /> {t("learn.block.keyPoints", "Key points")}
           </div>
           <ul className={clsx("space-y-2 font-semibold", kids && "text-xl")}>
             {block.items.map((it, i) => (
@@ -153,23 +163,24 @@ export function BlockView({ block, world, id }: { block: Block; world: WorldId; 
 }
 
 function Checkpoint({ questions, kids, id }: { questions: import("@/content/types").Question[]; kids: boolean; id: string }) {
+  const t = useT();
   const [i, setI] = useState(0);
   const [done, setDone] = useState(false);
   const award = useLearner((s) => s.award);
   const recordAnswer = useLearner((s) => s.recordAnswer);
   return (
-    <section className="rounded-3xl border-2 border-b-4 border-line bg-surface p-5 sm:p-6" aria-label="Checkpoint">
+    <section className="rounded-3xl border-2 border-b-4 border-line bg-surface p-5 sm:p-6" aria-label={t("learn.checkpoint.title", "Checkpoint")}>
       <div className="mb-4 flex items-center gap-2 text-xs font-bold uppercase tracking-wider text-accent">
-        <Target className="h-4 w-4" /> {kids ? "Your turn!" : "Checkpoint"} {questions.length > 1 && `· ${Math.min(i + 1, questions.length)}/${questions.length}`}
+        <Target className="h-4 w-4" /> {kids ? t("learn.checkpoint.kidsTitle", "Your turn!") : t("learn.checkpoint.title", "Checkpoint")} {questions.length > 1 && `· ${Math.min(i + 1, questions.length)}/${questions.length}`}
       </div>
       {done ? (
-        <div className={clsx("text-center font-extrabold text-good", kids && "text-2xl")}>Checkpoint cleared — keep going!</div>
+        <div className={clsx("text-center font-extrabold text-good", kids && "text-2xl")}>{t("learn.checkpoint.cleared", "Checkpoint cleared — keep going!")}</div>
       ) : (
         <QuestionCard
           key={`${id}-${i}`}
           question={questions[i]}
           variant={kids ? "kids" : "default"}
-          continueLabel={i + 1 < questions.length ? "Next" : "Continue reading"}
+          continueLabel={i + 1 < questions.length ? t("learn.checkpoint.next", "Next") : t("learn.checkpoint.continueReading", "Continue reading")}
           onDone={(ok) => {
             recordAnswer(ok);
             if (ok) award(2, "Checkpoint");

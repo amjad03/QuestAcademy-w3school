@@ -11,6 +11,7 @@ import { ConsoleView, Preview, SqlTable } from "./Output";
 import { useRunner } from "./useRunner";
 import { LANG_LABEL } from "./TryIt";
 import { copyText } from "@/lib/clipboard";
+import { useT } from "@/i18n";
 
 const CodeEditor = dynamic(() => import("./CodeEditor"), { ssr: false, loading: () => <div className="h-full animate-pulse bg-[#1a1b26]" /> });
 
@@ -80,6 +81,7 @@ ORDER BY total_xp DESC;`,
 const CSS_DEMO = `<div style="display:grid;place-items:center;min-height:85vh"><div class="box"></div></div>`;
 
 export function Playground() {
+  const t = useT();
   const [lang, setLang] = useState<CodeLang>("html");
   const [codes, setCodes] = useState<Record<CodeLang, string>>(STARTERS);
   const [live, setLive] = useState(true);
@@ -120,8 +122,8 @@ export function Playground() {
   // Live preview for web languages (debounced).
   useEffect(() => {
     if (!live || !isWeb(lang) || lang === "javascript") return;
-    const t = setTimeout(() => void runner.run(code, lang === "css" ? { setup: CSS_DEMO } : {}), 450);
-    return () => clearTimeout(t);
+    const timer = setTimeout(() => void runner.run(code, lang === "css" ? { setup: CSS_DEMO } : {}), 450);
+    return () => clearTimeout(timer);
   }, [code, lang, live]); // eslint-disable-line react-hooks/exhaustive-deps
 
   const share = () => {
@@ -149,9 +151,9 @@ export function Playground() {
           <span className="grid h-9 w-9 place-items-center rounded-xl bg-[#334155] text-white shadow-[inset_0_-3px_0_#1E293B]">
             <SquareTerminal className="h-5 w-5" strokeWidth={2.4} />
           </span>
-          <h1 className="text-lg font-black">Code lab</h1>
+          <h1 className="text-lg font-black">{t("code.playground.title", "Code lab")}</h1>
         </div>
-        <div className="flex overflow-x-auto rounded-xl border-2 border-line bg-surface-2 p-1" role="tablist" aria-label="Language">
+        <div className="flex overflow-x-auto rounded-xl border-2 border-line bg-surface-2 p-1" role="tablist" aria-label={t("code.playground.language", "Language")}>
           {(Object.keys(STARTERS) as CodeLang[]).map((l) => (
             <button
               key={l}
@@ -166,21 +168,21 @@ export function Playground() {
         </div>
         {isWeb(lang) && lang !== "javascript" && (
           <label className="flex cursor-pointer items-center gap-2 text-sm font-bold text-muted">
-            <input type="checkbox" checked={live} onChange={(e) => setLive(e.target.checked)} className="h-4 w-4 accent-[rgb(var(--accent))]" /> Live preview
+            <input type="checkbox" checked={live} onChange={(e) => setLive(e.target.checked)} className="h-4 w-4 accent-[rgb(var(--accent))]" /> {t("code.playground.livePreview", "Live preview")}
           </label>
         )}
         <div className="ml-auto flex items-center gap-1.5">
-          <button onClick={() => setCodes((x) => ({ ...x, [lang]: STARTERS[lang] }))} className="btn-flat !text-muted" title="Reset to starter code">
-            <RotateCcw className="h-4 w-4" /> <span className="hidden xl:inline">Reset</span>
+          <button onClick={() => setCodes((x) => ({ ...x, [lang]: STARTERS[lang] }))} className="btn-flat !text-muted" title={t("code.playground.resetTitle", "Reset to starter code")}>
+            <RotateCcw className="h-4 w-4" /> <span className="hidden xl:inline">{t("code.reset", "Reset")}</span>
           </button>
-          <button onClick={download} className="btn-flat !text-muted" title="Download file">
-            <Download className="h-4 w-4" /> <span className="hidden xl:inline">Download</span>
+          <button onClick={download} className="btn-flat !text-muted" title={t("code.playground.downloadTitle", "Download file")}>
+            <Download className="h-4 w-4" /> <span className="hidden xl:inline">{t("code.playground.download", "Download")}</span>
           </button>
-          <button onClick={share} className="btn-flat !text-muted" title="Copy share link">
-            <Share2 className="h-4 w-4" /> <span className="hidden sm:inline">{copied ? "Copied!" : "Share"}</span>
+          <button onClick={share} className="btn-flat !text-muted" title={t("code.playground.shareTitle", "Copy share link")}>
+            <Share2 className="h-4 w-4" /> <span className="hidden sm:inline">{copied ? t("code.playground.copied", "Copied!") : t("code.playground.share", "Share")}</span>
           </button>
-          <button onClick={run} className="btn-good !py-2 text-sm" title="Run (⌘/Ctrl + Enter)">
-            {runner.running ? <Loader2 className="h-4 w-4 animate-spin" /> : <Play className="h-4 w-4 fill-white" />} Run
+          <button onClick={run} className="btn-good !py-2 text-sm" title={t("code.runShortcut", "Run (⌘/Ctrl + Enter)")}>
+            {runner.running ? <Loader2 className="h-4 w-4 animate-spin" /> : <Play className="h-4 w-4 fill-white" />} {t("code.run", "Run")}
           </button>
         </div>
       </div>
@@ -202,7 +204,7 @@ export function Playground() {
           )}
           {(!visual || runner.logs.length > 0) && (
             <div className={clsx("min-h-0 overflow-auto border-t-2 border-line", visual ? "max-h-40" : lang === "sql" && runner.sql ? "max-h-32" : "flex-1")}>
-              <ConsoleView lines={runner.logs} empty={lang === "sql" ? "Run a query to see results." : "Press Run to see output."} />
+              <ConsoleView lines={runner.logs} empty={lang === "sql" ? t("code.playground.emptySql", "Run a query to see results.") : t("code.playground.empty", "Press Run to see output.")} />
             </div>
           )}
         </div>

@@ -9,6 +9,7 @@
 import { useEffect, useId, useRef, type PointerEvent as ReactPointerEvent, type ReactNode, type RefObject } from "react";
 import { motion } from "framer-motion";
 import { Minus, Plus } from "lucide-react";
+import { useT } from "@/i18n";
 
 /* ------------------------------------------------------------------ */
 /* Prop readers                                                        */
@@ -151,13 +152,14 @@ export function Stepper({
   onChange: (v: number) => void;
   step?: number;
 }) {
+  const t = useT();
   return (
     <div className="flex items-center gap-2">
       <span className="text-sm font-medium text-muted">{label}</span>
       <div className="flex items-center rounded-2xl border border-line bg-surface-2 p-1">
         <button
           type="button"
-          aria-label={`Decrease ${label}`}
+          aria-label={t("widget.stepper.decrease", "Decrease {label}", { label })}
           disabled={value <= min}
           onClick={() => onChange(clamp(value - step, min, max))}
           className="grid h-9 w-9 place-items-center rounded-xl text-ink transition hover:bg-surface active:scale-90 disabled:opacity-40"
@@ -175,7 +177,7 @@ export function Stepper({
         </motion.span>
         <button
           type="button"
-          aria-label={`Increase ${label}`}
+          aria-label={t("widget.stepper.increase", "Increase {label}", { label })}
           disabled={value >= max}
           onClick={() => onChange(clamp(value + step, min, max))}
           className="grid h-9 w-9 place-items-center rounded-xl text-ink transition hover:bg-surface active:scale-90 disabled:opacity-40"

@@ -3,8 +3,10 @@
 import { useNotebook } from "@/lib/notebook-store";
 import { useHydrated } from "@/components/providers";
 import { RailCard } from "@/components/shell/RailCards";
+import { useT } from "@/i18n";
 
 export function NotebookRail() {
+  const t = useT();
   const hydrated = useHydrated();
   const notes = useNotebook((s) => Object.keys(s.notes).length);
   const bookmarks = useNotebook((s) => Object.keys(s.bookmarks).length);
@@ -12,13 +14,13 @@ export function NotebookRail() {
   const resolved = useNotebook((s) => s.doubts.filter((d) => d.resolved).length);
   const n = (v: number) => (hydrated ? String(v) : "–");
   return (
-    <RailCard title="At a glance">
+    <RailCard title={t("notebook.rail.title", "At a glance")}>
       <dl className="space-y-2.5 text-sm">
         {[
-          ["Notes", n(notes)],
-          ["Bookmarks", n(bookmarks)],
-          ["Open doubts", n(open)],
-          ["Resolved doubts", n(resolved)],
+          [t("notebook.rail.notes", "Notes"), n(notes)],
+          [t("notebook.rail.bookmarks", "Bookmarks"), n(bookmarks)],
+          [t("notebook.rail.openDoubts", "Open doubts"), n(open)],
+          [t("notebook.rail.resolvedDoubts", "Resolved doubts"), n(resolved)],
         ].map(([label, value]) => (
           <div key={label} className="flex items-center justify-between gap-3">
             <dt className="font-semibold text-muted">{label}</dt>
@@ -26,7 +28,7 @@ export function NotebookRail() {
           </div>
         ))}
       </dl>
-      <p className="mt-4 text-xs font-semibold text-muted">Everything here is stored on this device. Export to Markdown to keep a copy.</p>
+      <p className="mt-4 text-xs font-semibold text-muted">{t("notebook.rail.storageNote", "Everything here is stored on this device. Export to Markdown to keep a copy.")}</p>
     </RailCard>
   );
 }

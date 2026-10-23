@@ -9,6 +9,7 @@ import { dayKey } from "@/lib/gamification";
 import { planToIcs, type PlanDay, type PlanTask } from "@/lib/planner";
 import { useHydrated } from "@/components/providers";
 import { ProgressBar } from "@/components/ui/Progress";
+import { useT } from "@/i18n";
 import { PlanSetup } from "./PlanSetup";
 import { usePlan, type LivePlan } from "./usePlan";
 
@@ -22,6 +23,7 @@ function startOfWeek(d: string) {
 
 /** Generic planner: setup when there's no plan, otherwise the live schedule. */
 export function PlanView() {
+  const t = useT();
   const hydrated = useHydrated();
   const plan = useLearner((s) => s.plan);
   const [editing, setEditing] = useState(false);
@@ -33,9 +35,9 @@ export function PlanView() {
   if (!live)
     return (
       <div className="card p-6">
-        <p className="font-bold">We couldn’t load this plan’s content.</p>
+        <p className="font-bold">{t("plan.view.loadError", "We couldn’t load this plan’s content.")}</p>
         <button className="btn-primary mt-4" onClick={() => setEditing(true)}>
-          Choose again
+          {t("plan.view.chooseAgain", "Choose again")}
         </button>
       </div>
     );
@@ -43,6 +45,7 @@ export function PlanView() {
 }
 
 function PlanSchedule({ live, onReplan }: { live: LivePlan; onReplan: () => void }) {
+  const t = useT();
   const { plan, source, result } = live;
   const setPlan = useLearner((s) => s.setPlan);
   const today = dayKey();
@@ -78,20 +81,20 @@ function PlanSchedule({ live, onReplan }: { live: LivePlan; onReplan: () => void
       <section className="card p-5 sm:p-6">
         <div className="flex flex-wrap items-start justify-between gap-4">
           <div className="min-w-0">
-            <p className="eyebrow">Study plan</p>
+            <p className="eyebrow">{t("plan.view.eyebrow", "Study plan")}</p>
             <h1 className="mt-1 text-2xl font-black">{source.title}</h1>
             <p className="mt-1 text-sm font-semibold text-muted">
-              Finish by {fmt(plan.targetDate, { day: "numeric", month: "long", year: "numeric" })} · {plan.hoursPerWeek} h/week
+              {t("plan.view.summary", "Finish by {date} · {hours} h/week", { date: fmt(plan.targetDate, { day: "numeric", month: "long", year: "numeric" }), hours: plan.hoursPerWeek })}
             </p>
           </div>
           <div className="flex flex-wrap gap-2">
             <button className="btn-ghost !px-3 !py-2 text-sm" onClick={onReplan}>
-              <RefreshCw className="h-4 w-4" /> Re-plan
+              <RefreshCw className="h-4 w-4" /> {t("plan.view.replan", "Re-plan")}
             </button>
             <button className="btn-ghost !px-3 !py-2 text-sm" onClick={downloadIcs}>
-              <CalendarPlus className="h-4 w-4" /> Add to calendar (.ics)
+              <CalendarPlus className="h-4 w-4" /> {t("plan.view.addCalendar", "Add to calendar (.ics)")}
             </button>
-            <button className="btn-ghost !px-3 !py-2 text-sm" onClick={() => setPlan(null)} aria-label="Delete plan">
+            <button className="btn-ghost !px-3 !py-2 text-sm" onClick={() => setPlan(null)} aria-label={t("plan.view.delete", "Delete plan")}>
               <Trash2 className="h-4 w-4" />
             </button>
           </div>
@@ -100,11 +103,11 @@ function PlanSchedule({ live, onReplan }: { live: LivePlan; onReplan: () => void
         <div className="mt-5">
           <div className="mb-1.5 flex justify-between text-sm font-bold">
             <span>
-              {result.doneItems} of {result.totalItems} done
+              {t("plan.view.progress", "{done} of {total} done", { done: result.doneItems, total: result.totalItems })}
             </span>
             <span className="text-muted">{Math.round(pct * 100)}%</span>
           </div>
-          <ProgressBar value={pct} height={12} color="rgb(var(--good))" label="Plan progress" />
+          <ProgressBar value={pct} height={12} color="rgb(var(--good))" label={t("plan.view.progressLabel", "Plan progress")} />
         </div>
 
         <div className={clsx("mt-5 flex items-start gap-3 rounded-2xl p-4", result.onTrack ? "bg-good-soft" : "bg-bad-soft")}>
@@ -112,28 +115,33 @@ function PlanSchedule({ live, onReplan }: { live: LivePlan; onReplan: () => void
           <div className="text-sm font-semibold">
             {result.onTrack ? (
               <p>
-                <b>On track.</b> {result.finishDate ? `New material wraps up ${fmt(result.finishDate)}, leaving time for revision and mock tests.` : "Everything is covered — the rest is revision and mock tests."}
+                <b>{t("plan.view.onTrack", "On track.")}</b>{" "}
+                {result.finishDate
+                  ? t("plan.view.onTrackFinish", "New material wraps up {date}, leaving time for revision and mock tests.", { date: fmt(result.finishDate) })
+                  : t("plan.view.onTrackDone", "Everything is covered — the rest is revision and mock tests.")}
               </p>
             ) : (
               <p>
-                <b>Behind schedule.</b> At {plan.hoursPerWeek} h/week you’d finish {result.finishDate ? fmt(result.finishDate) : "late"}. Add about <b>{result.extraHoursNeeded} h/week</b> or move the date.
+                <b>{t("plan.view.behind", "Behind schedule.")}</b>{" "}
+                {t("plan.view.behindFinish", "At {hours} h/week you’d finish {date}.", { hours: plan.hoursPerWeek, date: result.finishDate ? fmt(result.finishDate) : t("plan.view.late", "late") })}{" "}
+                {t("plan.view.behindAdd", "Add about")} <b>{t("plan.view.behindHours", "{n} h/week", { n: result.extraHoursNeeded })}</b> {t("plan.view.behindMove", "or move the date.")}
               </p>
             )}
-            {replanned && <p className="mt-1 text-muted">Plan updated for your progress.</p>}
+            {replanned && <p className="mt-1 text-muted">{t("plan.view.updated", "Plan updated for your progress.")}</p>}
           </div>
         </div>
       </section>
 
       <section className="card p-5 sm:p-6">
-        <h2 className="text-lg font-black">This week</h2>
+        <h2 className="text-lg font-black">{t("plan.view.thisWeek", "This week")}</h2>
         <div className="mt-4 space-y-3">
-          {week.length ? week.map((d) => <DayRow key={d.date} day={d} today={today} doneIds={doneIds} manualIds={manualIds} />) : <p className="text-sm font-semibold text-muted">No study days left this week.</p>}
+          {week.length ? week.map((d) => <DayRow key={d.date} day={d} today={today} doneIds={doneIds} manualIds={manualIds} />) : <p className="text-sm font-semibold text-muted">{t("plan.view.noDays", "No study days left this week.")}</p>}
         </div>
       </section>
 
       {later.length > 0 && (
         <section className="card p-5 sm:p-6">
-          <h2 className="text-lg font-black">Full calendar</h2>
+          <h2 className="text-lg font-black">{t("plan.view.fullCalendar", "Full calendar")}</h2>
           <div className="mt-4 space-y-3">
             {shown.map((d) => (
               <DayRow key={d.date} day={d} today={today} doneIds={doneIds} manualIds={manualIds} />
@@ -141,7 +149,7 @@ function PlanSchedule({ live, onReplan }: { live: LivePlan; onReplan: () => void
           </div>
           {later.length > shown.length && (
             <button className="btn-flat mt-4 w-full" onClick={() => setShowAll(true)}>
-              Show all {later.length} days
+              {t("plan.view.showAll", "Show all {n} days", { n: later.length })}
             </button>
           )}
         </section>
@@ -153,16 +161,17 @@ function PlanSchedule({ live, onReplan }: { live: LivePlan; onReplan: () => void
 const KIND_ICON = { learn: BookOpen, revise: RotateCcw, mock: ClipboardCheck } as const;
 
 function DayRow({ day, today, doneIds, manualIds }: { day: PlanDay; today: string; doneIds: Set<string>; manualIds: Set<string> }) {
+  const t = useT();
   const isToday = day.date === today;
   return (
     <div className={clsx("rounded-2xl border-2 p-3 sm:p-4", isToday ? "border-accent bg-accent-soft/40" : "border-line")}>
       <div className="mb-2 flex items-center justify-between">
-        <span className={clsx("text-sm font-extrabold", isToday && "text-accent")}>{isToday ? `Today · ${fmt(day.date)}` : fmt(day.date)}</span>
-        <span className="text-xs font-bold text-muted">{day.minutes} min</span>
+        <span className={clsx("text-sm font-extrabold", isToday && "text-accent")}>{isToday ? t("plan.view.today", "Today · {date}", { date: fmt(day.date) }) : fmt(day.date)}</span>
+        <span className="text-xs font-bold text-muted">{t("plan.view.minutes", "{n} min", { n: day.minutes })}</span>
       </div>
       <ul className="space-y-1.5">
-        {day.tasks.map((t, i) => (
-          <TaskRow key={`${t.id}-${i}`} task={t} done={doneIds.has(t.id)} manual={t.kind !== "learn" || manualIds.has(t.id)} />
+        {day.tasks.map((task, i) => (
+          <TaskRow key={`${task.id}-${i}`} task={task} done={doneIds.has(task.id)} manual={task.kind !== "learn" || manualIds.has(task.id)} />
         ))}
       </ul>
     </div>
@@ -170,6 +179,7 @@ function DayRow({ day, today, doneIds, manualIds }: { day: PlanDay; today: strin
 }
 
 export function TaskRow({ task, done, manual }: { task: PlanTask; done?: boolean; manual: boolean }) {
+  const t = useT();
   const planDone = useLearner((s) => s.planDone);
   const toggle = useLearner((s) => s.togglePlanTask);
   const ticked = done || Boolean(planDone[task.id]);
@@ -180,13 +190,13 @@ export function TaskRow({ task, done, manual }: { task: PlanTask; done?: boolean
         <button
           onClick={() => toggle(task.id)}
           aria-pressed={ticked}
-          aria-label={ticked ? `Mark “${task.title}” not done` : `Mark “${task.title}” done`}
+          aria-label={ticked ? t("plan.task.markNotDone", "Mark “{title}” not done", { title: task.title }) : t("plan.task.markDone", "Mark “{title}” done", { title: task.title })}
           className={clsx("grid h-6 w-6 shrink-0 place-items-center rounded-md border-2 transition", ticked ? "border-good bg-good text-white" : "border-line hover:border-good")}
         >
           {ticked && <Check className="h-4 w-4" strokeWidth={3.5} />}
         </button>
       ) : (
-        <span className={clsx("grid h-6 w-6 shrink-0 place-items-center rounded-md", ticked ? "bg-good text-white" : "bg-surface-2 text-muted")} title="Completes when you finish the lesson">
+        <span className={clsx("grid h-6 w-6 shrink-0 place-items-center rounded-md", ticked ? "bg-good text-white" : "bg-surface-2 text-muted")} title={t("plan.task.autoHint", "Completes when you finish the lesson")}>
           {ticked ? <Check className="h-4 w-4" strokeWidth={3.5} /> : <Icon className="h-3.5 w-3.5" strokeWidth={2.5} />}
         </span>
       )}
@@ -194,7 +204,7 @@ export function TaskRow({ task, done, manual }: { task: PlanTask; done?: boolean
         {task.title}
       </Link>
       {task.group && <span className="hidden shrink-0 text-xs font-semibold text-muted sm:inline">{task.group}</span>}
-      <span className="shrink-0 text-xs font-bold text-muted">{task.minutes}m</span>
+      <span className="shrink-0 text-xs font-bold text-muted">{t("plan.task.minutes", "{n}m", { n: task.minutes })}</span>
     </li>
   );
 }

@@ -8,6 +8,7 @@ import clsx from "clsx";
 import { useNotebook } from "@/lib/notebook-store";
 import { useMode } from "@/lib/useMode";
 import { useHydrated } from "@/components/providers";
+import { useT } from "@/i18n";
 
 interface Props {
   lessonId: string;
@@ -17,6 +18,7 @@ interface Props {
 
 /** Compact per-lesson control row: bookmark, notes panel and a quick "add a doubt" form. */
 export function NotebookDock({ lessonId, title, href }: Props) {
+  const t = useT();
   const hydrated = useHydrated();
   const mode = useMode();
   const bookmarked = useNotebook((s) => Boolean(s.bookmarks[lessonId]));
@@ -39,23 +41,23 @@ export function NotebookDock({ lessonId, title, href }: Props) {
         className={clsx("chip flex items-center gap-1.5 transition", isMarked ? "!border-accent !text-accent" : "hover:text-accent")}
       >
         {isMarked ? <BookmarkCheck className="h-4 w-4" /> : <Bookmark className="h-4 w-4" />}
-        {explore ? (isMarked ? "Saved for later" : "Save for later") : isMarked ? "Bookmarked" : "Bookmark"}
+        {explore ? (isMarked ? t("notebook.dock.savedForLater", "Saved for later") : t("notebook.dock.saveForLater", "Save for later")) : isMarked ? t("notebook.dock.bookmarked", "Bookmarked") : t("notebook.dock.bookmark", "Bookmark")}
       </button>
 
       {!explore && (
         <>
           <button type="button" onClick={() => setPanel((p) => (p === "notes" ? null : "notes"))} aria-expanded={panel === "notes"} className={clsx("chip flex items-center gap-1.5 transition", panel === "notes" ? "!border-accent !text-accent" : "hover:text-accent")}>
             <NotebookPen className="h-4 w-4" />
-            Notes
-            {hydrated && hasNote && <span className="h-1.5 w-1.5 rounded-full bg-accent" aria-label="Has a note" />}
+            {t("notebook.dock.notes", "Notes")}
+            {hydrated && hasNote && <span className="h-1.5 w-1.5 rounded-full bg-accent" aria-label={t("notebook.dock.hasNote", "Has a note")} />}
           </button>
           <button type="button" onClick={() => setPanel((p) => (p === "doubt" ? null : "doubt"))} aria-expanded={panel === "doubt"} className={clsx("chip flex items-center gap-1.5 transition", panel === "doubt" ? "!border-accent !text-accent" : "hover:text-accent")}>
             <CircleHelp className="h-4 w-4" />
-            Add a doubt
+            {t("notebook.dock.addDoubt", "Add a doubt")}
             {hydrated && openDoubts > 0 && <span className="rounded-full bg-accent-soft px-1.5 text-[11px] font-bold text-accent tabular-nums">{openDoubts}</span>}
           </button>
           <Link href="/notebook" className="ml-auto text-xs font-bold text-muted hover:text-accent">
-            Open notebook
+            {t("notebook.dock.openNotebook", "Open notebook")}
           </Link>
         </>
       )}
@@ -71,6 +73,7 @@ export function NotebookDock({ lessonId, title, href }: Props) {
 }
 
 function NotesPanel({ lessonId, title, onClose }: { lessonId: string; title: string; onClose: () => void }) {
+  const t = useT();
   const saved = useNotebook((s) => s.notes[lessonId]?.text ?? "");
   const updatedAt = useNotebook((s) => s.notes[lessonId]?.updatedAt);
   const setNote = useNotebook((s) => s.setNote);
@@ -97,7 +100,7 @@ function NotesPanel({ lessonId, title, onClose }: { lessonId: string; title: str
   return (
     <motion.aside
       role="dialog"
-      aria-label={`Notes for ${title}`}
+      aria-label={t("notebook.notes.dialogLabel", "Notes for {title}", { title })}
       initial={{ x: 40, opacity: 0 }}
       animate={{ x: 0, opacity: 1 }}
       exit={{ x: 40, opacity: 0 }}
@@ -106,10 +109,10 @@ function NotesPanel({ lessonId, title, onClose }: { lessonId: string; title: str
     >
       <div className="flex items-start gap-3">
         <div className="min-w-0 flex-1">
-          <p className="eyebrow">Notes</p>
+          <p className="eyebrow">{t("notebook.dock.notes", "Notes")}</p>
           <h2 className="truncate font-black">{title}</h2>
         </div>
-        <button type="button" onClick={onClose} className="btn-flat !p-1.5" aria-label="Close notes">
+        <button type="button" onClick={onClose} className="btn-flat !p-1.5" aria-label={t("notebook.notes.close", "Close notes")}>
           <X className="h-4 w-4" />
         </button>
       </div>
@@ -117,13 +120,13 @@ function NotesPanel({ lessonId, title, onClose }: { lessonId: string; title: str
         ref={ref}
         value={text}
         onChange={(e) => onChange(e.target.value)}
-        placeholder="Write what you want to remember from this lesson. Notes save automatically."
+        placeholder={t("notebook.notes.placeholder", "Write what you want to remember from this lesson. Notes save automatically.")}
         className="input mt-4 min-h-0 flex-1 resize-none text-sm leading-relaxed"
       />
       <div className="mt-3 flex items-center justify-between text-xs font-semibold text-muted">
-        <span aria-live="polite">{status === "saving" ? "Saving…" : status === "saved" ? "Saved" : updatedAt ? `Last saved ${new Date(updatedAt).toLocaleString()}` : "Nothing saved yet"}</span>
+        <span aria-live="polite">{status === "saving" ? t("notebook.notes.saving", "Saving…") : status === "saved" ? t("notebook.notes.saved", "Saved") : updatedAt ? t("notebook.notes.lastSaved", "Last saved {date}", { date: new Date(updatedAt).toLocaleString() }) : t("notebook.notes.nothingSaved", "Nothing saved yet")}</span>
         <Link href="/notebook" className="font-bold hover:text-accent">
-          All notes
+          {t("notebook.notes.allNotes", "All notes")}
         </Link>
       </div>
     </motion.aside>
@@ -131,6 +134,7 @@ function NotesPanel({ lessonId, title, onClose }: { lessonId: string; title: str
 }
 
 function DoubtForm({ lessonId, onClose }: { lessonId: string; onClose: () => void }) {
+  const t = useT();
   const addDoubt = useNotebook((s) => s.addDoubt);
   const [title, setTitle] = useState("");
   const [text, setText] = useState("");
@@ -160,27 +164,27 @@ function DoubtForm({ lessonId, onClose }: { lessonId: string; onClose: () => voi
       <div className="card mt-1 p-4">
         {done ? (
           <div className="flex flex-wrap items-center gap-3">
-            <p className="min-w-0 flex-1 text-sm font-semibold text-muted">Added to your doubts. Come back to it once the idea clicks.</p>
+            <p className="min-w-0 flex-1 text-sm font-semibold text-muted">{t("notebook.doubt.added", "Added to your doubts. Come back to it once the idea clicks.")}</p>
             <button type="button" onClick={() => setDone(false)} className="btn-ghost !px-3 !py-1.5 text-xs">
-              Add another
+              {t("notebook.doubt.addAnother", "Add another")}
             </button>
             <button type="button" onClick={onClose} className="btn-flat !px-3 !py-1.5 text-xs">
-              Close
+              {t("notebook.doubt.close", "Close")}
             </button>
           </div>
         ) : (
           <>
             <label className="block text-sm font-bold" htmlFor="doubt-title">
-              What is unclear?
+              {t("notebook.doubt.titleLabel", "What is unclear?")}
             </label>
-            <input id="doubt-title" ref={ref} value={title} onChange={(e) => setTitle(e.target.value)} placeholder="One line, e.g. Why does the loop stop at n-1?" className="input mt-1.5 w-full text-sm" maxLength={120} required />
-            <textarea value={text} onChange={(e) => setText(e.target.value)} placeholder="Optional: add what you tried or where you got stuck." className="input mt-2 w-full resize-none text-sm" rows={2} />
+            <input id="doubt-title" ref={ref} value={title} onChange={(e) => setTitle(e.target.value)} placeholder={t("notebook.doubt.titlePlaceholder", "One line, e.g. Why does the loop stop at n-1?")} className="input mt-1.5 w-full text-sm" maxLength={120} required />
+            <textarea value={text} onChange={(e) => setText(e.target.value)} placeholder={t("notebook.doubt.textPlaceholder", "Optional: add what you tried or where you got stuck.")} className="input mt-2 w-full resize-none text-sm" rows={2} />
             <div className="mt-3 flex items-center gap-2">
               <button type="submit" className="btn-primary !py-2 text-sm" disabled={!title.trim()}>
-                Save doubt
+                {t("notebook.doubt.save", "Save doubt")}
               </button>
               <button type="button" onClick={onClose} className="btn-flat !py-2 text-sm">
-                Cancel
+                {t("notebook.doubt.cancel", "Cancel")}
               </button>
             </div>
           </>

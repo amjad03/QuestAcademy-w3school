@@ -13,42 +13,44 @@ import { useHydrated } from "@/components/providers";
 import { CourseIcon, courseStyle } from "@/components/brand/CourseIcon";
 import { ProgressBar } from "@/components/ui/Progress";
 import { masteryPoints } from "@/lib/mastery";
+import { useT } from "@/i18n";
 
 type Card = CourseCard & { description: string };
 
 export function CourseCatalog({ courses }: { courses: Card[] }) {
+  const t = useT();
   const params = useSearchParams();
   const router = useRouter();
   const cat = (params.get("c") as WorldId | null) ?? null;
   const [q, setQ] = useState("");
 
   const shown = useMemo(() => {
-    const t = q.trim().toLowerCase();
-    return courses.filter((c) => (!cat || c.world === cat) && (!t || [c.title, c.tagline, c.description, c.domain ?? "", ...c.levels].join(" ").toLowerCase().includes(t)));
+    const needle = q.trim().toLowerCase();
+    return courses.filter((c) => (!cat || c.world === cat) && (!needle || [c.title, c.tagline, c.description, c.domain ?? "", ...c.levels].join(" ").toLowerCase().includes(needle)));
   }, [courses, cat, q]);
 
   const groups = worlds.filter((w) => !cat || w.id === cat).map((w) => ({ w, list: shown.filter((c) => c.world === w.id) })).filter((g) => g.list.length);
 
   return (
     <div className="mx-auto max-w-[1060px] px-4 py-8 sm:px-6">
-      <h1 className="text-3xl font-black">Courses</h1>
-      <p className="mt-1 font-semibold text-muted">Every course has videos, lessons, practice, unit tests and a course challenge.</p>
+      <h1 className="text-3xl font-black">{t("course.catalog.title", "Courses")}</h1>
+      <p className="mt-1 font-semibold text-muted">{t("course.catalog.subtitle", "Every course has videos, lessons, practice, unit tests and a course challenge.")}</p>
 
       <div className="mt-6 flex flex-col gap-4 lg:flex-row lg:items-center">
         <div className="flex flex-wrap gap-2">
-          {[{ id: null, name: "All" }, ...worlds.map((w) => ({ id: w.id, name: w.name }))].map((t) => (
+          {[{ id: null, name: t("course.catalog.all", "All") }, ...worlds.map((w) => ({ id: w.id, name: w.name }))].map((f) => (
             <button
-              key={t.id ?? "all"}
-              onClick={() => router.replace(t.id ? `/courses?c=${t.id}` : "/courses", { scroll: false })}
-              className={clsx("rounded-xl border-2 border-b-4 px-4 py-2 text-sm font-extrabold transition", cat === t.id ? "border-accent bg-accent-soft text-accent" : "border-line bg-surface text-muted hover:bg-surface-2")}
+              key={f.id ?? "all"}
+              onClick={() => router.replace(f.id ? `/courses?c=${f.id}` : "/courses", { scroll: false })}
+              className={clsx("rounded-xl border-2 border-b-4 px-4 py-2 text-sm font-extrabold transition", cat === f.id ? "border-accent bg-accent-soft text-accent" : "border-line bg-surface text-muted hover:bg-surface-2")}
             >
-              {t.name}
+              {f.name}
             </button>
           ))}
         </div>
         <label className="relative lg:ml-auto lg:w-72">
           <Search className="absolute left-4 top-1/2 h-5 w-5 -translate-y-1/2 text-muted" />
-          <input value={q} onChange={(e) => setQ(e.target.value)} placeholder="Search courses" className="input pl-12" />
+          <input value={q} onChange={(e) => setQ(e.target.value)} placeholder={t("course.catalog.search", "Search courses")} className="input pl-12" />
         </label>
       </div>
 
@@ -66,13 +68,14 @@ export function CourseCatalog({ courses }: { courses: Card[] }) {
             </div>
           </section>
         ))}
-        {groups.length === 0 && <p className="py-20 text-center font-bold text-muted">No courses match “{q}”.</p>}
+        {groups.length === 0 && <p className="py-20 text-center font-bold text-muted">{t("course.catalog.noMatch", "No courses match “{query}”.", { query: q })}</p>}
       </div>
     </div>
   );
 }
 
 function CourseTile({ c }: { c: Card }) {
+  const t = useT();
   const hydrated = useHydrated();
   const mastery = useLearner((s) => s.mastery);
   const setProfile = useLearner((s) => s.setProfile);
@@ -94,8 +97,8 @@ function CourseTile({ c }: { c: Card }) {
             {l}
           </span>
         ))}
-        <span className="chip">{c.units} units</span>
-        <span className="chip">{c.lessons} lessons</span>
+        <span className="chip">{t("course.stats.units", "{n} units", { n: c.units })}</span>
+        <span className="chip">{t("course.stats.lessons", "{n} lessons", { n: c.lessons })}</span>
       </div>
       <div className="mt-auto flex items-center gap-3 pt-5">
         {mp.pct > 0 ? (
@@ -106,10 +109,10 @@ function CourseTile({ c }: { c: Card }) {
             </span>
           </>
         ) : (
-          <span className="flex-1 text-sm font-bold text-muted">Not started</span>
+          <span className="flex-1 text-sm font-bold text-muted">{t("course.catalog.notStarted", "Not started")}</span>
         )}
         <Link href="/learn" onClick={() => setProfile({ course: c.slug })} className={clsx("btn !px-4 !py-2 text-xs", hydrated && current === c.slug ? "btn-ghost" : "btn-primary")}>
-          {hydrated && current === c.slug ? "Continue" : "Start"}
+          {hydrated && current === c.slug ? t("course.continue", "Continue") : t("course.start", "Start")}
         </Link>
       </div>
     </div>

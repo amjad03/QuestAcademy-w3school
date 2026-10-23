@@ -10,7 +10,9 @@ import { Md, MdInline } from "@/components/Md";
 import { useLearner, type MockResult } from "@/lib/store";
 import { SUBJECT_META, assembleMock, scoreQuestion, type MockTest } from "@/lib/exam";
 import { useHydrated } from "@/components/providers";
+import { useT } from "@/i18n";
 import { MockReport } from "./MockReport";
+import { useSubjectNames } from "./labels";
 
 type Status = "unvisited" | "unanswered" | "answered" | "marked" | "answered-marked";
 
@@ -38,6 +40,15 @@ const MOCK_ICON: Record<string, { icon: LucideIcon; color: string }> = {
 
 export function CbtExam({ test, pool }: { test: MockTest; pool: ExamQuestion[] }) {
   const hydrated = useHydrated();
+  const t = useT();
+  const subjectName = useSubjectNames();
+  const LEGEND: Record<Status, string> = {
+    unvisited: t("exam.cbt.legend.unvisited", "Not visited"),
+    unanswered: t("exam.cbt.legend.unanswered", "Not answered"),
+    answered: t("exam.cbt.legend.answered", "Answered"),
+    marked: t("exam.cbt.legend.marked", "Marked"),
+    "answered-marked": t("exam.cbt.legend.answeredMarked", "Answered & marked"),
+  };
   const recordMock = useLearner((s) => s.recordMock);
   const [phase, setPhase] = useState<"intro" | "test" | "result">("intro");
   const [session, setSession] = useState<Session | null>(null);
@@ -69,8 +80,8 @@ export function CbtExam({ test, pool }: { test: MockTest; pool: ExamQuestion[] }
 
   useEffect(() => {
     if (phase !== "test") return;
-    const t = setInterval(() => setNow(Date.now()), 1000);
-    return () => clearInterval(t);
+    const timer = setInterval(() => setNow(Date.now()), 1000);
+    return () => clearInterval(timer);
   }, [phase]);
 
   const questions = useMemo(() => session?.ids.map((id) => byId.get(id)!) ?? [], [session, byId]);
@@ -190,37 +201,38 @@ export function CbtExam({ test, pool }: { test: MockTest; pool: ExamQuestion[] }
       <div className="min-h-screen bg-bg text-ink">
         <div className="mx-auto max-w-3xl px-5 py-8">
           <Link href="/exam/mock" className="flex items-center gap-1 text-sm font-extrabold uppercase tracking-wide text-muted hover:text-accent">
-            <ArrowLeft className="h-4 w-4" /> All mock tests
+            <ArrowLeft className="h-4 w-4" /> {t("exam.cbt.allMocks", "All mock tests")}
           </Link>
           <div className="mt-8 flex items-center gap-5">
             <span className="grid h-16 w-16 shrink-0 place-items-center rounded-2xl text-white" style={{ background: meta.color }}>
               <TestIcon className="h-8 w-8" strokeWidth={2.5} />
             </span>
             <div className="min-w-0">
-              <p className="eyebrow">Mock test · {test.exam === "Mixed" ? "NEET · JEE" : test.exam}</p>
+              <p className="eyebrow">{t("exam.cbt.eyebrow", "Mock test · {exam}", { exam: test.exam === "Mixed" ? "NEET · JEE" : test.exam })}</p>
               <h1 className="mt-1 text-3xl font-black">{test.title}</h1>
               <p className="mt-1 font-semibold text-muted">{test.blurb}</p>
             </div>
           </div>
 
           <div className="mt-8 grid grid-cols-3 gap-3">
-            <Info label="Questions" value={String(total)} />
-            <Info label="Duration" value={`${test.minutes} min`} />
-            <Info label="Max marks" value={String(total * test.marking.correct)} />
+            <Info label={t("exam.cbt.info.questions", "Questions")} value={String(total)} />
+            <Info label={t("exam.cbt.info.duration", "Duration")} value={t("exam.cbt.minutes", "{n} min", { n: test.minutes })} />
+            <Info label={t("exam.cbt.info.maxMarks", "Max marks")} value={String(total * test.marking.correct)} />
           </div>
 
           <div className="card mt-6 p-6">
-            <h2 className="text-lg font-black">Instructions</h2>
+            <h2 className="text-lg font-black">{t("exam.cbt.instructions", "Instructions")}</h2>
             <ul className="mt-3 space-y-2 font-semibold leading-7 text-muted">
               <li>
-                <b className="text-ink">Sections:</b> {test.sections.map((s) => `${SUBJECT_META[s.subject].name} (${s.count})`).join(" · ")}
+                <b className="text-ink">{t("exam.cbt.sections", "Sections:")}</b> {test.sections.map((s) => `${subjectName[s.subject]} (${s.count})`).join(" · ")}
               </li>
               <li>
-                <b className="text-ink">Marking:</b> <span className="font-black text-good">+{test.marking.correct}</span> correct, <span className="font-black text-bad">{test.marking.wrong}</span> wrong MCQ,{" "}
-                {test.marking.numericWrong} wrong numerical, 0 unattempted.
+                <b className="text-ink">{t("exam.cbt.marking", "Marking:")}</b> <span className="font-black text-good">+{test.marking.correct}</span> {t("exam.cbt.marking.correct", "correct,")}{" "}
+                <span className="font-black text-bad">{test.marking.wrong}</span> {t("exam.cbt.marking.wrongMcq", "wrong MCQ,")}{" "}
+                {t("exam.cbt.marking.rest", "{n} wrong numerical, 0 unattempted.", { n: test.marking.numericWrong })}
               </li>
-              <li>Use the palette to jump between questions. “Mark for review” flags a question to revisit — marked answers are still evaluated.</li>
-              <li>The timer keeps running if you refresh; your attempt is saved and resumes automatically. The test auto-submits at 00:00.</li>
+              <li>{t("exam.cbt.rule.palette", "Use the palette to jump between questions. “Mark for review” flags a question to revisit — marked answers are still evaluated.")}</li>
+              <li>{t("exam.cbt.rule.timer", "The timer keeps running if you refresh; your attempt is saved and resumes automatically. The test auto-submits at 00:00.")}</li>
             </ul>
             <div className="mt-5 grid grid-cols-2 gap-3 border-t-2 border-line pt-5 sm:grid-cols-3">
               {(["unvisited", "unanswered", "answered", "marked", "answered-marked"] as Status[]).map((st) => (
@@ -235,7 +247,7 @@ export function CbtExam({ test, pool }: { test: MockTest; pool: ExamQuestion[] }
             {session ? (
               <>
                 <button className="btn-primary sm:min-w-[240px]" onClick={() => start(true)}>
-                  Resume · {Math.floor(remaining / 60)} min left
+                  {t("exam.cbt.resume", "Resume · {n} min left", { n: Math.floor(remaining / 60) })}
                 </button>
                 <button
                   className="btn-ghost"
@@ -245,12 +257,12 @@ export function CbtExam({ test, pool }: { test: MockTest; pool: ExamQuestion[] }
                     start(false);
                   }}
                 >
-                  Start fresh
+                  {t("exam.cbt.startFresh", "Start fresh")}
                 </button>
               </>
             ) : (
               <button className="btn-primary sm:min-w-[240px]" onClick={() => start(false)}>
-                Begin test
+                {t("exam.cbt.begin", "Begin test")}
               </button>
             )}
           </div>
@@ -298,7 +310,7 @@ export function CbtExam({ test, pool }: { test: MockTest; pool: ExamQuestion[] }
           return (
             <div key={sub}>
               <div className="mb-2 flex items-center gap-2 text-xs font-extrabold uppercase tracking-wider text-muted">
-                <I className="h-4 w-4" style={{ color: SUBJECT_META[sub].color }} /> {SUBJECT_META[sub].name}
+                <I className="h-4 w-4" style={{ color: SUBJECT_META[sub].color }} /> {subjectName[sub]}
               </div>
               <div className="grid grid-cols-6 gap-2">
                 {questions.map((q, i) =>
@@ -311,7 +323,7 @@ export function CbtExam({ test, pool }: { test: MockTest; pool: ExamQuestion[] }
                         setPaletteOpen(false);
                       }}
                       className={clsx("rounded-lg", i === session.current && "ring-2 ring-ink ring-offset-2 ring-offset-surface")}
-                      aria-label={`Question ${i + 1}: ${LEGEND[statusOf(q.id)]}`}
+                      aria-label={t("exam.cbt.paletteItem", "Question {n}: {status}", { n: i + 1, status: LEGEND[statusOf(q.id)] })}
                     >
                       <PaletteDot status={statusOf(q.id)} label={String(i + 1)} big />
                     </button>
@@ -324,7 +336,7 @@ export function CbtExam({ test, pool }: { test: MockTest; pool: ExamQuestion[] }
       </div>
       <div className="border-t-2 border-line p-4">
         <button className="btn-good w-full" onClick={() => setConfirm(true)}>
-          <Flag className="h-4 w-4" /> Submit test
+          <Flag className="h-4 w-4" /> {t("exam.cbt.submitTest", "Submit test")}
         </button>
       </div>
     </div>
@@ -340,18 +352,18 @@ export function CbtExam({ test, pool }: { test: MockTest; pool: ExamQuestion[] }
         <div className="min-w-0">
           <div className="truncate font-black">{test.title}</div>
           <div className="text-xs font-bold text-muted">
-            Question {session.current + 1} of {questions.length}
+            {t("exam.cbt.progress", "Question {n} of {total}", { n: session.current + 1, total: questions.length })}
           </div>
         </div>
         <div
           className={clsx("ml-auto flex items-center gap-2 rounded-xl border-2 px-3 py-1.5 font-mono text-lg font-black", low ? "animate-pulse border-bad bg-bad-soft text-bad" : "border-line bg-surface-2 text-ink")}
           aria-live="polite"
-          aria-label="Time remaining"
+          aria-label={t("exam.cbt.timeRemaining", "Time remaining")}
         >
           <Clock className="h-4 w-4" />
           {String(Math.floor(remaining / 3600)).padStart(2, "0")}:{String(Math.floor((remaining % 3600) / 60)).padStart(2, "0")}:{String(remaining % 60).padStart(2, "0")}
         </div>
-        <button className="grid h-10 w-10 place-items-center rounded-xl border-2 border-line lg:hidden" onClick={() => setPaletteOpen(true)} aria-label="Question palette">
+        <button className="grid h-10 w-10 place-items-center rounded-xl border-2 border-line lg:hidden" onClick={() => setPaletteOpen(true)} aria-label={t("exam.cbt.palette", "Question palette")}>
           <LayoutGrid className="h-5 w-5" />
         </button>
       </header>
@@ -372,7 +384,7 @@ export function CbtExam({ test, pool }: { test: MockTest; pool: ExamQuestion[] }
               }}
               className={clsx("-mb-[2px] flex shrink-0 items-center gap-2 border-b-4 px-4 py-3 text-sm font-extrabold uppercase tracking-wide transition", active ? "border-accent text-accent" : "border-transparent text-muted hover:text-ink")}
             >
-              <I className="h-4 w-4" /> {SUBJECT_META[sub].name}
+              <I className="h-4 w-4" /> {subjectName[sub]}
             </button>
           );
         })}
@@ -386,7 +398,7 @@ export function CbtExam({ test, pool }: { test: MockTest; pool: ExamQuestion[] }
               <div className="flex flex-wrap items-center gap-2">
                 <span className="rounded-lg bg-ink px-2.5 py-1 text-sm font-black text-bg">Q{session.current + 1}</span>
                 <span className="chip">{current.chapter}</span>
-                <span className="chip">{current.kind === "numeric" ? "Numerical value" : "Single correct"}</span>
+                <span className="chip">{current.kind === "numeric" ? t("exam.cbt.kind.numeric", "Numerical value") : t("exam.cbt.kind.single", "Single correct")}</span>
                 <span className="chip !bg-good-soft !text-good-shade">+{test.marking.correct}</span>
                 <span className="chip !bg-bad-soft !text-bad-shade">{current.kind === "numeric" ? test.marking.numericWrong : test.marking.wrong}</span>
               </div>
@@ -418,7 +430,7 @@ export function CbtExam({ test, pool }: { test: MockTest; pool: ExamQuestion[] }
                 ) : (
                   <div>
                     <label className="eyebrow" htmlFor="num-answer">
-                      Enter your numerical answer{current.unit ? ` (${current.unit})` : ""}
+                      {t("exam.cbt.numericLabel", "Enter your numerical answer")}{current.unit ? ` (${current.unit})` : ""}
                     </label>
                     <input
                       id="num-answer"
@@ -443,9 +455,9 @@ export function CbtExam({ test, pool }: { test: MockTest; pool: ExamQuestion[] }
                 go(Math.max(0, session.current - 1));
               }}
               disabled={session.current === 0}
-              aria-label="Previous question"
+              aria-label={t("exam.cbt.previousAria", "Previous question")}
             >
-              <ChevronLeft className="h-4 w-4" /> <span className="hidden sm:inline">Previous</span>
+              <ChevronLeft className="h-4 w-4" /> <span className="hidden sm:inline">{t("exam.cbt.previous", "Previous")}</span>
             </button>
             <button
               className="btn-ghost !px-4"
@@ -453,15 +465,15 @@ export function CbtExam({ test, pool }: { test: MockTest; pool: ExamQuestion[] }
                 setAnswer(null);
                 setDraft("");
               }}
-              aria-label="Clear response"
+              aria-label={t("exam.cbt.clearAria", "Clear response")}
             >
-              <Eraser className="h-4 w-4" /> <span className="hidden sm:inline">Clear</span>
+              <Eraser className="h-4 w-4" /> <span className="hidden sm:inline">{t("exam.cbt.clear", "Clear")}</span>
             </button>
-            <button className="btn-purple !px-4" onClick={() => saveNext(true)} aria-label="Mark for review and next">
-              <Bookmark className="h-4 w-4" /> <span className="hidden sm:inline">Mark &amp; next</span>
+            <button className="btn-purple !px-4" onClick={() => saveNext(true)} aria-label={t("exam.cbt.markNextAria", "Mark for review and next")}>
+              <Bookmark className="h-4 w-4" /> <span className="hidden sm:inline">{t("exam.cbt.markNext", "Mark & next")}</span>
             </button>
             <button className="btn-primary ml-auto" onClick={() => (session.current === questions.length - 1 ? (commitDraft(), setConfirm(true)) : saveNext(false))}>
-              {session.current === questions.length - 1 ? "Save & submit" : "Save & next"} <ChevronRight className="h-4 w-4" />
+              {session.current === questions.length - 1 ? t("exam.cbt.saveSubmit", "Save & submit") : t("exam.cbt.saveNext", "Save & next")} <ChevronRight className="h-4 w-4" />
             </button>
           </div>
         </main>
@@ -474,7 +486,7 @@ export function CbtExam({ test, pool }: { test: MockTest; pool: ExamQuestion[] }
         {paletteOpen && (
           <motion.div className="fixed inset-0 z-[60] bg-ink/40 lg:hidden" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} onClick={() => setPaletteOpen(false)}>
             <motion.div className="absolute inset-y-0 right-0 w-[86%] max-w-sm bg-surface" initial={{ x: "100%" }} animate={{ x: 0 }} exit={{ x: "100%" }} onClick={(e) => e.stopPropagation()}>
-              <button className="absolute right-3 top-3 z-10 grid h-9 w-9 place-items-center rounded-xl hover:bg-surface-2" onClick={() => setPaletteOpen(false)} aria-label="Close">
+              <button className="absolute right-3 top-3 z-10 grid h-9 w-9 place-items-center rounded-xl hover:bg-surface-2" onClick={() => setPaletteOpen(false)} aria-label={t("exam.cbt.close", "Close")}>
                 <X className="h-5 w-5" />
               </button>
               {palette}
@@ -491,21 +503,21 @@ export function CbtExam({ test, pool }: { test: MockTest; pool: ExamQuestion[] }
               <div className="flex items-center gap-3">
                 <AlertTriangle className="h-6 w-6 text-warn-shade" />
                 <h2 id="submit-title" className="text-xl font-black">
-                  Submit your test?
+                  {t("exam.cbt.confirm.title", "Submit your test?")}
                 </h2>
               </div>
               <div className="mt-5 grid grid-cols-2 gap-2.5">
-                <Info label="Answered" value={String(counts.answered + counts["answered-marked"])} />
-                <Info label="Not answered" value={String(counts.unanswered + counts.unvisited + counts.marked)} />
-                <Info label="Marked" value={String(counts.marked + counts["answered-marked"])} />
-                <Info label="Time left" value={`${Math.floor(remaining / 60)}m ${remaining % 60}s`} />
+                <Info label={t("exam.cbt.legend.answered", "Answered")} value={String(counts.answered + counts["answered-marked"])} />
+                <Info label={t("exam.cbt.legend.unanswered", "Not answered")} value={String(counts.unanswered + counts.unvisited + counts.marked)} />
+                <Info label={t("exam.cbt.legend.marked", "Marked")} value={String(counts.marked + counts["answered-marked"])} />
+                <Info label={t("exam.cbt.timeLeft", "Time left")} value={t("exam.cbt.timeLeftValue", "{m}m {s}s", { m: Math.floor(remaining / 60), s: remaining % 60 })} />
               </div>
               <div className="mt-7 flex flex-col-reverse gap-2 sm:flex-row sm:justify-end">
                 <button className="btn-ghost" onClick={() => setConfirm(false)} autoFocus>
-                  Keep going
+                  {t("exam.cbt.keepGoing", "Keep going")}
                 </button>
                 <button className="btn-good" onClick={submit}>
-                  Submit
+                  {t("exam.cbt.submit", "Submit")}
                 </button>
               </div>
             </motion.div>
@@ -515,14 +527,6 @@ export function CbtExam({ test, pool }: { test: MockTest; pool: ExamQuestion[] }
     </div>
   );
 }
-
-const LEGEND: Record<Status, string> = {
-  unvisited: "Not visited",
-  unanswered: "Not answered",
-  answered: "Answered",
-  marked: "Marked",
-  "answered-marked": "Answered & marked",
-};
 
 function PaletteDot({ status, label, big }: { status: Status; label?: string; big?: boolean }) {
   return (

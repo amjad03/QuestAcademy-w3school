@@ -13,6 +13,7 @@ import { Mascot, type MascotPose } from "@/components/brand/Mascot";
 import { ProgressBar } from "@/components/ui/Progress";
 import { MASTERY } from "@/lib/mastery";
 import { sfx } from "@/lib/sound";
+import { useT } from "@/i18n";
 
 type Node =
   | { kind: "lesson"; key: string; lesson: CourseLesson; index: number }
@@ -45,6 +46,7 @@ function unitNodes(u: CourseUnit): Node[] {
 }
 
 export function LearnPath({ outline }: { outline: CourseOutline }) {
+  const t = useT();
   const s = useLearner();
   const [open, setOpen] = useState<string | null>(null);
   const { color, shade } = courseStyle(outline.slug);
@@ -80,11 +82,11 @@ export function LearnPath({ outline }: { outline: CourseOutline }) {
           <div className="flex items-baseline justify-between gap-3">
             <h1 className="truncate text-2xl font-black">{outline.title}</h1>
             <Link href={outline.href} className="shrink-0 text-sm font-extrabold uppercase tracking-wide text-accent">
-              Course overview
+              {t("learn.path.courseOverview", "Course overview")}
             </Link>
           </div>
           <div className="mt-2 flex items-center gap-3">
-            <ProgressBar value={cp.pct} height={12} color={color} label="Course mastery" />
+            <ProgressBar value={cp.pct} height={12} color={color} label={t("learn.path.courseMastery", "Course mastery")} />
             <span className="shrink-0 text-sm font-black" style={{ color }}>
               {Math.round(cp.pct * 100)}%
             </span>
@@ -101,11 +103,11 @@ export function LearnPath({ outline }: { outline: CourseOutline }) {
             <div className="sticky top-[60px] z-20 md:top-4">
               <div className="flex items-center justify-between gap-4 rounded-2xl px-5 py-4 text-white" style={{ background: color, boxShadow: `inset 0 -4px 0 ${shade}` }}>
                 <div className="min-w-0">
-                  <p className="text-[13px] font-extrabold uppercase tracking-[0.12em] text-white/75">Unit {ui + 1}</p>
+                  <p className="text-[13px] font-extrabold uppercase tracking-[0.12em] text-white/75">{t("learn.path.unit", "Unit {n}", { n: ui + 1 })}</p>
                   <h2 className="truncate text-xl font-black">{u.title}</h2>
                 </div>
                 <Link href={u.href} className="flex shrink-0 items-center gap-2 rounded-xl border-2 border-b-4 border-white/30 px-3 py-2 text-sm font-extrabold uppercase tracking-wide hover:bg-white/10">
-                  <NotebookText className="h-5 w-5" /> <span className="hidden sm:inline">Guidebook</span>
+                  <NotebookText className="h-5 w-5" /> <span className="hidden sm:inline">{t("learn.path.guidebook", "Guidebook")}</span>
                 </Link>
               </div>
             </div>
@@ -152,10 +154,10 @@ export function LearnPath({ outline }: { outline: CourseOutline }) {
         <span className="grid h-20 w-20 place-items-center rounded-full bg-warn text-white" style={{ boxShadow: "inset 0 -5px 0 rgb(var(--warn-shade))" }}>
           <Trophy className="h-10 w-10" strokeWidth={2.4} />
         </span>
-        <h2 className="text-2xl font-black">Course challenge</h2>
-        <p className="max-w-sm font-semibold text-muted">Test your knowledge of the whole course. Correct answers level up skills — all the way to Mastered.</p>
+        <h2 className="text-2xl font-black">{t("learn.path.challenge.title", "Course challenge")}</h2>
+        <p className="max-w-sm font-semibold text-muted">{t("learn.path.challenge.body", "Test your knowledge of the whole course. Correct answers level up skills — all the way to Mastered.")}</p>
         <Link href={outline.challenge.href} className="btn-gold">
-          Start challenge · {outline.challenge.questions} questions
+          {t("learn.path.challenge.start", "Start challenge · {n} questions", { n: outline.challenge.questions })}
         </Link>
       </section>
     </div>
@@ -187,6 +189,7 @@ function PathNode({
   lessonTotal: number;
   chestUnlocked: boolean;
 }) {
+  const t = useT();
   const s = useLearner();
   const markItem = useLearner((st) => st.markItem);
   const claimCoins = useLearner((st) => st.claimCoins);
@@ -225,7 +228,7 @@ function PathNode({
           animate={{ y: [0, -5, 0] }}
           transition={{ repeat: Infinity, duration: 1.4, ease: "easeInOut" }}
         >
-          Start
+          {t("learn.path.start", "Start")}
           <span className="absolute -bottom-[7px] left-1/2 h-3 w-3 -translate-x-1/2 rotate-45 border-b-2 border-r-2 border-line bg-surface" />
         </motion.div>
       )}
@@ -233,7 +236,7 @@ function PathNode({
       <button
         onClick={onToggle}
         aria-expanded={open}
-        aria-label={node.kind === "lesson" ? node.lesson.title : node.kind === "assessment" ? node.a.title : "Treasure chest"}
+        aria-label={node.kind === "lesson" ? node.lesson.title : node.kind === "assessment" ? node.a.title : t("learn.path.chest.title", "Treasure chest")}
         className="relative grid place-items-center"
         style={{ width: size + 24, height: size + 24 }}
       >
@@ -276,21 +279,23 @@ function PathNode({
             )}
             {node.kind === "assessment" && (
               <div className="relative">
-                <h3 className="text-lg font-black">{node.a.kind === "test" ? "Unit test" : "Unit quiz"}</h3>
+                <h3 className="text-lg font-black">{node.a.kind === "test" ? t("learn.path.unitTest", "Unit test") : t("learn.path.unitQuiz", "Unit quiz")}</h3>
                 <p className={clsx("mt-1 text-[15px] font-semibold", active ? "text-white/85" : "text-muted")}>
-                  {node.a.questions} questions · Correct answers level up skills{node.a.kind === "test" ? " to Mastered" : " to Proficient"}.
-                  {s.assessments[node.a.key] !== undefined && ` Best: ${Math.round(s.assessments[node.a.key] * 100)}%.`}
+                  {node.a.kind === "test"
+                    ? t("learn.path.assessment.descTest", "{n} questions · Correct answers level up skills to Mastered.", { n: node.a.questions })
+                    : t("learn.path.assessment.descQuiz", "{n} questions · Correct answers level up skills to Proficient.", { n: node.a.questions })}
+                  {s.assessments[node.a.key] !== undefined && " " + t("learn.path.assessment.best", "Best: {pct}%.", { pct: Math.round(s.assessments[node.a.key] * 100) })}
                 </p>
                 <Link href={node.a.href} className={clsx("btn mt-4 w-full", active ? "border-black/15 bg-white" : "border-line bg-surface-2 text-muted")} style={active ? { color } : undefined}>
-                  {active ? (s.assessments[node.a.key] !== undefined ? "Retake" : "Start") : "Jump ahead"} +{node.a.questions * 3} XP
+                  {active ? (s.assessments[node.a.key] !== undefined ? t("learn.path.retake", "Retake") : t("learn.path.start", "Start")) : t("learn.path.jumpAhead", "Jump ahead")} +{node.a.questions * 3} XP
                 </Link>
               </div>
             )}
             {node.kind === "chest" && (
               <div className="relative text-center">
-                <h3 className="text-lg font-black">Treasure chest</h3>
+                <h3 className="text-lg font-black">{t("learn.path.chest.title", "Treasure chest")}</h3>
                 {status === "done" ? (
-                  <p className="mt-1 text-[15px] font-semibold opacity-85">You already opened this chest.</p>
+                  <p className="mt-1 text-[15px] font-semibold opacity-85">{t("learn.path.chest.opened", "You already opened this chest.")}</p>
                 ) : (
                   <ChestClaim
                     unlocked={chestUnlocked}
@@ -311,13 +316,14 @@ function PathNode({
 }
 
 function LessonPopover({ lesson, num, total, active, color }: { lesson: CourseLesson; num: number; total: number; active: boolean; color: string }) {
+  const t = useT();
   const s = useLearner();
   const p = lessonProgress(s, lesson);
   return (
     <div className="relative">
       <h3 className="text-lg font-black leading-snug">{lesson.title}</h3>
       <p className={clsx("mt-1 text-[15px] font-semibold", active ? "text-white/85" : "text-muted")}>
-        Lesson {num} of {total} · {MASTERY[p.level].name}
+        {t("learn.path.lessonOf", "Lesson {n} of {total}", { n: num, total })} · {MASTERY[p.level].name}
       </p>
       <ul className="mt-3 space-y-1.5">
         {lesson.items.map((it) => {
@@ -327,7 +333,7 @@ function LessonPopover({ lesson, num, total, active, color }: { lesson: CourseLe
             <li key={it.id}>
               <Link href={it.href} className={clsx("flex items-center gap-2.5 rounded-xl px-2 py-1.5 text-sm font-bold", active ? "hover:bg-white/15" : "hover:bg-surface-2")}>
                 <I className="h-4 w-4 shrink-0 opacity-90" strokeWidth={2.6} />
-                <span className="flex-1 truncate">{it.kind === "practice" ? "Practice" : it.kind === "article" ? "Read the lesson" : it.kind === "video" ? "Watch the video" : it.kind === "cards" ? "Flashcards" : "Coding challenge"}</span>
+                <span className="flex-1 truncate">{it.kind === "practice" ? t("learn.path.item.practice", "Practice") : it.kind === "article" ? t("learn.path.item.article", "Read the lesson") : it.kind === "video" ? t("learn.path.item.video", "Watch the video") : it.kind === "cards" ? t("learn.path.item.cards", "Flashcards") : t("learn.path.item.challenge", "Coding challenge")}</span>
                 {done ? <Check className="h-4 w-4" strokeWidth={3.5} /> : <ChevronRight className="h-4 w-4 opacity-60" />}
               </Link>
             </li>
@@ -335,20 +341,21 @@ function LessonPopover({ lesson, num, total, active, color }: { lesson: CourseLe
         })}
       </ul>
       <Link href={p.nextItem.href} className={clsx("btn mt-3 w-full", active ? "border-black/15 bg-white" : "border-line bg-surface-2 text-muted")} style={active ? { color } : undefined}>
-        {p.complete ? "Review" : p.itemsDone ? "Continue" : active ? "Start" : "Jump here"} +{lesson.items.reduce((a, i) => a + i.xp, 0)} XP
+        {p.complete ? t("learn.path.review", "Review") : p.itemsDone ? t("learn.path.continue", "Continue") : active ? t("learn.path.start", "Start") : t("learn.path.jumpHere", "Jump here")} +{lesson.items.reduce((a, i) => a + i.xp, 0)} XP
       </Link>
     </div>
   );
 }
 
 function ChestClaim({ unlocked, onClaim, active }: { unlocked: boolean; onClaim: () => void; active: boolean }) {
+  const t = useT();
   return unlocked ? (
     <button onClick={onClaim} className="btn-gold mt-3 w-full">
-      Open · +20 coins
+      {t("learn.path.chest.open", "Open · +{n} coins", { n: 20 })}
     </button>
   ) : (
     <p className={clsx("mt-1 flex items-center justify-center gap-1.5 text-[15px] font-semibold", active ? "text-white/85" : "text-muted")}>
-      <Lock className="h-4 w-4" /> Complete the lessons above to unlock
+      <Lock className="h-4 w-4" /> {t("learn.path.chest.locked", "Complete the lessons above to unlock")}
     </p>
   );
 }

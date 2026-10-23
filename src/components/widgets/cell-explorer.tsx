@@ -3,24 +3,104 @@
 import { useState, type ReactNode } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import { bag, readOneOf, Segmented, WidgetTitle } from "./_shared";
+import { useT } from "@/i18n";
 
 type Kind = "animal" | "plant";
 type OrgId = "membrane" | "wall" | "cytoplasm" | "nucleus" | "mitochondria" | "chloroplast" | "vacuole" | "er" | "golgi" | "ribosome" | "lysosome" | "centriole";
 
-const INFO: Record<OrgId, { name: string; emoji: string; fn: string; fact: string }> = {
-  membrane: { name: "Cell membrane", emoji: "🛡️", fn: "A thin, flexible layer that controls what enters and leaves the cell.", fact: "It's 'selectively permeable' — like a bouncer letting only some molecules through." },
-  wall: { name: "Cell wall", emoji: "🧱", fn: "A rigid layer made of cellulose outside the membrane. It gives the plant cell shape and support.", fact: "Only plants, fungi and bacteria have cell walls — animal cells don't." },
-  cytoplasm: { name: "Cytoplasm", emoji: "💧", fn: "The jelly-like fluid that fills the cell. Most chemical reactions happen here.", fact: "It's about 70–80% water." },
-  nucleus: { name: "Nucleus", emoji: "🧠", fn: "The control centre. It holds DNA — the instructions for building and running the cell.", fact: "The dark spot inside is the nucleolus, which makes ribosomes." },
-  mitochondria: { name: "Mitochondria", emoji: "⚡", fn: "The powerhouse: it releases energy from glucose by aerobic respiration, making ATP.", fact: "Mitochondria have their own DNA, inherited from your mother." },
-  chloroplast: { name: "Chloroplast", emoji: "🌿", fn: "Contains green chlorophyll that traps sunlight to make food (glucose) by photosynthesis.", fact: "6CO₂ + 6H₂O → C₆H₁₂O₆ + 6O₂, powered by light." },
-  vacuole: { name: "Vacuole", emoji: "🫧", fn: "A storage sac for water, sugars and waste. In plants one large central vacuole keeps the cell firm (turgid).", fact: "A plant's central vacuole can fill up to 90% of the cell!" },
-  er: { name: "Endoplasmic reticulum", emoji: "🛤️", fn: "A network of folded membranes that transports materials. Rough ER (with ribosomes) makes proteins; smooth ER makes lipids.", fact: "Rough ER is studded with ribosomes, which makes it look bumpy." },
-  golgi: { name: "Golgi apparatus", emoji: "📦", fn: "The packaging and shipping centre: it modifies proteins and packs them into vesicles to send around or out of the cell.", fact: "It looks like a stack of flattened pancakes." },
-  ribosome: { name: "Ribosomes", emoji: "🔩", fn: "Tiny factories that build proteins by reading instructions copied from DNA (mRNA).", fact: "A single cell can have millions of ribosomes." },
-  lysosome: { name: "Lysosome", emoji: "♻️", fn: "Contains digestive enzymes that break down worn-out parts, food particles and invading germs.", fact: "Often called the cell's recycling centre." },
-  centriole: { name: "Centrioles", emoji: "🧵", fn: "Help organise the spindle fibres that pull chromosomes apart when the cell divides.", fact: "Found in animal cells; most plant cells don't have them." },
+const EMOJI: Record<OrgId, string> = {
+  membrane: "🛡️",
+  wall: "🧱",
+  cytoplasm: "💧",
+  nucleus: "🧠",
+  mitochondria: "⚡",
+  chloroplast: "🌿",
+  vacuole: "🫧",
+  er: "🛤️",
+  golgi: "📦",
+  ribosome: "🔩",
+  lysosome: "♻️",
+  centriole: "🧵",
 };
+
+/** Organelle names and descriptions in the learner's language. */
+function useCellInfo(): Record<OrgId, { name: string; emoji: string; fn: string; fact: string }> {
+  const t = useT();
+  return {
+    membrane: {
+      name: t("widget.cell.membrane.name", "Cell membrane"),
+      emoji: EMOJI.membrane,
+      fn: t("widget.cell.membrane.fn", "A thin, flexible layer that controls what enters and leaves the cell."),
+      fact: t("widget.cell.membrane.fact", "It's 'selectively permeable' — like a bouncer letting only some molecules through."),
+    },
+    wall: {
+      name: t("widget.cell.wall.name", "Cell wall"),
+      emoji: EMOJI.wall,
+      fn: t("widget.cell.wall.fn", "A rigid layer made of cellulose outside the membrane. It gives the plant cell shape and support."),
+      fact: t("widget.cell.wall.fact", "Only plants, fungi and bacteria have cell walls — animal cells don't."),
+    },
+    cytoplasm: {
+      name: t("widget.cell.cytoplasm.name", "Cytoplasm"),
+      emoji: EMOJI.cytoplasm,
+      fn: t("widget.cell.cytoplasm.fn", "The jelly-like fluid that fills the cell. Most chemical reactions happen here."),
+      fact: t("widget.cell.cytoplasm.fact", "It's about 70–80% water."),
+    },
+    nucleus: {
+      name: t("widget.cell.nucleus.name", "Nucleus"),
+      emoji: EMOJI.nucleus,
+      fn: t("widget.cell.nucleus.fn", "The control centre. It holds DNA — the instructions for building and running the cell."),
+      fact: t("widget.cell.nucleus.fact", "The dark spot inside is the nucleolus, which makes ribosomes."),
+    },
+    mitochondria: {
+      name: t("widget.cell.mitochondria.name", "Mitochondria"),
+      emoji: EMOJI.mitochondria,
+      fn: t("widget.cell.mitochondria.fn", "The powerhouse: it releases energy from glucose by aerobic respiration, making ATP."),
+      fact: t("widget.cell.mitochondria.fact", "Mitochondria have their own DNA, inherited from your mother."),
+    },
+    chloroplast: {
+      name: t("widget.cell.chloroplast.name", "Chloroplast"),
+      emoji: EMOJI.chloroplast,
+      fn: t("widget.cell.chloroplast.fn", "Contains green chlorophyll that traps sunlight to make food (glucose) by photosynthesis."),
+      fact: t("widget.cell.chloroplast.fact", "6CO₂ + 6H₂O → C₆H₁₂O₆ + 6O₂, powered by light."),
+    },
+    vacuole: {
+      name: t("widget.cell.vacuole.name", "Vacuole"),
+      emoji: EMOJI.vacuole,
+      fn: t("widget.cell.vacuole.fn", "A storage sac for water, sugars and waste. In plants one large central vacuole keeps the cell firm (turgid)."),
+      fact: t("widget.cell.vacuole.fact", "A plant's central vacuole can fill up to 90% of the cell!"),
+    },
+    er: {
+      name: t("widget.cell.er.name", "Endoplasmic reticulum"),
+      emoji: EMOJI.er,
+      fn: t("widget.cell.er.fn", "A network of folded membranes that transports materials. Rough ER (with ribosomes) makes proteins; smooth ER makes lipids."),
+      fact: t("widget.cell.er.fact", "Rough ER is studded with ribosomes, which makes it look bumpy."),
+    },
+    golgi: {
+      name: t("widget.cell.golgi.name", "Golgi apparatus"),
+      emoji: EMOJI.golgi,
+      fn: t("widget.cell.golgi.fn", "The packaging and shipping centre: it modifies proteins and packs them into vesicles to send around or out of the cell."),
+      fact: t("widget.cell.golgi.fact", "It looks like a stack of flattened pancakes."),
+    },
+    ribosome: {
+      name: t("widget.cell.ribosome.name", "Ribosomes"),
+      emoji: EMOJI.ribosome,
+      fn: t("widget.cell.ribosome.fn", "Tiny factories that build proteins by reading instructions copied from DNA (mRNA)."),
+      fact: t("widget.cell.ribosome.fact", "A single cell can have millions of ribosomes."),
+    },
+    lysosome: {
+      name: t("widget.cell.lysosome.name", "Lysosome"),
+      emoji: EMOJI.lysosome,
+      fn: t("widget.cell.lysosome.fn", "Contains digestive enzymes that break down worn-out parts, food particles and invading germs."),
+      fact: t("widget.cell.lysosome.fact", "Often called the cell's recycling centre."),
+    },
+    centriole: {
+      name: t("widget.cell.centriole.name", "Centrioles"),
+      emoji: EMOJI.centriole,
+      fn: t("widget.cell.centriole.fn", "Help organise the spindle fibres that pull chromosomes apart when the cell divides."),
+      fact: t("widget.cell.centriole.fact", "Found in animal cells; most plant cells don't have them."),
+    },
+  };
+}
 
 const PARTS: Record<Kind, OrgId[]> = {
   animal: ["membrane", "cytoplasm", "nucleus", "mitochondria", "er", "golgi", "ribosome", "lysosome", "vacuole", "centriole"],
@@ -69,6 +149,7 @@ const ER = ({ x, y }: { x: number; y: number }) => (
 );
 
 function Part({ id, sel, onSelect, children }: { id: OrgId; sel: OrgId; onSelect: (id: OrgId) => void; children: ReactNode }) {
+  const INFO = useCellInfo();
   const active = sel === id;
   return (
     <motion.g
@@ -97,6 +178,8 @@ function Part({ id, sel, onSelect, children }: { id: OrgId; sel: OrgId; onSelect
 }
 
 export default function CellExplorer(input: Record<string, unknown>) {
+  const t = useT();
+  const INFO = useCellInfo();
   const p = bag(input);
   const [kind, setKind] = useState<Kind>(readOneOf(p, "kind", ["animal", "plant"] as const, "animal"));
   const [sel, setSel] = useState<OrgId>("nucleus");
@@ -114,19 +197,19 @@ export default function CellExplorer(input: Record<string, unknown>) {
   return (
     <div>
       <WidgetTitle
-        title={`${plant ? "Plant" : "Animal"} cell explorer`}
-        hint="Tap a part of the cell to learn what it does."
+        title={plant ? t("widget.cell.titlePlant", "Plant cell explorer") : t("widget.cell.titleAnimal", "Animal cell explorer")}
+        hint={t("widget.cell.hint", "Tap a part of the cell to learn what it does.")}
         right={
           <Segmented
-            label="Cell type"
+            label={t("widget.cell.type", "Cell type")}
             value={kind}
             onChange={(k) => {
               setKind(k);
               if (!PARTS[k].includes(sel)) setSel("nucleus");
             }}
             options={[
-              { value: "animal", label: "🐾 Animal" },
-              { value: "plant", label: "🌱 Plant" },
+              { value: "animal", label: "🐾 " + t("widget.cell.animal", "Animal") },
+              { value: "plant", label: "🌱 " + t("widget.cell.plant", "Plant") },
             ]}
           />
         }
@@ -134,7 +217,7 @@ export default function CellExplorer(input: Record<string, unknown>) {
 
       <div className="grid gap-5 md:grid-cols-[1.3fr_1fr]">
         <div className="rounded-3xl bg-surface-2 p-2">
-          <svg viewBox="0 0 400 300" className="w-full" role="group" aria-label={`${kind} cell diagram`}>
+          <svg viewBox="0 0 400 300" className="w-full" role="group" aria-label={plant ? t("widget.cell.diagramPlant", "plant cell diagram") : t("widget.cell.diagramAnimal", "animal cell diagram")}>
             <defs>
               <filter id="cellGlow" x="-30%" y="-30%" width="160%" height="160%">
                 <feDropShadow dx="0" dy="0" stdDeviation="4" floodColor="rgb(var(--accent))" floodOpacity="0.9" />
@@ -155,7 +238,7 @@ export default function CellExplorer(input: Record<string, unknown>) {
                 <Part id="vacuole" sel={sel} onSelect={setSel}>
                   <path d="M 150 95 C 150 70, 290 65, 300 100 C 315 140, 310 190, 270 205 C 230 220, 160 215, 150 180 C 140 150, 150 120, 150 95 Z" fill="rgb(var(--accent) / 0.18)" stroke="rgb(var(--accent) / 0.6)" strokeWidth="2" />
                   <text x="228" y="148" textAnchor="middle" fontSize="11" fill="rgb(var(--accent))" fontWeight="700">
-                    vacuole
+                    {t("widget.cell.vacuoleLabel", "vacuole")}
                   </text>
                 </Part>
                 <Part id="nucleus" sel={sel} onSelect={setSel}>
