@@ -1,7 +1,7 @@
 "use client";
 
 import { usePathname } from "next/navigation";
-import { useEffect } from "react";
+import { useEffect, useMemo } from "react";
 import clsx from "clsx";
 import { useMode } from "@/lib/useMode";
 import { useUi } from "@/lib/ui";
@@ -9,6 +9,7 @@ import { useLearner } from "@/lib/store";
 import { useHydrated } from "@/components/providers";
 import { useExperience } from "@/experiences";
 import { isActivePath, moreFor, navFor } from "@/experiences/shared/nav";
+import { useTranslatedNav } from "@/experiences/shared/useNavLabels";
 import { StatsBar } from "./StatsBar";
 
 /** Picks the app frame for the learner's experience profile. */
@@ -30,12 +31,16 @@ export function AppShell({ children }: { children: React.ReactNode }) {
     return () => window.removeEventListener("keydown", key);
   }, [setPalette]);
 
+  const baseNav = useMemo(() => navFor(mode), [mode]);
+  const baseMore = useMemo(() => moreFor(mode), [mode]);
+  const { nav, more } = useTranslatedNav(mode, baseNav, baseMore);
+
   // Before the learner's profile loads we don't know which frame to draw.
   if (!hydrated) return <main className="min-h-screen bg-bg">{children}</main>;
 
   const Shell = exp.Shell;
   return (
-    <Shell pathname={pathname} nav={navFor(mode)} more={moreFor(mode)} isActive={(href) => isActivePath(pathname, href)} openSearch={() => setPalette(true)}>
+    <Shell pathname={pathname} nav={nav} more={more} isActive={(href) => isActivePath(pathname, href)} openSearch={() => setPalette(true)}>
       {children}
     </Shell>
   );
