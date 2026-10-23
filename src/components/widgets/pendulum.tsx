@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { Pause, Play } from "lucide-react";
 import { fmt, Readout, Segmented, Slider, useFrame, WidgetTitle } from "./_shared";
+import { useT } from "@/i18n";
 
 const PLANETS = [
   { value: "earth", label: "🌍 Earth", g: 9.81 },
@@ -19,6 +20,13 @@ const MAX_L = 3;
 const PX_PER_M = (H - 50) / MAX_L;
 
 export default function Pendulum() {
+  const t = useT();
+  const planetLabel: Record<Planet, string> = {
+    earth: "🌍 " + t("widget.pendulum.earth", "Earth"),
+    moon: "🌙 " + t("widget.pendulum.moon", "Moon"),
+    mars: "🔴 " + t("widget.pendulum.mars", "Mars"),
+    jupiter: "🪐 " + t("widget.pendulum.jupiter", "Jupiter"),
+  };
   const [L, setL] = useState(1);
   const [planet, setPlanet] = useState<Planet>("earth");
   const [amp, setAmp] = useState(15);
@@ -46,24 +54,24 @@ export default function Pendulum() {
   return (
     <div>
       <WidgetTitle
-        title="Pendulum lab"
-        hint="Period depends only on length and gravity — not on the mass or (small) swing angle."
+        title={t("widget.pendulum.title", "Pendulum lab")}
+        hint={t("widget.pendulum.hint", "Period depends only on length and gravity — not on the mass or (small) swing angle.")}
         right={
           <Segmented
-            label="Planet gravity"
+            label={t("widget.pendulum.gravity", "Planet gravity")}
             value={planet}
             onChange={(v) => {
               setPlanet(v);
               reset();
             }}
-            options={PLANETS.map((p) => ({ value: p.value, label: p.label }))}
+            options={PLANETS.map((p) => ({ value: p.value, label: planetLabel[p.value] }))}
           />
         }
       />
 
       <div className="grid gap-5 md:grid-cols-[1fr_1fr]">
         <div className="relative overflow-hidden rounded-3xl bg-surface-2">
-          <svg viewBox={`0 0 ${W} ${H}`} className="w-full" role="img" aria-label={`Pendulum of length ${fmt(L)} metres`}>
+          <svg viewBox={`0 0 ${W} ${H}`} className="w-full" role="img" aria-label={t("widget.pendulum.label", "Pendulum of length {n} metres", { n: fmt(L) })}>
             <rect x={PIVOT.x - 50} y={PIVOT.y - 10} width="100" height="10" rx="3" fill="rgb(var(--muted))" />
             <path d={`M ${arcL.x} ${arcL.y} A ${len} ${len} 0 0 0 ${arcR.x} ${arcR.y}`} fill="none" stroke="rgb(var(--accent) / 0.3)" strokeWidth="2" strokeDasharray="4 5" />
             <line x1={PIVOT.x} y1={PIVOT.y} x2={PIVOT.x} y2={PIVOT.y + len + 20} stroke="rgb(var(--line))" strokeDasharray="3 4" />
@@ -76,20 +84,20 @@ export default function Pendulum() {
             type="button"
             onClick={() => setRunning((r) => !r)}
             className="btn-ghost absolute bottom-3 right-3 !px-3 !py-1.5"
-            aria-label={running ? "Pause" : "Play"}
+            aria-label={running ? t("widget.pause", "Pause") : t("widget.play", "Play")}
           >
             {running ? <Pause size={16} /> : <Play size={16} />}
           </button>
         </div>
 
         <div className="space-y-4">
-          <Slider label="Length L" value={L} min={0.1} max={MAX_L} step={0.05} onChange={(v) => { setL(v); reset(); }} unit="m" />
-          <Slider label="Release angle" value={amp} min={2} max={25} onChange={setAmp} unit="°" />
+          <Slider label={t("widget.pendulum.length", "Length L")} value={L} min={0.1} max={MAX_L} step={0.05} onChange={(v) => { setL(v); reset(); }} unit="m" />
+          <Slider label={t("widget.pendulum.angle", "Release angle")} value={amp} min={2} max={25} onChange={setAmp} unit="°" />
           <div className="grid grid-cols-2 gap-2" aria-live="polite">
-            <Readout label="Period T" value={fmt(T, 3)} unit="s" />
-            <Readout label="Frequency" value={fmt(1 / T, 3)} unit="Hz" />
-            <Readout label="Gravity g" value={fmt(g, 2)} unit="m/s²" tone="ink" />
-            <Readout label="Full swings" value={swings} tone="ink" />
+            <Readout label={t("widget.pendulum.period", "Period T")} value={fmt(T, 3)} unit="s" />
+            <Readout label={t("widget.pendulum.frequency", "Frequency")} value={fmt(1 / T, 3)} unit="Hz" />
+            <Readout label={t("widget.pendulum.gravityG", "Gravity g")} value={fmt(g, 2)} unit="m/s²" tone="ink" />
+            <Readout label={t("widget.pendulum.swings", "Full swings")} value={swings} tone="ink" />
           </div>
           <div className="rounded-2xl bg-accent/10 p-3 text-center font-mono text-sm text-ink">
             T = 2π √(L / g) = 2π √({fmt(L)} / {fmt(g)}) = <b className="text-accent">{fmt(T, 3)} s</b>

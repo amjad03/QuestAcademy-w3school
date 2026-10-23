@@ -3,6 +3,7 @@
 import { useMemo, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import { WidgetTitle } from "./_shared";
+import { useT } from "@/i18n";
 
 type Cat = "a" | "e" | "t" | "p" | "m" | "n" | "h" | "g" | "l" | "c" | "u";
 
@@ -185,6 +186,20 @@ const ELEMENTS: El[] = RAW.split("\n").map((line, idx) => {
 const swatch = (c: Cat, a = 0.22) => `hsl(${CATS[c].hue} 75% 55% / ${a})`;
 
 export default function PeriodicTable() {
+  const t = useT();
+  const catName: Record<Cat, string> = {
+    a: t("widget.periodic.cat.alkali", "Alkali metal"),
+    e: t("widget.periodic.cat.alkalineEarth", "Alkaline earth metal"),
+    t: t("widget.periodic.cat.transition", "Transition metal"),
+    p: t("widget.periodic.cat.postTransition", "Post-transition metal"),
+    m: t("widget.periodic.cat.metalloid", "Metalloid"),
+    n: t("widget.periodic.cat.nonmetal", "Reactive nonmetal"),
+    h: t("widget.periodic.cat.halogen", "Halogen"),
+    g: t("widget.periodic.cat.noble", "Noble gas"),
+    l: t("widget.periodic.cat.lanthanide", "Lanthanide"),
+    c: t("widget.periodic.cat.actinide", "Actinide"),
+    u: t("widget.periodic.cat.unknown", "Unknown properties"),
+  };
   const [sel, setSel] = useState<El>(ELEMENTS[0]);
   const [focus, setFocus] = useState<Cat | null>(null);
 
@@ -192,7 +207,7 @@ export default function PeriodicTable() {
 
   return (
     <div>
-      <WidgetTitle title="Periodic table" hint="Tap an element for details. Tap a category to highlight it." />
+      <WidgetTitle title={t("widget.periodic.title", "Periodic table")} hint={t("widget.periodic.hint", "Tap an element for details. Tap a category to highlight it.")} />
 
       <AnimatePresence mode="wait">
         <motion.div
@@ -215,14 +230,14 @@ export default function PeriodicTable() {
             <div className="text-2xl font-bold text-ink">{sel.name}</div>
             <div className="mt-1 flex flex-wrap gap-2 text-xs">
               <span className="chip !text-ink" style={{ background: swatch(sel.cat, 0.3) }}>
-                {CATS[sel.cat].name}
+                {catName[sel.cat]}
               </span>
-              <span className="chip">Atomic number {sel.z}</span>
-              <span className="chip">Atomic mass {sel.mass} u</span>
-              <span className="chip">Period {sel.period}</span>
-              <span className="chip">{sel.group === null ? "f-block (no group number)" : `Group ${sel.group}`}</span>
+              <span className="chip">{t("widget.periodic.atomicNumber", "Atomic number {n}", { n: sel.z })}</span>
+              <span className="chip">{t("widget.periodic.atomicMass", "Atomic mass {mass} u", { mass: sel.mass })}</span>
+              <span className="chip">{t("widget.periodic.period", "Period {n}", { n: sel.period })}</span>
+              <span className="chip">{sel.group === null ? t("widget.periodic.fBlock", "f-block (no group number)") : t("widget.periodic.group", "Group {n}", { n: sel.group })}</span>
             </div>
-            {sel.mass.startsWith("[") && <p className="mt-2 text-xs text-muted">[ ] = mass number of the most stable isotope (radioactive element).</p>}
+            {sel.mass.startsWith("[") && <p className="mt-2 text-xs text-muted">{t("widget.periodic.bracketNote", "[ ] = mass number of the most stable isotope (radioactive element).")}</p>}
           </div>
         </motion.div>
       </AnimatePresence>
@@ -237,7 +252,7 @@ export default function PeriodicTable() {
                 key={el.z}
                 type="button"
                 onClick={() => setSel(el)}
-                aria-label={`${el.name}, atomic number ${el.z}`}
+                aria-label={t("widget.periodic.elementLabel", "{name}, atomic number {n}", { name: el.name, n: el.z })}
                 aria-pressed={active}
                 className={`relative aspect-square rounded-md border text-center transition hover:z-10 hover:scale-125 focus-visible:z-10 focus-visible:scale-125 focus-visible:outline-none ${
                   active ? "z-10 scale-110 border-ink" : "border-transparent"
@@ -273,7 +288,7 @@ export default function PeriodicTable() {
       </div>
 
       <div className="mt-3 flex flex-wrap gap-1.5">
-        {legend.map(([k, c]) => (
+        {legend.map(([k]) => (
           <button
             key={k}
             type="button"
@@ -282,7 +297,7 @@ export default function PeriodicTable() {
             className={`flex items-center gap-1.5 rounded-full border px-2.5 py-1 text-xs font-medium transition ${focus === k ? "border-ink text-ink" : "border-line text-muted hover:text-ink"}`}
           >
             <span className="h-3 w-3 rounded-full" style={{ background: swatch(k, 0.8) }} />
-            {c.name}
+            {catName[k]}
           </button>
         ))}
       </div>

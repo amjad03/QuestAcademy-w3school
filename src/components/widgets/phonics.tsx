@@ -5,6 +5,7 @@ import { AnimatePresence, motion } from "framer-motion";
 import { Volume2 } from "lucide-react";
 import { say } from "@/lib/voice";
 import { bag, readStrArray, WidgetTitle } from "./_shared";
+import { useT } from "@/i18n";
 
 export const WORDS: Record<string, [word: string, emoji: string]> = {
   A: ["Apple", "🍎"],
@@ -40,6 +41,7 @@ const ALL = Object.keys(WORDS);
 export const phonicsLine = (letter: string, word: string) => `${letter}. ${letter} is for ${word}.`;
 
 export default function Phonics(input: Record<string, unknown>) {
+  const t = useT();
   const p = bag(input);
   const letters = (readStrArray(p, "letters") ?? ALL).map((l) => l.trim().charAt(0).toUpperCase()).filter((l) => l in WORDS);
   const list = letters.length ? letters : ALL;
@@ -63,8 +65,8 @@ export default function Phonics(input: Record<string, unknown>) {
   return (
     <div className="font-bold">
       <WidgetTitle
-        title="Letter sounds"
-        hint={canSpeak ? "Tap a letter to hear it!" : "Tap a letter to see its word (sound isn't available on this device)."}
+        title={t("widget.phonics.title", "Letter sounds")}
+        hint={canSpeak ? t("widget.phonics.hint", "Tap a letter to hear it!") : t("widget.phonics.hintNoSound", "Tap a letter to see its word (sound isn't available on this device).")}
       />
 
       <div className="mb-5 flex flex-col items-center gap-2 rounded-3xl bg-surface-2 p-5 sm:flex-row sm:justify-center sm:gap-6" aria-live="polite">
@@ -87,9 +89,9 @@ export default function Phonics(input: Record<string, unknown>) {
           </motion.div>
         </AnimatePresence>
         <div className="text-center text-xl font-bold text-ink sm:text-left">
-          <span className="text-accent">{active}</span> is for <span className="text-accent">{word}</span>
+          <span className="text-accent">{active}</span> {t("widget.phonics.isFor", "is for")} <span className="text-accent">{word}</span>
           {canSpeak && (
-            <button type="button" onClick={() => speak(active)} className="btn-ghost ml-3 !px-3 !py-1.5" aria-label="Say it again">
+            <button type="button" onClick={() => speak(active)} className="btn-ghost ml-3 !px-3 !py-1.5" aria-label={t("widget.phonics.again", "Say it again")}>
               <Volume2 size={16} />
             </button>
           )}
@@ -104,7 +106,7 @@ export default function Phonics(input: Record<string, unknown>) {
             whileTap={{ scale: 0.85, rotate: -6 }}
             whileHover={{ y: -3 }}
             onClick={() => speak(l)}
-            aria-label={`${l} is for ${WORDS[l][0]}`}
+            aria-label={t("widget.phonics.letterLabel", "{letter} is for {word}", { letter: l, word: WORDS[l][0] })}
             className={`h-14 rounded-2xl text-2xl font-black transition ${
               l === active ? "bg-accent text-white shadow-[inset_0_-4px_0_rgb(var(--accent-shade))]" : "border-2 border-b-4 border-line bg-surface text-ink hover:bg-accent/10"
             }`}

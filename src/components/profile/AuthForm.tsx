@@ -8,10 +8,12 @@ import clsx from "clsx";
 import { supabase } from "@/lib/supabase";
 import { useAuth } from "@/components/providers";
 import { LogoMark } from "@/components/brand/Mascot";
+import { useT } from "@/i18n";
 
 type Mode = "signin" | "signup" | "magic";
 
 export function AuthForm() {
+  const t = useT();
   const { enabled, user } = useAuth();
   const router = useRouter();
   const params = useSearchParams();
@@ -40,25 +42,25 @@ export function AuthForm() {
           : await sb.auth.signInWithPassword({ email, password });
     setBusy(false);
     if (res.error) setMsg({ ok: false, text: res.error.message });
-    else if (mode === "magic") setMsg({ ok: true, text: "Check your inbox — we sent you a sign-in link." });
-    else if (mode === "signup" && !res.data.session) setMsg({ ok: true, text: "Almost there! Confirm your email to finish creating your profile." });
+    else if (mode === "magic") setMsg({ ok: true, text: t("auth.msg.magicSent", "Check your inbox — we sent you a sign-in link.") });
+    else if (mode === "signup" && !res.data.session) setMsg({ ok: true, text: t("auth.msg.confirmEmail", "Almost there! Confirm your email to finish creating your profile.") });
   };
 
   const google = async () => {
     await supabase()?.auth.signInWithOAuth({ provider: "google", options: { redirectTo: `${window.location.origin}/learn` } });
   };
 
-  const title = mode === "signup" ? "Create your profile" : mode === "magic" ? "Sign in with email" : "Log in";
+  const title = mode === "signup" ? t("auth.title.signup", "Create your profile") : mode === "magic" ? t("auth.title.magic", "Sign in with email") : t("auth.title.signin", "Log in");
 
   return (
     <div className="flex min-h-screen flex-col bg-bg">
       <div className="flex items-center justify-between px-5 pt-6">
-        <Link href="/" className="grid h-10 w-10 place-items-center rounded-xl text-muted hover:bg-surface-2" aria-label="Close">
+        <Link href="/" className="grid h-10 w-10 place-items-center rounded-xl text-muted hover:bg-surface-2" aria-label={t("auth.close", "Close")}>
           <X className="h-7 w-7" strokeWidth={2.6} />
         </Link>
         {enabled && (
           <button onClick={() => { setMode(mode === "signup" ? "signin" : "signup"); setMsg(null); }} className="btn-ghost">
-            {mode === "signup" ? "Log in" : "Sign up"}
+            {mode === "signup" ? t("auth.switch.login", "Log in") : t("auth.switch.signup", "Sign up")}
           </button>
         )}
       </div>
@@ -72,17 +74,17 @@ export function AuthForm() {
         {!enabled ? (
           <div className="mt-8 space-y-4">
             <p className="text-center font-semibold leading-7 text-muted">
-              Accounts aren’t switched on for this site yet. You can keep learning as a guest — your progress is saved on this device.
+              {t("auth.disabled.body", "Accounts aren’t switched on for this site yet. You can keep learning as a guest — your progress is saved on this device.")}
             </p>
             <Link href="/learn" className="btn-primary w-full">
-              Continue as guest
+              {t("auth.disabled.guest", "Continue as guest")}
             </Link>
-            <p className="text-center text-xs font-semibold text-muted">Site owner: add the Supabase keys described in the README to enable sign-in.</p>
+            <p className="text-center text-xs font-semibold text-muted">{t("auth.disabled.owner", "Site owner: add the Supabase keys described in the README to enable sign-in.")}</p>
           </div>
         ) : (
           <>
             <form onSubmit={submit} className="mt-8 space-y-3">
-              <input type="email" required value={email} onChange={(e) => setEmail(e.target.value)} placeholder="Email" className="input" autoComplete="email" aria-label="Email" />
+              <input type="email" required value={email} onChange={(e) => setEmail(e.target.value)} placeholder={t("auth.email", "Email")} className="input" autoComplete="email" aria-label={t("auth.email", "Email")} />
               {mode !== "magic" && (
                 <input
                   type="password"
@@ -90,26 +92,26 @@ export function AuthForm() {
                   minLength={6}
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
-                  placeholder={mode === "signup" ? "Password (6+ characters)" : "Password"}
+                  placeholder={mode === "signup" ? t("auth.passwordNew", "Password (6+ characters)") : t("auth.password", "Password")}
                   className="input"
                   autoComplete={mode === "signup" ? "new-password" : "current-password"}
-                  aria-label="Password"
+                  aria-label={t("auth.password", "Password")}
                 />
               )}
               <button className="btn-primary w-full" disabled={busy}>
                 {busy && <Loader2 className="h-4 w-4 animate-spin" />}
-                {mode === "signin" ? "Log in" : mode === "signup" ? "Create profile" : "Email me a link"}
+                {mode === "signin" ? t("auth.submit.signin", "Log in") : mode === "signup" ? t("auth.submit.signup", "Create profile") : t("auth.submit.magic", "Email me a link")}
               </button>
             </form>
 
             {msg && <p className={clsx("mt-4 rounded-2xl p-3 text-center text-sm font-bold", msg.ok ? "bg-good-soft text-good-shade" : "bg-bad-soft text-bad-shade")}>{msg.text}</p>}
 
             <button onClick={() => { setMode(mode === "magic" ? "signin" : "magic"); setMsg(null); }} className="btn-flat mx-auto mt-3 flex">
-              {mode === "magic" ? "Use a password instead" : "Email me a sign-in link"}
+              {mode === "magic" ? t("auth.toggle.password", "Use a password instead") : t("auth.toggle.magic", "Email me a sign-in link")}
             </button>
 
             <div className="my-6 flex items-center gap-3 text-sm font-extrabold uppercase tracking-wide text-muted">
-              <span className="h-0.5 flex-1 bg-line" /> or <span className="h-0.5 flex-1 bg-line" />
+              <span className="h-0.5 flex-1 bg-line" /> {t("auth.or", "or")} <span className="h-0.5 flex-1 bg-line" />
             </div>
 
             <button onClick={() => void google()} className="btn-ghost w-full !text-ink">
@@ -119,7 +121,7 @@ export function AuthForm() {
               Google
             </button>
 
-            <p className="mt-8 text-center text-sm font-semibold leading-6 text-muted">Your guest progress is merged into your profile automatically when you sign in.</p>
+            <p className="mt-8 text-center text-sm font-semibold leading-6 text-muted">{t("auth.mergeNote", "Your guest progress is merged into your profile automatically when you sign in.")}</p>
           </>
         )}
       </div>

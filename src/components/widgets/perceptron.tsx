@@ -4,9 +4,11 @@ import { useEffect, useMemo, useRef, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import { Pause, RotateCcw, Zap } from "lucide-react";
 import { fmt, Readout, Segmented, Slider, WidgetTitle } from "./_shared";
+import { useT } from "@/i18n";
 
 type Gate = "AND" | "OR" | "XOR";
 type Pt = { x: number; y: number; t: 0 | 1 };
+type Status = { ok: boolean; text: string };
 
 const TRUTH: Record<Gate, (a: number, b: number) => 0 | 1> = {
   AND: (a, b) => (a && b ? 1 : 0),
@@ -37,6 +39,7 @@ const sy = (y: number) => S - ((y - D0) / (D1 - D0)) * S;
 const predict = (w1: number, w2: number, b: number, x: number, y: number): 0 | 1 => (w1 * x + w2 * y + b >= 0 ? 1 : 0);
 
 export default function Perceptron() {
+  const t = useT();
   const [gate, setGate] = useState<Gate>("AND");
   const [w1, setW1] = useState(0.5);
   const [w2, setW2] = useState(-0.5);
@@ -45,7 +48,7 @@ export default function Perceptron() {
   const [training, setTraining] = useState(false);
   const [epoch, setEpoch] = useState(0);
   const [cursor, setCursor] = useState(-1);
-  const [status, setStatus] = useState<string | null>(null);
+  const [status, setStatus] = useState<Status | null>(null);
   const state = useRef({ w1, w2, b, i: 0, errors: 0, epoch: 0 });
 
   const pts = useMemo(() => dataset(gate), [gate]);
@@ -79,20 +82,28 @@ export default function Perceptron() {
         if (converged) {
           setTraining(false);
           setCursor(-1);
-          setStatus(`Converged after ${s.epoch} epoch${s.epoch === 1 ? "" : "s"}! Every point is classified correctly.`);
+          setStatus({
+            ok: true,
+            text:
+              s.epoch === 1
+                ? t("widget.perceptron.converged.one", "Converged after {n} epoch! Every point is classified correctly.", { n: s.epoch })
+                : t("widget.perceptron.converged.other", "Converged after {n} epochs! Every point is classified correctly.", { n: s.epoch }),
+          });
         } else if (s.epoch >= 30) {
           setTraining(false);
           setCursor(-1);
-          setStatus(
-            gate === "XOR"
-              ? "Stuck! XOR is not linearly separable — no single straight line can split it. You need a hidden layer (a multi-layer network)."
-              : "Stopped after 30 epochs. Try a different learning rate.",
-          );
+          setStatus({
+            ok: false,
+            text:
+              gate === "XOR"
+                ? t("widget.perceptron.xorStuck", "Stuck! XOR is not linearly separable — no single straight line can split it. You need a hidden layer (a multi-layer network).")
+                : t("widget.perceptron.stopped", "Stopped after {n} epochs. Try a different learning rate.", { n: 30 }),
+          });
         }
       }
     }, 70);
     return () => clearInterval(id);
-  }, [training, pts, lr, gate]);
+  }, [training, pts, lr, gate, t]);
 
   const startTraining = () => {
     state.current = { w1, w2, b, i: 0, errors: 0, epoch: 0 };
@@ -149,11 +160,11 @@ export default function Perceptron() {
   return (
     <div>
       <WidgetTitle
-        title="Perceptron playground"
-        hint="A single neuron draws one straight line. Can it separate the green (1) and red (0) points?"
+        title={t("widget.perceptron.title", "Perceptron playground")}
+        hint={t("widget.perceptron.hint", "A single neuron draws one straight line. Can it separate the green (1) and red (0) points?")}
         right={
           <Segmented
-            label="Dataset"
+            label={t("widget.perceptron.dataset", "Dataset")}
             value={gate}
             onChange={(g) => {
               setGate(g);
@@ -172,7 +183,7 @@ export default function Perceptron() {
 
       <div className="grid gap-5 md:grid-cols-[minmax(0,320px)_1fr]">
         <div className="mx-auto w-full max-w-[320px] overflow-hidden rounded-3xl border border-line bg-surface">
-          <svg viewBox={`0 0 ${S} ${S}`} className="w-full" role="img" aria-label={`Decision boundary for ${gate}`}>
+          <svg viewBox={`0 0 ${S} ${S}`} className="w-full" role="img" aria-label={t("widget.perceptron.boundary", "Decision boundary for {gate}", { gate })}>
             <defs>
               <clipPath id="perc-clip">
                 <rect width={S} height={S} />
@@ -204,21 +215,21 @@ export default function Perceptron() {
           <div className="rounded-2xl bg-accent/10 px-3 py-2 text-center font-mono text-sm text-ink">
             output = step({fmt(w1)}·x₁ + {fmt(w2)}·x₂ + {fmt(b)})
           </div>
-          <Slider label="Weight w₁" value={w1} min={-3} max={3} step={0.05} onChange={manual(setW1)} format={(v) => fmt(v)} />
-          <Slider label="Weight w₂" value={w2} min={-3} max={3} step={0.05} onChange={manual(setW2)} format={(v) => fmt(v)} />
-          <Slider label="Bias b" value={b} min={-3} max={3} step={0.05} onChange={manual(setB)} format={(v) => fmt(v)} />
-          <Slider label="Learning rate η" value={lr} min={0.05} max={1} step={0.05} onChange={setLr} />
+          <Slider label={t("widget.perceptron.w1", "Weight w₁")} value={w1} min={-3} max={3} step={0.05} onChange={manual(setW1)} format={(v) => fmt(v)} />
+          <Slider label={t("widget.perceptron.w2", "Weight w₂")} value={w2} min={-3} max={3} step={0.05} onChange={manual(setW2)} format={(v) => fmt(v)} />
+          <Slider label={t("widget.perceptron.bias", "Bias b")} value={b} min={-3} max={3} step={0.05} onChange={manual(setB)} format={(v) => fmt(v)} />
+          <Slider label={t("widget.perceptron.lr", "Learning rate η")} value={lr} min={0.05} max={1} step={0.05} onChange={setLr} />
           <div className="flex gap-2">
             <button type="button" className="btn-pop flex-1" onClick={training ? () => setTraining(false) : startTraining}>
-              {training ? <Pause size={16} /> : <Zap size={16} />} {training ? "Pause" : "Train"}
+              {training ? <Pause size={16} /> : <Zap size={16} />} {training ? t("widget.pause", "Pause") : t("widget.perceptron.train", "Train")}
             </button>
-            <button type="button" className="btn-ghost" onClick={reset} aria-label="Reset weights">
+            <button type="button" className="btn-ghost" onClick={reset} aria-label={t("widget.perceptron.resetWeights", "Reset weights")}>
               <RotateCcw size={16} />
             </button>
           </div>
           <div className="grid grid-cols-2 gap-2" aria-live="polite">
-            <Readout label="Accuracy" value={`${Math.round(accuracy * 100)}%`} tone={accuracy === 1 ? "good" : "accent"} />
-            <Readout label="Epoch" value={epoch} tone="ink" />
+            <Readout label={t("widget.perceptron.accuracy", "Accuracy")} value={`${Math.round(accuracy * 100)}%`} tone={accuracy === 1 ? "good" : "accent"} />
+            <Readout label={t("widget.perceptron.epoch", "Epoch")} value={epoch} tone="ink" />
           </div>
           <AnimatePresence>
             {status && (
@@ -226,15 +237,15 @@ export default function Perceptron() {
                 initial={{ opacity: 0, y: 6 }}
                 animate={{ opacity: 1, y: 0 }}
                 exit={{ opacity: 0 }}
-                className={`rounded-2xl p-3 text-sm ${status.startsWith("Converged") ? "bg-good/10 text-good" : "bg-warn/10 text-warn"}`}
+                className={`rounded-2xl p-3 text-sm ${status.ok ? "bg-good/10 text-good" : "bg-warn/10 text-warn"}`}
                 aria-live="polite"
               >
-                {status}
+                {status.text}
               </motion.p>
             )}
           </AnimatePresence>
           <p className="text-xs text-muted">
-            Learning rule: if a point is wrong, nudge w ← w + η (target − output) · x. Points with a dark outline are misclassified.
+            {t("widget.perceptron.rule", "Learning rule: if a point is wrong, nudge w ← w + η (target − output) · x. Points with a dark outline are misclassified.")}
           </p>
         </div>
       </div>

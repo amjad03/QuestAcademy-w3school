@@ -3,6 +3,7 @@
 import { useRef, useState } from "react";
 import { Rocket, RotateCcw } from "lucide-react";
 import { fmt, Readout, Segmented, Slider, useFrame, WidgetTitle } from "./_shared";
+import { useT } from "@/i18n";
 
 const PLANETS = [
   { value: "earth", label: "🌍 Earth", g: 9.81 },
@@ -32,11 +33,18 @@ function niceCeil(x: number) {
 }
 
 export default function Projectile() {
+  const t = useT();
+  const planetLabel: Record<(typeof PLANETS)[number]["value"], string> = {
+    earth: "🌍 " + t("widget.pendulum.earth", "Earth"),
+    moon: "🌙 " + t("widget.pendulum.moon", "Moon"),
+    mars: "🔴 " + t("widget.pendulum.mars", "Mars"),
+    jupiter: "🪐 " + t("widget.pendulum.jupiter", "Jupiter"),
+  };
   const [angle, setAngle] = useState(45);
   const [speed, setSpeed] = useState(20);
   const [g, setG] = useState(9.81);
   const [trails, setTrails] = useState<Shot[]>([]);
-  const [t, setTState] = useState<number | null>(null);
+  const [time, setTState] = useState<number | null>(null);
   const tRef = useRef<number | null>(null);
   const setT = (v: number | null) => {
     tRef.current = v;
@@ -45,7 +53,7 @@ export default function Projectile() {
 
   const cur: Shot = { angle, speed, g };
   const s = stats(cur);
-  const flying = t !== null && t < s.T;
+  const flying = time !== null && time < s.T;
 
   // Playback lasts between ~1.2 s and 4 s of real time.
   const playRate = s.T / Math.min(4, Math.max(1.2, s.T));
@@ -75,7 +83,7 @@ export default function Projectile() {
     return d;
   };
 
-  const tt = t ?? 0;
+  const tt = time ?? 0;
   const bx = s.vx * tt;
   const by = Math.max(0, s.vy * tt - 0.5 * g * tt * tt);
   const vyNow = s.vy - g * tt;
@@ -92,23 +100,23 @@ export default function Projectile() {
   return (
     <div>
       <WidgetTitle
-        title="Projectile launcher"
-        hint="Set the angle, speed and gravity, then launch! Faded paths show your last shots."
+        title={t("widget.projectile.title", "Projectile launcher")}
+        hint={t("widget.projectile.hint", "Set the angle, speed and gravity, then launch! Faded paths show your last shots.")}
         right={
           <Segmented
-            label="Planet"
+            label={t("widget.projectile.planet", "Planet")}
             value={planet}
             onChange={(v) => {
               setG(PLANETS.find((p) => p.value === v)!.g);
               setT(null);
             }}
-            options={PLANETS.map((p) => ({ value: p.value, label: p.label }))}
+            options={PLANETS.map((p) => ({ value: p.value, label: planetLabel[p.value] }))}
           />
         }
       />
 
       <div className="overflow-hidden rounded-3xl border border-line bg-surface">
-        <svg viewBox={`0 0 ${W} ${H}`} className="w-full" role="img" aria-label="Projectile trajectory">
+        <svg viewBox={`0 0 ${W} ${H}`} className="w-full" role="img" aria-label={t("widget.projectile.trajectory", "Projectile trajectory")}>
           <rect x="0" y={H - PAD} width={W} height={PAD} fill="rgb(var(--good) / 0.15)" />
           <line x1="0" x2={W} y1={H - PAD} y2={H - PAD} stroke="rgb(var(--good))" strokeWidth="2" />
           {ticks.map((v) => (
@@ -135,8 +143,8 @@ export default function Projectile() {
           </g>
           <circle cx={X(0)} cy={Y(0)} r="9" fill="rgb(var(--accent))" />
           {/* ball */}
-          {t !== null && <circle cx={X(bx)} cy={Y(by)} r="7" fill="rgb(var(--accent-2))" stroke="rgb(var(--surface))" strokeWidth="2" />}
-          {t !== null && !flying && (
+          {time !== null && <circle cx={X(bx)} cy={Y(by)} r="7" fill="rgb(var(--accent-2))" stroke="rgb(var(--surface))" strokeWidth="2" />}
+          {time !== null && !flying && (
             <text x={X(s.R)} y={Y(0) - 12} textAnchor="middle" fontSize="16">
               💥
             </text>
@@ -146,32 +154,32 @@ export default function Projectile() {
 
       <div className="mt-4 grid gap-5 md:grid-cols-[1fr_1fr]">
         <div className="space-y-4">
-          <Slider label="Launch angle θ" value={angle} min={5} max={85} onChange={change(setAngle)} unit="°" />
-          <Slider label="Launch speed v₀" value={speed} min={5} max={40} step={0.5} onChange={change(setSpeed)} unit="m/s" />
-          <Slider label="Gravity g" value={g} min={1} max={25} step={0.01} onChange={change(setG)} unit="m/s²" />
+          <Slider label={t("widget.projectile.angle", "Launch angle θ")} value={angle} min={5} max={85} onChange={change(setAngle)} unit="°" />
+          <Slider label={t("widget.projectile.speed", "Launch speed v₀")} value={speed} min={5} max={40} step={0.5} onChange={change(setSpeed)} unit="m/s" />
+          <Slider label={t("widget.pendulum.gravityG", "Gravity g")} value={g} min={1} max={25} step={0.01} onChange={change(setG)} unit="m/s²" />
           <div className="flex gap-2">
             <button type="button" className="btn-pop flex-1" onClick={launch} disabled={flying}>
-              <Rocket size={16} /> Launch
+              <Rocket size={16} /> {t("widget.projectile.launch", "Launch")}
             </button>
-            <button type="button" className="btn-ghost" onClick={() => { setTrails([]); setT(null); }} aria-label="Clear trails">
+            <button type="button" className="btn-ghost" onClick={() => { setTrails([]); setT(null); }} aria-label={t("widget.projectile.clear", "Clear trails")}>
               <RotateCcw size={16} />
             </button>
           </div>
         </div>
         <div className="space-y-3">
           <div className="grid grid-cols-3 gap-2" aria-live="polite">
-            <Readout label="Range R" value={fmt(s.R, 1)} unit="m" />
-            <Readout label="Max height" value={fmt(s.Hmax, 1)} unit="m" />
-            <Readout label="Flight time" value={fmt(s.T, 2)} unit="s" />
+            <Readout label={t("widget.projectile.range", "Range R")} value={fmt(s.R, 1)} unit="m" />
+            <Readout label={t("widget.projectile.maxHeight", "Max height")} value={fmt(s.Hmax, 1)} unit="m" />
+            <Readout label={t("widget.projectile.flightTime", "Flight time")} value={fmt(s.T, 2)} unit="s" />
           </div>
           <div className="grid grid-cols-3 gap-2 text-xs">
             <Readout label="t" value={fmt(tt, 2)} unit="s" tone="ink" />
             <Readout label="vₓ" value={fmt(s.vx, 1)} unit="m/s" tone="ink" />
-            <Readout label="v_y" value={fmt(flying ? vyNow : t === null ? s.vy : -s.vy, 1)} unit="m/s" tone="ink" />
+            <Readout label="v_y" value={fmt(flying ? vyNow : time === null ? s.vy : -s.vy, 1)} unit="m/s" tone="ink" />
           </div>
           <div className="rounded-2xl bg-surface-2 p-3 font-mono text-xs leading-6 text-muted">
             R = v₀² sin 2θ / g · H = v₀² sin²θ / 2g · T = 2v₀ sin θ / g
-            <div className="font-sans text-[11px]">No air resistance. 45° gives the longest range on flat ground.</div>
+            <div className="font-sans text-[11px]">{t("widget.projectile.note", "No air resistance. 45° gives the longest range on flat ground.")}</div>
           </div>
         </div>
       </div>
