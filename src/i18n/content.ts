@@ -55,7 +55,10 @@ export function useHasContentTranslation(course: string) {
   const locale = useLocale();
   const [has, setHas] = useState(false);
   useEffect(() => {
-    if (locale === "en" || !course) return setHas(false);
+    if (locale === "en" || !course) {
+      setHas(false);
+      return;
+    }
     let live = true;
     loadContentDict(locale, course).then((d) => live && setHas(Boolean(d && Object.keys(d).length)));
     return () => {

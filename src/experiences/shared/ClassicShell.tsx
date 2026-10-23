@@ -43,7 +43,9 @@ function Sidebar({ pathname, nav, more, isActive, openSearch }: Omit<ShellProps,
   const theme = useLearner((s) => s.settings.theme);
   const setSettings = useLearner((s) => s.setSettings);
 
-  useEffect(() => setOpen(false), [pathname]);
+  useEffect(() => {
+    setOpen(false);
+  }, [pathname]);
   useEffect(() => {
     const close = (e: MouseEvent) => ref.current && !ref.current.contains(e.target as Node) && setOpen(false);
     window.addEventListener("mousedown", close);

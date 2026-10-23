@@ -18,7 +18,9 @@ import { NeonBar, rankInfo } from "./hud";
  */
 export function AdventureShell({ children, pathname, nav, more, isActive, openSearch }: ShellProps) {
   const [panel, setPanel] = useState(false);
-  useEffect(() => setPanel(false), [pathname]);
+  useEffect(() => {
+    setPanel(false);
+  }, [pathname]);
 
   // Phones: home + 3 destinations in the bar, the rest in the control panel.
   const barNav = nav.slice(0, 4);

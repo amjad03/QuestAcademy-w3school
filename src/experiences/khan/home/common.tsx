@@ -51,7 +51,9 @@ export function Greeting({ title, sub, aside }: { title?: ReactNode; sub?: React
   const greeting = useGreeting();
   const f = useFmt();
   const [today, setToday] = useState("");
-  useEffect(() => setToday(f.date(new Date(), { weekday: "long", day: "numeric", month: "long" })), [f]);
+  useEffect(() => {
+    setToday(f.date(new Date(), { weekday: "long", day: "numeric", month: "long" }));
+  }, [f]);
   return (
     <header className="mb-8 flex flex-wrap items-end justify-between gap-x-8 gap-y-5 border-b border-line pb-6">
       <div className="min-w-0">
@@ -339,7 +341,9 @@ export function SeeItCard({ minAge = 12, compact }: { minAge?: number; compact?:
   const f = useFmt();
   const index = useExplainerIndex();
   const [seed, setSeed] = useState(0);
-  useEffect(() => setSeed(Math.floor(Date.now() / 86_400_000)), []);
+  useEffect(() => {
+    setSeed(Math.floor(Date.now() / 86_400_000));
+  }, []);
   const picks = useMemo(() => {
     if (!index) return [];
     const pool = index.all.filter((e) => explainerMaxAge(e.ages) >= minAge);
@@ -416,7 +420,10 @@ export function LanguageNudge() {
   const setSettings = useLearner((s) => s.setSettings);
   const [offer, setOffer] = useState<Locale | null>(null);
   useEffect(() => {
-    if (locale !== "en") return setOffer(null);
+    if (locale !== "en") {
+      setOffer(null);
+      return;
+    }
     try {
       if (localStorage.getItem(NUDGE_KEY)) return;
     } catch {
@@ -427,7 +434,10 @@ export function LanguageNudge() {
       const base = p.toLowerCase().split("-")[0];
       if (base === "en") return;
       const hit = LOCALES.find((l) => l.id === base);
-      if (hit) return setOffer(hit.id);
+      if (hit) {
+        setOffer(hit.id);
+        return;
+      }
     }
   }, [locale]);
   if (!offer) return null;

@@ -278,7 +278,9 @@ function Dropdown({
   const ref = useRef<HTMLDivElement>(null);
   const btn = useRef<HTMLButtonElement>(null);
 
-  useEffect(() => setOpen(false), [pathname]);
+  useEffect(() => {
+    setOpen(false);
+  }, [pathname]);
   useEffect(() => {
     if (!open) return;
     const close = (e: MouseEvent) => ref.current && !ref.current.contains(e.target as Node) && setOpen(false);
@@ -342,7 +344,9 @@ function BottomBar({ pathname, tabs, more, isActive }: { pathname: string; tabs:
   const rest = [...tabs.slice(4), ...more];
   const restActive = rest.some((n) => isActive(n.href)) || isActive("/settings") || isActive("/profile");
 
-  useEffect(() => setOpen(false), [pathname]);
+  useEffect(() => {
+    setOpen(false);
+  }, [pathname]);
   useEffect(() => {
     if (!open) return;
     const key = (e: KeyboardEvent) => e.key === "Escape" && setOpen(false);

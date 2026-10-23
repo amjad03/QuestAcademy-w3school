@@ -40,7 +40,9 @@ function groupNav(nav: NavItem[]) {
 /** Focus (15–18): an exam command centre — purpose-grouped sidebar, countdown, search and a focus timer. */
 export function FocusShell({ children, pathname, nav, more, isActive, openSearch }: ShellProps) {
   const [drawer, setDrawer] = useState(false);
-  useEffect(() => setDrawer(false), [pathname]);
+  useEffect(() => {
+    setDrawer(false);
+  }, [pathname]);
   const closeDrawer = useCallback(() => setDrawer(false), []);
 
   return (
@@ -163,7 +165,9 @@ function ThemeToggle({ className, withLabel }: { className?: string; withLabel?:
   const theme = useLearner((s) => s.settings.theme);
   const setSettings = useLearner((s) => s.setSettings);
   const [sysDark, setSysDark] = useState(false);
-  useEffect(() => setSysDark(document.documentElement.classList.contains("dark")), [theme]);
+  useEffect(() => {
+    setSysDark(document.documentElement.classList.contains("dark"));
+  }, [theme]);
   const dark = hydrated && (theme === "dark" || (theme === "system" && sysDark));
   const label = dark ? "Switch to light mode" : "Switch to dark mode";
   return (

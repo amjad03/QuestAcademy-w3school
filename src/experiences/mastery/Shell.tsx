@@ -30,7 +30,9 @@ export function MasteryShell({ children, pathname, nav, more, isActive, openSear
       if (localStorage.getItem(EXPLORER_KEY) === "closed") setOpen(false);
     } catch {}
   }, []);
-  useEffect(() => setDrawer(false), [pathname]);
+  useEffect(() => {
+    setDrawer(false);
+  }, [pathname]);
   useEffect(() => {
     if (!drawer) return;
     const esc = (e: KeyboardEvent) => e.key === "Escape" && setDrawer(false);
@@ -108,7 +110,9 @@ function ActivityBar({
 }: Pick<ShellProps, "nav" | "more" | "isActive" | "pathname"> & { explorerOpen: boolean; onToggleExplorer: () => void }) {
   const [menu, setMenu] = useState(false);
   const ref = useRef<HTMLDivElement>(null);
-  useEffect(() => setMenu(false), [pathname]);
+  useEffect(() => {
+    setMenu(false);
+  }, [pathname]);
   useEffect(() => {
     if (!menu) return;
     const close = (e: MouseEvent) => ref.current && !ref.current.contains(e.target as Node) && setMenu(false);

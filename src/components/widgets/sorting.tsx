@@ -111,7 +111,9 @@ export default function Sorting(input: Record<string, unknown>) {
   const [playing, setPlaying] = useState(false);
   const [speed, setSpeed] = useState(4);
 
-  useEffect(() => setItems(randomItems(10)), []);
+  useEffect(() => {
+    setItems(randomItems(10));
+  }, []);
 
   const all = useMemo(() => frames(items, algo, t), [items, algo, t]);
   const frame = all[Math.min(step, all.length - 1)];

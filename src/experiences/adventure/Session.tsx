@@ -319,7 +319,10 @@ function Level({ level }: { level: 0 | 1 | 2 | 3 | 4 }) {
 function CountUp({ to }: { to: number }) {
   const [n, setN] = useState(0);
   useEffect(() => {
-    if (to <= 0) return setN(to);
+    if (to <= 0) {
+      setN(to);
+      return;
+    }
     let raf = 0;
     const start = performance.now();
     const tick = (t: number) => {

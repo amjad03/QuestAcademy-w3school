@@ -19,8 +19,14 @@ const outlines = new Map<string, CourseOutline>();
 export function useOutline(slug: string | null | undefined) {
   const [outline, setOutline] = useState<CourseOutline | null>(slug ? (outlines.get(slug) ?? null) : null);
   useEffect(() => {
-    if (!slug) return setOutline(null);
-    if (outlines.has(slug)) return setOutline(outlines.get(slug)!);
+    if (!slug) {
+      setOutline(null);
+      return;
+    }
+    if (outlines.has(slug)) {
+      setOutline(outlines.get(slug)!);
+      return;
+    }
     let live = true;
     fetch(`/course-data/${slug}`)
       .then((r) => (r.ok ? r.json() : Promise.reject()))

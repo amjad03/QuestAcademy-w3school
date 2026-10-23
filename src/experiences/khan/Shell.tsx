@@ -86,7 +86,9 @@ function useDismiss(open: boolean, close: () => void, box: RefObject<HTMLElement
       window.removeEventListener("keydown", key);
     };
   }, [open, close, box, trigger]);
-  useEffect(() => close(), [pathname, close]);
+  useEffect(() => {
+    close();
+  }, [pathname, close]);
 }
 
 const isLessonPath = (p: string) => /^\/course\/[^/]+\/[^/]+\/[^/]+/.test(p);
@@ -106,7 +108,9 @@ export function KhanShell({ children, pathname, nav, more, isActive, openSearch 
   const lesson = isLessonPath(pathname);
   const [sheet, setSheet] = useState(false);
   const closeSheet = useCallback(() => setSheet(false), []);
-  useEffect(() => setSheet(false), [pathname]);
+  useEffect(() => {
+    setSheet(false);
+  }, [pathname]);
 
   return (
     <div className="kh-shell min-h-screen bg-bg" data-subnav={lesson ? undefined : "true"}>
@@ -486,7 +490,9 @@ function ThemeToggle() {
   const theme = useLearner((s) => s.settings.theme);
   const setSettings = useLearner((s) => s.setSettings);
   const [sysDark, setSysDark] = useState(false);
-  useEffect(() => setSysDark(document.documentElement.classList.contains("dark")), [theme]);
+  useEffect(() => {
+    setSysDark(document.documentElement.classList.contains("dark"));
+  }, [theme]);
   const dark = hydrated && (theme === "dark" || (theme === "system" && sysDark));
   return (
     <button type="button" className="kh-menuitem" onClick={() => setSettings({ theme: dark ? "light" : "dark" })} aria-pressed={dark}>

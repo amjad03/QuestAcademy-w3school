@@ -30,7 +30,9 @@ export function NotebookDock({ lessonId, title, href }: Props) {
   const explore = mode.young;
   const isMarked = hydrated && bookmarked;
 
-  useEffect(() => setPanel(null), [lessonId]);
+  useEffect(() => {
+    setPanel(null);
+  }, [lessonId]);
 
   return (
     <div className="mt-4 flex flex-wrap items-center gap-2">
@@ -141,7 +143,9 @@ function DoubtForm({ lessonId, onClose }: { lessonId: string; onClose: () => voi
   const [done, setDone] = useState(false);
   const ref = useRef<HTMLInputElement>(null);
 
-  useEffect(() => ref.current?.focus(), []);
+  useEffect(() => {
+    ref.current?.focus();
+  }, []);
 
   const submit = (e: React.FormEvent) => {
     e.preventDefault();

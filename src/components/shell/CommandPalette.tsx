@@ -83,7 +83,9 @@ export function CommandPalette() {
       setTimeout(() => inputRef.current?.focus(), 30);
     }
   }, [open]);
-  useEffect(() => setActive(0), [q]);
+  useEffect(() => {
+    setActive(0);
+  }, [q]);
 
   const go = (item?: SearchItem) => {
     if (!item) return;

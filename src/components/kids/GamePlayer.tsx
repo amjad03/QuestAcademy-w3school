@@ -365,7 +365,10 @@ function MathPop({ onAnswer, locked }: { onAnswer: (ok: boolean) => void; locked
   const [time, setTime] = useState(10);
   useEffect(() => {
     if (locked) return;
-    if (time === 0) return onAnswer(false);
+    if (time === 0) {
+      onAnswer(false);
+      return;
+    }
     const t = setTimeout(() => setTime((x) => x - 1), 1000);
     return () => clearTimeout(t);
   }, [time, locked]); // eslint-disable-line react-hooks/exhaustive-deps

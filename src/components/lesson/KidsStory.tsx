@@ -42,7 +42,10 @@ export function KidsStory({ lesson, id, onComplete, done }: { lesson: Lesson; id
   const last = i === pages.length - 1;
 
   useEffect(() => {
-    if (!voice) return stopSpeaking();
+    if (!voice) {
+      stopSpeaking();
+      return;
+    }
     // One clip per block, so each has its own pre-rendered recording.
     sayQueue(pages[i].map(blockSpeech).filter((t): t is string => Boolean(t)), { rate: 0.92, pitch: 1.2 });
     return () => stopSpeaking();

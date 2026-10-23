@@ -88,7 +88,9 @@ export function LessonViewer(raw: LessonViewerPayload) {
     }
   }, [p.id]); // eslint-disable-line react-hooks/exhaustive-deps
 
-  useEffect(() => window.scrollTo({ top: 0 }), [item.kind, p.id]);
+  useEffect(() => {
+    window.scrollTo({ top: 0 });
+  }, [item.kind, p.id]);
 
   // Next step after the current item: next item in this lesson, else the next lesson.
   const upNext = useMemo(() => {

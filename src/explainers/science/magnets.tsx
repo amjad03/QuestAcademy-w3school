@@ -261,7 +261,9 @@ function TwoMagnets({ onStatus }: { onStatus: (s: string, done: boolean) => void
   const done = seen.a && seen.r;
   const msg = gap <= 0 ? `Click! ${facingL} and ${facingR} are opposites, so they attract and stick together.` : near ? (attract ? `${facingL} and ${facingR} are opposites: feel them pull together!` : `${facingL} and ${facingR} are the same: they push apart! You can't make them touch.`) : "Drag the left magnet towards the other one.";
   const full = done ? `${msg} You found both: opposites attract and same poles repel!` : `${msg} ${!seen.a ? "Can you make them stick?" : "Now flip one and see if they push apart."}`;
-  useEffect(() => onStatus(full, done), [full, done]); // eslint-disable-line react-hooks/exhaustive-deps
+  useEffect(() => {
+    onStatus(full, done);
+  }, [full, done]); // eslint-disable-line react-hooks/exhaustive-deps
 
   return (
     <div>
@@ -355,7 +357,9 @@ function WhatSticks({ onStatus }: { onStatus: (s: string, done: boolean) => void
     : count === 0
       ? "Drag the magnet down close to each object. Which ones jump up and stick?"
       : `Tested ${count} of ${OBJS.length}. ${yes.length ? `Sticks: ${yes.join(", ")}.` : ""} ${no.length ? `Doesn't stick: ${no.join(", ")}.` : ""}`;
-  useEffect(() => onStatus(full, done), [full, done]); // eslint-disable-line react-hooks/exhaustive-deps
+  useEffect(() => {
+    onStatus(full, done);
+  }, [full, done]); // eslint-disable-line react-hooks/exhaustive-deps
 
   return (
     <div className="overflow-hidden rounded-2xl border-2 border-line">

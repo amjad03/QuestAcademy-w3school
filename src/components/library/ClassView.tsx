@@ -59,7 +59,9 @@ export function ClassView({ data }: { data: ClassViewData }) {
   const visit = useLibrary((s) => s.visit);
   const isMine = hydrated && classForStage(stage)?.id === g.id;
 
-  useEffect(() => visit(g.id), [g.id, visit]);
+  useEffect(() => {
+    visit(g.id);
+  }, [g.id, visit]);
 
   const progress = useMemo(() => {
     const m = new Map<string, { done: number; next: string | null }>();

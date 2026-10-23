@@ -28,8 +28,14 @@ const outlineCache = new Map<string, CourseOutline>();
 function useCourseOutline(slug: string | null) {
   const [o, setO] = useState<CourseOutline | null | undefined>(slug ? (outlineCache.get(slug) ?? null) : null);
   useEffect(() => {
-    if (!slug) return setO(null);
-    if (outlineCache.has(slug)) return setO(outlineCache.get(slug)!);
+    if (!slug) {
+      setO(null);
+      return;
+    }
+    if (outlineCache.has(slug)) {
+      setO(outlineCache.get(slug)!);
+      return;
+    }
     let live = true;
     fetch(`/course-data/${slug}`)
       .then((r) => (r.ok ? r.json() : Promise.reject()))

@@ -34,7 +34,9 @@ export function ExploreSessionLayout(p: SessionLayoutProps) {
   const [why, setWhy] = useState(false);
   const [party, setParty] = useState<number | null>(null);
 
-  useEffect(() => setWhy(false), [p.index, fb]);
+  useEffect(() => {
+    setWhy(false);
+  }, [p.index, fb]);
 
   useEffect(() => {
     if (!fb?.correct || !isMilestone(p.combo)) return;

@@ -63,7 +63,9 @@ export function ExploreShell({ children, pathname, nav, more, isActive, openSear
   const [menu, setMenu] = useState(false);
   const [gate, setGate] = useState(false);
 
-  useEffect(() => setMenu(false), [pathname]);
+  useEffect(() => {
+    setMenu(false);
+  }, [pathname]);
 
   const tabHrefs = new Set(KID_TABS.map((k) => k.href));
   const extra = [...nav, ...more].filter((n, i, all) => !tabHrefs.has(n.href) && n.href !== GROWN_UPS && all.findIndex((x) => x.href === n.href) === i);

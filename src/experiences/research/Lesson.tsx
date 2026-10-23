@@ -22,7 +22,9 @@ export function ResearchLessonLayout(p: LessonLayoutProps) {
   const [cite, setCite] = useState<"idle" | "copied" | "failed">("idle");
   const timer = useRef<ReturnType<typeof setTimeout> | undefined>(undefined);
 
-  useEffect(() => setContentsOpen(false), [p.lesson.id]);
+  useEffect(() => {
+    setContentsOpen(false);
+  }, [p.lesson.id]);
   useEffect(() => () => clearTimeout(timer.current), []);
 
   const onCite = async () => {
