@@ -117,7 +117,7 @@ export function LessonViewer(p: LessonViewerPayload) {
         (p.world === "kids" ? (
           <KidsStory lesson={p.lesson} id={p.id} onComplete={finishArticle} done={Boolean(st.lessons[p.id])} />
         ) : (
-          <Article lesson={p.lesson} id={p.id} world={p.world} done={Boolean(st.lessons[p.id])} onComplete={finishArticle} />
+          <Article lesson={p.lesson} id={p.id} world={p.world} done={Boolean(st.lessons[p.id])} onComplete={finishArticle} endCard={!exp.ownsComplete} />
         ))}
       {item.kind === "cards" && p.lesson.flashcards && <Flashcards cards={p.lesson.flashcards} kids={p.world === "kids"} onAllSeen={() => markItem(item.id, item.xp)} />}
       {item.kind === "challenge" && p.lesson.challenge && <Challenge challenge={p.lesson.challenge} lessonId={p.id} />}
@@ -147,7 +147,7 @@ export function LessonViewer(p: LessonViewerPayload) {
   );
 }
 
-function Article({ lesson, id, world, done, onComplete }: { lesson: Lesson; id: string; world: WorldId; done: boolean; onComplete: () => void }) {
+function Article({ lesson, id, world, done, onComplete, endCard }: { lesson: Lesson; id: string; world: WorldId; done: boolean; onComplete: () => void; endCard: boolean }) {
   const narration = useNarration(lesson.blocks);
   const rewards = useMode().rewards;
   const playful = rewards === "celebrate" || rewards === "playful";
@@ -165,18 +165,20 @@ function Article({ lesson, id, world, done, onComplete }: { lesson: Lesson; id: 
           </div>
         ))}
       </div>
-      <div className="card mt-10 flex flex-col items-center gap-4 p-8 text-center sm:flex-row sm:text-left">
-        {playful && <Mascot pose={done ? "cheer" : "read"} size={90} animate={false} />}
-        <div className="flex-1">
-          <h3 className="text-xl font-black">{done ? "Lesson complete" : "Finished reading?"}</h3>
-          <p className="mt-1 font-semibold text-muted">{done ? "Now lock it in with practice — that’s what builds mastery." : `Mark it complete to earn ${lesson.xp} XP and unlock practice.`}</p>
+      {endCard && (
+        <div className="card mt-10 flex flex-col items-center gap-4 p-8 text-center sm:flex-row sm:text-left">
+          {playful && <Mascot pose={done ? "cheer" : "read"} size={90} animate={false} />}
+          <div className="flex-1">
+            <h3 className="text-xl font-black">{done ? "Lesson complete" : "Finished reading?"}</h3>
+            <p className="mt-1 font-semibold text-muted">{done ? "Now lock it in with practice — that’s what builds mastery." : `Mark it complete to earn ${lesson.xp} XP and unlock practice.`}</p>
+          </div>
+          {!done && (
+            <button onClick={onComplete} className="btn-good">
+              Mark complete
+            </button>
+          )}
         </div>
-        {!done && (
-          <button onClick={onComplete} className="btn-good">
-            Mark complete
-          </button>
-        )}
-      </div>
+      )}
     </div>
   );
 }

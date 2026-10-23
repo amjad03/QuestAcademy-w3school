@@ -113,4 +113,6 @@ export interface Experience {
   LessonLayout: ComponentType<LessonLayoutProps>;
   SessionLayout: ComponentType<SessionLayoutProps>;
   SessionResults: ComponentType<SessionResultsProps>;
+  /** The lesson layout renders its own "Mark complete" control, so the article skips its end card. */
+  ownsComplete?: boolean;
 }
