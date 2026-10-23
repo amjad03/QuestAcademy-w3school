@@ -1,6 +1,8 @@
 import Link from "next/link";
 import { Mascot } from "@/components/brand/Mascot";
 
+export const metadata = { title: "Page not found" };
+
 export default function NotFound() {
   return (
     <div className="grid min-h-screen place-items-center bg-bg px-4 text-center">

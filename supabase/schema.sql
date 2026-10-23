@@ -88,10 +88,14 @@ begin
   insert into tutor_usage (key, day, count) values (p_key, today, 1)
     on conflict (key, day) do update set count = tutor_usage.count + 1
     returning count into mine;
+  -- A learner over their own limit must not use up the shared budget.
+  if mine > p_limit then
+    return false;
+  end if;
   insert into tutor_usage (key, day, count) values ('__all__', today, 1)
     on conflict (key, day) do update set count = tutor_usage.count + 1
     returning count into total;
-  if mine > p_limit or (p_global_limit > 0 and total > p_global_limit) then
+  if p_global_limit > 0 and total > p_global_limit then
     return false;
   end if;
   return true;

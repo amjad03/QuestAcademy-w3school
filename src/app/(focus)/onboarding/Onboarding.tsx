@@ -139,7 +139,7 @@ export function Onboarding() {
           <Mascot pose={id === "done" ? "cheer" : id === "goal" ? "think" : "wave"} size={id === "done" ? 120 : 96} />
           <motion.div key={id} initial={{ opacity: 0, x: -8 }} animate={{ opacity: 1, x: 0 }} className="relative mb-6 rounded-2xl border-2 border-line bg-surface px-5 py-3.5 text-lg font-bold">
             <span className="absolute -left-[9px] bottom-4 h-4 w-4 rotate-45 border-b-2 border-l-2 border-line bg-surface" />
-            {PROMPT[id]}
+            <h1 className="text-lg font-bold">{PROMPT[id]}</h1>
           </motion.div>
         </div>
 
@@ -238,6 +238,8 @@ export function Onboarding() {
 function Option({ active, onClick, children }: { active: boolean; onClick: () => void; children: React.ReactNode }) {
   return (
     <button
+      type="button"
+      aria-pressed={active}
       onClick={() => {
         onClick();
         sfx("tap");

@@ -8,7 +8,7 @@ import { Mascot } from "@/components/brand/Mascot";
 import { PageIntro, Section } from "@/components/marketing/Section";
 
 export const metadata: Metadata = {
-  title: "About — Quest Academy",
+  title: "About",
   description: "What Quest Academy is, who it is for and how the lessons are built.",
 };
 

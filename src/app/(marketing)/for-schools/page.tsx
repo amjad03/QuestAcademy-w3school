@@ -6,7 +6,7 @@ import { syllabusStats } from "@/content/syllabus";
 import { PageIntro, Section } from "@/components/marketing/Section";
 
 export const metadata: Metadata = {
-  title: "For schools — Quest Academy",
+  title: "For schools",
   description: "How teachers and schools use Quest Academy for classroom lessons, worksheets and parent reports.",
 };
 

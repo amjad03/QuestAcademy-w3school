@@ -143,7 +143,7 @@ function Header({ pathname, nav, more, isActive, openSearch, lesson }: Omit<Shel
       <div className="mx-auto flex h-[var(--kh-header-h)] max-w-[1280px] items-center gap-2 px-3 sm:gap-3 sm:px-5 lg:px-8">
         <Link href="/learn" className="flex shrink-0 items-center gap-2 rounded-md pr-1" aria-label={t("khan.homeAria", "Quest Academy — my learning")}>
           <LogoMark size={28} />
-          <span className="kh-wordmark hidden min-[380px]:inline">Quest Academy</span>
+          <span className="kh-wordmark hidden min-[430px]:inline">Quest Academy</span>
         </Link>
 
         <CoursesMenu pathname={pathname} />

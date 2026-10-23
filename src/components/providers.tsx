@@ -32,7 +32,8 @@ function ModeSync() {
   useEffect(() => {
     document.documentElement.dataset.mode = mode;
     document.documentElement.dataset.skin = skin;
-    document.documentElement.lang = localeInfo(locale).bcp47;
+    // Marketing pages are written in English only, so declare them as English.
+    document.documentElement.lang = skin === "site" ? "en-IN" : localeInfo(locale).bcp47;
   }, [mode, skin, locale]);
   return null;
 }

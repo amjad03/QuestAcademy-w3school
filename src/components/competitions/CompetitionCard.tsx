@@ -24,7 +24,7 @@ export function CompetitionCard({ c }: { c: Competition }) {
             </span>
           ))}
         </div>
-        <h3 className="mt-2 text-lg font-black leading-tight">{c.name}</h3>
+        <h2 className="mt-2 text-lg font-black leading-tight">{c.name}</h2>
         <p className="mt-1 text-sm font-semibold leading-6 text-muted">{c.short}</p>
         <p className="mt-3 flex items-center gap-1.5 text-xs font-bold text-muted">
           <CalendarDays className="h-3.5 w-3.5" strokeWidth={2.5} />

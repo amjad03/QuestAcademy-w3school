@@ -8,6 +8,7 @@ import "@/experiences/khan/theme.css";
 import { Providers } from "@/components/providers";
 import { Overlays } from "@/components/shell/Overlays";
 import { CommandPalette } from "@/components/shell/CommandPalette";
+import { SITE_URL } from "@/lib/site";
 
 const sans = Nunito({ subsets: ["latin"], variable: "--font-sans", weight: ["500", "600", "700", "800", "900"], display: "swap" });
 const pro = Inter({ subsets: ["latin"], variable: "--font-pro", display: "swap" });
@@ -27,21 +28,24 @@ const serif = Source_Serif_4({ subsets: ["latin"], variable: "--font-serif", dis
 const work = Manrope({ subsets: ["latin"], variable: "--font-work", display: "swap", preload: false });
 
 export const metadata: Metadata = {
-  title: { default: "Quest Academy — the free, fun way to learn anything", template: "%s · Quest Academy" },
+  metadataBase: new URL(SITE_URL),
+  title: { default: "Quest Academy: free lessons and practice from pre-school to college", template: "%s · Quest Academy" },
   description:
-    "Videos, articles, practice and tests for every subject — from first letters to university. Earn XP, keep your streak and master skills one lesson at a time.",
+    "Lessons, practice and mock tests mapped to CBSE, ICSE, Karnataka PUC, NEET and JEE, plus college subjects and career skills. In English and six Indian languages.",
+  applicationName: "Quest Academy",
   icons: { icon: "/icon.svg" },
+  alternates: { canonical: "./" },
+  openGraph: { siteName: "Quest Academy", type: "website", locale: "en_IN", images: [{ url: "/landing/lesson.webp", width: 2880, height: 1800, alt: "A Quest Academy lesson" }] },
+  twitter: { card: "summary_large_image" },
 };
 
 export const viewport: Viewport = {
-  themeColor: [
-    { media: "(prefers-color-scheme: light)", color: "#ffffff" },
-    { media: "(prefers-color-scheme: dark)", color: "#101521" },
-  ],
+  // The site opens in the light theme unless the learner picks dark, so the browser bar matches it.
+  themeColor: "#ffffff",
 };
 
 // Applies the saved theme before first paint to avoid a flash.
-const themeScript = `try{var s=JSON.parse(localStorage.getItem('quest-academy')||'{}').state;var t=s&&s.settings&&s.settings.theme||'light';if(t==='dark'||(t==='system'&&matchMedia('(prefers-color-scheme: dark)').matches))document.documentElement.classList.add('dark');var p=s&&s.profile||{};var st=p.stage;var m=p.mode||({preprimary:'sprout',primary:'explore',middle:'adventure',secondary:'focus',aspirant:'focus',ug:'mastery',pg:'research',lifelong:'professional'})[st]||'adventure';document.documentElement.dataset.mode=m;var pa=location.pathname;if(pa.length>1&&pa.charAt(pa.length-1)==='/')pa=pa.slice(0,-1);document.documentElement.dataset.skin=['/','/about','/for-schools','/privacy','/terms'].indexOf(pa)>-1?'site':((s&&s.settings&&s.settings.skin)||'modes');var lc={en:'en-IN',hi:'hi-IN',kn:'kn-IN',ta:'ta-IN',te:'te-IN',mr:'mr-IN',bn:'bn-IN'}[(s&&s.settings&&s.settings.locale)||'en'];if(lc)document.documentElement.lang=lc}catch(e){}`;
+const themeScript = `try{var s=JSON.parse(localStorage.getItem('quest-academy')||'{}').state;var t=s&&s.settings&&s.settings.theme||'light';if(t==='dark'||(t==='system'&&matchMedia('(prefers-color-scheme: dark)').matches))document.documentElement.classList.add('dark');var p=s&&s.profile||{};var st=p.stage;var m=p.mode||({preprimary:'sprout',primary:'explore',middle:'adventure',secondary:'focus',aspirant:'focus',ug:'mastery',pg:'research',lifelong:'professional'})[st]||'adventure';document.documentElement.dataset.mode=m;var pa=location.pathname;if(pa.length>1&&pa.charAt(pa.length-1)==='/')pa=pa.slice(0,-1);document.documentElement.dataset.skin=['/','/about','/for-schools','/privacy','/terms'].indexOf(pa)>-1?'site':((s&&s.settings&&s.settings.skin)||'modes');var lc=document.documentElement.dataset.skin==='site'?'en-IN':{en:'en-IN',hi:'hi-IN',kn:'kn-IN',ta:'ta-IN',te:'te-IN',mr:'mr-IN',bn:'bn-IN'}[(s&&s.settings&&s.settings.locale)||'en'];if(lc)document.documentElement.lang=lc}catch(e){}`;
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (

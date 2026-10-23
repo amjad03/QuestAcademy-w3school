@@ -38,7 +38,8 @@ export function ExplainGallery() {
                 {e.icon}
               </span>
               <span className="min-w-0">
-                <span className="eyebrow" style={{ color: e.color }}>
+                <span className="eyebrow flex items-center gap-1.5 !text-muted">
+                  <span className="h-2 w-2 shrink-0 rounded-full" style={{ background: e.color }} aria-hidden />
                   {t("explain.gallery.ages", "{area} · ages {ages}", { area: e.area, ages: e.ages })}
                 </span>
                 <span className="mt-0.5 block text-lg font-black leading-snug">{e.title}</span>

@@ -37,7 +37,7 @@ export default function Page() {
           </div>
           <div className="mt-3 grid gap-3">
             {g.courses.map((c) => (
-              <article key={c.subject.slug} className="card p-4">
+              <article key={c.subject.slug} className="card min-w-0 p-4">
                 <div className="flex items-center gap-3">
                   <CourseIcon slug={c.subject.slug} size={40} />
                   <div className="min-w-0 flex-1">

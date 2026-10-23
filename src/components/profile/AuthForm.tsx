@@ -97,7 +97,7 @@ export function AuthForm() {
             <Link href="/learn" className="btn-primary w-full">
               {t("auth.disabled.guest", "Continue as guest")}
             </Link>
-            <p className="text-center text-xs font-semibold text-muted">{t("auth.disabled.owner", "Site owner: add the Supabase keys described in the README to enable sign-in.")}</p>
+            {process.env.NODE_ENV !== "production" && <p className="text-center text-xs font-semibold text-muted">{t("auth.disabled.owner", "Site owner: add the Supabase keys described in the README to enable sign-in.")}</p>}
           </div>
         ) : (
           <>

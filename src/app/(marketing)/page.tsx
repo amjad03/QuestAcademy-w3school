@@ -11,7 +11,7 @@ import { AgeSwitcher } from "@/components/marketing/landing/AgeSwitcher";
 import { ProductShot } from "@/components/marketing/landing/ProductShot";
 
 export const metadata: Metadata = {
-  title: "Quest Academy: free lessons and practice from pre-school to college",
+  title: { absolute: "Quest Academy: free lessons and practice from pre-school to college" },
   description: "Lessons, practice and mock tests mapped to CBSE, ICSE, Karnataka PUC, NEET and JEE, plus college subjects and career skills. In English and six Indian languages. Free.",
 };
 

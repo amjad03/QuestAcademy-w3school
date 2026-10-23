@@ -4,6 +4,22 @@ const nextConfig = {
   // A second dev server can build into its own folder: NEXT_DIST_DIR=.next-dev next dev -p 3300
   distDir: process.env.NEXT_DIST_DIR || ".next",
   eslint: { ignoreDuringBuilds: true },
+  poweredByHeader: false,
+  async headers() {
+    return [
+      {
+        source: "/:path*",
+        headers: [
+          { key: "X-Content-Type-Options", value: "nosniff" },
+          { key: "Referrer-Policy", value: "strict-origin-when-cross-origin" },
+          { key: "X-Frame-Options", value: "SAMEORIGIN" },
+          { key: "Strict-Transport-Security", value: "max-age=63072000; includeSubDomains; preload" },
+          // Microphone stays available for read-aloud practice; nothing else is needed.
+          { key: "Permissions-Policy", value: "camera=(), geolocation=(), payment=(), usb=()" },
+        ],
+      },
+    ];
+  },
   async redirects() {
     return [
       { source: "/dashboard", destination: "/learn", permanent: false },

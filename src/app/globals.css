@@ -383,3 +383,9 @@ html[data-skin="site"] header.sticky {
 html[data-skin="site"] :is(.card, .tile) {
   border-width: 1px;
 }
+
+/* Dark mode: the bright accent is too light behind white text (3.3:1); use the deeper shade. */
+.dark .btn-primary:not(:disabled) {
+  background-color: rgb(var(--accent-shade));
+  border-color: rgb(var(--accent-shade) / 0.6);
+}

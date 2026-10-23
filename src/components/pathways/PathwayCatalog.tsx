@@ -54,7 +54,7 @@ export function PathwayCatalog({ pathways, hours }: { pathways: Pathway[]; hours
           {rest.map((p) => (
             <Link key={p.slug} href={`/pathways/${p.slug}`} className="card group flex flex-col p-6 transition hover:border-ink/20">
               <span className="h-1 w-10 rounded-full" style={{ background: p.color }} />
-              <h3 className="mt-4 text-lg font-bold">{p.title}</h3>
+              <h2 className="mt-4 text-lg font-bold">{p.title}</h2>
               <p className="mt-2 line-clamp-3 text-sm text-muted">{p.goal}</p>
               <div className="mt-4 flex flex-wrap gap-1.5">
                 {p.skills.slice(0, 4).map((k) => (

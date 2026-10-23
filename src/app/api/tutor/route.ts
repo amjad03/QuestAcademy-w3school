@@ -15,9 +15,16 @@ function fail(status: number, error: TutorErrorCode, extra?: Record<string, unkn
 
 const hasCredential = () => Boolean(process.env.ANTHROPIC_API_KEY || process.env.ANTHROPIC_AUTH_TOKEN);
 
+/**
+ * The caller's IP as seen by the platform. Vercel sets x-vercel-forwarded-for and
+ * x-real-ip itself; the first X-Forwarded-For entry is client-controlled, so only
+ * the last hop (added by our own proxy) is trusted as a fallback.
+ */
 function clientIp(req: Request) {
+  const platform = req.headers.get("x-vercel-forwarded-for") || req.headers.get("x-real-ip");
+  if (platform) return platform.split(",")[0].trim();
   const fwd = req.headers.get("x-forwarded-for");
-  return (fwd?.split(",")[0] || req.headers.get("x-real-ip") || "unknown").trim();
+  return (fwd?.split(",").at(-1) || "unknown").trim();
 }
 
 const envInt = (name: string, fallback: number) => {

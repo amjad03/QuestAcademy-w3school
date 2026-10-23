@@ -3,7 +3,7 @@ import type { Metadata } from "next";
 import { PageIntro, Prose } from "@/components/marketing/Section";
 
 export const metadata: Metadata = {
-  title: "Privacy — Quest Academy",
+  title: "Privacy",
   description: "What Quest Academy stores, where, and the choices you have.",
 };
 
