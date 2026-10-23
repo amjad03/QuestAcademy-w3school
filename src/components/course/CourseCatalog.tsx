@@ -51,7 +51,7 @@ export function CourseCatalog({ courses }: { courses: Card[] }) {
         </div>
         <label className="relative lg:ml-auto lg:w-72">
           <Search className="absolute left-4 top-1/2 h-5 w-5 -translate-y-1/2 text-muted" />
-          <input value={q} onChange={(e) => setQ(e.target.value)} placeholder={t("course.catalog.search", "Search courses")} className="input pl-12" />
+          <input value={q} onChange={(e) => setQ(e.target.value)} placeholder={t("course.catalog.search", "Search courses")} className="input !pl-12" />
         </label>
       </div>
 

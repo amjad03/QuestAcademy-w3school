@@ -8,6 +8,7 @@ import { TutorToggle } from "@/components/tutor/TutorToggle";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { deleteAccount, pushAccount } from "@/lib/supabase";
+import { mergeNotebooks, notebookSnapshot, useNotebook, type NotebookData } from "@/lib/notebook-store";
 import { useRef, useState } from "react";
 import { Download, LogOut, Upload } from "lucide-react";
 import clsx from "clsx";
@@ -85,16 +86,17 @@ export function Settings() {
 
   const exportData = () => {
     const a = document.createElement("a");
-    a.href = URL.createObjectURL(new Blob([JSON.stringify(learnerSnapshot(), null, 2)], { type: "application/json" }));
+    a.href = URL.createObjectURL(new Blob([JSON.stringify({ ...learnerSnapshot(), notebook: notebookSnapshot() }, null, 2)], { type: "application/json" }));
     a.download = "quest-academy-progress.json";
     a.click();
   };
 
   const importData = async (f: File) => {
     try {
-      const data = JSON.parse(await f.text()) as LearnerState;
+      const { notebook, ...data } = JSON.parse(await f.text()) as LearnerState & { notebook?: Partial<NotebookData> };
       if (!data.profile || typeof data.xp !== "number") throw new Error("bad file");
       s.replaceState(mergeStates(learnerSnapshot(), data));
+      if (notebook) useNotebook.getState().replaceNotebook(mergeNotebooks(notebookSnapshot(), notebook));
       toast({ text: t("settings.data.imported", "Progress imported and merged") });
     } catch {
       toast({ text: t("settings.data.importBad", "That file isn’t Quest Academy progress") });
@@ -200,7 +202,7 @@ export function Settings() {
       </Section>
 
       <Section id="data" title={t("settings.section.data", "Your data")}>
-        <Row label={t("settings.data.backup", "Backup")} hint={t("settings.data.backupHint", "Download or restore all your progress")}>
+        <Row label={t("settings.data.backup", "Backup")} hint={t("settings.data.backupHint", "Download or restore your progress, notes and doubts")}>
           <div className="flex gap-2">
             <button className="btn-ghost" onClick={exportData}>
               <Download className="h-4 w-4" /> {t("settings.data.export", "Export")}

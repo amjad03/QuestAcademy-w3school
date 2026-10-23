@@ -155,7 +155,8 @@ export function Session({ payload: raw }: { payload: SessionPayload }) {
     const xpBefore = useLearner.getState().xp;
     const bestBefore = useLearner.getState().assessments[p.key];
     recordQuiz(correct, answers.length);
-    if (assessment) applyAssessment(p.key, p.kind as "quiz" | "test" | "challenge", answers);
+    // Record when each assessment was first finished (insights shows the date).
+    if (assessment) (applyAssessment(p.key, p.kind as "quiz" | "test" | "challenge", answers), markItem(p.key));
     else {
       applyPractice(p.key, correct, answers.length);
       // Finishing the set completes the practice item; the score sets the mastery level.

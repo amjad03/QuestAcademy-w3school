@@ -48,7 +48,7 @@ export function LibrarySearch({ items, placeholder = "Search courses, units and 
     <div>
       <label className="relative block">
         <Search className="absolute left-4 top-1/2 h-5 w-5 -translate-y-1/2 text-muted" aria-hidden />
-        <input value={q} onChange={(e) => setQ(e.target.value)} placeholder={placeholder} className="input pl-12" aria-label="Search the library" />
+        <input value={q} onChange={(e) => setQ(e.target.value)} placeholder={placeholder} className="input !pl-12" aria-label="Search the library" />
       </label>
       {terms.length > 0 && (
         <div className="card mt-2 overflow-hidden" role="region" aria-live="polite" aria-label="Search results">

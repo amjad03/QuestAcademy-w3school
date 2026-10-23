@@ -85,18 +85,27 @@ function NotesPanel({ lessonId, title, onClose }: { lessonId: string; title: str
   const [status, setStatus] = useState<"idle" | "saving" | "saved">("idle");
   const timer = useRef<ReturnType<typeof setTimeout> | undefined>(undefined);
   const ref = useRef<HTMLTextAreaElement>(null);
+  const latest = useRef(saved);
+  const pending = useRef(false);
 
   useEffect(() => {
     ref.current?.focus();
-    return () => clearTimeout(timer.current);
-  }, []);
+    // Closing the panel (or leaving the page) mid-typing must still save the note.
+    return () => {
+      clearTimeout(timer.current);
+      if (pending.current) setNote(lessonId, latest.current);
+    };
+  }, [lessonId, setNote]);
 
   const onChange = (v: string) => {
+    latest.current = v;
+    pending.current = true;
     setText(v);
     setStatus("saving");
     clearTimeout(timer.current);
     timer.current = setTimeout(() => {
       setNote(lessonId, v);
+      pending.current = false;
       setStatus("saved");
     }, 500);
   };

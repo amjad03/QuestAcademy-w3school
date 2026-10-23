@@ -102,10 +102,13 @@ export function CourseOverview({ outline: raw }: { outline: CourseOutline }) {
             </span>
             <div className="min-w-0 flex-1">
               <h3 className="font-black">{t("course.overview.challenge", "Course challenge")}</h3>
-              <p className="text-sm font-semibold text-muted">{t("course.overview.challengeDesc", "{n} questions · level up to Mastered", { n: outline.challenge.questions })}</p>
+              <p className="text-sm font-semibold text-muted">
+                {t("course.overview.challengeDesc", "{n} questions · level up to Mastered", { n: outline.challenge.questions })}
+                {hydrated && s.assessments[outline.challenge.key] !== undefined ? " · " + t("course.overview.best", "best {pct}%", { pct: Math.round(s.assessments[outline.challenge.key] * 100) }) : ""}
+              </p>
             </div>
             <Link href={outline.challenge.href} className="btn-gold !px-3 !py-2 text-xs">
-              {t("course.start", "Start")}
+              {hydrated && s.assessments[outline.challenge.key] !== undefined ? t("course.retake", "Retake") : t("course.start", "Start")}
             </Link>
           </div>
         </aside>
@@ -166,7 +169,7 @@ export function CourseOverview({ outline: raw }: { outline: CourseOutline }) {
                       </span>
                     </span>
                     <Link href={a!.href} className="flex items-center gap-1 text-sm font-extrabold uppercase tracking-wide text-accent">
-                      {t("course.start", "Start")} <ArrowRight className="h-4 w-4" />
+                      {hydrated && s.assessments[a!.key] !== undefined ? t("course.retake", "Retake") : t("course.start", "Start")} <ArrowRight className="h-4 w-4" />
                     </Link>
                   </li>
                 ))}

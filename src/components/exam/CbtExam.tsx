@@ -66,8 +66,12 @@ export function CbtExam({ test, pool }: { test: MockTest; pool: ExamQuestion[] }
       const raw = localStorage.getItem(KEY(test.id));
       if (raw) {
         const s = JSON.parse(raw) as Session;
-        if (Date.now() - s.startedAt < test.minutes * 60_000 && s.ids.every((id) => byId.has(id))) setSession(s);
-        else localStorage.removeItem(KEY(test.id));
+        if (!s.ids.every((id) => byId.has(id))) localStorage.removeItem(KEY(test.id));
+        else {
+          setSession(s);
+          // Time ran out while the tab was closed: open the attempt so the timer submits it, as at 00:00.
+          if (Date.now() - s.startedAt >= test.minutes * 60_000) setPhase("test");
+        }
       }
     } catch {
       /* ignore */

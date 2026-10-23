@@ -95,7 +95,7 @@ export function PathwayDetail({ pathway: p, meta, hours }: { pathway: Pathway; m
         </aside>
       </header>
 
-      <div className="mt-10 grid gap-10 lg:grid-cols-[1fr_320px]">
+      <div className="mt-10 grid grid-cols-1 gap-10 lg:grid-cols-[minmax(0,1fr)_320px]">
         {/* Modules */}
         <section>
           <h2 className="text-xl font-bold">{t("path.detail.curriculum", "Curriculum")}</h2>

@@ -65,7 +65,7 @@ export function FormulaVault({ sheets }: { sheets: Sheet[] }) {
         </div>
         <label className="relative sm:ml-auto sm:w-64">
           <Search className="absolute left-4 top-1/2 h-4 w-4 -translate-y-1/2 text-muted" />
-          <input value={q} onChange={(e) => setQ(e.target.value)} placeholder={t("exam.formulas.search", "Search formulas")} className="input !py-2 pl-10" aria-label={t("exam.formulas.search", "Search formulas")} />
+          <input value={q} onChange={(e) => setQ(e.target.value)} placeholder={t("exam.formulas.search", "Search formulas")} className="input !py-2 !pl-10" aria-label={t("exam.formulas.search", "Search formulas")} />
         </label>
         <button
           onClick={() => {
@@ -88,7 +88,7 @@ export function FormulaVault({ sheets }: { sheets: Sheet[] }) {
                 <I className="h-5 w-5" style={{ color: SUBJECT_META[sh.subject].color }} strokeWidth={2.5} /> {sh.chapter}
                 <span className="chip ml-1">{sh.items.length}</span>
               </h2>
-              <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
+              <div className="grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-3">
                 {sh.items.map((i) => {
                   const key = sh.chapter + i.name;
                   const hidden = quiz && !revealed.has(key);
@@ -96,7 +96,7 @@ export function FormulaVault({ sheets }: { sheets: Sheet[] }) {
                     <button
                       key={key}
                       onClick={() => quiz && setRevealed((r) => new Set(r).add(key))}
-                      className={clsx("flex flex-col rounded-2xl border-2 border-b-4 border-line bg-surface p-4 text-left transition", quiz && "cursor-pointer hover:bg-surface-2")}
+                      className={clsx("flex min-w-0 flex-col overflow-x-auto rounded-2xl border-2 border-b-4 border-line bg-surface p-4 text-left transition", quiz && "cursor-pointer hover:bg-surface-2")}
                       aria-label={hidden ? t("exam.formulas.revealAria", "Reveal {name}", { name: i.name }) : i.name}
                     >
                       <span className="text-sm font-extrabold">{i.name}</span>

@@ -94,7 +94,7 @@ export function ExamHub({ questionCount, formulaCount, chapters }: { questionCou
       </div>
 
       {/* actions */}
-      <section className="mt-8 grid gap-3 sm:grid-cols-2">
+      <section className="mt-8 grid grid-cols-1 gap-3 sm:grid-cols-2">
         {[
           { href: `/exam/mock/${exam === "NEET" ? "neet-full" : "jee-main"}`, icon: Timer, color: "#FF4B4B", t: t("exam.hub.action.mock.title", "Full mock test"), d: t("exam.hub.action.mock.desc", "Exam-day simulation with timer and palette") },
           { href: "/exam/practice", icon: Crosshair, color: "#2F6BFF", t: t("exam.hub.action.drill.title", "Chapter drill"), d: t("exam.hub.action.drill.desc", "Adaptive questions, one chapter at a time") },
