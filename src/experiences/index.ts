@@ -11,15 +11,20 @@ import { ClassicLessonLayout } from "./shared/ClassicLessonLayout";
 import { ClassicSessionLayout, ClassicSessionResults } from "./shared/ClassicSession";
 import { experience as sprout } from "./sprout";
 import { experience as explore } from "./explore";
-import { experience as adventure } from "./adventure";
-import { experience as focus } from "./focus";
-import { experience as mastery } from "./mastery";
-import { experience as research } from "./research";
-import { experience as professional } from "./professional";
+import { khanExperience } from "./khan";
 
 export type * from "./types";
 
-export const EXPERIENCES: Record<ModeId, Experience> = { sprout, explore, adventure, focus, mastery, research, professional };
+/** Duolingo-style for young children; one Khan Academy-style base for everyone from Class 6 up. */
+export const EXPERIENCES: Record<ModeId, Experience> = {
+  sprout,
+  explore,
+  adventure: khanExperience("adventure"),
+  focus: khanExperience("focus"),
+  mastery: khanExperience("mastery"),
+  research: khanExperience("research"),
+  professional: khanExperience("professional"),
+};
 
 /** The original design, used when the learner picks the Classic or Studio skin. */
 export const CLASSIC: Omit<Experience, "id"> = {

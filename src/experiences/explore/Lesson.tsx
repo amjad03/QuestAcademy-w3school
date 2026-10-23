@@ -9,147 +9,161 @@ import type { ItemKind } from "@/content/course";
 import { CourseIcon } from "@/components/brand/CourseIcon";
 import { useHydrated } from "@/components/providers";
 import { useNotebook } from "@/lib/notebook-store";
+import { say } from "@/lib/voice";
+import { EXPLORE_LINES } from "@/content/voice-lines";
+import { useT } from "@/i18n";
 import type { LessonLayoutProps, LessonTab } from "../types";
-import { EX, ReadAloud, chunky } from "./ui";
+import { EX, FatBar, ReadAloud, chunky, type Col } from "./ui";
 
-type Col = { c: string; s: string };
-
-const TAB_LOOK: Record<ItemKind, { label: string; col: Col }> = {
-  video: { label: "Watch", col: EX.red },
-  article: { label: "Story", col: EX.blue },
-  cards: { label: "Flip cards", col: EX.purple },
-  practice: { label: "Quiz time", col: EX.green },
-  challenge: { label: "Challenge", col: EX.orange },
+const TAB_LOOK: Record<ItemKind, { key: string; en: string; col: Col }> = {
+  video: { key: "explore.kind.video", en: "Watch", col: EX.red },
+  article: { key: "explore.kind.article", en: "Story", col: EX.blue },
+  cards: { key: "explore.kind.cards", en: "Flip cards", col: EX.purple },
+  practice: { key: "explore.kind.practice", en: "Quiz time", col: EX.green },
+  challenge: { key: "explore.kind.challenge", en: "Challenge", col: EX.orange },
 };
 
-const NEXT_LABEL: Record<string, string> = { Practice: "Quiz time", Lesson: "Story", Video: "Watch", Flashcards: "Flip cards", "Next lesson": "Next stop", "Unit test": "Treasure quiz" };
+const NEXT_WORD: Record<string, [string, string]> = {
+  Practice: ["explore.next.practice", "Quiz time"],
+  Lesson: ["explore.next.story", "Story"],
+  Video: ["explore.next.video", "Watch"],
+  Flashcards: ["explore.next.cards", "Flip cards"],
+  Challenge: ["explore.next.challenge", "Challenge"],
+  "Next lesson": ["explore.next.lesson", "Next lesson"],
+  "Unit test": ["explore.next.test", "Unit trophy"],
+};
 
-/** Explore lesson: a storybook page with big pill tabs, a lesson-trail drawer and big arrows. */
+/** Explore lesson: full-focus, bite-size — X + progress on top, one big card, a big Continue at the bottom. */
 export function ExploreLessonLayout(p: LessonLayoutProps) {
+  const t = useT();
   const [trail, setTrail] = useState(false);
+  const active = p.tabs.find((x) => x.active);
+  const doneTabs = p.tabs.filter((x) => x.done).length;
+  const story = p.world === "kids" && active?.kind === "article";
+  const waitingOnStory = story && !p.completed;
   const read = `${p.lesson.title}. ${p.lesson.summary}`;
+  const [nk, nen] = NEXT_WORD[p.upNext.label] ?? ["explore.next.other", p.upNext.label];
+
+  const onContinue = () => {
+    // A plain article counts as read when the child moves on (same as "Mark complete").
+    if (active?.kind === "article" && !p.completed && !story) p.onComplete();
+    say(t("explore.voice.continue", EXPLORE_LINES.continue));
+  };
 
   return (
-    <div className="mx-auto max-w-[1040px] px-3 pb-8 pt-4 sm:px-6">
-      {/* Top row: where am I + lesson trail */}
-      <div className="flex flex-wrap items-center gap-2">
-        <Link href={p.course.href} className="ex-press flex min-w-0 items-center gap-2 rounded-full bg-surface py-1.5 pl-1.5 pr-4 text-[15px] font-black" style={{ boxShadow: "inset 0 -3px 0 rgb(var(--line))" }}>
-          <CourseIcon slug={p.course.slug} size={30} />
-          <span className="truncate">
-            Island {p.unit.index + 1}: {p.unit.title}
-          </span>
-        </Link>
-        <button type="button" onClick={() => setTrail(true)} aria-expanded={trail} aria-controls="ex-trail" className="ex-press ml-auto flex items-center gap-2 rounded-full px-4 py-2 text-[15px] font-black text-white" style={chunky(EX.teal, 4)}>
-          <Footprints className="h-5 w-5" strokeWidth={2.6} aria-hidden /> Lesson trail
-          <span className="rounded-full bg-white/25 px-2 text-sm tabular-nums">
-            {p.unitProgress.done}/{p.unitProgress.total}
-          </span>
-        </button>
-      </div>
-
-      {/* Storybook title */}
-      <header className="ex-pagehead relative mt-4 px-5 pb-5 pt-6 sm:px-8">
-        <div className="flex items-start gap-3">
-          <div className="min-w-0 flex-1">
-            <h1 className="text-[2rem] font-black leading-[1.1] sm:text-[2.6rem]">{p.lesson.title}</h1>
-            {p.lesson.summary && <p className="mt-2 text-lg font-bold text-muted">{p.lesson.summary}</p>}
-          </div>
-          <BookmarkStar lessonId={p.lesson.id} title={p.lesson.title} href={`/course/${p.lesson.id}`} />
-        </div>
-        <div className="mt-4 flex flex-wrap items-center gap-3">
-          <ReadAloud text={read} label="Read to me" withWord size="lg" />
-          <TrailStars done={p.unitProgress.done} total={p.unitProgress.total} />
+    <div className="flex min-h-screen flex-col">
+      {/* Top bar: close + lesson progress */}
+      <header className="ex-lessonbar sticky top-0 z-30">
+        <div className="mx-auto flex w-full max-w-[1000px] items-center gap-3 px-4 py-3 sm:gap-4 sm:px-6">
+          <Link href="/learn" className="ex-press grid h-11 w-11 shrink-0 place-items-center rounded-full text-muted hover:bg-surface-2" aria-label={t("explore.lesson.close", "Close lesson and go home")}>
+            <X className="h-8 w-8" strokeWidth={3} />
+          </Link>
+          <FatBar value={p.tabs.length ? doneTabs / p.tabs.length : 0} height={18} label={t("explore.lesson.progress", "Lesson progress")} />
+          <button type="button" onClick={() => setTrail(true)} aria-expanded={trail} aria-controls="ex-trail" className="ex-press flex shrink-0 items-center gap-1.5 rounded-full px-3 py-2 text-[15px] font-black text-white" style={chunky(EX.teal, 4)} aria-label={t("explore.lesson.trail", "Lesson trail")}>
+            <Footprints className="h-5 w-5" strokeWidth={2.6} aria-hidden />
+            <span className="tabular-nums">
+              {p.unitProgress.done}/{p.unitProgress.total}
+            </span>
+          </button>
         </div>
       </header>
 
-      {/* Pill tabs */}
-      <div className="-mx-3 mt-5 flex gap-2.5 overflow-x-auto px-3 pb-2 pt-1 sm:mx-0 sm:flex-wrap sm:px-0" role="group" aria-label="Lesson parts">
-        {p.tabs.map((t) => (
-          <PillTab key={t.kind} tab={t} />
-        ))}
+      <div className="mx-auto w-full max-w-[860px] flex-1 px-4 pb-40 pt-3 sm:px-6">
+        {/* Where am I */}
+        <Link href={p.course.href} className="inline-flex max-w-full items-center gap-2 rounded-full py-1 pr-3 text-[15px] font-black text-muted hover:text-ink">
+          <CourseIcon slug={p.course.slug} size={28} />
+          <span className="truncate">{t("explore.lesson.where", "Unit {n} · {title}", { n: p.unit.index + 1, title: p.unit.title })}</span>
+        </Link>
+
+        {/* Title */}
+        <div className="mt-2 flex items-start gap-3">
+          <div className="min-w-0 flex-1">
+            <h1 className="text-[1.9rem] font-black leading-[1.12] sm:text-[2.4rem]">{p.lesson.title}</h1>
+            {p.lesson.summary && <p className="mt-1.5 text-lg font-bold text-muted">{p.lesson.summary}</p>}
+          </div>
+          <ReadAloud text={read} size="lg" />
+          <BookmarkStar lessonId={p.lesson.id} title={p.lesson.title} href={`/course/${p.lesson.id}`} />
+        </div>
+
+        {/* Big pill tabs */}
+        {p.tabs.length > 1 && (
+          <div className="-mx-4 mt-5 flex gap-2.5 overflow-x-auto px-4 pb-2 pt-1 sm:mx-0 sm:flex-wrap sm:px-0" role="group" aria-label={t("explore.lesson.parts", "Lesson parts")}>
+            {p.tabs.map((x) => (
+              <PillTab key={x.kind} tab={x} />
+            ))}
+          </div>
+        )}
+
+        {/* The page */}
+        <AnimatePresence mode="wait">
+          <motion.div key={active?.kind ?? "page"} initial={{ opacity: 0, y: 14 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -10 }} transition={{ duration: 0.2 }} className={clsx("mt-4", story ? "ex-story" : "ex-page p-4 sm:p-8")}>
+            {p.content}
+          </motion.div>
+        </AnimatePresence>
       </div>
 
-      {/* The page */}
-      <div className="ex-page mt-4 p-4 sm:p-8">{p.content}</div>
-
-      {/* Big arrows */}
-      <nav className="mt-6 grid gap-3 sm:grid-cols-[minmax(0,1fr)_minmax(0,1.6fr)]" aria-label="Lesson steps">
-        {p.prev ? (
-          <Link href={p.prev.href} className="ex-press flex min-w-0 items-center gap-3 rounded-[1.5rem] bg-surface p-3 pr-5" style={{ boxShadow: "inset 0 -5px 0 rgb(var(--line))" }}>
-            <span className="grid h-14 w-14 shrink-0 place-items-center rounded-full text-white" style={chunky(EX.purple, 5)}>
-              <ArrowLeft className="h-8 w-8" strokeWidth={3} aria-hidden />
-            </span>
-            <span className="min-w-0">
-              <span className="block text-sm font-black text-muted">Go back</span>
-              <span className="block truncate text-lg font-black">{p.prev.title}</span>
-            </span>
+      {/* Continue */}
+      <footer className="ex-answerbar fixed inset-x-0 bottom-0 z-30">
+        <div className="mx-auto flex w-full max-w-[1000px] items-center gap-3 px-4 py-4 sm:px-6">
+          {p.prev ? (
+            <Link href={p.prev.href} className="ex-press grid h-14 w-14 shrink-0 place-items-center rounded-[1.25rem] bg-surface text-muted" style={{ boxShadow: "inset 0 0 0 3px rgb(var(--line)), inset 0 -6px 0 rgb(var(--line))" }} aria-label={t("explore.lesson.back", "Go back: {title}", { title: p.prev.title })}>
+              <ArrowLeft className="h-7 w-7" strokeWidth={3} aria-hidden />
+            </Link>
+          ) : null}
+          <p className="hidden min-w-0 flex-1 truncate text-lg font-black text-muted sm:block">
+            {waitingOnStory ? t("explore.lesson.finishStory", "Finish the story to win your star!") : t("explore.lesson.upNext", "Next: {what} · {title}", { what: t(nk, nen), title: p.upNext.title })}
+          </p>
+          <Link
+            href={p.upNext.href}
+            onClick={onContinue}
+            className={clsx("ex-press ex-bigbtn ml-auto flex min-w-0 flex-1 items-center justify-center gap-2 rounded-[1.25rem] px-6 py-4 text-xl font-black uppercase tracking-wide sm:max-w-[300px]", waitingOnStory ? "bg-surface text-[#2EBE70]" : "text-white")}
+            style={waitingOnStory ? { boxShadow: "inset 0 0 0 3px rgb(var(--line)), inset 0 -6px 0 rgb(var(--line))" } : chunky(EX.green, 6)}
+          >
+            {waitingOnStory ? t("explore.lesson.skip", "Skip") : t("explore.continue", "Continue")}
+            <ArrowRight className="h-6 w-6 shrink-0" strokeWidth={3} aria-hidden />
           </Link>
-        ) : (
-          <span className="hidden sm:block" />
-        )}
-        <Link href={p.upNext.href} className="ex-press flex min-w-0 items-center justify-end gap-3 rounded-[1.5rem] p-3 pl-5 text-right text-white" style={chunky(EX.green, 7)}>
-          <span className="min-w-0">
-            <span className="block text-sm font-black text-white/85">{NEXT_LABEL[p.upNext.label] ?? p.upNext.label}</span>
-            <span className="block truncate text-xl font-black">{p.upNext.title}</span>
-          </span>
-          <span className="grid h-16 w-16 shrink-0 place-items-center rounded-full bg-white text-[#1F9B58]" style={{ boxShadow: "inset 0 -5px 0 rgb(0 0 0 / 0.12)" }}>
-            <ArrowRight className="h-9 w-9" strokeWidth={3} aria-hidden />
-          </span>
-        </Link>
-      </nav>
+        </div>
+      </footer>
 
       <TrailDrawer open={trail} onClose={() => setTrail(false)}>
         {p.unitNav}
+        <div className="mt-5 border-t-2 border-line pt-3">{p.notebook}</div>
       </TrailDrawer>
     </div>
   );
 }
 
-function PillTab({ tab: t }: { tab: LessonTab }) {
-  const look = TAB_LOOK[t.kind];
-  const cls = clsx("ex-press flex shrink-0 items-center gap-2 rounded-full border-[3px] px-4 py-2.5 text-[1.05rem] font-black", t.active ? "text-white" : "bg-surface");
-  const style = t.active ? { background: look.col.c, borderColor: look.col.c, boxShadow: `inset 0 -5px 0 ${look.col.s}` } : { borderColor: `${look.col.c}55`, color: look.col.s, boxShadow: `0 4px 0 ${look.col.c}40` };
+function PillTab({ tab: x }: { tab: LessonTab }) {
+  const t = useT();
+  const look = TAB_LOOK[x.kind];
+  const cls = clsx("ex-press flex shrink-0 items-center gap-2 rounded-full border-[3px] px-4 py-2.5 text-[1.05rem] font-black", x.active ? "text-white" : "bg-surface");
+  const style = x.active ? { background: look.col.c, borderColor: look.col.c, boxShadow: `inset 0 -5px 0 ${look.col.s}` } : { borderColor: `${look.col.c}55`, color: look.col.s, boxShadow: `0 4px 0 ${look.col.c}40` };
   const inner = (
     <>
-      <span className="grid h-8 w-8 place-items-center rounded-full" style={{ background: t.active ? "rgb(255 255 255 / 0.25)" : `${look.col.c}1f` }}>
-        <t.icon className="h-5 w-5" strokeWidth={2.6} aria-hidden />
+      <span className="grid h-9 w-9 place-items-center rounded-full" style={{ background: x.active ? "rgb(255 255 255 / 0.25)" : `${look.col.c}1f` }}>
+        <x.icon className="h-5 w-5" strokeWidth={2.6} aria-hidden />
       </span>
-      {look.label}
-      {t.done && (
-        <span className="grid h-6 w-6 place-items-center rounded-full bg-[#FFC21A]" aria-label="done">
+      {t(look.key, look.en)}
+      {x.done && (
+        <span className="grid h-6 w-6 place-items-center rounded-full bg-[#FFC21A]" aria-label={t("explore.done", "done")}>
           <Check className="h-4 w-4 text-white" strokeWidth={4} aria-hidden />
         </span>
       )}
     </>
   );
-  return t.href ? (
-    <Link href={t.href} className={cls} style={style}>
+  return x.href ? (
+    <Link href={x.href} className={cls} style={style}>
       {inner}
     </Link>
   ) : (
-    <button type="button" onClick={t.onSelect} className={cls} style={style} aria-pressed={t.active}>
+    <button type="button" onClick={x.onSelect} className={cls} style={style} aria-pressed={x.active}>
       {inner}
     </button>
   );
 }
 
-function TrailStars({ done, total }: { done: number; total: number }) {
-  const n = Math.min(total, 12);
-  return (
-    <div className="flex items-center gap-2 rounded-full bg-surface-2 px-3 py-2" aria-label={`${done} of ${total} lessons on this island done`}>
-      <div className="flex gap-0.5" aria-hidden>
-        {Array.from({ length: n }).map((_, i) => (
-          <Star key={i} className={clsx("h-5 w-5", i < done ? "fill-[#FFC21A] text-[#D99A00]" : "text-line")} strokeWidth={2.4} />
-        ))}
-      </div>
-      <span className="text-sm font-black text-muted">
-        {done} of {total}
-      </span>
-    </div>
-  );
-}
-
 function BookmarkStar({ lessonId, title, href }: { lessonId: string; title: string; href: string }) {
+  const t = useT();
   const hydrated = useHydrated();
   const marked = useNotebook((s) => Boolean(s.bookmarks[lessonId]));
   const toggle = useNotebook((s) => s.toggleBookmark);
@@ -159,9 +173,9 @@ function BookmarkStar({ lessonId, title, href }: { lessonId: string; title: stri
       type="button"
       onClick={() => toggle(lessonId, { title, href })}
       aria-pressed={on}
-      aria-label={on ? "Saved to my favourites. Tap to remove." : "Save to my favourites"}
-      title={on ? "Saved!" : "Save for later"}
-      className="ex-press ex-bookmark grid h-14 w-14 shrink-0 place-items-center rounded-full"
+      aria-label={on ? t("explore.fav.on", "Saved to my favourites. Tap to remove.") : t("explore.fav.off", "Save to my favourites")}
+      title={on ? t("explore.fav.saved", "Saved!") : t("explore.fav.save", "Save for later")}
+      className="ex-press grid h-14 w-14 shrink-0 place-items-center rounded-full"
       style={on ? chunky(EX.yellow, 5) : { background: "rgb(var(--surface-2))", boxShadow: "inset 0 -5px 0 rgb(var(--line))" }}
     >
       <Star className={clsx("h-8 w-8", on ? "fill-white text-white" : "text-muted")} strokeWidth={2.4} aria-hidden />
@@ -170,6 +184,7 @@ function BookmarkStar({ lessonId, title, href }: { lessonId: string; title: stri
 }
 
 function TrailDrawer({ open, onClose, children }: { open: boolean; onClose: () => void; children: React.ReactNode }) {
+  const t = useT();
   const closeRef = useRef<HTMLButtonElement>(null);
   useEffect(() => {
     if (!open) return;
@@ -187,22 +202,21 @@ function TrailDrawer({ open, onClose, children }: { open: boolean; onClose: () =
             id="ex-trail"
             role="dialog"
             aria-modal="true"
-            aria-label="Lesson trail"
+            aria-label={t("explore.lesson.trail", "Lesson trail")}
             initial={{ x: "100%" }}
             animate={{ x: 0 }}
             exit={{ x: "100%" }}
             transition={{ type: "spring", stiffness: 380, damping: 34 }}
             onClick={(e) => e.stopPropagation()}
             onClickCapture={(e) => {
-              // Close after following a link in the trail.
               if ((e.target as HTMLElement).closest("a")) onClose();
             }}
             className="ex-drawer flex h-full w-[min(380px,92vw)] flex-col"
           >
             <div className="flex items-center gap-2 px-5 pb-3 pt-5 text-white">
               <Footprints className="h-7 w-7" strokeWidth={2.6} aria-hidden />
-              <h2 className="text-2xl font-black">Lesson trail</h2>
-              <button ref={closeRef} type="button" onClick={onClose} className="ml-auto grid h-11 w-11 place-items-center rounded-full bg-white/25 hover:bg-white/35" aria-label="Close lesson trail">
+              <h2 className="text-2xl font-black">{t("explore.lesson.trail", "Lesson trail")}</h2>
+              <button ref={closeRef} type="button" onClick={onClose} className="ml-auto grid h-11 w-11 place-items-center rounded-full bg-white/25 hover:bg-white/35" aria-label={t("explore.close", "Close")}>
                 <X className="h-6 w-6" strokeWidth={3} />
               </button>
             </div>
