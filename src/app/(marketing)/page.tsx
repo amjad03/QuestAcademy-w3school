@@ -23,7 +23,7 @@ const faq: FaqItem[] = [
   },
   {
     q: "Which ages is it for?",
-    a: "Everyone from about six upwards. The site adapts to five experience profiles, from Explore for primary school (bigger buttons, voice prompts) to Professional for adults following a career pathway. The profile is chosen at onboarding and can be changed in Settings.",
+    a: "Everyone from about three upwards. There are seven experience profiles, each with its own design: Sprout for pre-primary (no reading needed, everything spoken), Explore for primary school, Adventure for middle school, Focus for high school, PUC and entrance exams, Mastery for undergraduates, Research for postgraduates, and Professional for working adults. The profile is chosen at onboarding and can be changed in Settings.",
   },
   {
     q: "Do I need an account?",
@@ -82,11 +82,11 @@ export default function Home() {
       {/* ---------- EXPERIENCE PROFILES ---------- */}
       <Section
         id="profiles"
-        eyebrow="Five experience profiles"
-        title="The same site, shaped for the learner in front of it"
-        lede="A six-year-old and a final-year student should not see the same screen. Quest Academy picks a profile at onboarding and adjusts type size, rewards, navigation and voice support to match."
+        eyebrow="Seven experience profiles"
+        title="A different app for every stage of learning"
+        lede="A four-year-old, a PUC student and a PhD scholar should not see the same screen. Each profile has its own navigation, lesson pages, practice screens, typography and rewards, picked at onboarding and switchable any time."
       >
-        <div className="mt-10 grid gap-4 sm:grid-cols-2 lg:grid-cols-5">
+        <div className="mt-10 grid gap-4 sm:grid-cols-2 lg:grid-cols-4 xl:grid-cols-7">
           {MODE_LIST.map((m) => (
             <article key={m.id} className="card flex flex-col p-5">
               <span className="font-mono text-sm font-bold text-accent">{m.number}</span>

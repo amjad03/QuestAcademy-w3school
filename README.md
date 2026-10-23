@@ -19,17 +19,21 @@
 
 **Content:** 29 courses, 321 lessons, ~1,500 practice questions, 305 NEET/JEE questions, 283 formulas, 50 coding challenges and 20 interactive simulations.
 
-## Five experience profiles
+## Seven experience profiles
 
-The same content and design system, tuned for each age group. The mode is picked from the learner's age during onboarding and can be changed any time in **Settings → Experience** (leaving Explore needs a grown-up check).
+Each stage of learning gets its own app. With **Settings → Design → Age designs** (the default), every profile has its own app frame and navigation, home screen, lesson page, practice screen, results screen, typeface, colours and rewards. The profile is picked at onboarding (age for children; college / postgraduate / working for adults) and can be changed any time in **Settings → Experience** (leaving the young-learner profiles needs a grown-up check).
 
-| Mode | Ages | Home | Feel |
-|---|---|---|---|
-| **01 Explore** | ~6–10 | Course pictures, island map, sticker book, games | Big buttons, Questy reads everything aloud, stickers for trying, finishing and improving. No leagues. |
-| **02 Adventure** | ~11–14 | Mission control: current mission, topic map with unlockable units, experiments, challenges | Ranks, quests, opt-in leagues with a nickname only, friend challenge links. |
-| **03 Focus** | ~15–18 | Syllabus dashboard for CBSE 9–12, Karnataka PUC, ICSE/ISC, NEET/JEE | Chapter progress, weightage, exam countdown, weak chapters, formulas, simulations, revision planner. Rewards become quiet toasts. |
-| **04 Mastery** | ~18–24+ | Competency dashboard | Competency radar, coding workspace, case studies, curated research readings, assessments due. Subtle rewards. |
-| **05 Professional** | Adults | My goals | Career pathways with practical assignments, rubrics, schedules and certificates of completion (not accredited). No game elements. |
+| Profile | Who | Feel |
+|---|---|---|
+| **01 Sprout** | Pre-primary, ~3–5 | No reading needed: giant picture buttons, everything spoken by Questy, one thing at a time, stars and stickers, grown-up corner behind a check. |
+| **02 Explore** | Primary, ~6–10 | Bright storybook world: island map, read-to-me buttons, stickers for trying and improving, star results. No leagues. |
+| **03 Adventure** | Middle school, ~11–14 | Mission control: game HUD with ranks, missions, topic maps, experiments, unlockable challenges, opt-in leagues. |
+| **04 Focus** | High school, PUC, NEET/JEE, ~15–18 | Exam command centre: syllabus dashboard, exam countdown, focus timer, study-notes lessons, CBT-style practice and scorecards. |
+| **05 Mastery** | Undergraduate | Academic workspace: IDE-like frame, lecture-notes lessons, problem sets with judge-style verdicts, grade reports and competencies. |
+| **06 Research** | Postgraduate and research | Reading room: serif long-form lessons, margin contents and notes, reading lists, citations, quiet self-checks. No game elements. |
+| **07 Professional** | Working adults | Career-learning product: goal dashboard, course-player lessons, knowledge checks with a pass mark, pathways and certificates. No game elements. |
+
+Each profile lives in `src/experiences/<profile>/` (an `Experience` with `Shell`, `Home`, `LessonLayout`, `SessionLayout`, `SessionResults`, plus a `theme.css` scoped to `html[data-skin="modes"][data-mode="<profile>"]`). Shared logic (progress, grading, mastery) stays in shared components; profiles only decide presentation.
 
 **Study planner** (`/plan`): pick a syllabus, pathway or course, a finish date, hours per week and study days. The plan schedules lessons, revision days and mock tests, re-plans automatically as you progress, tells you how many extra hours you need when you fall behind, and exports to your calendar (.ics).
 
@@ -51,9 +55,13 @@ npm run generate-voice      # renders only missing clips; needs ffmpeg
 npm run generate-voice -- --prune   # also removes clips no longer used
 ```
 
-## Two design systems
+## Design rollback
 
-**Classic** (default) is the original Quest look: rounded, chunky, Quest Blue, Nunito. **Studio** is a second, editorial system on the same components: hairline borders, indigo and teal, Inter, calmer surfaces for long study sessions. Switch in **Settings → Design**; both are instant and rollback to Classic is one tap. Technically the skin is a `data-skin` attribute on `<html>` that swaps the CSS tokens and a handful of component rules at the end of `src/app/globals.css`, so every page and both colour themes (light/dark) work in either skin.
+**Settings → Design** has three choices: **Age designs** (default, one design per profile, above), **Classic** (the original Quest look for everyone — the rollback) and **Studio** (an editorial variant of Classic: hairline borders, indigo and teal, Inter). The choice is a `data-skin` attribute on `<html>`; switching is instant and never touches progress.
+
+## Visual explainers
+
+About 30 core concepts are explained four ways — an animated step-by-step scene narrated by Questy, a hands-on activity, a comic strip and an everyday analogy — pitched so a young child can follow. They appear at the top of the matching lessons and in the gallery at `/explain`. Each lives in `src/explainers/<area>/` and follows the `Explainer` type in `src/explainers/types.ts`.
 
 ## Platform layer
 

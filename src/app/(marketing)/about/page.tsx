@@ -42,7 +42,7 @@ export default function AboutPage() {
       </Section>
 
       <section className="border-y-2 border-line bg-surface">
-        <Section align="left" eyebrow="Who it is for" title="Five profiles, one site" className="!py-16">
+        <Section align="left" eyebrow="Who it is for" title="Seven profiles, one site" className="!py-16">
           <ul className="mt-8 divide-y-2 divide-line">
             {MODE_LIST.map((m) => (
               <li key={m.id} className="grid gap-1 py-4 sm:grid-cols-[6rem_1fr] sm:gap-6">

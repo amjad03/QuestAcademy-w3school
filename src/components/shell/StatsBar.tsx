@@ -8,6 +8,7 @@ import { liveStreak, useLearner } from "@/lib/store";
 import { useHydrated } from "@/components/providers";
 import { CourseIcon } from "@/components/brand/CourseIcon";
 import { useCatalog } from "./CatalogContext";
+import { useMode } from "@/lib/useMode";
 
 /** Course switcher + streak + coins + XP, like the top of Duolingo's right column. */
 export function StatsBar({ compact }: { compact?: boolean }) {
@@ -21,6 +22,8 @@ export function StatsBar({ compact }: { compact?: boolean }) {
   const xp = useLearner((s) => s.xp);
   const [open, setOpen] = useState(false);
   const ref = useRef<HTMLDivElement>(null);
+  // Postgraduate and professional profiles have no game layer: just the course switcher.
+  const gameless = useMode().rewards === "minimal";
 
   useEffect(() => {
     const close = (e: MouseEvent) => ref.current && !ref.current.contains(e.target as Node) && setOpen(false);
@@ -64,9 +67,13 @@ export function StatsBar({ compact }: { compact?: boolean }) {
           </div>
         )}
       </div>
-      <Stat href="/quests" title="Day streak" icon={<Flame className={clsx("h-6 w-6", streak ? "fill-streak text-streak" : "text-line")} />} value={streak} color={streak ? "rgb(var(--streak))" : "rgb(var(--muted))"} />
-      <Stat href="/shop" title="Coins" icon={<Coins className="h-6 w-6 text-warn-shade" strokeWidth={2.5} />} value={coins} color="rgb(var(--warn-shade))" />
-      <Stat href="/profile" title="Total XP" icon={<Zap className="h-6 w-6 fill-accent text-accent" />} value={xp} color="rgb(var(--accent))" />
+      {!gameless && (
+        <>
+          <Stat href="/quests" title="Day streak" icon={<Flame className={clsx("h-6 w-6", streak ? "fill-streak text-streak" : "text-line")} />} value={streak} color={streak ? "rgb(var(--streak))" : "rgb(var(--muted))"} />
+          <Stat href="/shop" title="Coins" icon={<Coins className="h-6 w-6 text-warn-shade" strokeWidth={2.5} />} value={coins} color="rgb(var(--warn-shade))" />
+          <Stat href="/profile" title="Total XP" icon={<Zap className="h-6 w-6 fill-accent text-accent" />} value={xp} color="rgb(var(--accent))" />
+        </>
+      )}
     </div>
   );
 }
