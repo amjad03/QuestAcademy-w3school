@@ -65,6 +65,14 @@ A Socratic tutor powered by Claude Haiku: it answers with hints and guiding ques
 
 Without a key the rest of the app works normally. Built-in limits: 30 requests per 10 minutes per IP (in memory, per server instance) and at most 20 messages of up to 4,000 characters each. The tutor is never shown to Sprout learners (ages 3–5), and **Settings → Ask Questy** turns it off on a device. Set a monthly spend limit in the Anthropic Console.
 
+## Indian languages
+
+Quest Academy runs in English, हिन्दी, ಕನ್ನಡ, தமிழ், తెలుగు, मराठी and বাংলা (**Settings → Language**). All translations are AI-made and marked "being reviewed by teachers" until a human pass is done.
+
+- **Interface:** components call `t("key", "English")` (`src/i18n`). `npm run i18n:extract` writes `src/i18n/catalog.json` and lists missing keys per language; translations live in `src/i18n/messages/<locale>.ts`.
+- **Lessons:** `public/i18n/<locale>/<course>.json` maps each English string of a course (titles, paragraphs, questions, options, flashcards) to its translation. Lessons, practice and unit menus swap strings at render time, maths and code stay untouched, and learners can tap **Show original**. `npm run i18n:content` shows coverage per course; `-- --missing <course> <locale>` lists what's left and `-- --check <course> <locale>` validates a file. Edit English content as usual: changed strings simply fall back to English until re-translated.
+- **Voice:** Indian-script text is read with the device's voice for that language; Questy's Kokoro voice is English-only.
+
 ## Design rollback
 
 **Settings → Design** has three choices: **Age designs** (default, one design per profile, above), **Classic** (the original Quest look for everyone — the rollback) and **Studio** (an editorial variant of Classic: hairline borders, indigo and teal, Inter). The choice is a `data-skin` attribute on `<html>`; switching is instant and never touches progress.
