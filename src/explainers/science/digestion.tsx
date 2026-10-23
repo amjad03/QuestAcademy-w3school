@@ -107,7 +107,7 @@ function Chomp() {
         <motion.circle key={i} cx={330 + i * 12} cy={78} r={4} fill="#ef4444" animate={{ cx: [330 + i * 12, 320 + i * 20], cy: [78, 74 + i * 4] }} transition={{ duration: 0.5, repeat: Infinity, repeatType: "reverse" }} />
       ))}
       {[0, 1].map((i) => (
-        <motion.circle key={`s${i}`} r={3} fill="#bae6fd" animate={{ cx: [310 + i * 60, 330 + i * 30], cy: [96, 80], opacity: [0, 1, 0] }} transition={{ duration: 1.2, delay: i * 0.5, repeat: Infinity }} />
+        <motion.circle key={`s${i}`} cx={310 + i * 60} cy={96} r={3} fill="#bae6fd" animate={{ cx: [310 + i * 60, 330 + i * 30], cy: [96, 80], opacity: [0, 1, 0] }} transition={{ duration: 1.2, delay: i * 0.5, repeat: Infinity }} />
       ))}
       <text x={343} y={124} textAnchor="middle" fontSize={10} fontWeight={900} fill="#9d174d">
         teeth + spit
@@ -134,7 +134,7 @@ function DigestionScene({ stage }: { stage: number }) {
       )}
       {stage === 1 && (
         <>
-          <motion.circle r={7} fill="#ef4444" stroke="#7f1d1d" strokeWidth={2} animate={{ cx: [200, 200, 214], cy: [56, 92, 118] }} transition={{ duration: 1.6, repeat: Infinity, ease: "easeInOut" }} />
+          <motion.circle cx={200} cy={56} r={7} fill="#ef4444" stroke="#7f1d1d" strokeWidth={2} animate={{ cx: [200, 200, 214], cy: [56, 92, 118] }} transition={{ duration: 1.6, repeat: Infinity, ease: "easeInOut" }} />
           <Tag x={86} y={100} text="2. FOOD PIPE" color="#be123c" />
           <Label x={330} y={100} size={12} color="#9d174d">
             muscles squeeze
@@ -147,7 +147,7 @@ function DigestionScene({ stage }: { stage: number }) {
       {stage === 2 && (
         <>
           {[0, 1, 2, 3].map((i) => (
-            <motion.circle key={i} r={3} fill="#fef08a" stroke="#ca8a04" animate={{ cx: [226 + i * 8, 230 + i * 7], cy: [146, 112], opacity: [0, 1, 0] }} transition={{ duration: 1.2, delay: i * 0.3, repeat: Infinity }} />
+            <motion.circle key={i} cx={226 + i * 8} cy={146} r={3} fill="#fef08a" stroke="#ca8a04" animate={{ cx: [226 + i * 8, 230 + i * 7], cy: [146, 112], opacity: [0, 1, 0] }} transition={{ duration: 1.2, delay: i * 0.3, repeat: Infinity }} />
           ))}
           <Tag x={330} y={130} text="3. STOMACH" color="#db2777" />
           <Label x={330} y={156} size={12} color="#9d174d">
@@ -159,7 +159,7 @@ function DigestionScene({ stage }: { stage: number }) {
         <>
           <path d="M 120 140 C 100 180, 100 220, 130 240" stroke="#dc2626" strokeWidth={7} fill="none" opacity={0.85} />
           {[0, 1, 2, 3].map((i) => (
-            <motion.circle key={i} r={4} fill="#facc15" stroke="#a16207" animate={{ cx: [180, 128], cy: [176 + i * 12, 170 + i * 16], opacity: [0, 1, 0] }} transition={{ duration: 1.6, delay: i * 0.35, repeat: Infinity }} />
+            <motion.circle key={i} cx={180} cy={176 + i * 12} r={4} fill="#facc15" stroke="#a16207" animate={{ cx: [180, 128], cy: [176 + i * 12, 170 + i * 16], opacity: [0, 1, 0] }} transition={{ duration: 1.6, delay: i * 0.35, repeat: Infinity }} />
           ))}
           <Tag x={330} y={196} text="4. SMALL INTESTINE" color="#be185d" />
           <Label x={70} y={128} size={12} color="#dc2626">
@@ -170,7 +170,7 @@ function DigestionScene({ stage }: { stage: number }) {
       {stage === 4 && (
         <>
           {[0, 1, 2].map((i) => (
-            <motion.circle key={i} r={4} fill="#38bdf8" animate={{ cx: [262, 290], cy: [180 + i * 16, 176 + i * 16], opacity: [0, 1, 0] }} transition={{ duration: 1.4, delay: i * 0.4, repeat: Infinity }} />
+            <motion.circle key={i} cx={262} cy={180 + i * 16} r={4} fill="#38bdf8" animate={{ cx: [262, 290], cy: [180 + i * 16, 176 + i * 16], opacity: [0, 1, 0] }} transition={{ duration: 1.4, delay: i * 0.4, repeat: Infinity }} />
           ))}
           <Tag x={86} y={196} text="5. LARGE INTESTINE" color="#c2410c" />
           <Label x={330} y={170} size={12} color="#0369a1">
@@ -183,7 +183,7 @@ function DigestionScene({ stage }: { stage: number }) {
       )}
       {stage === 5 && (
         <>
-          <motion.circle r={7} fill="#ef4444" stroke="#7f1d1d" strokeWidth={2} animate={JOURNEY} transition={{ duration: 7, repeat: Infinity, ease: "linear" }} />
+          <motion.circle cx={JOURNEY.cx[0]} cy={JOURNEY.cy[0]} r={7} fill="#ef4444" stroke="#7f1d1d" strokeWidth={2} animate={JOURNEY} transition={{ duration: 7, repeat: Infinity, ease: "linear" }} />
           <Tag x={330} y={60} text="THE WHOLE TRIP" color={C} />
           <Label x={330} y={92} size={12} color="#9d174d">
             takes about 1 to 3 days!
@@ -338,7 +338,7 @@ const story: Explainer["story"] = [
         <path d="M 30 40 C 60 10, 210 10, 214 80 C 218 140, 120 156, 60 134 C 20 120, 10 70, 30 40 Z" fill="#f9a8d4" stroke="#be185d" strokeWidth={4} />
         <path d="M 40 100 Q 120 80 200 100 L 200 130 Q 120 150 40 120 Z" fill="#fde68a" opacity={0.7} />
         {[70, 100, 150, 180].map((x, i) => (
-          <motion.circle key={x} cx={x} r={4} fill="#fff" opacity={0.8} animate={{ cy: [120, 80], opacity: [0.9, 0] }} transition={{ duration: 1.4, delay: i * 0.3, repeat: Infinity }} />
+          <motion.circle key={x} cx={x} cy={120} r={4} fill="#fff" opacity={0.8} animate={{ cy: [120, 80], opacity: [0.9, 0] }} transition={{ duration: 1.4, delay: i * 0.3, repeat: Infinity }} />
         ))}
         <motion.g animate={{ rotate: [-8, 8, -8] }} transition={{ duration: 1.6, repeat: Infinity }}>
           <Apple x={120} y={96} s={1.2} face />
@@ -434,7 +434,7 @@ const like: Explainer["like"] = {
         <rect x={160} y={40} width={70} height={36} fill="#f9a8d4" stroke="#be185d" strokeWidth={2} />
         <rect x={160} y={100} width={70} height={20} fill="#ef4444" stroke="#991b1b" strokeWidth={2} />
         {[0, 1, 2].map((i) => (
-          <motion.circle key={i} cx={176 + i * 18} r={4} fill="#facc15" stroke="#a16207" animate={{ cy: [58, 110] }} transition={{ duration: 1.4, delay: i * 0.4, repeat: Infinity }} />
+          <motion.circle key={i} cx={176 + i * 18} cy={58} r={4} fill="#facc15" stroke="#a16207" animate={{ cy: [58, 110] }} transition={{ duration: 1.4, delay: i * 0.4, repeat: Infinity }} />
         ))}
       </Panel>
     ),

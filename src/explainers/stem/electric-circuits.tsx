@@ -35,7 +35,7 @@ function Bulb({ x, y, glow, dark }: { x: number; y: number; glow: number; dark?:
   const ink = dark ? DARK : INK;
   return (
     <g>
-      <motion.circle cx={x} cy={y - 22} animate={{ r: 18 + glow * 22, opacity: glow * 0.45 }} fill="#fde047" />
+      <motion.circle cx={x} cy={y - 22} r={18 + glow * 22} animate={{ r: 18 + glow * 22, opacity: glow * 0.45 }} fill="#fde047" />
       <path d={`M ${x - 9} ${y - 4} L ${x - 9} ${y + 6} L ${x + 9} ${y + 6} L ${x + 9} ${y - 4}`} fill="#94a3b8" stroke={ink} strokeWidth="2" />
       <motion.circle cx={x} cy={y - 22} r="17" stroke={ink} strokeWidth="2.5" animate={{ fill: glow > 0.02 ? `rgba(253, 224, 71, ${0.25 + glow * 0.75})` : "rgba(255, 255, 255, 0.85)" }} />
       <path d={`M ${x - 6} ${y - 4} L ${x - 4} ${y - 24} L ${x} ${y - 18} L ${x + 4} ${y - 24} L ${x + 6} ${y - 4}`} fill="none" stroke={glow > 0.02 ? "#b45309" : ink} strokeWidth="1.8" />
