@@ -2,6 +2,7 @@
 
 import type { User } from "@supabase/supabase-js";
 import { createContext, useContext, useEffect, useState, useSyncExternalStore, type ReactNode } from "react";
+import { usePathname } from "next/navigation";
 import { useLearner } from "@/lib/store";
 import { localeInfo } from "@/i18n/locales";
 import { resolveMode } from "@/lib/modes";
@@ -16,9 +17,14 @@ export function useHydrated() {
   );
 }
 
+/** Public marketing pages keep their own look, whatever design the learner picked in the app. */
+const SITE_PAGES = new Set(["/", "/about", "/for-schools", "/privacy", "/terms"]);
+
 function ModeSync() {
   const mode = useLearner((s) => resolveMode(s.profile));
-  const skin = useLearner((s) => s.settings.skin ?? "modes");
+  const chosen = useLearner((s) => s.settings.skin ?? "modes");
+  const pathname = usePathname();
+  const skin = SITE_PAGES.has(pathname) ? "site" : chosen;
   const locale = useLearner((s) => s.settings.locale ?? "en");
   useEffect(() => {
     document.documentElement.dataset.mode = mode;

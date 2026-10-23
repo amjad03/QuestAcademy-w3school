@@ -352,3 +352,34 @@ html[data-skin="studio"] .font-extrabold {
 html {
   --font-indic: var(--font-deva), var(--font-knda), var(--font-taml), var(--font-telu), var(--font-beng);
 }
+
+/* ------------------------------------------------------------------ */
+/* Public site (landing, about, schools, legal): calmer, editorial     */
+/* versions of the shared pieces, independent of the in-app design.    */
+/* ------------------------------------------------------------------ */
+html[data-skin="site"] :is(.btn, .btn-primary, .btn-ghost, .btn-good, .btn-purple, .btn-gold) {
+  text-transform: none;
+  letter-spacing: -0.01em;
+  font-weight: 800;
+  border-radius: 14px;
+  border-bottom-width: 3px;
+}
+html[data-skin="site"] .btn-ghost {
+  border-width: 1.5px;
+  border-bottom-width: 3px;
+  color: rgb(var(--ink));
+}
+html[data-skin="site"] .btn-flat {
+  text-transform: none;
+  letter-spacing: -0.005em;
+  font-weight: 700;
+  font-size: 15px;
+}
+html[data-skin="site"] header.sticky {
+  border-bottom-width: 1px;
+  background: rgb(var(--surface) / 0.8);
+  backdrop-filter: saturate(1.4) blur(14px);
+}
+html[data-skin="site"] :is(.card, .tile) {
+  border-width: 1px;
+}

@@ -53,8 +53,8 @@ export function AgeSwitcher() {
         ))}
       </div>
 
-      <div className="mt-6 grid items-center gap-8 overflow-hidden rounded-[28px] border-2 border-line bg-surface p-5 sm:p-8 lg:grid-cols-[minmax(0,5fr)_minmax(0,6fr)] lg:gap-12" role="tabpanel">
-        <div>
+      <div className="mt-6 grid grid-cols-1 items-center gap-8 overflow-hidden rounded-[30px] border border-line bg-surface p-5 sm:p-8 lg:grid-cols-[minmax(0,5fr)_minmax(0,6fr)] lg:gap-12" role="tabpanel">
+        <div className="min-w-0">
           <p className="text-sm font-black uppercase tracking-wide" style={{ color: tint }}>
             {mode.number} · {mode.audience}
           </p>
@@ -74,7 +74,7 @@ export function AgeSwitcher() {
             Try {mode.name} <ArrowRight className="h-4 w-4" />
           </Link>
         </div>
-        <div className="relative">
+        <div className="relative min-w-0">
           <div className="absolute -inset-6 rounded-[36px] opacity-60 blur-2xl" style={{ background: `radial-gradient(60% 60% at 50% 50%, color-mix(in srgb, ${tint} 22%, transparent), transparent)` }} aria-hidden />
           <div className="relative">
             <Preview id={id} tint={tint} />
@@ -138,7 +138,7 @@ function Preview({ id, tint }: { id: ModeId; tint: string }) {
     case "explore":
       return (
         <Frame bg="#EAF4FF">
-          <div className="grid grid-cols-[1fr_150px] gap-4 p-5">
+          <div className="grid grid-cols-[minmax(0,1fr)_112px] gap-3 p-4 sm:grid-cols-[minmax(0,1fr)_150px] sm:gap-4 sm:p-5">
             <div className="space-y-4">
               <div className="flex items-center justify-between rounded-2xl bg-[#2EBE70] px-4 py-3 text-white shadow-[0_4px_0_#1F9B58]">
                 <span className="font-black">Unit 1 · Let’s Count!</span>

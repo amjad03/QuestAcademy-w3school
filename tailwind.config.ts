@@ -33,6 +33,8 @@ const config: Config = {
       fontFamily: {
         sans: ["var(--font-sans)", "var(--font-indic)", "system-ui", "sans-serif"],
         display: ["var(--font-sans)", "system-ui", "sans-serif"],
+        /** Marketing pages: geometric Manrope with Indic fallbacks. */
+        landing: ["var(--font-work)", "var(--font-indic)", "system-ui", "sans-serif"],
         kids: ["var(--font-sans)", "system-ui", "sans-serif"],
         serif: ["var(--font-serif)", "Georgia", "serif"],
         mono: ["var(--font-mono)", "ui-monospace", "monospace"],
@@ -52,6 +54,7 @@ const config: Config = {
         blink: { "0%,100%": { opacity: "1" }, "50%": { opacity: "0" } },
         shimmer: { "0%": { backgroundPosition: "-200% 0" }, "100%": { backgroundPosition: "200% 0" } },
         marquee: { to: { transform: "translateX(-50%)" } },
+        aurora: { "0%,100%": { transform: "translate(0,0) scale(1)" }, "50%": { transform: "translate(40px,-30px) scale(1.12)" } },
       },
       animation: {
         float: "float 3.2s ease-in-out infinite",
@@ -61,6 +64,7 @@ const config: Config = {
         blink: "blink 1s step-end infinite",
         shimmer: "shimmer 2.4s linear infinite",
         marquee: "marquee 60s linear infinite",
+        aurora: "aurora 18s ease-in-out infinite",
       },
     },
   },
