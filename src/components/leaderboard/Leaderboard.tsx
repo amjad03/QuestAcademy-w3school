@@ -14,6 +14,7 @@ import { QuestsCard, RailCard, RailFooter, SaveProgressCard } from "@/components
 import { Mascot } from "@/components/brand/Mascot";
 import { useMode } from "@/lib/useMode";
 import { SocialOptInCard } from "@/components/modes/adventure/SocialOptIn";
+import { useT } from "@/i18n";
 
 const NAMES = ["Aarav", "Sofia", "Kenji", "Amara", "Lucas", "Priya", "Noah", "Zara", "Mateo", "Ishaan", "Chloe", "Omar", "Ananya", "Leo", "Fatima", "Ethan", "Meera", "Yuki", "Diego", "Sara", "Arjun", "Nia", "Felix", "Riya", "Kai", "Elif", "Tomás", "Aditi"];
 const COLORS = AVATARS.map((a) => a.id);
@@ -48,6 +49,7 @@ function practiceLeague(myXp: number, week: string): LeaderRow[] {
 }
 
 export function Leaderboard() {
+  const t = useT();
   const hydrated = useHydrated();
   const { user, enabled } = useAuth();
   const profile = useLearner((s) => s.profile);
@@ -62,7 +64,7 @@ export function Leaderboard() {
   const mode = useMode();
   const meId = user?.id ?? "me";
   // Adventure learners appear by nickname only — never their real name.
-  const publicName = mode.id === "adventure" ? profile.nickname || "Explorer" : profile.name || "You";
+  const publicName = mode.id === "adventure" ? profile.nickname || t("board.defaultNickname", "Explorer") : profile.name || t("board.defaultName", "You");
   const rows = useMemo(() => {
     const me: LeaderRow = { id: meId, display_name: publicName, avatar: profile.avatar, weekly_xp: weekly, xp: 0, level: 0, streak };
     const others = remote ? remote.filter((r) => r.id !== me.id) : practiceLeague(weekly, weekKey());
@@ -73,11 +75,11 @@ export function Leaderboard() {
     <>
       <SaveProgressCard />
       {mode.social === "opt-in" && profile.socialOptIn && <SocialOptInCard />}
-      <RailCard title="How leagues work">
+      <RailCard title={t("board.how.title", "How leagues work")}>
         <ul className="space-y-2 text-sm font-semibold leading-6 text-muted">
-          <li>Earn XP from lessons, practice and tests to climb the board.</li>
-          <li>The top {PROMOTE} move up a league when the week ends on Sunday.</li>
-          <li>The bottom {DEMOTE} drop down a league.</li>
+          <li>{t("board.how.earn", "Earn XP from lessons, practice and tests to climb the board.")}</li>
+          <li>{t("board.how.promote", "The top {n} move up a league when the week ends on Sunday.", { n: PROMOTE })}</li>
+          <li>{t("board.how.demote", "The bottom {n} drop down a league.", { n: DEMOTE })}</li>
         </ul>
       </RailCard>
       <QuestsCard limit={2} />
@@ -92,10 +94,10 @@ export function Leaderboard() {
       <PageColumns rail={rail}>
         <div className="mx-auto flex max-w-md flex-col items-center py-10 text-center">
           <Mascot pose="wave" size={140} />
-          <h1 className="mt-6 text-3xl font-black">Leagues are for older explorers</h1>
-          <p className="mt-2 font-semibold text-muted">Here, every star you earn is just for you. Keep learning and filling your sticker book!</p>
+          <h1 className="mt-6 text-3xl font-black">{t("board.off.title", "Leagues are for older explorers")}</h1>
+          <p className="mt-2 font-semibold text-muted">{t("board.off.body", "Here, every star you earn is just for you. Keep learning and filling your sticker book!")}</p>
           <Link href="/learn" className="btn-primary mt-8">
-            Back to learning
+            {t("board.off.back", "Back to learning")}
           </Link>
         </div>
       </PageColumns>
@@ -108,8 +110,8 @@ export function Leaderboard() {
           <div className="mb-6 flex justify-center">
             <ShieldHalf className="h-20 w-20 fill-warn text-warn" strokeWidth={1.4} />
           </div>
-          <h1 className="text-center text-3xl font-black">Weekly leagues</h1>
-          <p className="mt-2 text-center font-semibold text-muted">Leagues are optional. Join with a nickname to race other explorers for the top spot each week.</p>
+          <h1 className="text-center text-3xl font-black">{t("board.optIn.title", "Weekly leagues")}</h1>
+          <p className="mt-2 text-center font-semibold text-muted">{t("board.optIn.body", "Leagues are optional. Join with a nickname to race other explorers for the top spot each week.")}</p>
           <SocialOptInCard className="mt-8" />
         </div>
       </PageColumns>
@@ -139,25 +141,26 @@ export function Leaderboard() {
             );
           })}
         </div>
-        <h1 className="mt-5 text-center text-3xl font-black">{league.name} League</h1>
+        <h1 className="mt-5 text-center text-3xl font-black">{t("board.leagueTitle", "{name} League", { name: league.name })}</h1>
         <p className="mt-1 text-center font-bold text-muted">
-          Top {PROMOTE} advance to the next league · {daysLeft} day{daysLeft === 1 ? "" : "s"} left
+          {t("board.advance", "Top {n} advance to the next league", { n: PROMOTE })} ·{" "}
+          {daysLeft === 1 ? t("board.daysLeft.one", "{n} day left", { n: daysLeft }) : t("board.daysLeft.other", "{n} days left", { n: daysLeft })}
         </p>
 
         {!remote && (
           <div className="mt-6 flex items-start gap-3 rounded-2xl bg-surface-2 p-4 text-sm font-semibold text-muted">
             <Info className="mt-0.5 h-4 w-4 shrink-0" />
             <span>
-              This is a practice league with simulated learners.{" "}
+              {t("board.practice.note", "This is a practice league with simulated learners.")}{" "}
               {enabled ? (
                 <>
                   <Link href="/auth" className="font-extrabold text-accent">
-                    Sign in
+                    {t("board.practice.signIn", "Sign in")}
                   </Link>{" "}
-                  to compete with real learners.
+                  {t("board.practice.compete", "to compete with real learners.")}
                 </>
               ) : (
-                "Connect Supabase (see README) to enable live leagues."
+                t("board.practice.connect", "Connect Supabase (see README) to enable live leagues.")
               )}
             </span>
           </div>
@@ -169,15 +172,15 @@ export function Leaderboard() {
             const zone = i < PROMOTE ? "up" : i >= rows.length - DEMOTE ? "down" : null;
             return (
               <li key={r.id}>
-                {i === PROMOTE && <ZoneDivider label="Promotion zone" color="rgb(var(--good))" />}
-                {i === rows.length - DEMOTE && <ZoneDivider label="Demotion zone" color="rgb(var(--bad))" />}
+                {i === PROMOTE && <ZoneDivider label={t("board.zone.promotion", "Promotion zone")} color="rgb(var(--good))" />}
+                {i === rows.length - DEMOTE && <ZoneDivider label={t("board.zone.demotion", "Demotion zone")} color="rgb(var(--bad))" />}
                 <div className={clsx("flex items-center gap-4 rounded-2xl px-4 py-3", me && "bg-accent-soft")}>
                   <span className={clsx("w-7 text-center text-lg font-black", i === 0 ? "text-[#E0A100]" : i === 1 ? "text-[#94A3B8]" : i === 2 ? "text-[#C2773A]" : zone === "up" ? "text-good" : zone === "down" ? "text-bad" : "text-muted")}>{i + 1}</span>
                   <Avatar name={r.display_name} color={r.avatar} size={44} />
-                  <span className={clsx("min-w-0 flex-1 truncate text-[17px] font-extrabold", me && "text-accent")}>{me ? `${r.display_name} (you)` : r.display_name}</span>
-                  {zone === "up" && <ChevronUp className="h-5 w-5 shrink-0 text-good" aria-label="Promotion zone" />}
-                  {zone === "down" && <ChevronDown className="h-5 w-5 shrink-0 text-bad" aria-label="Demotion zone" />}
-                  <span className="w-20 shrink-0 text-right font-bold text-muted">{r.weekly_xp} XP</span>
+                  <span className={clsx("min-w-0 flex-1 truncate text-[17px] font-extrabold", me && "text-accent")}>{me ? t("board.you", "{name} (you)", { name: r.display_name }) : r.display_name}</span>
+                  {zone === "up" && <ChevronUp className="h-5 w-5 shrink-0 text-good" aria-label={t("board.zone.promotion", "Promotion zone")} />}
+                  {zone === "down" && <ChevronDown className="h-5 w-5 shrink-0 text-bad" aria-label={t("board.zone.demotion", "Demotion zone")} />}
+                  <span className="w-20 shrink-0 text-right font-bold text-muted">{t("board.xp", "{n} XP", { n: r.weekly_xp })}</span>
                 </div>
               </li>
             );

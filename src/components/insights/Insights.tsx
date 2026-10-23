@@ -10,6 +10,7 @@ import { useMode } from "@/lib/useMode";
 import { PageColumns } from "@/components/shell/AppShell";
 import { RailCard, RailFooter } from "@/components/shell/RailCards";
 import { ProgressBar } from "@/components/ui/Progress";
+import { useT } from "@/i18n";
 import { heatmap, milestones, pattern, skills, subjectInsights, summaryText, type HeatCell, type InsightState, type Milestone } from "./analytics";
 
 const WEEKDAYS = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
@@ -20,6 +21,7 @@ const fmtDate = (d: Date) => d.toLocaleDateString(undefined, { month: "short", d
 /* ------------------------------------------------------------------ */
 
 export function Insights() {
+  const t = useT();
   const hydrated = useHydrated();
   const mode = useMode();
   const s = useLearner();
@@ -54,20 +56,20 @@ export function Insights() {
   if (friendly) {
     return (
       <PageColumns rail={<RailFooter />}>
-        <p className="eyebrow">My learning</p>
-        <h1 className="text-2xl font-black">Look how far you have come</h1>
+        <p className="eyebrow">{t("insights.kid.eyebrow", "My learning")}</p>
+        <h1 className="text-2xl font-black">{t("insights.kid.title", "Look how far you have come")}</h1>
         <div className="mt-5 grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
-          <BigNumber icon={BookOpen} value={lessonsDone} label="lessons finished" />
-          <BigNumber icon={Flame} value={s.streak.count} label={`day streak · best ${s.streak.best}`} />
-          <BigNumber icon={Target} value={data.heat.activeDays} label="days you learned lately" />
-          <BigNumber icon={Award} value={badgeCount} label="badges collected" />
+          <BigNumber icon={BookOpen} value={lessonsDone} label={t("insights.kid.lessons", "lessons finished")} />
+          <BigNumber icon={Flame} value={s.streak.count} label={t("insights.kid.streak", "day streak · best {n}", { n: s.streak.best })} />
+          <BigNumber icon={Target} value={data.heat.activeDays} label={t("insights.kid.activeDays", "days you learned lately")} />
+          <BigNumber icon={Award} value={badgeCount} label={t("insights.kid.badges", "badges collected")} />
         </div>
         <section className="card mt-6 p-5">
-          <h2 className="text-lg font-black">Your learning days</h2>
-          <p className="mt-1 text-sm font-semibold text-muted">Every bright square is a day you learned something.</p>
+          <h2 className="text-lg font-black">{t("insights.kid.daysTitle", "Your learning days")}</h2>
+          <p className="mt-1 text-sm font-semibold text-muted">{t("insights.kid.daysHint", "Every bright square is a day you learned something.")}</p>
           <HeatmapGrid heat={data.heat} />
           {data.pattern.sentence && <p className="mt-4 rounded-lg bg-accent-soft px-4 py-3 font-bold text-accent">{data.pattern.sentence}</p>}
-          {!data.pattern.sentence && <p className="mt-4 text-sm font-semibold text-muted">Finish a few more lessons and we will show when you learn best.</p>}
+          {!data.pattern.sentence && <p className="mt-4 text-sm font-semibold text-muted">{t("insights.kid.noPattern", "Finish a few more lessons and we will show when you learn best.")}</p>}
         </section>
         <MilestonesList items={data.milestones} friendly />
         <div className="mt-6">
@@ -84,14 +86,14 @@ export function Insights() {
     <PageColumns
       rail={
         <>
-          <RailCard title="Summary">
+          <RailCard title={t("insights.summary.title", "Summary")}>
             <dl className="space-y-2 text-sm font-semibold">
-              <Row k="Lessons completed" v={lessonsDone} />
-              <Row k="Active days (12 wk)" v={data.heat.activeDays} />
-              <Row k="Current streak" v={`${s.streak.count} days`} />
-              <Row k="Best streak" v={`${s.streak.best} days`} />
-              <Row k="Total XP" v={s.xp.toLocaleString()} />
-              <Row k="Badges" v={badgeCount} />
+              <Row k={t("insights.summary.lessons", "Lessons completed")} v={lessonsDone} />
+              <Row k={t("insights.summary.activeDays", "Active days (12 wk)")} v={data.heat.activeDays} />
+              <Row k={t("insights.summary.streak", "Current streak")} v={t("insights.summary.days", "{n} days", { n: s.streak.count })} />
+              <Row k={t("insights.summary.bestStreak", "Best streak")} v={t("insights.summary.days", "{n} days", { n: s.streak.best })} />
+              <Row k={t("insights.summary.xp", "Total XP")} v={s.xp.toLocaleString()} />
+              <Row k={t("insights.summary.badges", "Badges")} v={badgeCount} />
             </dl>
             <div className="mt-4">
               <CopySummary s={s} />
@@ -101,43 +103,49 @@ export function Insights() {
         </>
       }
     >
-      <p className="eyebrow">Learning insights</p>
-      <h1 className="text-2xl font-black">Your progress at a glance</h1>
-      <p className="mt-1 font-semibold text-muted">Activity, accuracy and mastery across everything you have studied. All figures are computed from your own records on this device.</p>
+      <p className="eyebrow">{t("insights.eyebrow", "Learning insights")}</p>
+      <h1 className="text-2xl font-black">{t("insights.title", "Your progress at a glance")}</h1>
+      <p className="mt-1 font-semibold text-muted">{t("insights.subtitle", "Activity, accuracy and mastery across everything you have studied. All figures are computed from your own records on this device.")}</p>
 
       {/* Activity */}
       <section className="card mt-6 p-5">
         <div className="flex flex-wrap items-baseline justify-between gap-2">
-          <h2 className="text-lg font-black">Activity, last 12 weeks</h2>
-          <span className="text-sm font-semibold text-muted">{data.heat.activeDays} active days · {data.heat.total} items</span>
+          <h2 className="text-lg font-black">{t("insights.activity.title", "Activity, last 12 weeks")}</h2>
+          <span className="text-sm font-semibold text-muted">{t("insights.activity.meta", "{days} active days · {items} items", { days: data.heat.activeDays, items: data.heat.total })}</span>
         </div>
         <HeatmapGrid heat={data.heat} />
         <p className="mt-4 text-sm font-semibold text-muted">
-          {data.pattern.sentence ?? "Not enough activity yet to spot a pattern. A few sessions in, this will show when you tend to learn."}
-          {data.pattern.sentence && <span className="text-muted/80"> Based on {data.pattern.sample} dated learning items.</span>}
+          {data.pattern.sentence ?? t("insights.activity.noPattern", "Not enough activity yet to spot a pattern. A few sessions in, this will show when you tend to learn.")}
+          {data.pattern.sentence && <span className="text-muted/80">{t("insights.activity.sample", " Based on {n} dated learning items.", { n: data.pattern.sample })}</span>}
         </p>
       </section>
 
       {/* Accuracy + mastery */}
       <section className="card mt-5 p-5">
-        <h2 className="text-lg font-black">Accuracy and mastery by subject</h2>
+        <h2 className="text-lg font-black">{t("insights.subjects.title", "Accuracy and mastery by subject")}</h2>
         {data.subjects.length === 0 ? (
-          <EmptyNote text="Complete a few practice sets to see trends." href="/practice" cta="Go to practice" />
+          <EmptyNote text={t("insights.subjects.empty", "Complete a few practice sets to see trends.")} href="/practice" cta={t("insights.subjects.goPractice", "Go to practice")} />
         ) : (
           <ul className="mt-4 space-y-4">
             {data.subjects.map((sub) => (
               <li key={sub.slug}>
                 <div className="flex items-baseline justify-between gap-3">
                   <span className="truncate font-black">{sub.title}</span>
-                  <span className="shrink-0 text-xs font-semibold text-muted">{sub.assessments} assessment{sub.assessments === 1 ? "" : "s"} · {sub.lessonsTouched} lesson{sub.lessonsTouched === 1 ? "" : "s"}</span>
+                  <span className="shrink-0 text-xs font-semibold text-muted">{sub.assessments === 1
+                      ? t("insights.subjects.assessments.one", "{n} assessment", { n: sub.assessments })
+                      : t("insights.subjects.assessments.other", "{n} assessments", { n: sub.assessments })}{" "}
+                    ·{" "}
+                    {sub.lessonsTouched === 1
+                      ? t("insights.subjects.lessons.one", "{n} lesson", { n: sub.lessonsTouched })
+                      : t("insights.subjects.lessons.other", "{n} lessons", { n: sub.lessonsTouched })}</span>
                 </div>
                 <div className="mt-2 grid gap-2 sm:grid-cols-2">
-                  <Bar label="Accuracy" value={sub.accuracy} color={sub.color} />
-                  <Bar label="Avg mastery" value={sub.mastery} color="rgb(var(--accent))" />
+                  <Bar label={t("insights.subjects.accuracy", "Accuracy")} value={sub.accuracy} color={sub.color} />
+                  <Bar label={t("insights.subjects.mastery", "Avg mastery")} value={sub.mastery} color="rgb(var(--accent))" />
                 </div>
               </li>
             ))}
-            {data.subjects.every((x) => x.accuracy === null) && <li className="text-sm font-semibold text-muted">Complete a few practice sets to see accuracy trends.</li>}
+            {data.subjects.every((x) => x.accuracy === null) && <li className="text-sm font-semibold text-muted">{t("insights.subjects.noAccuracy", "Complete a few practice sets to see accuracy trends.")}</li>}
           </ul>
         )}
       </section>
@@ -145,9 +153,9 @@ export function Insights() {
       {/* Skills */}
       <div className="mt-5 grid gap-5 lg:grid-cols-2">
         <section className="card p-5">
-          <h2 className="flex items-center gap-2 text-lg font-black"><TrendingUp size={18} className="text-good" /> Strongest skills</h2>
+          <h2 className="flex items-center gap-2 text-lg font-black"><TrendingUp size={18} className="text-good" /> {t("insights.skills.strongest", "Strongest skills")}</h2>
           {strongest.length === 0 ? (
-            <p className="mt-3 text-sm font-semibold text-muted">Reach Proficient on a skill and it will appear here.</p>
+            <p className="mt-3 text-sm font-semibold text-muted">{t("insights.skills.strongestEmpty", "Reach Proficient on a skill and it will appear here.")}</p>
           ) : (
             <ul className="mt-3 divide-y-2 divide-line">
               {strongest.map((r) => <SkillItem key={r.id} r={r} />)}
@@ -155,15 +163,15 @@ export function Insights() {
           )}
         </section>
         <section className="card p-5">
-          <h2 className="flex items-center gap-2 text-lg font-black"><Target size={18} className="text-warn" /> Needs practice</h2>
+          <h2 className="flex items-center gap-2 text-lg font-black"><Target size={18} className="text-warn" /> {t("insights.skills.weakest", "Needs practice")}</h2>
           {weakest.length === 0 ? (
-            <p className="mt-3 text-sm font-semibold text-muted">Nothing is lagging behind. Start a new lesson to keep building.</p>
+            <p className="mt-3 text-sm font-semibold text-muted">{t("insights.skills.weakestEmpty", "Nothing is lagging behind. Start a new lesson to keep building.")}</p>
           ) : (
             <ul className="mt-3 divide-y-2 divide-line">
               {weakest.map((r) => <SkillItem key={r.id} r={r} practice />)}
             </ul>
           )}
-          <Link href="/practice" className="btn-ghost mt-4 w-full justify-center text-sm">Open practice</Link>
+          <Link href="/practice" className="btn-ghost mt-4 w-full justify-center text-sm">{t("insights.skills.openPractice", "Open practice")}</Link>
         </section>
       </div>
 
@@ -219,14 +227,15 @@ function EmptyNote({ text, href, cta }: { text: string; href: string; cta: strin
 }
 
 function SkillItem({ r, practice }: { r: ReturnType<typeof skills>["strongest"][number]; practice?: boolean }) {
+  const t = useT();
   return (
     <li className="flex items-center gap-3 py-2.5">
       <span className="h-2.5 w-2.5 shrink-0 rounded-full" style={{ background: r.color }} aria-hidden />
       <span className="min-w-0 flex-1">
         <Link href={r.href} className="block truncate font-bold hover:text-accent">{r.title}</Link>
-        <span className="block truncate text-xs font-semibold text-muted">{r.subject} · {r.levelName}{r.practice !== null ? ` · practice ${Math.round(r.practice * 100)}%` : ""}</span>
+        <span className="block truncate text-xs font-semibold text-muted">{r.subject} · {r.levelName}{r.practice !== null ? t("insights.skills.practicePct", " · practice {pct}%", { pct: Math.round(r.practice * 100) }) : ""}</span>
       </span>
-      {practice && <Link href="/practice" className="btn-flat shrink-0 text-xs">Practise</Link>}
+      {practice && <Link href="/practice" className="btn-flat shrink-0 text-xs">{t("insights.skills.practise", "Practise")}</Link>}
     </li>
   );
 }
@@ -234,11 +243,14 @@ function SkillItem({ r, practice }: { r: ReturnType<typeof skills>["strongest"][
 const MILESTONE_ICON: Record<Milestone["kind"], typeof BookOpen> = { lesson: BookOpen, test: Check, badge: Award, certificate: GraduationCap, streak: Flame };
 
 function MilestonesList({ items, friendly }: { items: Milestone[]; friendly?: boolean }) {
+  const t = useT();
   return (
     <section className="card mt-5 p-5">
-      <h2 className="flex items-center gap-2 text-lg font-black"><ScrollText size={18} className="text-accent" /> {friendly ? "Things you have earned" : "Milestones"}</h2>
+      <h2 className="flex items-center gap-2 text-lg font-black"><ScrollText size={18} className="text-accent" /> {friendly ? t("insights.milestones.kidTitle", "Things you have earned") : t("insights.milestones.title", "Milestones")}</h2>
       {items.length === 0 ? (
-        <p className="mt-3 text-sm font-semibold text-muted">{friendly ? "Finish your first lesson to start your collection." : "Your first lesson, unit test, badges and certificates will be recorded here."}</p>
+        <p className="mt-3 text-sm font-semibold text-muted">{friendly
+            ? t("insights.milestones.kidEmpty", "Finish your first lesson to start your collection.")
+            : t("insights.milestones.empty", "Your first lesson, unit test, badges and certificates will be recorded here.")}</p>
       ) : (
         <ol className="mt-4 space-y-0">
           {items.map((m, i) => {
@@ -250,7 +262,7 @@ function MilestonesList({ items, friendly }: { items: Milestone[]; friendly?: bo
                 <span className="min-w-0 flex-1">
                   <span className="flex flex-wrap items-baseline justify-between gap-x-3">
                     <span className="font-black">{m.title}</span>
-                    <span className="text-xs font-semibold text-muted">{m.date ? fmtDate(m.date) : "ongoing"}</span>
+                    <span className="text-xs font-semibold text-muted">{m.date ? fmtDate(m.date) : t("insights.milestones.ongoing", "ongoing")}</span>
                   </span>
                   <span className="block truncate text-sm font-semibold text-muted">{m.detail}</span>
                 </span>
@@ -265,9 +277,23 @@ function MilestonesList({ items, friendly }: { items: Milestone[]; friendly?: bo
 
 /** 12 × 7 activity grid, one column per week, with weekday and month labels. */
 function HeatmapGrid({ heat }: { heat: ReturnType<typeof heatmap> }) {
+  const t = useT();
+  const weekdayLabel = [
+    t("insights.weekday.sun", "Sun"),
+    t("insights.weekday.mon", "Mon"),
+    t("insights.weekday.tue", "Tue"),
+    t("insights.weekday.wed", "Wed"),
+    t("insights.weekday.thu", "Thu"),
+    t("insights.weekday.fri", "Fri"),
+    t("insights.weekday.sat", "Sat"),
+  ];
   const cols = heat.weeks.length;
   const cell = (c: HeatCell) => {
-    const title = c.future ? "" : `${fmtDate(c.date)}: ${c.count} item${c.count === 1 ? "" : "s"}`;
+    const title = c.future
+      ? ""
+      : c.count === 1
+        ? t("insights.heat.cell.one", "{date}: {n} item", { date: fmtDate(c.date), n: c.count })
+        : t("insights.heat.cell.other", "{date}: {n} items", { date: fmtDate(c.date), n: c.count });
     return (
       <div
         key={c.key}
@@ -288,23 +314,24 @@ function HeatmapGrid({ heat }: { heat: ReturnType<typeof heatmap> }) {
         })}
         {WEEKDAYS.map((label, d) => (
           <div key={label} className="contents">
-            <div className="flex items-center text-[10px] font-bold leading-none text-muted">{d % 2 === 1 ? label : ""}</div>
+            <div className="flex items-center text-[10px] font-bold leading-none text-muted">{d % 2 === 1 ? weekdayLabel[d] : ""}</div>
             {heat.weeks.map((week) => cell(week[d]))}
           </div>
         ))}
       </div>
       <div className="mt-2 flex items-center justify-end gap-1 text-[10px] font-bold text-muted">
-        <span className="mr-1">Less</span>
+        <span className="mr-1">{t("insights.heat.less", "Less")}</span>
         {[0, 1, 2, 3, 4].map((l) => (
           <span key={l} className="h-2.5 w-2.5 rounded-[2px]" style={{ background: l === 0 ? "rgb(var(--line))" : `rgb(var(--accent) / ${0.25 + l * 0.19})` }} />
         ))}
-        <span className="ml-1">More</span>
+        <span className="ml-1">{t("insights.heat.more", "More")}</span>
       </div>
     </div>
   );
 }
 
 function CopySummary({ s, friendly }: { s: InsightState; friendly?: boolean }) {
+  const t = useT();
   const [state, setState] = useState<"idle" | "done" | "failed">("idle");
   const copy = async () => {
     const text = summaryText(s, friendly);
@@ -332,7 +359,13 @@ function CopySummary({ s, friendly }: { s: InsightState; friendly?: boolean }) {
   return (
     <button type="button" onClick={copy} className={clsx("w-full justify-center", state === "done" ? "btn-good" : "btn-primary")} aria-live="polite">
       <Icon size={16} className="mr-2" />
-      {state === "done" ? "Copied" : state === "failed" ? "Could not copy" : friendly ? "Copy my progress" : "Copy progress summary"}
+      {state === "done"
+        ? t("insights.copy.done", "Copied")
+        : state === "failed"
+          ? t("insights.copy.failed", "Could not copy")
+          : friendly
+            ? t("insights.copy.kid", "Copy my progress")
+            : t("insights.copy.label", "Copy progress summary")}
     </button>
   );
 }

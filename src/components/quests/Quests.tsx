@@ -13,8 +13,10 @@ import { BadgeMedal, GameIcon } from "@/components/ui/GameIcon";
 import { ProgressBar } from "@/components/ui/Progress";
 import { Mascot } from "@/components/brand/Mascot";
 import { badgeProgress } from "@/components/profile/badgeProgress";
+import { useT } from "@/i18n";
 
 export function Quests() {
+  const t = useT();
   const hydrated = useHydrated();
   const s = useLearner();
   const [monthOffset, setMonthOffset] = useState(0);
@@ -60,16 +62,18 @@ export function Quests() {
       {/* hero */}
       <section className="flex items-center gap-6 rounded-3xl bg-streak p-6 text-white" style={{ boxShadow: "inset 0 -6px 0 #D97000" }}>
         <div className="min-w-0 flex-1">
-          <p className="text-sm font-extrabold uppercase tracking-[0.12em] text-white/80">Daily quests</p>
-          <h1 className="mt-1 text-3xl font-black">Complete quests to earn coins!</h1>
-          <p className="mt-2 font-bold text-white/85">New quests in {hoursLeft} hour{hoursLeft === 1 ? "" : "s"}</p>
+          <p className="text-sm font-extrabold uppercase tracking-[0.12em] text-white/80">{t("quests.hero.eyebrow", "Daily quests")}</p>
+          <h1 className="mt-1 text-3xl font-black">{t("quests.hero.title", "Complete quests to earn coins!")}</h1>
+          <p className="mt-2 font-bold text-white/85">
+            {hoursLeft === 1 ? t("quests.hero.reset.one", "New quests in {n} hour", { n: hoursLeft }) : t("quests.hero.reset.other", "New quests in {n} hours", { n: hoursLeft })}
+          </p>
         </div>
         <Mascot pose="cheer" size={110} className="hidden sm:block" />
       </section>
 
       {/* daily quests */}
       <section className="card mt-6 divide-y-2 divide-line">
-        {[{ id: "goal", title: `Earn ${s.profile.dailyGoal} XP (daily goal)`, icon: "zap", value: goalXp, target: s.profile.dailyGoal, coins: 0 }, ...quests.map((q) => ({ id: q.id, title: q.title, icon: q.icon, value: q.metric === "xp" ? goalXp : (data?.counters[q.metric] ?? 0), target: q.target, coins: q.coins }))].map((q) => {
+        {[{ id: "goal", title: t("quests.dailyGoal", "Earn {n} XP (daily goal)", { n: s.profile.dailyGoal }), icon: "zap", value: goalXp, target: s.profile.dailyGoal, coins: 0 }, ...quests.map((q) => ({ id: q.id, title: q.title, icon: q.icon, value: q.metric === "xp" ? goalXp : (data?.counters[q.metric] ?? 0), target: q.target, coins: q.coins }))].map((q) => {
           const done = q.value >= q.target;
           const isClaimed = claimed.includes(q.id);
           return (
@@ -88,7 +92,7 @@ export function Quests() {
               </div>
               {q.coins > 0 &&
                 (isClaimed ? (
-                  <span className="shrink-0 text-xs font-extrabold uppercase tracking-wide text-good">Claimed</span>
+                  <span className="shrink-0 text-xs font-extrabold uppercase tracking-wide text-good">{t("quests.claimed", "Claimed")}</span>
                 ) : (
                   <button disabled={!done} onClick={() => s.claimQuest(q.id)} className={clsx("shrink-0", done ? "btn-gold" : "btn-ghost !text-muted")}>
                     <Coins className="h-4 w-4" /> {q.coins}
@@ -102,9 +106,9 @@ export function Quests() {
       {/* streak calendar */}
       <section className="mt-10">
         <div className="flex items-baseline justify-between">
-          <h2 className="text-2xl font-black">Streak</h2>
+          <h2 className="text-2xl font-black">{t("quests.streak.title", "Streak")}</h2>
           <Link href="/shop" className="text-sm font-extrabold uppercase tracking-wide text-accent">
-            Get freezes
+            {t("quests.streak.getFreezes", "Get freezes")}
           </Link>
         </div>
         <div className="mt-4 grid gap-3 sm:grid-cols-3">
@@ -112,40 +116,48 @@ export function Quests() {
             <Flame className={clsx("h-8 w-8", streak ? "fill-streak text-streak" : "text-line")} />
             <div>
               <div className="text-xl font-black">{streak}</div>
-              <div className="text-sm font-bold text-muted">Current streak</div>
+              <div className="text-sm font-bold text-muted">{t("quests.streak.current", "Current streak")}</div>
             </div>
           </div>
           <div className="card flex items-center gap-3 p-4">
             <Flame className="h-8 w-8 text-muted" />
             <div>
               <div className="text-xl font-black">{s.streak.best}</div>
-              <div className="text-sm font-bold text-muted">Longest streak</div>
+              <div className="text-sm font-bold text-muted">{t("quests.streak.longest", "Longest streak")}</div>
             </div>
           </div>
           <div className="card flex items-center gap-3 p-4">
             <Snowflake className="h-8 w-8 text-[#1CB0F6]" />
             <div>
               <div className="text-xl font-black">{s.streak.freezes}</div>
-              <div className="text-sm font-bold text-muted">Freezes equipped</div>
+              <div className="text-sm font-bold text-muted">{t("quests.streak.freezes", "Freezes equipped")}</div>
             </div>
           </div>
         </div>
 
         <div className="card mt-4 p-5">
           <div className="flex items-center justify-between">
-            <button onClick={() => setMonthOffset((m) => m - 1)} className="grid h-9 w-9 place-items-center rounded-xl text-muted hover:bg-surface-2" aria-label="Previous month">
+            <button onClick={() => setMonthOffset((m) => m - 1)} className="grid h-9 w-9 place-items-center rounded-xl text-muted hover:bg-surface-2" aria-label={t("quests.calendar.prev", "Previous month")}>
               <ChevronLeft className="h-5 w-5" />
             </button>
             <div className="text-center">
               <div className="font-black">{month.toLocaleDateString(undefined, { month: "long", year: "numeric" })}</div>
-              <div className="text-xs font-bold text-muted">{activeDays} day{activeDays === 1 ? "" : "s"} practised</div>
+              <div className="text-xs font-bold text-muted">{activeDays === 1 ? t("quests.calendar.active.one", "{n} day practised", { n: activeDays }) : t("quests.calendar.active.other", "{n} days practised", { n: activeDays })}</div>
             </div>
-            <button onClick={() => setMonthOffset((m) => Math.min(0, m + 1))} disabled={monthOffset === 0} className="grid h-9 w-9 place-items-center rounded-xl text-muted hover:bg-surface-2 disabled:opacity-30" aria-label="Next month">
+            <button onClick={() => setMonthOffset((m) => Math.min(0, m + 1))} disabled={monthOffset === 0} className="grid h-9 w-9 place-items-center rounded-xl text-muted hover:bg-surface-2 disabled:opacity-30" aria-label={t("quests.calendar.next", "Next month")}>
               <ChevronRight className="h-5 w-5" />
             </button>
           </div>
           <div className="mt-4 grid grid-cols-7 gap-1.5 text-center">
-            {["M", "T", "W", "T", "F", "S", "S"].map((d, i) => (
+            {[
+              t("quests.calendar.day.mon", "M"),
+              t("quests.calendar.day.tue", "T"),
+              t("quests.calendar.day.wed", "W"),
+              t("quests.calendar.day.thu", "T"),
+              t("quests.calendar.day.fri", "F"),
+              t("quests.calendar.day.sat", "S"),
+              t("quests.calendar.day.sun", "S"),
+            ].map((d, i) => (
               <span key={i} className="text-xs font-extrabold text-muted">
                 {d}
               </span>
@@ -158,7 +170,7 @@ export function Quests() {
               return (
                 <span
                   key={i}
-                  title={active ? `${s.daily[k].xp} XP` : undefined}
+                  title={active ? t("quests.calendar.xp", "{n} XP", { n: s.daily[k].xp }) : undefined}
                   className={clsx(
                     "mx-auto grid h-9 w-9 place-items-center rounded-full text-sm font-extrabold",
                     active ? "bg-streak text-white" : "text-muted",
@@ -177,9 +189,9 @@ export function Quests() {
       {nextBadges.length > 0 && (
         <section className="mt-10">
           <div className="flex items-baseline justify-between">
-            <h2 className="text-2xl font-black">Almost there</h2>
+            <h2 className="text-2xl font-black">{t("quests.badges.title", "Almost there")}</h2>
             <Link href="/profile" className="text-sm font-extrabold uppercase tracking-wide text-accent">
-              All achievements
+              {t("quests.badges.all", "All achievements")}
             </Link>
           </div>
           <div className="card mt-4 divide-y-2 divide-line">

@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { motion } from "framer-motion";
 import { bag, fmt, gcd, readNum, Readout, Stepper, WidgetTitle } from "./_shared";
+import { useT } from "@/i18n";
 
 const MAX_DEN = 12;
 
@@ -25,6 +26,7 @@ function Frac({ n, d, className = "" }: { n: number; d: number; className?: stri
 }
 
 export default function Fraction(input: Record<string, unknown>) {
+  const t = useT();
   const p = bag(input);
   const d0 = Math.round(readNum(p, "denominator", 4, 1, MAX_DEN));
   const n0 = Math.round(readNum(p, "numerator", 1, 0, d0));
@@ -43,10 +45,10 @@ export default function Fraction(input: Record<string, unknown>) {
 
   return (
     <div>
-      <WidgetTitle title="Fraction pizza" hint="Change the steppers or tap slices to eat the pizza." />
+      <WidgetTitle title={t("widget.fraction.title", "Fraction pizza")} hint={t("widget.fraction.hint", "Change the steppers or tap slices to eat the pizza.")} />
 
       <div className="grid items-center gap-6 md:grid-cols-[auto_1fr]">
-        <svg viewBox="0 0 200 200" className="mx-auto w-full max-w-[240px]" role="img" aria-label={`${num} out of ${den} slices`}>
+        <svg viewBox="0 0 200 200" className="mx-auto w-full max-w-[240px]" role="img" aria-label={t("widget.fraction.slices", "{n} out of {d} slices", { n: num, d: den })}>
           <circle cx="100" cy="100" r="92" fill="rgb(var(--warn) / 0.25)" />
           {Array.from({ length: den }, (_, i) => {
             const on = i < num;
@@ -76,19 +78,19 @@ export default function Fraction(input: Record<string, unknown>) {
           <div className="flex flex-wrap items-center gap-4">
             <Frac n={num} d={den} className="text-4xl text-accent" />
             <div className="space-y-2">
-              <Stepper label="Top (numerator)" value={num} min={0} max={den} onChange={setNum} />
-              <Stepper label="Bottom (denominator)" value={den} min={1} max={MAX_DEN} onChange={setDenominator} />
+              <Stepper label={t("widget.fraction.top", "Top (numerator)")} value={num} min={0} max={den} onChange={setNum} />
+              <Stepper label={t("widget.fraction.bottom", "Bottom (denominator)")} value={den} min={1} max={MAX_DEN} onChange={setDenominator} />
             </div>
           </div>
 
           <div>
-            <div className="mb-1 text-xs font-semibold uppercase tracking-wide text-muted">As a bar</div>
+            <div className="mb-1 text-xs font-semibold uppercase tracking-wide text-muted">{t("widget.fraction.asBar", "As a bar")}</div>
             <div className="flex h-10 overflow-hidden rounded-2xl border border-line bg-surface-2">
               {Array.from({ length: den }, (_, i) => (
                 <button
                   type="button"
                   key={`${den}-${i}`}
-                  aria-label={`Bar part ${i + 1}`}
+                  aria-label={t("widget.fraction.barPart", "Bar part {n}", { n: i + 1 })}
                   aria-pressed={i < num}
                   onClick={() => toggleSlice(i)}
                   className={`h-full flex-1 border-r border-surface transition-colors duration-300 last:border-r-0 ${i < num ? "bg-accent" : "bg-surface-2"}`}
@@ -98,22 +100,22 @@ export default function Fraction(input: Record<string, unknown>) {
           </div>
 
           <div className="grid grid-cols-3 gap-2" aria-live="polite">
-            <Readout label="Simplest" value={simple} />
-            <Readout label="Decimal" value={fmt(num / den, 3)} />
-            <Readout label="Percent" value={`${fmt((num / den) * 100, 1)}%`} />
+            <Readout label={t("widget.fraction.simplest", "Simplest")} value={simple} />
+            <Readout label={t("widget.fraction.decimal", "Decimal")} value={fmt(num / den, 3)} />
+            <Readout label={t("widget.fraction.percent", "Percent")} value={`${fmt((num / den) * 100, 1)}%`} />
           </div>
 
           <div className="rounded-2xl border border-line bg-surface-2 p-3">
             <div className="mb-2 flex flex-wrap items-center justify-between gap-2">
-              <span className="text-sm font-semibold text-ink">Equivalent fraction</span>
-              <Stepper label="× by" value={mult} min={2} max={6} onChange={setMult} />
+              <span className="text-sm font-semibold text-ink">{t("widget.fraction.equivalent", "Equivalent fraction")}</span>
+              <Stepper label={t("widget.fraction.timesBy", "× by")} value={mult} min={2} max={6} onChange={setMult} />
             </div>
             <div className="flex items-center justify-center gap-3 text-2xl text-ink">
               <Frac n={num} d={den} />
               <span className="text-muted">=</span>
               <Frac n={num * mult} d={den * mult} className="text-accent" />
               <span className="ml-2 text-xs text-muted">
-                multiply top and bottom by {mult}
+                {t("widget.fraction.multiply", "multiply top and bottom by {n}", { n: mult })}
               </span>
             </div>
           </div>

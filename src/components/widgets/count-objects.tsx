@@ -5,6 +5,7 @@ import { AnimatePresence, motion } from "framer-motion";
 import { RefreshCw, Sparkles } from "lucide-react";
 import { say as voiceSay } from "@/lib/voice";
 import { bag, readNum, readStr, WidgetTitle } from "./_shared";
+import { useT } from "@/i18n";
 
 export const NUMBER_WORDS = ["zero", "one", "two", "three", "four", "five", "six", "seven", "eight", "nine", "ten", "eleven", "twelve", "thirteen", "fourteen", "fifteen", "sixteen", "seventeen", "eighteen", "nineteen", "twenty"];
 
@@ -13,6 +14,7 @@ function say(text: string) {
 }
 
 export default function CountObjects(input: Record<string, unknown>) {
+  const t = useT();
   const p = bag(input);
   const emoji = readStr(p, "emoji", "🍎");
   const max = Math.round(readNum(p, "max", 10, 1, 20));
@@ -48,7 +50,7 @@ export default function CountObjects(input: Record<string, unknown>) {
 
   return (
     <div className="font-bold">
-      <WidgetTitle title="Let's count!" hint={`Tap each ${emoji} once to count it.`} />
+      <WidgetTitle title={t("widget.count.title", "Let's count!")} hint={t("widget.count.hint", "Tap each {emoji} once to count it.", { emoji })} />
 
       <div className="flex min-h-[180px] flex-wrap content-center items-center justify-center gap-3 rounded-3xl bg-surface-2 p-4 sm:gap-4">
         {Array.from({ length: total }, (_, i) => {
@@ -58,7 +60,7 @@ export default function CountObjects(input: Record<string, unknown>) {
             <motion.button
               key={`${total}-${i}`}
               type="button"
-              aria-label={isTapped ? `Counted as ${order + 1}` : `Count ${emoji}`}
+              aria-label={isTapped ? t("widget.count.countedAs", "Counted as {n}", { n: order + 1 }) : t("widget.count.count", "Count {emoji}", { emoji })}
               initial={{ scale: 0, rotate: -20 }}
               animate={{ scale: 1, rotate: 0 }}
               transition={{ type: "spring", stiffness: 400, damping: 18, delay: i * 0.04 }}
@@ -92,18 +94,18 @@ export default function CountObjects(input: Record<string, unknown>) {
           <AnimatePresence mode="wait">
             {done ? (
               <motion.span key="done" initial={{ scale: 0.6, opacity: 0 }} animate={{ scale: 1, opacity: 1 }} className="flex items-center gap-2 text-good">
-                <Sparkles size={20} /> Yay! There are {total} {emoji}
+                <Sparkles size={20} /> {t("widget.count.done", "Yay! There are {n} {emoji}", { n: total, emoji })}
               </motion.span>
             ) : (
               <motion.span key={count} initial={{ y: 8, opacity: 0 }} animate={{ y: 0, opacity: 1 }}>
-                Counted: <span className="font-mono text-2xl text-accent">{count}</span>
+                {t("widget.count.counted", "Counted:")} <span className="font-mono text-2xl text-accent">{count}</span>
                 {count > 0 && <span className="ml-2 text-muted">({NUMBER_WORDS[count] ?? count})</span>}
               </motion.span>
             )}
           </AnimatePresence>
         </div>
         <button type="button" onClick={newRound} className="btn-pop">
-          <RefreshCw size={16} /> New round
+          <RefreshCw size={16} /> {t("widget.count.newRound", "New round")}
         </button>
       </div>
     </div>

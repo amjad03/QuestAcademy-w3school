@@ -2,6 +2,7 @@
 
 import { useId, useMemo, useRef, useState } from "react";
 import { bag, fmt, readOneOf, Readout, Segmented, Slider, svgPoint, WidgetTitle } from "./_shared";
+import { useT } from "@/i18n";
 
 type Kind = "linear" | "quadratic" | "sine" | "exponential";
 const KINDS = ["linear", "quadratic", "sine", "exponential"] as const;
@@ -19,6 +20,7 @@ const ix = (px: number) => XMIN + (px / W) * (XMAX - XMIN);
 const signed = (n: number, digits = 2) => (n < 0 ? `− ${fmt(-n, digits)}` : `+ ${fmt(n, digits)}`);
 
 export default function FunctionPlot(input: Record<string, unknown>) {
+  const t = useT();
   const p = bag(input);
   const [kind, setKind] = useState<Kind>(readOneOf(p, "kind", KINDS, "linear"));
   const [m, setM] = useState(1);
@@ -70,41 +72,53 @@ export default function FunctionPlot(input: Record<string, unknown>) {
   const points: { x: number; y: number; label: string }[] = [];
   const facts: { label: string; value: string }[] = [];
 
+  const yInt = t("widget.plot.yInt", "y-int");
+  const rootLabel = t("widget.plot.root", "root");
+  const vertexLabel = t("widget.plot.vertex", "vertex");
+
   if (kind === "linear") {
     equation = `y = ${fmt(m)}x ${signed(c)}`;
-    points.push({ x: 0, y: c, label: "y-int" });
-    if (m !== 0) points.push({ x: -c / m, y: 0, label: "root" });
-    facts.push({ label: "Slope m", value: fmt(m) }, { label: "y-intercept", value: fmt(c) }, { label: "x-intercept", value: m === 0 ? (c === 0 ? "all x" : "none") : fmt(-c / m) });
+    points.push({ x: 0, y: c, label: yInt });
+    if (m !== 0) points.push({ x: -c / m, y: 0, label: rootLabel });
+    facts.push(
+      { label: t("widget.plot.slope", "Slope m"), value: fmt(m) },
+      { label: t("widget.plot.yIntercept", "y-intercept"), value: fmt(c) },
+      { label: t("widget.plot.xIntercept", "x-intercept"), value: m === 0 ? (c === 0 ? t("widget.plot.allX", "all x") : t("widget.plot.none", "none")) : fmt(-c / m) },
+    );
   } else if (kind === "quadratic") {
     equation = `y = ${fmt(qa)}x² ${signed(qb)}x ${signed(qc)}`;
     if (qa !== 0) {
       const vx = -qb / (2 * qa);
       const vy = f(vx);
       const disc = qb * qb - 4 * qa * qc;
-      points.push({ x: vx, y: vy, label: "vertex" });
-      let roots = "none (Δ < 0)";
+      points.push({ x: vx, y: vy, label: vertexLabel });
+      let roots = t("widget.plot.noRoots", "none (Δ < 0)");
       if (disc > 1e-9) {
         const r1 = (-qb - Math.sqrt(disc)) / (2 * qa);
         const r2 = (-qb + Math.sqrt(disc)) / (2 * qa);
-        points.push({ x: r1, y: 0, label: "root" }, { x: r2, y: 0, label: "root" });
+        points.push({ x: r1, y: 0, label: rootLabel }, { x: r2, y: 0, label: rootLabel });
         roots = `${fmt(Math.min(r1, r2))}, ${fmt(Math.max(r1, r2))}`;
       } else if (Math.abs(disc) <= 1e-9) {
-        roots = `${fmt(vx)} (double)`;
+        roots = t("widget.plot.doubleRoot", "{x} (double)", { x: fmt(vx) });
       }
-      facts.push({ label: "Vertex", value: `(${fmt(vx)}, ${fmt(vy)})` }, { label: "Δ = b² − 4ac", value: fmt(disc) }, { label: "Roots", value: roots });
+      facts.push({ label: t("widget.plot.vertexTitle", "Vertex"), value: `(${fmt(vx)}, ${fmt(vy)})` }, { label: "Δ = b² − 4ac", value: fmt(disc) }, { label: t("widget.plot.roots", "Roots"), value: roots });
     } else {
-      facts.push({ label: "Note", value: "a = 0 → it's a line!" });
+      facts.push({ label: t("widget.plot.note", "Note"), value: t("widget.plot.isLine", "a = 0 → it's a line!") });
     }
   } else if (kind === "sine") {
     equation = `y = ${fmt(A)}·sin(${fmt(B)}x ${signed(C)})`;
-    facts.push({ label: "Amplitude |A|", value: fmt(Math.abs(A)) }, { label: "Period 2π/B", value: B === 0 ? "∞" : fmt((2 * Math.PI) / Math.abs(B)) }, { label: "Phase shift −C/B", value: B === 0 ? "—" : fmt(-C / B) });
+    facts.push(
+      { label: t("widget.plot.amplitude", "Amplitude |A|"), value: fmt(Math.abs(A)) },
+      { label: t("widget.plot.period", "Period 2π/B"), value: B === 0 ? "∞" : fmt((2 * Math.PI) / Math.abs(B)) },
+      { label: t("widget.plot.phase", "Phase shift −C/B"), value: B === 0 ? "—" : fmt(-C / B) },
+    );
   } else {
     equation = `y = ${fmt(ea)}·${fmt(eb)}ˣ`;
-    points.push({ x: 0, y: ea, label: "y-int" });
+    points.push({ x: 0, y: ea, label: yInt });
     facts.push(
-      { label: "y-intercept", value: fmt(ea) },
-      { label: "Behaviour", value: eb > 1 ? "growth" : eb < 1 ? "decay" : "constant" },
-      { label: "Asymptote", value: "y = 0" },
+      { label: t("widget.plot.yIntercept", "y-intercept"), value: fmt(ea) },
+      { label: t("widget.plot.behaviour", "Behaviour"), value: eb > 1 ? t("widget.plot.growth", "growth") : eb < 1 ? t("widget.plot.decay", "decay") : t("widget.plot.constant", "constant") },
+      { label: t("widget.plot.asymptote", "Asymptote"), value: "y = 0" },
     );
   }
 
@@ -117,18 +131,18 @@ export default function FunctionPlot(input: Record<string, unknown>) {
   return (
     <div>
       <WidgetTitle
-        title="Function plotter"
-        hint="Move the sliders and watch the graph change. Hover or drag on the graph to trace it."
+        title={t("widget.plot.title", "Function plotter")}
+        hint={t("widget.plot.hint", "Move the sliders and watch the graph change. Hover or drag on the graph to trace it.")}
         right={
           <Segmented
-            label="Function type"
+            label={t("widget.plot.type", "Function type")}
             value={kind}
             onChange={setKind}
             options={[
-              { value: "linear", label: "Linear" },
-              { value: "quadratic", label: "Quadratic" },
-              { value: "sine", label: "Sine" },
-              { value: "exponential", label: "Exp" },
+              { value: "linear", label: t("widget.plot.linear", "Linear") },
+              { value: "quadratic", label: t("widget.plot.quadratic", "Quadratic") },
+              { value: "sine", label: t("widget.plot.sine", "Sine") },
+              { value: "exponential", label: t("widget.plot.exp", "Exp") },
             ]}
           />
         }
@@ -149,7 +163,7 @@ export default function FunctionPlot(input: Record<string, unknown>) {
             onPointerLeave={() => setHoverX(null)}
             style={{ touchAction: "none" }}
             role="img"
-            aria-label={`Graph of ${equation}`}
+            aria-label={t("widget.plot.graphOf", "Graph of {equation}", { equation })}
           >
             <defs>
               <clipPath id={clip}>
@@ -181,7 +195,7 @@ export default function FunctionPlot(input: Record<string, unknown>) {
               {points.map((pt, i) =>
                 Number.isFinite(pt.y) && Math.abs(pt.x) <= XMAX && pt.y >= YMIN && pt.y <= YMAX ? (
                   <g key={i}>
-                    <circle cx={sx(pt.x)} cy={sy(pt.y)} r="5" fill={pt.label === "vertex" ? "rgb(var(--accent-2))" : "rgb(var(--good))"} stroke="rgb(var(--surface))" strokeWidth="2" />
+                    <circle cx={sx(pt.x)} cy={sy(pt.y)} r="5" fill={pt.label === vertexLabel ? "rgb(var(--accent-2))" : "rgb(var(--good))"} stroke="rgb(var(--surface))" strokeWidth="2" />
                     <text x={sx(pt.x) + 7} y={sy(pt.y) - 7} fontSize="10" fontWeight="700" fill="rgb(var(--ink))">
                       {pt.label}
                     </text>
@@ -205,8 +219,8 @@ export default function FunctionPlot(input: Record<string, unknown>) {
         <div className="space-y-4">
           {kind === "linear" && (
             <>
-              <Slider label="m (slope)" value={m} min={-5} max={5} step={0.1} onChange={setM} />
-              <Slider label="c (intercept)" value={c} min={-7} max={7} step={0.5} onChange={setC} />
+              <Slider label={t("widget.plot.mSlope", "m (slope)")} value={m} min={-5} max={5} step={0.1} onChange={setM} />
+              <Slider label={t("widget.plot.cIntercept", "c (intercept)")} value={c} min={-7} max={7} step={0.5} onChange={setC} />
             </>
           )}
           {kind === "quadratic" && (
@@ -218,15 +232,15 @@ export default function FunctionPlot(input: Record<string, unknown>) {
           )}
           {kind === "sine" && (
             <>
-              <Slider label="A (amplitude)" value={A} min={-6} max={6} step={0.5} onChange={setA} />
-              <Slider label="B (frequency)" value={B} min={0.1} max={4} step={0.1} onChange={setB} />
-              <Slider label="C (phase)" value={C} min={-Math.PI} max={Math.PI} step={0.05} onChange={setC2} />
+              <Slider label={t("widget.plot.aAmplitude", "A (amplitude)")} value={A} min={-6} max={6} step={0.5} onChange={setA} />
+              <Slider label={t("widget.plot.bFrequency", "B (frequency)")} value={B} min={0.1} max={4} step={0.1} onChange={setB} />
+              <Slider label={t("widget.plot.cPhase", "C (phase)")} value={C} min={-Math.PI} max={Math.PI} step={0.05} onChange={setC2} />
             </>
           )}
           {kind === "exponential" && (
             <>
-              <Slider label="a (start value)" value={ea} min={-3} max={3} step={0.1} onChange={setEa} />
-              <Slider label="b (base)" value={eb} min={0.1} max={3} step={0.05} onChange={setEb} />
+              <Slider label={t("widget.plot.aStart", "a (start value)")} value={ea} min={-3} max={3} step={0.1} onChange={setEa} />
+              <Slider label={t("widget.plot.bBase", "b (base)")} value={eb} min={0.1} max={3} step={0.05} onChange={setEb} />
             </>
           )}
           <div className="grid grid-cols-1 gap-2 sm:grid-cols-3 lg:grid-cols-1" aria-live="polite">

@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { fmt, Readout, Segmented, Slider, useFrame, WidgetTitle } from "./_shared";
+import { useT } from "@/i18n";
 
 type Solve = "V" | "I" | "R";
 
@@ -26,6 +27,7 @@ function along(s: number) {
 }
 
 export default function OhmsLaw() {
+  const t = useT();
   const [solve, setSolve] = useState<Solve>("I");
   const [V, setV] = useState(9);
   const [I, setI] = useState(0.5);
@@ -47,17 +49,17 @@ export default function OhmsLaw() {
   return (
     <div>
       <WidgetTitle
-        title="Ohm's law circuit"
-        hint="V = I × R. Pick what to calculate, then move the other two sliders."
+        title={t("widget.ohms.title", "Ohm's law circuit")}
+        hint={t("widget.ohms.hint", "V = I × R. Pick what to calculate, then move the other two sliders.")}
         right={
           <Segmented
-            label="Solve for"
+            label={t("widget.ohms.solveFor", "Solve for")}
             value={solve}
             onChange={setSolve}
             options={[
-              { value: "V", label: "Voltage V" },
-              { value: "I", label: "Current I" },
-              { value: "R", label: "Resistance R" },
+              { value: "V", label: t("widget.ohms.voltageV", "Voltage V") },
+              { value: "I", label: t("widget.ohms.currentI", "Current I") },
+              { value: "R", label: t("widget.ohms.resistanceR", "Resistance R") },
             ]}
           />
         }
@@ -65,7 +67,7 @@ export default function OhmsLaw() {
 
       <div className="grid gap-5 md:grid-cols-[1.2fr_1fr]">
         <div className="overflow-hidden rounded-3xl bg-surface-2 p-2">
-          <svg viewBox="0 0 360 200" className="w-full" role="img" aria-label="Simple circuit with battery, resistor and bulb">
+          <svg viewBox="0 0 360 200" className="w-full" role="img" aria-label={t("widget.ohms.circuit", "Simple circuit with battery, resistor and bulb")}>
             {/* wires */}
             <rect x={L} y={T} width={Rt - L} height={B - T} fill="none" stroke="rgb(var(--muted))" strokeWidth="4" rx="6" />
             {/* resistor */}
@@ -101,17 +103,17 @@ export default function OhmsLaw() {
         </div>
 
         <div className="space-y-4">
-          {solve !== "V" && <Slider label="Voltage V" value={V} min={0} max={24} step={0.5} onChange={setV} unit="V" />}
-          {solve !== "I" && <Slider label="Current I" value={I} min={0.01} max={5} step={0.01} onChange={setI} unit="A" />}
-          {solve !== "R" && <Slider label="Resistance R" value={R} min={1} max={100} step={1} onChange={setR} unit="Ω" />}
+          {solve !== "V" && <Slider label={t("widget.ohms.voltageV", "Voltage V")} value={V} min={0} max={24} step={0.5} onChange={setV} unit="V" />}
+          {solve !== "I" && <Slider label={t("widget.ohms.currentI", "Current I")} value={I} min={0.01} max={5} step={0.01} onChange={setI} unit="A" />}
+          {solve !== "R" && <Slider label={t("widget.ohms.resistanceR", "Resistance R")} value={R} min={1} max={100} step={1} onChange={setR} unit="Ω" />}
           <div className="grid grid-cols-2 gap-2" aria-live="polite">
-            <Readout label="Voltage" value={fmt(volts, 2)} unit="V" tone={solve === "V" ? "accent" : "ink"} />
-            <Readout label="Current" value={fmt(amps, 3)} unit="A" tone={solve === "I" ? "accent" : "ink"} />
-            <Readout label="Resistance" value={fmt(ohms, 2)} unit="Ω" tone={solve === "R" ? "accent" : "ink"} />
-            <Readout label="Power P = VI" value={fmt(power, 2)} unit="W" tone="warn" />
+            <Readout label={t("widget.ohms.voltage", "Voltage")} value={fmt(volts, 2)} unit="V" tone={solve === "V" ? "accent" : "ink"} />
+            <Readout label={t("widget.ohms.current", "Current")} value={fmt(amps, 3)} unit="A" tone={solve === "I" ? "accent" : "ink"} />
+            <Readout label={t("widget.ohms.resistance", "Resistance")} value={fmt(ohms, 2)} unit="Ω" tone={solve === "R" ? "accent" : "ink"} />
+            <Readout label={t("widget.ohms.power", "Power P = VI")} value={fmt(power, 2)} unit="W" tone="warn" />
           </div>
           <p className="text-xs text-muted">
-            Blue dots are electrons: they flow from − to + (opposite to conventional current), and move faster when the current is bigger.
+            {t("widget.ohms.note", "Blue dots are electrons: they flow from − to + (opposite to conventional current), and move faster when the current is bigger.")}
           </p>
         </div>
       </div>

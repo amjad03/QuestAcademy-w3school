@@ -10,10 +10,22 @@ import { useHydrated } from "@/components/providers";
 import { Avatar } from "@/components/shell/Avatar";
 import { PageColumns } from "@/components/shell/AppShell";
 import { LeagueCard, QuestsCard, RailFooter } from "@/components/shell/RailCards";
-
-const COLOR_NAME: Record<string, string> = { blue: "Quest Blue", green: "Leaf", purple: "Royal", orange: "Tangerine", red: "Cherry", teal: "Lagoon", pink: "Blossom", sky: "Sky", navy: "Midnight", gold: "Gold" };
+import { useT } from "@/i18n";
 
 export function Shop() {
+  const t = useT();
+  const COLOR_NAME: Record<string, string> = {
+    blue: t("shop.color.blue", "Quest Blue"),
+    green: t("shop.color.green", "Leaf"),
+    purple: t("shop.color.purple", "Royal"),
+    orange: t("shop.color.orange", "Tangerine"),
+    red: t("shop.color.red", "Cherry"),
+    teal: t("shop.color.teal", "Lagoon"),
+    pink: t("shop.color.pink", "Blossom"),
+    sky: t("shop.color.sky", "Sky"),
+    navy: t("shop.color.navy", "Midnight"),
+    gold: t("shop.color.gold", "Gold"),
+  };
   const hydrated = useHydrated();
   const s = useLearner();
   const toast = useUi((u) => u.toast);
@@ -33,10 +45,10 @@ export function Shop() {
     if (s.buy(id, price)) {
       sfx("coin");
       apply();
-      toast({ text: "Unlocked!" });
+      toast({ text: t("shop.toast.unlocked", "Unlocked!") });
     } else {
       sfx("wrong");
-      toast({ text: `You need ${price - s.coins} more coins` });
+      toast({ text: t("shop.toast.needMore", "You need {n} more coins", { n: price - s.coins }) });
     }
   };
 
@@ -44,8 +56,8 @@ export function Shop() {
     <PageColumns rail={rail}>
       <div className="flex items-end justify-between gap-4">
         <div>
-          <h1 className="text-3xl font-black">Shop</h1>
-          <p className="mt-1 font-semibold text-muted">Earn coins from lessons, quests, chests, challenges and achievements.</p>
+          <h1 className="text-3xl font-black">{t("shop.title", "Shop")}</h1>
+          <p className="mt-1 font-semibold text-muted">{t("shop.subtitle", "Earn coins from lessons, quests, chests, challenges and achievements.")}</p>
         </div>
         <span className="flex items-center gap-2 text-2xl font-black text-warn-shade">
           <Coins className="h-7 w-7" strokeWidth={2.5} /> {s.coins}
@@ -53,14 +65,14 @@ export function Shop() {
       </div>
 
       {/* power-ups */}
-      <h2 className="mt-10 text-xl font-black">Power-ups</h2>
+      <h2 className="mt-10 text-xl font-black">{t("shop.powerUps", "Power-ups")}</h2>
       <div className="card mt-4 flex flex-col gap-4 p-5 sm:flex-row sm:items-center">
         <span className="grid h-16 w-16 shrink-0 place-items-center rounded-2xl bg-[#1CB0F6] text-white" style={{ boxShadow: "inset 0 -5px 0 #1290CC" }}>
           <Snowflake className="h-9 w-9" strokeWidth={2.5} />
         </span>
         <div className="min-w-0 flex-1">
-          <h3 className="text-lg font-black">Streak freeze</h3>
-          <p className="text-sm font-semibold text-muted">Keeps your streak alive if you miss a day. {s.streak.freezes}/3 equipped.</p>
+          <h3 className="text-lg font-black">{t("shop.freeze.title", "Streak freeze")}</h3>
+          <p className="text-sm font-semibold text-muted">{t("shop.freeze.body", "Keeps your streak alive if you miss a day. {n}/3 equipped.", { n: s.streak.freezes })}</p>
         </div>
         <button
           className="btn-ghost shrink-0"
@@ -68,16 +80,22 @@ export function Shop() {
           onClick={() => {
             if (s.buyFreeze()) {
               sfx("coin");
-              toast({ text: "Streak freeze equipped" });
-            } else toast({ text: `You need ${STREAK_FREEZE_PRICE} coins` });
+              toast({ text: t("shop.toast.freezeEquipped", "Streak freeze equipped") });
+            } else toast({ text: t("shop.toast.needCoins", "You need {n} coins", { n: STREAK_FREEZE_PRICE }) });
           }}
         >
-          {s.streak.freezes >= 3 ? "Full" : <>Get for <Coins className="h-4 w-4 text-warn-shade" /> {STREAK_FREEZE_PRICE}</>}
+          {s.streak.freezes >= 3 ? (
+            t("shop.freeze.full", "Full")
+          ) : (
+            <>
+              {t("shop.freeze.getFor", "Get for")} <Coins className="h-4 w-4 text-warn-shade" /> {STREAK_FREEZE_PRICE}
+            </>
+          )}
         </button>
       </div>
 
       {/* profile colours */}
-      <h2 className="mt-10 text-xl font-black">Profile colour</h2>
+      <h2 className="mt-10 text-xl font-black">{t("shop.colours", "Profile colour")}</h2>
       <div className="mt-4 grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-5">
         {AVATARS.map((a) => {
           const own = s.owned.includes(a.id);
@@ -93,7 +111,7 @@ export function Shop() {
       </div>
 
       {/* frames */}
-      <h2 className="mt-10 text-xl font-black">Avatar frames</h2>
+      <h2 className="mt-10 text-xl font-black">{t("shop.frames", "Avatar frames")}</h2>
       <div className="mt-4 grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-5">
         {FRAMES.map((f) => {
           const own = s.owned.includes(f.id);
@@ -112,13 +130,14 @@ export function Shop() {
 }
 
 function PriceTag({ own, active, price }: { own: boolean; active: boolean; price: number }) {
+  const t = useT();
   if (active)
     return (
       <span className="flex items-center gap-1 text-xs font-extrabold uppercase tracking-wide text-accent">
-        <Check className="h-3.5 w-3.5" strokeWidth={3.5} /> Equipped
+        <Check className="h-3.5 w-3.5" strokeWidth={3.5} /> {t("shop.equipped", "Equipped")}
       </span>
     );
-  if (own) return <span className="text-xs font-extrabold uppercase tracking-wide text-muted">Owned</span>;
+  if (own) return <span className="text-xs font-extrabold uppercase tracking-wide text-muted">{t("shop.owned", "Owned")}</span>;
   return (
     <span className="flex items-center gap-1 text-sm font-black text-warn-shade">
       <Coins className="h-4 w-4" /> {price}

@@ -4,6 +4,9 @@ import { useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import { RotateCcw } from "lucide-react";
 import { WidgetTitle } from "./_shared";
+import { useT } from "@/i18n";
+
+type TFn = ReturnType<typeof useT>;
 
 type Paint = "red" | "yellow" | "blue" | "white";
 
@@ -38,25 +41,47 @@ function rybToRgb(r: number, y: number, b: number): RGB {
   return mix3(y0, y1, b);
 }
 
-function colourName(d: Record<Paint, number>): string {
+function colourName(d: Record<Paint, number>, t: TFn): string {
   const { red: r, yellow: y, blue: b, white: w } = d;
   const total = r + y + b;
-  if (total === 0) return w > 0 ? "White" : "Empty — add some paint!";
+  if (total === 0) return w > 0 ? t("widget.colorMix.white", "White") : t("widget.colorMix.empty", "Empty — add some paint!");
   const used = [r, y, b].filter((x) => x > 0).length;
-  let base: string;
-  if (used === 3) base = "Brown";
-  else if (r && y) base = r > y * 1.8 ? "Red-orange" : y > r * 1.8 ? "Yellow-orange" : "Orange";
-  else if (y && b) base = y > b * 1.8 ? "Yellow-green" : b > y * 1.8 ? "Blue-green" : "Green";
-  else if (r && b) base = r > b * 1.8 ? "Red-violet" : b > r * 1.8 ? "Blue-violet" : "Purple";
-  else base = r ? "Red" : y ? "Yellow" : "Blue";
+  const names = {
+    brown: t("widget.colorMix.brown", "Brown"),
+    redOrange: t("widget.colorMix.redOrange", "Red-orange"),
+    yellowOrange: t("widget.colorMix.yellowOrange", "Yellow-orange"),
+    orange: t("widget.colorMix.orange", "Orange"),
+    yellowGreen: t("widget.colorMix.yellowGreen", "Yellow-green"),
+    blueGreen: t("widget.colorMix.blueGreen", "Blue-green"),
+    green: t("widget.colorMix.green", "Green"),
+    redViolet: t("widget.colorMix.redViolet", "Red-violet"),
+    blueViolet: t("widget.colorMix.blueViolet", "Blue-violet"),
+    purple: t("widget.colorMix.purple", "Purple"),
+    red: t("widget.colorMix.red", "Red"),
+    yellow: t("widget.colorMix.yellow", "Yellow"),
+    blue: t("widget.colorMix.blue", "Blue"),
+  };
+  let base: keyof typeof names;
+  if (used === 3) base = "brown";
+  else if (r && y) base = r > y * 1.8 ? "redOrange" : y > r * 1.8 ? "yellowOrange" : "orange";
+  else if (y && b) base = y > b * 1.8 ? "yellowGreen" : b > y * 1.8 ? "blueGreen" : "green";
+  else if (r && b) base = r > b * 1.8 ? "redViolet" : b > r * 1.8 ? "blueViolet" : "purple";
+  else base = r ? "red" : y ? "yellow" : "blue";
   if (w > 0) {
-    if (base === "Red" && w >= r) return "Pink";
-    return `Light ${base.toLowerCase()}`;
+    if (base === "red" && w >= r) return t("widget.colorMix.pink", "Pink");
+    return t("widget.colorMix.light", "Light {colour}", { colour: names[base].toLowerCase() });
   }
-  return base;
+  return names[base];
 }
 
 export default function ColorMix() {
+  const t = useT();
+  const paintLabel: Record<Paint, string> = {
+    red: t("widget.colorMix.red", "Red"),
+    yellow: t("widget.colorMix.yellow", "Yellow"),
+    blue: t("widget.colorMix.blue", "Blue"),
+    white: t("widget.colorMix.white", "White"),
+  };
   const [drops, setDrops] = useState<Record<Paint, number>>({ red: 0, yellow: 0, blue: 0, white: 0 });
   const [splash, setSplash] = useState(0);
 
@@ -73,11 +98,11 @@ export default function ColorMix() {
   const rgb = mix3([R, G, B], [1, 1, 1], tint * 0.85).map((v) => Math.round(v * 255));
   const isEmpty = all === 0;
   const css = isEmpty ? "transparent" : `rgb(${rgb.join(",")})`;
-  const name = colourName(drops);
+  const name = colourName(drops, t);
 
   return (
     <div className="font-bold">
-      <WidgetTitle title="Mix the colours" hint="Tap a paint pot to drop paint into the bowl." right={<button type="button" onClick={reset} className="btn-ghost !px-3 !py-1.5"><RotateCcw size={14} /> Clean bowl</button>} />
+      <WidgetTitle title={t("widget.colorMix.title", "Mix the colours")} hint={t("widget.colorMix.hint", "Tap a paint pot to drop paint into the bowl.")} right={<button type="button" onClick={reset} className="btn-ghost !px-3 !py-1.5"><RotateCcw size={14} /> {t("widget.colorMix.clean", "Clean bowl")}</button>} />
 
       <div className="flex flex-col items-center gap-6 sm:flex-row sm:justify-center">
         <div className="grid grid-cols-4 gap-3 sm:grid-cols-2">
@@ -88,13 +113,13 @@ export default function ColorMix() {
               whileTap={{ scale: 0.85, rotate: 12 }}
               whileHover={{ y: -4 }}
               onClick={() => add(p.id)}
-              aria-label={`Add a drop of ${p.label}`}
+              aria-label={t("widget.colorMix.addDrop", "Add a drop of {colour}", { colour: paintLabel[p.id] })}
               className="flex flex-col items-center gap-1"
             >
               <span className="relative grid h-16 w-16 place-items-center rounded-2xl border-2 border-line" style={{ background: p.css }}>
                 <span className="absolute -bottom-2 -right-2 grid h-6 w-6 place-items-center rounded-full bg-surface font-mono text-xs font-bold text-ink">{drops[p.id]}</span>
               </span>
-              <span className="text-xs font-bold text-muted">{p.label}</span>
+              <span className="text-xs font-bold text-muted">{paintLabel[p.id]}</span>
             </motion.button>
           ))}
         </div>
@@ -131,7 +156,7 @@ export default function ColorMix() {
         <span className="chip">🔴 + 🟡 = 🟠</span>
         <span className="chip">🟡 + 🔵 = 🟢</span>
         <span className="chip">🔴 + 🔵 = 🟣</span>
-        <span className="chip">all three = 🟤</span>
+        <span className="chip">{t("widget.colorMix.allThree", "all three = 🟤")}</span>
       </div>
     </div>
   );

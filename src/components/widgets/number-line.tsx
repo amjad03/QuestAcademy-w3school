@@ -4,8 +4,10 @@ import { useEffect, useRef, useState } from "react";
 import { motion } from "framer-motion";
 import { Play, RotateCcw } from "lucide-react";
 import { bag, readNum, Segmented, Stepper, WidgetTitle } from "./_shared";
+import { useT } from "@/i18n";
 
 export default function NumberLine(input: Record<string, unknown>) {
+  const t = useT();
   const p = bag(input);
   const rawMin = Math.round(readNum(p, "min", 0, -50, 50));
   const rawMax = Math.round(readNum(p, "max", 20, -50, 100));
@@ -71,11 +73,11 @@ export default function NumberLine(input: Record<string, unknown>) {
 
   return (
     <div>
-      <WidgetTitle title="Hop along the number line" hint="Pick a start, choose + or −, then watch the frog hop." />
+      <WidgetTitle title={t("widget.numberLine.title", "Hop along the number line")} hint={t("widget.numberLine.hint", "Pick a start, choose + or −, then watch the frog hop.")} />
 
       <div className="mb-4 flex flex-wrap items-center gap-3">
         <Stepper
-          label="Start"
+          label={t("widget.numberLine.start", "Start")}
           value={start}
           min={min}
           max={max}
@@ -85,19 +87,19 @@ export default function NumberLine(input: Record<string, unknown>) {
           }}
         />
         <Segmented
-          label="Operation"
+          label={t("widget.numberLine.operation", "Operation")}
           value={op}
           onChange={(v) => {
             setOp(v);
             reset();
           }}
           options={[
-            { value: "+", label: "+ add" },
-            { value: "-", label: "− take away" },
+            { value: "+", label: t("widget.numberLine.add", "+ add") },
+            { value: "-", label: t("widget.numberLine.takeAway", "− take away") },
           ]}
         />
         <Stepper
-          label="Hops"
+          label={t("widget.numberLine.hops", "Hops")}
           value={b}
           min={0}
           max={Math.max(0, maxAmount)}
@@ -109,7 +111,7 @@ export default function NumberLine(input: Record<string, unknown>) {
       </div>
 
       <div className="overflow-hidden rounded-3xl bg-surface-2 p-2">
-        <svg viewBox={`0 0 ${W} 150`} className="w-full" role="img" aria-label={`Number line from ${min} to ${max}`}>
+        <svg viewBox={`0 0 ${W} 150`} className="w-full" role="img" aria-label={t("widget.numberLine.label", "Number line from {min} to {max}", { min, max })}>
           {/* hop arcs */}
           {hops.map((from, i) => {
             const x1 = X(from);
@@ -162,11 +164,11 @@ export default function NumberLine(input: Record<string, unknown>) {
           {start} {op === "+" ? "+" : "−"} {b} = <span className={done ? "text-good" : "text-muted"}>{done ? result : "?"}</span>
         </div>
         <div className="flex gap-2">
-          <button type="button" onClick={() => reset()} className="btn-ghost" aria-label="Reset">
+          <button type="button" onClick={() => reset()} className="btn-ghost" aria-label={t("widget.reset", "Reset")}>
             <RotateCcw size={16} />
           </button>
           <button type="button" onClick={go} disabled={running} className="btn-pop">
-            <Play size={16} /> Hop!
+            <Play size={16} /> {t("widget.numberLine.hop", "Hop!")}
           </button>
         </div>
       </div>
