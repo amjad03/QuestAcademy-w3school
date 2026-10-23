@@ -33,6 +33,8 @@ export interface SessionPayload {
   count: number;
   pool: { lessonId: string; question: Question }[];
   exitHref: string;
+  /** Where "Continue" on the results screen goes; defaults to exitHref. */
+  nextHref?: string;
   course: { slug: string; title: string };
   world: WorldId;
   lessons: { id: string; title: string }[];
@@ -237,7 +239,7 @@ export function Session({ payload: raw }: { payload: SessionPayload }) {
           answer: <MdInline text={correctAnswerText(m.question, t)} />,
           explain: m.question.explain ? <Md text={m.question.explain} className="prose-quest space-y-1 !text-sm !leading-6" /> : null,
         }))}
-        exitHref={p.exitHref}
+        exitHref={p.nextHref ?? p.exitHref}
         onRetry={() => window.location.reload()}
       />
     );

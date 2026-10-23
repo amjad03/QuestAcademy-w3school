@@ -39,7 +39,12 @@ function build(key: string[]): SessionPayload | null {
   if (!l) return null;
   const qs = lessonQuestions(subject, u.slug, l.slug);
   if (!qs.length) return null;
-  return { ...base, kind: "practice", key: l.id, title: l.title, count: qs.length, pool: qs.map((q) => ({ lessonId: l.id, question: q })), exitHref: l.href, lessons: [{ id: l.id, title: l.title }] };
+  // After practice, carry on to the lesson's next item, else the next lesson, else the unit test.
+  const pi = l.items.findIndex((i) => i.kind === "practice");
+  const lessonsInCourse = o.units.flatMap((x) => x.lessons);
+  const nextLesson = lessonsInCourse[lessonsInCourse.findIndex((x) => x.id === l.id) + 1];
+  const nextHref = l.items[pi + 1]?.href ?? nextLesson?.href ?? u.test.href;
+  return { ...base, kind: "practice", key: l.id, title: l.title, count: qs.length, pool: qs.map((q) => ({ lessonId: l.id, question: q })), exitHref: l.href, nextHref, lessons: [{ id: l.id, title: l.title }] };
 }
 
 export async function generateMetadata({ params }: { params: Promise<Params> }) {

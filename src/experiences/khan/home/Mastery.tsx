@@ -47,7 +47,7 @@ export function MasteryHome() {
   const outline = useOutline(mine[0]?.slug ?? null);
   const weekly = s.weekly.week === weekKey() ? s.weekly.xp : 0;
   const mastered = Object.values(s.mastery).filter((l) => l >= 4).length;
-  const passed = Object.values(s.assessments).filter((v) => v >= PASS).length;
+  const passed = Object.entries(s.assessments).filter(([k, v]) => k.includes(":") && v >= PASS).length;
 
   return (
     <HomeFrame

@@ -83,7 +83,7 @@ export function MasteryHome() {
     );
   }
 
-  const assessmentsPassed = Object.values(s.assessments).filter((v) => v >= PASS).length;
+  const assessmentsPassed = Object.entries(s.assessments).filter(([k, v]) => k.includes(":") && v >= PASS).length;
   const skillsMastered = Object.values(s.mastery).filter((l) => l >= 4).length;
 
   return (

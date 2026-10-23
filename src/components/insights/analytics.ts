@@ -205,7 +205,7 @@ export function skills(s: InsightState): { strongest: SkillRow[]; weakest: Skill
     if (!ref) continue;
     const level = (s.mastery[id] ?? (s.lessons[id] ? 1 : 0)) as MasteryLevel;
     if (level === 0) continue;
-    const practice = s.assessments[`${id}:practice`];
+    const practice = s.assessments[id];
     rows.push({
       id,
       title: ref.lesson.title,

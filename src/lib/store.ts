@@ -374,7 +374,8 @@ export const useLearner = create<Store>()(
             if (perfect) n = addCounter(n, "perfectQuizzes");
             return addXp(n, xp);
           });
-          if (xp) useUi.getState().toast({ xp, text: perfect ? "Perfect quiz! +10 bonus" : "Quiz finished" });
+          // Pre-readers get the XP without words; the session's own results screen says the rest.
+          if (xp) useUi.getState().toast(MODES[resolveMode(get().profile)].young ? { xp } : { xp, text: perfect ? "Perfect score! +10 bonus" : "Set finished" });
         },
 
         recordAnswer: (correct) => {
@@ -449,7 +450,12 @@ export const useLearner = create<Store>()(
         },
 
         applyPractice: (lessonId, correct, total) =>
-          update((st) => ({ ...st, mastery: { ...st.mastery, [lessonId]: afterPractice(st.mastery[lessonId] ?? 0, correct, total) } })),
+          update((st) => ({
+            ...st,
+            mastery: { ...st.mastery, [lessonId]: afterPractice(st.mastery[lessonId] ?? 0, correct, total) },
+            // Best practice score, keyed by lesson id (assessments use "...:quiz" / ":test" / ":challenge").
+            assessments: { ...st.assessments, [lessonId]: Math.max(st.assessments[lessonId] ?? 0, total ? correct / total : 0) },
+          })),
 
         applyAssessment: (key, kind, answers) =>
           update((st) => {

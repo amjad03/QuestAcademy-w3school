@@ -106,11 +106,16 @@ export interface RecentItem {
 
 /** Most recently completed learning item, described in parent-friendly words. */
 export function latestItem(items: Record<string, string>, t: Translate = english): RecentItem | null {
+  // Rewards (stickers, best game scores) are side effects of learning; prefer the learning item itself.
+  const isReward = (k: string) => k.startsWith("sticker:") || k.startsWith("game-best:");
   let best: [string, string] | null = null;
-  for (const e of Object.entries(items)) if (!best || e[1] > best[1]) best = e;
+  for (const e of Object.entries(items)) if (!isReward(e[0]) && (!best || e[1] > best[1])) best = e;
+  if (!best) for (const e of Object.entries(items)) if (!best || e[1] > best[1]) best = e;
   if (!best) return null;
   const [id, at] = best;
-  const [path, suffix] = id.split(":");
+  const parts = id.split(":");
+  // "sticker:<kind>:<lesson id>" belongs to the lesson at the end.
+  const [path, suffix] = parts[0] === "sticker" ? [parts.slice(2).join(":"), "sticker"] : parts;
   const kindMap: Record<string, string> = {
     article: t("parent.kind.reading", "Reading"),
     practice: t("parent.kind.practice", "Practice"),
@@ -118,13 +123,14 @@ export function latestItem(items: Record<string, string>, t: Translate = english
     quiz: t("parent.kind.quiz", "Quiz"),
     test: t("parent.kind.test", "Test"),
     challenge: t("parent.kind.challenge", "Challenge"),
+    sticker: t("parent.kind.sticker", "Sticker"),
   };
   const kind = kindMap[suffix ?? ""] ?? (id.startsWith("sticker") ? t("parent.kind.sticker", "Sticker") : id.includes("game") ? t("parent.kind.game", "Game") : t("parent.kind.activity", "Activity"));
   const ref = getLessonById(path);
   if (ref) return { id, at, kind, label: `${ref.lesson.title} (${ref.subject.title})`, href: ref.href };
   const subj = getSubject(path.split("/")[0]);
   if (subj) return { id, at, kind, label: `${path.split("/")[1]?.replace(/-/g, " ") ?? subj.title} (${subj.title})`, href: `/course/${subj.slug}` };
-  return { id, at, kind, label: path.replace(/[-_]/g, " "), href: null };
+  return { id, at, kind, label: path ? path.replace(/[-_]/g, " ") : kind, href: null };
 }
 
 export interface Suggestion {

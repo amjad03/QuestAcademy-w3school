@@ -92,14 +92,14 @@ export function LessonViewer(raw: LessonViewerPayload) {
     window.scrollTo({ top: 0 });
   }, [item.kind, p.id]);
 
-  // Next step after the current item: next item in this lesson, else the next lesson.
+  // Next step after the current item: the next unfinished item in this lesson, else the next lesson.
   const upNext = useMemo(() => {
     const i = p.items.findIndex((x) => x.id === item.id);
-    const after = p.items[i + 1];
+    const after = p.items.slice(i + 1).find((x) => !itemDone(st, p.id, x));
     if (after) return { href: after.href, label: after.kind === "practice" ? t("lesson.tab.practice", "Practice") : TAB_LABEL[after.kind], title: after.kind === "practice" ? t("lesson.upNext.practiceTitle", "Practice · {n}+ questions", { n: p.lesson.quiz?.length ?? 0 }) : after.title };
     if (p.next) return { href: p.next.href, label: t("lesson.upNext.nextLesson", "Next lesson"), title: p.next.title };
     return { href: p.unit.test.href, label: t("lesson.upNext.unitTest", "Unit test"), title: p.unit.title };
-  }, [p, item, t]); // eslint-disable-line react-hooks/exhaustive-deps
+  }, [p, item, t, st]); // eslint-disable-line react-hooks/exhaustive-deps
 
   const finishArticle = () => {
     completeLesson({ id: p.id, subject: p.course.slug, world: p.world, xp: p.lesson.xp, flashcards: p.lesson.flashcards?.length ?? 0 });

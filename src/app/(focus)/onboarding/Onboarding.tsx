@@ -148,14 +148,18 @@ export function Onboarding() {
             {id === "age" && (
               <div className="grid grid-cols-2 gap-3 sm:grid-cols-3">
                 {AGES.map((a) => (
-                  <Option key={a.label} active={age === a.age} onClick={() => { setAge(a.age); setMode(null); }}>
+                  <Option key={a.label} active={age === a.age} onClick={() => {
+                    // A different age means a different profile: drop choices made for the old one.
+                    if (a.age !== age) { setMode(null); setCategory(null); setCourse(null); }
+                    setAge(a.age);
+                  }}>
                     <span className="w-full text-center text-lg font-extrabold">{ageLabel[a.age] ?? a.label}</span>
                   </Option>
                 ))}
               </div>
             )}
 
-            {id === "mode" && <ModePicker value={mode} recommended={recommended} onChange={(m) => { setMode(m); setCategory(MODE_CATEGORY[m]); sfx("tap"); }} />}
+            {id === "mode" && <ModePicker value={mode} recommended={recommended} onChange={(m) => { setMode(m); if (MODE_CATEGORY[m] !== category) { setCategory(MODE_CATEGORY[m]); setCourse(null); } sfx("tap"); }} />}
 
             {id === "category" && (
               <div className="grid gap-3">

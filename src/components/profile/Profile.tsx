@@ -53,7 +53,7 @@ export function Profile() {
           <h1 className="truncate text-3xl font-black">{s.profile.name || t("profile.defaultName", "Learner")}</h1>
           <p className="mt-1 font-bold text-muted">
             {t("profile.level", "Level {n}", { n: lvl.level })} · {lvl.title}
-            {s.profile.stage && ` · ${stageById[s.profile.stage].label}`}
+            {s.profile.stage && stageById[s.profile.stage] && ` · ${stageById[s.profile.stage].label}`}
           </p>
           <p className="mt-2 flex items-center gap-2 text-sm font-bold text-muted">
             <CalendarDays className="h-4 w-4" /> {t("profile.joined", "Joined {date}", { date: joined.toLocaleDateString(undefined, { month: "long", year: "numeric" }) })}

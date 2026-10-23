@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { Flame, Zap } from "lucide-react";
 import { useT } from "@/i18n";
+import { dayKey } from "@/lib/gamification";
 import { useLearner, liveStreak } from "@/lib/store";
 import { BADGES, levelInfo } from "@/lib/gamification";
 import { BadgeMedal } from "@/components/ui/GameIcon";
@@ -40,6 +41,7 @@ function Motivation() {
   const xp = useLearner((s) => s.xp);
   const streak = useLearner((s) => liveStreak(s));
   const best = useLearner((s) => s.streak.best);
+  const doneToday = useLearner((s) => s.streak.lastDay === dayKey());
   const earned = useLearner((s) => s.badges);
   const lvl = levelInfo(xp);
   const badges = BADGES.filter((b) => earned[b.id]).sort((a, b) => earned[b.id].localeCompare(earned[a.id]));
@@ -66,8 +68,8 @@ function Motivation() {
           <Flame className="h-4 w-4 text-streak" aria-hidden /> {t("khan.streak", "Day streak")}
         </p>
         <p className="mt-1 text-[1.75rem] font-bold tabular-nums leading-tight">{f.n(streak)}</p>
-        <p className="mt-1 text-[0.8125rem] text-muted">{streak ? t("khan.adventure.streakKeep", "Learn something today to keep it going.") : t("khan.adventure.streakStart", "Finish one lesson today to start a streak.")}</p>
-        <p className="mt-3 text-xs text-muted">{t("khan.adventure.best", "Best: {n} days", { n: f.n(best) })}</p>
+        <p className="mt-1 text-[0.8125rem] text-muted">{doneToday ? t("khan.adventure.streakDone", "Done for today. Come back tomorrow to keep it going.") : streak ? t("khan.adventure.streakKeep", "Learn something today to keep it going.") : t("khan.adventure.streakStart", "Finish one lesson today to start a streak.")}</p>
+        <p className="mt-3 text-xs text-muted">{best === 1 ? t("khan.adventure.best.one", "Best: {n} day", { n: f.n(best) }) : t("khan.adventure.best.other", "Best: {n} days", { n: f.n(best) })}</p>
       </div>
       <div className="card p-5">
         <div className="flex items-baseline justify-between gap-2">

@@ -333,6 +333,9 @@ function ControlsCard() {
   const setTimeLimit = useParent((s) => s.setTimeLimit);
   const setQuietHours = useParent((s) => s.setQuietHours);
   const t = useT();
+  const mode = useMode();
+  const joined = useLearner((s) => s.profile.socialOptIn);
+  const nickname = useLearner((s) => s.profile.nickname);
   return (
     <RailCard title={t("parent.controls.title", "Parent controls")}>
       <div className="space-y-5">
@@ -369,16 +372,33 @@ function ControlsCard() {
           </div>
         </div>
 
-        <div className="flex items-start gap-3 rounded-2xl bg-good-soft p-3 text-sm">
-          <ShieldCheck className="mt-0.5 h-4 w-4 shrink-0 text-good" />
-          <div>
-            <p className="font-extrabold">{t("parent.controls.socialOff", "Leagues and social are off")}</p>
-            <p className="mt-0.5 text-xs font-semibold text-muted">
-              <Users className="mr-1 inline h-3 w-3" />
-              {t("parent.controls.socialOffBody", "Explore mode never shows leaderboards, chat or other learners.")}
-            </p>
+        {mode.social === "off" ? (
+          <div className="flex items-start gap-3 rounded-2xl bg-good-soft p-3 text-sm">
+            <ShieldCheck className="mt-0.5 h-4 w-4 shrink-0 text-good" />
+            <div>
+              <p className="font-extrabold">{t("parent.controls.socialOff", "Leagues and social are off")}</p>
+              <p className="mt-0.5 text-xs font-semibold text-muted">
+                <Users className="mr-1 inline h-3 w-3" />
+                {t("parent.controls.socialOffBodyMode", "{mode} never shows leaderboards, chat or other learners.", { mode: mode.name })}
+              </p>
+            </div>
           </div>
-        </div>
+        ) : (
+          <div className="flex items-start gap-3 rounded-2xl bg-surface-2 p-3 text-sm">
+            <Users className="mt-0.5 h-4 w-4 shrink-0 text-muted" />
+            <div>
+              <p className="font-extrabold">
+                {joined && nickname ? t("parent.controls.leaguesJoined", "Leagues: joined as {name}", { name: nickname }) : t("parent.controls.leaguesNotJoined", "Leagues: not joined")}
+              </p>
+              <p className="mt-0.5 text-xs font-semibold text-muted">
+                {t("parent.controls.leaguesBody", "Weekly leagues show a nickname and points only. There is no chat.")}{" "}
+                <Link href="/leaderboard" className="font-bold text-accent hover:underline">
+                  {t("parent.controls.leaguesLink", "View leagues")}
+                </Link>
+              </p>
+            </div>
+          </div>
+        )}
       </div>
     </RailCard>
   );
