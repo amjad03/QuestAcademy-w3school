@@ -175,6 +175,7 @@ function Header({ pathname, nav, more, isActive, openSearch, lesson }: Omit<Shel
 /** Points / streak for Adventure, exam countdown for Focus; quiet for older profiles. */
 function StagePill() {
   const t = useT();
+  const tx = useSharedText();
   const f = useFmt();
   const mode = useMode();
   const hydrated = useHydrated();
@@ -200,12 +201,12 @@ function StagePill() {
       <Link
         href="/plan"
         className="kh-pill hidden sm:inline-flex"
-        title={`${exam.name} · ${f.date(exam.date)}`}
-        aria-label={t("khan.countdownAria", "{n} days until {exam}. Open study plan.", { n: f.n(exam.days), exam: exam.name })}
+        title={`${tx(exam.name)} · ${f.date(exam.date)}`}
+        aria-label={t("khan.countdownAria", "{n} days until {exam}. Open study plan.", { n: f.n(exam.days), exam: tx(exam.name) })}
       >
         <CalendarClock className="h-3.5 w-3.5 text-accent" aria-hidden />
         {t("khan.daysShort", "{n} days", { n: f.n(exam.days) })}
-        <span className="hidden max-w-[150px] truncate font-normal text-muted 2xl:inline">· {exam.name}</span>
+        <span className="hidden max-w-[150px] truncate font-normal text-muted 2xl:inline">· {tx(exam.name)}</span>
       </Link>
     );
   return null;

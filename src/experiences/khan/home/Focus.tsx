@@ -61,7 +61,7 @@ export function FocusHome() {
                 <span>
                   <span className="block text-xl font-bold tabular-nums leading-tight">{t("khan.daysShort", "{n} days", { n: f.n(exam.days) })}</span>
                   <span className="block text-xs text-muted">
-                    {t("khan.focus.until", "until {exam}", { exam: exam.name })}
+                    {t("khan.focus.until", "until {exam}", { exam: tx(exam.name) })}
                     {exam.approx ? ` · ${t("khan.approx", "approx.")}` : ""}
                   </span>
                 </span>

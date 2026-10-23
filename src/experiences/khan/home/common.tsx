@@ -86,6 +86,7 @@ export function UpNextHero({ lessonId, context, eyebrow, secondary }: { lessonId
   const outline = useOutline(slug);
   const state = useCourseState(outline);
   const explainers = useExplainerIndex();
+  const explainerDict = useContentDict("explainers");
   const tx = useSharedText();
   const dict = useContentDict(slug ?? "");
   const tc = (s: string) => dict?.[s] ?? s;
@@ -140,7 +141,7 @@ export function UpNextHero({ lessonId, context, eyebrow, secondary }: { lessonId
               <li>
                 <Link href={`/explain/${seeItMeta.id}`} className="inline-flex items-center gap-1.5 rounded-full bg-white/15 px-2.5 py-1 text-xs font-semibold text-white hover:bg-white/25">
                   <Eye className="h-3.5 w-3.5" aria-hidden />
-                  {t("khan.seeItChip", "See it: {title}", { title: seeItMeta.title })}
+                  {t("khan.seeItChip", "See it: {title}", { title: explainerDict?.[seeItMeta.title] ?? seeItMeta.title })}
                 </Link>
               </li>
             )}
