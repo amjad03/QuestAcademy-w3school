@@ -269,7 +269,7 @@ function ShapeTry() {
   return (
     <TryFrame color={C} round={round} status={status} onAnother={another} picture={<TargetIcon t={target} />} prompt={`Join the dots to make a ${NAMES[target]}. Tap the first dot again to close it.`}>
       <div className="overflow-hidden rounded-2xl border-2 border-line bg-white">
-        <svg viewBox="0 0 360 290" className="block h-auto w-full" style={{ maxHeight: 340, touchAction: "manipulation" }} role="img" aria-label={closed && result ? `You made a shape with ${result.n} sides and ${result.n} corners` : `Dot grid. ${path.length} dots joined.`}>
+        <svg viewBox="0 0 360 290" className="block h-auto w-full" style={{ maxHeight: 340, touchAction: "manipulation" }} role="group" aria-label={closed && result ? `You made a shape with ${result.n} sides and ${result.n} corners` : `Dot grid. ${path.length} dots joined.`}>
           {closed && <motion.polygon points={shape.map((p) => `${p.x},${p.y}`).join(" ")} fill={good ? "#CCFBF1" : "#FEF3C7"} initial={{ opacity: 0 }} animate={{ opacity: 1 }} />}
           {pts.map((p, k) => {
             if (k === pts.length - 1 && !closed) return null;
@@ -280,7 +280,7 @@ function ShapeTry() {
             const k = path.indexOf(i);
             const isFirst = k === 0 && path.length >= 3 && !closed;
             return (
-              <g key={i} onClick={() => tap(i)} style={{ cursor: closed ? "default" : "pointer" }} role="button" aria-label={`Dot ${i + 1}${k >= 0 ? ", joined" : ""}`}>
+              <g key={i} onClick={() => tap(i)} tabIndex={0} onKeyDown={(e) => (e.key === "Enter" || e.key === " ") && (e.preventDefault(), tap(i))} style={{ cursor: closed ? "default" : "pointer" }} role="button" aria-label={`Dot ${i + 1}${k >= 0 ? ", joined" : ""}`}>
                 <circle cx={d.x} cy={d.y} r={30} fill="transparent" />
                 {isFirst && <motion.circle cx={d.x} cy={d.y} r={18} fill="none" stroke={C} strokeWidth={3} animate={{ scale: [1, 1.35, 1], opacity: [1, 0.3, 1] }} transition={{ repeat: Infinity, duration: 1.2 }} />}
                 <circle cx={d.x} cy={d.y} r={k >= 0 ? 11 : 8} fill={k >= 0 ? C : "#CBD5E1"} />

@@ -87,6 +87,8 @@ export function Session(p: SessionPayload) {
   const [xpEarned, setXpEarned] = useState(0);
   const mode = useMode();
   const exp = useExperience();
+  // The owl belongs to the playful profiles; older learners get a plain dialog.
+  const playful = mode.rewards === "celebrate" || mode.rewards === "playful";
   const explore = mode.young;
   const kids = p.world === "kids" || explore;
   const assessment = p.kind !== "practice";
@@ -264,9 +266,11 @@ export function Session(p: SessionPayload) {
           {quit && (
             <motion.div className="fixed inset-0 z-50 grid place-items-end bg-ink/40 sm:place-items-center" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} onClick={() => setQuit(false)}>
               <motion.div initial={{ y: 40 }} animate={{ y: 0 }} exit={{ y: 40 }} onClick={(e) => e.stopPropagation()} className="w-full rounded-t-3xl bg-surface p-8 text-center sm:max-w-md sm:rounded-3xl" role="alertdialog" aria-modal="true">
-                <div className="flex justify-center">
-                  <Mascot pose="sad" size={110} animate={false} />
-                </div>
+                {playful && (
+                  <div className="flex justify-center">
+                    <Mascot pose="sad" size={110} animate={false} />
+                  </div>
+                )}
                 <h2 className="mt-4 text-2xl font-black">{explore ? "Wait, don’t go!" : "Leave this session?"}</h2>
                 <p className="mt-2 font-semibold text-muted">You’ll lose your progress in this {p.kind === "practice" ? "practice" : "session"} if you quit now.</p>
                 <button className="btn-primary mt-6 w-full" onClick={() => setQuit(false)} autoFocus>

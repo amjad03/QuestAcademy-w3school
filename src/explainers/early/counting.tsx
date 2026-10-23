@@ -120,7 +120,7 @@ function CountTry() {
   return (
     <TryFrame color={C} round={round} status={status} onAnother={another} picture={r.thing} prompt="Touch each one and count. How many are there?">
       <div className="overflow-hidden rounded-2xl border-2 border-line" style={{ background: "#F0FDF4" }}>
-        <svg viewBox="0 0 360 250" className="block h-auto w-full" style={{ maxHeight: 300, touchAction: "manipulation" }} role="img" aria-label={`${r.n} things to count. ${order.length} counted so far.`}>
+        <svg viewBox="0 0 360 250" className="block h-auto w-full" style={{ maxHeight: 300, touchAction: "manipulation" }} role="group" aria-label={`${r.n} things to count. ${order.length} counted so far.`}>
           {status === "good" && (
             <motion.g {...pop(0)}>
               <rect x={130} y={4} width={100} height={44} rx={16} fill="#16A34A" />
@@ -136,7 +136,7 @@ function CountTry() {
             const k = order.indexOf(i);
             const counted = k >= 0;
             return (
-              <g key={`${round}-${i}`} onClick={() => tap(i)} style={{ cursor: "pointer" }} role="button" aria-label={counted ? `Counted ${k + 1}` : "Not counted yet"}>
+              <g key={`${round}-${i}`} onClick={() => tap(i)} tabIndex={0} onKeyDown={(e) => (e.key === "Enter" || e.key === " ") && (e.preventDefault(), tap(i))} style={{ cursor: "pointer", outline: "none" }} role="button" aria-label={counted ? `Counted ${k + 1}` : "Not counted yet"}>
                 <motion.g {...pop(i * 0.06)}>
                   <motion.g key={shake?.i === i ? shake.k : 0} animate={shake?.i === i ? { x: [0, -6, 6, -4, 4, 0] } : { scale: counted ? 0.92 : 1 }} transition={{ duration: 0.4 }}>
                     <circle cx={p.x} cy={p.y} r={27} fill={counted ? "#FFEDD5" : "white"} stroke={counted ? C : "#CBD5E1"} strokeWidth={3} strokeDasharray={counted ? undefined : "5 4"} />

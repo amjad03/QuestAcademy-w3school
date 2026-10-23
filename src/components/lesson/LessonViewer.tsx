@@ -19,7 +19,7 @@ import { Flashcards } from "@/components/learn/Flashcards";
 import { useNarration } from "@/components/learn/useNarration";
 import { Challenge } from "@/components/code/Challenge";
 import { KidsStory } from "./KidsStory";
-import { currentMode } from "@/lib/useMode";
+import { currentMode, useMode } from "@/lib/useMode";
 import { useUi } from "@/lib/ui";
 import { awardExploreSticker } from "@/components/modes/explore/stickers";
 import { VideoPlayer } from "./VideoPlayer";
@@ -145,6 +145,8 @@ export function LessonViewer(p: LessonViewerPayload) {
 
 function Article({ lesson, id, world, done, onComplete }: { lesson: Lesson; id: string; world: WorldId; done: boolean; onComplete: () => void }) {
   const narration = useNarration(lesson.blocks);
+  const rewards = useMode().rewards;
+  const playful = rewards === "celebrate" || rewards === "playful";
   return (
     <div>
       {narration.supported && (
@@ -160,7 +162,7 @@ function Article({ lesson, id, world, done, onComplete }: { lesson: Lesson; id: 
         ))}
       </div>
       <div className="card mt-10 flex flex-col items-center gap-4 p-8 text-center sm:flex-row sm:text-left">
-        <Mascot pose={done ? "cheer" : "read"} size={90} animate={false} />
+        {playful && <Mascot pose={done ? "cheer" : "read"} size={90} animate={false} />}
         <div className="flex-1">
           <h3 className="text-xl font-black">{done ? "Lesson complete" : "Finished reading?"}</h3>
           <p className="mt-1 font-semibold text-muted">{done ? "Now lock it in with practice — that’s what builds mastery." : `Mark it complete to earn ${lesson.xp} XP and unlock practice.`}</p>

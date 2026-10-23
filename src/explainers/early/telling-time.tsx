@@ -233,6 +233,7 @@ function TimeTry() {
 
   const another = () => {
     done.current = false;
+    setTotal(0);
     setRound((x) => x + 1);
   };
 
@@ -249,12 +250,12 @@ function TimeTry() {
   return (
     <TryFrame color={C} round={round} status={status} onAnother={another} picture="⏰" prompt={`Drag the hands to make ${words(target)}.`}>
       <div className="grid items-center gap-4 sm:grid-cols-[1fr_auto]">
-        <svg ref={svg} viewBox="0 0 300 300" className="mx-auto block h-auto w-full max-w-[320px]" role="img" aria-label={`Clock showing ${words(total)}. Drag the long blue hand or the short red hand.`}>
+        <svg ref={svg} viewBox="0 0 300 300" className="mx-auto block h-auto w-full max-w-[320px]" role="group" aria-label={`Clock showing ${words(total)}. Drag the long blue hand or the short red hand.`}>
           <Face {...TK} />
-          <g {...handlers(dragHour)} role="slider" aria-label="Short hour hand" aria-valuetext={words(total)}>
+          <g {...handlers(dragHour)} tabIndex={0} onKeyDown={(e) => { if (e.key === "ArrowRight" || e.key === "ArrowUp") { e.preventDefault(); set(total + 60); } else if (e.key === "ArrowLeft" || e.key === "ArrowDown") { e.preventDefault(); set(total - 60); } }} role="slider" aria-label="Short hour hand" aria-valuetext={words(total)}>
             {hand(ha, TK.r * 0.38, 12, HOUR, 13)}
           </g>
-          <g {...handlers(dragMinute)} role="slider" aria-label="Long minute hand" aria-valuetext={words(total)}>
+          <g {...handlers(dragMinute)} tabIndex={0} onKeyDown={(e) => { if (e.key === "ArrowRight" || e.key === "ArrowUp") { e.preventDefault(); set(total + 5); } else if (e.key === "ArrowLeft" || e.key === "ArrowDown") { e.preventDefault(); set(total - 5); } }} role="slider" aria-label="Long minute hand" aria-valuetext={words(total)}>
             {hand(ma, TK.r * 0.6, 8, MIN, 15)}
           </g>
           <circle cx={TK.cx} cy={TK.cy} r={8} fill="#1c2333" pointerEvents="none" />

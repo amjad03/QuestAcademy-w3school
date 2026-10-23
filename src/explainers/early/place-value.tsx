@@ -245,7 +245,7 @@ function PlaceTry() {
   return (
     <TryFrame color={C} round={round} status={status} onAnother={another} picture="🪵" prompt="Tap the sticks to make bundles of ten. What number is it?">
       <div className="overflow-hidden rounded-2xl border-2 border-line bg-white">
-        <svg viewBox="0 0 360 262" className="block h-auto w-full" style={{ maxHeight: 340, touchAction: "manipulation" }} role="img" aria-label={`${n} sticks. ${bundles} bundles of ten made.${done ? ` ${tens} tens and ${ones} ones.` : ""}`}>
+        <svg viewBox="0 0 360 262" className="block h-auto w-full" style={{ maxHeight: 340, touchAction: "manipulation" }} role="group" aria-label={`${n} sticks. ${bundles} bundles of ten made.${done ? ` ${tens} tens and ${ones} ones.` : ""}`}>
           <rect x={6} y={8} width={226} height={118} rx={14} fill="#FEF9C3" />
           <circle cx={RING.x} cy={RING.y} r={52} fill={inRing >= 10 ? "#EDE9FE" : "#F8FAFC"} stroke={C} strokeWidth={3} strokeDasharray="7 6" />
           <T x={RING.x} y={RING.y + 64} size={13} color={C}>
@@ -262,7 +262,7 @@ function PlaceTry() {
           {Array.from({ length: n }, (_, i) => {
             const p = pos(i);
             return (
-              <motion.g key={`${round}-${i}`} initial={{ ...p, scale: 0 }} animate={{ ...p, scale: 1 }} transition={{ duration: 0.45, ease: "easeOut", scale: { delay: order.length ? 0 : i * 0.02 } }} onClick={() => tap(i)} style={{ cursor: done ? "default" : "pointer" }}>
+              <motion.g key={`${round}-${i}`} initial={{ ...p, scale: 0 }} animate={{ ...p, scale: 1 }} transition={{ duration: 0.45, ease: "easeOut", scale: { delay: order.length ? 0 : i * 0.02 } }} onClick={() => tap(i)} tabIndex={0} onKeyDown={(e) => (e.key === "Enter" || e.key === " ") && (e.preventDefault(), tap(i))} role="button" aria-label="Stick" style={{ cursor: done ? "default" : "pointer" }}>
                 <rect x={-12} y={-30} width={24} height={60} fill="transparent" />
                 <StickArt h={46} />
               </motion.g>

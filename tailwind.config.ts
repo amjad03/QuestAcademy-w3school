@@ -34,7 +34,7 @@ const config: Config = {
         sans: ["var(--font-sans)", "system-ui", "sans-serif"],
         display: ["var(--font-sans)", "system-ui", "sans-serif"],
         kids: ["var(--font-sans)", "system-ui", "sans-serif"],
-        serif: ["var(--font-sans)", "system-ui", "sans-serif"],
+        serif: ["var(--font-serif)", "Georgia", "serif"],
         mono: ["var(--font-mono)", "ui-monospace", "monospace"],
       },
       borderRadius: { "4xl": "2rem" },
