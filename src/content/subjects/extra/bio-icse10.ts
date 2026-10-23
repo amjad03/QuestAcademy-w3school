@@ -80,7 +80,7 @@ export const topics: Topic[] = [
           },
           {
             type: "text",
-            md: "**Worked example — counting chromosomes in a human cell.**\n\n| Stage | Chromosomes | Chromatids |\n|---|---|---|\n| G₁ | 46 | 46 |\n| After S / G₂ | 46 | 92 |\n| Metaphase | 46 | 92 |\n| Anaphase (whole cell) | 92 | 92 |\n| Each daughter cell | 46 | 46 |\n\nAt anaphase each separated chromatid counts as an independent chromosome, so the cell briefly holds 92.",
+            md: "**Worked example — counting chromosomes in a human cell.**\n\n- **G₁:** 46 chromosomes, 46 chromatids.\n- **After S / in G₂:** 46 chromosomes, 92 chromatids.\n- **Metaphase:** 46 chromosomes, 92 chromatids.\n- **Anaphase (whole cell):** 92 chromosomes.\n- **Each daughter cell:** 46 chromosomes.\n\nAt anaphase each separated chromatid counts as an independent chromosome, so the cell briefly holds 92.",
           },
           {
             type: "callout",
@@ -876,7 +876,7 @@ export const topics: Topic[] = [
             type: "callout",
             tone: "exam",
             title: "ICSE trap",
-            md: "A **root** is **positively geotropic** and **negatively phototropic**; a **shoot** is **negatively geotropic** and **positively phototropic**. Swapping these is the most common error. The bending of a sunflower head is a growth response, whereas folding of *Mimosa* leaves is a **nastic** (turgor) movement, not a tropism.",
+            md: "A **root** is **positively geotropic** and **negatively phototropic**; a **shoot** is **negatively geotropic** and **positively phototropic**. Swapping these is the most common error. Folding of *Mimosa* leaves on touch is a **nastic** (turgor) movement, not a tropism.",
           },
           {
             type: "keypoints",
