@@ -95,7 +95,7 @@ export function ResearchShell({ children, pathname, nav, more, isActive, openSea
                   aria-current={active ? "page" : undefined}
                   className={clsx(
                     "whitespace-nowrap border-b py-1 text-[0.86rem] transition-colors",
-                    i >= LG_COUNT && "hidden xl:inline",
+                    i >= LG_COUNT && "hidden 2xl:inline",
                     active ? "border-accent text-ink" : "border-transparent text-muted hover:text-ink",
                   )}
                 >
@@ -116,9 +116,9 @@ export function ResearchShell({ children, pathname, nav, more, isActive, openSea
               {moreOpen && (
                 <div className="absolute left-0 top-9 z-50 max-h-[70vh] w-60 overflow-y-auto rounded-md border border-line bg-surface py-2">
                   {overflow.map((n) => (
-                    <MenuItem key={n.href} item={n} active={isActive(n.href)} className="xl:hidden" />
+                    <MenuItem key={n.href} item={n} active={isActive(n.href)} className="2xl:hidden" />
                   ))}
-                  {overflow.length > 0 && <div className="my-2 border-t border-line xl:hidden" />}
+                  {overflow.length > 0 && <div className="my-2 border-t border-line 2xl:hidden" />}
                   {more.map((n) => (
                     <MenuItem key={n.href} item={n} active={isActive(n.href)} />
                   ))}

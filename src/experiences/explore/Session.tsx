@@ -174,8 +174,8 @@ export function ExploreSessionResults(r: SessionResultsProps) {
 
         {/* Simple numbers */}
         <div className="ex-card mt-6 flex w-full items-center justify-center gap-4 px-5 py-4">
-          <span className="grid h-14 w-14 shrink-0 place-items-center rounded-full text-white" style={chunky(EX.green, 5)}>
-            <Check className="h-8 w-8" strokeWidth={4} aria-hidden />
+          <span className="grid h-14 w-14 shrink-0 place-items-center rounded-full text-white" style={chunky(r.correct ? EX.green : EX.orange, 5)}>
+            {r.correct ? <Check className="h-8 w-8" strokeWidth={4} aria-hidden /> : <Sparkles className="h-8 w-8" strokeWidth={3} aria-hidden />}
           </span>
           <p className="text-left text-2xl font-black">
             {r.correct} of {r.total} right

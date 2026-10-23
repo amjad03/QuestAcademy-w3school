@@ -22,6 +22,9 @@ export function Overlays() {
   const mode = useMode();
   // Calmer modes turn celebrations into a quiet toast instead of a dialog.
   const celebration = mode.dialogs ? queued : undefined;
+  // Points are a game layer for 11–22-year-olds; young children see stars, and
+  // postgraduate / professional profiles have no game layer at all.
+  const showXp = mode.id === "adventure" || mode.id === "focus" || mode.id === "mastery";
 
   useEffect(() => {
     if (!queued || mode.dialogs) return;
@@ -44,7 +47,7 @@ export function Overlays() {
       {!focus && (
         <div className="pointer-events-none fixed right-4 top-4 z-[60] flex flex-col items-end gap-2" aria-live="polite">
           <AnimatePresence>
-            {toasts.map((t) => (
+            {toasts.filter((t) => t.text || (showXp && (t.xp || t.coins))).map((t) => (
               <motion.div
                 key={t.id}
                 layout
@@ -53,12 +56,12 @@ export function Overlays() {
                 exit={{ opacity: 0, scale: 0.95 }}
                 className="flex items-center gap-3 rounded-2xl border-2 border-b-4 border-line bg-surface px-4 py-2.5"
               >
-                {t.xp ? (
+                {showXp && t.xp ? (
                   <span className="flex items-center gap-1 text-lg font-black text-warn">
                     <Zap className="h-5 w-5 fill-warn" />+{t.xp} XP
                   </span>
                 ) : null}
-                {t.coins ? (
+                {showXp && t.coins ? (
                   <span className="flex items-center gap-1 text-lg font-black text-warn-shade">
                     <Coins className="h-5 w-5" />+{t.coins}
                   </span>

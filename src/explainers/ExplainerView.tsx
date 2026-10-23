@@ -62,7 +62,7 @@ export function ExplainerView({ explainer: e, compact }: { explainer: Explainer;
       )}
 
       <div className="p-4 sm:p-6">
-        {tab === "watch" && e.watch && <StepPlayer steps={e.watch} color={e.color} autoVoice={young} />}
+        {tab === "watch" && e.watch && <StepPlayer steps={e.watch} color={e.color} autoVoice={young} owl={mode.rewards === "celebrate" || mode.rewards === "playful"} />}
         {tab === "try" && e.try && <e.try />}
         {tab === "story" && e.story && <Comic panels={e.story} color={e.color} />}
         {tab === "like" && e.like && <AnalogyView a={e.like} color={e.color} young={young} />}
@@ -71,7 +71,7 @@ export function ExplainerView({ explainer: e, compact }: { explainer: Explainer;
   );
 }
 
-function StepPlayer({ steps, color, autoVoice }: { steps: NonNullable<Explainer["watch"]>; color: string; autoVoice: boolean }) {
+function StepPlayer({ steps, color, autoVoice, owl }: { steps: NonNullable<Explainer["watch"]>; color: string; autoVoice: boolean; owl: boolean }) {
   const [i, setI] = useState(0);
   const [voice, setVoice] = useState(autoVoice);
   const step = steps[i];
@@ -96,7 +96,7 @@ function StepPlayer({ steps, color, autoVoice }: { steps: NonNullable<Explainer[
       </div>
 
       <div className="mt-4 flex items-start gap-3">
-        <Mascot pose={last ? "cheer" : i % 2 ? "read" : "wave"} size={56} animate={false} />
+        {owl && <Mascot pose={last ? "cheer" : i % 2 ? "read" : "wave"} size={56} animate={false} />}
         <div className="min-w-0 flex-1">
           <p className="text-lg font-black leading-snug">{step.title}</p>
           <p className="mt-1 font-semibold leading-relaxed text-ink/80">{step.say}</p>
