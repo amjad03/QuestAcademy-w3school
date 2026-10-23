@@ -13,6 +13,11 @@ import { chemistrySchool } from "./subjects/school/chemistry-school";
 import { biologySchool } from "./subjects/school/biology-school";
 import { english } from "./subjects/school/english";
 import { socialStudies } from "./subjects/school/social-studies";
+import { physicsSenior } from "./subjects/senior/physics-senior";
+import { chemistrySenior } from "./subjects/senior/chemistry-senior";
+import { biologySenior } from "./subjects/senior/biology-senior";
+import { mathsSenior } from "./subjects/senior/maths-senior";
+import { extraTopics } from "./subjects/extra";
 
 import { examPhysics } from "./subjects/exam/exam-physics";
 import { examChemistry } from "./subjects/exam/exam-chemistry";
@@ -47,6 +52,10 @@ export const subjects: Subject[] = [
   biologySchool,
   english,
   socialStudies,
+  physicsSenior,
+  chemistrySenior,
+  biologySenior,
+  mathsSenior,
   examPhysics,
   examChemistry,
   examBiology,
@@ -65,6 +74,9 @@ export const subjects: Subject[] = [
   psychology,
   uxDesign,
 ];
+
+// Class 9–10 chapters written to close syllabus gaps join their school course.
+for (const s of [mathHigh, physicsSchool, chemistrySchool, biologySchool]) s.topics = [...s.topics, ...extraTopics(s.slug)];
 
 const bySlug = new Map(subjects.map((s) => [s.slug, s]));
 
