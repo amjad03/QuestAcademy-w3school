@@ -67,7 +67,7 @@ function sample(pool: SessionPayload["pool"], count: number): Item[] {
 export function Session(raw: SessionPayload) {
   // Titles in the learner's language when the course is translated; questions are swapped per item below.
   const dict = useContentDict(raw.course.slug);
-  const p = useMemo(() => (dict ? { ...raw, title: dict[raw.title] ?? raw.title, lessons: localize(raw.lessons, dict) } : raw), [raw, dict]);
+  const p = useMemo(() => (dict ? { ...raw, title: dict[raw.title] ?? raw.title, course: { ...raw.course, title: dict[raw.course.title] ?? raw.course.title }, lessons: localize(raw.lessons, dict) } : raw), [raw, dict]);
   const t = useT();
   const PRAISE = [
     t("practice.session.praise.nice", "Nice!"),

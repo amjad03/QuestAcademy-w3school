@@ -38,13 +38,13 @@ function useTabLabel() {
 }
 
 /** Unit progress word, from the share of lessons completed in this unit. */
-function unitStage(done: number, total: number) {
+function unitStage(done: number, total: number, t: ReturnType<typeof useT>) {
   const f = total ? done / total : 0;
-  if (f === 0) return { key: "khan.unit.notStarted", en: "Not started" };
-  if (f < 0.4) return { key: "khan.unit.started", en: "Getting started" };
-  if (f < 0.8) return { key: "khan.unit.familiar", en: "Familiar" };
-  if (f < 1) return { key: "khan.unit.proficient", en: "Proficient" };
-  return { key: "khan.unit.complete", en: "Complete" };
+  if (f === 0) return t("khan.unit.notStarted", "Not started");
+  if (f < 0.4) return t("khan.unit.started", "Getting started");
+  if (f < 0.8) return t("khan.unit.familiar", "Familiar");
+  if (f < 1) return t("khan.unit.proficient", "Proficient");
+  return t("khan.unit.complete", "Complete");
 }
 
 /**
@@ -61,7 +61,7 @@ export function KhanLessonLayout(p: LessonLayoutProps) {
   const active = p.tabs.find((x) => x.active);
   const onArticle = active?.kind === "article";
   const pct = p.unitProgress.total ? p.unitProgress.done / p.unitProgress.total : 0;
-  const stage = unitStage(p.unitProgress.done, p.unitProgress.total);
+  const stage = unitStage(p.unitProgress.done, p.unitProgress.total, t);
   const nf = new Intl.NumberFormat(bcp47);
 
   useEffect(() => {
@@ -89,7 +89,7 @@ export function KhanLessonLayout(p: LessonLayoutProps) {
     <div className="rounded-md border border-line bg-surface p-3.5">
       <div className="flex items-baseline justify-between gap-2 text-[13px]">
         <span className="font-semibold text-ink">{t("khan.unit.progress", "Unit progress")}</span>
-        <span className="font-medium text-muted">{t(stage.key, stage.en)}</span>
+        <span className="font-medium text-muted">{stage}</span>
       </div>
       <div className="mt-2 h-2 overflow-hidden rounded-full bg-surface-2" role="progressbar" aria-label={t("khan.unit.progress", "Unit progress")} aria-valuemin={0} aria-valuemax={p.unitProgress.total} aria-valuenow={p.unitProgress.done}>
         <div className="h-full rounded-full bg-[#7854F7] transition-[width] duration-500" style={{ width: `${pct * 100}%` }} />

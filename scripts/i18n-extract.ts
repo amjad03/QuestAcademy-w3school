@@ -12,8 +12,14 @@ const ROOT = path.resolve(__dirname, "..");
 const SRC = path.join(ROOT, "src");
 const LOCALES = ["hi", "kn", "ta", "te", "mr", "bn"];
 
-// t("key", "English" | 'English' | `English`
-const CALL = /\bt\(\s*"([\w.-]+)"\s*,\s*("(?:[^"\\]|\\.)*"|'(?:[^'\\]|\\.)*'|`(?:[^`\\$]|\\.)*`)/g;
+const LIT = String.raw`("(?:[^"\\]|\\.)*"|'(?:[^'\\]|\\.)*'|\`(?:[^\`\\$]|\\.)*\`)`;
+const KEY = String.raw`"([a-z][\w-]*\.[\w.-]+)"`;
+/** t("key", "English"), ["key", "English"] tuples and { key: "key", en: "English" } objects. */
+const PATTERNS = [
+  new RegExp(String.raw`\bt\(\s*"([\w.-]+)"\s*,\s*` + LIT, "g"),
+  new RegExp(String.raw`\[\s*` + KEY + String.raw`\s*,\s*` + LIT + String.raw`\s*\]`, "g"),
+  new RegExp(String.raw`\bkey:\s*` + KEY + String.raw`\s*,\s*en:\s*` + LIT, "g"),
+];
 
 function walk(dir: string, out: string[] = []) {
   for (const e of fs.readdirSync(dir, { withFileTypes: true })) {
@@ -34,7 +40,7 @@ const conflicts: string[] = [];
 for (const file of walk(SRC)) {
   if (file.includes(`${path.sep}i18n${path.sep}messages${path.sep}`)) continue;
   const text = fs.readFileSync(file, "utf8");
-  for (const m of text.matchAll(CALL)) {
+  for (const m of PATTERNS.flatMap((re) => [...text.matchAll(re)])) {
     const [, key, lit] = m;
     const en = unquote(lit);
     if (catalog[key] !== undefined && catalog[key] !== en) conflicts.push(`${key}: "${catalog[key]}" vs "${en}" (${path.relative(ROOT, file)})`);
