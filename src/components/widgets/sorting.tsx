@@ -4,6 +4,9 @@ import { useEffect, useMemo, useState } from "react";
 import { motion } from "framer-motion";
 import { Pause, Play, Shuffle, StepForward } from "lucide-react";
 import { bag, readOneOf, Readout, Segmented, Slider, WidgetTitle } from "./_shared";
+import { useT } from "@/i18n";
+
+type TFn = ReturnType<typeof useT>;
 
 type Algo = "bubble" | "selection" | "insertion";
 const ALGOS = ["bubble", "selection", "insertion"] as const;
@@ -25,7 +28,7 @@ interface Frame {
   note: string;
 }
 
-function frames(start: Item[], algo: Algo): Frame[] {
+function frames(start: Item[], algo: Algo, t: TFn): Frame[] {
   const a = start.slice();
   const out: Frame[] = [];
   let comparisons = 0;
@@ -38,24 +41,24 @@ function frames(start: Item[], algo: Algo): Frame[] {
     swaps++;
   };
   const n = a.length;
-  push([], [], "Ready! Press play or step.");
+  push([], [], t("widget.sorting.ready", "Ready! Press play or step."));
 
   if (algo === "bubble") {
     for (let end = n - 1; end > 0; end--) {
       let any = false;
       for (let i = 0; i < end; i++) {
         comparisons++;
-        push([i, i + 1], [], `Compare ${a[i].v} and ${a[i + 1].v}`);
+        push([i, i + 1], [], t("widget.sorting.compare", "Compare {a} and {b}", { a: a[i].v, b: a[i + 1].v }));
         if (a[i].v > a[i + 1].v) {
           swap(i, i + 1);
           any = true;
-          push([], [i, i + 1], `${a[i + 1].v} > ${a[i].v}, so swap`);
+          push([], [i, i + 1], t("widget.sorting.swap", "{a} > {b}, so swap", { a: a[i + 1].v, b: a[i].v }));
         }
       }
       sorted.add(end);
       if (!any) {
         for (let k = 0; k < end; k++) sorted.add(k);
-        push([], [], "No swaps this pass — the list is sorted!");
+        push([], [], t("widget.sorting.noSwaps", "No swaps this pass — the list is sorted!"));
         break;
       }
     }
@@ -64,12 +67,12 @@ function frames(start: Item[], algo: Algo): Frame[] {
       let min = i;
       for (let j = i + 1; j < n; j++) {
         comparisons++;
-        push([min, j], [], `Is ${a[j].v} smaller than current min ${a[min].v}?`);
+        push([min, j], [], t("widget.sorting.isSmaller", "Is {a} smaller than current min {min}?", { a: a[j].v, min: a[min].v }));
         if (a[j].v < a[min].v) min = j;
       }
       if (min !== i) {
         swap(i, min);
-        push([], [i, min], `Move smallest (${a[i].v}) to position ${i + 1}`);
+        push([], [i, min], t("widget.sorting.moveSmallest", "Move smallest ({v}) to position {pos}", { v: a[i].v, pos: i + 1 }));
       }
       sorted.add(i);
     }
@@ -79,10 +82,10 @@ function frames(start: Item[], algo: Algo): Frame[] {
       let j = i;
       while (j > 0) {
         comparisons++;
-        push([j - 1, j], [], `Compare ${a[j - 1].v} and ${a[j].v}`);
+        push([j - 1, j], [], t("widget.sorting.compare", "Compare {a} and {b}", { a: a[j - 1].v, b: a[j].v }));
         if (a[j - 1].v <= a[j].v) break;
         swap(j - 1, j);
-        push([], [j - 1, j], `Shift ${a[j - 1].v} left`);
+        push([], [j - 1, j], t("widget.sorting.shift", "Shift {v} left", { v: a[j - 1].v }));
         j--;
       }
       // in insertion sort, the prefix is sorted relative to itself
@@ -90,7 +93,7 @@ function frames(start: Item[], algo: Algo): Frame[] {
     }
   }
   for (let k = 0; k < n; k++) sorted.add(k);
-  push([], [], `Done! ${comparisons} comparisons, ${swaps} swaps.`);
+  push([], [], t("widget.sorting.done", "Done! {comparisons} comparisons, {swaps} swaps.", { comparisons, swaps }));
   return out;
 }
 
@@ -99,6 +102,7 @@ function randomItems(n: number): Item[] {
 }
 
 export default function Sorting(input: Record<string, unknown>) {
+  const t = useT();
   const p = bag(input);
   const [algo, setAlgo] = useState<Algo>(readOneOf(p, "algorithm", ALGOS, "bubble"));
   const [size, setSize] = useState(10);
@@ -109,7 +113,7 @@ export default function Sorting(input: Record<string, unknown>) {
 
   useEffect(() => setItems(randomItems(10)), []);
 
-  const all = useMemo(() => frames(items, algo), [items, algo]);
+  const all = useMemo(() => frames(items, algo, t), [items, algo, t]);
   const frame = all[Math.min(step, all.length - 1)];
   const done = step >= all.length - 1;
 
@@ -134,11 +138,11 @@ export default function Sorting(input: Record<string, unknown>) {
   return (
     <div>
       <WidgetTitle
-        title="Sorting visualiser"
-        hint="Watch how each algorithm compares and swaps bars."
+        title={t("widget.sorting.title", "Sorting visualiser")}
+        hint={t("widget.sorting.hint", "Watch how each algorithm compares and swaps bars.")}
         right={
           <Segmented
-            label="Algorithm"
+            label={t("widget.sorting.algorithm", "Algorithm")}
             value={algo}
             onChange={(a) => {
               setAlgo(a);
@@ -146,9 +150,9 @@ export default function Sorting(input: Record<string, unknown>) {
               setPlaying(false);
             }}
             options={[
-              { value: "bubble", label: "Bubble" },
-              { value: "selection", label: "Selection" },
-              { value: "insertion", label: "Insertion" },
+              { value: "bubble", label: t("widget.sorting.bubble", "Bubble") },
+              { value: "selection", label: t("widget.sorting.selection", "Selection") },
+              { value: "insertion", label: t("widget.sorting.insertion", "Insertion") },
             ]}
           />
         }
@@ -186,20 +190,20 @@ export default function Sorting(input: Record<string, unknown>) {
 
       <div className="mt-3 flex flex-wrap items-center justify-center gap-2">
         <button type="button" className="btn-primary" onClick={() => (done ? (setStep(0), setPlaying(true)) : setPlaying((x) => !x))}>
-          {playing ? <Pause size={16} /> : <Play size={16} />} {playing ? "Pause" : done ? "Replay" : "Play"}
+          {playing ? <Pause size={16} /> : <Play size={16} />} {playing ? t("widget.pause", "Pause") : done ? t("widget.replay", "Replay") : t("widget.play", "Play")}
         </button>
         <button type="button" className="btn-ghost" onClick={() => setStep((s) => Math.min(all.length - 1, s + 1))} disabled={done || playing}>
-          <StepForward size={16} /> Step
+          <StepForward size={16} /> {t("widget.sorting.step", "Step")}
         </button>
         <button type="button" className="btn-ghost" onClick={() => reshuffle()}>
-          <Shuffle size={16} /> Shuffle
+          <Shuffle size={16} /> {t("widget.sorting.shuffle", "Shuffle")}
         </button>
       </div>
 
       <div className="mt-4 grid gap-4 sm:grid-cols-[1fr_1fr_auto]">
-        <Slider label="Speed" value={speed} min={1} max={20} onChange={setSpeed} unit="steps/s" />
+        <Slider label={t("widget.sorting.speed", "Speed")} value={speed} min={1} max={20} onChange={setSpeed} unit={t("widget.sorting.stepsPerSec", "steps/s")} />
         <Slider
-          label="Bars"
+          label={t("widget.sorting.bars", "Bars")}
           value={size}
           min={5}
           max={20}
@@ -209,16 +213,16 @@ export default function Sorting(input: Record<string, unknown>) {
           }}
         />
         <div className="grid grid-cols-2 gap-2" aria-live="polite">
-          <Readout label="Comparisons" value={frame.comparisons} />
-          <Readout label="Swaps" value={frame.swaps} tone="ink" />
+          <Readout label={t("widget.sorting.comparisons", "Comparisons")} value={frame.comparisons} />
+          <Readout label={t("widget.sorting.swaps", "Swaps")} value={frame.swaps} tone="ink" />
         </div>
       </div>
 
       <div className="mt-3 flex flex-wrap justify-center gap-3 text-xs text-muted">
         {[
-          ["--warn", "comparing"],
-          ["--accent-2", "swapped"],
-          ["--good", "sorted"],
+          ["--warn", t("widget.sorting.comparing", "comparing")],
+          ["--accent-2", t("widget.sorting.swapped", "swapped")],
+          ["--good", t("widget.sorting.sorted", "sorted")],
         ].map(([c, l]) => (
           <span key={l} className="flex items-center gap-1">
             <span className="h-3 w-3 rounded" style={{ background: `rgb(var(${c}))` }} /> {l}
