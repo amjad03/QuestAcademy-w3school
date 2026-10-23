@@ -3,6 +3,7 @@
 import { useRef, useState } from "react";
 import { RotateCcw } from "lucide-react";
 import { clamp, fmt, Readout, Slider, svgPoint, WidgetTitle } from "./_shared";
+import { useT } from "@/i18n";
 
 const W = 400;
 const H = 300;
@@ -23,6 +24,7 @@ const qd = (p: number, shift: number) => (AD - p) / BD + shift;
 const qs = (p: number, shift: number) => (p - AS) / BS + shift;
 
 export default function SupplyDemand() {
+  const t = useT();
   const [dShift, setDShift] = useState(0);
   const [sShift, setSShift] = useState(0);
   const [priceOn, setPriceOn] = useState(false);
@@ -69,8 +71,8 @@ export default function SupplyDemand() {
   return (
     <div>
       <WidgetTitle
-        title="Supply & demand"
-        hint="Drag the curves left or right to shift them. Turn on a fixed price to see shortages and surpluses."
+        title={t("widget.supply.title", "Supply & demand")}
+        hint={t("widget.supply.hint", "Drag the curves left or right to shift them. Turn on a fixed price to see shortages and surpluses.")}
         right={
           <button
             type="button"
@@ -80,14 +82,14 @@ export default function SupplyDemand() {
               setSShift(0);
             }}
           >
-            <RotateCcw size={14} /> Reset
+            <RotateCcw size={14} /> {t("widget.reset", "Reset")}
           </button>
         }
       />
 
       <div className="grid gap-5 lg:grid-cols-[1.3fr_1fr]">
         <div className="overflow-hidden rounded-3xl border border-line bg-surface">
-          <svg ref={svgRef} viewBox={`0 0 ${W} ${H}`} className="w-full select-none" onPointerMove={onMove} onPointerUp={onUp} onPointerCancel={onUp} style={{ touchAction: "none" }} role="img" aria-label="Supply and demand diagram">
+          <svg ref={svgRef} viewBox={`0 0 ${W} ${H}`} className="w-full select-none" onPointerMove={onMove} onPointerUp={onUp} onPointerCancel={onUp} style={{ touchAction: "none" }} role="img" aria-label={t("widget.supply.diagram", "Supply and demand diagram")}>
             {[0, 25, 50, 75, 100].map((v) => (
               <g key={v}>
                 <line x1={X(0)} x2={X(QMAX)} y1={Y(v)} y2={Y(v)} stroke="rgb(var(--line))" strokeWidth="0.75" />
@@ -102,10 +104,10 @@ export default function SupplyDemand() {
             <line x1={X(0)} x2={X(0)} y1={Y(0)} y2={Y(PMAX)} stroke="rgb(var(--ink))" strokeWidth="1.5" />
             <line x1={X(0)} x2={X(QMAX)} y1={Y(0)} y2={Y(0)} stroke="rgb(var(--ink))" strokeWidth="1.5" />
             <text x={X(QMAX)} y={H - 4} textAnchor="end" fontSize="10" fontWeight="700" fill="rgb(var(--muted))">
-              Quantity
+              {t("widget.supply.quantity", "Quantity")}
             </text>
             <text x={10} y={PAD.t + 4} fontSize="10" fontWeight="700" fill="rgb(var(--muted))" transform={`rotate(-90 10 ${PAD.t + 4})`} textAnchor="end">
-              Price
+              {t("widget.supply.price", "Price")}
             </text>
 
             {/* base curves (ghosts) */}
@@ -160,31 +162,31 @@ export default function SupplyDemand() {
 
         <div className="space-y-4">
           <div className="grid grid-cols-2 gap-2" aria-live="polite">
-            <Readout label="Equilibrium price P*" value={fmt(pStar, 1)} tone="good" />
-            <Readout label="Equilibrium qty Q*" value={fmt(Math.max(0, qStar), 1)} tone="good" />
+            <Readout label={t("widget.supply.eqPrice", "Equilibrium price P*")} value={fmt(pStar, 1)} tone="good" />
+            <Readout label={t("widget.supply.eqQty", "Equilibrium qty Q*")} value={fmt(Math.max(0, qStar), 1)} tone="good" />
           </div>
-          <Slider label="Shift demand" value={dShift} min={-40} max={40} onChange={setDShift} format={(v) => (v > 0 ? `+${v}` : `${v}`)} />
-          <Slider label="Shift supply" value={sShift} min={-40} max={40} onChange={setSShift} format={(v) => (v > 0 ? `+${v}` : `${v}`)} />
+          <Slider label={t("widget.supply.shiftDemand", "Shift demand")} value={dShift} min={-40} max={40} onChange={setDShift} format={(v) => (v > 0 ? `+${v}` : `${v}`)} />
+          <Slider label={t("widget.supply.shiftSupply", "Shift supply")} value={sShift} min={-40} max={40} onChange={setSShift} format={(v) => (v > 0 ? `+${v}` : `${v}`)} />
 
           <div className="rounded-2xl border border-line bg-surface-2 p-3">
             <label className="flex cursor-pointer items-center gap-2 text-sm font-semibold text-ink">
               <input type="checkbox" checked={priceOn} onChange={(e) => setPriceOn(e.target.checked)} className="h-4 w-4 accent-[rgb(var(--accent))]" />
-              Fix the price (price control)
+              {t("widget.supply.fixPrice", "Fix the price (price control)")}
             </label>
             {priceOn && (
               <div className="mt-3 space-y-3">
-                <Slider label="Price" value={price} min={0} max={100} onChange={setPrice} />
+                <Slider label={t("widget.supply.price", "Price")} value={price} min={0} max={100} onChange={setPrice} />
                 <div className="grid grid-cols-2 gap-2 text-xs">
-                  <Readout label="Quantity demanded" value={fmt(QdP, 1)} tone="accent" />
-                  <Readout label="Quantity supplied" value={fmt(QsP, 1)} tone="ink" />
+                  <Readout label={t("widget.supply.qDemanded", "Quantity demanded")} value={fmt(QdP, 1)} tone="accent" />
+                  <Readout label={t("widget.supply.qSupplied", "Quantity supplied")} value={fmt(QsP, 1)} tone="ink" />
                 </div>
                 <p
                   aria-live="polite"
                   className={`rounded-xl px-3 py-2 text-sm font-semibold ${market === "shortage" ? "bg-bad/10 text-bad" : market === "surplus" ? "bg-warn/10 text-warn" : "bg-good/10 text-good"}`}
                 >
-                  {market === "shortage" && `Shortage of ${fmt(gap, 1)} units — price is below equilibrium, buyers want more than sellers offer.`}
-                  {market === "surplus" && `Surplus of ${fmt(-gap, 1)} units — price is above equilibrium, unsold goods pile up.`}
-                  {market === "equilibrium" && "At equilibrium: the market clears!"}
+                  {market === "shortage" && t("widget.supply.shortage", "Shortage of {n} units — price is below equilibrium, buyers want more than sellers offer.", { n: fmt(gap, 1) })}
+                  {market === "surplus" && t("widget.supply.surplus", "Surplus of {n} units — price is above equilibrium, unsold goods pile up.", { n: fmt(-gap, 1) })}
+                  {market === "equilibrium" && t("widget.supply.equilibrium", "At equilibrium: the market clears!")}
                 </p>
               </div>
             )}
@@ -192,13 +194,13 @@ export default function SupplyDemand() {
 
           <div className="flex flex-wrap gap-2 text-xs">
             <button type="button" className="chip hover:text-ink" onClick={() => setDShift(20)}>
-              💰 Incomes rise (D →)
+              💰 {t("widget.supply.incomes", "Incomes rise (D →)")}
             </button>
             <button type="button" className="chip hover:text-ink" onClick={() => setSShift(-20)}>
-              🌧️ Bad harvest (S ←)
+              🌧️ {t("widget.supply.harvest", "Bad harvest (S ←)")}
             </button>
             <button type="button" className="chip hover:text-ink" onClick={() => setSShift(20)}>
-              🤖 New technology (S →)
+              🤖 {t("widget.supply.tech", "New technology (S →)")}
             </button>
           </div>
         </div>
