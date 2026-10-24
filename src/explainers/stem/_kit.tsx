@@ -11,6 +11,7 @@ import type { ReactNode, Ref } from "react";
 import { motion } from "framer-motion";
 import { RotateCcw } from "lucide-react";
 import clsx from "clsx";
+import { useLabel } from "../useLabel";
 
 export const INK = "rgb(var(--ink))";
 export const MUTED = "rgb(var(--muted))";
@@ -192,6 +193,7 @@ export function Ground({ y = 140, color = "#bbf7d0", w = 240 }: { y?: number; co
  * Use `ink` for dark text on light accent colours.
  */
 export function ActionButton({ onClick, disabled, color, ink = "white", children }: { onClick: () => void; disabled?: boolean; color: string; ink?: string; children: ReactNode }) {
+  const tr = useLabel();
   return (
     <button
       type="button"
@@ -200,7 +202,7 @@ export function ActionButton({ onClick, disabled, color, ink = "white", children
       className="flex min-h-[52px] items-center justify-center gap-2 rounded-2xl px-6 text-lg font-black shadow-sm transition active:scale-95 disabled:cursor-default disabled:opacity-50"
       style={{ background: color, color: ink, touchAction: "manipulation" }}
     >
-      {children}
+      {tr(children)}
     </button>
   );
 }

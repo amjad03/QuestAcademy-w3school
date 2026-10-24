@@ -9,6 +9,7 @@
 import { useState, type ReactNode } from "react";
 import { motion, type Transition } from "framer-motion";
 import type { MissionApi } from "../types";
+import { useLabel } from "../useLabel";
 
 /* ------------------------------------------------------------------ */
 /* Motion presets                                                      */
@@ -199,9 +200,10 @@ export function Finger({ path, delay = 0, step = 0.7, size = 30 }: { path: { x: 
 
 /** The one big action button of a mission step (at least 56px tall). */
 export function MissionButton({ color, onClick, disabled, children }: { color: string; onClick: () => void; disabled?: boolean; children: ReactNode }) {
+  const tr = useLabel();
   return (
     <button type="button" onClick={onClick} disabled={disabled} className="mx-auto mt-3 flex min-h-[3.5rem] items-center justify-center gap-2 rounded-2xl border-2 border-b-4 px-7 text-xl font-black text-white transition active:translate-y-[2px] disabled:opacity-50" style={{ background: color, borderColor: `color-mix(in srgb, ${color} 70%, black)` }}>
-      {children}
+      {tr(children)}
     </button>
   );
 }

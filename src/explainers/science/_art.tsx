@@ -12,6 +12,7 @@
 import type { ReactNode } from "react";
 import { motion } from "framer-motion";
 import { RotateCcw } from "lucide-react";
+import { useLabel } from "../useLabel";
 
 export const INK = "#1e293b";
 
@@ -336,9 +337,10 @@ export function BigSlider({ label, value, min, max, step = 1, onChange, left, ri
 
 /** The one big action button of a mission step (at least 52px tall). */
 export function StepButton({ onClick, disabled, color, children, label }: { onClick: () => void; disabled?: boolean; color: string; children: ReactNode; label?: string }) {
+  const tr = useLabel();
   return (
     <button type="button" onClick={onClick} disabled={disabled} aria-label={label} className="mx-auto mt-3 flex min-h-[52px] items-center justify-center gap-2 rounded-2xl px-6 text-lg font-black text-white shadow-sm transition disabled:opacity-50" style={{ background: color }}>
-      {children}
+      {tr(children)}
     </button>
   );
 }

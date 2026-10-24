@@ -4,6 +4,7 @@ import { useEffect, useState, type ReactNode } from "react";
 import { motion } from "framer-motion";
 import type { Explainer, Mission, MissionApi } from "../types";
 import { DARK, INK, Kid, MUTED, Svg } from "./_kit";
+import { useLabel } from "../useLabel";
 
 const C = "#F59E0B";
 const PIPE = "#7dd3fc";
@@ -204,9 +205,10 @@ function SceneSwitch() {
 
 /** One big action button for a mission step. */
 function ActionButton({ onClick, disabled, children }: { onClick: () => void; disabled?: boolean; children: ReactNode }) {
+  const tr = useLabel();
   return (
     <button type="button" onClick={onClick} disabled={disabled} className="mx-auto mt-2 flex min-h-[52px] items-center justify-center rounded-2xl px-6 text-lg font-black text-white disabled:opacity-50" style={{ background: C }}>
-      {children}
+      {tr(children)}
     </button>
   );
 }

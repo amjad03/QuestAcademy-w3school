@@ -8,6 +8,7 @@
 
 import { useEffect, type ReactNode } from "react";
 import { motion } from "framer-motion";
+import { useLabel } from "../useLabel";
 
 /** Ink that is always dark (for drawings on light comic / analogy panels). */
 export const INK = "#1c2333";
@@ -286,9 +287,10 @@ export function shade(hex: string, amt: number) {
 
 /** One big action button for a guided-mission step (at least 52px tall, full colour). */
 export function MissionButton({ onClick, disabled, color, children }: { onClick: () => void; disabled?: boolean; color: string; children: ReactNode }) {
+  const tr = useLabel();
   return (
     <button type="button" onClick={onClick} disabled={disabled} className="mx-auto mt-3 flex min-h-[52px] items-center justify-center gap-2 rounded-2xl px-6 text-lg font-black text-white shadow-sm transition active:scale-95 disabled:opacity-50" style={{ background: color }}>
-      {children}
+      {tr(children)}
     </button>
   );
 }

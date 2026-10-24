@@ -50,6 +50,35 @@ function strings(course: string): string[] {
       for (const [k, x] of Object.entries(v)) if ((!SKIP_FIELDS.has(k) || (course === "catalog" && k === "domain")) && !EXTRA_SKIP[course]?.has(k)) walk(x);
   };
   walk(root);
+  if (course === "explainers") for (const l of sceneLabels()) out.add(l);
+  return [...out];
+}
+
+/** Button labels written inside mission scenes (see src/explainers/useLabel.ts). */
+function sceneLabels(): string[] {
+  const dir = path.join(ROOT, "src", "explainers");
+  const files = fs.readdirSync(dir, { recursive: true }).map(String).filter((f) => f.endsWith(".tsx"));
+  const out = new Set<string>();
+  for (const f of files) {
+    const src = fs.readFileSync(path.join(dir, f), "utf8");
+    for (const m of src.matchAll(/<(ActionButton|MissionButton|StepButton)\b/g)) {
+      // The opening tag ends at the first ">" outside {…} (attributes can hold arrows).
+      let i = m.index! + m[0].length;
+      for (let depth = 0; i < src.length; i++) {
+        const c = src[i];
+        if (c === "{") depth++;
+        else if (c === "}") depth--;
+        else if (c === ">" && depth === 0) break;
+      }
+      if (src[i - 1] === "/") continue; // self-closing
+      const end = src.indexOf(`</${m[1]}>`, i);
+      if (end < 0) continue;
+      // Text between the tags, minus JSX expressions and icon elements.
+      const text = src.slice(i + 1, end).replace(/\{[^{}]*\}/g, " ").replace(/<[^>]+\/>/g, " ").replace(/\s+/g, " ").trim();
+      if (text && translatable(text)) out.add(text);
+    }
+    for (const m of src.matchAll(/\bbutton="([^"]+)"/g)) if (translatable(m[1])) out.add(m[1].trim());
+  }
   return [...out];
 }
 
