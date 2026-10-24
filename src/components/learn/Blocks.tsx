@@ -10,6 +10,7 @@ import { WidgetRenderer } from "@/components/widgets";
 import { useLearner } from "@/lib/store";
 import { useT } from "@/i18n";
 import { QuestionCard } from "./QuestionCard";
+import { ActivityView, CommonMistake, WorkedExample } from "./KitBlocks";
 
 const CALLOUT = {
   tip: { icon: Lightbulb, label: "Pro tip", cls: "border-good/40 bg-good-soft", ic: "text-good-shade" },
@@ -58,11 +59,11 @@ export function BlockView({ block, world, id }: { block: Block; world: WorldId; 
         </figure>
       );
     case "code":
-      if (block.runnable) return <TryIt lang={block.lang} code={block.code} caption={block.caption} />;
+      if (block.runnable && block.lang !== "java") return <TryIt lang={block.lang} code={block.code} caption={block.caption} />;
       return (
         <figure className="overflow-hidden rounded-3xl border border-line bg-[#1a1b26]">
           <div className="flex items-center justify-between border-b border-white/10 bg-[#13141c] px-4 py-2 font-mono text-[11px] text-slate-400">
-            <span className="font-semibold text-cyan-300">{LANG_LABEL[block.lang]}</span>
+            <span className="font-semibold text-cyan-300">{block.lang === "java" ? "Java" : LANG_LABEL[block.lang]}</span>
             {block.caption && <span className="truncate pl-4">{block.caption}</span>}
           </div>
           <pre className="overflow-x-auto p-4 font-mono text-[13.5px] leading-6 text-slate-200">
@@ -159,6 +160,12 @@ export function BlockView({ block, world, id }: { block: Block; world: WorldId; 
           </ul>
         </aside>
       );
+    case "example":
+      return <WorkedExample title={block.title} problem={block.problem} steps={block.steps} answer={block.answer} kids={kids} />;
+    case "mistake":
+      return <CommonMistake wrong={block.wrong} right={block.right} why={block.why} kids={kids} />;
+    case "activity":
+      return <ActivityView activity={block.activity} kids={kids} />;
   }
 }
 

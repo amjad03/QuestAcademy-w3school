@@ -54,18 +54,32 @@ export const topics: Topic[] = [
             md: "By the principle of moments, $L \\times \\text{load arm} = E \\times \\text{effort arm}$, so the ideal MA of a lever is $\\dfrac{\\text{effort arm}}{\\text{load arm}}$. Class III levers have MA < 1, but they give a **gain in speed**: a small movement of the biceps moves the hand a long way.",
           },
           {
-            type: "heading",
-            text: "Worked example",
+            type: "example",
+            problem: "A mason in Jaipur uses a 1.4 m crowbar to lift a 600 N stone. The fulcrum is 0.2 m from the stone. What effort does he need, and how far must his hands move to raise the stone by 2 cm?",
+            steps: [
+              "Load arm = 0.2 m, so effort arm = 1.4 − 0.2 = 1.2 m.",
+              "Ideal MA $= \\tfrac{\\text{effort arm}}{\\text{load arm}} = \\tfrac{1.2}{0.2} = 6$.",
+              "Effort $= \\tfrac{\\text{load}}{\\text{MA}} = \\tfrac{600}{6} = 100$ N.",
+              "For an ideal lever VR = MA = 6, so the hands move $6 \\times 2 = 12$ cm.",
+            ],
+            answer: "100 N of effort; the hands move down 12 cm.",
           },
           {
-            type: "list",
-            ordered: true,
-            items: [
-              "A mason in Jaipur uses a 1.4 m crowbar to lift a 600 N stone. The fulcrum is 0.2 m from the stone, so load arm = 0.2 m and effort arm = 1.2 m.",
-              "Ideal MA $= \\tfrac{1.2}{0.2} = 6$.",
-              "Effort needed $= \\tfrac{600}{6} = 100$ N.",
-              "VR is also 6: to raise the stone by 2 cm, his hands must move down 12 cm.",
-            ],
+            type: "activity",
+            activity: {
+              kind: "sort",
+              prompt: "Which class of lever is each one? Look at what is in the middle.",
+              groups: ["Class I", "Class II", "Class III"],
+              items: [
+                { text: "See-saw", group: 0, hint: "The pivot is in the middle." },
+                { text: "Nutcracker", group: 1, hint: "The nut (load) sits between the hinge and your hand." },
+                { text: "Forceps", group: 2, hint: "You press in the middle, between the hinge and the tips." },
+                { text: "Scissors", group: 0, hint: "The screw (fulcrum) is between the handles and the blades." },
+                { text: "Wheelbarrow", group: 1, hint: "The load is between the wheel and your hands." },
+                { text: "Fishing rod", group: 2, hint: "Your front hand pushes between the end you hold and the line." },
+              ],
+              explain: "Find the thing in the middle. **Fulcrum** in the middle → class I. **Load** in the middle → class II (MA > 1). **Effort** in the middle → class III (MA < 1, but you gain speed).",
+            },
           },
           {
             type: "checkpoint",
@@ -79,10 +93,10 @@ export const topics: Topic[] = [
             ],
           },
           {
-            type: "callout",
-            tone: "exam",
-            title: "Board trap",
-            md: "Students often write that efficiency can be made 100% by \"oiling well\". No real machine reaches 100%: some energy is always lost to friction and in lifting moving parts. Also remember VR depends only on the **design**, while MA depends on friction and so changes with use.",
+            type: "mistake",
+            wrong: "A machine can be made 100% efficient if it is oiled well.",
+            right: "No real machine reaches 100% efficiency.",
+            why: "Some energy is always lost to friction and in lifting the moving parts of the machine itself. Also remember that VR depends only on the **design**, while MA depends on friction and so changes with use.",
           },
           {
             type: "illustration",

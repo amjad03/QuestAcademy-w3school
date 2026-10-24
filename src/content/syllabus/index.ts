@@ -1,5 +1,5 @@
 /**
- * Board syllabi for Focus mode (CBSE, Karnataka PUC, ICSE/ISC, NEET/JEE).
+ * Board syllabi for Focus mode (CBSE, Karnataka SSLC and PUC, ICSE/ISC, NEET/JEE).
  * Mapping based on known syllabi — check against the current official editions.
  */
 import type { Stage } from "@/content/types";
@@ -9,12 +9,13 @@ import { nextExamDate } from "@/lib/exam";
 import { CBSE } from "./cbse";
 import { PUE } from "./pue";
 import { ICSE } from "./icse";
+import { KSEEB } from "./kseeb";
 import { EXAM } from "./exam";
 import type { SyllabusChapter, SyllabusGrade } from "./types";
 
 export type { SyllabusBoard, SyllabusChapter, SyllabusGrade, SyllabusSubject } from "./types";
 
-export const SYLLABI: Record<Board, typeof CBSE> = { cbse: CBSE, pue: PUE, icse: ICSE, exam: EXAM };
+export const SYLLABI: Record<Board, typeof CBSE> = { cbse: CBSE, kseeb: KSEEB, pue: PUE, icse: ICSE, exam: EXAM };
 
 export function getGrade(board: Board, grade: string | null | undefined): SyllabusGrade | undefined {
   const b = SYLLABI[board];

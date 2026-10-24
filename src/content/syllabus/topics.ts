@@ -233,6 +233,13 @@ export const TOPICS = {
   "mat.ratio": { lessons: ["math-middle/ratio-percent/ratio-and-proportion", "math-middle/ratio-percent/percentages"] },
   "mat.algebra-basic": { lessons: ["math-middle/algebra-basics/algebraic-expressions"] },
   "mat.none": { lessons: [] },
+  /* ---- subjects whose lessons are linked by chapter title only (see extra/) ---- */
+  "soc.none": { lessons: [] },
+  "eng.none": { lessons: [] },
+  "hin.none": { lessons: [] },
+  "kan.none": { lessons: [] },
+  "cmp.none": { lessons: [] },
+  "gk.none": { lessons: [] },
 } satisfies Record<string, Topic>;
 
 export type TopicKey = keyof typeof TOPICS;

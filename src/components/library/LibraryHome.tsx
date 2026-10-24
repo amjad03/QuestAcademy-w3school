@@ -1,5 +1,6 @@
 "use client";
 
+import type { Board } from "@/lib/modes";
 import Link from "next/link";
 import { useMemo } from "react";
 import clsx from "clsx";
@@ -37,7 +38,7 @@ export interface ClassSummary {
 }
 
 export interface BoardSummary {
-  id: "cbse" | "pue" | "icse" | "exam";
+  id: Board;
   name: string;
   full: string;
   note: string;

@@ -21,6 +21,8 @@ export type Stage =
   | "lifelong"; // professionals & curious minds
 
 export type CodeLang = "html" | "css" | "javascript" | "python" | "sql";
+/** Languages that can be shown (not run) in a lesson code block. */
+export type DisplayLang = CodeLang | "java";
 
 /**
  * Inline text supports a tiny markdown subset:
@@ -36,7 +38,7 @@ export type Block =
   /** Display maths, KaTeX syntax (no surrounding $$). */
   | { type: "formula"; tex: string; caption?: string }
   /** runnable=true renders a "Try it yourself" live editor. */
-  | { type: "code"; lang: CodeLang; code: string; runnable?: boolean; caption?: string }
+  | { type: "code"; lang: DisplayLang; code: string; runnable?: boolean; caption?: string }
   /** Big emoji illustration, used instead of images. */
   | { type: "illustration"; emoji: string; caption: string }
   | { type: "list"; ordered?: boolean; items: Md[] }
@@ -44,7 +46,27 @@ export type Block =
   | { type: "widget"; widget: WidgetId; props?: Record<string, unknown>; caption?: string }
   /** Inline checkpoint question(s) inside the reading flow. */
   | { type: "checkpoint"; questions: Question[] }
-  | { type: "keypoints"; items: Md[] };
+  | { type: "keypoints"; items: Md[] }
+  /** Worked example: the problem, numbered steps, the final answer. */
+  | { type: "example"; title?: string; problem: Md; steps: Md[]; answer: Md }
+  /** The common mistake: what people wrongly think or do, the correct version, and why. */
+  | { type: "mistake"; wrong: Md; right: Md; why: Md }
+  /** A guided activity built from data (no custom drawing). See Activity. */
+  | { type: "activity"; activity: Activity };
+
+/**
+ * Guided activities, one action at a time, big tap targets:
+ *  sort    one card at a time; tap the group it belongs to (2–3 groups, 4–8 items)
+ *  order   tap the items in the right order (items listed here in the CORRECT order; 3–6 items)
+ *  match   one left item at a time; pick its partner (3–6 pairs)
+ *  reveal  predict first (2–4 options, `trap` = the common wrong idea), then the explanation
+ * Every activity ends with `explain`: what the learner should now see, in 1–2 sentences.
+ */
+export type Activity =
+  | { kind: "sort"; prompt: string; groups: string[]; items: { text: string; group: number; hint?: string }[]; explain: Md }
+  | { kind: "order"; prompt: string; items: string[]; explain: Md }
+  | { kind: "match"; prompt: string; pairs: [string, string][]; explain: Md }
+  | { kind: "reveal"; prompt: string; emoji?: string; options: string[]; answer: number; trap?: number; explain: Md };
 
 /**
  * Interactive widgets available to lessons. Props are optional.

@@ -198,10 +198,11 @@ export function modeForAge(age: number): ModeId {
   return "professional";
 }
 
-export type Board = "cbse" | "pue" | "icse" | "exam";
+export type Board = "cbse" | "kseeb" | "pue" | "icse" | "exam";
 
 export const BOARDS: { id: Board; name: string; full: string }[] = [
   { id: "cbse", name: "CBSE", full: "CBSE · Class 9–12 (NCERT)" },
+  { id: "kseeb", name: "Karnataka SSLC", full: "Karnataka State Board · SSLC (Class 10)" },
   { id: "pue", name: "Karnataka PUC", full: "Karnataka I & II PUC" },
   { id: "icse", name: "ICSE / ISC", full: "ICSE (9–10) · ISC (11–12)" },
   { id: "exam", name: "NEET / JEE", full: "NTA NEET-UG / JEE Main syllabus" },
