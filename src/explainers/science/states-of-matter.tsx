@@ -53,7 +53,7 @@ function GasParticles({ x, y, w, h, n = 7, r = 7, seed = 3, fast = 1 }: { x: num
         const ys = Array.from({ length: 5 }, () => y + r + rand() * (h - 2 * r));
         xs.push(xs[0]);
         ys.push(ys[0]);
-        return <motion.circle key={i} r={r} fill={GAS} stroke="#9d174d" strokeWidth={1.5} initial={{ cx: xs[0], cy: ys[0] }} animate={{ cx: xs, cy: ys }} transition={{ duration: (3 + rand() * 2) / fast, repeat: Infinity, ease: "linear" }} />;
+        return <motion.circle key={i} cx={xs[0]} cy={ys[0]} r={r} fill={GAS} stroke="#9d174d" strokeWidth={1.5} initial={{ cx: xs[0], cy: ys[0] }} animate={{ cx: xs, cy: ys }} transition={{ duration: (3 + rand() * 2) / fast, repeat: Infinity, ease: "linear" }} />;
       })}
     </g>
   );
@@ -341,21 +341,24 @@ const mission: Mission = {
   steps: [
     {
       task: "Heat the ice.",
-      predict: { question: "What happens to the tiny ice particles when you heat them?", options: ["Each particle melts into smaller bits", "They wiggle faster and break out of their rows"], answer: 1 },
+      settle: 2600,
+      predict: { question: "What happens to the tiny ice particles when you heat them?", options: ["Each particle melts into smaller bits", "They wiggle faster and break out of their rows"], answer: 1, trap: 0 },
       scene: (api) => <StepTemp api={api} from={-15} to={40} button="🔥 Heat" />,
       hint: "Tap Heat and watch the blue balls.",
       explain: "Heat gives the particles more energy. They wiggle so hard they break out of their rows and slide around: the ice has **melted** into water. The particles themselves don't change.",
     },
     {
       task: "Heat the water until it boils.",
-      predict: { question: "When water boils, what are the bubbles made of?", options: ["Air", "Water that has turned into a gas"], answer: 1 },
+      settle: 2600,
+      predict: { question: "When water boils, what are the bubbles made of?", options: ["Air", "Water that has turned into a gas"], answer: 1, trap: 0 },
       scene: (api) => <StepTemp api={api} from={40} to={120} button="🔥 Heat more" />,
       hint: "Tap the button and look for bubbles in the water.",
       explain: "The bubbles are **steam**: water particles that got so much energy they broke free and zoom about as a **gas**. They are not air.",
     },
     {
       task: "Cool the steam down.",
-      predict: { question: "What will the steam turn into?", options: ["Water again", "Nothing: it's gone for good"], answer: 0 },
+      settle: 2600,
+      predict: { question: "What will the steam turn into?", options: ["Water again", "Nothing: it's gone for good"], answer: 0, trap: 1 },
       scene: (api) => <StepTemp api={api} from={120} to={50} button="❄️ Cool" />,
       hint: "Tap Cool and watch the pink balls.",
       explain: "Cooling takes energy away. The particles slow down and gather back together: the steam **condenses** into water. Nothing was lost!",

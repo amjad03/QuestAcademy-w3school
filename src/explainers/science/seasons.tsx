@@ -4,7 +4,7 @@ import { useState } from "react";
 import { motion } from "framer-motion";
 import type { Explainer, Mission, MissionApi } from "../types";
 import { useFrame } from "@/components/widgets/_shared";
-import { Arrow, Kid, Label, Panel, Scene, StepButton, Sun, Tag, Tree, rng } from "./_art";
+import { Arrow, Kid, Label, Panel, Scene, StepButton, StepNote, Sun, Tag, Tree, rng } from "./_art";
 
 const C = "#14B8A6";
 const TILT = 23.5;
@@ -79,8 +79,8 @@ function SeasonView({ x, y, w, h, season, title, id }: { x: number; y: number; w
         </motion.g>
         <rect x={x} y={y + h * 0.74} width={w} height={h * 0.26} fill={ground} />
         <Tree x={x + w * 0.68} y={y + h * 0.82} s={h / 140} bare={season === "winter"} snow={season === "winter"} blossom={season === "spring"} leaves={season === "autumn" ? "#f97316" : season === "spring" ? "#86efac" : "#16a34a"} />
-        {season === "autumn" && [0, 1, 2].map((i) => <motion.circle key={i} r={3} fill="#ea580c" animate={{ cx: [x + w * 0.66, x + w * (0.5 + i * 0.12)], cy: [y + h * 0.4, y + h * 0.8] }} transition={{ duration: 2, delay: i * 0.6, repeat: Infinity }} />)}
-        {season === "winter" && [0, 1, 2, 3].map((i) => <motion.circle key={i} r={2.5} fill="#fff" animate={{ cy: [y, y + h * 0.75] }} transition={{ duration: 2.5, delay: i * 0.5, repeat: Infinity, ease: "linear" }} cx={x + w * (0.15 + i * 0.22)} />)}
+        {season === "autumn" && [0, 1, 2].map((i) => <motion.circle key={i} cx={x + w * 0.66} cy={y + h * 0.4} r={3} fill="#ea580c" animate={{ cx: [x + w * 0.66, x + w * (0.5 + i * 0.12)], cy: [y + h * 0.4, y + h * 0.8] }} transition={{ duration: 2, delay: i * 0.6, repeat: Infinity }} />)}
+        {season === "winter" && [0, 1, 2, 3].map((i) => <motion.circle key={i} cy={y} r={2.5} fill="#fff" animate={{ cy: [y, y + h * 0.75] }} transition={{ duration: 2.5, delay: i * 0.5, repeat: Infinity, ease: "linear" }} cx={x + w * (0.15 + i * 0.22)} />)}
       </g>
       <rect x={x} y={y} width={w} height={h} rx={10} fill="none" stroke="#fff" strokeWidth={3} />
       {title && (
@@ -294,6 +294,9 @@ function StepOrbit({ api, from, to, button }: { api: MissionApi; from: number; t
   return (
     <div>
       <OrbitView phi={phi} />
+      <StepNote color={C}>
+        🔴 North: {seasonFor(phi)} {SEASON_EMOJI[seasonFor(phi)]}
+      </StepNote>
       <StepButton color={C} disabled={moving || api.complete} onClick={() => setMoving(true)}>
         {button}
       </StepButton>
@@ -306,6 +309,9 @@ function StepSouth({ done, complete }: MissionApi) {
   return (
     <div>
       <OrbitView phi={0} south={look} />
+      <StepNote color={C}>
+        🔴 North: winter {SEASON_EMOJI.winter} · 🟠 South: {look ? `summer ${SEASON_EMOJI.summer}` : "?"}
+      </StepNote>
       <StepButton color={C} disabled={look || complete} onClick={() => (setLook(true), setTimeout(done, 800))}>
         🔍 Look at the South
       </StepButton>
@@ -318,21 +324,24 @@ const mission: Mission = {
   steps: [
     {
       task: "Move the Earth on to June.",
-      predict: { question: "June is summer in the North. Why?", options: ["The Earth is closer to the Sun", "The North leans towards the Sun"], answer: 1 },
+      settle: 2600,
+      predict: { question: "June is summer in the North. Why?", options: ["The Earth is closer to the Sun", "The North leans towards the Sun"], answer: 1, trap: 0 },
       scene: (api) => <StepOrbit api={api} from={90} to={180} button="➡️ Move to June" />,
       hint: "The red pin is a place in the North, like the UK. Tap the button.",
       explain: "In June the North **leans towards** the Sun. Its sunlight is strong and direct and the days are long: **summer**. The distance to the Sun hardly changes.",
     },
     {
       task: "Keep going, on to December.",
-      predict: { question: "Does the Earth's lean change during the year?", options: ["Yes, it flips the other way", "No, it always leans the same way"], answer: 1 },
+      settle: 2600,
+      predict: { question: "Does the Earth's lean change during the year?", options: ["Yes, it flips the other way", "No, it always leans the same way"], answer: 1, trap: 0 },
       scene: (api) => <StepOrbit api={api} from={180} to={360} button="➡️ Move to December" />,
       hint: "Watch the white stick through the Earth as it moves.",
       explain: "The Earth **always leans the same way**. But in December it is on the other side of the Sun, so now the North leans **away**. The sunlight is weak and spread out: **winter**.",
     },
     {
       task: "Look at a place in the South, like Australia.",
-      predict: { question: "It's December. What season is it in the South?", options: ["Winter, the same as the North", "Summer"], answer: 1 },
+      settle: 2600,
+      predict: { question: "It's December. What season is it in the South?", options: ["Winter, the same as the North", "Summer"], answer: 1, trap: 0 },
       scene: (api) => <StepSouth {...api} />,
       hint: "Tap the button to uncover the South window.",
       explain: "When the North leans away, the South leans **towards** the Sun, so it has **summer**. That's why Christmas is a beach day in Australia!",
@@ -366,7 +375,7 @@ const story: Explainer["story"] = [
           <circle cx={4} cy={-54} r={1.8} fill="#1e293b" />
         </g>
         {[20, 70, 120, 170, 210].map((x, i) => (
-          <motion.circle key={x} cx={x} r={2.5} fill="#fff" animate={{ cy: [0, 124] }} transition={{ duration: 3, delay: i * 0.5, repeat: Infinity, ease: "linear" }} />
+          <motion.circle key={x} cx={x} cy={0} r={2.5} fill="#fff" animate={{ cy: [0, 124] }} transition={{ duration: 3, delay: i * 0.5, repeat: Infinity, ease: "linear" }} />
         ))}
       </Panel>
     ),

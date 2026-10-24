@@ -104,7 +104,7 @@ function PlantScene({ stage }: { stage: number }) {
       {stage >= 2 && (
         <>
           {[0, 1, 2, 3].map((i) => (
-            <motion.circle key={i} r={4.5} fill="#38bdf8" stroke="#0369a1" strokeWidth={1.5} initial={{ cx: 186, cy: 232 }} animate={{ cx: [186, 196, 200, 200], cy: [236, 214, 170, 112] }} transition={{ duration: 2.4, delay: i * 0.6, repeat: Infinity, ease: "linear" }} />
+            <motion.circle key={i} cx={186} cy={232} r={4.5} fill="#38bdf8" stroke="#0369a1" strokeWidth={1.5} initial={{ cx: 186, cy: 232 }} animate={{ cx: [186, 196, 200, 200], cy: [236, 214, 170, 112] }} transition={{ duration: 2.4, delay: i * 0.6, repeat: Infinity, ease: "linear" }} />
           ))}
           {[[150, 228], [250, 236], [120, 246]].map(([dx, dy], i) => (
             <circle key={i} cx={dx} cy={dy} r={5} fill="#38bdf8" opacity={0.8} />
@@ -236,21 +236,24 @@ const mission: Mission = {
   steps: [
     {
       task: "Leave the watered plant in the dark for a week.",
-      predict: { question: "It has soil and water, but no light. What happens?", options: ["It grows big and green", "It goes pale and droopy"], answer: 1 },
+      settle: 2600,
+      predict: { question: "It has soil and water, but no light. What happens?", options: ["It grows big and green", "It goes pale and droopy"], answer: 1, trap: 0 },
       scene: (api) => <StepDark {...api} />,
       hint: "Tap the green button to skip ahead a week.",
       explain: "Soil and water were not enough! Without **light** the leaves can't make food, so the plant gets weak and pale.",
     },
     {
       task: "Put the plant in the sunlight.",
-      predict: { question: "Where does the plant get its food from?", options: ["From the soil", "It makes it in its leaves"], answer: 1 },
+      settle: 2600,
+      predict: { question: "Where does the plant get its food from?", options: ["From the soil", "It makes it in its leaves"], answer: 1, trap: 0 },
       scene: (api) => <StepSunlight {...api} />,
       hint: "Tap the button to move the plant into the sunshine.",
       explain: "The leaves use **sunlight** to turn water and air (carbon dioxide) into **sugar**. That sugar is the plant's food. The soil only gives water and a few minerals.",
     },
     {
       task: "Look closely at the busy leaves.",
-      predict: { question: "What gas do the leaves give out while they make food?", options: ["Carbon dioxide", "Oxygen"], answer: 1 },
+      settle: 2600,
+      predict: { question: "What gas do the leaves give out while they make food?", options: ["Carbon dioxide", "Oxygen"], answer: 1, trap: 0 },
       scene: (api) => <StepOxygen {...api} />,
       hint: "Tap the button and watch the little bubbles.",
       explain: "While they make sugar, leaves give out **oxygen**, the gas we breathe in. Making food from light like this is called **photosynthesis**.",
@@ -310,7 +313,7 @@ const story: Explainer["story"] = [
         <Sun x={30} y={30} r={16} />
         <Arrow x1={48} y1={42} x2={100} y2={76} color="#eab308" w={3} />
         <Plant x={120} ground={128} h={78} flower />
-        {[0, 1].map((i) => <motion.circle key={i} r={4} fill="#38bdf8" animate={{ cx: [110, 120], cy: [150, 100] }} transition={{ duration: 1.6, delay: i * 0.8, repeat: Infinity }} />)}
+        {[0, 1].map((i) => <motion.circle key={i} cx={110} cy={150} r={4} fill="#38bdf8" animate={{ cx: [110, 120], cy: [150, 100] }} transition={{ duration: 1.6, delay: i * 0.8, repeat: Infinity }} />)}
         <Arrow x1={200} y1={92} x2={150} y2={92} color="#64748b" w={3} />
         <text x={200} y={110} fontSize={11} fontWeight={900} fill="#475569" textAnchor="middle">
           CO₂

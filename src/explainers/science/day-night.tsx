@@ -213,21 +213,24 @@ const mission: Mission = {
   steps: [
     {
       task: "It's night at Mia's house. Spin the Earth.",
-      predict: { question: "What must move to bring morning to Mia?", options: ["The Sun moves over to her side", "The Earth spins her house round"], answer: 1 },
+      settle: 2600,
+      predict: { question: "What must move to bring morning to Mia?", options: ["The Sun moves over to her side", "The Earth spins her house round"], answer: 1, trap: 0 },
       scene: (api) => <StepSpin api={api} from={90} turn={180} button="Spin the Earth" />,
       hint: "Mia's house is the little red roof on the Earth. Tap the button.",
       explain: "The Sun stayed still. The **Earth spun**, and Mia's house turned into the sunlight. First came sunrise, then day.",
     },
     {
       task: "Spin again to make night.",
-      predict: { question: "When it is night for Mia, what is the Sun doing?", options: ["It switches off", "It hides behind the hills", "It is still shining on the other side of Earth"], answer: 2 },
+      settle: 2600,
+      predict: { question: "When it is night for Mia, what is the Sun doing?", options: ["It switches off", "It hides behind the hills", "It is still shining on the other side of Earth"], answer: 2, trap: 1 },
       scene: (api) => <StepSpin api={api} from={-90} turn={180} button="Spin the Earth" />,
       hint: "Tap the button and watch Mia's window.",
       explain: "The Sun never stops shining. Mia's house turned away into the Earth's own **shadow**, so it is night for her and day for children on the other side.",
     },
     {
       task: "Spin the Earth one whole turn.",
-      predict: { question: "How long does one whole spin take?", options: ["One hour", "One day (24 hours)", "One year"], answer: 1 },
+      settle: 2600,
+      predict: { question: "How long does one whole spin take?", options: ["One hour", "One day (24 hours)", "One year"], answer: 1, trap: 2 },
       scene: (api) => <StepSpin api={api} from={90} turn={360} button="One whole turn" showHours />,
       hint: "Tap the button and watch the hours count up.",
       explain: "One whole spin takes **24 hours**: one day and one night. Going all the way round the Sun is much slower: that takes a year.",

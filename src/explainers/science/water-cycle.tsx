@@ -119,7 +119,7 @@ function WaterCycleScene({ stage }: { stage: number }) {
           {/* the loop */}
           <Arrow x1={175} y1={70} x2={238} y2={70} cx={206} cy={56} color="#334155" w={3} delay={0.8} />
           <Arrow x1={240} y1={226} x2={190} y2={232} color="#334155" w={3} delay={1.1} />
-          <motion.circle r={6} fill="#38bdf8" stroke="#0369a1" strokeWidth={2} animate={{ cx: [318, 305, 312, 290, 230, 182], cy: [112, 150, 175, 200, 220, 232] }} transition={{ duration: 3, repeat: Infinity, ease: "linear" }} />
+          <motion.circle cx={318} cy={112} r={6} fill="#38bdf8" stroke="#0369a1" strokeWidth={2} animate={{ cx: [318, 305, 312, 290, 230, 182], cy: [112, 150, 175, 200, 220, 232] }} transition={{ duration: 3, repeat: Infinity, ease: "linear" }} />
         </>
       )}
     </Scene>
@@ -157,21 +157,24 @@ const mission: Mission = {
   steps: [
     {
       task: "Let the Sun warm the sea.",
-      predict: { question: "When the Sun warms water, where does some of it go?", options: ["It disappears for ever", "Up into the air, as a gas you can't see"], answer: 1 },
+      settle: 2600,
+      predict: { question: "When the Sun warms water, where does some of it go?", options: ["It disappears for ever", "Up into the air, as a gas you can't see"], answer: 1, trap: 0 },
       scene: (api) => <StepCycle api={api} from={0} to={1} button="☀️ Warm the sea" />,
       hint: "Tap the blue button and watch above the sea.",
       explain: "The warm water **evaporates**: it turns into an invisible gas called **water vapour** and floats up. It's like a puddle drying in the sun.",
     },
     {
       task: "Let the vapour rise into the cold air.",
-      predict: { question: "What is a cloud made of?", options: ["Water vapour (steam)", "Millions of tiny water drops", "Smoke"], answer: 1 },
+      settle: 2600,
+      predict: { question: "What is a cloud made of?", options: ["Water vapour (steam)", "Millions of tiny water drops", "Smoke"], answer: 1, trap: 0 },
       scene: (api) => <StepCycle api={api} from={1} to={2} button="⬆️ Up to the cold air" />,
       hint: "Tap the button and watch a cloud appear.",
       explain: "High up it is cold, so the vapour cools and turns back into **tiny drops** of water. Millions of them together make a cloud. This is **condensation**.",
     },
     {
       task: "Let the wind blow the cloud over the hills.",
-      predict: { question: "After it rains, where does the water go?", options: ["It soaks away and is used up", "It flows back to the sea, and the trip starts again"], answer: 1 },
+      settle: 2600,
+      predict: { question: "After it rains, where does the water go?", options: ["It soaks away and is used up", "It flows back to the sea, and the trip starts again"], answer: 1, trap: 0 },
       scene: (api) => <StepCycle api={api} from={2} to={3} then={4} button="💨 Blow the cloud" />,
       hint: "Tap the button, then follow the river.",
       explain: "The tiny drops join up until they are too heavy and fall as **rain**. Rivers carry the water back to the sea, ready to go round again.",

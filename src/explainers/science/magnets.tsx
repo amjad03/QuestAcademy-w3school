@@ -318,6 +318,7 @@ const mission: Mission = {
   steps: [
     {
       task: "Push the two magnets together.",
+      settle: 2600,
       predict: { question: "The S end faces the N end. What will happen?", options: ["They pull together and stick", "They push apart"], answer: 0 },
       scene: (api) => <StepPush api={api} />,
       hint: "Look at the letters on the ends that face each other, then tap the button.",
@@ -325,6 +326,7 @@ const mission: Mission = {
     },
     {
       task: "Now N faces N. Push them together.",
+      settle: 2600,
       predict: { question: "Two N ends face each other. What will happen?", options: ["They stick even harder", "They push apart"], answer: 1 },
       scene: (api) => <StepPush api={api} same />,
       hint: "Both ends that touch are red N poles. Tap the button.",
@@ -332,7 +334,8 @@ const mission: Mission = {
     },
     {
       task: "Lower the magnet over the three things.",
-      predict: { question: "The drinks can is metal (aluminium). Will the magnet pick it up?", options: ["Yes: magnets pick up all metals", "No: it will stay on the table"], answer: 1 },
+      settle: 2600,
+      predict: { question: "The drinks can is metal (aluminium). Will the magnet pick it up?", options: ["Yes: magnets pick up all metals", "No: it will stay on the table"], answer: 1, trap: 0 },
       scene: (api) => <StepPickUp {...api} />,
       hint: "Left to right: a paper clip, a drinks can and a tin of beans. Tap the button.",
       explain: "Magnets only pull things with **iron** in them, like steel paper clips and food tins. Aluminium cans, copper and gold are metals too, but magnets don't pull them.",

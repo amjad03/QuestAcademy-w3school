@@ -271,21 +271,24 @@ const mission: Mission = {
   steps: [
     {
       task: "Chew the apple.",
-      predict: { question: "Where does digestion start?", options: ["In the stomach", "In the mouth"], answer: 1 },
+      settle: 2600,
+      predict: { question: "Where does digestion start?", options: ["In the stomach", "In the mouth"], answer: 1, trap: 0 },
       scene: (api) => <StepChew {...api} />,
       hint: "Tap the pink button under Kai.",
       explain: "Digestion starts in the **mouth**. Teeth chop the apple into little bits, and spit (saliva) makes them soft.",
     },
     {
       task: "Swallow the food.",
-      predict: { question: "How does food get down to your stomach?", options: ["It just falls down", "Muscles squeeze it down"], answer: 1 },
+      settle: 2600,
+      predict: { question: "How does food get down to your stomach?", options: ["It just falls down", "Muscles squeeze it down"], answer: 1, trap: 0 },
       scene: (api) => <StepSwallow {...api} />,
       hint: "Tap Swallow and watch the red dot.",
       explain: "The food pipe has **muscles** that squeeze food down, like toothpaste in a tube. That's why you can swallow even lying down! In the stomach, juices churn it into soup.",
     },
     {
       task: "Send the food out of the stomach.",
-      predict: { question: "Where does the goodness go into Kai's blood?", options: ["In the stomach", "In the small intestine", "In the large intestine"], answer: 1 },
+      settle: 2600,
+      predict: { question: "Where does the goodness go into Kai's blood?", options: ["In the stomach", "In the small intestine", "In the large intestine"], answer: 1, trap: 0 },
       scene: (api) => <StepIntestine {...api} />,
       hint: "Tap the button and watch the yellow energy bar.",
       explain: "In the long, curly **small intestine**, the goodness passes into the blood and gives Kai energy. Later, the large intestine soaks up water and the rest leaves as waste.",

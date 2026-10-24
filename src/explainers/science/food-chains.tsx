@@ -98,7 +98,7 @@ function FoodChainScene({ stage }: { stage: number }) {
             <Arrow key={i} x1={92 + i * 100} y1={120} x2={110 + i * 100} y2={120} color="#ea580c" w={5} delay={0.4 + i * 0.35} />
           ))}
           <Tag x={200} y={46} text="ARROW = 'GIVES ENERGY TO'" color="#ea580c" delay={1.4} />
-          <motion.circle r={7} fill="#facc15" stroke="#ca8a04" strokeWidth={2} animate={{ cx: [50, 150, 250, 350], cy: [120, 120, 120, 120], opacity: [1, 1, 1, 0] }} transition={{ duration: 3, delay: 1.6, repeat: Infinity }} />
+          <motion.circle cx={50} cy={120} r={7} fill="#facc15" stroke="#ca8a04" strokeWidth={2} animate={{ cx: [50, 150, 250, 350], cy: [120, 120, 120, 120], opacity: [1, 1, 1, 0] }} transition={{ duration: 3, delay: 1.6, repeat: Infinity }} />
           <Label x={200} y={226} size={12} color="#9a3412">
             producer → consumer → consumer
           </Label>
@@ -142,7 +142,7 @@ function FoodChainScene({ stage }: { stage: number }) {
       {stage === 0 && (
         <>
           {[0, 1, 2].map((i) => (
-            <motion.circle key={i} r={6} fill="#facc15" initial={{ cx: 80, cy: 70 }} animate={{ cx: [80, 140 + i * 30], cy: [70, 170], opacity: [1, 0] }} transition={{ duration: 1.8, delay: i * 0.4, repeat: Infinity }} />
+            <motion.circle key={i} cx={80} cy={70} r={6} fill="#facc15" initial={{ cx: 80, cy: 70 }} animate={{ cx: [80, 140 + i * 30], cy: [70, 170], opacity: [1, 0] }} transition={{ duration: 1.8, delay: i * 0.4, repeat: Infinity }} />
           ))}
           <Tag x={200} y={110} text="ENERGY FROM THE SUN" color="#ca8a04" />
         </>
@@ -210,21 +210,24 @@ const mission: Mission = {
   steps: [
     {
       task: "Let the Sun shine on the grass.",
-      predict: { question: "Grass can't eat. How does it get its energy?", options: ["It sucks food out of the soil", "It makes its own food with sunlight"], answer: 1 },
+      settle: 2600,
+      predict: { question: "Grass can't eat. How does it get its energy?", options: ["It sucks food out of the soil", "It makes its own food with sunlight"], answer: 1, trap: 0 },
       scene: (api) => <StepLink api={api} from={0} to={1} button="☀️ Shine" />,
       hint: "Tap the orange Shine button.",
       explain: "Grass uses sunlight to make its own food. Plants are **producers**: every food chain starts with them, and with the Sun.",
     },
     {
       task: "Let the rabbit eat the grass.",
-      predict: { question: "Which way should the arrow point?", options: ["Rabbit → grass (the rabbit eats it)", "Grass → rabbit (the energy goes to the rabbit)"], answer: 1 },
+      settle: 2600,
+      predict: { question: "Which way should the arrow point?", options: ["Rabbit → grass (the rabbit eats it)", "Grass → rabbit (the energy goes to the rabbit)"], answer: 1, trap: 0 },
       scene: (api) => <StepLink api={api} from={1} to={2} button="🐇 Munch" />,
       hint: "Tap Munch, then look at the new orange arrow.",
       explain: "The arrow points to the **eater**. It shows where the energy goes: from the grass into the rabbit.",
     },
     {
       task: "Let the fox catch the rabbit.",
-      predict: { question: "In a meadow, are there more foxes or more rabbits?", options: ["More foxes: they are the strongest", "More rabbits", "The same number"], answer: 1 },
+      settle: 2600,
+      predict: { question: "In a meadow, are there more foxes or more rabbits?", options: ["More foxes: they are the strongest", "More rabbits", "The same number"], answer: 1, trap: 0 },
       scene: (api) => <StepLink api={api} from={2} to={3} then={5} button="🦊 Hunt" />,
       hint: "Tap Hunt and watch what happens next.",
       explain: "Each animal uses up most of its energy just living, so only a little passes on. So there is lots of grass, **fewer rabbits** and only a few foxes.",
@@ -322,7 +325,7 @@ const like: Explainer["like"] = {
           <g key={x}>
             <path d={`M ${x - 9} ${92} L ${x + 9} ${92} L ${x + 6} ${110} L ${x - 6} ${110} Z`} fill="#94a3b8" stroke="#475569" strokeWidth={2} />
             <rect x={x - 8} y={94} width={16} height={i ? 5 : 9} fill="#38bdf8" />
-            <motion.circle cx={x + 4} r={2.5} fill="#38bdf8" animate={{ cy: [112, 136], opacity: [1, 0] }} transition={{ duration: 0.8, repeat: Infinity, delay: i * 0.3 }} />
+            <motion.circle cx={x + 4} cy={112} r={2.5} fill="#38bdf8" animate={{ cy: [112, 136], opacity: [1, 0] }} transition={{ duration: 0.8, repeat: Infinity, delay: i * 0.3 }} />
           </g>
         ))}
       </Panel>
