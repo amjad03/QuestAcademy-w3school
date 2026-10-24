@@ -205,7 +205,9 @@ function StagePill() {
         aria-label={t("khan.countdownAria", "{n} days until {exam}. Open study plan.", { n: f.n(exam.days), exam: tx(exam.name) })}
       >
         <CalendarClock className="h-3.5 w-3.5 text-accent" aria-hidden />
-        {t("khan.daysShort", "{n} days", { n: f.n(exam.days) })}
+        {/* Phones show just the number (the icon and label say what it counts). */}
+        <span className="sm:hidden">{f.n(exam.days)}</span>
+        <span className="hidden sm:inline">{t("khan.daysShort", "{n} days", { n: f.n(exam.days) })}</span>
         <span className="hidden max-w-[150px] truncate font-normal text-muted 2xl:inline">· {tx(exam.name)}</span>
       </Link>
     );

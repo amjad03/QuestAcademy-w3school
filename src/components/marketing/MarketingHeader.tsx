@@ -26,7 +26,7 @@ export function MarketingHeader() {
   return (
     <header className="sticky top-0 z-40 border-b-2 border-line bg-surface/95 backdrop-blur">
       <div className="mx-auto flex h-[72px] max-w-[1120px] items-center gap-3 px-4 sm:gap-6 sm:px-5">
-        <Logo />
+        <Logo tinyMark />
         <nav className="ml-6 hidden items-center gap-1 md:flex">
           <Link href="/courses" className="btn-flat !text-muted hover:!text-accent">
             {t("site.nav.courses", "Courses")}

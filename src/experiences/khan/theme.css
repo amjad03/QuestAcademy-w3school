@@ -407,7 +407,6 @@ html.dark[data-skin="modes"]:is([data-mode="adventure"], [data-mode="focus"], [d
 }
 
 html[data-skin="modes"]:is([data-mode="adventure"], [data-mode="focus"], [data-mode="mastery"], [data-mode="research"], [data-mode="professional"]) .kh-iconbtn {
-  display: inline-grid;
   place-items: center;
   height: 2.25rem;
   width: 2.25rem;
@@ -418,6 +417,10 @@ html[data-skin="modes"]:is([data-mode="adventure"], [data-mode="focus"], [data-m
     background-color 0.12s,
     color 0.12s;
 }
+/* display at zero specificity so responsive utilities (hidden, md:flex …) win */
+:where(html[data-skin="modes"]:is([data-mode="adventure"], [data-mode="focus"], [data-mode="mastery"], [data-mode="research"], [data-mode="professional"]) .kh-iconbtn) {
+  display: inline-grid;
+}
 html[data-skin="modes"]:is([data-mode="adventure"], [data-mode="focus"], [data-mode="mastery"], [data-mode="research"], [data-mode="professional"]) .kh-iconbtn:hover,
 html[data-skin="modes"]:is([data-mode="adventure"], [data-mode="focus"], [data-mode="mastery"], [data-mode="research"], [data-mode="professional"]) .kh-iconbtn[aria-expanded="true"] {
   background: rgb(var(--surface-2));
@@ -425,7 +428,6 @@ html[data-skin="modes"]:is([data-mode="adventure"], [data-mode="focus"], [data-m
 }
 
 html[data-skin="modes"]:is([data-mode="adventure"], [data-mode="focus"], [data-mode="mastery"], [data-mode="research"], [data-mode="professional"]) .kh-menubtn {
-  display: inline-flex;
   height: 2.5rem;
   align-items: center;
   gap: 0.35rem;
@@ -435,6 +437,10 @@ html[data-skin="modes"]:is([data-mode="adventure"], [data-mode="focus"], [data-m
   font-weight: 600;
   color: rgb(var(--accent-shade));
   transition: background-color 0.12s;
+}
+/* display at zero specificity so responsive utilities (hidden, md:flex …) win */
+:where(html[data-skin="modes"]:is([data-mode="adventure"], [data-mode="focus"], [data-mode="mastery"], [data-mode="research"], [data-mode="professional"]) .kh-menubtn) {
+  display: inline-flex;
 }
 html.dark[data-skin="modes"]:is([data-mode="adventure"], [data-mode="focus"], [data-mode="mastery"], [data-mode="research"], [data-mode="professional"]) .kh-menubtn {
   color: rgb(var(--accent));
@@ -471,7 +477,6 @@ html[data-skin="modes"]:is([data-mode="adventure"], [data-mode="focus"], [data-m
 /* sub-navigation tabs (desktop) and generic underlined tabs */
 html[data-skin="modes"]:is([data-mode="adventure"], [data-mode="focus"], [data-mode="mastery"], [data-mode="research"], [data-mode="professional"]) .kh-tab {
   position: relative;
-  display: inline-flex;
   align-items: center;
   gap: 0.45rem;
   flex-shrink: 0;
@@ -481,6 +486,10 @@ html[data-skin="modes"]:is([data-mode="adventure"], [data-mode="focus"], [data-m
   font-weight: 600;
   color: rgb(var(--muted));
   transition: color 0.12s;
+}
+/* display at zero specificity so responsive utilities (hidden, md:flex …) win */
+:where(html[data-skin="modes"]:is([data-mode="adventure"], [data-mode="focus"], [data-mode="mastery"], [data-mode="research"], [data-mode="professional"]) .kh-tab) {
+  display: inline-flex;
 }
 html[data-skin="modes"]:is([data-mode="adventure"], [data-mode="focus"], [data-mode="mastery"], [data-mode="research"], [data-mode="professional"]) .kh-tab:hover {
   color: rgb(var(--ink));
@@ -518,7 +527,6 @@ html.dark[data-skin="modes"]:is([data-mode="adventure"], [data-mode="focus"], [d
   box-shadow: 0 12px 32px rgb(0 0 0 / 0.55);
 }
 html[data-skin="modes"]:is([data-mode="adventure"], [data-mode="focus"], [data-mode="mastery"], [data-mode="research"], [data-mode="professional"]) .kh-menuitem {
-  display: flex;
   width: 100%;
   min-height: 2.5rem;
   align-items: center;
@@ -529,6 +537,10 @@ html[data-skin="modes"]:is([data-mode="adventure"], [data-mode="focus"], [data-m
   font-size: 0.9rem;
   font-weight: 500;
   color: rgb(var(--ink));
+}
+/* display at zero specificity so responsive utilities (hidden, md:flex …) win */
+:where(html[data-skin="modes"]:is([data-mode="adventure"], [data-mode="focus"], [data-mode="mastery"], [data-mode="research"], [data-mode="professional"]) .kh-menuitem) {
+  display: flex;
 }
 html[data-skin="modes"]:is([data-mode="adventure"], [data-mode="focus"], [data-mode="mastery"], [data-mode="research"], [data-mode="professional"]) .kh-menuitem:hover,
 html[data-skin="modes"]:is([data-mode="adventure"], [data-mode="focus"], [data-mode="mastery"], [data-mode="research"], [data-mode="professional"]) .kh-menuitem:focus-visible {
@@ -547,7 +559,6 @@ html[data-skin="modes"]:is([data-mode="adventure"], [data-mode="focus"], [data-m
 }
 
 html[data-skin="modes"]:is([data-mode="adventure"], [data-mode="focus"], [data-mode="mastery"], [data-mode="research"], [data-mode="professional"]) .kh-courselink {
-  display: flex;
   align-items: center;
   gap: 0.6rem;
   border-radius: 6px;
@@ -555,6 +566,10 @@ html[data-skin="modes"]:is([data-mode="adventure"], [data-mode="focus"], [data-m
   font-size: 0.875rem;
   font-weight: 500;
   color: rgb(var(--ink));
+}
+/* display at zero specificity so responsive utilities (hidden, md:flex …) win */
+:where(html[data-skin="modes"]:is([data-mode="adventure"], [data-mode="focus"], [data-mode="mastery"], [data-mode="research"], [data-mode="professional"]) .kh-courselink) {
+  display: flex;
 }
 html[data-skin="modes"]:is([data-mode="adventure"], [data-mode="focus"], [data-mode="mastery"], [data-mode="research"], [data-mode="professional"]) .kh-courselink:hover {
   background: rgb(var(--accent-soft));
@@ -566,7 +581,6 @@ html.dark[data-skin="modes"]:is([data-mode="adventure"], [data-mode="focus"], [d
 
 /* pills */
 html[data-skin="modes"]:is([data-mode="adventure"], [data-mode="focus"], [data-mode="mastery"], [data-mode="research"], [data-mode="professional"]) .kh-pill {
-  display: inline-flex;
   height: 2rem;
   align-items: center;
   gap: 0.35rem;
@@ -579,6 +593,10 @@ html[data-skin="modes"]:is([data-mode="adventure"], [data-mode="focus"], [data-m
   font-weight: 600;
   color: rgb(var(--ink));
   font-variant-numeric: tabular-nums;
+}
+/* display at zero specificity so responsive utilities (hidden, md:flex …) win */
+:where(html[data-skin="modes"]:is([data-mode="adventure"], [data-mode="focus"], [data-mode="mastery"], [data-mode="research"], [data-mode="professional"]) .kh-pill) {
+  display: inline-flex;
 }
 html[data-skin="modes"]:is([data-mode="adventure"], [data-mode="focus"], [data-mode="mastery"], [data-mode="research"], [data-mode="professional"]) a.kh-pill:hover {
   border-color: rgb(var(--accent));
@@ -624,7 +642,6 @@ html[data-skin="modes"]:is([data-mode="adventure"], [data-mode="focus"], [data-m
   background: rgb(232 240 254);
 }
 html[data-skin="modes"]:is([data-mode="adventure"], [data-mode="focus"], [data-mode="mastery"], [data-mode="research"], [data-mode="professional"]) .kh-hero .kh-hero-ghost {
-  display: inline-flex;
   min-height: 2.5rem;
   align-items: center;
   gap: 0.4rem;
@@ -635,6 +652,10 @@ html[data-skin="modes"]:is([data-mode="adventure"], [data-mode="focus"], [data-m
   font-weight: 700;
   color: #fff;
 }
+/* display at zero specificity so responsive utilities (hidden, md:flex …) win */
+:where(html[data-skin="modes"]:is([data-mode="adventure"], [data-mode="focus"], [data-mode="mastery"], [data-mode="research"], [data-mode="professional"]) .kh-hero .kh-hero-ghost) {
+  display: inline-flex;
+}
 html[data-skin="modes"]:is([data-mode="adventure"], [data-mode="focus"], [data-mode="mastery"], [data-mode="research"], [data-mode="professional"]) .kh-hero .kh-hero-ghost:hover {
   background: rgb(255 255 255 / 0.1);
 }
@@ -644,13 +665,16 @@ html[data-skin="modes"]:is([data-mode="adventure"], [data-mode="focus"], [data-m
 
 /* segmented control */
 html[data-skin="modes"]:is([data-mode="adventure"], [data-mode="focus"], [data-mode="mastery"], [data-mode="research"], [data-mode="professional"]) .kh-seg {
-  display: inline-flex;
   flex-wrap: wrap;
   gap: 2px;
   border: 1px solid rgb(var(--line));
   border-radius: 8px;
   background: rgb(var(--surface-2));
   padding: 3px;
+}
+/* display at zero specificity so responsive utilities (hidden, md:flex …) win */
+:where(html[data-skin="modes"]:is([data-mode="adventure"], [data-mode="focus"], [data-mode="mastery"], [data-mode="research"], [data-mode="professional"]) .kh-seg) {
+  display: inline-flex;
 }
 html[data-skin="modes"]:is([data-mode="adventure"], [data-mode="focus"], [data-mode="mastery"], [data-mode="research"], [data-mode="professional"]) .kh-seg > :is(a, button) {
   border-radius: 6px;
@@ -667,13 +691,16 @@ html[data-skin="modes"]:is([data-mode="adventure"], [data-mode="focus"], [data-m
 
 /* mastery squares */
 html[data-skin="modes"]:is([data-mode="adventure"], [data-mode="focus"], [data-mode="mastery"], [data-mode="research"], [data-mode="professional"]) .kh-sq {
-  display: inline-block;
   flex-shrink: 0;
   width: 0.875rem;
   height: 0.875rem;
   border-radius: 3px;
   border: 1px solid rgb(var(--kh-line-strong));
   background: rgb(var(--surface));
+}
+/* display at zero specificity so responsive utilities (hidden, md:flex …) win */
+:where(html[data-skin="modes"]:is([data-mode="adventure"], [data-mode="focus"], [data-mode="mastery"], [data-mode="research"], [data-mode="professional"]) .kh-sq) {
+  display: inline-block;
 }
 html[data-skin="modes"]:is([data-mode="adventure"], [data-mode="focus"], [data-mode="mastery"], [data-mode="research"], [data-mode="professional"]) .kh-sq.kh-m1 {
   border: 2px solid rgb(var(--kh-m1));
