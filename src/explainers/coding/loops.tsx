@@ -330,6 +330,7 @@ const mission: Mission = {
   steps: [
     {
       task: "Press Run and count Bolt's sides.",
+      settle: 3000,
       predict: { question: "The loop says repeat 4. How many sides will Bolt draw?", options: ["3", "4", "5"], answer: 1, trap: 2 },
       scene: (api) => <StepShape {...api} pts={SQ} turn={90} code={["repeat 4:", "    forward", "    turn right"]} color={TRAIL} />,
       hint: "Tap the green Run button and watch the lap number.",
@@ -337,6 +338,7 @@ const mission: Mission = {
     },
     {
       task: "Run the loop with repeat 6.",
+      settle: 3000,
       predict: { question: "Now it says repeat 6 and turn 60°. What will Bolt draw?", options: ["A square again", "A shape with 6 sides", "Just one long line"], answer: 1 },
       scene: (api) => <StepShape {...api} pts={HEX} turn={60} code={["repeat 6:", "    forward", "    turn right 60"]} color="#0EA5E9" />,
       hint: "The 4 is already changed to 6 for you. Just tap Run.",
@@ -344,6 +346,7 @@ const mission: Mission = {
     },
     {
       task: "Run this Python loop.",
+      settle: 3000,
       predict: { question: "What will for i in range(4) print?", options: ["1 2 3 4", "0 1 2 3", "0 1 2 3 4"], answer: 1, trap: 0 },
       scene: (api) => <StepRange {...api} />,
       hint: "Tap Run and watch the box called i.",

@@ -370,12 +370,14 @@ const mission: Mission = {
   steps: [
     {
       task: "Search for Mia page by page.",
+      settle: 3000,
       scene: (api) => <StepSearch {...api} run={LINEAR_RUN} color={LINEAR} button="Search page by page" />,
       hint: "Tap the orange button and watch the counter.",
       explain: "Checking every item in turn is called **linear search**. Mia is on page 13, so it took **13 checks**. In the worst case it checks all 16.",
     },
     {
       task: "Now search by opening the middle.",
+      settle: 3000,
       predict: { question: "Open the middle, throw away the half Mia can't be in, repeat. How many checks?", options: ["About 4", "About 8", "16, same as before"], answer: 0, trap: 2 },
       scene: (api) => <StepSearch {...api} run={HALVING_RUN} color={HALVE} button="Search by halving" />,
       hint: "Tap the blue button. Crossed-out pages are ruled out.",
@@ -383,6 +385,7 @@ const mission: Mission = {
     },
     {
       task: "Double the book to 32 names.",
+      settle: 3000,
       predict: { question: "Twice as many names. What happens to the halving checks?", options: ["They double, to about 8", "Just one more, about 5"], answer: 1, trap: 0 },
       scene: (api) => <StepDouble {...api} />,
       hint: "Tap Double the names and compare the two bars.",
@@ -390,6 +393,7 @@ const mission: Mission = {
     },
     {
       task: "Race them on a million names.",
+      settle: 3000,
       predict: { question: "Page by page gets a computer 10× faster. Halving stays on a normal one. Who wins?", options: ["Page by page — a faster computer fixes a slow method", "Halving, by a huge amount"], answer: 1, trap: 0 },
       scene: (api) => <StepRace {...api} />,
       hint: "Tap Start the race.",

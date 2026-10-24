@@ -352,6 +352,7 @@ const mission: Mission = {
   steps: [
     {
       task: "Cut the photo into packets.",
+      settle: 3000,
       predict: { question: "How does a photo travel across the internet?", options: ["In one big piece, all at once", "Cut into small numbered pieces"], answer: 1, trap: 0 },
       scene: (api) => <StepCut {...api} />,
       hint: "Tap the green button under the photo.",
@@ -359,6 +360,7 @@ const mission: Mission = {
     },
     {
       task: "Send the packets to Grandma.",
+      settle: 3000,
       predict: { question: "Router R1 has a traffic jam. What will the packets do?", options: ["Wait up in the cloud until it clears", "Take another road around it"], answer: 1, trap: 0 },
       scene: (api) => <StepSend {...api} />,
       hint: "Tap Send and watch the packets hop.",
@@ -366,6 +368,7 @@ const mission: Mission = {
     },
     {
       task: "Rebuild the photo on Grandma's tablet.",
+      settle: 3000,
       predict: { question: "The packets came as 2, 4, 1, 3. Can the tablet fix the order?", options: ["No — the photo stays scrambled", "Yes — it sorts them by their numbers"], answer: 1, trap: 0 },
       scene: (api) => <StepRebuild {...api} />,
       hint: "Tap the button under the pieces.",

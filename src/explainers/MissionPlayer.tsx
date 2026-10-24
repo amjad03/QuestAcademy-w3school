@@ -180,9 +180,24 @@ export function MissionPlayer({ mission, color }: { mission: Mission; color: str
                       </p>
                     )}
                     <Md text={step.explain} className={clsx("leading-relaxed", young ? "text-lg" : "text-[15px]")} />
-                    <button type="button" onClick={() => (i + 1 < mission.steps.length ? start(i + 1) : (stopVoice(), setI(mission.steps.length)))} className="mt-4 inline-flex min-h-[48px] items-center gap-2 rounded-2xl px-6 font-black text-white" style={{ background: color }}>
-                      {i + 1 < mission.steps.length ? t("mission.next", "Next step") : t("mission.finish", "Finish")} <ArrowRight className="h-5 w-5" />
-                    </button>
+                    <div className="mt-4 flex flex-wrap items-center gap-3">
+                      <button type="button" onClick={() => (i + 1 < mission.steps.length ? start(i + 1) : (stopVoice(), setI(mission.steps.length)))} className="inline-flex min-h-[48px] items-center gap-2 rounded-2xl px-6 font-black text-white" style={{ background: color }}>
+                        {i + 1 < mission.steps.length ? t("mission.next", "Next step") : t("mission.finish", "Finish")} <ArrowRight className="h-5 w-5" />
+                      </button>
+                      <button
+                        type="button"
+                        onClick={() => {
+                          // Replay this step: fresh scene, same guess.
+                          stopVoice();
+                          setComplete(false);
+                          setPhase("do");
+                          setRun((r) => r + 1);
+                        }}
+                        className="inline-flex min-h-[48px] items-center gap-1.5 rounded-2xl px-3 text-sm font-bold text-muted hover:text-ink"
+                      >
+                        <RotateCcw className="h-4 w-4" /> {t("mission.again.step", "Try this step again")}
+                      </button>
+                    </div>
                   </motion.div>
                 )}
               </>

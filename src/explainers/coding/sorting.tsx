@@ -229,6 +229,7 @@ const mission: Mission = {
   steps: [
     {
       task: "Compare the first two friends.",
+      settle: 3000,
       predict: { question: "How does the computer find out who is in the wrong place?", options: ["It looks at the whole line at once and just knows", "It compares two neighbours at a time"], answer: 1, trap: 0 },
       scene: (api) => <StepPass {...api} start={O0} from={0} to={1} sorted={[]} button="Compare" />,
       hint: "Tap the pink Compare button.",
@@ -236,6 +237,7 @@ const mission: Mission = {
     },
     {
       task: "Finish walking down the line.",
+      settle: 3000,
       predict: { question: "After one walk down the line, who will be at the end?", options: ["The tallest friend (160)", "Everyone will be sorted", "The shortest friend (115)"], answer: 0, trap: 1 },
       scene: (api) => <StepPass {...api} start={O1} from={1} to={4} sorted={[4]} button="Keep comparing" />,
       hint: "Tap the button and watch each pair get checked.",
@@ -243,6 +245,7 @@ const mission: Mission = {
     },
     {
       task: "Do a second pass.",
+      settle: 3000,
       predict: { question: "On the second pass, how many swaps will there be?", options: ["0", "1", "4"], answer: 1 },
       scene: (api) => <StepPass {...api} start={O2} from={0} to={3} sorted={[0, 1, 2, 3, 4]} button="Second pass" />,
       hint: "Tap the button and count the swaps.",
