@@ -327,3 +327,25 @@ export function BigSlider({ label, value, min, max, step = 1, onChange, left, ri
     </label>
   );
 }
+
+/* ------------------------------------------------------------------ */
+/* Guided mission helpers                                              */
+/* ------------------------------------------------------------------ */
+
+/** The one big action button of a mission step (at least 52px tall). */
+export function StepButton({ onClick, disabled, color, children, label }: { onClick: () => void; disabled?: boolean; color: string; children: ReactNode; label?: string }) {
+  return (
+    <button type="button" onClick={onClick} disabled={disabled} aria-label={label} className="mx-auto mt-3 flex min-h-[52px] items-center justify-center gap-2 rounded-2xl px-6 text-lg font-black text-white shadow-sm transition disabled:opacity-50" style={{ background: color }}>
+      {children}
+    </button>
+  );
+}
+
+/** A short status line under a mission scene ("Night", "3 hours"). */
+export function StepNote({ children, color }: { children: ReactNode; color?: string }) {
+  return (
+    <p className="mt-2 text-center text-base font-black" style={color ? { color } : undefined} aria-live="polite">
+      {children}
+    </p>
+  );
+}
