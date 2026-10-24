@@ -80,7 +80,7 @@ export const CLASS_GROUPS: ClassGroup[] = [
       { board: "kseeb", grades: ["10"] },
       { board: "icse", grades: ["9", "10"] },
     ],
-    comingSoon: ["Economics", "Hindi", "Information technology"],
+    comingSoon: ["Sanskrit", "Class 9 for Karnataka SSLC"],
   },
   {
     id: "classes-11-12",

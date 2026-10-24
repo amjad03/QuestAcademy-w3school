@@ -1325,6 +1325,17 @@ export const topics: Topic[] = [
             },
           },
           {
+            type: "checkpoint",
+            questions: [
+              {
+                kind: "fill",
+                q: "ತತ್ಸಮ ಅಕ್ಷರ (letter) → ತದ್ಭವ ___ .",
+                answer: ["ಅಕ್ಕರ"],
+                explain: "ಕ್ಷ becomes ಕ್ಕ: ಅಕ್ಷರ → ಅಕ್ಕರ.",
+              },
+            ],
+          },
+          {
             type: "callout",
             tone: "exam",
             title: "SSLC exam tip",
@@ -1474,7 +1485,7 @@ export const topics: Topic[] = [
             type: "activity",
             activity: {
               kind: "reveal",
-              prompt: "Which alankara is this sentence?",
+              prompt: "ಚುಕ್ಕೆಗಳು ಮುತ್ತುಗಳೋ ಎಂಬಂತೆ ಹೊಳೆಯುತ್ತಿದ್ದವು. Which alankara?",
               emoji: "🌙",
               options: ["ಉಪಮಾ", "ರೂಪಕ", "ಉತ್ಪ್ರೇಕ್ಷೆ", "ಅನುಪ್ರಾಸ"],
               answer: 2,
@@ -1486,7 +1497,7 @@ export const topics: Topic[] = [
             type: "callout",
             tone: "exam",
             title: "SSLC exam tip",
-            md: "For a 2-mark alankara question, the board expects: **ಉಪಮೇಯ, ಉಪಮಾನ, ಉಪಮಾವಾಚಕ, ಸಮಾನಧರ್ಮ, ಅಲಂಕಾರದ ಹೆಸರು, ಸಮನ್ವಯ** (a one-line explanation). Students lose marks by writing only the name. For ರೂಪಕ, write 'ಉಪಮಾವಾಚಕ ಇಲ್ಲ'.",
+            md: "For an alankara question, the board expects: **ಉಪಮೇಯ, ಉಪಮಾನ, ಉಪಮಾವಾಚಕ, ಸಮಾನಧರ್ಮ, ಅಲಂಕಾರದ ಹೆಸರು, ಸಮನ್ವಯ** (a one-line explanation). Students lose marks by writing only the name. For ರೂಪಕ, write 'ಉಪಮಾವಾಚಕ ಇಲ್ಲ'.",
           },
           {
             type: "keypoints",
@@ -1729,9 +1740,686 @@ export const topics: Topic[] = [
       },
     ],
   },
+  /* ------------------------------------------------------------------ */
+  {
+    slug: "kannada-gade-nudigattu",
+    title: "Proverbs and Idioms (ಗಾದೆಗಳು ಮತ್ತು ನುಡಿಗಟ್ಟುಗಳು)",
+    icon: "💬",
+    description: "Common Kannada proverbs (ಗಾದೆ) with meanings, how to expand a proverb, and everyday idioms (ನುಡಿಗಟ್ಟು).",
+    lessons: [
+      {
+        slug: "gadegalu-mattu-nudigattugalu",
+        title: "ಗಾದೆ and ನುಡಿಗಟ್ಟು",
+        summary: "What proverbs and idioms are, ten useful ones with meanings, and how to write a proverb expansion (ಗಾದೆ ವಿಸ್ತರಣೆ).",
+        minutes: 15,
+        xp: 40,
+        blocks: [
+          {
+            type: "text",
+            md: "A **ಗಾದೆ** (proverb) is a short, old saying that carries a life lesson. People say 'ವೇದ ಸುಳ್ಳಾದರೂ ಗಾದೆ ಸುಳ್ಳಾಗದು' — even if the Vedas are wrong, a proverb is never wrong. This shows how much people trust proverbs.\n\nA **ನುಡಿಗಟ್ಟು** (idiom) is a group of words with a special meaning that is different from the meaning of each word. ಕಾಲು ಕೀಳು does not mean 'pull out a leg'; it means 'run away'.",
+          },
+          {
+            type: "table",
+            headers: ["ಗಾದೆ (proverb)", "Word meaning", "Real meaning"],
+            rows: [
+              ["ಹಾಸಿಗೆ ಇದ್ದಷ್ಟು ಕಾಲು ಚಾಚು", "stretch your legs only as long as the bed", "spend only as much as you have"],
+              ["ಕೈ ಕೆಸರಾದರೆ ಬಾಯಿ ಮೊಸರು", "if the hand gets muddy, the mouth gets curd", "hard work brings reward"],
+              ["ಅತಿ ಆಸೆ ಗತಿ ಕೇಡು", "too much desire, bad end", "greed leads to ruin"],
+              ["ಹನಿ ಹನಿ ಗೂಡಿದರೆ ಹಳ್ಳ", "drops together make a stream", "small savings add up"],
+              ["ದೂರದ ಬೆಟ್ಟ ನುಣ್ಣಗೆ", "a far hill looks smooth", "things far away look better than they are"],
+              ["ಮಾಡಿದ್ದುಣ್ಣೋ ಮಹಾರಾಯ", "eat what you have made, sir", "you face the results of your own deeds"],
+              ["ಕುಣಿಯಲಾರದವಳು ನೆಲ ಡೊಂಕು ಅಂದಳು", "she who could not dance said the floor is crooked", "blaming others for your own weakness"],
+              ["ಆರೋಗ್ಯವೇ ಭಾಗ್ಯ", "health itself is fortune", "health is the greatest wealth"],
+            ],
+          },
+          {
+            type: "table",
+            headers: ["ನುಡಿಗಟ್ಟು (idiom)", "Meaning", "Sentence"],
+            rows: [
+              ["ಕಾಲು ಕೀಳು", "to run away", "ಪೊಲೀಸರನ್ನು ಕಂಡು ಕಳ್ಳ ಕಾಲು ಕಿತ್ತ. (Seeing the police, the thief ran away.)"],
+              ["ಮೂಗು ತೂರಿಸು", "to interfere", "ಬೇರೆಯವರ ವಿಷಯದಲ್ಲಿ ಮೂಗು ತೂರಿಸಬೇಡ. (Don't interfere in others' matters.)"],
+              ["ಬೆನ್ನು ತಟ್ಟು", "to encourage, praise", "ಶಿಕ್ಷಕರು ನನ್ನ ಬೆನ್ನು ತಟ್ಟಿದರು. (The teacher encouraged me.)"],
+              ["ಕೈಕೊಡು", "to let someone down", "ಕೊನೆಯ ಕ್ಷಣದಲ್ಲಿ ಗೆಳೆಯ ಕೈಕೊಟ್ಟ. (My friend let me down at the last moment.)"],
+              ["ತಲೆ ತಿನ್ನು", "to pester, bother", "ತಮ್ಮ ಆಟಿಕೆಗಾಗಿ ತಲೆ ತಿನ್ನುತ್ತಿದ್ದಾನೆ. (Little brother is pestering for a toy.)"],
+              ["ಹೊಟ್ಟೆ ಉರಿ", "jealousy", "ಅವನ ಯಶಸ್ಸು ನೋಡಿ ಕೆಲವರಿಗೆ ಹೊಟ್ಟೆ ಉರಿ. (Some are jealous of his success.)"],
+            ],
+          },
+          {
+            type: "example",
+            title: "Expand a proverb (ಗಾದೆ ವಿಸ್ತರಣೆ)",
+            problem: "Expand the proverb 'ಕೈ ಕೆಸರಾದರೆ ಬಾಯಿ ಮೊಸರು' in 5–6 sentences.",
+            steps: [
+              "Step 1 — the word meaning: a farmer's hands get muddy in the field.",
+              "Step 2 — the real meaning: hard work gives good results. ಕಷ್ಟಪಟ್ಟರೆ ಫಲ ಸಿಗುತ್ತದೆ.",
+              "Step 3 — an example from life: ರೈತನು ಹೊಲದಲ್ಲಿ ಕೆಸರಿನಲ್ಲಿ ದುಡಿದರೆ ಒಳ್ಳೆಯ ಬೆಳೆ ಬರುತ್ತದೆ. ಆಗ ಅವನ ಮನೆಯಲ್ಲಿ ಹಾಲು, ಮೊಸರು, ಅನ್ನ ತುಂಬಿರುತ್ತದೆ. (If a farmer works in the mud, he gets a good crop, and his home is full of milk, curd and rice.)",
+              "Step 4 — a second example: ವಿದ್ಯಾರ್ಥಿಯು ಪ್ರತಿದಿನ ಓದಿದರೆ ಒಳ್ಳೆಯ ಅಂಕಗಳು ಸಿಗುತ್ತವೆ. (A student who studies daily gets good marks.)",
+              "Step 5 — close with the lesson: ಕಷ್ಟಪಡದೆ ಸುಖ ಸಿಗುವುದಿಲ್ಲ ಎಂಬುದೇ ಈ ಗಾದೆಯ ಅರ್ಥ. (The proverb means there is no comfort without effort.)",
+            ],
+            answer: "A good expansion has: word meaning → real meaning → one or two life examples → the lesson in the last line.",
+          },
+          {
+            type: "checkpoint",
+            questions: [
+              {
+                kind: "mcq",
+                q: "'ಹಾಸಿಗೆ ಇದ್ದಷ್ಟು ಕಾಲು ಚಾಚು' teaches us to:",
+                options: ["sleep on a big bed", "spend within our means", "exercise our legs", "buy a new bed"],
+                answer: 1,
+                explain: "The bed is what we have. Stretch only that far: spend only what you can afford.",
+              },
+            ],
+          },
+          {
+            type: "mistake",
+            wrong: "'ಕಾಲು ಕೀಳು' means to hurt your leg.",
+            right: "'ಕಾಲು ಕೀಳು' is an idiom meaning **to run away**.",
+            why: "Learners translate idioms word by word. A ನುಡಿಗಟ್ಟು has a fixed, special meaning that you must learn as one unit.",
+          },
+          {
+            type: "activity",
+            activity: {
+              kind: "match",
+              prompt: "Match each ಗಾದೆ to its meaning.",
+              pairs: [
+                ["ಅತಿ ಆಸೆ ಗತಿ ಕೇಡು", "Greed leads to ruin"],
+                ["ಹನಿ ಹನಿ ಗೂಡಿದರೆ ಹಳ್ಳ", "Small savings add up"],
+                ["ದೂರದ ಬೆಟ್ಟ ನುಣ್ಣಗೆ", "Far things look better than they are"],
+                ["ಮಾಡಿದ್ದುಣ್ಣೋ ಮಹಾರಾಯ", "You face the results of your own deeds"],
+                ["ಕುಣಿಯಲಾರದವಳು ನೆಲ ಡೊಂಕು ಅಂದಳು", "Blaming others for your own weakness"],
+              ],
+              explain: "First see the picture in the words (a far hill, drops of water), then ask what lesson that picture teaches about life.",
+            },
+          },
+          {
+            type: "checkpoint",
+            questions: [
+              {
+                kind: "truefalse",
+                q: "'ಬೇರೆಯವರ ವಿಷಯದಲ್ಲಿ ಮೂಗು ತೂರಿಸಬೇಡ' means 'do not interfere in other people's matters'.",
+                answer: true,
+                explain: "ಮೂಗು ತೂರಿಸು is an idiom for interfering. It has nothing to do with a real nose.",
+              },
+            ],
+          },
+          {
+            type: "callout",
+            tone: "exam",
+            title: "SSLC exam tip",
+            md: "**ಗಾದೆ ವಿಸ್ತರಣೆ** is a short-paragraph question. Marks are given for the real meaning, a life example and a clear closing line. Writing only the word meaning, or only one sentence, gets low marks. Write in simple, correct Kannada and keep to one tense.",
+          },
+          {
+            type: "keypoints",
+            items: [
+              "**ಗಾದೆ** = an old saying with a life lesson. **ನುಡಿಗಟ್ಟು** = a phrase with a special meaning.",
+              "Learn the real meaning, not just the word meaning.",
+              "ಗಾದೆ ವಿಸ್ತರಣೆ: word meaning → real meaning → example(s) → lesson.",
+              "Use an idiom in a sentence to show you know its meaning.",
+            ],
+          },
+        ],
+        flashcards: [
+          { front: "ಗಾದೆ", back: "A short traditional saying that teaches a life lesson." },
+          { front: "ನುಡಿಗಟ್ಟು", back: "A phrase whose meaning is different from its separate words (idiom)." },
+          { front: "ಕೈ ಕೆಸರಾದರೆ ಬಾಯಿ ಮೊಸರು", back: "Hard work brings reward." },
+          { front: "ಅತಿ ಆಸೆ ಗತಿ ಕೇಡು", back: "Greed leads to ruin." },
+          { front: "ಮೂಗು ತೂರಿಸು", back: "To interfere in others' matters." },
+          { front: "ಬೆನ್ನು ತಟ್ಟು", back: "To encourage or praise someone." },
+        ],
+        quiz: [
+          {
+            kind: "mcq",
+            q: "'ಕೈಕೊಡು' as an idiom means:",
+            options: ["to give a hand to help", "to let someone down", "to shake hands", "to give a gift"],
+            answer: 1,
+            explain: "ಕೈಕೊಡು means to fail or let someone down: ಕೊನೆಯ ಕ್ಷಣದಲ್ಲಿ ಗೆಳೆಯ ಕೈಕೊಟ್ಟ.",
+            difficulty: 2,
+            hint: "It is not 'give a hand'.",
+          },
+          {
+            kind: "truefalse",
+            q: "'ಆರೋಗ್ಯವೇ ಭಾಗ್ಯ' means health is the greatest wealth.",
+            answer: true,
+            explain: "ಭಾಗ್ಯ means fortune; the proverb says good health is our real fortune.",
+          },
+          {
+            kind: "mcq",
+            q: "Which proverb fits a student who blames the pen for bad handwriting?",
+            options: ["ಹನಿ ಹನಿ ಗೂಡಿದರೆ ಹಳ್ಳ", "ಕುಣಿಯಲಾರದವಳು ನೆಲ ಡೊಂಕು ಅಂದಳು", "ಆರೋಗ್ಯವೇ ಭಾಗ್ಯ", "ದೂರದ ಬೆಟ್ಟ ನುಣ್ಣಗೆ"],
+            answer: 1,
+            explain: "Blaming the floor (or the pen) for one's own weakness is exactly this proverb.",
+          },
+          {
+            kind: "fill",
+            q: "ಹನಿ ಹನಿ ಗೂಡಿದರೆ ___ (a stream).",
+            answer: ["ಹಳ್ಳ"],
+            explain: "Drops of water together make a stream: small things add up.",
+          },
+          {
+            kind: "order",
+            q: "Put the parts of a ಗಾದೆ ವಿಸ್ತರಣೆ in order.",
+            items: ["Word meaning of the proverb", "Real meaning", "Example from life", "Closing line with the lesson"],
+            explain: "Start from the picture, explain the lesson, prove it with examples, and close it clearly.",
+          },
+          {
+            kind: "multi",
+            q: "Which are ನುಡಿಗಟ್ಟುಗಳು (idioms)? (choose all)",
+            options: ["ಕಾಲು ಕೀಳು", "ತಲೆ ತಿನ್ನು", "ಅತಿ ಆಸೆ ಗತಿ ಕೇಡು", "ಹೊಟ್ಟೆ ಉರಿ"],
+            answers: [0, 1, 3],
+            explain: "ಕಾಲು ಕೀಳು, ತಲೆ ತಿನ್ನು and ಹೊಟ್ಟೆ ಉರಿ are idioms. ಅತಿ ಆಸೆ ಗತಿ ಕೇಡು is a full proverb.",
+            difficulty: 2,
+          },
+        ],
+      },
+    ],
+  },
+  /* ------------------------------------------------------------------ */
+  {
+    slug: "kannada-patra-lekhana",
+    title: "Letter Writing (ಪತ್ರಲೇಖನ)",
+    icon: "✉️",
+    description: "Formats and model letters for a personal letter (ಖಾಸಗಿ ಪತ್ರ) and a formal letter (ವ್ಯವಹಾರ ಪತ್ರ).",
+    lessons: [
+      {
+        slug: "khasagi-vyavahara-patra",
+        title: "ಖಾಸಗಿ ಪತ್ರ and ವ್ಯವಹಾರ ಪತ್ರ",
+        summary: "The parts of a personal and a formal letter in Kannada, the right greetings and endings, and two model letters.",
+        minutes: 18,
+        xp: 45,
+        blocks: [
+          {
+            type: "text",
+            md: "There are two kinds of letters. A **ಖಾಸಗಿ ಪತ್ರ** (personal letter) is written to family and friends. A **ವ್ಯವಹಾರ ಪತ್ರ** (formal or official letter) is written to a headmaster, an officer, a company or a newspaper.\n\nThe two kinds use different greetings (**ಸಂಬೋಧನೆ**) and endings. Using a family greeting in a formal letter is a common error.",
+          },
+          {
+            type: "table",
+            headers: ["Part", "ಖಾಸಗಿ ಪತ್ರ (personal)", "ವ್ಯವಹಾರ ಪತ್ರ (formal)"],
+            rows: [
+              ["Address", "Only ಸ್ಥಳ (place) and ದಿನಾಂಕ (date) at the top right", "**ಇಂದ** (from) and **ಗೆ** (to) addresses at the top left"],
+              ["Greeting (ಸಂಬೋಧನೆ)", "ತೀರ್ಥರೂಪ ತಂದೆಯವರಿಗೆ (to respected father), ಮಾತೃಶ್ರೀ ಅಮ್ಮನವರಿಗೆ (to respected mother), ಪ್ರೀತಿಯ ಗೆಳೆಯ / ಗೆಳತಿ", "ಮಾನ್ಯರೇ (Sir / Madam), ಮಾನ್ಯ ಮುಖ್ಯೋಪಾಧ್ಯಾಯರೇ"],
+              ["Subject", "Not needed", "**ವಿಷಯ:** one line saying what the letter is about"],
+              ["Opening", "Wishes and health news: ನಾನು ಇಲ್ಲಿ ಕ್ಷೇಮ. ನೀವೂ ಕ್ಷೇಮವೆಂದು ಭಾವಿಸುತ್ತೇನೆ.", "Straight to the point: ನಾನು ನಿಮ್ಮ ಶಾಲೆಯ ಹತ್ತನೇ ತರಗತಿಯ ವಿದ್ಯಾರ್ಥಿ..."],
+              ["Ending", "ಇಂತಿ ನಿಮ್ಮ ಪ್ರೀತಿಯ ಮಗ / ಮಗಳು / ಗೆಳೆಯ + name", "ವಂದನೆಗಳೊಂದಿಗೆ, ಇಂತಿ ತಮ್ಮ ವಿಧೇಯ / ತಮ್ಮ ವಿಶ್ವಾಸಿ + name; ಸ್ಥಳ and ದಿನಾಂಕ"],
+            ],
+          },
+          {
+            type: "heading",
+            text: "Model ಖಾಸಗಿ ಪತ್ರ (to a friend)",
+          },
+          {
+            type: "table",
+            headers: ["Part", "Model text"],
+            rows: [
+              ["ಸ್ಥಳ, ದಿನಾಂಕ", "ಸ್ಥಳ: ಮೈಸೂರು · ದಿನಾಂಕ: 12-01-2026"],
+              ["ಸಂಬೋಧನೆ", "ಪ್ರೀತಿಯ ಗೆಳತಿ ಸುಮಾ,"],
+              ["ಕ್ಷೇಮ ಸಮಾಚಾರ", "ನಾನು ಇಲ್ಲಿ ಕ್ಷೇಮವಾಗಿದ್ದೇನೆ. ನೀನೂ ಕ್ಷೇಮವಾಗಿರುವೆ ಎಂದು ಭಾವಿಸುತ್ತೇನೆ. (I am well here. I hope you are well too.)"],
+              ["ವಿಷಯ (body)", "ಕಳೆದ ವಾರ ನಮ್ಮ ಶಾಲೆಯಲ್ಲಿ ವಿಜ್ಞಾನ ವಸ್ತುಪ್ರದರ್ಶನ ನಡೆಯಿತು. ನಾನು ಮಳೆನೀರು ಕೊಯ್ಲಿನ ಮಾದರಿಯನ್ನು ಮಾಡಿದ್ದೆ. ಅನೇಕರು ಅದನ್ನು ನೋಡಿ ಮೆಚ್ಚಿದರು. ನನಗೆ ಎರಡನೇ ಬಹುಮಾನ ಸಿಕ್ಕಿತು. ನಿನ್ನ ಶಾಲೆಯ ಸುದ್ದಿಯನ್ನೂ ಬರೆ. (Last week our school held a science exhibition. I made a model of rainwater harvesting. Many people liked it. I won second prize. Write your school news too.)"],
+              ["ಮುಕ್ತಾಯ", "ನಿಮ್ಮ ತಂದೆ ತಾಯಿಯವರಿಗೆ ನನ್ನ ನಮಸ್ಕಾರಗಳನ್ನು ತಿಳಿಸು. ಇಂತಿ ನಿನ್ನ ಪ್ರೀತಿಯ ಗೆಳತಿ, ಕವಿತಾ."],
+            ],
+          },
+          {
+            type: "heading",
+            text: "Model ವ್ಯವಹಾರ ಪತ್ರ (leave letter)",
+          },
+          {
+            type: "table",
+            headers: ["Part", "Model text"],
+            rows: [
+              ["ಇಂದ (from)", "ರವಿ ಕೆ., ಹತ್ತನೇ ತರಗತಿ 'ಎ' ವಿಭಾಗ, ಸರ್ಕಾರಿ ಪ್ರೌಢಶಾಲೆ, ಹಾಸನ."],
+              ["ಗೆ (to)", "ಮುಖ್ಯೋಪಾಧ್ಯಾಯರು, ಸರ್ಕಾರಿ ಪ್ರೌಢಶಾಲೆ, ಹಾಸನ."],
+              ["ಸಂಬೋಧನೆ", "ಮಾನ್ಯರೇ,"],
+              ["ವಿಷಯ", "ವಿಷಯ: ಎರಡು ದಿನಗಳ ರಜೆ ಕೋರಿ ಮನವಿ. (Subject: request for two days' leave.)"],
+              ["ಒಡಲು (body)", "ನಾನು ನಿಮ್ಮ ಶಾಲೆಯ ಹತ್ತನೇ ತರಗತಿಯ ವಿದ್ಯಾರ್ಥಿ. ನನಗೆ ನಿನ್ನೆಯಿಂದ ಜ್ವರ ಬಂದಿದೆ. ವೈದ್ಯರು ಎರಡು ದಿನ ವಿಶ್ರಾಂತಿ ಪಡೆಯಲು ಹೇಳಿದ್ದಾರೆ. ಆದ್ದರಿಂದ ದಿನಾಂಕ 15-01-2026 ಮತ್ತು 16-01-2026 ರಂದು ನನಗೆ ರಜೆ ನೀಡಬೇಕೆಂದು ವಿನಂತಿಸುತ್ತೇನೆ. (I have had fever since yesterday. The doctor has told me to rest for two days. So I request leave on 15 and 16 January 2026.)"],
+              ["ಮುಕ್ತಾಯ", "ವಂದನೆಗಳೊಂದಿಗೆ, ಇಂತಿ ತಮ್ಮ ವಿಧೇಯ ವಿದ್ಯಾರ್ಥಿ, ರವಿ ಕೆ. · ಸ್ಥಳ: ಹಾಸನ · ದಿನಾಂಕ: 15-01-2026"],
+            ],
+          },
+          {
+            type: "example",
+            title: "Plan a formal letter",
+            problem: "Write a letter to the Commissioner of your city corporation about the garbage piled near your school. Plan it first.",
+            steps: [
+              "Kind of letter: to an officer → **ವ್ಯವಹಾರ ಪತ್ರ**.",
+              "Top: ಇಂದ (your name as given in the question, class, school) and ಗೆ (ಆಯುಕ್ತರು, ನಗರ ಪಾಲಿಕೆ, with the city name).",
+              "Greeting ಮಾನ್ಯರೇ, then ವಿಷಯ: ಶಾಲೆಯ ಹತ್ತಿರದ ಕಸದ ರಾಶಿಯನ್ನು ತೆರವುಗೊಳಿಸುವಂತೆ ಮನವಿ (request to clear the garbage near the school).",
+              "Body in 3 short parts: the problem (smell, flies, illness), how it affects students, the request (clear it and place a dustbin).",
+              "End: ವಂದನೆಗಳೊಂದಿಗೆ, ಇಂತಿ ತಮ್ಮ ವಿಶ್ವಾಸಿ, name; ಸ್ಥಳ and ದಿನಾಂಕ.",
+            ],
+            answer: "A complete formal letter with ಇಂದ, ಗೆ, ಮಾನ್ಯರೇ, ವಿಷಯ, a 3-part body and a polite ending.",
+          },
+          {
+            type: "checkpoint",
+            questions: [
+              {
+                kind: "mcq",
+                q: "Which greeting suits a letter to your father?",
+                options: ["ಮಾನ್ಯರೇ", "ತೀರ್ಥರೂಪ ತಂದೆಯವರಿಗೆ", "ಆಯುಕ್ತರೇ", "ಪ್ರೀತಿಯ ತಮ್ಮ"],
+                answer: 1,
+                explain: "**ತೀರ್ಥರೂಪ** is the respectful word used for a father in Kannada letters. ಮಾನ್ಯರೇ is for formal letters.",
+              },
+            ],
+          },
+          {
+            type: "mistake",
+            wrong: "A formal letter to the headmaster can end with 'ಇಂತಿ ನಿಮ್ಮ ಪ್ರೀತಿಯ ರವಿ'.",
+            right: "A formal letter ends with 'ವಂದನೆಗಳೊಂದಿಗೆ, ಇಂತಿ ತಮ್ಮ ವಿಧೇಯ ವಿದ್ಯಾರ್ಥಿ, ರವಿ'.",
+            why: "Students mix up the two formats because both start with ಇಂತಿ. 'ಪ್ರೀತಿಯ' (loving) is only for family and friends. Formal letters use ತಮ್ಮ ವಿಧೇಯ (your obedient) or ತಮ್ಮ ವಿಶ್ವಾಸಿ (yours faithfully).",
+          },
+          {
+            type: "activity",
+            activity: {
+              kind: "order",
+              prompt: "Put the parts of a ವ್ಯವಹಾರ ಪತ್ರ in order.",
+              items: ["ಇಂದ (from address)", "ಗೆ (to address)", "ಮಾನ್ಯರೇ (greeting)", "ವಿಷಯ (subject)", "ಪತ್ರದ ಒಡಲು (body)", "ಇಂತಿ ತಮ್ಮ ವಿಧೇಯ + ಹೆಸರು"],
+              explain: "Addresses first, then the greeting and the subject line, then the body, and a polite ending with your name.",
+            },
+          },
+          {
+            type: "callout",
+            tone: "exam",
+            title: "SSLC exam tip",
+            md: "Letter writing is a long-answer question. Marks go to the **format** (addresses, greeting, subject, ending) and to the **content and language**. Use the name and address given in the question; do not write your own name or roll number. Keep the body short, polite and to the point.",
+          },
+          {
+            type: "keypoints",
+            items: [
+              "**ಖಾಸಗಿ ಪತ್ರ**: ಸ್ಥಳ, ದಿನಾಂಕ → ಸಂಬೋಧನೆ → ಕ್ಷೇಮ ಸಮಾಚಾರ → ವಿಷಯ → ಇಂತಿ ನಿಮ್ಮ ಪ್ರೀತಿಯ...",
+              "**ವ್ಯವಹಾರ ಪತ್ರ**: ಇಂದ → ಗೆ → ಮಾನ್ಯರೇ → ವಿಷಯ → ಒಡಲು → ಇಂತಿ ತಮ್ಮ ವಿಧೇಯ / ವಿಶ್ವಾಸಿ.",
+              "ತೀರ್ಥರೂಪ (father), ಮಾತೃಶ್ರೀ (mother) are respectful greetings.",
+              "Use the name given in the question, not your own.",
+            ],
+          },
+        ],
+        flashcards: [
+          { front: "ಖಾಸಗಿ ಪತ್ರ", back: "A personal letter to family or friends." },
+          { front: "ವ್ಯವಹಾರ ಪತ್ರ", back: "A formal letter to an officer, headmaster, company or newspaper." },
+          { front: "ಸಂಬೋಧನೆ", back: "The greeting at the start: ತೀರ್ಥರೂಪ ತಂದೆಯವರಿಗೆ, ಮಾನ್ಯರೇ." },
+          { front: "ವಿಷಯ", back: "The subject line in a formal letter, e.g. ವಿಷಯ: ರಜೆ ಕೋರಿ ಮನವಿ." },
+          { front: "Formal ending", back: "ವಂದನೆಗಳೊಂದಿಗೆ, ಇಂತಿ ತಮ್ಮ ವಿಧೇಯ / ತಮ್ಮ ವಿಶ್ವಾಸಿ + name." },
+          { front: "ತೀರ್ಥರೂಪ, ಮಾತೃಶ್ರೀ", back: "Respectful words for father and mother used in letters." },
+        ],
+        quiz: [
+          {
+            kind: "mcq",
+            q: "Which part is found ONLY in a ವ್ಯವಹಾರ ಪತ್ರ?",
+            options: ["ದಿನಾಂಕ", "ವಿಷಯ (subject line)", "ಸಂಬೋಧನೆ", "Name of the writer"],
+            answer: 1,
+            explain: "A formal letter needs a **ವಿಷಯ** line. Date, greeting and name are in both kinds.",
+          },
+          {
+            kind: "truefalse",
+            q: "In a ಖಾಸಗಿ ಪತ್ರ, we write 'ಮಾನ್ಯರೇ' as the greeting.",
+            answer: false,
+            explain: "ಮಾನ್ಯರೇ is formal. A personal letter uses ಪ್ರೀತಿಯ ಗೆಳೆಯ, ತೀರ್ಥರೂಪ, ಮಾತೃಶ್ರೀ and so on.",
+          },
+          {
+            kind: "fill",
+            q: "A formal letter ends with 'ಇಂತಿ ತಮ್ಮ ___' + name.",
+            answer: ["ವಿಧೇಯ", "ವಿಶ್ವಾಸಿ"],
+            explain: "ತಮ್ಮ ವಿಧೇಯ (your obedient) or ತಮ್ಮ ವಿಶ್ವಾಸಿ (yours faithfully).",
+          },
+          {
+            kind: "mcq",
+            q: "You are writing to the editor of a newspaper about bad roads. Which kind of letter is it?",
+            options: ["ಖಾಸಗಿ ಪತ್ರ", "ವ್ಯವಹಾರ ಪತ್ರ", "Either one", "A proverb expansion"],
+            answer: 1,
+            explain: "A letter to an editor is official, so it is a **ವ್ಯವಹಾರ ಪತ್ರ**.",
+          },
+          {
+            kind: "order",
+            q: "Put the parts of a ಖಾಸಗಿ ಪತ್ರ in order.",
+            items: ["ಸ್ಥಳ, ದಿನಾಂಕ", "ಸಂಬೋಧನೆ (ಪ್ರೀತಿಯ ಗೆಳತಿ)", "ಕ್ಷೇಮ ಸಮಾಚಾರ", "ಪತ್ರದ ವಿಷಯ", "ಇಂತಿ ನಿನ್ನ ಪ್ರೀತಿಯ + ಹೆಸರು"],
+            explain: "Place and date, greeting, health wishes, the news, then a loving ending with the name.",
+          },
+          {
+            kind: "multi",
+            q: "Which are suitable for a ವ್ಯವಹಾರ ಪತ್ರ? (choose all)",
+            options: ["ಮಾನ್ಯರೇ", "ವಂದನೆಗಳೊಂದಿಗೆ", "ಇಂತಿ ನಿನ್ನ ಪ್ರೀತಿಯ ಗೆಳೆಯ", "ವಿಷಯ:"],
+            answers: [0, 1, 3],
+            explain: "ಮಾನ್ಯರೇ, ವಂದನೆಗಳೊಂದಿಗೆ and ವಿಷಯ belong to formal letters. 'ಪ್ರೀತಿಯ ಗೆಳೆಯ' is for a friend.",
+            difficulty: 2,
+          },
+          {
+            kind: "mcq",
+            q: "The exam question says 'ನಿಮ್ಮನ್ನು ಸುನಿಲ್ ಎಂದು ಭಾವಿಸಿ' (imagine you are Sunil). What name do you sign?",
+            options: ["Your own name", "ಸುನಿಲ್", "Your roll number", "No name"],
+            answer: 1,
+            explain: "Always use the name given in the question. Writing your own name or roll number is not allowed.",
+          },
+        ],
+      },
+    ],
+  },
+  /* ------------------------------------------------------------------ */
+  {
+    slug: "kannada-prabandha",
+    title: "Essay Writing (ಪ್ರಬಂಧ)",
+    icon: "📝",
+    description: "How to plan and write a Kannada essay in three parts: ಪೀಠಿಕೆ, ವಿಷಯ ನಿರೂಪಣೆ and ಉಪಸಂಹಾರ.",
+    lessons: [
+      {
+        slug: "prabandha-rachane",
+        title: "Writing a ಪ್ರಬಂಧ",
+        summary: "The three parts of an essay, how to make a point list, useful linking words, and a short model essay on trees.",
+        minutes: 16,
+        xp: 40,
+        blocks: [
+          {
+            type: "text",
+            md: "A **ಪ್ರಬಂಧ** (essay) is a piece of writing on one topic, with ideas in a clear order. Common SSLC topics are about the environment, health, festivals, science, and our state and language.\n\nEvery essay has three parts: **ಪೀಠಿಕೆ** (introduction), **ವಿಷಯ ನಿರೂಪಣೆ** (main body, also called ವಿಷಯ ವಿಸ್ತರಣೆ) and **ಉಪಸಂಹಾರ** (conclusion).",
+          },
+          {
+            type: "table",
+            headers: ["Part", "What it does", "Length"],
+            rows: [
+              ["**ಪೀಠಿಕೆ**", "Introduces the topic in 2–3 sentences. Can start with a fact, a question or a proverb.", "1 short paragraph"],
+              ["**ವಿಷಯ ನಿರೂಪಣೆ**", "Explains the main points, one point per paragraph, with examples.", "2–3 paragraphs"],
+              ["**ಉಪಸಂಹಾರ**", "Sums up and gives a message or suggestion.", "1 short paragraph"],
+            ],
+          },
+          {
+            type: "heading",
+            text: "Model essay: ಮರಗಳ ಮಹತ್ವ (The importance of trees)",
+          },
+          {
+            type: "table",
+            headers: ["Part", "Model text (meaning)"],
+            rows: [
+              ["ಪೀಠಿಕೆ", "ಮರಗಳು ಮನುಷ್ಯನ ಉತ್ತಮ ಗೆಳೆಯರು. ಅವು ಇಲ್ಲದೆ ಭೂಮಿಯ ಮೇಲೆ ಜೀವನ ಕಷ್ಟ. (Trees are man's best friends. Without them life on earth is hard.)"],
+              ["ವಿಷಯ ನಿರೂಪಣೆ 1 — uses", "ಮರಗಳು ನಮಗೆ ಶುದ್ಧ ಗಾಳಿ, ನೆರಳು, ಹಣ್ಣು, ಕಟ್ಟಿಗೆ ಮತ್ತು ಔಷಧಿಗಳನ್ನು ಕೊಡುತ್ತವೆ. ಹಕ್ಕಿಗಳಿಗೆ ಮತ್ತು ಪ್ರಾಣಿಗಳಿಗೆ ಮರಗಳೇ ಮನೆ. (Trees give us clean air, shade, fruit, firewood and medicines. Trees are home to birds and animals.)"],
+              ["ವಿಷಯ ನಿರೂಪಣೆ 2 — soil and rain", "ಮರಗಳ ಬೇರುಗಳು ಮಣ್ಣು ಕೊಚ್ಚಿಹೋಗದಂತೆ ತಡೆಯುತ್ತವೆ. ಕಾಡುಗಳು ಮಳೆಗೆ ಸಹಾಯ ಮಾಡುತ್ತವೆ. (Tree roots stop the soil from being washed away. Forests help bring rain.)"],
+              ["ವಿಷಯ ನಿರೂಪಣೆ 3 — the problem", "ಇಂದು ರಸ್ತೆ ಮತ್ತು ಕಟ್ಟಡಗಳಿಗಾಗಿ ಅನೇಕ ಮರಗಳನ್ನು ಕಡಿಯಲಾಗುತ್ತಿದೆ. ಇದರಿಂದ ಬಿಸಿಲು ಹೆಚ್ಚಾಗುತ್ತಿದೆ. (Today many trees are cut for roads and buildings. Because of this, the heat is rising.)"],
+              ["ಉಪಸಂಹಾರ", "ಪ್ರತಿಯೊಬ್ಬರೂ ಕನಿಷ್ಠ ಒಂದು ಗಿಡವನ್ನು ನೆಟ್ಟು ಬೆಳೆಸಬೇಕು. ಮರಗಳನ್ನು ಉಳಿಸಿದರೆ ನಮ್ಮ ಭವಿಷ್ಯ ಉಳಿಯುತ್ತದೆ. (Everyone should plant and grow at least one sapling. If we save trees, we save our future.)"],
+            ],
+          },
+          {
+            type: "list",
+            items: [
+              "Linking words: **ಮೊದಲನೆಯದಾಗಿ** (firstly), **ಅಲ್ಲದೆ** (also), **ಆದರೆ** (but), **ಆದ್ದರಿಂದ** (so), **ಹೀಗೆ** (in this way), **ಕೊನೆಯದಾಗಿ** (finally).",
+              "Keep sentences short. One idea per sentence is safer than one long sentence with mistakes.",
+              "A proverb fits well in the ಪೀಠಿಕೆ or ಉಪಸಂಹಾರ, for example ಆರೋಗ್ಯವೇ ಭಾಗ್ಯ in an essay on health.",
+            ],
+          },
+          {
+            type: "example",
+            title: "Make a point plan",
+            problem: "Plan an essay on 'ಪ್ಲಾಸ್ಟಿಕ್ ಬಳಕೆಯ ದುಷ್ಪರಿಣಾಮಗಳು' (the harmful effects of plastic use).",
+            steps: [
+              "ಪೀಠಿಕೆ: plastic is everywhere in daily life — bags, bottles, toys.",
+              "ವಿಷಯ ನಿರೂಪಣೆ point 1: plastic does not rot; it stays in soil and water for many years.",
+              "Point 2: animals like cows eat plastic bags and fall sick; drains get blocked in the rainy season.",
+              "Point 3: what we can do — cloth bags, steel bottles, saying no to single-use plastic.",
+              "ಉಪಸಂಹಾರ: a message — every family can reduce plastic, and a clean Karnataka begins at home.",
+            ],
+            answer: "Five short points arranged as ಪೀಠಿಕೆ → three body points → ಉಪಸಂಹಾರ. Now each point becomes one paragraph.",
+          },
+          {
+            type: "checkpoint",
+            questions: [
+              {
+                kind: "mcq",
+                q: "Which part of an essay gives a message or suggestion at the end?",
+                options: ["ಪೀಠಿಕೆ", "ವಿಷಯ ನಿರೂಪಣೆ", "ಉಪಸಂಹಾರ", "ಶೀರ್ಷಿಕೆ"],
+                answer: 2,
+                explain: "**ಉಪಸಂಹಾರ** (conclusion) sums up and gives the message.",
+              },
+            ],
+          },
+          {
+            type: "mistake",
+            wrong: "A long essay with every idea in one big paragraph gets more marks.",
+            right: "A clear essay with **ಪೀಠಿಕೆ, ವಿಷಯ ನಿರೂಪಣೆ, ಉಪಸಂಹಾರ** in separate paragraphs gets more marks.",
+            why: "Students think length shows effort. Examiners look for order, clear points and correct language. One big block is hard to read and usually repeats ideas.",
+          },
+          {
+            type: "activity",
+            activity: {
+              kind: "order",
+              prompt: "Put the essay-writing steps in order.",
+              items: ["Read the topic carefully", "Note 4–5 points", "Write the ಪೀಠಿಕೆ", "Write one paragraph per point", "Write the ಉಪಸಂಹಾರ", "Read it again and correct mistakes"],
+              explain: "Plan first, then write the three parts in order, and keep two minutes to check spelling and verb endings.",
+            },
+          },
+          {
+            type: "callout",
+            tone: "exam",
+            title: "SSLC exam tip",
+            md: "The essay is a long-answer question. Marks are given for **structure** (three parts), **content** (relevant points) and **language** (spelling, sentence endings). Underline the title, and do not write on a different topic from the one asked. Spend 2 minutes making a point plan before you write.",
+          },
+          {
+            type: "keypoints",
+            items: [
+              "Three parts: **ಪೀಠಿಕೆ** (intro), **ವಿಷಯ ನಿರೂಪಣೆ** (body), **ಉಪಸಂಹಾರ** (conclusion).",
+              "Plan 4–5 points first; one point per paragraph.",
+              "Use linking words: ಅಲ್ಲದೆ, ಆದರೆ, ಆದ್ದರಿಂದ, ಕೊನೆಯದಾಗಿ.",
+              "Short, correct sentences beat long, wrong ones.",
+            ],
+          },
+        ],
+        flashcards: [
+          { front: "ಪ್ರಬಂಧ", back: "An essay: ordered writing on one topic." },
+          { front: "ಪೀಠಿಕೆ", back: "Introduction: 2–3 sentences that open the topic." },
+          { front: "ವಿಷಯ ನಿರೂಪಣೆ", back: "Main body: the points, one per paragraph, with examples." },
+          { front: "ಉಪಸಂಹಾರ", back: "Conclusion: sums up and gives a message." },
+          { front: "ಆದ್ದರಿಂದ", back: "Linking word meaning 'so / therefore'." },
+        ],
+        quiz: [
+          {
+            kind: "mcq",
+            q: "Which is the best opening (ಪೀಠಿಕೆ) for an essay on health?",
+            options: [
+              "ಕೊನೆಯದಾಗಿ, ಎಲ್ಲರೂ ಆರೋಗ್ಯವಾಗಿರಬೇಕು.",
+              "'ಆರೋಗ್ಯವೇ ಭಾಗ್ಯ' ಎಂಬ ಗಾದೆ ಇದೆ. ಆರೋಗ್ಯ ಇಲ್ಲದಿದ್ದರೆ ಹಣ ಇದ್ದರೂ ಸುಖ ಇಲ್ಲ.",
+              "ಆದ್ದರಿಂದ ಇದು ಮುಖ್ಯ.",
+              "ನನ್ನ ಹೆಸರು ಕವಿತಾ.",
+            ],
+            answer: 1,
+            explain: "A proverb and a simple idea open the topic well. ಕೊನೆಯದಾಗಿ (finally) belongs to the end.",
+            difficulty: 2,
+          },
+          {
+            kind: "order",
+            q: "Arrange the three parts of a ಪ್ರಬಂಧ.",
+            items: ["ಪೀಠಿಕೆ", "ವಿಷಯ ನಿರೂಪಣೆ", "ಉಪಸಂಹಾರ"],
+            explain: "Introduction → body → conclusion.",
+          },
+          {
+            kind: "truefalse",
+            q: "In the ವಿಷಯ ನಿರೂಪಣೆ, it is best to write one main point in each paragraph.",
+            answer: true,
+            explain: "One point per paragraph keeps the essay clear and easy to mark.",
+          },
+          {
+            kind: "fill",
+            q: "The Kannada word for 'conclusion' of an essay is ___ .",
+            answer: ["ಉಪಸಂಹಾರ"],
+            explain: "ಉಪಸಂಹಾರ = conclusion.",
+          },
+          {
+            kind: "mcq",
+            q: "Which linking word means 'but'?",
+            options: ["ಅಲ್ಲದೆ", "ಆದರೆ", "ಆದ್ದರಿಂದ", "ಹೀಗೆ"],
+            answer: 1,
+            explain: "ಆದರೆ = but. ಅಲ್ಲದೆ = also, ಆದ್ದರಿಂದ = so, ಹೀಗೆ = in this way.",
+          },
+          {
+            kind: "multi",
+            q: "Examiners give marks for: (choose all)",
+            options: ["Clear three-part structure", "Relevant points", "Correct spelling and verb endings", "Writing on a different topic you know well"],
+            answers: [0, 1, 2],
+            explain: "Structure, content and language earn marks. Writing on a different topic loses marks.",
+          },
+        ],
+      },
+    ],
+  },
+  /* ------------------------------------------------------------------ */
+  {
+    slug: "kannada-apathita-gadya",
+    title: "Unseen Passage (ಅಪಠಿತ ಗದ್ಯಭಾಗ)",
+    icon: "📖",
+    description: "How to read an unseen Kannada passage and answer questions in full, correct sentences.",
+    lessons: [
+      {
+        slug: "apathita-gadyabhaga",
+        title: "Reading an Unseen Passage",
+        summary: "A step-by-step method for the unseen passage: read the questions, find key words, and answer from the passage in full sentences.",
+        minutes: 14,
+        xp: 35,
+        blocks: [
+          {
+            type: "text",
+            md: "An **ಅಪಠಿತ ಗದ್ಯಭಾಗ** (unseen prose passage) is a short passage you have not read before. You read it in the exam and answer the questions below it.\n\nThe answers are **inside the passage**. You do not need outside knowledge. Your job is to find the right line and write the answer in your own clear sentence.",
+          },
+          {
+            type: "heading",
+            text: "Practice passage",
+          },
+          {
+            type: "text",
+            md: "ನಮ್ಮ ಹಳ್ಳಿಯ ಹತ್ತಿರ ಒಂದು ದೊಡ್ಡ ಕೆರೆ ಇದೆ. ಹಿಂದೆ ಈ ಕೆರೆಯ ನೀರು ತುಂಬಾ ಸ್ವಚ್ಛವಾಗಿತ್ತು. ಜನರು ಅದರ ನೀರನ್ನು ಕುಡಿಯಲು ಮತ್ತು ಹೊಲಗಳಿಗೆ ಬಳಸುತ್ತಿದ್ದರು. ಕೆಲವು ವರ್ಷಗಳಿಂದ ಜನರು ಕೆರೆಗೆ ಕಸ ಮತ್ತು ಪ್ಲಾಸ್ಟಿಕ್ ಎಸೆಯತೊಡಗಿದರು. ನೀರು ಕೊಳಕಾಯಿತು. ಮೀನುಗಳು ಸತ್ತುಹೋದವು.\n\nಆಗ ಊರಿನ ಶಾಲೆಯ ಮಕ್ಕಳು ಒಂದು ತಂಡ ಮಾಡಿಕೊಂಡರು. ಪ್ರತಿ ಭಾನುವಾರ ಅವರು ಕೆರೆಯ ದಡವನ್ನು ಸ್ವಚ್ಛಗೊಳಿಸಿದರು. ಹಿರಿಯರೂ ಅವರ ಜೊತೆ ಸೇರಿದರು. ಒಂದು ವರ್ಷದಲ್ಲಿ ಕೆರೆ ಮತ್ತೆ ಸುಂದರವಾಯಿತು. ಈಗ ಅಲ್ಲಿಗೆ ಅನೇಕ ಹಕ್ಕಿಗಳು ಬರುತ್ತವೆ.\n\n(Meaning: Near our village there is a big lake. Its water was once very clean, used for drinking and for the fields. For some years people began throwing rubbish and plastic into it. The water became dirty and the fish died. Then the schoolchildren formed a team and cleaned the lake bank every Sunday. The elders joined them. In one year the lake became beautiful again, and now many birds come there.)",
+          },
+          {
+            type: "example",
+            title: "Answer a question step by step",
+            problem: "ಕೆರೆಯ ನೀರು ಏಕೆ ಕೊಳಕಾಯಿತು? (Why did the lake water become dirty?)",
+            steps: [
+              "Key words in the question: ನೀರು, ಕೊಳಕಾಯಿತು (water, became dirty). ಏಕೆ asks for a reason.",
+              "Find the line with ಕೊಳಕಾಯಿತು. Just before it: ಜನರು ಕೆರೆಗೆ ಕಸ ಮತ್ತು ಪ್ಲಾಸ್ಟಿಕ್ ಎಸೆಯತೊಡಗಿದರು.",
+              "A reason answer uses **ಇಂದ / ದ್ದರಿಂದ** (because): ಎಸೆದುದರಿಂದ.",
+              "Write a full sentence that repeats the question's words.",
+            ],
+            answer: "ಜನರು ಕೆರೆಗೆ ಕಸ ಮತ್ತು ಪ್ಲಾಸ್ಟಿಕ್ ಎಸೆದುದರಿಂದ ಕೆರೆಯ ನೀರು ಕೊಳಕಾಯಿತು. (The lake water became dirty because people threw rubbish and plastic into it.)",
+          },
+          {
+            type: "table",
+            headers: ["Question word", "Asks for", "Answer begins with"],
+            rows: [
+              ["ಯಾರು?", "who", "a person: ಶಾಲೆಯ ಮಕ್ಕಳು..."],
+              ["ಏನು?", "what", "a thing or action"],
+              ["ಎಲ್ಲಿ?", "where", "a place with ಅಲ್ಲಿ: ಹಳ್ಳಿಯ ಹತ್ತಿರ..."],
+              ["ಯಾವಾಗ?", "when", "a time: ಪ್ರತಿ ಭಾನುವಾರ..."],
+              ["ಏಕೆ? / ಯಾಕೆ?", "why", "a reason with ...ದ್ದರಿಂದ / ...ಇಂದ"],
+              ["ಹೇಗೆ?", "how", "a way or method"],
+            ],
+          },
+          {
+            type: "checkpoint",
+            questions: [
+              {
+                kind: "mcq",
+                q: "ಮಕ್ಕಳು ಕೆರೆಯ ದಡವನ್ನು ಯಾವಾಗ ಸ್ವಚ್ಛಗೊಳಿಸಿದರು? (When did the children clean the lake bank?)",
+                options: ["ಪ್ರತಿ ದಿನ", "ಪ್ರತಿ ಭಾನುವಾರ", "ಒಂದು ವರ್ಷದ ನಂತರ", "ಮಳೆಗಾಲದಲ್ಲಿ"],
+                answer: 1,
+                explain: "The passage says: ಪ್ರತಿ ಭಾನುವಾರ ಅವರು ಕೆರೆಯ ದಡವನ್ನು ಸ್ವಚ್ಛಗೊಳಿಸಿದರು.",
+              },
+            ],
+          },
+          {
+            type: "mistake",
+            wrong: "Answering in one word, like 'ಮಕ್ಕಳು', or writing what I think instead of what the passage says.",
+            right: "Answer in a **full sentence** using facts **from the passage**: ಊರಿನ ಶಾಲೆಯ ಮಕ್ಕಳು ಕೆರೆಯನ್ನು ಸ್ವಚ್ಛಗೊಳಿಸಿದರು.",
+            why: "A one-word answer feels quick, and your own ideas feel clever. But the marks are for a complete, correct sentence based on the passage. Ideas not in the passage get no marks.",
+          },
+          {
+            type: "activity",
+            activity: {
+              kind: "reveal",
+              prompt: "Who joined the children in cleaning the lake?",
+              emoji: "🦆",
+              options: ["ಪೊಲೀಸರು (the police)", "ಹಿರಿಯರು (the elders)", "ಶಿಕ್ಷಕರು (the teachers)", "ಹಕ್ಕಿಗಳು (the birds)"],
+              answer: 1,
+              trap: 2,
+              explain: "The passage says 'ಹಿರಿಯರೂ ಅವರ ಜೊತೆ ಸೇರಿದರು' — the elders joined them. Teachers sound likely for a school team, but the passage never mentions them. Answer only from the text.",
+            },
+          },
+          {
+            type: "callout",
+            tone: "exam",
+            title: "SSLC exam tip",
+            md: "Read the **questions first**, then the passage. Underline the line where each answer is. Write every answer as a complete Kannada sentence, with the verb in the same tense as the passage. If a question asks for a title (ಶೀರ್ಷಿಕೆ), give a short title that covers the whole passage, e.g. 'ಮಕ್ಕಳು ಉಳಿಸಿದ ಕೆರೆ'.",
+          },
+          {
+            type: "keypoints",
+            items: [
+              "The answer is always **in the passage**.",
+              "Read the questions first; find key words; underline the answer line.",
+              "Answer in a **full sentence**; reason questions use ...ದ್ದರಿಂದ / ಇಂದ.",
+              "A title should cover the main idea of the whole passage.",
+            ],
+          },
+        ],
+        flashcards: [
+          { front: "ಅಪಠಿತ ಗದ್ಯಭಾಗ", back: "An unseen prose passage with questions to answer." },
+          { front: "First step", back: "Read the questions before reading the passage." },
+          { front: "ಏಕೆ? (why) answers", back: "Give a reason, often ending in ...ದ್ದರಿಂದ (because)." },
+          { front: "ಶೀರ್ಷಿಕೆ", back: "A title. It should cover the whole passage, not one line." },
+          { front: "Where do answers come from?", back: "Only from the passage, not from your own ideas." },
+        ],
+        quiz: [
+          {
+            kind: "mcq",
+            q: "From the passage: what did people use the lake water for earlier?",
+            options: ["Only for washing clothes", "For drinking and for the fields", "For making bricks", "For fishing only"],
+            answer: 1,
+            explain: "ಜನರು ಅದರ ನೀರನ್ನು ಕುಡಿಯಲು ಮತ್ತು ಹೊಲಗಳಿಗೆ ಬಳಸುತ್ತಿದ್ದರು — for drinking and for the fields.",
+          },
+          {
+            kind: "truefalse",
+            q: "According to the passage, the lake became beautiful again in one month.",
+            answer: false,
+            explain: "The passage says ಒಂದು ವರ್ಷದಲ್ಲಿ — in one year, not one month.",
+            difficulty: 2,
+            hint: "Find the exact time in the passage.",
+          },
+          {
+            kind: "mcq",
+            q: "Which is the best title (ಶೀರ್ಷಿಕೆ) for the passage?",
+            options: ["ಮೀನುಗಳು", "ಮಕ್ಕಳು ಉಳಿಸಿದ ಕೆರೆ", "ಭಾನುವಾರ", "ಪ್ಲಾಸ್ಟಿಕ್ ಚೀಲ"],
+            answer: 1,
+            explain: "The main idea is that children saved the lake. The other titles cover only one detail.",
+          },
+          {
+            kind: "fill",
+            q: "ಈಗ ಕೆರೆಗೆ ಅನೇಕ ___ ಬರುತ್ತವೆ. (Now many ___ come to the lake.)",
+            answer: ["ಹಕ್ಕಿಗಳು"],
+            explain: "The last line says ಈಗ ಅಲ್ಲಿಗೆ ಅನೇಕ ಹಕ್ಕಿಗಳು ಬರುತ್ತವೆ.",
+          },
+          {
+            kind: "order",
+            q: "Put the events of the passage in order.",
+            items: ["The lake water was clean", "People threw rubbish into the lake", "The fish died", "Children formed a team", "Birds came back to the lake"],
+            explain: "Clean lake → rubbish → fish died → children's team → birds return.",
+          },
+          {
+            kind: "mcq",
+            q: "Which answer to 'ಮೀನುಗಳು ಏಕೆ ಸತ್ತವು?' is the best?",
+            options: [
+              "ಕೊಳಕು.",
+              "ನೀರು ಕೊಳಕಾದುದರಿಂದ ಮೀನುಗಳು ಸತ್ತುಹೋದವು.",
+              "ಮೀನುಗಳಿಗೆ ಆಹಾರ ಸಿಗಲಿಲ್ಲ.",
+              "ಮಕ್ಕಳು ಮೀನು ಹಿಡಿದರು.",
+            ],
+            answer: 1,
+            explain: "It is a full sentence, gives the reason with ...ದುದರಿಂದ, and comes from the passage. Option 1 is one word; options 3 and 4 are not in the passage.",
+            difficulty: 2,
+          },
+        ],
+      },
+    ],
+  },
 ];
 
 /** Exact syllabus chapter title → topic slug. */
 export const links: Record<string, string> = {
   "Sandhi (ಸಂಧಿ)": "kannada-sandhi",
+  "Samasa (ಸಮಾಸ)": "kannada-samasa",
+  "Case Suffixes (ವಿಭಕ್ತಿ ಪ್ರತ್ಯಯಗಳು)": "kannada-vibhakti",
+  "Tenses (ಕಾಲಗಳು)": "kannada-tenses",
+  "Gender and Number (ಲಿಂಗ ಮತ್ತು ವಚನ)": "kannada-linga-vachana",
+  "Tatsama and Tadbhava (ತತ್ಸಮ – ತದ್ಭವ)": "kannada-tatsama-tadbhava",
+  "Figures of Speech (ಅಲಂಕಾರ)": "kannada-alankara",
+  "Synonyms and Antonyms (ಸಮಾನಾರ್ಥಕ – ವಿರುದ್ಧಾರ್ಥಕ ಪದಗಳು)": "kannada-samanarthaka-viruddharthaka",
+  "Proverbs and Idioms (ಗಾದೆಗಳು ಮತ್ತು ನುಡಿಗಟ್ಟುಗಳು)": "kannada-gade-nudigattu",
+  "Letter Writing (ಪತ್ರಲೇಖನ)": "kannada-patra-lekhana",
+  "Essay Writing (ಪ್ರಬಂಧ)": "kannada-prabandha",
+  "Unseen Passage (ಅಪಠಿತ ಗದ್ಯಭಾಗ)": "kannada-apathita-gadya",
 };
