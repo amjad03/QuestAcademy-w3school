@@ -813,7 +813,7 @@ const sandhi: Topic = {
             groups: ["स्वर संधि", "व्यंजन संधि", "विसर्ग संधि"],
             items: [
               { text: "हिमालय (हिम + आलय)", group: 0, hint: "अ + आ, two vowels meet." },
-              { text: "स्वागत (सु + आगत)", group: 0, hint: "उ + आ = व; a vowel meets a vowel (यण)." },
+              { text: "स्वागत (सु + आगत)", group: 0, hint: "उ + आ = वा; a vowel meets a vowel (यण)." },
               { text: "जगदीश (जगत् + ईश)", group: 1, hint: "The consonant त् changes to द्." },
               { text: "सज्जन (सत् + जन)", group: 1, hint: "त् + ज = ज्ज, consonants meet." },
               { text: "निश्चय (निः + चय)", group: 2, hint: "The विसर्ग changes to श्." },
@@ -1221,7 +1221,7 @@ const shabdBhandar: Topic = {
           q: "The विलोम of 'उदय' (rise) is:",
           options: ["अनुदय", "अस्त", "उन्नति", "प्रकाश"],
           answer: 1,
-          explain: "The sun rises (उदय) and sets (**अस्त**). 'अनुदय' is a made-up form.",
+          explain: "The sun rises (उदय) and sets (**अस्त**). 'अनुदय' is not its विलोम.",
         },
         {
           kind: "fill",
@@ -1351,7 +1351,7 @@ const lingVachanKarak: Topic = {
           type: "mistake",
           wrong: "Every word ending in 'ई' is स्त्रीलिंग, so 'पानी ठंडी है' and 'दही खट्टी है'.",
           right: "पानी, दही, मोती, घी, हाथी are **पुल्लिंग**: 'पानी ठंडा है', 'दही खट्टा है'.",
-          why: "Many feminine words end in 'ई' (लड़की, नदी), so the rule seems true. But it has many exceptions, and in Kannada and English, things like water or tea are not masculine or feminine, so learners must learn these words one by one.",
+          why: "Many feminine words end in 'ई' (लड़की, नदी), so the rule seems true. But it has many exceptions, and in English (and in many other Indian languages), things like water or tea are not masculine or feminine, so learners must learn these words one by one.",
         },
         {
           type: "activity",

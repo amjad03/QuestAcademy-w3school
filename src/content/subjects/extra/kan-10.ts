@@ -226,7 +226,7 @@ export const topics: Topic[] = [
             type: "table",
             headers: ["Sandhi", "Rule", "Examples"],
             rows: [
-              ["**ಜಶ್ತ್ವ**", "The hard consonants ಕ, ಚ, ಟ, ತ, ಪ at the end of the first word become the soft ಗ, ಜ, ಡ, ದ, ಬ (before a vowel or a soft consonant).", "ವಾಕ್ + ಈಶ = ವಾಗೀಶ; ದಿಕ್ + ಅಂತ = ದಿಗಂತ (horizon); ಷಟ್ + ಆನನ = ಷಡಾನನ; ಸತ್ + ಆನಂದ = ಸದಾನಂದ"],
+              ["**ಜಶ್ತ್ವ**", "The hard consonants ಕ, ಚ, ಟ, ತ, ಪ at the end of the first word become the soft ಗ, ಜ, ಡ, ದ, ಬ (before a vowel or a soft consonant).", "ವಾಕ್ + ಈಶ = ವಾಗೀಶ; ದಿಕ್ + ಅಂತ = ದಿಗಂತ (horizon); ಷಟ್ + ಆನನ = ಷಡಾನನ; ಚಿತ್ + ಆನಂದ = ಚಿದಾನಂದ"],
               ["**ಶ್ಚುತ್ವ**", "ಸ or a ತ-group letter meets ಶ or a ಚ-group letter. It becomes ಶ or a ಚ-group letter.", "ಮನಸ್ + ಶುದ್ಧಿ = ಮನಶ್ಶುದ್ಧಿ; ಸತ್ + ಚರಿತ್ರೆ = ಸಚ್ಚರಿತ್ರೆ (good character); ಶರತ್ + ಚಂದ್ರ = ಶರಚ್ಚಂದ್ರ; ಜಗತ್ + ಜ್ಯೋತಿ = ಜಗಜ್ಜ್ಯೋತಿ"],
               ["**ಅನುನಾಸಿಕ**", "A group consonant meets a nasal (ಙ, ಞ, ಣ, ನ, ಮ). It becomes the nasal of its own group.", "ವಾಕ್ + ಮಯ = ವಾಙ್ಮಯ (literature); ಷಟ್ + ಮುಖ = ಷಣ್ಮುಖ; ಚಿತ್ + ಮಯ = ಚಿನ್ಮಯ; ಜಗತ್ + ನಾಥ = ಜಗನ್ನಾಥ"],
             ],
@@ -323,10 +323,10 @@ export const topics: Topic[] = [
           },
           {
             kind: "mcq",
-            q: "Split ಸದಾನಂದ (sadaananda) and name the sandhi.",
-            options: ["ಸದಾ + ಆನಂದ — ಸವರ್ಣದೀರ್ಘ", "ಸತ್ + ಆನಂದ — ಜಶ್ತ್ವ", "ಸತ್ + ಆನಂದ — ಶ್ಚುತ್ವ", "ಸದ + ಆನಂದ — ಗುಣ"],
+            q: "Split ಚಿದಾನಂದ (chidaananda) and name the sandhi.",
+            options: ["ಚಿದಾ + ಆನಂದ — ಸವರ್ಣದೀರ್ಘ", "ಚಿತ್ + ಆನಂದ — ಜಶ್ತ್ವ", "ಚಿತ್ + ಆನಂದ — ಶ್ಚುತ್ವ", "ಚಿದ + ಆನಂದ — ಗುಣ"],
             answer: 1,
-            explain: "ಸತ್ (good) + ಆನಂದ (joy): ತ has become the soft ದ. That is **ಜಶ್ತ್ವ ಸಂಧಿ**.",
+            explain: "ಚಿತ್ (consciousness) + ಆನಂದ (joy): ತ has become the soft ದ. That is **ಜಶ್ತ್ವ ಸಂಧಿ**.",
             difficulty: 2,
             hint: "Which hard consonant becomes ದ?",
           },
@@ -409,7 +409,7 @@ export const topics: Topic[] = [
             headers: ["Samasa", "How to spot it", "ವಿಗ್ರಹ ವಾಕ್ಯ = ಸಮಸ್ತ ಪದ"],
             rows: [
               ["**ತತ್ಪುರುಷ**", "The meaning of the **second** word is the main one. The first word had a case suffix (often ಅ — 'of').", "ಅರಸನ + ಮನೆ = ಅರಮನೆ (palace); ಮರದ + ಕಾಲು = ಮರಗಾಲು (wooden leg); ಕಣ್ಣಿನ + ನೀರು = ಕಣ್ಣೀರು (tears); ತಲೆಯ + ನೋವು = ತಲೆನೋವು (headache)"],
-              ["**ಕರ್ಮಧಾರಯ**", "The first word is an **adjective** (ವಿಶೇಷಣ — describing word), the second is a noun.", "ಕೆಂಪು + ತಾವರೆ = ಕೆಂದಾವರೆ (red lotus); ಹಿರಿದು + ಮರ = ಹೆಮ್ಮರ (big tree); ಹೊಸದು + ಕನ್ನಡ = ಹೊಸಗನ್ನಡ (new Kannada); ಹಿರಿದು + ಬಾಗಿಲು = ಹೆಬ್ಬಾಗಿಲು (main door)"],
+              ["**ಕರ್ಮಧಾರಯ**", "The first word is an **adjective** (ವಿಶೇಷಣ — describing word), the second is a noun.", "ಕೆಂಪಾದ + ತಾವರೆ = ಕೆಂದಾವರೆ (red lotus); ಹಿರಿದಾದ + ಮರ = ಹೆಮ್ಮರ (big tree); ಹೊಸದಾದ + ಕನ್ನಡ = ಹೊಸಗನ್ನಡ (new Kannada); ಹಿರಿದಾದ + ಬಾಗಿಲು = ಹೆಬ್ಬಾಗಿಲು (main door)"],
               ["**ದ್ವಿಗು**", "The first word is a **number** (ಸಂಖ್ಯೆ).", "ಎರಡು + ಮಡಿ = ಇಮ್ಮಡಿ (double); ಮೂರು + ಮಡಿ = ಮುಮ್ಮಡಿ (three times); ಎರಡು + ಕೆಲ = ಇಕ್ಕೆಲ (both sides)"],
               ["**ಅಂಶಿ**", "One word is a **part** (ಅಂಶ) of the other, the whole (ಅಂಶಿ). The part word comes first.", "ಕೈಯ + ಮುಂದು = ಮುಂಗೈ (forearm); ತಲೆಯ + ಮುಂದು = ಮುಂದಲೆ (front of the head); ಕೈಯ + ಅಡಿ = ಅಂಗೈ (palm); ಬೆರಳಿನ + ತುದಿ = ತುದಿಬೆರಳು (fingertip)"],
             ],
@@ -422,9 +422,9 @@ export const topics: Topic[] = [
               "Find the two parts: ಕೆಂ (from ಕೆಂಪು — red) + ದಾವರೆ (from ತಾವರೆ — lotus).",
               "Ask: what is the first word? ಕೆಂಪು tells us *what kind* of lotus. It is an adjective (ವಿಶೇಷಣ).",
               "The second word ತಾವರೆ is a noun. Adjective + noun = **ಕರ್ಮಧಾರಯ**.",
-              "Write it as: ಕೆಂಪು + ತಾವರೆ = ಕೆಂದಾವರೆ.",
+              "Write it as: ಕೆಂಪಾದ + ತಾವರೆ = ಕೆಂದಾವರೆ.",
             ],
-            answer: "ಕೆಂಪಾದ ತಾವರೆ (the lotus that is red) → ಕೆಂಪು + ತಾವರೆ = ಕೆಂದಾವರೆ — **ಕರ್ಮಧಾರಯ ಸಮಾಸ**.",
+            answer: "ಕೆಂಪಾದ ತಾವರೆ (the lotus that is red) → ಕೆಂಪಾದ + ತಾವರೆ = ಕೆಂದಾವರೆ — **ಕರ್ಮಧಾರಯ ಸಮಾಸ**.",
           },
           {
             type: "checkpoint",
@@ -441,7 +441,7 @@ export const topics: Topic[] = [
           {
             type: "mistake",
             wrong: "ಹೆಮ್ಮರ is ತತ್ಪುರುಷ, because the second word ಮರ is the main word.",
-            right: "ಹೆಮ್ಮರ (ಹಿರಿದು + ಮರ) is **ಕರ್ಮಧಾರಯ**, because the first word is an adjective.",
+            right: "ಹೆಮ್ಮರ (ಹಿರಿದಾದ + ಮರ) is **ಕರ್ಮಧಾರಯ**, because the first word is an adjective.",
             why: "In both ತತ್ಪುರುಷ and ಕರ್ಮಧಾರಯ the second word is the main one, so they look alike. Look at the first word: if it *describes* (big, red, new), it is ಕರ್ಮಧಾರಯ. If it has an 'of' meaning (ಅರಸನ — of the king), it is ತತ್ಪುರುಷ.",
           },
           {
@@ -452,10 +452,10 @@ export const topics: Topic[] = [
               groups: ["ತತ್ಪುರುಷ", "ಕರ್ಮಧಾರಯ", "ದ್ವಿಗು"],
               items: [
                 { text: "ಅರಮನೆ", group: 0, hint: "ಅರಸನ + ಮನೆ: the king's house." },
-                { text: "ಹೆಬ್ಬಾಗಿಲು", group: 1, hint: "ಹಿರಿದು + ಬಾಗಿಲು: 'big' describes the door." },
+                { text: "ಹೆಬ್ಬಾಗಿಲು", group: 1, hint: "ಹಿರಿದಾದ + ಬಾಗಿಲು: 'big' describes the door." },
                 { text: "ಮುಮ್ಮಡಿ", group: 2, hint: "ಮೂರು + ಮಡಿ: starts with a number." },
                 { text: "ಕಣ್ಣೀರು", group: 0, hint: "ಕಣ್ಣಿನ + ನೀರು: water of the eye." },
-                { text: "ಹೊಸಗನ್ನಡ", group: 1, hint: "ಹೊಸದು + ಕನ್ನಡ: 'new' describes Kannada." },
+                { text: "ಹೊಸಗನ್ನಡ", group: 1, hint: "ಹೊಸದಾದ + ಕನ್ನಡ: 'new' describes Kannada." },
                 { text: "ಇಕ್ಕೆಲ", group: 2, hint: "ಎರಡು + ಕೆಲ: starts with a number." },
               ],
               explain: "First word with 'of' (ಅ, ಇನ) → **ತತ್ಪುರುಷ**. First word an adjective → **ಕರ್ಮಧಾರಯ**. First word a number → **ದ್ವಿಗು**.",
@@ -492,7 +492,7 @@ export const topics: Topic[] = [
           { front: "ಸಮಾಸ", back: "Two or more words join into one word and the case suffix between them drops." },
           { front: "ವಿಗ್ರಹ ವಾಕ್ಯ", back: "The compound broken back into words with suffixes, e.g. ಅರಸನ + ಮನೆ." },
           { front: "ತತ್ಪುರುಷ ಸಮಾಸ", back: "Second word's meaning is main. ಮರದ + ಕಾಲು = ಮರಗಾಲು." },
-          { front: "ಕರ್ಮಧಾರಯ ಸಮಾಸ", back: "Adjective + noun. ಹಿರಿದು + ಮರ = ಹೆಮ್ಮರ." },
+          { front: "ಕರ್ಮಧಾರಯ ಸಮಾಸ", back: "Adjective + noun. ಹಿರಿದಾದ + ಮರ = ಹೆಮ್ಮರ." },
           { front: "ದ್ವಿಗು ಸಮಾಸ", back: "First word is a number. ಎರಡು + ಮಡಿ = ಇಮ್ಮಡಿ." },
           { front: "ಅಂಶಿ ಸಮಾಸ", back: "A part and its whole. ತಲೆಯ + ಮುಂದು = ಮುಂದಲೆ." },
         ],
@@ -521,7 +521,7 @@ export const topics: Topic[] = [
           },
           {
             kind: "fill",
-            q: "ಹಿರಿದು + ಮರ = ___ (ಕರ್ಮಧಾರಯ ಸಮಾಸ).",
+            q: "ಹಿರಿದಾದ + ಮರ = ___ (ಕರ್ಮಧಾರಯ ಸಮಾಸ).",
             answer: ["ಹೆಮ್ಮರ"],
             explain: "ಹಿರಿದು (big) + ಮರ (tree) = ಹೆಮ್ಮರ (a huge tree).",
           },
@@ -1750,7 +1750,7 @@ export const topics: Topic[] = [
       {
         slug: "gadegalu-mattu-nudigattugalu",
         title: "ಗಾದೆ and ನುಡಿಗಟ್ಟು",
-        summary: "What proverbs and idioms are, ten useful ones with meanings, and how to write a proverb expansion (ಗಾದೆ ವಿಸ್ತರಣೆ).",
+        summary: "What proverbs and idioms are, common ones with meanings, and how to write a proverb expansion (ಗಾದೆ ವಿಸ್ತರಣೆ).",
         minutes: 15,
         xp: 40,
         blocks: [

@@ -224,7 +224,7 @@ export const topics: Topic[] = [
           },
           {
             type: "text",
-            md: "As of 2024, India has **28 states** and **8 union territories**. A **union territory (UT)** is governed more directly by the Union (Central) Government. The newest state is **Telangana**, formed on **2 June 2014** with **Hyderabad** as its capital. In 2000 three states were born in one month: Chhattisgarh, Uttarakhand and Jharkhand.",
+            md: "Since January 2020, India has had **28 states** and **8 union territories**. A **union territory (UT)** is governed more directly by the Union (Central) Government. The newest state is **Telangana**, formed on **2 June 2014** with **Hyderabad** as its capital. In 2000 three states were born in one month: Chhattisgarh, Uttarakhand and Jharkhand.",
           },
           {
             type: "table",
@@ -306,7 +306,7 @@ export const topics: Topic[] = [
             type: "keypoints",
             items: [
               "States were reorganised mainly on linguistic lines by the States Reorganisation Act, 1956.",
-              "As of 2024: 28 states and 8 union territories; newest state Telangana (2 June 2014).",
+              "Since 2020: 28 states and 8 union territories; newest state Telangana (2 June 2014).",
               "Tropic of Cancer crosses 8 states; IST is based on 82°30′E.",
               "Southernmost point of India: Indira Point (Great Nicobar), not Kanyakumari.",
             ],
@@ -401,7 +401,7 @@ export const topics: Topic[] = [
           },
           {
             type: "text",
-            md: "In the 1920s, archaeologists digging at **Harappa** (1921) and **Mohenjo-daro** (1922) found something nobody expected: planned cities with grid streets and drains, older than the pyramids of many lands. This was the **Harappan** or **Indus Valley Civilisation**, at its peak roughly 2600–1900 BCE.\n\nHistory is not a list of dates. Each date below marks a moment when life for millions of people changed direction. Learn the *story*, and the date sticks.",
+            md: "In the 1920s, archaeologists digging at **Harappa** (1921) and **Mohenjo-daro** (1922) found something nobody expected: planned cities with grid streets and drains, about as old as the great pyramids of Egypt. This was the **Harappan** or **Indus Valley Civilisation**, at its peak roughly 2600–1900 BCE.\n\nHistory is not a list of dates. Each date below marks a moment when life for millions of people changed direction. Learn the *story*, and the date sticks.",
           },
           {
             type: "table",
@@ -1274,7 +1274,7 @@ export const topics: Topic[] = [
           },
           {
             type: "text",
-            md: "After the First World War, countries formed the **League of Nations** (1920) to keep peace. It failed: some big powers never joined or left, and it could not stop the Second World War.\n\nSo in 1945, countries tried again with a stronger body, the **United Nations (UN)**. Its **Charter** (founding rulebook) was signed in San Francisco on 26 June 1945, and the UN came into being on **24 October 1945**, now **UN Day**. Its headquarters is in **New York**. India was one of its **founding members**. As of 2024, the UN has **193** member states.",
+            md: "After the First World War, countries formed the **League of Nations** (1920) to keep peace. It failed: some big powers never joined or left, and it could not stop the Second World War.\n\nSo in 1945, countries tried again with a stronger body, the **United Nations (UN)**. Its **Charter** (founding rulebook) was signed in San Francisco on 26 June 1945, and the UN came into being on **24 October 1945**, now **UN Day**. Its headquarters is in **New York**. India was one of its **founding members**. The UN has had **193** member states since South Sudan joined in 2011.",
           },
           {
             type: "table",
@@ -1316,7 +1316,7 @@ export const topics: Topic[] = [
                 ["International Court of Justice", "The Hague"],
                 ["International Atomic Energy Agency (IAEA)", "Vienna"],
               ],
-              explain: "Only the main UN offices are in New York. Many agencies sit in Europe: Geneva alone hosts the WHO, the ILO and the WTO.",
+              explain: "The UN's main offices are in New York, but many agencies sit in Europe: Geneva alone hosts the WHO, the ILO and the WTO.",
             },
           },
           {

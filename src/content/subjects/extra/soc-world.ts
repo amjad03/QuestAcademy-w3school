@@ -1279,7 +1279,7 @@ export const topics: Topic[] = [
           },
           {
             type: "text",
-            md: "The **printing press first came to Goa** with **Portuguese missionaries** in the mid-16th century. Jesuit priests learnt **Konkani** and printed several tracts. By 1674, about 50 books had been printed in Konkani and Kanara languages. Catholic priests printed the first **Tamil** book in 1579 at Cochin, and the first **Malayalam** book in 1713. By 1710, Dutch Protestant missionaries had printed 32 Tamil texts.\n\nThe English language press grew slowly. From 1780, **James Augustus Hickey** began editing the *Bengal Gazette*, a weekly magazine. The first Indian to publish an Indian newspaper was **Gangadhar Bhattacharya**, who brought out the *Bengal Gazette*.",
+            md: "The **printing press first came to Goa** with **Portuguese missionaries** in the mid-16th century. Jesuit priests learnt **Konkani** and printed several tracts. By 1674, about 50 books had been printed in Konkani and Kanara languages. Catholic priests printed the first **Tamil** book in 1579 at Cochin, and the first **Malayalam** book in 1713. By 1710, Dutch Protestant missionaries had printed 32 Tamil texts.\n\nThe English language press grew slowly. From 1780, **James Augustus Hickey** began editing the *Bengal Gazette*, a weekly magazine. The first Indian to publish an Indian newspaper was **Gangadhar Bhattacharya**, who brought out a weekly also called the *Bengal Gazette* (a different paper from Hickey's).",
           },
           {
             type: "heading",
@@ -2044,7 +2044,7 @@ export const topics: Topic[] = [
           },
           {
             type: "text",
-            md: "The **UN Charter** is the founding document, like a constitution for the UN. Its preamble begins with the words 'We the peoples of the United Nations'. The UN has its **headquarters in New York**, six official languages (Arabic, Chinese, English, French, Russian and Spanish) and **193 member states** today. **India** was one of the original members; it signed the Charter in 1945, even before independence.",
+            md: "The **UN Charter** is the founding document, like a constitution for the UN. Its preamble begins with the words 'We the peoples of the United Nations'. The UN has its **headquarters in New York**, six official languages (Arabic, Chinese, English, French, Russian and Spanish) and **193 member states** (the number since 2011). **India** was one of the original members; it signed the Charter in 1945, even before independence.",
           },
           {
             type: "checkpoint",
