@@ -292,7 +292,7 @@ const cbse: Topic[] = [
             type: "activity",
             activity: {
               kind: "reveal",
-              prompt: "What label does the first item get?",
+              prompt: "For <ol type=\"i\" start=\"4\">, what label does the first item get?",
               emoji: "🔢",
               options: ["iv.", "4.", "i.", "d."],
               answer: 0,
@@ -761,7 +761,7 @@ const cbse: Topic[] = [
             type: "activity",
             activity: {
               kind: "reveal",
-              prompt: "What colour is this paragraph's text?",
+              prompt: "CSS: p { color: green; } .info { color: blue; }. Tag: <p class=\"info\" style=\"color: red;\">. What colour is this paragraph's text?",
               emoji: "🎨",
               options: ["red", "blue", "green", "black"],
               answer: 0,
@@ -1304,7 +1304,7 @@ const icse: Topic[] = [
               "Start: n = 472, sum = 0. Each round, `n % 10` takes the last digit and `n / 10` removes it.",
               "Round 1: d = 2, sum = 2, n = 47. Round 2: d = 7, sum = 9, n = 4.",
               "Round 3: d = 4, sum = 13, n = 0. Now `n > 0` is false, so the loop stops.",
-              "The prompt is printed with `print`, so the answer appears on the same line after the typed input.",
+              "The prompt is printed with `print` (not `println`), so the number the user types appears on the same line as the prompt. The `println` then prints the sum on the next line.",
             ],
             answer: "Enter a number: 472\nSum of digits = 13",
           },
@@ -2185,7 +2185,7 @@ public class DigitSum
             type: "activity",
             activity: {
               kind: "reveal",
-              prompt: "What does this line print?",
+              prompt: "What does System.out.println(Integer.parseInt(\"12\") + Integer.parseInt(\"8\")); print?",
               emoji: "🧮",
               options: ["20", "128", "12 8", "Error"],
               answer: 0,
@@ -2633,7 +2633,7 @@ public class BinarySearch
               "Key 20: mid = 3 (27 > 20) → high = 2; mid = 1 (12 < 20) → low = 2; mid = 2 (19 < 20) → low = 3.",
               "Now low = 3 > high = 2, so the loop ends with pos = −1.",
             ],
-            answer: "Key 41 → Enter number to search: Found at index 5\nKey 20 → Enter number to search: Not found",
+            answer: "Key 41:\nEnter number to search: 41\nFound at index 5\n\nKey 20:\nEnter number to search: 20\nNot found",
           },
           {
             type: "table",
@@ -3423,7 +3423,7 @@ public class VowelWords
           {
             kind: "order",
             q: "Order the steps of a palindrome program.",
-            items: ["Read the word with next()", "Build the reverse with a backward loop", "Compare the reverse with the word using equals", "Print Palindrome or Not a palindrome"],
+            items: ["Read the word with next()", "Build the reverse with a backward loop", "Compare the reverse with the word using equals or equalsIgnoreCase", "Print Palindrome or Not a palindrome"],
             explain: "Input, process (reverse), compare, output.",
           },
           {

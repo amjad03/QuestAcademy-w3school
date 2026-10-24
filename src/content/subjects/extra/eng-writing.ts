@@ -1934,7 +1934,7 @@ export const topics: Topic[] = [
                 { text: "Why do you think the grandmother called the seeds 'older than your father'?", group: 1, hint: "The passage does not say why; you work it out." },
                 { text: "Where is the seed library kept?", group: 0, hint: "Paragraph 4 says it directly." },
                 { text: "What kind of person is Lalitha?", group: 1, hint: "You judge from her actions." },
-                { text: "Give a word from paragraph 4 that means 'takes on loan'.", group: 2, hint: "Look for 'borrow'." },
+                { text: "Give a word from paragraph 4 that means 'take on loan'.", group: 2, hint: "Look for 'borrow'." },
               ],
               explain: "Factual answers are written in the passage; inference answers come from clues in it; vocabulary answers need the meaning in context.",
             },
