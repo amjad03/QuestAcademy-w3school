@@ -2066,10 +2066,6 @@ export const topics: Topic[] = [
             ],
           },
           {
-            type: "heading",
-            text: "Rowlatt Act and Jallianwala Bagh",
-          },
-          {
             type: "text",
             md: "In **1919** the British passed the **Rowlatt Act**, though every Indian member of the Imperial Legislative Council opposed it. It allowed the government to arrest people and keep them in prison **without trial** for up to two years. Gandhi called for a nationwide **hartal** (closing of shops and work) on 6 April 1919.\n\nOn **13 April 1919**, the day of the **Baisakhi** festival, a large crowd gathered in the walled **Jallianwala Bagh** in **Amritsar**. Many did not know of the ban on meetings. **General Dyer** blocked the exit and ordered his troops to fire. Hundreds were killed. The massacre shocked the whole country.",
           },
@@ -2579,7 +2575,7 @@ export const topics: Topic[] = [
           },
           {
             type: "text",
-            md: "In **March 1946** three British cabinet ministers came to India: **Pethick-Lawrence**, **Stafford Cripps** and **A.V. Alexander**. The **Cabinet Mission Plan** proposed:\n\n- a **united India** with a weak centre (defence, foreign affairs, communications) and strong provinces;\n- provinces arranged in **three groups**;\n- a **Constituent Assembly** to write the constitution;\n- an **Interim Government** of Indian leaders.\n\nIt **rejected** the demand for a separate Pakistan. The League first accepted the plan, then withdrew and called for **Direct Action Day (16 August 1946)**. Terrible riots followed in Calcutta and spread to other places.",
+            md: "In **March 1946** three British cabinet ministers came to India: **Pethick-Lawrence**, **Stafford Cripps** and **A.V. Alexander**. The **Cabinet Mission Plan** proposed a **united India** with a weak centre (dealing only with defence, foreign affairs and communications) and strong provinces. The provinces were to be arranged in **three groups**. A **Constituent Assembly** would write the constitution, and an **Interim Government** of Indian leaders would run the country meanwhile.\n\nIt **rejected** the demand for a separate Pakistan. The League first accepted the plan, then withdrew and called for **Direct Action Day (16 August 1946)**. Terrible riots followed in Calcutta and spread to other places.",
           },
           {
             type: "checkpoint",
@@ -2733,12 +2729,8 @@ export const topics: Topic[] = [
             md: "Free India faced huge problems at once: millions of **refugees** from Pakistan, the **princely states**, foreign colonies on Indian soil, and demands for states based on language.\n\nThe government set up camps and a ministry for **rehabilitation** (resettling refugees). Refugees were given land, loans, houses and jobs. New towns and colonies grew up for them.",
           },
           {
-            type: "heading",
-            text: "Integration of the princely states",
-          },
-          {
             type: "text",
-            md: "Under the Indian Independence Act, princely states could join India or Pakistan, or try to stay independent. **Sardar Vallabhbhai Patel**, minister for states, and his secretary **V.P. Menon** persuaded most rulers to sign the **Instrument of Accession**, handing over **defence, foreign affairs and communications** to India. Almost all states joined by 15 August 1947. Three did not.",
+            md: "**Integration of the princely states.** Under the Indian Independence Act, princely states could join India or Pakistan, or try to stay independent. **Sardar Vallabhbhai Patel**, minister for states, and his secretary **V.P. Menon** persuaded most rulers to sign the **Instrument of Accession**, handing over **defence, foreign affairs and communications** to India. Almost all states joined by 15 August 1947. Three did not.",
           },
           {
             type: "table",
