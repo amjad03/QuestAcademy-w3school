@@ -26,7 +26,7 @@ function inline(text: string, keyBase: string): ReactNode[] {
     if (idx > last) out.push(text.slice(last, idx));
     const t = m[0];
     const key = `${keyBase}-${i++}`;
-    if (t.startsWith("`")) out.push(<code key={key}>{t.slice(1, -1)}</code>);
+    if (t.startsWith("`")) out.push(<code key={key} className="[overflow-wrap:anywhere]">{t.slice(1, -1)}</code>);
     else if (t.startsWith("$")) out.push(<span key={key} dangerouslySetInnerHTML={{ __html: tex(t.slice(1, -1)) }} />);
     else if (t.startsWith("**")) out.push(<strong key={key}>{inline(t.slice(2, -2), key)}</strong>);
     else if (t.startsWith("*")) out.push(<em key={key}>{inline(t.slice(1, -1), key)}</em>);
