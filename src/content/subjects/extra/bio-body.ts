@@ -40,18 +40,18 @@ export const topics: Topic[] = [
             title: "One-way traffic",
             md: "An impulse always travels **dendrite → cell body → axon → axon terminal**. At the **synapse** (the tiny gap between two neurons) the electrical signal becomes a chemical one: neurotransmitters such as acetylcholine diffuse across and start a new impulse in the next neuron. Because only axon terminals release them, the signal can cross in one direction only.",
           },
-          { type: "heading", text: "Worked example: the reflex arc" },
           {
-            type: "list",
-            ordered: true,
-            items: [
+            type: "example",
+            title: "The reflex arc",
+            problem: "You touch a hot *tawa* and your hand jerks back at once. Trace the path of the nerve impulse that makes this happen.",
+            steps: [
               "**Receptor**: heat receptors in the skin of the finger detect the hot tawa.",
               "**Sensory neuron**: carries the impulse to the spinal cord.",
               "**Relay neuron** (interneuron) in the spinal cord passes it straight on.",
               "**Motor neuron**: carries the command out of the spinal cord.",
-              "**Effector**: arm muscles contract and the hand is pulled away.",
-              "Only *afterwards* does a message reach the brain and you feel the pain.",
+              "**Effector**: arm muscles contract and the hand is pulled away. Only *afterwards* does a message reach the brain and you feel the pain.",
             ],
+            answer: "Receptor → sensory neuron → relay neuron (spinal cord) → motor neuron → effector muscle. This path is the **reflex arc**; it skips the brain to save time.",
           },
           {
             type: "illustration",
@@ -86,6 +86,21 @@ export const topics: Topic[] = [
             ],
           },
           {
+            type: "activity",
+            activity: {
+              kind: "match",
+              prompt: "Match each brain part to the job it controls.",
+              pairs: [
+                ["Cerebrum", "Thinking, memory and solving a sum"],
+                ["Cerebellum", "Balance while riding a cycle"],
+                ["Medulla oblongata", "Heartbeat and breathing"],
+                ["Hypothalamus", "Hunger, thirst and body temperature"],
+                ["Midbrain", "Turning the eyes towards a sudden sound"],
+              ],
+              explain: "The **cerebrum** does voluntary and thinking work. The **cerebellum** keeps balance. The **medulla** runs involuntary actions. The **hypothalamus** controls hunger, thirst and temperature.",
+            },
+          },
+          {
             type: "callout",
             tone: "tip",
             title: "Protection",
@@ -95,7 +110,13 @@ export const topics: Topic[] = [
             type: "callout",
             tone: "exam",
             title: "Board trap",
-            md: "Balance and posture are controlled by the **cerebellum**, not the cerebrum. Heartbeat and breathing are controlled by the **medulla**. Also, a reflex is coordinated by the **spinal cord**; the brain is informed but does not decide the action.",
+            md: "Balance and posture are controlled by the **cerebellum**, not the cerebrum. Heartbeat and breathing are controlled by the **medulla**.",
+          },
+          {
+            type: "mistake",
+            wrong: "The brain decides every action, even a reflex like pulling your hand away from a hot tawa.",
+            right: "A reflex is coordinated by the **spinal cord**. The relay neuron there links the sensory and motor neurons directly; the brain is informed afterwards but does not decide the action.",
+            why: "We feel the pain and think 'I moved my hand', so it seems the brain was in charge. But the hand moves before the pain is felt. Going through the brain would take longer, so the spinal cord short-cuts it.",
           },
           {
             type: "keypoints",
@@ -225,7 +246,7 @@ export const topics: Topic[] = [
             title: "Ears pop on a flight",
             md: "When a plane descends into Mumbai, outside air pressure rises. Swallowing or yawning opens the **Eustachian tube**, letting air into the middle ear so pressure on both sides of the eardrum becomes equal.",
           },
-          { type: "heading", text: "Worked comparison: coordination in plants" },
+          { type: "heading", text: "Coordination in plants" },
           {
             type: "text",
             md: "Plants have no nerves or muscles. They coordinate with **plant hormones (phytohormones)** and respond by growing or by changes in water content.",
@@ -242,6 +263,34 @@ export const topics: Topic[] = [
             ],
           },
           {
+            type: "activity",
+            activity: {
+              kind: "match",
+              prompt: "Match each plant hormone to what it does.",
+              pairs: [
+                ["Auxin", "Bends the shoot towards light"],
+                ["Gibberellin", "Makes stems longer and grapes bigger"],
+                ["Cytokinin", "Promotes cell division"],
+                ["Abscisic acid", "Inhibits growth and closes stomata"],
+                ["Ethylene", "Ripens mangoes and bananas"],
+              ],
+              explain: "Four of these hormones **promote** growth or ripening. **Abscisic acid** is the odd one out: it **inhibits** growth, so it is called the stress hormone.",
+            },
+          },
+          {
+            type: "example",
+            title: "Why a shoot bends towards a window",
+            problem: "A pot of bean seedlings is kept near a window in Chennai. After three days the shoots bend towards the window. Explain step by step.",
+            steps: [
+              "Light falls on the shoots from one side only (the window side).",
+              "**Auxin** is made at the shoot tip and moves down the shoot.",
+              "Auxin collects more on the **shaded side**, away from the light.",
+              "Cells on the shaded side **elongate** more than cells on the lit side.",
+              "The shaded side grows longer, so the shoot curves towards the light.",
+            ],
+            answer: "Uneven auxin makes the shaded side grow faster, so the shoot bends towards light: **positive phototropism**, a growth movement.",
+          },
+          {
             type: "list",
             items: [
               "**Phototropism**: shoot grows towards light (positive), root away from it.",
@@ -255,7 +304,13 @@ export const topics: Topic[] = [
             type: "callout",
             tone: "exam",
             title: "Board trap",
-            md: "The **blind spot** has no receptors at all; the **yellow spot** has the most cones. Do not swap them. In plants, *Mimosa* folding is a **nastic** (non-directional, non-growth) movement, while a tendril coiling round a stick is a growth movement (thigmotropism).",
+            md: "The **blind spot** has no receptors at all; the **yellow spot** has the most cones. Do not swap them.",
+          },
+          {
+            type: "mistake",
+            wrong: "The touch-me-not plant folds its leaves because it grows in response to touch, just like a tendril.",
+            right: "*Mimosa* folding is a **nastic** movement: it is not growth and does not depend on the direction of touch. Cells at the leaf base quickly **lose water** and the leaflets droop. A tendril coiling round a stick is a slow growth movement (**thigmotropism**).",
+            why: "Both respond to touch, so they look alike. But *Mimosa* folds in seconds and opens again later, which growth cannot do. A tendril takes hours or days and the coil stays, because the cells have actually grown.",
           },
           {
             type: "keypoints",
@@ -379,6 +434,22 @@ export const topics: Topic[] = [
             ],
           },
           {
+            type: "activity",
+            activity: {
+              kind: "match",
+              prompt: "Match each hormone to the gland that makes it.",
+              pairs: [
+                ["Thyroxine", "Thyroid"],
+                ["Insulin", "Pancreas (islets of Langerhans)"],
+                ["Adrenaline", "Adrenal medulla"],
+                ["Growth hormone", "Pituitary"],
+                ["Testosterone", "Testes"],
+                ["Oestrogen", "Ovaries"],
+              ],
+              explain: "Each gland has its own hormone. Learn them in pairs: **thyroid–thyroxine**, **pancreas–insulin**, **adrenal–adrenaline**, **pituitary–growth hormone**.",
+            },
+          },
+          {
             type: "callout",
             tone: "tip",
             title: "Why 'master gland'?",
@@ -409,10 +480,29 @@ export const topics: Topic[] = [
             ],
           },
           {
+            type: "example",
+            title: "Adrenaline in an emergency",
+            problem: "Go back to the stray dog chasing you in Pune. Explain step by step how **adrenaline** prepares your body to run.",
+            steps: [
+              "Your eyes and ears detect the danger; nerves carry the message to the brain.",
+              "Nerve impulses from the brain reach the **adrenal medulla**, which releases adrenaline **directly into the blood**.",
+              "The blood carries adrenaline to many **target organs** at once.",
+              "The **heart** beats faster and stronger, sending more oxygen to the muscles. **Breathing** becomes faster.",
+              "Blood is moved away from the gut and skin to the **muscles**, and the liver releases glucose for extra energy.",
+            ],
+            answer: "Nerves start the response quickly; adrenaline in the blood then keeps many organs on alert together. This is the **fight-or-flight** response.",
+          },
+          {
             type: "callout",
             tone: "exam",
             title: "Board trap",
-            md: "Adrenaline comes from the adrenal **medulla**, not the cortex. And **insulin lowers** blood sugar while **glucagon raises** it: students often swap these in one-mark questions.",
+            md: "Adrenaline comes from the adrenal **medulla**, not the cortex.",
+          },
+          {
+            type: "mistake",
+            wrong: "Insulin raises blood sugar and glucagon lowers it.",
+            right: "**Insulin lowers** blood glucose (cells take it in and the liver stores it as glycogen). **Glucagon raises** it (the liver turns glycogen back into glucose).",
+            why: "Both come from the same islets and both control sugar, so they are easy to swap in one-mark questions. Remember: diabetics who lack **insulin** have **high** blood sugar, so insulin must be the hormone that brings it down.",
           },
           {
             type: "keypoints",
@@ -473,6 +563,19 @@ export const topics: Topic[] = [
             explain: "Hormones act more slowly than nerves but their effects last longer.",
             difficulty: 2,
           },
+          {
+            kind: "mcq",
+            q: "Why is the pancreas called a heterocrine (mixed) gland?",
+            options: [
+              "It makes both insulin and adrenaline",
+              "It has a duct for digestive juice and also releases hormones into blood",
+              "It is controlled by both the brain and the kidneys",
+              "It works only after meals",
+            ],
+            answer: 1,
+            explain: "Its acini send pancreatic juice through a **duct** (exocrine), while its **islets of Langerhans** release insulin and glucagon into blood (endocrine).",
+            difficulty: 3,
+          },
         ],
       },
       {
@@ -486,17 +589,18 @@ export const topics: Topic[] = [
             type: "text",
             md: "Hormones must be released in the **right amount at the right time**. The body manages this with **feedback**: the level of a hormone, or of what it controls, tells the gland whether to speed up or slow down.",
           },
-          { type: "heading", text: "Worked example: blood sugar after a meal" },
           {
-            type: "list",
-            ordered: true,
-            items: [
+            type: "example",
+            title: "Blood sugar after a meal",
+            problem: "You eat two plates of rice at lunch. Show how your body brings blood glucose back to normal, and what happens if it later falls too low.",
+            steps: [
               "You eat two plates of rice at lunch; blood glucose rises.",
               "Beta cells of the pancreas detect the rise and release **insulin**.",
               "Insulin makes liver and muscle cells take in glucose and store it as **glycogen**.",
               "Blood glucose falls back to normal, so insulin release slows down.",
               "If glucose drops too low (say during a long fast), alpha cells release **glucagon**, which turns glycogen back into glucose.",
             ],
+            answer: "High glucose → insulin → glucose stored → level falls → insulin switched off. Low glucose → glucagon → glucose released. The level stays within a normal range by **negative feedback**.",
           },
           {
             type: "callout",
@@ -532,6 +636,24 @@ export const topics: Topic[] = [
             ],
           },
           {
+            type: "activity",
+            activity: {
+              kind: "sort",
+              prompt: "Is each disorder caused by too little or too much hormone?",
+              groups: ["Too little hormone", "Too much hormone"],
+              items: [
+                { text: "Dwarfism", group: 0, hint: "Not enough growth hormone in childhood." },
+                { text: "Cretinism", group: 0, hint: "A child whose thyroid makes too little thyroxine." },
+                { text: "Diabetes mellitus", group: 0, hint: "Too little insulin, so blood sugar stays high." },
+                { text: "Diabetes insipidus", group: 0, hint: "Too little ADH, so the kidneys lose lots of water." },
+                { text: "Gigantism", group: 1, hint: "Extra growth hormone while a child is still growing." },
+                { text: "Acromegaly", group: 1, hint: "Extra growth hormone in an adult." },
+                { text: "Exophthalmic goitre", group: 1, hint: "An overactive thyroid: bulging eyes and fast heartbeat." },
+              ],
+              explain: "Most disorders are **deficiencies**. Remember the 'too much' ones: **gigantism** and **acromegaly** (growth hormone) and **exophthalmic goitre** (thyroxine).",
+            },
+          },
+          {
             type: "callout",
             tone: "warning",
             title: "Simple goitre and iodised salt",
@@ -547,7 +669,13 @@ export const topics: Topic[] = [
             type: "callout",
             tone: "exam",
             title: "Board trap",
-            md: "**Diabetes mellitus** is an insulin problem (sweet urine). **Diabetes insipidus** is an ADH problem (dilute, tasteless urine). Similarly, **cretinism** is thyroid deficiency in a *child*, **dwarfism** is growth-hormone deficiency: a cretin is mentally retarded too, a pituitary dwarf usually is not.",
+            md: "**Cretinism** is thyroid deficiency in a *child*, **dwarfism** is growth-hormone deficiency: a child with cretinism also has poor mental development, while a pituitary dwarf usually does not.",
+          },
+          {
+            type: "mistake",
+            wrong: "Diabetes insipidus and diabetes mellitus are both caused by a lack of insulin.",
+            right: "**Diabetes mellitus** is caused by too little insulin (high blood sugar, sugar in urine). **Diabetes insipidus** is caused by too little **ADH** from the pituitary (large amounts of dilute urine, no sugar).",
+            why: "Both share the word 'diabetes' because both make a person pass a lot of urine and feel thirsty. But the cause is different: 'mellitus' means sweet (sugar in urine), 'insipidus' means tasteless (the kidneys cannot hold back water).",
           },
           {
             type: "keypoints",
@@ -563,7 +691,7 @@ export const topics: Topic[] = [
         flashcards: [
           { front: "Negative feedback", back: "A control system where the effect of a hormone reduces further release of that hormone." },
           { front: "Acromegaly", back: "Excess growth hormone in adults, causing enlarged jaw, hands and feet." },
-          { front: "Cretinism", back: "Thyroxine deficiency in children: stunted growth and mental retardation." },
+          { front: "Cretinism", back: "Thyroxine deficiency in children: stunted growth and poor mental development." },
           { front: "Diabetes insipidus", back: "Deficiency of ADH, causing large volumes of dilute urine." },
           { front: "Why is salt iodised?", back: "Iodine is needed to make thyroxine; lack of it causes simple goitre." },
         ],
@@ -647,6 +775,22 @@ export const topics: Topic[] = [
             ],
           },
           {
+            type: "activity",
+            activity: {
+              kind: "match",
+              prompt: "Match each organism to how it reproduces.",
+              pairs: [
+                ["Amoeba", "Binary fission"],
+                ["Plasmodium", "Multiple fission"],
+                ["Yeast", "Budding"],
+                ["Spirogyra", "Fragmentation"],
+                ["Rhizopus (bread mould)", "Spore formation"],
+                ["Planaria", "Regeneration"],
+              ],
+              explain: "All of these are **asexual**: one parent, and offspring that are near copies of it. Fission splits one cell; budding and regeneration grow new bodies from part of the parent.",
+            },
+          },
+          {
             type: "callout",
             tone: "tip",
             title: "Artificial vegetative propagation",
@@ -673,17 +817,18 @@ export const topics: Topic[] = [
               "**Self-pollination**: pollen reaches the stigma of the same flower or plant. **Cross-pollination**: pollen comes from another plant, carried by insects, wind, water or birds.",
             ],
           },
-          { type: "heading", text: "Worked example: from flower to fruit" },
           {
-            type: "list",
-            ordered: true,
-            items: [
+            type: "example",
+            title: "From flower to fruit",
+            problem: "A bee visits the yellow flowers of a mustard field in Punjab. Trace how one flower becomes a pod of seeds.",
+            steps: [
               "A bee carries pollen from one mustard flower to the stigma of another (cross-pollination).",
               "The pollen grain grows a **pollen tube** down the style to the ovule.",
               "A male gamete fuses with the egg: **fertilisation** forms a **zygote**.",
               "Zygote → **embryo**; ovule → **seed**; ovary → **fruit**.",
               "Petals, sepals and stamens usually wither and fall.",
             ],
+            answer: "Pollination → pollen tube → fertilisation → zygote → embryo inside a seed, with the ovary ripening into the fruit (the mustard pod).",
           },
           {
             type: "illustration",
@@ -694,7 +839,13 @@ export const topics: Topic[] = [
             type: "callout",
             tone: "exam",
             title: "Board trap",
-            md: "**Pollination** (transfer of pollen) is not **fertilisation** (fusion of gametes). Also, *Leishmania* splits in a definite plane, while *Amoeba* can split in any plane: examiners love this difference.",
+            md: "*Leishmania* splits in a definite plane, while *Amoeba* can split in any plane: examiners love this difference.",
+          },
+          {
+            type: "mistake",
+            wrong: "Pollination and fertilisation are the same thing.",
+            right: "**Pollination** is the transfer of pollen from anther to stigma. **Fertilisation** comes later: the male gamete fuses with the egg inside the ovule.",
+            why: "Both happen in the flower, one soon after the other, so they blur together. But pollen landing on the stigma is still far from the egg: it must grow a pollen tube down the style first. Pollination can happen without fertilisation following.",
           },
           {
             type: "keypoints",
@@ -797,17 +948,18 @@ export const topics: Topic[] = [
               ["Cervix and vagina", "neck of the uterus and the birth canal"],
             ],
           },
-          { type: "heading", text: "Worked example: a 28-day menstrual cycle" },
           {
-            type: "list",
-            ordered: true,
-            items: [
+            type: "example",
+            title: "A 28-day menstrual cycle",
+            problem: "Walk through one regular 28-day menstrual cycle and say what the uterus and ovary are doing at each stage.",
+            steps: [
               "**Days 1–5: menstruation.** The thick uterine lining breaks down and leaves the body with blood.",
               "**Days 6–13:** oestrogen rebuilds the lining.",
               "**About day 14: ovulation.** An ovum is released into the oviduct.",
               "**Days 15–28:** progesterone keeps the lining thick and ready.",
               "If no fertilisation happens, the lining breaks down and the cycle restarts on day 1.",
             ],
+            answer: "Menstruation (days 1–5) → lining rebuilt (6–13) → ovulation (about day 14) → lining kept ready (15–28) → menstruation again if the ovum is not fertilised.",
           },
           {
             type: "text",
@@ -824,6 +976,22 @@ export const topics: Topic[] = [
                 explain: "The sperm meets the ovum in the oviduct; the zygote then moves to the uterus.",
               },
             ],
+          },
+          {
+            type: "activity",
+            activity: {
+              kind: "order",
+              prompt: "Put the events from ovulation to pregnancy in order.",
+              items: [
+                "Ovary releases an ovum (ovulation)",
+                "Sperm meets the ovum in the oviduct",
+                "Fertilisation forms a zygote",
+                "Zygote divides into a ball of cells",
+                "Embryo implants in the uterus wall",
+                "Placenta forms and nourishes the embryo",
+              ],
+              explain: "**Fertilisation** happens in the **oviduct**. The dividing embryo then travels down to the **uterus**, implants, and is fed through the **placenta**.",
+            },
           },
           { type: "heading", text: "Reproductive health" },
           {
@@ -846,7 +1014,13 @@ export const topics: Topic[] = [
             type: "callout",
             tone: "exam",
             title: "Board trap",
-            md: "Fertilisation happens in the **oviduct**, not the uterus; implantation happens in the **uterus**. And **vasectomy** blocks the vas deferens in males, **tubectomy** blocks the fallopian tubes in females.",
+            md: "**Vasectomy** blocks the vas deferens in males, **tubectomy** blocks the fallopian tubes in females.",
+          },
+          {
+            type: "mistake",
+            wrong: "Fertilisation happens in the uterus, where the baby grows.",
+            right: "Fertilisation happens in the **oviduct (fallopian tube)**. Only **implantation** and the growth of the embryo happen in the **uterus**.",
+            why: "The uterus is where the baby develops, so it seems the natural place for everything to start. But the ovum is released into the oviduct and lives there only about a day, so the sperm must meet it there; the zygote then takes a few days to reach the uterus.",
           },
           {
             type: "keypoints",

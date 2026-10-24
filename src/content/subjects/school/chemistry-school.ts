@@ -383,6 +383,23 @@ export const chemistrySchool: Subject = {
                 "**Covalent bonding** — non-metals share pairs of electrons (H₂O, CH₄).",
               ],
             },
+            {
+              type: "activity",
+              activity: {
+                kind: "sort",
+                prompt: "Ionic or covalent? Look for a metal.",
+                groups: ["Ionic", "Covalent"],
+                items: [
+                  { text: "NaCl (common salt)", group: 0, hint: "Sodium is a metal; it gives an electron to chlorine." },
+                  { text: "MgO", group: 0, hint: "Magnesium (metal) gives two electrons to oxygen." },
+                  { text: "CaCl₂", group: 0, hint: "Calcium is a metal, chlorine a non-metal." },
+                  { text: "H₂O", group: 1, hint: "Hydrogen and oxygen are both non-metals; they share." },
+                  { text: "CH₄ (methane)", group: 1, hint: "Carbon and hydrogen are non-metals." },
+                  { text: "CO₂", group: 1, hint: "Carbon and oxygen share electron pairs." },
+                ],
+                explain: "**Metal + non-metal** → electrons are transferred → **ionic**. **Non-metal + non-metal** → electrons are shared → **covalent**.",
+              },
+            },
             { type: "heading", text: "The mole" },
             {
               type: "formula",
@@ -399,6 +416,17 @@ export const chemistrySchool: Subject = {
               caption: "moles = mass (g) ÷ molar mass (g/mol)",
             },
             {
+              type: "example",
+              title: "Counting molecules by weighing",
+              problem: "How many moles and how many molecules are there in 88 g of carbon dioxide? (C = 12, O = 16)",
+              steps: [
+                "Molar mass of CO₂: $M = 12 + 2(16) = 44$ g/mol.",
+                "Moles: $n = \\dfrac{m}{M} = \\dfrac{88 \\text{ g}}{44 \\text{ g/mol}} = 2$ mol.",
+                "Molecules = $n \\times N_A = 2 \\text{ mol} \\times 6.022 \\times 10^{23}$ per mol $= 1.2044 \\times 10^{24}$.",
+              ],
+              answer: "**2 mol**, which is about **1.2 × 10²⁴ molecules** of CO₂.",
+            },
+            {
               type: "checkpoint",
               questions: [
                 {
@@ -409,6 +437,12 @@ export const chemistrySchool: Subject = {
                   explain: "n = 36 ÷ 18 = 2 mol.",
                 },
               ],
+            },
+            {
+              type: "mistake",
+              wrong: "The molar mass of oxygen gas is 16 g/mol, because oxygen's atomic mass is 16.",
+              right: "Oxygen gas is **O₂**, so its molar mass is 2 × 16 = **32 g/mol**. 16 g/mol is for oxygen **atoms**.",
+              why: "The atomic mass on the periodic table is for one atom. Gases like O₂, N₂, H₂ and Cl₂ exist as two-atom molecules, so always work from the formula of the substance you actually have.",
             },
             {
               type: "keypoints",
@@ -456,6 +490,22 @@ export const chemistrySchool: Subject = {
               unit: "g",
               explain: "m = n × M = 0.5 × 44 = 22 g.",
             },
+            {
+              kind: "numeric",
+              q: "How many moles of oxygen gas (O₂) are in 64 g of it? (O = 16)",
+              answer: 2,
+              unit: "mol",
+              explain: "M(O₂) = 32 g/mol, so n = 64 ÷ 32 = 2 mol. Using 16 g/mol (the atom) would wrongly give 4 mol.",
+              difficulty: 2,
+            },
+            {
+              kind: "mcq",
+              q: "How many molecules are in 9 g of water? (H₂O = 18 g/mol)",
+              options: ["6.022 × 10²³", "3.011 × 10²³", "1.2044 × 10²⁴", "9 × 10²³"],
+              answer: 1,
+              explain: "n = 9 ÷ 18 = 0.5 mol, and 0.5 × 6.022 × 10²³ = 3.011 × 10²³ molecules.",
+              difficulty: 2,
+            },
           ],
         },
         {
@@ -473,6 +523,46 @@ export const chemistrySchool: Subject = {
               type: "widget",
               widget: "periodic-table",
               caption: "Tap any element to see its atomic number, group and category.",
+            },
+            { type: "heading", text: "Periodic classification: how the table grew" },
+            {
+              type: "text",
+              md: "Scientists tried for many years to sort the elements into groups with similar properties. Each attempt worked a little better than the last. Boards (including Karnataka SSLC and CBSE) ask about each step and its **limitations**.",
+            },
+            {
+              type: "table",
+              headers: ["Attempt", "The idea", "Limitation"],
+              rows: [
+                ["**Döbereiner's triads** (1817–1829)", "Groups of three similar elements. Arranged by atomic mass, the middle one's mass is about the **average** of the other two (Li, Na, K; Ca, Sr, Ba; Cl, Br, I).", "Only three triads could be found among the elements known then."],
+                ["**Newlands' law of octaves** (1866)", "In order of atomic mass, every **eighth** element has properties like the first, like the eighth note in music (Li and Na, Na and K).", "Worked only up to **calcium**; he put two elements in one place and dissimilar elements (Co, Ni with F, Cl, Br) together."],
+                ["**Mendeléev's periodic law** (1869)", "Properties of elements are a periodic function of their **atomic masses**. He left **gaps** and predicted eka-boron, eka-aluminium and eka-silicon (later scandium, gallium and germanium).", "No fixed place for **hydrogen**; **isotopes** have different masses but one place; atomic mass does not always increase in order (Co 58.9 is placed before Ni 58.7)."],
+                ["**Modern periodic law** (Moseley, 1913)", "Properties of elements are a periodic function of their **atomic numbers**.", "Solves Mendeléev's problems: isotopes have the same atomic number, and Co (27) comes before Ni (28)."],
+              ],
+            },
+            {
+              type: "example",
+              title: "Checking a Döbereiner triad",
+              problem: "Lithium (atomic mass 7), sodium (23) and potassium (39) are similar metals. Show that they form a Döbereiner triad.",
+              steps: [
+                "Arrange them in order of atomic mass: Li (7), Na (23), K (39).",
+                "Find the average of the first and third masses: $(7 + 39) \\div 2 = 46 \\div 2 = 23$.",
+                "Compare with the middle element: sodium's atomic mass is 23.",
+              ],
+              answer: "The average equals sodium's mass, and all three are similar soft, reactive metals, so **Li, Na, K form a triad**.",
+            },
+            {
+              type: "activity",
+              activity: {
+                kind: "order",
+                prompt: "Put these classification ideas in the order they came.",
+                items: [
+                  "Döbereiner's triads",
+                  "Newlands' law of octaves",
+                  "Mendeléev's periodic table (by atomic mass)",
+                  "Modern periodic table (by atomic number)",
+                ],
+                explain: "Triads (early 1800s) → octaves (1866) → Mendeléev (1869) → Moseley's **atomic number** order (1913). Each step fixed problems in the one before.",
+              },
             },
             { type: "heading", text: "How it is organised" },
             {
@@ -515,17 +605,19 @@ export const chemistrySchool: Subject = {
                 ["Atomic size", "Decreases", "Increases"],
                 ["Metallic character", "Decreases", "Increases"],
                 ["Tendency to gain electrons (non-metallic)", "Increases", "Decreases"],
+                ["Valency (period 3: Na to Ar)", "Rises 1 → 4, then falls to 0 (1, 2, 3, 4, 3, 2, 1, 0)", "Stays the same (same valence electrons)"],
               ],
             },
             {
-              type: "callout",
-              tone: "exam",
-              title: "Why size shrinks across a period",
-              md: "Moving right adds protons to the nucleus but electrons go into the **same** shell. The stronger positive pull drags the shell inward, so atoms get smaller.",
+              type: "mistake",
+              wrong: "Atoms get bigger across a period, because each one has more electrons.",
+              right: "Atoms get **smaller** across a period. They get bigger only **down a group**, where new shells are added.",
+              why: "More electrons sounds like a bigger atom. But across a period the new electrons go into the **same** shell, while the nucleus gains protons. The stronger positive pull drags the shell inward, so atoms get smaller.",
             },
             {
               type: "keypoints",
               items: [
+                "Döbereiner (triads) → Newlands (octaves) → Mendeléev (atomic mass, gaps) → modern law (atomic number).",
                 "118 elements, 7 periods, 18 groups.",
                 "Same group → same valence electrons → similar reactions.",
                 "Metals left, non-metals right, noble gases far right.",
@@ -537,7 +629,9 @@ export const chemistrySchool: Subject = {
             { front: "Period", back: "A horizontal row; its number equals the number of electron shells." },
             { front: "Group", back: "A vertical column; elements share the same number of valence electrons." },
             { front: "Noble gases", back: "Group 18 — full outer shells, very unreactive." },
-            { front: "Who created the first periodic table?", back: "Dmitri Mendeleev, in 1869." },
+            { front: "Who made the first widely accepted periodic table?", back: "Dmitri Mendeleev, in 1869. He arranged elements by atomic mass and left gaps for undiscovered ones." },
+            { front: "Döbereiner's triad", back: "Three similar elements where the middle one's atomic mass is about the average of the other two, e.g. Li, Na, K." },
+            { front: "Modern periodic law", back: "Properties of elements are a periodic function of their atomic numbers (Moseley, 1913)." },
             { front: "Trend in atomic size down a group", back: "Increases, because more shells are added." },
           ],
           quiz: [
@@ -572,6 +666,35 @@ export const chemistrySchool: Subject = {
               options: ["Sodium", "Silicon", "Neon", "Iron"],
               answer: 1,
               explain: "Silicon has properties between metals and non-metals — that is why it is great for computer chips.",
+            },
+            {
+              kind: "mcq",
+              q: "Newlands' law of octaves could be applied only up to which element?",
+              options: ["Hydrogen", "Calcium", "Iron", "Uranium"],
+              answer: 1,
+              explain: "Beyond calcium, every eighth element did not have properties like the first, so the law failed for heavier elements.",
+              difficulty: 2,
+            },
+            {
+              kind: "numeric",
+              q: "Calcium (40), strontium and barium (137) form a Döbereiner triad. Use the triad rule to predict the atomic mass of strontium.",
+              answer: 88.5,
+              tolerance: 1,
+              explain: "Average of the outer two: (40 + 137) ÷ 2 = 88.5. The real value is about 87.6, close to the prediction.",
+              difficulty: 3,
+            },
+            {
+              kind: "mcq",
+              q: "Which problem in Mendeléev's table did the modern periodic law solve?",
+              options: [
+                "Isotopes of an element needed different places",
+                "Elements had no fixed atomic mass",
+                "Noble gases were too reactive",
+                "There were too few groups",
+              ],
+              answer: 0,
+              explain: "Isotopes have different atomic masses but the same **atomic number**, so in the modern table they share one place.",
+              difficulty: 2,
             },
           ],
         },
@@ -626,6 +749,23 @@ export const chemistrySchool: Subject = {
               ],
             },
             {
+              type: "activity",
+              activity: {
+                kind: "sort",
+                prompt: "Which family does each reaction belong to?",
+                groups: ["Combination", "Decomposition", "Displacement"],
+                items: [
+                  { text: "CaO + H₂O → Ca(OH)₂", group: 0, hint: "Two substances join to make one product." },
+                  { text: "2H₂ + O₂ → 2H₂O", group: 0, hint: "Two elements combine into one compound." },
+                  { text: "2H₂O → 2H₂ + O₂ (electric current)", group: 1, hint: "One compound breaks into simpler substances." },
+                  { text: "2AgCl → 2Ag + Cl₂ (sunlight)", group: 1, hint: "Light splits silver chloride into two elements." },
+                  { text: "Zn + CuSO₄ → ZnSO₄ + Cu", group: 2, hint: "A more reactive metal pushes out a less reactive one." },
+                  { text: "Fe + CuSO₄ → FeSO₄ + Cu", group: 2, hint: "Iron takes copper's place in the compound." },
+                ],
+                explain: "Count reactants and products. **Many → one** is combination; **one → many** is decomposition; an element swapping places with another in a compound is **displacement**.",
+              },
+            },
+            {
               type: "checkpoint",
               questions: [
                 {
@@ -639,7 +779,25 @@ export const chemistrySchool: Subject = {
             },
             {
               type: "text",
-              md: "**Oxidation and reduction** often travel together (redox). Oxidation is gaining oxygen or losing electrons; reduction is losing oxygen or gaining electrons. Rusting is iron being oxidised: 4Fe + 3O₂ → 2Fe₂O₃ (water helps it happen).",
+              md: "**Oxidation and reduction** often travel together (redox). Oxidation is gaining oxygen or losing electrons; reduction is losing oxygen or gaining electrons. Rusting is iron being oxidised: 4Fe + 3O₂ → 2Fe₂O₃ (water helps it happen).\n\nThe substance that **gives** oxygen (or takes electrons) is the **oxidising agent**; it is itself reduced. The substance that **takes** oxygen (or gives electrons) is the **reducing agent**; it is itself oxidised.",
+            },
+            {
+              type: "example",
+              title: "Finding the oxidising and reducing agents",
+              problem: "Hydrogen gas is passed over hot copper(II) oxide: CuO + H₂ → Cu + H₂O. Which substance is oxidised, which is reduced, and which is the oxidising agent?",
+              steps: [
+                "Follow the oxygen. CuO **loses** oxygen to become Cu, so CuO is **reduced**.",
+                "H₂ **gains** oxygen to become H₂O, so H₂ is **oxidised**.",
+                "CuO gives oxygen to H₂, so CuO is the **oxidising agent**.",
+                "H₂ takes oxygen from CuO, so H₂ is the **reducing agent**.",
+              ],
+              answer: "H₂ is oxidised (reducing agent); CuO is reduced (oxidising agent). This is a **redox** reaction.",
+            },
+            {
+              type: "mistake",
+              wrong: "The oxidising agent is the substance that gets oxidised.",
+              right: "The oxidising agent **causes** oxidation of something else, so it is itself **reduced**. The reducing agent is itself oxidised.",
+              why: "The names sound as if they describe what happens to the agent. They really describe what the agent **does** to the other substance, like a cleaning agent that cleans the floor but itself gets dirty.",
             },
             {
               type: "keypoints",
@@ -656,6 +814,8 @@ export const chemistrySchool: Subject = {
             { front: "Endothermic reaction", back: "Absorbs heat from the surroundings (e.g. instant ice packs)." },
             { front: "Precipitate", back: "An insoluble solid formed when two solutions react." },
             { front: "Oxidation", back: "Gain of oxygen or loss of electrons." },
+            { front: "Reduction", back: "Loss of oxygen or gain of electrons." },
+            { front: "Oxidising agent", back: "The substance that gives oxygen (or takes electrons); it is itself reduced, e.g. CuO in CuO + H₂ → Cu + H₂O." },
           ],
           quiz: [
             {
@@ -685,6 +845,22 @@ export const chemistrySchool: Subject = {
               answers: [0, 2, 3],
               explain: "Dissolving is usually a physical change; the others are classic reaction signs.",
             },
+            {
+              kind: "mcq",
+              q: "In ZnO + C → Zn + CO, the reducing agent is:",
+              options: ["ZnO", "C", "Zn", "CO"],
+              answer: 1,
+              explain: "Carbon takes oxygen from ZnO, so carbon is oxidised and acts as the reducing agent. ZnO is the oxidising agent.",
+              difficulty: 2,
+            },
+            {
+              kind: "mcq",
+              q: "Mixing lead nitrate and potassium iodide solutions gives a yellow precipitate of PbI₂. This is a:",
+              options: ["Combination reaction", "Decomposition reaction", "Double displacement reaction", "Combustion reaction"],
+              answer: 2,
+              explain: "Pb(NO₃)₂ + 2KI → PbI₂↓ + 2KNO₃: the two compounds swap partners, forming a precipitate.",
+              difficulty: 2,
+            },
           ],
         },
         {
@@ -700,22 +876,22 @@ export const chemistrySchool: Subject = {
             },
             { type: "heading", text: "The golden rule" },
             {
-              type: "callout",
-              tone: "warning",
-              title: "Never change subscripts",
-              md: "Changing H₂O to H₂O₂ makes hydrogen peroxide — a different chemical! Only change the **coefficients** (big numbers in front).",
+              type: "mistake",
+              wrong: "H₂ + O₂ → H₂O is short of one oxygen, so just write H₂O₂ on the right.",
+              right: "Never change **subscripts**. Only change the **coefficients** (big numbers in front): 2H₂ + O₂ → 2H₂O.",
+              why: "Changing the subscript does make the atoms match, which is why it is tempting. But H₂O₂ is hydrogen peroxide, a different chemical! The formula of each substance is fixed; only the number of units can change.",
             },
-            { type: "heading", text: "Worked example: making water" },
             {
-              type: "list",
-              ordered: true,
-              items: [
-                "Write the unbalanced equation: H₂ + O₂ → H₂O",
+              type: "example",
+              title: "Making water",
+              problem: "Balance the equation for hydrogen burning in oxygen: H₂ + O₂ → H₂O.",
+              steps: [
                 "Count atoms. Left: H = 2, O = 2. Right: H = 2, O = 1.",
                 "Fix oxygen: put 2 in front of H₂O → H₂ + O₂ → 2H₂O. Now right has H = 4, O = 2.",
                 "Fix hydrogen: put 2 in front of H₂ → 2H₂ + O₂ → 2H₂O.",
-                "Recount: H = 4 and O = 2 on both sides. Balanced!",
+                "Recount: H = 4 and O = 2 on both sides.",
               ],
+              answer: "**2H₂ + O₂ → 2H₂O** (balanced).",
             },
             { type: "formula", tex: "2H_2 + O_2 \\rightarrow 2H_2O" },
             { type: "heading", text: "Tips from the pros" },
@@ -733,6 +909,18 @@ export const chemistrySchool: Subject = {
               md: "Example: burning methane. CH₄ + O₂ → CO₂ + H₂O. Carbon is already 1 = 1. Hydrogen: 4 on left, so put 2H₂O. Now oxygen on the right = 2 + 2 = 4, so we need 2O₂.",
             },
             { type: "formula", tex: "CH_4 + 2O_2 \\rightarrow CO_2 + 2H_2O" },
+            {
+              type: "activity",
+              activity: {
+                kind: "reveal",
+                prompt: "Aluminium burns in oxygen: Al + O₂ → Al₂O₃. Which is balanced?",
+                emoji: "⚖️",
+                options: ["Al + O₂ → AlO₂", "2Al + O₂ → Al₂O₃", "4Al + 3O₂ → 2Al₂O₃"],
+                answer: 2,
+                trap: 0,
+                explain: "AlO₂ changes the formula, which is not allowed. Al₂O₃ has 3 O, O₂ has 2, so the smallest match is 6 O: **2Al₂O₃** and **3O₂**. Then 4 Al are needed: 4Al + 3O₂ → 2Al₂O₃.",
+              },
+            },
             {
               type: "checkpoint",
               questions: [
@@ -765,6 +953,7 @@ export const chemistrySchool: Subject = {
             { front: "Subscript", back: "The small number in a formula; never changed when balancing." },
             { front: "(aq) means…", back: "Aqueous — dissolved in water." },
             { front: "Balanced combustion of methane", back: "CH₄ + 2O₂ → CO₂ + 2H₂O" },
+            { front: "Why must equations be balanced?", back: "Law of conservation of mass: atoms are neither created nor destroyed, so each element has the same count on both sides." },
           ],
           quiz: [
             {
@@ -802,6 +991,13 @@ export const chemistrySchool: Subject = {
               q: "To balance H₂O you may change it to H₂O₂.",
               answer: false,
               explain: "That makes a different substance (hydrogen peroxide). Only coefficients may change.",
+            },
+            {
+              kind: "numeric",
+              q: "Balance: Fe + H₂O → Fe₃O₄ + H₂ (iron with steam). What is the coefficient of H₂O?",
+              answer: 4,
+              explain: "Fe₃O₄ needs 3 Fe and 4 O. So 3Fe + 4H₂O → Fe₃O₄ + 4H₂: 8 H atoms on each side.",
+              difficulty: 3,
             },
           ],
         },
@@ -853,6 +1049,29 @@ export const chemistrySchool: Subject = {
               title: "Each step is ×10",
               md: "pH is a logarithmic scale. A solution at pH 3 is **10 times** more acidic than one at pH 4, and 100 times more acidic than pH 5.",
             },
+            {
+              type: "mistake",
+              wrong: "A higher pH number means a stronger acid, so pH 5 is more acidic than pH 2.",
+              right: "The **lower** the pH, the **stronger** the acid. pH 2 is 1000 times more acidic than pH 5.",
+              why: "We usually expect a bigger number to mean \"more\". But pH measures the H⁺ ions the other way round: more H⁺ ions give a smaller pH. Above 7, a higher pH means a stronger base.",
+            },
+            {
+              type: "activity",
+              activity: {
+                kind: "sort",
+                prompt: "Acidic, neutral or basic?",
+                groups: ["Acidic (pH < 7)", "Neutral (pH = 7)", "Basic (pH > 7)"],
+                items: [
+                  { text: "Lemon juice", group: 0, hint: "It tastes sour: pH about 2–3." },
+                  { text: "Vinegar", group: 0, hint: "It contains ethanoic acid." },
+                  { text: "Pure water", group: 1, hint: "Equal H⁺ and OH⁻ ions: pH 7." },
+                  { text: "Sugar solution", group: 1, hint: "Sugar gives no H⁺ or OH⁻ ions." },
+                  { text: "Soap solution", group: 2, hint: "Soap feels slippery: pH about 10." },
+                  { text: "Baking soda solution", group: 2, hint: "Sodium hydrogen carbonate is mildly basic: pH about 8–9." },
+                ],
+                explain: "Below 7 is **acidic**, exactly 7 is **neutral**, above 7 is **basic**. Sour foods are usually acids; slippery cleaners are usually bases.",
+              },
+            },
             { type: "heading", text: "Indicators" },
             {
               type: "table",
@@ -867,6 +1086,18 @@ export const chemistrySchool: Subject = {
             {
               type: "text",
               md: "Some natural indicators live in your kitchen: red cabbage juice turns pink in acid and green-yellow in strong base, and turmeric turns red-brown in base.",
+            },
+            {
+              type: "example",
+              title: "Identifying three solutions with red litmus only",
+              problem: "Three test tubes hold distilled water, an acid and a base, but the labels are lost. You have only **red litmus paper**. How do you identify each one?",
+              steps: [
+                "Dip red litmus in each tube. Only a **base** turns red litmus **blue**. Mark that tube B.",
+                "The other two leave red litmus red, so they are the acid and the water.",
+                "Now you have blue litmus: the paper that turned blue in tube B. Dip it in the other two.",
+                "The tube that turns this blue litmus back to **red** is the **acid**. The one with no change is **water**.",
+              ],
+              answer: "Base: turns red litmus blue. Acid: turns that blue litmus red. Water: no change to either.",
             },
             {
               type: "checkpoint",
@@ -895,6 +1126,7 @@ export const chemistrySchool: Subject = {
             { front: "Alkali", back: "A base that dissolves in water, releasing OH⁻ ions; pH > 7." },
             { front: "Litmus in acid", back: "Turns red." },
             { front: "pH of pure water", back: "7 (neutral)." },
+            { front: "Phenolphthalein in base", back: "Turns pink. It stays colourless in acid and in neutral solutions." },
           ],
           quiz: [
             {
@@ -921,6 +1153,27 @@ export const chemistrySchool: Subject = {
               options: ["OH⁻", "H⁺", "Na⁺", "Cl⁻"],
               answer: 1,
               explain: "Acids release hydrogen ions, H⁺.",
+            },
+            {
+              kind: "mcq",
+              q: "Solution A has pH 3 and solution B has pH 6. Which statement is correct?",
+              options: [
+                "B is more acidic than A",
+                "A is 1000 times more acidic than B",
+                "A is 3 times more acidic than B",
+                "Both are basic",
+              ],
+              answer: 1,
+              explain: "Lower pH = more acidic. Three pH steps = 10 × 10 × 10 = 1000 times.",
+              difficulty: 3,
+            },
+            {
+              kind: "mcq",
+              q: "A solution turns methyl orange red. Its pH is most likely:",
+              options: ["2", "7", "9", "13"],
+              answer: 0,
+              explain: "Methyl orange is red in acids, so the pH is below 7.",
+              difficulty: 2,
             },
           ],
         },
@@ -951,6 +1204,22 @@ export const chemistrySchool: Subject = {
                 ["Acid + metal oxide", "salt + water", "—"],
               ],
             },
+            {
+              type: "activity",
+              activity: {
+                kind: "reveal",
+                prompt: "Marble chips (CaCO₃) go into dilute HCl. What forms?",
+                emoji: "🫧",
+                options: [
+                  "Calcium chloride + hydrogen",
+                  "Calcium chloride + water + carbon dioxide",
+                  "Calcium oxide + chlorine",
+                ],
+                answer: 1,
+                trap: 0,
+                explain: "Bubbles make many people think of hydrogen, but that comes from **metals**. A **carbonate** gives CO₂: CaCO₃ + 2HCl → CaCl₂ + H₂O + CO₂. The gas turns limewater milky.",
+              },
+            },
             { type: "heading", text: "Naming salts" },
             {
               type: "text",
@@ -978,6 +1247,24 @@ export const chemistrySchool: Subject = {
               ],
             },
             {
+              type: "example",
+              title: "Is the salt solution acidic, basic or neutral?",
+              problem: "Predict whether solutions of sodium chloride (NaCl), sodium carbonate (Na₂CO₃) and ammonium chloride (NH₄Cl) are acidic, basic or neutral.",
+              steps: [
+                "Find the **parent acid and base** of each salt. NaCl: HCl (strong acid) + NaOH (strong base).",
+                "Na₂CO₃: H₂CO₃ (weak acid) + NaOH (strong base).",
+                "NH₄Cl: HCl (strong acid) + NH₄OH (weak base).",
+                "The **stronger** parent wins. Strong + strong gives neutral; a strong base wins over a weak acid; a strong acid wins over a weak base.",
+              ],
+              answer: "NaCl: **neutral** (pH 7). Na₂CO₃: **basic** (pH > 7). NH₄Cl: **acidic** (pH < 7).",
+            },
+            {
+              type: "mistake",
+              wrong: "Neutralisation makes a salt, so every salt solution has pH 7.",
+              right: "Only salts of a **strong acid and a strong base** (like NaCl) are neutral. Others can be acidic or basic.",
+              why: "The word \"neutralisation\" suggests the product is always neutral. But the pH of a salt solution depends on the strength of its parent acid and base: washing soda is basic, ammonium chloride is acidic.",
+            },
+            {
               type: "callout",
               tone: "tip",
               title: "Farmers use it too",
@@ -998,6 +1285,7 @@ export const chemistrySchool: Subject = {
             { front: "Test for hydrogen", back: "A lit splint makes a squeaky pop." },
             { front: "Test for carbon dioxide", back: "It turns limewater milky." },
             { front: "Salts from sulfuric acid", back: "Sulfates." },
+            { front: "pH of a sodium carbonate solution", back: "Above 7 (basic): it comes from a strong base (NaOH) and a weak acid (H₂CO₃)." },
           ],
           quiz: [
             {
@@ -1025,6 +1313,21 @@ export const chemistrySchool: Subject = {
               options: ["Na⁺ + Cl⁻ → NaCl", "H⁺ + OH⁻ → H₂O", "2H₂ + O₂ → 2H₂O", "H₂O → H⁺ + OH⁻"],
               answer: 1,
               explain: "Hydrogen ions and hydroxide ions combine to form water.",
+            },
+            {
+              kind: "mcq",
+              q: "Which salt gives an acidic solution in water?",
+              options: ["Sodium chloride", "Sodium carbonate", "Ammonium chloride", "Potassium sulfate"],
+              answer: 2,
+              explain: "NH₄Cl comes from a strong acid (HCl) and a weak base (NH₄OH), so its solution is acidic. NaCl and K₂SO₄ are neutral; Na₂CO₃ is basic.",
+              difficulty: 3,
+            },
+            {
+              kind: "numeric",
+              q: "Balance: H₂SO₄ + ?NaOH → Na₂SO₄ + 2H₂O. What is the coefficient of NaOH?",
+              answer: 2,
+              explain: "Na₂SO₄ has 2 Na, so 2NaOH is needed. Then 2 H from the acid + 2 OH from the base make 2H₂O.",
+              difficulty: 2,
             },
           ],
         },
@@ -1068,6 +1371,12 @@ export const chemistrySchool: Subject = {
                 ["Graphene", "A single layer of graphite", "Super strong, ultra-thin conductor"],
               ],
             },
+            {
+              type: "mistake",
+              wrong: "Graphite conducts electricity, so it must be a metal.",
+              right: "Graphite is a **non-metal**: it is a form (**allotrope**) of carbon, the same element as diamond.",
+              why: "We link conducting with metals, so it is easy to guess wrong. In graphite each carbon uses only 3 of its 4 electrons in bonds, and the spare electrons can move along the layers. Diamond uses all 4, so it does not conduct.",
+            },
             { type: "heading", text: "Hydrocarbons" },
             {
               type: "text",
@@ -1088,6 +1397,35 @@ export const chemistrySchool: Subject = {
               tone: "tip",
               title: "Memory trick",
               md: "**M**onkeys **E**at **P**eanut **B**utter → Meth-, Eth-, Prop-, But- = 1, 2, 3, 4 carbons.",
+            },
+            {
+              type: "example",
+              title: "Using the general formulae",
+              problem: "Write the formulae of the alkane and the alkene with 3 carbon atoms. Name them and say which one is saturated.",
+              steps: [
+                "Three carbons → the prefix is **prop-**.",
+                "Alkane: $C_nH_{2n+2}$ with n = 3 gives C₃H₂₍₃₎₊₂ = **C₃H₈**, propane.",
+                "Alkene: $C_nH_{2n}$ with n = 3 gives **C₃H₆**, propene.",
+                "Propane has only single bonds; propene has one C=C double bond.",
+              ],
+              answer: "Propane, C₃H₈ (**saturated**) and propene, C₃H₆ (**unsaturated**).",
+            },
+            {
+              type: "activity",
+              activity: {
+                kind: "sort",
+                prompt: "Saturated or unsaturated hydrocarbon?",
+                groups: ["Saturated (only single bonds)", "Unsaturated (C=C or C≡C)"],
+                items: [
+                  { text: "CH₄ (methane)", group: 0, hint: "Fits CₙH₂ₙ₊₂: an alkane." },
+                  { text: "C₂H₆ (ethane)", group: 0, hint: "2(2) + 2 = 6: an alkane." },
+                  { text: "C₄H₁₀ (butane)", group: 0, hint: "2(4) + 2 = 10: an alkane." },
+                  { text: "C₂H₄ (ethene)", group: 1, hint: "Fits CₙH₂ₙ: it has a C=C double bond." },
+                  { text: "C₃H₆ (propene)", group: 1, hint: "2(3) = 6: an alkene." },
+                  { text: "C₂H₂ (ethyne)", group: 1, hint: "It has a C≡C triple bond (an alkyne)." },
+                ],
+                explain: "Check the hydrogens: **2n + 2** means all single bonds (**saturated**). Fewer hydrogens than that means a double or triple bond (**unsaturated**).",
+              },
             },
             {
               type: "checkpoint",
@@ -1114,6 +1452,7 @@ export const chemistrySchool: Subject = {
             { front: "Tetravalency", back: "Carbon's ability to form four covalent bonds." },
             { front: "Alkane general formula", back: "CₙH₂ₙ₊₂" },
             { front: "Why does graphite conduct electricity?", back: "Each carbon uses only 3 electrons in bonds, leaving free electrons that move between layers." },
+            { front: "Alkene general formula", back: "CₙH₂ₙ, e.g. ethene C₂H₄. Alkenes are unsaturated (they have a C=C bond)." },
           ],
           quiz: [
             {
@@ -1141,6 +1480,27 @@ export const chemistrySchool: Subject = {
               options: ["It is a metal", "It forms 4 bonds and links to itself in chains", "It has no electrons", "It is a noble gas"],
               answer: 1,
               explain: "Tetravalency plus catenation give carbon its building power.",
+            },
+            {
+              kind: "mcq",
+              q: "Which of these is an unsaturated hydrocarbon?",
+              options: ["C₂H₆", "C₃H₈", "C₃H₆", "CH₄"],
+              answer: 2,
+              explain: "C₃H₆ fits CₙH₂ₙ, so it is propene with a C=C bond. The others fit CₙH₂ₙ₊₂ (alkanes).",
+              difficulty: 2,
+            },
+            {
+              kind: "mcq",
+              q: "Diamond does not conduct electricity but graphite does. This is because in diamond:",
+              options: [
+                "carbon is a metal",
+                "each carbon uses all 4 valence electrons in bonds",
+                "the atoms are in flat layers",
+                "there are no covalent bonds",
+              ],
+              answer: 1,
+              explain: "In diamond every carbon bonds to 4 others, so no electrons are free to move. Graphite has one spare electron per carbon.",
+              difficulty: 2,
             },
           ],
         },

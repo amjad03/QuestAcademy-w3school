@@ -318,6 +318,40 @@ export const biologySchool: Subject = {
               ],
             },
             {
+              type: "activity",
+              activity: {
+                kind: "match",
+                prompt: "Match each digestive juice part to its job.",
+                pairs: [
+                  ["Salivary amylase", "Starch → sugar (maltose)"],
+                  ["Pepsin", "Proteins → smaller peptides"],
+                  ["Lipase", "Fats → fatty acids and glycerol"],
+                  ["Bile", "Breaks fat into tiny droplets (no enzyme)"],
+                  ["Hydrochloric acid", "Kills germs and makes the stomach acidic"],
+                ],
+                explain: "Each **enzyme** works on one kind of food. **Bile** has no enzyme: it only **emulsifies** fat so lipase can work faster.",
+              },
+            },
+            {
+              type: "example",
+              title: "Trace a bite of chapati",
+              problem: "Priya eats a piece of chapati. Chapati is mostly **starch**. Trace what happens to the starch until it reaches her blood.",
+              steps: [
+                "**Mouth:** teeth chew the chapati into small pieces (mechanical digestion). **Salivary amylase** starts turning starch into the sugar **maltose**. Chew a chapati for a long time and it starts to taste sweet.",
+                "**Oesophagus:** the food ball (bolus) is pushed down by **peristalsis**. No digestion happens here.",
+                "**Stomach:** hydrochloric acid makes the contents acidic, so salivary amylase stops working. Starch digestion pauses; only proteins are digested here.",
+                "**Small intestine:** **pancreatic amylase** turns the remaining starch into maltose, and intestinal enzymes turn maltose into **glucose**.",
+                "**Villi** of the small intestine absorb the glucose into the blood capillaries.",
+              ],
+              answer: "Starch → maltose (mouth and small intestine) → glucose (small intestine), which is absorbed by the **villi** into the blood.",
+            },
+            {
+              type: "mistake",
+              wrong: "Most of our food is digested and absorbed in the stomach.",
+              right: "The stomach only starts protein digestion. Most digestion and almost all absorption of food happen in the **small intestine**.",
+              why: "The stomach is big and we feel food sitting there, so it seems like the main organ. But it has no villi and makes only one main enzyme (pepsin). The small intestine gets bile and pancreatic juice and has millions of villi to absorb the products.",
+            },
+            {
               type: "keypoints",
               items: [
                 "Cells → tissues → organs → organ systems → organism.",
@@ -359,6 +393,21 @@ export const biologySchool: Subject = {
               q: "Order the levels of organisation from smallest to largest.",
               items: ["Cell", "Tissue", "Organ", "Organ system", "Organism"],
               explain: "Each level is built from the one before it.",
+            },
+            {
+              kind: "truefalse",
+              q: "Bile is an enzyme that digests fats.",
+              answer: false,
+              explain: "Bile has **no enzyme**. It breaks large fat drops into tiny droplets (**emulsification**), giving lipase more surface to work on.",
+              difficulty: 2,
+            },
+            {
+              kind: "mcq",
+              q: "Salivary amylase stops working once food reaches the stomach. Why?",
+              options: ["The stomach is too cold", "The stomach contents are strongly acidic", "There is no starch left", "Peristalsis destroys it"],
+              answer: 1,
+              explain: "Hydrochloric acid makes the stomach acidic. Salivary amylase works best in near-neutral conditions, so it stops working there.",
+              difficulty: 3,
             },
           ],
         },
@@ -405,6 +454,34 @@ export const biologySchool: Subject = {
               ],
             },
             {
+              type: "activity",
+              activity: {
+                kind: "order",
+                prompt: "Put the steps of breathing in (inhalation) in order.",
+                items: [
+                  "Diaphragm and rib muscles contract",
+                  "Diaphragm flattens; ribs move up and out",
+                  "Volume of the chest cavity increases",
+                  "Air pressure inside the lungs falls",
+                  "Air rushes in through the nose to the alveoli",
+                ],
+                explain: "Muscles move first. A bigger chest means **lower pressure** inside the lungs, so air flows in from outside, where the pressure is higher.",
+              },
+            },
+            {
+              type: "example",
+              title: "Trace one breath",
+              problem: "Arjun takes one deep breath at a park in Pune. Trace an oxygen molecule from the air into his blood, and say how carbon dioxide leaves.",
+              steps: [
+                "His **diaphragm** contracts and flattens and the rib muscles lift the ribs. The chest gets bigger, pressure in the lungs falls, and air is drawn in.",
+                "In the **nose**, hairs and mucus trap dust; the air is warmed and moistened.",
+                "The air passes the **pharynx**, **larynx** and **trachea**, then splits into the two **bronchi** and smaller **bronchioles**.",
+                "It reaches an **alveolus**. Oxygen is more concentrated in the alveolus than in the blood, so it **diffuses** across the one-cell-thick walls into a capillary and joins **haemoglobin** in a red blood cell.",
+                "Carbon dioxide is more concentrated in the blood, so it diffuses the other way into the alveolus and is breathed out when the diaphragm relaxes.",
+              ],
+              answer: "Air → nose → pharynx → larynx → trachea → bronchi → bronchioles → alveoli; O₂ diffuses into the blood and CO₂ diffuses out, both by **diffusion**.",
+            },
+            {
               type: "checkpoint",
               questions: [
                 {
@@ -431,6 +508,12 @@ export const biologySchool: Subject = {
               md: "Tobacco smoke coats airways with tar, paralyses the tiny hairs (cilia) that sweep out mucus, damages alveoli, and greatly raises the risk of lung cancer and heart disease.",
             },
             {
+              type: "mistake",
+              wrong: "Breathing and respiration are the same thing.",
+              right: "**Breathing** is the physical movement of air into and out of the lungs. **Respiration** is the chemical breakdown of glucose inside every cell to release energy.",
+              why: "In daily speech we say 'respiration' for breathing, so the words seem to mean the same. But breathing only brings in the oxygen; respiration happens in the **mitochondria** of cells, even in cells far from the lungs.",
+            },
+            {
               type: "keypoints",
               items: [
                 "Air path: nose → trachea → bronchi → bronchioles → alveoli.",
@@ -445,6 +528,7 @@ export const biologySchool: Subject = {
             { front: "Trachea", back: "The windpipe, supported by rings of cartilage." },
             { front: "Diaphragm", back: "A dome-shaped muscle below the lungs; contracts to cause inhalation." },
             { front: "Breathing vs respiration", back: "Breathing moves air; respiration releases energy from glucose in cells." },
+            { front: "Cilia and mucus in the airways", back: "Mucus traps dust and germs; tiny hairs called cilia sweep it up and out of the airways." },
           ],
           quiz: [
             {
@@ -474,6 +558,21 @@ export const biologySchool: Subject = {
               answer: ["decreases", "gets smaller", "reduces"],
               explain: "The diaphragm relaxes and ribs move in, shrinking the chest and pushing air out.",
             },
+            {
+              kind: "truefalse",
+              q: "Exhaled air contains no oxygen.",
+              answer: false,
+              explain: "Exhaled air still has about **16%** oxygen. Only part of the oxygen breathed in is taken up by the blood. That is why mouth-to-mouth rescue breathing works.",
+              difficulty: 2,
+            },
+            {
+              kind: "mcq",
+              q: "Why does air move INTO the lungs when the chest expands?",
+              options: ["The lungs suck air in by themselves", "Pressure inside the lungs becomes lower than outside", "Pressure inside the lungs becomes higher than outside", "The trachea pumps air in"],
+              answer: 1,
+              explain: "A larger volume means lower pressure inside the lungs. Air always moves from higher to lower pressure. Lungs have no muscle of their own.",
+              difficulty: 3,
+            },
           ],
         },
         {
@@ -498,6 +597,19 @@ export const biologySchool: Subject = {
               title: "Double circulation",
               md: "Blood passes through the heart **twice** per complete loop: heart → lungs → heart (pulmonary circuit), then heart → body → heart (systemic circuit).",
             },
+            {
+              type: "example",
+              title: "Follow one drop of blood",
+              problem: "A drop of deoxygenated blood comes back from the leg muscles of a runner. Trace its path until it is pumped back out to the body.",
+              steps: [
+                "It travels up the **vena cava** (a large vein) into the **right atrium**.",
+                "The right atrium contracts and pushes it through a valve into the **right ventricle**.",
+                "The right ventricle pumps it into the **pulmonary artery**, which takes it to the **lungs**. There it picks up oxygen and gives out CO₂.",
+                "Now oxygenated, it returns through the **pulmonary vein** to the **left atrium**, then passes into the **left ventricle**.",
+                "The thick-walled left ventricle pumps it into the **aorta**, the largest artery, which carries it to the whole body.",
+              ],
+              answer: "Body → vena cava → right atrium → right ventricle → pulmonary artery → lungs → pulmonary vein → left atrium → left ventricle → aorta → body. It passed through the heart **twice**: this is **double circulation**.",
+            },
             { type: "heading", text: "Blood vessels" },
             {
               type: "table",
@@ -507,6 +619,23 @@ export const biologySchool: Subject = {
                 ["Veins", "Back to the heart", "Thinner walls, valves, low pressure"],
                 ["Capillaries", "Link arteries to veins", "Walls one cell thick for exchange of materials"],
               ],
+            },
+            {
+              type: "activity",
+              activity: {
+                kind: "sort",
+                prompt: "Which blood vessel does each feature describe?",
+                groups: ["Artery", "Vein", "Capillary"],
+                items: [
+                  { text: "Thick, muscular, elastic wall", group: 0, hint: "This vessel takes the high-pressure push straight from the heart." },
+                  { text: "Has valves to stop backflow", group: 1, hint: "Blood here is at low pressure and could flow backwards." },
+                  { text: "Wall only one cell thick", group: 2, hint: "This is where substances pass to and from the tissues." },
+                  { text: "Carries blood away from the heart", group: 0, hint: "Think 'A' for Away." },
+                  { text: "Brings blood back to the heart", group: 1, hint: "This vessel returns blood at low pressure." },
+                  { text: "Exchanges oxygen and food with body cells", group: 2, hint: "The thinnest vessels do the exchange." },
+                ],
+                explain: "**Arteries** carry blood away at high pressure, so they have thick walls. **Veins** return blood at low pressure, so they need valves. **Capillaries** are thin so materials can pass through them.",
+              },
             },
             {
               type: "checkpoint",
@@ -532,10 +661,10 @@ export const biologySchool: Subject = {
               ],
             },
             {
-              type: "callout",
-              tone: "fact",
-              title: "Exception alert",
-              md: "The **pulmonary artery** carries deoxygenated blood (to the lungs) and the **pulmonary vein** carries oxygenated blood (back to the heart). Arteries and veins are defined by direction, not by oxygen.",
+              type: "mistake",
+              wrong: "Arteries always carry oxygenated blood and veins always carry deoxygenated blood.",
+              right: "Arteries carry blood **away from** the heart; veins carry blood **to** the heart. The **pulmonary artery** carries deoxygenated blood to the lungs, and the **pulmonary vein** carries oxygenated blood back to the heart.",
+              why: "In most of the body the rule 'artery = oxygen-rich' happens to work, so it feels true. But vessels are named by the **direction** of flow, not by how much oxygen the blood holds.",
             },
             {
               type: "keypoints",
@@ -587,6 +716,21 @@ export const biologySchool: Subject = {
               answer: ["white"],
               explain: "White blood cells defend the body against germs.",
             },
+            {
+              kind: "mcq",
+              q: "Blood leaving the right ventricle goes next to the:",
+              options: ["Whole body, through the aorta", "Lungs, through the pulmonary artery", "Left atrium, through a valve", "Liver, through the vena cava"],
+              answer: 1,
+              explain: "The right side of the heart sends deoxygenated blood to the lungs through the **pulmonary artery**. Only the left ventricle pumps into the aorta.",
+              difficulty: 2,
+            },
+            {
+              kind: "truefalse",
+              q: "In double circulation, blood passes through the heart twice in one complete trip around the body.",
+              answer: true,
+              explain: "Once through the right side (to the lungs) and once through the left side (to the body). This keeps oxygenated and deoxygenated blood apart.",
+              difficulty: 2,
+            },
           ],
         },
       ],
@@ -628,6 +772,29 @@ export const biologySchool: Subject = {
               type: "text",
               md: "The glucose made is used for respiration, turned into **starch** for storage, into **cellulose** for cell walls, or combined with minerals (like nitrates) to make proteins.",
             },
+            {
+              type: "activity",
+              activity: {
+                kind: "sort",
+                prompt: "Is it used up or made in photosynthesis?",
+                groups: ["Goes in", "Comes out"],
+                items: [
+                  { text: "Carbon dioxide", group: 0, hint: "It enters the leaf through the stomata." },
+                  { text: "Water", group: 0, hint: "Roots absorb it and xylem carries it up." },
+                  { text: "Light energy", group: 0, hint: "Chlorophyll traps it to drive the reaction." },
+                  { text: "Glucose", group: 1, hint: "This is the food the leaf makes." },
+                  { text: "Oxygen", group: 1, hint: "It is given out through the stomata as a by-product." },
+                  { text: "Starch", group: 1, hint: "The leaf turns extra glucose into this for storage." },
+                ],
+                explain: "**Raw materials** are CO₂, water and light energy. **Products** are glucose (stored as starch) and oxygen. Respiration uses up the products and gives back the raw materials.",
+              },
+            },
+            {
+              type: "mistake",
+              wrong: "A plant gets its food, and most of its mass, from the soil.",
+              right: "A plant **makes** its food by photosynthesis. Most of its dry mass comes from **carbon dioxide** taken from the air. The soil gives only water and small amounts of minerals.",
+              why: "We see roots in the soil and add fertiliser, so soil looks like the plant's food. But fertiliser only supplies minerals such as nitrates. The carbon in wood, sugar and starch all came from CO₂ in the air.",
+            },
             { type: "heading", text: "Leaf design" },
             {
               type: "table",
@@ -653,10 +820,17 @@ export const biologySchool: Subject = {
               ],
             },
             {
-              type: "callout",
-              tone: "tip",
-              title: "Classroom test for starch",
-              md: "Boil a leaf to kill it, soak it in warm ethanol to remove chlorophyll, then add **iodine**. Parts that photosynthesised turn **blue-black**, showing starch.",
+              type: "example",
+              title: "Testing a variegated leaf for starch",
+              problem: "A croton (or money plant) leaf has green and white patches. Show that **chlorophyll** is needed for photosynthesis.",
+              steps: [
+                "**Destarch** the plant: keep it in the dark for about 2 days so the leaves use up their stored starch.",
+                "Put it in bright sunlight for a few hours, then pluck a leaf and draw where the green and white parts are.",
+                "Boil the leaf in water for a minute to kill it and soften it.",
+                "Soak it in warm **alcohol (ethanol)** in a water bath to remove the chlorophyll. The leaf turns pale. (Never heat alcohol over an open flame.)",
+                "Rinse it and add **iodine** solution. Parts with starch turn **blue-black**; parts without starch stay brown.",
+              ],
+              answer: "Only the parts that were **green** turn blue-black. The white parts had no chlorophyll, made no glucose and so stored no starch. Chlorophyll is needed for photosynthesis.",
             },
             {
               type: "text",
@@ -677,6 +851,7 @@ export const biologySchool: Subject = {
             { front: "Stomata", back: "Pores in the leaf surface that allow gas exchange; opened and closed by guard cells." },
             { front: "Iodine test", back: "Turns blue-black in the presence of starch." },
             { front: "Limiting factor", back: "The factor in shortest supply that restricts the rate of a process." },
+            { front: "Why destarch a plant before the starch test?", back: "Keeping it in the dark for about 2 days uses up old starch, so any starch found later was made during the experiment." },
           ],
           quiz: [
             {
@@ -704,6 +879,22 @@ export const biologySchool: Subject = {
               answer: 6,
               explain: "6CO₂ + 6H₂O → C₆H₁₂O₆ + 6O₂.",
             },
+            {
+              kind: "mcq",
+              q: "In the starch test, why is the leaf soaked in warm alcohol?",
+              options: ["To kill the leaf", "To remove chlorophyll so the colour change is easy to see", "To add starch to the leaf", "To open the stomata"],
+              answer: 1,
+              explain: "Boiling in water kills the leaf. Warm alcohol removes the green **chlorophyll**, so the blue-black colour of iodine and starch shows clearly.",
+              difficulty: 2,
+            },
+            {
+              kind: "mcq",
+              q: "A greenhouse in Ooty is brightly lit and warm, but adding more light does not speed up photosynthesis. What is most likely limiting the rate?",
+              options: ["Light intensity", "Carbon dioxide concentration", "Amount of soil", "Oxygen concentration"],
+              answer: 1,
+              explain: "If more light makes no difference, light is not the factor in shortest supply. The usual limit then is **CO₂ concentration**, which is why growers add CO₂.",
+              difficulty: 3,
+            },
           ],
         },
         {
@@ -729,6 +920,19 @@ export const biologySchool: Subject = {
             {
               type: "text",
               md: "**Transpiration** is the loss of water vapour from leaves, mostly through stomata. As water evaporates, it pulls a continuous column of water up the xylem — like sucking through a very long straw. This is called the **transpiration stream**.",
+            },
+            {
+              type: "example",
+              title: "Trace a drop of water through a plant",
+              problem: "After the monsoon rain, a neem tree takes up water from wet soil. Trace one drop of water from the soil to the air.",
+              steps: [
+                "**Root hairs** have a more concentrated cell sap than the soil water, so water enters them by **osmosis**.",
+                "Water moves from cell to cell across the root to the **xylem** in the centre of the root.",
+                "It rises up the xylem of the stem in a continuous column, pulled from above.",
+                "In the leaf, water leaves the xylem in the veins and enters the **mesophyll** cells, wetting their surfaces.",
+                "It evaporates into the air spaces and escapes as water vapour through open **stomata**. This loss is **transpiration**, and it pulls the next drop up behind it.",
+              ],
+              answer: "Soil → root hair (osmosis) → root cells → xylem of root, stem and leaf → mesophyll → air spaces → stomata → air. Evaporation at the leaf creates the **transpiration pull** that lifts the water.",
             },
             {
               type: "table",
@@ -759,10 +963,32 @@ export const biologySchool: Subject = {
               caption: "Aerobic respiration — happens in all living cells, all the time",
             },
             {
+              type: "activity",
+              activity: {
+                kind: "reveal",
+                prompt: "At noon in bright sunlight, is a mango leaf respiring?",
+                emoji: "🌞🍃",
+                options: [
+                  "No. Plants respire only at night.",
+                  "Yes. It respires all the time, but photosynthesis is faster, so it takes in CO₂ overall.",
+                  "No. In daylight photosynthesis replaces respiration.",
+                ],
+                answer: 1,
+                trap: 0,
+                explain: "Every living cell needs energy every moment, so plants **respire day and night**. In bright light photosynthesis uses CO₂ faster than respiration makes it, which hides the respiration. In the dark only respiration is left, so the plant gives out CO₂.",
+              },
+            },
+            {
               type: "callout",
               tone: "note",
               title: "Day vs night",
               md: "In bright light, photosynthesis is faster than respiration, so plants take in CO₂ overall. At night there's no photosynthesis — plants only respire, so they give out CO₂.",
+            },
+            {
+              type: "mistake",
+              wrong: "Phloem carries food only downwards, from the leaves to the roots.",
+              right: "Phloem carries food (sucrose) **both up and down**, from where it is made or stored (**source**) to where it is needed (**sink**). Only xylem flow is one-way, upwards.",
+              why: "Leaves are at the top and make food, so 'food goes down' sounds right. But growing buds, flowers and fruits also need food, and in spring stored food moves **up** from roots and stems to new leaves.",
             },
             {
               type: "keypoints",
@@ -779,6 +1005,7 @@ export const biologySchool: Subject = {
             { front: "Phloem", back: "Tissue carrying dissolved sugars around the plant (translocation)." },
             { front: "Transpiration", back: "Evaporation of water from leaves, mainly through stomata." },
             { front: "Do plants respire at night?", back: "Yes — respiration happens all the time; only photosynthesis stops in darkness." },
+            { front: "Transpiration pull", back: "The suction created when water evaporates from leaves; it pulls a continuous column of water up the xylem." },
           ],
           quiz: [
             {
@@ -806,6 +1033,21 @@ export const biologySchool: Subject = {
               options: ["The same process", "Roughly opposite processes", "Both only in animals", "Both only in daylight"],
               answer: 1,
               explain: "Photosynthesis makes glucose and O₂ from CO₂ and water; respiration does the reverse to release energy.",
+            },
+            {
+              kind: "truefalse",
+              q: "Xylem vessels are made of living cells.",
+              answer: false,
+              explain: "Mature xylem vessels are **dead**, hollow tubes strengthened with lignin. Phloem is made of living cells.",
+              difficulty: 2,
+            },
+            {
+              kind: "mcq",
+              q: "A potted plant is kept in a dark cupboard for two days. Which gas does it give out overall?",
+              options: ["Oxygen", "Carbon dioxide", "No gas at all", "Nitrogen"],
+              answer: 1,
+              explain: "In the dark there is no photosynthesis, but the plant still **respires**, so it gives out carbon dioxide.",
+              difficulty: 3,
             },
           ],
         },
@@ -852,6 +1094,24 @@ export const biologySchool: Subject = {
               md: "Human body cells have **46 chromosomes in 23 pairs** — one of each pair from each parent. Sex cells (sperm and egg) carry just **23**, so when they join at fertilisation the baby has 46 again.\n\nThe 23rd pair are the **sex chromosomes**: XX in females, XY in males. The egg always carries X; the sperm carries X or Y, so the sperm determines the baby's sex.",
             },
             {
+              type: "example",
+              title: "Sex determination as a cross",
+              problem: "Show why the chance of a baby being a boy or a girl is 50% each time.",
+              steps: [
+                "Mother is **XX**, so every egg she makes carries one **X**.",
+                "Father is **XY**, so half his sperm carry **X** and half carry **Y**.",
+                "Egg (X) + sperm (X) → **XX**, a girl. Egg (X) + sperm (Y) → **XY**, a boy.",
+                "Each kind of sperm is equally likely to fertilise the egg, so the outcomes are XX : XY = 1 : 1.",
+              ],
+              answer: "There is a **50%** chance of a girl (XX) and a **50%** chance of a boy (XY) at every birth. The **father's sperm** decides the sex.",
+            },
+            {
+              type: "mistake",
+              wrong: "The mother decides whether the baby is a boy or a girl.",
+              right: "The **father's sperm** decides the sex. All eggs carry X; a sperm with X gives a girl and a sperm with Y gives a boy.",
+              why: "The baby grows inside the mother, so people often blame or credit her. But she can only give an X chromosome. Only the father can give a Y, and which sperm reaches the egg is pure chance.",
+            },
+            {
               type: "checkpoint",
               questions: [
                 {
@@ -868,6 +1128,23 @@ export const biologySchool: Subject = {
               md: "Differences between individuals come from **genes** (eye colour, blood group), the **environment** (scars, language, a suntan), or **both** (height, weight — genes set a range, diet and health decide where you land).",
             },
             {
+              type: "activity",
+              activity: {
+                kind: "sort",
+                prompt: "What causes each difference between people?",
+                groups: ["Genes only", "Environment only", "Both"],
+                items: [
+                  { text: "Blood group", group: 0, hint: "You are born with it and it never changes." },
+                  { text: "Natural eye colour", group: 0, hint: "It is set by the alleles you inherit." },
+                  { text: "A scar on the knee", group: 1, hint: "It comes from an injury during life." },
+                  { text: "Speaking Kannada or Tamil", group: 1, hint: "You learn the language around you." },
+                  { text: "Height", group: 2, hint: "Genes set a range; food and health decide where you land." },
+                  { text: "Body weight", group: 2, hint: "Inherited build matters, but so do diet and exercise." },
+                ],
+                explain: "Inherited traits come from **genes**. Acquired traits come from the **environment** and are not passed on. Many traits, like height, depend on **both**.",
+              },
+            },
+            {
               type: "keypoints",
               items: [
                 "DNA is a double helix; its base sequence is the genetic code.",
@@ -882,6 +1159,7 @@ export const biologySchool: Subject = {
             { front: "Allele", back: "One of the different forms of a gene." },
             { front: "Number of chromosomes in a human body cell", back: "46 (23 pairs)." },
             { front: "Base pairing rules", back: "A–T and C–G." },
+            { front: "Who decides the sex of a human baby?", back: "The father's sperm: an X-carrying sperm gives a girl (XX), a Y-carrying sperm gives a boy (XY)." },
           ],
           quiz: [
             {
@@ -909,6 +1187,22 @@ export const biologySchool: Subject = {
               options: ["Blood group", "Natural eye colour", "A scar on your knee", "Natural hair colour"],
               answer: 2,
               explain: "Scars are acquired during life, not inherited.",
+            },
+            {
+              kind: "numeric",
+              q: "A couple already has two daughters. What is the chance (in %) that their next baby is a boy?",
+              answer: 50,
+              unit: "%",
+              explain: "Each birth is independent. Half the father's sperm carry Y, so the chance is still **50%**, whatever happened before.",
+              difficulty: 2,
+            },
+            {
+              kind: "mcq",
+              q: "One strand of DNA has the bases A T G C. What does the matching strand read?",
+              options: ["A T G C", "T A C G", "G C A T", "C G T A"],
+              answer: 1,
+              explain: "A pairs with T and G pairs with C, so A T G C pairs with **T A C G**.",
+              difficulty: 2,
             },
           ],
         },
@@ -945,8 +1239,17 @@ export const biologySchool: Subject = {
               ],
             },
             {
-              type: "text",
-              md: "Result: 1 TT : 2 Tt : 1 tt. Since T is dominant, 3 of every 4 offspring are tall — the **3 : 1 phenotype ratio** Mendel observed. The probability of a short plant is $\\frac{1}{4}$ = 25%.",
+              type: "example",
+              title: "Mendel's monohybrid cross",
+              problem: "A pure tall pea plant (**TT**) is crossed with a pure short (dwarf) plant (**tt**). The **F₁** plants are then self-pollinated. Predict the **F₁** and **F₂** generations.",
+              steps: [
+                "**Parents (P):** TT × tt. The TT plant makes only **T** gametes; the tt plant makes only **t** gametes.",
+                "**F₁:** every offspring gets one T and one t, so all are **Tt**. T is dominant, so all F₁ plants are **tall**.",
+                "**F₁ × F₁:** Tt × Tt. Each parent makes T and t gametes in equal numbers.",
+                "Fill the **Punnett square** above: TT, Tt, Tt, tt. **Genotype ratio** = 1 TT : 2 Tt : 1 tt.",
+                "TT and Tt both look tall, so the **phenotype ratio** = 3 tall : 1 short. The chance of a short plant is $\\frac{1}{4}$ = 25%.",
+              ],
+              answer: "F₁: all tall (Tt). F₂: genotypes 1 TT : 2 Tt : 1 tt, phenotypes **3 tall : 1 short** — the 3 : 1 ratio Mendel observed.",
             },
             {
               type: "checkpoint",
@@ -961,10 +1264,24 @@ export const biologySchool: Subject = {
               ],
             },
             {
-              type: "callout",
-              tone: "exam",
-              title: "Ratios are probabilities",
-              md: "A 3 : 1 ratio does not guarantee that 4 children will include exactly 1 with the recessive trait. Each offspring is an independent chance, like a fresh coin toss.",
+              type: "activity",
+              activity: {
+                kind: "match",
+                prompt: "Match each cross to the offspring it gives.",
+                pairs: [
+                  ["TT × tt", "All tall"],
+                  ["Tt × Tt", "3 tall : 1 short"],
+                  ["Tt × tt", "1 tall : 1 short"],
+                  ["tt × tt", "All short"],
+                ],
+                explain: "Write the gametes of each parent, fill a Punnett square, then count. Any plant with at least one **T** is tall; only **tt** is short.",
+              },
+            },
+            {
+              type: "mistake",
+              wrong: "If two Tt parents have 4 offspring, exactly 1 of them will be short.",
+              right: "Each offspring has a **1 in 4 chance** of being tt. Out of 4 offspring there could be 0, 1, 2 or more short ones. The 3 : 1 ratio appears only in **large numbers**.",
+              why: "A Punnett square has 4 boxes, so it looks like a list of 4 children. In fact each box is a **probability**. Each offspring is an independent chance, like a fresh coin toss; Mendel saw 3 : 1 because he counted hundreds of plants.",
             },
             {
               type: "callout",
@@ -1016,6 +1333,22 @@ export const biologySchool: Subject = {
               answer: ["phenotype"],
               explain: "Phenotype is what you can see or measure.",
             },
+            {
+              kind: "mcq",
+              q: "Pure tall (TT) pea plants are crossed with pure short (tt) plants. The F₁ plants are:",
+              options: ["All short", "All tall", "3 tall : 1 short", "1 tall : 1 short"],
+              answer: 1,
+              explain: "Every F₁ plant is **Tt**. The dominant T allele masks t, so all are tall. The 3 : 1 ratio appears only in the F₂.",
+              difficulty: 2,
+            },
+            {
+              kind: "mcq",
+              q: "A tall pea plant of unknown genotype is crossed with a short (tt) plant. About half the offspring are short. What was the tall plant's genotype?",
+              options: ["TT", "Tt", "tt", "It cannot be worked out"],
+              answer: 1,
+              explain: "Short offspring (tt) need a t from each parent, so the tall parent must carry t: it is **Tt**. Tt × tt gives 1 tall : 1 short. A TT parent would give all tall offspring.",
+              difficulty: 3,
+            },
           ],
         },
       ],
@@ -1051,6 +1384,23 @@ export const biologySchool: Subject = {
               ],
             },
             {
+              type: "activity",
+              activity: {
+                kind: "sort",
+                prompt: "Is each organism a producer, consumer or decomposer?",
+                groups: ["Producer", "Consumer", "Decomposer"],
+                items: [
+                  { text: "Paddy (rice) plant", group: 0, hint: "It makes its own food from sunlight." },
+                  { text: "Green algae in a pond", group: 0, hint: "Algae have chlorophyll and photosynthesise." },
+                  { text: "Grasshopper", group: 1, hint: "It eats leaves; it cannot make food." },
+                  { text: "Peacock", group: 1, hint: "It eats insects and snakes." },
+                  { text: "Mushroom", group: 2, hint: "A fungus that feeds on dead, rotting matter." },
+                  { text: "Bacteria in compost", group: 2, hint: "They break down dead leaves and return minerals to the soil." },
+                ],
+                explain: "**Producers** make food by photosynthesis. **Consumers** eat other organisms. **Decomposers** (fungi and bacteria) break down dead matter and return nutrients to the soil.",
+              },
+            },
+            {
               type: "text",
               md: "Real ecosystems are tangled **food webs** — many interlinked food chains. If one species disappears, the effect ripples through the web.",
             },
@@ -1064,6 +1414,25 @@ export const biologySchool: Subject = {
               tone: "note",
               title: "Why food chains are short",
               md: "With 90% lost at each step, after 4–5 levels there isn't enough energy left to support another population of predators.",
+            },
+            {
+              type: "example",
+              title: "Energy down a food chain",
+              problem: "In a grassland, the food chain is grass → grasshopper → frog → snake → eagle. The grass traps **50,000 kJ** of energy. Using the **10% law**, how much energy reaches the eagle?",
+              steps: [
+                "Grass (producer, 1st trophic level): 50,000 kJ.",
+                "Grasshopper (primary consumer): 10% of 50,000 = 5,000 kJ.",
+                "Frog (secondary consumer): 10% of 5,000 = 500 kJ.",
+                "Snake (tertiary consumer): 10% of 500 = 50 kJ.",
+                "Eagle (top consumer): 10% of 50 = 5 kJ.",
+              ],
+              answer: "Only about **5 kJ** reaches the eagle — just 0.01% of the energy the grass trapped. This is why food chains rarely have more than 4–5 levels.",
+            },
+            {
+              type: "mistake",
+              wrong: "Energy is recycled in an ecosystem, just like nutrients.",
+              right: "**Energy flows one way**: Sun → producers → consumers, and is lost as heat at each step. **Nutrients** (such as carbon and nitrogen) are **recycled** by decomposers.",
+              why: "Decomposers do return things to the soil, so it seems everything goes round in a circle. But what they return is matter (minerals). The energy has already been used for life processes and lost as heat, which plants cannot use again. New energy must keep coming from the Sun.",
             },
             {
               type: "checkpoint",
@@ -1098,6 +1467,7 @@ export const biologySchool: Subject = {
             { front: "Decomposer", back: "An organism (fungus or bacterium) that breaks down dead material." },
             { front: "10% rule", back: "About 10% of energy passes from one trophic level to the next." },
             { front: "Biomagnification", back: "Increasing concentration of a toxic substance at higher trophic levels." },
+            { front: "Trophic level", back: "Each step of a food chain: producers are the 1st level, herbivores the 2nd, and so on." },
           ],
           quiz: [
             {
@@ -1126,6 +1496,21 @@ export const biologySchool: Subject = {
               answers: [0, 1, 3],
               explain: "Predators and disease are biotic — they involve living things.",
             },
+            {
+              kind: "numeric",
+              q: "In the chain grass → deer → tiger, a tiger population gets 300 kJ. Using the 10% law, how much energy did the grass trap?",
+              answer: 30000,
+              unit: "kJ",
+              explain: "Work backwards: deer had 300 × 10 = 3,000 kJ; grass had 3,000 × 10 = **30,000 kJ**.",
+              difficulty: 3,
+            },
+            {
+              kind: "truefalse",
+              q: "Energy in an ecosystem is recycled by decomposers, just like nutrients.",
+              answer: false,
+              explain: "Energy flows **one way** and is lost as heat. Only nutrients (matter) are recycled.",
+              difficulty: 2,
+            },
           ],
         },
         {
@@ -1149,6 +1534,36 @@ export const biologySchool: Subject = {
                 "**Decomposition** releases carbon from dead matter.",
                 "**Combustion** of fossil fuels and wood releases stored carbon as CO₂.",
               ],
+            },
+            {
+              type: "example",
+              title: "Follow one carbon atom",
+              problem: "Trace a carbon atom that starts in a CO₂ molecule in the air above a mango orchard, and show how it can get back to the air.",
+              steps: [
+                "**Photosynthesis:** a mango leaf takes in the CO₂ and the carbon becomes part of **glucose**, then of sugar in a mango.",
+                "**Feeding:** a girl eats the mango. The carbon is now in the sugar in her blood.",
+                "**Respiration:** her cells break down the glucose for energy; the carbon leaves as CO₂ when she breathes out. Back in the air!",
+                "Another route: a fallen mango leaf is broken down by **decomposers**, whose respiration also releases the carbon as CO₂.",
+                "If the tree is buried for millions of years, its carbon may become **coal**; **combustion** of that coal releases it as CO₂.",
+              ],
+              answer: "Air (CO₂) → plant (photosynthesis) → animal (feeding) → air (respiration, decomposition or combustion). Carbon atoms go round and round; the cycle never runs out of matter.",
+            },
+            {
+              type: "activity",
+              activity: {
+                kind: "sort",
+                prompt: "Does each process add CO₂ to the air or remove it?",
+                groups: ["Adds CO₂", "Removes CO₂"],
+                items: [
+                  { text: "Respiration by animals", group: 0, hint: "Breathing out releases CO₂ made in cells." },
+                  { text: "Burning petrol in a car", group: 0, hint: "Combustion of a fossil fuel releases stored carbon." },
+                  { text: "Decay of dead leaves", group: 0, hint: "Decomposers respire as they feed." },
+                  { text: "Photosynthesis by trees", group: 1, hint: "Plants take in CO₂ to make glucose." },
+                  { text: "Algae growing in the sea", group: 1, hint: "Algae photosynthesise too." },
+                  { text: "Burning crop stubble", group: 0, hint: "Any burning of plant matter releases CO₂." },
+                ],
+                explain: "Only **photosynthesis** takes CO₂ out of the air. **Respiration**, **decomposition** and **combustion** all put it back. Burning fossil fuels adds carbon that was locked away for millions of years.",
+              },
             },
             { type: "heading", text: "The water cycle" },
             {
@@ -1185,6 +1600,12 @@ export const biologySchool: Subject = {
               ],
             },
             {
+              type: "mistake",
+              wrong: "Global warming is caused by the hole in the ozone layer.",
+              right: "Global warming is caused by **greenhouse gases** (CO₂, methane) trapping heat. **Ozone depletion** is a separate problem: a thinner ozone layer lets more harmful **UV rays** reach Earth.",
+              why: "Both problems are in the atmosphere and both are caused by human-made gases, so they get mixed up. But the ozone hole is about UV radiation and was caused mainly by **CFCs**; warming is about heat trapped by greenhouse gases.",
+            },
+            {
               type: "callout",
               tone: "tip",
               title: "What helps",
@@ -1211,6 +1632,7 @@ export const biologySchool: Subject = {
             { front: "Greenhouse gases", back: "Gases such as CO₂ and methane that trap heat in the atmosphere." },
             { front: "Transpiration's role in the water cycle", back: "Plants release water vapour into the air from their leaves." },
             { front: "Combustion in the carbon cycle", back: "Burning fuels releases stored carbon as CO₂." },
+            { front: "Ozone depletion vs global warming", back: "Ozone depletion (mainly by CFCs) lets in more UV rays; global warming is heat trapped by greenhouse gases." },
           ],
           quiz: [
             {
@@ -1237,6 +1659,22 @@ export const biologySchool: Subject = {
               q: "The variety of living things in an area is called ___.",
               answer: ["biodiversity"],
               explain: "Biodiversity includes the number of species and the genetic variety within them.",
+            },
+            {
+              kind: "mcq",
+              q: "Which greenhouse gas is released in large amounts by flooded paddy fields and cattle?",
+              options: ["Oxygen", "Methane", "Nitrogen", "Ozone"],
+              answer: 1,
+              explain: "Bacteria in waterlogged paddy soil and in the stomachs of cattle release **methane**, a strong greenhouse gas.",
+              difficulty: 2,
+            },
+            {
+              kind: "mcq",
+              q: "Fertiliser washes from farms into a lake. Soon many fish die. What is the main reason?",
+              options: ["Fertiliser is poisonous to fish", "Algae grow fast, then die; decomposers use up the oxygen in the water", "The lake water evaporates", "The fertiliser makes the water too cold"],
+              answer: 1,
+              explain: "Extra nitrates and phosphates cause an **algal bloom**. When the algae die, decomposing bacteria respire and use up the dissolved **oxygen**, so fish suffocate.",
+              difficulty: 3,
             },
           ],
         },

@@ -53,6 +53,34 @@ export const mathMiddle: Subject = {
               ],
             },
             {
+              type: "example",
+              title: "Coldest to warmest",
+              problem: "One January morning the temperatures were: Leh $-20$ °C, Shimla $-3$ °C, Srinagar $-7$ °C, Delhi $12$ °C. Arrange them from coldest to warmest.",
+              steps: [
+                "The only positive number, $12$, is the warmest.",
+                "Among the negatives, the one furthest from zero is the smallest: $-20$ is furthest, then $-7$, then $-3$.",
+                "Check on a number line: $-20$ is furthest left, then $-7$, $-3$ and $12$.",
+              ],
+              answer: "$-20 < -7 < -3 < 12$: Leh, Srinagar, Shimla, Delhi.",
+            },
+            {
+              type: "activity",
+              activity: {
+                kind: "sort",
+                prompt: "Is each number greater or less than $-3$?",
+                groups: ["Greater than −3", "Less than −3"],
+                items: [
+                  { text: "$-2$", group: 0, hint: "$-2$ is closer to zero, so it is to the right of $-3$." },
+                  { text: "$0$", group: 0, hint: "Zero is to the right of every negative number." },
+                  { text: "$1$", group: 0, hint: "Any positive number beats any negative number." },
+                  { text: "$-4$", group: 1, hint: "$-4$ is one step further left than $-3$." },
+                  { text: "$-7$", group: 1, hint: "7 is bigger than 3, but $-7$ is further from zero on the left." },
+                  { text: "$-10$", group: 1, hint: "$-10$ is far to the left of $-3$." },
+                ],
+                explain: "On the number line, **right means greater**. A negative number with a bigger digit is further left, so it is **smaller**.",
+              },
+            },
+            {
               type: "checkpoint",
               questions: [
                 {
@@ -63,6 +91,12 @@ export const mathMiddle: Subject = {
                   explain: "$-3$ sits to the right of $-8$ on the number line, so it is greater.",
                 },
               ],
+            },
+            {
+              type: "mistake",
+              wrong: "$-7$ is greater than $-2$, because 7 is greater than 2.",
+              right: "$-2 > -7$. For negative numbers, the one **closer to zero** is greater.",
+              why: "We are used to bigger digits meaning bigger numbers. But a minus sign means \"below zero\": $-7$ °C is colder than $-2$ °C, and owing ₹7 is worse than owing ₹2.",
             },
             {
               type: "heading",
@@ -93,6 +127,7 @@ export const mathMiddle: Subject = {
             { front: "Is 0 positive or negative?", back: "Neither. It separates the positives from the negatives." },
             { front: "What is $|-14|$?", back: "$14$, because absolute value is distance from zero." },
             { front: "Which is bigger, −1 or −10?", back: "−1, because it is closer to zero (further right)." },
+            { front: "What is $|0|$?", back: "$0$. Zero is no distance from itself." },
           ],
           quiz: [
             {
@@ -119,6 +154,21 @@ export const mathMiddle: Subject = {
               options: ["The bird", "The diver", "Both are equally far"],
               answer: 1,
               explain: "$|-18| = 18$ is more than $|5| = 5$.",
+            },
+            {
+              kind: "mcq",
+              q: "Which is the greatest: $-15$, $-4$, $-9$, $-20$?",
+              options: ["$-15$", "$-4$", "$-9$", "$-20$"],
+              answer: 1,
+              explain: "$-4$ is closest to zero, so it is furthest right. Choosing $-20$ treats the negatives as if they were positive.",
+              difficulty: 2,
+            },
+            {
+              kind: "numeric",
+              q: "Find $|-7| + |3|$.",
+              answer: 10,
+              explain: "$|-7| = 7$ and $|3| = 3$, so the sum is 10.",
+              difficulty: 2,
             },
           ],
         },
@@ -554,6 +604,22 @@ export const mathMiddle: Subject = {
               caption: "One quarter is 0.25: twenty-five hundredths of the bar.",
             },
             {
+              type: "activity",
+              activity: {
+                kind: "match",
+                prompt: "Match each fraction to its decimal.",
+                pairs: [
+                  ["$\\tfrac{1}{2}$", "$0.5$"],
+                  ["$\\tfrac{1}{4}$", "$0.25$"],
+                  ["$\\tfrac{3}{4}$", "$0.75$"],
+                  ["$\\tfrac{1}{5}$", "$0.2$"],
+                  ["$\\tfrac{3}{8}$", "$0.375$"],
+                  ["$\\tfrac{1}{3}$", "$0.\\overline{3}$"],
+                ],
+                explain: "Divide the numerator by the denominator. Most of these stop, but $\\tfrac{1}{3}$ gives $0.333\\ldots$, a **recurring decimal**.",
+              },
+            },
+            {
               type: "heading",
               text: "Calculating with decimals",
             },
@@ -565,6 +631,18 @@ export const mathMiddle: Subject = {
                 "**Multiply:** ignore the points, multiply, then put back as many decimal places as the two numbers have in total. $0.6 \\times 0.4$: $6 \\times 4 = 24$, two places → $0.24$.",
                 "**Divide:** shift both points right until the divisor is whole. $4.5 \\div 0.15 = 450 \\div 15 = 30$.",
               ],
+            },
+            {
+              type: "example",
+              title: "Shopping with decimals",
+              problem: "Riya buys 2.5 kg of tomatoes at ₹36.40 per kg. How much does she pay?",
+              steps: [
+                "Cost = $2.5 \\times 36.40$. Drop the zero at the end: $36.40 = 36.4$.",
+                "Ignore the points and multiply: $25 \\times 364 = 9100$.",
+                "Decimal places: $2.5$ has 1 and $36.4$ has 1, so 2 in total: $91.00$.",
+                "Sense check: $2.5 \\times 36$ is about $90$. ✓",
+              ],
+              answer: "She pays ₹91.00.",
             },
             {
               type: "checkpoint",
@@ -585,9 +663,10 @@ export const mathMiddle: Subject = {
               md: "Prices are decimals: three notebooks at ₹24.50 each cost $3 \\times 24.50 =$ ₹73.50. Fuel pumps show litres to two or three decimal places.",
             },
             {
-              type: "callout",
-              tone: "warning",
-              md: "More digits does not mean bigger: $0.305 < 0.35$ because 3 tenths 0 hundredths is less than 3 tenths 5 hundredths. Compare place by place from the left.",
+              type: "mistake",
+              wrong: "$0.305$ is bigger than $0.35$, because 305 is bigger than 35.",
+              right: "$0.305 < 0.35$. Compare place by place from the left: both have 3 tenths, but $0.35$ has 5 hundredths and $0.305$ has 0.",
+              why: "With whole numbers, more digits means a bigger number. After the decimal point that rule fails: write both with the same number of places ($0.305$ and $0.350$) and the answer is clear.",
             },
             {
               type: "keypoints",
@@ -604,6 +683,7 @@ export const mathMiddle: Subject = {
             { front: "$0.6$ as a fraction", back: "$\\tfrac{6}{10} = \\tfrac{3}{5}$" },
             { front: "What does $0.\\overline{6}$ mean?", back: "0.666…, the 6 repeats forever. It equals $\\tfrac{2}{3}$." },
             { front: "How do you multiply decimals?", back: "Multiply as whole numbers, then place the point using the total number of decimal places." },
+            { front: "Which is bigger, $0.305$ or $0.35$?", back: "$0.35$ (= $0.350$). More digits does not mean bigger." },
           ],
           quiz: [
             {
@@ -639,6 +719,14 @@ export const mathMiddle: Subject = {
               answer: true,
               explain: "$1 \\div 3 = 0.333\\ldots$, a recurring decimal.",
             },
+            {
+              kind: "mcq",
+              q: "Which is the greatest?",
+              options: ["$0.68$", "$0.7$", "$0.685$", "$0.07$"],
+              answer: 1,
+              explain: "Compare tenths first: $0.7$ has 7 tenths, the others have 6 or 0. Picking $0.685$ because it has the most digits is the common trap.",
+              difficulty: 2,
+            },
           ],
         },
       ],
@@ -670,14 +758,22 @@ export const mathMiddle: Subject = {
               text: "Sharing in a ratio",
             },
             {
-              type: "list",
-              ordered: true,
-              items: [
-                "Share ₹600 between Asha and Ben in the ratio $2 : 3$.",
+              type: "example",
+              title: "Sharing in a ratio",
+              problem: "Share ₹600 between Asha and Ben in the ratio $2 : 3$.",
+              steps: [
                 "Total parts: $2 + 3 = 5$.",
                 "One part: $600 \\div 5 =$ ₹120.",
-                "Asha gets $2 \\times 120 =$ ₹240, Ben gets $3 \\times 120 =$ ₹360. Check: $240 + 360 = 600$ ✓",
+                "Asha gets $2 \\times 120 =$ ₹240, Ben gets $3 \\times 120 =$ ₹360.",
+                "Check: $240 + 360 = 600$ ✓",
               ],
+              answer: "Asha ₹240, Ben ₹360.",
+            },
+            {
+              type: "mistake",
+              wrong: "The ratio of 50 paise to ₹2 is $50 : 2 = 25 : 1$.",
+              right: "First write both in the **same unit**: ₹2 = 200 paise, so the ratio is $50 : 200 = 1 : 4$.",
+              why: "The numbers 50 and 2 are right there, so it is tempting to use them. But a ratio compares quantities of the same kind. 50 paise is actually much **less** than ₹2, and $25 : 1$ says the opposite.",
             },
             {
               type: "heading",
@@ -690,6 +786,23 @@ export const mathMiddle: Subject = {
             {
               type: "formula",
               tex: "a : b = c : d \\iff \\frac{a}{b} = \\frac{c}{d} \\iff ad = bc",
+            },
+            {
+              type: "activity",
+              activity: {
+                kind: "sort",
+                prompt: "Cross-multiply. Are the two ratios in proportion?",
+                groups: ["In proportion", "Not in proportion"],
+                items: [
+                  { text: "$2 : 3$ and $8 : 12$", group: 0, hint: "$2 \\times 12 = 24$ and $3 \\times 8 = 24$." },
+                  { text: "$3 : 5$ and $9 : 15$", group: 0, hint: "$3 \\times 15 = 45$ and $5 \\times 9 = 45$." },
+                  { text: "$4 : 6$ and $10 : 15$", group: 0, hint: "$4 \\times 15 = 60$ and $6 \\times 10 = 60$." },
+                  { text: "$2 : 3$ and $3 : 2$", group: 1, hint: "$2 \\times 2 = 4$ but $3 \\times 3 = 9$. Order matters." },
+                  { text: "$1 : 4$ and $4 : 8$", group: 1, hint: "$1 \\times 8 = 8$ but $4 \\times 4 = 16$." },
+                  { text: "$5 : 7$ and $7 : 9$", group: 1, hint: "Adding 2 to both parts does not keep the ratio: $45 \\neq 49$." },
+                ],
+                explain: "Two ratios are in **proportion** when the cross products are equal ($ad = bc$). Multiplying both parts by the same number keeps the ratio; adding the same number does not.",
+              },
             },
             {
               type: "checkpoint",
@@ -731,6 +844,7 @@ export const mathMiddle: Subject = {
             { front: "What is a proportion?", back: "A statement that two ratios are equal, e.g. $2 : 3 = 8 : 12$." },
             { front: "Unitary method", back: "Find the value of one unit, then multiply by the number of units needed." },
             { front: "Map scale 1 : 100 000 — what does 1 cm show?", back: "100 000 cm = 1 km." },
+            { front: "What must you do before writing a ratio of two quantities?", back: "Put them in the same unit, e.g. ₹2 : 50 paise = 200 : 50 = 4 : 1." },
           ],
           quiz: [
             {
@@ -759,6 +873,21 @@ export const mathMiddle: Subject = {
               unit: "km",
               explain: "$4 \\times 50\\,000 = 200\\,000$ cm $= 2000$ m $= 2$ km.",
               difficulty: 2,
+            },
+            {
+              kind: "mcq",
+              q: "The ratio of 50 paise to ₹2 is:",
+              options: ["$25 : 1$", "$1 : 4$", "$50 : 2$", "$4 : 1$"],
+              answer: 1,
+              explain: "₹2 = 200 paise, so $50 : 200 = 1 : 4$. Using 50 and 2 directly mixes units.",
+              difficulty: 2,
+            },
+            {
+              kind: "numeric",
+              q: "7 kg of rice costs ₹371. What do 4 kg cost (in ₹)?",
+              answer: 212,
+              unit: "₹",
+              explain: "Unitary method: 1 kg costs $371 \\div 7 =$ ₹53, so 4 kg cost $4 \\times 53 =$ ₹212.",
             },
           ],
         },
@@ -794,14 +923,31 @@ export const mathMiddle: Subject = {
               tex: "\\text{Percentage change} = \\frac{\\text{new} - \\text{original}}{\\text{original}} \\times 100\\%",
             },
             {
-              type: "list",
-              ordered: true,
-              items: [
-                "A bicycle's price goes from ₹800 to ₹920. Find the percentage increase.",
-                "Change: $920 - 800 = 120$.",
-                "Divide by the **original**: $\\tfrac{120}{800} = 0.15$.",
-                "Answer: $15\\%$ increase.",
+              type: "example",
+              title: "Percentage increase",
+              problem: "A bicycle's price goes from ₹800 to ₹920. Find the percentage increase.",
+              steps: [
+                "Change: $920 - 800 =$ ₹120.",
+                "Divide by the **original** price: $\\tfrac{120}{800} = 0.15$.",
+                "Multiply by 100: $0.15 \\times 100 = 15$.",
               ],
+              answer: "A $15\\%$ increase.",
+            },
+            {
+              type: "activity",
+              activity: {
+                kind: "match",
+                prompt: "Match each change to its one-step multiplier.",
+                pairs: [
+                  ["Increase by 12%", "$\\times 1.12$"],
+                  ["Add 5% GST", "$\\times 1.05$"],
+                  ["Decrease by 25%", "$\\times 0.75$"],
+                  ["20% discount", "$\\times 0.8$"],
+                  ["Decrease by 5%", "$\\times 0.95$"],
+                  ["Increase by 100%", "$\\times 2$"],
+                ],
+                explain: "An increase of $x\\%$ multiplies by $1 + \\tfrac{x}{100}$; a decrease of $x\\%$ multiplies by $1 - \\tfrac{x}{100}$. A 100% increase doubles the amount.",
+              },
             },
             {
               type: "heading",
@@ -830,10 +976,10 @@ export const mathMiddle: Subject = {
               ],
             },
             {
-              type: "callout",
-              tone: "warning",
-              title: "Trap",
-              md: "A 10% rise followed by a 10% fall does **not** bring you back. ₹100 → ₹110 → ₹99, because the second 10% is taken of a bigger number.",
+              type: "mistake",
+              wrong: "A 10% rise followed by a 10% fall brings the price back to where it started.",
+              right: "It ends lower: ₹100 → ₹110 → ₹99. Overall, $1.1 \\times 0.9 = 0.99$, a 1% fall.",
+              why: "\"Up 10, down 10\" sounds like it cancels. But each percentage is taken of a **different** amount: the fall is 10% of ₹110 (₹11), which is more than the rise of 10% of ₹100 (₹10).",
             },
             {
               type: "callout",
@@ -856,6 +1002,7 @@ export const mathMiddle: Subject = {
             { front: "Multiplier for a 12% increase", back: "$1.12$" },
             { front: "Multiplier for a 25% decrease", back: "$0.75$" },
             { front: "Profit % formula", back: "$\\tfrac{\\text{SP} - \\text{CP}}{\\text{CP}} \\times 100$" },
+            { front: "Percentage change: divide by…", back: "The **original** value, never the new one." },
           ],
           quiz: [
             {
@@ -890,6 +1037,14 @@ export const mathMiddle: Subject = {
               answer: 25,
               unit: "%",
               explain: "Profit ₹100 on a cost of ₹400: $\\tfrac{100}{400} \\times 100 = 25\\%$.",
+              difficulty: 2,
+            },
+            {
+              kind: "mcq",
+              q: "A phone's price falls from ₹500 to ₹400. The percentage decrease is:",
+              options: ["25%", "20%", "100%", "80%"],
+              answer: 1,
+              explain: "Fall ₹100 divided by the **original** ₹500 gives 20%. Dividing by the new price (₹400) gives the wrong 25%.",
               difficulty: 2,
             },
           ],

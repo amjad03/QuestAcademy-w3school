@@ -59,6 +59,20 @@ export const topics: Topic[] = [
             ],
           },
           {
+            type: "activity",
+            activity: {
+              kind: "match",
+              prompt: "Match each stage of mitosis to what you would see.",
+              pairs: [
+                ["Prophase", "Chromosomes become visible; nuclear membrane starts to disappear"],
+                ["Metaphase", "Chromosomes line up at the equator"],
+                ["Anaphase", "Sister chromatids move to opposite poles"],
+                ["Telophase", "Two new nuclei form at the poles"],
+              ],
+              explain: "Remember **PMAT**: chromosomes **appear** (P), line up in the **middle** (M), move **apart** (A), and two nuclei form at the **two ends** (T).",
+            },
+          },
+          {
             type: "checkpoint",
             questions: [
               {
@@ -79,14 +93,23 @@ export const topics: Topic[] = [
             ],
           },
           {
-            type: "text",
-            md: "**Worked example — counting chromosomes in a human cell.**\n\n- **G₁:** 46 chromosomes, 46 chromatids.\n- **After S / in G₂:** 46 chromosomes, 92 chromatids.\n- **Metaphase:** 46 chromosomes, 92 chromatids.\n- **Anaphase (whole cell):** 92 chromosomes.\n- **Each daughter cell:** 46 chromosomes.\n\nAt anaphase each separated chromatid counts as an independent chromosome, so the cell briefly holds 92.",
+            type: "example",
+            title: "Counting chromosomes in a human cell",
+            problem: "A human body cell has 46 chromosomes. Track the number of **chromosomes** and **chromatids** through one cell cycle.",
+            steps: [
+              "**G₁:** DNA is not yet copied, so there are 46 chromosomes and 46 chromatids.",
+              "**After S / in G₂:** each chromosome now has two sister chromatids, so 46 chromosomes and 92 chromatids.",
+              "**Metaphase:** nothing has separated yet, so still 46 chromosomes and 92 chromatids.",
+              "**Anaphase (whole cell):** centromeres split and each chromatid now counts as its own chromosome, so the cell briefly holds 92 chromosomes.",
+              "**Each daughter cell:** gets one copy of each, so 46 chromosomes.",
+            ],
+            answer: "46 → 46 (92 chromatids) → 92 at anaphase → 46 in each daughter cell. The number is kept the same (2n → 2n).",
           },
           {
-            type: "callout",
-            tone: "exam",
-            title: "ICSE trap",
-            md: "Mitosis produces **two daughter cells identical** to the parent, each with the **same number of chromosomes** (2n → 2n). It occurs in **somatic (body) cells** — growth, repair and asexual reproduction. Do not say it makes gametes.",
+            type: "mistake",
+            wrong: "Mitosis halves the chromosome number, so it is how gametes are made.",
+            right: "Mitosis gives **two daughter cells identical** to the parent, each with the **same number of chromosomes** (2n → 2n). It occurs in **somatic (body) cells** for growth, repair and asexual reproduction. Gametes are made by **meiosis**.",
+            why: "Learners see one cell become two and think the chromosomes must be shared out in half. But DNA was copied in the S phase first, so each new cell still gets a full set.",
           },
           {
             type: "keypoints",
@@ -140,6 +163,14 @@ export const topics: Topic[] = [
             q: "The nuclear membrane and nucleolus reappear during ___.",
             answer: ["telophase"],
             explain: "Telophase reverses the events of prophase.",
+          },
+          {
+            kind: "mcq",
+            q: "An onion root-tip cell (2n = 16) divides by mitosis. How many chromosomes does each daughter cell have?",
+            options: ["8", "16", "32", "4"],
+            answer: 1,
+            explain: "Mitosis keeps the number the same: 16 → 16. Halving to 8 happens only in meiosis.",
+            difficulty: 2,
           },
         ],
       },
@@ -199,14 +230,45 @@ export const topics: Topic[] = [
             ],
           },
           {
-            type: "text",
-            md: "**Worked example — tracking one cell.** A human germ cell in the testis (46 chromosomes) undergoes meiosis:\n\n1. After meiosis I → **2 cells × 23 chromosomes** (each chromosome still has 2 chromatids).\n2. After meiosis II → **4 cells × 23 chromosomes** (single chromatids).\n3. Each becomes a sperm. When one sperm (23) fertilises an egg (23), the zygote has **46** — the number is restored.",
+            type: "activity",
+            activity: {
+              kind: "sort",
+              prompt: "Is each feature true of mitosis or meiosis?",
+              groups: ["Mitosis", "Meiosis"],
+              items: [
+                { text: "Two daughter cells", group: 0, hint: "Only one division happens here." },
+                { text: "Four daughter cells", group: 1, hint: "Two divisions, one after the other." },
+                { text: "Crossing over in prophase I", group: 1, hint: "Homologous chromosomes pair up only in this division." },
+                { text: "Repairs a cut on your skin", group: 0, hint: "New skin cells must be identical to the old ones." },
+                { text: "Chromosome number halved (2n → n)", group: 1, hint: "Gametes need half the number." },
+                { text: "Daughter cells identical to parent", group: 0, hint: "No pairing, no crossing over, no shuffling." },
+              ],
+              explain: "**Mitosis** copies a cell exactly (2n → 2n, two cells). **Meiosis** halves the number and mixes the genes (2n → n, four different cells).",
+            },
+          },
+          {
+            type: "example",
+            title: "Tracking one germ cell through meiosis",
+            problem: "A human germ cell in the testis has 46 chromosomes. How many cells, and how many chromosomes in each, are there after meiosis I, after meiosis II, and after fertilisation?",
+            steps: [
+              "**Meiosis I** separates the homologous pairs, so we get **2 cells × 23 chromosomes** (each chromosome still has 2 chromatids).",
+              "**Meiosis II** separates the sister chromatids, so we get **4 cells × 23 chromosomes** (single chromatids).",
+              "Each of the four cells becomes a **sperm** with 23 chromosomes.",
+              "At fertilisation, a sperm (23) fuses with an egg (23): 23 + 23 = **46** in the zygote.",
+            ],
+            answer: "2 cells of 23 → 4 cells of 23 → zygote with 46. The chromosome number is restored at fertilisation.",
+          },
+          {
+            type: "mistake",
+            wrong: "The chromosome number is halved in meiosis II, because that is the division that makes the final four cells.",
+            right: "The **reduction** happens in **meiosis I**, when homologous chromosomes separate. Meiosis II only separates sister chromatids, just like mitosis, so the number stays at n.",
+            why: "Meiosis II is the last step, so it feels like the 'halving' step. But after meiosis I each cell already has only 23 chromosomes; meiosis II just splits each chromosome's two chromatids.",
           },
           {
             type: "callout",
             tone: "exam",
-            title: "ICSE trap",
-            md: "The **reduction** in chromosome number happens in **meiosis I**, not meiosis II. Meiosis II only separates sister chromatids, just like mitosis. Also remember: **crossing over** occurs between **non-sister chromatids of homologous chromosomes** in prophase I.",
+            title: "ICSE tip",
+            md: "**Crossing over** occurs between **non-sister chromatids of homologous chromosomes** in prophase I.",
           },
           { type: "heading", text: "Why meiosis matters" },
           {
@@ -270,6 +332,14 @@ export const topics: Topic[] = [
             unit: "chromosomes",
             explain: "Gametes are haploid: 78 ÷ 2 = 39.",
           },
+          {
+            kind: "mcq",
+            q: "Crossing over takes place between:",
+            options: ["Sister chromatids of the same chromosome", "Non-sister chromatids of homologous chromosomes", "Two non-homologous chromosomes", "Two daughter cells after telophase"],
+            answer: 1,
+            explain: "In prophase I, homologous chromosomes pair and their **non-sister** chromatids swap segments. Sister chromatids are identical, so swapping between them would change nothing.",
+            difficulty: 3,
+          },
         ],
       },
     ],
@@ -328,6 +398,18 @@ export const topics: Topic[] = [
             md: "**Endosmosis** = water entering a cell (cell placed in a dilute / hypotonic solution). **Exosmosis** = water leaving a cell (cell placed in a concentrated / hypertonic solution). The pressure that would be needed to prevent water entering a solution across a semi-permeable membrane is its **osmotic pressure**.",
           },
           {
+            type: "activity",
+            activity: {
+              kind: "reveal",
+              prompt: "Cucumber slice in strong salt water: what happens?",
+              emoji: "🥒",
+              options: ["It swells and becomes firmer", "It shrinks and becomes limp", "Nothing changes"],
+              answer: 1,
+              trap: 0,
+              explain: "Salt water is **more concentrated** than the cell sap, so water leaves the cells by **exosmosis**. The cells lose turgor and the slice goes limp. That is why salted cucumber gives out water.",
+            },
+          },
+          {
             type: "checkpoint",
             questions: [
               {
@@ -345,14 +427,23 @@ export const topics: Topic[] = [
             md: "When water enters, the vacuole swells and the cytoplasm presses against the wall — **turgor pressure**; the wall presses back with equal **wall pressure**. A cell in this state is **turgid**, which keeps leaves and young stems firm.\n\nIf a cell loses water, the protoplasm shrinks away from the cell wall — **plasmolysis**. If the plasmolysed cell is put back in water and recovers, it is **deplasmolysis**. Wilting of plants on a hot May afternoon in Delhi is due to loss of turgor.",
           },
           {
-            type: "text",
-            md: "**Worked example — the potato osmoscope.**\n\n1. Peel a large potato, cut a flat base and scoop out a cavity.\n2. Fill the cavity halfway with **concentrated sugar solution**; mark the level with a pin.\n3. Stand the potato in a dish of **pure water**.\n4. After a few hours the level in the cavity **rises**.\n5. Reason: potato cells act as a semi-permeable membrane; water moves by **endosmosis** from the dish (dilute) into the sugar solution (concentrated).\n\n*Control:* a boiled potato shows no rise — boiling kills cells, so membranes are no longer semi-permeable.",
+            type: "example",
+            title: "The potato osmoscope",
+            problem: "A peeled potato has a cavity filled halfway with **concentrated sugar solution**, and it stands in a dish of **pure water**. Predict and explain what happens to the level in the cavity.",
+            steps: [
+              "Set-up: peel a large potato, cut a flat base, scoop out a cavity, half-fill it with sugar solution and mark the level with a pin.",
+              "Stand the potato in a dish of pure water and leave it for a few hours.",
+              "Observation: the level in the cavity **rises**.",
+              "Reason: the living potato cells act as a **semi-permeable membrane**. Water moves by **endosmosis** from the dish (dilute) into the sugar solution (concentrated).",
+              "Control: a **boiled** potato shows no rise, because boiling kills the cells and their membranes are no longer semi-permeable.",
+            ],
+            answer: "The level rises because water enters the sugar solution by osmosis through living potato cells.",
           },
           {
-            type: "callout",
-            tone: "exam",
-            title: "ICSE trap",
-            md: "Over-fertilising a field or watering plants with salty water makes the soil solution **hypertonic**; water leaves root hairs by **exosmosis** and the plants wilt. Students often write 'endosmosis' here. Also remember: the **cell wall** is fully permeable; it is the **cell membrane** that is semi-permeable.",
+            type: "mistake",
+            wrong: "Plants wilt in over-fertilised or salty soil because water rushes into the root hairs by endosmosis.",
+            right: "Too much fertiliser or salt makes the soil solution **hypertonic** (more concentrated than cell sap). Water **leaves** the root hairs by **exosmosis**, so the plant wilts.",
+            why: "Fertiliser sounds like 'more food', so learners expect the plant to take in more. But water always moves towards the more concentrated side, and here that is the soil. Also remember: the **cell wall** is fully permeable; the **cell membrane** is the semi-permeable part.",
           },
           {
             type: "keypoints",
@@ -405,6 +496,13 @@ export const topics: Topic[] = [
             options: ["Endosmosis occurs in root hairs", "Exosmosis occurs from root hairs", "Roots stop respiring", "Transpiration stops"],
             answer: 1,
             explain: "The soil solution becomes hypertonic, so water leaves root cells.",
+          },
+          {
+            kind: "truefalse",
+            q: "In osmosis, water moves from a concentrated solution to a dilute solution.",
+            answer: false,
+            explain: "Water moves from the **dilute** solution (more water) to the **concentrated** solution (less water) across a semi-permeable membrane.",
+            difficulty: 2,
           },
         ],
       },
@@ -466,14 +564,39 @@ export const topics: Topic[] = [
             ],
           },
           {
-            type: "text",
-            md: "**Worked example — demonstrating root pressure.**\n\n1. Cut the stem of a well-watered potted plant (e.g. balsam) a few cm above the soil.\n2. Fix a glass tube to the stump with rubber tubing and add a little water; mark the level.\n3. After a few hours, the water level in the tube **rises**.\n4. Conclusion: the root pushes water up — **root pressure**. The oozing of sap from a cut stem is called **bleeding**.",
+            type: "activity",
+            activity: {
+              kind: "sort",
+              prompt: "Is each statement about root pressure or transpiration pull?",
+              groups: ["Root pressure", "Transpiration pull"],
+              items: [
+                { text: "Pushes water up from below", group: 0, hint: "It starts in the root xylem." },
+                { text: "Pulls water up from above", group: 1, hint: "It starts with evaporation from leaves." },
+                { text: "Seen as bleeding from a cut stem", group: 0, hint: "The cut stump still oozes sap even without leaves." },
+                { text: "Main force in tall trees", group: 1, hint: "The other force can lift water only a few metres." },
+                { text: "Needs open stomata and evaporation", group: 1, hint: "No evaporation, no suction." },
+                { text: "Lifts water only a few metres", group: 0, hint: "It is a small force." },
+              ],
+              explain: "**Root pressure** is a small **push** from below. **Transpiration pull** is a strong **pull** from the leaves, and cohesion keeps the water column unbroken all the way up.",
+            },
           },
           {
-            type: "callout",
-            tone: "exam",
-            title: "ICSE trap",
-            md: "Root pressure alone **cannot** explain water reaching the top of tall trees; the main force is **transpiration pull** with cohesion of water molecules. Also, water travels up in **xylem**, not phloem — phloem carries food.",
+            type: "example",
+            title: "Demonstrating root pressure",
+            problem: "How can you show that roots push water up the stem?",
+            steps: [
+              "Cut the stem of a well-watered potted plant (e.g. balsam) a few cm above the soil.",
+              "Fix a glass tube to the stump with rubber tubing, add a little water and mark the level.",
+              "After a few hours, the water level in the tube **rises**.",
+              "There are no leaves, so there is no transpiration pull. The only force left is the push from the root.",
+            ],
+            answer: "The root pushes water up: this is **root pressure**. The oozing of sap from a cut stem is called **bleeding**.",
+          },
+          {
+            type: "mistake",
+            wrong: "Root pressure pushes water all the way to the top of tall trees.",
+            right: "Root pressure is small and lifts water only a few metres. The main force in tall trees is **transpiration pull**, helped by **cohesion** and **adhesion** of water molecules.",
+            why: "The bleeding experiment makes root pressure easy to see, so it seems to be the whole story. But tall trees lift water tens of metres, and the pull from evaporating leaves does that. Also, water travels up in **xylem**, not phloem — phloem carries food.",
           },
           {
             type: "illustration",
@@ -530,6 +653,14 @@ export const topics: Topic[] = [
             options: ["Phloem", "Xylem", "Cortex", "Pith"],
             answer: 1,
             explain: "Xylem conducts water and minerals; phloem conducts food.",
+          },
+          {
+            kind: "mcq",
+            q: "When roots are treated with a poison that stops respiration, mineral uptake falls sharply but water uptake continues for a while. This shows that minerals are absorbed mainly by:",
+            options: ["Osmosis", "Active transport", "Imbibition", "Transpiration pull"],
+            answer: 1,
+            explain: "Stopping respiration stops ATP supply. Mineral uptake needs that energy (active transport); water uptake by osmosis does not.",
+            difficulty: 3,
           },
         ],
       },
@@ -609,14 +740,49 @@ export const topics: Topic[] = [
             ],
           },
           {
+            type: "activity",
+            activity: {
+              kind: "sort",
+              prompt: "Does each condition raise or lower the rate of transpiration?",
+              groups: ["Raises the rate", "Lowers the rate"],
+              items: [
+                { text: "Bright sunlight", group: 0, hint: "Light opens the stomata." },
+                { text: "Very humid air", group: 1, hint: "Moist air means a smaller vapour gradient." },
+                { text: "Strong wind", group: 0, hint: "Wind sweeps away the humid air near the leaf." },
+                { text: "Dry soil", group: 1, hint: "Short of water, the plant closes its stomata." },
+                { text: "High temperature", group: 0, hint: "Heat speeds up evaporation." },
+                { text: "Thick waxy cuticle", group: 1, hint: "Wax blocks water loss from the surface." },
+              ],
+              explain: "Anything that **opens stomata** or **speeds evaporation** raises the rate. Anything that closes stomata, blocks the surface or makes the air **moist** lowers it.",
+            },
+          },
+          {
+            type: "example",
+            title: "Ranking days by transpiration",
+            problem: "Rank these for the rate of transpiration of a tulsi plant: (A) a hot, dry, windy afternoon in Jaipur; (B) a humid, still monsoon day in Mumbai; (C) a cool, humid, still night.",
+            steps: [
+              "Think of washing on a line: it dries fast on a hot, dry, windy day and stays damp on a humid, still day. Leaves lose water the same way.",
+              "**A:** light (stomata open), heat, dry air and wind all **raise** the rate.",
+              "**B:** there is light, so stomata are open, but humid, still air **lowers** the vapour gradient.",
+              "**C:** in darkness stomata close; the air is cool, humid and still, so the rate is **lowest**.",
+            ],
+            answer: "A > B > C. Transpiration is highest on hot, dry, sunny, windy days and lowest on cool, humid, still nights.",
+          },
+          {
             type: "text",
-            md: "**Worked comparison.** Washing hung out on a hot, dry, windy afternoon in Jaipur dries fast; on a humid, still monsoon day in Mumbai it stays damp. Plants behave the same: transpiration is **highest on hot, dry, sunny, windy days** and **lowest on cool, humid, still nights**. Internal factors also matter — leaf area, number and position of stomata, and thickness of cuticle.",
+            md: "Internal factors also matter — leaf area, number and position of stomata, and thickness of cuticle.",
+          },
+          {
+            type: "mistake",
+            wrong: "High humidity increases transpiration, because the air is full of water.",
+            right: "High **humidity decreases** transpiration. Water vapour moves out of the leaf only when the air outside is **drier** than the air inside the leaf.",
+            why: "'Wet air' and 'water loss' sound linked, so learners join them the wrong way. Humid air is already nearly full of vapour, so the gradient from leaf to air is small and less water escapes.",
           },
           {
             type: "callout",
             tone: "exam",
-            title: "ICSE trap",
-            md: "High **humidity decreases** transpiration — a very common mistake is to say it increases it. Also, most transpiration is **stomatal**, not cuticular. Guard cells are the **only epidermal cells with chloroplasts**.",
+            title: "ICSE tip",
+            md: "Most transpiration is **stomatal**, not cuticular. Guard cells are the **only epidermal cells with chloroplasts**.",
           },
           {
             type: "keypoints",
@@ -670,6 +836,14 @@ export const topics: Topic[] = [
             explain: "The thin outer walls stretch more than the thick inner walls, so the cells curve and the pore widens.",
             difficulty: 2,
           },
+          {
+            kind: "mcq",
+            q: "Two identical plants stand in sunlight. One is covered by a closed glass case. After an hour, the covered plant is transpiring more slowly. Why?",
+            options: ["Glass blocks all the light", "Humidity builds up inside the case", "The plant runs out of CO₂ and dies", "Temperature inside the case falls"],
+            answer: 1,
+            explain: "Vapour from the leaves collects in the closed case, so the air becomes humid and the vapour gradient falls. (Light still passes through glass, and the case usually gets warmer, not cooler.)",
+            difficulty: 3,
+          },
         ],
       },
       {
@@ -691,8 +865,30 @@ export const topics: Topic[] = [
             ],
           },
           {
-            type: "text",
-            md: "**Worked example — reading a potometer.** In a potometer, the air bubble moves **6 cm in 12 minutes** in still air, and **6 cm in 4 minutes** when a fan is switched on.\n\n- Still air: rate = 6 ÷ 12 = **0.5 cm/min**.\n- With fan: rate = 6 ÷ 4 = **1.5 cm/min**.\n- Wind made the rate **3 times** faster, because it carries away the humid air around the leaves.",
+            type: "activity",
+            activity: {
+              kind: "match",
+              prompt: "Match each experiment to what it shows.",
+              pairs: [
+                ["Bell-jar", "The plant gives out water vapour"],
+                ["Cobalt chloride paper", "The lower leaf surface loses more water"],
+                ["Four-leaf vaseline test", "Most water is lost through stomata"],
+                ["Ganong's potometer", "The rate of water uptake by a shoot"],
+              ],
+              explain: "Each set-up answers one question: **does** the plant lose water (bell-jar), **where** (CoCl₂ paper, vaseline test), and **how fast** (potometer).",
+            },
+          },
+          {
+            type: "example",
+            title: "Reading a potometer",
+            problem: "In a potometer, the air bubble moves **6 cm in 12 minutes** in still air, and **6 cm in 4 minutes** when a fan is switched on. Find both rates and explain the difference.",
+            steps: [
+              "Rate = distance moved by bubble ÷ time.",
+              "Still air: 6 ÷ 12 = **0.5 cm/min**.",
+              "With fan: 6 ÷ 4 = **1.5 cm/min**.",
+              "Compare: 1.5 ÷ 0.5 = 3, so the rate is 3 times faster. Wind carries away the humid air around the leaves, keeping the vapour gradient steep.",
+            ],
+            answer: "0.5 cm/min in still air and 1.5 cm/min with the fan; wind made transpiration 3 times faster.",
           },
           {
             type: "checkpoint",
@@ -744,10 +940,16 @@ export const topics: Topic[] = [
             ],
           },
           {
+            type: "mistake",
+            wrong: "The drops along the edges of grass blades and *Colocasia* leaves at dawn are just dew.",
+            right: "They are **guttation** drops: liquid water (with dissolved salts) pushed out through **hydathodes** at the leaf margins by **root pressure**. **Dew** is vapour from the air condensing on any cold surface, and **bleeding** is sap oozing from a cut stem.",
+            why: "Both appear on cool, humid mornings, so they look the same. But dew forms all over a surface (even on a car), while guttation drops sit neatly at the leaf tips and edges, where the hydathodes are.",
+          },
+          {
             type: "callout",
             tone: "exam",
-            title: "ICSE trap",
-            md: "Do not confuse **guttation** with **dew** (water vapour condensing from air) or with **bleeding** (sap oozing from a cut stem). In the cobalt chloride test, the paper changes from **blue (dry) to pink (moist)** — not the reverse.",
+            title: "ICSE tip",
+            md: "In the cobalt chloride test, the paper changes from **blue (dry) to pink (moist)** — not the reverse.",
           },
           {
             type: "keypoints",
@@ -852,6 +1054,23 @@ export const topics: Topic[] = [
             ],
           },
           {
+            type: "activity",
+            activity: {
+              kind: "sort",
+              prompt: "Is each movement a tropism or a nastic movement?",
+              groups: ["Tropism (directional)", "Nastic (non-directional)"],
+              items: [
+                { text: "Money plant bending towards a window", group: 0, hint: "It bends towards where the light comes from." },
+                { text: "Mimosa leaves folding when touched", group: 1, hint: "The leaflets fold the same way wherever you touch." },
+                { text: "Pea tendril coiling round a stick", group: 0, hint: "It grows around the side that touches the support." },
+                { text: "Tulip flowers opening in warmth", group: 1, hint: "Warmth from any side gives the same opening." },
+                { text: "Root growing towards moist soil", group: 0, hint: "The direction of the water decides the bending." },
+                { text: "Venus flytrap snapping shut", group: 1, hint: "It closes the same way whichever hair the insect touches." },
+              ],
+              explain: "Ask: **does the direction of the stimulus decide the direction of the response?** If yes, it is a **tropism**. If the response is the same from any side, it is **nastic**.",
+            },
+          },
+          {
             type: "checkpoint",
             questions: [
               {
@@ -865,18 +1084,38 @@ export const topics: Topic[] = [
           },
           { type: "heading", text: "Classic experiments" },
           {
-            type: "text",
-            md: "**Worked example 1 — phototropism.** Place a potted seedling in a box with a single hole on one side. After a few days the shoot **bends towards the hole**. Rotate the pot 180° and the shoot gradually bends back towards the light.\n\n**Worked example 2 — geotropism with a clinostat.** Lay a potted seedling horizontally. After a day, the root bends **downward** and the shoot bends **upward**. Now mount another horizontal seedling on a **clinostat**, which rotates it slowly; gravity acts on all sides equally, so root and shoot continue to grow **horizontally**. This proves gravity caused the bending.",
+            type: "example",
+            title: "Phototropism: the box with one hole",
+            problem: "A potted seedling is kept in a box with a single hole on one side. What happens to the shoot, and what happens if the pot is then turned through 180°?",
+            steps: [
+              "Light enters only through the hole, so it falls on one side of the shoot.",
+              "After a few days the shoot **bends towards the hole**.",
+              "Rotate the pot 180°: the shoot now leans away from the light.",
+              "Over the next few days it gradually bends back towards the light.",
+            ],
+            answer: "The shoot always grows towards the light: shoots are **positively phototropic**.",
+          },
+          {
+            type: "example",
+            title: "Geotropism with a clinostat",
+            problem: "How can you prove that **gravity** makes the root bend down and the shoot bend up in a seedling laid on its side?",
+            steps: [
+              "Lay a potted seedling horizontally. After a day, the root bends **downward** and the shoot bends **upward**.",
+              "Mount a second horizontal seedling on a **clinostat**, which rotates it slowly.",
+              "As it turns, gravity acts on all sides equally, so no side is 'down' for long.",
+              "Root and shoot of the rotating seedling keep growing **horizontally**.",
+            ],
+            answer: "Only the still seedling bends, so the one-sided pull of gravity caused the bending: roots are **positively geotropic**, shoots **negatively geotropic**.",
           },
           {
             type: "text",
             md: "**Hydrotropism experiment:** sow seeds in a sieve filled with moist sawdust and hang it at an angle. Roots first grow down through the sieve (geotropism), then **bend back** towards the moist sawdust — showing hydrotropism can override geotropism.",
           },
           {
-            type: "callout",
-            tone: "exam",
-            title: "ICSE trap",
-            md: "A **root** is **positively geotropic** and **negatively phototropic**; a **shoot** is **negatively geotropic** and **positively phototropic**. Swapping these is the most common error. Folding of *Mimosa* leaves on touch is a **nastic** (turgor) movement, not a tropism.",
+            type: "mistake",
+            wrong: "A shoot is positively geotropic, because it grows up towards the sky.",
+            right: "A **shoot** is **negatively geotropic** (it grows **away** from gravity) and **positively phototropic**. A **root** is **positively geotropic** and **negatively phototropic**.",
+            why: "'Positive' sounds like 'up' or 'good', so learners give it to the shoot. But positive and negative refer to the **stimulus**: towards gravity (down) is positive, away from it (up) is negative. Also, folding of *Mimosa* leaves on touch is a **nastic** (turgor) movement, not a tropism.",
           },
           {
             type: "keypoints",
@@ -930,6 +1169,14 @@ export const topics: Topic[] = [
             answer: 2,
             explain: "Mimosa leaf folding is non-directional and caused by turgor changes.",
           },
+          {
+            kind: "mcq",
+            q: "A seedling is laid horizontally on a slowly rotating clinostat in the dark. After two days its root will:",
+            options: ["Bend downward", "Bend upward", "Keep growing horizontally", "Stop growing"],
+            answer: 2,
+            explain: "The rotation spreads the pull of gravity equally on all sides, and there is no light from one side, so there is no one-sided stimulus and no bending.",
+            difficulty: 3,
+          },
         ],
       },
       {
@@ -946,7 +1193,25 @@ export const topics: Topic[] = [
           { type: "heading", text: "Auxins and phototropism" },
           {
             type: "text",
-            md: "**Auxins** (e.g. indole-3-acetic acid, IAA) are made at the **shoot tip** and promote **cell elongation**.\n\n**Worked process — why a shoot bends towards light:**\n1. Light falls on one side of the shoot tip.\n2. Auxin moves to the **shaded side**.\n3. Cells on the shaded side **elongate more**.\n4. The shoot bends **towards the light**.",
+            md: "**Auxins** (e.g. indole-3-acetic acid, IAA) are made at the **shoot tip** and promote **cell elongation**.",
+          },
+          {
+            type: "example",
+            title: "Why a shoot bends towards light",
+            problem: "A seedling on a windowsill gets light from one side only. Explain, step by step, how auxin makes it bend towards the window.",
+            steps: [
+              "Light falls on one side of the shoot tip.",
+              "Auxin made at the tip moves to the **shaded side**.",
+              "Cells on the shaded side **elongate more** than cells on the lit side.",
+              "The shaded side grows longer, so the shoot curves **towards the light**.",
+            ],
+            answer: "Unequal auxin → unequal elongation → bending towards light (positive phototropism).",
+          },
+          {
+            type: "mistake",
+            wrong: "Light makes the lit side of the shoot grow faster, so the shoot bends towards the light.",
+            right: "The **shaded** side grows faster. Auxin moves away from light to the shaded side, and the extra elongation there pushes the tip towards the light.",
+            why: "It feels natural that light 'feeds' growth. But think of a bend: the outer side of a curve must be the longer side, and the outer side here is the one away from the light.",
           },
           {
             type: "callout",
@@ -978,6 +1243,21 @@ export const topics: Topic[] = [
             ],
           },
           {
+            type: "activity",
+            activity: {
+              kind: "match",
+              prompt: "Match each hormone to its main job.",
+              pairs: [
+                ["Auxin", "Rooting of stem cuttings and apical dominance"],
+                ["Gibberellin", "Bolting and stem elongation"],
+                ["Cytokinin", "Cell division and delaying leaf ageing"],
+                ["Ethylene", "Ripening of mangoes and bananas"],
+                ["Abscisic acid", "Closing stomata during water stress"],
+              ],
+              explain: "Three **promoters** (auxin, gibberellin, cytokinin), one **ripener** (ethylene, the gas) and one **inhibitor** (ABA, the stress hormone).",
+            },
+          },
+          {
             type: "callout",
             tone: "tip",
             title: "Apical dominance in your garden",
@@ -985,7 +1265,7 @@ export const topics: Topic[] = [
           },
           {
             type: "text",
-            md: "**Worked comparison — growth promoters vs inhibitor.** Auxins, gibberellins and cytokinins *promote* growth (elongation, bolting, division). Ethylene mainly drives ripening and abscission. **ABA works against** them: it closes stomata and keeps seeds dormant until conditions are right — for example, keeping seeds from germinating in the dry months before the monsoon arrives.",
+            md: "**Growth promoters vs inhibitor.** Auxins, gibberellins and cytokinins *promote* growth (elongation, bolting, division). Ethylene mainly drives ripening and abscission. **ABA works against** them: it closes stomata and keeps seeds dormant until conditions are right — for example, keeping seeds from germinating in the dry months before the monsoon arrives.",
           },
           {
             type: "callout",
@@ -1118,6 +1398,21 @@ export const topics: Topic[] = [
             ],
           },
           {
+            type: "activity",
+            activity: {
+              kind: "match",
+              prompt: "Match each part of the nephron to its job.",
+              pairs: [
+                ["Glomerulus", "Filters blood under high pressure"],
+                ["Bowman's capsule", "Cup that collects the filtrate"],
+                ["PCT", "Takes back most useful substances"],
+                ["Loop of Henle", "Helps make urine concentrated"],
+                ["Collecting duct", "Carries urine from many nephrons to the pelvis"],
+              ],
+              explain: "Follow the fluid: **filter** (glomerulus) → **collect** (Bowman's capsule) → **take back** (PCT) → **concentrate** (loop of Henle) → **carry away** (collecting duct).",
+            },
+          },
+          {
             type: "callout",
             tone: "note",
             title: "Blood supply",
@@ -1136,14 +1431,28 @@ export const topics: Topic[] = [
             ],
           },
           {
-            type: "text",
-            md: "**Worked comparison — renal artery vs renal vein.** Blood in the **renal artery** carries oxygen and **more urea**; blood in the **renal vein** has **the least urea** of any blood vessel in the body, because the kidney has removed it. (It is deoxygenated, as kidney cells used the oxygen.)",
+            type: "example",
+            title: "Renal artery vs renal vein",
+            problem: "Compare the blood in the **renal artery** and the **renal vein**: which has more urea, and which has more oxygen?",
+            steps: [
+              "The renal artery brings blood **to** the kidney straight from the aorta, so it is **oxygenated** and still carries urea.",
+              "In the kidney, nephrons filter urea out of this blood into the urine.",
+              "Kidney cells also use oxygen for their own respiration (they need energy for reabsorption).",
+              "So the blood leaving in the renal vein has lost both urea and oxygen.",
+            ],
+            answer: "Renal artery: more urea, oxygenated. Renal vein: **least urea of any blood vessel**, deoxygenated.",
+          },
+          {
+            type: "mistake",
+            wrong: "Urea is made in the kidneys and passed out in urine.",
+            right: "Urea is made in the **liver** (from excess amino acids, by deamination). The blood carries it to the **kidneys**, which only filter it out and excrete it.",
+            why: "Urea leaves the body in urine, so it seems the kidney must make it. But the kidney is the filter, not the factory — which is why the renal vein, leaving the filter, has the least urea.",
           },
           {
             type: "callout",
             tone: "exam",
-            title: "ICSE trap",
-            md: "Ureter vs urethra: **ureters** (two) go from kidneys to bladder; the **urethra** (one) goes from bladder to outside. And the **liver** makes urea but does **not** excrete it — kidneys do. The blood vessel with the least urea is the **renal vein**.",
+            title: "ICSE tip",
+            md: "Ureter vs urethra: **ureters** (two) go from kidneys to bladder; the **urethra** (one) goes from bladder to outside.",
           },
           {
             type: "keypoints",
@@ -1197,6 +1506,14 @@ export const topics: Topic[] = [
             explain: "The liver makes urea by deamination; the kidneys excrete it.",
             difficulty: 2,
           },
+          {
+            kind: "mcq",
+            q: "Which blood vessel in the body carries blood with the least urea?",
+            options: ["Hepatic vein", "Renal artery", "Renal vein", "Aorta"],
+            answer: 2,
+            explain: "The kidneys have just filtered urea out, so the renal vein has the least. The hepatic vein, leaving the liver where urea is made, has the most.",
+            difficulty: 3,
+          },
         ],
       },
       {
@@ -1219,10 +1536,34 @@ export const topics: Topic[] = [
               "**Tubular secretion** (mainly DCT): extra wastes such as **potassium and hydrogen ions**, creatinine and certain drugs are secreted from blood into the tubule.",
             ],
           },
+          {
+            type: "activity",
+            activity: {
+              kind: "sort",
+              prompt: "Where does each substance end up?",
+              groups: ["Stays in blood (not filtered)", "Filtered, then fully reabsorbed", "Filtered and left in urine"],
+              items: [
+                { text: "Plasma proteins", group: 0, hint: "The molecules are too big to pass the glomerular filter." },
+                { text: "Red blood cells", group: 0, hint: "Cells are far too large to be filtered." },
+                { text: "Glucose", group: 1, hint: "It is useful, so the PCT takes all of it back." },
+                { text: "Amino acids", group: 1, hint: "Useful food molecules are all taken back in the PCT." },
+                { text: "Urea", group: 2, hint: "It is the main nitrogenous waste." },
+                { text: "Creatinine", group: 2, hint: "A waste that is even secreted into the tubule." },
+              ],
+              explain: "Big things (**cells, proteins**) never leave the blood. Small useful things (**glucose, amino acids**) are filtered but **all** taken back. **Wastes** stay in the tubule and leave as urine.",
+            },
+          },
           { type: "formula", tex: "125\\ \\text{mL/min} \\times 60 \\times 24 = 180\\,000\\ \\text{mL} = 180\\ \\text{L/day}", caption: "Glomerular filtration in a healthy adult" },
           {
-            type: "text",
-            md: "**Worked example — how much is reabsorbed?** About **180 L** of filtrate forms each day, but only about **1.5 L** of urine is passed.\n\n- Reabsorbed = 180 − 1.5 = **178.5 L**.\n- Percentage reabsorbed = 178.5 ÷ 180 × 100 ≈ **99%**.\n\nSo nearly all the filtered water returns to the blood.",
+            type: "example",
+            title: "How much filtrate is reabsorbed?",
+            problem: "About **180 L** of glomerular filtrate forms each day, but only about **1.5 L** of urine is passed. How much is reabsorbed, and what percentage is that?",
+            steps: [
+              "Reabsorbed = filtrate − urine = 180 − 1.5 = **178.5 L**.",
+              "Percentage reabsorbed = 178.5 ÷ 180 × 100.",
+              "= 99.17%, which is about **99%**.",
+            ],
+            answer: "About 178.5 L a day (≈ 99%) is reabsorbed, so nearly all the filtered water returns to the blood.",
           },
           {
             type: "checkpoint",
@@ -1258,10 +1599,16 @@ export const topics: Topic[] = [
             md: "In **haemodialysis**, the patient's blood flows through tubes of a semi-permeable membrane bathed in dialysing fluid; urea and excess salts diffuse out. A long-term option is a **kidney transplant** from a matching donor — a healthy person can live normally with one kidney.",
           },
           {
+            type: "mistake",
+            wrong: "Normal urine has no glucose because glucose is not filtered by the glomerulus.",
+            right: "Glucose **is** filtered into Bowman's capsule, but it is **completely reabsorbed** in the PCT. Proteins are the ones that are not filtered.",
+            why: "Both glucose and proteins are missing from urine, so learners give them the same reason. But glucose molecules are small and pass the filter easily; they are missing only because the PCT takes all of them back.",
+          },
+          {
             type: "callout",
             tone: "exam",
-            title: "ICSE trap",
-            md: "Normal urine contains **no glucose and no proteins**. Glucose is filtered but **completely reabsorbed** in the PCT — so 'glucose is not filtered' is wrong. Also, urine colour comes from the pigment **urochrome**, and **ADH increases** water reabsorption (anti-diuresis = less urine).",
+            title: "ICSE tip",
+            md: "Urine colour comes from the pigment **urochrome**, and **ADH increases** water reabsorption (anti-diuresis = less urine).",
           },
           {
             type: "keypoints",
@@ -1327,6 +1674,401 @@ export const topics: Topic[] = [
       },
     ],
   },
+
+  /* ------------------------------------------------------------ */
+  /* Management of Natural Resources (Karnataka SSLC)              */
+  /* ------------------------------------------------------------ */
+  {
+    slug: "management-of-natural-resources",
+    title: "Management of Natural Resources",
+    icon: "🌳",
+    description: "Why we must manage resources, the three Rs, forests and wildlife (Chipko, Bishnoi, Arabari), water harvesting and dams, and saving coal and petroleum.",
+    lessons: [
+      {
+        slug: "three-rs-forests-and-wildlife",
+        title: "The Three Rs, Forests & Wildlife",
+        summary: "Why natural resources need managing, reduce–reuse–recycle, the stakeholders of a forest, and how people like the Bishnois and the Chipko women saved trees.",
+        minutes: 17,
+        xp: 45,
+        blocks: [
+          { type: "illustration", emoji: "🌲", caption: "A forest gives timber, fuelwood, fodder, fruit, medicine, clean water and a home for wildlife — and many people want a share of it." },
+          {
+            type: "text",
+            md: "Forests, wildlife, water, coal and petroleum are **natural resources** — things from nature that we use. They are **limited**, but the number of people using them keeps growing. If we use them carelessly today, there will be little left for our children.",
+          },
+          {
+            type: "text",
+            md: "**Managing** resources means using them so that three things happen:\n\n- They last a long time — a **long-term view**, not quick profit.\n- They are shared **fairly** (equitable distribution), not taken only by a few rich and powerful people.\n- Their use causes as little **damage to the environment** as possible.\n\nUsing resources to meet today's needs without harming the needs of future generations is called **sustainable development**.",
+          },
+          {
+            type: "callout",
+            tone: "fact",
+            title: "The Ganga Action Plan",
+            md: "By the 1980s the Ganga was badly polluted by untreated sewage, industrial waste and the dumping of ashes and bodies. The **Ganga Action Plan** began in **1985** to clean it. The presence of **coliform bacteria** in river water shows that it is contaminated by human excreta.",
+          },
+          { type: "heading", text: "The three Rs" },
+          {
+            type: "table",
+            headers: ["R", "Meaning", "Examples"],
+            rows: [
+              ["**Reduce**", "Use less", "Switch off unused lights and fans; mend leaking taps; do not waste food; carry a cloth bag"],
+              ["**Reuse**", "Use the same thing again, as it is", "Store spices in old jam bottles; write on the back of used paper; pass old books to juniors"],
+              ["**Recycle**", "Send used materials to be made into new things", "Separate paper, plastic, glass and metal so they can be recycled"],
+            ],
+          },
+          {
+            type: "text",
+            md: "**Reuse is better than recycling.** Recycling needs **energy** to collect, melt or pulp the material and remake it. Reusing a bottle needs no energy at all.",
+          },
+          {
+            type: "activity",
+            activity: {
+              kind: "sort",
+              prompt: "Is each action reduce, reuse or recycle?",
+              groups: ["Reduce", "Reuse", "Recycle"],
+              items: [
+                { text: "Turning off the fan when you leave the room", group: 0, hint: "You simply use less electricity." },
+                { text: "Fixing a dripping tap", group: 0, hint: "Less water is wasted." },
+                { text: "Keeping pens in an old glass jar", group: 1, hint: "The jar is used again just as it is." },
+                { text: "Giving last year's textbooks to a junior", group: 1, hint: "The books are not remade, just used again." },
+                { text: "Selling old newspapers to the kabadiwala for pulping", group: 2, hint: "The paper will be pulped and made into new paper." },
+                { text: "Putting empty cans in a separate bin for melting", group: 2, hint: "The metal will be melted and remade." },
+              ],
+              explain: "**Reduce** = use less. **Reuse** = use again as it is. **Recycle** = remake into something new, which costs energy, so reduce and reuse come first.",
+            },
+          },
+          {
+            type: "mistake",
+            wrong: "Recycling is the best of the three Rs, so it does not matter how much we throw away if it gets recycled.",
+            right: "**Reduce** is best, then **reuse**. Recycling is useful, but it still uses energy and often water and chemicals to remake the material.",
+            why: "Recycling is the R we hear most about, so it sounds the greenest. But a thing that is never made, or is used again as it is, saves all that energy.",
+          },
+          { type: "heading", text: "Forests and their stakeholders" },
+          {
+            type: "text",
+            md: "Forests are **biodiversity hot spots** — they hold a huge variety of plants and animals. Different groups of people have an interest in a forest. They are called **stakeholders**:",
+          },
+          {
+            type: "table",
+            headers: ["Stakeholder", "What they want from the forest"],
+            rows: [
+              ["**Local people** living in and near the forest", "Fuelwood, fodder, fruit, small timber, thatch, medicines; they have used forests sustainably for centuries"],
+              ["**Forest Department** of the government", "Owns the land and controls its use; earns money from timber"],
+              ["**Industrialists**", "Cheap raw material — wood for paper, furniture, sports goods, tendu leaves for bidis"],
+              ["**Nature and wildlife enthusiasts**", "Want forests and wildlife conserved in their natural state"],
+            ],
+          },
+          {
+            type: "checkpoint",
+            questions: [
+              {
+                kind: "mcq",
+                q: "A paper mill wants cheap bamboo from a forest. Which stakeholder is it?",
+                options: ["Local people", "Forest Department", "Industrialists", "Wildlife enthusiasts"],
+                answer: 2,
+                explain: "Industries use forest produce as raw material for their factories.",
+              },
+            ],
+          },
+          { type: "heading", text: "People who saved forests" },
+          {
+            type: "text",
+            md: "**The Bishnoi community** of Rajasthan treats the protection of trees and animals as a **religious duty**. In **1731**, at **Khejrali** village near Jodhpur, **Amrita Devi Bishnoi** and **363** other Bishnois gave their lives trying to stop the cutting of **khejri** trees for the king's palace. The Government of India has named a national award for wildlife conservation after her — the **Amrita Devi Bishnoi National Award**.",
+          },
+          {
+            type: "text",
+            md: "**The Chipko Andolan** ('hug the trees' movement) began in the early **1970s** in the village of **Reni** in Garhwal, high in the Himalayas (now in Uttarakhand). A contractor's men came to fell trees while the village men were away. The **women**, led by **Gaura Devi**, **hugged the trees** so they could not be cut. The movement spread quickly and made governments rethink how forests were used.",
+          },
+          {
+            type: "example",
+            title: "How the Arabari forest came back",
+            problem: "In the early 1970s the **sal forest of Arabari** (Midnapore district, West Bengal) was badly degraded. Explain how it recovered.",
+            steps: [
+              "**The problem:** the Forest Department kept villagers out, so people cut trees secretly and nobody cared for the forest.",
+              "**The change (1972):** forest officer **A. K. Banerjee** involved the villagers in protecting about **1,272 hectares** of degraded sal forest.",
+              "**What villagers got:** jobs in planting and harvesting, **25% of the final harvest**, and the right to collect fuelwood and fodder for a small fee.",
+              "**Why it worked:** the forest now belonged to the villagers too, so protecting it was in their own interest.",
+              "**The result:** by **1983** the forest had regrown well, and a forest once thought worthless was valued at about **₹12.5 crore**.",
+            ],
+            answer: "Arabari recovered because local people became **partners** in managing it and shared its benefits. Involving local people is key to sustainable forest management.",
+          },
+          {
+            type: "text",
+            md: "**Sustainable forest management** means: involve local people, plant more trees than are cut, let industries pay a fair price, and protect wildlife habitats. Planting a single species over a large area (**monoculture**, e.g. only teak or eucalyptus) gives timber but destroys biodiversity.",
+          },
+          {
+            type: "callout",
+            tone: "exam",
+            title: "Board tip",
+            md: "Know the place and state for each case: **Bishnoi / Amrita Devi** → Khejrali, Rajasthan (1731, khejri trees); **Chipko** → Reni, Garhwal Himalayas (early 1970s, women hugged trees); **Arabari** → sal forest, Midnapore, West Bengal (1972, A. K. Banerjee).",
+          },
+          {
+            type: "keypoints",
+            items: [
+              "Natural resources are limited; managing them needs a long-term view, fair sharing and less damage — **sustainable development**.",
+              "Three Rs: **reduce**, **reuse**, **recycle**; reuse is better than recycling because recycling uses energy.",
+              "Forest stakeholders: local people, Forest Department, industrialists, wildlife enthusiasts.",
+              "Amrita Devi Bishnoi (1731), the Chipko movement (1970s) and Arabari (1972) show the role of local people.",
+            ],
+          },
+        ],
+        flashcards: [
+          { front: "Sustainable development", back: "Meeting today's needs without harming the ability of future generations to meet theirs." },
+          { front: "The three Rs", back: "Reduce, reuse, recycle. Reuse is better than recycling because recycling uses energy." },
+          { front: "Stakeholders of a forest", back: "Local people, the Forest Department, industrialists, and nature and wildlife enthusiasts." },
+          { front: "Amrita Devi Bishnoi", back: "Gave her life with 363 others in 1731 at Khejrali, Rajasthan, to save khejri trees." },
+          { front: "Chipko Andolan", back: "Early 1970s, Reni village in Garhwal; women hugged trees to stop contractors felling them." },
+          { front: "Arabari forest", back: "Sal forest in Midnapore, West Bengal, revived from 1972 by involving villagers (A. K. Banerjee)." },
+          { front: "Coliform bacteria in water", back: "Show that the water is contaminated by human excreta." },
+        ],
+        quiz: [
+          {
+            kind: "mcq",
+            q: "Which is the best order of preference among the three Rs?",
+            options: ["Recycle, reuse, reduce", "Reduce, reuse, recycle", "Reuse, recycle, reduce", "All three are equally good"],
+            answer: 1,
+            explain: "Using less saves the most; reusing saves the energy needed for recycling; recycling comes last.",
+          },
+          {
+            kind: "mcq",
+            q: "The Chipko movement started in:",
+            options: ["Khejrali, Rajasthan", "Reni, Garhwal Himalayas", "Arabari, West Bengal", "Silent Valley, Kerala"],
+            answer: 1,
+            explain: "It began in the early 1970s at Reni village, Garhwal. Khejrali is linked to Amrita Devi Bishnoi and Arabari to the sal forest revival.",
+          },
+          {
+            kind: "truefalse",
+            q: "The Arabari sal forest recovered because the government fenced it and kept all villagers out.",
+            answer: false,
+            explain: "It recovered because villagers were **included** — given jobs, 25% of the harvest and fuelwood and fodder rights.",
+            difficulty: 2,
+          },
+          {
+            kind: "fill",
+            q: "Amrita Devi Bishnoi gave her life in 1731 to save ___ trees.",
+            answer: ["khejri", "khejari"],
+            explain: "She and 363 others died protecting khejri trees at Khejrali near Jodhpur.",
+          },
+          {
+            kind: "multi",
+            q: "Which of these are stakeholders of a forest? (Choose all that apply.)",
+            options: ["People living near the forest", "The Forest Department", "Industrialists", "Wildlife enthusiasts"],
+            answers: [0, 1, 2, 3],
+            explain: "All four groups have an interest in the forest, and good management balances them.",
+          },
+          {
+            kind: "mcq",
+            q: "Why do environmentalists criticise planting only teak or eucalyptus over large forest areas?",
+            options: ["These trees grow too slowly", "Such monoculture destroys biodiversity and does not meet local needs", "They cannot be sold to industry", "They need too little water"],
+            answer: 1,
+            explain: "A single-species plantation gives timber but removes the variety of plants and animals, and the fodder and fuelwood local people depend on.",
+            difficulty: 2,
+          },
+          {
+            kind: "mcq",
+            q: "A student says, 'Recycling is greener than reusing.' What is the best reply?",
+            options: ["Correct — recycling makes new things", "Wrong — recycling needs energy, but reusing as it is needs none", "Correct — reused things are unhygienic", "Wrong — recycling is not one of the three Rs"],
+            answer: 1,
+            explain: "Recycling uses energy to collect and remake the material; reusing does not.",
+            difficulty: 2,
+          },
+        ],
+      },
+      {
+        slug: "water-dams-coal-and-petroleum",
+        title: "Water for All, Coal & Petroleum",
+        summary: "Big dams and their problems, traditional water harvesting such as khadins, kulhs, bundhis and tankas, and why and how we must save coal and petroleum.",
+        minutes: 17,
+        xp: 45,
+        blocks: [
+          { type: "illustration", emoji: "💧", caption: "India gets most of its rain in a few monsoon months. Storing that water for the dry months is an old Indian skill." },
+          {
+            type: "text",
+            md: "Water is a basic need of all life. Rain is the main source, but it falls mostly in the monsoon. Cutting forests and failing to store rainwater have made water scarce in many places, even where it once was plentiful.",
+          },
+          { type: "heading", text: "Dams: benefits and problems" },
+          {
+            type: "text",
+            md: "Large **dams** store river water in reservoirs. They give water for **irrigation** and **drinking**, and they generate **electricity**. Canals from dams carry water to faraway fields. Examples are the **Tehri dam** on the Bhagirathi (Ganga) and the **Sardar Sarovar dam** on the Narmada.",
+          },
+          {
+            type: "table",
+            headers: ["Kind of problem", "What goes wrong"],
+            rows: [
+              ["**Social**", "Large numbers of farmers and tribal people are **displaced** from their land, often without enough compensation or rehabilitation"],
+              ["**Economic**", "Huge amounts of public money are spent without proportionate benefits"],
+              ["**Environmental**", "Forests are drowned, causing **deforestation** and **loss of biodiversity**"],
+            ],
+          },
+          {
+            type: "text",
+            md: "There is also a problem of **fair sharing**: people near the canal head or in big cities often get most of the water, while the poor and people far away get little.",
+          },
+          {
+            type: "mistake",
+            wrong: "Large dams only bring benefits — more water and electricity for everyone.",
+            right: "Dams do give irrigation, drinking water and electricity, but they also cause **social**, **economic** and **environmental** problems, and the benefits are often **not shared fairly**.",
+            why: "We see the reservoir and the power lines, but not the villages that were moved or the forest under the water. Good management weighs both sides and asks who gains and who loses.",
+          },
+          {
+            type: "checkpoint",
+            questions: [
+              {
+                kind: "mcq",
+                q: "Thousands of tribal families lose their land when a dam reservoir fills. This is a:",
+                options: ["Social problem", "Economic problem", "Environmental problem", "Benefit of the dam"],
+                answer: 0,
+                explain: "Displacement of people without proper rehabilitation is the main **social** problem of large dams.",
+              },
+            ],
+          },
+          { type: "heading", text: "Traditional water harvesting" },
+          {
+            type: "text",
+            md: "**Water harvesting** means catching rainwater where it falls and storing it — in the ground or in small structures — so it can be used later. Indian villages have done this for centuries, each region in its own way:",
+          },
+          {
+            type: "table",
+            headers: ["Structure", "Region", "How it works"],
+            rows: [
+              ["**Khadin**", "Rajasthan", "A long earthen embankment (**bund**) is built across the lower edge of a sloping field; rainwater collects, soaks into the soil and is used to grow crops; the extra water recharges groundwater and is drawn from shallow wells"],
+              ["**Tanka**", "Rajasthan (Thar desert)", "An underground tank, often in the courtyard, that collects rainwater from the roof or a sloping catchment for drinking"],
+              ["**Kulh**", "Himachal Pradesh", "Channels that divert stream water down the hillside to villages; water reached the farthest village first and was shared by agreement"],
+              ["**Bundhi**", "Madhya Pradesh and Uttar Pradesh", "Small earthen dams (bunds) that hold rainwater in fields"],
+              ["**Ahar and pyne**", "Bihar", "Ahars are catchment basins; pynes are channels that carry water to them"],
+              ["**Katta**", "Karnataka", "Small check dams across streams that store water for irrigation"],
+              ["**Eri**", "Tamil Nadu", "Tanks that store water for irrigation"],
+            ],
+          },
+          {
+            type: "activity",
+            activity: {
+              kind: "match",
+              prompt: "Match each water-harvesting structure to its description.",
+              pairs: [
+                ["Khadin", "Rajasthan: earthen bund across a sloping field"],
+                ["Tanka", "Rajasthan: underground tank for drinking water"],
+                ["Kulh", "Himachal Pradesh: hill channels fed by streams"],
+                ["Bundhi", "Madhya Pradesh and Uttar Pradesh: small earthen field dams"],
+                ["Katta", "Karnataka: small check dams on streams"],
+              ],
+              explain: "Each region built what suited its land: **bunds** on flat dry fields, **tanks** in the desert, **channels** on hill slopes.",
+            },
+          },
+          {
+            type: "example",
+            title: "Why underground storage beats an open pond",
+            problem: "Two villages in Rajasthan harvest rain. Village A stores it in an open pond; Village B uses a **khadin**, so the water soaks into the ground. In May, A's pond is dry but B's wells still have water. Explain why.",
+            steps: [
+              "**Evaporation:** the open pond loses water to the hot, dry air every day; water stored in the soil hardly evaporates.",
+              "**Spreading out:** groundwater moves through the soil and **recharges wells** across a wide area, and keeps the soil moist for crops.",
+              "**Safety:** an open pond collects animal and human waste and breeds **mosquitoes**; groundwater is protected from both.",
+              "So B's water lasts through the dry months, while A's has evaporated.",
+            ],
+            answer: "Storing water **underground** prevents evaporation, recharges wells, moistens the soil and keeps the water clean and free of mosquitoes.",
+          },
+          {
+            type: "text",
+            md: "These systems worked because **local people managed them**. In Himachal Pradesh, the kulhs were looked after by two or three people paid by the villagers. After the government took them over, many kulhs fell into disuse and the water was no longer shared smoothly — another lesson that local involvement matters.",
+          },
+          { type: "heading", text: "Coal and petroleum" },
+          {
+            type: "text",
+            md: "**Coal** and **petroleum** are **fossil fuels**, formed over millions of years from the remains of buried plants and animals. They cannot be made again in a human lifetime, so they will **run out**. At the present rate of use, known petroleum reserves may last only about **40 years** and coal about **200 years**.",
+          },
+          {
+            type: "text",
+            md: "Burning them also harms the environment. Coal and petroleum contain carbon, hydrogen, nitrogen and sulphur. On burning they give **carbon dioxide** (a greenhouse gas), water, **oxides of nitrogen** and **oxides of sulphur**. With too little air, poisonous **carbon monoxide** forms.",
+          },
+          {
+            type: "list",
+            items: [
+              "Use **public transport**, cycle or walk instead of a private car or scooter.",
+              "Switch off lights, fans and TVs when not in use; use **LED** bulbs.",
+              "Use the **stairs** instead of the lift for one or two floors.",
+              "Wear an extra sweater instead of running a heater.",
+              "Use **solar cookers** and solar water heaters where possible.",
+            ],
+          },
+          {
+            type: "callout",
+            tone: "exam",
+            title: "Board tip",
+            md: "When asked for traditional water harvesting, give the **name, state and working** together, e.g. 'khadins of Rajasthan: a bund across sloping land collects rainwater that soaks in and is used for crops'. For dams, always write all **three** kinds of problems.",
+          },
+          {
+            type: "keypoints",
+            items: [
+              "Dams give irrigation, drinking water and electricity, but cause social, economic and environmental problems.",
+              "Traditional harvesting: khadins and tankas (Rajasthan), kulhs (Himachal), bundhis (MP, UP), ahars and pynes (Bihar), kattas (Karnataka), eris (Tamil Nadu).",
+              "Underground storage does not evaporate, recharges wells and breeds no mosquitoes.",
+              "Coal and petroleum are limited and polluting; save them by using less energy.",
+            ],
+          },
+        ],
+        flashcards: [
+          { front: "Three problems of large dams", back: "Social (displacement of people), economic (huge cost, small benefit), environmental (deforestation, loss of biodiversity)." },
+          { front: "Khadin", back: "Rajasthan: an earthen bund across sloping farmland that collects rainwater, which soaks in for crops and recharges wells." },
+          { front: "Kulh", back: "Himachal Pradesh: channels that carry stream water down the hillside to villages." },
+          { front: "Tanka", back: "Rajasthan: an underground tank that stores rainwater for drinking." },
+          { front: "Bundhi", back: "Madhya Pradesh and Uttar Pradesh: small earthen dams holding rainwater in fields." },
+          { front: "Advantages of storing water underground", back: "No evaporation, recharges wells, keeps soil moist, no mosquito breeding, protected from contamination." },
+          { front: "Gases from burning fossil fuels", back: "CO₂, water vapour, oxides of nitrogen and sulphur; carbon monoxide if air is short." },
+        ],
+        quiz: [
+          {
+            kind: "mcq",
+            q: "Khadins are a traditional water-harvesting system of:",
+            options: ["Himachal Pradesh", "Rajasthan", "Bihar", "Tamil Nadu"],
+            answer: 1,
+            explain: "Khadins are bunds across sloping fields in Rajasthan. Kulhs are from Himachal, ahars and pynes from Bihar, eris from Tamil Nadu.",
+          },
+          {
+            kind: "multi",
+            q: "Which are problems caused by large dams? (Choose all that apply.)",
+            options: ["Displacement of tribal people", "Loss of forests and biodiversity", "Huge public spending without proportionate benefit", "Generation of electricity"],
+            answers: [0, 1, 2],
+            explain: "Displacement (social), loss of forests (environmental) and high cost (economic) are problems; electricity is a benefit.",
+          },
+          {
+            kind: "truefalse",
+            q: "Water stored underground is lost faster by evaporation than water in an open pond.",
+            answer: false,
+            explain: "Groundwater hardly evaporates; an open pond loses water to the air every day.",
+          },
+          {
+            kind: "fill",
+            q: "The traditional channels that carry stream water to villages in Himachal Pradesh are called ___.",
+            answer: ["kulhs", "kulh", "kuhls"],
+            explain: "Kulhs took water first to the farthest village and were managed by people paid by the villagers.",
+          },
+          {
+            kind: "mcq",
+            q: "Burning coal in a poor supply of air produces a poisonous gas. It is:",
+            options: ["Carbon dioxide", "Carbon monoxide", "Oxygen", "Nitrogen"],
+            answer: 1,
+            explain: "Incomplete burning gives carbon monoxide (CO), which is poisonous.",
+            difficulty: 2,
+          },
+          {
+            kind: "mcq",
+            q: "Which action best saves petroleum?",
+            options: ["Driving alone to school every day", "Taking the school bus or cycling", "Leaving the scooter engine running at signals", "Using a heater instead of a sweater"],
+            answer: 1,
+            explain: "Sharing a bus or cycling uses far less fuel per person.",
+          },
+          {
+            kind: "mcq",
+            q: "After the government took over the kulhs of Himachal Pradesh, many fell into disuse. What does this teach about resource management?",
+            options: ["Government control always improves resources", "Local people's involvement is key to managing resources well", "Kulhs were never useful", "Water should not be shared between villages"],
+            answer: 1,
+            explain: "Like the Arabari forest, the kulhs show that resources are best managed when local people take part and share the benefits.",
+            difficulty: 3,
+          },
+        ],
+      },
+    ],
+  },
 ];
 
 /** Syllabus chapter title (and its synonyms) → topic slug in `topics`. */
@@ -1336,4 +2078,5 @@ export const links: Record<string, string> = {
   "Transpiration": "icse-transpiration",
   "Chemical Coordination in Plants": "icse-chemical-coordination-in-plants",
   "Excretory System": "icse-excretory-system",
+  "Management of Natural Resources": "management-of-natural-resources",
 };

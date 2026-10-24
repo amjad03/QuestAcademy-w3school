@@ -61,19 +61,33 @@ export const mathHigh: Subject = {
               ],
             },
             {
-              type: "heading",
-              text: "Worked example",
-            },
-            {
-              type: "list",
-              ordered: true,
-              items: [
-                "Factorise $p(x) = x^3 - 6x^2 + 11x - 6$.",
-                "Try small integers that divide the constant 6: $p(1) = 1 - 6 + 11 - 6 = 0$, so $(x - 1)$ is a factor.",
+              type: "example",
+              title: "Factorising a cubic",
+              problem: "Factorise $p(x) = x^3 - 6x^2 + 11x - 6$.",
+              steps: [
+                "Try small integers that divide the constant 6: $p(1) = 1 - 6 + 11 - 6 = 0$, so $(x - 1)$ is a factor (**factor theorem**).",
                 "Divide: $p(x) = (x - 1)(x^2 - 5x + 6)$.",
                 "Factorise the quadratic: $x^2 - 5x + 6 = (x - 2)(x - 3)$.",
-                "So $p(x) = (x - 1)(x - 2)(x - 3)$, with zeros 1, 2 and 3.",
               ],
+              answer: "$p(x) = (x - 1)(x - 2)(x - 3)$, with zeros 1, 2 and 3.",
+            },
+            {
+              type: "activity",
+              activity: {
+                kind: "sort",
+                prompt: "Is $(x - 2)$ a factor? Put $x = 2$ and check.",
+                groups: ["Factor", "Not a factor"],
+                items: [
+                  { text: "$x^2 - 4$", group: 0, hint: "$p(2) = 4 - 4 = 0$." },
+                  { text: "$x^2 - 5x + 6$", group: 0, hint: "$p(2) = 4 - 10 + 6 = 0$." },
+                  { text: "$x^3 - 8$", group: 0, hint: "$p(2) = 8 - 8 = 0$." },
+                  { text: "$x^3 - 2x^2 + x - 2$", group: 0, hint: "$p(2) = 8 - 8 + 2 - 2 = 0$." },
+                  { text: "$x^2 + 4$", group: 1, hint: "$p(2) = 4 + 4 = 8$, not 0." },
+                  { text: "$x^2 + x - 2$", group: 1, hint: "$p(2) = 4 + 2 - 2 = 4$. Its factors are $(x + 2)(x - 1)$." },
+                  { text: "$x^2 - 2x + 1$", group: 1, hint: "$p(2) = 4 - 4 + 1 = 1$. It is $(x - 1)^2$." },
+                ],
+                explain: "By the **factor theorem**, $(x - 2)$ is a factor exactly when $p(2) = 0$. Any other value of $p(2)$ is the **remainder**.",
+              },
             },
             {
               type: "checkpoint",
@@ -85,6 +99,12 @@ export const mathHigh: Subject = {
                   explain: "$p(2) = 4 + 6 - 5 = 5$.",
                 },
               ],
+            },
+            {
+              type: "mistake",
+              wrong: "To find the remainder when $p(x)$ is divided by $(x + 1)$, I put $x = 1$.",
+              right: "Put $x = -1$: the remainder is $p(-1)$. Always use the value that makes the divisor zero.",
+              why: "The plus sign makes $+1$ look natural. But the theorem is about dividing by $(x - a)$, and $x + 1 = x - (-1)$, so $a = -1$.",
             },
             {
               type: "heading",
@@ -115,6 +135,8 @@ export const mathHigh: Subject = {
             { front: "Remainder theorem", back: "When $p(x)$ is divided by $(x - a)$, the remainder is $p(a)$." },
             { front: "Factor theorem", back: "$(x - a)$ is a factor of $p(x)$ if and only if $p(a) = 0$." },
             { front: "$a^2 - b^2$", back: "$(a + b)(a - b)$" },
+            { front: "Zero of a polynomial", back: "A value $k$ with $p(k) = 0$; the graph meets the x-axis at $x = k$." },
+            { front: "Most zeros a polynomial of degree $n$ can have", back: "$n$ (a quadratic at most 2, a cubic at most 3)." },
           ],
           quiz: [
             {
@@ -143,6 +165,21 @@ export const mathHigh: Subject = {
               options: ["$x^2 + 25$", "$x^2 + 5x + 25$", "$x^2 + 10x + 25$", "$2x + 10$"],
               answer: 2,
               explain: "$(a + b)^2 = a^2 + 2ab + b^2$ with $2ab = 10x$.",
+            },
+            {
+              kind: "numeric",
+              q: "$(x - 2)$ is a factor of $x^3 + kx - 10$. Find $k$.",
+              answer: 1,
+              explain: "Factor theorem: $p(2) = 8 + 2k - 10 = 0$, so $2k = 2$ and $k = 1$.",
+              difficulty: 3,
+            },
+            {
+              kind: "mcq",
+              q: "The remainder when $x^3 + 2x + 1$ is divided by $(x + 2)$ is:",
+              options: ["$13$", "$-11$", "$-3$", "$5$"],
+              answer: 1,
+              explain: "Use $x = -2$: $-8 - 4 + 1 = -11$. Putting $x = 2$ (giving 13) is the common sign slip.",
+              difficulty: 2,
             },
           ],
         },
@@ -181,14 +218,21 @@ export const mathHigh: Subject = {
               caption: "Works for every quadratic.",
             },
             {
-              type: "list",
-              ordered: true,
-              items: [
-                "Solve $2x^2 + 3x - 2 = 0$. Here $a = 2$, $b = 3$, $c = -2$.",
-                "Discriminant: $D = b^2 - 4ac = 9 + 16 = 25$.",
-                "$x = \\dfrac{-3 \\pm 5}{4}$.",
-                "So $x = \\tfrac{1}{2}$ or $x = -2$.",
+              type: "example",
+              title: "Using the quadratic formula",
+              problem: "Solve $2x^2 + 3x - 2 = 0$.",
+              steps: [
+                "Read off the coefficients: $a = 2$, $b = 3$, $c = -2$.",
+                "**Discriminant:** $D = b^2 - 4ac = 9 - 4(2)(-2) = 9 + 16 = 25$.",
+                "$x = \\dfrac{-3 \\pm \\sqrt{25}}{2 \\times 2} = \\dfrac{-3 \\pm 5}{4}$.",
               ],
+              answer: "$x = \\tfrac{1}{2}$ or $x = -2$.",
+            },
+            {
+              type: "mistake",
+              wrong: "$x^2 = 3x$, so I divide both sides by $x$ and get $x = 3$.",
+              right: "Bring everything to one side: $x^2 - 3x = 0$, so $x(x - 3) = 0$ and $x = 0$ or $x = 3$.",
+              why: "Dividing by $x$ looks like simplifying, but you cannot divide by $x$ if $x$ might be 0. That step silently throws away the root $x = 0$. A quadratic can have two roots, so look for both.",
             },
             {
               type: "heading",
@@ -202,6 +246,23 @@ export const mathHigh: Subject = {
                 ["$D = 0$", "one repeated real root", "touches the x-axis"],
                 ["$D < 0$", "no real roots", "never meets the x-axis"],
               ],
+            },
+            {
+              type: "activity",
+              activity: {
+                kind: "sort",
+                prompt: "Work out $D = b^2 - 4ac$. Sort by the nature of roots.",
+                groups: ["Two distinct real roots", "Two equal real roots", "No real roots"],
+                items: [
+                  { text: "$x^2 - 5x + 4 = 0$", group: 0, hint: "$D = 25 - 16 = 9 > 0$." },
+                  { text: "$x^2 - 2 = 0$", group: 0, hint: "$b = 0$: $D = 0 - 4(1)(-2) = 8 > 0$." },
+                  { text: "$x^2 - 6x + 9 = 0$", group: 1, hint: "$D = 36 - 36 = 0$." },
+                  { text: "$4x^2 - 4x + 1 = 0$", group: 1, hint: "$D = 16 - 16 = 0$." },
+                  { text: "$x^2 + x + 1 = 0$", group: 2, hint: "$D = 1 - 4 = -3 < 0$." },
+                  { text: "$2x^2 + 3x + 5 = 0$", group: 2, hint: "$D = 9 - 40 = -31 < 0$." },
+                ],
+                explain: "The sign of the **discriminant** decides: $D > 0$ two distinct real roots, $D = 0$ two equal roots, $D < 0$ no real roots. You do not need to solve the equation to know this.",
+              },
             },
             {
               type: "checkpoint",
@@ -247,6 +308,7 @@ export const mathHigh: Subject = {
             { front: "$D < 0$ means…", back: "No real roots; the parabola never meets the x-axis." },
             { front: "Axis of symmetry of $y = ax^2 + bx + c$", back: "$x = -\\dfrac{b}{2a}$" },
             { front: "Sum and product of roots", back: "Sum $= -b/a$, product $= c/a$." },
+            { front: "$D = 0$ means…", back: "Two equal real roots, $x = -\\dfrac{b}{2a}$; the parabola just touches the x-axis." },
           ],
           quiz: [
             {
@@ -280,6 +342,21 @@ export const mathHigh: Subject = {
               q: "Find the x-coordinate of the vertex of $y = 2x^2 - 8x + 3$.",
               answer: 2,
               explain: "$x = -b/2a = 8/4 = 2$.",
+            },
+            {
+              kind: "mcq",
+              q: "The roots of $x^2 = 3x$ are:",
+              options: ["$3$ only", "$0$ and $3$", "$-3$ and $3$", "$0$ only"],
+              answer: 1,
+              explain: "$x^2 - 3x = 0 \\Rightarrow x(x - 3) = 0$, so $x = 0$ or $3$. Dividing by $x$ loses the root 0.",
+              difficulty: 2,
+            },
+            {
+              kind: "numeric",
+              q: "For what value of $k$ does $x^2 - 6x + k = 0$ have two equal roots?",
+              answer: 9,
+              explain: "Equal roots need $D = 0$: $36 - 4k = 0$, so $k = 9$.",
+              difficulty: 2,
             },
           ],
         },
@@ -323,14 +400,15 @@ export const mathHigh: Subject = {
               tex: "m = \\frac{y_2 - y_1}{x_2 - x_1} = \\frac{\\text{rise}}{\\text{run}}",
             },
             {
-              type: "list",
-              ordered: true,
-              items: [
-                "Find the line through $(1, 3)$ and $(4, 9)$.",
+              type: "example",
+              title: "Line through two points",
+              problem: "Find the equation of the line through $(1, 3)$ and $(4, 9)$.",
+              steps: [
                 "Slope: $m = \\dfrac{9 - 3}{4 - 1} = \\dfrac{6}{3} = 2$.",
                 "Substitute $(1, 3)$ into $y = 2x + c$: $3 = 2 + c$, so $c = 1$.",
-                "Equation: $y = 2x + 1$.",
+                "Check with the other point: $2(4) + 1 = 9$. ✓",
               ],
+              answer: "$y = 2x + 1$.",
             },
             {
               type: "list",
@@ -339,6 +417,23 @@ export const mathHigh: Subject = {
                 "**Perpendicular** lines have slopes multiplying to $-1$: $m_1 m_2 = -1$.",
                 "The **x-intercept** is found by setting $y = 0$.",
               ],
+            },
+            {
+              type: "activity",
+              activity: {
+                kind: "sort",
+                prompt: "Compare the slopes. How are the two lines related?",
+                groups: ["Parallel", "Perpendicular", "Neither"],
+                items: [
+                  { text: "$y = 2x + 1$ and $y = 2x - 3$", group: 0, hint: "Both slopes are 2." },
+                  { text: "$y = -2x$ and $y = 4 - 2x$", group: 0, hint: "Both slopes are $-2$." },
+                  { text: "$y = 3x$ and $y = -\\tfrac{1}{3}x + 2$", group: 1, hint: "$3 \\times (-\\tfrac{1}{3}) = -1$." },
+                  { text: "$y = x + 4$ and $y = -x + 1$", group: 1, hint: "$1 \\times (-1) = -1$." },
+                  { text: "$y = 2x$ and $y = -2x$", group: 2, hint: "$2 \\times (-2) = -4$, not $-1$. Changing only the sign is not enough." },
+                  { text: "$y = \\tfrac{1}{2}x + 1$ and $y = 2x$", group: 2, hint: "$\\tfrac{1}{2} \\times 2 = 1$, not $-1$. You need the sign flip too." },
+                ],
+                explain: "Equal slopes mean **parallel**. Slopes whose product is $-1$ (flip the fraction **and** change the sign) mean **perpendicular**.",
+              },
             },
             {
               type: "checkpoint",
@@ -358,6 +453,12 @@ export const mathHigh: Subject = {
             {
               type: "text",
               md: "Two lines usually meet at exactly one point, and that point satisfies **both** equations. Solve $x + y = 10$ and $x - y = 2$ by **elimination**: adding gives $2x = 12$, so $x = 6$ and $y = 4$. The lines cross at $(6, 4)$.",
+            },
+            {
+              type: "mistake",
+              wrong: "A line perpendicular to slope $\\tfrac{2}{3}$ has slope $-\\tfrac{2}{3}$.",
+              right: "Flip **and** change the sign: the perpendicular slope is $-\\tfrac{3}{2}$, because $\\tfrac{2}{3} \\times (-\\tfrac{3}{2}) = -1$.",
+              why: "Changing the sign feels like \"turning\" the line, but $y = \\tfrac{2}{3}x$ and $y = -\\tfrac{2}{3}x$ are only mirror images. For a right angle the product of the slopes must be exactly $-1$.",
             },
             {
               type: "callout",
@@ -380,6 +481,7 @@ export const mathHigh: Subject = {
             { front: "Condition for perpendicular lines", back: "$m_1 m_2 = -1$" },
             { front: "y-intercept of $y = -3x + 4$", back: "4" },
             { front: "What does the solution of two linear equations represent?", back: "The point where their graphs intersect." },
+            { front: "When does $a_1x + b_1y + c_1 = 0$, $a_2x + b_2y + c_2 = 0$ have no solution?", back: "When $\\dfrac{a_1}{a_2} = \\dfrac{b_1}{b_2} \\neq \\dfrac{c_1}{c_2}$: the lines are parallel (**inconsistent**)." },
           ],
           quiz: [
             {
@@ -414,6 +516,22 @@ export const mathHigh: Subject = {
               q: "Solve $x + y = 10$ and $x - y = 2$. What is $y$?",
               answer: 4,
               explain: "Adding gives $x = 6$, then $y = 10 - 6 = 4$.",
+            },
+            {
+              kind: "mcq",
+              q: "What is the slope of a line perpendicular to $y = 4x - 1$?",
+              options: ["$4$", "$-4$", "$\\tfrac{1}{4}$", "$-\\tfrac{1}{4}$"],
+              answer: 3,
+              explain: "$m_2 = -\\tfrac{1}{4}$ because $4 \\times (-\\tfrac{1}{4}) = -1$. $-4$ only changes the sign.",
+              difficulty: 2,
+            },
+            {
+              kind: "mcq",
+              q: "The pair $x + 2y = 3$ and $2x + 4y = 7$ has:",
+              options: ["exactly one solution", "no solution", "infinitely many solutions", "two solutions"],
+              answer: 1,
+              explain: "$\\tfrac{1}{2} = \\tfrac{2}{4} \\neq \\tfrac{3}{7}$, so the lines are parallel and never meet.",
+              difficulty: 3,
             },
           ],
         },
@@ -451,14 +569,36 @@ export const mathHigh: Subject = {
               caption: "P divides the segment from (x₁, y₁) to (x₂, y₂) internally in the ratio m : n.",
             },
             {
-              type: "list",
-              ordered: true,
-              items: [
-                "Find the point dividing $A(1, -2)$ to $B(7, 4)$ in the ratio $1 : 2$.",
-                "Here $m = 1$, $n = 2$.",
-                "$x = \\dfrac{1 \\cdot 7 + 2 \\cdot 1}{3} = 3$ and $y = \\dfrac{1 \\cdot 4 + 2 \\cdot (-2)}{3} = 0$.",
-                "So $P = (3, 0)$, one third of the way from A to B.",
+              type: "example",
+              title: "Section formula",
+              problem: "Find the point P that divides the segment from $A(1, -2)$ to $B(7, 4)$ internally in the ratio $1 : 2$.",
+              steps: [
+                "Here $m = 1$ (the part next to A) and $n = 2$ (the part next to B).",
+                "$x = \\dfrac{m x_2 + n x_1}{m + n} = \\dfrac{1 \\cdot 7 + 2 \\cdot 1}{3} = \\dfrac{9}{3} = 3$.",
+                "$y = \\dfrac{m y_2 + n y_1}{m + n} = \\dfrac{1 \\cdot 4 + 2 \\cdot (-2)}{3} = \\dfrac{0}{3} = 0$.",
+                "Sense check: a $1 : 2$ split puts P one third of the way from A, so P should be closer to A. It is.",
               ],
+              answer: "$P = (3, 0)$.",
+            },
+            {
+              type: "mistake",
+              wrong: "In the section formula, $m$ multiplies the first point: $x = \\dfrac{m x_1 + n x_2}{m + n}$.",
+              right: "It is a cross-over: $x = \\dfrac{m x_2 + n x_1}{m + n}$. The ratio number next to A multiplies B's coordinate.",
+              why: "Pairing $m$ with $x_1$ looks neat, but it gives the point that divides in $n : m$, which sits nearer B. Check your answer: a $1 : 2$ point must be closer to A.",
+            },
+            {
+              type: "activity",
+              activity: {
+                kind: "match",
+                prompt: "Match each description to its point.",
+                pairs: [
+                  ["Midpoint of $(2, 4)$ and $(8, 6)$", "$(5, 5)$"],
+                  ["Midpoint of $(-2, 3)$ and $(4, -1)$", "$(1, 1)$"],
+                  ["Divides $(0, 0)$ to $(6, 9)$ in $1 : 2$", "$(2, 3)$"],
+                  ["Divides $(0, 0)$ to $(6, 9)$ in $2 : 1$", "$(4, 6)$"],
+                ],
+                explain: "The midpoint is the $1 : 1$ case, so you just average. For $m : n$, the point is $\\tfrac{m}{m+n}$ of the way from the first point, so $1 : 2$ is one third of the way and $2 : 1$ is two thirds.",
+              },
             },
             {
               type: "checkpoint",
@@ -505,6 +645,7 @@ export const mathHigh: Subject = {
             { front: "Midpoint formula", back: "$\\left(\\tfrac{x_1 + x_2}{2}, \\tfrac{y_1 + y_2}{2}\\right)$" },
             { front: "How can you test whether three points are collinear?", back: "Their triangle area is 0 (or the slopes between pairs are equal)." },
             { front: "Distance from origin to $(x, y)$", back: "$\\sqrt{x^2 + y^2}$" },
+            { front: "Section formula (internal, ratio $m : n$)", back: "$\\left(\\dfrac{m x_2 + n x_1}{m + n}, \\dfrac{m y_2 + n y_1}{m + n}\\right)$" },
           ],
           quiz: [
             {
@@ -533,6 +674,20 @@ export const mathHigh: Subject = {
               q: "The points $(0, 0)$, $(1, 1)$ and $(2, 2)$ are collinear.",
               answer: true,
               explain: "All lie on $y = x$; the area formula gives 0.",
+            },
+            {
+              kind: "numeric",
+              q: "Find the x-coordinate of the point that divides the join of $(-1, 7)$ and $(4, -3)$ in the ratio $2 : 3$.",
+              answer: 1,
+              explain: "$x = \\dfrac{2 \\cdot 4 + 3 \\cdot (-1)}{5} = \\dfrac{5}{5} = 1$ (and $y = \\dfrac{2(-3) + 3(7)}{5} = 3$).",
+              difficulty: 2,
+            },
+            {
+              kind: "numeric",
+              q: "The points $(1, 2)$, $(3, k)$ and $(5, 6)$ are collinear. Find $k$.",
+              answer: 4,
+              explain: "Area $= \\tfrac{1}{2}|1(k - 6) + 3(6 - 2) + 5(2 - k)| = \\tfrac{1}{2}|16 - 4k| = 0$, so $k = 4$.",
+              difficulty: 3,
             },
           ],
         },
@@ -570,17 +725,15 @@ export const mathHigh: Subject = {
               md: "The reciprocals are $\\csc\\theta = \\tfrac{1}{\\sin\\theta}$, $\\sec\\theta = \\tfrac{1}{\\cos\\theta}$ and $\\cot\\theta = \\tfrac{1}{\\tan\\theta}$.",
             },
             {
-              type: "heading",
-              text: "Worked example",
-            },
-            {
-              type: "list",
-              ordered: true,
-              items: [
-                "A right triangle has opposite side 3 and hypotenuse 5 for angle $\\theta$.",
-                "Adjacent side by Pythagoras: $\\sqrt{25 - 9} = 4$.",
-                "$\\sin\\theta = \\tfrac{3}{5}$, $\\cos\\theta = \\tfrac{4}{5}$, $\\tan\\theta = \\tfrac{3}{4}$.",
+              type: "example",
+              title: "All ratios from two sides",
+              problem: "In a right triangle, the side opposite angle $\\theta$ is 3 and the hypotenuse is 5. Find $\\sin\\theta$, $\\cos\\theta$ and $\\tan\\theta$.",
+              steps: [
+                "Find the adjacent side by Pythagoras: $\\sqrt{5^2 - 3^2} = \\sqrt{25 - 9} = 4$.",
+                "$\\sin\\theta = \\tfrac{\\text{opp}}{\\text{hyp}} = \\tfrac{3}{5}$ and $\\cos\\theta = \\tfrac{\\text{adj}}{\\text{hyp}} = \\tfrac{4}{5}$.",
+                "$\\tan\\theta = \\tfrac{\\text{opp}}{\\text{adj}} = \\tfrac{3}{4}$.",
               ],
+              answer: "$\\sin\\theta = \\tfrac{3}{5}$, $\\cos\\theta = \\tfrac{4}{5}$, $\\tan\\theta = \\tfrac{3}{4}$.",
             },
             {
               type: "heading",
@@ -602,6 +755,22 @@ export const mathHigh: Subject = {
               md: "Write $\\sqrt{0}, \\sqrt{1}, \\sqrt{2}, \\sqrt{3}, \\sqrt{4}$ and divide each by 2: that is the sine row for 0°, 30°, 45°, 60°, 90°. Read it backwards for cosine.",
             },
             {
+              type: "activity",
+              activity: {
+                kind: "match",
+                prompt: "Match each ratio to its exact value.",
+                pairs: [
+                  ["$\\sin 30^\\circ$", "$\\tfrac{1}{2}$"],
+                  ["$\\cos 30^\\circ$", "$\\tfrac{\\sqrt{3}}{2}$"],
+                  ["$\\tan 30^\\circ$", "$\\tfrac{1}{\\sqrt{3}}$"],
+                  ["$\\tan 45^\\circ$", "$1$"],
+                  ["$\\tan 60^\\circ$", "$\\sqrt{3}$"],
+                  ["$\\cos 90^\\circ$", "$0$"],
+                ],
+                explain: "Build the sine row as $\\tfrac{\\sqrt{0}}{2}, \\tfrac{\\sqrt{1}}{2}, \\ldots, \\tfrac{\\sqrt{4}}{2}$, read it backwards for cosine, and get tan as $\\sin \\div \\cos$.",
+              },
+            },
+            {
               type: "checkpoint",
               questions: [
                 {
@@ -612,6 +781,12 @@ export const mathHigh: Subject = {
                   explain: "The adjacent side is $\\sqrt{169 - 25} = 12$, so $\\cos\\theta = \\tfrac{12}{13}$.",
                 },
               ],
+            },
+            {
+              type: "mistake",
+              wrong: "$\\sin(A + B) = \\sin A + \\sin B$, so $\\sin 90^\\circ = \\sin 30^\\circ + \\sin 60^\\circ$.",
+              right: "$\\sin$ is not a number multiplied by the angle, so it does not split over a sum. $\\sin 90^\\circ = 1$, but $\\sin 30^\\circ + \\sin 60^\\circ = \\tfrac{1 + \\sqrt{3}}{2} \\approx 1.37$.",
+              why: "$\\sin\\theta$ looks like \"sin times θ\", so learners split it like $a(x + y) = ax + ay$. It is really a ratio of sides that depends on the angle, so you must work it out for the whole angle.",
             },
             {
               type: "callout",
@@ -634,6 +809,7 @@ export const mathHigh: Subject = {
             { front: "$\\cos 45^\\circ$", back: "$\\tfrac{1}{\\sqrt{2}} \\approx 0.707$" },
             { front: "$\\tan 60^\\circ$", back: "$\\sqrt{3} \\approx 1.732$" },
             { front: "What does SOH-CAH-TOA stand for?", back: "Sin = Opp/Hyp, Cos = Adj/Hyp, Tan = Opp/Adj." },
+            { front: "Reciprocal ratios", back: "$\\csc\\theta = \\tfrac{1}{\\sin\\theta}$, $\\sec\\theta = \\tfrac{1}{\\cos\\theta}$, $\\cot\\theta = \\tfrac{1}{\\tan\\theta}$." },
           ],
           quiz: [
             {
@@ -661,6 +837,21 @@ export const mathHigh: Subject = {
               q: "$\\tan\\theta = \\sin\\theta \\div$ ___",
               answer: ["cos θ", "cos", "cosθ", "cos theta", "cos(θ)"],
               explain: "$\\tfrac{\\text{opp}/\\text{hyp}}{\\text{adj}/\\text{hyp}} = \\tfrac{\\text{opp}}{\\text{adj}}$.",
+            },
+            {
+              kind: "truefalse",
+              q: "$\\sin(30^\\circ + 60^\\circ) = \\sin 30^\\circ + \\sin 60^\\circ$",
+              answer: false,
+              explain: "Left side $= \\sin 90^\\circ = 1$. Right side $= \\tfrac{1}{2} + \\tfrac{\\sqrt{3}}{2} \\approx 1.37$. Trig ratios do not split over a sum.",
+              difficulty: 2,
+            },
+            {
+              kind: "numeric",
+              q: "If $\\tan A = \\tfrac{3}{4}$ and $A$ is acute, find $\\sin A + \\cos A$ (decimal).",
+              answer: 1.4,
+              tolerance: 0.001,
+              explain: "Sides 3 and 4 give hypotenuse 5, so $\\sin A + \\cos A = \\tfrac{3}{5} + \\tfrac{4}{5} = \\tfrac{7}{5} = 1.4$.",
+              difficulty: 3,
             },
           ],
         },
@@ -697,18 +888,33 @@ export const mathHigh: Subject = {
               ],
             },
             {
-              type: "heading",
-              text: "Worked example",
-            },
-            {
-              type: "list",
-              ordered: true,
-              items: [
-                "Tower: you are 30 m from its base, elevation of the top is 60°.",
-                "The height $h$ is opposite the angle; 30 m is adjacent. Use tan.",
+              type: "example",
+              title: "Height of a tower",
+              problem: "You stand 30 m from the base of a tower. The angle of elevation of its top is 60°. Find the height of the tower.",
+              steps: [
+                "Sketch: the tower is the vertical side, the 30 m ground is the horizontal side, and the line of sight is the hypotenuse.",
+                "The height $h$ is opposite the 60° angle; 30 m is adjacent. Use tan.",
                 "$\\tan 60^\\circ = \\dfrac{h}{30} \\Rightarrow h = 30\\sqrt{3}$.",
                 "$h \\approx 30 \\times 1.732 \\approx 51.96$ m.",
               ],
+              answer: "$h = 30\\sqrt{3} \\approx 51.96$ m.",
+            },
+            {
+              type: "activity",
+              activity: {
+                kind: "sort",
+                prompt: "Which ratio links the side you know and the side you want?",
+                groups: ["tan", "sin", "cos"],
+                items: [
+                  { text: "Distance from the base known; find the tower's height", group: 0, hint: "Height is opposite, distance is adjacent: opp/adj." },
+                  { text: "Sun's elevation and shadow length known; find the pole's height", group: 0, hint: "Pole is opposite, shadow is adjacent." },
+                  { text: "Tower's height known; find how far away the boat is", group: 0, hint: "Height is opposite, the distance is adjacent." },
+                  { text: "Ladder length known; find how high up the wall it reaches", group: 1, hint: "Ladder is the hypotenuse, height is opposite: opp/hyp." },
+                  { text: "Kite string length known; find the kite's height", group: 1, hint: "String is the hypotenuse, height is opposite." },
+                  { text: "Ramp length known; find its horizontal run", group: 2, hint: "Ramp is the hypotenuse, the run is adjacent: adj/hyp." },
+                ],
+                explain: "Name the two sides in play. No hypotenuse involved → **tan**. Hypotenuse with the opposite side → **sin**; with the adjacent side → **cos**.",
+              },
             },
             {
               type: "checkpoint",
@@ -727,6 +933,12 @@ export const mathHigh: Subject = {
               tone: "exam",
               title: "Exam habit",
               md: "Always sketch the triangle, mark the right angle, label the known side and angle, then pick the ratio that links the known and unknown sides.",
+            },
+            {
+              type: "mistake",
+              wrong: "From the top of a tower, the angle of depression of a car is the angle between the tower and my line of sight.",
+              right: "The **angle of depression** is measured from the **horizontal** at your eye, down to the line of sight. It equals the angle of elevation of the tower top seen from the car.",
+              why: "The tower is the only line you can see in the sketch, so learners measure from it. But that gives $90^\\circ$ minus the true angle. The horizontal through the eye is parallel to the ground, so the two angles are **alternate angles** and are equal.",
             },
             {
               type: "callout",
@@ -749,6 +961,7 @@ export const mathHigh: Subject = {
             { front: "$1 + \\tan^2\\theta = ?$", back: "$\\sec^2\\theta$" },
             { front: "Angle of depression", back: "The angle below the horizontal from the observer's eye to an object below." },
             { front: "Height from distance d and elevation θ", back: "$h = d \\tan\\theta$" },
+            { front: "Angle of depression from A to B vs angle of elevation from B to A", back: "Equal (alternate angles between parallel horizontals)." },
           ],
           quiz: [
             {
@@ -783,6 +996,23 @@ export const mathHigh: Subject = {
               ],
               answer: 1,
               explain: "Both elevation and depression are measured from the observer's horizontal.",
+            },
+            {
+              kind: "numeric",
+              q: "From the top of a 50 m cliff, the angle of depression of a boat is 30°. How far is the boat from the foot of the cliff? (1 decimal place)",
+              answer: 86.6,
+              tolerance: 0.1,
+              unit: "m",
+              explain: "The angle of elevation of the cliff top from the boat is also 30°. $\\tan 30^\\circ = \\tfrac{50}{d}$, so $d = 50\\sqrt{3} \\approx 86.6$ m.",
+              difficulty: 3,
+            },
+            {
+              kind: "mcq",
+              q: "Simplify $(1 - \\sin^2\\theta)\\sec^2\\theta$.",
+              options: ["$0$", "$1$", "$\\tan^2\\theta$", "$\\cos^2\\theta$"],
+              answer: 1,
+              explain: "$1 - \\sin^2\\theta = \\cos^2\\theta$, and $\\cos^2\\theta \\times \\sec^2\\theta = 1$.",
+              difficulty: 2,
             },
           ],
         },
@@ -1197,8 +1427,22 @@ export const mathHigh: Subject = {
               ],
             },
             {
-              type: "text",
-              md: "Mean $= \\tfrac{210}{10} = 21$ marks.",
+              type: "example",
+              title: "Mean from a frequency table",
+              problem: "Find the mean mark from the table above (marks 10, 20, 30 scored by 2, 5 and 3 students).",
+              steps: [
+                "Multiply each mark by its frequency: $10 \\times 2 = 20$, $20 \\times 5 = 100$, $30 \\times 3 = 90$.",
+                "Add the products: $\\sum f x = 20 + 100 + 90 = 210$.",
+                "Add the frequencies (the number of students): $\\sum f = 2 + 5 + 3 = 10$.",
+                "Mean $= \\dfrac{\\sum f x}{\\sum f} = \\dfrac{210}{10}$.",
+              ],
+              answer: "Mean = 21 marks.",
+            },
+            {
+              type: "mistake",
+              wrong: "Mean of the table $= \\dfrac{10 + 20 + 30}{3} = 20$ marks.",
+              right: "Weight each mark by its frequency: $\\dfrac{\\sum f x}{\\sum f} = \\dfrac{210}{10} = 21$ marks.",
+              why: "Adding the $x$ column feels like \"adding the data\", but the table has 10 students, not 3. Five students scored 20, so 20 must count five times. Divide by $\\sum f$, not by the number of rows.",
             },
             {
               type: "heading",
@@ -1210,14 +1454,15 @@ export const mathHigh: Subject = {
               caption: "Average squared distance from the mean, then its square root.",
             },
             {
-              type: "list",
-              ordered: true,
-              items: [
-                "Data: 2, 4, 4, 4, 5, 5, 7, 9. Mean $= \\tfrac{40}{8} = 5$.",
-                "Deviations squared: 9, 1, 1, 1, 0, 0, 4, 16. Sum = 32.",
+              type: "example",
+              title: "Standard deviation",
+              problem: "Find the standard deviation of 2, 4, 4, 4, 5, 5, 7, 9.",
+              steps: [
+                "Mean $= \\tfrac{40}{8} = 5$.",
+                "Squared deviations from 5: 9, 1, 1, 1, 0, 0, 4, 16. Sum = 32.",
                 "Variance $= \\tfrac{32}{8} = 4$.",
-                "Standard deviation $= \\sqrt{4} = 2$.",
               ],
+              answer: "Standard deviation $= \\sqrt{4} = 2$.",
             },
             {
               type: "checkpoint",
@@ -1235,6 +1480,23 @@ export const mathHigh: Subject = {
               tone: "note",
               title: "Which average?",
               md: "The **mean** uses every value but is dragged by outliers. The **median** resists outliers. The **mode** works even for non-numbers (most popular shoe size). For moderately skewed data, Mode ≈ 3 Median − 2 Mean.",
+            },
+            {
+              type: "activity",
+              activity: {
+                kind: "sort",
+                prompt: "Which average fits each job best?",
+                groups: ["Mean", "Median", "Mode"],
+                items: [
+                  { text: "Comparing the average marks of two sections", group: 0, hint: "Every student's mark should count, and there are no wild outliers." },
+                  { text: "Average daily rainfall in Mumbai in July", group: 0, hint: "You want total rain shared equally over the days." },
+                  { text: "Typical house price on a street with one mansion", group: 1, hint: "One huge value would drag the mean up." },
+                  { text: "Typical salary in a firm where the owner earns crores", group: 1, hint: "The median ignores how big the outlier is." },
+                  { text: "Which shoe size a shop should stock most", group: 2, hint: "You need the most popular size." },
+                  { text: "The most common blood group in a school", group: 2, hint: "Blood groups are not numbers; only the mode works." },
+                ],
+                explain: "Use the **mean** when every value should count, the **median** when outliers would mislead, and the **mode** for the most popular value (it even works for categories).",
+              },
             },
             {
               type: "callout",
@@ -1257,6 +1519,7 @@ export const mathHigh: Subject = {
             { front: "Relationship between variance and SD", back: "SD = √variance (variance = SD²)." },
             { front: "Which average is most affected by outliers?", back: "The mean." },
             { front: "Empirical relation", back: "Mode ≈ 3 Median − 2 Mean" },
+            { front: "Median of $n$ sorted values ($n$ odd)", back: "The $\\left(\\tfrac{n + 1}{2}\\right)$th value." },
           ],
           quiz: [
             {
@@ -1285,6 +1548,21 @@ export const mathHigh: Subject = {
               answer: true,
               explain: "$\\sigma^2$ is variance; $\\sigma$ is the SD.",
             },
+            {
+              kind: "mcq",
+              q: "Marks 5, 10 and 15 are scored by 6, 3 and 1 students. The mean mark is:",
+              options: ["$10$", "$7.5$", "$25$", "$3.33$"],
+              answer: 1,
+              explain: "$\\sum fx = 30 + 30 + 15 = 75$ and $\\sum f = 10$, so mean $= 7.5$. Answering 10 ignores the frequencies.",
+              difficulty: 2,
+            },
+            {
+              kind: "numeric",
+              q: "The mean of 5 numbers is 18. When one number is removed, the mean of the rest is 16. What number was removed?",
+              answer: 26,
+              explain: "Total before $= 5 \\times 18 = 90$. Total after $= 4 \\times 16 = 64$. Removed number $= 90 - 64 = 26$.",
+              difficulty: 3,
+            },
           ],
         },
         {
@@ -1312,17 +1590,54 @@ export const mathHigh: Subject = {
               ],
             },
             {
-              type: "heading",
-              text: "Worked examples",
+              type: "activity",
+              activity: {
+                kind: "sort",
+                prompt: "Sort each event by its probability.",
+                groups: ["0 (impossible)", "Between 0 and 1", "1 (sure)"],
+                items: [
+                  { text: "Rolling a 7 on an ordinary die", group: 0, hint: "A die only shows 1 to 6." },
+                  { text: "A month having 32 days", group: 0, hint: "No month has more than 31 days." },
+                  { text: "Drawing a king from a full deck", group: 1, hint: "$\\tfrac{4}{52} = \\tfrac{1}{13}$." },
+                  { text: "Getting a head when a coin is tossed", group: 1, hint: "$\\tfrac{1}{2}$." },
+                  { text: "Rolling a number less than 7 on a die", group: 2, hint: "Every face, 1 to 6, is less than 7." },
+                  { text: "Getting a head or a tail when a coin is tossed", group: 2, hint: "One of the two must happen." },
+                ],
+                explain: "An **impossible event** has probability 0 and a **sure event** has probability 1. Every other event lies strictly between them.",
+              },
             },
             {
-              type: "list",
-              ordered: true,
-              items: [
-                "**Two dice, sum 7.** There are $6 \\times 6 = 36$ outcomes. Pairs summing to 7: (1,6), (2,5), (3,4), (4,3), (5,2), (6,1). So $P = \\tfrac{6}{36} = \\tfrac{1}{6}$.",
-                "**King or heart** from 52 cards: $\\tfrac{4}{52} + \\tfrac{13}{52} - \\tfrac{1}{52} = \\tfrac{16}{52} = \\tfrac{4}{13}$. (Subtract the king of hearts, counted twice.)",
-                "**At least one head** in two coin tosses: $1 - P(\\text{TT}) = 1 - \\tfrac{1}{4} = \\tfrac{3}{4}$.",
+              type: "example",
+              title: "Two dice",
+              problem: "Two fair dice are rolled. Find the probability that the sum is 7.",
+              steps: [
+                "Total equally likely outcomes: $6 \\times 6 = 36$.",
+                "Favourable pairs: (1,6), (2,5), (3,4), (4,3), (5,2), (6,1). That is 6 outcomes. (3,4) and (4,3) are different outcomes.",
+                "$P = \\tfrac{6}{36}$.",
               ],
+              answer: "$P(\\text{sum } 7) = \\tfrac{1}{6}$.",
+            },
+            {
+              type: "example",
+              title: "King or heart",
+              problem: "A card is drawn from a well-shuffled deck of 52. Find P(king or heart).",
+              steps: [
+                "$P(\\text{king}) = \\tfrac{4}{52}$ and $P(\\text{heart}) = \\tfrac{13}{52}$.",
+                "The king of hearts is in both, so subtract it once: $P(\\text{king and heart}) = \\tfrac{1}{52}$.",
+                "$\\tfrac{4}{52} + \\tfrac{13}{52} - \\tfrac{1}{52} = \\tfrac{16}{52}$.",
+              ],
+              answer: "$P(\\text{king or heart}) = \\tfrac{4}{13}$.",
+            },
+            {
+              type: "example",
+              title: "Using the complement",
+              problem: "Two coins are tossed. Find the probability of at least one head.",
+              steps: [
+                "Outcomes: HH, HT, TH, TT (4 equally likely).",
+                "\"At least one head\" fails only for TT, so $P(\\text{no head}) = \\tfrac{1}{4}$.",
+                "$P(\\text{at least one head}) = 1 - \\tfrac{1}{4}$.",
+              ],
+              answer: "$\\tfrac{3}{4}$.",
             },
             {
               type: "checkpoint",
@@ -1337,10 +1652,10 @@ export const mathHigh: Subject = {
               ],
             },
             {
-              type: "callout",
-              tone: "warning",
-              title: "Gambler's fallacy",
-              md: "After five heads in a row, the next toss is **still** 50–50. Coins have no memory; independent events don't “balance out” in the short run.",
+              type: "mistake",
+              wrong: "After five heads in a row, a tail is now more likely. It is \"due\".",
+              right: "The next toss is **still** 50–50: $P(\\text{tail}) = \\tfrac{1}{2}$.",
+              why: "This is the **gambler's fallacy**. Over thousands of tosses heads and tails come out close to half each, so it feels as if the coin must \"balance out\" soon. But each toss is independent: the coin has no memory of earlier tosses.",
             },
             {
               type: "callout",
@@ -1363,6 +1678,7 @@ export const mathHigh: Subject = {
             { front: "Complement rule", back: "$P(\\text{not } E) = 1 - P(E)$" },
             { front: "Addition rule", back: "$P(A \\cup B) = P(A) + P(B) - P(A \\cap B)$" },
             { front: "Number of outcomes for two dice", back: "36" },
+            { front: "Impossible event and sure event", back: "$P(\\text{impossible}) = 0$, $P(\\text{sure}) = 1$." },
           ],
           quiz: [
             {
@@ -1398,6 +1714,13 @@ export const mathHigh: Subject = {
               answer: 0.028,
               tolerance: 0.002,
               explain: "Only (6, 6) works: $\\tfrac{1}{36} \\approx 0.028$.",
+              difficulty: 2,
+            },
+            {
+              kind: "truefalse",
+              q: "A fair coin shows heads five times in a row. On the sixth toss, a tail is more likely than a head.",
+              answer: false,
+              explain: "Tosses are independent, so $P(\\text{tail})$ is still $\\tfrac{1}{2}$. Believing otherwise is the gambler's fallacy.",
               difficulty: 2,
             },
           ],
