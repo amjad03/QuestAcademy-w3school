@@ -854,7 +854,7 @@ export const topics: Topic[] = [
             type: "list",
             items: [
               "**Recombination:** a second, inverted identical prism recombines the colours into white light (Newton).",
-              "**Rainbow:** sunlight is refracted, dispersed, totally internally reflected and refracted again in raindrops. You see it with the Sun **behind** you, common after a monsoon shower.",
+              "**Rainbow:** sunlight is refracted, dispersed, internally reflected and refracted again in raindrops. You see it with the Sun **behind** you, common after a monsoon shower.",
               "**Atmospheric refraction:** stars twinkle because air layers of changing density keep shifting their apparent position; the Sun appears about 2 minutes before actual sunrise and stays about 2 minutes after sunset.",
             ],
           },

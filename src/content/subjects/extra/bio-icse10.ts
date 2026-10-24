@@ -1188,7 +1188,7 @@ export const topics: Topic[] = [
         blocks: [
           {
             type: "text",
-            md: "**Phytohormones** are chemicals produced in small amounts in one part of a plant and transported to other parts, where they regulate growth and development. There are five main groups — four mainly promote growth, and one mainly inhibits it.",
+            md: "**Phytohormones** are chemicals produced in small amounts in one part of a plant and transported to other parts, where they regulate growth and development. There are five main groups — three promote growth, ethylene mainly ripens fruit, and abscisic acid mainly inhibits growth.",
           },
           { type: "heading", text: "Auxins and phototropism" },
           {
@@ -1974,7 +1974,7 @@ export const topics: Topic[] = [
           { type: "heading", text: "Coal and petroleum" },
           {
             type: "text",
-            md: "**Coal** and **petroleum** are **fossil fuels**, formed over millions of years from the remains of buried plants and animals. They cannot be made again in a human lifetime, so they will **run out**. At the present rate of use, known petroleum reserves may last only about **40 years** and coal about **200 years**.",
+            md: "**Coal** and **petroleum** are **fossil fuels**, formed over millions of years from the remains of buried plants and animals. They cannot be made again in a human lifetime, so they will **run out**. The NCERT textbook estimates that, at the rate of use when it was written, known petroleum reserves would last only about **40 years** and coal about **200 years**.",
           },
           {
             type: "text",
