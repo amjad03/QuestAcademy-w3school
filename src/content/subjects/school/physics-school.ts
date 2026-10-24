@@ -419,13 +419,14 @@ export const physicsSchool: Subject = {
               caption: "1 newton (N) is the force that gives 1 kg an acceleration of 1 m/s², so 1 N = 1 kg·m/s².",
             },
             {
-              type: "list",
-              ordered: true,
-              items: [
-                "A 1200 kg car accelerates at 2.5 m/s². What net force acts?",
-                "$F = ma = 1200 \\times 2.5$.",
-                "$F = 3000$ N.",
+              type: "example",
+              problem: "A 1200 kg car speeds up from 0 to 15 m/s in 6 s on a straight road. What net force acts on it?",
+              steps: [
+                "Acceleration $a = \\tfrac{v - u}{t} = \\tfrac{15 - 0}{6} = 2.5$ m/s².",
+                "Second law: $F = ma = 1200 \\times 2.5$.",
+                "$F = 3000$ N, in the direction of motion.",
               ],
+              answer: "A net force of 3000 N acts forward on the car.",
             },
             {
               type: "heading",
@@ -439,6 +440,29 @@ export const physicsSchool: Subject = {
               type: "illustration",
               emoji: "🚀",
               caption: "A rocket pushes exhaust gas down; the gas pushes the rocket up.",
+            },
+            {
+              type: "activity",
+              activity: {
+                kind: "sort",
+                prompt: "Which of Newton's laws explains each one best?",
+                groups: ["First law (inertia)", "Second law (F = ma)", "Third law (action–reaction)"],
+                items: [
+                  { text: "You lurch forward when a bus brakes", group: 0, hint: "Your body keeps moving because of inertia." },
+                  { text: "Dust leaves a carpet when it is beaten", group: 0, hint: "The carpet moves, but the dust tends to stay at rest." },
+                  { text: "An empty cart speeds up faster than a loaded one with the same push", group: 1, hint: "Same force, more mass, less acceleration: a = F/m." },
+                  { text: "A harder kick makes the football speed up more", group: 1, hint: "More force gives more acceleration." },
+                  { text: "A gun recoils when fired", group: 2, hint: "The bullet pushes back on the gun." },
+                  { text: "A swimmer pushes water back to move forward", group: 2, hint: "The water pushes the swimmer forward." },
+                ],
+                explain: "**First law**: things keep doing what they were doing. **Second law**: force changes motion by $a = F/m$. **Third law**: forces come in equal, opposite pairs on two different bodies.",
+              },
+            },
+            {
+              type: "mistake",
+              wrong: "Action and reaction are equal and opposite, so they cancel and nothing can move.",
+              right: "Action and reaction act on **different bodies**, so they never cancel each other. Only forces on the **same** body can cancel.",
+              why: "\"Equal and opposite\" sounds exactly like balanced forces. But when a horse pulls a cart, the cart's pull acts on the horse, not on the cart. The cart moves because the horse's pull on it is larger than the friction on it.",
             },
             {
               type: "checkpoint",
@@ -472,6 +496,7 @@ export const physicsSchool: Subject = {
             { front: "Newton's second law", back: "$F_{\\text{net}} = ma$" },
             { front: "Newton's third law", back: "Every action has an equal and opposite reaction, acting on a different body." },
             { front: "1 newton in base units", back: "1 kg·m/s²" },
+            { front: "Inertia", back: "The tendency of a body to resist a change in its state of rest or motion. More mass means more inertia." },
           ],
           quiz: [
             {
@@ -507,6 +532,27 @@ export const physicsSchool: Subject = {
               explain: "Constant velocity means balanced forces, not an absence of forces.",
               difficulty: 2,
             },
+            {
+              kind: "mcq",
+              q: "A horse pulls a cart forward. The cart pulls back on the horse with an equal force. Why does the cart still move?",
+              options: [
+                "The horse's pull is slightly larger than the cart's pull",
+                "The two forces act on different bodies, so they do not cancel",
+                "Newton's third law does not apply to animals",
+                "The cart's pull acts only when it is at rest",
+              ],
+              answer: 1,
+              explain: "The cart's pull acts on the horse. The cart moves because the horse's pull on it is bigger than the friction on the cart.",
+              difficulty: 3,
+            },
+            {
+              kind: "numeric",
+              q: "A 2 kg ball is pushed with a force of 10 N while friction of 4 N opposes it. What is its acceleration in m/s²?",
+              answer: 3,
+              unit: "m/s²",
+              explain: "Net force $= 10 - 4 = 6$ N, so $a = 6/2 = 3$ m/s².",
+              difficulty: 2,
+            },
           ],
         },
         {
@@ -532,6 +578,12 @@ export const physicsSchool: Subject = {
               md: "A fielder pulls their hands back while catching. This **increases the time** $t$ over which the ball's momentum is removed, so the force $F = \\Delta p / t$ on the hands is smaller. Crumple zones in cars and the sand pit in long jump work the same way.",
             },
             {
+              type: "mistake",
+              wrong: "A fielder pulls the hands back so that the ball loses less momentum.",
+              right: "The ball loses **the same momentum** either way (it ends at rest). Pulling back makes the **time** longer, so the **force** $F = \\Delta p / t$ is smaller.",
+              why: "The catch feels softer, so it seems that \"less\" happened to the ball. But the change in momentum is fixed by the ball's starting and final speeds; only the time, and so the force, changes.",
+            },
+            {
               type: "heading",
               text: "Conservation of momentum",
             },
@@ -540,14 +592,14 @@ export const physicsSchool: Subject = {
               md: "When no external force acts, the total momentum of a system stays the same before and after a collision or explosion.",
             },
             {
-              type: "list",
-              ordered: true,
-              items: [
-                "A 4 kg gun fires a 20 g bullet at 400 m/s. Find the gun's recoil speed.",
-                "Before firing, total momentum is 0.",
-                "After: $0.02 \\times 400 + 4 \\times v = 0$, so $4v = -8$.",
-                "$v = -2$ m/s: the gun recoils backward at 2 m/s.",
+              type: "example",
+              problem: "A 4 kg gun fires a 20 g bullet at 400 m/s. Find the gun's recoil velocity.",
+              steps: [
+                "Convert: 20 g $= 0.02$ kg. Before firing, gun and bullet are at rest, so total momentum is 0.",
+                "After firing: $0.02 \\times 400 + 4 \\times v = 0$.",
+                "$8 + 4v = 0$, so $v = -2$ m/s.",
               ],
+              answer: "The gun recoils backward at 2 m/s (the minus sign means opposite to the bullet).",
             },
             {
               type: "heading",
@@ -580,6 +632,23 @@ export const physicsSchool: Subject = {
               md: "Friction isn't only a nuisance. Without it you couldn't walk, cars couldn't brake, and knots would slip undone. Treads on tyres are designed to keep enough friction even on wet roads.",
             },
             {
+              type: "activity",
+              activity: {
+                kind: "sort",
+                prompt: "Does each idea lengthen impact time or change friction?",
+                groups: ["Longer impact time, smaller force", "Changes friction"],
+                items: [
+                  { text: "Airbags in a car", group: 0, hint: "The bag lets your head stop slowly." },
+                  { text: "Sand pit for the long jump", group: 0, hint: "Soft sand makes the landing take longer." },
+                  { text: "Crumple zones at the front of a car", group: 0, hint: "The car body folds slowly, stretching out the crash." },
+                  { text: "Treads on tyres", group: 1, hint: "Grooves grip the road, even when wet." },
+                  { text: "Oiling a bicycle chain", group: 1, hint: "Oil makes surfaces slide more easily." },
+                  { text: "Ball bearings in a fan", group: 1, hint: "Rolling replaces sliding, so friction falls." },
+                ],
+                explain: "Making the stopping **time** longer reduces the **force** for the same change in momentum. Treads, oil and ball bearings change **friction** instead.",
+              },
+            },
+            {
               type: "keypoints",
               items: [
                 "p = mv, a vector in kg·m/s.",
@@ -595,6 +664,7 @@ export const physicsSchool: Subject = {
             { front: "Impulse", back: "Force × time $= \\Delta p$." },
             { front: "Law of conservation of momentum", back: "With no external force, total momentum before = total momentum after." },
             { front: "Why do cars have crumple zones?", back: "They lengthen the collision time, reducing the force on passengers." },
+            { front: "Friction formula", back: "$f = \\mu N$; on level ground $N = mg$." },
           ],
           quiz: [
             {
@@ -625,6 +695,22 @@ export const physicsSchool: Subject = {
               q: "Friction always opposes the relative motion between surfaces.",
               answer: true,
               explain: "That is the defining property of friction.",
+            },
+            {
+              kind: "numeric",
+              q: "A 0.15 kg cricket ball moving at 20 m/s is stopped by a fielder in 0.1 s. What average force (in N) acts on the hands?",
+              answer: 30,
+              unit: "N",
+              explain: "$\\Delta p = 0.15 \\times 20 = 3$ kg·m/s, so $F = \\Delta p / t = 3 / 0.1 = 30$ N.",
+              difficulty: 2,
+            },
+            {
+              kind: "numeric",
+              q: "A 2 kg trolley at 3 m/s hits and sticks to a 1 kg trolley at rest. What is their common speed afterwards, in m/s?",
+              answer: 2,
+              unit: "m/s",
+              explain: "Momentum before $= 2 \\times 3 = 6$ kg·m/s. After: $(2 + 1)v = 6$, so $v = 2$ m/s.",
+              difficulty: 3,
             },
           ],
         },
@@ -895,6 +981,29 @@ export const physicsSchool: Subject = {
               caption: "Work (joules) = force × displacement × cos of the angle between them. If there is no displacement, W = 0.",
             },
             {
+              type: "activity",
+              activity: {
+                kind: "sort",
+                prompt: "Is work done by the force named? Sort each one.",
+                groups: ["Work is done", "No work is done"],
+                items: [
+                  { text: "Your pull lifts a bucket from a well", group: 0, hint: "The bucket moves up, along the pull." },
+                  { text: "Your push on a wall that does not move", group: 1, hint: "No displacement means no work, however tired you get." },
+                  { text: "Your upward force on a bag carried along a flat road", group: 1, hint: "The force is up, the motion is sideways: θ = 90°." },
+                  { text: "A horse's pull on a moving tonga", group: 0, hint: "The tonga moves in the direction of the pull." },
+                  { text: "Your hold on books kept still on your head", group: 1, hint: "The books do not move." },
+                  { text: "Gravity on a falling coconut", group: 0, hint: "The coconut moves down, along the force of gravity." },
+                ],
+                explain: "Work needs **both** a force and a displacement **along** the force. No movement, or movement at 90° to the force, means **zero work**.",
+              },
+            },
+            {
+              type: "mistake",
+              wrong: "Holding a heavy bag still for a long time is a lot of work, because it makes you tired.",
+              right: "In physics, **no work** is done on the bag, because it does not move: $W = Fs\\cos\\theta$ with $s = 0$.",
+              why: "In daily language \"work\" means effort, so tiredness feels like proof. Your muscles do use up food energy, but it turns into heat inside your body, not into work on the bag.",
+            },
+            {
               type: "heading",
               text: "Two kinds of mechanical energy",
             },
@@ -908,18 +1017,15 @@ export const physicsSchool: Subject = {
               md: "Energy can't be created or destroyed, only changed from one form to another (**conservation of energy**). As a ball falls, PE turns into KE; ignoring air, the total stays constant.",
             },
             {
-              type: "heading",
-              text: "Worked example",
-            },
-            {
-              type: "list",
-              ordered: true,
-              items: [
-                "A 20 kg box is lifted 5 m. Take $g = 10$ m/s².",
+              type: "example",
+              problem: "A 20 kg box is lifted 5 m. It is then dropped. Ignoring air resistance, how fast is it moving just before it hits the ground? Take $g = 10$ m/s².",
+              steps: [
                 "PE gained $= mgh = 20 \\times 10 \\times 5 = 1000$ J.",
-                "If it is dropped, at the ground all of this becomes KE: $\\tfrac{1}{2}(20)v^2 = 1000$.",
-                "$v^2 = 100$, so $v = 10$ m/s.",
+                "As it falls, all of this PE becomes KE: $\\tfrac{1}{2}(20)v^2 = 1000$.",
+                "$10v^2 = 1000$, so $v^2 = 100$.",
+                "$v = 10$ m/s.",
               ],
+              answer: "The box gains 1000 J of PE and hits the ground at 10 m/s.",
             },
             {
               type: "heading",
@@ -998,6 +1104,22 @@ export const physicsSchool: Subject = {
               explain: "The force is vertical but the displacement is horizontal ($\\theta = 90^\\circ$, cos 90° = 0).",
               difficulty: 2,
             },
+            {
+              kind: "numeric",
+              q: "A 500 W motor lifts a load for 2 minutes. How much work does it do, in kJ?",
+              answer: 60,
+              unit: "kJ",
+              explain: "$W = Pt = 500 \\times 120 = 60\\,000$ J $= 60$ kJ.",
+              difficulty: 2,
+            },
+            {
+              kind: "numeric",
+              q: "A 0.5 kg ball is dropped from a height of 20 m. Ignoring air, what is its speed just before it lands, in m/s? ($g = 10$ m/s²)",
+              answer: 20,
+              unit: "m/s",
+              explain: "$mgh = \\tfrac{1}{2}mv^2$, so $v^2 = 2gh = 400$ and $v = 20$ m/s. The mass cancels.",
+              difficulty: 3,
+            },
           ],
         },
       ],
@@ -1050,13 +1172,20 @@ export const physicsSchool: Subject = {
               caption: "Raise the voltage and watch the current grow. Raise the resistance and watch it shrink.",
             },
             {
-              type: "list",
-              ordered: true,
-              items: [
-                "A 12 V battery is connected to a 4 Ω resistor. Find the current.",
-                "$I = \\dfrac{V}{R} = \\dfrac{12}{4}$.",
-                "$I = 3$ A.",
+              type: "example",
+              problem: "A 12 V battery is connected to a 4 Ω resistor. Find the current. What happens to the current if the resistor is changed to 6 Ω?",
+              steps: [
+                "Ohm's law: $I = \\dfrac{V}{R} = \\dfrac{12}{4} = 3$ A.",
+                "With 6 Ω: $I = \\dfrac{12}{6} = 2$ A.",
+                "More resistance with the same voltage gives less current.",
               ],
+              answer: "3 A with 4 Ω, falling to 2 A with 6 Ω.",
+            },
+            {
+              type: "mistake",
+              wrong: "Current gets used up as it goes round a circuit, so less current comes back to the battery.",
+              right: "In a series circuit the **same current** flows everywhere, even after a bulb. What the bulb uses is **energy**, not charge.",
+              why: "The bulb clearly \"uses\" something, so it seems the current must drop. But charge is not destroyed; each coulomb gives up energy in the bulb and flows on. An ammeter reads the same on both sides.",
             },
             {
               type: "heading",
@@ -1070,6 +1199,23 @@ export const physicsSchool: Subject = {
             {
               type: "text",
               md: "A longer wire has more resistance; a thicker wire has less. Copper has very low resistivity, which is why it's used for wiring, while nichrome's high resistivity makes it perfect for heater coils.",
+            },
+            {
+              type: "activity",
+              activity: {
+                kind: "sort",
+                prompt: "Does each change raise or lower the wire's resistance?",
+                groups: ["More resistance", "Less resistance"],
+                items: [
+                  { text: "Use a longer wire", group: 0, hint: "R ∝ L: charges have farther to travel." },
+                  { text: "Use a thicker wire", group: 1, hint: "R ∝ 1/A: a wider path is easier." },
+                  { text: "Swap copper for nichrome", group: 0, hint: "Nichrome has a much higher resistivity." },
+                  { text: "Cut the wire to half its length", group: 1, hint: "Half the length, half the resistance." },
+                  { text: "Use a thinner wire", group: 0, hint: "A smaller area means more resistance." },
+                  { text: "Swap nichrome for copper", group: 1, hint: "Copper has a very low resistivity." },
+                ],
+                explain: "$R = \\rho \\dfrac{L}{A}$: resistance rises with **length** and **resistivity**, and falls as the **area** grows.",
+              },
             },
             {
               type: "checkpoint",
@@ -1141,6 +1287,14 @@ export const physicsSchool: Subject = {
               unit: "C",
               explain: "$Q = It = 0.5 \\times 600 = 300$ C.",
             },
+            {
+              kind: "numeric",
+              q: "A copper wire has a resistance of 4 Ω. Another wire of the same copper is twice as long and has twice the cross-sectional area. What is its resistance in Ω?",
+              answer: 4,
+              unit: "Ω",
+              explain: "$R \\propto L/A$: doubling L doubles R, doubling A halves it, so R stays 4 Ω.",
+              difficulty: 3,
+            },
           ],
         },
         {
@@ -1169,18 +1323,37 @@ export const physicsSchool: Subject = {
               ],
             },
             {
-              type: "heading",
-              text: "Worked example",
+              type: "activity",
+              activity: {
+                kind: "sort",
+                prompt: "Is this true of series or parallel circuits?",
+                groups: ["Series", "Parallel"],
+                items: [
+                  { text: "The same current flows through every part", group: 0, hint: "There is only one path for the charge." },
+                  { text: "Each branch gets the full supply voltage", group: 1, hint: "Every branch is joined straight across the supply." },
+                  { text: "One fused bulb puts all the others out", group: 0, hint: "Breaking the single path stops all current." },
+                  { text: "Total resistance is less than the smallest resistor", group: 1, hint: "Each branch adds a new path for current." },
+                  { text: "Total resistance is the sum of all resistors", group: 0, hint: "Charge must pass through each one in turn." },
+                  { text: "How the fan and fridge in your home are connected", group: 1, hint: "Each appliance can be switched on and off on its own." },
+                ],
+                explain: "**Series**: one path, same current, resistances add. **Parallel**: many paths, same voltage, total resistance falls; that is how homes are wired.",
+              },
             },
             {
-              type: "list",
-              ordered: true,
-              items: [
-                "Combine 4 Ω and 6 Ω.",
-                "Series: $4 + 6 = 10$ Ω.",
-                "Parallel: $\\tfrac{1}{R} = \\tfrac{1}{4} + \\tfrac{1}{6} = \\tfrac{5}{12}$, so $R = 2.4$ Ω.",
-                "Shortcut for two resistors in parallel: $\\tfrac{R_1 R_2}{R_1 + R_2} = \\tfrac{24}{10} = 2.4$ Ω.",
+              type: "example",
+              problem: "Find the combined resistance of a 4 Ω and a 6 Ω resistor, first in series and then in parallel.",
+              steps: [
+                "Series: $R = 4 + 6 = 10$ Ω.",
+                "Parallel: $\\tfrac{1}{R} = \\tfrac{1}{4} + \\tfrac{1}{6} = \\tfrac{3 + 2}{12} = \\tfrac{5}{12}$, so $R = \\tfrac{12}{5} = 2.4$ Ω.",
+                "Check with the shortcut for two resistors: $\\tfrac{R_1 R_2}{R_1 + R_2} = \\tfrac{24}{10} = 2.4$ Ω.",
               ],
+              answer: "10 Ω in series and 2.4 Ω in parallel (less than the smaller resistor, 4 Ω).",
+            },
+            {
+              type: "mistake",
+              wrong: "Adding another resistor in parallel increases the total resistance, just as in series.",
+              right: "Adding a resistor in **parallel** always makes the total resistance **smaller**, because it opens one more path for the current.",
+              why: "\"More resistors means more resistance\" is true in series, so it feels like a general rule. In parallel, each new branch lets extra current flow from the same voltage, and more current for the same V means less R.",
             },
             {
               type: "heading",
@@ -1231,6 +1404,7 @@ export const physicsSchool: Subject = {
             { front: "Two resistors in parallel (shortcut)", back: "$R = \\dfrac{R_1R_2}{R_1 + R_2}$" },
             { front: "Why are homes wired in parallel?", back: "Each appliance gets full voltage and can be switched independently." },
             { front: "1 unit of electricity", back: "1 kWh = $3.6 \\times 10^6$ J" },
+            { front: "Three formulas for electrical power", back: "$P = VI = I^2R = \\dfrac{V^2}{R}$" },
           ],
           quiz: [
             {
@@ -1260,6 +1434,22 @@ export const physicsSchool: Subject = {
               answer: 1,
               unit: "kWh",
               explain: "$0.1\\ \\text{kW} \\times 10\\ \\text{h} = 1$ kWh.",
+            },
+            {
+              kind: "numeric",
+              q: "Three 6 Ω resistors are connected in parallel. What is their combined resistance in Ω?",
+              answer: 2,
+              unit: "Ω",
+              explain: "$\\tfrac{1}{R} = \\tfrac{1}{6} + \\tfrac{1}{6} + \\tfrac{1}{6} = \\tfrac{3}{6}$, so $R = 2$ Ω.",
+              difficulty: 2,
+            },
+            {
+              kind: "numeric",
+              q: "An electric kettle has a resistance of 23 Ω and runs on 230 V. What is its power in watts?",
+              answer: 2300,
+              unit: "W",
+              explain: "$P = \\tfrac{V^2}{R} = \\tfrac{230^2}{23} = \\tfrac{52\\,900}{23} = 2300$ W.",
+              difficulty: 2,
             },
           ],
         },

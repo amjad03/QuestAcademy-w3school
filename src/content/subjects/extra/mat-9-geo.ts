@@ -659,15 +659,41 @@ export const topics: Topic[] = [
             tex: t`r^2 = d^2 + \left(\tfrac{c}{2}\right)^2`,
             caption: "r = radius, d = distance of the chord from the centre, c = chord length",
           },
-          { type: "heading", text: "Worked example 1" },
           {
-            type: "text",
-            md: t`**A chord of length 24 cm is drawn in a circle of radius 13 cm. Find its distance from the centre.** The perpendicular from the centre bisects the chord, giving half-chord 12 cm. Then $d = \sqrt{13^2 - 12^2} = \sqrt{169 - 144} = \sqrt{25} = 5$ cm.`,
+            type: "example",
+            title: "Distance of a chord from the centre",
+            problem: "A chord of length 24 cm is drawn in a circle of radius 13 cm. Find its distance from the centre.",
+            steps: [
+              "The perpendicular from the centre **bisects** the chord, so the half-chord is 12 cm.",
+              "The radius, the half-chord and the distance form a right triangle with the radius as hypotenuse.",
+              t`$d = \sqrt{13^2 - 12^2} = \sqrt{169 - 144} = \sqrt{25}$.`,
+            ],
+            answer: "The chord is 5 cm from the centre.",
           },
-          { type: "heading", text: "Worked example 2" },
           {
-            type: "text",
-            md: t`**Two parallel chords of lengths 6 cm and 8 cm lie on opposite sides of the centre of a circle of radius 5 cm. Find the distance between them.** Distance of the 6 cm chord $= \sqrt{25 - 9} = 4$ cm; of the 8 cm chord $= \sqrt{25 - 16} = 3$ cm. Opposite sides, so distance $= 4 + 3 = 7$ cm. (Same side would give $4 - 3 = 1$ cm.)`,
+            type: "example",
+            title: "Two parallel chords",
+            problem: "Two parallel chords of lengths 6 cm and 8 cm lie on opposite sides of the centre of a circle of radius 5 cm. Find the distance between them.",
+            steps: [
+              t`Distance of the 6 cm chord: $\sqrt{25 - 3^2} = \sqrt{16} = 4$ cm.`,
+              t`Distance of the 8 cm chord: $\sqrt{25 - 4^2} = \sqrt{9} = 3$ cm.`,
+              "The chords are on **opposite** sides, so add the distances. (On the same side you would subtract: 4 − 3 = 1 cm.)",
+            ],
+            answer: "The chords are 4 + 3 = 7 cm apart.",
+          },
+          {
+            type: "activity",
+            activity: {
+              kind: "match",
+              prompt: "Match each radius and distance to the chord length.",
+              pairs: [
+                ["r = 5 cm, d = 3 cm", "8 cm"],
+                ["r = 13 cm, d = 5 cm", "24 cm"],
+                ["r = 10 cm, d = 6 cm", "16 cm"],
+                ["r = 25 cm, d = 7 cm", "48 cm"],
+              ],
+              explain: t`Half-chord $= \sqrt{r^2 - d^2}$, then **double** it. For example $\sqrt{25 - 9} = 4$, so the chord is 8 cm.`,
+            },
           },
           {
             type: "checkpoint",
@@ -682,10 +708,16 @@ export const topics: Topic[] = [
             ],
           },
           {
+            type: "mistake",
+            wrong: t`A 24 cm chord in a circle of radius 13 cm is $\sqrt{13^2 - 24^2}$ from the centre.`,
+            right: t`Use **half** the chord: $d = \sqrt{13^2 - 12^2} = 5$ cm. When you are asked for the chord, double the half-chord at the end.`,
+            why: "The right triangle is made by the perpendicular from the centre, which cuts the chord into two equal halves. Only one half is a side of that triangle. (Here $24 > 13$, so using the full chord would even give the square root of a negative number.)",
+          },
+          {
             type: "callout",
             tone: "exam",
             title: "Board trap",
-            md: "Pythagoras uses **half** the chord, not the full chord. Forgetting to halve (or forgetting to double at the end) is the most common error. For two parallel chords, always check whether they are on the **same** side or **opposite** sides of the centre.",
+            md: "For two parallel chords, always check whether they are on the **same** side or **opposite** sides of the centre: subtract the distances for the same side, add them for opposite sides.",
           },
           {
             type: "callout",
@@ -789,15 +821,42 @@ export const topics: Topic[] = [
             type: "text",
             md: "**Corollary:** an exterior angle of a cyclic quadrilateral equals the interior opposite angle.",
           },
-          { type: "heading", text: "Worked example 1" },
           {
-            type: "text",
-            md: t`**O is the centre, $\angle BOC = 130^\circ$ and A lies on the major arc. Find $\angle BAC$.** $\angle BAC = \tfrac12 \angle BOC = 65^\circ$. If instead a point D lies on the minor arc BC, then ABDC is cyclic and $\angle BDC = 180^\circ - 65^\circ = 115^\circ$.`,
+            type: "example",
+            title: "Centre angle and a point on each arc",
+            problem: t`O is the centre and $\angle BOC = 130^\circ$. A lies on the major arc and D on the minor arc BC. Find $\angle BAC$ and $\angle BDC$.`,
+            steps: [
+              t`A is on the remaining (major) arc, so $\angle BAC = \tfrac12 \angle BOC = \tfrac12 \times 130^\circ = 65^\circ$.`,
+              "A, B, D, C all lie on the circle, so ABDC is a **cyclic quadrilateral** with A and D opposite.",
+              t`Opposite angles are supplementary: $\angle BDC = 180^\circ - 65^\circ = 115^\circ$.`,
+            ],
+            answer: t`$\angle BAC = 65^\circ$ and $\angle BDC = 115^\circ$.`,
           },
-          { type: "heading", text: "Worked example 2" },
           {
-            type: "text",
-            md: t`**In cyclic quadrilateral ABCD, $\angle A = (2x + 10)^\circ$ and $\angle C = (3x + 20)^\circ$. Find both.** Opposite angles: $5x + 30 = 180 \Rightarrow x = 30$. So $\angle A = 70^\circ$ and $\angle C = 110^\circ$.`,
+            type: "example",
+            title: "Opposite angles with algebra",
+            problem: t`In cyclic quadrilateral ABCD, $\angle A = (2x + 10)^\circ$ and $\angle C = (3x + 20)^\circ$. Find both angles.`,
+            steps: [
+              t`A and C are opposite, so $\angle A + \angle C = 180^\circ$.`,
+              t`$(2x + 10) + (3x + 20) = 180 \Rightarrow 5x + 30 = 180 \Rightarrow x = 30$.`,
+              t`$\angle A = 2(30) + 10 = 70^\circ$ and $\angle C = 3(30) + 20 = 110^\circ$. Check: $70 + 110 = 180$ ✓`,
+            ],
+            answer: t`$\angle A = 70^\circ$, $\angle C = 110^\circ$.`,
+          },
+          {
+            type: "activity",
+            activity: {
+              kind: "match",
+              prompt: "Match each situation to the angle it gives.",
+              pairs: [
+                ["Angle at the centre, when the angle at the circumference on the same arc is 40°", "80°"],
+                ["Angle in a semicircle", "90°"],
+                ["Opposite angle of a cyclic quadrilateral to 70°", "110°"],
+                ["Another angle in the same segment as 35°", "35°"],
+                ["Exterior angle of a cyclic quadrilateral whose interior opposite angle is 95°", "95°"],
+              ],
+              explain: "Centre angle = **double** the angle at the circumference; angles in the same segment are **equal**; a semicircle gives **90°**; opposite angles of a cyclic quadrilateral are **supplementary**, and an exterior angle equals the interior opposite angle.",
+            },
           },
           {
             type: "checkpoint",
@@ -822,10 +881,16 @@ export const topics: Topic[] = [
             ],
           },
           {
+            type: "mistake",
+            wrong: "In a cyclic quadrilateral, opposite angles are equal.",
+            right: "Opposite angles of a cyclic quadrilateral are **supplementary**: they add up to 180°.",
+            why: "Equal opposite angles is a **parallelogram** property, and learners carry it over. In a circle, the two opposite angles stand on the two arcs that together make the whole circle, so their central angles total 360° and the angles themselves total 180°.",
+          },
+          {
             type: "callout",
             tone: "exam",
             title: "Board trap",
-            md: "The \"double angle\" theorem needs the inscribed angle on the **remaining** (opposite) arc. If the point is on the same side as the minor arc, the inscribed angle is half the **reflex** central angle. Also, cyclic quadrilateral opposite angles are **supplementary**, not equal — that is a parallelogram property.",
+            md: "The \"double angle\" theorem needs the inscribed angle on the **remaining** (opposite) arc. If the point is on the same side as the minor arc, the inscribed angle is half the **reflex** central angle.",
           },
           {
             type: "keypoints",

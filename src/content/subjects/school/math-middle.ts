@@ -1207,29 +1207,54 @@ export const mathMiddle: Subject = {
               text: "Undo with inverse operations",
             },
             {
-              type: "list",
-              ordered: true,
-              items: [
-                "Solve $3x + 7 = 22$.",
+              type: "example",
+              title: "Two inverse steps",
+              problem: "Solve $3x + 7 = 22$.",
+              steps: [
                 "Subtract 7 from both sides: $3x = 15$.",
                 "Divide both sides by 3: $x = 5$.",
                 "Check: $3(5) + 7 = 22$ ✓",
               ],
+              answer: "$x = 5$.",
+            },
+            {
+              type: "mistake",
+              wrong: "$3x + 7 = 22$, so I move the 7 across: $3x = 22 + 7 = 29$.",
+              right: "Subtract 7 from **both** sides: $3x = 22 - 7 = 15$. A term that moves across the $=$ sign changes its sign (**transposing**).",
+              why: "\"Move it to the other side\" is a handy shortcut, but it hides the real step. You are undoing $+7$ on both sides of the balance, and the undo of adding is subtracting.",
             },
             {
               type: "heading",
               text: "Variables on both sides",
             },
             {
-              type: "list",
-              ordered: true,
-              items: [
-                "Solve $5(x - 2) = 2x + 11$.",
+              type: "example",
+              title: "Brackets and variables on both sides",
+              problem: "Solve $5(x - 2) = 2x + 11$.",
+              steps: [
                 "Expand: $5x - 10 = 2x + 11$.",
                 "Subtract $2x$ from both sides: $3x - 10 = 11$.",
                 "Add 10: $3x = 21$, so $x = 7$.",
                 "Check: $5(7 - 2) = 25$ and $2(7) + 11 = 25$ ✓",
               ],
+              answer: "$x = 7$.",
+            },
+            {
+              type: "activity",
+              activity: {
+                kind: "sort",
+                prompt: "Substitute $x = 4$. Is it a solution?",
+                groups: ["Yes, x = 4 works", "No, it does not"],
+                items: [
+                  { text: "$2x + 1 = 9$", group: 0, hint: "$2(4) + 1 = 9$ ✓" },
+                  { text: "$3x - 5 = 7$", group: 0, hint: "$3(4) - 5 = 7$ ✓" },
+                  { text: "$\\tfrac{x}{2} + 3 = 5$", group: 0, hint: "$4 \\div 2 + 3 = 5$ ✓" },
+                  { text: "$4x + 2 = 14$", group: 1, hint: "$4(4) + 2 = 18$, not 14. The solution is $x = 3$." },
+                  { text: "$2(x - 1) = 8$", group: 1, hint: "$2(4 - 1) = 6$, not 8. The solution is $x = 5$." },
+                  { text: "$x + 4 = 0$", group: 1, hint: "$4 + 4 = 8$, not 0. The solution is $x = -4$." },
+                ],
+                explain: "A **solution** is a value that makes both sides equal. Substituting back is how you check any answer.",
+              },
             },
             {
               type: "checkpoint",
@@ -1271,6 +1296,7 @@ export const mathMiddle: Subject = {
             { front: "Inverse of “add 7”", back: "Subtract 7." },
             { front: "Solve $2x = 18$", back: "$x = 9$" },
             { front: "How do you check a solution?", back: "Substitute it back into the original equation; both sides should match." },
+            { front: "What happens to a term when it is transposed?", back: "It changes sign: $+7$ on one side becomes $-7$ on the other." },
           ],
           quiz: [
             {
@@ -1298,6 +1324,21 @@ export const mathMiddle: Subject = {
               answer: 12,
               unit: "years",
               explain: "$s + 3s = 48 \\Rightarrow 4s = 48 \\Rightarrow s = 12$.",
+              difficulty: 2,
+            },
+            {
+              kind: "mcq",
+              q: "Which step correctly follows from $5x - 3 = 12$?",
+              options: ["$5x = 9$", "$5x = 15$", "$x - 3 = \\tfrac{12}{5}$", "$5x = -15$"],
+              answer: 1,
+              explain: "Add 3 to both sides: $5x = 15$. Getting $5x = 12 - 3 = 9$ forgets to change the sign of the transposed term.",
+            },
+            {
+              kind: "numeric",
+              q: "A rectangle's length is twice its breadth and its perimeter is 54 cm. Find the breadth.",
+              answer: 9,
+              unit: "cm",
+              explain: "Let breadth $= b$, length $= 2b$. $2(2b + b) = 54 \\Rightarrow 6b = 54 \\Rightarrow b = 9$ cm.",
               difficulty: 2,
             },
           ],
@@ -1364,6 +1405,21 @@ export const mathMiddle: Subject = {
               md: "An **exterior angle** of a triangle equals the sum of the two interior opposite angles. If the interior angles are 40° and 65°, the exterior angle at the third corner is $40^\\circ + 65^\\circ = 105^\\circ$.",
             },
             {
+              type: "activity",
+              activity: {
+                kind: "match",
+                prompt: "Match each description to the angle it gives.",
+                pairs: [
+                  ["Complement of 35°", "55°"],
+                  ["Supplement of 35°", "145°"],
+                  ["Vertically opposite to 35°", "35°"],
+                  ["Third angle of a triangle with 35° and 100°", "45°"],
+                  ["Exterior angle when the interior opposite angles are 35° and 60°", "95°"],
+                ],
+                explain: "**Complementary** means a total of 90°, **supplementary** a total of 180°. Vertically opposite angles are equal, a triangle's angles total 180°, and an exterior angle equals the two interior opposite angles added.",
+              },
+            },
+            {
               type: "checkpoint",
               questions: [
                 {
@@ -1385,13 +1441,21 @@ export const mathMiddle: Subject = {
               caption: "In a right triangle, c is the hypotenuse (the side opposite the right angle).",
             },
             {
-              type: "list",
-              ordered: true,
-              items: [
-                "A ladder reaches 8 m up a wall with its foot 6 m from the wall. How long is it?",
+              type: "example",
+              title: "Ladder against a wall",
+              problem: "A ladder reaches 8 m up a wall with its foot 6 m from the wall. How long is it?",
+              steps: [
+                "The wall and the ground meet at a right angle, so the ladder is the **hypotenuse** $c$.",
                 "$c^2 = 6^2 + 8^2 = 36 + 64 = 100$.",
-                "$c = \\sqrt{100} = 10$ m.",
+                "$c = \\sqrt{100} = 10$.",
               ],
+              answer: "The ladder is 10 m long.",
+            },
+            {
+              type: "mistake",
+              wrong: "The hypotenuse is 13 cm and one side is 5 cm, so the other side is $\\sqrt{13^2 + 5^2} = \\sqrt{194}$ cm.",
+              right: "When you know the hypotenuse, **subtract**: other side $= \\sqrt{13^2 - 5^2} = \\sqrt{144} = 12$ cm.",
+              why: "\"Square and add\" is the first thing learners memorise. But $a^2 + b^2 = c^2$ only adds the two **shorter** sides. A shorter side can never come out longer than the hypotenuse, and $\\sqrt{194} \\approx 13.9$ is longer.",
             },
             {
               type: "callout",
@@ -1451,6 +1515,14 @@ export const mathMiddle: Subject = {
               answer: 13,
               unit: "cm",
               explain: "$\\sqrt{25 + 144} = \\sqrt{169} = 13$.",
+              difficulty: 2,
+            },
+            {
+              kind: "mcq",
+              q: "A 13 m ladder reaches 12 m up a wall. How far is its foot from the wall?",
+              options: ["5 m", "17.7 m", "25 m", "1 m"],
+              answer: 0,
+              explain: "The ladder is the hypotenuse: $\\sqrt{13^2 - 12^2} = \\sqrt{25} = 5$ m. Adding the squares (17.7 m) gives a side longer than the ladder.",
               difficulty: 2,
             },
           ],
@@ -1611,6 +1683,12 @@ export const mathMiddle: Subject = {
               ],
             },
             {
+              type: "mistake",
+              wrong: "The median of 8, 2, 9, 4, 6 is 9, because 9 is in the middle.",
+              right: "Sort first: 2, 4, 6, 8, 9. The middle value is **6**.",
+              why: "\"Median\" means middle, so learners pick the middle of the list as it is written. But the median is the middle of the values **in order of size**; an unsorted list can put any value in the middle.",
+            },
+            {
               type: "heading",
               text: "Pie charts",
             },
@@ -1619,10 +1697,39 @@ export const mathMiddle: Subject = {
               md: "A pie chart shows parts of a whole. Each slice's angle is its fraction of the total times 360°. If 25% of a class walks to school, that slice is $0.25 \\times 360^\\circ = 90^\\circ$.",
             },
             {
+              type: "example",
+              title: "Angles for a pie chart",
+              problem: "In a class of 40 students, 10 walk to school, 18 come by bus and 12 cycle. Find the angle of each slice of a pie chart.",
+              steps: [
+                "Walk: $\\tfrac{10}{40} \\times 360^\\circ = 90^\\circ$.",
+                "Bus: $\\tfrac{18}{40} \\times 360^\\circ = 162^\\circ$.",
+                "Cycle: $\\tfrac{12}{40} \\times 360^\\circ = 108^\\circ$.",
+                "Check: $90 + 162 + 108 = 360^\\circ$ ✓",
+              ],
+              answer: "Walk 90°, bus 162°, cycle 108°.",
+            },
+            {
               type: "callout",
               tone: "note",
               title: "Choosing a graph",
               md: "Use a **bar graph** to compare separate categories, a **line graph** to show change over time, and a **pie chart** to show how a whole is divided.",
+            },
+            {
+              type: "activity",
+              activity: {
+                kind: "sort",
+                prompt: "Which graph shows this data best?",
+                groups: ["Bar graph", "Line graph", "Pie chart"],
+                items: [
+                  { text: "Number of students who like each sport", group: 0, hint: "Separate categories to compare side by side." },
+                  { text: "Medals won by five states at a games meet", group: 0, hint: "Compare separate states." },
+                  { text: "Bengaluru's temperature each month of a year", group: 1, hint: "Change over time." },
+                  { text: "Your height on each birthday", group: 1, hint: "One quantity changing over time." },
+                  { text: "How a family's monthly budget is spent", group: 2, hint: "Parts of one whole budget." },
+                  { text: "Share of a farm's land under each crop", group: 2, hint: "Slices of one whole farm." },
+                ],
+                explain: "Ask what the data is about: separate categories → **bar graph**; change over time → **line graph**; parts of one whole → **pie chart**.",
+              },
             },
             {
               type: "callout",
@@ -1646,6 +1753,7 @@ export const mathMiddle: Subject = {
             { front: "Mode", back: "The value that appears most often." },
             { front: "Range", back: "Largest value minus smallest value." },
             { front: "Pie chart angle for 1/3 of the data", back: "$\\tfrac{1}{3} \\times 360^\\circ = 120^\\circ$" },
+            { front: "Median of an even number of values", back: "The mean of the two middle values (after sorting)." },
           ],
           quiz: [
             {
@@ -1674,6 +1782,21 @@ export const mathMiddle: Subject = {
               q: "The mean is always one of the values in the data set.",
               answer: false,
               explain: "The mean of 1 and 2 is 1.5, which is not in the data.",
+            },
+            {
+              kind: "mcq",
+              q: "What is the median of 8, 2, 9, 4, 6?",
+              options: ["9", "6", "5.8", "4"],
+              answer: 1,
+              explain: "Sorted: 2, 4, 6, 8, 9, so the median is 6. 9 is just the middle of the unsorted list, and 5.8 is the mean.",
+              difficulty: 2,
+            },
+            {
+              kind: "numeric",
+              q: "Out of 60 students, 20 chose cricket as their favourite sport. What angle shows cricket on a pie chart?",
+              answer: 120,
+              unit: "°",
+              explain: "$\\tfrac{20}{60} \\times 360^\\circ = 120^\\circ$.",
             },
           ],
         },

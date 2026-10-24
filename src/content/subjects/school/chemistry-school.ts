@@ -1525,9 +1525,41 @@ export const chemistrySchool: Subject = {
               ],
             },
             {
+              type: "activity",
+              activity: {
+                kind: "match",
+                prompt: "Match each compound to its family.",
+                pairs: [
+                  ["C₂H₅OH (ethanol)", "Alcohol (–OH)"],
+                  ["CH₃COOH (ethanoic acid)", "Carboxylic acid (–COOH)"],
+                  ["CH₃COOC₂H₅ (ethyl ethanoate)", "Ester (–COO–)"],
+                  ["C₂H₄ (ethene)", "Alkene (C=C)"],
+                ],
+                explain: "Look past the carbon chain to the **functional group** at its end. That small group decides the family and how the compound reacts.",
+              },
+            },
+            {
+              type: "mistake",
+              wrong: "Ethanol has an –OH group, just like NaOH, so it is a base.",
+              right: "Ethanol is **neutral**. Its –OH is covalently bonded to carbon and does not form OH⁻ ions in water.",
+              why: "The two formulas look alike. But NaOH is ionic and releases OH⁻ ions, which make a solution basic. Ethanol stays as whole molecules, so it does not change litmus.",
+            },
+            {
               type: "formula",
               tex: "\\text{acid} + \\text{alcohol} \\rightarrow \\text{ester} + \\text{water}",
               caption: "Esterification (needs a little concentrated sulfuric acid as catalyst)",
+            },
+            {
+              type: "example",
+              title: "Making a fruity ester",
+              problem: "Ethanoic acid is warmed with ethanol and a few drops of concentrated sulfuric acid. Write the word and chemical equations, and say how you know a new substance formed.",
+              steps: [
+                "Identify the reactants: acid = ethanoic acid (CH₃COOH); alcohol = ethanol (C₂H₅OH).",
+                "Use the pattern acid + alcohol → ester + water.",
+                "The ester's name: the alcohol part first (**ethyl**), then the acid part (**ethanoate**).",
+                "Check atoms. Left: CH₃COOH (C₂H₄O₂) + C₂H₅OH (C₂H₆O) = C₄H₁₀O₃. Right: CH₃COOC₂H₅ (C₄H₈O₂) + H₂O = C₄H₁₀O₃. Balanced.",
+              ],
+              answer: "Ethanoic acid + ethanol → ethyl ethanoate + water: **CH₃COOH + C₂H₅OH → CH₃COOC₂H₅ + H₂O**. A sweet, fruity smell shows that an ester has formed.",
             },
             { type: "heading", text: "How soap cleans" },
             {
@@ -1574,6 +1606,7 @@ export const chemistrySchool: Subject = {
             { front: "–COOH", back: "Carboxylic acid group (e.g. ethanoic acid in vinegar)." },
             { front: "Micelle", back: "A cluster of soap molecules with tails inward trapping oil, heads outward facing water." },
             { front: "Esters smell…", back: "Sweet and fruity." },
+            { front: "Why do detergents work in hard water?", back: "Their calcium and magnesium salts are soluble, so they do not form scum the way soap does." },
           ],
           quiz: [
             {
@@ -1601,6 +1634,32 @@ export const chemistrySchool: Subject = {
               options: ["–COOH", "–OH", "–COO–", "C=C"],
               answer: 1,
               explain: "Ethanol, C₂H₅OH, is an alcohol with an –OH group.",
+            },
+            {
+              kind: "mcq",
+              q: "A drop of ethanol and a drop of ethanoic acid are put on blue litmus paper. What happens?",
+              options: [
+                "Both turn it red",
+                "Only ethanoic acid turns it red",
+                "Only ethanol turns it red",
+                "Neither changes it",
+              ],
+              answer: 1,
+              explain: "Ethanoic acid is a (weak) acid and turns blue litmus red. Ethanol is neutral: its –OH does not form OH⁻ or H⁺ ions.",
+              difficulty: 2,
+            },
+            {
+              kind: "mcq",
+              q: "In a micelle, the soap molecules arrange themselves with:",
+              options: [
+                "heads inside the oil, tails in the water",
+                "tails inside the oil, ionic heads facing the water",
+                "all molecules lying flat on the water",
+                "heads and tails mixed at random",
+              ],
+              answer: 1,
+              explain: "The hydrophobic tails dissolve in the grease at the centre; the hydrophilic ionic heads face outward into water.",
+              difficulty: 2,
             },
           ],
         },

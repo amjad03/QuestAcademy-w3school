@@ -121,6 +121,8 @@ interface QBase {
   q: Md;
   explain?: Md;
   difficulty?: Difficulty;
+  /** Nudge shown on request before answering (not in timed tests). */
+  hint?: Md;
 }
 
 export type Question =

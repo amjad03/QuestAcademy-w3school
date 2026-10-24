@@ -852,6 +852,16 @@ export const topics: Topic[] = [
             },
           },
           {
+            type: "table",
+            headers: ["Purpose", "Useful phrases"],
+            rows: [
+              ["Opening", "I hope this letter finds you in the best of health. / It was lovely to get your letter."],
+              ["Sharing news", "Guess what happened last week! / I must tell you about..."],
+              ["Giving advice", "If I were you, I would... / Why don't you try...?"],
+              ["Closing", "Do write back soon. / Please give my regards to Uncle and Aunty. / I miss you all."],
+            ],
+          },
+          {
             type: "checkpoint",
             questions: [
               {
@@ -1347,10 +1357,10 @@ export const topics: Topic[] = [
             steps: [
               "Plan the viewpoint: I am waiting for a late train with my father.",
               "Introduction: arrival at the station and the first impression.",
-              "Body: (1) sights on the platform, (2) sounds and smells, (3) people and small stories.",
+              "Body: (1) sights and sounds on the platform, (2) smells, (3) people and their small stories.",
               "Conclusion: the train arrives; a thought about the station that never sleeps.",
             ],
-            answer: "It was nearly eleven at night when my father and I reached Vijayawada Junction. Our train to Chennai was running two hours late, so we found a bench on Platform 4 and settled down to wait. I had expected the station to be quiet at that hour. I could not have been more wrong.\n\nThe platform glowed under long rows of white tube lights. Moths circled them in restless clouds. A goods train rumbled slowly past on the far track, its wagons rattling like a giant's chain. Above us, the yellow display board kept changing, and every few minutes a calm voice announced arrivals and delays in Telugu, Hindi and English.\n\nThe smells were as busy as the sights. A tea seller walked by with a steel kettle, calling 'Chai, chai, garam chai!', and the sweet smell of cardamom followed him. From the food stall came the sharp scent of mirchi bajji frying in hot oil. Somewhere, a bundle of jasmine flowers lay in a basket, and its fragrance drifted over everything.\n\nThe people were the most interesting part of the scene. A family of five slept on a spread-out bedsheet, their suitcases arranged around them like a fort. A young soldier sat alone, reading a letter again and again. Two porters in red shirts argued cheerfully about cricket while they waited for the next train. A small boy pressed his nose to the window of a stationary coach, waving at anyone who looked his way.\n\nAt last, just after one o'clock, a bright headlight appeared in the darkness and our train slid in with a long sigh of its brakes. As we climbed aboard, I looked back at the crowded platform. The night had ended for us, but for the station it would never really end.",
+            answer: "It was nearly eleven at night when my father and I reached Vijayawada Junction. Our train to Chennai was running two hours late, so we found a bench on Platform 4 and settled down to wait. I had expected the station to be quiet at that hour. I could not have been more wrong.\n\nThe platform glowed under long rows of white tube lights. Moths circled them in restless clouds. A goods train rumbled slowly past on the far track, its wagons rattling like a giant's chain. Above us, the yellow display board kept changing, and every few minutes a calm voice announced arrivals and delays in Telugu, Hindi and English.\n\nThe smells were as busy as the sights. A tea seller walked by with a steel kettle, calling 'Chai, chai, garam chai!', and the sweet smell of cardamom followed him. From the food stall came the sharp scent of mirchi bajji frying in hot oil. Somewhere, a bundle of jasmine flowers lay in a basket, and its fragrance drifted over everything.\n\nThe people were the most interesting part of the scene. A family of five slept on a spread-out bedsheet, their suitcases arranged around them like a fort. A young soldier sat alone, reading a letter again and again. Two porters in red shirts argued cheerfully about cricket while they waited for the next train. A small boy pressed his nose to the window of a stationary coach, waving at anyone who looked his way. Near the stairs, a woman sold peanuts in paper cones, counting coins by the light of a mobile phone. Everyone was waiting for something, yet each person seemed to be in a small world of their own.\n\nAt last, just after one o'clock, a bright headlight appeared in the darkness and our train slid in with a long sigh of its brakes. As we climbed aboard, I looked back at the crowded platform. The night had ended for us, but for the station it would never really end.",
           },
           {
             type: "callout",
@@ -1397,6 +1407,17 @@ export const topics: Topic[] = [
               ],
               explain: "Narratives tell **what happened**, descriptions show **what it was like**, and argumentative essays explain **what you think and why**.",
             },
+          },
+          {
+            type: "checkpoint",
+            questions: [
+              {
+                kind: "truefalse",
+                q: "In the model composition, each body paragraph deals with one main idea: sights and sounds, then smells, then people.",
+                answer: true,
+                explain: "One idea per paragraph keeps the composition organised and easy to follow, which earns organisation marks.",
+              },
+            ],
           },
           {
             type: "keypoints",
@@ -1554,6 +1575,18 @@ export const topics: Topic[] = [
             why: "The subject line tells the reader what the mail is about before opening it, and it is part of the format the examiner checks.",
           },
           {
+            type: "checkpoint",
+            questions: [
+              {
+                kind: "mcq",
+                q: "Which heading is best for a notice about a blood donation camp?",
+                options: ["NOTICE", "BLOOD DONATION CAMP", "Dear Students", "Please read this carefully"],
+                answer: 1,
+                explain: "The heading names the event in a few words, in capitals. 'NOTICE' is a separate line above it, and notices have no salutation.",
+              },
+            ],
+          },
+          {
             type: "activity",
             activity: {
               kind: "sort",
@@ -1651,6 +1684,11 @@ export const topics: Topic[] = [
         xp: 35,
         blocks: [
           {
+            type: "illustration",
+            emoji: "📞",
+            caption: "When you hear only one side of a phone call ('Yes... at six... no, near the temple'), you can still guess the questions. Dialogue completion uses the same skill.",
+          },
+          {
             type: "text",
             md: "In **dialogue completion**, you get a conversation between two people with some lines missing. You must write the missing lines so the whole conversation makes sense.\n\nThe secret is that **the answer is hidden in the next line**. If the next speaker says 'It starts at ten', the missing line was probably a question about the time.",
           },
@@ -1705,7 +1743,7 @@ export const topics: Topic[] = [
             type: "activity",
             activity: {
               kind: "reveal",
-              prompt: "Pick the line that fits the gap.",
+              prompt: "Next line: ‘It’s two hundred and ten rupees.’ Which fits?",
               emoji: "🗨️",
               options: [
                 "Customer: I want a ticket.",
@@ -1775,7 +1813,7 @@ export const topics: Topic[] = [
           },
           {
             kind: "fill",
-            q: "Doctor: ___ have you had this fever?\nPatient: For three days. (Write the two-word question opener: How ___)",
+            q: "Doctor: How ___ have you had this fever?\nPatient: For three days.",
             answer: ["long"],
             explain: "'For three days' answers **How long**.",
           },

@@ -30,10 +30,6 @@ export const topics: Topic[] = [
             md: "Imagine 299 people in one hall trying to agree on rules for a brand-new country of crores of people, many languages and many faiths. That is what the **Constituent Assembly** did. It was the body elected to write India's **Constitution**, the supreme rulebook that every law and every government must follow.\n\nThe Assembly first met on **9 December 1946**. Dr **Rajendra Prasad** was elected its President, and Dr **B. R. Ambedkar** chaired the **Drafting Committee**, the small group that wrote the actual text. The work took **2 years, 11 months and 18 days**.",
           },
           {
-            type: "heading",
-            text: "Two dates, two meanings",
-          },
-          {
             type: "table",
             headers: ["Date", "What happened", "Celebrated as"],
             rows: [
@@ -1705,7 +1701,7 @@ export const topics: Topic[] = [
             type: "callout",
             tone: "exam",
             title: "Exam tip",
-            md: "In CBSE Class 10 *Forest and Wildlife Resources* and the Karnataka SSLC geography textbook, the **Chipko** and **Bishnoi** examples are often asked. Name the place and what people did; just writing \"people saved trees\" earns less.",
+            md: "School geography and environment chapters on forest conservation often ask about **Chipko** and the **Bishnois**. Name the place, the year and what people did; just writing \"people saved trees\" earns fewer marks.",
           },
           {
             type: "keypoints",

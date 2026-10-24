@@ -1122,17 +1122,17 @@ export const topics: Topic[] = [
             tex: "\\text{Growth rate (\\%)} = \\frac{\\text{birth rate} - \\text{death rate}}{10}",
             caption: "Birth and death rates are per 1000 people, so dividing by 10 gives a percentage.",
           },
-          { type: "heading", text: "Worked example" },
           {
-            type: "list",
-            ordered: true,
-            items: [
-              "A district has a birth rate of 20 per 1000 and a death rate of 7 per 1000.",
+            type: "example",
+            title: "Growth rate of a district",
+            problem: "A district of 20,00,000 people has a birth rate of 20 per 1000 and a death rate of 7 per 1000. Find its growth rate, its rough doubling time and the number of extra people each year.",
+            steps: [
               "Natural increase $= 20 - 7 = 13$ per 1000.",
               "Growth rate $= 13 \\div 10 = 1.3\\%$ per year.",
               "Rough doubling time (rule of 70) $= 70 \\div 1.3 \\approx 54$ years.",
-              "For a district of 20,00,000 people, that is about $20{,}00{,}000 \\times 0.013 = 26{,}000$ extra people each year.",
+              "Extra people each year $= 20{,}00{,}000 \\times 0.013 = 26{,}000$.",
             ],
+            answer: "Growth rate 1.3% per year; the population doubles in about 54 years; about 26,000 extra people each year.",
           },
           {
             type: "checkpoint",
@@ -1169,10 +1169,35 @@ export const topics: Topic[] = [
             md: "After 1950, the **death rate fell sharply** thanks to vaccines, antibiotics, better sanitation and the Green Revolution, while the **birth rate fell only slowly** because of early marriage, illiteracy (especially among women), poverty, a preference for sons, and high infant mortality that made families want more children.",
           },
           {
+            type: "activity",
+            activity: {
+              kind: "sort",
+              prompt: "Did each factor lower the death rate or keep births high?",
+              groups: ["Lowered the death rate", "Kept the birth rate high"],
+              items: [
+                { text: "Vaccines against smallpox and polio", group: 0, hint: "Fewer people died of these diseases." },
+                { text: "Antibiotics", group: 0, hint: "Infections that once killed could now be cured." },
+                { text: "Clean water and sanitation", group: 0, hint: "Fewer deaths from cholera and diarrhoea." },
+                { text: "Green Revolution", group: 0, hint: "More food meant fewer deaths from famine." },
+                { text: "Early marriage", group: 1, hint: "A longer span of years for having children." },
+                { text: "Preference for sons", group: 1, hint: "Families kept having children until a son was born." },
+                { text: "High infant mortality", group: 1, hint: "Parents had more children in case some died young." },
+                { text: "Low female literacy", group: 1, hint: "Less awareness of family planning." },
+              ],
+              explain: "The death rate fell **fast** while the birth rate fell **slowly**. The gap between them is what made the population grow so quickly.",
+            },
+          },
+          {
             type: "callout",
             tone: "exam",
             title: "Board trap",
-            md: "Population explosion was caused mainly by a **falling death rate**, not by a rising birth rate. Also remember that growth rate uses **birth rate minus death rate**; using birth rate alone is a common error.",
+            md: "Remember that growth rate uses **birth rate minus death rate**; using birth rate alone is a common error.",
+          },
+          {
+            type: "mistake",
+            wrong: "India's population exploded because families started having more children than before.",
+            right: "The explosion came mainly from a **sharp fall in the death rate** after 1950, while the birth rate fell only **slowly**.",
+            why: "A bigger population sounds like 'more births'. But the birth rate in India was actually falling. What changed fast was that far fewer people died, so births stayed well above deaths for decades.",
           },
           {
             type: "keypoints",
@@ -1229,6 +1254,14 @@ export const topics: Topic[] = [
             explain: "$70 \\div 2 = 35$ years.",
             difficulty: 3,
           },
+          {
+            kind: "mcq",
+            q: "A state has a birth rate of 18 and a death rate of 6 per 1000. Its population is 1 crore. About how many people are added each year?",
+            options: ["12,000", "1,20,000", "1,80,000", "12,00,000"],
+            answer: 1,
+            explain: "Growth rate $= (18 - 6) \\div 10 = 1.2\\%$. $1{,}00{,}00{,}000 \\times 0.012 = 1{,}20{,}000$. Using the birth rate alone (1.8%) gives the wrong answer 1,80,000.",
+            difficulty: 3,
+          },
         ],
       },
       {
@@ -1259,6 +1292,18 @@ export const topics: Topic[] = [
             emoji: "🏙️🚗🚱🌳",
             caption: "Crowded cities, traffic, water stress and shrinking forests are all linked to population pressure.",
           },
+          {
+            type: "example",
+            title: "Water for a growing town",
+            problem: "A town in Karnataka has 1,00,000 people and grows at 2% a year. Each person needs about **135 litres** of water a day. How much extra water does the town need each day after one year, and when will its population double?",
+            steps: [
+              "Extra people after one year $= 1{,}00{,}000 \\times 0.02 = 2{,}000$.",
+              "Extra water per day $= 2{,}000 \\times 135 = 2{,}70{,}000$ litres.",
+              "Doubling time (rule of 70) $= 70 \\div 2 = 35$ years.",
+              "In 35 years the town will have about 2,00,000 people and need about twice today's water, schools, houses and hospitals.",
+            ],
+            answer: "About **2,70,000 litres** more water every day after just one year, and double the population (and its needs) in about **35 years**.",
+          },
           { type: "heading", text: "Ways to control population" },
           {
             type: "list",
@@ -1270,6 +1315,23 @@ export const topics: Topic[] = [
               "**Awareness** through campaigns; World Population Day is on **11 July**.",
               "**Ending son preference** and banning sex-selective practices under the PCPNDT Act.",
             ],
+          },
+          {
+            type: "activity",
+            activity: {
+              kind: "sort",
+              prompt: "Is it an effect of rapid growth or a way to control it?",
+              groups: ["Effect of rapid growth", "Control measure"],
+              items: [
+                { text: "Slums in big cities", group: 0, hint: "Too many people for the houses available." },
+                { text: "Falling groundwater levels", group: 0, hint: "More people pump more water from wells." },
+                { text: "Unemployment", group: 0, hint: "Jobs do not grow as fast as the number of workers." },
+                { text: "Educating girls", group: 1, hint: "Educated women tend to marry later and choose smaller families." },
+                { text: "Raising the age of marriage", group: 1, hint: "Later marriage means fewer child-bearing years." },
+                { text: "Free contraceptives at health centres", group: 1, hint: "Family planning methods help couples space and limit children." },
+              ],
+              explain: "Rapid growth puts **pressure** on housing, water and jobs. Control measures work by helping families **choose** to have fewer children, above all through education.",
+            },
           },
           {
             type: "checkpoint",
@@ -1301,7 +1363,13 @@ export const topics: Topic[] = [
             type: "callout",
             tone: "exam",
             title: "Board trap",
-            md: "Replacement level fertility is about **2.1**, not 2.0: the extra 0.1 makes up for children who die before adulthood. Also, population control aims at a **stable** population, not a shrinking one.",
+            md: "Population control aims at a **stable** population, not a shrinking one.",
+          },
+          {
+            type: "mistake",
+            wrong: "Replacement level fertility is exactly 2 children per woman, one to replace each parent.",
+            right: "Replacement level fertility is about **2.1** children per woman.",
+            why: "Two parents replaced by two children sounds exact. But some children die before they grow up and have children of their own, and slightly more boys than girls are born. The extra 0.1 makes up for this.",
           },
           {
             type: "keypoints",
@@ -1319,6 +1387,7 @@ export const topics: Topic[] = [
           { front: "Replacement level fertility", back: "A TFR of about 2.1, at which a population just replaces itself." },
           { front: "World Population Day", back: "11 July." },
           { front: "Why does female literacy reduce birth rate?", back: "Educated women marry later, use family planning, and have healthier children, so they choose smaller families." },
+          { front: "National Family Planning Programme", back: "Started by India in 1952, the first such official programme in the world." },
         ],
         quiz: [
           {
@@ -1355,6 +1424,14 @@ export const topics: Topic[] = [
             answer: 1,
             explain: "High (especially female) literacy and good health care go with low fertility.",
             difficulty: 2,
+          },
+          {
+            kind: "numeric",
+            q: "A city of 50,00,000 people grows by 2% in a year. If each person needs 135 litres of water a day, how many extra litres per day does the city need after that year?",
+            answer: 13500000,
+            unit: "litres",
+            explain: "Extra people $= 50{,}00{,}000 \\times 0.02 = 1{,}00{,}000$. Extra water $= 1{,}00{,}000 \\times 135 = 1{,}35{,}00{,}000$ litres (1.35 crore litres) a day.",
+            difficulty: 3,
           },
         ],
       },

@@ -726,6 +726,511 @@ export const topics: Topic[] = [
       },
     ],
   },
+  /* ------------------------------------------------------------------ */
+  {
+    slug: "kannada-vibhakti",
+    title: "Case Suffixes (ವಿಭಕ್ತಿ ಪ್ರತ್ಯಯಗಳು)",
+    icon: "🏷️",
+    description: "The seven ವಿಭಕ್ತಿ and their ಪ್ರತ್ಯಯ (ಉ, ಅನ್ನು, ಇಂದ, ಗೆ/ಕೆ/ಇಗೆ, ದೆಸೆಯಿಂದ, ಅ, ಅಲ್ಲಿ) and the ಸಂಬೋಧನಾ form.",
+    lessons: [
+      {
+        slug: "vibhakti-pratyaya",
+        title: "The Seven Vibhaktis and Their Suffixes",
+        summary: "How a case suffix (ವಿಭಕ್ತಿ ಪ್ರತ್ಯಯ) shows the job of a noun in a sentence, with all seven vibhaktis and the vocative.",
+        minutes: 16,
+        xp: 40,
+        blocks: [
+          {
+            type: "text",
+            md: "In English, small words like *to*, *with*, *of*, *in* show the job of a noun. In Kannada, a small ending is added to the noun instead: ಮನೆ**ಗೆ** (to the house), ಮನೆ**ಯಲ್ಲಿ** (in the house).\n\nA noun without any ending is a **ಪ್ರಕೃತಿ** (base word). The ending added to it is a **ವಿಭಕ್ತಿ ಪ್ರತ್ಯಯ** (case suffix). Kannada grammar has **seven** vibhaktis, plus the calling form **ಸಂಬೋಧನಾ** (vocative).",
+          },
+          {
+            type: "table",
+            headers: ["ವಿಭಕ್ತಿ", "ಪ್ರತ್ಯಯ (suffix)", "Job (ಕಾರಕ)", "ಮರ (tree)", "ರಾಮ"],
+            rows: [
+              ["**ಪ್ರಥಮಾ** (1st)", "ಉ", "doer — ಕರ್ತೃ", "ಮರವು", "ರಾಮನು"],
+              ["**ದ್ವಿತೀಯಾ** (2nd)", "ಅನ್ನು", "object — ಕರ್ಮ", "ಮರವನ್ನು", "ರಾಮನನ್ನು"],
+              ["**ತೃತೀಯಾ** (3rd)", "ಇಂದ", "by / with — ಕರಣ", "ಮರದಿಂದ", "ರಾಮನಿಂದ"],
+              ["**ಚತುರ್ಥೀ** (4th)", "ಗೆ, ಕೆ, ಇಗೆ", "to / for — ಸಂಪ್ರದಾನ", "ಮರಕ್ಕೆ", "ರಾಮನಿಗೆ"],
+              ["**ಪಂಚಮೀ** (5th)", "ದೆಸೆಯಿಂದ", "from / because of — ಅಪಾದಾನ", "ಮರದ ದೆಸೆಯಿಂದ", "ರಾಮನ ದೆಸೆಯಿಂದ"],
+              ["**ಷಷ್ಠೀ** (6th)", "ಅ", "of — ಸಂಬಂಧ", "ಮರದ", "ರಾಮನ"],
+              ["**ಸಪ್ತಮೀ** (7th)", "ಅಲ್ಲಿ", "in / at — ಅಧಿಕರಣ", "ಮರದಲ್ಲಿ", "ರಾಮನಲ್ಲಿ"],
+              ["**ಸಂಬೋಧನಾ** (calling)", "ಆ, ಏ, ಓ", "calling someone", "—", "ರಾಮಾ, ಓ ರಾಮಾ"],
+            ],
+          },
+          {
+            type: "text",
+            md: "Notice the small extra letters: ರಾಮ + ಅನ್ನು = ರಾಮನನ್ನು (extra **ನ**), ಮರ + ಅನ್ನು = ಮರವನ್ನು (extra **ವ**), ಮರ + ಇಂದ = ಮರದಿಂದ (extra **ದ**). These extra letters come in by **ಆಗಮ** (adding). They are not part of the suffix. The suffix is still ಅನ್ನು or ಇಂದ.\n\nThe word ಮನೆ (house) goes: ಮನೆಯು, ಮನೆಯನ್ನು, ಮನೆಯಿಂದ, ಮನೆಗೆ, ಮನೆಯ ದೆಸೆಯಿಂದ, ಮನೆಯ, ಮನೆಯಲ್ಲಿ.",
+          },
+          {
+            type: "example",
+            title: "Find every vibhakti in a sentence",
+            problem: "ರಾಮನು ತೋಟದಲ್ಲಿ ಕೋಲಿನಿಂದ ಮಾವಿನ ಹಣ್ಣನ್ನು ಕೆಡವಿ ತಂಗಿಗೆ ಕೊಟ್ಟನು. (Rama knocked down a mango in the garden with a stick and gave it to his younger sister.) Name the vibhakti of each noun.",
+            steps: [
+              "ರಾಮನು — ends in ಉ, the doer → **ಪ್ರಥಮಾ**.",
+              "ತೋಟದಲ್ಲಿ — ends in ಅಲ್ಲಿ, 'in the garden' → **ಸಪ್ತಮೀ**.",
+              "ಕೋಲಿನಿಂದ — ends in ಇಂದ, 'with a stick' → **ತೃತೀಯಾ**.",
+              "ಮಾವಿನ — ends in ಅ, 'of the mango tree' → **ಷಷ್ಠೀ**. ಹಣ್ಣನ್ನು — ends in ಅನ್ನು, the object → **ದ್ವಿತೀಯಾ**.",
+              "ತಂಗಿಗೆ — ends in ಗೆ, 'to the sister' → **ಚತುರ್ಥೀ**.",
+            ],
+            answer: "ರಾಮನು (ಪ್ರಥಮಾ), ತೋಟದಲ್ಲಿ (ಸಪ್ತಮೀ), ಕೋಲಿನಿಂದ (ತೃತೀಯಾ), ಮಾವಿನ (ಷಷ್ಠೀ), ಹಣ್ಣನ್ನು (ದ್ವಿತೀಯಾ), ತಂಗಿಗೆ (ಚತುರ್ಥೀ).",
+          },
+          {
+            type: "checkpoint",
+            questions: [
+              {
+                kind: "mcq",
+                q: "ಶಾಲೆಗೆ (to school) is in which vibhakti?",
+                options: ["ದ್ವಿತೀಯಾ", "ಚತುರ್ಥೀ", "ಸಪ್ತಮೀ", "ಷಷ್ಠೀ"],
+                answer: 1,
+                explain: "The suffix ಗೆ ('to') belongs to **ಚತುರ್ಥೀ ವಿಭಕ್ತಿ**.",
+              },
+            ],
+          },
+          {
+            type: "mistake",
+            wrong: "ಕೋಲಿನಿಂದ and ಮರದಿಂದ are ಪಂಚಮೀ, because ಇಂದ means 'from'.",
+            right: "Any word ending in **ಇಂದ** is **ತೃತೀಯಾ**. The ಪಂಚಮೀ suffix is **ದೆಸೆಯಿಂದ** (ಮರದ ದೆಸೆಯಿಂದ).",
+            why: "In everyday Kannada, ಇಂದ is used for 'from' too, so it feels like ಪಂಚಮೀ. But in the exam, the vibhakti is named by the suffix. ಇಂದ → ತೃತೀಯಾ; ದೆಸೆಯಿಂದ → ಪಂಚಮೀ.",
+          },
+          {
+            type: "activity",
+            activity: {
+              kind: "match",
+              prompt: "Match each form of ಮನೆ to its vibhakti.",
+              pairs: [
+                ["ಮನೆಯನ್ನು", "ದ್ವಿತೀಯಾ"],
+                ["ಮನೆಯಿಂದ", "ತೃತೀಯಾ"],
+                ["ಮನೆಗೆ", "ಚತುರ್ಥೀ"],
+                ["ಮನೆಯ ದೆಸೆಯಿಂದ", "ಪಂಚಮೀ"],
+                ["ಮನೆಯ", "ಷಷ್ಠೀ"],
+                ["ಮನೆಯಲ್ಲಿ", "ಸಪ್ತಮೀ"],
+              ],
+              explain: "Read only the ending: ಅನ್ನು, ಇಂದ, ಗೆ, ದೆಸೆಯಿಂದ, ಅ, ಅಲ್ಲಿ. The ಯ in ಮನೆಯನ್ನು is an added letter (ಆಗಮ), not part of the suffix.",
+            },
+          },
+          {
+            type: "callout",
+            tone: "exam",
+            title: "SSLC exam tip",
+            md: "A common question: 'ವಿಭಕ್ತಿ ಪ್ರತ್ಯಯ ಗುರುತಿಸಿ' (identify the case suffix). Write the word, the suffix and the vibhakti name: ಮನೆಯಲ್ಲಿ — ಅಲ್ಲಿ — ಸಪ್ತಮೀ ವಿಭಕ್ತಿ. Do not write ಯಲ್ಲಿ as the suffix; the ಯ is an ಆಗಮ letter.",
+          },
+          {
+            type: "checkpoint",
+            questions: [
+              {
+                kind: "fill",
+                q: "The ಷಷ್ಠೀ form of ರಾಮ is ___ (Rama's).",
+                answer: ["ರಾಮನ"],
+                explain: "ಷಷ್ಠೀ suffix is ಅ, with ನ added: ರಾಮನ.",
+              },
+            ],
+          },
+          {
+            type: "keypoints",
+            items: [
+              "**ವಿಭಕ್ತಿ ಪ್ರತ್ಯಯ** = case suffix added to a noun to show its job.",
+              "ಪ್ರಥಮಾ ಉ, ದ್ವಿತೀಯಾ ಅನ್ನು, ತೃತೀಯಾ ಇಂದ, ಚತುರ್ಥೀ ಗೆ/ಕೆ/ಇಗೆ, ಪಂಚಮೀ ದೆಸೆಯಿಂದ, ಷಷ್ಠೀ ಅ, ಸಪ್ತಮೀ ಅಲ್ಲಿ.",
+              "**ಸಂಬೋಧನಾ** is for calling: ರಾಮಾ, ಗುರುವೇ.",
+              "Extra letters like ನ, ವ, ಯ, ದ are ಆಗಮ letters, not the suffix.",
+            ],
+          },
+        ],
+        flashcards: [
+          { front: "ಪ್ರಥಮಾ ವಿಭಕ್ತಿ", back: "Suffix ಉ, the doer (ಕರ್ತೃ). ರಾಮನು, ಮರವು." },
+          { front: "ದ್ವಿತೀಯಾ ವಿಭಕ್ತಿ", back: "Suffix ಅನ್ನು, the object (ಕರ್ಮ). ಹಣ್ಣನ್ನು." },
+          { front: "ತೃತೀಯಾ ವಿಭಕ್ತಿ", back: "Suffix ಇಂದ, by / with (ಕರಣ). ಕೋಲಿನಿಂದ." },
+          { front: "ಚತುರ್ಥೀ ವಿಭಕ್ತಿ", back: "Suffix ಗೆ / ಕೆ / ಇಗೆ, to / for. ಮನೆಗೆ, ಮರಕ್ಕೆ, ರಾಮನಿಗೆ." },
+          { front: "ಪಂಚಮೀ ವಿಭಕ್ತಿ", back: "Suffix ದೆಸೆಯಿಂದ, from / because of. ಮರದ ದೆಸೆಯಿಂದ." },
+          { front: "ಷಷ್ಠೀ ವಿಭಕ್ತಿ", back: "Suffix ಅ, 'of' (ಸಂಬಂಧ). ರಾಮನ, ಮರದ." },
+          { front: "ಸಪ್ತಮೀ ವಿಭಕ್ತಿ", back: "Suffix ಅಲ್ಲಿ, in / at (ಅಧಿಕರಣ). ಮನೆಯಲ್ಲಿ." },
+        ],
+        quiz: [
+          {
+            kind: "mcq",
+            q: "Which is the ಪಂಚಮೀ ವಿಭಕ್ತಿ ಪ್ರತ್ಯಯ?",
+            options: ["ಇಂದ", "ದೆಸೆಯಿಂದ", "ಅಲ್ಲಿ", "ಅನ್ನು"],
+            answer: 1,
+            explain: "ಪಂಚಮೀ uses **ದೆಸೆಯಿಂದ**. ಇಂದ alone is ತೃತೀಯಾ.",
+          },
+          {
+            kind: "mcq",
+            q: "In 'ಅಜ್ಜಿ ಕಥೆಯನ್ನು ಹೇಳಿದಳು' (Grandmother told a story), ಕಥೆಯನ್ನು is:",
+            options: ["ಪ್ರಥಮಾ", "ದ್ವಿತೀಯಾ", "ತೃತೀಯಾ", "ಸಪ್ತಮೀ"],
+            answer: 1,
+            explain: "ಕಥೆಯನ್ನು ends in ಅನ್ನು and is the object → **ದ್ವಿತೀಯಾ**.",
+          },
+          {
+            kind: "fill",
+            q: "ಪುಸ್ತಕ ಮೇಜಿನ ಮೇಲೆ ಇದೆ. The word ಮೇಜಿನ ends in the ___ vibhakti suffix ಅ.",
+            answer: ["ಷಷ್ಠೀ", "ಷಷ್ಠಿ"],
+            explain: "ಮೇಜು + ಅ (with ಇನ added) = ಮೇಜಿನ, 'of the table' → ಷಷ್ಠೀ.",
+            difficulty: 2,
+          },
+          {
+            kind: "truefalse",
+            q: "In ಮನೆಯಲ್ಲಿ, the vibhakti suffix is ಯಲ್ಲಿ.",
+            answer: false,
+            explain: "The suffix is ಅಲ್ಲಿ. The ಯ is an ಆಗಮ letter added between ಮನೆ and ಅಲ್ಲಿ.",
+            difficulty: 2,
+            hint: "Remember ಯಕಾರಾಗಮ ಸಂಧಿ.",
+          },
+          {
+            kind: "order",
+            q: "Put these vibhaktis in order, from ಪ್ರಥಮಾ to ಸಪ್ತಮೀ.",
+            items: ["ಮರವು", "ಮರವನ್ನು", "ಮರದಿಂದ", "ಮರಕ್ಕೆ", "ಮರದ ದೆಸೆಯಿಂದ", "ಮರದಲ್ಲಿ"],
+            explain: "ಉ, ಅನ್ನು, ಇಂದ, ಕೆ, ದೆಸೆಯಿಂದ, (ಅ), ಅಲ್ಲಿ: ಪ್ರಥಮಾ, ದ್ವಿತೀಯಾ, ತೃತೀಯಾ, ಚತುರ್ಥೀ, ಪಂಚಮೀ, then ಸಪ್ತಮೀ.",
+          },
+          {
+            kind: "multi",
+            q: "Which words are in ಚತುರ್ಥೀ ವಿಭಕ್ತಿ? (choose all)",
+            options: ["ಮರಕ್ಕೆ", "ರಾಮನಿಗೆ", "ಮನೆಯಲ್ಲಿ", "ಶಾಲೆಗೆ"],
+            answers: [0, 1, 3],
+            explain: "ಕೆ, ಇಗೆ and ಗೆ are all ಚತುರ್ಥೀ suffixes. ಮನೆಯಲ್ಲಿ is ಸಪ್ತಮೀ.",
+          },
+          {
+            kind: "mcq",
+            q: "'ಗುರುವೇ, ನಮಸ್ಕಾರ' — ಗುರುವೇ is in which form?",
+            options: ["ಪ್ರಥಮಾ", "ಸಂಬೋಧನಾ", "ಷಷ್ಠೀ", "ಚತುರ್ಥೀ"],
+            answer: 1,
+            explain: "We are calling the teacher, so it is **ಸಂಬೋಧನಾ** (vocative), with the ending ಏ.",
+          },
+        ],
+      },
+    ],
+  },
+  /* ------------------------------------------------------------------ */
+  {
+    slug: "kannada-tenses",
+    title: "Tenses (ಕಾಲಗಳು)",
+    icon: "⏳",
+    description: "Present, past and future verbs in Kannada (ವರ್ತಮಾನ, ಭೂತ, ಭವಿಷ್ಯತ್) and how the verb agrees with the subject.",
+    lessons: [
+      {
+        slug: "kannada-kalagalu",
+        title: "ವರ್ತಮಾನ, ಭೂತ, ಭವಿಷ್ಯತ್ ಕಾಲ",
+        summary: "The three tenses, their markers (ಉತ್ತ, ದ/ಇದ, ಉವ), the verb root (ಧಾತು) and the personal endings.",
+        minutes: 15,
+        xp: 40,
+        blocks: [
+          {
+            type: "illustration",
+            emoji: "⏳",
+            caption: "ನಿನ್ನೆ ಓದಿದೆನು (I read yesterday) · ಇಂದು ಓದುತ್ತೇನೆ (I read today) · ನಾಳೆ ಓದುವೆನು (I will read tomorrow).",
+          },
+          {
+            type: "text",
+            md: "A **ಕ್ರಿಯಾಪದ** (verb) tells us an action. It is made from a **ಧಾತು** (verb root), like ಓದು (read), ಬರೆ (write), ಹಾಡು (sing).\n\n**ಕಾಲ** (tense) tells us *when* the action happens. Kannada grammar has three tenses: **ವರ್ತಮಾನ ಕಾಲ** (present), **ಭೂತ ಕಾಲ** (past) and **ಭವಿಷ್ಯತ್ ಕಾಲ** (future).",
+          },
+          {
+            type: "table",
+            headers: ["ಕಾಲ", "Marker", "ಓದು (read) with ಅವನು (he)"],
+            rows: [
+              ["**ವರ್ತಮಾನ** (present)", "ಉತ್ತ", "ಓದುತ್ತಾನೆ (he reads / is reading)"],
+              ["**ಭೂತ** (past)", "ದ / ಇದ", "ಓದಿದನು (he read)"],
+              ["**ಭವಿಷ್ಯತ್** (future)", "ಉವ", "ಓದುವನು (he will read)"],
+            ],
+          },
+          {
+            type: "table",
+            headers: ["Subject", "ವರ್ತಮಾನ", "ಭೂತ", "ಭವಿಷ್ಯತ್"],
+            rows: [
+              ["ಅವನು (he)", "ಓದುತ್ತಾನೆ", "ಓದಿದನು", "ಓದುವನು"],
+              ["ಅವಳು (she)", "ಓದುತ್ತಾಳೆ", "ಓದಿದಳು", "ಓದುವಳು"],
+              ["ಅವರು (they)", "ಓದುತ್ತಾರೆ", "ಓದಿದರು", "ಓದುವರು"],
+              ["ನಾನು (I)", "ಓದುತ್ತೇನೆ", "ಓದಿದೆನು", "ಓದುವೆನು"],
+              ["ನಾವು (we)", "ಓದುತ್ತೇವೆ", "ಓದಿದೆವು", "ಓದುವೆವು"],
+              ["ನೀನು (you)", "ಓದುತ್ತೀಯೆ", "ಓದಿದೆ", "ಓದುವೆ"],
+              ["ನೀವು (you, plural/respect)", "ಓದುತ್ತೀರಿ", "ಓದಿದಿರಿ", "ಓದುವಿರಿ"],
+            ],
+          },
+          {
+            type: "text",
+            md: "Some common verbs have a special past form: ಬಾ (come) → ಬಂದನು; ಹೋಗು (go) → ಹೋದನು; ಕೊಡು (give) → ಕೊಟ್ಟನು; ತಿನ್ನು (eat) → ತಿಂದನು. Learn these by heart.\n\nIn everyday speech, people also use the present form with a time word for the future: ನಾಳೆ ಅವನು ಬರುತ್ತಾನೆ (he will come tomorrow). In grammar answers, use the ಉವ form for ಭವಿಷ್ಯತ್: ಬರುವನು.",
+          },
+          {
+            type: "example",
+            title: "Change the tense",
+            problem: "Change 'ಅವಳು ಹಾಡು ಹಾಡುತ್ತಾಳೆ' (she sings a song) into ಭೂತ ಕಾಲ and ಭವಿಷ್ಯತ್ ಕಾಲ.",
+            steps: [
+              "Find the verb: ಹಾಡುತ್ತಾಳೆ. The root (ಧಾತು) is ಹಾಡು, and the subject is ಅವಳು (she).",
+              "Past: root + ಇದ + she-ending ಅಳು → ಹಾಡಿದಳು.",
+              "Future: root + ಉವ + ಅಳು → ಹಾಡುವಳು.",
+              "Keep the rest of the sentence the same.",
+            ],
+            answer: "ಭೂತ: ಅವಳು ಹಾಡು ಹಾಡಿದಳು. ಭವಿಷ್ಯತ್: ಅವಳು ಹಾಡು ಹಾಡುವಳು.",
+          },
+          {
+            type: "checkpoint",
+            questions: [
+              {
+                kind: "mcq",
+                q: "ನಾವು ಆಟ ಆಡಿದೆವು (we played a game). Which tense?",
+                options: ["ವರ್ತಮಾನ", "ಭೂತ", "ಭವಿಷ್ಯತ್", "None"],
+                answer: 1,
+                explain: "ಆಡಿದೆವು has the past marker ಇದ → **ಭೂತ ಕಾಲ**.",
+              },
+            ],
+          },
+          {
+            type: "mistake",
+            wrong: "ಅವಳು ಶಾಲೆಗೆ ಹೋದನು.",
+            right: "ಅವಳು ಶಾಲೆಗೆ ಹೋದಳು. (She went to school.)",
+            why: "Learners change the tense correctly but forget the ending. The ending must match the subject: ಅವನು → -ಅನು, ಅವಳು → -ಅಳು, ಅವರು → -ಅರು.",
+          },
+          {
+            type: "activity",
+            activity: {
+              kind: "sort",
+              prompt: "Sort each verb by its tense.",
+              groups: ["ವರ್ತಮಾನ", "ಭೂತ", "ಭವಿಷ್ಯತ್"],
+              items: [
+                { text: "ಬರೆಯುತ್ತಾನೆ", group: 0, hint: "Has the marker ಉತ್ತ." },
+                { text: "ಬರೆದನು", group: 1, hint: "Has the past marker ದ." },
+                { text: "ಬರೆಯುವನು", group: 2, hint: "Has the marker ಉವ." },
+                { text: "ಬಂದಳು", group: 1, hint: "ಬಾ → ಬಂದ: special past form." },
+                { text: "ತಿನ್ನುತ್ತೇವೆ", group: 0, hint: "Has the marker ಉತ್ತ." },
+                { text: "ಹೋಗುವೆನು", group: 2, hint: "Has the marker ಉವ." },
+              ],
+              explain: "Look for the marker in the middle of the verb: **ಉತ್ತ** → present, **ದ / ಇದ** → past, **ಉವ** → future.",
+            },
+          },
+          {
+            type: "callout",
+            tone: "exam",
+            title: "SSLC exam tip",
+            md: "In 'change the tense' questions, marks are lost for a wrong ending (ಹೋದನು for a girl) or for changing the subject. Change only the verb. Also, when you write a letter or essay, do not mix tenses in one sentence.",
+          },
+          {
+            type: "keypoints",
+            items: [
+              "**ಧಾತು** = verb root (ಓದು, ಬರೆ). **ಕಾಲ** = tense.",
+              "**ವರ್ತಮಾನ** — ಉತ್ತ (ಓದುತ್ತಾನೆ); **ಭೂತ** — ದ/ಇದ (ಓದಿದನು); **ಭವಿಷ್ಯತ್** — ಉವ (ಓದುವನು).",
+              "The ending agrees with the subject: ಅವನು -ಅನು, ಅವಳು -ಅಳು, ಅವರು -ಅರು, ನಾನು -ಎನು.",
+              "Special past forms: ಬಂದ, ಹೋದ, ಕೊಟ್ಟ, ತಿಂದ.",
+            ],
+          },
+        ],
+        flashcards: [
+          { front: "ಧಾತು", back: "The verb root, e.g. ಓದು (read), ಬರೆ (write), ಹಾಡು (sing)." },
+          { front: "ವರ್ತಮಾನ ಕಾಲ marker", back: "ಉತ್ತ: ಓದುತ್ತಾನೆ (he reads)." },
+          { front: "ಭೂತ ಕಾಲ marker", back: "ದ / ಇದ: ಓದಿದನು (he read), ಬರೆದನು (he wrote)." },
+          { front: "ಭವಿಷ್ಯತ್ ಕಾಲ marker", back: "ಉವ: ಓದುವನು (he will read)." },
+          { front: "Past of ಬಾ, ಹೋಗು, ಕೊಡು", back: "ಬಂದನು, ಹೋದನು, ಕೊಟ್ಟನು." },
+        ],
+        quiz: [
+          {
+            kind: "mcq",
+            q: "ಮಕ್ಕಳು ನಾಳೆ ಊರಿಗೆ ಹೋಗುವರು. The verb is in:",
+            options: ["ವರ್ತಮಾನ ಕಾಲ", "ಭೂತ ಕಾಲ", "ಭವಿಷ್ಯತ್ ಕಾಲ", "No tense"],
+            answer: 2,
+            explain: "ಹೋಗುವರು has the marker ಉವ → **ಭವಿಷ್ಯತ್ ಕಾಲ** (they will go).",
+          },
+          {
+            kind: "fill",
+            q: "Past tense of 'ನಾನು ಪತ್ರ ಬರೆಯುತ್ತೇನೆ': ನಾನು ಪತ್ರ ___ .",
+            answer: ["ಬರೆದೆನು", "ಬರೆದೆ"],
+            explain: "ಬರೆ + ದ + ಎನು = ಬರೆದೆನು (I wrote).",
+            difficulty: 2,
+          },
+          {
+            kind: "truefalse",
+            q: "ಓದುತ್ತಾಳೆ is a past tense verb.",
+            answer: false,
+            explain: "ಓದುತ್ತಾಳೆ has ಉತ್ತ, so it is present (she reads). Past would be ಓದಿದಳು.",
+          },
+          {
+            kind: "mcq",
+            q: "Choose the correct sentence.",
+            options: ["ಅವಳು ಹಣ್ಣು ತಿಂದನು.", "ಅವಳು ಹಣ್ಣು ತಿಂದಳು.", "ಅವಳು ಹಣ್ಣು ತಿಂದರು.", "ಅವಳು ಹಣ್ಣು ತಿನ್ನಿದಳು."],
+            answer: 1,
+            explain: "Subject ಅವಳು needs -ಅಳು, and the past of ತಿನ್ನು is ತಿಂದ: ತಿಂದಳು.",
+            difficulty: 2,
+            hint: "Check the ending and the special past form.",
+          },
+          {
+            kind: "multi",
+            q: "Which verbs are in ವರ್ತಮಾನ ಕಾಲ? (choose all)",
+            options: ["ಮಾಡುತ್ತಾರೆ", "ಮಾಡಿದರು", "ಆಡುತ್ತೇವೆ", "ಆಡುವೆವು"],
+            answers: [0, 2],
+            explain: "ಮಾಡುತ್ತಾರೆ and ಆಡುತ್ತೇವೆ have ಉತ್ತ. ಮಾಡಿದರು is past; ಆಡುವೆವು is future.",
+          },
+          {
+            kind: "order",
+            q: "Arrange from past to future.",
+            items: ["ಹಾಡಿದನು", "ಹಾಡುತ್ತಾನೆ", "ಹಾಡುವನು"],
+            explain: "ಹಾಡಿದನು (sang) → ಹಾಡುತ್ತಾನೆ (sings) → ಹಾಡುವನು (will sing).",
+          },
+        ],
+      },
+    ],
+  },
+  /* ------------------------------------------------------------------ */
+  {
+    slug: "kannada-linga-vachana",
+    title: "Gender and Number (ಲಿಂಗ ಮತ್ತು ವಚನ)",
+    icon: "👫",
+    description: "Masculine, feminine and neuter nouns (ಪುಲ್ಲಿಂಗ, ಸ್ತ್ರೀಲಿಂಗ, ನಪುಂಸಕಲಿಂಗ) and singular and plural (ಏಕವಚನ, ಬಹುವಚನ).",
+    lessons: [
+      {
+        slug: "linga-mattu-vachana",
+        title: "ಲಿಂಗ and ವಚನ",
+        summary: "The three genders, how to make feminine forms, plural suffixes (ಗಳು, ಅರು, ಅಂದಿರು) and verb agreement.",
+        minutes: 14,
+        xp: 35,
+        blocks: [
+          {
+            type: "text",
+            md: "**ಲಿಂಗ** (gender) tells us whether a noun is male, female or neither. **ವಚನ** (number) tells us whether it is one or many.\n\nIn Kannada, gender is very important because the **verb ending changes** with it: ಹುಡುಗ ಬಂದ**ನು** (the boy came), ಹುಡುಗಿ ಬಂದ**ಳು** (the girl came), ಮರ ಬಿದ್ದಿತು (the tree fell).",
+          },
+          {
+            type: "table",
+            headers: ["ಲಿಂಗ", "Meaning", "Examples", "Verb ending (past)"],
+            rows: [
+              ["**ಪುಲ್ಲಿಂಗ**", "masculine — men, boys", "ಹುಡುಗ, ಅರಸ, ಅಜ್ಜ, ಶಿಕ್ಷಕ", "-ಅನು: ಬಂದನು"],
+              ["**ಸ್ತ್ರೀಲಿಂಗ**", "feminine — women, girls", "ಹುಡುಗಿ, ಅರಸಿ, ಅಜ್ಜಿ, ಶಿಕ್ಷಕಿ", "-ಅಳು: ಬಂದಳು"],
+              ["**ನಪುಂಸಕಲಿಂಗ**", "neuter — things, animals, birds, plants", "ಮರ, ಮನೆ, ಹಸು, ನಾಯಿ, ಹಕ್ಕಿ", "-ಇತು: ಬಂದಿತು / ಬಂತು"],
+            ],
+          },
+          {
+            type: "list",
+            items: [
+              "Masculine → feminine: ಹುಡುಗ → ಹುಡುಗಿ, ಅಜ್ಜ → ಅಜ್ಜಿ, ಮುದುಕ → ಮುದುಕಿ, ಗೆಳೆಯ → ಗೆಳತಿ, ಒಡೆಯ → ಒಡತಿ, ಲೇಖಕ → ಲೇಖಕಿ.",
+              "Animals and birds are **ನಪುಂಸಕಲಿಂಗ** in Kannada grammar, even a cow or a hen: ಹಸು ಹಾಲು ಕೊಡುತ್ತದೆ (the cow gives milk).",
+              "Textbooks also list some mixed types, for example words like ಮಂತ್ರಿ (minister) that can be used for a man or a woman. Your teacher will tell you which mixed types your board asks for.",
+            ],
+          },
+          {
+            type: "heading",
+            text: "ವಚನ: ಏಕವಚನ and ಬಹುವಚನ",
+          },
+          {
+            type: "table",
+            headers: ["Plural suffix", "Used for", "ಏಕವಚನ → ಬಹುವಚನ"],
+            rows: [
+              ["**ಗಳು**", "things, animals (and many other nouns)", "ಮರ → ಮರಗಳು, ಮನೆ → ಮನೆಗಳು, ಹಸು → ಹಸುಗಳು"],
+              ["**ಅರು**", "people", "ಹುಡುಗ → ಹುಡುಗರು, ಅರಸ → ಅರಸರು, ಹುಡುಗಿ → ಹುಡುಗಿಯರು"],
+              ["**ಅಂದಿರು**", "family / relation words", "ಅಣ್ಣ → ಅಣ್ಣಂದಿರು, ಅಕ್ಕ → ಅಕ್ಕಂದಿರು, ತಾಯಿ → ತಾಯಂದಿರು"],
+            ],
+          },
+          {
+            type: "example",
+            title: "Change gender and number",
+            problem: "Change 'ಹುಡುಗನು ಹಾಡಿದನು' (the boy sang) to (a) feminine and (b) plural.",
+            steps: [
+              "Feminine of ಹುಡುಗ is ಹುಡುಗಿ. The verb must also change: -ಅನು → -ಅಳು.",
+              "(a) ಹುಡುಗಿಯು ಹಾಡಿದಳು.",
+              "Plural of ಹುಡುಗ (a person) takes ಅರು: ಹುಡುಗರು. The verb ending for 'they' is -ಅರು.",
+              "(b) ಹುಡುಗರು ಹಾಡಿದರು.",
+            ],
+            answer: "(a) ಹುಡುಗಿಯು ಹಾಡಿದಳು. (b) ಹುಡುಗರು ಹಾಡಿದರು.",
+          },
+          {
+            type: "checkpoint",
+            questions: [
+              {
+                kind: "mcq",
+                q: "ಹಕ್ಕಿ (bird) belongs to which ಲಿಂಗ?",
+                options: ["ಪುಲ್ಲಿಂಗ", "ಸ್ತ್ರೀಲಿಂಗ", "ನಪುಂಸಕಲಿಂಗ", "It has no gender"],
+                answer: 2,
+                explain: "Birds and animals are **ನಪುಂಸಕಲಿಂಗ**: ಹಕ್ಕಿ ಹಾರಿತು (the bird flew).",
+              },
+            ],
+          },
+          {
+            type: "mistake",
+            wrong: "ಹಸು ಹಾಲು ಕೊಡುತ್ತಾಳೆ. (A cow is female, so I use the feminine ending.)",
+            right: "ಹಸು ಹಾಲು ಕೊಡುತ್ತದೆ.",
+            why: "In English we sometimes say 'she' for a cow, so it feels natural. In Kannada grammar, animals take the neuter (ನಪುಂಸಕ) ending -ಅದೆ / -ಇತು.",
+          },
+          {
+            type: "activity",
+            activity: {
+              kind: "sort",
+              prompt: "Sort each noun by its gender (ಲಿಂಗ).",
+              groups: ["ಪುಲ್ಲಿಂಗ", "ಸ್ತ್ರೀಲಿಂಗ", "ನಪುಂಸಕಲಿಂಗ"],
+              items: [
+                { text: "ಅಜ್ಜ", group: 0, hint: "Grandfather — a man." },
+                { text: "ಗೆಳತಿ", group: 1, hint: "A female friend." },
+                { text: "ನಾಯಿ", group: 2, hint: "Animals are neuter." },
+                { text: "ಶಿಕ್ಷಕ", group: 0, hint: "A male teacher." },
+                { text: "ಒಡತಿ", group: 1, hint: "A female owner." },
+                { text: "ಪುಸ್ತಕ", group: 2, hint: "A thing." },
+              ],
+              explain: "Men → **ಪುಲ್ಲಿಂಗ**, women → **ಸ್ತ್ರೀಲಿಂಗ**, everything else (things, animals, birds, plants) → **ನಪುಂಸಕಲಿಂಗ**.",
+            },
+          },
+          {
+            type: "callout",
+            tone: "exam",
+            title: "SSLC exam tip",
+            md: "When you change gender or number in a sentence, change the **verb too**. ಹುಡುಗಿಯರು ಬಂದಳು loses the mark; ಹುಡುಗಿಯರು ಬಂದರು is right. Also remember ಅಣ್ಣ → ಅಣ್ಣಂದಿರು, not ಅಣ್ಣಗಳು.",
+          },
+          {
+            type: "keypoints",
+            items: [
+              "**ಪುಲ್ಲಿಂಗ** (masculine), **ಸ್ತ್ರೀಲಿಂಗ** (feminine), **ನಪುಂಸಕಲಿಂಗ** (neuter: things and animals).",
+              "**ಏಕವಚನ** = one; **ಬಹುವಚನ** = many.",
+              "Plural suffixes: ಗಳು (ಮರಗಳು), ಅರು (ಹುಡುಗರು), ಅಂದಿರು (ಅಣ್ಣಂದಿರು).",
+              "The verb ending agrees with gender and number: ಬಂದನು / ಬಂದಳು / ಬಂದಿತು / ಬಂದರು.",
+            ],
+          },
+        ],
+        flashcards: [
+          { front: "ಪುಲ್ಲಿಂಗ", back: "Masculine: ಹುಡುಗ, ಅಜ್ಜ, ಅರಸ. Verb: ಬಂದನು." },
+          { front: "ಸ್ತ್ರೀಲಿಂಗ", back: "Feminine: ಹುಡುಗಿ, ಅಜ್ಜಿ, ಅರಸಿ. Verb: ಬಂದಳು." },
+          { front: "ನಪುಂಸಕಲಿಂಗ", back: "Neuter: things, animals, birds — ಮರ, ಹಸು, ಹಕ್ಕಿ. Verb: ಬಂದಿತು." },
+          { front: "ಬಹುವಚನ suffixes", back: "ಗಳು (ಮರಗಳು), ಅರು (ಹುಡುಗರು), ಅಂದಿರು (ಅಕ್ಕಂದಿರು)." },
+          { front: "Feminine of ಗೆಳೆಯ, ಒಡೆಯ", back: "ಗೆಳತಿ, ಒಡತಿ." },
+        ],
+        quiz: [
+          {
+            kind: "mcq",
+            q: "The plural of ಅಕ್ಕ (elder sister) is:",
+            options: ["ಅಕ್ಕಗಳು", "ಅಕ್ಕರು", "ಅಕ್ಕಂದಿರು", "ಅಕ್ಕಿಯರು"],
+            answer: 2,
+            explain: "Relation words take **ಅಂದಿರು**: ಅಕ್ಕಂದಿರು.",
+          },
+          {
+            kind: "fill",
+            q: "The feminine form of ಲೇಖಕ (writer) is ___ .",
+            answer: ["ಲೇಖಕಿ"],
+            explain: "ಲೇಖಕ → ಲೇಖಕಿ, like ಶಿಕ್ಷಕ → ಶಿಕ್ಷಕಿ.",
+          },
+          {
+            kind: "truefalse",
+            q: "In Kannada grammar, ಹಸು (cow) is ಸ್ತ್ರೀಲಿಂಗ.",
+            answer: false,
+            explain: "Animals are ನಪುಂಸಕಲಿಂಗ: ಹಸು ಮೇಯುತ್ತದೆ (the cow grazes).",
+            difficulty: 2,
+          },
+          {
+            kind: "mcq",
+            q: "Choose the correct plural sentence of 'ಹುಡುಗಿ ಓದಿದಳು'.",
+            options: ["ಹುಡುಗಿಯರು ಓದಿದಳು.", "ಹುಡುಗಿಗಳು ಓದಿದಳು.", "ಹುಡುಗಿಯರು ಓದಿದರು.", "ಹುಡುಗಿ ಓದಿದರು."],
+            answer: 2,
+            explain: "Both the noun and the verb become plural: ಹುಡುಗಿಯರು ಓದಿದರು.",
+            difficulty: 2,
+            hint: "Change the noun and the verb.",
+          },
+          {
+            kind: "multi",
+            q: "Which nouns are ನಪುಂಸಕಲಿಂಗ? (choose all)",
+            options: ["ಮನೆ", "ಹಕ್ಕಿ", "ಅಜ್ಜಿ", "ಮರ"],
+            answers: [0, 1, 3],
+            explain: "ಮನೆ, ಹಕ್ಕಿ and ಮರ are neuter. ಅಜ್ಜಿ (grandmother) is ಸ್ತ್ರೀಲಿಂಗ.",
+          },
+          {
+            kind: "mcq",
+            q: "ಮರ ___ . (The tree fell.) Fill in the correct verb.",
+            options: ["ಬಿದ್ದನು", "ಬಿದ್ದಳು", "ಬಿದ್ದಿತು", "ಬಿದ್ದರು"],
+            answer: 2,
+            explain: "ಮರ is neuter and singular, so the ending is -ಇತು: ಬಿದ್ದಿತು.",
+          },
+        ],
+      },
+    ],
+  },
 ];
 
 /** Exact syllabus chapter title → topic slug. */

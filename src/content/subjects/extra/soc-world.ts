@@ -1430,6 +1430,598 @@ export const topics: Topic[] = [
       },
     ],
   },
+  /* ------------------------------------------------------------------ */
+  /* ICSE: The First World War                                           */
+  /* ------------------------------------------------------------------ */
+  {
+    slug: "the-first-world-war",
+    title: "The First World War",
+    icon: "🪖",
+    description: "Causes, main events and results of the First World War (1914–1918) and the Treaty of Versailles.",
+    lessons: [
+      {
+        slug: "first-world-war-causes-and-results",
+        title: "WWI: Causes, Course and the Treaty of Versailles",
+        summary: "Nationalism, imperialism, militarism and alliances; the Sarajevo assassination; the Treaty of Versailles and the results of the war.",
+        minutes: 17,
+        xp: 44,
+        blocks: [
+          {
+            type: "text",
+            md: "Picture a dry forest after months without rain. Any small spark can set it ablaze. Europe in 1914 was like that forest. The spark came on **28 June 1914** in the town of Sarajevo.",
+          },
+          {
+            type: "text",
+            md: "The **First World War** was fought from **1914 to 1918**. It is called a 'world' war because it involved countries from every continent, including colonies such as India; more than a million Indian soldiers served overseas. Two groups fought: the **Allies** (Britain, France, Russia, later Italy, the USA and others) and the **Central Powers** (Germany, Austria-Hungary, Ottoman Turkey and Bulgaria).",
+          },
+          {
+            type: "heading",
+            text: "Causes of the war",
+          },
+          {
+            type: "table",
+            headers: ["Cause", "What it means", "Example"],
+            rows: [
+              ["**Aggressive nationalism**", "loving one's nation so much that others are seen as enemies", "France wanted Alsace-Lorraine back from Germany; Serbs wanted to unite all Slavs"],
+              ["**Imperialism**", "rivalry for colonies, markets and raw materials", "Germany, a late-comer, clashed with Britain and France over colonies"],
+              ["**Militarism** (armament race)", "building ever larger armies and navies", "naval race between Britain and Germany"],
+              ["**System of alliances**", "Europe split into two armed camps", "**Triple Alliance** (1882): Germany, Austria-Hungary, Italy. **Triple Entente** (1907): Britain, France, Russia"],
+              ["**Balkan crisis**", "Ottoman decline and rivalry over the Balkans", "Austria-Hungary annexed Bosnia in 1908, angering Serbia"],
+            ],
+          },
+          {
+            type: "text",
+            md: "**Immediate cause:** On **28 June 1914**, Archduke **Franz Ferdinand**, heir to the Austro-Hungarian throne, and his wife were shot dead at **Sarajevo** in Bosnia by **Gavrilo Princip**, a young Bosnian Serb linked to the Serbian secret society called the **Black Hand**. Austria-Hungary blamed Serbia and declared war on it on **28 July 1914**. Because of the alliances, Russia, Germany, France and Britain were drawn in within days. Britain declared war on Germany on 4 August 1914 after Germany invaded neutral Belgium.",
+          },
+          {
+            type: "checkpoint",
+            questions: [
+              {
+                kind: "mcq",
+                q: "Which countries formed the Triple Entente?",
+                options: [
+                  "Germany, Austria-Hungary, Italy",
+                  "Britain, France, Russia",
+                  "Britain, USA, Japan",
+                  "Germany, Italy, Japan",
+                ],
+                answer: 1,
+                explain: "Germany, Austria-Hungary and Italy made up the Triple Alliance (1882). Italy later changed sides and joined the Allies in 1915.",
+              },
+            ],
+          },
+          {
+            type: "text",
+            md: "**Course of the war (in brief):** Fighting on the Western Front became **trench warfare**, with little movement for years. New weapons such as machine guns, tanks, poison gas, submarines and aircraft caused huge losses. The **USA joined the Allies in April 1917**, angered by German submarine attacks. **Russia** left the war after its revolution, signing the **Treaty of Brest-Litovsk** with Germany in March 1918. Germany signed an **armistice** (ceasefire) on **11 November 1918**.",
+          },
+          {
+            type: "heading",
+            text: "The Treaty of Versailles (28 June 1919)",
+          },
+          {
+            type: "list",
+            items: [
+              "**War guilt clause:** Germany had to accept blame for the war.",
+              "**Reparations:** Germany had to pay huge compensation, fixed in 1921 at 6,600 million pounds.",
+              "**Territory:** Alsace-Lorraine went back to France; the Saar coal mines went to France for 15 years; Germany lost all its colonies, which became **mandates** under the League of Nations; Danzig became a free city.",
+              "**Disarmament:** the German army was limited to 100,000 men; no air force and no submarines; the Rhineland was demilitarised.",
+              "**League of Nations:** its Covenant was part of the treaty.",
+            ],
+          },
+          {
+            type: "example",
+            title: "Explaining why the treaty caused anger",
+            problem: "Why did Germans call the Treaty of Versailles a 'dictated peace'? (3 marks)",
+            steps: [
+              "Process: Germany was not invited to negotiate; it was simply told to sign.",
+              "Blame: the war guilt clause made Germany alone responsible.",
+              "Burden: heavy reparations, loss of land and colonies, and a tiny army humiliated the nation.",
+            ],
+            answer: "The treaty was imposed without discussion, blamed Germany alone and burdened it with reparations and losses of land and military power, so Germans saw it as dictated and unjust. This anger later helped Hitler rise.",
+          },
+          {
+            type: "mistake",
+            wrong: "The assassination at Sarajevo was the main cause of the First World War.",
+            right: "The assassination was only the immediate cause. The real (underlying) causes were nationalism, imperialism, militarism, the alliance system and the Balkan crisis.",
+            why: "The murder is a dramatic story, so students give it all the weight. Without the alliances and rivalries, a local crisis between Austria and Serbia would not have become a world war.",
+          },
+          {
+            type: "activity",
+            activity: {
+              kind: "sort",
+              prompt: "Underlying cause or immediate cause?",
+              groups: ["Underlying cause", "Immediate cause"],
+              items: [
+                { text: "Naval race between Britain and Germany", group: 0, hint: "This built up over many years." },
+                { text: "Rivalry for colonies in Africa and Asia", group: 0, hint: "Imperialism is a long-term cause." },
+                { text: "Two armed camps of alliances", group: 0, hint: "Alliances formed from 1882 to 1907." },
+                { text: "Murder of Franz Ferdinand at Sarajevo", group: 1, hint: "This was the spark in June 1914." },
+                { text: "French wish to recover Alsace-Lorraine", group: 0, hint: "France lost it in 1871; this is long-term nationalism." },
+              ],
+              explain: "Long-term **underlying causes** made war likely; the **immediate cause**, the Sarajevo murder, set it off.",
+            },
+          },
+          {
+            type: "callout",
+            tone: "exam",
+            title: "ICSE tip",
+            md: "ICSE often asks for 'any three terms of the Treaty of Versailles' or 'any three consequences of the war'. Write precise terms (Alsace-Lorraine to France, army of 100,000, war guilt clause), not vague lines like 'Germany was punished'.",
+          },
+          {
+            type: "text",
+            md: "**Results of the war:** four empires fell (German, Austro-Hungarian, Russian and Ottoman); new nations such as Poland, Czechoslovakia and Yugoslavia appeared; the **League of Nations** was set up in 1920 to keep peace; the USA rose as a world power; and German anger at Versailles helped the rise of dictators.",
+          },
+          {
+            type: "keypoints",
+            items: [
+              "WWI lasted from 1914 to 1918: Allies vs Central Powers.",
+              "Underlying causes: nationalism, imperialism, militarism, alliances, Balkan crisis.",
+              "Immediate cause: assassination of Archduke Franz Ferdinand at Sarajevo, 28 June 1914.",
+              "Armistice on 11 November 1918; Treaty of Versailles signed on 28 June 1919.",
+              "Results: fall of four empires, new states, League of Nations, resentment in Germany.",
+            ],
+          },
+        ],
+        flashcards: [
+          { front: "Triple Alliance (1882)", back: "Germany, Austria-Hungary and Italy." },
+          { front: "Triple Entente (1907)", back: "Britain, France and Russia." },
+          { front: "Immediate cause of WWI", back: "Assassination of Archduke Franz Ferdinand at Sarajevo on 28 June 1914." },
+          { front: "Armistice", back: "A ceasefire agreement; WWI's armistice was signed on 11 November 1918." },
+          { front: "War guilt clause", back: "Clause of the Treaty of Versailles making Germany accept responsibility for the war." },
+          { front: "Mandate", back: "A former colony of a defeated power, governed by an Allied country under League of Nations supervision." },
+          { front: "Treaty of Versailles", back: "Peace treaty with Germany signed on 28 June 1919." },
+        ],
+        quiz: [
+          {
+            kind: "mcq",
+            q: "Who assassinated Archduke Franz Ferdinand?",
+            options: ["Otto von Bismarck", "Gavrilo Princip", "Kaiser William II", "Benito Mussolini"],
+            answer: 1,
+            explain: "Gavrilo Princip, a Bosnian Serb linked to the Black Hand, shot him at Sarajevo.",
+          },
+          {
+            kind: "fill",
+            q: "The armistice ending the fighting of WWI was signed on 11 November ___.",
+            answer: ["1918"],
+            explain: "The fighting stopped on 11 November 1918.",
+          },
+          {
+            kind: "truefalse",
+            q: "Italy fought throughout the war on the side of Germany.",
+            answer: false,
+            explain: "Italy was in the Triple Alliance but joined the Allies in 1915.",
+            difficulty: 2,
+            hint: "Think about which side Italy entered the war on.",
+          },
+          {
+            kind: "multi",
+            q: "Which were terms of the Treaty of Versailles?",
+            options: [
+              "Alsace-Lorraine returned to France",
+              "German army limited to 100,000 men",
+              "Germany allowed to keep its colonies",
+              "Germany had to pay reparations",
+            ],
+            answers: [0, 1, 3],
+            explain: "Germany lost all its colonies, which became League mandates.",
+          },
+          {
+            kind: "order",
+            q: "Put these events in order.",
+            items: [
+              "Triple Alliance formed",
+              "Triple Entente formed",
+              "Assassination at Sarajevo",
+              "USA enters the war",
+              "Treaty of Versailles signed",
+            ],
+            explain: "1882 → 1907 → 1914 → 1917 → 1919.",
+          },
+          {
+            kind: "mcq",
+            q: "Which treaty took Russia out of the First World War?",
+            options: ["Treaty of Versailles", "Treaty of Vienna", "Treaty of Brest-Litovsk", "Treaty of Constantinople"],
+            answer: 2,
+            explain: "Russia signed the Treaty of Brest-Litovsk with Germany in March 1918.",
+          },
+          {
+            kind: "mcq",
+            q: "Why did Britain declare war on Germany on 4 August 1914?",
+            options: [
+              "Germany invaded neutral Belgium",
+              "Germany sank the Lusitania",
+              "Germany attacked Pearl Harbor",
+              "Germany invaded Poland",
+            ],
+            answer: 0,
+            explain: "The invasion of Belgium brought Britain in. Poland's invasion in 1939 started WWII; Pearl Harbor was a Japanese attack in 1941.",
+          },
+        ],
+      },
+    ],
+  },
+  /* ------------------------------------------------------------------ */
+  /* ICSE: Rise of Dictatorships                                         */
+  /* ------------------------------------------------------------------ */
+  {
+    slug: "rise-of-dictatorships",
+    title: "Rise of Dictatorships",
+    icon: "🗳️",
+    description: "Why democracy failed after WWI, and how Mussolini's Fascism and Hitler's Nazism took power.",
+    lessons: [
+      {
+        slug: "fascism-and-nazism",
+        title: "Fascism in Italy and Nazism in Germany",
+        summary: "Causes of dictatorship, Mussolini's rise and ideas, Hitler's rise and ideas, and how the two compare.",
+        minutes: 17,
+        xp: 44,
+        blocks: [
+          {
+            type: "text",
+            md: "When people are hungry, jobless and humiliated, a leader who promises 'I alone can fix this' can sound attractive. That is what happened in Italy and Germany after the First World War.",
+          },
+          {
+            type: "text",
+            md: "A **dictatorship** is a government in which one person or one party holds all power, with no free elections, free press or opposition. In a **totalitarian** state, the government tries to control every part of life: politics, economy, education, culture and even thought.",
+          },
+          {
+            type: "heading",
+            text: "Why dictatorships rose",
+          },
+          {
+            type: "list",
+            items: [
+              "**Anger at the peace settlement:** Germany felt humiliated by Versailles; Italy, though on the winning side, felt cheated because it did not get the lands it had been promised.",
+              "**Economic crisis:** unemployment, inflation and then the **Great Depression (1929)** caused despair.",
+              "**Weak democratic governments:** coalition governments kept falling and could not solve problems.",
+              "**Fear of communism:** after the Russian Revolution (1917), industrialists and landlords supported anyone who promised to crush communists.",
+              "**Aggressive nationalism:** people wanted to restore national glory.",
+            ],
+          },
+          {
+            type: "heading",
+            text: "Mussolini and Fascism in Italy",
+          },
+          {
+            type: "text",
+            md: "**Benito Mussolini** founded the Fascist movement in **1919**. The word **Fascism** comes from *fasces*, a bundle of rods with an axe, a symbol of authority in ancient Rome. His armed followers, the **Blackshirts**, attacked socialists and strikers. In **October 1922** thousands of Fascists took part in the **March on Rome**, and King Victor Emmanuel III invited Mussolini to form the government. He soon banned other parties, controlled the press and called himself **Il Duce** (the leader). In 1935 Italy invaded **Abyssinia** (Ethiopia).",
+          },
+          {
+            type: "heading",
+            text: "Hitler and Nazism in Germany",
+          },
+          {
+            type: "text",
+            md: "After WWI, Germany became a democratic republic, the **Weimar Republic**. **Adolf Hitler** led the **National Socialist German Workers' Party** (the **Nazi Party**). After a failed attempt to seize power in Munich in **1923**, he wrote **Mein Kampf** ('My Struggle') in prison. During the Great Depression, Nazi support grew fast. On **30 January 1933**, President Hindenburg appointed Hitler **Chancellor**. Within months he ended democracy, banned other parties and used the secret police (**Gestapo**). After Hindenburg died in 1934, Hitler became **Führer** (leader).",
+          },
+          {
+            type: "table",
+            headers: ["", "Fascism (Italy)", "Nazism (Germany)"],
+            rows: [
+              ["Leader", "Benito Mussolini, 'Il Duce'", "Adolf Hitler, 'Führer'"],
+              ["Came to power", "October 1922, after the March on Rome", "30 January 1933, appointed Chancellor"],
+              ["Armed followers", "Blackshirts", "Brownshirts (SA) and SS"],
+              ["Special idea", "glory of the state; revive the Roman Empire", "racial superiority of 'Aryans', hatred of Jews, **Lebensraum** (living space)"],
+              ["Shared ideas", "one party, cult of the leader, glorification of war, opposition to democracy and communism", "same"],
+            ],
+          },
+          {
+            type: "checkpoint",
+            questions: [
+              {
+                kind: "mcq",
+                q: "What event brought Mussolini to power in 1922?",
+                options: ["The Munich Putsch", "The March on Rome", "The Reichstag fire", "The Treaty of Versailles"],
+                answer: 1,
+                explain: "After the March on Rome in October 1922, the king invited Mussolini to form the government. The Munich Putsch (1923) was Hitler's failed attempt.",
+              },
+            ],
+          },
+          {
+            type: "example",
+            title: "Comparing two ideologies",
+            problem: "State two similarities and one difference between Fascism and Nazism. (3 marks)",
+            steps: [
+              "Find a shared feature of government: both had one-party rule under an all-powerful leader.",
+              "Find a shared attitude: both opposed democracy and communism and glorified war.",
+              "Find a key difference: Nazism made race central (Aryan superiority, anti-Semitism), while Italian Fascism stressed the glory of the state.",
+            ],
+            answer: "Similarities: one-party dictatorship with a cult of the leader; hostility to democracy and communism, with glorification of war. Difference: Nazism was built on racial ideas and anti-Semitism; Fascism centred on the supremacy of the state.",
+          },
+          {
+            type: "mistake",
+            wrong: "Hitler seized power in Germany by an armed revolution.",
+            right: "Hitler's armed attempt in 1923 failed. He came to power legally: the Nazis became the largest party in elections, and he was appointed Chancellor in January 1933. He then destroyed democracy from within.",
+            why: "Because Hitler became a dictator, students assume he grabbed power by force. The ICSE point is that democratic weakness let a dictator rise through the system itself.",
+          },
+          {
+            type: "activity",
+            activity: {
+              kind: "sort",
+              prompt: "Italy's Fascism or Germany's Nazism?",
+              groups: ["Fascism (Italy)", "Nazism (Germany)"],
+              items: [
+                { text: "March on Rome", group: 0, hint: "Rome is Italy's capital." },
+                { text: "Mein Kampf", group: 1, hint: "Written in prison after the 1923 Munich attempt." },
+                { text: "Blackshirts", group: 0, hint: "Mussolini's armed squads." },
+                { text: "Lebensraum", group: 1, hint: "A German word: 'living space'." },
+                { text: "Il Duce", group: 0, hint: "Italian for 'the leader'." },
+                { text: "Gestapo", group: 1, hint: "The German secret state police." },
+              ],
+              explain: "Both were dictatorships with similar ideas, but each had its own leader, symbols and slogans.",
+            },
+          },
+          {
+            type: "callout",
+            tone: "exam",
+            title: "ICSE tip",
+            md: "For 'causes of the rise of Fascism / Nazism', give at least three points and tie each to the country: Italy's discontent with the peace settlement, Germany's humiliation at Versailles, economic crisis, fear of communism, weak governments. A frequent error is writing Germany's points for Italy.",
+          },
+          {
+            type: "keypoints",
+            items: [
+              "Dictatorships rose from anger at the peace treaties, economic crisis, weak democracies and fear of communism.",
+              "Mussolini founded Fascism (1919) and came to power after the March on Rome (October 1922).",
+              "Hitler led the Nazi Party and became Chancellor on 30 January 1933, then Führer in 1934.",
+              "Both systems were one-party, anti-democratic, anti-communist and glorified war; Nazism added racism.",
+            ],
+          },
+        ],
+        flashcards: [
+          { front: "Dictatorship", back: "Rule by one person or party with no free elections, opposition or free press." },
+          { front: "Fasces", back: "A bundle of rods with an axe, Roman symbol of authority; gave Fascism its name." },
+          { front: "March on Rome", back: "October 1922 Fascist march after which Mussolini was asked to form the government." },
+          { front: "Mein Kampf", back: "Book by Hitler ('My Struggle') setting out his ideas, written in prison." },
+          { front: "Lebensraum", back: "'Living space': Nazi idea that Germany must win land in the east." },
+          { front: "Hitler becomes Chancellor", back: "30 January 1933" },
+        ],
+        quiz: [
+          {
+            kind: "mcq",
+            q: "What was Mussolini's title as leader of Italy?",
+            options: ["Führer", "Il Duce", "Kaiser", "Tsar"],
+            answer: 1,
+            explain: "Il Duce means 'the leader'. Führer was Hitler's title.",
+          },
+          {
+            kind: "fill",
+            q: "Hitler was appointed Chancellor of Germany on 30 January ___.",
+            answer: ["1933"],
+            explain: "President Hindenburg appointed him in 1933.",
+          },
+          {
+            kind: "truefalse",
+            q: "Italy felt dissatisfied after WWI even though it was on the winning side.",
+            answer: true,
+            explain: "Italy did not get all the territory it had been promised, which fed Fascist anger.",
+          },
+          {
+            kind: "multi",
+            q: "Which ideas did Fascism and Nazism share?",
+            options: [
+              "One-party rule",
+              "Opposition to communism",
+              "Free and fair elections",
+              "Glorification of war",
+            ],
+            answers: [0, 1, 3],
+            explain: "Both destroyed free elections.",
+          },
+          {
+            kind: "order",
+            q: "Put these in order.",
+            items: ["Mussolini founds the Fascist movement", "March on Rome", "Hitler's failed Munich attempt", "Hitler becomes Chancellor", "Italy invades Abyssinia"],
+            explain: "1919 → 1922 → 1923 → 1933 → 1935.",
+            difficulty: 2,
+          },
+          {
+            kind: "mcq",
+            q: "Which economic event most helped the Nazis win support?",
+            options: ["The Corn Laws", "The Great Depression", "The Zollverein", "Bretton Woods"],
+            answer: 1,
+            explain: "The Depression from 1929 caused mass unemployment in Germany, and Nazi votes rose sharply.",
+          },
+        ],
+      },
+    ],
+  },
+  /* ------------------------------------------------------------------ */
+  /* ICSE: The Second World War                                          */
+  /* ------------------------------------------------------------------ */
+  {
+    slug: "the-second-world-war",
+    title: "The Second World War",
+    icon: "✈️",
+    description: "Causes, key events and consequences of the Second World War (1939–1945).",
+    lessons: [
+      {
+        slug: "second-world-war-causes-and-consequences",
+        title: "WWII: Causes, Course and Consequences",
+        summary: "Versailles, the League's failure, appeasement and the Axis; the invasion of Poland; key events to 1945; and the war's results.",
+        minutes: 17,
+        xp: 44,
+        blocks: [
+          {
+            type: "text",
+            md: "Only twenty-one years after the 'war to end all wars', the world was at war again, and this time it was even more destructive. The **Second World War** lasted from **1939 to 1945**.",
+          },
+          {
+            type: "text",
+            md: "Two sides fought. The **Axis Powers** were Germany, Italy and Japan. The **Allies** included Britain, France, and later the USSR (from 1941), the USA (from December 1941) and China.",
+          },
+          {
+            type: "heading",
+            text: "Causes of the war",
+          },
+          {
+            type: "list",
+            items: [
+              "**Treaty of Versailles:** Germans wanted revenge for a treaty they saw as unjust.",
+              "**Failure of the League of Nations:** it could not stop Japan's invasion of Manchuria (1931) or Italy's invasion of Abyssinia (1935).",
+              "**Rise of Fascism and Nazism:** aggressive dictators wanted expansion.",
+              "**Policy of appeasement:** Britain and France gave in to Hitler's demands to avoid war, most famously in the **Munich Pact (1938)**, which handed the Sudetenland of Czechoslovakia to Germany.",
+              "**Formation of the Axis:** Germany and Italy formed the Rome–Berlin Axis (1936); Japan joined them, making the Rome–Berlin–Tokyo Axis.",
+              "**Nazi–Soviet Pact (23 August 1939):** Germany and the USSR agreed not to attack each other, so Hitler felt free to attack Poland.",
+            ],
+          },
+          {
+            type: "text",
+            md: "**Immediate cause:** Hitler demanded the free city of **Danzig** and a route across the Polish Corridor. When Poland refused, Germany **invaded Poland on 1 September 1939**. Britain and France declared war on Germany on **3 September 1939**.",
+          },
+          {
+            type: "checkpoint",
+            questions: [
+              {
+                kind: "mcq",
+                q: "What is meant by the policy of appeasement?",
+                options: [
+                  "Building alliances to attack Germany",
+                  "Giving in to an aggressor's demands to avoid war",
+                  "Refusing to trade with dictators",
+                  "Joining the Axis Powers",
+                ],
+                answer: 1,
+                explain: "Britain and France let Hitler take Austria and the Sudetenland, hoping he would stop. He did not.",
+              },
+            ],
+          },
+          {
+            type: "table",
+            headers: ["Date", "Event"],
+            rows: [
+              ["1 September 1939", "Germany invades Poland; war begins"],
+              ["June 1940", "France falls to Germany"],
+              ["22 June 1941", "Germany invades the USSR"],
+              ["7 December 1941", "Japan attacks Pearl Harbor; the USA joins the war"],
+              ["6 June 1944", "D-Day: Allied landings in Normandy, France"],
+              ["8 May 1945", "Germany surrenders (V-E Day)"],
+              ["6 and 9 August 1945", "Atomic bombs dropped on Hiroshima and Nagasaki"],
+              ["2 September 1945", "Japan formally surrenders; the war ends"],
+            ],
+          },
+          {
+            type: "example",
+            title: "Linking WWI to WWII",
+            problem: "'The seeds of the Second World War were sown at Versailles.' Explain. (3 marks)",
+            steps: [
+              "Recall what Versailles did: war guilt, reparations, loss of land, a tiny army.",
+              "Show the feeling it created: Germans felt humiliated and wanted revenge.",
+              "Show how it was used: Hitler promised to tear up the treaty; he rearmed, took the Rhineland, Austria and the Sudetenland, and then attacked Poland over Danzig.",
+            ],
+            answer: "The harsh Treaty of Versailles left Germany humiliated and resentful. Hitler exploited this anger, broke the treaty step by step and finally invaded Poland over Danzig, which started WWII.",
+          },
+          {
+            type: "mistake",
+            wrong: "The USA fought in the Second World War from the very start in 1939.",
+            right: "The USA stayed out of the fighting until Japan attacked Pearl Harbor on 7 December 1941.",
+            why: "The USA was so important by the end of the war that students assume it fought from the beginning. It helped Britain with supplies earlier, but did not join the fighting until Pearl Harbor.",
+          },
+          {
+            type: "activity",
+            activity: {
+              kind: "order",
+              prompt: "Put these WWII events in order.",
+              items: [
+                "Munich Pact gives the Sudetenland to Germany",
+                "Germany invades Poland",
+                "Japan attacks Pearl Harbor",
+                "D-Day landings in Normandy",
+                "Atomic bomb dropped on Hiroshima",
+              ],
+              explain: "1938 → 1939 → 1941 → 1944 → 1945. Appeasement came first; the war ended with the atomic bombs and Japan's surrender.",
+            },
+          },
+          {
+            type: "heading",
+            text: "Consequences of the war",
+          },
+          {
+            type: "list",
+            items: [
+              "**Huge destruction:** tens of millions of people died, including millions of Jews killed in the Holocaust.",
+              "**Defeat of the Axis:** Fascism and Nazism were destroyed; Germany was divided.",
+              "**Rise of two superpowers:** the USA and the USSR became the strongest powers, while Britain and France weakened.",
+              "**Cold War:** rivalry between the USA and the USSR began.",
+              "**End of colonialism:** weakened European powers could not hold their empires; India became independent in 1947.",
+              "**United Nations:** set up in 1945 to prevent future wars.",
+            ],
+          },
+          {
+            type: "callout",
+            tone: "exam",
+            title: "ICSE tip",
+            md: "When asked for the 'immediate cause' of WWII, write the **German invasion of Poland on 1 September 1939** with the reason (Danzig, Polish Corridor). Writing 'Hitler' or 'Versailles' alone is an underlying cause and loses the mark.",
+          },
+          {
+            type: "keypoints",
+            items: [
+              "WWII lasted from 1939 to 1945: Axis (Germany, Italy, Japan) vs Allies.",
+              "Causes: Versailles, League's failure, dictators, appeasement (Munich 1938), Axis, Nazi–Soviet Pact.",
+              "Immediate cause: Germany's invasion of Poland on 1 September 1939.",
+              "Germany surrendered in May 1945; Japan surrendered on 2 September 1945 after Hiroshima and Nagasaki.",
+              "Results: superpowers, Cold War, decolonisation and the United Nations.",
+            ],
+          },
+        ],
+        flashcards: [
+          { front: "Axis Powers", back: "Germany, Italy and Japan." },
+          { front: "Appeasement", back: "Policy of giving in to an aggressor's demands to avoid war; e.g. the Munich Pact of 1938." },
+          { front: "Immediate cause of WWII", back: "Germany's invasion of Poland on 1 September 1939." },
+          { front: "Pearl Harbor", back: "US naval base attacked by Japan on 7 December 1941; brought the USA into the war." },
+          { front: "Nazi–Soviet Pact", back: "Non-aggression pact between Germany and the USSR, 23 August 1939." },
+          { front: "Hiroshima and Nagasaki", back: "Japanese cities hit by atomic bombs on 6 and 9 August 1945." },
+        ],
+        quiz: [
+          {
+            kind: "mcq",
+            q: "On which date did Germany invade Poland?",
+            options: ["28 June 1914", "1 September 1939", "7 December 1941", "6 June 1944"],
+            answer: 1,
+            explain: "1 September 1939. 28 June 1914 is the Sarajevo assassination (WWI).",
+          },
+          {
+            kind: "fill",
+            q: "The 1938 agreement that gave the Sudetenland to Germany is called the ___ Pact.",
+            answer: ["Munich"],
+            explain: "The Munich Pact is the best-known example of appeasement.",
+          },
+          {
+            kind: "truefalse",
+            q: "The USSR was on Germany's side for the whole of WWII.",
+            answer: false,
+            explain: "The USSR signed a non-aggression pact in 1939, but Germany invaded it in June 1941, and it fought with the Allies.",
+            difficulty: 2,
+            hint: "What happened on 22 June 1941?",
+          },
+          {
+            kind: "multi",
+            q: "Which were consequences of WWII?",
+            options: [
+              "Rise of the USA and USSR as superpowers",
+              "Formation of the United Nations",
+              "Formation of the League of Nations",
+              "Speeding up of decolonisation",
+            ],
+            answers: [0, 1, 3],
+            explain: "The League of Nations was formed after WWI, in 1920.",
+          },
+          {
+            kind: "mcq",
+            q: "Which event brought the USA into the Second World War?",
+            options: ["Invasion of Poland", "Fall of France", "Attack on Pearl Harbor", "D-Day"],
+            answer: 2,
+            explain: "Japan's attack on Pearl Harbor on 7 December 1941.",
+          },
+          {
+            kind: "order",
+            q: "Arrange in chronological order.",
+            items: ["Japan invades Manchuria", "Italy invades Abyssinia", "Munich Pact", "Nazi–Soviet Pact", "Japan formally surrenders"],
+            explain: "1931 → 1935 → 1938 → August 1939 → September 1945.",
+          },
+        ],
+      },
+    ],
+  },
   /* NEXT */
 ];
 

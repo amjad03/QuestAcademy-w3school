@@ -1827,7 +1827,787 @@ export const topics: Topic[] = [
       },
     ],
   },
-  /* @@APPEND@@ */
+  /* ------------------------------------------------------------------ */
+  {
+    slug: "rural-development",
+    title: "Rural Development",
+    icon: "🏡",
+    description: "Why rural development matters, rural problems, Panchayat Raj and decentralisation, SHGs and women's empowerment, and rural employment schemes.",
+    lessons: [
+      {
+        slug: "rural-development-and-panchayat-raj",
+        title: "Rural Development, Panchayat Raj and Women's Empowerment",
+        summary: "The meaning and importance of rural development, problems of villages, decentralisation through Panchayat Raj, SHGs and schemes like MGNREGA.",
+        minutes: 16,
+        xp: 40,
+        blocks: [
+          {
+            type: "illustration",
+            emoji: "🛖",
+            caption: "A large share of India's people still live in villages. When villages grow, India grows.",
+          },
+          {
+            type: "text",
+            md: "**Rural development** means improving the economic and social life of people living in villages. It includes better farming and incomes, more jobs, and better facilities: roads, drinking water, electricity, schools, health centres and housing.\n\nMahatma Gandhi believed that the real India lives in its villages, and that India could develop only if its villages became self-reliant. He called this ideal **Gram Swaraj** (village self-rule).",
+          },
+          {
+            type: "heading",
+            text: "Why is rural development important?",
+          },
+          {
+            type: "list",
+            items: [
+              "Most Indians live in villages, so national development depends on rural development.",
+              "Agriculture supplies food to the country and raw materials to industries.",
+              "Rural poverty and unemployment push people to migrate to crowded cities.",
+              "Villages need basic facilities to give everyone a fair chance in life.",
+            ],
+          },
+          {
+            type: "text",
+            md: "**Rural problems** include poverty, unemployment and **disguised unemployment** in farming, dependence on the monsoon, illiteracy, poor health facilities, poor roads and markets, debt to moneylenders, and inequality, including discrimination against women and weaker sections.",
+          },
+          {
+            type: "heading",
+            text: "Decentralisation and Panchayat Raj",
+          },
+          {
+            type: "text",
+            md: "**Decentralisation** means handing power and responsibility from the central and state governments to local bodies, so that people can plan and decide for their own area. Local people know their own problems best.\n\nThe **73rd Constitutional Amendment (1992)** gave Panchayat Raj institutions constitutional status. It requires regular elections every five years and reserves seats for SCs, STs and **at least one-third of seats for women**. Many states have raised women's reservation to half.",
+          },
+          {
+            type: "table",
+            headers: ["Level in Karnataka", "Covers", "Example of work"],
+            rows: [
+              ["**Gram Panchayat**", "A village or group of villages", "Drinking water, street lights, village roads, sanitation"],
+              ["**Taluk Panchayat**", "A taluk", "Coordinating plans of gram panchayats in the taluk"],
+              ["**Zilla Panchayat**", "A district", "District-level development plans, rural schools and health centres"],
+            ],
+          },
+          {
+            type: "checkpoint",
+            questions: [
+              {
+                kind: "order",
+                q: "Arrange the Panchayat Raj institutions of Karnataka from the village level upward.",
+                items: ["Gram Panchayat", "Taluk Panchayat", "Zilla Panchayat"],
+                explain: "Village → taluk → district.",
+              },
+            ],
+          },
+          {
+            type: "heading",
+            text: "Women's empowerment and SHGs",
+          },
+          {
+            type: "text",
+            md: "**Women's empowerment** means giving women the confidence, income and power to make their own decisions. In villages, **Self-Help Groups (SHGs)** of 15–20 women save small sums regularly, give loans to members, and later get bank loans without collateral to start small businesses like tailoring, papad-making or dairy. Karnataka's **Stree Shakti** programme organises rural women into such groups.\n\nEarning their own money gives women more say at home and in the community, and reservation in panchayats brings many women into local leadership.",
+          },
+          {
+            type: "example",
+            title: "How an SHG builds capital",
+            problem: "An SHG in Haveri has 15 women. Each saves ₹100 a month. After 2 years, the bank lends the group four times its savings. How much money does the group have to lend and invest?",
+            steps: [
+              "Monthly saving of the group = 15 × ₹100 = ₹1,500.",
+              "Savings in 2 years = 1,500 × 24 = ₹36,000.",
+              "Bank loan = 4 × 36,000 = ₹1,44,000.",
+              "Total funds = 36,000 + 1,44,000 = ₹1,80,000 (ignoring interest).",
+            ],
+            answer: "₹1,80,000, enough to start small enterprises for several members. Small savings plus bank credit make a real difference.",
+          },
+          {
+            type: "mistake",
+            wrong: "Rural development only means improving agriculture.",
+            right: "It includes farming, but also non-farm jobs, education, health, roads, housing, drinking water, and empowerment of women and weaker sections.",
+            why: "Villages are linked in our minds with farms, so farming looks like the whole answer. But many rural people are landless and need jobs, skills and services too.",
+          },
+          {
+            type: "activity",
+            activity: {
+              kind: "sort",
+              prompt: "Is this a rural problem or a step towards rural development?",
+              groups: ["Rural problem", "Step towards development"],
+              items: [
+                { text: "Dependence on the monsoon for crops", group: 0, hint: "A failed monsoon can ruin farmers." },
+                { text: "Building an all-weather road to the village", group: 1, hint: "Roads connect villages to markets." },
+                { text: "Borrowing from moneylenders at high interest", group: 0, hint: "It can lead to a debt trap." },
+                { text: "Forming a women's SHG", group: 1, hint: "SHGs give savings and credit." },
+                { text: "100 days of work under MGNREGA", group: 1, hint: "It gives employment and builds village assets." },
+                { text: "Young people migrating to cities for any work", group: 0, hint: "It happens when there are no jobs in villages." },
+              ],
+              explain: "Rural development tackles problems like poverty, debt and lack of work with roads, credit, jobs and empowerment.",
+            },
+          },
+          {
+            type: "text",
+            md: "Some schemes for rural development: **MGNREGA (2005)**, which guarantees 100 days of wage work a year to rural households; **Pradhan Mantri Gram Sadak Yojana**, for all-weather rural roads; rural housing schemes; and **cooperative societies** that give farmers credit, seeds and fertilisers at fair rates.",
+          },
+          {
+            type: "callout",
+            tone: "exam",
+            title: "Board tip (Karnataka SSLC)",
+            md: "Questions often ask \"Why is decentralisation important?\" or \"How do SHGs empower women?\". Give 3–4 separate points, and link at least one point to Gandhiji's idea of self-reliant villages. Spell the three tiers correctly: Gram, Taluk and Zilla Panchayat.",
+          },
+          {
+            type: "keypoints",
+            items: [
+              "Rural development improves incomes, jobs and facilities in villages.",
+              "Gandhiji saw self-reliant villages (Gram Swaraj) as the base of India's development.",
+              "The 73rd Amendment (1992) gave Panchayat Raj constitutional status, with at least one-third seats for women.",
+              "Karnataka has Gram, Taluk and Zilla Panchayats.",
+              "SHGs (e.g. Stree Shakti) and MGNREGA help rural women and households.",
+            ],
+          },
+        ],
+        flashcards: [
+          { front: "Rural development", back: "Improving the economic and social life of village people: incomes, jobs, roads, water, health, education." },
+          { front: "Decentralisation", back: "Transfer of power and responsibility from central and state governments to local bodies." },
+          { front: "73rd Constitutional Amendment", back: "1992; gave Panchayat Raj constitutional status, regular elections and reservation (at least one-third for women)." },
+          { front: "Three tiers of Panchayat Raj in Karnataka", back: "Gram Panchayat, Taluk Panchayat, Zilla Panchayat." },
+          { front: "Gram Swaraj", back: "Gandhiji's ideal of self-reliant, self-governing villages." },
+          { front: "Stree Shakti", back: "Karnataka programme organising rural women into Self-Help Groups." },
+        ],
+        quiz: [
+          {
+            kind: "mcq",
+            q: "Which amendment gave constitutional status to Panchayat Raj institutions?",
+            options: ["42nd", "52nd", "73rd", "86th"],
+            answer: 2,
+            explain: "The 73rd Amendment, 1992.",
+          },
+          {
+            kind: "fill",
+            q: "The Panchayat Raj body at the district level in Karnataka is the ___ Panchayat.",
+            answer: ["Zilla", "Zila"],
+            explain: "Gram (village), Taluk (taluk), Zilla (district).",
+          },
+          {
+            kind: "truefalse",
+            q: "The 73rd Amendment reserves at least one-third of panchayat seats for women.",
+            answer: true,
+            explain: "Many states have increased this further.",
+          },
+          {
+            kind: "multi",
+            q: "Which of these are rural problems? (Choose all that apply.)",
+            options: ["Disguised unemployment", "Dependence on monsoon", "Poor roads to markets", "Too many factories in villages"],
+            answers: [0, 1, 2],
+            explain: "Villages usually lack industry, not have too much of it.",
+          },
+          {
+            kind: "numeric",
+            q: "An SHG of 20 women each saves ₹50 a month. What are the group's total savings (₹) after 1 year?",
+            answer: 12000,
+            unit: "₹",
+            explain: "20 × 50 = ₹1,000 a month; × 12 = ₹12,000.",
+          },
+          {
+            kind: "mcq",
+            q: "The main idea of decentralisation is that:",
+            options: [
+              "All decisions should be taken in New Delhi",
+              "Local people can best plan for their own area",
+              "Panchayats should collect all national taxes",
+              "Villages should not have elections",
+            ],
+            answer: 1,
+            explain: "Local bodies understand local problems and can act faster.",
+            difficulty: 2,
+          },
+          {
+            kind: "truefalse",
+            q: "Rural development means only increasing crop production.",
+            answer: false,
+            explain: "It also covers jobs, health, education, infrastructure and empowerment.",
+          },
+        ],
+      },
+    ],
+  },
+
+  /* ------------------------------------------------------------------ */
+  {
+    slug: "public-finance-and-budget",
+    title: "Public Finance and Budget",
+    icon: "🏛️",
+    description: "Government income and spending, taxes and non-tax revenue, the budget, and balanced, surplus and deficit budgets.",
+    lessons: [
+      {
+        slug: "public-finance-and-budget",
+        title: "Government Revenue, Expenditure and the Budget",
+        summary: "What public finance is, sources of government revenue, direct and indirect taxes, public expenditure, the budget and its types, and deficits.",
+        minutes: 17,
+        xp: 45,
+        blocks: [
+          {
+            type: "text",
+            md: "A family plans how much it will earn and spend in a month. A government does the same, on a huge scale. **Public finance** is the study of the **income (revenue) and expenditure of the government**, and how the two are balanced.",
+          },
+          {
+            type: "heading",
+            text: "Where does the government's money come from?",
+          },
+          {
+            type: "text",
+            md: "**Tax revenue**: a **tax** is a compulsory payment to the government, for which the taxpayer does not get a direct service in return.\n\n- A **direct tax** is paid by the person on whom it is imposed; its burden cannot be shifted. Examples: **income tax**, **corporation tax** (on company profits).\n- An **indirect tax** is collected through the seller, so its burden can be passed on to the buyer in the price. Examples: **GST** (Goods and Services Tax, introduced on 1 July 2017) and **customs duty** on imports.",
+          },
+          {
+            type: "text",
+            md: "**Non-tax revenue**: money the government gets other than taxes: **fees** (for licences, registration), **fines and penalties**, **profits of public sector enterprises**, **interest** on loans given to states and others, and grants.\n\nWhen revenue is not enough, the government **borrows** from people and banks inside the country (**internal debt**) or from abroad (**external debt**). The total of these loans is called **public debt**.",
+          },
+          {
+            type: "activity",
+            activity: {
+              kind: "sort",
+              prompt: "Is it a direct tax, an indirect tax or non-tax revenue?",
+              groups: ["Direct tax", "Indirect tax", "Non-tax revenue"],
+              items: [
+                { text: "Income tax paid by a doctor", group: 0, hint: "The doctor pays it herself; she cannot shift it." },
+                { text: "GST added to a restaurant bill", group: 1, hint: "The restaurant collects it from the customer." },
+                { text: "Corporation tax on a company's profit", group: 0, hint: "The company bears it directly." },
+                { text: "Customs duty on imported phones", group: 1, hint: "The importer passes it on in the price." },
+                { text: "A fine for jumping a red light", group: 2, hint: "A penalty is not a tax." },
+                { text: "Profit of a government-owned company", group: 2, hint: "It is earnings from an enterprise, not a tax." },
+              ],
+              explain: "Ask two questions: is it compulsory with no direct service (a tax)? Can the burden be passed on (indirect) or not (direct)?",
+            },
+          },
+          {
+            type: "text",
+            md: "**Public expenditure** is the money the government spends: on **defence** and police, **education** and **health**, roads, railways and dams, **subsidies** (e.g. on food and fertilisers), salaries and pensions, and **interest** on public debt. Spending on development helps the economy grow and reduces inequality.",
+          },
+          {
+            type: "heading",
+            text: "The budget",
+          },
+          {
+            type: "text",
+            md: "A **budget** is a statement of the **estimated revenue and expenditure** of the government for a **financial year**. In India the financial year runs from **1 April to 31 March**. The Constitution calls the Union Budget the **Annual Financial Statement**. The Union Finance Minister presents it in Parliament (now on **1 February** each year), and each state's budget is presented in its legislature.",
+          },
+          {
+            type: "table",
+            headers: ["Type of budget", "Condition", "Meaning"],
+            rows: [
+              ["**Balanced budget**", "Revenue = Expenditure", "Government spends exactly what it earns"],
+              ["**Surplus budget**", "Revenue > Expenditure", "Government earns more than it spends"],
+              ["**Deficit budget**", "Revenue < Expenditure", "Government spends more than it earns and must borrow or cover the gap"],
+            ],
+          },
+          {
+            type: "example",
+            title: "Finding the budget type",
+            problem: "A state estimates: tax revenue ₹1,80,000 crore, non-tax revenue ₹20,000 crore, and total expenditure ₹2,30,000 crore (borrowing not counted as revenue). What type of budget is this and by how much?",
+            steps: [
+              "Total revenue = 1,80,000 + 20,000 = ₹2,00,000 crore.",
+              "Compare: expenditure ₹2,30,000 crore is greater than revenue ₹2,00,000 crore.",
+              "Gap = 2,30,000 − 2,00,000 = ₹30,000 crore.",
+              "Since expenditure exceeds revenue, it is a deficit budget; the gap must be met by borrowing.",
+            ],
+            answer: "A deficit budget, with a deficit of ₹30,000 crore.",
+          },
+          {
+            type: "checkpoint",
+            questions: [
+              {
+                kind: "numeric",
+                q: "A government expects revenue of ₹500 crore and plans to spend ₹460 crore. By how much (₹ crore) is the budget in surplus?",
+                answer: 40,
+                unit: "₹ crore",
+                explain: "Revenue exceeds expenditure by 500 − 460 = ₹40 crore, so it is a surplus budget.",
+              },
+            ],
+          },
+          {
+            type: "text",
+            md: "**Fiscal deficit** is the gap between the government's **total expenditure** and its **total receipts excluding borrowings**. It shows how much the government must borrow in the year. A moderate deficit spent on roads, schools and hospitals can help growth, but a very large one piles up public debt and interest payments.",
+          },
+          {
+            type: "mistake",
+            wrong: "A deficit budget is always bad, and a surplus budget is always good.",
+            right: "It depends on why. Deficit spending on development can help growth, especially in a developing country; a surplus while people lack basic services is not ideal.",
+            why: "For a family, spending more than you earn sounds bad. But a government can borrow to build assets that raise future income, while a surplus may mean it is spending too little.",
+          },
+          {
+            type: "callout",
+            tone: "exam",
+            title: "Board tip (Karnataka SSLC)",
+            md: "Differences between direct and indirect taxes are asked often. Write in a table: who pays, can the burden be shifted, examples. When asked for types of budget, give the condition (revenue vs expenditure) for each. Use \"revenue\" and \"expenditure\", not \"income\" and \"spending\", to match the textbook terms.",
+          },
+          {
+            type: "keypoints",
+            items: [
+              "Public finance studies government revenue and expenditure.",
+              "Revenue: taxes (direct and indirect) and non-tax revenue (fees, fines, PSU profits, interest).",
+              "Direct tax burden cannot be shifted (income tax); indirect tax burden can (GST, customs).",
+              "A budget estimates revenue and expenditure for the financial year (1 April to 31 March).",
+              "Balanced: R = E; surplus: R > E; deficit: R < E.",
+            ],
+          },
+        ],
+        flashcards: [
+          { front: "Public finance", back: "The study of the income (revenue) and expenditure of the government and how they are balanced." },
+          { front: "Tax", back: "A compulsory payment to the government without a direct service in return." },
+          { front: "Direct tax", back: "Burden cannot be shifted, e.g. income tax, corporation tax." },
+          { front: "Indirect tax", back: "Burden can be shifted to buyers, e.g. GST, customs duty." },
+          { front: "Budget", back: "Statement of estimated revenue and expenditure of the government for a financial year." },
+          { front: "India's financial year", back: "1 April to 31 March." },
+          { front: "Deficit budget", back: "Expenditure is greater than revenue." },
+          { front: "Fiscal deficit", back: "Total expenditure minus total receipts excluding borrowings." },
+        ],
+        quiz: [
+          {
+            kind: "mcq",
+            q: "Which of these is a direct tax?",
+            options: ["GST", "Customs duty", "Income tax", "A traffic fine"],
+            answer: 2,
+            explain: "Income tax is paid by the earner and cannot be shifted. GST and customs are indirect; a fine is non-tax revenue.",
+          },
+          {
+            kind: "truefalse",
+            q: "In a surplus budget, the government's expenditure is more than its revenue.",
+            answer: false,
+            explain: "In a surplus budget, revenue is more than expenditure.",
+          },
+          {
+            kind: "numeric",
+            q: "Revenue is ₹840 crore and expenditure is ₹900 crore. What is the deficit (₹ crore)?",
+            answer: 60,
+            unit: "₹ crore",
+            explain: "900 − 840 = ₹60 crore.",
+          },
+          {
+            kind: "fill",
+            q: "GST stands for Goods and Services ___.",
+            answer: ["Tax"],
+            explain: "GST was introduced in India on 1 July 2017.",
+          },
+          {
+            kind: "multi",
+            q: "Which are sources of non-tax revenue? (Choose all that apply.)",
+            options: ["Fees for a driving licence", "Profits of public sector companies", "Fines", "Income tax"],
+            answers: [0, 1, 2],
+            explain: "Income tax is a tax, so it is tax revenue.",
+          },
+          {
+            kind: "mcq",
+            q: "India's financial year runs from:",
+            options: ["1 January to 31 December", "1 April to 31 March", "1 July to 30 June", "1 February to 31 January"],
+            answer: 1,
+            explain: "The financial year is 1 April to 31 March. The budget is presented on 1 February, before the year starts.",
+            difficulty: 2,
+            hint: "Do not confuse the date the budget is presented with the financial year.",
+          },
+          {
+            kind: "numeric",
+            q: "A government's total expenditure is ₹1,200 crore. Its revenue receipts are ₹950 crore and other non-borrowed receipts are ₹50 crore. What is the fiscal deficit (₹ crore)?",
+            answer: 200,
+            unit: "₹ crore",
+            explain: "Receipts excluding borrowings = 950 + 50 = ₹1,000 crore. Fiscal deficit = 1,200 − 1,000 = ₹200 crore.",
+            difficulty: 3,
+            hint: "Add up all receipts that are not borrowings first.",
+          },
+        ],
+      },
+    ],
+  },
+
+  /* ------------------------------------------------------------------ */
+  {
+    slug: "bank-transactions",
+    title: "Bank Transactions",
+    icon: "🏦",
+    description: "Types of bank accounts, opening an account, deposit slips, cheques and crossing, and modern e-banking.",
+    lessons: [
+      {
+        slug: "bank-accounts-slips-and-cheques",
+        title: "Bank Accounts, Deposit Slips and Cheques",
+        summary: "Savings, current, recurring and fixed deposit accounts, how to open an account, filling a pay-in slip and a cheque, crossing, and e-banking.",
+        minutes: 17,
+        xp: 45,
+        blocks: [
+          {
+            type: "text",
+            md: "A **bank** accepts deposits from the public and gives loans. To use a bank, you first open an **account**. Different people need different kinds of accounts.",
+          },
+          {
+            type: "table",
+            headers: ["Account", "Best for", "Key features"],
+            rows: [
+              ["**Savings Bank (SB) account**", "Individuals saving money", "Earns interest; withdrawals allowed; cheque book and debit card available"],
+              ["**Current account**", "Businesses and traders", "Any number of deposits and withdrawals; usually no interest; overdraft may be allowed"],
+              ["**Recurring Deposit (RD)**", "People who can save a fixed sum every month", "Fixed monthly deposit for a fixed period; higher interest than SB"],
+              ["**Fixed Deposit (FD)**", "A lump sum not needed for some time", "Deposited for a fixed period; highest interest of these; early withdrawal may cut interest"],
+            ],
+          },
+          {
+            type: "heading",
+            text: "Opening an account",
+          },
+          {
+            type: "list",
+            ordered: true,
+            items: [
+              "Get the **account opening form** from the bank (or its website) and fill it in.",
+              "Attach **KYC (Know Your Customer)** documents: proof of identity and address, such as Aadhaar, PAN card, passport or voter ID.",
+              "Attach recent **passport-size photographs** and give your **specimen signature**.",
+              "Make the **initial deposit**, if the bank requires one.",
+              "The bank checks the documents, opens the account and gives an **account number**, a **passbook** and, if asked, a **cheque book** and debit card.",
+            ],
+          },
+          {
+            type: "heading",
+            text: "Depositing money: the pay-in slip",
+          },
+          {
+            type: "text",
+            md: "To deposit cash or a cheque at the branch, you fill a **pay-in slip** (deposit slip). It has the date, branch, account number, account holder's name, the **denominations** of notes, the total in **figures and words**, and the depositor's signature. The bank stamps and returns the small **counterfoil** as your receipt.",
+          },
+          {
+            type: "example",
+            title: "Filling a pay-in slip step by step",
+            problem: "Kavya deposits cash into her savings account: 3 notes of ₹500, 4 notes of ₹200 and 5 notes of ₹100. Fill in the amount on the pay-in slip.",
+            steps: [
+              "Write the date, branch name, her **account number** and **name** exactly as in the passbook.",
+              "Denomination table: 500 × 3 = ₹1,500; 200 × 4 = ₹800; 100 × 5 = ₹500.",
+              "Total in figures: 1,500 + 800 + 500 = **₹2,800**.",
+              "Total in words: **Rupees Two Thousand Eight Hundred only**.",
+              "Sign the slip, hand it over with the cash, and keep the stamped counterfoil.",
+            ],
+            answer: "₹2,800 (Rupees Two Thousand Eight Hundred only), with the denominations listed and the counterfoil kept as proof.",
+          },
+          {
+            type: "heading",
+            text: "Cheques",
+          },
+          {
+            type: "text",
+            md: "A **cheque** is a written order by an account holder to the bank to pay a stated sum to a named person or to the bearer. It has three parties:\n\n- **Drawer**: the account holder who writes and signs the cheque.\n- **Drawee**: the bank on which it is drawn, which pays.\n- **Payee**: the person who receives the money.\n\nA cheque is valid for **three months** from its date.",
+          },
+          {
+            type: "table",
+            headers: ["Type", "How it is paid"],
+            rows: [
+              ["**Bearer cheque**", "Paid in cash to whoever presents it at the counter; risky if lost"],
+              ["**Order cheque**", "\"Bearer\" is struck off; paid only to the named payee, after identification"],
+              ["**Crossed cheque**", "Two parallel lines on the top-left corner; cannot be cashed at the counter, only credited to a bank account"],
+              ["**Account payee crossing**", "\"A/c Payee\" written between the lines; credited only to the payee's own account"],
+            ],
+          },
+          {
+            type: "checkpoint",
+            questions: [
+              {
+                kind: "mcq",
+                q: "Ramesh writes a cheque from his SBI account to pay Suresh. Who is the drawee?",
+                options: ["Ramesh", "Suresh", "SBI, the bank", "The RBI"],
+                answer: 2,
+                explain: "The drawee is the bank that is ordered to pay. Ramesh is the drawer; Suresh is the payee.",
+              },
+            ],
+          },
+          {
+            type: "mistake",
+            wrong: "The person who receives the cheque is the drawer, because the money is drawn out to them.",
+            right: "The **drawer** writes and signs the cheque; the **payee** receives the money; the **drawee** is the bank.",
+            why: "\"Draw\" sounds like \"take money out\", so students give it to the receiver. Remember: the drawer *draws up* (writes) the cheque.",
+          },
+          {
+            type: "activity",
+            activity: {
+              kind: "order",
+              prompt: "Order the steps to write a safe cheque.",
+              items: [
+                "Write the date",
+                "Write the payee's name and strike off \"or bearer\"",
+                "Write the amount in words, ending with \"only\"",
+                "Write the amount in figures in the box",
+                "Draw two parallel lines with \"A/c Payee\" at the top-left",
+                "Sign as the drawer",
+              ],
+              explain: "Writing \"only\", striking off \"bearer\" and crossing the cheque all reduce the risk of fraud. Words and figures must match.",
+            },
+          },
+          {
+            type: "text",
+            md: "**E-banking** lets you bank without visiting the branch: **ATMs** and debit cards for cash, **net banking** and **mobile banking** apps, **NEFT** and **RTGS** for transfers between banks, and **UPI** for instant payments from a phone. Never share your PIN, OTP or password with anyone, not even someone claiming to be from the bank.",
+          },
+          {
+            type: "callout",
+            tone: "exam",
+            title: "Board tip (Karnataka SSLC Business Studies)",
+            md: "You may be asked to fill a specimen pay-in slip or cheque. Marks are given for: correct date, payee name, amount in words with \"only\", amount in figures matching, crossing where asked, and signature. A mismatch between words and figures is the most common error.",
+          },
+          {
+            type: "keypoints",
+            items: [
+              "Accounts: savings (individuals), current (businesses), RD (monthly saving), FD (lump sum, fixed period).",
+              "Opening an account needs a form, KYC documents, photos and a specimen signature.",
+              "The pay-in slip lists denominations and the amount in figures and words.",
+              "Cheque parties: drawer (writes), drawee (bank), payee (receives). Valid for three months.",
+              "A crossed cheque is paid only into a bank account, not in cash.",
+            ],
+          },
+        ],
+        flashcards: [
+          { front: "Current account", back: "Account for businesses with unlimited transactions, usually no interest; overdraft may be allowed." },
+          { front: "Fixed deposit", back: "A lump sum kept for a fixed period at a higher interest rate." },
+          { front: "Recurring deposit", back: "A fixed sum deposited every month for a fixed period." },
+          { front: "KYC", back: "Know Your Customer: identity and address proof needed to open an account." },
+          { front: "Drawer, drawee, payee", back: "Drawer writes the cheque, drawee is the bank, payee receives the money." },
+          { front: "Crossed cheque", back: "Two parallel lines at the top-left; cannot be paid in cash, only into a bank account." },
+          { front: "Validity of a cheque", back: "Three months from the date written on it." },
+        ],
+        quiz: [
+          {
+            kind: "mcq",
+            q: "A trader who makes many deposits and withdrawals daily should open a:",
+            options: ["Fixed deposit", "Recurring deposit", "Current account", "Savings account with a monthly limit"],
+            answer: 2,
+            explain: "A current account allows unlimited transactions for businesses.",
+          },
+          {
+            kind: "numeric",
+            q: "On a pay-in slip, Arjun lists 2 notes of ₹500, 6 notes of ₹100 and 10 notes of ₹50. What total (₹) should he write?",
+            answer: 2100,
+            unit: "₹",
+            explain: "1,000 + 600 + 500 = ₹2,100.",
+          },
+          {
+            kind: "truefalse",
+            q: "A crossed cheque can be cashed over the bank counter.",
+            answer: false,
+            explain: "A crossed cheque can only be credited to a bank account.",
+          },
+          {
+            kind: "fill",
+            q: "The person who writes and signs a cheque is called the ___.",
+            answer: ["drawer"],
+            explain: "The bank is the drawee; the receiver is the payee.",
+          },
+          {
+            kind: "multi",
+            q: "Which documents can serve as KYC proof? (Choose all that apply.)",
+            options: ["Aadhaar card", "PAN card", "Passport", "A shopping bill"],
+            answers: [0, 1, 2],
+            explain: "A shopping bill does not prove identity.",
+          },
+          {
+            kind: "numeric",
+            q: "Meena puts ₹40,000 in a fixed deposit at 7% per year simple interest for 2 years. What interest (₹) does she earn?",
+            answer: 5600,
+            unit: "₹",
+            explain: "40,000 × 7 × 2 ÷ 100 = ₹5,600. (Banks often compound interest, which gives a little more.)",
+            difficulty: 2,
+            hint: "I = P × R × T ÷ 100.",
+          },
+          {
+            kind: "mcq",
+            q: "Writing \"only\" after the amount in words on a cheque helps to:",
+            options: ["Make the cheque valid for six months", "Prevent anyone adding words to increase the amount", "Turn it into a bearer cheque", "Earn interest"],
+            answer: 1,
+            explain: "It closes the space so the amount cannot be altered.",
+          },
+        ],
+      },
+    ],
+  },
+
+  /* ------------------------------------------------------------------ */
+  {
+    slug: "entrepreneurship",
+    title: "Entrepreneurship",
+    icon: "💡",
+    description: "Who an entrepreneur is, qualities and functions, steps to start an enterprise, role in economic development, and government support.",
+    lessons: [
+      {
+        slug: "entrepreneur-qualities-and-role",
+        title: "Entrepreneurs: Qualities, Functions and Role",
+        summary: "Entrepreneur, enterprise and entrepreneurship, qualities and functions of an entrepreneur, steps to start a business, and its role in development.",
+        minutes: 16,
+        xp: 40,
+        blocks: [
+          {
+            type: "illustration",
+            emoji: "🧵",
+            caption: "Shabana starts a small tailoring unit in Belagavi with two machines. Two years later she employs six women. She is an entrepreneur.",
+          },
+          {
+            type: "text",
+            md: "An **entrepreneur** is a person who has a business idea, brings together money, people and materials, starts a business and **bears the risk** of loss in the hope of profit. The word comes from the French word *entreprendre*, meaning \"to undertake\".\n\nThe business unit the entrepreneur sets up is the **enterprise**. **Entrepreneurship** is the whole process: spotting an opportunity, taking the risk and building the enterprise.",
+          },
+          {
+            type: "table",
+            headers: ["Term", "Meaning", "Example"],
+            rows: [
+              ["Entrepreneur", "The person", "Shabana"],
+              ["Enterprise", "The business unit", "Her tailoring unit"],
+              ["Entrepreneurship", "The process or activity", "Starting and growing the unit, taking the risk"],
+            ],
+          },
+          {
+            type: "heading",
+            text: "Qualities of a successful entrepreneur",
+          },
+          {
+            type: "list",
+            items: [
+              "**Initiative**: acts on an idea instead of waiting.",
+              "**Risk-bearing**: ready to face uncertainty and possible loss.",
+              "**Creativity and innovation**: finds new products, methods or markets.",
+              "**Leadership**: guides and motivates workers.",
+              "**Decision-making**: takes timely, sensible decisions.",
+              "**Hard work and perseverance**: keeps going after setbacks.",
+              "**Self-confidence**: believes in the idea and in themselves.",
+            ],
+          },
+          {
+            type: "text",
+            md: "**Functions** of an entrepreneur: generating the idea, studying whether it will work (**feasibility**), arranging **finance**, **organising** land, labour and machines, **managing** production and sales, **innovating**, and **bearing the risk**.",
+          },
+          {
+            type: "activity",
+            activity: {
+              kind: "order",
+              prompt: "Put the steps of starting an enterprise in order.",
+              items: [
+                "Spot a business idea",
+                "Do a market survey",
+                "Prepare a project report",
+                "Arrange finance",
+                "Register and set up the unit",
+                "Start production and selling",
+              ],
+              explain: "A good entrepreneur checks the market and plans on paper before spending money.",
+            },
+          },
+          {
+            type: "example",
+            title: "Does the business make a profit?",
+            problem: "In one month, Shabana's unit stitches 200 blouses and sells each for ₹250. Costs: cloth and thread ₹18,000, rent ₹5,000, electricity ₹2,000, wages of helpers ₹10,000. Find her profit.",
+            steps: [
+              "Sales revenue = 200 × ₹250 = ₹50,000.",
+              "Total cost = 18,000 + 5,000 + 2,000 + 10,000 = ₹35,000.",
+              "Profit = Revenue − Cost = 50,000 − 35,000 = ₹15,000.",
+              "Profit is the reward for her risk. If she could sell only 120 of the 200 blouses she made, revenue would be ₹30,000 against the same ₹35,000 cost: a loss of ₹5,000.",
+            ],
+            answer: "Profit = ₹15,000 for the month. The risk is real: lower sales could turn it into a loss.",
+          },
+          {
+            type: "checkpoint",
+            questions: [
+              {
+                kind: "numeric",
+                q: "A juice stall earns ₹24,000 in a month. Its costs are ₹9,000 for fruit, ₹3,000 rent and ₹6,000 wages. What is the profit (₹)?",
+                answer: 6000,
+                unit: "₹",
+                explain: "Cost = ₹18,000. Profit = 24,000 − 18,000 = ₹6,000.",
+              },
+            ],
+          },
+          {
+            type: "mistake",
+            wrong: "An entrepreneur is anyone who has a job in a business.",
+            right: "An entrepreneur **starts and owns** an enterprise and **bears its risk**. An employee earns a fixed salary and does not bear the business risk.",
+            why: "Both work in business, so they seem similar. The key difference is risk: if the business fails, the entrepreneur loses money, while an employee only loses the job.",
+          },
+          {
+            type: "heading",
+            text: "Role in economic development",
+          },
+          {
+            type: "list",
+            items: [
+              "Creates **employment**, for the entrepreneur and others.",
+              "Raises **income** and the standard of living.",
+              "Uses **local resources** and skills, e.g. silk in Ramanagara or toys in Channapatna.",
+              "Promotes **balanced regional development** by setting up units in small towns and villages.",
+              "Increases **exports** and brings in foreign exchange.",
+              "Brings **innovation**: new products and better methods.",
+            ],
+          },
+          {
+            type: "text",
+            md: "The government supports new entrepreneurs through schemes like **Pradhan Mantri MUDRA Yojana** (loans to small and micro enterprises, in categories Shishu, Kishore and Tarun), **Startup India** and **Stand-Up India** (bank loans for women and SC/ST entrepreneurs). Karnataka is home to well-known entrepreneurs: **Kiran Mazumdar-Shaw** founded the biotechnology company **Biocon** in Bengaluru in 1978.",
+          },
+          {
+            type: "callout",
+            tone: "exam",
+            title: "Board tip (Karnataka SSLC Business Studies)",
+            md: "Questions often ask for \"qualities of an entrepreneur\" or \"role of entrepreneurs in economic development\". Write each point as a heading word in bold plus one line of explanation. Do not mix up qualities (what the person is like) with functions (what the person does).",
+          },
+          {
+            type: "keypoints",
+            items: [
+              "Entrepreneur = the person; enterprise = the business; entrepreneurship = the process.",
+              "Key qualities: initiative, risk-bearing, innovation, leadership, decision-making, perseverance.",
+              "Functions: idea, feasibility, finance, organising, managing, innovating, bearing risk.",
+              "Profit = revenue − cost; it is the reward for bearing risk.",
+              "Entrepreneurs create jobs, use local resources and support balanced regional development.",
+            ],
+          },
+        ],
+        flashcards: [
+          { front: "Entrepreneur", back: "A person who starts a business, organises resources and bears the risk in the hope of profit." },
+          { front: "Origin of the word 'entrepreneur'", back: "French entreprendre, meaning \"to undertake\"." },
+          { front: "Enterprise", back: "The business unit set up by an entrepreneur." },
+          { front: "Entrepreneurship", back: "The process of spotting an opportunity, taking risk and building an enterprise." },
+          { front: "Profit", back: "Revenue minus cost; the reward for the entrepreneur's risk." },
+          { front: "MUDRA loan categories", back: "Shishu, Kishore and Tarun (for micro and small enterprises)." },
+        ],
+        quiz: [
+          {
+            kind: "mcq",
+            q: "The most important feature that separates an entrepreneur from an employee is:",
+            options: ["Working long hours", "Bearing the risk of the business", "Having a degree", "Working in an office"],
+            answer: 1,
+            explain: "The entrepreneur bears the risk of loss; the employee gets a fixed salary.",
+          },
+          {
+            kind: "fill",
+            q: "The business unit set up by an entrepreneur is called an ___.",
+            answer: ["enterprise"],
+            explain: "Entrepreneur (person), enterprise (unit), entrepreneurship (process).",
+          },
+          {
+            kind: "numeric",
+            q: "A candle maker sells 500 candles at ₹20 each. Wax and wicks cost ₹4,000 and other costs are ₹2,500. What is the profit (₹)?",
+            answer: 3500,
+            unit: "₹",
+            explain: "Revenue = ₹10,000. Cost = ₹6,500. Profit = ₹3,500.",
+            difficulty: 2,
+          },
+          {
+            kind: "multi",
+            q: "Which are qualities of a successful entrepreneur? (Choose all that apply.)",
+            options: ["Initiative", "Willingness to take risks", "Fear of any change", "Leadership"],
+            answers: [0, 1, 3],
+            explain: "Entrepreneurs welcome change and innovation.",
+          },
+          {
+            kind: "truefalse",
+            q: "Setting up enterprises in small towns helps balanced regional development.",
+            answer: true,
+            explain: "It spreads jobs and income beyond big cities.",
+          },
+          {
+            kind: "order",
+            q: "Order these steps of starting a business.",
+            items: ["Business idea", "Market survey", "Project report", "Arranging finance", "Starting production"],
+            explain: "Plan and test the idea before investing money.",
+          },
+          {
+            kind: "mcq",
+            q: "\"Arranging finance and organising land, labour and machines\" describes an entrepreneur's:",
+            options: ["Qualities", "Functions", "Profit", "Enterprise"],
+            answer: 1,
+            explain: "These are things the entrepreneur does, i.e. functions. Qualities describe what they are like.",
+            difficulty: 2,
+            hint: "Qualities = what they are like; functions = what they do.",
+          },
+        ],
+      },
+    ],
+  },
 ];
 
 /** Exact syllabus chapter title → topic slug. */
@@ -1835,4 +2615,15 @@ export const links: Record<string, string> = {
   // CBSE (NCERT) Economics
   "Development": "development",
   "Sectors of the Indian Economy": "sectors-of-the-indian-economy",
+  "Money and Credit": "money-and-credit",
+  "Globalisation and the Indian Economy": "globalisation",
+  "Consumer Rights": "consumer-rights",
+  // Karnataka SSLC Economics ("Development" is shared with CBSE above)
+  "Rural Development": "rural-development",
+  "Public Finance and Budget": "public-finance-and-budget",
+  // Karnataka SSLC Business Studies
+  "Bank Transactions": "bank-transactions",
+  "Entrepreneurship": "entrepreneurship",
+  "Globalisation of Business": "globalisation",
+  "Consumer Education and Protection": "consumer-rights",
 };

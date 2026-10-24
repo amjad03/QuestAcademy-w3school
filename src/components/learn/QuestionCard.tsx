@@ -1,7 +1,7 @@
 "use client";
 
 import { AnimatePresence, motion } from "framer-motion";
-import { ArrowDown, ArrowUp, CheckCircle2, Volume2, XCircle } from "lucide-react";
+import { ArrowDown, ArrowUp, CheckCircle2, Lightbulb, Volume2, XCircle } from "lucide-react";
 import { useEffect, useMemo, useState } from "react";
 import clsx from "clsx";
 import type { Question } from "@/content/types";
@@ -331,6 +331,7 @@ export function QuestionCard({
   const initial = useMemo(() => emptyAnswer(q), [q]);
   const [answer, setAnswer] = useState<Answer>(initial);
   const [result, setResult] = useState<boolean | null>(null);
+  const [hint, setHint] = useState(false);
 
   const check = () => {
     if (!isAnswered(q, answer) || result !== null) return;
@@ -347,6 +348,19 @@ export function QuestionCard({
         </p>
       )}
       <QuestionInput question={q} answer={answer} onChange={setAnswer} result={result} big={variant === "kids"} onSubmit={check} />
+      {q.hint && variant !== "exam" && result === null && (
+        <div className="mt-4">
+          {hint ? (
+            <p className="flex items-start gap-2 rounded-xl bg-warn/10 px-3 py-2 text-sm font-semibold text-ink">
+              <Lightbulb className="mt-0.5 h-4 w-4 shrink-0 text-warn-shade" /> <MdInline text={q.hint} />
+            </p>
+          ) : (
+            <button type="button" onClick={() => setHint(true)} className="inline-flex items-center gap-1.5 text-sm font-bold text-muted hover:text-ink">
+              <Lightbulb className="h-4 w-4" /> {t("mission.needHint", "Need a hint?")}
+            </button>
+          )}
+        </div>
+      )}
       <AnimatePresence mode="wait">
         {result === null ? (
           <motion.div key="check" className="mt-6 flex justify-end" initial={{ opacity: 0 }} animate={{ opacity: 1 }}>

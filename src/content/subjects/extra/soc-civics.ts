@@ -2058,3 +2058,662 @@ const icse: Topic[] = [
     ],
   },
 ];
+
+/* ================================================================== */
+/* Karnataka SSLC: Political Science                                   */
+/* ================================================================== */
+
+const kaPolitics: Topic[] = [
+  /* ------------------------------------------------------------------ */
+  {
+    slug: "problems-of-india-solutions",
+    title: "Problems of India and their Solutions",
+    icon: "🧩",
+    description: "Unemployment, corruption, communalism, terrorism, regionalism and illiteracy, and how to tackle them.",
+    lessons: [
+      {
+        slug: "major-problems-and-solutions",
+        title: "Major Problems of India and their Solutions",
+        summary: "What each major national problem means, why it harms the country, and the laws and steps that address it.",
+        minutes: 16,
+        xp: 40,
+        blocks: [
+          {
+            type: "illustration",
+            emoji: "🧩",
+            caption: "A young graduate in Kalaburagi cannot find a job, a family pays a bribe for a certificate, and a rumour sets two communities against each other. Each is a separate problem, but all slow the nation down.",
+          },
+          {
+            type: "text",
+            md: "India has made great progress since 1947, but some problems still stand in the way of development and unity. For each problem we need to know three things: **what it is**, **why it is harmful**, and **how it can be solved**.",
+          },
+          {
+            type: "table",
+            headers: ["Problem", "Meaning", "Main solutions"],
+            rows: [
+              ["**Unemployment**", "People who are able and willing to work do not find work", "Skill training, self-employment, small industries, rural employment schemes such as MGNREGA (2005), better vocational education"],
+              ["**Corruption**", "Misuse of public office for private gain, such as bribery", "Lokpal and Lokayuktas Act (2013), Karnataka Lokayukta (1984), Right to Information Act (2005), e-governance, strong public opinion"],
+              ["**Communalism**", "Using religion to divide people and seek political gain", "Secular values, education, strict action against those who spread hatred, inter-faith harmony"],
+              ["**Terrorism**", "Use of violence and fear against people to achieve political aims", "Strong laws, intelligence and security forces, the National Investigation Agency, international cooperation"],
+              ["**Regionalism**", "Putting the interests of one's own region above the nation", "Balanced regional development, respect for all languages and cultures, fair sharing of resources"],
+              ["**Illiteracy**", "Inability to read and write with understanding", "Right to Education (Article 21A); free and compulsory education for children aged 6 to 14; adult literacy programmes"],
+            ],
+          },
+          {
+            type: "text",
+            md: "**Regional imbalance** means some regions develop faster than others. In Karnataka, the **Dr. D.M. Nanjundappa Committee** studied backward taluks and recommended special development plans (report, 2002). **Article 371J**, added in 2012, gives special provisions for the Hyderabad-Karnataka region (now called Kalyana Karnataka), such as reservation in education and jobs for local people.",
+          },
+          {
+            type: "example",
+            title: "Building a solution answer",
+            problem: "Suggest three ways to reduce corruption in public offices.",
+            steps: [
+              "Start with a meaning: corruption is misuse of public office for private gain.",
+              "Point 1 (law): strengthen the Lokpal at the Union and Lokayukta in states to investigate complaints.",
+              "Point 2 (transparency): use the Right to Information Act and online services, so fewer face-to-face dealings are needed.",
+              "Point 3 (citizens): build public awareness and refuse to pay or take bribes.",
+            ],
+            answer: "Strong anti-corruption bodies (Lokpal, Lokayukta), transparency through RTI and e-governance, and active, honest citizens.",
+          },
+          {
+            type: "checkpoint",
+            questions: [
+              {
+                kind: "mcq",
+                q: "Which law guarantees free and compulsory education to children aged 6 to 14?",
+                options: ["Lokpal Act", "Right to Education under Article 21A", "Right to Information Act", "MGNREGA"],
+                answer: 1,
+                explain: "Article 21A and the Right of Children to Free and Compulsory Education Act, 2009 make elementary education a right.",
+              },
+            ],
+          },
+          {
+            type: "mistake",
+            wrong: "Only the government can solve these problems; ordinary citizens have no role.",
+            right: "Laws and schemes help, but problems like corruption and communalism end only when citizens refuse to take part in them and build social harmony.",
+            why: "It feels as though big problems need big governments. But a bribe needs a giver, and a rumour needs people to spread it; citizens' choices matter as much as laws.",
+          },
+          {
+            type: "activity",
+            activity: {
+              kind: "match",
+              prompt: "Match each problem to a step that tackles it.",
+              pairs: [
+                ["Corruption", "Lokayukta"],
+                ["Unemployment", "Skill training and rural job schemes"],
+                ["Illiteracy", "Right to Education"],
+                ["Communalism", "Secular values and inter-faith harmony"],
+                ["Regional imbalance", "Special plans for backward taluks"],
+              ],
+              explain: "Each problem needs its own remedy. In Karnataka, the **Lokayukta** checks corruption and the Nanjundappa Committee's plans target backward taluks.",
+            },
+          },
+          {
+            type: "callout",
+            tone: "exam",
+            title: "SSLC tip",
+            md: "For a 3- or 4-mark \"suggest measures\" question, write one line of meaning first, then numbered measures. Examiners give marks per valid point, so four clear points beat one long paragraph.",
+          },
+          {
+            type: "callout",
+            tone: "note",
+            md: "These problems are linked. Unemployment can push young people towards crime or extremism; illiteracy makes people easier to mislead with rumours. Solving one helps solve the others.",
+          },
+          {
+            type: "keypoints",
+            items: [
+              "Major problems: unemployment, corruption, communalism, terrorism, regionalism, illiteracy.",
+              "Anti-corruption: Lokpal (2013), Karnataka Lokayukta (1984), RTI (2005).",
+              "Education is a fundamental right for children aged 6 to 14 (Article 21A).",
+              "Regional imbalance in Karnataka: Nanjundappa Committee; Article 371J for Kalyana Karnataka.",
+            ],
+          },
+        ],
+        flashcards: [
+          { front: "Unemployment", back: "A situation where people who are able and willing to work cannot find work." },
+          { front: "Corruption", back: "Misuse of public office or power for private gain." },
+          { front: "Lokayukta", back: "A state-level anti-corruption body; Karnataka's was set up under the Karnataka Lokayukta Act, 1984." },
+          { front: "Regionalism", back: "Giving more importance to one's own region than to the nation as a whole." },
+          { front: "Article 21A", back: "The right to free and compulsory education for children aged 6 to 14." },
+          { front: "Nanjundappa Committee", back: "A Karnataka committee on regional imbalances that identified backward taluks (report 2002)." },
+        ],
+        quiz: [
+          {
+            kind: "mcq",
+            q: "The Lokpal and Lokayuktas Act was passed in:",
+            options: ["1984", "2005", "2013", "2009"],
+            answer: 2,
+            explain: "1984 is the Karnataka Lokayukta Act; 2005 is RTI; 2009 is the RTE Act.",
+            difficulty: 2,
+            hint: "It is the most recent of these laws.",
+          },
+          {
+            kind: "truefalse",
+            q: "Communalism means using religion to divide people for political gain.",
+            answer: true,
+            explain: "It sets communities against each other and harms national unity.",
+          },
+          {
+            kind: "fill",
+            q: "Putting the interests of one's own region above the nation is called ___.",
+            answer: ["regionalism"],
+            explain: "Love for one's region is natural; regionalism becomes a problem when it goes against national interest.",
+          },
+          {
+            kind: "multi",
+            q: "Which steps help reduce unemployment?",
+            options: ["Skill development and vocational training", "Encouraging small and cottage industries", "Rural employment schemes", "Closing schools"],
+            answers: [0, 1, 2],
+            explain: "Closing schools would worsen illiteracy and unemployment.",
+          },
+          {
+            kind: "mcq",
+            q: "Article 371J gives special provisions to which region of Karnataka?",
+            options: ["Coastal Karnataka", "Malnad", "Hyderabad-Karnataka (Kalyana Karnataka)", "Old Mysore"],
+            answer: 2,
+            explain: "It was added in 2012 for the Hyderabad-Karnataka region.",
+            difficulty: 2,
+          },
+          {
+            kind: "truefalse",
+            q: "The Right to Information Act helps fight corruption by making government work more transparent.",
+            answer: true,
+            explain: "Citizens can ask for records, which makes hidden wrongdoing harder.",
+          },
+        ],
+      },
+    ],
+  },
+  /* ------------------------------------------------------------------ */
+  {
+    slug: "indias-foreign-policy",
+    title: "India's Foreign Policy",
+    icon: "🌐",
+    description: "Aims and principles of India's foreign policy: Panchasheela, non-alignment, anti-colonialism and disarmament.",
+    lessons: [
+      {
+        slug: "foreign-policy-principles",
+        title: "Principles of India's Foreign Policy",
+        summary: "What foreign policy is, Nehru's role, Panchasheela, the Non-Aligned Movement and India's other guiding principles.",
+        minutes: 15,
+        xp: 40,
+        blocks: [
+          {
+            type: "illustration",
+            emoji: "🌐",
+            caption: "A family decides how to behave with its neighbours: friendly, fair, not interfering. A country does the same through its foreign policy.",
+          },
+          {
+            type: "text",
+            md: "**Foreign policy** is the set of principles and goals a country follows in its relations with other countries. Its aim is to protect the **national interest**: security, development and the welfare of the people.\n\n**Jawaharlal Nehru**, India's first Prime Minister, is called the **architect of India's foreign policy**. The Constitution also guides it: **Article 51** (a Directive Principle) asks the state to promote international peace and security and to settle disputes by peaceful means.",
+          },
+          {
+            type: "heading",
+            text: "Panchasheela (1954)",
+          },
+          {
+            type: "text",
+            md: "The **Panchasheela**, or five principles of peaceful co-existence, were agreed between India and China in 1954, by Nehru and the Chinese Premier Zhou Enlai.",
+          },
+          {
+            type: "list",
+            ordered: true,
+            items: [
+              "Mutual respect for each other's territorial integrity and sovereignty.",
+              "Mutual non-aggression.",
+              "Mutual non-interference in each other's internal affairs.",
+              "Equality and mutual benefit.",
+              "Peaceful co-existence.",
+            ],
+          },
+          {
+            type: "heading",
+            text: "Non-alignment",
+          },
+          {
+            type: "text",
+            md: "After the Second World War, the world split into two power blocs: one led by the **USA** and one led by the **USSR**. This rivalry is called the **Cold War**. **Non-alignment** means not joining either military bloc and deciding each issue on its merits. It is not the same as staying neutral or silent.\n\nThe **Non-Aligned Movement (NAM)** was founded by Nehru (India), Tito (Yugoslavia), Nasser (Egypt), Sukarno (Indonesia) and Nkrumah (Ghana). Its first summit was held in **Belgrade in 1961**.",
+          },
+          {
+            type: "table",
+            headers: ["Other principle", "What it means for India"],
+            rows: [
+              ["Opposition to colonialism and imperialism", "Supported freedom struggles of colonised countries in Asia and Africa"],
+              ["Opposition to racial discrimination", "Opposed apartheid in South Africa"],
+              ["Disarmament", "Wants the world to reduce and finally destroy weapons of mass destruction"],
+              ["Faith in the United Nations", "A founding member of the UN in 1945; sends troops for UN peacekeeping"],
+              ["Peaceful settlement of disputes", "Prefers talks and agreements over war"],
+            ],
+          },
+          {
+            type: "example",
+            title: "Spot the principle",
+            problem: "During the Cold War, India accepted help from both the USA and the USSR but joined neither of their military alliances. Which principle is this?",
+            steps: [
+              "Note the key fact: India did not join either bloc's military alliance.",
+              "It still kept friendly ties and judged issues by itself.",
+              "This is exactly the idea of non-alignment.",
+            ],
+            answer: "Non-alignment.",
+          },
+          {
+            type: "mistake",
+            wrong: "Non-alignment means India stayed neutral and did not take a stand on world issues.",
+            right: "Non-alignment means not joining military blocs, while actively taking a stand on each issue on its own merits.",
+            why: "Neutral and non-aligned sound alike. But India spoke strongly against colonialism, apartheid and the arms race; it simply refused to follow either superpower blindly.",
+          },
+          {
+            type: "checkpoint",
+            questions: [
+              {
+                kind: "mcq",
+                q: "The first summit of the Non-Aligned Movement was held in:",
+                options: ["New Delhi, 1955", "Belgrade, 1961", "Bandung, 1965", "Cairo, 1947"],
+                answer: 1,
+                explain: "The first NAM summit was in Belgrade, Yugoslavia, in 1961.",
+              },
+            ],
+          },
+          {
+            type: "activity",
+            activity: {
+              kind: "sort",
+              prompt: "Is it one of the five Panchasheela principles?",
+              groups: ["Panchasheela principle", "Not in Panchasheela"],
+              items: [
+                { text: "Mutual non-aggression", group: 0, hint: "Neither side attacks the other." },
+                { text: "Peaceful co-existence", group: 0, hint: "Living side by side in peace." },
+                { text: "Equality and mutual benefit", group: 0, hint: "Fair dealings that help both sides." },
+                { text: "Joining a military alliance", group: 1, hint: "This goes against India's policy." },
+                { text: "Non-interference in internal affairs", group: 0, hint: "Not meddling in another country's matters." },
+                { text: "Building more nuclear weapons", group: 1, hint: "India supports disarmament." },
+              ],
+              explain: "The five principles are respect for territorial integrity and sovereignty, **non-aggression**, **non-interference**, **equality and mutual benefit**, and **peaceful co-existence**.",
+            },
+          },
+          {
+            type: "callout",
+            tone: "exam",
+            title: "SSLC tip",
+            md: "Listing all five Panchasheela principles is a common 2- or 3-mark question. Learn them in order; a frequent error is adding \"non-alignment\" as one of the five.",
+          },
+          {
+            type: "keypoints",
+            items: [
+              "Foreign policy protects national interest; Nehru is its architect; Article 51 guides it.",
+              "Panchasheela (1954, India–China): five principles of peaceful co-existence.",
+              "Non-alignment: not joining Cold War blocs; NAM's first summit was in Belgrade, 1961.",
+              "Other principles: anti-colonialism, anti-racism, disarmament, faith in the UN, peaceful settlement.",
+            ],
+          },
+        ],
+        flashcards: [
+          { front: "Foreign policy", back: "The principles and goals a country follows in its relations with other countries." },
+          { front: "Architect of India's foreign policy", back: "Jawaharlal Nehru." },
+          { front: "Panchasheela", back: "Five principles of peaceful co-existence agreed between India and China in 1954." },
+          { front: "Non-alignment", back: "Not joining either Cold War military bloc and judging each issue on its merits." },
+          { front: "Founders of NAM", back: "Nehru (India), Tito (Yugoslavia), Nasser (Egypt), Sukarno (Indonesia), Nkrumah (Ghana)." },
+          { front: "Article 51", back: "Directive Principle asking the state to promote international peace and security." },
+        ],
+        quiz: [
+          {
+            kind: "mcq",
+            q: "Panchasheela was signed between India and:",
+            options: ["Pakistan", "China", "USSR", "Nepal"],
+            answer: 1,
+            explain: "It was agreed between India and China in 1954.",
+          },
+          {
+            kind: "truefalse",
+            q: "Non-alignment means India refused to take any stand on international issues.",
+            answer: false,
+            explain: "India took clear stands on issues such as colonialism and apartheid; it only refused to join military blocs.",
+          },
+          {
+            kind: "fill",
+            q: "The rivalry between the USA-led bloc and the USSR-led bloc after the Second World War is called the ___ War.",
+            answer: ["Cold"],
+            explain: "It was called cold because the two superpowers did not fight each other directly.",
+          },
+          {
+            kind: "multi",
+            q: "Who were among the founders of the Non-Aligned Movement?",
+            options: ["Jawaharlal Nehru", "Josip Broz Tito", "Gamal Abdel Nasser", "Winston Churchill"],
+            answers: [0, 1, 2],
+            explain: "Churchill was the British Prime Minister and had no role in NAM.",
+            difficulty: 2,
+          },
+          {
+            kind: "mcq",
+            q: "Which Article of the Constitution asks India to promote international peace and security?",
+            options: ["Article 21", "Article 32", "Article 51", "Article 356"],
+            answer: 2,
+            explain: "Article 51 is a Directive Principle of State Policy.",
+            difficulty: 2,
+          },
+          {
+            kind: "truefalse",
+            q: "India is a founding member of the United Nations.",
+            answer: true,
+            explain: "India signed the UN Charter in 1945.",
+          },
+        ],
+      },
+    ],
+  },
+  /* ------------------------------------------------------------------ */
+  {
+    slug: "india-relations-other-countries",
+    title: "India's Relationship with Other Countries",
+    icon: "🤝",
+    description: "India's relations with neighbours, the USA and Russia, and the role of SAARC.",
+    lessons: [
+      {
+        slug: "india-and-the-world",
+        title: "India and Its Neighbours and Partners",
+        summary: "Key agreements and issues in India's relations with Pakistan, China, Nepal, Bangladesh, Sri Lanka, the USA and Russia.",
+        minutes: 16,
+        xp: 40,
+        blocks: [
+          {
+            type: "illustration",
+            emoji: "🗺️",
+            caption: "India shares land borders with seven countries and sea neighbours like Sri Lanka and the Maldives. Good neighbours mean safer borders and more trade.",
+          },
+          {
+            type: "text",
+            md: "India's relations with other countries rest on the principles of its foreign policy: peace, friendship and mutual benefit. Some relations have been warm, some have seen conflict, and many have changed over time. We look at the key events with each country.",
+          },
+          {
+            type: "table",
+            headers: ["Country", "Key events and agreements"],
+            rows: [
+              ["**Pakistan**", "Dispute over Kashmir since 1947; wars in 1947–48, 1965 and 1971; Kargil conflict in 1999; **Tashkent Agreement** (1966) and **Simla Agreement** (1972) to settle issues peacefully; terrorism remains a major concern"],
+              ["**China**", "Panchasheela (1954); war in 1962; boundary dispute still unsettled; today a large trading partner"],
+              ["**Nepal**", "Treaty of Peace and Friendship (1950); open border; close cultural ties"],
+              ["**Bangladesh**", "India helped in its liberation in 1971; Ganga water-sharing treaty (1996); Land Boundary Agreement (2015) settled the exchange of enclaves"],
+              ["**Sri Lanka**", "India–Sri Lanka Accord (1987) on the Tamil issue; trade and fishing links"],
+              ["**USA**", "Differences during the Cold War; closer ties later; civil nuclear agreement (2008); cooperation in trade, technology and defence"],
+              ["**Russia** (earlier USSR)", "Treaty of Peace, Friendship and Cooperation (1971); long-standing partner in defence, space and energy"],
+            ],
+          },
+          {
+            type: "heading",
+            text: "SAARC",
+          },
+          {
+            type: "text",
+            md: "The **South Asian Association for Regional Cooperation (SAARC)** was set up in **1985** at **Dhaka**. Its members are India, Pakistan, Bangladesh, Nepal, Bhutan, Sri Lanka, the Maldives and Afghanistan (which joined in 2007). Its secretariat is at **Kathmandu**. It aims to promote welfare, economic growth and cultural cooperation in South Asia.",
+          },
+          {
+            type: "example",
+            title: "Reading a timeline",
+            problem: "Put these India–Pakistan events in order and say what links the second and fourth: 1965 war, Tashkent Agreement, 1971 war, Simla Agreement.",
+            steps: [
+              "1965: war between India and Pakistan.",
+              "1966: Tashkent Agreement, signed after the 1965 war.",
+              "1971: war, which led to the creation of Bangladesh.",
+              "1972: Simla Agreement, signed after the 1971 war.",
+              "Both agreements came after a war and committed the two countries to settle disputes peacefully.",
+            ],
+            answer: "1965 war → Tashkent (1966) → 1971 war → Simla (1972). Both agreements aimed at peaceful settlement after a war.",
+          },
+          {
+            type: "checkpoint",
+            questions: [
+              {
+                kind: "mcq",
+                q: "India signed the Treaty of Peace, Friendship and Cooperation in 1971 with:",
+                options: ["USA", "USSR", "China", "Nepal"],
+                answer: 1,
+                explain: "The 1971 Indo-Soviet treaty strengthened India's ties with the USSR.",
+              },
+            ],
+          },
+          {
+            type: "mistake",
+            wrong: "SAARC was founded in New Delhi and has its headquarters there.",
+            right: "SAARC was founded in Dhaka in 1985, and its secretariat is in Kathmandu.",
+            why: "Because India is the largest member, students assume the headquarters is in India. The members chose Kathmandu to keep the body balanced.",
+          },
+          {
+            type: "activity",
+            activity: {
+              kind: "match",
+              prompt: "Match each agreement to the country.",
+              pairs: [
+                ["Simla Agreement, 1972", "Pakistan"],
+                ["Panchasheela, 1954", "China"],
+                ["Treaty of Peace and Friendship, 1950", "Nepal"],
+                ["Land Boundary Agreement, 2015", "Bangladesh"],
+                ["Accord on the Tamil issue, 1987", "Sri Lanka"],
+              ],
+              explain: "Linking each year to a country is a quick way to revise. Notice that most agreements aim at peaceful settlement, as India's foreign policy requires.",
+            },
+          },
+          {
+            type: "callout",
+            tone: "exam",
+            title: "SSLC tip",
+            md: "When writing about India's relations with a country, give both sides: one area of cooperation and one area of difference. Answers that list only problems or only friendship usually get partial marks.",
+          },
+          {
+            type: "keypoints",
+            items: [
+              "Pakistan: Kashmir dispute, wars, Tashkent (1966) and Simla (1972) agreements.",
+              "China: Panchasheela (1954), 1962 war, border dispute, large trade.",
+              "Bangladesh liberated in 1971 with India's help; Nepal treaty 1950; Sri Lanka accord 1987.",
+              "USA and Russia are major partners; SAARC (1985, Dhaka) promotes South Asian cooperation.",
+            ],
+          },
+        ],
+        flashcards: [
+          { front: "Simla Agreement", back: "Signed between India and Pakistan in 1972, after the 1971 war, to settle disputes bilaterally and peacefully." },
+          { front: "Tashkent Agreement", back: "Signed between India and Pakistan in 1966 after the 1965 war." },
+          { front: "SAARC", back: "South Asian Association for Regional Cooperation, set up in 1985 at Dhaka; secretariat at Kathmandu." },
+          { front: "India–USSR treaty", back: "Treaty of Peace, Friendship and Cooperation, 1971." },
+          { front: "India–China war", back: "1962." },
+          { front: "Members of SAARC", back: "India, Pakistan, Bangladesh, Nepal, Bhutan, Sri Lanka, Maldives, Afghanistan." },
+        ],
+        quiz: [
+          {
+            kind: "mcq",
+            q: "The Simla Agreement was signed in:",
+            options: ["1966", "1971", "1972", "1999"],
+            answer: 2,
+            explain: "1966 was Tashkent; 1971 was the war; 1999 was Kargil.",
+            difficulty: 2,
+            hint: "It came the year after the 1971 war.",
+          },
+          {
+            kind: "numeric",
+            q: "How many member countries does SAARC have?",
+            answer: 8,
+            explain: "Seven founding members plus Afghanistan, which joined in 2007.",
+          },
+          {
+            kind: "truefalse",
+            q: "India helped in the liberation of Bangladesh in 1971.",
+            answer: true,
+            explain: "Bangladesh became independent after the 1971 war.",
+          },
+          {
+            kind: "fill",
+            q: "The secretariat of SAARC is located at ___.",
+            answer: ["Kathmandu"],
+            explain: "Kathmandu is the capital of Nepal.",
+          },
+          {
+            kind: "order",
+            q: "Arrange these events in chronological order.",
+            items: ["Panchasheela agreement", "India–China war", "Tashkent Agreement", "Simla Agreement"],
+            explain: "1954, 1962, 1966, 1972.",
+            difficulty: 2,
+          },
+          {
+            kind: "mcq",
+            q: "The Land Boundary Agreement that settled the exchange of enclaves was signed with:",
+            options: ["Nepal", "Bangladesh", "Sri Lanka", "Bhutan"],
+            answer: 1,
+            explain: "India and Bangladesh completed the exchange of enclaves under the 2015 agreement.",
+          },
+        ],
+      },
+    ],
+  },
+  /* ------------------------------------------------------------------ */
+  {
+    slug: "global-problems-indias-role",
+    title: "Global Problems and India's Role",
+    icon: "🌍",
+    description: "Human rights, apartheid, the arms race, terrorism and economic inequality, and how India responds.",
+    lessons: [
+      {
+        slug: "global-problems",
+        title: "Global Problems and India's Role",
+        summary: "The major problems facing the world today and the stand India has taken on each.",
+        minutes: 15,
+        xp: 40,
+        blocks: [
+          {
+            type: "illustration",
+            emoji: "🌍",
+            caption: "Some problems do not stop at borders: a terror attack, a nuclear threat or a hungry nation affects everyone on the planet.",
+          },
+          {
+            type: "text",
+            md: "**Global problems** are problems that affect many countries and cannot be solved by one country alone. They need cooperation through bodies like the **United Nations**. India, true to its foreign policy, has worked for peace, justice and equality on each of them.",
+          },
+          {
+            type: "table",
+            headers: ["Global problem", "What it means", "India's role"],
+            rows: [
+              ["**Violation of human rights**", "Denial of basic rights such as life, liberty, equality and dignity", "Supports the **Universal Declaration of Human Rights** (10 December 1948); set up the **National Human Rights Commission** in 1993"],
+              ["**Apartheid**", "A policy of racial segregation and discrimination followed by the white minority government in South Africa", "Raised the issue at the UN in 1946, cut trade ties with South Africa, supported Nelson Mandela's struggle"],
+              ["**Arms race**", "Countries competing to build more and deadlier weapons, including nuclear weapons", "Supports complete **disarmament**; follows a policy of **no first use** of nuclear weapons"],
+              ["**Terrorism**", "Use of violence to spread fear for political aims", "Proposed a **Comprehensive Convention on International Terrorism** at the UN in 1996; works with other nations against terror"],
+              ["**Economic inequality**", "A wide gap between rich developed nations and poor developing nations", "Leads developing countries in demanding fair trade and a just world economic order"],
+            ],
+          },
+          {
+            type: "text",
+            md: "**Disarmament** means reducing and finally removing weapons, especially weapons of mass destruction. India did not sign the **Nuclear Non-Proliferation Treaty (NPT, 1968)** or the **Comprehensive Test Ban Treaty (CTBT, 1996)**, because it considers them **discriminatory**: they let a few countries keep nuclear weapons while barring others. India conducted nuclear tests at **Pokhran** in 1974 and 1998, but stands for the complete elimination of nuclear weapons by all.",
+          },
+          {
+            type: "example",
+            title: "Explaining a stand",
+            problem: "India supports disarmament but did not sign the NPT. Is this a contradiction?",
+            steps: [
+              "State India's aim: complete disarmament for all countries.",
+              "State what the NPT does: it allows five nuclear powers to keep weapons and stops others from getting them.",
+              "India sees this as unequal: it limits some countries but does not make the nuclear powers give up their weapons.",
+              "So India's refusal comes from its demand for equal and complete disarmament.",
+            ],
+            answer: "Not a contradiction: India rejects the NPT as discriminatory and demands disarmament by every country.",
+          },
+          {
+            type: "checkpoint",
+            questions: [
+              {
+                kind: "mcq",
+                q: "The Universal Declaration of Human Rights was adopted on:",
+                options: ["15 August 1947", "26 January 1950", "10 December 1948", "24 October 1945"],
+                answer: 2,
+                explain: "10 December is observed as Human Rights Day. 24 October 1945 is when the UN came into existence.",
+              },
+            ],
+          },
+          {
+            type: "mistake",
+            wrong: "India refused to sign the NPT because it is against disarmament.",
+            right: "India supports complete disarmament; it did not sign the NPT because it treats nuclear and non-nuclear countries unequally.",
+            why: "Not signing a disarmament treaty looks like opposing disarmament. India's objection is to the unequal terms, not to the goal.",
+          },
+          {
+            type: "activity",
+            activity: {
+              kind: "sort",
+              prompt: "Which global problem does each item relate to?",
+              groups: ["Human rights and racism", "Arms race and terrorism"],
+              items: [
+                { text: "Apartheid in South Africa", group: 0, hint: "Discrimination based on race." },
+                { text: "National Human Rights Commission", group: 0, hint: "Protects basic rights in India." },
+                { text: "Nuclear Non-Proliferation Treaty", group: 1, hint: "A treaty about weapons." },
+                { text: "No first use policy", group: 1, hint: "India's nuclear weapons policy." },
+                { text: "Universal Declaration of 1948", group: 0, hint: "Adopted by the UN on 10 December." },
+                { text: "Comprehensive Convention on International Terrorism", group: 1, hint: "India's proposal at the UN in 1996." },
+              ],
+              explain: "Human rights and **racism** concern how people are treated; the **arms race** and **terrorism** concern weapons and violence. India acts on both fronts through the UN.",
+            },
+          },
+          {
+            type: "callout",
+            tone: "exam",
+            title: "SSLC tip",
+            md: "For \"India's role\" questions, mention one action India took (not just an opinion). For apartheid, \"India raised the issue at the UN in 1946 and cut trade ties\" earns marks; \"India was against apartheid\" alone is too vague.",
+          },
+          {
+            type: "keypoints",
+            items: [
+              "Global problems need international cooperation through the UN.",
+              "Human rights: UDHR 10 December 1948; NHRC in India set up in 1993.",
+              "India opposed apartheid from 1946; Nelson Mandela became South Africa's President in 1994.",
+              "India supports complete disarmament but rejects the NPT and CTBT as discriminatory.",
+            ],
+          },
+        ],
+        flashcards: [
+          { front: "Apartheid", back: "Racial segregation and discrimination by the white minority government of South Africa." },
+          { front: "Human Rights Day", back: "10 December, the day the UDHR was adopted in 1948." },
+          { front: "NHRC", back: "National Human Rights Commission of India, set up in 1993." },
+          { front: "Disarmament", back: "Reducing and finally eliminating weapons, especially weapons of mass destruction." },
+          { front: "Why India did not sign the NPT", back: "It considers the treaty discriminatory, as it lets five nuclear powers keep weapons." },
+          { front: "Arms race", back: "Competition among countries to build more and deadlier weapons." },
+        ],
+        quiz: [
+          {
+            kind: "mcq",
+            q: "The National Human Rights Commission of India was set up in:",
+            options: ["1948", "1976", "1993", "2005"],
+            answer: 2,
+            explain: "It was set up under the Protection of Human Rights Act, 1993.",
+          },
+          {
+            kind: "truefalse",
+            q: "India has signed the Comprehensive Test Ban Treaty.",
+            answer: false,
+            explain: "India did not sign the CTBT, considering it discriminatory.",
+          },
+          {
+            kind: "fill",
+            q: "The policy of racial segregation in South Africa was called ___.",
+            answer: ["apartheid"],
+            explain: "It ended in the early 1990s; Nelson Mandela became President in 1994.",
+          },
+          {
+            kind: "multi",
+            q: "Which describe India's stand on nuclear weapons?",
+            options: ["Supports complete disarmament", "Follows no first use", "Considers the NPT discriminatory", "Wants only some countries to keep weapons"],
+            answers: [0, 1, 2],
+            explain: "India wants disarmament by all, not a world where only some keep weapons.",
+            difficulty: 2,
+            hint: "One option describes the NPT itself, which India opposes.",
+          },
+          {
+            kind: "mcq",
+            q: "India's nuclear tests were conducted at:",
+            options: ["Sriharikota", "Pokhran", "Thumba", "Kalpakkam"],
+            answer: 1,
+            explain: "Pokhran is in Rajasthan. Sriharikota and Thumba are space launch sites.",
+          },
+          {
+            kind: "truefalse",
+            q: "Economic inequality between developed and developing nations is a global problem.",
+            answer: true,
+            explain: "India works with other developing nations for fairer trade and a just economic order.",
+          },
+        ],
+      },
+    ],
+  },
+];
