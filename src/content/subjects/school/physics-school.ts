@@ -1482,6 +1482,23 @@ export const physicsSchool: Subject = {
               ],
             },
             {
+              type: "activity",
+              activity: {
+                kind: "sort",
+                prompt: "Is each wave transverse or longitudinal?",
+                groups: ["Transverse", "Longitudinal"],
+                items: [
+                  { text: "Ripples on a pond", group: 0, hint: "The water bobs up and down while the ripple moves outward." },
+                  { text: "Sound from a temple bell", group: 1, hint: "Air is squeezed and stretched along the direction of travel." },
+                  { text: "Light from the Sun", group: 0, hint: "Light is a transverse electromagnetic wave." },
+                  { text: "A slinky pushed and pulled along its length", group: 1, hint: "The coils bunch up and spread out along the slinky." },
+                  { text: "A guitar string plucked sideways", group: 0, hint: "The string moves sideways while the wave runs along it." },
+                  { text: "Ultrasound in a hospital scan", group: 1, hint: "Ultrasound is still sound, just of high frequency." },
+                ],
+                explain: "Ask how the particles move. **At right angles** to the wave's travel → transverse. **Back and forth along** it → longitudinal. All sound is longitudinal.",
+              },
+            },
+            {
               type: "widget",
               widget: "wave",
               caption: "Adjust amplitude, frequency and wavelength. Notice how frequency and wavelength trade off.",
@@ -1508,17 +1525,21 @@ export const physicsSchool: Subject = {
               md: "Sound needs a **medium**; it cannot travel through a vacuum. It moves at about 343 m/s in air at 20 °C, roughly 1500 m/s in water and about 5000 m/s in steel. Humans hear roughly **20 Hz to 20 000 Hz**; above that is **ultrasound**, below it **infrasound**.",
             },
             {
-              type: "heading",
-              text: "Worked example: echo",
+              type: "example",
+              title: "Echo",
+              problem: "You shout at a cliff and hear the echo 2 s later. Take $v = 340$ m/s. How far away is the cliff?",
+              steps: [
+                "Sound travels to the cliff **and back** in 2 s.",
+                "Total distance $= v \\times t = 340 \\times 2 = 680$ m.",
+                "Distance to the cliff $= 680 \\div 2 = 340$ m, i.e. $d = \\tfrac{vt}{2}$.",
+              ],
+              answer: "The cliff is 340 m away.",
             },
             {
-              type: "list",
-              ordered: true,
-              items: [
-                "You shout at a cliff and hear the echo 2 s later. Take $v = 340$ m/s.",
-                "Sound travels to the cliff **and back**: total distance $= 340 \\times 2 = 680$ m.",
-                "Distance to the cliff $= 680 \\div 2 = 340$ m.",
-              ],
+              type: "mistake",
+              wrong: "Distance to the cliff = speed × echo time.",
+              right: "Distance $= \\dfrac{\\text{speed} \\times \\text{time}}{2}$, because the sound goes to the cliff **and comes back**.",
+              why: "\"Distance = speed × time\" is the rule from motion, so students apply it directly. But in an echo the measured time covers the round trip, which is twice the distance.",
             },
             {
               type: "checkpoint",
@@ -1554,6 +1575,7 @@ export const physicsSchool: Subject = {
             { front: "Transverse vs longitudinal", back: "Transverse: vibration ⟂ direction of travel. Longitudinal: vibration ∥ direction of travel." },
             { front: "Can sound travel through a vacuum?", back: "No, it needs a medium." },
             { front: "What sets pitch? What sets loudness?", back: "Pitch: frequency. Loudness: amplitude." },
+            { front: "Distance to a reflecting surface from an echo", back: "$d = \\dfrac{vt}{2}$, since sound travels there and back." },
           ],
           quiz: [
             {
@@ -1591,6 +1613,14 @@ export const physicsSchool: Subject = {
               answer: 2,
               explain: "Ultrasound is above the upper limit of human hearing.",
             },
+            {
+              kind: "numeric",
+              q: "A ship's SONAR sends an ultrasound pulse to the sea bed and receives the echo after 2 s. Sound travels at 1500 m/s in sea water. How deep is the sea, in m?",
+              answer: 1500,
+              unit: "m",
+              explain: "$d = \\tfrac{vt}{2} = \\tfrac{1500 \\times 2}{2} = 1500$ m.",
+              difficulty: 2,
+            },
           ],
         },
         {
@@ -1626,14 +1656,15 @@ export const physicsSchool: Subject = {
               caption: "Mirror formula (New Cartesian sign convention: distances measured from the pole, against the incoming light are negative).",
             },
             {
-              type: "list",
-              ordered: true,
-              items: [
-                "An object is 30 cm in front of a concave mirror of focal length 15 cm. So $u = -30$ cm, $f = -15$ cm.",
-                "$\\tfrac{1}{v} = \\tfrac{1}{f} - \\tfrac{1}{u} = -\\tfrac{1}{15} + \\tfrac{1}{30} = -\\tfrac{1}{30}$.",
-                "$v = -30$ cm: a real image 30 cm in front of the mirror.",
-                "$m = -\\tfrac{v}{u} = -1$: inverted and the same size (the object is at the centre of curvature).",
+              type: "example",
+              title: "Concave mirror",
+              problem: "An object is 30 cm in front of a concave mirror of focal length 15 cm. Find the position, size and nature of the image.",
+              steps: [
+                "Signs: $u = -30$ cm, $f = -15$ cm.",
+                "$\\tfrac{1}{v} = \\tfrac{1}{f} - \\tfrac{1}{u} = -\\tfrac{1}{15} + \\tfrac{1}{30} = -\\tfrac{1}{30}$, so $v = -30$ cm.",
+                "$m = -\\tfrac{v}{u} = -\\tfrac{-30}{-30} = -1$.",
               ],
+              answer: "A real, inverted image of the same size, 30 cm in front of the mirror (the object is at the centre of curvature).",
             },
             {
               type: "heading",
@@ -1651,6 +1682,29 @@ export const physicsSchool: Subject = {
             {
               type: "text",
               md: "Glass has $n \\approx 1.5$, so light travels through it at $\\tfrac{3 \\times 10^8}{1.5} = 2 \\times 10^8$ m/s.",
+            },
+            {
+              type: "activity",
+              activity: {
+                kind: "sort",
+                prompt: "Does the ray bend towards or away from the normal?",
+                groups: ["Towards the normal", "Away from the normal"],
+                items: [
+                  { text: "Air into glass", group: 0, hint: "Glass is optically denser, so light slows down." },
+                  { text: "Glass into air", group: 1, hint: "Light speeds up as it leaves the denser glass." },
+                  { text: "Air into water", group: 0, hint: "Water (n ≈ 1.33) is denser than air." },
+                  { text: "Water into air", group: 1, hint: "This is why a pool looks shallower than it is." },
+                  { text: "Water into glass", group: 0, hint: "Glass (n ≈ 1.5) is denser than water (n ≈ 1.33)." },
+                  { text: "Diamond into air", group: 1, hint: "Diamond has n ≈ 2.42, so light speeds up a lot on leaving it." },
+                ],
+                explain: "Into a medium with a **higher n** (light slows down) → bends **towards** the normal. Into a **lower n** (light speeds up) → bends **away**.",
+              },
+            },
+            {
+              type: "mistake",
+              wrong: "Light always bends towards the normal when it goes into a new medium.",
+              right: "It bends **towards** the normal only when it enters an optically **denser** medium. Going into a rarer medium (glass → air) it bends **away**. A ray along the normal does not bend at all.",
+              why: "The first example everyone learns is air → glass, so \"towards the normal\" sticks as the rule. The real rule depends on whether light slows down or speeds up.",
             },
             {
               type: "heading",
@@ -1731,6 +1785,14 @@ export const physicsSchool: Subject = {
               q: "Light bends towards the normal when it enters a denser medium.",
               answer: true,
               explain: "It slows down, so it bends towards the normal.",
+            },
+            {
+              kind: "numeric",
+              q: "An object is placed 20 cm in front of a concave mirror of focal length 10 cm. What is the image distance v in cm? (Give the sign.)",
+              answer: -20,
+              unit: "cm",
+              explain: "$\\tfrac{1}{v} = \\tfrac{1}{f} - \\tfrac{1}{u} = -\\tfrac{1}{10} + \\tfrac{1}{20} = -\\tfrac{1}{20}$, so $v = -20$ cm: real image at C.",
+              difficulty: 3,
             },
           ],
         },

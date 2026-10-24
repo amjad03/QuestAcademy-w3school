@@ -1890,7 +1890,1555 @@ public class DigitSum
       },
     ],
   },
-  /*ICSE-MORE*/
+  /* ------------------------------------------------------------------ */
+  {
+    slug: "constructors",
+    title: "Constructors",
+    icon: "🏗️",
+    description: "What a constructor is, default and parameterised constructors, constructor overloading, the this keyword, and constructor vs method.",
+    lessons: [
+      {
+        slug: "constructors-types-overloading",
+        title: "Default, Parameterised and Overloaded Constructors",
+        summary: "Characteristics of constructors, the default constructor, parameterised constructors, the this keyword, constructor overloading and how constructors differ from methods.",
+        minutes: 16,
+        xp: 40,
+        blocks: [
+          {
+            type: "text",
+            md: "When a new student joins school, the office fills in a form straight away: name, class, roll number. A **constructor** does the same for an object: it is a special member method that **initialises** the object's data members at the moment the object is created.",
+          },
+          {
+            type: "list",
+            items: [
+              "It has the **same name as the class**.",
+              "It has **no return type**, not even `void`.",
+              "It is **called automatically** when an object is created with `new`.",
+              "It is usually declared `public` so objects can be created from other classes.",
+              "It cannot be declared `static`.",
+            ],
+          },
+          {
+            type: "table",
+            headers: ["Kind", "Parameters", "Example header"],
+            rows: [
+              ["**Default** (non-parameterised) constructor", "none", "`Book()`"],
+              ["**Parameterised** constructor", "one or more", "`Book(String t, double p)`"],
+            ],
+          },
+          {
+            type: "text",
+            md: "If you write **no constructor at all**, Java supplies a default constructor, and the instance variables keep their **default values**: 0 for int, 0.0 for double, `false` for boolean, `null` for String and other objects, and the null character for char. Once you write any constructor yourself, Java no longer supplies this one.\n\nWhen a parameter has the same name as a data member, use the keyword **this**: `this.title = title;`. Here `this.title` is the object's data member and `title` is the parameter. `this` always refers to the **current object**.",
+          },
+          {
+            type: "example",
+            title: "Constructor overloading",
+            problem: "Trace the program below and give its exact output.",
+            steps: [
+              "**Constructor overloading** means a class has more than one constructor, each with a different parameter list.",
+              "`new Book()` has no arguments, so the default constructor runs: title = \"Unknown\", price = 0.0.",
+              "`new Book(\"Wings of Fire\", 250.0)` matches `Book(String, double)`: `this.title` and `this.price` get the arguments.",
+              "`show()` prints each object. A double always prints with a decimal point, so 0.0 and 250.0.",
+            ],
+            answer: "Unknown : Rs. 0.0\nWings of Fire : Rs. 250.0",
+          },
+          {
+            type: "code",
+            lang: "java",
+            caption: "Book.java",
+            code: `public class Book
+{
+    String title;
+    double price;
+
+    Book()
+    {
+        title = "Unknown";
+        price = 0.0;
+    }
+
+    Book(String title, double price)
+    {
+        this.title = title;
+        this.price = price;
+    }
+
+    void show()
+    {
+        System.out.println(title + " : Rs. " + price);
+    }
+
+    public static void main(String[] args)
+    {
+        Book b1 = new Book();
+        Book b2 = new Book("Wings of Fire", 250.0);
+        b1.show();
+        b2.show();
+    }
+}`,
+          },
+          {
+            type: "checkpoint",
+            questions: [
+              {
+                kind: "mcq",
+                q: "When is a constructor called?",
+                options: ["Automatically, when an object is created with new", "Only when you call it by name like a method", "When the program ends", "Each time any method of the object is called"],
+                answer: 0,
+                explain: "`new` creates the object and runs the matching constructor once for it.",
+              },
+            ],
+          },
+          {
+            type: "mistake",
+            wrong: "Write the constructor as `void Book() { ... }` because it returns nothing.",
+            right: "Write `Book() { ... }` with **no** return type. With `void`, it becomes an ordinary method that happens to share the class name, and it will not run on `new Book()`.",
+            why: "Methods that return nothing are marked void, so it feels right. But a constructor is not a method that returns nothing: it has no return type at all, and that is how Java recognises it.",
+          },
+          {
+            type: "activity",
+            activity: {
+              kind: "sort",
+              prompt: "Is this true of a constructor or of a method?",
+              groups: ["Constructor", "Method"],
+              items: [
+                { text: "Must have the same name as the class", group: 0, hint: "Only constructors are tied to the class name." },
+                { text: "Has a return type such as int or void", group: 1, hint: "Constructors have no return type." },
+                { text: "Runs automatically when new creates the object", group: 0, hint: "You never call it by name with the dot operator." },
+                { text: "Can be called many times on the same object", group: 1, hint: "A constructor runs only once per object." },
+                { text: "Can be declared static", group: 1, hint: "Constructors cannot be static." },
+                { text: "Used to initialise data members of a new object", group: 0, hint: "That is its whole purpose." },
+              ],
+              explain: "A constructor: class name, no return type, called once and automatically by `new`, for initialisation. A method: any name, a return type, called as often as needed.",
+            },
+          },
+          {
+            type: "callout",
+            tone: "exam",
+            title: "ICSE tip",
+            md: "\"Differentiate between a constructor and a method\" is a common 2-mark question. Give two clear points: name (same as class vs any name) and return type (none vs must have one). In programs, initialise every data member inside the constructor the question asks for.",
+          },
+          {
+            type: "keypoints",
+            items: [
+              "A constructor has the class's name, no return type, and runs automatically on `new`.",
+              "Default constructor: no parameters. Parameterised: takes values.",
+              "If no constructor is written, Java supplies one and members keep default values (0, 0.0, false, null).",
+              "Constructor overloading = several constructors with different parameter lists.",
+              "`this` refers to the current object; `this.x = x;` separates the member from the parameter.",
+            ],
+          },
+        ],
+        flashcards: [
+          { front: "Constructor", back: "A member method with the same name as the class, no return type, called automatically when an object is created." },
+          { front: "Default constructor", back: "A constructor with no parameters." },
+          { front: "Parameterised constructor", back: "A constructor that takes parameters to initialise data members with given values." },
+          { front: "Constructor overloading", back: "More than one constructor in a class, each with a different parameter list." },
+          { front: "`this` keyword", back: "A reference to the current object." },
+          { front: "Default value of a String data member", back: "null" },
+        ],
+        quiz: [
+          {
+            kind: "mcq",
+            q: "Which is a correct constructor for class `Pen`?",
+            options: ["`Pen() { }`", "`void Pen() { }`", "`int Pen() { }`", "`static Pen() { }`"],
+            answer: 0,
+            explain: "A constructor has no return type and cannot be static.",
+          },
+          {
+            kind: "truefalse",
+            q: "A class can have more than one constructor.",
+            answer: true,
+            explain: "That is constructor overloading; the parameter lists must differ.",
+          },
+          {
+            kind: "fill",
+            q: "The keyword that refers to the current object is ___.",
+            answer: ["this"],
+            explain: "`this` is the reference to the object whose constructor or method is running.",
+          },
+          {
+            kind: "mcq",
+            q: "A class has `int roll; double fee;` and no constructor. After `new`, what are roll and fee?",
+            options: ["0 and 0.0", "null and null", "garbage values", "1 and 1.0"],
+            answer: 0,
+            explain: "Data members get default values: 0 for int, 0.0 for double. Java never leaves garbage in instance variables.",
+            difficulty: 2,
+          },
+          {
+            kind: "mcq",
+            q: "In `Book(String title, double price) { title = title; }`, what happens to the data member title?",
+            options: ["It is not changed; the parameter is assigned to itself", "It gets the parameter's value", "Compile-time error", "It becomes null always"],
+            answer: 0,
+            explain: "Inside the constructor, `title` means the parameter, so the line copies it to itself. Write `this.title = title;` to set the member.",
+            difficulty: 3,
+            hint: "Which title does the bare name refer to inside the constructor?",
+          },
+          {
+            kind: "multi",
+            q: "Which are characteristics of a constructor? (Choose all that apply)",
+            options: ["Same name as the class", "No return type", "Called automatically on object creation", "Must be static"],
+            answers: [0, 1, 2],
+            explain: "A constructor cannot be static; the other three are its defining features.",
+          },
+        ],
+      },
+    ],
+  },
+
+  /* ------------------------------------------------------------------ */
+  {
+    slug: "library-classes",
+    title: "Library Classes",
+    icon: "📚",
+    description: "Packages, wrapper classes, parsing strings to numbers, Character class methods, autoboxing and unboxing.",
+    lessons: [
+      {
+        slug: "wrapper-classes-character-methods",
+        title: "Wrapper Classes and Character Methods",
+        summary: "Java packages, the eight wrapper classes, parseInt and parseDouble, Character methods like isDigit and toUpperCase, and autoboxing and unboxing.",
+        minutes: 16,
+        xp: 40,
+        blocks: [
+          {
+            type: "text",
+            md: "Java comes with thousands of ready-made classes, called **library classes**, grouped into **packages**. `java.lang` (String, Math, the wrapper classes) is imported automatically. `java.util` (Scanner) and `java.io` must be imported with `import`.",
+          },
+          {
+            type: "text",
+            md: "A **wrapper class** wraps a primitive value inside an object. Each primitive type has one. Wrapper classes are needed when an object is required instead of a primitive, and they provide useful methods, such as converting a String to a number.",
+          },
+          {
+            type: "table",
+            headers: ["Primitive", "Wrapper class", "Useful method"],
+            rows: [
+              ["`byte`", "`Byte`", "`Byte.parseByte(\"12\")`"],
+              ["`short`", "`Short`", "`Short.parseShort(\"300\")`"],
+              ["`int`", "`Integer`", "`Integer.parseInt(\"25\")` → 25"],
+              ["`long`", "`Long`", "`Long.parseLong(\"98765\")`"],
+              ["`float`", "`Float`", "`Float.parseFloat(\"2.5\")`"],
+              ["`double`", "`Double`", "`Double.parseDouble(\"3.75\")` → 3.75"],
+              ["`char`", "`Character`", "`Character.isDigit('7')` → true"],
+              ["`boolean`", "`Boolean`", "`Boolean.parseBoolean(\"true\")`"],
+            ],
+          },
+          {
+            type: "table",
+            headers: ["Character method", "Returns", "Example"],
+            rows: [
+              ["`isLetter(ch)`", "boolean", "`isLetter('g')` → true"],
+              ["`isDigit(ch)`", "boolean", "`isDigit('g')` → false"],
+              ["`isLetterOrDigit(ch)`", "boolean", "`isLetterOrDigit('#')` → false"],
+              ["`isWhitespace(ch)`", "boolean", "`isWhitespace(' ')` → true"],
+              ["`isUpperCase(ch)` / `isLowerCase(ch)`", "boolean", "`isUpperCase('K')` → true"],
+              ["`toUpperCase(ch)` / `toLowerCase(ch)`", "char", "`toUpperCase('k')` → 'K'"],
+            ],
+          },
+          {
+            type: "text",
+            md: "**Autoboxing** is Java's automatic conversion of a primitive into its wrapper object: `Integer obj = 25;`. **Unboxing** is the reverse: `int n = obj;`. Before autoboxing, programmers had to write these conversions themselves.",
+          },
+          {
+            type: "example",
+            title: "Counting letters, digits and spaces",
+            problem: "Trace the program below and give its exact output.",
+            steps: [
+              "The string \"Room 204 B\" has 10 characters: R, o, o, m, space, 2, 0, 4, space, B.",
+              "Letters: R, o, o, m, B = 5. Digits: 2, 0, 4 = 3. Spaces: 2.",
+              "`Integer.parseInt(\"204\")` turns the text \"204\" into the int 204, so total = 204 + 6 = 210.",
+              "`Integer boxed = total;` autoboxes 210; `int back = boxed;` unboxes it; back + 1 = 211.",
+            ],
+            answer: "Letters = 5\nDigits = 3\nSpaces = 2\nTotal = 210\n211",
+          },
+          {
+            type: "code",
+            lang: "java",
+            caption: "CharCount.java",
+            code: `public class CharCount
+{
+    public static void main(String[] args)
+    {
+        String s = "Room 204 B";
+        int letters = 0, digits = 0, spaces = 0;
+        for (int i = 0; i < s.length(); i++)
+        {
+            char ch = s.charAt(i);
+            if (Character.isLetter(ch))
+                letters++;
+            else if (Character.isDigit(ch))
+                digits++;
+            else if (Character.isWhitespace(ch))
+                spaces++;
+        }
+        System.out.println("Letters = " + letters);
+        System.out.println("Digits = " + digits);
+        System.out.println("Spaces = " + spaces);
+        int total = Integer.parseInt("204") + 6;
+        System.out.println("Total = " + total);
+        Integer boxed = total;
+        int back = boxed;
+        System.out.println(back + 1);
+    }
+}`,
+          },
+          {
+            type: "activity",
+            activity: {
+              kind: "reveal",
+              prompt: "What does this line print?",
+              emoji: "🧮",
+              options: ["20", "128", "12 8", "Error"],
+              answer: 0,
+              trap: 1,
+              explain: "`System.out.println(Integer.parseInt(\"12\") + Integer.parseInt(\"8\"));` parseInt turns both strings into ints, so + adds them: **20**. Without parseInt, `\"12\" + \"8\"` would join the strings to make \"128\".",
+            },
+          },
+          {
+            type: "mistake",
+            wrong: "`Character.toUpperCase(ch);` changes ch to a capital letter.",
+            right: "It **returns** the capital letter and leaves ch unchanged. Store the result: `ch = Character.toUpperCase(ch);`.",
+            why: "The method name sounds like an action on ch. But char is a primitive passed by value; the method can only hand back a new value, which is lost if you do not store or print it.",
+          },
+          {
+            type: "checkpoint",
+            questions: [
+              {
+                kind: "mcq",
+                q: "Which package is imported automatically in every Java program?",
+                options: ["java.lang", "java.util", "java.io", "java.awt"],
+                answer: 0,
+                explain: "java.lang holds String, Math and the wrapper classes and needs no import.",
+              },
+              {
+                kind: "fill",
+                q: "Automatically converting an int into an Integer object is called ___.",
+                answer: ["autoboxing", "auto-boxing", "boxing"],
+                explain: "Autoboxing wraps the primitive; unboxing takes it out again.",
+              },
+            ],
+          },
+          {
+            type: "callout",
+            tone: "exam",
+            title: "ICSE tip",
+            md: "In \"give the output\" questions, note the **return type**: `Character.isDigit` returns true or false, while `Character.toUpperCase` returns a char. Also, `Integer.parseInt(\"12.5\")` does not give 12; it throws a NumberFormatException because \"12.5\" is not a whole number.",
+          },
+          {
+            type: "keypoints",
+            items: [
+              "Library classes are grouped in packages; java.lang is imported by default.",
+              "Eight wrapper classes: Byte, Short, Integer, Long, Float, Double, Character, Boolean.",
+              "parseInt / parseDouble convert a String to a number.",
+              "Character methods test (isLetter, isDigit, isWhitespace, isUpperCase) or convert (toUpperCase, toLowerCase).",
+              "Autoboxing: primitive → wrapper object; unboxing: wrapper object → primitive.",
+            ],
+          },
+        ],
+        flashcards: [
+          { front: "Wrapper class", back: "A class that wraps a primitive value in an object, e.g. Integer for int." },
+          { front: "Wrapper class of char", back: "Character" },
+          { front: "Integer.parseInt(\"45\")", back: "Converts the String \"45\" to the int 45." },
+          { front: "Autoboxing", back: "Automatic conversion of a primitive into its wrapper object." },
+          { front: "Unboxing", back: "Automatic conversion of a wrapper object back into its primitive." },
+          { front: "Character.isLetterOrDigit('#')", back: "false" },
+        ],
+        quiz: [
+          {
+            kind: "mcq",
+            q: "What is the wrapper class of int?",
+            options: ["Integer", "Int", "Number", "Long"],
+            answer: 0,
+            explain: "The wrapper for int is Integer, and for char it is Character; the others are just capitalised names.",
+          },
+          {
+            kind: "mcq",
+            q: "What does `Character.isUpperCase('m')` return?",
+            options: ["false", "true", "'M'", "'m'"],
+            answer: 0,
+            explain: "is... methods return a boolean. 'm' is lowercase, so false.",
+          },
+          {
+            kind: "numeric",
+            q: "What is printed by `System.out.println(Double.parseDouble(\"2.5\") * 4);`?",
+            answer: 10,
+            explain: "2.5 × 4 = 10.0. Java prints 10.0 because the result is a double.",
+            difficulty: 2,
+          },
+          {
+            kind: "truefalse",
+            q: "`Integer x = 10;` is an example of unboxing.",
+            answer: false,
+            explain: "A primitive 10 is being wrapped into an Integer object: that is autoboxing.",
+          },
+          {
+            kind: "fill",
+            q: "`Character.toLowerCase('Q')` returns ___.",
+            answer: ["q", "'q'"],
+            explain: "It returns the lowercase form of the character.",
+          },
+          {
+            kind: "multi",
+            q: "Which of these return a boolean? (Choose all that apply)",
+            options: ["`Character.isDigit(ch)`", "`Character.isWhitespace(ch)`", "`Character.toUpperCase(ch)`", "`Integer.parseInt(s)`"],
+            answers: [0, 1],
+            explain: "Methods starting with is return true or false. toUpperCase returns a char and parseInt returns an int.",
+            difficulty: 2,
+          },
+        ],
+      },
+    ],
+  },
+
+  /* ------------------------------------------------------------------ */
+  {
+    slug: "encapsulation",
+    title: "Encapsulation",
+    icon: "💊",
+    description: "Wrapping data and methods into a class, data hiding with private, access specifiers and the scope of variables.",
+    lessons: [
+      {
+        slug: "access-specifiers-scope",
+        title: "Access Specifiers and Scope of Variables",
+        summary: "Encapsulation and data hiding, private, default, protected and public access, getters and setters, and instance, class, local and argument variables.",
+        minutes: 16,
+        xp: 40,
+        blocks: [
+          {
+            type: "illustration",
+            emoji: "🏧",
+            caption: "At an ATM you can deposit and withdraw, but you can never open the machine and change the cash count yourself.",
+          },
+          {
+            type: "text",
+            md: "**Encapsulation** is the wrapping up of data and the methods that work on that data into a single unit, the **class**. Usually the data is made **private** so that code outside the class cannot change it directly. This is **data hiding**. Outside code must go through **public** methods, which can check that every change is sensible.",
+          },
+          {
+            type: "table",
+            headers: ["Access specifier", "Same class", "Same package", "Subclass in another package", "Any other class"],
+            rows: [
+              ["`private`", "Yes", "No", "No", "No"],
+              ["default (no keyword)", "Yes", "Yes", "No", "No"],
+              ["`protected`", "Yes", "Yes", "Yes", "No"],
+              ["`public`", "Yes", "Yes", "Yes", "Yes"],
+            ],
+          },
+          {
+            type: "example",
+            title: "A bank account that protects its balance",
+            problem: "Trace the program below and give its exact output.",
+            steps: [
+              "`new Account(\"Meera\")` runs the constructor: holder = Meera, balance = 0.0, and the **static** count becomes 1.",
+              "`deposit(500)`: 500 > 0, so balance = 500.0.",
+              "`deposit(-200)`: the check fails, so it prints \"Invalid amount\" and balance stays 500.0.",
+              "`deposit(300)`: balance = 800.0. `getBalance()` returns 800.0; `Account.count` is 1.",
+            ],
+            answer: "Invalid amount\nBalance = 800.0\nAccounts = 1",
+          },
+          {
+            type: "code",
+            lang: "java",
+            caption: "Account.java",
+            code: `public class Account
+{
+    private String holder;
+    private double balance;
+    static int count = 0;
+
+    public Account(String h)
+    {
+        holder = h;
+        balance = 0.0;
+        count++;
+    }
+
+    public void deposit(double amt)
+    {
+        if (amt > 0)
+            balance = balance + amt;
+        else
+            System.out.println("Invalid amount");
+    }
+
+    public double getBalance()
+    {
+        return balance;
+    }
+
+    public static void main(String[] args)
+    {
+        Account a = new Account("Meera");
+        a.deposit(500);
+        a.deposit(-200);
+        a.deposit(300);
+        System.out.println("Balance = " + a.getBalance());
+        System.out.println("Accounts = " + Account.count);
+    }
+}`,
+          },
+          {
+            type: "text",
+            md: "`getBalance()` is a **getter** (accessor): it reads a private value. `deposit()` acts as a **setter** (mutator): it changes the value, but only after checking it. If another class wrote `a.balance = -5000;`, the compiler would reject it, because balance is private.",
+          },
+          {
+            type: "heading",
+            text: "Scope of variables",
+          },
+          {
+            type: "table",
+            headers: ["Variable", "Declared", "Lives for", "In Account"],
+            rows: [
+              ["**Instance variable**", "in the class, without static", "as long as its object; one copy per object", "`holder`, `balance`"],
+              ["**Class variable**", "in the class, with `static`", "the whole program; one copy shared by all objects", "`count`"],
+              ["**Local variable**", "inside a method or block", "only until that method or block ends", "`a` in main"],
+              ["**Argument variable**", "in a method's parameter list", "only while the method runs", "`amt`, `h`"],
+            ],
+          },
+          {
+            type: "mistake",
+            wrong: "If balance is private, the balance cannot be used from outside the class at all.",
+            right: "Outside code cannot touch balance **directly**, but it can use it through public methods such as `getBalance()` and `deposit()`.",
+            why: "\"Private\" sounds like \"locked forever\". Encapsulation is not about hiding data from use; it is about forcing every use to go through methods that the class controls and checks.",
+          },
+          {
+            type: "activity",
+            activity: {
+              kind: "sort",
+              prompt: "In Account.java, what kind of variable is each one?",
+              groups: ["Instance", "Class (static)", "Local or argument"],
+              items: [
+                { text: "balance", group: 0, hint: "Declared in the class without static; each account has its own." },
+                { text: "count", group: 1, hint: "Declared static, so all objects share one copy." },
+                { text: "amt in deposit()", group: 2, hint: "It is a parameter of the method." },
+                { text: "holder", group: 0, hint: "Each object stores its own holder's name." },
+                { text: "a in main()", group: 2, hint: "Declared inside main, it ends when main ends." },
+                { text: "h in the constructor", group: 2, hint: "A parameter, alive only while the constructor runs." },
+              ],
+              explain: "Where it is declared decides the kind: in the class without static → instance; with static → class variable; inside a method or its brackets → local or argument.",
+            },
+          },
+          {
+            type: "checkpoint",
+            questions: [
+              {
+                kind: "mcq",
+                q: "Which access specifier makes a member visible only inside its own class?",
+                options: ["private", "protected", "public", "default"],
+                answer: 0,
+                explain: "private is the most restrictive. default allows the whole package.",
+              },
+            ],
+          },
+          {
+            type: "callout",
+            tone: "exam",
+            title: "ICSE tip",
+            md: "In Section B class programs, the question often says \"data members are private\". Use the exact specifier and member names given, and access private members only through the class's own methods. Marks are lost for changing the names or types in the question.",
+          },
+          {
+            type: "keypoints",
+            items: [
+              "Encapsulation = wrapping data and methods into one class; data hiding = making data private.",
+              "private (class) < default (package) < protected (package + subclasses) < public (everywhere).",
+              "Getters read private data; setters change it with checks.",
+              "Instance variables: one per object. Class (static) variables: one shared copy. Local and argument variables: only inside their method.",
+            ],
+          },
+        ],
+        flashcards: [
+          { front: "Encapsulation", back: "Wrapping data and the methods that use it into a single unit, the class." },
+          { front: "Data hiding", back: "Making data members private so they can be accessed only through the class's methods." },
+          { front: "Four access levels", back: "private, default (no keyword), protected, public." },
+          { front: "protected access", back: "Same class, same package, and subclasses in other packages." },
+          { front: "Class variable", back: "A static data member; one copy shared by all objects of the class." },
+          { front: "Local variable", back: "Declared inside a method or block; exists only until it ends." },
+        ],
+        quiz: [
+          {
+            kind: "mcq",
+            q: "A member with no access specifier is visible in:",
+            options: ["Its own class and the same package", "Its own class only", "Every class everywhere", "Subclasses in other packages only"],
+            answer: 0,
+            explain: "Default (package) access allows the same package but not outside it.",
+            difficulty: 2,
+          },
+          {
+            kind: "truefalse",
+            q: "All objects of a class share one copy of a static variable.",
+            answer: true,
+            explain: "A static (class) variable belongs to the class, not to any one object.",
+          },
+          {
+            kind: "order",
+            q: "Order the access specifiers from most restrictive to least restrictive.",
+            items: ["private", "default", "protected", "public"],
+            explain: "Each level adds more classes that can see the member.",
+          },
+          {
+            kind: "fill",
+            q: "A method that only reads and returns the value of a private data member is called a ___ (or accessor).",
+            answer: ["getter", "get method"],
+            explain: "Getters (accessors) read; setters (mutators) change.",
+          },
+          {
+            kind: "mcq",
+            q: "In Account, what is printed if main also calls `a.deposit(0);` once more before printing?",
+            options: ["Invalid amount is printed twice and balance stays 800.0", "Balance becomes 0.0", "Balance becomes 800.0 with no message", "Compile-time error"],
+            answer: 0,
+            explain: "0 is not greater than 0, so the else part prints \"Invalid amount\" again and balance does not change.",
+            difficulty: 3,
+            hint: "Check the condition amt > 0 with amt = 0.",
+          },
+          {
+            kind: "multi",
+            q: "Which statements about encapsulation are true? (Choose all that apply)",
+            options: ["It binds data and methods into one unit", "It allows data hiding using private", "It means a class has no methods", "It lets the class check changes to its data"],
+            answers: [0, 1, 3],
+            explain: "Encapsulation needs methods; they are the controlled way in to the hidden data.",
+          },
+        ],
+      },
+    ],
+  },
+
+  /* ------------------------------------------------------------------ */
+  {
+    slug: "arrays",
+    title: "Arrays",
+    icon: "🗃️",
+    description: "Single and double dimensional arrays, linear and binary search, and bubble and selection sort.",
+    lessons: [
+      {
+        slug: "arrays-and-searching",
+        title: "Arrays, Linear Search and Binary Search",
+        summary: "Declare, initialise and fill a single dimensional array, use length and indexes, and search it with linear search and binary search.",
+        minutes: 18,
+        xp: 45,
+        blocks: [
+          {
+            type: "text",
+            md: "To store the marks of 40 students you would need 40 variables. An **array** solves this: it is a group of variables of the **same type**, under **one name**, stored together. Each value is an **element**, reached by its **index** (subscript) in square brackets.",
+          },
+          {
+            type: "code",
+            lang: "java",
+            caption: "Ways to create a single dimensional array",
+            code: `int marks[] = new int[5];          // 5 ints, each starts as 0
+double price[] = {45.5, 12.0, 99.9}; // declared and initialised
+String city[] = {"Pune", "Agra", "Kochi"};
+
+marks[0] = 78;                      // first element
+marks[4] = 91;                      // last element (index 4)
+System.out.println(marks.length);   // prints 5`,
+          },
+          {
+            type: "list",
+            items: [
+              "Indexes run from **0 to length − 1**. An array of 5 has indexes 0, 1, 2, 3, 4.",
+              "`length` is a property of the array, written **without brackets**: `marks.length`.",
+              "Using an index outside this range (like `marks[5]`) causes **ArrayIndexOutOfBoundsException** when the program runs.",
+              "Input is taken in a loop: `for (int i = 0; i < a.length; i++) a[i] = sc.nextInt();`",
+            ],
+          },
+          {
+            type: "heading",
+            text: "Linear search",
+          },
+          {
+            type: "text",
+            md: "**Linear search** checks the elements one by one from the start until it finds the value (the **key**) or reaches the end. It works on any array, sorted or not.",
+          },
+          {
+            type: "code",
+            lang: "java",
+            caption: "LinearSearch.java (sample input: 8 3 15 6 11, then 15; output: Found at index 2)",
+            code: `import java.util.Scanner;
+
+public class LinearSearch
+{
+    public static void main(String[] args)
+    {
+        Scanner sc = new Scanner(System.in);
+        int a[] = new int[5];
+        System.out.println("Enter 5 numbers:");
+        for (int i = 0; i < a.length; i++)
+            a[i] = sc.nextInt();
+        System.out.print("Enter number to search: ");
+        int key = sc.nextInt();
+        int pos = -1;
+        for (int i = 0; i < a.length; i++)
+        {
+            if (a[i] == key)
+            {
+                pos = i;
+                break;
+            }
+        }
+        if (pos == -1)
+            System.out.println("Not found");
+        else
+            System.out.println("Found at index " + pos);
+    }
+}`,
+          },
+          {
+            type: "heading",
+            text: "Binary search",
+          },
+          {
+            type: "text",
+            md: "**Binary search** works only on a **sorted** array. It looks at the middle element. If that is the key, it stops. If the key is bigger, it throws away the left half; if smaller, the right half. Each step halves the part left to search, so it is much faster on big arrays.",
+          },
+          {
+            type: "code",
+            lang: "java",
+            caption: "BinarySearch.java",
+            code: `import java.util.Scanner;
+
+public class BinarySearch
+{
+    public static void main(String[] args)
+    {
+        Scanner sc = new Scanner(System.in);
+        int a[] = {5, 12, 19, 27, 34, 41, 58};
+        System.out.print("Enter number to search: ");
+        int key = sc.nextInt();
+        int low = 0, high = a.length - 1, pos = -1;
+        while (low <= high)
+        {
+            int mid = (low + high) / 2;
+            if (a[mid] == key)
+            {
+                pos = mid;
+                break;
+            }
+            else if (a[mid] < key)
+                low = mid + 1;
+            else
+                high = mid - 1;
+        }
+        if (pos == -1)
+            System.out.println("Not found");
+        else
+            System.out.println("Found at index " + pos);
+    }
+}`,
+          },
+          {
+            type: "example",
+            title: "Dry run of binary search",
+            problem: "Trace BinarySearch for key = 41, then for key = 20. Give the output each time.",
+            steps: [
+              "Key 41: low = 0, high = 6 → mid = 3, a[3] = 27 < 41, so low = 4.",
+              "low = 4, high = 6 → mid = 5, a[5] = 41 = key, so pos = 5 and the loop breaks.",
+              "Key 20: mid = 3 (27 > 20) → high = 2; mid = 1 (12 < 20) → low = 2; mid = 2 (19 < 20) → low = 3.",
+              "Now low = 3 > high = 2, so the loop ends with pos = −1.",
+            ],
+            answer: "Key 41 → Enter number to search: Found at index 5\nKey 20 → Enter number to search: Not found",
+          },
+          {
+            type: "table",
+            headers: ["Key", "low", "high", "mid", "a[mid]", "Action"],
+            rows: [
+              ["41", "0", "6", "3", "27", "27 < 41 → low = 4"],
+              ["41", "4", "6", "5", "41", "found, pos = 5"],
+              ["20", "0", "6", "3", "27", "27 > 20 → high = 2"],
+              ["20", "0", "2", "1", "12", "12 < 20 → low = 2"],
+              ["20", "2", "2", "2", "19", "19 < 20 → low = 3; low > high, stop"],
+            ],
+          },
+          {
+            type: "mistake",
+            wrong: "Binary search can be used on any array; it is just faster.",
+            right: "Binary search works **only on a sorted array**. On an unsorted array it may say \"Not found\" even when the value is there. Use linear search, or sort first.",
+            why: "The method throws away half the array after one comparison. That is safe only if every smaller value is on the left and every bigger value is on the right, which is true only when the array is sorted.",
+          },
+          {
+            type: "activity",
+            activity: {
+              kind: "order",
+              prompt: "Order the steps of one round of binary search.",
+              items: [
+                "Find mid = (low + high) / 2",
+                "Compare a[mid] with the key",
+                "If equal, record the position and stop",
+                "If a[mid] < key, set low = mid + 1",
+                "Otherwise set high = mid − 1 and repeat while low <= high",
+              ],
+              explain: "Each round finds the middle, compares, and either stops or discards half of the array by moving low or high.",
+            },
+          },
+          {
+            type: "checkpoint",
+            questions: [
+              {
+                kind: "numeric",
+                q: "For `int a[] = new int[8];`, what is the index of the last element?",
+                answer: 7,
+                explain: "Indexes go from 0 to length − 1 = 7.",
+              },
+              {
+                kind: "truefalse",
+                q: "Linear search needs the array to be sorted.",
+                answer: false,
+                explain: "Linear search checks every element, so order does not matter. Binary search needs a sorted array.",
+              },
+            ],
+          },
+          {
+            type: "callout",
+            tone: "exam",
+            title: "ICSE tip",
+            md: "Search programs are frequent in Section B. Print a clear message for **both** cases (found / not found). A common error is printing \"Not found\" inside the loop, which prints it many times; use a position or flag variable and decide after the loop.",
+          },
+          {
+            type: "keypoints",
+            items: [
+              "An array holds many values of one type under one name; indexes run 0 to length − 1.",
+              "`a.length` (no brackets) gives the size; a bad index throws ArrayIndexOutOfBoundsException.",
+              "Linear search: check one by one; works on any array.",
+              "Binary search: compare with the middle and halve the range; the array must be sorted.",
+            ],
+          },
+        ],
+        flashcards: [
+          { front: "Array", back: "A collection of variables of the same type, under one name, accessed by index." },
+          { front: "First and last index of an array of size n", back: "0 and n − 1." },
+          { front: "length of an array", back: "A property, written a.length without brackets." },
+          { front: "ArrayIndexOutOfBoundsException", back: "The run-time error when an index is below 0 or at least the length." },
+          { front: "Linear search", back: "Checks elements one by one from the start; works on unsorted arrays." },
+          { front: "Condition for binary search", back: "The array must be sorted." },
+          { front: "mid in binary search", back: "(low + high) / 2, using integer division." },
+        ],
+        quiz: [
+          {
+            kind: "mcq",
+            q: "Which statement correctly gives the size of array `a`?",
+            options: ["`a.length`", "`a.length()`", "`a.size()`", "`length(a)`"],
+            answer: 0,
+            explain: "For arrays, length is a property, not a method. `length()` with brackets is for Strings.",
+          },
+          {
+            kind: "mcq",
+            q: "`int x[] = {4, 8, 15, 16, 23};` What is `x[1] + x[3]`?",
+            options: ["24", "23", "19", "31"],
+            answer: 0,
+            explain: "x[1] = 8 and x[3] = 16 (counting from 0), so 8 + 16 = 24.",
+            difficulty: 2,
+            hint: "Index 0 is the first element.",
+          },
+          {
+            kind: "numeric",
+            q: "In binary search on a sorted array of 7 elements (indexes 0 to 6), which index is checked first?",
+            answer: 3,
+            explain: "mid = (0 + 6) / 2 = 3.",
+          },
+          {
+            kind: "truefalse",
+            q: "Binary search on the array {7, 2, 9, 4} may fail to find 9.",
+            answer: true,
+            explain: "The array is not sorted, so binary search can discard the wrong half.",
+            difficulty: 2,
+          },
+          {
+            kind: "fill",
+            q: "In binary search, if a[mid] is smaller than the key, the new value of low is ___.",
+            answer: ["mid + 1", "mid+1"],
+            explain: "The key must be to the right of mid, so low moves to mid + 1.",
+          },
+          {
+            kind: "numeric",
+            q: "In the BinarySearch program, how many times is mid calculated when searching for 58?",
+            answer: 3,
+            explain: "mid = 3 (27 < 58, low = 4), mid = 5 (41 < 58, low = 6), mid = 6 (58 found). So 3 times.",
+            difficulty: 3,
+            hint: "Write a low / high / mid table.",
+          },
+          {
+            kind: "multi",
+            q: "Which statements are true? (Choose all that apply)",
+            options: ["`int a[] = new int[5];` sets every element to 0", "An array can hold values of different types", "Linear search works on unsorted arrays", "Array indexes start at 1"],
+            answers: [0, 2],
+            explain: "int elements start at 0. An array holds one type only, and indexes start at 0.",
+          },
+        ],
+      },
+      {
+        slug: "sorting-and-2d-arrays",
+        title: "Bubble Sort, Selection Sort and 2D Arrays",
+        summary: "Sort an array with bubble sort and selection sort, trace each pass, and use double dimensional arrays with nested loops.",
+        minutes: 18,
+        xp: 45,
+        blocks: [
+          {
+            type: "text",
+            md: "**Sorting** means arranging elements in order: **ascending** (smallest first) or **descending** (largest first). ICSE asks for two methods: **bubble sort** and **selection sort**. Both use two nested loops; they differ in how they move elements.",
+          },
+          {
+            type: "text",
+            md: "**Bubble sort** compares each pair of **adjacent** elements and swaps them if they are in the wrong order. After the first pass, the largest element has \"bubbled\" to the last place. Each pass fixes one more element at the end, so an array of n elements needs at most n − 1 passes.",
+          },
+          {
+            type: "code",
+            lang: "java",
+            caption: "BubbleSort.java (output: 1 2 4 5 )",
+            code: `public class BubbleSort
+{
+    public static void main(String[] args)
+    {
+        int a[] = {5, 1, 4, 2};
+        int n = a.length;
+        for (int i = 0; i < n - 1; i++)
+        {
+            for (int j = 0; j < n - 1 - i; j++)
+            {
+                if (a[j] > a[j + 1])
+                {
+                    int t = a[j];
+                    a[j] = a[j + 1];
+                    a[j + 1] = t;
+                }
+            }
+        }
+        for (int i = 0; i < n; i++)
+            System.out.print(a[i] + " ");
+        System.out.println();
+    }
+}`,
+          },
+          {
+            type: "table",
+            headers: ["Pass", "Comparisons (swap?)", "Array after the pass"],
+            rows: [
+              ["start", "-", "5 1 4 2"],
+              ["1", "5,1 swap; 5,4 swap; 5,2 swap", "1 4 2 5"],
+              ["2", "1,4 no; 4,2 swap", "1 2 4 5"],
+              ["3", "1,2 no", "1 2 4 5"],
+            ],
+          },
+          {
+            type: "text",
+            md: "**Selection sort** finds the **smallest** element in the unsorted part and swaps it into the first unsorted place. Pass 1 puts the smallest at index 0, pass 2 puts the next smallest at index 1, and so on. It makes at most one swap per pass.",
+          },
+          {
+            type: "example",
+            title: "Dry run of selection sort",
+            problem: "Sort {29, 10, 14, 37, 13} in ascending order using the selection sort program below. Show the array after each pass and give the output.",
+            steps: [
+              "Pass 1 (i = 0): smallest of all is 10 at index 1. Swap with index 0 → 10 29 14 37 13.",
+              "Pass 2 (i = 1): smallest of 29 14 37 13 is 13 at index 4. Swap with index 1 → 10 13 14 37 29.",
+              "Pass 3 (i = 2): smallest of 14 37 29 is 14, already at index 2 (it is swapped with itself) → 10 13 14 37 29.",
+              "Pass 4 (i = 3): smallest of 37 29 is 29 at index 4. Swap → 10 13 14 29 37. n − 1 = 4 passes are done.",
+            ],
+            answer: "10 13 14 29 37 (each number followed by a space)",
+          },
+          {
+            type: "code",
+            lang: "java",
+            caption: "SelectionSort.java",
+            code: `public class SelectionSort
+{
+    public static void main(String[] args)
+    {
+        int a[] = {29, 10, 14, 37, 13};
+        int n = a.length;
+        for (int i = 0; i < n - 1; i++)
+        {
+            int min = i;
+            for (int j = i + 1; j < n; j++)
+            {
+                if (a[j] < a[min])
+                    min = j;
+            }
+            int t = a[i];
+            a[i] = a[min];
+            a[min] = t;
+        }
+        for (int i = 0; i < n; i++)
+            System.out.print(a[i] + " ");
+        System.out.println();
+    }
+}`,
+          },
+          {
+            type: "mistake",
+            wrong: "In bubble sort the inner loop can run `for (int j = 0; j < n; j++)` and compare `a[j]` with `a[j + 1]`.",
+            right: "The inner loop must stop at `j < n - 1 - i` (or at least `j < n - 1`), because `a[j + 1]` must still be inside the array.",
+            why: "Looping j up to n − 1 looks natural since that is the last index. But when j = n − 1, `a[j + 1]` is `a[n]`, which does not exist, so the program stops with ArrayIndexOutOfBoundsException.",
+          },
+          {
+            type: "activity",
+            activity: {
+              kind: "sort",
+              prompt: "Bubble sort or selection sort?",
+              groups: ["Bubble sort", "Selection sort"],
+              items: [
+                { text: "Compares neighbours a[j] and a[j + 1]", group: 0, hint: "Adjacent pairs are its trademark." },
+                { text: "Finds the index of the smallest element in each pass", group: 1, hint: "It keeps a min index." },
+                { text: "The largest element reaches the end after pass 1 (ascending)", group: 0, hint: "Big values bubble to the right." },
+                { text: "At most one swap per pass", group: 1, hint: "It swaps only once, after finding the minimum." },
+                { text: "May swap many times in one pass", group: 0, hint: "Every out-of-order pair is swapped." },
+                { text: "Smallest element is at index 0 after pass 1", group: 1, hint: "It selects the minimum and puts it first." },
+              ],
+              explain: "Bubble sort swaps neighbours and pushes the largest to the end. Selection sort selects the smallest and swaps it to the front, once per pass.",
+            },
+          },
+          {
+            type: "heading",
+            text: "Double dimensional arrays",
+          },
+          {
+            type: "text",
+            md: "A **double dimensional (2D) array** stores values in **rows and columns**, like a table. `int m[][] = new int[3][4];` has 3 rows and 4 columns (12 elements). `m[r][c]` is the element in row r, column c, both counted from 0. Nested loops are used: the outer loop for rows and the inner loop for columns.",
+          },
+          {
+            type: "code",
+            lang: "java",
+            caption: "RowSum.java (output: Row 0 sum = 9, then Row 1 sum = 10, on separate lines)",
+            code: `public class RowSum
+{
+    public static void main(String[] args)
+    {
+        int m[][] = {{3, 5, 1}, {4, 0, 6}};
+        for (int r = 0; r < 2; r++)
+        {
+            int sum = 0;
+            for (int c = 0; c < 3; c++)
+                sum = sum + m[r][c];
+            System.out.println("Row " + r + " sum = " + sum);
+        }
+    }
+}`,
+          },
+          {
+            type: "checkpoint",
+            questions: [
+              {
+                kind: "numeric",
+                q: "How many elements does `int t[][] = new int[4][5];` hold?",
+                answer: 20,
+                explain: "4 rows × 5 columns = 20 elements.",
+              },
+            ],
+          },
+          {
+            type: "callout",
+            tone: "exam",
+            title: "ICSE tip",
+            md: "If the question says \"sort in descending order\", change only the comparison: `a[j] < a[j + 1]` for bubble sort, or look for the **largest** in selection sort. Examiners check that you use the method named in the question; a bubble sort answer to a selection sort question loses most of the marks.",
+          },
+          {
+            type: "keypoints",
+            items: [
+              "Bubble sort: compare and swap adjacent elements; the largest moves to the end each pass.",
+              "Selection sort: find the smallest in the unsorted part and swap it to the front; one swap per pass.",
+              "Both take n − 1 passes for n elements.",
+              "2D array `int m[][] = new int[r][c];` uses `m[i][j]` and nested loops.",
+            ],
+          },
+        ],
+        flashcards: [
+          { front: "Bubble sort", back: "Repeatedly compares adjacent elements and swaps them if they are out of order." },
+          { front: "Selection sort", back: "Each pass selects the smallest remaining element and swaps it into the next position." },
+          { front: "Number of passes for n elements", back: "n − 1." },
+          { front: "Swapping two elements", back: "t = a[i]; a[i] = a[j]; a[j] = t; using a temporary variable." },
+          { front: "Change bubble sort to descending", back: "Swap when a[j] < a[j + 1]." },
+          { front: "Elements in int m[][] = new int[3][4]", back: "12 (3 rows × 4 columns)." },
+        ],
+        quiz: [
+          {
+            kind: "mcq",
+            q: "After the first pass of bubble sort (ascending) on {9, 3, 7, 1}, the array is:",
+            options: ["3 7 1 9", "1 3 7 9", "3 9 7 1", "1 9 3 7"],
+            answer: 0,
+            explain: "9,3 swap → 3 9 7 1; 9,7 swap → 3 7 9 1; 9,1 swap → 3 7 1 9. The largest reaches the end.",
+            difficulty: 2,
+          },
+          {
+            kind: "mcq",
+            q: "After the first pass of selection sort (ascending) on {9, 3, 7, 1}, the array is:",
+            options: ["1 3 7 9", "3 7 1 9", "1 9 3 7", "3 9 7 1"],
+            answer: 0,
+            explain: "The smallest, 1, is swapped with 9 at index 0: 1 3 7 9. (Here one pass happens to sort it completely.)",
+            difficulty: 2,
+            hint: "Find the minimum and swap it with the first element.",
+          },
+          {
+            kind: "numeric",
+            q: "How many passes does bubble sort (as in the program) make for an array of 10 elements?",
+            answer: 9,
+            explain: "The outer loop runs from i = 0 to i < n − 1, which is 9 passes.",
+          },
+          {
+            kind: "truefalse",
+            q: "Selection sort makes at most one swap in each pass.",
+            answer: true,
+            explain: "It finds the minimum first, then swaps it once into place.",
+          },
+          {
+            kind: "fill",
+            q: "In `int m[][] = new int[3][4];`, the element in the last row and last column is m[2][___].",
+            answer: ["3"],
+            explain: "Columns are numbered 0 to 3, so the last column is index 3.",
+          },
+          {
+            kind: "order",
+            q: "Put the three lines that swap a[j] and a[j + 1] in order.",
+            items: ["int t = a[j];", "a[j] = a[j + 1];", "a[j + 1] = t;"],
+            explain: "Save a[j] first, overwrite it, then put the saved value in a[j + 1].",
+          },
+          {
+            kind: "multi",
+            q: "Which are true of the bubble sort program? (Choose all that apply)",
+            options: ["It uses nested loops", "It compares adjacent elements", "It needs the array to be sorted first", "It needs a temporary variable to swap"],
+            answers: [0, 1, 3],
+            explain: "Sorting does not need a sorted array; that requirement belongs to binary search.",
+          },
+        ],
+      },
+    ],
+  },
+
+  /* ------------------------------------------------------------------ */
+  {
+    slug: "string-handling",
+    title: "String Handling",
+    icon: "🔤",
+    description: "String class methods and programs that process strings character by character and word by word.",
+    lessons: [
+      {
+        slug: "string-methods",
+        title: "String Class Methods",
+        summary: "Create Strings and use length, charAt, indexOf, lastIndexOf, substring, toUpperCase, replace, equals, equalsIgnoreCase, compareTo, trim and more.",
+        minutes: 17,
+        xp: 40,
+        blocks: [
+          {
+            type: "text",
+            md: "A **String** is a sequence of characters, such as a name or a sentence, written in double quotes: `String s = \"Kolkata\";`. String is a class in `java.lang`, so a String variable is a reference type. Each character has an index starting at **0**, just like an array.\n\nStrings are **immutable**: once created, a String object can never change. Methods like `toUpperCase()` do not alter s; they **return a new String**.",
+          },
+          {
+            type: "table",
+            headers: ["Method", "Returns", "With s = \"Kolkata\""],
+            rows: [
+              ["`length()`", "int: number of characters", "7"],
+              ["`charAt(i)`", "char at index i", "`charAt(3)` → 'k'"],
+              ["`indexOf(ch)`", "int: first index of ch, or −1", "`indexOf('a')` → 4"],
+              ["`lastIndexOf(ch)`", "int: last index of ch, or −1", "`lastIndexOf('a')` → 6"],
+              ["`substring(b, e)`", "String from index b up to **e − 1**", "`substring(2, 5)` → \"lka\""],
+              ["`substring(b)`", "String from b to the end", "`substring(4)` → \"ata\""],
+              ["`toUpperCase()` / `toLowerCase()`", "new String", "\"KOLKATA\" / \"kolkata\""],
+              ["`replace(a, b)`", "new String with every a changed to b", "`replace('a', 'o')` → \"Kolkoto\""],
+              ["`concat(t)`", "s joined with t", "`concat(\" city\")` → \"Kolkata city\""],
+              ["`trim()`", "copy with leading and trailing spaces removed", "`\"  hi  \".trim()` → \"hi\""],
+              ["`startsWith(t)` / `endsWith(t)`", "boolean", "`startsWith(\"Kol\")` → true"],
+            ],
+          },
+          {
+            type: "table",
+            headers: ["Comparison method", "Returns", "Example"],
+            rows: [
+              ["`equals(t)`", "true if exactly the same, case included", "`s.equals(\"kolkata\")` → false"],
+              ["`equalsIgnoreCase(t)`", "true if same, ignoring case", "`s.equalsIgnoreCase(\"kolkata\")` → true"],
+              ["`compareTo(t)`", "0 if equal; else the difference of the first unequal characters' codes", "`s.compareTo(\"Kochi\")` → 9"],
+              ["`compareToIgnoreCase(t)`", "same as compareTo, ignoring case", "`\"apple\".compareToIgnoreCase(\"APPLE\")` → 0"],
+            ],
+          },
+          {
+            type: "example",
+            title: "Working out compareTo",
+            problem: "Find the value of `\"Kolkata\".compareTo(\"Kochi\")`.",
+            steps: [
+              "Compare letter by letter: K = K, o = o.",
+              "Third letters differ: 'l' and 'c'.",
+              "Character codes: 'l' = 108, 'c' = 99. Result = 108 − 99 = **9**.",
+              "Positive means \"Kolkata\" comes after \"Kochi\" in dictionary order. Negative would mean before; 0 means equal.",
+            ],
+            answer: "9",
+          },
+          {
+            type: "code",
+            lang: "java",
+            caption: "StringDemo.java: each line of output is shown in the table below.",
+            code: `public class StringDemo
+{
+    public static void main(String[] args)
+    {
+        String s = "Kolkata";
+        System.out.println(s.length());
+        System.out.println(s.charAt(3));
+        System.out.println(s.indexOf('a'));
+        System.out.println(s.lastIndexOf('a'));
+        System.out.println(s.substring(2, 5));
+        System.out.println(s.toUpperCase());
+        System.out.println(s.replace('a', 'o'));
+        System.out.println(s.equals("kolkata"));
+        System.out.println(s.equalsIgnoreCase("kolkata"));
+        System.out.println(s.compareTo("Kochi"));
+        System.out.println(s);
+    }
+}`,
+          },
+          {
+            type: "table",
+            headers: ["Line", "Output", "Reason"],
+            rows: [
+              ["1", "7", "K o l k a t a"],
+              ["2", "k", "index 3 is the small k"],
+              ["3", "4", "first 'a' is at index 4"],
+              ["4", "6", "last 'a' is at index 6"],
+              ["5", "lka", "indexes 2, 3, 4"],
+              ["6", "KOLKATA", "new uppercase String"],
+              ["7", "Kolkoto", "both a's replaced"],
+              ["8", "false", "K and k differ"],
+              ["9", "true", "case ignored"],
+              ["10", "9", "'l' − 'c' = 108 − 99"],
+              ["11", "Kolkata", "s itself never changed"],
+            ],
+          },
+          {
+            type: "activity",
+            activity: {
+              kind: "reveal",
+              prompt: "What does \"Kolkata\".substring(2, 5) return?",
+              emoji: "✂️",
+              options: ["\"lka\"", "\"lkat\"", "\"olk\"", "\"olka\""],
+              answer: 0,
+              trap: 1,
+              explain: "substring(b, e) starts **at** index b and stops **before** index e. Indexes 2, 3, 4 are l, k, a, so the answer is \"lka\" with 5 − 2 = 3 characters.",
+            },
+          },
+          {
+            type: "mistake",
+            wrong: "Compare two Strings with `==`, like `if (city == \"Pune\")`.",
+            right: "Use `city.equals(\"Pune\")` (or `equalsIgnoreCase`). `==` checks whether both references point to the **same object**, not whether the characters match.",
+            why: "`==` works for int and char, so it seems natural. For Strings it compares addresses; a String typed by the user is a different object from the literal \"Pune\", so `==` can give false even though the text is the same.",
+          },
+          {
+            type: "checkpoint",
+            questions: [
+              {
+                kind: "mcq",
+                q: "What is `\"MUMBAI\".indexOf('M')`?",
+                options: ["0", "2", "1", "−1"],
+                answer: 0,
+                explain: "indexOf gives the first position. M is at index 0 (and also at 2, which lastIndexOf would give).",
+              },
+              {
+                kind: "truefalse",
+                q: "After `s.toUpperCase();` (result not stored), s holds the uppercase text.",
+                answer: false,
+                explain: "Strings are immutable. Write `s = s.toUpperCase();` to keep the result.",
+              },
+            ],
+          },
+          {
+            type: "callout",
+            tone: "exam",
+            title: "ICSE tip",
+            md: "Section A always has String output questions. Write the **index under each letter** before answering, and remember the return type: `charAt` gives a char, `indexOf` an int, `equals` a boolean, `substring` a String. A frequent error is counting from 1 instead of 0.",
+          },
+          {
+            type: "keypoints",
+            items: [
+              "Strings are immutable objects; indexes start at 0 and end at length() − 1.",
+              "charAt, indexOf, lastIndexOf, substring(b, e) (e is excluded), length().",
+              "toUpperCase, toLowerCase, replace, concat, trim return new Strings.",
+              "equals / equalsIgnoreCase for equality; compareTo gives 0, a negative or a positive number.",
+              "Never compare String contents with ==.",
+            ],
+          },
+        ],
+        flashcards: [
+          { front: "length() vs length", back: "length() is a String method; length (no brackets) is an array property." },
+          { front: "substring(2, 5)", back: "Characters at indexes 2, 3 and 4 (the end index is excluded)." },
+          { front: "indexOf when the character is absent", back: "It returns −1." },
+          { front: "Immutable String", back: "A String object cannot be changed; methods return new Strings." },
+          { front: "equals vs ==", back: "equals compares the characters; == compares the references (addresses)." },
+          { front: "\"Apple\".compareTo(\"Apple\")", back: "0, because they are equal." },
+          { front: "trim()", back: "Removes spaces at the start and end of a String, not in the middle." },
+        ],
+        quiz: [
+          {
+            kind: "mcq",
+            q: "What does `\"COMPUTER\".charAt(4)` return?",
+            options: ["'U'", "'P'", "'T'", "'M'"],
+            answer: 0,
+            explain: "C0 O1 M2 P3 U4: index 4 is 'U'. Answering 'P' comes from counting from 1.",
+          },
+          {
+            kind: "numeric",
+            q: "What is `\"Bengaluru\".length()`?",
+            answer: 9,
+            explain: "B-e-n-g-a-l-u-r-u has 9 characters.",
+          },
+          {
+            kind: "fill",
+            q: "`\"Chennai\".substring(3)` returns \"___\".",
+            answer: ["nnai"],
+            explain: "From index 3 to the end: C0 h1 e2 n3 n4 a5 i6 → \"nnai\".",
+            difficulty: 2,
+          },
+          {
+            kind: "mcq",
+            q: "What is `\"bat\".compareTo(\"cat\")`?",
+            options: ["−1", "1", "0", "−98"],
+            answer: 0,
+            explain: "'b' (98) − 'c' (99) = −1. Negative means \"bat\" comes first.",
+            difficulty: 2,
+            hint: "Subtract the codes of the first unequal characters.",
+          },
+          {
+            kind: "truefalse",
+            q: "`\"India\".equals(\"india\")` returns true.",
+            answer: false,
+            explain: "equals is case-sensitive. equalsIgnoreCase would return true.",
+          },
+          {
+            kind: "mcq",
+            q: "`String s = \"level\";` What is `s.lastIndexOf('l')`?",
+            options: ["4", "0", "3", "5"],
+            answer: 0,
+            explain: "l0 e1 v2 e3 l4: the last 'l' is at index 4.",
+          },
+          {
+            kind: "multi",
+            q: "Which methods return a String? (Choose all that apply)",
+            options: ["`substring()`", "`toUpperCase()`", "`indexOf()`", "`trim()`"],
+            answers: [0, 1, 3],
+            explain: "indexOf returns an int position.",
+          },
+          {
+            kind: "mcq",
+            q: "What is printed by `System.out.println(\"Goa\".replace('o', 'e').toUpperCase());`?",
+            options: ["GEA", "Gea", "GOA", "geA"],
+            answer: 0,
+            explain: "replace gives \"Gea\", then toUpperCase gives \"GEA\". Methods can be chained left to right.",
+            difficulty: 3,
+            hint: "Work left to right, one method at a time.",
+          },
+        ],
+      },
+      {
+        slug: "string-programs",
+        title: "String Programs: Characters and Words",
+        summary: "Traverse a String with charAt, reverse it, check a palindrome, count vowels, and split a sentence into words.",
+        minutes: 17,
+        xp: 45,
+        blocks: [
+          {
+            type: "text",
+            md: "Most String programs follow one pattern: **traverse** the String with a loop from index 0 to `length() − 1`, take each character with `charAt(i)`, and do something with it: count it, test it, or add it to a new String.",
+          },
+          {
+            type: "code",
+            lang: "java",
+            caption: "The traversal pattern",
+            code: `for (int i = 0; i < s.length(); i++)
+{
+    char ch = s.charAt(i);
+    // test or use ch here
+}`,
+          },
+          {
+            type: "text",
+            md: "To **reverse** a String, run the loop backwards from `length() − 1` down to 0 and join each character to a new String. A word that reads the same both ways, like RADAR or MALAYALAM, is a **palindrome**.",
+          },
+          {
+            type: "code",
+            lang: "java",
+            caption: "Palindrome.java",
+            code: `import java.util.Scanner;
+
+public class Palindrome
+{
+    public static void main(String[] args)
+    {
+        Scanner sc = new Scanner(System.in);
+        System.out.print("Enter a word: ");
+        String w = sc.next();
+        String rev = "";
+        for (int i = w.length() - 1; i >= 0; i--)
+            rev = rev + w.charAt(i);
+        System.out.println("Reverse: " + rev);
+        if (rev.equalsIgnoreCase(w))
+            System.out.println("Palindrome");
+        else
+            System.out.println("Not a palindrome");
+    }
+}`,
+          },
+          {
+            type: "example",
+            title: "Dry run: is Radar a palindrome?",
+            problem: "The user enters Radar. Trace the program and give the exact output.",
+            steps: [
+              "w = \"Radar\", length 5, so i runs 4, 3, 2, 1, 0.",
+              "Characters added: r (i = 4), a, d, a, R (i = 0). rev = \"radaR\".",
+              "`equals` would say false, because R and r differ. `equalsIgnoreCase` ignores case, so the test is true.",
+            ],
+            answer: "Enter a word: Radar\nReverse: radaR\nPalindrome",
+          },
+          {
+            type: "table",
+            headers: ["i", "w.charAt(i)", "rev after the step"],
+            rows: [
+              ["4", "r", "r"],
+              ["3", "a", "ra"],
+              ["2", "d", "rad"],
+              ["1", "a", "rada"],
+              ["0", "R", "radaR"],
+            ],
+          },
+          {
+            type: "mistake",
+            wrong: "Loop with `for (int i = 0; i <= s.length(); i++)` to reach every character.",
+            right: "Use `i < s.length()`. The last index is `length() − 1`.",
+            why: "\"Up to the length\" sounds like it covers everything. But with 5 characters the indexes are 0 to 4; `charAt(5)` does not exist and the program stops with StringIndexOutOfBoundsException.",
+          },
+          {
+            type: "activity",
+            activity: {
+              kind: "order",
+              prompt: "Order the lines that reverse String w.",
+              items: [
+                "String rev = \"\";",
+                "for (int i = w.length() - 1; i >= 0; i--)",
+                "rev = rev + w.charAt(i);",
+                "System.out.println(rev);",
+              ],
+              explain: "Start with an empty String, loop from the last index down to 0 adding each character, and print only after the loop ends.",
+            },
+          },
+          {
+            type: "heading",
+            text: "Working with words",
+          },
+          {
+            type: "text",
+            md: "To split a sentence into **words**, build each word character by character and finish it when you meet a space. Adding one space at the end of the sentence (`s = s.trim() + \" \";`) makes sure the last word is also finished. This simple version assumes there is a single space between words.",
+          },
+          {
+            type: "code",
+            lang: "java",
+            caption: "VowelWords.java: sample input \"Java is fun\". Output: Java -> 4, is -> 2, fun -> 3 (one per line), then Words = 3 and Vowels = 4.",
+            code: `import java.util.Scanner;
+
+public class VowelWords
+{
+    public static void main(String[] args)
+    {
+        Scanner sc = new Scanner(System.in);
+        System.out.println("Enter a sentence:");
+        String s = sc.nextLine().trim() + " ";
+        int vowels = 0, words = 0;
+        String word = "";
+        for (int i = 0; i < s.length(); i++)
+        {
+            char ch = s.charAt(i);
+            if ("AEIOUaeiou".indexOf(ch) != -1)
+                vowels++;
+            if (ch == ' ')
+            {
+                words++;
+                System.out.println(word + " -> " + word.length());
+                word = "";
+            }
+            else
+                word = word + ch;
+        }
+        System.out.println("Words = " + words);
+        System.out.println("Vowels = " + vowels);
+    }
+}`,
+          },
+          {
+            type: "checkpoint",
+            questions: [
+              {
+                kind: "numeric",
+                q: "In VowelWords, how many vowels are counted for the input \"Taj Mahal\"?",
+                answer: 3,
+                explain: "a in Taj, a and a in Mahal: 3 vowels.",
+              },
+            ],
+          },
+          {
+            type: "callout",
+            tone: "exam",
+            title: "ICSE tip",
+            md: "In String programs, use `nextLine()` for a sentence and `next()` for a single word. The trick `\"AEIOUaeiou\".indexOf(ch) != -1` is a short and accepted way to test for a vowel. Remember to handle both cases (capital and small letters) unless the question says otherwise.",
+          },
+          {
+            type: "keypoints",
+            items: [
+              "Traverse with `for (i = 0; i < s.length(); i++)` and `charAt(i)`.",
+              "Reverse by looping from length() − 1 down to 0 and joining characters.",
+              "A palindrome equals its reverse; use equals or equalsIgnoreCase, never ==.",
+              "Split words by finishing a word at each space; add a space at the end for the last word.",
+            ],
+          },
+        ],
+        flashcards: [
+          { front: "Palindrome", back: "A word that reads the same forwards and backwards, e.g. MADAM, MALAYALAM." },
+          { front: "Loop to reverse a String s", back: "for (int i = s.length() - 1; i >= 0; i--) rev = rev + s.charAt(i);" },
+          { front: "StringIndexOutOfBoundsException", back: "Run-time error when charAt or substring uses an index outside 0 to length() − 1." },
+          { front: "Quick vowel test", back: "\"AEIOUaeiou\".indexOf(ch) != -1" },
+          { front: "Why add a space at the end of the sentence?", back: "So the last word is also ended and processed by the same space test." },
+        ],
+        quiz: [
+          {
+            kind: "mcq",
+            q: "Which loop visits every character of s exactly once?",
+            options: ["`for (int i = 0; i < s.length(); i++)`", "`for (int i = 1; i <= s.length(); i++)`", "`for (int i = 0; i <= s.length(); i++)`", "`for (int i = 1; i < s.length(); i++)`"],
+            answer: 0,
+            explain: "Indexes run from 0 to length() − 1. The others skip index 0 or go past the end.",
+          },
+          {
+            kind: "truefalse",
+            q: "\"MALAYALAM\" is a palindrome.",
+            answer: true,
+            explain: "Reversed, it is still MALAYALAM.",
+          },
+          {
+            kind: "fill",
+            q: "Using the Palindrome program, the input \"Java\" prints Reverse: ___",
+            answer: ["avaJ"],
+            explain: "Characters are added from the last index: a, v, a, J.",
+          },
+          {
+            kind: "numeric",
+            q: "How many times does the reverse loop run for the word \"KERALA\"?",
+            answer: 6,
+            explain: "It runs once per character: i = 5 down to 0.",
+          },
+          {
+            kind: "mcq",
+            q: "In VowelWords, for the input \"Go to Ooty\", what is printed for Vowels?",
+            options: ["4", "3", "5", "2"],
+            answer: 0,
+            explain: "o in Go, o in to, O and o in Ooty: 4. The capital O is counted because \"AEIOUaeiou\" has both cases.",
+            difficulty: 2,
+            hint: "Do not forget the capital O.",
+          },
+          {
+            kind: "order",
+            q: "Order the steps of a palindrome program.",
+            items: ["Read the word with next()", "Build the reverse with a backward loop", "Compare the reverse with the word using equals", "Print Palindrome or Not a palindrome"],
+            explain: "Input, process (reverse), compare, output.",
+          },
+          {
+            kind: "mcq",
+            q: "For the input \"Noon\", what does the Palindrome program print on its last line?",
+            options: ["Palindrome", "Not a palindrome", "Error", "nooN"],
+            answer: 0,
+            explain: "The reverse is \"nooN\". equalsIgnoreCase(\"Noon\") ignores case, so it prints Palindrome. With equals it would print Not a palindrome.",
+            difficulty: 3,
+            hint: "Which comparison method does the program use?",
+          },
+        ],
+      },
+    ],
+  },
 ];
 
 export const topics: Topic[] = [...cbse, ...icse];
@@ -1902,4 +3450,12 @@ export const links: Record<string, string> = {
   "HTML: Tables and Forms": "html-tables-and-forms",
   "Styling with CSS": "styling-with-css",
   "Cyber Ethics and Safety": "cyber-ethics-and-safety",
+  "Revision: Java Basics": "java-basics-revision",
+  "Class as the Basis of all Computation": "class-as-basis-of-computation",
+  "User-defined Methods": "user-defined-methods",
+  "Constructors": "constructors",
+  "Library Classes": "library-classes",
+  "Encapsulation": "encapsulation",
+  "Arrays": "arrays",
+  "String Handling": "string-handling",
 };

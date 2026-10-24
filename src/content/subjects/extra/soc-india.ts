@@ -867,5 +867,25 @@ export const topics: Topic[] = [
 
 /** Exact syllabus chapter title → topic slug. */
 export const links: Record<string, string> = {
+  // CBSE
+  "Nationalism in India": "gandhian-era",
+  // ICSE
+  "The First War of Independence, 1857": "revolt-of-1857",
+  "Growth of Nationalism": "rise-of-nationalism-and-congress",
+  "First Phase of the Indian National Movement (1885–1907)": "rise-of-nationalism-and-congress",
+  "Second Phase of the Indian National Movement (1905–1916)": "assertive-nationalism",
+  "The Muslim League": "muslim-league",
+  "Mahatma Gandhi and the National Movement": "gandhian-era",
+  "Forward Bloc and the INA": "forward-bloc-and-ina",
+  "Independence and Partition of India": "independence-and-partition",
+  // Karnataka SSLC
   "The Advent of Europeans to India": "europeans-in-india",
+  "The Extension of the British Rule": "extension-of-british-rule",
+  "The Impact of British Rule in India": "impact-of-british-rule",
+  "Opposition to British Rule in Karnataka": "resistance-in-karnataka",
+  "The First War of Indian Independence (1857)": "revolt-of-1857",
+  "Social and Religious Reform Movements": "social-religious-reform",
+  "Indian Freedom Movement": "rise-of-nationalism-and-congress",
+  "Era of Gandhi and the National Movement": "gandhian-era",
+  "Post-Independent India": "post-independent-india",
 };

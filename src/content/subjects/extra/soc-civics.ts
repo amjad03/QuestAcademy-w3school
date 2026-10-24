@@ -2717,3 +2717,681 @@ const kaPolitics: Topic[] = [
     ],
   },
 ];
+
+/* ================================================================== */
+/* Karnataka SSLC: Sociology                                           */
+/* ================================================================== */
+
+const kaSociology: Topic[] = [
+  /* ------------------------------------------------------------------ */
+  {
+    slug: "social-stratification",
+    title: "Social Stratification",
+    icon: "🪜",
+    description: "Caste, class, race and gender as bases of inequality, untouchability, and steps towards equality.",
+    lessons: [
+      {
+        slug: "stratification-caste-class",
+        title: "Social Stratification, Caste and Class",
+        summary: "What stratification is, how caste and class differ, why untouchability is a crime, and how society moves towards equality.",
+        minutes: 16,
+        xp: 40,
+        blocks: [
+          {
+            type: "illustration",
+            emoji: "🪨",
+            caption: "Look at the layers in a rock cut beside a ghat road. Sociologists use the same idea, strata or layers, to describe how some groups in society are placed above others.",
+          },
+          {
+            type: "text",
+            md: "**Social stratification** is the division of society into groups that are arranged one above another, based on things like wealth, power, prestige or birth. It creates **social inequality**: some groups get more opportunities and respect than others.\n\nThe main bases of stratification are **caste**, **class**, **race** and **gender**.",
+          },
+          {
+            type: "table",
+            headers: ["Caste", "Class"],
+            rows: [
+              ["Membership is by **birth**", "Membership depends mainly on **income, wealth and occupation**"],
+              ["A **closed** system: hard to change one's caste", "An **open** system: a person can move up or down"],
+              ["Traditionally linked to marriage within the group (**endogamy**) and fixed occupations", "No rules on marriage or occupation"],
+              ["Social mobility is very limited", "**Social mobility** (moving from one level to another) is possible through education and work"],
+            ],
+          },
+          {
+            type: "text",
+            md: "**Untouchability** was the most inhuman practice of the caste system. People of certain groups were denied entry to temples, schools, wells and public places, and were treated as \"impure\". It denied them dignity and equality.",
+          },
+          {
+            type: "heading",
+            text: "Steps towards equality",
+          },
+          {
+            type: "list",
+            items: [
+              "**Article 17** of the Constitution abolishes untouchability and makes its practice in any form an offence.",
+              "The **Untouchability (Offences) Act, 1955**, renamed the **Protection of Civil Rights Act** in 1976, punishes the practice.",
+              "The **Scheduled Castes and Scheduled Tribes (Prevention of Atrocities) Act, 1989** protects these groups from violence and humiliation.",
+              "**Reservation** in education, jobs and legislatures helps groups denied opportunities for centuries.",
+              "Reformers such as **Basavanna** (12th-century Karnataka), Jyotiba Phule, Narayana Guru, Mahatma Gandhi and **Dr. B.R. Ambedkar** fought caste discrimination.",
+            ],
+          },
+          {
+            type: "example",
+            title: "Caste or class?",
+            problem: "Ravi's father was a daily-wage worker. Ravi studied hard, became an engineer and now earns well. Has his caste changed, or his class?",
+            steps: [
+              "Caste is decided by birth and does not change with income.",
+              "Class depends on income, wealth and occupation.",
+              "Ravi's income and occupation have changed, so his class position has moved up.",
+              "This upward movement is called social mobility.",
+            ],
+            answer: "His class has changed (upward social mobility); caste is fixed by birth.",
+          },
+          {
+            type: "checkpoint",
+            questions: [
+              {
+                kind: "mcq",
+                q: "Which Article of the Constitution abolishes untouchability?",
+                options: ["Article 14", "Article 17", "Article 21", "Article 32"],
+                answer: 1,
+                explain: "Article 17 abolishes untouchability and forbids its practice in any form.",
+              },
+            ],
+          },
+          {
+            type: "mistake",
+            wrong: "Stratification is just natural difference: people are simply different in height, talent or looks.",
+            right: "Stratification is a social ranking of groups that gives unequal rewards, power and respect; it is made by society, not by nature.",
+            why: "Natural differences exist between individuals. But stratification ranks whole groups and passes this ranking on to the next generation, which is why it is a social issue that society can change.",
+          },
+          {
+            type: "activity",
+            activity: {
+              kind: "sort",
+              prompt: "Is each a feature of caste or of class?",
+              groups: ["Caste", "Class"],
+              items: [
+                { text: "Decided by birth", group: 0, hint: "You cannot choose it." },
+                { text: "Based on income and occupation", group: 1, hint: "It can change with a new job." },
+                { text: "Closed system", group: 0, hint: "Movement between groups is very hard." },
+                { text: "Open system", group: 1, hint: "People can move up or down." },
+                { text: "Traditionally marriage within the group", group: 0, hint: "Endogamy." },
+                { text: "Mobility through education", group: 1, hint: "A degree can lead to a better-paid job." },
+              ],
+              explain: "**Caste** is ascribed by birth and closed; **class** is achieved through income and work and is open, allowing social mobility.",
+            },
+          },
+          {
+            type: "callout",
+            tone: "exam",
+            title: "SSLC tip",
+            md: "\"Differentiate between caste and class\" usually carries 3–4 marks. Write points in pairs (birth vs income, closed vs open, limited vs possible mobility). Pairs are easier for the examiner to mark than two separate paragraphs.",
+          },
+          {
+            type: "keypoints",
+            items: [
+              "Social stratification ranks groups in layers based on wealth, power, prestige or birth.",
+              "Main bases: caste, class, race and gender.",
+              "Caste is by birth and closed; class depends on income and is open.",
+              "Untouchability is abolished by Article 17 and punished by law; reservation and reform movements promote equality.",
+            ],
+          },
+        ],
+        flashcards: [
+          { front: "Social stratification", back: "Division of society into groups ranked one above another, based on wealth, power, prestige or birth." },
+          { front: "Social mobility", back: "Movement of a person or group from one social level to another." },
+          { front: "Endogamy", back: "The custom of marrying within one's own group." },
+          { front: "Article 17", back: "Abolishes untouchability and makes its practice an offence." },
+          { front: "Protection of Civil Rights Act", back: "The 1955 Untouchability (Offences) Act, renamed in 1976." },
+          { front: "Basavanna", back: "12th-century reformer of Karnataka who opposed caste discrimination." },
+        ],
+        quiz: [
+          {
+            kind: "mcq",
+            q: "Which of these is an open system of stratification?",
+            options: ["Caste", "Class", "Race", "Untouchability"],
+            answer: 1,
+            explain: "Class allows movement up or down through education, work and income.",
+          },
+          {
+            kind: "truefalse",
+            q: "The practice of untouchability in any form is an offence under the Constitution.",
+            answer: true,
+            explain: "Article 17 abolishes it.",
+          },
+          {
+            kind: "fill",
+            q: "Moving from one social level to another is called social ___.",
+            answer: ["mobility"],
+            explain: "It is much easier in a class system than in the caste system.",
+          },
+          {
+            kind: "multi",
+            q: "Which are bases of social stratification?",
+            options: ["Caste", "Class", "Gender", "Height"],
+            answers: [0, 1, 2],
+            explain: "Height is a natural difference between individuals, not a social ranking of groups.",
+            difficulty: 2,
+            hint: "Look for ranks created by society.",
+          },
+          {
+            kind: "mcq",
+            q: "The SC and ST (Prevention of Atrocities) Act was passed in:",
+            options: ["1955", "1976", "1989", "2005"],
+            answer: 2,
+            explain: "1955 and 1976 relate to the Protection of Civil Rights Act.",
+            difficulty: 2,
+          },
+          {
+            kind: "truefalse",
+            q: "A person's caste changes when he gets a better job.",
+            answer: false,
+            explain: "Caste is ascribed by birth; a better job changes class position, not caste.",
+          },
+        ],
+      },
+    ],
+  },
+  /* ------------------------------------------------------------------ */
+  {
+    slug: "labour",
+    title: "Labour",
+    icon: "🛠️",
+    description: "Division of labour, gender and work, organised and unorganised sectors, and labour rights.",
+    lessons: [
+      {
+        slug: "labour-and-society",
+        title: "Labour, Division of Labour and Work Sectors",
+        summary: "What labour is, division of labour, unpaid and gender-based work, and how organised and unorganised workers differ.",
+        minutes: 15,
+        xp: 40,
+        blocks: [
+          {
+            type: "illustration",
+            emoji: "🧺",
+            caption: "In a Mysuru silk unit, one person reels the thread, another dyes it and a third weaves. Each does one part, and together they make a saree.",
+          },
+          {
+            type: "text",
+            md: "**Labour** means physical or mental effort used to produce goods and services. Farmers, teachers, nurses, coolies, software engineers and homemakers all labour.\n\n**Division of labour** means dividing work into parts and giving each part to a different person or group. It increases efficiency and skill. The sociologist **Emile Durkheim** wrote about how division of labour holds modern society together, because people depend on each other.",
+          },
+          {
+            type: "heading",
+            text: "Labour and gender",
+          },
+          {
+            type: "text",
+            md: "In many homes, cooking, cleaning and caring for children and the elderly are done mostly by women. This is **unpaid labour**: it is real work, but it earns no wage and is often not counted. Women also face **wage discrimination**: being paid less than men for the same work.\n\nThe Constitution asks the state to ensure **equal pay for equal work** for men and women (**Article 39(d)**, a Directive Principle). The **Equal Remuneration Act, 1976** put this into law; its provisions are now part of the Code on Wages, 2019.",
+          },
+          {
+            type: "table",
+            headers: ["Organised sector", "Unorganised sector"],
+            rows: [
+              ["Registered with the government; follows labour laws", "Mostly unregistered; laws are often not followed"],
+              ["Fixed working hours and regular salary", "Irregular work and wages"],
+              ["Job security and benefits such as provident fund, pension, paid leave", "Little or no job security or social security"],
+              ["Examples: government offices, banks, large factories", "Examples: agricultural labourers, construction workers, street vendors, domestic workers"],
+            ],
+          },
+          {
+            type: "text",
+            md: "Most Indian workers are in the **unorganised sector**. **Landless agricultural labourers**, who own no land and work on others' fields for wages, are among the poorest. Many workers **migrate** from villages to cities for work, often facing poor housing and no security.",
+          },
+          {
+            type: "example",
+            title: "Which sector?",
+            problem: "Lakshmi works as a mason's helper at a building site in Bengaluru. She is paid daily, gets no leave and has no provident fund. Which sector does she work in, and what problems does she face?",
+            steps: [
+              "Check the signs: daily pay, no leave, no provident fund, no written contract.",
+              "These are features of the unorganised sector.",
+              "Her problems: irregular income, no job security, no social security, and possibly lower pay than male workers.",
+            ],
+            answer: "She works in the unorganised sector and lacks job security, social security and fair, regular wages.",
+          },
+          {
+            type: "checkpoint",
+            questions: [
+              {
+                kind: "truefalse",
+                q: "Housework done by a homemaker is labour, even though it is unpaid.",
+                answer: true,
+                explain: "It is effort that produces services for the family; it is simply not paid or counted in income.",
+              },
+            ],
+          },
+          {
+            type: "mistake",
+            wrong: "Only work that earns money counts as labour.",
+            right: "Labour includes all physical and mental effort that produces goods or services, paid or unpaid.",
+            why: "We usually measure work by wages, so unpaid work seems invisible. But cooking, caring and household farming keep families and the economy running.",
+          },
+          {
+            type: "activity",
+            activity: {
+              kind: "sort",
+              prompt: "Organised or unorganised sector?",
+              groups: ["Organised", "Unorganised"],
+              items: [
+                { text: "Bank clerk with a pension", group: 0, hint: "Regular salary and benefits." },
+                { text: "Street vendor", group: 1, hint: "No fixed income or employer." },
+                { text: "Teacher in a government school", group: 0, hint: "Registered employer, fixed salary." },
+                { text: "Landless agricultural labourer", group: 1, hint: "Daily wages, seasonal work." },
+                { text: "Domestic worker", group: 1, hint: "Usually no contract or benefits." },
+                { text: "Worker in a registered factory with provident fund", group: 0, hint: "Labour laws apply." },
+              ],
+              explain: "The **organised sector** gives regular pay, fixed hours and social security. The **unorganised sector** lacks them, and most Indian workers are in it.",
+            },
+          },
+          {
+            type: "callout",
+            tone: "exam",
+            title: "SSLC tip",
+            md: "In \"distinguish between organised and unorganised labour\", give at least three paired points with one example each. Students often give only examples; the examiner looks for features first.",
+          },
+          {
+            type: "keypoints",
+            items: [
+              "Labour is physical or mental effort that produces goods and services, paid or unpaid.",
+              "Division of labour increases efficiency and makes people depend on each other.",
+              "Women do much unpaid work and face wage discrimination; Article 39(d) calls for equal pay for equal work.",
+              "Organised workers have security and benefits; unorganised workers, the majority, largely do not.",
+            ],
+          },
+        ],
+        flashcards: [
+          { front: "Labour", back: "Physical or mental effort used to produce goods and services." },
+          { front: "Division of labour", back: "Splitting work into parts done by different people, which raises efficiency." },
+          { front: "Unpaid labour", back: "Work, such as housework and care, that earns no wage." },
+          { front: "Wage discrimination", back: "Paying different wages for the same work, for example to women and men." },
+          { front: "Unorganised sector", back: "Small, mostly unregistered units with irregular work and little social security." },
+          { front: "Article 39(d)", back: "Directive Principle: equal pay for equal work for both men and women." },
+        ],
+        quiz: [
+          {
+            kind: "mcq",
+            q: "Which worker belongs to the organised sector?",
+            options: ["A construction labourer", "A railway employee", "A street vendor", "A domestic worker"],
+            answer: 1,
+            explain: "Railway employees have regular salaries, fixed hours and benefits.",
+          },
+          {
+            kind: "truefalse",
+            q: "Most workers in India are employed in the organised sector.",
+            answer: false,
+            explain: "Most Indian workers are in the unorganised sector.",
+          },
+          {
+            kind: "fill",
+            q: "Equal pay for equal work for men and women is a Directive Principle under Article ___.",
+            answer: ["39(d)", "39 (d)", "39d", "39"],
+            explain: "Article 39(d) of the Constitution.",
+            difficulty: 2,
+          },
+          {
+            kind: "multi",
+            q: "Which are features of the unorganised sector?",
+            options: ["Irregular wages", "No job security", "Provident fund and pension", "Little or no social security"],
+            answers: [0, 1, 3],
+            explain: "Provident fund and pension are features of the organised sector.",
+            difficulty: 2,
+          },
+          {
+            kind: "mcq",
+            q: "Workers who own no land and work on others' fields for wages are called:",
+            options: ["Tenants", "Landlords", "Landless agricultural labourers", "Industrial workers"],
+            answer: 2,
+            explain: "They are among the poorest groups in rural India.",
+          },
+          {
+            kind: "truefalse",
+            q: "Division of labour makes members of society depend on each other.",
+            answer: true,
+            explain: "Each person does one kind of work and relies on others for the rest.",
+          },
+        ],
+      },
+    ],
+  },
+  /* ------------------------------------------------------------------ */
+  {
+    slug: "collective-behaviour-protests",
+    title: "Collective Behaviour and Protests",
+    icon: "📢",
+    description: "Crowds and mobs, and social movements: environmental, farmers', workers' and women's movements.",
+    lessons: [
+      {
+        slug: "collective-behaviour-movements",
+        title: "Collective Behaviour and Social Movements",
+        summary: "How groups act together, the difference between a crowd and a mob, and major protest movements such as Chipko and Appiko.",
+        minutes: 16,
+        xp: 40,
+        blocks: [
+          {
+            type: "illustration",
+            emoji: "🌳",
+            caption: "In 1983, villagers near Sirsi hugged trees to stop them being cut. A small act by a group of people became a movement known across India.",
+          },
+          {
+            type: "text",
+            md: "**Collective behaviour** means the actions of a large number of people together, usually spontaneous and short-lived, not guided by fixed rules. A sudden rush at a festival, cheering at a cricket match or panic after a rumour are examples.\n\nA **crowd** is a temporary gathering of people in one place with a common focus, such as people watching a procession. A **mob** is an emotional crowd that acts with a common aim, often violently. **Rumours** (unverified stories) can turn a crowd into a mob, so checking facts matters.",
+          },
+          {
+            type: "text",
+            md: "A **protest** is a public expression of objection. When protests become organised and continue over time for a shared goal, they form a **social movement**. Movements have leaders, ideas and a plan, and they aim to bring about (or resist) social change.",
+          },
+          {
+            type: "table",
+            headers: ["Movement", "Where and when", "What it was about"],
+            rows: [
+              ["**Chipko movement**", "Himalayan region of present-day Uttarakhand, from 1973", "Villagers, many of them women, hugged trees to stop felling; associated with Chandi Prasad Bhatt and Sunderlal Bahuguna"],
+              ["**Appiko movement**", "Salkani village, Sirsi, Uttara Kannada district, Karnataka, 1983", "\"Appiko\" means \"to hug\" in Kannada; protected Western Ghats forests; led by Pandurang Hegde"],
+              ["**Narmada Bachao Andolan**", "Narmada valley, from the 1980s", "Against large dams that displaced people; Medha Patkar and Baba Amte"],
+              ["**Silent Valley movement**", "Kerala, 1970s–80s", "Saved a rainforest from a hydroelectric project; Silent Valley became a National Park in 1984"],
+            ],
+          },
+          {
+            type: "list",
+            items: [
+              "**Farmers' movements**: in Karnataka, the **Karnataka Rajya Raitha Sangha**, led by Prof. M.D. Nanjundaswamy, fought for fair prices and farmers' rights from 1980.",
+              "**Workers' (labour) movement**: trade unions demand fair wages, safe conditions and fixed hours; the All India Trade Union Congress was founded in 1920.",
+              "**Women's movement**: struggles against dowry, violence and discrimination, and for equal rights.",
+              "**Dalit movement**: struggles for dignity, equality and an end to caste discrimination.",
+            ],
+          },
+          {
+            type: "example",
+            title: "Crowd, mob or movement?",
+            problem: "Classify: (a) people gathered to watch a Dasara procession in Mysuru; (b) a group that, after hearing a rumour, damages a shop; (c) villagers who for years run campaigns, petitions and peaceful protests to save a forest.",
+            steps: [
+              "(a) A temporary gathering with a common focus, no violent aim: a crowd.",
+              "(b) Emotional, acting together with an aim, violent: a mob.",
+              "(c) Organised, continuing over time, with a clear goal of change: a social movement.",
+            ],
+            answer: "(a) crowd, (b) mob, (c) social movement.",
+          },
+          {
+            type: "checkpoint",
+            questions: [
+              {
+                kind: "mcq",
+                q: "The Appiko movement began in which district of Karnataka?",
+                options: ["Mysuru", "Uttara Kannada", "Kodagu", "Ballari"],
+                answer: 1,
+                explain: "It began at Salkani village in Sirsi taluk, Uttara Kannada district, in 1983.",
+              },
+            ],
+          },
+          {
+            type: "mistake",
+            wrong: "Every protest is a social movement.",
+            right: "A single protest is a short event; it becomes a social movement only when it is organised, continues over time and pursues a shared goal of change.",
+            why: "Protests are the most visible part of movements, so the two seem the same. But a movement also has leaders, ideas, organisation and continuity.",
+          },
+          {
+            type: "activity",
+            activity: {
+              kind: "match",
+              prompt: "Match each movement to its leader or place.",
+              pairs: [
+                ["Appiko movement", "Pandurang Hegde"],
+                ["Narmada Bachao Andolan", "Medha Patkar"],
+                ["Karnataka Rajya Raitha Sangha", "M.D. Nanjundaswamy"],
+                ["Chipko movement", "Sunderlal Bahuguna"],
+              ],
+              explain: "Appiko was inspired by Chipko and carried the idea of hugging trees to the Western Ghats of Karnataka.",
+            },
+          },
+          {
+            type: "callout",
+            tone: "exam",
+            title: "SSLC tip",
+            md: "For environmental movements, write the place, the year, the leader and the aim. \"Appiko: Salkani, Uttara Kannada, 1983, Pandurang Hegde, protecting Western Ghats forests\" earns full marks; many students confuse Appiko with Chipko.",
+          },
+          {
+            type: "keypoints",
+            items: [
+              "Collective behaviour is spontaneous group action; a crowd is a temporary gathering, a mob is an emotional and often violent crowd.",
+              "Organised, lasting protests for a common goal are social movements.",
+              "Environmental: Chipko (1973), Appiko (1983, Karnataka), Narmada Bachao Andolan, Silent Valley.",
+              "Farmers', workers', women's and Dalit movements fight for rights and equality.",
+            ],
+          },
+        ],
+        flashcards: [
+          { front: "Collective behaviour", back: "Spontaneous, short-lived actions of many people together, not guided by fixed rules." },
+          { front: "Crowd", back: "A temporary gathering of people in one place with a common focus." },
+          { front: "Mob", back: "An emotional crowd acting together with a common aim, often violently." },
+          { front: "Social movement", back: "An organised, continuing effort by a group to bring about or resist social change." },
+          { front: "Appiko movement", back: "Started in 1983 at Salkani, Sirsi (Uttara Kannada); villagers hugged trees to save forests; led by Pandurang Hegde." },
+          { front: "Chipko movement", back: "Started in 1973 in the Himalayan region of present-day Uttarakhand to stop tree felling." },
+        ],
+        quiz: [
+          {
+            kind: "mcq",
+            q: "The word \"Appiko\" in Kannada means:",
+            options: ["To protest", "To hug", "To plant", "To march"],
+            answer: 1,
+            explain: "Villagers hugged trees to stop them being cut.",
+          },
+          {
+            kind: "truefalse",
+            q: "A mob is usually calm and has no common aim.",
+            answer: false,
+            explain: "A mob is emotional and acts together with a common aim, often violently.",
+          },
+          {
+            kind: "fill",
+            q: "The Chipko movement began in the year ___.",
+            answer: ["1973"],
+            explain: "It started in the Himalayan region of present-day Uttarakhand.",
+          },
+          {
+            kind: "order",
+            q: "Arrange these in chronological order.",
+            items: ["Founding of AITUC", "Start of the Chipko movement", "Start of the Appiko movement"],
+            explain: "1920, 1973, 1983.",
+            difficulty: 2,
+          },
+          {
+            kind: "multi",
+            q: "Which are environmental movements?",
+            options: ["Chipko", "Appiko", "Narmada Bachao Andolan", "All India Trade Union Congress"],
+            answers: [0, 1, 2],
+            explain: "AITUC is a workers' organisation, part of the labour movement.",
+          },
+          {
+            kind: "mcq",
+            q: "Which body led farmers' struggles in Karnataka under Prof. M.D. Nanjundaswamy?",
+            options: ["Karnataka Rajya Raitha Sangha", "Narmada Bachao Andolan", "AITUC", "Chipko Samiti"],
+            answer: 0,
+            explain: "The Karnataka Rajya Raitha Sangha fought for farmers' rights.",
+          },
+        ],
+      },
+    ],
+  },
+  /* ------------------------------------------------------------------ */
+  {
+    slug: "social-challenges",
+    title: "Social Challenges",
+    icon: "🛡️",
+    description: "Child labour, child marriage, female foeticide and trafficking, and the laws that fight them.",
+    lessons: [
+      {
+        slug: "child-labour-marriage-foeticide",
+        title: "Child Labour, Child Marriage and Female Foeticide",
+        summary: "Why these practices harm society, what the Constitution and laws say, and what citizens can do.",
+        minutes: 15,
+        xp: 40,
+        blocks: [
+          {
+            type: "illustration",
+            emoji: "🎒",
+            caption: "Two 12-year-olds: one goes to school, the other washes dishes at a roadside hotel. One social challenge is making sure every child has the first life.",
+          },
+          {
+            type: "text",
+            md: "**Social challenges** are harmful practices that deny people, often children and women, their rights and dignity. They hold back the whole society. Three major ones are **child labour**, **child marriage** and **female foeticide**.",
+          },
+          {
+            type: "table",
+            headers: ["Challenge", "Meaning", "Law and protection"],
+            rows: [
+              ["**Child labour**", "Children made to work in ways that harm their health, education and childhood", "**Article 24**: no child below 14 in factories, mines or hazardous work. Child Labour (Prohibition and Regulation) Act, 1986, amended in 2016 to ban employing children below 14 in all occupations and adolescents (14–18) in hazardous ones"],
+              ["**Child marriage**", "Marriage below the legal age", "**Prohibition of Child Marriage Act, 2006**: minimum age 18 for girls and 21 for boys"],
+              ["**Female foeticide**", "Killing a female foetus because of a preference for sons", "**PCPNDT Act, 1994**: bans sex-determination tests and sex selection"],
+              ["**Human trafficking**", "Buying and selling of people, often for forced labour", "**Article 23**: prohibits trafficking in human beings and forced labour"],
+            ],
+          },
+          {
+            type: "text",
+            md: "**Causes** include poverty, illiteracy, old customs, the dowry system and preference for sons. **Effects** include loss of education, poor health, early pregnancy and danger to the mother and child, and a falling number of girls compared with boys (an imbalanced **sex ratio**).\n\n**Article 21A** makes free and compulsory education a fundamental right for children aged 6 to 14, which helps keep children in school and out of work.",
+          },
+          {
+            type: "example",
+            title: "From problem to action",
+            problem: "A 15-year-old girl in your neighbourhood is about to be married. What does the law say, and what can be done?",
+            steps: [
+              "The legal minimum age of marriage for girls is 18 (Prohibition of Child Marriage Act, 2006), so this is a child marriage.",
+              "It harms her education and health and is an offence.",
+              "A citizen can inform the Childline helpline (1098), the police or the Child Marriage Prohibition Officer.",
+              "Awareness in the family and community helps prevent it in the first place.",
+            ],
+            answer: "It is illegal; it should be reported to Childline (1098), the police or the officer concerned, along with awareness efforts.",
+          },
+          {
+            type: "checkpoint",
+            questions: [
+              {
+                kind: "mcq",
+                q: "Under the Prohibition of Child Marriage Act, 2006, the minimum age of marriage for boys is:",
+                options: ["18 years", "19 years", "21 years", "25 years"],
+                answer: 2,
+                explain: "It is 21 for boys and 18 for girls.",
+              },
+            ],
+          },
+          {
+            type: "mistake",
+            wrong: "Child labour is fine if the child is helping to feed a poor family.",
+            right: "Child labour harms a child's health and education and keeps the family poor in the next generation; the solution is support for the family and schooling for the child.",
+            why: "It feels kind to let a child earn. But a child who misses school earns less as an adult, so poverty continues. Laws, free education and welfare schemes aim to break this cycle.",
+          },
+          {
+            type: "activity",
+            activity: {
+              kind: "match",
+              prompt: "Match each challenge to the law or provision against it.",
+              pairs: [
+                ["Child marriage", "Prohibition of Child Marriage Act, 2006"],
+                ["Female foeticide", "PCPNDT Act, 1994"],
+                ["Child labour in hazardous work", "Article 24"],
+                ["Human trafficking", "Article 23"],
+                ["Children out of school", "Article 21A"],
+              ],
+              explain: "The Constitution sets the principle (Articles 21A, 23, 24) and laws such as the 2006 and 1994 Acts put it into practice.",
+            },
+          },
+          {
+            type: "callout",
+            tone: "exam",
+            title: "SSLC tip",
+            md: "For a \"measures to eradicate\" question, mix three kinds of points: legal (name the Act), educational (awareness, free schooling) and economic (support to poor families). Answers with only legal points rarely get full marks.",
+          },
+          {
+            type: "keypoints",
+            items: [
+              "Child labour: Article 24; the 1986 Act (amended 2016) bans employing children below 14.",
+              "Child marriage: minimum age 18 for girls and 21 for boys (2006 Act).",
+              "Female foeticide: the PCPNDT Act, 1994 bans sex-selection tests.",
+              "Article 23 bans trafficking; Article 21A guarantees education for ages 6–14.",
+            ],
+          },
+        ],
+        flashcards: [
+          { front: "Child labour", back: "Work that deprives children of childhood, education and health." },
+          { front: "Article 24", back: "No child below 14 shall be employed in factories, mines or hazardous work." },
+          { front: "Legal age of marriage", back: "18 for girls and 21 for boys (Prohibition of Child Marriage Act, 2006)." },
+          { front: "Female foeticide", back: "Killing a female foetus because of son preference; sex-selection tests are banned by the PCPNDT Act, 1994." },
+          { front: "Article 23", back: "Prohibits trafficking in human beings and forced labour." },
+          { front: "Childline", back: "The helpline 1098 for children in need of care and protection." },
+        ],
+        quiz: [
+          {
+            kind: "mcq",
+            q: "Which Article bans employing children below 14 in factories and mines?",
+            options: ["Article 17", "Article 21A", "Article 23", "Article 24"],
+            answer: 3,
+            explain: "Article 24. Article 23 bans trafficking; 21A is the right to education; 17 abolishes untouchability.",
+            difficulty: 2,
+            hint: "It comes right after the Article on trafficking.",
+          },
+          {
+            kind: "numeric",
+            q: "What is the minimum legal age of marriage for girls in India?",
+            answer: 18,
+            unit: "years",
+            explain: "Under the Prohibition of Child Marriage Act, 2006.",
+          },
+          {
+            kind: "truefalse",
+            q: "Sex-determination tests to choose the sex of a child are banned in India.",
+            answer: true,
+            explain: "The PCPNDT Act, 1994 bans them.",
+          },
+          {
+            kind: "fill",
+            q: "Killing a female foetus because of a preference for sons is called female ___.",
+            answer: ["foeticide", "feticide"],
+            explain: "It leads to an imbalanced sex ratio.",
+          },
+          {
+            kind: "multi",
+            q: "Which are causes of child labour?",
+            options: ["Poverty", "Illiteracy of parents", "Free and compulsory education", "Lack of awareness"],
+            answers: [0, 1, 3],
+            explain: "Free and compulsory education is a remedy, not a cause.",
+            difficulty: 2,
+            hint: "One option is a solution.",
+          },
+          {
+            kind: "mcq",
+            q: "The Child Labour Act was amended in 2016 to ban the employment of children below 14 in:",
+            options: ["Only mines", "Only factories", "All occupations", "Only hotels"],
+            answer: 2,
+            explain: "The 2016 amendment extended the ban to all occupations, with narrow exceptions such as helping in a family enterprise after school.",
+            difficulty: 3,
+          },
+        ],
+      },
+    ],
+  },
+];
+
+export const topics: Topic[] = [...cbse, ...icse, ...kaPolitics, ...kaSociology];
+
+/** Exact syllabus chapter title → topic slug. */
+export const links: Record<string, string> = {
+  // CBSE: Democratic Politics II
+  "Power Sharing": "power-sharing",
+  "Federalism": "federalism",
+  "Gender, Religion and Caste": "gender-religion-caste",
+  "Political Parties": "political-parties",
+  "Outcomes of Democracy": "outcomes-of-democracy",
+  // ICSE: Civics
+  "The Union Parliament": "union-parliament",
+  "The Union Executive: President and Vice-President": "president-vice-president",
+  "The Union Executive: Prime Minister and Council of Ministers": "prime-minister-council-of-ministers",
+  "The Judiciary: Supreme Court": "supreme-court",
+  "High Courts and Subordinate Courts": "high-courts-subordinate-courts",
+  // Karnataka SSLC: Political Science
+  "Problems of India and their Solutions": "problems-of-india-solutions",
+  "India's Foreign Policy": "indias-foreign-policy",
+  "India's Relationship with Other Countries": "india-relations-other-countries",
+  "Global Problems and India's Role": "global-problems-indias-role",
+  // Karnataka SSLC: Sociology
+  "Social Stratification": "social-stratification",
+  "Labour": "labour",
+  "Collective Behaviour and Protests": "collective-behaviour-protests",
+  "Social Challenges": "social-challenges",
+};

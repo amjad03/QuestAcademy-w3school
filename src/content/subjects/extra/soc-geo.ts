@@ -4110,6 +4110,349 @@ export const topics: Topic[] = [
     ],
   },
   /* @@MORE@@ */
+  /* ------------------------------------------------------------------ */
+  {
+    slug: "independence-and-partition",
+    title: "Independence and Partition of India",
+    icon: "🕰️",
+    description: "The Cabinet Mission, the Interim Government, the Mountbatten Plan, the Indian Independence Act and the partition of 1947.",
+    lessons: [
+      {
+        slug: "road-to-1947",
+        title: "The Road to 15 August 1947",
+        summary: "How the plans of 1945–47 led to freedom and partition, and why the Congress finally accepted the division of India.",
+        minutes: 16,
+        xp: 40,
+        blocks: [
+          {
+            type: "illustration",
+            emoji: "🌅",
+            caption: "At midnight on 14–15 August 1947 India became free, but as two countries, India and Pakistan.",
+          },
+          {
+            type: "text",
+            md: "By 1945 the Second World War had left Britain weak and in debt. A new **Labour government** under **Clement Attlee** was willing to leave India. The Quit India Movement, the INA trials and the RIN revolt had shown that British rule could not last. The big question was no longer *whether* India would be free, but *how*, and whether as one country or two.",
+          },
+          {
+            type: "heading",
+            text: "The Cabinet Mission, 1946",
+          },
+          {
+            type: "text",
+            md: "In **March 1946** three British cabinet ministers came to India: **Pethick-Lawrence**, **Stafford Cripps** and **A.V. Alexander**. The **Cabinet Mission Plan** proposed:\n\n- a **united India** with a weak centre (defence, foreign affairs, communications) and strong provinces;\n- provinces arranged in **three groups**;\n- a **Constituent Assembly** to write the constitution;\n- an **Interim Government** of Indian leaders.\n\nIt **rejected** the demand for a separate Pakistan. The League first accepted the plan, then withdrew and called for **Direct Action Day (16 August 1946)**. Terrible riots followed in Calcutta and spread to other places.",
+          },
+          {
+            type: "checkpoint",
+            questions: [
+              {
+                kind: "mcq",
+                q: "What did the Cabinet Mission Plan say about Pakistan?",
+                options: ["It accepted a separate Pakistan", "It rejected the demand for a separate Pakistan", "It said Pakistan would be formed in 1948", "It did not mention any groups of provinces"],
+                answer: 1,
+                explain: "It proposed a united India with groups of provinces, not partition.",
+              },
+            ],
+          },
+          {
+            type: "table",
+            headers: ["Date", "Event"],
+            rows: [
+              ["2 September 1946", "**Interim Government** formed, headed by **Jawaharlal Nehru**; the League joined later but did not cooperate."],
+              ["9 December 1946", "**Constituent Assembly** met for the first time; the League stayed away."],
+              ["20 February 1947", "Attlee announced Britain would leave India by **June 1948**."],
+              ["March 1947", "**Lord Mountbatten** arrived as the last Viceroy."],
+              ["3 June 1947", "**Mountbatten Plan**: India to be divided into two dominions; Punjab and Bengal to be partitioned."],
+              ["July 1947", "British Parliament passed the **Indian Independence Act**."],
+              ["14 and 15 August 1947", "Pakistan and India became independent."],
+            ],
+          },
+          {
+            type: "example",
+            title: "Explaining a hard decision",
+            problem: "The Congress had always opposed dividing India. Why did it accept the Mountbatten Plan in 1947?",
+            steps: [
+              "Look at the riots: communal violence after Direct Action Day was spreading; leaders feared civil war.",
+              "Look at the government: the League blocked work in the Interim Government, so a united government was not working.",
+              "Look at time: the British wanted to leave quickly; delay could mean more bloodshed.",
+              "Conclude with the leaders' view: partition seemed the lesser evil.",
+            ],
+            answer: "Rising communal riots, the deadlock in the Interim Government and the wish for a quick, peaceful transfer of power made Congress leaders accept partition as the lesser evil.",
+          },
+          {
+            type: "text",
+            md: "The **Indian Independence Act, 1947** ended British rule. India and Pakistan became two independent **dominions**. Princely states could join either country. The new borders in Punjab and Bengal were drawn by a commission under **Cyril Radcliffe**.\n\nPartition brought one of the largest migrations in history. Millions of people crossed the new borders, and lakhs died in riots. Gandhi spent Independence Day in Calcutta, working to stop the violence. He was assassinated on **30 January 1948**.",
+          },
+          {
+            type: "mistake",
+            wrong: "The Cabinet Mission divided India into India and Pakistan.",
+            right: "The Cabinet Mission (1946) proposed a **united** India. Partition was decided by the **Mountbatten Plan of 3 June 1947**, and made law by the **Indian Independence Act**.",
+            why: "Both are British plans close in time, so they blur together. Remember: Cabinet Mission = united India with groups; Mountbatten = two dominions.",
+          },
+          {
+            type: "activity",
+            activity: {
+              kind: "order",
+              prompt: "Put the steps to independence in order.",
+              items: ["Cabinet Mission arrives", "Direct Action Day", "Interim Government formed", "Attlee's announcement", "Mountbatten Plan", "Independence Day"],
+              explain: "March 1946 → 16 August 1946 → 2 September 1946 → 20 February 1947 → 3 June 1947 → 15 August 1947.",
+            },
+          },
+          {
+            type: "callout",
+            tone: "exam",
+            title: "Exam tip",
+            md: "ICSE asks for the 'main provisions' of the Mountbatten Plan and the Indian Independence Act. For the Act write: end of British rule from 15 August 1947; two dominions, India and Pakistan; each with its own Constituent Assembly; princely states free to join either; the title of Viceroy ended (a Governor-General for each dominion).",
+          },
+          {
+            type: "keypoints",
+            items: [
+              "Cabinet Mission (1946): united India, groups of provinces, Constituent Assembly, Interim Government; rejected Pakistan.",
+              "Direct Action Day (16 August 1946) led to riots.",
+              "Interim Government under Nehru (2 September 1946); Constituent Assembly met 9 December 1946.",
+              "Mountbatten Plan (3 June 1947) and Indian Independence Act (July 1947): two dominions.",
+              "Independence: 15 August 1947; partition caused huge migration and violence.",
+            ],
+          },
+        ],
+        flashcards: [
+          { front: "Members of the Cabinet Mission", back: "Pethick-Lawrence, Stafford Cripps and A.V. Alexander (1946)." },
+          { front: "Head of the Interim Government", back: "Jawaharlal Nehru, from 2 September 1946." },
+          { front: "Mountbatten Plan", back: "3 June 1947: partition of India into two dominions, with Punjab and Bengal divided." },
+          { front: "Indian Independence Act", back: "Passed by British Parliament in July 1947; created India and Pakistan from 15 August 1947." },
+          { front: "Who drew the new borders?", back: "A boundary commission under Cyril Radcliffe." },
+          { front: "Attlee's announcement", back: "20 February 1947: Britain would leave India by June 1948." },
+        ],
+        quiz: [
+          {
+            kind: "mcq",
+            q: "Who was the last Viceroy of British India?",
+            options: ["Lord Wavell", "Lord Mountbatten", "Lord Linlithgow", "Lord Irwin"],
+            answer: 1,
+            explain: "Mountbatten arrived in March 1947 and stayed on as independent India's first Governor-General.",
+          },
+          {
+            kind: "fill",
+            q: "The Mountbatten Plan was announced on 3 ___ 1947.",
+            answer: ["June"],
+            explain: "It was announced on 3 June 1947.",
+          },
+          {
+            kind: "truefalse",
+            q: "The Cabinet Mission Plan of 1946 accepted the demand for Pakistan.",
+            answer: false,
+            explain: "It rejected Pakistan and proposed a united India with groups of provinces.",
+          },
+          {
+            kind: "multi",
+            q: "Why did the Congress accept partition? (Choose all.)",
+            options: ["Spreading communal riots", "Deadlock in the Interim Government", "Wish for a quick transfer of power", "Gandhi demanded partition"],
+            answers: [0, 1, 2],
+            explain: "Gandhi was deeply unhappy about partition; he did not demand it.",
+            difficulty: 2,
+          },
+          {
+            kind: "order",
+            q: "Arrange in order.",
+            items: ["Constituent Assembly meets", "Attlee's announcement", "Mountbatten Plan", "Indian Independence Act"],
+            explain: "December 1946 → February 1947 → June 1947 → July 1947.",
+            difficulty: 2,
+            hint: "The Act came after the Plan it put into law.",
+          },
+          {
+            kind: "mcq",
+            q: "Why was Britain willing to leave India after 1945?",
+            options: ["India asked politely", "The war had weakened Britain and Indian unrest showed rule could not last", "The League demanded it", "The Simon Commission recommended it"],
+            answer: 1,
+            explain: "A weak post-war Britain, a Labour government, and unrest such as the INA trials and RIN revolt made withdrawal inevitable.",
+          },
+        ],
+      },
+    ],
+  },
+  /* ------------------------------------------------------------------ */
+  {
+    slug: "post-independent-india",
+    title: "India After Independence",
+    icon: "🧩",
+    description: "Refugees, integration of princely states, freeing of French and Portuguese colonies, and the linguistic reorganisation of states.",
+    lessons: [
+      {
+        slug: "integration-and-reorganisation",
+        title: "Integration of States and Reorganisation",
+        summary: "How free India settled refugees, brought the princely states together, freed Goa and Pondicherry, and redrew states on the basis of language.",
+        minutes: 17,
+        xp: 45,
+        blocks: [
+          {
+            type: "illustration",
+            emoji: "🧩",
+            caption: "In 1947 India was a puzzle of more than 550 princely states and British provinces. Fitting it together was the first big task.",
+          },
+          {
+            type: "text",
+            md: "Free India faced huge problems at once: millions of **refugees** from Pakistan, the **princely states**, foreign colonies on Indian soil, and demands for states based on language.\n\nThe government set up camps and a ministry for **rehabilitation** (resettling refugees). Refugees were given land, loans, houses and jobs. New towns and colonies grew up for them.",
+          },
+          {
+            type: "heading",
+            text: "Integration of the princely states",
+          },
+          {
+            type: "text",
+            md: "Under the Indian Independence Act, princely states could join India or Pakistan, or try to stay independent. **Sardar Vallabhbhai Patel**, minister for states, and his secretary **V.P. Menon** persuaded most rulers to sign the **Instrument of Accession**, handing over **defence, foreign affairs and communications** to India. Almost all states joined by 15 August 1947. Three did not.",
+          },
+          {
+            type: "table",
+            headers: ["State", "Problem", "How it joined India"],
+            rows: [
+              ["**Junagadh**", "The Nawab wanted to join Pakistan though most people wanted India", "People rose against him; he fled; a **plebiscite** (vote of the people) in 1948 chose India"],
+              ["**Hyderabad**", "The Nizam wanted to stay independent; the **Razakars** attacked people", "Indian army action, **Operation Polo** (September 1948)"],
+              ["**Jammu and Kashmir**", "Raiders from Pakistan attacked in October 1947", "**Maharaja Hari Singh** signed the Instrument of Accession (26 October 1947); Indian troops were sent"],
+            ],
+          },
+          {
+            type: "checkpoint",
+            questions: [
+              {
+                kind: "mcq",
+                q: "Who is known for integrating the princely states into India?",
+                options: ["Jawaharlal Nehru", "Sardar Vallabhbhai Patel", "B.R. Ambedkar", "Lord Mountbatten"],
+                answer: 1,
+                explain: "As minister for states, Patel (with V.P. Menon) brought the princely states into India. He is called the Iron Man of India.",
+              },
+            ],
+          },
+          {
+            type: "heading",
+            text: "French and Portuguese areas",
+          },
+          {
+            type: "list",
+            items: [
+              "**Pondicherry** and other French areas (Karaikal, Mahe, Yanam) were handed over to India in **1954**, and formally ceded later.",
+              "Portugal refused to leave **Goa, Daman and Diu**. After years of peaceful protest, the Indian army freed them in **December 1961** (Operation Vijay).",
+            ],
+          },
+          {
+            type: "heading",
+            text: "Linguistic reorganisation of states",
+          },
+          {
+            type: "text",
+            md: "People wanted states where one language was spoken, so that government work and education could be in their own language. **Potti Sriramulu** fasted for a separate Telugu state and died in **December 1952**. In **1953** **Andhra** became the first state formed on the basis of language.\n\nThe **States Reorganisation Commission** (1953), headed by **Fazl Ali**, with H.N. Kunzru and K.M. Panikkar as members, studied the issue. The **States Reorganisation Act, 1956** created **14 states and 6 Union Territories**.\n\nFor Karnataka, Kannada-speaking areas that were in the Bombay, Madras and Hyderabad regions and Coorg were joined with the old Mysore state. The new, enlarged **Mysore State** was formed on **1 November 1956**. Leaders like **Aluru Venkata Rao** had worked for this **Karnataka Ekikarana** (unification). The state was renamed **Karnataka** on **1 November 1973**.",
+          },
+          {
+            type: "example",
+            title: "Arguing both sides",
+            problem: "Was reorganising states by language good for India? Give one benefit and one worry.",
+            steps: [
+              "Benefit: people could use their own language in government, courts and schools, so democracy came closer to them.",
+              "Worry (at the time): leaders feared it could weaken national unity and create disputes over borders and rivers.",
+              "Check the result: India stayed united, though some border disputes (such as Belagavi) continue.",
+            ],
+            answer: "It brought government closer to the people and strengthened regional cultures, while India's unity held; the main problems left were some border disputes between states.",
+          },
+          {
+            type: "mistake",
+            wrong: "Karnataka was formed with the name 'Karnataka' in 1956.",
+            right: "On 1 November 1956 the unified state was called **Mysore State**. It was renamed **Karnataka** on **1 November 1973**.",
+            why: "We celebrate Karnataka Rajyotsava on 1 November, so students think the name also dates from 1956. The date of unification and the date of the new name are different.",
+          },
+          {
+            type: "activity",
+            activity: {
+              kind: "match",
+              prompt: "Match each event with its year.",
+              pairs: [
+                ["Hyderabad joins India (Operation Polo)", "1948"],
+                ["Andhra State formed", "1953"],
+                ["French areas handed over", "1954"],
+                ["States Reorganisation Act; Mysore State formed", "1956"],
+                ["Goa freed", "1961"],
+                ["Mysore State renamed Karnataka", "1973"],
+              ],
+              explain: "Integration came first (1947–48), then language-based states (1953–56); the last colonies went in 1954 and 1961.",
+            },
+          },
+          {
+            type: "callout",
+            tone: "exam",
+            title: "Exam tip",
+            md: "Karnataka SSLC often asks: 'How was Hyderabad integrated?' or 'Explain the unification of Karnataka.' Name the people (Patel, V.P. Menon, Aluru Venkata Rao), the action (Operation Polo, States Reorganisation Act) and the dates (1948, 1956, 1973).",
+          },
+          {
+            type: "keypoints",
+            items: [
+              "Refugees from partition were resettled with land, loans and housing.",
+              "Patel and V.P. Menon integrated the princely states through the Instrument of Accession.",
+              "Junagadh (plebiscite), Hyderabad (Operation Polo, 1948), Kashmir (accession, October 1947).",
+              "Pondicherry handed over in 1954; Goa freed in 1961.",
+              "Andhra (1953) was the first linguistic state; States Reorganisation Act 1956; Mysore State 1956, renamed Karnataka 1973.",
+            ],
+          },
+        ],
+        flashcards: [
+          { front: "Instrument of Accession", back: "Document by which a princely state joined India, handing over defence, foreign affairs and communications." },
+          { front: "Operation Polo", back: "Indian army action in September 1948 that brought Hyderabad into India." },
+          { front: "How did Junagadh join India?", back: "The Nawab fled after popular protest; a plebiscite in 1948 chose India." },
+          { front: "First linguistic state", back: "Andhra, 1953, after Potti Sriramulu's death on fast." },
+          { front: "States Reorganisation Commission", back: "1953; chairman Fazl Ali, members H.N. Kunzru and K.M. Panikkar." },
+          { front: "When was Goa freed?", back: "December 1961." },
+          { front: "When was Mysore State renamed Karnataka?", back: "1 November 1973." },
+        ],
+        quiz: [
+          {
+            kind: "mcq",
+            q: "Who was the secretary who helped Patel integrate the princely states?",
+            options: ["V.P. Menon", "K.M. Panikkar", "Fazl Ali", "Aluru Venkata Rao"],
+            answer: 0,
+            explain: "V.P. Menon worked with Patel in the States Ministry. Fazl Ali and Panikkar were on the Reorganisation Commission.",
+          },
+          {
+            kind: "fill",
+            q: "The States Reorganisation Act was passed in the year ___.",
+            answer: ["1956"],
+            explain: "It created 14 states and 6 Union Territories.",
+          },
+          {
+            kind: "truefalse",
+            q: "Hyderabad joined India by a plebiscite.",
+            answer: false,
+            explain: "Junagadh had the plebiscite. Hyderabad joined after Operation Polo in 1948.",
+            difficulty: 2,
+          },
+          {
+            kind: "numeric",
+            q: "How many states did the States Reorganisation Act of 1956 create?",
+            answer: 14,
+            explain: "It created 14 states and 6 Union Territories.",
+          },
+          {
+            kind: "order",
+            q: "Arrange in order.",
+            items: ["Kashmir signs the Instrument of Accession", "Operation Polo", "Andhra State formed", "Mysore State formed", "Goa freed"],
+            explain: "1947 → 1948 → 1953 → 1956 → 1961.",
+            difficulty: 2,
+          },
+          {
+            kind: "multi",
+            q: "Which areas were joined to form the enlarged Mysore State in 1956? (Choose all.)",
+            options: ["Kannada areas of Bombay region", "Kannada areas of Hyderabad region", "Coorg", "Goa"],
+            answers: [0, 1, 2],
+            explain: "Kannada areas of Bombay, Madras and Hyderabad regions and Coorg joined old Mysore. Goa was still Portuguese until 1961.",
+            difficulty: 2,
+            hint: "Goa was not part of India in 1956.",
+          },
+          {
+            kind: "mcq",
+            q: "Why was Andhra created in 1953?",
+            options: ["To settle refugees", "On the basis of language, after Potti Sriramulu's fast", "Because the Nizam asked for it", "As a reward for the INA"],
+            answer: 1,
+            explain: "It was the first state formed for Telugu speakers on a linguistic basis.",
+          },
+        ],
+      },
+    ],
+  },
   /* END TOPICS */
 ];
 

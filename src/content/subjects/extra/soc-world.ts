@@ -2022,10 +2022,925 @@ export const topics: Topic[] = [
       },
     ],
   },
-  /* NEXT */
+  /* ------------------------------------------------------------------ */
+  /* ICSE: The United Nations | Karnataka: International Institutions    */
+  /* ------------------------------------------------------------------ */
+  {
+    slug: "the-united-nations",
+    title: "The United Nations",
+    icon: "🇺🇳",
+    description: "How the UN was formed, its aims and principles, and the work of its principal organs.",
+    lessons: [
+      {
+        slug: "un-formation-and-objectives",
+        title: "Formation, Aims and the General Assembly",
+        summary: "The road to the UN Charter, the UN's objectives and principles, its six principal organs, and the General Assembly.",
+        minutes: 16,
+        xp: 42,
+        blocks: [
+          {
+            type: "text",
+            md: "Every year on **24 October**, schools around the world mark **UN Day**. It is the birthday of an organisation that almost every country on Earth has joined: the **United Nations (UN)**.",
+          },
+          {
+            type: "text",
+            md: "The League of Nations, set up after WWI, failed to stop the Second World War. As that war raged, world leaders planned a stronger body. The name 'United Nations' was suggested by US President **Franklin D. Roosevelt**.",
+          },
+          {
+            type: "table",
+            headers: ["Date", "Step towards the UN"],
+            rows: [
+              ["14 August 1941", "**Atlantic Charter**: Roosevelt and Churchill set out goals for a peaceful post-war world"],
+              ["1 January 1942", "**Declaration by United Nations** signed by 26 nations fighting the Axis"],
+              ["1944", "**Dumbarton Oaks** talks (USA, UK, USSR, China) draft the plan for the UN"],
+              ["25 April – 26 June 1945", "**San Francisco Conference**: delegates of 50 nations draw up the Charter"],
+              ["26 June 1945", "**UN Charter signed**"],
+              ["24 October 1945", "Charter comes **into force**; the UN is born (UN Day)"],
+            ],
+          },
+          {
+            type: "text",
+            md: "The **UN Charter** is the founding document, like a constitution for the UN. Its preamble begins with the words 'We the peoples of the United Nations'. The UN has its **headquarters in New York**, six official languages (Arabic, Chinese, English, French, Russian and Spanish) and **193 member states** today. **India** was one of the original members; it signed the Charter in 1945, even before independence.",
+          },
+          {
+            type: "checkpoint",
+            questions: [
+              {
+                kind: "mcq",
+                q: "When did the UN Charter come into force?",
+                options: ["26 June 1945", "24 October 1945", "1 January 1942", "14 August 1941"],
+                answer: 1,
+                explain: "It was signed on 26 June 1945 and came into force on 24 October 1945, which is celebrated as UN Day.",
+              },
+            ],
+          },
+          {
+            type: "heading",
+            text: "Objectives and principles",
+          },
+          {
+            type: "list",
+            ordered: true,
+            items: [
+              "To maintain **international peace and security**.",
+              "To develop **friendly relations** among nations, based on equal rights and **self-determination** of peoples.",
+              "To achieve international **cooperation** in solving economic, social, cultural and humanitarian problems, and to promote **human rights**.",
+              "To be a **centre** for harmonising the actions of nations towards these common goals.",
+            ],
+          },
+          {
+            type: "text",
+            md: "Its principles include the **sovereign equality** of all members, settling disputes by **peaceful means**, not using force against the territory or independence of any state, and not interfering in matters that are essentially within a country's **domestic jurisdiction**.\n\nThe UN has **six principal organs**: the General Assembly, the Security Council, the Economic and Social Council (ECOSOC), the Trusteeship Council, the International Court of Justice and the Secretariat.",
+          },
+          {
+            type: "heading",
+            text: "The General Assembly",
+          },
+          {
+            type: "table",
+            headers: ["Feature", "Detail"],
+            rows: [
+              ["Composition", "all member states; each may send up to 5 representatives but has **one vote**"],
+              ["Sessions", "one regular session every year, starting in September; special sessions when needed"],
+              ["President", "elected for each session; **Vijaya Lakshmi Pandit** of India was the first woman President (1953)"],
+              ["Voting", "**important questions** (peace and security, new members, budget) need a **two-thirds majority** of members present and voting; other questions a simple majority"],
+              ["Functions", "discusses any matter within the Charter; elects the 10 non-permanent members of the Security Council and the members of ECOSOC; with the Security Council, elects judges of the ICJ; appoints the Secretary-General and admits new members **on the Security Council's recommendation**; approves the UN budget"],
+            ],
+          },
+          {
+            type: "example",
+            title: "Writing a 'functions' answer",
+            problem: "State any three functions of the General Assembly. (3 marks)",
+            steps: [
+              "Choose functions of different kinds so each is clearly separate: deliberative, electoral, financial.",
+              "Deliberative: it discusses any question relating to peace, security and international cooperation and makes recommendations.",
+              "Electoral: it elects the 10 non-permanent members of the Security Council.",
+              "Financial: it considers and approves the UN budget and fixes members' contributions.",
+            ],
+            answer: "(1) Discusses and recommends on any matter within the Charter. (2) Elects the non-permanent members of the Security Council. (3) Approves the UN budget.",
+          },
+          {
+            type: "mistake",
+            wrong: "The General Assembly alone appoints the Secretary-General and admits new members.",
+            right: "The General Assembly appoints the Secretary-General and admits new members only **on the recommendation of the Security Council**.",
+            why: "Because the Assembly holds the final vote, students forget the Security Council's role. Without its recommendation, the Assembly cannot act on these matters.",
+          },
+          {
+            type: "activity",
+            activity: {
+              kind: "order",
+              prompt: "Put the steps towards the UN in order.",
+              items: [
+                "Atlantic Charter",
+                "Declaration by United Nations",
+                "Dumbarton Oaks talks",
+                "Charter signed at San Francisco",
+                "Charter comes into force",
+              ],
+              explain: "August 1941 → January 1942 → 1944 → 26 June 1945 → 24 October 1945.",
+            },
+          },
+          {
+            type: "callout",
+            tone: "exam",
+            title: "Exam tip",
+            md: "Keep the two 1945 dates apart: **26 June 1945** = Charter signed; **24 October 1945** = Charter in force, UN Day. Swapping them is the most common error in ICSE and Karnataka SSLC papers.",
+          },
+          {
+            type: "keypoints",
+            items: [
+              "UN Charter signed on 26 June 1945; came into force on 24 October 1945 (UN Day).",
+              "Headquarters: New York; 193 member states; India is an original member.",
+              "Main aim: maintain international peace and security; also cooperation and human rights.",
+              "Six principal organs: GA, SC, ECOSOC, Trusteeship Council, ICJ, Secretariat.",
+              "General Assembly: all members, one vote each; two-thirds majority on important questions.",
+            ],
+          },
+        ],
+        flashcards: [
+          { front: "UN Charter signed", back: "26 June 1945, at San Francisco." },
+          { front: "UN Day", back: "24 October: the day in 1945 the Charter came into force." },
+          { front: "UN headquarters", back: "New York, USA." },
+          { front: "Six principal organs of the UN", back: "General Assembly, Security Council, ECOSOC, Trusteeship Council, International Court of Justice, Secretariat." },
+          { front: "Voting in the General Assembly", back: "One member, one vote; two-thirds majority on important questions, simple majority on others." },
+          { front: "First woman President of the General Assembly", back: "Vijaya Lakshmi Pandit of India (1953)." },
+        ],
+        quiz: [
+          {
+            kind: "mcq",
+            q: "Where is the headquarters of the United Nations?",
+            options: ["Geneva", "The Hague", "New York", "Paris"],
+            answer: 2,
+            explain: "Geneva hosts WHO and ILO, The Hague hosts the ICJ, Paris hosts UNESCO.",
+          },
+          {
+            kind: "fill",
+            q: "The UN Charter was signed on 26 June ___.",
+            answer: ["1945"],
+            explain: "It was signed at the San Francisco Conference.",
+          },
+          {
+            kind: "truefalse",
+            q: "In the General Assembly, a big country like the USA has more votes than a small country like Nepal.",
+            answer: false,
+            explain: "Every member state has one vote: this is sovereign equality.",
+          },
+          {
+            kind: "numeric",
+            q: "How many principal organs does the United Nations have?",
+            answer: 6,
+            explain: "GA, SC, ECOSOC, Trusteeship Council, ICJ and Secretariat.",
+          },
+          {
+            kind: "multi",
+            q: "Which are objectives of the United Nations?",
+            options: [
+              "Maintain international peace and security",
+              "Promote respect for human rights",
+              "Form a single world government",
+              "Develop friendly relations among nations",
+            ],
+            answers: [0, 1, 3],
+            explain: "The UN respects the sovereignty of states; it is not a world government.",
+            difficulty: 2,
+          },
+          {
+            kind: "mcq",
+            q: "What majority does the General Assembly need to admit a new member?",
+            options: ["Simple majority", "Two-thirds majority of members present and voting", "Unanimous vote", "Three-fourths majority"],
+            answer: 1,
+            explain: "Admission of new members is an important question, so it needs two-thirds, and also a Security Council recommendation.",
+            difficulty: 2,
+            hint: "Admission counts as an 'important question'.",
+          },
+        ],
+      },
+      {
+        slug: "security-council-icj-secretariat",
+        title: "Security Council, ICJ and Secretariat",
+        summary: "Composition, voting and the veto in the Security Council; the International Court of Justice; the Secretariat and Secretary-General; ECOSOC and the Trusteeship Council.",
+        minutes: 15,
+        xp: 40,
+        blocks: [
+          {
+            type: "text",
+            md: "If a war breaks out somewhere tomorrow, the world will turn to one small room in New York: the chamber of the **Security Council**. It is the UN's main body for peace and security.",
+          },
+          {
+            type: "heading",
+            text: "The Security Council",
+          },
+          {
+            type: "table",
+            headers: ["Feature", "Detail"],
+            rows: [
+              ["Composition", "**15 members**: 5 permanent and 10 non-permanent"],
+              ["Permanent members (P5)", "China, France, Russia, the United Kingdom and the United States"],
+              ["Non-permanent members", "elected by the General Assembly for **2-year terms**; 5 are replaced each year"],
+              ["Procedural matters", "need 9 votes out of 15"],
+              ["Substantive (important) matters", "need 9 votes **including the concurring votes of all 5 permanent members**"],
+              ["Presidency", "rotates among members every month"],
+            ],
+          },
+          {
+            type: "text",
+            md: "The **veto** is the power of any one permanent member to block a decision on a substantive matter by voting against it. In practice, if a permanent member only **abstains**, it is not counted as a veto.\n\n**Functions** of the Security Council: to investigate disputes that may threaten peace; to recommend ways of settling them; to impose **sanctions** (such as trade bans) on an aggressor; to take **military action** if needed, including sending peacekeeping forces; to recommend the appointment of the Secretary-General and the admission of new members; and, with the General Assembly, to elect the judges of the ICJ.",
+          },
+          {
+            type: "checkpoint",
+            questions: [
+              {
+                kind: "mcq",
+                q: "Which country is NOT a permanent member of the Security Council?",
+                options: ["China", "France", "India", "Russia"],
+                answer: 2,
+                explain: "India has been elected a non-permanent member several times and seeks a permanent seat, but it is not one of the P5.",
+              },
+            ],
+          },
+          {
+            type: "heading",
+            text: "International Court of Justice and the Secretariat",
+          },
+          {
+            type: "table",
+            headers: ["", "International Court of Justice (ICJ)", "Secretariat"],
+            rows: [
+              ["Seat", "The Hague, Netherlands", "New York (UN headquarters)"],
+              ["Head / members", "**15 judges**, no two from the same country", "headed by the **Secretary-General**, with international staff"],
+              ["How chosen", "elected by the General Assembly and Security Council, voting separately", "Secretary-General appointed by the General Assembly on the Security Council's recommendation"],
+              ["Term", "**9 years**; one-third retire every 3 years", "Secretary-General usually serves a 5-year term, which can be renewed"],
+              ["Work", "settles legal disputes between states that accept its jurisdiction; gives **advisory opinions** to UN organs", "runs the day-to-day work of the UN; the Secretary-General can bring any threat to peace to the Security Council's attention"],
+            ],
+          },
+          {
+            type: "text",
+            md: "The **Economic and Social Council (ECOSOC)** has 54 members elected for 3-year terms and coordinates economic and social work, including the specialised agencies. The **Trusteeship Council** looked after trust territories until they became independent; it suspended its work in 1994 after the last one, Palau, became independent.\n\nThe first Secretary-General was **Trygve Lie** of Norway. **António Guterres** of Portugal became Secretary-General in 2017.",
+          },
+          {
+            type: "example",
+            title: "Applying the voting rule",
+            problem: "In a Security Council vote on sanctions, 13 members vote yes; one permanent member votes no and one non-permanent member abstains. Is the resolution passed?",
+            steps: [
+              "Decide the type of matter: sanctions are a substantive matter.",
+              "Check the number of votes: 13 yes is more than the required 9.",
+              "Check the permanent members: one permanent member voted **no**, which is a veto.",
+            ],
+            answer: "No. Even with 13 votes in favour, a 'no' vote by one permanent member vetoes a substantive resolution.",
+          },
+          {
+            type: "mistake",
+            wrong: "Any member of the Security Council can use the veto.",
+            right: "Only the 5 permanent members have the veto. The 10 non-permanent members vote, but none of them can block a decision alone.",
+            why: "Students hear 'Security Council members have a veto' and apply it to all 15. The veto is the special privilege of the P5.",
+          },
+          {
+            type: "activity",
+            activity: {
+              kind: "match",
+              prompt: "Match each UN organ to its feature.",
+              pairs: [
+                ["General Assembly", "All members, one vote each"],
+                ["Security Council", "15 members, 5 with the veto"],
+                ["International Court of Justice", "15 judges at The Hague"],
+                ["Secretariat", "Headed by the Secretary-General"],
+                ["ECOSOC", "54 members, economic and social work"],
+              ],
+              explain: "Each principal organ has a clear job: the Assembly debates, the Council keeps peace, the Court judges, the Secretariat administers and ECOSOC coordinates development work.",
+            },
+          },
+          {
+            type: "callout",
+            tone: "exam",
+            title: "Exam tip",
+            md: "For 'composition of the Security Council', write all three parts: **15 members**, **5 permanent** (name them) and **10 non-permanent elected for 2 years**. For the ICJ, remember **15 judges, 9-year term, The Hague**: many students write 5 or 10 judges.",
+          },
+          {
+            type: "keypoints",
+            items: [
+              "Security Council: 15 members, P5 = China, France, Russia, UK, USA; 10 elected for 2 years.",
+              "Substantive decisions need 9 votes including all 5 permanent members; one 'no' from the P5 is a veto.",
+              "ICJ: 15 judges, 9-year terms, at The Hague.",
+              "Secretariat: headed by the Secretary-General, appointed by the GA on the SC's recommendation.",
+              "ECOSOC has 54 members; the Trusteeship Council suspended work in 1994.",
+            ],
+          },
+        ],
+        flashcards: [
+          { front: "Permanent members of the Security Council", back: "China, France, Russia, United Kingdom, United States." },
+          { front: "Veto", back: "The power of a permanent member to block a substantive Security Council decision by voting against it." },
+          { front: "Term of non-permanent Security Council members", back: "2 years, elected by the General Assembly." },
+          { front: "ICJ", back: "International Court of Justice at The Hague: 15 judges, 9-year terms." },
+          { front: "Secretary-General", back: "Chief administrative officer of the UN, appointed by the GA on the SC's recommendation." },
+          { front: "First UN Secretary-General", back: "Trygve Lie of Norway." },
+        ],
+        quiz: [
+          {
+            kind: "numeric",
+            q: "How many judges sit on the International Court of Justice?",
+            answer: 15,
+            explain: "15 judges, elected for 9 years.",
+          },
+          {
+            kind: "mcq",
+            q: "Where is the International Court of Justice located?",
+            options: ["New York", "Geneva", "The Hague", "Rome"],
+            answer: 2,
+            explain: "It sits in the Peace Palace at The Hague, Netherlands.",
+          },
+          {
+            kind: "truefalse",
+            q: "An abstention by a permanent member of the Security Council counts as a veto.",
+            answer: false,
+            explain: "By long practice, only a negative vote by a permanent member is a veto.",
+            difficulty: 2,
+          },
+          {
+            kind: "fill",
+            q: "Non-permanent members of the Security Council are elected for a term of ___ years.",
+            answer: ["2", "two"],
+            explain: "They are elected by the General Assembly; five seats change each year.",
+          },
+          {
+            kind: "multi",
+            q: "Which are functions of the Security Council?",
+            options: [
+              "Impose sanctions on an aggressor",
+              "Recommend the appointment of the Secretary-General",
+              "Approve the UN budget",
+              "Send peacekeeping forces",
+            ],
+            answers: [0, 1, 3],
+            explain: "The budget is approved by the General Assembly.",
+            difficulty: 2,
+          },
+          {
+            kind: "mcq",
+            q: "How many votes does a substantive Security Council resolution need?",
+            options: [
+              "Any 8 votes",
+              "9 votes including all 5 permanent members",
+              "All 15 votes",
+              "A simple majority of the General Assembly",
+            ],
+            answer: 1,
+            explain: "9 of 15, with no negative vote from any permanent member.",
+          },
+        ],
+      },
+    ],
+  },
+  /* ------------------------------------------------------------------ */
+  /* ICSE: Major Agencies of the United Nations                          */
+  /* ------------------------------------------------------------------ */
+  {
+    slug: "major-agencies-of-the-un",
+    title: "Major Agencies of the United Nations",
+    icon: "🤝",
+    description: "UNICEF, WHO and UNESCO in detail, with a look at the ILO, FAO, IMF and World Bank.",
+    lessons: [
+      {
+        slug: "unicef-who-unesco",
+        title: "UNICEF, WHO and UNESCO",
+        summary: "When and why each agency was set up, its headquarters and its main functions, with Indian examples.",
+        minutes: 16,
+        xp: 42,
+        blocks: [
+          {
+            type: "text",
+            md: "The two drops of polio vaccine you got as a baby, the World Heritage tag on the ruins of Hampi, and school nutrition campaigns all have one thing in common: UN agencies helped make them possible.",
+          },
+          {
+            type: "text",
+            md: "Besides its six principal organs, the UN works through many **specialised agencies**, funds and programmes. Each deals with one area, such as health, children, education or labour, and works with governments across the world.",
+          },
+          {
+            type: "heading",
+            text: "UNICEF",
+          },
+          {
+            type: "text",
+            md: "The **United Nations International Children's Emergency Fund (UNICEF)** was set up by the General Assembly on **11 December 1946** to help children in countries ruined by WWII. In 1953 it became a permanent part of the UN, renamed the **United Nations Children's Fund**, but kept the short name UNICEF. Its headquarters is in **New York**. It won the **Nobel Peace Prize in 1965**.\n\n**Functions:** child health and immunisation; nutrition for mothers and children; safe drinking water and sanitation; education, especially for girls; emergency relief for children in wars and disasters; and protecting **child rights**.",
+          },
+          {
+            type: "heading",
+            text: "WHO",
+          },
+          {
+            type: "text",
+            md: "The **World Health Organization (WHO)** was set up when its constitution came into force on **7 April 1948**. That is why 7 April is **World Health Day**. Its headquarters is in **Geneva**, Switzerland.\n\n**Functions:** to help all peoples reach the highest possible level of health; to fight diseases such as malaria, tuberculosis, polio and HIV/AIDS; to run immunisation campaigns; to set international health standards; to support health research; and to coordinate the response to epidemics. WHO led the campaign that **eradicated smallpox**, declared in **1980**. In 2014 WHO certified India and the South-East Asia region **polio-free**.",
+          },
+          {
+            type: "checkpoint",
+            questions: [
+              {
+                kind: "mcq",
+                q: "Why is 7 April celebrated as World Health Day?",
+                options: [
+                  "Smallpox was eradicated on that day",
+                  "WHO's constitution came into force on 7 April 1948",
+                  "UNICEF was founded on that day",
+                  "It is the date of the UN Charter",
+                ],
+                answer: 1,
+                explain: "WHO came into being on 7 April 1948.",
+              },
+            ],
+          },
+          {
+            type: "heading",
+            text: "UNESCO",
+          },
+          {
+            type: "text",
+            md: "The **United Nations Educational, Scientific and Cultural Organization (UNESCO)** came into force on **4 November 1946** (its constitution was signed in November 1945). Its headquarters is in **Paris**. Its idea is that wars begin in the minds of people, so peace must be built in their minds too.\n\n**Functions:** to spread education and literacy; to promote science and cooperation among scientists; to protect cultural and natural heritage, including **World Heritage Sites** such as the Group of Monuments at **Hampi** in Karnataka; to encourage free flow of ideas and respect for diverse cultures.",
+          },
+          {
+            type: "table",
+            headers: ["Agency", "Set up", "Headquarters", "Main focus"],
+            rows: [
+              ["UNICEF", "11 December 1946", "New York", "children's health, nutrition, education, rights"],
+              ["WHO", "7 April 1948", "Geneva", "health for all, disease control"],
+              ["UNESCO", "1945–46 (in force 4 November 1946)", "Paris", "education, science, culture, heritage"],
+              ["ILO", "1919 (UN agency from 1946)", "Geneva", "workers' rights and labour standards"],
+              ["FAO", "16 October 1945", "Rome", "food, farming, fighting hunger"],
+              ["IMF and World Bank", "1944 (Bretton Woods)", "Washington, D.C.", "currency stability; loans for development"],
+            ],
+          },
+          {
+            type: "example",
+            title: "Choosing the right agency",
+            problem: "A cyclone hits coastal Odisha. Children need clean water, vaccines and a safe place to study. Which UN agency would lead help for the children, and what would it do? (2 marks)",
+            steps: [
+              "Identify the group being helped: children.",
+              "Recall the agency for children: UNICEF.",
+              "List two actions from its functions: safe water and sanitation; immunisation; temporary learning centres.",
+            ],
+            answer: "UNICEF. It would supply safe drinking water and hygiene kits, support vaccination and set up temporary learning spaces for children.",
+          },
+          {
+            type: "mistake",
+            wrong: "WHO is based in New York, like the UN.",
+            right: "WHO's headquarters is in Geneva. UNICEF is in New York and UNESCO is in Paris.",
+            why: "Students assume every UN body sits at the UN headquarters. Agencies have their own seats, and headquarters questions are common one-mark items.",
+          },
+          {
+            type: "activity",
+            activity: {
+              kind: "match",
+              prompt: "Match each agency with its role.",
+              pairs: [
+                ["UNICEF", "Health, nutrition and rights of children"],
+                ["WHO", "Disease control and health standards"],
+                ["UNESCO", "Education, science and World Heritage"],
+                ["ILO", "Labour standards and workers' rights"],
+                ["FAO", "Food security and better farming"],
+              ],
+              explain: "Each agency covers one field. Learn one keyword each: **children**, **health**, **education and culture**, **labour**, **food**.",
+            },
+          },
+          {
+            type: "callout",
+            tone: "exam",
+            title: "ICSE tip",
+            md: "ICSE commonly asks 'State any three functions of WHO / UNICEF / UNESCO'. Write three clearly different functions, each as a full sentence. Mixing them up, such as giving 'literacy' as a WHO function, loses marks. Note that UNICEF is technically a UN **fund**, not a specialised agency, but ICSE groups it with the major agencies.",
+          },
+          {
+            type: "keypoints",
+            items: [
+              "UNICEF: 11 December 1946, New York; children's health, nutrition, education and rights; Nobel Peace Prize 1965.",
+              "WHO: 7 April 1948 (World Health Day), Geneva; smallpox eradicated (1980); India polio-free (2014).",
+              "UNESCO: in force 4 November 1946, Paris; education, science, culture and World Heritage.",
+              "Other agencies: ILO (labour), FAO (food), IMF and World Bank (finance).",
+            ],
+          },
+        ],
+        flashcards: [
+          { front: "UNICEF headquarters and founding", back: "New York; set up on 11 December 1946." },
+          { front: "WHO headquarters and founding", back: "Geneva; constitution in force on 7 April 1948." },
+          { front: "UNESCO headquarters", back: "Paris." },
+          { front: "World Health Day", back: "7 April, marking WHO's founding in 1948." },
+          { front: "Smallpox eradication", back: "Declared by WHO in 1980." },
+          { front: "Three functions of UNESCO", back: "Spread education and literacy; promote science; protect cultural and natural heritage." },
+          { front: "FAO", back: "Food and Agriculture Organization, Rome; works to defeat hunger." },
+        ],
+        quiz: [
+          {
+            kind: "mcq",
+            q: "Which agency's headquarters is in Paris?",
+            options: ["WHO", "UNICEF", "UNESCO", "ILO"],
+            answer: 2,
+            explain: "UNESCO is in Paris; WHO and ILO are in Geneva; UNICEF is in New York.",
+          },
+          {
+            kind: "fill",
+            q: "WHO declared smallpox eradicated in the year ___.",
+            answer: ["1980"],
+            explain: "Smallpox is the first human disease eradicated worldwide.",
+          },
+          {
+            kind: "truefalse",
+            q: "UNICEF was originally set up to help children in countries devastated by the Second World War.",
+            answer: true,
+            explain: "It began in 1946 as an emergency fund; it became permanent in 1953.",
+          },
+          {
+            kind: "multi",
+            q: "Which are functions of UNICEF?",
+            options: [
+              "Immunisation of children",
+              "Safe drinking water and sanitation",
+              "Fixing currency exchange rates",
+              "Education of girls",
+            ],
+            answers: [0, 1, 3],
+            explain: "Exchange rates are the IMF's area.",
+          },
+          {
+            kind: "mcq",
+            q: "A UN agency lists Hampi as a World Heritage Site. Which agency?",
+            options: ["WHO", "UNESCO", "FAO", "UNICEF"],
+            answer: 1,
+            explain: "UNESCO protects cultural and natural heritage through the World Heritage list.",
+          },
+          {
+            kind: "order",
+            q: "Arrange by founding date, earliest first.",
+            items: ["ILO", "FAO", "UNICEF", "WHO"],
+            explain: "ILO 1919 → FAO October 1945 → UNICEF December 1946 → WHO April 1948.",
+            difficulty: 3,
+            hint: "The ILO is older than the UN itself.",
+          },
+        ],
+      },
+    ],
+  },
+  /* ------------------------------------------------------------------ */
+  /* ICSE: The Non-Aligned Movement                                      */
+  /* ------------------------------------------------------------------ */
+  {
+    slug: "the-non-aligned-movement",
+    title: "The Non-Aligned Movement",
+    icon: "🕊️",
+    description: "Why newly free nations chose not to join either Cold War bloc, and what NAM stood for.",
+    lessons: [
+      {
+        slug: "nam-origins-and-objectives",
+        title: "NAM: Meaning, Founders and Aims",
+        summary: "The Cold War blocs, the meaning of non-alignment, Panchsheel, Bandung and Belgrade, NAM's objectives and India's role.",
+        minutes: 15,
+        xp: 40,
+        blocks: [
+          {
+            type: "text",
+            md: "Imagine two big gangs in your school, each pushing you to join. You choose to stay friends with both, while judging every quarrel on its merits. That is the basic idea of **non-alignment**.",
+          },
+          {
+            type: "text",
+            md: "After WWII the world split into two **power blocs** in the **Cold War**: the **Western bloc**, led by the USA (with the military alliance **NATO**, formed in 1949), and the **Eastern bloc**, led by the USSR (with the **Warsaw Pact**, 1955). Newly independent countries of Asia and Africa did not want to become pawns in this rivalry.\n\n**Non-alignment** means not joining either military bloc and following an **independent foreign policy**, deciding each issue on its merits.",
+          },
+          {
+            type: "mistake",
+            wrong: "Non-alignment means neutrality: staying silent and not taking sides on world issues.",
+            right: "Non-alignment means not joining military blocs, but actively taking a stand on each issue on its merits, for peace, against colonialism and racism.",
+            why: "Both words suggest 'not taking sides', so students mix them up. A neutral country stays out of disputes; a non-aligned country speaks and acts on them, independently of the blocs.",
+          },
+          {
+            type: "heading",
+            text: "Founders and key meetings",
+          },
+          {
+            type: "table",
+            headers: ["Founder leader", "Country"],
+            rows: [
+              ["**Jawaharlal Nehru**", "India"],
+              ["**Gamal Abdel Nasser**", "Egypt"],
+              ["**Josip Broz Tito**", "Yugoslavia"],
+              ["**Sukarno**", "Indonesia"],
+              ["**Kwame Nkrumah**", "Ghana"],
+            ],
+          },
+          {
+            type: "text",
+            md: "In 1954 India and China agreed on **Panchsheel**, five principles of peaceful relations: (1) mutual respect for each other's territorial integrity and sovereignty; (2) mutual non-aggression; (3) mutual non-interference in each other's internal affairs; (4) equality and mutual benefit; (5) peaceful coexistence. These ideas shaped NAM.\n\nIn **April 1955** the **Bandung Conference** in Indonesia brought Asian and African nations together. The first **NAM summit** was held at **Belgrade**, Yugoslavia, in **September 1961**, with **25 member countries**. NAM has since grown to about **120 members**, the largest grouping of states after the UN. India hosted the seventh summit in **New Delhi in 1983**.",
+          },
+          {
+            type: "checkpoint",
+            questions: [
+              {
+                kind: "mcq",
+                q: "Where and when was the first NAM summit held?",
+                options: ["Bandung, 1955", "Belgrade, 1961", "Cairo, 1964", "New Delhi, 1983"],
+                answer: 1,
+                explain: "Belgrade, September 1961. Bandung (1955) was an Asian-African conference that came before it.",
+              },
+            ],
+          },
+          {
+            type: "heading",
+            text: "Objectives of NAM",
+          },
+          {
+            type: "list",
+            items: [
+              "Keep away from military alliances and the power blocs.",
+              "End **colonialism** and **imperialism**; support freedom struggles.",
+              "Oppose **racial discrimination**, such as apartheid in South Africa.",
+              "Work for **disarmament**, especially nuclear disarmament, and world peace.",
+              "Promote a fair **New International Economic Order** and cooperation among developing countries.",
+              "Strengthen the **United Nations**.",
+            ],
+          },
+          {
+            type: "example",
+            title: "Explaining why India chose non-alignment",
+            problem: "Give three reasons why India adopted a policy of non-alignment after independence. (3 marks)",
+            steps: [
+              "Freedom: India had just won independence and wanted to keep its decisions in its own hands, not a bloc leader's.",
+              "Development: staying out of blocs let India get aid and technology from both the USA and the USSR.",
+              "Peace: India needed peace to build its economy and believed in peaceful coexistence (Panchsheel).",
+            ],
+            answer: "To protect its newly won independence in foreign policy, to get economic help from both blocs, and to promote world peace needed for its own development.",
+          },
+          {
+            type: "activity",
+            activity: {
+              kind: "reveal",
+              prompt: "A NAM country sees one superpower invade a small nation. What does it do?",
+              emoji: "🌐",
+              options: ["Stays silent, since it is neutral", "Condemns the invasion on its merits", "Joins the other superpower's alliance"],
+              answer: 1,
+              trap: 0,
+              explain: "Non-alignment is **not** neutrality. A non-aligned country judges each issue on its merits and speaks up, without joining either bloc.",
+            },
+          },
+          {
+            type: "callout",
+            tone: "exam",
+            title: "ICSE tip",
+            md: "Name all five founders with their countries for full marks, and give the first summit exactly: **Belgrade, 1961**. Writing 'Bandung 1955' as the first NAM summit is a common error.",
+          },
+          {
+            type: "keypoints",
+            items: [
+              "Non-alignment: not joining Cold War military blocs; independent foreign policy on merits.",
+              "Founders: Nehru (India), Nasser (Egypt), Tito (Yugoslavia), Sukarno (Indonesia), Nkrumah (Ghana).",
+              "Panchsheel (1954) and Bandung (1955) prepared the ground; first summit at Belgrade, 1961, with 25 members.",
+              "Aims: end colonialism and racism, disarmament, peace, fair world economic order.",
+              "Non-alignment is not neutrality.",
+            ],
+          },
+        ],
+        flashcards: [
+          { front: "Non-alignment", back: "Not joining either Cold War military bloc; following an independent foreign policy on merits." },
+          { front: "Five founders of NAM", back: "Nehru, Nasser, Tito, Sukarno and Nkrumah." },
+          { front: "First NAM summit", back: "Belgrade, Yugoslavia, September 1961; 25 member countries." },
+          { front: "Panchsheel", back: "Five principles of peaceful coexistence agreed by India and China in 1954." },
+          { front: "Bandung Conference", back: "April 1955 Asian-African conference in Indonesia that prepared the ground for NAM." },
+          { front: "NATO and Warsaw Pact", back: "Military alliances of the Western bloc (1949) and the Eastern bloc (1955)." },
+        ],
+        quiz: [
+          {
+            kind: "mcq",
+            q: "Which leader represented Yugoslavia among NAM's founders?",
+            options: ["Nasser", "Tito", "Sukarno", "Nkrumah"],
+            answer: 1,
+            explain: "Josip Broz Tito of Yugoslavia hosted the first summit at Belgrade.",
+          },
+          {
+            kind: "truefalse",
+            q: "Non-alignment and neutrality mean exactly the same thing.",
+            answer: false,
+            explain: "A non-aligned nation takes active positions on issues; it only refuses to join military blocs.",
+          },
+          {
+            kind: "numeric",
+            q: "How many countries attended the first NAM summit at Belgrade in 1961?",
+            answer: 25,
+            explain: "25 member countries took part.",
+            difficulty: 2,
+          },
+          {
+            kind: "multi",
+            q: "Which are objectives of NAM?",
+            options: [
+              "End colonialism",
+              "Oppose racial discrimination",
+              "Join NATO for protection",
+              "Work for disarmament",
+            ],
+            answers: [0, 1, 3],
+            explain: "Joining NATO would be the opposite of non-alignment.",
+          },
+          {
+            kind: "order",
+            q: "Put these in chronological order.",
+            items: ["NATO formed", "Panchsheel agreed", "Bandung Conference", "Belgrade summit", "New Delhi summit"],
+            explain: "1949 → 1954 → 1955 → 1961 → 1983.",
+            difficulty: 2,
+          },
+          {
+            kind: "fill",
+            q: "The five principles of peaceful coexistence agreed between India and China in 1954 are called ___.",
+            answer: ["Panchsheel", "Panchshila", "Panchsheela", "Panchshil"],
+            explain: "Panchsheel means 'five principles'.",
+          },
+        ],
+      },
+    ],
+  },
+  /* ------------------------------------------------------------------ */
+  /* Karnataka SSLC: Political Developments of the 20th Century          */
+  /* ------------------------------------------------------------------ */
+  {
+    slug: "political-developments-20th-century",
+    title: "Political Developments of the 20th Century",
+    icon: "🌐",
+    description: "An overview of the world wars, revolutions in Russia and China, the dictators and the Cold War.",
+    lessons: [
+      {
+        slug: "twentieth-century-overview",
+        title: "Wars, Revolutions, Dictators and the Cold War",
+        summary: "A one-lesson map of the 20th century: WWI, the Russian Revolution, Fascism and Nazism, WWII, the Chinese Revolution and the Cold War.",
+        minutes: 17,
+        xp: 44,
+        blocks: [
+          {
+            type: "text",
+            md: "Your grandparents' parents lived through more change than almost any generation in history: two world wars, revolutions that overthrew emperors, dictators, the atom bomb and a 'cold' war that lasted 45 years. This lesson gives you the big picture.",
+          },
+          {
+            type: "table",
+            headers: ["Year", "Event"],
+            rows: [
+              ["1914–1918", "First World War"],
+              ["1917", "Russian Revolution: the Bolsheviks under Lenin take power"],
+              ["1922", "Mussolini comes to power in Italy"],
+              ["1933", "Hitler becomes Chancellor of Germany"],
+              ["1939–1945", "Second World War"],
+              ["1945", "United Nations formed"],
+              ["1949", "People's Republic of China proclaimed by Mao Zedong; NATO formed"],
+              ["1955", "Warsaw Pact formed"],
+              ["1961", "Berlin Wall built"],
+              ["1989", "Berlin Wall falls"],
+              ["1991", "Soviet Union breaks up; the Cold War ends"],
+            ],
+          },
+          {
+            type: "heading",
+            text: "Revolutions in Russia and China",
+          },
+          {
+            type: "text",
+            md: "In **Russia**, the Tsar's harsh rule, poverty and heavy losses in WWI led to revolution in **1917**. Tsar **Nicholas II** gave up the throne, and later that year the **Bolsheviks** led by **Lenin** seized power. Russia became the first **communist** state; in 1922 it became the **USSR** (Soviet Union).\n\nIn **China**, the Communist Party led by **Mao Zedong** won a long civil war. On **1 October 1949** Mao proclaimed the **People's Republic of China**.",
+          },
+          {
+            type: "text",
+            md: "Between the wars, **dictatorships** rose. **Mussolini** led **Fascism** in Italy from 1922, and **Hitler** led **Nazism** in Germany from 1933. Both crushed democracy, glorified war and pursued aggressive expansion, which led to the **Second World War (1939–1945)**.",
+          },
+          {
+            type: "checkpoint",
+            questions: [
+              {
+                kind: "mcq",
+                q: "Who led the Bolsheviks in the Russian Revolution of 1917?",
+                options: ["Stalin", "Lenin", "Mao Zedong", "Nicholas II"],
+                answer: 1,
+                explain: "Lenin led the Bolsheviks. Nicholas II was the Tsar who was overthrown; Mao led China's revolution.",
+              },
+            ],
+          },
+          {
+            type: "heading",
+            text: "The Cold War",
+          },
+          {
+            type: "text",
+            md: "The **Cold War** was the long rivalry between the **USA** (capitalist, democratic) and the **USSR** (communist, one-party) after WWII. It is called 'cold' because the two superpowers never fought each other directly. Instead they competed through an **arms race** (including nuclear weapons), military alliances, propaganda, the space race and wars fought by others.\n\nThe West formed **NATO (1949)**; the communist bloc formed the **Warsaw Pact (1955)**. Germany was divided, and the **Berlin Wall (1961)** became its symbol. Newly free nations such as India chose **non-alignment**. The Cold War ended when the Berlin Wall fell in **1989** and the **USSR broke up in 1991**.",
+          },
+          {
+            type: "example",
+            title: "Explaining a term with an example",
+            problem: "What is meant by the Cold War? Give one example of it. (2 marks)",
+            steps: [
+              "Define it: a state of tension and rivalry between the USA and the USSR after WWII, without direct war between them.",
+              "Say why 'cold': no direct fighting between the two superpowers.",
+              "Give one concrete example: rival military alliances (NATO and the Warsaw Pact) or the Berlin Wall.",
+            ],
+            answer: "The Cold War was the tension and rivalry between the USA and the USSR after 1945, fought through arms races and alliances instead of direct war. Example: the USA's NATO (1949) against the USSR's Warsaw Pact (1955).",
+          },
+          {
+            type: "mistake",
+            wrong: "The Cold War was a war fought in cold countries like Russia.",
+            right: "'Cold' means the superpowers never fought each other directly. It was a war of tension, arms races and rival alliances.",
+            why: "The word sounds like weather. Remember: a 'hot' war has direct fighting; a 'cold' war is hostility without it.",
+          },
+          {
+            type: "activity",
+            activity: {
+              kind: "sort",
+              prompt: "Which side of the Cold War does each belong to?",
+              groups: ["Western bloc (USA)", "Eastern bloc (USSR)"],
+              items: [
+                { text: "NATO", group: 0, hint: "North Atlantic Treaty Organization, formed in 1949 by the USA and Western Europe." },
+                { text: "Warsaw Pact", group: 1, hint: "Formed in 1955 by the USSR and its allies." },
+                { text: "Capitalist economy", group: 0, hint: "Private ownership and markets." },
+                { text: "Communist one-party state", group: 1, hint: "The Soviet model." },
+                { text: "West Germany", group: 0, hint: "Allied with the USA and NATO." },
+                { text: "East Germany", group: 1, hint: "Under Soviet influence; built the Berlin Wall." },
+              ],
+              explain: "The Cold War divided Europe and much of the world into a **Western bloc** led by the USA and an **Eastern bloc** led by the USSR. India stayed out of both through non-alignment.",
+            },
+          },
+          {
+            type: "callout",
+            tone: "exam",
+            title: "Board tip",
+            md: "Karnataka SSLC often asks short answers such as 'What were the results of the Second World War?' or 'Name the military alliances of the Cold War'. Use exact names and dates (NATO 1949, Warsaw Pact 1955, USSR broke up 1991). For deeper detail on each event, see the topics on the two world wars, dictatorships and NAM.",
+          },
+          {
+            type: "keypoints",
+            items: [
+              "WWI 1914–1918 and WWII 1939–1945 changed the world map.",
+              "Russian Revolution 1917 (Lenin, Bolsheviks); People's Republic of China 1949 (Mao Zedong).",
+              "Mussolini (Italy, 1922) and Hitler (Germany, 1933) set up dictatorships.",
+              "Cold War: USA vs USSR rivalry without direct war; NATO (1949) vs Warsaw Pact (1955).",
+              "The Cold War ended with the fall of the Berlin Wall (1989) and break-up of the USSR (1991).",
+            ],
+          },
+        ],
+        flashcards: [
+          { front: "Russian Revolution", back: "1917: the Tsar was overthrown and the Bolsheviks under Lenin took power." },
+          { front: "People's Republic of China", back: "Proclaimed by Mao Zedong on 1 October 1949." },
+          { front: "Cold War", back: "Rivalry between the USA and the USSR after WWII without direct war between them." },
+          { front: "NATO", back: "Western military alliance led by the USA, formed in 1949." },
+          { front: "Warsaw Pact", back: "Eastern bloc military alliance led by the USSR, formed in 1955." },
+          { front: "End of the Cold War", back: "Fall of the Berlin Wall (1989) and break-up of the USSR (1991)." },
+        ],
+        quiz: [
+          {
+            kind: "mcq",
+            q: "Why is the Cold War called 'cold'?",
+            options: [
+              "It was fought only in winter",
+              "The USA and USSR never fought each other directly",
+              "It was fought in the Arctic",
+              "No weapons were made during it",
+            ],
+            answer: 1,
+            explain: "It was a war of rivalry and tension; there was a huge arms race, but no direct war between the superpowers.",
+          },
+          {
+            kind: "fill",
+            q: "The People's Republic of China was proclaimed by ___ in 1949.",
+            answer: ["Mao Zedong", "Mao", "Mao Tse-tung"],
+            explain: "Mao proclaimed it on 1 October 1949.",
+          },
+          {
+            kind: "truefalse",
+            q: "The USSR broke up in 1991.",
+            answer: true,
+            explain: "Its break-up in 1991 marked the end of the Cold War.",
+          },
+          {
+            kind: "order",
+            q: "Arrange in chronological order.",
+            items: ["Russian Revolution", "Hitler becomes Chancellor", "UN formed", "Berlin Wall built", "Berlin Wall falls"],
+            explain: "1917 → 1933 → 1945 → 1961 → 1989.",
+          },
+          {
+            kind: "multi",
+            q: "Which were part of the Cold War rivalry?",
+            options: ["Arms race", "NATO and Warsaw Pact", "Treaty of Vienna", "Division of Germany"],
+            answers: [0, 1, 3],
+            explain: "The Treaty of Vienna was in 1815, long before the Cold War.",
+          },
+          {
+            kind: "mcq",
+            q: "Which country became the first communist state?",
+            options: ["China", "Russia (later the USSR)", "Germany", "Yugoslavia"],
+            answer: 1,
+            explain: "Russia, after the Bolshevik Revolution of 1917. China became communist in 1949.",
+            difficulty: 2,
+          },
+        ],
+      },
+    ],
+  },
 ];
 
 /** Exact syllabus chapter title → topic slug. */
 export const links: Record<string, string> = {
   "The Rise of Nationalism in Europe": "rise-of-nationalism-in-europe",
+  "The Making of a Global World": "making-of-a-global-world",
+  "The Age of Industrialisation": "age-of-industrialisation",
+  "Print Culture and the Modern World": "print-culture-and-the-modern-world",
+  "The First World War": "the-first-world-war",
+  "Rise of Dictatorships": "rise-of-dictatorships",
+  "The Second World War": "the-second-world-war",
+  "The United Nations": "the-united-nations",
+  "Major Agencies of the United Nations": "major-agencies-of-the-un",
+  "The Non-Aligned Movement": "the-non-aligned-movement",
+  "Political Developments of the 20th Century": "political-developments-20th-century",
+  "International Institutions": "the-united-nations",
 };
