@@ -32,10 +32,6 @@ export const topics: Topic[] = [
             md: "Think of how you feel when India plays a cricket final. You cheer for people you have never met, because you share one country. That shared feeling is **nationalism**: the belief that people with a common identity should belong to one nation.\n\nIn 1789 most of Europe had no nations in this sense. People were ruled by kings and emperors, spoke many languages and saw themselves as subjects of a ruler. In the 19th century this changed. The **nation-state** appeared: a state in which most citizens share a sense of common identity and history.",
           },
           {
-            type: "heading",
-            text: "The French Revolution and the idea of the nation",
-          },
-          {
             type: "text",
             md: "The **French Revolution of 1789** was the first clear expression of nationalism. It moved **sovereignty** (the supreme power to rule) from the king to the body of French citizens. The revolutionaries said the people would now shape the country's future.",
           },
@@ -82,10 +78,6 @@ export const topics: Topic[] = [
                 explain: "The Napoleonic Code ended birth-based privileges, made all equal before the law and protected property. It did not give votes to all.",
               },
             ],
-          },
-          {
-            type: "heading",
-            text: "Liberals, conservatives and revolutionaries",
           },
           {
             type: "text",
@@ -1455,10 +1447,6 @@ export const topics: Topic[] = [
             md: "The **First World War** was fought from **1914 to 1918**. It is called a 'world' war because it involved countries from every continent, including colonies such as India; more than a million Indian soldiers served overseas. Two groups fought: the **Allies** (Britain, France, Russia, later Italy, the USA and others) and the **Central Powers** (Germany, Austria-Hungary, Ottoman Turkey and Bulgaria).",
           },
           {
-            type: "heading",
-            text: "Causes of the war",
-          },
-          {
             type: "table",
             headers: ["Cause", "What it means", "Example"],
             rows: [
@@ -1663,10 +1651,6 @@ export const topics: Topic[] = [
           {
             type: "text",
             md: "A **dictatorship** is a government in which one person or one party holds all power, with no free elections, free press or opposition. In a **totalitarian** state, the government tries to control every part of life: politics, economy, education, culture and even thought.",
-          },
-          {
-            type: "heading",
-            text: "Why dictatorships rose",
           },
           {
             type: "list",
@@ -2075,10 +2059,6 @@ export const topics: Topic[] = [
             ],
           },
           {
-            type: "heading",
-            text: "Objectives and principles",
-          },
-          {
             type: "list",
             ordered: true,
             items: [
@@ -2408,11 +2388,7 @@ export const topics: Topic[] = [
         blocks: [
           {
             type: "text",
-            md: "The two drops of polio vaccine you got as a baby, the World Heritage tag on the ruins of Hampi, and school nutrition campaigns all have one thing in common: UN agencies helped make them possible.",
-          },
-          {
-            type: "text",
-            md: "Besides its six principal organs, the UN works through many **specialised agencies**, funds and programmes. Each deals with one area, such as health, children, education or labour, and works with governments across the world.",
+            md: "The two drops of polio vaccine you got as a baby, the World Heritage tag on the ruins of Hampi, and school nutrition campaigns all have one thing in common: UN agencies helped make them possible.\n\nBesides its six principal organs, the UN works through many **specialised agencies**, funds and programmes. Each deals with one area, such as health, children, education or labour, and works with governments across the world.",
           },
           {
             type: "heading",

@@ -114,7 +114,7 @@ export const topics: Topic[] = [
               {
                 kind: "fill",
                 q: "Fill in the blank: \"When we reached the cinema, the film ___ (already start).\"",
-                answer: ["had already started"],
+                answer: ["had already started", "had started already"],
                 explain: "Two past actions: the film started first, we reached later. The earlier action takes the **past perfect**: *had already started*.",
                 difficulty: 2,
                 hint: "Which action happened first?",
