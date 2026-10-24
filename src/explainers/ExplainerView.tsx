@@ -2,9 +2,10 @@
 
 import { useEffect, useMemo, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
-import { ArrowLeft, ArrowRight, BookImage, Hand, Lightbulb, Play, RotateCcw, Volume2, VolumeX } from "lucide-react";
+import { ArrowLeft, ArrowRight, BookImage, Check, Hand, Lightbulb, Play, RotateCcw, Volume2, VolumeX, X } from "lucide-react";
 import clsx from "clsx";
 import type { Explainer } from "./types";
+import { MissionPlayer } from "./MissionPlayer";
 import { say, stopVoice } from "@/lib/voice";
 import { useMode } from "@/lib/useMode";
 import { Mascot } from "@/components/brand/Mascot";
@@ -31,7 +32,7 @@ export function ExplainerView({ explainer: raw, compact }: { explainer: Explaine
   const tabLabel: Record<Tab, string> = young
     ? { watch: t("explain.tab.watchYoung", "Watch"), try: t("explain.tab.tryYoung", "Play"), story: t("explain.tab.story", "Story"), like: t("explain.tab.likeYoung", "It’s like") }
     : { watch: t("explain.tab.watch", "Watch it"), try: t("explain.tab.try", "Try it"), story: t("explain.tab.story", "Story"), like: t("explain.tab.like", "It’s like…") };
-  const tabs = TABS.filter((x) => (x.id === "watch" ? e.watch?.length : x.id === "try" ? e.try : x.id === "story" ? e.story?.length : e.like));
+  const tabs = TABS.filter((x) => (x.id === "watch" ? e.watch?.length : x.id === "try" ? e.mission || e.try : x.id === "story" ? e.story?.length : e.like));
   const [tab, setTab] = useState<Tab>(tabs[0]?.id ?? "watch");
   useEffect(() => () => stopVoice(), []);
 
@@ -49,6 +50,23 @@ export function ExplainerView({ explainer: raw, compact }: { explainer: Explaine
           {!compact && <p className="text-sm font-semibold text-muted">{e.tagline}</p>}
         </div>
       </header>
+
+      {e.misconception && !compact && (
+        <div className="grid gap-2 border-b-2 border-line px-5 py-3 text-sm sm:grid-cols-2">
+          <p className="flex items-start gap-2">
+            <X className="mt-0.5 h-4 w-4 shrink-0 text-bad" strokeWidth={3} aria-hidden />
+            <span>
+              <span className="font-black">{t("explain.myth", "Many people think:")}</span> {e.misconception.myth}
+            </span>
+          </p>
+          <p className="flex items-start gap-2">
+            <Check className="mt-0.5 h-4 w-4 shrink-0 text-good" strokeWidth={3} aria-hidden />
+            <span>
+              <span className="font-black">{t("explain.truth", "Actually:")}</span> {e.misconception.truth}
+            </span>
+          </p>
+        </div>
+      )}
 
       {tabs.length > 1 && (
         <div className="flex gap-1.5 overflow-x-auto border-b-2 border-line px-4 py-2.5" role="tablist">
@@ -72,7 +90,7 @@ export function ExplainerView({ explainer: raw, compact }: { explainer: Explaine
 
       <div className="p-4 sm:p-6">
         {tab === "watch" && e.watch && <StepPlayer steps={e.watch} color={e.color} autoVoice={young} owl={mode.rewards === "celebrate" || mode.rewards === "playful"} />}
-        {tab === "try" && e.try && <e.try />}
+        {tab === "try" && (e.mission ? <MissionPlayer mission={e.mission} color={e.color} /> : e.try && <e.try />)}
         {tab === "story" && e.story && <Comic panels={e.story} color={e.color} />}
         {tab === "like" && e.like && <AnalogyView a={e.like} color={e.color} young={young} />}
       </div>

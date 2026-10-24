@@ -2,9 +2,8 @@
 
 import { useEffect, useState, type ReactNode } from "react";
 import { motion } from "framer-motion";
-import type { Explainer } from "../types";
-import { fmt, Readout, Slider } from "@/components/widgets/_shared";
-import { DARK, Feedback, INK, Kid, MUTED, Pad, Svg, TryShell } from "./_kit";
+import type { Explainer, Mission, MissionApi } from "../types";
+import { DARK, INK, Kid, MUTED, Svg } from "./_kit";
 
 const C = "#F59E0B";
 const PIPE = "#7dd3fc";
@@ -63,7 +62,7 @@ function Battery({ x, y, ink = INK }: { x: number; y: number; ink?: string }) {
 /* Electric loop: left side x=60 holds battery (y 104–156), top wire y=50, right x=340, bottom y=210. */
 const WIRE = "M 60 104 L 60 50 L 340 50 L 340 210 L 60 210 L 60 156";
 
-function Circuit({ speed, glow, open = false, label }: { speed: number; glow: number; open?: boolean; label: string }) {
+function Circuit({ speed, glow, open = false, label, cells = 1 }: { speed: number; glow: number; open?: boolean; label: string; cells?: number }) {
   return (
     <Svg label={label}>
       <path d={WIRE} fill="none" stroke={MUTED} strokeWidth="5" strokeLinejoin="round" />
@@ -74,6 +73,7 @@ function Circuit({ speed, glow, open = false, label }: { speed: number; glow: nu
       <motion.line x1="182" y1="210" initial={false} animate={{ x2: open ? 210 : 218, y2: open ? 186 : 210 }} stroke={INK} strokeWidth="4" strokeLinecap="round" />
       <Flow d={WIRE} speed={open ? 0 : speed} color={SPARK} />
       <Battery x={60} y={130} />
+      {cells > 1 && <Battery x={60} y={84} />}
       <rect x="176" y="40" width="48" height="20" fill="rgb(var(--surface))" />
       <Bulb x={200} y={60} glow={open ? 0 : glow} />
       <text x="96" y="134" fontSize="13" fontWeight="800" fill={INK}>
@@ -200,128 +200,98 @@ function SceneSwitch() {
 
 /* ---------------- Try ---------------- */
 
-const GOALS = [
-  { ask: "Make a current of exactly 2 A.", ok: (V: number, R: number) => Math.abs(V / R - 2) < 1e-9 },
-  { ask: "Use a 4 Ω pipe and get 3 A flowing.", ok: (V: number, R: number) => R === 4 && Math.abs(V / R - 3) < 1e-9 },
-  { ask: "Set the push to 10 V. Pick a resistance that gives 2 A.", ok: (V: number, R: number) => V === 10 && Math.abs(V / R - 2) < 1e-9 },
-  { ask: "Get a gentle 0.5 A.", ok: (V: number, R: number) => Math.abs(V / R - 0.5) < 1e-9 },
-];
+/* ---------- guided mission ---------- */
 
-function CircuitTry() {
-  const [V, setV] = useState(6);
-  const [R, setR] = useState(6);
-  const [on, setOn] = useState(true);
-  const [g, setG] = useState(0);
-  const I = on ? V / R : 0;
-  const P = V * I;
-  const glow = Math.min(1, P / 40);
-  const speed = I > 0 ? Math.min(260, 26 * I) : 0;
-  const w = Math.max(8, 24 - R * 1.4);
-  const goal = GOALS[g];
-  const met = on && goal.ok(V, R);
-  const reset = () => {
-    setV(6);
-    setR(6);
-    setOn(true);
-    setG(0);
-  };
-  const loop = "M 40 120 L 40 30 L 300 30 L 300 170 L 40 170 Z";
-  const wire = "M 40 84 L 40 30 L 300 30 L 300 170 L 40 170 L 40 136";
-
+/** One big action button for a mission step. */
+function ActionButton({ onClick, disabled, children }: { onClick: () => void; disabled?: boolean; children: ReactNode }) {
   return (
-    <TryShell title="Pump, pipe and bulb" hint="Change the push (voltage) and the pipe width (resistance). Watch the flow and the bulb." onReset={reset}>
-      <div className="grid gap-3 md:grid-cols-2">
-        <div className="rounded-2xl border-2 border-line p-1">
-          <p className="px-2 pt-1 text-xs font-black uppercase tracking-wide text-muted">Water model</p>
-          <Svg label={`Water pipe loop. Pump push ${V}. Narrow pipe for resistance ${R}. Flow ${fmt(I, 2)}.`} vb="0 0 340 200" maxH={220}>
-            <path d={loop} fill="none" stroke={PIPE_EDGE} strokeWidth="28" strokeLinejoin="round" />
-            <path d={loop} fill="none" stroke={PIPE} strokeWidth="22" strokeLinejoin="round" />
-            <rect x="120" y="14" width="100" height="32" fill="rgb(var(--surface))" />
-            <motion.rect x="120" animate={{ y: 30 - w / 2 - 3, height: w + 6 }} width="100" fill={PIPE_EDGE} />
-            <motion.rect x="120" animate={{ y: 30 - w / 2, height: w }} width="100" fill={PIPE} />
-            {on ? <Flow d={loop} speed={speed} color={DROP} width={7} gap={20} /> : null}
-            {!on && (
-              <g>
-                <rect x="285" y="80" width="30" height="40" rx="4" fill="#ef4444" stroke={INK} strokeWidth="2" />
-                <text x="300" y="105" textAnchor="middle" fontSize="11" fontWeight="900" fill="white">
-                  shut
-                </text>
-              </g>
-            )}
-            <Pump x={40} y={110} spin={on ? V / 3 : 0} />
-            <text x="170" y="64" textAnchor="middle" fontSize="12" fontWeight="800" fill={INK}>
-              narrow pipe = R
-            </text>
-            <text x="170" y="110" textAnchor="middle" fontSize="13" fontWeight="900" fill={INK}>
-              pump push = {V} V
-            </text>
-          </Svg>
-        </div>
-        <div className="rounded-2xl border-2 border-line p-1">
-          <p className="px-2 pt-1 text-xs font-black uppercase tracking-wide text-muted">Real circuit</p>
-          <Svg label={`Circuit with a ${V} volt battery and a ${R} ohm bulb. Current ${fmt(I, 2)} amps.`} vb="0 0 340 200" maxH={220}>
-            <path d={wire} fill="none" stroke={MUTED} strokeWidth="5" strokeLinejoin="round" />
-            <Flow d={wire} speed={speed} color={SPARK} />
-            <Battery x={40} y={110} />
-            <rect x="146" y="20" width="48" height="20" fill="rgb(var(--surface))" />
-            <Bulb x={170} y={40} glow={glow} />
-            <rect x="150" y="160" width="40" height="20" fill="rgb(var(--surface))" />
-            <circle cx="152" cy="170" r="4" fill={INK} />
-            <circle cx="188" cy="170" r="4" fill={INK} />
-            <motion.line x1="152" y1="170" initial={false} animate={{ x2: on ? 188 : 180, y2: on ? 170 : 146 }} stroke={INK} strokeWidth="4" strokeLinecap="round" />
-            <text x="72" y="114" fontSize="13" fontWeight="900" fill={INK}>
-              {V} V
-            </text>
-            <text x="170" y="94" textAnchor="middle" fontSize="13" fontWeight="900" fill={INK}>
-              {R} Ω
-            </text>
-            <text x="170" y="124" textAnchor="middle" fontSize="16" fontWeight="900" fill={C}>
-              I = {fmt(I, 2)} A
-            </text>
-          </Svg>
-        </div>
-      </div>
-      <div className="mt-3 grid gap-4 sm:grid-cols-[1fr_1fr_auto] sm:items-end">
-        <Slider label="Push: voltage V (pump strength)" value={V} min={0} max={12} step={1} onChange={setV} unit="V" />
-        <Slider label="Resistance R (narrow pipe)" value={R} min={1} max={12} step={1} onChange={setR} unit="Ω" />
-        <Pad onClick={() => setOn((v) => !v)} color={on ? "#ef4444" : "#16a34a"} solid>
-          {on ? "Open the switch" : "Close the switch"}
-        </Pad>
-      </div>
-      <div className="mt-3 grid grid-cols-2 gap-2 sm:grid-cols-4">
-        <Readout label="Voltage V" value={V} unit="V" tone="ink" />
-        <Readout label="Resistance R" value={R} unit="Ω" tone="ink" />
-        <Readout label="Current I = V ÷ R" value={fmt(I, 2)} unit="A" tone="accent" />
-        <Readout label="Bulb power" value={fmt(P, 1)} unit="W" tone="warn" />
-      </div>
-      <div className="mt-3 space-y-2">
-        <p className="text-sm font-black">
-          Challenge {g + 1} of {GOALS.length}: {goal.ask}
-        </p>
-        {met ? (
-          <Feedback tone="good" k={`m${g}`}>
-            ✓ Done! {V} V ÷ {R} Ω = {fmt(I, 2)} A. Notice: same current, but a bigger push needs a narrower pipe.
-          </Feedback>
-        ) : !on ? (
-          <Feedback tone="warn" k="off">
-            The loop is broken, so nothing flows — even though the battery is still pushing.
-          </Feedback>
-        ) : (
-          <Feedback tone="info" k={`i${g}`}>
-            Right now: {V} ÷ {R} = {fmt(I, 2)} A. More push → more current. Narrower pipe (bigger R) → less current.
-          </Feedback>
-        )}
-        {met && (
-          <Pad onClick={() => setG((x) => (x + 1) % GOALS.length)} color={C} solid>
-            Next challenge →
-          </Pad>
-        )}
-      </div>
-    </TryShell>
+    <button type="button" onClick={onClick} disabled={disabled} className="mx-auto mt-2 flex min-h-[52px] items-center justify-center rounded-2xl px-6 text-lg font-black text-white disabled:opacity-50" style={{ background: C }}>
+      {children}
+    </button>
   );
 }
 
-/* ---------------- Story + analogy ---------------- */
+function StepSwitch({ done, complete }: MissionApi) {
+  const [closed, setClosed] = useState(false);
+  return (
+    <div>
+      <Circuit speed={closed ? 70 : 0} glow={closed ? 0.6 : 0} open={!closed} label={closed ? "The switch is closed, current flows and the bulb glows" : "The switch is open, nothing flows and the bulb is dark"} />
+      <ActionButton
+        disabled={complete}
+        onClick={() => {
+          setClosed(true);
+          done();
+        }}
+      >
+        Close the switch
+      </ActionButton>
+    </div>
+  );
+}
+
+function StepBatteries({ done, complete }: MissionApi) {
+  const [two, setTwo] = useState(false);
+  return (
+    <div>
+      <Circuit cells={two ? 2 : 1} speed={two ? 140 : 70} glow={two ? 1 : 0.45} label={two ? "Two batteries: faster flow and a brighter bulb" : "One battery: steady flow and a dim bulb"} />
+      <p className="text-center text-sm font-bold text-muted">{two ? "2 batteries" : "1 battery"}</p>
+      <ActionButton
+        disabled={complete}
+        onClick={() => {
+          setTwo(true);
+          done();
+        }}
+      >
+        Add a second battery
+      </ActionButton>
+    </div>
+  );
+}
+
+function StepThinWire({ done, complete }: MissionApi) {
+  const [thin, setThin] = useState(false);
+  return (
+    <div>
+      <Circuit speed={thin ? 30 : 70} glow={thin ? 0.2 : 0.6} label={thin ? "A thin, long wire: slower flow and a dimmer bulb" : "Normal wire: steady flow"} />
+      <p className="text-center text-sm font-bold text-muted">{thin ? "thin, long wire (more resistance)" : "normal wire"}</p>
+      <ActionButton
+        disabled={complete}
+        onClick={() => {
+          setThin(true);
+          done();
+        }}
+      >
+        Use the thin wire
+      </ActionButton>
+    </div>
+  );
+}
+
+const mission: Mission = {
+  goal: "Light the bulb, then find out what makes it brighter or dimmer.",
+  steps: [
+    {
+      task: "Close the switch.",
+      predict: { question: "The battery is connected, but the switch is open. Will the bulb light?", options: ["Yes — the battery is connected", "No — the loop is broken"], answer: 1 },
+      scene: (api) => <StepSwitch {...api} />,
+      hint: "Tap the orange button under the circuit.",
+      explain: "Current only flows round a **complete loop**. With the switch open there is a gap, so nothing flows anywhere — not even in the wire next to the battery.",
+    },
+    {
+      task: "Add a second battery.",
+      predict: { question: "What will the bulb do with two batteries?", options: ["Get brighter", "Stay the same", "Go out"], answer: 0 },
+      scene: (api) => <StepBatteries {...api} />,
+      explain: "Two batteries give a **bigger push** (more voltage), so more current flows and the bulb glows brighter.",
+    },
+    {
+      task: "Swap in a thin, long wire.",
+      predict: { question: "A thin, long wire is harder to flow through. What happens to the bulb?", options: ["Brighter", "Dimmer"], answer: 1 },
+      scene: (api) => <StepThinWire {...api} />,
+      explain: "A thin, long wire has **more resistance**, so less current flows and the bulb dims. Push and resistance together decide the current: **I = V ÷ R**.",
+    },
+  ],
+  takeaway: "Current flows only round a complete loop: more push (voltage) means more current, more resistance means less.",
+};
 
 function Torch({ x, y, glow, broken }: { x: number; y: number; glow: number; broken?: boolean }) {
   return (
@@ -466,7 +436,8 @@ export const electricCircuits: Explainer = {
     { title: "Ohm's law: V = I × R", say: "More push gives more flow. A narrower pipe gives less flow. Put together: V = I × R, so the current I = V ÷ R.", scene: <SceneOhm /> },
     { title: "Break the loop and it all stops", say: "Open a switch and the loop is broken. With no complete path, no current flows anywhere, and the bulb goes out.", scene: <SceneSwitch /> },
   ],
-  try: CircuitTry,
+  misconception: { myth: "The bulb uses up the current, so less comes back to the battery.", truth: "The same current flows all the way round the loop. The bulb turns the battery's energy into light, not the current." },
+  mission,
   story,
   like,
 };
