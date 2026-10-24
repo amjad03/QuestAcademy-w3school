@@ -78,6 +78,12 @@ body {
   outline-offset: 2px;
 }
 
+/* Text fields already show focus with their border; a thin ring that hugs the field is enough. */
+:is(input, textarea, select):focus-visible {
+  outline-width: 2px;
+  outline-offset: 0;
+}
+
 @layer components {
   /* ---------- surfaces ---------- */
   .card {

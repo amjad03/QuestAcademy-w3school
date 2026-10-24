@@ -107,21 +107,21 @@ export function Settings() {
     <PageColumns rail={rail}>
       <h1 className="text-3xl font-black">{t("settings.title", "Settings")}</h1>
 
-      <Section id="language" title="Language · भाषा · ಭಾಷೆ">
+      <Section id="language" title="Language · भाषा · ಭಾಷೆ" bare>
         <LanguagePicker />
       </Section>
 
-      <Section id="design" title={t("settings.section.design", "Design")}>
+      <Section id="design" title={t("settings.section.design", "Design")} bare>
         <SkinPicker />
       </Section>
 
-      <Section id="experience" title={t("settings.section.experience", "Experience")}>
-        <p className="mb-4 text-sm font-semibold text-muted">{t("settings.experience.intro", "Quest Academy adapts its look, pace and rewards to you. Every course works in every mode.")}</p>
+      <Section id="experience" title={t("settings.section.experience", "Experience")} bare>
+        <p className="mb-4 text-sm text-muted">{t("settings.experience.intro", "Quest Academy adapts its look, pace and rewards to you. Every course works in every mode.")}</p>
         <ModeSettings />
       </Section>
 
       <Section id="tutor" title={t("settings.section.tutor", "Ask Questy (AI tutor)")}>
-        <TutorToggle />
+        <TutorToggle className="flex cursor-pointer items-start justify-between gap-4 p-5" />
       </Section>
 
       <Section id="preferences" title={t("settings.section.preferences", "Preferences")}>
@@ -231,11 +231,12 @@ export function Settings() {
   );
 }
 
-function Section({ id, title, children }: { id: string; title: string; children: React.ReactNode }) {
+/** A settings group. Rows sit in one card; `bare` sections bring their own cards (pickers). */
+function Section({ id, title, children, bare }: { id: string; title: string; children: React.ReactNode; bare?: boolean }) {
   return (
     <section id={id} className="mt-8 scroll-mt-6">
       <h2 className="text-xl font-black">{title}</h2>
-      <div className="card mt-3 divide-y-2 divide-line">{children}</div>
+      {bare ? <div className="mt-3">{children}</div> : <div className="card mt-3 divide-y-2 divide-line">{children}</div>}
     </section>
   );
 }

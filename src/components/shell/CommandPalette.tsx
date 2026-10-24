@@ -3,14 +3,15 @@
 import { AnimatePresence, motion } from "framer-motion";
 import { useRouter } from "next/navigation";
 import { useEffect, useMemo, useRef, useState } from "react";
-import { CornerDownLeft, Search } from "lucide-react";
+import { BookOpen, Code2, CornerDownLeft, Dumbbell, Map as MapIcon, Search, Target, type LucideIcon } from "lucide-react";
 import clsx from "clsx";
 import { useUi } from "@/lib/ui";
 import type { SearchItem } from "@/content";
 import { worldById } from "@/content/worlds";
 import { CourseIcon } from "@/components/brand/CourseIcon";
-import { LogoMark } from "@/components/brand/Mascot";
 import { useT } from "@/i18n";
+
+const QUICK_ICON: Record<string, LucideIcon> = { "/learn": MapIcon, "/courses": BookOpen, "/practice": Dumbbell, "/exam": Target, "/code/playground": Code2 };
 
 const QUICK: SearchItem[] = [
   { kind: "subject", title: "Learn", subtitle: "Your path", href: "/learn", icon: "", world: "school", course: "", keywords: "" },
@@ -131,7 +132,7 @@ export function CommandPalette() {
                   if (e.key === "Enter") go(results[active]);
                 }}
                 placeholder={t("shell.search.placeholder", "Search courses and lessons — try “flexbox” or “photosynthesis”")}
-                className="h-14 w-full bg-transparent text-base font-bold outline-none placeholder:font-semibold placeholder:text-muted"
+                className="h-14 w-full bg-transparent text-base font-bold outline-none placeholder:font-semibold placeholder:text-muted focus-visible:outline-none"
               />
               <kbd className="rounded-md border border-line px-1.5 py-0.5 font-mono text-[10px] text-muted">ESC</kbd>
             </div>
@@ -144,12 +145,23 @@ export function CommandPalette() {
                     onClick={() => go(r)}
                     className={clsx("flex w-full items-center gap-3 rounded-2xl px-3 py-2.5 text-left transition", i === active ? "bg-accent-soft" : "hover:bg-surface-2")}
                   >
-                    {r.course ? <CourseIcon slug={r.course} size={36} /> : <LogoMark size={36} />}
+                    {r.course ? (
+                      <CourseIcon slug={r.course} size={36} />
+                    ) : (
+                      <span className="grid h-9 w-9 shrink-0 place-items-center rounded-xl bg-surface-2 text-accent">
+                        {(() => {
+                          const I = QUICK_ICON[r.href] ?? Search;
+                          return <I className="h-[18px] w-[18px]" strokeWidth={2} aria-hidden />;
+                        })()}
+                      </span>
+                    )}
                     <span className="min-w-0 flex-1">
                       <span className="block truncate font-extrabold">{(!q && quickText[r.href]?.title) || r.title}</span>
                       <span className="block truncate text-xs font-semibold text-muted">{(!q && quickText[r.href]?.subtitle) || r.subtitle}</span>
                     </span>
-                    <span className="chip hidden capitalize sm:inline-flex">{r.kind === "subject" ? (r.course ? (worldName[r.world] ?? worldById[r.world].name) : t("shell.search.goTo", "Go to")) : r.kind === "topic" ? t("shell.search.unit", "Unit") : t("shell.search.lesson", "Lesson")}</span>
+                    {!(r.kind === "subject" && !r.course) && (
+                      <span className="chip hidden sm:inline-flex">{r.kind === "subject" ? (worldName[r.world] ?? worldById[r.world].name) : r.kind === "topic" ? t("shell.search.unit", "Unit") : t("shell.search.lesson", "Lesson")}</span>
+                    )}
                     {i === active && <CornerDownLeft className="h-4 w-4 text-muted" />}
                   </button>
                 </li>
