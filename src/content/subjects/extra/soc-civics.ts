@@ -1653,7 +1653,7 @@ const icse: Topic[] = [
             type: "table",
             headers: ["Point", "Supreme Court judges"],
             rows: [
-              ["Composition", "A Chief Justice of India and other judges; Parliament fixes the number. At present, 34 judges in all (the Chief Justice and 33 others)"],
+              ["Composition", "A Chief Justice of India and other judges; Parliament fixes the number. Since 2019 the sanctioned strength has been 34 (the Chief Justice and 33 others); Parliament can change it by law"],
               ["Appointed by", "The President, after consultation with judges of the Supreme Court and High Courts; the Chief Justice of India is always consulted for other judges. In practice, a **collegium** of the CJI and the four senior-most judges recommends names"],
               ["Qualifications", "Citizen of India, and either a High Court judge for at least 5 years, or an advocate of a High Court for at least 10 years, or a distinguished jurist in the opinion of the President"],
               ["Retirement", "At the age of **65 years**"],
@@ -2414,7 +2414,7 @@ const kaPolitics: Topic[] = [
             type: "mistake",
             wrong: "SAARC was founded in New Delhi and has its headquarters there.",
             right: "SAARC was founded in Dhaka in 1985, and its secretariat is in Kathmandu.",
-            why: "Because India is the largest member, students assume the headquarters is in India. The members chose Kathmandu to keep the body balanced.",
+            why: "Because India is the largest member, students assume the headquarters is in India. In fact SAARC was founded at Dhaka (Bangladesh) and its secretariat is at Kathmandu (Nepal).",
           },
           {
             type: "activity",

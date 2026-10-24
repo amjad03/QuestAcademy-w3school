@@ -1867,7 +1867,7 @@ export const topics: Topic[] = [
                 { text: "A village moneylender", group: 1, hint: "No one checks the interest rate the moneylender charges." },
                 { text: "A trader who lends to farmers", group: 1, hint: "The trader sets his own terms." },
                 { text: "Relatives and friends", group: 1, hint: "These loans are private, with no rules or records." },
-                { text: "A women's self-help group linked to a bank", group: 0, hint: "SHGs linked to banks follow set rules." },
+                { text: "A bank loan taken by a women's self-help group", group: 0, hint: "The lender is a bank, which follows RBI rules." },
               ],
               explain: "**Formal** lenders are supervised by the RBI, so their interest rates and terms are checked. **Informal** lenders often charge very high interest, which can trap poor borrowers in **debt**. Kerala's **Kudumbashree** (launched 1998) shows how women's self-help groups can give cheaper credit.",
             },

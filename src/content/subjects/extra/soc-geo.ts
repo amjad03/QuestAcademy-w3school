@@ -398,7 +398,7 @@ export const topics: Topic[] = [
               items: [
                 "In summer the land heats up faster than the sea",
                 "An intense low-pressure area forms over north-west India",
-                "High pressure lies over the Indian Ocean (east of Madagascar)",
+                "Winds start blowing towards this low from the high-pressure area over the Indian Ocean (east of Madagascar)",
                 "Moist south-east trade winds cross the Equator and turn into south-west winds",
                 "They strike the Kerala coast around 1 June: the burst of the monsoon",
               ],

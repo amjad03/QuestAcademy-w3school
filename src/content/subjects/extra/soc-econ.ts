@@ -2552,7 +2552,7 @@ export const topics: Topic[] = [
           { front: "Enterprise", back: "The business unit set up by an entrepreneur." },
           { front: "Entrepreneurship", back: "The process of spotting an opportunity, taking risk and building an enterprise." },
           { front: "Profit", back: "Revenue minus cost; the reward for the entrepreneur's risk." },
-          { front: "MUDRA loan categories", back: "Shishu, Kishore and Tarun (for micro and small enterprises)." },
+          { front: "MUDRA loan categories", back: "Shishu, Kishore and Tarun (for micro and small enterprises); a larger Tarun Plus category was added later." },
         ],
         quiz: [
           {
