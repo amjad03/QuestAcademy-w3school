@@ -51,7 +51,8 @@ export function ExplainerView({ explainer: raw, compact }: { explainer: Explaine
         </div>
       </header>
 
-      {e.misconception && !compact && (
+      {/* Hidden on the Try tab so it doesn't give away the predictions; the mission shows it at the end. */}
+      {e.misconception && !compact && !(tab === "try" && e.mission) && (
         <div className="grid gap-2 border-b-2 border-line px-5 py-3 text-sm sm:grid-cols-2">
           <p className="flex items-start gap-2">
             <X className="mt-0.5 h-4 w-4 shrink-0 text-bad" strokeWidth={3} aria-hidden />
@@ -90,7 +91,7 @@ export function ExplainerView({ explainer: raw, compact }: { explainer: Explaine
 
       <div className="p-4 sm:p-6">
         {tab === "watch" && e.watch && <StepPlayer steps={e.watch} color={e.color} autoVoice={young} owl={mode.rewards === "celebrate" || mode.rewards === "playful"} />}
-        {tab === "try" && (e.mission ? <MissionPlayer mission={e.mission} color={e.color} /> : e.try && <e.try />)}
+        {tab === "try" && (e.mission ? <MissionPlayer mission={e.mission} color={e.color} misconception={e.misconception} /> : e.try && <e.try />)}
         {tab === "story" && e.story && <Comic panels={e.story} color={e.color} />}
         {tab === "like" && e.like && <AnalogyView a={e.like} color={e.color} young={young} />}
       </div>

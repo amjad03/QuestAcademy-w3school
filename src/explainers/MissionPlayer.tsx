@@ -17,7 +17,7 @@ type Phase = "predict" | "do" | "explain";
  * prediction first (with the common wrong idea among the choices), then shows
  * only the controls for that task, then explains what happened.
  */
-export function MissionPlayer({ mission, color }: { mission: Mission; color: string }) {
+export function MissionPlayer({ mission, color, misconception }: { mission: Mission; color: string; misconception?: { myth: string; truth: string } }) {
   const t = useT();
   const mode = useMode();
   const young = mode.young;
@@ -214,6 +214,16 @@ export function MissionPlayer({ mission, color }: { mission: Mission; color: str
               {t("mission.remember", "Remember")}
             </p>
             <p className={clsx("mx-auto mt-1 max-w-xl font-black leading-snug", big)}>{mission.takeaway}</p>
+            {misconception && (
+              <div className="mx-auto mt-5 max-w-xl rounded-2xl border border-line bg-surface px-4 py-3 text-left text-sm">
+                <p>
+                  <span className="font-black">{t("explain.myth", "Many people think:")}</span> {misconception.myth}
+                </p>
+                <p className="mt-1.5">
+                  <span className="font-black">{t("mission.nowYouKnow", "Now you know:")}</span> {misconception.truth}
+                </p>
+              </div>
+            )}
             <button
               type="button"
               onClick={() => {

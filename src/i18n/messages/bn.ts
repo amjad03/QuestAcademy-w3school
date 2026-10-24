@@ -2439,5 +2439,6 @@ const messages: Record<string, string> = {
   "mission.steps": "{n}টি ছোট ধাপ",
   "mission.yourGuess": "তোমার অনুমান:",
   "mission.yourMission": "তোমার মিশন",
+  "mission.nowYouKnow": "এখন তুমি জানো:",
 };
 export default messages;
