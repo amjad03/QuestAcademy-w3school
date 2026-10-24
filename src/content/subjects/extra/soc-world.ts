@@ -414,7 +414,7 @@ export const topics: Topic[] = [
           },
           {
             type: "text",
-            md: "Long before the modern age, traders, travellers, priests and pilgrims crossed great distances. The **silk routes** were land and sea routes that linked China with South Asia, West Asia, Europe and North Africa. Chinese silk went west; Indian textiles and spices travelled too; gold and silver flowed east. Buddhism, Christianity and Islam also spread along these routes.\n\nAfter **Christopher Columbus** reached the Americas in 1492, many common foods came to the rest of the world: potatoes, soya, groundnuts, maize, tomatoes, chillies and sweet potatoes. In Ireland poor peasants came to depend so much on potatoes that when a disease destroyed the crop in the mid-1840s, hundreds of thousands died of starvation.",
+            md: "Long before the modern age, traders, travellers, priests and pilgrims crossed great distances. The **silk routes** were land and sea routes that linked China with South Asia, West Asia, Europe and North Africa. Chinese silk went west; Indian textiles and spices travelled too; gold and silver flowed east. Buddhism, Christianity and Islam also spread along these routes.\n\nAfter **Christopher Columbus** reached the Americas in 1492, many common foods came to the rest of the world: potatoes, soya, groundnuts, maize, tomatoes, chillies and sweet potatoes. In Ireland poor peasants came to depend so much on potatoes that when a disease destroyed the crop in the mid-1840s, about one million people died of starvation.",
           },
           {
             type: "text",

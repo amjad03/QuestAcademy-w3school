@@ -219,11 +219,7 @@ const cbse: Topic[] = [
           },
           {
             type: "text",
-            md: "**Federalism** is a system of government in which power is divided between a central authority and its various constituent units, such as states or provinces.\n\nIn a **unitary system**, there is only one level of government, or the lower levels are under the central government and get their powers from it.",
-          },
-          {
-            type: "heading",
-            text: "Key features of federalism",
+            md: "**Federalism** is a system of government in which power is divided between a central authority and its various constituent units, such as states or provinces.\n\nIn a **unitary system**, there is only one level of government, or the lower levels are under the central government and get their powers from it.\n\nA federation has the following key features.",
           },
           {
             type: "list",
@@ -245,10 +241,6 @@ const cbse: Topic[] = [
               ["States usually have equal power and are strong", "The centre tends to be more powerful than the states"],
               ["USA, Switzerland, Australia", "India, Spain, Belgium"],
             ],
-          },
-          {
-            type: "heading",
-            text: "How India divides law-making power",
           },
           {
             type: "table",
@@ -286,10 +278,6 @@ const cbse: Topic[] = [
           {
             type: "text",
             md: "**How federalism is practised:** many states were created on the basis of language (linguistic states), which made the country more united, not less. India has no national language; Hindi is the official language of the Union, and the Constitution recognises 22 languages as **Scheduled Languages**. Centre–state relations have also changed: since 1990, the rise of regional parties and coalition governments at the centre has given states more say.",
-          },
-          {
-            type: "heading",
-            text: "Decentralisation: the third tier",
           },
           {
             type: "text",
@@ -430,16 +418,8 @@ const cbse: Topic[] = [
             md: "Every society has differences of gender, religion and caste. These differences are not bad in themselves. The question for democracy is how they are expressed in politics: fairly, or in a way that harms some groups.",
           },
           {
-            type: "heading",
-            text: "Gender and politics",
-          },
-          {
             type: "text",
             md: "The **sexual division of labour** is a system in which work inside the home is done by women, or organised by them through domestic helpers, while men do most work outside the home. It is based on social expectations, not on biology.\n\nWomen's movements, known as **feminist movements**, demanded equal rights for women in voting, education, jobs and political office. **Patriarchy** means a system that values men more and gives them power over women.\n\nIn India, women still lag behind men in literacy, pay and representation. At least one-third of seats in panchayats and municipalities are reserved for women. In 2023, Parliament passed a constitutional amendment to reserve one-third of seats in the Lok Sabha and state assemblies for women; it will take effect after the next census and delimitation.",
-          },
-          {
-            type: "heading",
-            text: "Religion, communalism and secularism",
           },
           {
             type: "text",
@@ -459,10 +439,6 @@ const cbse: Topic[] = [
             tone: "fact",
             title: "Secular state",
             md: "These provisions make India a **secular state**: the state treats all religions equally and keeps no religion as its own.",
-          },
-          {
-            type: "heading",
-            text: "Caste and politics",
           },
           {
             type: "text",
@@ -629,10 +605,6 @@ const cbse: Topic[] = [
             ],
           },
           {
-            type: "heading",
-            text: "Recognised parties",
-          },
-          {
             type: "text",
             md: "Every party must register with the **Election Commission**. Larger parties are given a unique **symbol** and some facilities, and are called recognised parties.\n\nA **state party**: secures at least **6%** of the total votes in an election to the Legislative Assembly of a state and wins at least **two seats**.\n\nA **national party**: secures at least **6%** of the total votes in Lok Sabha elections or Assembly elections in **four states** and wins at least **four seats** in the Lok Sabha.",
           },
@@ -657,10 +629,6 @@ const cbse: Topic[] = [
                 explain: "A large, diverse country like India cannot easily be represented by just two parties.",
               },
             ],
-          },
-          {
-            type: "heading",
-            text: "Challenges and reforms",
           },
           {
             type: "table",
@@ -983,10 +951,6 @@ const icse: Topic[] = [
               "Must have other qualifications laid down by Parliament (for example, be registered as a voter).",
               "Must not hold an **office of profit** under the government, be of unsound mind declared by a court, or be an undischarged insolvent.",
             ],
-          },
-          {
-            type: "heading",
-            text: "Term, sessions and quorum",
           },
           {
             type: "text",
@@ -1317,10 +1281,6 @@ const icse: Topic[] = [
             md: "**Article 52** says there shall be a President of India. The President is the **head of the State** and the first citizen of India. All executive power of the Union is vested in the President (Article 53), but in practice it is used on the advice of the Council of Ministers headed by the Prime Minister. So the President is the **nominal** (formal) head, while the Prime Minister is the **real** head of the government.",
           },
           {
-            type: "heading",
-            text: "Election (Articles 54 and 55)",
-          },
-          {
             type: "text",
             md: "The President is elected **indirectly** by an **electoral college** made up of:\n\nthe **elected** members of both Houses of Parliament, and the **elected** members of the Legislative Assemblies of the states (including the National Capital Territory of Delhi and Puducherry).\n\nNominated members do not vote. Voting is by **proportional representation by means of the single transferable vote**, through a **secret ballot**. Disputes about the election are decided by the Supreme Court.",
           },
@@ -1352,12 +1312,8 @@ const icse: Topic[] = [
             ],
           },
           {
-            type: "heading",
-            text: "Powers of the President",
-          },
-          {
             type: "table",
-            headers: ["Type", "Examples"],
+            headers: ["Type of power", "Examples"],
             rows: [
               ["Executive", "Appoints the Prime Minister and, on the PM's advice, other ministers; appoints Governors, judges of the Supreme Court and High Courts, the Attorney General, the Comptroller and Auditor General and the Chief Election Commissioner"],
               ["Legislative", "Summons and prorogues Parliament, dissolves the Lok Sabha, addresses Parliament, gives assent to bills, nominates 12 members to the Rajya Sabha, issues **ordinances** when Parliament is not in session (Article 123)"],
@@ -1518,10 +1474,6 @@ const icse: Topic[] = [
             md: "**Article 74** says there shall be a **Council of Ministers** with the **Prime Minister** at its head to aid and advise the President. The President must act on this advice. This makes the Prime Minister the **real executive** head of the government.\n\nIndia follows the **parliamentary system**: the executive is drawn from Parliament and is answerable to it.",
           },
           {
-            type: "heading",
-            text: "Appointment (Article 75)",
-          },
-          {
             type: "list",
             items: [
               "The President appoints the **leader of the majority party** (or coalition) in the Lok Sabha as Prime Minister. When no party has a clear majority, the President uses discretion to invite the person most likely to win a vote of confidence.",
@@ -1545,10 +1497,6 @@ const icse: Topic[] = [
             tone: "fact",
             title: "Council of Ministers vs Cabinet",
             md: "The **Council of Ministers** is the larger body of all three ranks. The **Cabinet** is a smaller inner group of Cabinet Ministers, led by the PM. The Cabinet takes the main policy decisions; the whole Council rarely meets together.",
-          },
-          {
-            type: "heading",
-            text: "Collective and individual responsibility",
           },
           {
             type: "text",
@@ -1928,10 +1876,6 @@ const icse: Topic[] = [
             ],
           },
           {
-            type: "heading",
-            text: "Subordinate courts",
-          },
-          {
             type: "table",
             headers: ["Civil side", "Criminal side", "Revenue side"],
             rows: [
@@ -1943,10 +1887,6 @@ const icse: Topic[] = [
           {
             type: "text",
             md: "The **District Judge** is appointed by the **Governor** in consultation with the High Court (Article 233); an advocate needs at least **7 years** of practice. The same judge is called the District Judge when hearing civil cases and the **Sessions Judge** when hearing criminal cases. A Sessions Court can give any punishment allowed by law, including a death sentence, which needs the High Court's confirmation. **Revenue courts** deal with land records, land revenue and rent.",
-          },
-          {
-            type: "heading",
-            text: "Lok Adalats",
           },
           {
             type: "text",
