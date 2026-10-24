@@ -18,7 +18,7 @@ export function WorkedExample({ title, problem, steps, answer, kids }: { title?:
   const [shown, setShown] = useState(1);
   const all = shown >= steps.length;
   return (
-    <section className="rounded-2xl border-2 border-line bg-surface p-5">
+    <section data-kit="example" className="rounded-2xl border-2 border-line bg-surface p-5">
       <p className="flex items-center gap-2 text-xs font-bold uppercase tracking-wider text-accent">
         <ListOrdered className="h-4 w-4" /> {title || t("learn.example.title", "Worked example")}
       </p>
@@ -51,7 +51,7 @@ export function WorkedExample({ title, problem, steps, answer, kids }: { title?:
 export function CommonMistake({ wrong, right, why, kids }: { wrong: MdText; right: MdText; why: MdText; kids: boolean }) {
   const t = useT();
   return (
-    <section className="overflow-hidden rounded-2xl border-2 border-warn/50">
+    <section data-kit="mistake" className="overflow-hidden rounded-2xl border-2 border-warn/50">
       <p className="flex items-center gap-2 bg-warn/10 px-5 py-2.5 text-xs font-bold uppercase tracking-wider text-warn-shade">
         <CircleAlert className="h-4 w-4" /> {t("learn.mistake.title", "Common mistake")}
       </p>
@@ -105,7 +105,7 @@ export function ActivityView({ activity, kids }: { activity: Activity; kids: boo
     setRun((r) => r + 1);
   };
   return (
-    <section className="rounded-3xl border-2 border-b-4 border-line bg-surface p-5 sm:p-6" aria-label={t("learn.activity.title", "Try it")}>
+    <section data-kit="activity" className="rounded-3xl border-2 border-b-4 border-line bg-surface p-5 sm:p-6" aria-label={t("learn.activity.title", "Try it")}>
       <p className="flex items-center gap-2 text-xs font-bold uppercase tracking-wider text-accent">
         <Puzzle className="h-4 w-4" /> {t("learn.activity.title", "Try it")}
       </p>
