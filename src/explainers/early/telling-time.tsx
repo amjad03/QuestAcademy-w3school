@@ -196,12 +196,14 @@ const mission: Mission = {
     },
     {
       task: "Let one hour go by.",
+      settle: 4800,
       predict: { question: "One hour goes by. What does the long hand do?", options: ["🔄 Goes all the way round", "➡️ Moves on to the 4"], answer: 0, trap: 1 },
       scene: (api) => <TapStep api={api} color={C} button="⏩ 1 hour" render={(on) => <ClockAt h={on ? 120 : 90} m={on ? 360 : 0} secs={on ? 4 : 1.2} time={on ? "4:00" : "3:00"} label={on ? "The long hand goes all the way round and the short hand moves to 4: four o'clock" : "Three o'clock"} />} />,
       explain: "In one hour the long hand goes **all the way round**. The short hand moves on to 4. Now it is **4 o'clock**.",
     },
     {
       task: "Let half an hour go by.",
+      settle: 2900,
       predict: { question: "At half past 4, where is the short hand?", options: ["🎯 Right on the 4", "↔️ Between 4 and 5"], answer: 1, trap: 0 },
       scene: (api) => <TapStep api={api} color={C} button="⏩ Half an hour" render={(on) => <ClockAt h={on ? 135 : 120} m={on ? 180 : 0} secs={on ? 2.5 : 1.2} time={on ? "4:30" : "4:00"} label={on ? "The long hand points down to 6 and the short hand is half way between 4 and 5: half past four" : "Four o'clock"} />} />,
       explain: "The long hand points **down to 6**: half way round. The short hand is **half way** from 4 to 5. It is **half past 4**.",

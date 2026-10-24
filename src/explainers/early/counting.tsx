@@ -79,6 +79,7 @@ const mission: Mission = {
   steps: [
     {
       task: "Tap to count the apples.",
+      settle: 4300,
       scene: (api) => <TapStep api={api} color={C} button="👆 Count!" render={(on) => <CountScene shown={on ? 5 : 0} fresh={0} />} />,
       hint: "Tap the big orange button.",
       explain: "We said **one number** for each apple: 1, 2, 3, 4, 5.",

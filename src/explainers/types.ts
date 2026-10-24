@@ -77,6 +77,8 @@ export interface MissionStep {
   hint?: string;
   /** After the task: what just happened and why, in one or two plain sentences. */
   explain: string;
+  /** Milliseconds to let the scene's result play before the explanation appears (default 700). */
+  settle?: number;
 }
 
 /** A guided "Try it": a few steps that build to one takeaway. */

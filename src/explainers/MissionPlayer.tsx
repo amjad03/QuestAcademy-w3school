@@ -81,7 +81,7 @@ export function MissionPlayer({ mission, color }: { mission: Mission; color: str
     if (complete) return;
     setComplete(true);
     // Leave a beat to see the result before the explanation appears.
-    setTimeout(() => setPhase("explain"), 700);
+    setTimeout(() => setPhase("explain"), step?.settle ?? 700);
   };
 
   const big = young ? "text-xl sm:text-2xl" : "text-lg sm:text-xl";
@@ -130,6 +130,7 @@ export function MissionPlayer({ mission, color }: { mission: Mission; color: str
                   <button
                     key={n}
                     type="button"
+                    data-predict-option={n}
                     onClick={() => {
                       setGuess(n);
                       setPhase("do");
