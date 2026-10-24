@@ -2255,7 +2255,7 @@ export const topics: Topic[] = [
           },
           {
             type: "text",
-            md: "The **Economic and Social Council (ECOSOC)** has 54 members elected for 3-year terms and coordinates economic and social work, including the specialised agencies. The **Trusteeship Council** looked after trust territories until they became independent; it suspended its work in 1994 after the last one, Palau, became independent.\n\nThe first Secretary-General was **Trygve Lie** of Norway. **António Guterres** of Portugal became Secretary-General in 2017.",
+            md: "The **Economic and Social Council (ECOSOC)** has 54 members elected for 3-year terms and coordinates economic and social work, including the specialised agencies. The **Trusteeship Council** looked after trust territories until they became independent; it suspended its work in 1994 after the last one, Palau, became independent.\n\nThe first Secretary-General was **Trygve Lie** of Norway. The Secretary-General is appointed by the General Assembly on the recommendation of the Security Council, for a five-year term that can be renewed.",
           },
           {
             type: "example",

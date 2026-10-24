@@ -1010,7 +1010,7 @@ const icse: Topic[] = [
             type: "callout",
             tone: "exam",
             title: "ICSE tip",
-            md: "When asked for the composition of the Lok Sabha, write the maximum (550 elected: 530 from states, 20 from UTs) and that members are directly elected. For the Rajya Sabha, write 250 maximum with 12 nominated, and the method of election. Writing \"545\" or \"552\" without explanation is a common, outdated error.",
+            md: "When asked for the composition of the Lok Sabha, write the maximum (550 elected: 530 from states, 20 from UTs) and that members are directly elected. For the Rajya Sabha, write 250 maximum with 12 nominated, and the method of election. Older books give 552 (550 elected + 2 nominated Anglo-Indians); since the nominated seats ended in 2020, write 550 and mention the change if your textbook uses 552.",
           },
           {
             type: "keypoints",
