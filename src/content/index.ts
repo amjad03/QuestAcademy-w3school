@@ -44,7 +44,7 @@ import { economics } from "./subjects/campus/economics";
 import { psychology } from "./subjects/campus/psychology";
 import { uxDesign } from "./subjects/campus/ux-design";
 
-export const subjects: Subject[] = [
+const ALL_SUBJECTS: Subject[] = [
   abcAdventures,
   numberLand,
   shapesColors,
@@ -87,6 +87,9 @@ export const subjects: Subject[] = [
 
 // Class 9–10 chapters written to close syllabus gaps join their school course.
 for (const s of [mathHigh, physicsSchool, chemistrySchool, biologySchool, english]) s.topics = [...s.topics, ...extraTopics(s.slug)];
+
+/** Every course with at least one chapter (a course whose chapters are still being written stays hidden). */
+export const subjects: Subject[] = ALL_SUBJECTS.filter((s) => s.topics.length > 0);
 
 const bySlug = new Map(subjects.map((s) => [s.slug, s]));
 
