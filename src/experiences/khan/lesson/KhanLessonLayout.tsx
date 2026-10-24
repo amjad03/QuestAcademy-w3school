@@ -120,7 +120,7 @@ export function KhanLessonLayout(p: LessonLayoutProps) {
       <AnimatePresence>
         {drawer && (
           <motion.div className="fixed inset-0 z-50 lg:hidden" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}>
-            <button className="absolute inset-0 h-full w-full cursor-default bg-ink/40" aria-label={t("khan.lesson.closeNav", "Close lesson list")} onClick={() => setDrawer(false)} tabIndex={-1} />
+            <button className="absolute inset-0 h-full w-full cursor-default bg-[rgb(11_17_33/0.5)]" aria-label={t("khan.lesson.closeNav", "Close lesson list")} onClick={() => setDrawer(false)} tabIndex={-1} />
             <motion.aside
               role="dialog"
               aria-modal="true"

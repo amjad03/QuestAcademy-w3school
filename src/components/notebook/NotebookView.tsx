@@ -58,7 +58,7 @@ export function NotebookView() {
   return (
     <>
       <header className="flex flex-wrap items-end gap-3">
-        <div className="min-w-0 flex-1">
+        <div className="min-w-[16rem] flex-1">
           <h1 className="text-2xl font-black">{t("notebook.title", "Notebook")}</h1>
           <p className="mt-1 font-semibold text-muted">{t("notebook.subtitle", "Your notes, saved lessons and open questions, all in one place.")}</p>
         </div>

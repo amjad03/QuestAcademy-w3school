@@ -390,7 +390,7 @@ function Drawer({ nav, more, isActive, onClose }: { nav: NavItem[]; more: NavIte
 
   return (
     <div className="fixed inset-0 z-50 lg:hidden">
-      <div className="absolute inset-0 bg-ink/30" onClick={onClose} aria-hidden />
+      <div className="absolute inset-0 bg-[rgb(11_17_33/0.4)]" onClick={onClose} aria-hidden />
       <div ref={panel} role="dialog" aria-modal="true" aria-label="Menu" className="absolute inset-y-0 right-0 flex w-[min(300px,86vw)] flex-col border-l border-line bg-surface">
         <div className="flex h-14 shrink-0 items-center justify-between border-b border-line px-4">
           <span className="text-[15px] font-semibold">Menu</span>

@@ -86,7 +86,8 @@ html.dark[data-skin="modes"][data-mode="adventure"] body {
 html[data-skin="modes"][data-mode="adventure"] ::selection {
   background: rgb(var(--adv-teal) / 0.3);
 }
-html[data-skin="modes"][data-mode="adventure"] :focus-visible {
+/* :where() keeps this at the weight of a plain :focus-visible, so components can tune their own ring. */
+:where(html[data-skin="modes"][data-mode="adventure"]) :focus-visible {
   outline: 2px solid rgb(var(--accent));
   outline-offset: 2px;
 }

@@ -98,7 +98,7 @@ export function CommandPalette() {
     <AnimatePresence>
       {open && (
         <motion.div
-          className="fixed inset-0 z-[80] flex items-start justify-center bg-ink/40 p-4 pt-[12vh]"
+          className="fixed inset-0 z-[80] flex items-start justify-center bg-[rgb(11_17_33/0.5)] p-4 pt-[12vh]"
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
@@ -132,7 +132,7 @@ export function CommandPalette() {
                   if (e.key === "Enter") go(results[active]);
                 }}
                 placeholder={t("shell.search.placeholder", "Search courses and lessons — try “flexbox” or “photosynthesis”")}
-                className="h-14 w-full bg-transparent text-base font-bold outline-none placeholder:font-semibold placeholder:text-muted focus-visible:outline-none"
+                className="h-14 w-full bg-transparent text-base font-bold outline-none placeholder:font-semibold placeholder:text-muted focus-visible:!outline-none"
               />
               <kbd className="rounded-md border border-line px-1.5 py-0.5 font-mono text-[10px] text-muted">ESC</kbd>
             </div>

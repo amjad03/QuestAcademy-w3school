@@ -128,7 +128,7 @@ function GrownUpPanel({ items, onClose, openSearch, isActive }: { items: NavItem
   const rest = items.filter((i) => i.href !== "/parent");
 
   return (
-    <motion.div className="fixed inset-0 z-[80] flex justify-end bg-ink/30" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} onClick={onClose}>
+    <motion.div className="fixed inset-0 z-[80] flex justify-end bg-[rgb(11_17_33/0.4)]" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} onClick={onClose}>
       <motion.div
         role="dialog"
         aria-modal="true"

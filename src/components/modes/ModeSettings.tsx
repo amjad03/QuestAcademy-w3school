@@ -48,7 +48,7 @@ export function GrownUpGate({ onPass, onCancel, message }: { onPass: () => void;
   const [v, setV] = useState("");
   const [wrong, setWrong] = useState(false);
   return (
-    <motion.div className="fixed inset-0 z-[90] grid place-items-center bg-ink/40 p-4" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} onClick={onCancel}>
+    <motion.div className="fixed inset-0 z-[90] grid place-items-center bg-[rgb(11_17_33/0.5)] p-4" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} onClick={onCancel}>
       <motion.div initial={{ scale: 0.95 }} animate={{ scale: 1 }} className="card w-full max-w-sm p-6 text-center" onClick={(e) => e.stopPropagation()} role="dialog" aria-modal="true" aria-label={t("settings.gate.label", "Grown-up check")}>
         <span className="mx-auto grid h-14 w-14 place-items-center rounded-2xl bg-surface-2 text-muted">
           <Lock className="h-7 w-7" />

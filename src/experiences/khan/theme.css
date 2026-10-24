@@ -117,7 +117,8 @@ html[data-skin="modes"]:is([data-mode="adventure"], [data-mode="focus"], [data-m
   font-feature-settings: "cv11", "ss01";
 }
 
-html[data-skin="modes"]:is([data-mode="adventure"], [data-mode="focus"], [data-mode="mastery"], [data-mode="research"], [data-mode="professional"]) :focus-visible {
+/* :where() keeps this at the weight of a plain :focus-visible, so components can tune their own ring. */
+:where(html[data-skin="modes"]:is([data-mode="adventure"], [data-mode="focus"], [data-mode="mastery"], [data-mode="research"], [data-mode="professional"])) :focus-visible {
   outline: 2px solid rgb(var(--accent));
   outline-offset: 2px;
 }
@@ -716,4 +717,12 @@ html[data-skin="modes"]:is([data-mode="adventure"], [data-mode="focus"], [data-m
   html[data-skin="modes"]:is([data-mode="adventure"], [data-mode="focus"], [data-mode="mastery"], [data-mode="research"], [data-mode="professional"]) .kh-tabbar {
     backdrop-filter: none;
   }
+}
+
+/* Dark mode: the light accent is too pale behind white text (about 2.6:1); use the deeper blue the primary button uses. */
+html.dark[data-skin="modes"]:is([data-mode="adventure"], [data-mode="focus"], [data-mode="mastery"], [data-mode="research"], [data-mode="professional"]) .bg-accent.text-white {
+  background-color: rgb(24 101 242);
+}
+html.dark[data-skin="modes"]:is([data-mode="adventure"], [data-mode="focus"], [data-mode="mastery"], [data-mode="research"], [data-mode="professional"]) .bg-accent.text-white:hover {
+  background-color: rgb(19 81 196);
 }

@@ -284,7 +284,7 @@ export function Session({ payload: raw }: { payload: SessionPayload }) {
       quitDialog={
         <AnimatePresence>
           {quit && (
-            <motion.div className="fixed inset-0 z-50 grid place-items-end bg-ink/40 sm:place-items-center" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} onClick={() => setQuit(false)}>
+            <motion.div className="fixed inset-0 z-50 grid place-items-end bg-[rgb(11_17_33/0.5)] sm:place-items-center" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} onClick={() => setQuit(false)}>
               <motion.div initial={{ y: 40 }} animate={{ y: 0 }} exit={{ y: 40 }} onClick={(e) => e.stopPropagation()} className="w-full rounded-t-3xl bg-surface p-8 text-center sm:max-w-md sm:rounded-3xl" role="alertdialog" aria-modal="true">
                 {playful && (
                   <div className="flex justify-center">

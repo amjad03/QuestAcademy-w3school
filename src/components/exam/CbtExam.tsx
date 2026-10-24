@@ -488,7 +488,7 @@ export function CbtExam({ test, pool }: { test: MockTest; pool: ExamQuestion[] }
       {/* mobile palette */}
       <AnimatePresence>
         {paletteOpen && (
-          <motion.div className="fixed inset-0 z-[60] bg-ink/40 lg:hidden" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} onClick={() => setPaletteOpen(false)}>
+          <motion.div className="fixed inset-0 z-[60] bg-[rgb(11_17_33/0.5)] lg:hidden" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} onClick={() => setPaletteOpen(false)}>
             <motion.div className="absolute inset-y-0 right-0 w-[86%] max-w-sm bg-surface" initial={{ x: "100%" }} animate={{ x: 0 }} exit={{ x: "100%" }} onClick={(e) => e.stopPropagation()}>
               <button className="absolute right-3 top-3 z-10 grid h-9 w-9 place-items-center rounded-xl hover:bg-surface-2" onClick={() => setPaletteOpen(false)} aria-label={t("exam.cbt.close", "Close")}>
                 <X className="h-5 w-5" />
@@ -502,7 +502,7 @@ export function CbtExam({ test, pool }: { test: MockTest; pool: ExamQuestion[] }
       {/* submit confirm */}
       <AnimatePresence>
         {confirm && (
-          <motion.div className="fixed inset-0 z-[70] grid place-items-center bg-ink/40 p-4" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}>
+          <motion.div className="fixed inset-0 z-[70] grid place-items-center bg-[rgb(11_17_33/0.5)] p-4" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}>
             <motion.div className="w-full max-w-md rounded-3xl bg-surface p-7" initial={{ scale: 0.92 }} animate={{ scale: 1 }} role="alertdialog" aria-modal="true" aria-labelledby="submit-title">
               <div className="flex items-center gap-3">
                 <AlertTriangle className="h-6 w-6 text-warn-shade" />

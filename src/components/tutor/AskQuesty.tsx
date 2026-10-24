@@ -83,7 +83,8 @@ export function AskQuesty({ placement = "lesson", ...ctx }: AskQuestyProps) {
       className={clsx(
         "fixed right-4 z-40 flex items-center gap-2 rounded-full border-2 border-accent-shade bg-accent py-1.5 pl-1.5 pr-4 font-black text-white shadow-lg transition hover:brightness-110 focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-accent/40 md:right-6",
         // Session pages and young learners' lessons have a fixed action bar at the bottom: sit above it.
-        placement === "session" || young ? "bottom-[calc(8.5rem+env(safe-area-inset-bottom))] sm:bottom-32" : "bottom-[calc(5.5rem+env(safe-area-inset-bottom))] md:bottom-6",
+        // After answering, the feedback sheet is taller on phones: clear it too.
+        placement === "session" && ctx.answered ? "bottom-[calc(12.5rem+env(safe-area-inset-bottom))] sm:bottom-32" : placement === "session" || young ? "bottom-[calc(8.5rem+env(safe-area-inset-bottom))] sm:bottom-32" : "bottom-[calc(5.5rem+env(safe-area-inset-bottom))] md:bottom-6",
         open && "pointer-events-none opacity-0",
         young ? "text-base" : "text-sm",
       )}

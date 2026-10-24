@@ -76,6 +76,19 @@ export function TutorPanel(p: Props) {
     setStatus((s) => (s === "unavailable" ? s : "idle"));
   }, [contextKey]);
 
+  // Escape closes the panel even when focus has left it (e.g. once the composer is hidden).
+  const onClose = p.onClose;
+  useEffect(() => {
+    // Capture phase, so the page underneath (e.g. a practice session) doesn't also react.
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key !== "Escape") return;
+      e.stopPropagation();
+      onClose();
+    };
+    document.addEventListener("keydown", onKey, true);
+    return () => document.removeEventListener("keydown", onKey, true);
+  }, [onClose]);
+
   useEffect(() => {
     inputRef.current?.focus({ preventScroll: true });
     return () => {
@@ -191,11 +204,10 @@ export function TutorPanel(p: Props) {
       exit={{ opacity: 0 }}
       // Keep keys (Enter, digits…) away from the practice session's shortcuts.
       onKeyDown={(e) => {
-        e.stopPropagation();
-        if (e.key === "Escape") p.onClose();
+        if (e.key !== "Escape") e.stopPropagation();
       }}
     >
-      <div className="absolute inset-0 bg-ink/40 md:hidden" onClick={p.onClose} aria-hidden />
+      <div className="absolute inset-0 bg-[rgb(11_17_33/0.5)] md:hidden" onClick={p.onClose} aria-hidden />
       <motion.section
         role="dialog"
         aria-modal={!desktop}

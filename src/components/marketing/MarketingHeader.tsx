@@ -25,7 +25,7 @@ export function MarketingHeader() {
   ];
   return (
     <header className="sticky top-0 z-40 border-b-2 border-line bg-surface/95 backdrop-blur">
-      <div className="mx-auto flex h-[72px] max-w-[1120px] items-center gap-6 px-5">
+      <div className="mx-auto flex h-[72px] max-w-[1120px] items-center gap-3 px-4 sm:gap-6 sm:px-5">
         <Logo />
         <nav className="ml-6 hidden items-center gap-1 md:flex">
           <Link href="/courses" className="btn-flat !text-muted hover:!text-accent">
@@ -44,17 +44,18 @@ export function MarketingHeader() {
             {t("site.nav.about", "About")}
           </Link>
         </nav>
-        <div className="ml-auto flex items-center gap-3">
+        <div className="ml-auto flex items-center gap-2 sm:gap-3">
           {hydrated && onboarded ? (
-            <Link href="/learn" className="btn-primary">
-              {t("site.cta.continue", "Continue learning")}
+            <Link href="/learn" className="btn-primary whitespace-nowrap !px-3.5 text-sm sm:!px-5 sm:text-[15px]">
+              <span className="sm:hidden">{t("site.cta.continueShort", "Continue")}</span>
+              <span className="hidden sm:inline">{t("site.cta.continue", "Continue learning")}</span>
             </Link>
           ) : (
             <>
               <Link href="/auth" className="btn-ghost hidden sm:inline-flex">
                 {t("site.nav.logIn", "Log in")}
               </Link>
-              <Link href="/onboarding" className="btn-primary">
+              <Link href="/onboarding" className="btn-primary whitespace-nowrap !px-3.5 text-sm sm:!px-5 sm:text-[15px]">
                 {t("site.cta.getStarted", "Get started")}
               </Link>
             </>

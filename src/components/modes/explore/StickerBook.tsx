@@ -82,7 +82,7 @@ export function StickerBook() {
 
       <AnimatePresence>
         {open && (
-          <motion.div className="fixed inset-0 z-50 grid place-items-center bg-ink/40 p-6" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} onClick={() => setOpen(null)} role="dialog" aria-modal="true" aria-label={open.name}>
+          <motion.div className="fixed inset-0 z-50 grid place-items-center bg-[rgb(11_17_33/0.5)] p-6" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} onClick={() => setOpen(null)} role="dialog" aria-modal="true" aria-label={open.name}>
             <motion.div initial={{ scale: 0.7, rotate: -8 }} animate={{ scale: 1, rotate: 0 }} exit={{ scale: 0.8 }} transition={{ type: "spring", stiffness: 260, damping: 16 }} className="relative w-full max-w-xs rounded-[2rem] bg-surface p-8 text-center" onClick={(e) => e.stopPropagation()}>
               <button onClick={() => setOpen(null)} className="absolute right-4 top-4 grid h-10 w-10 place-items-center rounded-full text-muted hover:bg-surface-2" aria-label={t("kids.stickers.close", "Close")}>
                 <X className="h-6 w-6" />

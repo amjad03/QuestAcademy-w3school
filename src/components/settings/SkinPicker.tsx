@@ -40,8 +40,8 @@ export function SkinPicker() {
                   <span key={c} className="h-6 w-6 rounded-md" style={{ background: c }} />
                 ))}
               </span>
-              <span className="flex items-center gap-2 text-lg font-extrabold">
-                {skinText[k.id].name}
+              <span className="flex flex-wrap items-center gap-x-2 gap-y-1 text-lg font-extrabold leading-tight">
+                <span className="whitespace-nowrap">{skinText[k.id].name}</span>
                 {k.id === "modes" && <span className="chip">{t("settings.skin.default", "Default")}</span>}
               </span>
               <span className="text-sm font-semibold leading-6 text-muted">{skinText[k.id].blurb}</span>

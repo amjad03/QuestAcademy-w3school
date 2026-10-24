@@ -169,7 +169,7 @@ function Stat({ icon, value, label }: { icon: React.ReactNode; value: string; la
       {icon}
       <div className="min-w-0">
         <div className="truncate text-xl font-black">{value}</div>
-        <div className="truncate text-sm font-bold text-muted">{label}</div>
+        <div className="text-sm font-bold leading-tight text-muted">{label}</div>
       </div>
     </div>
   );

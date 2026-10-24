@@ -79,7 +79,7 @@ export function Overlays() {
         {celebration && (
           <motion.div
             key={celebration.id}
-            className="fixed inset-0 z-[70] grid place-items-center bg-ink/40 p-6"
+            className="fixed inset-0 z-[70] grid place-items-center bg-[rgb(11_17_33/0.5)] p-6"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
