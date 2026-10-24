@@ -294,7 +294,7 @@ function PickGoal() {
   return (
     <section aria-labelledby="kh-pickgoal">
       <SectionHeader id="kh-pickgoal" title={t("khan.pro.pick", "What are you working towards?")} sub={t("khan.pro.pickSub", "Each pathway gives you a structured route, practical assignments based on real work, a weekly schedule and a certificate at the end.")} />
-      <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-3">
+      <div className="grid gap-4 md:grid-cols-2">
         {pathways.map((p) => (
           <div key={p.slug} className="card flex flex-col p-5">
             <span className="h-1 w-10 rounded-full" style={{ background: p.color }} aria-hidden />
@@ -302,7 +302,7 @@ function PickGoal() {
             <p className="mt-1 line-clamp-3 text-sm text-muted">{p.goal}</p>
             <p className="mt-3 text-xs text-muted">{t("khan.pro.pathMeta", "{w} weeks · {n} assignments", { w: p.weeks, n: p.modules.length })}</p>
             <div className="mt-auto flex flex-wrap gap-2 pt-4">
-              <button type="button" onClick={() => enroll(p.slug)} className="btn-primary flex-1">
+              <button type="button" onClick={() => enroll(p.slug)} className="btn-primary flex-1 whitespace-nowrap">
                 {t("khan.pro.startGoal", "Set as my goal")}
               </button>
               <Link href={`/pathways/${p.slug}`} className="btn-ghost flex-1">

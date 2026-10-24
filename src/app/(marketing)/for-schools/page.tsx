@@ -1,6 +1,6 @@
 import Link from "next/link";
 import type { Metadata } from "next";
-import { ClipboardList, FileBarChart, Presentation, Mail } from "lucide-react";
+import { ClipboardList, FileBarChart, Presentation } from "lucide-react";
 import { BOARDS } from "@/lib/modes";
 import { syllabusStats } from "@/content/syllabus";
 import { PageIntro, Section } from "@/components/marketing/Section";
@@ -87,11 +87,11 @@ export default function ForSchoolsPage() {
         <div className="mx-auto max-w-[1120px] px-5 py-16">
           <div className="card mx-auto max-w-2xl p-6 sm:p-8">
             <span className="grid h-11 w-11 place-items-center rounded-2xl bg-accent-soft text-accent">
-              <Mail className="h-5 w-5" strokeWidth={2.5} />
+              <ClipboardList className="h-5 w-5" strokeWidth={2.5} />
             </span>
-            <h2 className="mt-4 text-2xl font-black text-ink">Get in touch</h2>
+            <h2 className="mt-4 text-2xl font-black text-ink">Start today</h2>
             <p className="mt-2 text-sm font-semibold leading-6 text-muted">
-              We are setting up a schools desk for pilot requests, bulk worksheet needs and syllabus corrections. Contact details will appear here once it is ready. In the meantime, everything on the site is open to use without asking.
+              Everything on the site is free to use in class, with no sign-up or permission needed. Start with the printable worksheets, or browse lessons by board and class.
             </p>
             <div className="mt-5 flex flex-col gap-3 sm:flex-row">
               <Link href="/worksheets" className="btn-primary">

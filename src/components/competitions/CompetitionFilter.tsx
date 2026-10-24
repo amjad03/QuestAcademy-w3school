@@ -40,7 +40,7 @@ export function CompetitionFilter({ items }: { items: Competition[] }) {
           ? t("comp.filter.entries.one", "{n} entry", { n: shown.length })
           : t("comp.filter.entries.other", "{n} entries", { n: shown.length })}
       </p>
-      <div className="mt-3 grid gap-4 md:grid-cols-2">
+      <div className="mt-3 grid gap-4 2xl:grid-cols-2">
         {shown.map((c) => (
           <CompetitionCard key={c.slug} c={c} />
         ))}

@@ -47,7 +47,7 @@ export function Overlays() {
   return (
     <>
       {!focus && (
-        <div className="pointer-events-none fixed right-4 top-4 z-[60] flex flex-col items-end gap-2" aria-live="polite">
+        <div className="pointer-events-none fixed inset-x-4 top-[calc(5.5rem+env(safe-area-inset-top))] z-[60] flex flex-col items-center gap-2 sm:inset-x-auto sm:right-4 sm:top-4 sm:items-end" aria-live="polite">
           <AnimatePresence>
             {toasts.filter((t) => t.text || (showXp && (t.xp || t.coins))).map((t) => (
               <motion.div
@@ -56,7 +56,7 @@ export function Overlays() {
                 initial={{ opacity: 0, y: -12, scale: 0.95 }}
                 animate={{ opacity: 1, y: 0, scale: 1 }}
                 exit={{ opacity: 0, scale: 0.95 }}
-                className="flex items-center gap-3 rounded-2xl border-2 border-b-4 border-line bg-surface px-4 py-2.5"
+                className="flex max-w-[22rem] items-center gap-3 rounded-2xl border border-line bg-surface px-4 py-2.5 shadow-[0_8px_24px_-12px_rgba(16,24,40,0.25)]"
               >
                 {showXp && t.xp ? (
                   <span className="flex items-center gap-1 text-lg font-black text-warn">
@@ -68,7 +68,7 @@ export function Overlays() {
                     <Coins className="h-5 w-5" />+{t.coins}
                   </span>
                 ) : null}
-                {t.text && <span className="text-sm font-bold text-muted">{t.text}</span>}
+                {t.text && <span className="text-sm font-bold text-ink">{t.text}</span>}
               </motion.div>
             ))}
           </AnimatePresence>

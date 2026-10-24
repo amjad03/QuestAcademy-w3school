@@ -1,5 +1,6 @@
 "use client";
 
+import { useMode } from "@/lib/useMode";
 import Link from "next/link";
 import { useEffect, useMemo, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
@@ -32,6 +33,7 @@ const GRADES = [
 ];
 
 export function PracticeHub() {
+  const modeId = useMode().id;
   const t = useT();
   const hydrated = useHydrated();
   const cards = useLearner((s) => s.cards);
@@ -159,6 +161,8 @@ export function PracticeHub() {
 
       {/* other */}
       <section className="mt-8 grid gap-4 sm:grid-cols-2">
+        {/* Learning games are made for younger learners; older profiles don't see them here. */}
+        {["sprout", "explore", "adventure"].includes(modeId) && (
         <Link href="/kids/play" className="tile flex items-center gap-4 p-5">
           <span className="grid h-12 w-12 place-items-center rounded-xl bg-[#EC4899] text-white">
             <Gamepad2 className="h-6 w-6" />
@@ -169,6 +173,7 @@ export function PracticeHub() {
           </span>
           <ChevronRight className="h-5 w-5 text-muted" />
         </Link>
+        )}
         <Link href="/exam/practice" className="tile flex items-center gap-4 p-5">
           <span className="grid h-12 w-12 place-items-center rounded-xl bg-bad text-white">
             <Layers className="h-6 w-6" />

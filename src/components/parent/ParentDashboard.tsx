@@ -89,7 +89,7 @@ function GateButton({ onPass }: { onPass: () => void }) {
       <button className="btn-primary" onClick={() => setOpen(true)}>
         {t("parent.gate.continue", "Continue")}
       </button>
-      <AnimatePresence>{open && <GrownUpGate onPass={onPass} onCancel={() => setOpen(false)} />}</AnimatePresence>
+      <AnimatePresence>{open && <GrownUpGate message={t("parent.gate", "This page is for parents. Please answer:")} onPass={onPass} onCancel={() => setOpen(false)} />}</AnimatePresence>
     </>
   );
 }

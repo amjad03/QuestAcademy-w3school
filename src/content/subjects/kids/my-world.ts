@@ -9,7 +9,7 @@ export const myWorld: Subject = {
   tagline: "Animals, plants, weather and ME — explore with Questy! 🦉",
   description:
     "Discover where animals live, how your amazing body and senses work, how plants grow, what the weather is doing, and the good habits that keep you healthy and safe.",
-  levels: ["Ages 3–5", "Ages 5–7"],
+  levels: ["Ages 3–7"],
   stages: ["preprimary", "primary"],
   topics: [
     /* ------------------------------------------------------------ */

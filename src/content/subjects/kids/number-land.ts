@@ -9,7 +9,7 @@ export const numberLand: Subject = {
   tagline: "Count, compare, add and hop with Questy! 🦉",
   description:
     "Welcome to Number Land! Count up to 20, find out which group has more, add and take away, hop along the number line and skip count by 2s, 5s and 10s.",
-  levels: ["Ages 4–5", "Ages 5–7"],
+  levels: ["Ages 4–7"],
   stages: ["preprimary", "primary"],
   topics: [
     /* ------------------------------------------------------------ */

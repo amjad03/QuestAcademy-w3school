@@ -305,8 +305,8 @@ function HeatmapGrid({ heat }: { heat: ReturnType<typeof heatmap> }) {
     );
   };
   return (
-    <div className="mt-4 overflow-x-auto">
-      <div className="grid min-w-[420px] gap-1" style={{ gridTemplateColumns: `2.25rem repeat(${cols}, minmax(0, 1fr))` }}>
+    <div className="mt-4">
+      <div className="grid w-full max-w-[560px] gap-[3px] sm:gap-1" style={{ gridTemplateColumns: `2.25rem repeat(${cols}, minmax(0, 1fr))` }}>
         <div />
         {heat.weeks.map((_, w) => {
           const m = heat.months.find((x) => x.col === w);

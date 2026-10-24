@@ -101,7 +101,7 @@ export function Shop() {
           const own = s.owned.includes(a.id);
           const active = s.profile.avatar === a.id;
           return (
-            <button key={a.id} onClick={() => buy(a.id, a.price, () => s.setProfile({ avatar: a.id }))} className={clsx("tile flex flex-col items-center gap-2 p-4", active && "!border-accent !bg-accent-soft")}>
+            <button key={a.id} onClick={() => buy(a.id, a.price, () => s.setProfile({ avatar: a.id }))} className={clsx("tile flex flex-col items-center gap-2 px-2 py-4 text-center", active && "!border-accent !bg-accent-soft")}>
               <Avatar name={s.profile.name} color={a.id} size={56} />
               <span className="text-sm font-extrabold">{COLOR_NAME[a.id] ?? a.id}</span>
               <PriceTag own={own} active={active} price={a.price} />
@@ -117,7 +117,7 @@ export function Shop() {
           const own = s.owned.includes(f.id);
           const active = s.profile.frame === f.id;
           return (
-            <button key={f.id} onClick={() => buy(f.id, f.price, () => s.setProfile({ frame: f.id }))} className={clsx("tile flex flex-col items-center gap-2 p-4", active && "!border-accent !bg-accent-soft")}>
+            <button key={f.id} onClick={() => buy(f.id, f.price, () => s.setProfile({ frame: f.id }))} className={clsx("tile flex flex-col items-center gap-2 px-2 py-4 text-center", active && "!border-accent !bg-accent-soft")}>
               <Avatar name={s.profile.name} color={s.profile.avatar} frame={f.id} size={56} />
               <span className="text-sm font-extrabold">{f.name}</span>
               <PriceTag own={own} active={active} price={f.price} />
@@ -133,8 +133,8 @@ function PriceTag({ own, active, price }: { own: boolean; active: boolean; price
   const t = useT();
   if (active)
     return (
-      <span className="flex items-center gap-1 text-xs font-extrabold uppercase tracking-wide text-accent">
-        <Check className="h-3.5 w-3.5" strokeWidth={3.5} /> {t("shop.equipped", "Equipped")}
+      <span className="flex items-center gap-1 text-xs font-extrabold uppercase text-accent">
+        <Check className="hidden h-3.5 w-3.5 sm:block" strokeWidth={3.5} /> {t("shop.equipped", "Equipped")}
       </span>
     );
   if (own) return <span className="text-xs font-extrabold uppercase tracking-wide text-muted">{t("shop.owned", "Owned")}</span>;

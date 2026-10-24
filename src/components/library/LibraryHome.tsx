@@ -114,7 +114,7 @@ export function LibraryHome({ data }: { data: LibraryHomeData }) {
                     <span className="font-black">{g.label}</span>
                     {isMine && <span className="chip !border-accent !py-0.5 text-xs text-accent">{t("library.yourClass", "Your class")}</span>}
                   </span>
-                  <span className="block truncate text-xs font-bold text-muted">{g.hint}</span>
+                  <span className="line-clamp-2 block text-xs font-bold text-muted">{g.hint}</span>
                   <span className="mt-1 block text-sm font-semibold text-muted">
                     {c.subjects === 1 ? t("library.subjects.one", "{n} subject", { n: c.subjects }) : t("library.subjects.other", "{n} subjects", { n: c.subjects })} · {t("library.lessonsCount", "{n} lessons", { n: c.lessons })}
                     {d > 0 && <span className="text-good"> · {t("library.doneCount", "{n} done", { n: d })}</span>}

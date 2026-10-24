@@ -9,7 +9,7 @@ export const abcAdventures: Subject = {
   tagline: "Letters, sounds and first words with Questy the owl! 🦉",
   description:
     "Hop through the alphabet from A to Z with Questy the owl. Hear every letter sound, meet the five vowels, build your very first words and play silly rhyming games.",
-  levels: ["Ages 3–5", "Ages 5–6"],
+  levels: ["Ages 3–6"],
   stages: ["preprimary", "primary"],
   topics: [
     /* ------------------------------------------------------------ */

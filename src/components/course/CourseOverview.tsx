@@ -38,7 +38,7 @@ export function CourseOverview({ outline: raw }: { outline: CourseOutline }) {
   return (
     <div className="mx-auto max-w-[1060px] px-4 py-8 sm:px-6">
       {/* header */}
-      <header className="flex flex-col gap-6 sm:flex-row sm:items-center">
+      <header className="flex flex-col gap-6 sm:flex-row sm:items-start">
         <CourseIcon slug={outline.slug} size={88} />
         <div className="min-w-0 flex-1">
           <p className="eyebrow">{outline.domain ? tx(outline.domain) : outline.levels.join(" · ")}</p>
@@ -71,7 +71,7 @@ export function CourseOverview({ outline: raw }: { outline: CourseOutline }) {
           <div className="mt-5 space-y-4">
             {outline.units.map((u, i) => (
               <div key={u.slug} className="flex flex-col gap-2 sm:flex-row sm:items-center sm:gap-4">
-                <Link href={u.href} className="w-40 shrink-0 truncate text-sm font-extrabold hover:text-accent">
+                <Link href={u.href} className="line-clamp-2 w-40 shrink-0 text-sm font-extrabold hover:text-accent sm:w-64">
                   {t("course.overview.unitTitle", "Unit {n}: {title}", { n: i + 1, title: u.title })}
                 </Link>
                 <MasteryGrid skills={u.lessons.map((l) => ({ id: l.id, title: l.title, href: l.href, level: cp.levels[l.id] ?? 0 }))} />

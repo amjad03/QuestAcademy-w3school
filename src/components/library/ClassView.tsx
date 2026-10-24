@@ -162,12 +162,11 @@ function SubjectCard({ s, done, next, levels }: { s: ClassSubject; done: number;
       <div className="flex items-start gap-3">
         <CourseIcon slug={s.slug} size={44} />
         <div className="min-w-0 flex-1">
-          <Link href={`/course/${s.slug}`} className="block truncate font-black hover:text-accent">
+          <Link href={`/course/${s.slug}`} className="block font-black leading-snug hover:text-accent">
             {tx(s.title)}
           </Link>
           <p className="text-sm font-semibold text-muted">{tx(s.tagline)}</p>
         </div>
-        <span className={clsx("chip shrink-0 !py-0.5 text-xs", complete ? "!border-good bg-good-soft text-good" : done > 0 ? "!border-accent text-accent" : "text-muted")}>{complete ? t("library.subject.complete", "Complete") : done > 0 ? t("library.subject.doneOf", "{done} of {total}", { done, total: s.lessons }) : t("library.subject.notStarted", "Not started")}</span>
       </div>
       <div className="mt-3 flex flex-wrap gap-1.5">
         {levels.slice(0, 4).map((l) => (
@@ -176,6 +175,7 @@ function SubjectCard({ s, done, next, levels }: { s: ClassSubject; done: number;
           </span>
         ))}
         {s.domain && <span className="chip !py-0.5 text-xs text-muted">{tx(s.domain)}</span>}
+        <span className={clsx("chip ml-auto shrink-0 !py-0.5 text-xs", complete ? "!border-good bg-good-soft text-good" : done > 0 ? "!border-accent text-accent" : "text-muted")}>{complete ? t("library.subject.complete", "Complete") : done > 0 ? t("library.subject.doneOf", "{done} of {total}", { done, total: s.lessons }) : t("library.subject.notStarted", "Not started")}</span>
       </div>
       <ProgressBar value={pct} height={8} className="mt-3" color={complete ? "rgb(var(--good))" : undefined} label={t("library.subject.progressLabel", "{title} progress", { title: tx(s.title) })} />
       <p className="mt-2 flex flex-wrap items-center gap-x-3 gap-y-1 text-xs font-bold text-muted">

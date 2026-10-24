@@ -7,6 +7,8 @@ import { TutorToggle } from "@/components/tutor/TutorToggle";
 
 import Link from "next/link";
 import { useRouter } from "next/navigation";
+import { useMode } from "@/lib/useMode";
+import { GrownUpGate } from "@/components/modes/ModeSettings";
 import { deleteAccount, pushAccount } from "@/lib/supabase";
 import { mergeNotebooks, notebookSnapshot, useNotebook, type NotebookData } from "@/lib/notebook-store";
 import { useRef, useState } from "react";
@@ -25,6 +27,8 @@ export function Settings() {
   const s = useLearner();
   const { enabled, user, signOut } = useAuth();
   const router = useRouter();
+  const young = useMode().young;
+  const [gatePassed, setGatePassed] = useState(false);
   const toast = useUi((u) => u.toast);
   const fileRef = useRef<HTMLInputElement>(null);
   const [name, setName] = useState<string | null>(null);
@@ -83,6 +87,14 @@ export function Settings() {
   );
 
   if (!hydrated) return <PageColumns rail={rail}><div className="h-96 animate-pulse rounded-2xl bg-surface-2" /></PageColumns>;
+
+  // Young learners' settings are for grown-ups: ask the gate question first.
+  if (young && !gatePassed)
+    return (
+      <PageColumns>
+        <GrownUpGate message={t("settings.gate", "Settings are for grown-ups. Please answer:")} onPass={() => setGatePassed(true)} onCancel={() => router.push("/learn")} />
+      </PageColumns>
+    );
 
   const exportData = () => {
     const a = document.createElement("a");

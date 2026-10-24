@@ -231,7 +231,7 @@ export function SproutSessionResults(r: SessionResultsProps) {
 
       <div className="relative z-10 flex w-full max-w-[560px] items-center gap-3 pb-[max(24px,env(safe-area-inset-bottom))]">
         <BubbleButton label={t("sprout.results.again", "Play again")} speak={t("sprout.results.againSay", "Let’s try that again. You can do it!")} icon={RotateCcw} hue="peach" size={64} onTap={r.onRetry} />
-        <ChunkyLink href={r.exitHref} tone="good" wide icon={ArrowRight} speak={t("sprout.results.goSay", "Let’s keep going!")} className="flex-1" autoFocus>
+        <ChunkyLink href={r.exitHref} tone="good" icon={ArrowRight} speak={t("sprout.results.goSay", "Let’s keep going!")} className="min-w-0 flex-1 !px-4" autoFocus>
           {t("sprout.results.continue", "Continue")}
         </ChunkyLink>
         <BubbleLink href="/learn" label={t("sprout.results.home", "Home")} icon={House} hue="sky" size={64} />

@@ -107,7 +107,7 @@ export function ExamHub({ questionCount, formulaCount, chapters }: { questionCou
             </span>
             <span className="min-w-0 flex-1">
               <span className="block font-black">{a.t}</span>
-              <span className="block truncate text-sm font-semibold text-muted">{a.d}</span>
+              <span className="line-clamp-2 block text-sm font-semibold text-muted">{a.d}</span>
             </span>
             <ArrowRight className="h-5 w-5 shrink-0 text-muted transition group-hover:translate-x-1 group-hover:text-accent" />
           </Link>

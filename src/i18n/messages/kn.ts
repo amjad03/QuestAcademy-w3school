@@ -2417,5 +2417,9 @@ const messages: Record<string, string> = {
   "site.nav.openMenu": "ಮೆನು ತೆರೆಯಿರಿ",
   "tutor.err.dailyGuest": "ನೀವು ಇಂದಿನ ಉಚಿತ ಪ್ರಶ್ನೆಗಳನ್ನು ಬಳಸಿದ್ದೀರಿ. ಇನ್ನಷ್ಟು ಪಡೆಯಲು ಲಾಗ್ ಇನ್ ಮಾಡಿ, ಅಥವಾ ನಾಳೆ ಮತ್ತೆ ಬನ್ನಿ.",
   "tutor.err.dailyUser": "ನೀವು ಇಂದು Questy ಗಾಗಿ ಇರುವ ಪ್ರಶ್ನೆಗಳನ್ನು ಬಳಸಿದ್ದೀರಿ. ಇದು ನಾಳೆ ಮತ್ತೆ ಲಭ್ಯವಿರುತ್ತದೆ.",
+  "board.practice.soon": "ಇತರ ಕಲಿಯುವವರೊಂದಿಗೆ ಲೈವ್ ಲೀಗ್‌ಗಳು ಶೀಘ್ರದಲ್ಲೇ ಬರಲಿವೆ.",
+  "parent.gate": "ಈ ಪುಟ ಪೋಷಕರಿಗಾಗಿ. ದಯವಿಟ್ಟು ಉತ್ತರಿಸಿ:",
+  "settings.gate": "ಸೆಟ್ಟಿಂಗ್‌ಗಳು ದೊಡ್ಡವರಿಗಾಗಿ. ದಯವಿಟ್ಟು ಉತ್ತರಿಸಿ:",
+  "site.cta.continueShort": "ಮುಂದುವರಿಸಿ",
 };
 export default messages;

@@ -9,7 +9,7 @@ export const shapesColors: Subject = {
   tagline: "Circles, cubes, rainbows and patterns with Questy! 🦉",
   description:
     "Spot flat shapes and solid shapes all around you, mix paint colours to make new ones, build patterns and learn words like big, small, on, under and next to.",
-  levels: ["Ages 3–5", "Ages 5–6"],
+  levels: ["Ages 3–6"],
   stages: ["preprimary", "primary"],
   topics: [
     /* ------------------------------------------------------------ */

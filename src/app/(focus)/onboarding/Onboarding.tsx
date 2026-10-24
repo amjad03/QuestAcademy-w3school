@@ -214,7 +214,7 @@ export function Onboarding() {
                 {[
                   [t("onboard.summary.course", "Your course"), catalog.find((c) => c.slug === course)?.title ?? "—"],
                   [t("onboard.summary.experience", "Experience"), mode ? t("onboard.summary.modeName", "{name} mode", { name: modeName[mode] ?? MODES[mode].name }) : "—"],
-                  [t("onboard.summary.goal", "Daily goal"), t("onboard.summary.goalXp", "{n} XP", { n: goal })],
+                  [t("onboard.summary.goal", "Daily goal"), goalText[goal] ? `${goalText[goal].label} · ${goalText[goal].hint}` : t("onboard.summary.goalXp", "{n} XP", { n: goal })],
                 ].map(([a, b]) => (
                   <div key={a} className="card p-4">
                     <div className="eyebrow">{a}</div>

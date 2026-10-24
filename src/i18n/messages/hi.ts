@@ -2417,5 +2417,9 @@ const messages: Record<string, string> = {
   "site.nav.openMenu": "मेन्यू खोलें",
   "tutor.err.dailyGuest": "आपने आज के मुफ़्त सवाल इस्तेमाल कर लिए हैं। ज़्यादा सवालों के लिए लॉग इन करें, या कल फिर आएँ।",
   "tutor.err.dailyUser": "आपने आज के लिए Questy से पूछे जाने वाले सवाल इस्तेमाल कर लिए हैं। यह कल फिर से उपलब्ध होगा।",
+  "board.practice.soon": "दूसरे सीखने वालों के साथ लाइव लीग जल्द आ रही हैं।",
+  "parent.gate": "यह पेज माता-पिता के लिए है। कृपया जवाब दें:",
+  "settings.gate": "सेटिंग्स बड़ों के लिए हैं। कृपया जवाब दें:",
+  "site.cta.continueShort": "जारी रखें",
 };
 export default messages;

@@ -37,8 +37,10 @@ export function StickerBook() {
       </Link>
 
       <header className="mt-6 flex items-center gap-4">
-        <Mascot pose="cheer" size={110} />
-        <div className="flex-1">
+        <div className="hidden shrink-0 sm:block">
+          <Mascot pose="cheer" size={110} />
+        </div>
+        <div className="min-w-0 flex-1">
           <h1 className="text-3xl font-black">{t("kids.stickers.title", "My sticker book")}</h1>
           <p className="mt-1 text-lg font-bold text-muted">{t("kids.stickers.subtitle", "Try new things to fill every page!")}</p>
           <div className="mt-3 flex items-center gap-3">

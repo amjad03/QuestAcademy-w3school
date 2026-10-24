@@ -144,6 +144,9 @@ export function SaveProgressCard() {
 
 export function RailFooter() {
   const t = useT();
+  const mode = useMode();
+  // Young learners get no grown-up links (settings sit behind the grown-up gate).
+  if (mode.young) return null;
   return (
     <nav className="flex flex-wrap justify-center gap-x-4 gap-y-1 px-4 text-xs font-extrabold uppercase tracking-wide text-muted">
       <Link href="/" className="hover:text-accent">{t("shell.footer.about", "About")}</Link>

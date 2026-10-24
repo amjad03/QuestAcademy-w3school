@@ -85,7 +85,7 @@ export function ExploreSessionLayout(p: SessionLayoutProps) {
       </div>
 
       {/* Bottom: Check, then the feedback banner */}
-      <div className={clsx("ex-answerbar sticky bottom-0 z-10 transition-colors duration-200", fb ? (good ? "ex-answerbar-good" : "ex-answerbar-bad") : "")}>
+      <div className={clsx("ex-answerbar sticky bottom-0 z-[45] transition-colors duration-200", fb ? (good ? "ex-answerbar-good" : "ex-answerbar-bad") : "")}>
         <div className="mx-auto w-full max-w-[1000px] px-4 py-4 sm:px-6 sm:py-6">
           {!fb ? (
             <div className="flex items-center justify-between gap-3">

@@ -160,7 +160,7 @@ export function Leaderboard() {
                   {t("board.practice.compete", "to compete with real learners.")}
                 </>
               ) : (
-                t("board.practice.connect", "Connect Supabase (see README) to enable live leagues.")
+                t("board.practice.soon", "Live leagues with other learners are coming soon.")
               )}
             </span>
           </div>

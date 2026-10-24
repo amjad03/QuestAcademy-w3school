@@ -112,7 +112,7 @@ export function KhanLessonLayout(p: LessonLayoutProps) {
   return (
     <div className={clsx("mx-auto flex w-full max-w-[1280px] text-ink", FONT)}>
       {/* Course navigation (desktop) */}
-      <aside className="sticky top-0 hidden h-screen w-[296px] shrink-0 overflow-y-auto border-r border-line bg-surface px-4 py-6 lg:block" aria-label={t("khan.lesson.unitNav", "Unit navigation")}>
+      <aside className="sticky top-[var(--kh-sticky-top,64px)] hidden h-[calc(100vh-var(--kh-sticky-top,64px))] w-[296px] shrink-0 overflow-y-auto border-r border-line bg-surface px-4 py-6 lg:block" aria-label={t("khan.lesson.unitNav", "Unit navigation")}>
         {navColumn}
       </aside>
 

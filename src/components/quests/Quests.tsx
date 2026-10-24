@@ -1,5 +1,6 @@
 "use client";
 
+import { useMode } from "@/lib/useMode";
 import Link from "next/link";
 import { ChevronLeft, ChevronRight, Coins, Flame, Snowflake } from "lucide-react";
 import { useState } from "react";
@@ -21,7 +22,9 @@ export function Quests() {
   const s = useLearner();
   const [monthOffset, setMonthOffset] = useState(0);
 
-  const rail = (
+  const young = useMode().young;
+  // For young learners every rail card is hidden, so drop the empty column.
+  const rail = young ? undefined : (
     <>
       <SaveProgressCard />
       <LeagueCard />
@@ -77,27 +80,30 @@ export function Quests() {
           const done = q.value >= q.target;
           const isClaimed = claimed.includes(q.id);
           return (
-            <div key={q.id} className="flex items-center gap-4 p-5">
-              <span className="grid h-14 w-14 shrink-0 place-items-center rounded-2xl bg-warn/15">
+            <div key={q.id} className="flex items-center gap-3 p-4 sm:gap-4 sm:p-5">
+              <span className="grid h-11 w-11 shrink-0 place-items-center rounded-2xl bg-warn/15 sm:h-14 sm:w-14">
                 <GameIcon name={q.icon} className="h-7 w-7 text-warn-shade" />
               </span>
               <div className="min-w-0 flex-1">
-                <h3 className="text-lg font-black">{q.title}</h3>
+                {/* Reward sits beside the title so every progress bar runs the full width. */}
+                <div className="flex items-center justify-between gap-3">
+                  <h3 className="min-w-0 text-base font-black leading-snug sm:text-lg">{q.title}</h3>
+                  {q.coins > 0 &&
+                    (isClaimed ? (
+                      <span className="shrink-0 text-xs font-extrabold uppercase tracking-wide text-good">{t("quests.claimed", "Claimed")}</span>
+                    ) : (
+                      <button disabled={!done} onClick={() => s.claimQuest(q.id)} className={clsx("shrink-0 !px-3 !py-1.5 text-sm", done ? "btn-gold" : "btn-ghost !text-muted")}>
+                        <Coins className="h-4 w-4" /> {q.coins}
+                      </button>
+                    ))}
+                </div>
                 <div className="mt-2 flex items-center gap-3">
                   <ProgressBar value={q.value / q.target} height={16} color="rgb(var(--warn))" />
-                  <span className="w-16 shrink-0 text-right text-sm font-bold text-muted">
+                  <span className="shrink-0 text-right text-sm font-bold tabular-nums text-muted">
                     {Math.min(q.value, q.target)} / {q.target}
                   </span>
                 </div>
               </div>
-              {q.coins > 0 &&
-                (isClaimed ? (
-                  <span className="shrink-0 text-xs font-extrabold uppercase tracking-wide text-good">{t("quests.claimed", "Claimed")}</span>
-                ) : (
-                  <button disabled={!done} onClick={() => s.claimQuest(q.id)} className={clsx("shrink-0", done ? "btn-gold" : "btn-ghost !text-muted")}>
-                    <Coins className="h-4 w-4" /> {q.coins}
-                  </button>
-                ))}
             </div>
           );
         })}

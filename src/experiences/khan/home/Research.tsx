@@ -138,13 +138,13 @@ function CompetencyTable({ outline, course }: { outline: CourseOutline | null; c
       <section aria-labelledby="kh-rcomp">
         <SectionHeader id="kh-rcomp" title={t("khan.mastery.competencies", "Competencies")} sub={t("khan.research.compSub", "Derived from lesson mastery, unit tests and solved challenges.")} />
         <div className="card overflow-x-auto">
-          <table className="w-full min-w-[480px] text-sm">
+          <table className="w-full text-sm sm:min-w-[480px]">
             <caption className="sr-only">{t("khan.research.compCaption", "Competency overview for the current course")}</caption>
             <thead className="border-b border-line text-left text-xs text-muted">
               <tr>
                 <th scope="col" className="px-4 py-2.5 font-semibold">{t("khan.research.competency", "Competency")}</th>
                 <th scope="col" className="px-4 py-2.5 font-semibold">{t("khan.research.level", "Level")}</th>
-                <th scope="col" className="px-4 py-2.5 text-right font-semibold">{t("khan.research.evidence", "Evidence")}</th>
+                <th scope="col" className="hidden px-4 py-2.5 text-right font-semibold sm:table-cell">{t("khan.research.evidence", "Evidence")}</th>
                 <th scope="col" className="px-4 py-2.5 text-right font-semibold">{t("khan.research.score", "Score")}</th>
               </tr>
             </thead>
@@ -160,7 +160,7 @@ function CompetencyTable({ outline, course }: { outline: CourseOutline | null; c
                       <MasterySquare level={r.level} size={12} /> {name(r.level)}
                     </span>
                   </td>
-                  <td className="px-4 py-3 text-right tabular-nums">{f.n(r.evidence)}</td>
+                  <td className="hidden px-4 py-3 text-right tabular-nums sm:table-cell">{f.n(r.evidence)}</td>
                   <td className="px-4 py-3 text-right font-semibold tabular-nums">{f.pct(r.score)}</td>
                 </tr>
               ))}

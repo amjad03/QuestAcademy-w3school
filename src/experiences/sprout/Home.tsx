@@ -139,7 +139,7 @@ export function SproutHome() {
             </button>
           )}
         </div>
-        <div className="sprout-carousel -mx-4 mt-2 flex snap-x snap-mandatory gap-3 overflow-x-auto px-4 pb-4 pt-2 sm:-mx-6 sm:px-6">
+        <div className="sprout-carousel -mx-4 mt-2 flex scroll-px-4 snap-x snap-mandatory gap-3 overflow-x-auto px-4 pb-4 pt-2 sm:-mx-6 sm:scroll-px-6 sm:px-6">
           {kids.map((c) => {
             const active = c.slug === course;
             const cs = courseStyle(c.slug);

@@ -121,7 +121,7 @@ export default function Home() {
     <main className="font-landing">
       {/* Hero */}
       <section className="overflow-hidden border-b border-line bg-gradient-to-b from-surface to-surface-2/60">
-        <div className="mx-auto max-w-[1200px] px-5 pt-16 text-center lg:pt-24">
+        <div className="mx-auto max-w-[1120px] px-5 pt-16 text-center lg:pt-24">
           <h1 className="mx-auto max-w-[17ch] text-[2.5rem] font-extrabold leading-[1.06] tracking-[-0.03em] text-ink sm:text-[3.5rem]">Learn anything from pre-school to college, in your language.</h1>
           <p className="mx-auto mt-6 max-w-[40rem] text-lg leading-8 text-muted">
             Lessons, practice and mock tests mapped to CBSE, ICSE, Karnataka PUC, NEET and JEE, plus college subjects and career skills. In English and six Indian languages. Free to use.
@@ -142,7 +142,7 @@ export default function Home() {
 
       {/* Figures */}
       <section className="border-b border-line bg-surface">
-        <dl className="mx-auto grid max-w-[1200px] grid-cols-2 gap-y-8 px-5 py-10 lg:grid-cols-4">
+        <dl className="mx-auto grid max-w-[1120px] grid-cols-2 gap-y-8 px-5 py-10 lg:grid-cols-4">
           {[
             [n(stats.subjects), "courses"],
             [n(stats.lessons), "lessons"],
@@ -158,14 +158,14 @@ export default function Home() {
       </section>
 
       {/* Profiles */}
-      <section id="profiles" className="mx-auto max-w-[1200px] px-5 py-20 lg:py-28">
+      <section id="profiles" className="mx-auto max-w-[1120px] px-5 py-20 lg:py-28">
         <SectionHead title="One platform, designed for each stage" body="A four-year-old and a working engineer need different things. Each age profile has its own home, navigation, lesson pages and practice, built on the same courses and progress." />
         <AgeSwitcher />
       </section>
 
       {/* Product tour */}
       <section className="border-y border-line bg-surface">
-        <div className="mx-auto max-w-[1200px] space-y-24 px-5 py-20 lg:space-y-32 lg:py-28">
+        <div className="mx-auto max-w-[1120px] space-y-24 px-5 py-20 lg:space-y-32 lg:py-28">
           {TOUR.map((f, i) => (
             <div key={f.title} className="grid grid-cols-1 items-center gap-10 lg:grid-cols-[minmax(0,5fr)_minmax(0,7fr)] lg:gap-16">
               <div className={i % 2 ? "lg:order-2" : ""}>
@@ -191,7 +191,7 @@ export default function Home() {
       </section>
 
       {/* More tools */}
-      <section className="mx-auto max-w-[1200px] px-5 py-20">
+      <section className="mx-auto max-w-[1120px] px-5 py-20">
         <SectionHead title="Also included" />
         <div className="mt-12 grid gap-x-10 gap-y-10 sm:grid-cols-2 lg:grid-cols-4">
           {[
@@ -211,7 +211,7 @@ export default function Home() {
 
       {/* Syllabus */}
       <section id="syllabus" className="border-t border-line">
-        <div className="mx-auto max-w-[1200px] px-5 py-20">
+        <div className="mx-auto max-w-[1120px] px-5 py-20">
         <SectionHead title="Mapped to your syllabus" body="Choose your board and class to see every chapter with its weightage, linked lessons, practice drills and formula sheets." />
         <div className="mt-10 overflow-hidden rounded-2xl border border-line">
           <table className="w-full text-left text-[15px]">
@@ -248,7 +248,7 @@ export default function Home() {
 
       {/* Courses */}
       <section className="border-y border-line bg-surface">
-        <div className="mx-auto max-w-[1200px] px-5 py-20">
+        <div className="mx-auto max-w-[1120px] px-5 py-20">
           <div className="flex flex-wrap items-end justify-between gap-4">
             <SectionHead title={`${stats.subjects} courses`} />
             <Link href="/courses" className="inline-flex items-center gap-1.5 font-bold text-accent hover:underline">
@@ -280,7 +280,7 @@ export default function Home() {
       </section>
 
       {/* Pathways */}
-      <section id="pathways" className="mx-auto max-w-[1200px] px-5 py-20">
+      <section id="pathways" className="mx-auto max-w-[1120px] px-5 py-20">
         <div className="flex flex-wrap items-end justify-between gap-4">
           <SectionHead title="Career pathways" body="Structured programmes that combine lessons with practical assignments and end in a certificate of completion." />
           <Link href="/pathways" className="inline-flex items-center gap-1.5 font-bold text-accent hover:underline">
@@ -302,7 +302,7 @@ export default function Home() {
 
       {/* Parents, teachers, schools */}
       <section className="border-y border-line bg-surface">
-        <div className="mx-auto grid max-w-[1200px] gap-10 px-5 py-20 md:grid-cols-3">
+        <div className="mx-auto grid max-w-[1120px] gap-10 px-5 py-20 md:grid-cols-3">
           {[
             { icon: Users, title: "For parents", body: "See time spent, chapters completed and where your child needs help.", href: "/parent", cta: "Parent dashboard" },
             { icon: ClipboardList, title: "For teachers", body: "Printable worksheets for each chapter with answer keys, plus notes and formula sheets.", href: "/worksheets", cta: "Worksheets" },
@@ -328,7 +328,7 @@ export default function Home() {
 
       {/* Closing */}
       <section className="border-t border-line bg-surface">
-        <div className="mx-auto flex max-w-[1200px] flex-col items-start justify-between gap-6 px-5 py-16 md:flex-row md:items-center">
+        <div className="mx-auto flex max-w-[1120px] flex-col items-start justify-between gap-6 px-5 py-16 md:flex-row md:items-center">
           <div>
             <h2 className="text-2xl font-extrabold tracking-[-0.02em] text-ink sm:text-3xl">Start with any lesson.</h2>
             <p className="mt-2 text-lg text-muted">No account or payment required.</p>

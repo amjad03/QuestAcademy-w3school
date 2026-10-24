@@ -73,7 +73,7 @@ export function BlockView({ block, world, id }: { block: Block; world: WorldId; 
     case "illustration":
       return (
         <figure className={clsx("flex flex-col items-center gap-3 rounded-3xl bg-surface-2 py-8", kids && "py-10")}>
-          <span className={clsx("leading-none", kids ? "animate-float text-[7rem]" : "text-7xl")}>{block.emoji}</span>
+          <span className={clsx("leading-none", kids ? "animate-float whitespace-nowrap text-center text-[clamp(4rem,18vw,7rem)]" : "whitespace-nowrap text-center text-[clamp(3rem,14vw,4.5rem)]")}>{block.emoji}</span>
           <figcaption className={clsx("max-w-md px-6 text-center font-bold text-muted", kids && "text-xl text-ink")}>
             <MdInline text={block.caption} />
           </figcaption>
