@@ -236,21 +236,21 @@ const mission: Mission = {
   steps: [
     {
       task: "Run the line score = 5.",
-      predict: { question: "What does score = 5 tell the computer?", options: ["Put 5 in the box called score", "Check whether score is equal to 5"], answer: 0 },
+      predict: { question: "What does score = 5 tell the computer?", options: ["Put 5 in the box called score", "Check whether score is equal to 5"], answer: 0, trap: 1 },
       scene: (api) => <StepRun {...api} code="score = 5" to="5" />,
       hint: "Tap the orange Run button under the box.",
       explain: "A **variable** is a box in the computer's memory with a name on it. The **=** sign means *store*: put the value on the right into the box on the left. Now `score` holds 5.",
     },
     {
       task: "Run the line score = 8.",
-      predict: { question: "score holds 5. After score = 8, what is in the box?", options: ["8 — the 5 is thrown away", "Both 5 and 8", "13"], answer: 0 },
+      predict: { question: "score holds 5. After score = 8, what is in the box?", options: ["8 — the 5 is thrown away", "Both 5 and 8", "13"], answer: 0, trap: 1 },
       scene: (api) => <StepRun {...api} code="score = 8" from="5" to="8" />,
       hint: "Tap the orange Run button.",
       explain: "A variable holds **one value at a time**. Storing 8 throws the old 5 away. That is why it is called a *variable*: its value can vary.",
     },
     {
       task: "Run the line score = score + 1.",
-      predict: { question: "score holds 8. What does score = score + 1 do?", options: ["Nothing — it is impossible maths", "Makes score 9", "Gives an error"], answer: 1 },
+      predict: { question: "score holds 8. What does score = score + 1 do?", options: ["Nothing — it is impossible maths", "Makes score 9", "Gives an error"], answer: 1, trap: 0 },
       scene: (api) => <StepRun {...api} code="score = score + 1" from="8" to="9" machine />,
       hint: "Tap Run and watch the 8 go through the +1 machine.",
       explain: "In code, = does not mean *is equal to*. The computer works out the **right side first** (8 + 1 = 9), then stores the answer back in `score`. This is how games add points.",

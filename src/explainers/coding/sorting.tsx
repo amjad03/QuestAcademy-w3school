@@ -229,14 +229,14 @@ const mission: Mission = {
   steps: [
     {
       task: "Compare the first two friends.",
-      predict: { question: "How does the computer find out who is in the wrong place?", options: ["It looks at the whole line at once and just knows", "It compares two neighbours at a time"], answer: 1 },
+      predict: { question: "How does the computer find out who is in the wrong place?", options: ["It looks at the whole line at once and just knows", "It compares two neighbours at a time"], answer: 1, trap: 0 },
       scene: (api) => <StepPass {...api} start={O0} from={0} to={1} sorted={[]} button="Compare" />,
       hint: "Tap the pink Compare button.",
       explain: "A computer cannot *see* the whole line. It can only **compare** two numbers at a time. 140 > 115, so the left friend is taller and they **swap**. That one rule is **bubble sort**.",
     },
     {
       task: "Finish walking down the line.",
-      predict: { question: "After one walk down the line, who will be at the end?", options: ["The tallest friend (160)", "Everyone will be sorted", "The shortest friend (115)"], answer: 0 },
+      predict: { question: "After one walk down the line, who will be at the end?", options: ["The tallest friend (160)", "Everyone will be sorted", "The shortest friend (115)"], answer: 0, trap: 1 },
       scene: (api) => <StepPass {...api} start={O1} from={1} to={4} sorted={[4]} button="Keep comparing" />,
       hint: "Tap the button and watch each pair get checked.",
       explain: "One walk down the line is called a **pass**. Each time the tallest so far meets a shorter friend they swap, so the tallest **bubbles** to the end. The others are still not in order.",

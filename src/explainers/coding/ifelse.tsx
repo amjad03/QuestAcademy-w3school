@@ -345,7 +345,7 @@ const mission: Mission = {
   steps: [
     {
       task: "It is raining. Run the code.",
-      predict: { question: "It is raining. What will Bolt do?", options: ["Take the umbrella only", "Take the umbrella AND wear sunglasses — both parts run"], answer: 0 },
+      predict: { question: "It is raining. What will Bolt do?", options: ["Take the umbrella only", "Take the umbrella AND wear sunglasses — both parts run"], answer: 0, trap: 1 },
       scene: (api) => <StepWeather {...api} weather="rainy" lines={IF_ELSE} />,
       hint: "Tap the purple Run button and watch the lines light up.",
       explain: "**if** asks a yes-or-no question, called a **condition**. It was raining, so the answer was yes: the umbrella line ran and the whole **else** part was skipped. Only one branch ever runs.",
@@ -359,7 +359,7 @@ const mission: Mission = {
     },
     {
       task: "It is snowing. Run the longer code.",
-      predict: { question: "It is snowing. Which questions does Bolt ask?", options: ["Only raining?", "raining? (no), then snowing? (yes)", "Every question, and all the yes parts run"], answer: 1 },
+      predict: { question: "It is snowing. Which questions does Bolt ask?", options: ["Only raining?", "raining? (no), then snowing? (yes)", "Every question, and all the yes parts run"], answer: 1, trap: 2 },
       scene: (api) => <StepWeather {...api} weather="snowy" lines={IF_ELIF} />,
       hint: "Tap Run and watch which questions light up.",
       explain: "**elif** means *else if*: ask another question. Bolt asks from the top and **stops at the first yes**, so he wears the scarf and skips the rest.",

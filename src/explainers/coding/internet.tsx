@@ -352,21 +352,21 @@ const mission: Mission = {
   steps: [
     {
       task: "Cut the photo into packets.",
-      predict: { question: "How does a photo travel across the internet?", options: ["In one big piece, all at once", "Cut into small numbered pieces"], answer: 1 },
+      predict: { question: "How does a photo travel across the internet?", options: ["In one big piece, all at once", "Cut into small numbered pieces"], answer: 1, trap: 0 },
       scene: (api) => <StepCut {...api} />,
       hint: "Tap the green button under the photo.",
       explain: "Data is cut into small pieces called **packets**. Each packet has a label saying who it is for and its number, like *2 of 4*.",
     },
     {
       task: "Send the packets to Grandma.",
-      predict: { question: "Router R1 has a traffic jam. What will the packets do?", options: ["Wait up in the cloud until it clears", "Take another road around it"], answer: 1 },
+      predict: { question: "Router R1 has a traffic jam. What will the packets do?", options: ["Wait up in the cloud until it clears", "Take another road around it"], answer: 1, trap: 0 },
       scene: (api) => <StepSend {...api} />,
       hint: "Tap Send and watch the packets hop.",
       explain: "**Routers** are computers that pass each packet to a neighbour closer to Grandma. They are joined by real cables, not a cloud in the sky, and there are many roads, so packets go round a jam. Some roads are longer, so they arrive **jumbled**.",
     },
     {
       task: "Rebuild the photo on Grandma's tablet.",
-      predict: { question: "The packets came as 2, 4, 1, 3. Can the tablet fix the order?", options: ["No — the photo stays scrambled", "Yes — it sorts them by their numbers"], answer: 1 },
+      predict: { question: "The packets came as 2, 4, 1, 3. Can the tablet fix the order?", options: ["No — the photo stays scrambled", "Yes — it sorts them by their numbers"], answer: 1, trap: 0 },
       scene: (api) => <StepRebuild {...api} />,
       hint: "Tap the button under the pieces.",
       explain: "The number on each packet tells the tablet where it goes, so it puts them back as 1, 2, 3, 4 and the **whole photo** appears. If one is missing, the tablet asks for it again.",

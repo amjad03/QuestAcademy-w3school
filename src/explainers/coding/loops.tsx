@@ -330,7 +330,7 @@ const mission: Mission = {
   steps: [
     {
       task: "Press Run and count Bolt's sides.",
-      predict: { question: "The loop says repeat 4. How many sides will Bolt draw?", options: ["3", "4", "5"], answer: 1 },
+      predict: { question: "The loop says repeat 4. How many sides will Bolt draw?", options: ["3", "4", "5"], answer: 1, trap: 2 },
       scene: (api) => <StepShape {...api} pts={SQ} turn={90} code={["repeat 4:", "    forward", "    turn right"]} color={TRAIL} />,
       hint: "Tap the green Run button and watch the lap number.",
       explain: "A **loop** repeats the lines inside it. Each time round is called a **lap** (or *iteration*). repeat 4 means exactly 4 laps, so Bolt draws exactly 4 sides — not one more, not one less.",
@@ -344,7 +344,7 @@ const mission: Mission = {
     },
     {
       task: "Run this Python loop.",
-      predict: { question: "What will for i in range(4) print?", options: ["1 2 3 4", "0 1 2 3", "0 1 2 3 4"], answer: 1 },
+      predict: { question: "What will for i in range(4) print?", options: ["1 2 3 4", "0 1 2 3", "0 1 2 3 4"], answer: 1, trap: 0 },
       scene: (api) => <StepRange {...api} />,
       hint: "Tap Run and watch the box called i.",
       explain: "range(4) gives 4 numbers, but Python **starts counting at 0**: 0, 1, 2, 3. The **loop variable** i holds the lap number, so the loop still runs exactly 4 times.",

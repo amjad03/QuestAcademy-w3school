@@ -322,21 +322,21 @@ const mission: Mission = {
   steps: [
     {
       task: "Switch on the switch worth 2.",
-      predict: { question: "With the 2 on and the 1 off, the switches read 10. What number is binary 10?", options: ["Ten", "Two"], answer: 1 },
+      predict: { question: "With the 2 on and the 1 off, the switches read 10. What number is binary 10?", options: ["Ten", "Two"], answer: 1, trap: 0 },
       scene: (api) => <StepFlip {...api} places={[2, 1]} start={0} tap={2} />,
       hint: "Tap the glowing switch on the left.",
       explain: "**Binary** writes numbers using only 0 (off) and 1 (on). Each switch is worth a number, and you add up the ones that are on. Binary 10 means one 2 and no 1s, so it is **two**, not ten.",
     },
     {
       task: "Switch on the 1 as well.",
-      predict: { question: "The 4 is on. Turn on the 1 too, and the switches read 0101. What number is that?", options: ["101", "5", "6"], answer: 1 },
+      predict: { question: "The 4 is on. Turn on the 1 too, and the switches read 0101. What number is that?", options: ["101", "5", "6"], answer: 1, trap: 0 },
       scene: (api) => <StepFlip {...api} places={PLACES4} start={4} tap={1} />,
       hint: "Tap the glowing switch on the far right.",
       explain: "Going left, each switch is worth **double** the one before: 1, 2, 4, 8. Add the ones that are on: 4 + 1 = **5**. Each 0 or 1 is called a **bit**.",
     },
     {
       task: "The switches show 7. Add 1.",
-      predict: { question: "0111 is 7. What will 7 + 1 look like?", options: ["0112", "1000", "1111"], answer: 1 },
+      predict: { question: "0111 is 7. What will 7 + 1 look like?", options: ["0112", "1000", "1111"], answer: 1, trap: 0 },
       scene: (api) => <StepCarry {...api} />,
       hint: "Tap the blue Add 1 button.",
       explain: "There is no digit 2 in binary, so 1 + 1 **carries** to the next switch, just like 9 + 1 carries in normal counting. All three 1s flip off and the 8 turns on: **1000** is 8.",
