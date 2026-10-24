@@ -2408,7 +2408,7 @@ export const topics: Topic[] = [
           {
             kind: "fill",
             q: "Error correction: \"The stranger asked me where did the bank stand.\" Correct: The stranger asked me where the bank ___.",
-            answer: ["stood"],
+            answer: ["stood", "was"],
             explain: "Remove *did* and use statement order with the past: *where the bank stood*.",
             difficulty: 3,
           },

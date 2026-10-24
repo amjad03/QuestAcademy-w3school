@@ -356,7 +356,7 @@ export const topics: Topic[] = [
           },
           {
             kind: "fill",
-            q: "Use the comparative: 'Ganga is the longest river in India.' → 'Ganga is longer than ___ other river in India.'",
+            q: "Use the comparative: 'The Ganga is the longest river in India.' → 'The Ganga is longer than ___ other river in India.'",
             answer: ["any"],
             explain: "Superlative → comparative: **longer than any other river**. Without 'other', Ganga would be compared with itself.",
           },

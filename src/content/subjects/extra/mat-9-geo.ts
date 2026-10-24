@@ -797,7 +797,7 @@ export const topics: Topic[] = [
         blocks: [
           {
             type: "text",
-            md: "Stand anywhere on the boundary of a circular cricket ground and look at the two ends of the pitch-side boundary rope. A beautiful fact: from every point on the same arc you see that rope under the **same angle**. This lesson collects the angle theorems that make such facts true.",
+            md: "Stand anywhere on the boundary of a circular cricket ground and look at two flags A and B fixed on the same boundary. A beautiful fact: from every point on the same arc you see A and B under the **same angle**. This lesson collects the angle theorems that make such facts true.",
           },
           { type: "heading", text: "The angle theorems" },
           {

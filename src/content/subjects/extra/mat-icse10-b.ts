@@ -1172,7 +1172,7 @@ export const topics: Topic[] = [
             type: "mistake",
             wrong: "After finding the incentre I, set the compass to IA (the distance to a vertex) and draw the incircle.",
             right: "The inradius is the **perpendicular** distance from I to a side: draw IM ⊥ BC first and use IM.",
-            why: "The incircle touches the sides, not the vertices, and I is always farther from a vertex than from a side, so a circle of radius IA would cross the sides. For an obtuse triangle the circumcentre lies outside, so extend the bisectors.",
+            why: "The incircle touches the sides, not the vertices, and I is always farther from a vertex than from a side, so a circle of radius IA would cross the sides. (For the circumcircle of an obtuse triangle, the circumcentre lies outside, so extend the perpendicular bisectors.)",
           },
           { type: "illustration", emoji: "⬡", caption: "A regular hexagon: six equilateral triangles around the centre." },
           {
