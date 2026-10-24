@@ -2,9 +2,9 @@
 
 import { useState } from "react";
 import { motion } from "framer-motion";
-import type { Explainer } from "../types";
+import type { Explainer, Mission, MissionApi } from "../types";
 import { fmt, useFrame } from "@/components/widgets/_shared";
-import { DARK, Feedback, Ground, INK, Kid, MUTED, Pad, Svg, TryShell } from "./_kit";
+import { ActionButton, ActionRow, DARK, Ground, INK, Kid, MUTED, Pad, Svg } from "./_kit";
 
 const C = "#EF4444";
 const G = 9.8;
@@ -299,16 +299,17 @@ function SceneWhy() {
   );
 }
 
-/* ---------------- Try: drop lab ---------------- */
+/* ---------------- guided mission: drop lab ---------------- */
 
-const OBJS: { id: ObjId; name: string; mass: string; vt: number }[] = [
-  { id: "bowling", name: "Bowling ball", mass: "7 kg", vt: 90 },
-  { id: "hammer", name: "Hammer", mass: "1 kg", vt: 45 },
-  { id: "apple", name: "Apple", mass: "100 g", vt: 25 },
-  { id: "crumpled", name: "Paper ball", mass: "5 g", vt: 5 },
-  { id: "sheet", name: "Flat paper", mass: "5 g", vt: 1.2 },
-  { id: "feather", name: "Feather", mass: "0.5 g", vt: 0.8 },
-];
+// foot: how far the art reaches below its centre, so it rests on the ground
+const OBJS: Record<ObjId, { mass: string; vt: number; foot: number }> = {
+  bowling: { mass: "7 kg", vt: 90, foot: 16 },
+  hammer: { mass: "1 kg", vt: 45, foot: 22 },
+  apple: { mass: "100 g", vt: 25, foot: 11 },
+  crumpled: { mass: "5 g", vt: 5, foot: 10 },
+  sheet: { mass: "5 g", vt: 1.2, foot: 2 },
+  feather: { mass: "0.5 g", vt: 0.8, foot: 20 },
+};
 const H = 2; // metres
 
 /** Distance fallen after time t (metres), with quadratic air drag (terminal speed vt) or none. */
@@ -321,19 +322,16 @@ function landTime(vt: number, air: boolean) {
   return (vt / G) * Math.acosh(Math.exp((H * G) / (vt * vt)));
 }
 
-function GravityTry() {
-  const [l, setL] = useState<ObjId>("bowling");
-  const [r, setR] = useState<ObjId>("feather");
-  const [air, setAir] = useState(true);
-  const [slow, setSlow] = useState(true);
+/** Two objects dropped from 2 m, side by side. One button drops them; afterwards a slow-motion replay. */
+function StepDrop({ l, r, air, api, cta }: { l: ObjId; r: ObjId; air: boolean; api: MissionApi; cta: string }) {
   const [t, setT] = useState(0);
   const [running, setRunning] = useState(false);
-  const oL = OBJS.find((o) => o.id === l)!;
-  const oR = OBJS.find((o) => o.id === r)!;
+  const [factor, setFactor] = useState(1);
+  const oL = OBJS[l];
+  const oR = OBJS[r];
   const tL = landTime(oL.vt, air);
   const tR = landTime(oR.vt, air);
   const tEnd = Math.max(tL, tR);
-  const factor = slow ? 0.35 : 1;
 
   useFrame((dt) => {
     setT((x) => {
@@ -346,129 +344,113 @@ function GravityTry() {
     });
   }, running);
 
-  const dropped = t > 0;
-  const finished = dropped && !running && t >= tEnd - 1e-9;
-  const TOP = 40;
-  const BOT = 250;
-  const yOf = (o: (typeof OBJS)[number]) => TOP + (Math.min(H, fallen(t, o.vt, air)) / H) * (BOT - TOP);
-  const sway = (o: (typeof OBJS)[number], tl: number) => (air && o.vt < 2 && t < tl ? Math.sin(t * 7) * 10 : 0);
-
-  const stop = () => {
-    setRunning(false);
-    setT(0);
-  };
-  const drop = () => {
+  const drop = (f: number) => {
+    setFactor(f);
     setT(0);
     setRunning(true);
   };
-  const pick = (side: "L" | "R", id: ObjId) => {
-    stop();
-    if (side === "L") setL(id);
-    else setR(id);
-  };
-
-  let msg: { tone: "good" | "info" | "warn"; text: string } = { tone: "info", text: "Pick two things, choose air or no air, then press Drop!" };
-  if (finished) {
-    const diff = Math.abs(tL - tR);
-    const paperPair = (l === "crumpled" && r === "sheet") || (l === "sheet" && r === "crumpled");
-    if (!air) msg = { tone: "good", text: `No air: both took ${fmt(tL, 2)} s — exactly the same, even though one is ${oL.mass} and the other ${oR.mass}!` };
-    else if (paperPair) msg = { tone: "good", text: `Same paper, same mass — only the shape changed. The flat sheet took ${fmt(Math.max(tL, tR) - Math.min(tL, tR), 2)} s longer. So it's the air, not the weight!` };
-    else if (diff < 0.03) msg = { tone: "good", text: `Almost a tie (${fmt(tL, 2)} s vs ${fmt(tR, 2)} s). Air barely slows heavy, compact things over a short drop.` };
-    else {
-      const slower = tL > tR ? oL : oR;
-      msg = { tone: "warn", text: `The ${slower.name.toLowerCase()} took longer because air pushes up on it a lot compared with its weight. Now try it with no air!` };
-    }
-  } else if (running) msg = { tone: "info", text: "Falling…" };
-
-  const Chip = ({ side, o }: { side: "L" | "R"; o: (typeof OBJS)[number] }) => {
-    const active = (side === "L" ? l : r) === o.id;
-    return (
-      <button type="button" onClick={() => pick(side, o.id)} aria-pressed={active} className="min-h-[44px] rounded-xl border-2 px-2.5 text-[13px] font-extrabold transition active:scale-95" style={active ? { background: C, borderColor: C, color: "white" } : { borderColor: "rgb(var(--line))" }}>
-        {o.name}
-      </button>
-    );
-  };
+  const TOP = 56;
+  const BOT = 250;
+  // lands with its lowest point on the ground line (BOT + 14)
+  const yOf = (o: { vt: number; foot: number }) => TOP + (Math.min(H, fallen(t, o.vt, air)) / H) * (BOT + 14 - o.foot - TOP);
+  const sway = (vt: number, tl: number) => (air && vt < 2 && t < tl ? Math.sin(t * 7) * 10 : 0);
+  const ink = air ? INK : "#e2e8f0";
 
   return (
-    <TryShell title="Drop lab" hint="Drop two things from 2 metres. Does the heavier one always win?" onReset={() => { stop(); setL("bowling"); setR("feather"); setAir(true); setSlow(true); }}>
-      <div className="grid gap-3 md:grid-cols-[1fr_1.1fr]">
-        <div className="rounded-2xl border-2 border-line p-1">
-          <Svg label={`Drop tubes. Left: ${oL.name}. Right: ${oR.name}. ${air ? "With air." : "No air."}`} vb="0 0 300 290" maxH={340}>
-            <rect x="0" y="0" width="300" height="290" rx="12" fill={air ? "rgba(125, 211, 252, 0.12)" : "rgba(15, 23, 42, 0.85)"} />
-            {air && Array.from({ length: 26 }, (_, i) => <circle key={i} cx={20 + ((i * 89) % 260)} cy={30 + ((i * 47) % 230)} r="2" fill="#7dd3fc" opacity="0.6" />)}
-            {[0, 0.5, 1, 1.5, 2].map((m) => (
-              <g key={m}>
-                <line x1="138" y1={TOP + (m / H) * (BOT - TOP)} x2="162" y2={TOP + (m / H) * (BOT - TOP)} stroke={air ? MUTED : "#94a3b8"} strokeWidth="1.5" />
-                <text x="150" y={TOP + (m / H) * (BOT - TOP) - 4} textAnchor="middle" fontSize="10" fontWeight="800" fill={air ? MUTED : "#cbd5e1"}>
-                  {m} m
-                </text>
-              </g>
-            ))}
-            <rect x="0" y={BOT + 14} width="300" height="26" fill={air ? "#86efac" : "#94a3b8"} />
-            <g transform={`translate(${75 + sway(oL, tL)} ${yOf(oL)})`}>
-              <ObjArt id={l} ink={air ? INK : "#e2e8f0"} />
-            </g>
-            <g transform={`translate(${225 + sway(oR, tR)} ${yOf(oR)})`}>
-              <ObjArt id={r} ink={air ? INK : "#e2e8f0"} />
-            </g>
-            <text x="75" y="22" textAnchor="middle" fontSize="12" fontWeight="900" fill={air ? INK : "white"}>
-              {oL.name} · {oL.mass}
+    <div>
+      <Svg label={`Two objects dropped from 2 metres, ${air ? "in air" : "with no air"}: ${l} (${oL.mass}) and ${r} (${oR.mass}).`} vb="0 0 300 290" maxH={250}>
+        <rect x="0" y="0" width="300" height="290" rx="12" fill={air ? "rgba(125, 211, 252, 0.12)" : "#0f172a"} />
+        {air && Array.from({ length: 26 }, (_, i) => <circle key={i} cx={20 + ((i * 89) % 260)} cy={30 + ((i * 47) % 230)} r="2" fill="#7dd3fc" opacity="0.6" />)}
+        {!air && Array.from({ length: 18 }, (_, i) => <circle key={i} cx={(i * 83) % 300} cy={(i * 41) % 200} r="1.2" fill="white" opacity="0.7" />)}
+        {[0, 1, 2].map((m) => (
+          <g key={m}>
+            <line x1="138" y1={TOP + (m / H) * (BOT - TOP)} x2="162" y2={TOP + (m / H) * (BOT - TOP)} stroke={air ? MUTED : "#94a3b8"} strokeWidth="1.5" />
+            <text x="150" y={TOP + (m / H) * (BOT - TOP) - 4} textAnchor="middle" fontSize="11" fontWeight="800" fill={air ? MUTED : "#cbd5e1"}>
+              {m} m
             </text>
-            <text x="225" y="22" textAnchor="middle" fontSize="12" fontWeight="900" fill={air ? INK : "white"}>
-              {oR.name} · {oR.mass}
-            </text>
-            {dropped && t >= tL && (
-              <text x="75" y={BOT + 32} textAnchor="middle" fontSize="13" fontWeight="900" fill="#1c2333">
-                {fmt(tL, 2)} s
-              </text>
-            )}
-            {dropped && t >= tR && (
-              <text x="225" y={BOT + 32} textAnchor="middle" fontSize="13" fontWeight="900" fill="#1c2333">
-                {fmt(tR, 2)} s
-              </text>
-            )}
-          </Svg>
-          <p className="px-2 pb-1 text-right font-mono text-sm font-bold text-muted">t = {fmt(t, 2)} s{slow ? " (slow motion)" : ""}</p>
-        </div>
-        <div className="flex flex-col gap-3">
-          <div>
-            <p className="mb-1 text-xs font-black uppercase tracking-wide text-muted">Left hand</p>
-            <div className="flex flex-wrap gap-1.5">
-              {OBJS.map((o) => (
-                <Chip key={o.id} side="L" o={o} />
-              ))}
-            </div>
-          </div>
-          <div>
-            <p className="mb-1 text-xs font-black uppercase tracking-wide text-muted">Right hand</p>
-            <div className="flex flex-wrap gap-1.5">
-              {OBJS.map((o) => (
-                <Chip key={o.id} side="R" o={o} />
-              ))}
-            </div>
-          </div>
-          <div className="flex flex-wrap gap-2">
-            <Pad onClick={() => { stop(); setAir(true); }} color="#0ea5e9" solid={air}>
-              🌍 Air (Earth)
-            </Pad>
-            <Pad onClick={() => { stop(); setAir(false); }} color="#475569" solid={!air}>
-              🌑 No air (vacuum)
-            </Pad>
-            <Pad onClick={() => setSlow((s) => !s)} color="#64748b" solid={slow}>
-              🐢 Slow-mo
-            </Pad>
-          </div>
-          <Pad onClick={drop} color={C} solid disabled={running} className="text-base">
-            {dropped ? "Drop again!" : "Drop!"}
+          </g>
+        ))}
+        <rect x="0" y={BOT + 14} width="300" height="26" fill={air ? "#86efac" : "#94a3b8"} />
+        <g transform={`translate(${75 + sway(oL.vt, tL)} ${yOf(oL)})`}>
+          <ObjArt id={l} ink={ink} />
+        </g>
+        <g transform={`translate(${225 + sway(oR.vt, tR)} ${yOf(oR)})`}>
+          <ObjArt id={r} ink={ink} />
+        </g>
+        <text x="75" y="22" textAnchor="middle" fontSize="15" fontWeight="900" fill={air ? INK : "white"}>
+          {oL.mass}
+        </text>
+        <text x="225" y="22" textAnchor="middle" fontSize="15" fontWeight="900" fill={air ? INK : "white"}>
+          {oR.mass}
+        </text>
+        {!air && (
+          <text x="150" y="282" textAnchor="middle" fontSize="12" fontWeight="900" fill="#1c2333">
+            no air
+          </text>
+        )}
+        {t > 0 && t >= tL && (
+          <text x="75" y={BOT + 32} textAnchor="middle" fontSize="15" fontWeight="900" fill="#1c2333">
+            {fmt(tL, 2)} s
+          </text>
+        )}
+        {t > 0 && t >= tR && (
+          <text x="225" y={BOT + 32} textAnchor="middle" fontSize="15" fontWeight="900" fill="#1c2333">
+            {fmt(tR, 2)} s
+          </text>
+        )}
+      </Svg>
+      <ActionRow>
+        {!api.complete ? (
+          <ActionButton
+            color={C}
+            onClick={() => {
+              drop(1);
+              api.done();
+            }}
+          >
+            {cta}
+          </ActionButton>
+        ) : (
+          <Pad onClick={() => drop(0.3)} disabled={running} color={C}>
+            🐢 Replay in slow motion
           </Pad>
-          <Feedback tone={msg.tone} k={msg.text}>
-            {msg.text}
-          </Feedback>
-        </div>
-      </div>
-    </TryShell>
+        )}
+      </ActionRow>
+    </div>
   );
 }
+
+const mission: Mission = {
+  goal: "Drop things side by side and find out what really decides which lands first.",
+  steps: [
+    {
+      task: "Drop the bowling ball and the apple.",
+      predict: { question: "A 7 kg bowling ball and a 100 g apple are dropped together. Which lands first?", options: ["The bowling ball — heavier things fall faster", "They land together", "The apple"], answer: 1, trap: 0 },
+      scene: (api) => <StepDrop l="bowling" r="apple" air api={api} cta="Drop both!" />,
+      hint: "Tap the red button under the picture.",
+      explain: "They land **together**, even though the ball is 70 times heavier. Gravity speeds up heavy and light things at the same rate.",
+    },
+    {
+      task: "Drop the hammer and the feather.",
+      predict: { question: "Now a hammer and a feather, in air. Which lands first?", options: ["The hammer", "They land together", "The feather"], answer: 0, trap: 1 },
+      scene: (api) => <StepDrop l="hammer" r="feather" air api={api} cta="Drop both!" />,
+      explain: "The feather drifts down slowly. Air pushes up on it as it falls — that push is called **air resistance** — and for a light, fluffy feather the push is big compared with its weight.",
+    },
+    {
+      task: "Drop a paper ball and a flat sheet.",
+      predict: { question: "Two sheets of the same paper (same weight). One is crumpled into a ball. Which lands first?", options: ["They land together — same weight", "The paper ball", "The flat sheet"], answer: 1, trap: 0 },
+      scene: (api) => <StepDrop l="crumpled" r="sheet" air api={api} cta="Drop both!" />,
+      explain: "Same weight, different **shape**. The flat sheet catches much more air, so air resistance slows it far more. It's the air, not the weight, that makes the difference.",
+    },
+    {
+      task: "Take the air away and drop the hammer and feather.",
+      predict: { question: "With no air at all (a vacuum, like on the Moon), which lands first?", options: ["The hammer — it's heavier", "They land together", "The feather"], answer: 1, trap: 0 },
+      scene: (api) => <StepDrop l="hammer" r="feather" air={false} api={api} cta="Drop with no air!" />,
+      explain: "With no air there is no air resistance, so they land at **exactly the same moment**. An astronaut did this on the Moon in 1971.",
+    },
+  ],
+  takeaway: "Without air, everything falls at the same rate, however heavy; air resistance is what slows light, spread-out things.",
+};
 
 /* ---------------- Story + analogy ---------------- */
 
@@ -618,12 +600,13 @@ export const gravityFalling: Explainer = {
   watch: [
     { title: "Gravity pulls everything down", say: "The Earth pulls every object towards its centre. That pull is called gravity, and it's why things fall when you let go.", scene: <SceneEarth /> },
     { title: "Heavy and light, dropped together", say: "Drop a heavy bowling ball and a light apple at the same moment. Surprise: they hit the ground together!", scene: <SceneSameTime /> },
-    { title: "Falling gets faster and faster", say: "A falling object speeds up by about 10 metres per second every second. That's why the gaps between these snapshots keep growing.", scene: <SceneStrobe /> },
+    { title: "Falling gets faster and faster", say: "A falling object keeps speeding up: every second it goes about 10 metres per second faster. That's why the gaps between these snapshots keep growing.", scene: <SceneStrobe /> },
     { title: "Air gets in the way", say: "A feather falls slowly because the air pushes up on it. This push is called air resistance, and it matters most for light, spread-out things.", scene: <SceneAir /> },
     { title: "Take the air away", say: "On the Moon there is no air. An astronaut dropped a hammer and a feather, and they landed at the very same moment!", scene: <SceneMoon /> },
-    { title: "Why they fall together", say: "A heavier object gets a bigger pull, but it's also harder to speed up. The two cancel out, so everything falls with the same acceleration, g.", scene: <SceneWhy /> },
+    { title: "Why they fall together", say: "A heavier object gets a bigger pull, but it is also harder to speed up. The two cancel out, so everything speeds up at the same rate as it falls. We call that rate g.", scene: <SceneWhy /> },
   ],
-  try: GravityTry,
+  misconception: { myth: "Heavier objects fall faster than light ones.", truth: "Without air, everything falls at the same rate. A feather is slow only because air pushes up on it." },
+  mission,
   story,
   like,
 };

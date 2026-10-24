@@ -2,9 +2,8 @@
 
 import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
-import { Minus, Plus } from "lucide-react";
-import type { Explainer } from "../types";
-import { DARK, Feedback, INK, Kid, MUTED, Pad, Svg, TryShell } from "./_kit";
+import type { Explainer, Mission, MissionApi } from "../types";
+import { ActionButton, ActionRow, DARK, INK, Kid, MUTED, Pad, Svg } from "./_kit";
 
 const C = "#84CC16";
 
@@ -321,156 +320,230 @@ function SceneMass() {
   );
 }
 
-/* ---------------- Try: balance the equation ---------------- */
+/* ---------------- guided mission: balance the equation ---------------- */
 
-type Reaction = { name: string; left: string[]; right: string[] };
-const REACTIONS: Reaction[] = [
-  { name: "Making water", left: ["H2", "O2"], right: ["H2O"] },
-  { name: "Burning methane gas", left: ["CH4", "O2"], right: ["CO2", "H2O"] },
-  { name: "Making ammonia", left: ["N2", "H2"], right: ["NH3"] },
-];
+const H2O2: Mol = { name: "hydrogen peroxide", formula: "H₂O₂", atoms: [{ el: "O", x: -10, y: 0 }, { el: "O", x: 10, y: 0 }, { el: "H", x: -20, y: 12 }, { el: "H", x: 20, y: -12 }], bonds: [[0, 1], [0, 2], [1, 3]] };
 
-function countAtoms(keys: string[], n: number[]) {
-  const out: Partial<Record<El, number>> = {};
-  keys.forEach((k, i) => MOLS[k].atoms.forEach((a) => (out[a.el] = (out[a.el] ?? 0) + n[i])));
-  return out;
-}
-const massOf = (c: Partial<Record<El, number>>) => (Object.keys(c) as El[]).reduce((s, e) => s + (c[e] ?? 0) * EL[e].mass, 0);
+type Eqn = { h2: number; o2: number; water: number; peroxide?: boolean };
 
-function MolBox({ k, n, onChange }: { k: string; n: number; onChange: (v: number) => void }) {
-  const m = MOLS[k];
+const fmtN = (n: number, f: string) => `${n > 1 ? n : ""}${f}`;
+
+/** H₂ + O₂ → water, drawn as molecules, with an atom count underneath when `count` is on. */
+function Equation({ e, count }: { e: Eqn; count: boolean }) {
+  const right = e.peroxide ? H2O2 : MOLS.H2O;
+  const lH = 2 * e.h2;
+  const lO = 2 * e.o2;
+  const rH = 2 * e.water;
+  const rO = (e.peroxide ? 2 : 1) * e.water;
+  const col = (n: number, i: number, x: number) => ({ x, y: n === 1 ? 86 : 60 + i * 54 });
+  const rows: [El, number, number][] = [
+    ["H", lH, rH],
+    ["O", lO, rO],
+  ];
   return (
-    <div className="flex min-w-[118px] flex-1 flex-col items-center rounded-2xl border-2 border-line p-2">
-      <p className="text-sm font-black">
-        <span className="text-lg" style={{ color: C }}>
-          {n}
-        </span>{" "}
-        {m.formula} <span className="font-semibold text-muted">{m.name}</span>
-      </p>
-      <Svg label={`${n} ${m.name} molecules`} vb="0 0 120 92" maxH={100}>
-        {Array.from({ length: n }, (_, i) => (
-          <motion.g key={i} initial={{ opacity: 0, scale: 0.4 }} animate={{ opacity: 1, scale: 1 }}>
-            <Molecule m={m} x={22 + (i % 3) * 38} y={22 + Math.floor(i / 3) * 46} s={0.75} />
+    <Svg label={`${fmtN(e.h2, "H₂")} + ${fmtN(e.o2, "O₂")} → ${fmtN(e.water, right.formula)}. Hydrogen atoms: ${lH} before, ${rH} after. Oxygen atoms: ${lO} before, ${rO} after.`} vb="0 0 400 250" maxH={250}>
+      <text x="200" y="26" textAnchor="middle" fontSize="22" fontWeight="900" fill={INK}>
+        {fmtN(e.h2, "H₂")} + {fmtN(e.o2, "O₂")} → {fmtN(e.water, right.formula)}
+      </text>
+      {Array.from({ length: e.h2 }, (_, i) => {
+        const p = col(e.h2, i, 56);
+        return (
+          <motion.g key={`h${i}`} initial={{ opacity: 0, scale: 0.5 }} animate={{ opacity: 1, scale: 1 }}>
+            <Molecule m={MOLS.H2} x={p.x} y={p.y} s={1.8} />
           </motion.g>
-        ))}
-      </Svg>
-      <div className="flex gap-1.5">
-        <Pad onClick={() => onChange(Math.max(1, n - 1))} disabled={n <= 1} color={C} label={`One fewer ${m.name} molecule`}>
-          <Minus className="h-5 w-5" />
-        </Pad>
-        <Pad onClick={() => onChange(Math.min(6, n + 1))} disabled={n >= 6} color={C} label={`One more ${m.name} molecule`}>
-          <Plus className="h-5 w-5" />
-        </Pad>
-      </div>
+        );
+      })}
+      {Array.from({ length: e.o2 }, (_, i) => {
+        const p = col(e.o2, i, 140);
+        return <Molecule key={`o${i}`} m={MOLS.O2} x={p.x} y={p.y} s={1.6} />;
+      })}
+      <path d="M 192 86 L 226 86" stroke={INK} strokeWidth="3" markerEnd="url(#ar-m)" />
+      <defs>
+        <marker id="ar-m" markerWidth="8" markerHeight="8" refX="4" refY="4" orient="auto">
+          <path d="M0,0 L8,4 L0,8 Z" fill={INK} />
+        </marker>
+      </defs>
+      {Array.from({ length: e.water }, (_, i) => {
+        const p = col(e.water, i, 305);
+        return (
+          <motion.g key={`w${i}${e.peroxide ? "p" : ""}`} initial={{ opacity: 0, scale: 0.5 }} animate={{ opacity: 1, scale: 1 }}>
+            <Molecule m={right} x={p.x} y={p.y} s={1.7} />
+          </motion.g>
+        );
+      })}
+      {count && (
+        <motion.g initial={{ opacity: 0 }} animate={{ opacity: 1 }}>
+          <line x1="20" y1="150" x2="380" y2="150" stroke="rgb(var(--line))" strokeWidth="2" />
+          <text x="110" y="174" textAnchor="middle" fontSize="13" fontWeight="800" fill={MUTED}>
+            before
+          </text>
+          <text x="290" y="174" textAnchor="middle" fontSize="13" fontWeight="800" fill={MUTED}>
+            after
+          </text>
+          {rows.map(([el, a, b], k) => (
+            <g key={el} transform={`translate(0 ${200 + k * 36})`}>
+              <Atom el={el} x={40} y={-6} s={1.2} />
+              <text x="110" y="2" textAnchor="middle" fontSize="22" fontWeight="900" fill={INK}>
+                {a}
+              </text>
+              <text x="200" y="2" textAnchor="middle" fontSize="22" fontWeight="900" fill={a === b ? "#16a34a" : "#ef4444"}>
+                {a === b ? "=" : "≠"}
+              </text>
+              <text x="290" y="2" textAnchor="middle" fontSize="22" fontWeight="900" fill={INK}>
+                {b}
+              </text>
+              <text x="360" y="2" textAnchor="middle" fontSize="20">
+                {a === b ? "✅" : "❌"}
+              </text>
+            </g>
+          ))}
+        </motion.g>
+      )}
+    </Svg>
+  );
+}
+
+function StepCount({ done, complete }: MissionApi) {
+  const [counted, setCounted] = useState(false);
+  return (
+    <div>
+      <Equation e={{ h2: 1, o2: 1, water: 1 }} count={counted} />
+      <ActionRow>
+        <ActionButton
+          color={C}
+          ink={DARK}
+          disabled={complete}
+          onClick={() => {
+            setCounted(true);
+            done();
+          }}
+        >
+          Count the atoms
+        </ActionButton>
+      </ActionRow>
     </div>
   );
 }
 
-function AtomsTry() {
-  const [ri, setRi] = useState(0);
-  const rx = REACTIONS[ri];
-  const [nl, setNl] = useState<number[]>(rx.left.map(() => 1));
-  const [nr, setNr] = useState<number[]>(rx.right.map(() => 1));
-  const load = (k: number) => {
-    setRi(k);
-    setNl(REACTIONS[k].left.map(() => 1));
-    setNr(REACTIONS[k].right.map(() => 1));
-  };
-  const cl = countAtoms(rx.left, nl);
-  const cr = countAtoms(rx.right, nr);
-  const els = (["C", "H", "N", "O"] as El[]).filter((e) => cl[e] || cr[e]);
-  const balanced = els.every((e) => cl[e] === cr[e]);
-  const ml = massOf(cl);
-  const mr = massOf(cr);
-  const tilt = Math.max(-10, Math.min(10, (ml - mr) / 3));
-  const eqStr = (keys: string[], n: number[]) => keys.map((k, i) => `${n[i] > 1 ? n[i] : ""}${MOLS[k].formula}`).join(" + ");
-  const th = (tilt * Math.PI) / 180;
-
+function StepFixOxygen({ done, complete }: MissionApi) {
+  const [e, setE] = useState<Eqn>({ h2: 1, o2: 1, water: 1 });
   return (
-    <TryShell title="Balance the reaction" hint="Atoms can't appear or vanish. Change how many molecules there are until every atom on the left shows up on the right." onReset={() => load(ri)}>
-      <div className="mb-3 flex flex-wrap gap-1.5">
-        {REACTIONS.map((r, k) => (
-          <button key={r.name} type="button" onClick={() => load(k)} className="min-h-[40px] rounded-xl border-2 px-3 text-sm font-extrabold" style={k === ri ? { background: C, borderColor: C, color: "#1c2333" } : { borderColor: "rgb(var(--line))" }}>
-            {r.name}
-          </button>
-        ))}
-      </div>
-      <p className="mb-2 text-center font-mono text-xl font-black" aria-live="polite">
-        {eqStr(rx.left, nl)} → {eqStr(rx.right, nr)}
-      </p>
-      <div className="grid items-stretch gap-2 sm:grid-cols-[1fr_auto_1fr]">
-        <div className="flex flex-wrap gap-2">
-          {rx.left.map((k, i) => (
-            <MolBox key={k} k={k} n={nl[i]} onChange={(v) => setNl((a) => a.map((x, j) => (j === i ? v : x)))} />
-          ))}
-        </div>
-        <div className="grid place-items-center text-3xl font-black text-muted">→</div>
-        <div className="flex flex-wrap gap-2">
-          {rx.right.map((k, i) => (
-            <MolBox key={k} k={k} n={nr[i]} onChange={(v) => setNr((a) => a.map((x, j) => (j === i ? v : x)))} />
-          ))}
-        </div>
-      </div>
-      <div className="mt-3 grid gap-3 sm:grid-cols-[1.2fr_1fr]">
-        <div className="space-y-1.5 rounded-2xl border-2 border-line p-3">
-          <p className="text-xs font-black uppercase tracking-wide text-muted">Atom count</p>
-          {els.map((e) => {
-            const a = cl[e] ?? 0;
-            const b = cr[e] ?? 0;
-            return (
-              <div key={e} className="grid grid-cols-[86px_1fr_28px_1fr] items-center gap-2 text-sm font-bold">
-                <span className="flex items-center gap-1.5">
-                  <svg width="20" height="20" viewBox="-11 -11 22 22" aria-hidden>
-                    <circle r="9" fill={EL[e].fill} stroke={DARK} strokeWidth="1.5" />
-                  </svg>
-                  {EL[e].name}
-                </span>
-                <span className="text-right font-mono text-lg">{a}</span>
-                <span className="text-center text-lg">{a === b ? "✅" : "❌"}</span>
-                <span className="font-mono text-lg">{b}</span>
-              </div>
-            );
-          })}
-        </div>
-        <div className="rounded-2xl border-2 border-line p-1">
-          <Svg label={`Mass before ${ml} units, mass after ${mr} units`} vb="0 0 220 120" maxH={140}>
-            <path d="M 110 40 L 100 108 L 120 108 Z" fill="#94a3b8" stroke={INK} strokeWidth="2" />
-            <motion.g animate={{ rotate: -tilt }} style={{ originX: 0.5, originY: 0.5 }}>
-              <line x1="30" y1="40" x2="190" y2="40" stroke={INK} strokeWidth="5" strokeLinecap="round" />
-            </motion.g>
-            {[
-              { x: 110 - 80 * Math.cos(th), y: 40 + 80 * Math.sin(th), m: ml, l: "before" },
-              { x: 110 + 80 * Math.cos(th), y: 40 - 80 * Math.sin(th), m: mr, l: "after" },
-            ].map((p) => (
-              <motion.g key={p.l} animate={{ x: p.x, y: p.y }} initial={false}>
-                <line x1="0" y1="0" x2="0" y2="20" stroke={INK} strokeWidth="1.5" />
-                <rect x="-30" y="20" width="60" height="26" rx="6" fill="rgb(var(--surface-2))" stroke={INK} strokeWidth="2" />
-                <text x="0" y="38" textAnchor="middle" fontSize="13" fontWeight="900" fill={INK}>
-                  {p.m} u
-                </text>
-                <text x="0" y="62" textAnchor="middle" fontSize="10" fontWeight="800" fill={MUTED}>
-                  {p.l}
-                </text>
-              </motion.g>
-            ))}
-            <circle cx="110" cy="40" r="5" fill="#fbbf24" stroke={INK} strokeWidth="2" />
-          </Svg>
-        </div>
-      </div>
-      <div className="mt-3">
-        {balanced ? (
-          <Feedback tone="good" k={`ok${ri}`}>
-            Balanced! Every atom on the left turns up on the right — none made, none destroyed. That's why the mass stays the same: {ml} u before, {mr} u after.
-          </Feedback>
-        ) : (
-          <Feedback tone="bad" k={`no${els.map((e) => `${cl[e]}-${cr[e]}`).join()}`}>
-            Not balanced: {els.filter((e) => cl[e] !== cr[e]).map((e) => `${EL[e].name.toLowerCase()} ${cl[e] ?? 0} → ${cr[e] ?? 0}`).join(", ")}. Atoms can&apos;t vanish or appear! Add molecules — but never change the little numbers inside a formula.
-          </Feedback>
-        )}
-      </div>
-    </TryShell>
+    <div>
+      <Equation e={e} count />
+      {e.peroxide && <p className="mt-1 text-center text-sm font-bold text-bad-shade">H₂O₂ is hydrogen peroxide (a bleach), not water! Try the other way.</p>}
+      <ActionRow>
+        <ActionButton
+          color={C}
+          ink={DARK}
+          disabled={complete}
+          onClick={() => {
+            setE({ h2: 1, o2: 1, water: 2 });
+            done();
+          }}
+        >
+          + 1 water molecule
+        </ActionButton>
+        <Pad onClick={() => setE({ h2: 1, o2: 1, water: 1, peroxide: true })} disabled={complete || e.peroxide} color="#64748b">
+          Change H₂O to H₂O₂
+        </Pad>
+      </ActionRow>
+    </div>
   );
 }
+
+function StepFixHydrogen({ done, complete }: MissionApi) {
+  const [h2, setH2] = useState(1);
+  return (
+    <div>
+      <Equation e={{ h2, o2: 1, water: 2 }} count />
+      <ActionRow>
+        <ActionButton
+          color={C}
+          ink={DARK}
+          disabled={complete}
+          onClick={() => {
+            setH2(2);
+            done();
+          }}
+        >
+          + 1 hydrogen molecule
+        </ActionButton>
+      </ActionRow>
+    </div>
+  );
+}
+
+function StepWeigh({ done, complete }: MissionApi) {
+  const [after, setAfter] = useState(false);
+  return (
+    <div>
+      <Svg label={after ? "After the reaction the sealed flask holds water and the scale still reads 100.0 grams" : "A sealed flask of hydrogen and oxygen on a scale reading 100.0 grams"} vb="0 0 400 240" maxH={240}>
+        <Flask x={200} y={180} after={after} />
+        {after && (
+          <motion.text x="250" y="110" fontSize="26" initial={{ opacity: 1 }} animate={{ opacity: 0 }} transition={{ duration: 1 }}>
+            💥
+          </motion.text>
+        )}
+        <ScaleBase x={200} y={180} reading="100.0 g" />
+        <text x="70" y="100" textAnchor="middle" fontSize="16" fontWeight="900" fill={INK}>
+          {after ? "after" : "before"}
+        </text>
+        <text x="70" y="122" textAnchor="middle" fontSize="15" fontWeight="800" fill={MUTED}>
+          {after ? "2H₂O" : "2H₂ + O₂"}
+        </text>
+        <text x="330" y="100" textAnchor="middle" fontSize="15" fontWeight="900" fill={INK}>
+          sealed
+        </text>
+      </Svg>
+      <ActionRow>
+        <ActionButton
+          color={C}
+          ink={DARK}
+          disabled={complete}
+          onClick={() => {
+            setAfter(true);
+            done();
+          }}
+        >
+          💥 Make them react
+        </ActionButton>
+      </ActionRow>
+    </div>
+  );
+}
+
+const mission: Mission = {
+  goal: "Balance the equation for making water: every atom before the arrow must turn up after it.",
+  steps: [
+    {
+      task: "Count the atoms on each side.",
+      predict: { question: "H₂ + O₂ → H₂O. Is this balanced (the same atoms on both sides)?", options: ["Yes — hydrogen and oxygen are on both sides", "No — an atom is missing"], answer: 1, trap: 0 },
+      scene: (api) => <StepCount {...api} />,
+      hint: "Tap the green button to count.",
+      explain: "There are 2 oxygen atoms before but only 1 after. Atoms can't vanish, so the equation is **not balanced** yet. **Balanced** means every kind of atom has the same count on both sides.",
+    },
+    {
+      task: "Fix the oxygen count.",
+      predict: { question: "How should we fix the missing oxygen?", options: ["Change H₂O to H₂O₂ (change the little number)", "Add another water molecule (2H₂O)"], answer: 1, trap: 0 },
+      scene: (api) => <StepFixOxygen {...api} />,
+      hint: "Changing the little number makes a different chemical. Add a whole molecule instead.",
+      explain: "Now oxygen matches: 2 and 2. The big number in front (**2**H₂O) means two molecules. The little numbers inside a formula say what the molecule *is*, so we never change them.",
+    },
+    {
+      task: "Now fix the hydrogen count.",
+      predict: { question: "Now there are 4 H atoms after but only 2 before. What should we do?", options: ["Change H₂ to H₄", "Add another H₂ molecule", "Take a water away"], answer: 1, trap: 0 },
+      scene: (api) => <StepFixHydrogen {...api} />,
+      explain: "4 hydrogen and 2 oxygen on each side: **2H₂ + O₂ → 2H₂O** is balanced. We only changed how many molecules there are, never what they are.",
+    },
+    {
+      task: "Seal the gases in a flask and make them react.",
+      predict: { question: "The sealed flask weighs 100.0 g. After the reaction, it weighs…", options: ["Less — the gases get used up", "The same", "More — water is heavier"], answer: 1, trap: 0 },
+      scene: (api) => <StepWeigh {...api} />,
+      explain: "Still 100.0 g. The very same atoms are there, just joined in new ways, so the **mass stays the same**. This is called conservation of mass.",
+    },
+  ],
+  takeaway: "In a reaction atoms only swap partners: balance an equation by changing the big numbers in front, never the little ones inside.",
+};
 
 /* ---------------- Story + analogy ---------------- */
 
@@ -624,13 +697,14 @@ export const atomsReactions: Explainer = {
   color: C,
   icon: "⚛️",
   watch: [
-    { title: "Everything is made of atoms", say: "Everything around you is built from tiny pieces called atoms, far too small to see. There are about 118 different kinds, called elements.", scene: <SceneZoom /> },
+    { title: "Everything is made of atoms", say: "Everything around you is built from tiny pieces called atoms, far too small to see. There are about 118 kinds of atom. Each kind is called an element.", scene: <SceneZoom /> },
     { title: "Atoms join to make molecules", say: "Atoms can link up like building blocks. Two hydrogen atoms and one oxygen atom join to make one molecule of water, H₂O.", scene: <SceneJoin /> },
-    { title: "A reaction swaps the partners", say: "In a chemical reaction, molecules break apart and their atoms join up with new partners. Hydrogen and oxygen gases become water.", scene: <SceneReaction /> },
+    { title: "A reaction swaps the partners", say: "In a chemical reaction, molecules break apart. Their atoms join up with new partners. Here, hydrogen gas and oxygen gas become water.", scene: <SceneReaction /> },
     { title: "Count the atoms", say: "Count the atoms before and after: 4 hydrogen and 2 oxygen on each side. No atom is made, and no atom is destroyed.", scene: <SceneCount /> },
     { title: "So the mass stays the same", say: "Because the very same atoms are still there, the total mass doesn't change. A sealed flask weighs the same before and after the reaction.", scene: <SceneMass /> },
   ],
-  try: AtomsTry,
+  misconception: { myth: "To balance an equation, change the little numbers inside a formula, like H₂O to H₂O₂.", truth: "The little numbers say what the substance is. Balance by changing the big numbers in front (how many molecules), like 2H₂O." },
+  mission,
   story,
   like,
 };

@@ -55,6 +55,16 @@ export function MissionPlayer({ mission, color }: { mission: Mission; color: str
 
   useEffect(() => () => stopVoice(), []);
 
+  // On small screens keep the current step's instruction and controls in view.
+  const rootRef = useRef<HTMLDivElement>(null);
+  useEffect(() => {
+    if (i < 0 || phase === "explain") return;
+    const el = rootRef.current;
+    if (!el) return;
+    const top = el.getBoundingClientRect().top;
+    if (top < 0 || top > window.innerHeight * 0.35) el.scrollIntoView({ behavior: "smooth", block: "start" });
+  }, [i, phase]);
+
   // On small screens the explanation lands below the fold: bring it into view.
   useEffect(() => {
     if (phase === "explain") explainRef.current?.scrollIntoView({ behavior: "smooth", block: "nearest" });
@@ -77,7 +87,7 @@ export function MissionPlayer({ mission, color }: { mission: Mission; color: str
   const big = young ? "text-xl sm:text-2xl" : "text-lg sm:text-xl";
 
   return (
-    <div className="mission" style={{ ["--ex" as string]: color }}>
+    <div ref={rootRef} className="mission scroll-mt-20" style={{ ["--ex" as string]: color }}>
       {/* progress */}
       <div className="mb-4 flex items-center gap-2" aria-hidden>
         {mission.steps.map((_, n) => (
@@ -164,7 +174,7 @@ export function MissionPlayer({ mission, color }: { mission: Mission; color: str
                             <Check className="h-5 w-5" strokeWidth={3} /> {t("mission.guessRight", "You guessed right!")}
                           </span>
                         ) : (
-                          <span>{t("mission.guessWrong", "Many people guess that too — here’s what really happens.")}</span>
+                          <span>{guess === step.predict.trap ? t("mission.guessTrap", "Many people think that too! Here’s what really happens.") : t("mission.guessWrong", "Not quite — here’s what really happens.")}</span>
                         )}
                       </p>
                     )}

@@ -64,7 +64,13 @@ export interface MissionStep {
    * Ask before acting. Put the common wrong idea among the options so the
    * result breaks it. `answer` is the index of the right option.
    */
-  predict?: { question: string; options: string[]; answer: number };
+  predict?: {
+    question: string;
+    options: string[];
+    answer: number;
+    /** Index of the option that is the common wrong idea, if one is. Picking it gets "Many people think that!". */
+    trap?: number;
+  };
   /** The interactive scene for this step: big touch targets, at most two controls. Call api.done() when the task is achieved. */
   scene: (api: MissionApi) => ReactNode;
   /** Shown if the learner asks for help or seems stuck. */

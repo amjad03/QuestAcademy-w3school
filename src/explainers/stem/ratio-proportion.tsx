@@ -2,10 +2,8 @@
 
 import { useState, type ReactNode } from "react";
 import { motion } from "framer-motion";
-import { Minus, Plus } from "lucide-react";
-import type { Explainer } from "../types";
-import { gcd } from "@/components/widgets/_shared";
-import { DARK, Feedback, Ground, INK, Kid, MUTED, Pad, Svg, TryShell } from "./_kit";
+import type { Explainer, Mission, MissionApi } from "../types";
+import { ActionButton, ActionRow, DARK, Ground, INK, Kid, MUTED, Svg } from "./_kit";
 
 const C = "#EC4899";
 const LEMON = "#facc15";
@@ -252,122 +250,128 @@ function SceneGraph() {
   );
 }
 
-/* ---------------- Try: paint mixer ---------------- */
+/* ---------------- guided mission: paint mixer ---------------- */
 
-const ORDERS = [
-  { tb: 1, ty: 2, ask: "Make a bigger batch using exactly 3 blue tins.", ok: (b: number, _y: number) => b === 3 },
-  { tb: 2, ty: 3, ask: "Make a batch using 10 tins altogether.", ok: (b: number, y: number) => b + y === 10 },
-  { tb: 3, ty: 1, ask: "You only have 2 yellow tins. Use both of them.", ok: (_b: number, y: number) => y === 2 },
-  { tb: 3, ty: 2, ask: "A big wall! Use 9 blue tins.", ok: (b: number, _y: number) => b === 9 },
-];
-
-function Counter({ label, value, color, onChange }: { label: string; value: number; color: string; onChange: (v: number) => void }) {
+/** A paint blob for a mix, with its tins underneath and its ratio above. */
+function Bucket({ x, mix, title }: { x: number; mix: [number, number] | null; title: string }) {
+  const tins = mix ? ([...Array(mix[0]).fill(BLUE), ...Array(mix[1]).fill(YELLOW)] as string[]) : [];
+  const gap = Math.min(15, 120 / Math.max(1, tins.length));
   return (
-    <div className="flex items-center gap-2 rounded-2xl border-2 p-2" style={{ borderColor: color }}>
-      <span className="min-w-[64px] text-sm font-black" style={{ color: color === YELLOW ? "#a16207" : color }}>
-        {label}
-      </span>
-      <Pad onClick={() => onChange(Math.max(0, value - 1))} disabled={value <= 0} color={color === YELLOW ? "#ca8a04" : color} label={`One less ${label} tin`}>
-        <Minus className="h-5 w-5" />
-      </Pad>
-      <motion.span key={value} initial={{ scale: 1.4 }} animate={{ scale: 1 }} className="w-8 text-center font-mono text-2xl font-black" aria-live="polite">
-        {value}
-      </motion.span>
-      <Pad onClick={() => onChange(Math.min(15, value + 1))} disabled={value >= 15} color={color === YELLOW ? "#ca8a04" : color} label={`One more ${label} tin`}>
-        <Plus className="h-5 w-5" />
-      </Pad>
+    <g>
+      <text x={x} y="24" textAnchor="middle" fontSize="15" fontWeight="800" fill={MUTED}>
+        {title}
+      </text>
+      <text x={x} y="52" textAnchor="middle" fontSize="24" fontWeight="900" fill={INK}>
+        {mix ? `${mix[0]} : ${mix[1]}` : "?"}
+      </text>
+      <motion.circle cx={x} cy="112" r="44" initial={false} animate={{ fill: mix ? paintMix(mix[0], mix[1]) : "#e5e7eb" }} transition={{ duration: 0.6 }} stroke={INK} strokeWidth="2.5" />
+      {tins.map((t, i) => (
+        <motion.g key={`${t}${i}`} initial={{ y: -16, opacity: 0 }} animate={{ y: 0, opacity: 1 }} transition={{ delay: i * 0.04 }}>
+          <Tin x={x - ((tins.length - 1) * gap) / 2 + i * gap} y={196} color={t} s={0.62} />
+        </motion.g>
+      ))}
+    </g>
+  );
+}
+
+/** Sample on the left, your mix on the right, and = or ≠ between them. */
+function PaintPair({ sample, mix }: { sample: [number, number] | null; mix: [number, number] | null }) {
+  const same = sample && mix && sample[0] * mix[1] === sample[1] * mix[0];
+  if (!sample)
+    return (
+      <Svg label={mix ? `Your bucket: ${mix[0]} blue to ${mix[1]} yellow` : "An empty bucket"} vb="0 0 300 210" maxH={230}>
+        <Bucket x={150} mix={mix} title="your bucket" />
+      </Svg>
+    );
+  return (
+    <Svg label={`Sample ${sample[0]} : ${sample[1]} beside your bucket ${mix ? `${mix[0]} : ${mix[1]}, ${same ? "the same green" : "a different colour"}` : "(empty)"}`} vb="0 0 300 210" maxH={230}>
+      <Bucket x={75} mix={sample} title="sample" />
+      <Bucket x={225} mix={mix} title="your bucket" />
+      {mix && (
+        <motion.text x="150" y="122" textAnchor="middle" fontSize="34" fontWeight="900" fill={same ? "#16a34a" : "#ef4444"} initial={{ opacity: 0, scale: 0.6 }} animate={{ opacity: 1, scale: 1 }} transition={{ delay: 0.4 }}>
+          {same ? "=" : "≠"}
+        </motion.text>
+      )}
+    </Svg>
+  );
+}
+
+function StepMix({ sample, to, cta, api }: { sample: [number, number] | null; to: [number, number]; cta: string; api: MissionApi }) {
+  const [mix, setMix] = useState<[number, number] | null>(null);
+  return (
+    <div>
+      <PaintPair sample={sample} mix={mix} />
+      <ActionRow>
+        <ActionButton
+          color={C}
+          disabled={api.complete}
+          onClick={() => {
+            setMix(to);
+            api.done();
+          }}
+        >
+          {cta}
+        </ActionButton>
+      </ActionRow>
     </div>
   );
 }
 
-function RatioTry() {
-  const [o, setO] = useState(0);
-  const [b, setB] = useState(0);
-  const [y, setY] = useState(0);
-  const ord = ORDERS[o];
-  const same = b + y > 0 && b * ord.ty === y * ord.tb;
-  const met = ord.ok(b, y);
-  const win = same && met;
-  const g = gcd(b, y);
-  const tins = [...Array(b).fill(BLUE), ...Array(y).fill(YELLOW)] as string[];
-  const reset = () => {
-    setB(0);
-    setY(0);
-  };
-  const next = () => {
-    setO((k) => (k + 1) % ORDERS.length);
-    reset();
-  };
+const BIG_YELLOW = [3, 5, 6];
 
-  let fb: { tone: "good" | "bad" | "info" | "warn"; text: string };
-  if (b + y === 0) fb = { tone: "info", text: "Add tins of blue and yellow. The colour depends on how the amounts compare, not on how much paint there is." };
-  else if (win) fb = { tone: "good", text: `Perfect match! ${b} : ${y} is the target ${ord.tb} : ${ord.ty} with every part multiplied by ${b / ord.tb}.` };
-  else if (same) fb = { tone: "warn", text: `Same colour ✓ — ${b} : ${y} simplifies to ${ord.tb} : ${ord.ty}. But check the order: ${ord.ask}` };
-  else if (b * ord.ty > y * ord.tb) fb = { tone: "bad", text: `Too blue. For every ${ord.tb} blue you need ${ord.ty} yellow.` };
-  else fb = { tone: "bad", text: `Too yellow. For every ${ord.ty} yellow you need ${ord.tb} blue.` };
-
+/** Uses the learner's guess: mixes 6 blue with the number of yellow tins they predicted. */
+function StepScaleUp({ done, complete, guess }: MissionApi) {
+  const y = BIG_YELLOW[guess ?? 0];
+  const [mix, setMix] = useState<[number, number] | null>(null);
   return (
-    <TryShell title="Paint shop: match the colour" hint="Mix blue and yellow tins until your green matches the sample exactly." onReset={reset}>
-      <div className="mb-3 rounded-2xl border-2 border-line bg-surface-2 px-4 py-3">
-        <p className="text-xs font-black uppercase tracking-wide text-muted">
-          Order {o + 1} of {ORDERS.length}
-        </p>
-        <p className="mt-0.5 text-lg font-black">
-          Sample: {ord.tb} blue : {ord.ty} yellow. {ord.ask}
-        </p>
-      </div>
-      <div className="grid gap-3 sm:grid-cols-2">
-        <div className="rounded-2xl border-2 border-line p-2">
-          <Svg label={`Sample colour beside your mix. Your mix is ${b} blue to ${y} yellow and ${same ? "matches" : "does not match"}.`} vb="0 0 300 180" maxH={240}>
-            <circle cx="70" cy="70" r="46" fill={paintMix(ord.tb, ord.ty)} stroke={INK} strokeWidth="2.5" />
-            <text x="70" y="140" textAnchor="middle" fontSize="13" fontWeight="900" fill={INK}>
-              sample
-            </text>
-            <text x="70" y="158" textAnchor="middle" fontSize="12" fontWeight="800" fill={MUTED}>
-              {ord.tb} : {ord.ty}
-            </text>
-            <motion.circle cx="210" cy="70" r="46" animate={{ fill: paintMix(b, y) }} stroke={INK} strokeWidth="2.5" />
-            {same && (
-              <motion.text x="140" y="78" textAnchor="middle" fontSize="26" fontWeight="900" fill="#16a34a" initial={{ opacity: 0 }} animate={{ opacity: 1 }}>
-                =
-              </motion.text>
-            )}
-            <text x="210" y="140" textAnchor="middle" fontSize="13" fontWeight="900" fill={INK}>
-              your bucket
-            </text>
-            <text x="210" y="158" textAnchor="middle" fontSize="12" fontWeight="800" fill={MUTED}>
-              {b} : {y}
-              {b + y > 0 && g > 1 ? ` = ${b / g} : ${y / g}` : ""}
-            </text>
-          </Svg>
-        </div>
-        <div className="flex flex-col gap-2">
-          <Counter label="Blue" value={b} color={BLUE} onChange={setB} />
-          <Counter label="Yellow" value={y} color={YELLOW} onChange={setY} />
-          <div className="min-h-[56px] rounded-2xl border-2 border-dashed border-line p-1">
-            <Svg label={`${b} blue tins and ${y} yellow tins`} vb="0 0 300 56" maxH={64}>
-              {tins.map((t, i) => (
-                <motion.g key={`${t}${i}`} initial={{ y: -20, opacity: 0 }} animate={{ y: 0, opacity: 1 }}>
-                  <Tin x={14 + (i % 15) * 19.5} y={i < 15 ? 30 : 54} color={t} s={0.7} />
-                </motion.g>
-              ))}
-            </Svg>
-          </div>
-        </div>
-      </div>
-      <div className="mt-3 space-y-2">
-        <Feedback tone={fb.tone} k={fb.text}>
-          {fb.text}
-        </Feedback>
-        {win && (
-          <Pad onClick={next} color={C} solid>
-            Next order →
-          </Pad>
-        )}
-      </div>
-    </TryShell>
+    <div>
+      <PaintPair sample={[2, 1]} mix={mix} />
+      <ActionRow>
+        <ActionButton
+          color={C}
+          disabled={complete}
+          onClick={() => {
+            setMix([6, y]);
+            done();
+          }}
+        >
+          Mix 6 blue + {y} yellow
+        </ActionButton>
+      </ActionRow>
+    </div>
   );
 }
+
+const mission: Mission = {
+  goal: "Mix a green paint, then make more of it without changing the colour.",
+  steps: [
+    {
+      task: "Mix 2 tins of blue with 1 tin of yellow.",
+      scene: (api) => <StepMix sample={null} to={[2, 1]} cta="Mix 2 blue + 1 yellow" api={api} />,
+      hint: "Tap the pink button.",
+      explain: "This is our green. We write the recipe as the **ratio 2 : 1** (“2 to 1”): 2 parts blue for every 1 part yellow.",
+    },
+    {
+      task: "Double the recipe.",
+      predict: { question: "Mix 4 blue with 2 yellow. What colour will it be?", options: ["The same green", "A darker green — there's more paint", "Bluer"], answer: 0, trap: 1 },
+      scene: (api) => <StepMix sample={[2, 1]} to={[4, 2]} cta="Mix 4 blue + 2 yellow" api={api} />,
+      explain: "Exactly the same green. Both parts were **multiplied by 2**, so blue is still twice the yellow. 2 : 1 and 4 : 2 are **equivalent ratios**.",
+    },
+    {
+      task: "Add 1 more tin of each colour.",
+      predict: { question: "Start from 2 : 1 and add 1 tin of each colour (3 : 2). Same green?", options: ["Yes — adding the same to both keeps it fair", "No — the colour changes"], answer: 1, trap: 0 },
+      scene: (api) => <StepMix sample={[2, 1]} to={[3, 2]} cta="+1 blue and +1 yellow" api={api} />,
+      explain: "The colour changes: it's more yellow. Yellow was 1 tin in 3, now it's 2 in 5. **Adding** the same amount changes a ratio; only **multiplying** both parts keeps it.",
+    },
+    {
+      task: "Make a big batch with 6 blue tins.",
+      predict: { question: "6 tins of blue. How many yellow tins for the same green?", options: ["3", "5", "6"], answer: 0, trap: 1 },
+      scene: (api) => <StepScaleUp {...api} />,
+      explain: "6 blue is 2 blue **× 3**, so yellow must be 1 **× 3** = 3. 6 : 3 is the same green. When both amounts grow by the same multiplier they are **in proportion**.",
+    },
+  ],
+  takeaway: "To keep a ratio the same, multiply (or divide) every part by the same number — adding the same amount changes it.",
+};
 
 /* ---------------- Story + analogy ---------------- */
 
@@ -530,11 +534,12 @@ export const ratioProportion: Explainer = {
   watch: [
     { title: "A ratio compares amounts", say: "Our lemonade uses 1 cup of lemon juice for every 3 cups of water. We write that as the ratio 1 : 3.", scene: <SceneRecipe /> },
     { title: "Making more: multiply both parts", say: "For twice as much, double both parts: 2 cups of lemon and 6 cups of water. It tastes exactly the same.", scene: <SceneDouble /> },
-    { title: "Adding the same amount doesn't work", say: "If we just add 1 cup to each, we get 2 : 4. Now lemon is a bigger share of the drink, so it tastes too sour.", scene: <SceneWrong /> },
+    { title: "Adding the same amount doesn't work", say: "What if we just add 1 cup of each? We get 2 : 4. Now lemon is a bigger part of the drink, so it tastes too sour.", scene: <SceneWrong /> },
     { title: "Paint mixes the same way", say: "2 blue to 1 yellow makes this green, and 4 to 2 gives the exact same green. But 2 to 2 is a different colour.", scene: <ScenePaint /> },
-    { title: "Proportion makes a straight line", say: "When both amounts grow by the same multiplier they are in proportion. Plotted on a graph they make a straight line through zero.", scene: <SceneGraph /> },
+    { title: "Proportion makes a straight line", say: "When both amounts are multiplied by the same number, we say they are in proportion. On a graph they make a straight line that starts at zero.", scene: <SceneGraph /> },
   ],
-  try: RatioTry,
+  misconception: { myth: "Adding the same amount to both parts keeps a ratio the same (1 : 3 → 2 : 4).", truth: "Only multiplying or dividing both parts by the same number keeps a ratio. 1 : 3 → 2 : 6 tastes the same; 2 : 4 is too sour." },
+  mission,
   story,
   like,
 };

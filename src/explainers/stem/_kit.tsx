@@ -186,3 +186,26 @@ export function Feedback({ tone, k, children }: { tone: "good" | "bad" | "info" 
 export function Ground({ y = 140, color = "#bbf7d0", w = 240 }: { y?: number; color?: string; w?: number }) {
   return <rect x="0" y={y} width={w} height="20" fill={color} />;
 }
+
+/**
+ * One big action button for a guided-mission step (52px tall, full colour).
+ * Use `ink` for dark text on light accent colours.
+ */
+export function ActionButton({ onClick, disabled, color, ink = "white", children }: { onClick: () => void; disabled?: boolean; color: string; ink?: string; children: ReactNode }) {
+  return (
+    <button
+      type="button"
+      onClick={onClick}
+      disabled={disabled}
+      className="flex min-h-[52px] items-center justify-center gap-2 rounded-2xl px-6 text-lg font-black shadow-sm transition active:scale-95 disabled:cursor-default disabled:opacity-50"
+      style={{ background: color, color: ink, touchAction: "manipulation" }}
+    >
+      {children}
+    </button>
+  );
+}
+
+/** Centred row for one or two mission action buttons. */
+export function ActionRow({ children }: { children: ReactNode }) {
+  return <div className="mt-2 flex flex-wrap items-center justify-center gap-2">{children}</div>;
+}

@@ -272,7 +272,7 @@ const mission: Mission = {
   steps: [
     {
       task: "Close the switch.",
-      predict: { question: "The battery is connected, but the switch is open. Will the bulb light?", options: ["Yes — the battery is connected", "No — the loop is broken"], answer: 1 },
+      predict: { question: "The battery is connected, but the switch is open. Will the bulb light?", options: ["Yes — the battery is connected", "No — the loop is broken"], answer: 1, trap: 0 },
       scene: (api) => <StepSwitch {...api} />,
       hint: "Tap the orange button under the circuit.",
       explain: "Current only flows round a **complete loop**. With the switch open there is a gap, so nothing flows anywhere — not even in the wire next to the battery.",

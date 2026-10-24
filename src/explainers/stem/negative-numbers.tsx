@@ -1,10 +1,9 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useState } from "react";
 import { motion } from "framer-motion";
-import type { Explainer } from "../types";
-import { useSvgDrag } from "@/components/widgets/_shared";
-import { DARK, Feedback, Ground, INK, Kid, MUTED, Pad, Svg, TryShell } from "./_kit";
+import type { Explainer, Mission, MissionApi } from "../types";
+import { ActionButton, ActionRow, DARK, Ground, INK, Kid, MUTED, Svg } from "./_kit";
 
 const COLD = "#3b82f6";
 const WARM = "#ef4444";
@@ -300,175 +299,204 @@ function SceneTakeNegative() {
   );
 }
 
-/* ---------------- Try: temperature frog ---------------- */
+/* ---------------- guided mission ---------------- */
 
-const ROUNDS = [
-  { start: 3, change: -5, text: "It's 3 °C. Then it gets 5 degrees colder." },
-  { start: -4, change: 6, text: "It's −4 °C. The sun warms it up by 6 degrees." },
-  { start: -2, change: -5, text: "It's −2 °C. Overnight it gets 5 degrees colder." },
-  { start: 6, change: -9, text: "It's 6 °C at lunch. By midnight it is 9 degrees colder." },
-  { start: -7, change: 4, text: "A freezer is at −7 °C. The door is left open and it warms up 4 degrees." },
-];
+const TX = (n: number) => 220 + n * 32;
+const TLY = 104;
 
-const TX = (n: number) => 220 + n * 20;
-const TLY = 100;
-
-function NegativeTry() {
-  const [round, setRound] = useState(0);
-  const [pos, setPos] = useState(ROUNDS[0].start);
-  const [hops, setHops] = useState(-1); // -1 = not checking
-  const [score, setScore] = useState(0);
-  const svgRef = useRef<SVGSVGElement>(null);
-  const r = ROUNDS[round];
-  const target = r.start + r.change;
-  const n = Math.abs(r.change);
-  const dir: 1 | -1 = r.change > 0 ? 1 : -1;
-  const done = hops >= n;
-  const correct = done && pos === target;
-
-  useEffect(() => {
-    if (hops < 0 || hops >= n) return;
-    const id = setTimeout(() => {
-      if (hops + 1 === n && pos === r.start + r.change) setScore((s) => s + 1);
-      setHops(hops + 1);
-    }, 330);
-    return () => clearTimeout(id);
-  }, [hops, n, pos, r.start, r.change]);
-
-
-  const drag = useSvgDrag(svgRef, (p) => {
-    if (hops >= 0) return;
-    setPos(Math.max(-10, Math.min(10, Math.round((p.x - 220) / 20))));
-  });
-
-  const goTo = (k: number) => {
-    setRound(k);
-    setPos(ROUNDS[k].start);
-    setHops(-1);
-  };
-  const reset = () => {
-    setScore(0);
-    goTo(0);
-  };
-  const ghost = r.start + dir * Math.max(0, Math.min(hops, n));
-
+/** Number line from −6 to 6 with a frog. The frog hops `change` steps from `start` when `go` is true. */
+function FrogLine({ start, change, go, marks = [], label }: { start: number; change: number; go: boolean; marks?: number[]; label: string }) {
+  const n = Math.abs(change);
+  const dir = change >= 0 ? 1 : -1;
+  const xs: number[] = [TX(start)];
+  const ys: number[] = [0];
+  for (let k = 0; k < n; k++) {
+    xs.push((TX(start + dir * k) + TX(start + dir * (k + 1))) / 2, TX(start + dir * (k + 1)));
+    ys.push(-30, 0);
+  }
   return (
-    <TryShell title="Where does the temperature land?" hint="Drag the frog (or tap the line) to your answer, then press Check to watch the hops." onReset={reset}>
-      <div className="mb-3 rounded-2xl border-2 border-line bg-surface-2 px-4 py-3">
-        <p className="text-xs font-black uppercase tracking-wide text-muted">
-          Puzzle {round + 1} of {ROUNDS.length} · score {score}
-        </p>
-        <p className="mt-0.5 text-lg font-black">{r.text}</p>
-      </div>
-      <div className="grid items-center gap-3 sm:grid-cols-[1fr_88px]">
-        <div className="rounded-2xl border-2 border-line p-1">
-          <Svg label={`Number line from −10 to 10. Start at ${minus(r.start)}. Frog is on ${minus(pos)}.`} vb="0 0 440 150" maxH={220} svgRef={svgRef}>
-            <rect x="0" y="0" width="440" height="150" fill="transparent" {...drag} />
-            <g pointerEvents="none">
-              <rect x={TX(-10) - 8} y={TLY - 4} width={TX(0) - TX(-10) + 8} height="8" rx="4" fill={COLD} opacity="0.25" />
-              <rect x={TX(0)} y={TLY - 4} width={TX(10) - TX(0) + 8} height="8" rx="4" fill={WARM} opacity="0.2" />
-              <line x1={TX(-10) - 8} y1={TLY} x2={TX(10) + 8} y2={TLY} stroke={INK} strokeWidth="2.5" />
-              {Array.from({ length: 21 }, (_, i) => {
-                const v = i - 10;
-                return (
-                  <g key={v}>
-                    <line x1={TX(v)} y1={TLY - 7} x2={TX(v)} y2={TLY + 7} stroke={v === 0 ? INK : MUTED} strokeWidth={v === 0 ? 3 : 1.8} />
-                    {(v % 2 === 0 || Math.abs(v) < 2) && (
-                      <text x={TX(v)} y={TLY + 26} textAnchor="middle" fontSize="12" fontWeight="800" fill={v < 0 ? COLD : v > 0 ? WARM : INK}>
-                        {minus(v)}
-                      </text>
-                    )}
-                  </g>
-                );
-              })}
-              {/* start flag */}
-              <g transform={`translate(${TX(r.start)} ${TLY})`}>
-                <line x1="0" y1="0" x2="0" y2="-62" stroke={INK} strokeWidth="2" />
-                <path d="M 0 -62 L 18 -56 L 0 -50 Z" fill="#f59e0b" />
-                <text x="0" y="-68" textAnchor="middle" fontSize="11" fontWeight="900" fill={INK}>
-                  start
-                </text>
-              </g>
-              {/* hop arcs */}
-              {hops > 0 &&
-                Array.from({ length: Math.min(hops, n) }, (_, k) => {
-                  const a = TX(r.start + dir * k);
-                  const b = TX(r.start + dir * (k + 1));
-                  return <motion.path key={k} d={`M ${a} ${TLY - 2} Q ${(a + b) / 2} ${TLY - 30} ${b} ${TLY - 2}`} fill="none" stroke={dir > 0 ? WARM : COLD} strokeWidth="2.5" initial={{ pathLength: 0 }} animate={{ pathLength: 1 }} transition={{ duration: 0.25 }} />;
-                })}
-              {hops >= 0 && <motion.circle r="6" cy={TLY} fill={dir > 0 ? WARM : COLD} animate={{ cx: TX(ghost) }} transition={{ duration: 0.25 }} />}
-              <motion.g animate={{ x: TX(pos), y: TLY - 2 }} transition={{ type: "spring", stiffness: 400, damping: 28 }}>
-                <circle cx="0" cy="-12" r="24" fill="transparent" />
-                <Frog s={1.1} />
-              </motion.g>
-            </g>
-          </Svg>
-        </div>
-        <div className="mx-auto w-[88px]">
-          <Svg label={`Thermometer showing ${minus(pos)} degrees`} vb="0 0 88 250" maxH={230}>
-            <rect x="24" y="12" width="22" height="206" rx="11" fill="white" stroke={INK} strokeWidth="2.5" />
-            <motion.rect x="30" width="10" rx="5" fill={pos < 0 ? COLD : WARM} animate={{ y: 120 - pos * 9.5, height: 230 - (120 - pos * 9.5) }} transition={{ type: "spring", stiffness: 200, damping: 25 }} />
-            <circle cx="35" cy="228" r="15" fill={pos < 0 ? COLD : WARM} stroke={INK} strokeWidth="2.5" />
-            {[-10, -5, 0, 5, 10].map((t) => (
-              <g key={t}>
-                <line x1="48" y1={120 - t * 9.5} x2="58" y2={120 - t * 9.5} stroke={INK} strokeWidth="1.8" />
-                <text x="60" y={124 - t * 9.5} fontSize="11" fontWeight="800" fill={t < 0 ? COLD : t > 0 ? WARM : INK}>
-                  {minus(t)}
-                </text>
-              </g>
-            ))}
-          </Svg>
-          <p className="text-center font-mono text-lg font-black" style={{ color: pos < 0 ? COLD : WARM }}>
-            {minus(pos)} °C
-          </p>
-        </div>
-      </div>
-      <div className="mt-3 flex flex-wrap gap-2">
-        <Pad onClick={() => setPos((p) => Math.max(-10, p - 1))} color={COLD} disabled={hops >= 0} label="Move one colder">
-          ❄️ −1 colder
-        </Pad>
-        <Pad onClick={() => setPos((p) => Math.min(10, p + 1))} color={WARM} disabled={hops >= 0} label="Move one warmer">
-          ☀️ +1 warmer
-        </Pad>
-        <Pad onClick={() => setHops(0)} color={C} solid disabled={hops >= 0}>
-          Check my answer
-        </Pad>
-        {done && !correct && (
-          <Pad onClick={() => setHops(-1)} color={C}>
-            Try again
-          </Pad>
-        )}
-        {done && (
-          <Pad onClick={() => goTo((round + 1) % ROUNDS.length)} color={C} solid>
-            Next puzzle →
-          </Pad>
-        )}
-      </div>
-      <div className="mt-3">
-        {!done && hops < 0 && (
-          <Feedback tone="info" k={`i${round}`}>
-            Colder means hop to the left; warmer means hop to the right. Remember: zero isn&apos;t the end of the line!
-          </Feedback>
-        )}
-        {hops >= 0 && !done && (
-          <Feedback tone="info" k="hopping">
-            Hopping {n} {dir > 0 ? "to the right (warmer)" : "to the left (colder)"} from {minus(r.start)}…
-          </Feedback>
-        )}
-        {done && correct && (
-          <Feedback tone="good" k={`g${round}`}>
-            Yes! {minus(r.start)} {r.change > 0 ? "+" : "−"} {n} = {minus(target)}. {r.start > 0 && target < 0 ? `You went ${r.start} down to zero, then ${-target} more below.` : "Nice hopping!"}
-          </Feedback>
-        )}
-        {done && !correct && (
-          <Feedback tone="bad" k={`b${round}`}>
-            Not quite: the hops land on {minus(target)}, but your frog is on {minus(pos)}. {minus(r.start)} {r.change > 0 ? "+" : "−"} {n} = {minus(target)}.
-          </Feedback>
-        )}
-      </div>
-    </TryShell>
+    <Svg label={label} vb="0 0 440 160" maxH={220}>
+      <rect x={TX(-6) - 12} y={TLY - 4} width={TX(0) - TX(-6) + 12} height="8" rx="4" fill={COLD} opacity="0.25" />
+      <rect x={TX(0)} y={TLY - 4} width={TX(6) - TX(0) + 12} height="8" rx="4" fill={WARM} opacity="0.2" />
+      <line x1={TX(-6) - 12} y1={TLY} x2={TX(6) + 12} y2={TLY} stroke={INK} strokeWidth="2.5" />
+      {Array.from({ length: 13 }, (_, i) => {
+        const v = i - 6;
+        return (
+          <g key={v}>
+            <line x1={TX(v)} y1={TLY - 8} x2={TX(v)} y2={TLY + 8} stroke={v === 0 ? INK : MUTED} strokeWidth={v === 0 ? 3 : 2} />
+            <text x={TX(v)} y={TLY + 30} textAnchor="middle" fontSize="17" fontWeight="900" fill={v < 0 ? COLD : v > 0 ? WARM : INK}>
+              {minus(v)}
+            </text>
+          </g>
+        );
+      })}
+      {marks.map((m, i) => (
+        <motion.g key={m} initial={{ opacity: 0, y: -20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: i * 0.3 }}>
+          <circle cx={TX(m)} cy={TLY} r="9" fill={COLD} stroke="white" strokeWidth="2" />
+          <text x={TX(m)} y={TLY - 20} textAnchor="middle" fontSize="18" fontWeight="900" fill={COLD}>
+            {minus(m)}
+          </text>
+        </motion.g>
+      ))}
+      {go &&
+        Array.from({ length: n }, (_, k) => {
+          const a = TX(start + dir * k);
+          const b = TX(start + dir * (k + 1));
+          return <motion.path key={k} d={`M ${a} ${TLY - 4} Q ${(a + b) / 2} ${TLY - 40} ${b} ${TLY - 4}`} fill="none" stroke={dir > 0 ? WARM : COLD} strokeWidth="2.5" strokeDasharray="5 4" initial={{ pathLength: 0, opacity: 0 }} animate={{ pathLength: 1, opacity: 1 }} transition={{ delay: k * 0.3, duration: 0.28 }} />;
+        })}
+      {n > 0 && (
+        <g transform={`translate(${TX(start)} ${TLY})`}>
+          <line x1="0" y1="0" x2="0" y2="-64" stroke={INK} strokeWidth="2" />
+          <path d="M 0 -64 L 18 -58 L 0 -52 Z" fill="#f59e0b" />
+        </g>
+      )}
+      {n > 0 && (
+        <motion.g initial={{ x: TX(start), y: TLY - 4 }} animate={go ? { x: xs, y: ys.map((y) => TLY - 4 + y) } : { x: TX(start), y: TLY - 4 }} transition={{ duration: n * 0.3, ease: "linear" }}>
+          <Frog s={1.15} />
+        </motion.g>
+      )}
+    </Svg>
   );
 }
+
+function StepColder({ done, complete }: MissionApi) {
+  const [go, setGo] = useState(false);
+  return (
+    <div>
+      <FrogLine start={3} change={-5} go={go} label={go ? "The frog hops 5 steps left from 3, past zero, and lands on −2" : "The frog sits on 3 on a number line from −6 to 6"} />
+      <p className="text-center text-xl font-black" style={{ color: go ? COLD : WARM }}>
+        {go ? "3 − 5 = −2 °C" : "3 °C"}
+      </p>
+      <ActionRow>
+        <ActionButton
+          color={COLD}
+          disabled={complete}
+          onClick={() => {
+            setGo(true);
+            done();
+          }}
+        >
+          ❄️ 5 degrees colder
+        </ActionButton>
+      </ActionRow>
+    </div>
+  );
+}
+
+function StepCompare({ done, complete }: MissionApi) {
+  const [shown, setShown] = useState(false);
+  return (
+    <div>
+      <FrogLine start={0} change={0} go={false} marks={shown ? [-5, -2] : []} label={shown ? "−5 sits further left than −2 on the number line" : "An empty number line from −6 to 6"} />
+      {shown && <p className="text-center text-xl font-black">−5 &lt; −2 &nbsp;·&nbsp; −2 is bigger</p>}
+      <ActionRow>
+        <ActionButton
+          color={C}
+          disabled={complete}
+          onClick={() => {
+            setShown(true);
+            done();
+          }}
+        >
+          Put −5 and −2 on the line
+        </ActionButton>
+      </ActionRow>
+    </div>
+  );
+}
+
+function StepWarmer({ done, complete }: MissionApi) {
+  const [go, setGo] = useState(false);
+  return (
+    <div>
+      <FrogLine start={-4} change={6} go={go} label={go ? "The frog hops 6 steps right from −4 and lands on 2" : "The frog sits on −4"} />
+      <p className="text-center text-xl font-black" style={{ color: go ? WARM : COLD }}>
+        {go ? "−4 + 6 = 2" : "−4"}
+      </p>
+      <ActionRow>
+        <ActionButton
+          color={WARM}
+          disabled={complete}
+          onClick={() => {
+            setGo(true);
+            done();
+          }}
+        >
+          ☀️ Add 6
+        </ActionButton>
+      </ActionRow>
+    </div>
+  );
+}
+
+function StepTakeIce({ done, complete }: MissionApi) {
+  const [out, setOut] = useState(false);
+  return (
+    <div>
+      <Svg label={out ? "The two ice counters are lifted out of the cup, leaving five warm counters: 5" : "A cup with five warm plus counters and two ice minus counters: worth 3"} vb="0 0 400 240" maxH={240}>
+        <path d="M 60 60 L 80 220 L 240 220 L 260 60" fill="#e0f2fe" stroke={INK} strokeWidth="3" strokeLinejoin="round" opacity="0.9" />
+        {[0, 1, 2, 3, 4].map((i) => (
+          <Counter key={i} x={110 + (i % 3) * 50} y={i < 3 ? 192 : 148} hot />
+        ))}
+        {[0, 1].map((i) => (
+          <motion.g key={i} initial={false} animate={out ? { x: 150 - i * 30, y: -40 - i * 30 } : { x: 0, y: 0 }} transition={{ delay: i * 0.25, duration: 0.7 }}>
+            <Counter x={i ? 135 : 185} y={i ? 104 : 104} hot={false} />
+          </motion.g>
+        ))}
+        <text x="330" y="150" textAnchor="middle" fontSize="44" fontWeight="900" fill={out ? WARM : INK}>
+          {out ? "5" : "3"}
+        </text>
+        <text x="330" y="182" textAnchor="middle" fontSize="15" fontWeight="800" fill={MUTED}>
+          {out ? "3 − (−2)" : "5 + (−2)"}
+        </text>
+      </Svg>
+      <ActionRow>
+        <ActionButton
+          color={C}
+          disabled={complete}
+          onClick={() => {
+            setOut(true);
+            done();
+          }}
+        >
+          🧊 Take out the 2 ice cubes
+        </ActionButton>
+      </ActionRow>
+    </div>
+  );
+}
+
+const mission: Mission = {
+  goal: "Walk the frog past zero, compare negative numbers, and see what taking away a negative does.",
+  steps: [
+    {
+      task: "Make it 5 degrees colder.",
+      predict: { question: "It's 3 °C. It gets 5 degrees colder. What is it now?", options: ["0 °C — you can't go below zero", "−2 °C", "2 °C"], answer: 1, trap: 0 },
+      scene: (api) => <StepColder {...api} />,
+      hint: "Tap the blue button. Colder means hop to the left.",
+      explain: "3 hops take the frog down to 0, and 2 more hops go **past zero** to −2. Numbers below zero are **negative numbers**; we write them with a minus sign.",
+    },
+    {
+      task: "Put −5 and −2 on the number line.",
+      predict: { question: "Which number is bigger: −5 or −2?", options: ["−5, because 5 is bigger than 2", "−2", "They are the same size"], answer: 1, trap: 0 },
+      scene: (api) => <StepCompare {...api} />,
+      explain: "On a number line, numbers get **bigger to the right**. −2 is to the right of −5, so −2 is bigger — just as −2 °C is warmer than −5 °C.",
+    },
+    {
+      task: "Add 6 to −4.",
+      predict: { question: "Start at −4 and add 6. Where do you land?", options: ["−10", "2", "−2"], answer: 1, trap: 0 },
+      scene: (api) => <StepWarmer {...api} />,
+      explain: "Adding means hopping **right**. 4 hops get you from −4 back up to 0, and 2 more land on **2**. So −4 + 6 = 2.",
+    },
+    {
+      task: "Take away the 2 ice cubes.",
+      predict: { question: "The cup holds 5 warm (+1) counters and 2 ice (−1) counters, so it's worth 3. Take away the ice. What is it worth now?", options: ["1 — taking away always makes it smaller", "5", "−5"], answer: 1, trap: 0 },
+      scene: (api) => <StepTakeIce {...api} />,
+      explain: "Each ice cube was pulling the total down by 1. Take both away and the total goes **up** to 5. So 3 − (−2) = 5: **taking away a negative** is the same as adding.",
+    },
+  ],
+  takeaway: "Numbers keep going below zero; further left on the number line means smaller, so −5 is less than −2.",
+};
 
 /* ---------------- Story + analogy art ---------------- */
 
@@ -629,14 +657,15 @@ export const negativeNumbers: Explainer = {
   color: C,
   icon: "🌡️",
   watch: [
-    { title: "Counting starts at zero", say: "Counting numbers start at zero and go to the right: 1, 2, 3. But what is on the other side of zero?", scene: <SceneCounting /> },
+    { title: "Counting starts at zero", say: "On a number line, counting goes to the right from zero: 1, 2, 3. But what is on the other side of zero?", scene: <SceneCounting /> },
     { title: "The other side of zero", say: "Numbers less than zero are called negative numbers. We write them with a minus sign: −1, −2, −3, and so on.", scene: <SceneOtherSide /> },
-    { title: "A thermometer is a number line standing up", say: "When it's 3 degrees and it gets 7 degrees colder, the temperature drops past zero and lands on −4 degrees.", scene: <SceneThermometer /> },
+    { title: "A thermometer is a number line standing up", say: "It is 3 degrees, then it gets 7 degrees colder. The temperature drops past zero and lands on −4 degrees.", scene: <SceneThermometer /> },
     { title: "Plus hops right, minus hops left", say: "To work out −2 + 5, start at −2 and hop 5 steps to the right. You land on 3.", scene: <SceneHop /> },
     { title: "Further left means smaller", say: "−4 is further left than −1, so −4 is the smaller number. Just like −4 °C is colder than −1 °C.", scene: <SceneCompare /> },
-    { title: "Taking away a negative", say: "Taking away a negative is like taking ice cubes out of a drink: it gets warmer! So 3 − (−2) = 5.", scene: <SceneTakeNegative /> },
+    { title: "Taking away a negative", say: "Think of a negative as an ice cube in a drink. Take the ice cubes out and the drink gets warmer! So taking away −2 adds 2: 3 − (−2) = 5.", scene: <SceneTakeNegative /> },
   ],
-  try: NegativeTry,
+  misconception: { myth: "−5 is bigger than −2, because 5 is bigger than 2.", truth: "Below zero it flips: −5 is further left on the number line, so it is smaller. −5 °C is colder than −2 °C." },
+  mission,
   story,
   like,
 };

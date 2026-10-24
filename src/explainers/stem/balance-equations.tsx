@@ -2,8 +2,8 @@
 
 import { useEffect, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
-import type { Explainer } from "../types";
-import { DARK, Feedback, INK, Kid, MUTED, Pad, Svg, TryShell } from "./_kit";
+import type { Explainer, Mission, MissionApi } from "../types";
+import { ActionButton, ActionRow, DARK, INK, Kid, MUTED, Svg } from "./_kit";
 
 const C = "#8B5CF6";
 const BOX = "#8B5CF6";
@@ -17,7 +17,6 @@ function sideText(s: Side) {
   if (s.n) parts.push(`${s.n}`);
   return parts.length ? parts.join(" + ") : "0";
 }
-const eq = (l: Side, r: Side) => `${sideText(l)} = ${sideText(r)}`;
 
 /* ---------------- Balance scale drawing ---------------- */
 
@@ -127,130 +126,72 @@ const S0: [Side, Side] = [
   { x: 0, n: 11 },
 ];
 
-/* ---------------- Try: solve on the scale ---------------- */
+/* ---------------- guided mission ---------------- */
 
-const PUZZLES: { l: Side; r: Side; xv: number }[] = [
-  { l: { x: 1, n: 6 }, r: { x: 0, n: 9 }, xv: 3 },
-  { l: { x: 3, n: 0 }, r: { x: 0, n: 12 }, xv: 4 },
-  { l: { x: 2, n: 3 }, r: { x: 0, n: 13 }, xv: 5 },
-  { l: { x: 3, n: 2 }, r: { x: 1, n: 8 }, xv: 3 },
-];
-
-function BalanceTry() {
-  const [p, setP] = useState(0);
-  const [l, setL] = useState<Side>(PUZZLES[0].l);
-  const [r, setR] = useState<Side>(PUZZLES[0].r);
-  const [moves, setMoves] = useState(0);
-  const [last, setLast] = useState<"one" | "both" | null>(null);
-  const xv = PUZZLES[p].xv;
+/** A scale that changes from `from` to `to` when its one button is pressed. */
+function StepScale({ from, to, text0, text1, cta, reveal, api }: { from: [Side, Side]; to: [Side, Side]; text0: string; text1: string; cta: string; reveal?: boolean; api: MissionApi }) {
+  const [on, setOn] = useState(false);
+  const [l, r] = on ? to : from;
+  const xv = 4;
   const wl = l.x * xv + l.n;
   const wr = r.x * xv + r.n;
-  const level = wl === wr;
-  const solved = level && ((l.x === 1 && l.n === 0 && r.x === 0) || (r.x === 1 && r.n === 0 && l.x === 0));
-  const answer = l.x === 1 ? r.n : l.n;
-
-  const load = (k: number) => {
-    setP(k);
-    setL(PUZZLES[k].l);
-    setR(PUZZLES[k].r);
-    setMoves(0);
-    setLast(null);
-  };
-  const act = (nl: Side, nr: Side, kind: "one" | "both") => {
-    setL(nl);
-    setR(nr);
-    setMoves((m) => m + 1);
-    setLast(kind);
-  };
-  const lim = (s: Side): Side => ({ x: Math.max(0, Math.min(4, s.x)), n: Math.max(0, Math.min(14, s.n)) });
-  const canDiv = (k: number) => l.x % k === 0 && l.n % k === 0 && r.x % k === 0 && r.n % k === 0 && (l.x + l.n + r.x + r.n) > 0 && !(l.x === 0 && l.n === 0) && !(r.x === 0 && r.n === 0);
-  const div = (k: number) => act({ x: l.x / k, n: l.n / k }, { x: r.x / k, n: r.n / k }, "both");
-
-  const sideButtons = (which: "L" | "R") => {
-    const s = which === "L" ? l : r;
-    const set = (ns: Side) => (which === "L" ? act(lim(ns), r, "one") : act(l, lim(ns), "one"));
-    return (
-      <div className="flex flex-wrap justify-center gap-1.5">
-        <Pad onClick={() => set({ ...s, n: s.n + 1 })} disabled={s.n >= 14 || solved} color={UNIT} label={`Add 1 to the ${which === "L" ? "left" : "right"} only`}>
-          +1
-        </Pad>
-        <Pad onClick={() => set({ ...s, n: s.n - 1 })} disabled={s.n <= 0 || solved} color={UNIT} label={`Take 1 from the ${which === "L" ? "left" : "right"} only`}>
-          −1
-        </Pad>
-        <Pad onClick={() => set({ ...s, x: s.x - 1 })} disabled={s.x <= 0 || solved} color={BOX} label={`Take one x from the ${which === "L" ? "left" : "right"} only`}>
-          −<i>x</i>
-        </Pad>
-      </div>
-    );
-  };
-
   return (
-    <TryShell title="Keep the scale level" hint="Each purple box x hides the same secret weight. Get one box alone on a pan, with the scale still level." onReset={() => load(p)}>
-      <div className="mb-2 flex flex-wrap gap-1.5">
-        {PUZZLES.map((q, k) => (
-          <button key={k} type="button" onClick={() => load(k)} className="min-h-[40px] rounded-xl border-2 px-3 text-sm font-extrabold" style={k === p ? { background: C, color: "white", borderColor: C } : { borderColor: "rgb(var(--line))" }}>
-            {eq(q.l, q.r)}
-          </button>
-        ))}
-      </div>
-      <div className="rounded-2xl border-2 border-line p-1">
-        <Svg label={`Balance scale. Left pan: ${sideText(l)}. Right pan: ${sideText(r)}. ${level ? "Level." : wl > wr ? "Left side is lower." : "Right side is lower."}`} vb="0 0 400 260" maxH={300}>
-          <Scale left={l} right={r} xv={xv} reveal={solved} />
-          <EqLabel text={eq(l, r)} color={level ? INK : "#ef4444"} />
-        </Svg>
-      </div>
-      <div className="mt-3 grid gap-3 sm:grid-cols-3">
-        <div className="rounded-2xl border-2 border-line p-2">
-          <p className="mb-1.5 text-center text-xs font-black uppercase tracking-wide text-muted">Left pan only</p>
-          {sideButtons("L")}
-        </div>
-        <div className="rounded-2xl border-2 p-2" style={{ borderColor: C }}>
-          <p className="mb-1.5 text-center text-xs font-black uppercase tracking-wide" style={{ color: C }}>
-            Both pans
-          </p>
-          <div className="flex flex-wrap justify-center gap-1.5">
-            <Pad onClick={() => act({ ...l, n: l.n - 1 }, { ...r, n: r.n - 1 }, "both")} disabled={l.n < 1 || r.n < 1 || solved} color={C} solid>
-              −1 both
-            </Pad>
-            <Pad onClick={() => act({ ...l, x: l.x - 1 }, { ...r, x: r.x - 1 }, "both")} disabled={l.x < 1 || r.x < 1 || solved} color={C} solid>
-              −<i>x</i> both
-            </Pad>
-            <Pad onClick={() => div(2)} disabled={!canDiv(2) || solved} color={C} solid>
-              ÷2 both
-            </Pad>
-            <Pad onClick={() => div(3)} disabled={!canDiv(3) || solved} color={C} solid>
-              ÷3 both
-            </Pad>
-          </div>
-        </div>
-        <div className="rounded-2xl border-2 border-line p-2">
-          <p className="mb-1.5 text-center text-xs font-black uppercase tracking-wide text-muted">Right pan only</p>
-          {sideButtons("R")}
-        </div>
-      </div>
-      <div className="mt-3 space-y-2">
-        {solved ? (
-          <Feedback tone="good" k={`s${p}`}>
-            You found it: <b>x = {answer}</b> in {moves} moves! Check: put {answer} back into {eq(PUZZLES[p].l, PUZZLES[p].r)} and both sides weigh the same.
-          </Feedback>
-        ) : !level ? (
-          <Feedback tone="bad" k={`t${wl > wr}`}>
-            Tipped! The {wl > wr ? "left" : "right"} pan is heavier now. {last === "one" ? "You changed only one side — do the same to the other side to level it again." : "Fix it by changing one side."}
-          </Feedback>
-        ) : (
-          <Feedback tone="info" k={`b${moves}`}>
-            {moves === 0 ? "Level. Try a “one pan only” button first and watch what happens… then use “both pans” to keep it fair." : "Level ✓ Same change on both sides keeps it balanced. Keep going until one x is alone."}
-          </Feedback>
-        )}
-        {solved && (
-          <Pad onClick={() => load((p + 1) % PUZZLES.length)} color={C} solid>
-            Next puzzle →
-          </Pad>
-        )}
-      </div>
-    </TryShell>
+    <div>
+      <Svg label={`Balance scale. Left pan: ${sideText(l)}. Right pan: ${sideText(r)}. ${wl === wr ? "Level." : wl > wr ? "Left side is lower." : "Right side is lower."}`} vb="0 0 400 260" maxH={260}>
+        <Scale left={l} right={r} xv={xv} reveal={on && reveal} />
+        <EqLabel text={on ? text1 : text0} color={wl === wr ? (on && reveal ? "#16a34a" : INK) : "#ef4444"} />
+      </Svg>
+      <ActionRow>
+        <ActionButton
+          color={C}
+          disabled={api.complete}
+          onClick={() => {
+            setOn(true);
+            api.done();
+          }}
+        >
+          {cta}
+        </ActionButton>
+      </ActionRow>
+    </div>
   );
 }
+
+const S1: [Side, Side] = [
+  { x: 2, n: 0 },
+  { x: 0, n: 8 },
+];
+
+const mission: Mission = {
+  goal: "Find the weight of the mystery box x in 2x + 3 = 11, keeping the scale level.",
+  steps: [
+    {
+      task: "Take 3 blocks off the left pan only.",
+      predict: { question: "The scale shows 2x + 3 = 11 and is level. Take 3 blocks off the left pan only. What happens?", options: ["It stays level", "It tips"], answer: 1, trap: 0 },
+      scene: (api) => <StepScale from={S0} to={[{ x: 2, n: 0 }, S0[1]]} text0="2x + 3 = 11" text1="2x ≠ 11" cta="−3 from the left only" api={api} />,
+      hint: "Tap the purple button under the scale.",
+      explain: "It **tips**. An **equation** says two sides weigh the same. Change only one side and they stop being equal.",
+    },
+    {
+      task: "Take 3 blocks off both pans.",
+      predict: { question: "Start again. This time take 3 blocks off both pans. What happens?", options: ["It tips", "It stays level"], answer: 1, trap: 0 },
+      scene: (api) => <StepScale from={S0} to={S1} text0="2x + 3 = 11" text1="2x = 8" cta="−3 from both pans" api={api} />,
+      explain: "It stays **level**, and the 3 loose blocks are gone from the left. Doing the **same thing to both sides** keeps an equation true: now 2x = 8.",
+    },
+    {
+      task: "Halve both pans.",
+      predict: { question: "Two boxes balance 8 blocks. What does one box weigh?", options: ["4", "6", "16"], answer: 0 },
+      scene: (api) => <StepScale from={S1} to={[{ x: 1, n: 0 }, { x: 0, n: 4 }]} text0="2x = 8" text1="x = 4" cta="÷2 both pans" api={api} />,
+      explain: "Split both sides in half and it is still level: one box balances 4 blocks, so **x = 4**. Getting x alone on one side is called **solving** the equation.",
+    },
+    {
+      task: "Check: open the boxes.",
+      scene: (api) => <StepScale from={S0} to={S0} text0="2x + 3 = 11" text1="4 + 4 + 3 = 11 ✓" cta="Open the boxes" reveal api={api} />,
+      explain: "Put 4 back in for each x: 4 + 4 + 3 = 11. Both sides match, so x = 4 is right. Always **check** by putting your answer back in.",
+    },
+  ],
+  takeaway: "An equation is a level scale: whatever you do to one side, do to the other, until x is on its own.",
+};
 
 /* ---------------- Story + analogy ---------------- */
 
@@ -364,7 +305,7 @@ export const balanceEquations: Explainer = {
   watch: [
     {
       title: "An equation is a level scale",
-      say: "2x + 3 = 11 means the left pan weighs exactly the same as the right pan. Each purple box x is a mystery weight.",
+      say: "2x + 3 = 11 means the left pan weighs exactly the same as the right pan. Each purple box is a mystery weight called x. 2x means two of these boxes.",
       scene: (
         <Svg label="Balance scale level with two x boxes and 3 blocks on the left and 11 blocks on the right">
           <Scale left={S0[0]} right={S0[1]} xv={4} />
@@ -384,7 +325,7 @@ export const balanceEquations: Explainer = {
     },
     {
       title: "Share both sides fairly",
-      say: "Two boxes weigh the same as 8 blocks, so one box weighs half of that. Halve both sides: x = 4.",
+      say: "Two boxes weigh the same as 8 blocks, so one box weighs half of that. Halve both sides and you get x = 4.",
       scene: <AutoScale from={[{ x: 2, n: 0 }, { x: 0, n: 8 }]} to={[{ x: 1, n: 0 }, { x: 0, n: 4 }]} label="Both sides are halved leaving one box balancing four blocks" text0="2x = 8" text1="x = 4" after={{ text: "÷2 both sides ✓", color: "#22c55e" }} />,
     },
     {
@@ -401,7 +342,8 @@ export const balanceEquations: Explainer = {
       ),
     },
   ],
-  try: BalanceTry,
+  misconception: { myth: "You can change one side of an equation on its own, like taking 3 off the left only.", truth: "Both sides must stay equal, so whatever you do to one side you must do to the other." },
+  mission,
   story,
   like,
 };

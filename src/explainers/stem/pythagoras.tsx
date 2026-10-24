@@ -1,10 +1,10 @@
 "use client";
 
-import { useRef, useState } from "react";
+import { useState } from "react";
 import { motion } from "framer-motion";
-import type { Explainer } from "../types";
-import { fmt, useSvgDrag } from "@/components/widgets/_shared";
-import { DARK, Feedback, INK, Kid, MUTED, Pad, Svg, TryShell } from "./_kit";
+import type { Explainer, Mission, MissionApi } from "../types";
+import { fmt } from "@/components/widgets/_shared";
+import { ActionButton, ActionRow, DARK, INK, Kid, MUTED, Svg } from "./_kit";
 
 const C = "#10B981";
 const SA = "#f97316"; // square on a
@@ -361,144 +361,174 @@ function SceneLadder() {
   );
 }
 
-/* ---------------- Try: drag the triangle ---------------- */
+/* ---------------- guided mission ---------------- */
 
-const U = 18;
-const OX = 216;
-const OY = 288;
-const gx = (v: number) => OX + v * U;
-const gy = (v: number) => OY - v * U;
-
-const DOTS = (
-  <g aria-hidden>
-    {Array.from({ length: 25 }, (_, i) => Array.from({ length: 25 }, (_, j) => <circle key={`${i}-${j}`} cx={i * U} cy={j * U} r="1.2" fill="rgb(var(--muted))" opacity="0.35" />))}
-  </g>
-);
-
-function SquareOn({ p, q, away, color, label }: { p: P; q: P; away: P; color: string; label: string }) {
+/** A square drawn outward on side p→q, with a tile grid when its side `len` (in units) is a whole number. */
+function SquareOn({ p, q, away, len, color, label }: { p: P; q: P; away: P; len: number; color: string; label: string }) {
   const n = outward(p, q, away);
-  const len = Math.hypot(q[0] - p[0], q[1] - p[1]);
   const k = Math.round(len);
   const isInt = Math.abs(len - k) < 1e-6;
   const ctr = add(add(p, mul(sub(q, p), 0.5)), mul(n, 0.5));
   return (
-    <g>
+    <motion.g initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 0.5 }}>
       <polygon points={pts(p, q, add(q, n), add(p, n))} fill={color} fillOpacity="0.22" stroke={color} strokeWidth="2.5" strokeLinejoin="round" />
       {isInt && k > 1 && <GridIn p={p} q={q} n={n} k={k} color={color} />}
-      <text x={ctr[0]} y={ctr[1] + 6} textAnchor="middle" fontSize="17" fontWeight="900" fill={INK} stroke="rgb(var(--surface))" strokeWidth="4" paintOrder="stroke">
+      <text x={ctr[0]} y={ctr[1] + 8} textAnchor="middle" fontSize="20" fontWeight="900" fill={INK} stroke="rgb(var(--surface))" strokeWidth="5" paintOrder="stroke">
         {label}
       </text>
-    </g>
+    </motion.g>
   );
 }
 
-function PythagorasTry() {
-  const [a, setA] = useState(4);
-  const [B, setB] = useState<[number, number]>([0, 3]);
-  const svgRef = useRef<SVGSVGElement>(null);
-  const dragA = useSvgDrag(svgRef, (p) => setA(Math.max(1, Math.min(8, Math.round((p.x - OX) / U)))));
-  const dragB = useSvgDrag(svgRef, (p) => setB([Math.max(-3, Math.min(3, Math.round((p.x - OX) / U))), Math.max(1, Math.min(8, Math.round((OY - p.y) / U)))]));
-
-  const [bx, by] = B;
+/**
+ * Triangle with a horizontal side of `a` units and its top corner at `top` (units, y up).
+ * The drawing scale keeps the picture the same size whatever the side lengths.
+ */
+function PyFig({ a, top, squares, hideC }: { a: number; top: [number, number]; squares: boolean; hideC?: boolean }) {
+  const U = 100 / a;
+  const O: P = [0, 0];
+  const A: P = [a * U, 0];
+  const B: P = [top[0] * U, -top[1] * U];
   const a2 = a * a;
-  const b2 = bx * bx + by * by;
-  const c2 = (bx - a) ** 2 + by * by;
-  const angle = (Math.atan2(by, bx) * 180) / Math.PI;
-  const right = bx === 0;
-  const O: P = [gx(0), gy(0)];
-  const A: P = [gx(a), gy(0)];
-  const Bp: P = [gx(bx), gy(by)];
-  const root = (v: number) => (Number.isInteger(Math.sqrt(v)) ? `${Math.sqrt(v)}` : `√${v} ≈ ${fmt(Math.sqrt(v), 2)}`);
-
-  const reset = () => {
-    setA(4);
-    setB([0, 3]);
+  const b2 = top[0] ** 2 + top[1] ** 2;
+  const c2 = (top[0] - a) ** 2 + top[1] ** 2;
+  const right = top[0] === 0;
+  // frame includes the squares even before they appear, so the picture doesn't jump
+  const corners: P[] = [O, A, B];
+  for (const [p, q, w] of [
+    [O, A, B],
+    [O, B, A],
+    [A, B, O],
+  ] as [P, P, P][]) {
+    const n = outward(p, q, w);
+    corners.push(add(p, n), add(q, n));
+  }
+  const xs = corners.map((c) => c[0]);
+  const ys = corners.map((c) => c[1]);
+  const pad = 22;
+  const minX = Math.min(...xs) - pad;
+  const minY = Math.min(...ys) - pad;
+  const w = Math.max(...xs) + pad - minX;
+  const h = Math.max(...ys) + pad - minY;
+  const angle = (Math.atan2(top[1], top[0]) * 180) / Math.PI;
+  const lab = (p: P, q: P, away: P, t: string, color: string) => {
+    const m = add(p, mul(sub(q, p), 0.5));
+    const n = outward(p, q, away);
+    const l = Math.hypot(n[0], n[1]);
+    const at = add(m, mul(n, 18 / l));
+    return (
+      <text x={at[0]} y={at[1] + 7} textAnchor="middle" fontSize="20" fontWeight="900" fill={color}>
+        {t}
+      </text>
+    );
   };
-
+  const side = (v: number) => (Number.isInteger(Math.sqrt(v)) ? `${Math.sqrt(v)}` : "");
   return (
-    <TryShell title="Drag the triangle" hint="Drag the orange dot to change the bottom side and the blue dot to move the top corner. Watch the three squares." onReset={reset}>
-      <div className="grid gap-3 md:grid-cols-[1.3fr_1fr]">
-        <div className="rounded-2xl border-2 border-line p-1">
-          <Svg label={`Triangle with a = ${a}, top corner at ${bx}, ${by}. Angle ${fmt(angle, 0)} degrees. a squared ${a2}, b squared ${b2}, c squared ${c2}.`} vb="0 0 440 440" maxH={420} svgRef={svgRef}>
-            {DOTS}
-            <SquareOn p={O} q={A} away={Bp} color={SA} label={`a² = ${a2}`} />
-            <SquareOn p={O} q={Bp} away={A} color={SB} label={`b² = ${b2}`} />
-            <SquareOn p={A} q={Bp} away={O} color={SC} label={`c² = ${c2}`} />
-            <polygon points={pts(O, A, Bp)} fill="#fde68a" stroke={INK} strokeWidth="3" strokeLinejoin="round" />
-            {right ? <RightMark at={O} s={14} color="#16a34a" /> : <path d={`M ${O[0] + 18} ${O[1]} A 18 18 0 0 0 ${O[0] + 18 * Math.cos((angle * Math.PI) / 180)} ${O[1] - 18 * Math.sin((angle * Math.PI) / 180)}`} fill="none" stroke="#ef4444" strokeWidth="2.5" />}
-            <text x={O[0] - 6} y={O[1] + 18} textAnchor="end" fontSize="13" fontWeight="900" fill={right ? "#16a34a" : "#ef4444"}>
-              {fmt(angle, 0)}°
-            </text>
-            {/* handles */}
-            <g {...dragA}>
-              <circle cx={A[0]} cy={A[1]} r="22" fill="transparent" />
-              <circle cx={A[0]} cy={A[1]} r="11" fill={SA} stroke="white" strokeWidth="3" />
-            </g>
-            <g {...dragB}>
-              <circle cx={Bp[0]} cy={Bp[1]} r="22" fill="transparent" />
-              <circle cx={Bp[0]} cy={Bp[1]} r="11" fill={SB} stroke="white" strokeWidth="3" />
-            </g>
-          </Svg>
-        </div>
-        <div className="flex flex-col gap-3">
-          <div className="rounded-2xl border-2 border-line p-3 font-mono text-[15px] font-bold leading-relaxed" aria-live="polite">
-            <p>
-              <span style={{ color: SA }}>a² = {a2}</span> &nbsp;+&nbsp; <span style={{ color: SB }}>b² = {b2}</span>
-            </p>
-            <p className="text-2xl font-black">
-              = {a2 + b2} <span className="text-muted">{a2 + b2 === c2 ? "=" : a2 + b2 > c2 ? ">" : "<"}</span> <span style={{ color: SC }}>{c2}</span>
-            </p>
-            <p className="text-sm text-muted">
-              c = {root(c2)} · angle = {fmt(angle, 0)}°
-            </p>
-          </div>
-          {right ? (
-            <Feedback tone="good" k={`r${a}-${by}`}>
-              Right angle ✓ The two small squares add up exactly to the big one: {a2} + {b2} = {c2}. {Number.isInteger(Math.sqrt(c2)) ? `So c = ${Math.sqrt(c2)}.` : `So c = √${c2}.`}
-            </Feedback>
-          ) : (
-            <Feedback tone="bad" k={`n${bx}`}>
-              The corner is {fmt(angle, 0)}° — {angle > 90 ? "wider" : "narrower"} than a right angle, so c² is {angle > 90 ? "BIGGER" : "SMALLER"} than a² + b². Pythagoras only works for right angles!
-            </Feedback>
-          )}
-          <div className="flex flex-wrap gap-2">
-            <Pad onClick={() => setB([0, by])} color={C} solid disabled={right}>
-              Make it 90°
-            </Pad>
-            <Pad
-              onClick={() => {
-                setA(4);
-                setB([0, 3]);
-              }}
-              color={C}
-            >
-              3-4-5
-            </Pad>
-            <Pad
-              onClick={() => {
-                setA(8);
-                setB([0, 6]);
-              }}
-              color={C}
-            >
-              6-8-10
-            </Pad>
-            <Pad
-              onClick={() => {
-                setA(5);
-                setB([0, 5]);
-              }}
-              color={C}
-            >
-              5-5-?
-            </Pad>
-          </div>
-          <p className="text-sm font-semibold text-muted">Tip: find another right triangle where c comes out as a whole number. (Hint: try 8 and 6, or 3 and 4 swapped.)</p>
-        </div>
-      </div>
-    </TryShell>
+    <Svg label={`Triangle with sides squared ${a2}, ${b2} and ${c2}. Corner angle ${fmt(angle, 0)} degrees.${squares ? ` Squares drawn: ${a2} + ${b2} ${a2 + b2 === c2 ? "=" : "≠"} ${c2}.` : ""}`} vb={`${fmt(minX, 1)} ${fmt(minY, 1)} ${fmt(w, 1)} ${fmt(h, 1)}`} maxH={260}>
+      {squares && (
+        <>
+          <SquareOn p={O} q={A} away={B} len={a} color={SA} label={`${a2}`} />
+          <SquareOn p={O} q={B} away={A} len={Math.sqrt(b2)} color={SB} label={`${b2}`} />
+          <SquareOn p={A} q={B} away={O} len={Math.sqrt(c2)} color={SC} label={hideC ? "?" : `${c2}`} />
+        </>
+      )}
+      <polygon points={pts(O, A, B)} fill="#fde68a" stroke={INK} strokeWidth="3" strokeLinejoin="round" />
+      {right ? <RightMark at={O} s={14} color="#16a34a" /> : <path d={`M 20 0 A 20 20 0 0 0 ${20 * Math.cos((angle * Math.PI) / 180)} ${-20 * Math.sin((angle * Math.PI) / 180)}`} fill="none" stroke="#ef4444" strokeWidth="3" />}
+      {!squares && (
+        <>
+          {lab(O, A, B, side(a2), SA)}
+          {lab(O, B, A, side(b2), SB)}
+          {lab(A, B, O, hideC ? "?" : side(c2), SC)}
+        </>
+      )}
+    </Svg>
   );
 }
+
+function SumLine({ a2, b2, c2 }: { a2: number; b2: number; c2: number }) {
+  const ok = a2 + b2 === c2;
+  return (
+    <p className="text-center font-mono text-lg font-black" aria-live="polite">
+      <span style={{ color: SA }}>{a2}</span> + <span style={{ color: SB }}>{b2}</span> = {a2 + b2} <span style={{ color: ok ? "#16a34a" : "#ef4444" }}>{ok ? "=" : "≠"}</span> <span style={{ color: SC }}>{c2}</span> {ok ? "✓" : "✗"}
+    </p>
+  );
+}
+
+function StepSquares({ a, b, cta, api }: { a: number; b: number; cta: string; api: MissionApi }) {
+  const [on, setOn] = useState(false);
+  return (
+    <div>
+      <PyFig a={a} top={[0, b]} squares={on} hideC={!on} />
+      {on && <SumLine a2={a * a} b2={b * b} c2={a * a + b * b} />}
+      <ActionRow>
+        <ActionButton
+          color={C}
+          disabled={api.complete}
+          onClick={() => {
+            setOn(true);
+            api.done();
+          }}
+        >
+          {cta}
+        </ActionButton>
+      </ActionRow>
+    </div>
+  );
+}
+
+function StepTilt({ done, complete }: MissionApi) {
+  const [tilted, setTilted] = useState(false);
+  const top: [number, number] = tilted ? [-2, 3] : [0, 3];
+  const b2 = top[0] ** 2 + top[1] ** 2;
+  const c2 = (top[0] - 4) ** 2 + top[1] ** 2;
+  return (
+    <div>
+      <PyFig a={4} top={top} squares />
+      <p className="text-center text-sm font-black" style={{ color: tilted ? "#ef4444" : "#16a34a" }}>
+        ∠ {tilted ? fmt((Math.atan2(3, -2) * 180) / Math.PI, 0) : 90}°
+      </p>
+      <SumLine a2={16} b2={b2} c2={c2} />
+      <ActionRow>
+        <ActionButton
+          color={C}
+          disabled={complete}
+          onClick={() => {
+            setTilted(true);
+            done();
+          }}
+        >
+          Open the corner wider
+        </ActionButton>
+      </ActionRow>
+    </div>
+  );
+}
+
+const mission: Mission = {
+  goal: "Draw squares on the sides of a triangle and discover the rule that links them.",
+  steps: [
+    {
+      task: "Draw a square on each side.",
+      predict: { question: "Sides 4 and 3 meet at a right angle. How many tiles fit in the square on the longest side?", options: ["7 (4 + 3)", "25 (16 + 9)", "12 (4 × 3)"], answer: 1, trap: 0 },
+      scene: (api) => <StepSquares a={4} b={3} cta="Draw the squares" api={api} />,
+      hint: "Tap the green button under the triangle.",
+      explain: "The two small squares hold 16 + 9 = 25 tiles, exactly as many as the big one. The longest side, opposite the **right angle** (a square corner, 90°), is called the **hypotenuse**.",
+    },
+    {
+      task: "Try a bigger triangle: sides 8 and 6.",
+      predict: { question: "Sides 8 and 6, with a right angle. How long is the longest side?", options: ["14", "10", "48"], answer: 1, trap: 0 },
+      scene: (api) => <StepSquares a={8} b={6} cta="Draw the squares" api={api} />,
+      explain: "64 + 36 = 100, and the square of side **10** holds 100 tiles. So the hypotenuse is √100 = 10. **a² + b² = c²**, where a² (“a squared”) means a × a.",
+    },
+    {
+      task: "Make the corner wider than a right angle.",
+      predict: { question: "If the corner is not a right angle, does a² + b² = c² still work?", options: ["Yes — it works for any triangle", "No — only with a right angle"], answer: 1, trap: 0 },
+      scene: (api) => <StepTilt {...api} />,
+      explain: "With a wider corner the big square grows: 16 + 13 is 29, but c² is 45. The rule **only works for right-angled triangles**.",
+    },
+  ],
+  takeaway: "In a right-angled triangle, the squares on the two shorter sides add up to the square on the longest side: a² + b² = c².",
+};
 
 /* ---------------- Story + analogy ---------------- */
 
@@ -613,7 +643,7 @@ const like = {
     ["Same number of tiles", "a² + b² = c²"],
   ] as [string, string][],
   limits:
-    "It only works when the triangle has a right angle — try the Try It tab and tilt the corner to see it fail. And most right triangles don't give whole-number tiles: sides 1 and 1 give c = √2, which no number of whole tiles can match.",
+    "It only works when the triangle has a right angle — the last step of the Try it tab opens the corner to show it failing. And most right triangles don't give whole-number tiles: sides 1 and 1 give c = √2, which no number of whole tiles can match.",
 };
 
 export const pythagoras: Explainer = {
@@ -627,13 +657,14 @@ export const pythagoras: Explainer = {
   icon: "📐",
   watch: [
     { title: "Meet the right-angled triangle", say: "This triangle has a square corner, called a right angle. The longest side, opposite that corner, is called the hypotenuse, c.", scene: <SceneTriangle /> },
-    { title: "Build a square on each side", say: "Draw a square on each side and count the little tiles: 9 on side a, 16 on side b, and 25 on side c.", scene: <SceneSquares /> },
-    { title: "The small squares fill the big one", say: "Slide the 9 tiles and the 16 tiles together: they fill a 5 by 5 square exactly. So a² + b² = c².", scene: <SceneTiles /> },
+    { title: "Build a square on each side", say: "Draw a square on each side and count the little tiles: 9 on side a, 16 on side b, and 25 on side c. We write 3 × 3 = 9 as 3², said “3 squared”.", scene: <SceneSquares /> },
+    { title: "The small squares fill the big one", say: "Slide the 9 tiles and the 16 tiles together: they fill the 5 by 5 square exactly. The two small squares make the big one: a² + b² = c².", scene: <SceneTiles /> },
     { title: "Proof, part 1: four triangles", say: "Put four copies of the triangle inside a big square. The empty space left in the middle is the square on c.", scene: <SceneProofA /> },
-    { title: "Proof, part 2: slide them around", say: "Slide the same four triangles into new places. Now the empty space is two squares, a² and b². Same big square, same triangles, so the spaces must be equal!", scene: <SceneProofB /> },
+    { title: "Proof, part 2: slide them around", say: "Slide the same four triangles into new places. Now the empty space is two squares, a² and b². The big square and the triangles haven't changed, so the empty space hasn't either: a² + b² = c².", scene: <SceneProofB /> },
     { title: "Use it: how long is the ladder?", say: "A ladder's foot is 3 m from a wall and it reaches 4 m up. 3² + 4² = 25, so the ladder is √25 = 5 m long.", scene: <SceneLadder /> },
   ],
-  try: PythagorasTry,
+  misconception: { myth: "a² + b² = c² works for any triangle.", truth: "It only works when the triangle has a right angle (90°). Open the corner wider and c² gets bigger than a² + b²." },
+  mission,
   story,
   like,
 };
