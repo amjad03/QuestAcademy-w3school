@@ -1,10 +1,8 @@
 "use client";
 
-import { useMemo, useRef, useState } from "react";
 import { motion } from "framer-motion";
-import type { Explainer } from "../types";
-import { say } from "@/lib/voice";
-import { Badge, Duck, Kid, NumberChoices, Panel, Stage, T, TryFrame, choicesFor, pointInside, pop, rand, rise, spring, type Status } from "./_kit";
+import type { Explainer, Mission } from "../types";
+import { Badge, Duck, Kid, Panel, Stage, T, TapStep, pop, rise, spring } from "./_kit";
 
 const C = "#16A34A";
 const YEL = "#FACC15";
@@ -119,114 +117,33 @@ function DuckScene({ show = 5, fromLayout, layout = "apart", freshFrom = 0, labe
 }
 
 /* ------------------------------------------------------------------ */
-/* Try: drag both groups into the big bowl                             */
+/* Guided mission                                                      */
 /* ------------------------------------------------------------------ */
 
-const PAIRS: [string, string][] = [
-  ["🍎", "🍊"],
-  ["🍓", "🫐"],
-  ["🐥", "🐸"],
-  ["⚽", "🏀"],
-  ["🌸", "🌻"],
-];
-
-function AddTry() {
-  const [round, setRound] = useState(0);
-  const r = useMemo(() => {
-    const a = rand(1, 5);
-    const b = rand(1, Math.min(5, 10 - a));
-    return { a, b, things: PAIRS[rand(0, PAIRS.length - 1)] };
-  }, [round]);
-  const [poured, setPoured] = useState<[boolean, boolean]>([false, false]);
-  const [status, setStatus] = useState<Status>("play");
-  const bowl = useRef<HTMLDivElement>(null);
-  const choices = useMemo(() => choicesFor(r.a + r.b, 1), [r]);
-  const both = poured[0] && poured[1];
-
-  const pour = (g: 0 | 1) => {
-    setPoured((p) => {
-      if (p[g]) return p;
-      const n: [boolean, boolean] = [...p] as [boolean, boolean];
-      n[g] = true;
-      return n;
-    });
-  };
-  const another = () => {
-    setPoured([false, false]);
-    setStatus("play");
-    setRound((x) => x + 1);
-  };
-  const counts = [r.a, r.b];
-  const tints = ["#FEF3C7", "#FFEDD5"];
-
-  return (
-    <TryFrame color={C} round={round} status={status} onAnother={another} picture="🥣" prompt="Drag both groups into the big bowl. How many altogether?">
-      <div className="grid grid-cols-2 gap-3">
-        {([0, 1] as const).map((g) => (
-          <div key={`${round}-${g}`} className="relative grid min-h-[112px] place-items-center rounded-2xl border-2 border-dashed border-line">
-            {!poured[g] ? (
-              <motion.button
-                type="button"
-                drag
-                dragSnapToOrigin
-                dragElastic={0.8}
-                whileDrag={{ scale: 1.08, zIndex: 30, rotate: -3 }}
-                whileHover={{ scale: 1.03 }}
-                onDragEnd={(_, info) => pointInside(bowl.current, info.point) && pour(g)}
-                onClick={() => pour(g)}
-                className="relative z-10 flex min-h-[96px] w-[92%] cursor-grab flex-wrap content-center items-center justify-center gap-1 rounded-2xl border-2 border-b-4 p-2 shadow-sm active:cursor-grabbing"
-                style={{ background: tints[g], borderColor: g ? ORA : YEL, touchAction: "none" }}
-                aria-label={`Group of ${counts[g]}. Drag into the bowl.`}
-              >
-                {Array.from({ length: counts[g] }, (_, i) => (
-                  <motion.span key={i} {...pop(i * 0.08)} className="text-3xl leading-none">
-                    {r.things[g]}
-                  </motion.span>
-                ))}
-                <span className="absolute -right-2 -top-3 grid h-8 w-8 place-items-center rounded-full text-lg font-black text-white" style={{ background: g ? "#EA580C" : "#CA8A04" }}>
-                  {counts[g]}
-                </span>
-              </motion.button>
-            ) : (
-              <span className="text-3xl opacity-30" aria-hidden>
-                ⬇️
-              </span>
-            )}
-          </div>
-        ))}
-      </div>
-
-      <div ref={bowl} className="relative mx-auto mt-3 flex min-h-[130px] w-full max-w-md flex-wrap content-center items-center justify-center gap-1.5 rounded-b-[999px] rounded-t-2xl border-4 px-8 pb-6 pt-3" style={{ borderColor: "#A16207", background: "linear-gradient(#FEF9C3, #FDE68A)" }} aria-label="Big bowl">
-        {!poured[0] && !poured[1] && <span className="text-sm font-black uppercase tracking-wide text-[#A16207]/60">bowl</span>}
-        {([0, 1] as const).map((g) =>
-          poured[g]
-            ? Array.from({ length: counts[g] }, (_, i) => (
-                <motion.span key={`${g}-${i}`} initial={{ y: -60, scale: 0.4, opacity: 0 }} animate={{ y: 0, scale: 1, opacity: 1 }} transition={{ ...spring, delay: i * 0.09 }} className="relative text-3xl leading-none">
-                  {r.things[g]}
-                  {both && status !== "play" && (
-                    <span className="absolute -right-1 -top-2 grid h-5 w-5 place-items-center rounded-full bg-[#16A34A] text-[11px] font-black text-white">{g === 0 ? i + 1 : r.a + i + 1}</span>
-                  )}
-                </motion.span>
-              ))
-            : null,
-        )}
-      </div>
-
-      <div className="mt-3 min-h-[64px]">
-        {both && status !== "good" && (
-          <motion.div {...pop(0.5)}>
-            <NumberChoices key={round} options={choices} answer={r.a + r.b} color={C} onRight={() => setStatus("good")} onWrong={() => setStatus("oops")} />
-          </motion.div>
-        )}
-        {status === "good" && (
-          <motion.p {...pop(0)} className="text-center text-5xl font-black" aria-live="polite" onAnimationComplete={() => say(`${r.a} plus ${r.b} equals ${r.a + r.b}`)}>
-            <span className="text-[#CA8A04]">{r.a}</span> + <span className="text-[#EA580C]">{r.b}</span> = <span style={{ color: C }}>{r.a + r.b}</span>
-          </motion.p>
-        )}
-      </div>
-    </TryFrame>
-  );
-}
+const mission: Mission = {
+  goal: "Put the ducks together. Find out how many!",
+  steps: [
+    {
+      task: "Make the ducks swim together.",
+      predict: { question: "3 ducks and 2 ducks swim together. How many?", options: ["🦆🦆🦆🦆 4", "🦆🦆🦆🦆🦆 5"], answer: 1 },
+      scene: (api) => <TapStep api={api} color={C} button="🦆 Swim!" render={(on) => (on ? <DuckScene fromLayout="apart" layout="together" /> : <DuckScene labels />)} />,
+      hint: "Tap the big green button.",
+      explain: "**Adding** puts groups together. Now all the ducks are in one pond.",
+    },
+    {
+      task: "Count all the ducks.",
+      scene: (api) => <TapStep api={api} color={C} button="👆 Count!" render={(on) => <DuckScene layout="together" count={on} eq={on} />} />,
+      explain: "1, 2, 3, 4, 5. Three and two make five: **3 + 2 = 5**.",
+    },
+    {
+      task: "Swap the groups round.",
+      predict: { question: "The 2 ducks go first. How many now?", options: ["🦆🦆🦆🦆🦆 Still 5", "🤔 A new number"], answer: 0, trap: 1 },
+      scene: (api) => <TapStep api={api} color={C} button="🔄 Swap!" render={(on) => (on ? <DuckScene fromLayout="together" layout="swapped" swapEq /> : <DuckScene layout="together" eq />)} />,
+      explain: "**2 + 3 = 5** too. You can add in any order. The answer is the same.",
+    },
+  ],
+  takeaway: "Adding puts groups together. Count them all to find how many.",
+};
 
 /* ------------------------------------------------------------------ */
 /* Story + analogy art                                                 */
@@ -343,10 +260,14 @@ export const addition: Explainer = {
     { title: "Two more ducks", say: "And here are two orange ducks in another pond.", scene: <DuckScene show={5} freshFrom={3} labels /> },
     { title: "Put them together", say: "The ducks swim together into one big pond. Adding means putting groups together.", scene: <DuckScene fromLayout="apart" layout="together" /> },
     { title: "Count them all", say: "Now count all the ducks: one, two, three, four, five.", scene: <DuckScene layout="together" count /> },
-    { title: "3 + 2 = 5", say: "Three and two make five. We write it: three plus two equals five.", scene: <DuckScene layout="together" eq /> },
+    { title: "3 + 2 = 5", say: "Three and two make five. We write: three plus two equals five.", scene: <DuckScene layout="together" eq /> },
     { title: "Swap them round", say: "Put the two orange ducks first. Two plus three is still five!", scene: <DuckScene fromLayout="together" layout="swapped" swapEq /> },
   ],
-  try: AddTry,
+  mission,
+  misconception: {
+    myth: "3 + 2 and 2 + 3 give different answers.",
+    truth: "Swap the groups round and you still have the same number. Both make 5.",
+  },
   story,
   like: {
     headline: "Adding is like pouring two jars of marbles into one big jar.",

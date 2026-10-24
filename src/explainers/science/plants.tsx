@@ -1,10 +1,9 @@
 "use client";
 
-import { useRef, useState } from "react";
+import { useState } from "react";
 import { motion } from "framer-motion";
-import type { Explainer } from "../types";
-import { useFrame, useSvgDrag } from "@/components/widgets/_shared";
-import { Arrow, Face, Kid, Label, Panel, Scene, Sun, Tag, TryShell } from "./_art";
+import type { Explainer, Mission, MissionApi } from "../types";
+import { Arrow, Face, Kid, Label, Panel, Scene, StepButton, StepNote, Sun, Tag } from "./_art";
 
 const C = "#22C55E";
 const LEAF = "#16a34a";
@@ -149,130 +148,116 @@ function PlantScene({ stage }: { stage: number }) {
 }
 
 /* ------------------------------------------------------------------ */
-/* Try it: give the plant what it needs                                */
+/* Guided mission: what does a plant need?                             */
 /* ------------------------------------------------------------------ */
 
-type Need = "sun" | "water" | "air";
-const HOMES: Record<Need, { x: number; y: number }> = { sun: { x: 50, y: 50 }, water: { x: 50, y: 135 }, air: { x: 350, y: 60 } };
-const SLOTS: Record<Need, { x: number; y: number }> = { sun: { x: 140, y: 42 }, water: { x: 255, y: 170 }, air: { x: 285, y: 85 } };
-const NEED_NAME: Record<Need, string> = { sun: "sunlight", water: "water", air: "air (carbon dioxide)" };
-
-function Token({ kind, pos, svg, onMove, onDrop, placed }: { kind: Need; pos: { x: number; y: number }; svg: React.RefObject<SVGSVGElement | null>; onMove: (p: { x: number; y: number }) => void; onDrop: () => void; placed: boolean }) {
-  const drag = useSvgDrag(svg, onMove, onDrop);
+/** A watered plant that is either in a dark cupboard or in the sunshine. */
+function PotScene({ dark, wilted, sugar, oxygen, label }: { dark?: boolean; wilted?: boolean; sugar?: boolean; oxygen?: boolean; label: string }) {
   return (
-    <g transform={`translate(${pos.x} ${pos.y})`} {...drag} role="button" aria-label={`Drag the ${NEED_NAME[kind]} to the plant`} style={{ ...drag.style, cursor: placed ? "default" : "grab" }}>
-      <circle r={30} fill="#fff" opacity={placed ? 0 : 0.9} stroke={placed ? "none" : "#94a3b8"} strokeWidth={2.5} strokeDasharray="5 4" />
-      {kind === "sun" && <Sun x={0} y={0} r={16} />}
-      {kind === "water" && (
-        <g transform="rotate(-20)">
-          <rect x={-16} y={-12} width={26} height={22} rx={5} fill="#0ea5e9" stroke="#0369a1" strokeWidth={2} />
-          <path d="M 10 -6 L 24 -16 L 26 -12 L 12 2 Z" fill="#0ea5e9" stroke="#0369a1" strokeWidth={2} />
-          <path d="M -12 -12 Q -2 -26 8 -12" fill="none" stroke="#0369a1" strokeWidth={3} />
-        </g>
-      )}
-      {kind === "air" && (
-        <g>
-          <path d="M -22 -6 q 10 -8 20 0 t 20 0 M -22 6 q 10 -8 20 0 t 20 0" stroke="#64748b" strokeWidth={3.5} fill="none" strokeLinecap="round" />
-          <text y={22} textAnchor="middle" fontSize={11} fontWeight={900} fill="#475569">
-            CO₂
-          </text>
-        </g>
-      )}
-    </g>
-  );
-}
-
-function FeedThePlant() {
-  const svg = useRef<SVGSVGElement>(null);
-  const [pos, setPos] = useState<Record<Need, { x: number; y: number }>>({ ...HOMES });
-  const [on, setOn] = useState<Record<Need, boolean>>({ sun: false, water: false, air: false });
-  const [growth, setGrowth] = useState(0);
-  const [oxy, setOxy] = useState(0);
-  const all = on.sun && on.water && on.air;
-
-  useFrame(
-    (dt) => {
-      setGrowth((g) => Math.min(1, g + dt * 0.12));
-      setOxy((o) => (o + dt) % 3);
-    },
-    all,
-  );
-
-  const reset = () => {
-    setPos({ ...HOMES });
-    setOn({ sun: false, water: false, air: false });
-    setGrowth(0);
-  };
-
-  const move = (k: Need) => (p: { x: number; y: number }) => {
-    if (on[k]) return;
-    setPos((s) => ({ ...s, [k]: { x: Math.max(20, Math.min(380, p.x)), y: Math.max(20, Math.min(240, p.y)) } }));
-  };
-  const drop = (k: Need) => () => {
-    if (on[k]) return;
-    const p = pos[k];
-    if (Math.hypot(p.x - 200, p.y - 120) < 110) {
-      setOn((s) => ({ ...s, [k]: true }));
-      setPos((s) => ({ ...s, [k]: SLOTS[k] }));
-    } else setPos((s) => ({ ...s, [k]: HOMES[k] }));
-  };
-
-  const missing = (Object.keys(on) as Need[]).filter((k) => !on[k]);
-  const h = 70 + growth * 60;
-  const done = growth >= 1;
-  const status = done
-    ? "Wow! With sunlight, water and air, the plant made lots of sugar food. It grew tall, flowered, and gave out oxygen!"
-    : all
-      ? `Photosynthesis is happening! The leaves are making sugar… growing ${Math.round(growth * 100)}%`
-      : missing.length === 3
-        ? "This plant is hungry. Drag the Sun, the watering can and the air onto the plant."
-        : `Good! Now the plant still needs ${missing.map((k) => NEED_NAME[k]).join(" and ")}.`;
-
-  return (
-    <TryShell title="Feed the plant" hint="A plant makes its own food. Drag the three things it needs onto it." onReset={reset} status={status} color={C} done={done}>
-      <div className="overflow-hidden rounded-2xl border-2 border-line">
-        <svg ref={svg} viewBox="0 0 400 260" role="img" aria-label={`Plant game. ${status}`} className="block h-auto w-full select-none" style={{ maxHeight: 300, touchAction: "none" }}>
-          <Ground id="pstry" />
-          <rect x={95} y={20} width={210} height={180} rx={24} fill={all ? "#dcfce7" : "#fff"} opacity={0.5} stroke="#86efac" strokeWidth={2} strokeDasharray="8 6" />
-          {on.sun && [0, 1].map((i) => <motion.line key={i} x1={152} y1={56 + i * 8} x2={190 + i * 14} y2={110 + i * 20} stroke="#facc15" strokeWidth={5} strokeLinecap="round" strokeDasharray="10 12" animate={{ strokeDashoffset: [0, -44] }} transition={{ duration: 0.9, repeat: Infinity, ease: "linear" }} />)}
-          {on.water && (
-            <>
-              {[0, 1, 2].map((i) => (
-                <motion.circle key={i} r={4} fill="#38bdf8" animate={{ cx: [246, 230, 210, 200], cy: [180, 196, 204, 206] }} transition={{ duration: 1, delay: i * 0.3, repeat: Infinity }} />
-              ))}
-              <ellipse cx={200} cy={222} rx={60} ry={14} fill="#1e3a8a" opacity={0.35} />
-            </>
-          )}
-          <motion.g key={growth >= 1 ? "big" : "small"} animate={{ rotate: all ? [-1.5, 1.5, -1.5] : 0 }} transition={{ duration: 2.5, repeat: Infinity }}>
-            <Plant x={200} ground={200} h={h} flower={done} />
-          </motion.g>
-          {!all && <Label x={200} y={192 - h - 22} size={12} color="#b45309">{missing.length === 3 ? "I'm hungry!" : `I need ${NEED_NAME[missing[0]].split(" ")[0]}!`}</Label>}
-          {all && (
-            <>
-              <motion.rect x={194} y={200 - h * 0.55} width={12} height={12} rx={2} fill="#fef3c7" stroke="#d97706" strokeWidth={2} animate={{ y: [0, 40], opacity: [1, 0] }} transition={{ duration: 1.6, repeat: Infinity }} />
-              <g opacity={oxy < 2.4 ? 1 : 0}>
-                <circle cx={140 - oxy * 20} cy={140 - oxy * 25} r={13} fill="#fff" stroke="#0ea5e9" strokeWidth={2.5} />
-                <text x={140 - oxy * 20} y={144 - oxy * 25} textAnchor="middle" fontSize={10} fontWeight={900} fill="#0ea5e9">
-                  O₂
-                </text>
-              </g>
-            </>
-          )}
-          {(Object.keys(HOMES) as Need[]).map((k) => (
-            <Token key={k} kind={k} pos={pos[k]} svg={svg} onMove={move(k)} onDrop={drop(k)} placed={on[k]} />
-          ))}
-        </svg>
-      </div>
-      <div className="mt-3 grid grid-cols-3 gap-2 text-center text-sm font-extrabold">
-        {(["sun", "water", "air"] as Need[]).map((k) => (
-          <span key={k} className="rounded-xl border-2 border-line px-2 py-2" style={on[k] ? { background: "color-mix(in srgb, #22C55E 20%, transparent)" } : undefined}>
-            {on[k] ? "✅" : "⬜"} {k === "sun" ? "Sunlight" : k === "water" ? "Water" : "Air (CO₂)"}
-          </span>
+    <svg viewBox="0 0 400 260" role="img" aria-label={label} className="block h-auto w-full select-none" style={{ maxHeight: 300 }}>
+      <Ground id="pmis" />
+      {!dark && <Sun x={56} y={48} r={24} glow />}
+      {!dark && sugar &&
+        [0, 1, 2].map((i) => (
+          <motion.line key={i} x1={78 + i * 6} y1={64 + i * 10} x2={168 + i * 10} y2={110 + i * 22} stroke="#facc15" strokeWidth={5} strokeLinecap="round" strokeDasharray="10 12" animate={{ strokeDashoffset: [0, -44] }} transition={{ duration: 0.9, repeat: Infinity, ease: "linear" }} />
         ))}
-      </div>
-    </TryShell>
+      {/* water in the soil */}
+      {[[170, 226], [230, 236], [200, 248]].map(([x, y], i) => (
+        <circle key={i} cx={x} cy={y} r={5} fill="#38bdf8" opacity={0.85} />
+      ))}
+      <motion.g initial={false} animate={wilted ? { rotate: -14, scaleY: 0.82 } : { rotate: 0, scaleY: 1 }} transition={{ duration: 1.2, ease: "easeInOut" }} style={{ originX: "200px", originY: "200px", transformBox: "view-box" }}>
+        <g style={{ filter: wilted ? "saturate(0.15) brightness(1.25)" : "none", transition: "filter 1.2s" }}>
+          <Plant x={200} ground={200} h={110} flower={sugar} face={!wilted} />
+        </g>
+      </motion.g>
+      {sugar &&
+        [0, 1, 2].map((i) => (
+          <motion.g key={i} initial={{ opacity: 0 }} animate={{ opacity: [0, 1, 1, 0], y: [0, 30, 70] }} transition={{ duration: 2.2, delay: 0.6 + i * 0.7, repeat: Infinity }}>
+            <rect x={194} y={118} width={12} height={12} rx={2} fill="#fef3c7" stroke="#d97706" strokeWidth={2} />
+          </motion.g>
+        ))}
+      {oxygen && (
+        <>
+          {[0, 1, 2].map((i) => (
+            <Bubble2 key={i} cx={150} cy={118} text="O₂" color="#0ea5e9" delay={i * 0.9} dx={-60} dy={-50} />
+          ))}
+          <Kid x={70} y={200} s={0.95} shirt="#ef4444" mood="happy" />
+        </>
+      )}
+      {dark && (
+        <>
+          <rect width="400" height="260" fill="#0f172a" opacity={0.72} />
+          <rect x={6} y={6} width={388} height={248} rx={10} fill="none" stroke="#78350f" strokeWidth={12} />
+        </>
+      )}
+    </svg>
   );
 }
+
+function StepDark({ done, complete }: MissionApi) {
+  const [waited, setWaited] = useState(false);
+  return (
+    <div>
+      <PotScene dark wilted={waited} label={waited ? "After a week in the dark the plant is pale and droopy" : "A watered plant in a dark cupboard"} />
+      <StepNote>{waited ? "🗓️ 7 days later…" : "🌙 + 💧"}</StepNote>
+      <StepButton color={C} disabled={waited || complete} onClick={() => (setWaited(true), setTimeout(done, 1300))}>
+        ⏩ Wait a week
+      </StepButton>
+    </div>
+  );
+}
+
+function StepSunlight({ done, complete }: MissionApi) {
+  const [sun, setSun] = useState(false);
+  return (
+    <div>
+      <PotScene dark={!sun} wilted={!sun} sugar={sun} label={sun ? "In the sunlight the plant turns green again and its leaves make sugar" : "The pale plant is still in the dark cupboard"} />
+      <StepButton color={C} disabled={sun || complete} onClick={() => (setSun(true), setTimeout(done, 1500))}>
+        ☀️ Put it in the sunlight
+      </StepButton>
+    </div>
+  );
+}
+
+function StepOxygen({ done, complete }: MissionApi) {
+  const [look, setLook] = useState(false);
+  return (
+    <div>
+      <PotScene sugar oxygen={look} label={look ? "The leaves give out oxygen and a child breathes it in" : "A healthy plant making food in the sunlight"} />
+      <StepButton color={C} disabled={look || complete} onClick={() => (setLook(true), setTimeout(done, 1500))}>
+        🔍 Look at the leaves
+      </StepButton>
+    </div>
+  );
+}
+
+const mission: Mission = {
+  goal: "Find out what a plant really needs to make its food.",
+  steps: [
+    {
+      task: "Leave the watered plant in the dark for a week.",
+      predict: { question: "It has soil and water, but no light. What happens?", options: ["It grows big and green", "It goes pale and droopy"], answer: 1 },
+      scene: (api) => <StepDark {...api} />,
+      hint: "Tap the green button to skip ahead a week.",
+      explain: "Soil and water were not enough! Without **light** the leaves can't make food, so the plant gets weak and pale.",
+    },
+    {
+      task: "Put the plant in the sunlight.",
+      predict: { question: "Where does the plant get its food from?", options: ["From the soil", "It makes it in its leaves"], answer: 1 },
+      scene: (api) => <StepSunlight {...api} />,
+      hint: "Tap the button to move the plant into the sunshine.",
+      explain: "The leaves use **sunlight** to turn water and air (carbon dioxide) into **sugar**. That sugar is the plant's food. The soil only gives water and a few minerals.",
+    },
+    {
+      task: "Look closely at the busy leaves.",
+      predict: { question: "What gas do the leaves give out while they make food?", options: ["Carbon dioxide", "Oxygen"], answer: 1 },
+      scene: (api) => <StepOxygen {...api} />,
+      hint: "Tap the button and watch the little bubbles.",
+      explain: "While they make sugar, leaves give out **oxygen**, the gas we breathe in. Making food from light like this is called **photosynthesis**.",
+    },
+  ],
+  takeaway: "Plants make their own food in their leaves from sunlight, water and air, and give out oxygen for us.",
+};
 
 /* ------------------------------------------------------------------ */
 /* Story + analogy                                                     */
@@ -425,13 +410,14 @@ export const plants: Explainer = {
   icon: "🌱",
   watch: [
     { title: "A plant is a food factory", say: "Plants can't eat like we do. Instead, they make their own food, right inside their green leaves!", scene: <PlantScene stage={0} /> },
-    { title: "1. Catch the sunlight", say: "First, the leaves catch sunlight. A green stuff in leaves, called chlorophyll, soaks up the light's energy.", scene: <PlantScene stage={1} /> },
+    { title: "1. Catch the sunlight", say: "First, the leaves catch sunlight. Leaves are green because of chlorophyll, and chlorophyll soaks up the light's energy.", scene: <PlantScene stage={1} /> },
     { title: "2. Drink up water", say: "The roots suck water up from the soil. It travels up the stem, all the way to the leaves.", scene: <PlantScene stage={2} /> },
-    { title: "3. Breathe in air", say: "The leaves take in a gas from the air called carbon dioxide, through tiny holes underneath.", scene: <PlantScene stage={3} /> },
+    { title: "3. Breathe in air", say: "The leaves also take in a gas from the air, called carbon dioxide. It goes in through tiny holes under each leaf.", scene: <PlantScene stage={3} /> },
     { title: "4. Make sugar", say: "Using the Sun's energy, the leaf turns water and carbon dioxide into sugar. Sugar is the plant's food, and it helps the plant grow.", scene: <PlantScene stage={4} /> },
-    { title: "5. A gift of oxygen", say: "As it makes food, the leaf gives out oxygen, the gas that we breathe. This is called photosynthesis. Thank you, plants!", scene: <PlantScene stage={5} /> },
+    { title: "5. A gift of oxygen", say: "As it makes food, the leaf gives out oxygen, the gas that we breathe. Making food from light is called photosynthesis. Thank you, plants!", scene: <PlantScene stage={5} /> },
   ],
-  try: FeedThePlant,
+  mission,
+  misconception: { myth: "Plants get their food from the soil.", truth: "Plants make their own food (sugar) in their leaves, from sunlight, water and air. The soil only gives them water and a few minerals." },
   story,
   like,
 };

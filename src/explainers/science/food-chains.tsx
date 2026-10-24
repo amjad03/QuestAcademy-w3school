@@ -1,10 +1,9 @@
 "use client";
 
 import { useState } from "react";
-import { AnimatePresence, LayoutGroup, motion } from "framer-motion";
-import { ArrowRight } from "lucide-react";
-import type { Explainer } from "../types";
-import { Arrow, BigButton, Face, Kid, Label, Panel, Scene, Sun, Tag, TryShell } from "./_art";
+import { motion } from "framer-motion";
+import type { Explainer, Mission, MissionApi } from "../types";
+import { Arrow, Face, Kid, Label, Panel, Scene, StepButton, Sun, Tag } from "./_art";
 
 const C = "#F97316";
 
@@ -181,138 +180,58 @@ function FoodChainScene({ stage }: { stage: number }) {
 }
 
 /* ------------------------------------------------------------------ */
-/* Try it: build the chain                                             */
+/* Guided mission: pass the energy along                               */
 /* ------------------------------------------------------------------ */
 
-type Card = { id: string; emoji: string; name: string };
-const LEVELS: { place: string; chain: Card[]; order: number[] }[] = [
-  {
-    place: "Meadow",
-    chain: [
-      { id: "sun", emoji: "☀️", name: "Sun" },
-      { id: "grass", emoji: "🌿", name: "Grass" },
-      { id: "rabbit", emoji: "🐇", name: "Rabbit" },
-      { id: "fox", emoji: "🦊", name: "Fox" },
-    ],
-    order: [2, 0, 3, 1],
-  },
-  {
-    place: "Garden",
-    chain: [
-      { id: "sun2", emoji: "☀️", name: "Sun" },
-      { id: "leaf", emoji: "🥬", name: "Cabbage leaf" },
-      { id: "caterpillar", emoji: "🐛", name: "Caterpillar" },
-      { id: "bird", emoji: "🐦", name: "Bird" },
-    ],
-    order: [3, 1, 0, 2],
-  },
-  {
-    place: "Ocean",
-    chain: [
-      { id: "sun3", emoji: "☀️", name: "Sun" },
-      { id: "plankton", emoji: "🌱", name: "Tiny sea plants" },
-      { id: "krill", emoji: "🦐", name: "Krill" },
-      { id: "whale", emoji: "🐋", name: "Whale" },
-    ],
-    order: [1, 3, 2, 0],
-  },
-];
-
-function hintFor(slot: number, chain: Card[]) {
-  if (slot === 0) return "Every food chain starts with energy from the Sun!";
-  if (slot === 1) return "Next comes a plant: it uses sunlight to make its own food.";
-  return `Who eats the ${chain[slot - 1].name.toLowerCase()}? That's who gets its energy next.`;
-}
-
-function BuildTheChain() {
-  const [level, setLevel] = useState(0);
-  const [placed, setPlaced] = useState(0);
-  const [wrong, setWrong] = useState<string | null>(null);
-  const [hint, setHint] = useState<string | null>(null);
-  const L = LEVELS[level % LEVELS.length];
-  const pool = L.order.map((i) => L.chain[i]).filter((c) => L.chain.indexOf(c) >= placed);
-  const complete = placed === L.chain.length;
-  const allDone = complete && level === LEVELS.length - 1;
-
-  const tap = (c: Card) => {
-    if (L.chain.indexOf(c) === placed) {
-      setPlaced((p) => p + 1);
-      setHint(null);
-      setWrong(null);
-    } else {
-      setWrong(c.id);
-      setHint(hintFor(placed, L.chain));
-      setTimeout(() => setWrong((w) => (w === c.id ? null : w)), 500);
-    }
+/** One link of the chain: the meadow shows `from`, and the button moves it on to `to` (then `then`, if given). */
+function StepLink({ api, from, to, then, button }: { api: MissionApi; from: number; to: number; then?: number; button: string }) {
+  const [stage, setStage] = useState(from);
+  const go = () => {
+    setStage(to);
+    if (then === undefined) setTimeout(api.done, 1600);
+    else
+      setTimeout(() => {
+        setStage(then);
+        setTimeout(api.done, 1200);
+      }, 1800);
   };
-  const reset = () => {
-    setLevel(0);
-    setPlaced(0);
-    setHint(null);
-  };
-
-  const status = allDone
-    ? "Food-chain expert! In every chain the energy starts at the Sun and passes from plant to animal to animal."
-    : complete
-      ? `Yes! ${L.chain.map((c) => c.name).join(" → ")}. The energy passed all the way along!`
-      : hint ?? (placed === 0 ? "Tap the card that comes FIRST in the food chain." : `Great! Now: who gets energy from the ${L.chain[placed - 1].name.toLowerCase()}?`);
-
   return (
-    <TryShell title={`Build the food chain: ${L.place}`} hint="Tap the cards in order, from where the energy starts to the last eater." onReset={reset} status={status} color={C} done={complete}>
-      <LayoutGroup id="food-chain">
-        <div className="rounded-2xl border-2 border-line p-3" style={{ background: "color-mix(in srgb, #F97316 7%, rgb(var(--surface)))" }}>
-          <ol className="flex items-center justify-between gap-1 sm:gap-2" aria-label="Your food chain">
-            {L.chain.map((c, i) => (
-              <li key={c.id} className="flex flex-1 items-center gap-1 sm:gap-2">
-                <div className="grid aspect-square w-full max-w-[110px] place-items-center rounded-2xl border-2 border-dashed" style={{ borderColor: i < placed ? "transparent" : "rgb(var(--line))" }}>
-                  {i < placed ? (
-                    <motion.div layoutId={c.id} className="grid h-full w-full place-items-center rounded-2xl border-2 bg-surface text-center" style={{ borderColor: C }}>
-                      <span className="text-4xl sm:text-5xl" aria-hidden>
-                        {c.emoji}
-                      </span>
-                      <span className="px-1 text-xs font-extrabold leading-tight sm:text-sm">{c.name}</span>
-                    </motion.div>
-                  ) : (
-                    <span className="text-2xl font-black text-muted">{i + 1}</span>
-                  )}
-                </div>
-                {i < L.chain.length - 1 && <ArrowRight className="h-6 w-6 shrink-0" style={{ color: i < placed - 1 ? C : "rgb(var(--line))" }} aria-hidden />}
-              </li>
-            ))}
-          </ol>
-        </div>
-        <div className="mt-3 grid min-h-[120px] grid-cols-2 gap-2 sm:grid-cols-4">
-          <AnimatePresence>
-            {pool.map((c) => (
-              <motion.button
-                key={c.id}
-                layoutId={c.id}
-                type="button"
-                onClick={() => tap(c)}
-                animate={wrong === c.id ? { x: [0, -10, 10, -6, 6, 0] } : { x: 0 }}
-                transition={{ duration: 0.4 }}
-                className="flex min-h-[110px] flex-col items-center justify-center rounded-2xl border-2 border-b-4 border-line bg-surface p-2 active:translate-y-[2px]"
-                aria-label={c.name}
-              >
-                <span className="text-5xl" aria-hidden>
-                  {c.emoji}
-                </span>
-                <span className="mt-1 text-sm font-extrabold">{c.name}</span>
-              </motion.button>
-            ))}
-          </AnimatePresence>
-          {complete && !allDone && (
-            <div className="col-span-2 flex items-center justify-center sm:col-span-4">
-              <BigButton onClick={() => { setLevel((l) => l + 1); setPlaced(0); setHint(null); }} color={C} active>
-                Next chain: {LEVELS[level + 1].place} <ArrowRight className="h-5 w-5" />
-              </BigButton>
-            </div>
-          )}
-        </div>
-      </LayoutGroup>
-    </TryShell>
+    <div>
+      <FoodChainScene stage={stage} />
+      <StepButton color={C} disabled={stage !== from || api.complete} onClick={go}>
+        {button}
+      </StepButton>
+    </div>
   );
 }
+
+const mission: Mission = {
+  goal: "Pass the Sun's energy along a food chain: grass, then rabbit, then fox.",
+  steps: [
+    {
+      task: "Let the Sun shine on the grass.",
+      predict: { question: "Grass can't eat. How does it get its energy?", options: ["It sucks food out of the soil", "It makes its own food with sunlight"], answer: 1 },
+      scene: (api) => <StepLink api={api} from={0} to={1} button="☀️ Shine" />,
+      hint: "Tap the orange Shine button.",
+      explain: "Grass uses sunlight to make its own food. Plants are **producers**: every food chain starts with them, and with the Sun.",
+    },
+    {
+      task: "Let the rabbit eat the grass.",
+      predict: { question: "Which way should the arrow point?", options: ["Rabbit → grass (the rabbit eats it)", "Grass → rabbit (the energy goes to the rabbit)"], answer: 1 },
+      scene: (api) => <StepLink api={api} from={1} to={2} button="🐇 Munch" />,
+      hint: "Tap Munch, then look at the new orange arrow.",
+      explain: "The arrow points to the **eater**. It shows where the energy goes: from the grass into the rabbit.",
+    },
+    {
+      task: "Let the fox catch the rabbit.",
+      predict: { question: "In a meadow, are there more foxes or more rabbits?", options: ["More foxes: they are the strongest", "More rabbits", "The same number"], answer: 1 },
+      scene: (api) => <StepLink api={api} from={2} to={3} then={5} button="🦊 Hunt" />,
+      hint: "Tap Hunt and watch what happens next.",
+      explain: "Each animal uses up most of its energy just living, so only a little passes on. So there is lots of grass, **fewer rabbits** and only a few foxes.",
+    },
+  ],
+  takeaway: "In a food chain the energy starts at the Sun and passes along: arrows point to the eater, and less energy is left at each step.",
+};
 
 /* ------------------------------------------------------------------ */
 /* Story + analogy                                                     */
@@ -452,9 +371,10 @@ export const foodChains: Explainer = {
     { title: "The rabbit eats the grass", say: "A rabbit eats the grass. The energy stored in the grass passes into the rabbit. The rabbit is a consumer.", scene: <FoodChainScene stage={2} /> },
     { title: "The fox eats the rabbit", say: "A fox hunts and eats the rabbit, so the energy moves on again. The fox is the predator and the rabbit is its prey.", scene: <FoodChainScene stage={3} /> },
     { title: "Follow the arrows", say: "In a food chain, the arrows point to the eater. They show which way the energy goes: Sun, grass, rabbit, fox.", scene: <FoodChainScene stage={4} /> },
-    { title: "Less energy each step", say: "Animals use up most of their energy just living, so only a little passes on. That's why there's lots of grass, fewer rabbits and only a few foxes.", scene: <FoodChainScene stage={5} /> },
+    { title: "Less energy each step", say: "Animals use up most of their energy just moving and keeping warm, so only a little passes on. That's why there's lots of grass, fewer rabbits and only a few foxes.", scene: <FoodChainScene stage={5} /> },
   ],
-  try: BuildTheChain,
+  mission,
+  misconception: { myth: "The arrow in a food chain means \"eats\", so it points from the fox to the rabbit.", truth: "The arrow points to the eater. It shows where the energy goes: grass → rabbit → fox." },
   story,
   like,
 };

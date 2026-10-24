@@ -1,13 +1,10 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { motion } from "framer-motion";
-import { CloudRain, CloudSnow, RotateCcw, Sun as SunIcon } from "lucide-react";
-import clsx from "clsx";
-import type { Explainer } from "../types";
-import { sfx } from "@/lib/sound";
-import { burst } from "@/lib/confetti";
-import { Art, Cloud, INK, Kid, Rain, Robot, Stage, STAGE_INK, STAGE_MUTED, Sun } from "./_art";
+import { Play } from "lucide-react";
+import type { Explainer, Mission, MissionApi } from "../types";
+import { Art, Cloud, INK, Kid, MissionButton, Rain, Robot, Stage, STAGE_INK, STAGE_MUTED, Sun, useTicker } from "./_art";
 
 const COLOR = "#7C3AED";
 
@@ -259,185 +256,117 @@ const watch: Explainer["watch"] = [
 ];
 
 /* ------------------------------------------------------------------ */
-/* Try: fix Bolt's weather rules                                       */
+/* Guided mission                                                      */
 /* ------------------------------------------------------------------ */
 
-type Weather = "rainy" | "snowy" | "sunny";
-type Item = "umbrella" | "scarf" | "sunglasses";
-const ITEMS: Item[] = ["umbrella", "scarf", "sunglasses"];
-const NEEDS: Record<Weather, Item> = { rainy: "umbrella", snowy: "scarf", sunny: "sunglasses" };
-const ITEM_ART: Record<Item, (s: number) => React.ReactNode> = {
-  umbrella: (s) => <Umbrella s={s} />,
-  scarf: (s) => <Scarf s={s} />,
-  sunglasses: (s) => <Shades s={s} />,
+type Weather = "rainy" | "sunny" | "snowy";
+
+const IF_ELSE = ["if raining:", "    take(umbrella)", "else:", "    wear(sunglasses)"];
+const IF_ELIF = ["if raining:", "    take(umbrella)", "elif snowing:", "    wear(scarf)", "else:", "    wear(sunglasses)"];
+
+/** Lines that run, in order, and the line that gives Bolt his item. */
+const RUNS: Record<string, { trace: number[]; item: "umbrella" | "scarf" | "sunglasses" }> = {
+  "2-rainy": { trace: [0, 1], item: "umbrella" },
+  "2-sunny": { trace: [0, 2, 3], item: "sunglasses" },
+  "3-snowy": { trace: [0, 2, 3], item: "scarf" },
 };
 
-/** Which code lines run, in order, for each weather (0 if, 1 body, 2 elif, 3 body, 4 else, 5 body). */
-const TRACE: Record<Weather, number[]> = { rainy: [0, 1], snowy: [0, 2, 3], sunny: [0, 2, 4, 5] };
-
-const OUCH: Record<Weather, Record<Item, string>> = {
-  rainy: { umbrella: "", scarf: "A scarf in the rain? Bolt is soggy!", sunglasses: "Sunglasses in the rain? Bolt is soaked and can't see!" },
-  snowy: { umbrella: "An umbrella doesn't keep Bolt's neck warm. Brrr!", scarf: "", sunglasses: "Sunglasses in the snow? Bolt's metal is freezing!" },
-  sunny: { umbrella: "An umbrella on a sunny day? Bolt squints in the glare.", scarf: "A woolly scarf in the sunshine? Bolt is far too hot!", sunglasses: "" },
-};
-
-function ItemButton({ item, onClick, lit }: { item: Item; onClick: () => void; lit?: boolean }) {
+/** One weather, one Run button: the lines light up one by one, skipped lines fade. */
+function StepWeather({ done, complete, weather, lines }: MissionApi & { weather: Weather; lines: string[] }) {
+  const run = RUNS[`${lines.length === 4 ? 2 : 3}-${weather}`];
+  const [tick, setTick] = useState(-1);
+  const running = tick >= 0 && tick < run.trace.length;
+  const finished = tick >= run.trace.length;
+  useTicker(running, 550, () => setTick((t) => t + 1));
+  const ran = run.trace.slice(0, Math.max(0, tick));
+  /** A question's answer was yes if the line just inside it ran next. */
+  const yes = (i: number) => run.trace[run.trace.indexOf(i) + 1] === i + 1;
+  const lh = lines.length === 4 ? 36 : 30;
+  const top = 120 - (lines.length * lh) / 2;
   return (
-    <button type="button" onClick={onClick} className={clsx("inline-flex min-h-[44px] items-center gap-1.5 rounded-xl border-2 border-dashed px-2.5 font-mono text-sm font-black text-violet-200 transition hover:bg-white/10", lit ? "border-amber-300" : "border-violet-400/60")} aria-label={`Change item, now ${item}`}>
-      <svg viewBox="-24 -24 48 48" className="h-7 w-7" aria-hidden>
-        {ITEM_ART[item](0.9)}
-      </svg>
-      {item}
-    </button>
-  );
-}
-
-function IfElseTry() {
-  const [rules, setRules] = useState<[Item, Item, Item]>(["sunglasses", "umbrella", "scarf"]);
-  const [weather, setWeather] = useState<Weather | null>(null);
-  const [tick, setTick] = useState(0);
-  const [results, setResults] = useState<Partial<Record<Weather, boolean>>>({});
-
-  const trace = weather ? TRACE[weather] : [];
-  const done = weather !== null && tick >= trace.length;
-  const ran = trace.slice(0, tick);
-  const chosen: Item | null = done && weather ? rules[weather === "rainy" ? 0 : weather === "snowy" ? 1 : 2] : null;
-  const ok = chosen !== null && weather !== null && chosen === NEEDS[weather];
-  const allOk = (["rainy", "snowy", "sunny"] as Weather[]).every((w) => results[w]);
-
-  useEffect(() => {
-    if (!weather || tick >= trace.length) return;
-    const id = setTimeout(() => setTick((t) => t + 1), 550);
-    return () => clearTimeout(id);
-  }, [weather, tick, trace.length]);
-
-  useEffect(() => {
-    if (!done || !weather || chosen === null) return;
-    sfx(ok ? "correct" : "wrong");
-    const next = { ...results, [weather]: ok };
-    if (ok && (["rainy", "snowy", "sunny"] as Weather[]).every((w) => next[w])) burst();
-    setResults(next);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [done]);
-
-  const go = (w: Weather) => {
-    setWeather(w);
-    setTick(0);
-  };
-  const cycle = (k: 0 | 1 | 2) => {
-    setRules((r) => {
-      const n = [...r] as [Item, Item, Item];
-      n[k] = ITEMS[(ITEMS.indexOf(r[k]) + 1) % ITEMS.length];
-      return n;
-    });
-    setResults({});
-    setWeather(null);
-    sfx("tap");
-  };
-  const reset = () => {
-    setRules(["sunglasses", "umbrella", "scarf"]);
-    setResults({});
-    setWeather(null);
-  };
-
-  const lineCls = (i: number) => clsx("rounded-lg px-2 py-1 transition-colors", ran.includes(i) ? (i % 2 === 0 ? "bg-violet-700" : "bg-green-800") : weather && done && !ran.includes(i) ? "opacity-40" : "");
-  const verdict = (i: number) => {
-    if (!weather || !ran.includes(i) || i % 2 === 1 || i === 4) return null;
-    const yes = (i === 0 && weather === "rainy") || (i === 2 && weather === "snowy");
-    return <span className={clsx("ml-2 text-xs", yes ? "text-green-300" : "text-red-300")}>{yes ? "← yes!" : "← no"}</span>;
-  };
-
-  return (
-    <div className="select-none">
-      <p className="mb-3 font-extrabold">
-        Bolt&apos;s rules are muddled! Tap the items to fix them, then test every kind of weather.
-      </p>
-      <div className="grid gap-4 md:grid-cols-[1fr_1fr]">
-        <div className="rounded-2xl bg-[#111827] p-3 font-mono text-[15px] font-bold text-gray-100" aria-live="polite">
-          <div className={lineCls(0)}>
-            <span className="text-pink-400">if</span> weather == <span className="text-sky-300">&quot;rainy&quot;</span>:{verdict(0)}
-          </div>
-          <div className={clsx(lineCls(1), "pl-8")}>
-            take( <ItemButton item={rules[0]} onClick={() => cycle(0)} lit={ran.includes(1)} /> )
-          </div>
-          <div className={lineCls(2)}>
-            <span className="text-pink-400">elif</span> weather == <span className="text-sky-300">&quot;snowy&quot;</span>:{verdict(2)}
-          </div>
-          <div className={clsx(lineCls(3), "pl-8")}>
-            take( <ItemButton item={rules[1]} onClick={() => cycle(1)} lit={ran.includes(3)} /> )
-          </div>
-          <div className={lineCls(4)}>
-            <span className="text-pink-400">else</span>:
-          </div>
-          <div className={clsx(lineCls(5), "pl-8")}>
-            take( <ItemButton item={rules[2]} onClick={() => cycle(2)} lit={ran.includes(5)} /> )
-          </div>
-        </div>
-
-        <div className="overflow-hidden rounded-2xl border-2 border-line" style={{ background: weather === "sunny" ? "#E0F2FE" : weather === "snowy" ? "#EFF6FF" : weather === "rainy" ? "#CBD5E1" : "#F1F5F9" }}>
-          <svg viewBox="0 0 240 170" role="img" aria-label={weather ? `It is ${weather}. ${chosen ? `Bolt took the ${chosen}. ${ok ? "He is comfy." : "He is not comfy."}` : "Bolt is checking his rules."}` : "Bolt is waiting for the weather."} className="h-auto w-full" style={{ maxHeight: 240 }}>
-            <rect y={140} width={240} height={30} fill={weather === "snowy" ? "#F8FAFC" : "#86EFAC"} />
-            {weather === "sunny" && <Sun x={200} y={34} r={16} />}
-            {weather === "rainy" && (
-              <>
-                <Cloud x={70} y={30} grey />
-                <Cloud x={170} y={26} s={0.9} grey />
-                <Rain x={20} y={40} w={200} h={110} n={14} />
-              </>
-            )}
-            {weather === "snowy" && (
-              <>
-                <Cloud x={110} y={28} />
-                <Snow x={20} y={40} w={200} h={110} n={14} />
-              </>
-            )}
-            <g transform="translate(120 120)">
-              <Robot s={1.2} mood={done ? (ok ? "happy" : "sad") : "wow"} />
-              {chosen && (
-                <g transform={chosen === "umbrella" ? "translate(26 -64)" : chosen === "scarf" ? "translate(0 -14)" : "translate(0 -33)"}>
-                  <motion.g key={`${weather}-${chosen}`} initial={{ opacity: 0, scale: 0.3 }} animate={{ opacity: 1, scale: 1 }}>
-                    {ITEM_ART[chosen](chosen === "umbrella" ? 1.5 : chosen === "scarf" ? 0.9 : 0.78)}
-                  </motion.g>
-                </g>
+    <div>
+      <Stage label={finished ? `It is ${weather}. Only the lit lines ran, so Bolt has his ${run.item}. The other lines were skipped.` : `It is ${weather}. Bolt's code is ready to run.`}>
+        <rect x={6} y={top - 12} width={244} height={lines.length * lh + 24} rx={12} fill="#111827" stroke={INK} strokeWidth={2} />
+        {lines.map((l, i) => {
+          const on = ran.includes(i);
+          const keyword = i % 2 === 0;
+          return (
+            <g key={i} opacity={finished && !on ? 0.35 : 1}>
+              {on && <rect x={14} y={top + i * lh} width={228} height={lh - 6} rx={6} fill={keyword ? "#6D28D9" : "#166534"} />}
+              <text x={22} y={top + i * lh + lh / 2 + 2} fontFamily="ui-monospace, Menlo, monospace" fontSize={15} fontWeight={700} fill={keyword ? "#F9A8D4" : "#F9FAFB"} xmlSpace="preserve">
+                {l}
+              </text>
+              {on && keyword && l !== "else:" && (
+                <text x={236} y={top + i * lh + lh / 2 + 2} textAnchor="end" fontSize={13} fontWeight={900} fill={yes(i) ? "#86EFAC" : "#FCA5A5"}>
+                  {yes(i) ? "yes" : "no"}
+                </text>
               )}
             </g>
-          </svg>
-        </div>
-      </div>
-
-      <div className="mt-4 flex flex-wrap items-center gap-2">
-        <span className="text-sm font-bold text-muted">Test the weather:</span>
-        {(
-          [
-            ["rainy", "Rain", CloudRain],
-            ["snowy", "Snow", CloudSnow],
-            ["sunny", "Sun", SunIcon],
-          ] as const
-        ).map(([w, label, Icon]) => (
-          <button key={w} type="button" onClick={() => go(w)} className={clsx("flex min-h-[48px] items-center gap-2 rounded-2xl border-2 px-4 font-extrabold", weather === w ? "border-transparent text-white" : "border-line bg-surface")} style={weather === w ? { background: COLOR } : undefined}>
-            <Icon className="h-5 w-5" /> {label}
-            {results[w] !== undefined && <span aria-label={results[w] ? "passed" : "failed"}>{results[w] ? "✅" : "❌"}</span>}
-          </button>
-        ))}
-        <button type="button" className="btn-ghost min-h-[48px]" onClick={reset} aria-label="Reset rules">
-          <RotateCcw className="h-4 w-4" />
-        </button>
-      </div>
-
-      <p className={clsx("mt-3 min-h-[3rem] rounded-2xl px-4 py-3 font-bold", allOk ? "bg-good/10 text-good" : done ? (ok ? "bg-good/10 text-good" : "bg-bad/10 text-bad") : "bg-surface-2 text-muted")} aria-live="polite">
-        {allOk
-          ? "Bolt is comfy in every weather! You tested all three branches — that's exactly how real programmers check their if/else code."
-          : !weather
-            ? "Pick a weather to run the code."
-            : !done
-              ? "Checking the questions from the top, one at a time…"
-              : ok
-                ? `Yes! ${weather === "sunny" ? "No question was true, so the else branch ran." : "The first true question wins, and the rest are skipped."} Now test the other weathers.`
-                : OUCH[weather][chosen!]}
-      </p>
+          );
+        })}
+        {/* the weather and Bolt */}
+        <rect x={262} y={20} width={132} height={200} rx={14} fill={weather === "sunny" ? "#E0F2FE" : weather === "snowy" ? "#EFF6FF" : "#CBD5E1"} stroke={INK} strokeWidth={2} />
+        {weather === "sunny" && <Sun x={360} y={52} r={14} />}
+        {weather === "rainy" && (
+          <>
+            <Cloud x={316} y={50} s={0.8} grey />
+            <Rain x={276} y={62} w={108} h={140} n={9} />
+          </>
+        )}
+        {weather === "snowy" && (
+          <>
+            <Cloud x={316} y={50} s={0.8} />
+            <Snow x={276} y={62} w={108} h={140} n={9} />
+          </>
+        )}
+        <g transform="translate(328 188)">
+          <Robot s={1} mood={finished ? "happy" : "wow"} />
+          {finished && (
+            <g transform={run.item === "umbrella" ? "translate(22 -60)" : run.item === "scarf" ? "translate(0 -12)" : "translate(0 -27)"}>
+              <motion.g initial={{ opacity: 0, scale: 0.3 }} animate={{ opacity: 1, scale: 1 }}>
+                {run.item === "umbrella" ? <Umbrella s={1.2} /> : run.item === "scarf" ? <Scarf s={0.75} /> : <Shades s={0.65} />}
+              </motion.g>
+            </g>
+          )}
+        </g>
+      </Stage>
+      <MissionButton color={COLOR} disabled={complete || tick >= 0} onClick={() => {
+          setTick(1);
+          done();
+        }}>
+        <Play className="h-5 w-5" /> Run the code
+      </MissionButton>
     </div>
   );
 }
+
+const mission: Mission = {
+  goal: "Run Bolt's weather code and see which lines run.",
+  steps: [
+    {
+      task: "It is raining. Run the code.",
+      predict: { question: "It is raining. What will Bolt do?", options: ["Take the umbrella only", "Take the umbrella AND wear sunglasses — both parts run"], answer: 0 },
+      scene: (api) => <StepWeather {...api} weather="rainy" lines={IF_ELSE} />,
+      hint: "Tap the purple Run button and watch the lines light up.",
+      explain: "**if** asks a yes-or-no question, called a **condition**. It was raining, so the answer was yes: the umbrella line ran and the whole **else** part was skipped. Only one branch ever runs.",
+    },
+    {
+      task: "Now it is sunny. Run the code again.",
+      predict: { question: "It is not raining. Which line gives Bolt his item?", options: ["take(umbrella)", "wear(sunglasses)", "Neither — nothing runs"], answer: 1 },
+      scene: (api) => <StepWeather {...api} weather="sunny" lines={IF_ELSE} />,
+      hint: "Tap Run and look for the line that lights up green.",
+      explain: "The answer to *raining?* was no, so the computer jumped to **else**, which means *otherwise*. The umbrella line was skipped this time.",
+    },
+    {
+      task: "It is snowing. Run the longer code.",
+      predict: { question: "It is snowing. Which questions does Bolt ask?", options: ["Only raining?", "raining? (no), then snowing? (yes)", "Every question, and all the yes parts run"], answer: 1 },
+      scene: (api) => <StepWeather {...api} weather="snowy" lines={IF_ELIF} />,
+      hint: "Tap Run and watch which questions light up.",
+      explain: "**elif** means *else if*: ask another question. Bolt asks from the top and **stops at the first yes**, so he wears the scarf and skips the rest.",
+    },
+  ],
+  takeaway: "if / elif / else asks questions from the top, runs the first branch whose answer is yes, and skips all the others.",
+};
 
 /* ------------------------------------------------------------------ */
 /* Story + analogy                                                     */
@@ -579,12 +508,13 @@ export const ifElseExplainer: Explainer = {
   title: "If / else: making decisions",
   tagline: "Ask a yes-or-no question, then pick a path — just like Bolt at the fork.",
   area: "Coding",
-  ages: "7–16",
+  ages: "10–14",
   lessons: ["python/control-flow/conditionals", "javascript/basics/operators-conditionals"],
   color: COLOR,
   icon: "🔀",
   watch,
-  try: IfElseTry,
+  misconception: { myth: "The computer runs both the if part and the else part.", truth: "Exactly one branch runs: the first one whose question is answered yes (or else, if none are). The rest are skipped." },
+  mission,
   story,
   like,
 };

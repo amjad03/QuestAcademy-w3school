@@ -3,13 +3,12 @@
 /**
  * Shared picture-book kit for the early-maths explainers: a responsive SVG
  * stage, friendly drawn objects (apples, cookies, ducks, kids…), number
- * badges, and the frame every hands-on activity sits in.
+ * badges, and the one-tap step every guided mission is built from.
  */
 
-import { useEffect, useRef, useState, type ReactNode } from "react";
-import { AnimatePresence, motion, type Transition } from "framer-motion";
-import { RotateCcw, Volume2 } from "lucide-react";
-import { say } from "@/lib/voice";
+import { useState, type ReactNode } from "react";
+import { motion, type Transition } from "framer-motion";
+import type { MissionApi } from "../types";
 
 /* ------------------------------------------------------------------ */
 /* Motion presets                                                      */
@@ -195,154 +194,40 @@ export function Finger({ path, delay = 0, step = 0.7, size = 30 }: { path: { x: 
 }
 
 /* ------------------------------------------------------------------ */
-/* Activity frame                                                      */
+/* Mission steps                                                       */
 /* ------------------------------------------------------------------ */
 
-export type Status = "play" | "good" | "oops";
-
-/** Speaker button that reads `text` aloud. */
-export function SayButton({ text, color }: { text: string; color: string }) {
+/** The one big action button of a mission step (at least 56px tall). */
+export function MissionButton({ color, onClick, disabled, children }: { color: string; onClick: () => void; disabled?: boolean; children: ReactNode }) {
   return (
-    <button type="button" onClick={() => say(text, { rate: 0.95 })} className="grid h-12 w-12 shrink-0 place-items-center rounded-2xl border-2 border-line bg-surface text-muted transition hover:bg-surface-2 active:scale-95" aria-label="Hear it" style={{ color }}>
-      <Volume2 className="h-6 w-6" />
+    <button type="button" onClick={onClick} disabled={disabled} className="mx-auto mt-3 flex min-h-[3.5rem] items-center justify-center gap-2 rounded-2xl border-2 border-b-4 px-7 text-xl font-black text-white transition active:translate-y-[2px] disabled:opacity-50" style={{ background: color, borderColor: `color-mix(in srgb, ${color} 70%, black)` }}>
+      {children}
     </button>
   );
 }
 
-/** Stars that burst outward when the child gets it. */
-export function Burst({ show }: { show: boolean }) {
-  return (
-    <AnimatePresence>
-      {show && (
-        <motion.div className="pointer-events-none absolute inset-0 z-20 grid place-items-center" initial={{ opacity: 1 }} exit={{ opacity: 0 }}>
-          {Array.from({ length: 12 }, (_, i) => {
-            const a = (i / 12) * Math.PI * 2;
-            return (
-              <motion.span key={i} className="absolute text-3xl" initial={{ x: 0, y: 0, scale: 0.3, opacity: 1 }} animate={{ x: Math.cos(a) * 150, y: Math.sin(a) * 110, scale: 1.2, opacity: 0 }} transition={{ duration: 1.1, ease: "easeOut" }}>
-                {["⭐", "🎉", "✨"][i % 3]}
-              </motion.span>
-            );
-          })}
-        </motion.div>
-      )}
-    </AnimatePresence>
-  );
-}
-
 /**
- * Frame for a hands-on activity: a picture prompt (read aloud on tap), the
- * play area, a friendly face for feedback and a big "Try another" button.
+ * A one-tap mission step: shows `render(false)`, and after the learner taps
+ * the big button shows `render(true)` (kept on screen) and reports done.
  */
-export function TryFrame({ color, prompt, picture, status, children, onAnother, round }: { color: string; prompt: string; picture?: ReactNode; status: Status; children: ReactNode; onAnother: () => void; round: number }) {
-  const first = useRef(true);
-  useEffect(() => {
-    if (first.current) {
-      first.current = false;
-      return;
-    }
-    say(prompt, { rate: 0.95 });
-    // Only on a new round.
-  }, [round]);
-  const [burstKey, setBurstKey] = useState(0);
-  useEffect(() => {
-    if (status === "good") setBurstKey((k) => k + 1);
-  }, [status]);
-
+export function TapStep({ api, color, button, render }: { api: MissionApi; color: string; button: ReactNode; render: (on: boolean) => ReactNode }) {
+  const [on, setOn] = useState(false);
   return (
     <div className="select-none">
-      <div className="mb-3 flex items-center gap-3 rounded-2xl border-2 border-line px-3 py-2" style={{ background: `color-mix(in srgb, ${color} 9%, rgb(var(--surface)))` }}>
-        {picture && <div className="shrink-0 text-3xl" aria-hidden>{picture}</div>}
-        <p className="min-w-0 flex-1 text-lg font-black leading-snug">{prompt}</p>
-        <SayButton text={prompt} color={color} />
-      </div>
-      <div className="relative">
-        {children}
-        <Burst key={burstKey} show={status === "good" && burstKey > 0} />
-      </div>
-      <div className="mt-3 flex items-center justify-between gap-3">
-        <AnimatePresence mode="wait">
-          <motion.span key={status} initial={{ scale: 0.4, opacity: 0 }} animate={{ scale: 1, opacity: 1 }} exit={{ scale: 0.4, opacity: 0 }} transition={spring} className="text-4xl" role="status" aria-label={status === "good" ? "Well done!" : status === "oops" ? "Not quite, try again" : "Your turn"}>
-            {status === "good" ? "🤩" : status === "oops" ? "🤔" : "🙂"}
-          </motion.span>
-        </AnimatePresence>
-        <button type="button" onClick={onAnother} className="btn h-14 !px-6 text-white" style={{ background: color, borderColor: `color-mix(in srgb, ${color} 70%, black)` }}>
-          <RotateCcw className="h-5 w-5" /> Try another
-        </button>
-      </div>
+      {render(on)}
+      <MissionButton
+        color={color}
+        disabled={on || api.complete}
+        onClick={() => {
+          setOn(true);
+          api.done();
+        }}
+      >
+        {button}
+      </MissionButton>
     </div>
   );
 }
-
-/** Three (or more) big number buttons; wrong picks wobble. */
-export function NumberChoices({ options, answer, onRight, onWrong, color, disabled }: { options: number[]; answer: number; onRight: () => void; onWrong: () => void; color: string; disabled?: boolean }) {
-  const [wrong, setWrong] = useState<number | null>(null);
-  const [right, setRight] = useState(false);
-  return (
-    <div className="flex flex-wrap justify-center gap-3" role="group" aria-label="Pick the number">
-      {options.map((n) => (
-        <motion.button
-          type="button"
-          key={n}
-          disabled={disabled || right}
-          animate={wrong === n ? { x: [0, -8, 8, -6, 6, 0] } : right && n === answer ? { scale: [1, 1.2, 1] } : {}}
-          transition={{ duration: 0.4 }}
-          onClick={() => {
-            say(String(n));
-            if (n === answer) {
-              setRight(true);
-              onRight();
-            } else {
-              setWrong(n);
-              setTimeout(() => setWrong(null), 450);
-              onWrong();
-            }
-          }}
-          className="grid h-16 w-16 place-items-center rounded-2xl border-2 border-b-4 text-3xl font-black transition active:translate-y-[2px] disabled:cursor-default"
-          style={right && n === answer ? { background: color, color: "white", borderColor: `color-mix(in srgb, ${color} 70%, black)` } : { background: "rgb(var(--surface))", borderColor: "rgb(var(--line))" }}
-        >
-          {n}
-        </motion.button>
-      ))}
-    </div>
-  );
-}
-
-/* ------------------------------------------------------------------ */
-/* Helpers                                                             */
-/* ------------------------------------------------------------------ */
-
-export const rand = (lo: number, hi: number) => lo + Math.floor(Math.random() * (hi - lo + 1));
-
-export function shuffle<T>(a: T[]): T[] {
-  const b = [...a];
-  for (let i = b.length - 1; i > 0; i--) {
-    const j = Math.floor(Math.random() * (i + 1));
-    [b[i], b[j]] = [b[j], b[i]];
-  }
-  return b;
-}
-
-/** The answer plus two nearby distractors (all ≥ 0), shuffled. */
-export function choicesFor(answer: number, lo = 0): number[] {
-  const set = new Set([answer]);
-  const near = shuffle([answer - 1, answer + 1, answer - 2, answer + 2].filter((n) => n >= lo));
-  for (const n of near) {
-    if (set.size >= 3) break;
-    set.add(n);
-  }
-  return shuffle([...set]);
-}
-
-/** Is a page-coordinate point (from a framer drag) inside an element? */
-export function pointInside(el: Element | null, point: { x: number; y: number }, pad = 10) {
-  if (!el) return false;
-  const r = el.getBoundingClientRect();
-  const x = point.x - window.scrollX;
-  const y = point.y - window.scrollY;
-  return x >= r.left - pad && x <= r.right + pad && y >= r.top - pad && y <= r.bottom + pad;
-}
-
-export const NUMBER_WORDS = ["zero", "one", "two", "three", "four", "five", "six", "seven", "eight", "nine", "ten", "eleven", "twelve"];
 
 /** Artwork box for comic panels and analogy figures. */
 export function Panel({ label, children, vb = "0 0 240 150" }: { label: string; children: ReactNode; vb?: string }) {

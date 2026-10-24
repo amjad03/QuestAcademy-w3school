@@ -1,10 +1,9 @@
 "use client";
 
-import { useRef, useState } from "react";
+import { useState } from "react";
 import { motion } from "framer-motion";
-import type { Explainer } from "../types";
-import { useFrame } from "@/components/widgets/_shared";
-import { Arrow, BigSlider, Cloud, Drop, DropBuddy, Panel, Scene, Sun, Tag, TryShell, rng } from "./_art";
+import type { Explainer, Mission, MissionApi } from "../types";
+import { Arrow, Cloud, Drop, DropBuddy, Panel, Scene, StepButton, Sun, Tag, rng } from "./_art";
 
 const C = "#0EA5E9";
 const SEA = "#2563eb";
@@ -128,143 +127,58 @@ function WaterCycleScene({ stage }: { stage: number }) {
 }
 
 /* ------------------------------------------------------------------ */
-/* Try it: make it rain                                                */
+/* Guided mission: make it rain                                        */
 /* ------------------------------------------------------------------ */
 
-type P = { x: number; y: number; id: number };
-const HOME = 110;
-const AWAY = 300;
-const FULL = 22;
-
-function MakeItRain() {
-  const [heat, setHeat] = useState(0);
-  const [, setTick] = useState(0);
-  const sim = useRef({ vapour: [] as P[], rain: [] as P[], water: 0, cloudX: HOME, phase: "gather" as "gather" | "moving" | "raining" | "back", spawn: 0, rainSpawn: 0, landed: 0, showers: 0, river: 0, nextId: 1 });
-  const rand = useRef(rng(7));
-
-  useFrame((dt) => {
-    const s = sim.current;
-    const r = rand.current;
-    s.spawn += (heat / 100) * 7 * dt;
-    while (s.spawn >= 1) {
-      s.spawn -= 1;
-      s.vapour.push({ x: 20 + r() * 160, y: 212, id: s.nextId++ });
-    }
-    s.vapour = s.vapour.filter((p) => {
-      p.y -= 48 * dt;
-      p.x += (HOME - p.x) * 0.4 * dt;
-      if (p.y <= 92) {
-        s.water = Math.min(FULL + 4, s.water + 1);
-        return false;
-      }
-      return true;
-    });
-    if (s.phase === "gather" && s.water >= FULL) s.phase = "moving";
-    if (s.phase === "moving") {
-      s.cloudX = Math.min(AWAY, s.cloudX + 70 * dt);
-      if (s.cloudX >= AWAY) s.phase = "raining";
-    }
-    if (s.phase === "raining") {
-      s.rainSpawn += 16 * dt;
-      while (s.rainSpawn >= 1) {
-        s.rainSpawn -= 1;
-        s.rain.push({ x: s.cloudX - 30 + r() * 60, y: 100, id: s.nextId++ });
-      }
-      s.water -= 5 * dt;
-      if (s.water <= 0) {
-        s.water = 0;
-        s.phase = "back";
-        s.showers += 1;
-      }
-    }
-    if (s.phase === "back") {
-      s.cloudX = Math.max(HOME, s.cloudX - 70 * dt);
-      if (s.cloudX <= HOME) s.phase = "gather";
-    }
-    s.rain = s.rain.filter((p) => {
-      p.y += 170 * dt;
-      if (p.y >= 160) {
-        s.landed += 1;
-        s.river = 1;
-        return false;
-      }
-      return true;
-    });
-    s.river = Math.max(0, s.river - 0.25 * dt);
-    setTick((t) => (t + 1) % 1000000);
-  });
-
-  const s = sim.current;
-  const reset = () => {
-    sim.current = { vapour: [], rain: [], water: 0, cloudX: HOME, phase: "gather", spawn: 0, rainSpawn: 0, landed: 0, showers: 0, river: 0, nextId: 1 };
-    rand.current = rng(7);
-    setHeat(0);
+/** One part of the trip: the scene shows `from`, and the button moves it on to `to` (then `then`, if given). */
+function StepCycle({ api, from, to, then, button }: { api: MissionApi; from: number; to: number; then?: number; button: string }) {
+  const [stage, setStage] = useState(from);
+  const go = () => {
+    setStage(to);
+    if (then === undefined) setTimeout(api.done, 1800);
+    else
+      setTimeout(() => {
+        setStage(then);
+        setTimeout(api.done, 1200);
+      }, 1900);
   };
-
-  const fullness = Math.min(1, s.water / FULL);
-  const grey = Math.round(255 - fullness * 95);
-  const cloudFill = `rgb(${grey},${grey + 4 > 255 ? 255 : grey + 4},${Math.min(255, grey + 14)})`;
-  const bloom = Math.min(1, s.landed / 70);
-  const sunY = 100 - heat * 0.6;
-
-  let status: string;
-  let done = false;
-  if (s.phase === "moving") status = "The cloud is full and heavy! The wind blows it over the hills…";
-  else if (s.phase === "raining") status = "Precipitation! Rain falls on the hill and runs down the river to the sea.";
-  else if (s.phase === "back") status = "The cloud is empty, so it drifts back over the sea.";
-  else if (heat === 0) status = s.showers ? `You made it rain ${s.showers} time${s.showers > 1 ? "s" : ""}! Turn the Sun up again to make another cloud.` : "The sea is cool. Slide the Sun up to warm it!";
-  else {
-    status = `Evaporation! Warm water rises as vapour and makes a cloud. The cloud is ${Math.round(fullness * 100)}% full.`;
-    if (s.showers >= 2) {
-      status = `Brilliant: ${s.showers} rain showers! The flowers on the hill are blooming. The same water goes round and round.`;
-      done = true;
-    }
-  }
-
   return (
-    <TryShell title="Make it rain!" hint="Slide the Sun to heat the sea. Watch the vapour rise, the cloud grow, and the rain fall." onReset={reset} status={status} color={C} done={done}>
-      <div className="overflow-hidden rounded-2xl border-2 border-line">
-        <Scene label={`Water cycle game. Cloud ${Math.round(fullness * 100)} percent full. ${status}`}>
-          <Landscape id="wctry" river={s.river} />
-          <rect x={0} y={200} width={214} height={60} fill="#f97316" opacity={heat / 400} />
-          <g>
-            <Sun x={50} y={sunY} r={18 + heat * 0.08} glow={heat > 40} />
-          </g>
-          {/* flowers on the hill */}
-          {[240, 262, 350, 372].map((x, i) => (
-            <g key={x} transform={`translate(${x} ${222 - (i % 2) * 6})`}>
-              <line x1={0} y1={0} x2={0} y2={-8 - bloom * 14} stroke="#15803d" strokeWidth={3} />
-              {bloom > 0.15 && <circle cx={0} cy={-8 - bloom * 14} r={2 + bloom * 5} fill={["#f43f5e", "#facc15", "#a855f7", "#fb923c"][i]} stroke="#fff" strokeWidth={1.5} />}
-            </g>
-          ))}
-          {s.vapour.map((p) => (
-            <circle key={p.id} cx={p.x} cy={p.y} r={4} fill="#f0f9ff" opacity={0.25 + ((212 - p.y) / 120) * 0.6} />
-          ))}
-          {(s.water > 0.5 || s.phase !== "gather") && (
-            <g>
-              <g transform={`translate(${s.cloudX} 92) scale(${0.45 + fullness * 0.75}) translate(${-s.cloudX} -92)`}>
-                <Cloud x={s.cloudX} y={92} fill={cloudFill} edge={fullness > 0.7 ? "#64748b" : "#c7d2e0"} face mood={s.phase === "raining" ? "wow" : "happy"} />
-              </g>
-            </g>
-          )}
-          {s.rain.map((p) => (
-            <Drop key={p.id} x={p.x} y={p.y} s={0.28} fill="#3b82f6" />
-          ))}
-          <g>
-            <rect x={300} y={12} width={88} height={16} rx={8} fill="#fff" stroke="#94a3b8" strokeWidth={2} />
-            <rect x={302} y={14} width={84 * fullness} height={12} rx={6} fill={SEA} />
-            <text x={344} y={44} textAnchor="middle" fontSize={11} fontWeight={800} fill="#1e3a8a">
-              cloud water
-            </text>
-          </g>
-        </Scene>
-      </div>
-      <div className="mt-3">
-        <BigSlider label="How hot is the Sun" value={heat} min={0} max={100} onChange={setHeat} left="🌥️" right="☀️" color="#f59e0b" />
-      </div>
-    </TryShell>
+    <div>
+      <WaterCycleScene stage={stage} />
+      <StepButton color={C} disabled={stage !== from || api.complete} onClick={go}>
+        {button}
+      </StepButton>
+    </div>
   );
 }
+
+const mission: Mission = {
+  goal: "Take some sea water up into the sky and back down as rain.",
+  steps: [
+    {
+      task: "Let the Sun warm the sea.",
+      predict: { question: "When the Sun warms water, where does some of it go?", options: ["It disappears for ever", "Up into the air, as a gas you can't see"], answer: 1 },
+      scene: (api) => <StepCycle api={api} from={0} to={1} button="☀️ Warm the sea" />,
+      hint: "Tap the blue button and watch above the sea.",
+      explain: "The warm water **evaporates**: it turns into an invisible gas called **water vapour** and floats up. It's like a puddle drying in the sun.",
+    },
+    {
+      task: "Let the vapour rise into the cold air.",
+      predict: { question: "What is a cloud made of?", options: ["Water vapour (steam)", "Millions of tiny water drops", "Smoke"], answer: 1 },
+      scene: (api) => <StepCycle api={api} from={1} to={2} button="⬆️ Up to the cold air" />,
+      hint: "Tap the button and watch a cloud appear.",
+      explain: "High up it is cold, so the vapour cools and turns back into **tiny drops** of water. Millions of them together make a cloud. This is **condensation**.",
+    },
+    {
+      task: "Let the wind blow the cloud over the hills.",
+      predict: { question: "After it rains, where does the water go?", options: ["It soaks away and is used up", "It flows back to the sea, and the trip starts again"], answer: 1 },
+      scene: (api) => <StepCycle api={api} from={2} to={3} then={4} button="💨 Blow the cloud" />,
+      hint: "Tap the button, then follow the river.",
+      explain: "The tiny drops join up until they are too heavy and fall as **rain**. Rivers carry the water back to the sea, ready to go round again.",
+    },
+  ],
+  takeaway: "The same water goes round and round: it evaporates, condenses into clouds, falls as rain and flows back to the sea.",
+};
 
 /* ------------------------------------------------------------------ */
 /* Story + analogy art                                                 */
@@ -405,12 +319,13 @@ export const waterCycle: Explainer = {
   icon: "💧",
   watch: [
     { title: "Water goes round and round", say: "Water is in seas, lakes and rivers. The same water travels round and round in a loop called the water cycle.", scene: <WaterCycleScene stage={0} /> },
-    { title: "1. Evaporation", say: "The Sun warms the sea. Some water turns into an invisible gas called water vapour, and floats up into the sky.", scene: <WaterCycleScene stage={1} /> },
+    { title: "1. Evaporation", say: "The Sun warms the sea. Some water turns into a gas you can't see, called water vapour. It floats up into the sky.", scene: <WaterCycleScene stage={1} /> },
     { title: "2. Condensation", say: "High up, the air is cold. The vapour cools and turns back into tiny drops of water. Lots of tiny drops make a cloud!", scene: <WaterCycleScene stage={2} /> },
-    { title: "3. Precipitation", say: "The tiny drops bump together and grow. When they get too heavy, they fall as rain, snow or hail.", scene: <WaterCycleScene stage={3} /> },
+    { title: "3. Precipitation", say: "The tiny drops bump together and grow bigger. When they get too heavy, they fall as rain, snow or hail.", scene: <WaterCycleScene stage={3} /> },
     { title: "4. Collection", say: "The rain runs into rivers, lakes and the ground, and flows back to the sea. Then the whole trip starts again!", scene: <WaterCycleScene stage={4} /> },
   ],
-  try: MakeItRain,
+  mission,
+  misconception: { myth: "Clouds are made of steam (water vapour).", truth: "Water vapour is an invisible gas. Clouds are millions of tiny drops of liquid water (or ice) that form when the vapour cools high up." },
   story,
   like,
 };

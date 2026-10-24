@@ -2,12 +2,9 @@
 
 import { useState } from "react";
 import { motion } from "framer-motion";
-import { RotateCcw, Send, Repeat } from "lucide-react";
-import clsx from "clsx";
-import type { Explainer } from "../types";
-import { sfx } from "@/lib/sound";
-import { burst } from "@/lib/confetti";
-import { Art, INK, Kid, Laptop, PacketIcon, Photo, RouterIcon, Stage, STAGE_INK, STAGE_MUTED, Tablet } from "./_art";
+import { ListOrdered, Scissors, Send } from "lucide-react";
+import type { Explainer, Mission, MissionApi } from "../types";
+import { Art, INK, Kid, Laptop, MissionButton, PacketIcon, Photo, RouterIcon, Stage, STAGE_INK, STAGE_MUTED, Tablet } from "./_art";
 
 const COLOR = "#0D9488";
 
@@ -215,7 +212,7 @@ const watch: Explainer["watch"] = [
   },
 ];
 
-function ReassembleScene() {
+function ReassembleScene({ still }: { still?: boolean } = {}) {
   // pieces start jumbled (positions of the arrival order) and slide into their quadrant
   const w = 180;
   const h = 130;
@@ -234,7 +231,7 @@ function ReassembleScene() {
   return (
     <g>
       {quads.map(([sx, sy], k) => (
-        <motion.g key={k} initial={{ x: jumble[k].x, y: jumble[k].y, rotate: (k - 1.5) * 14 }} animate={{ x: 200, y: 116, rotate: 0 }} transition={{ delay: 0.3 + k * 0.3, duration: 0.7, type: "spring", stiffness: 120, damping: 15 }}>
+        <motion.g key={k} initial={{ x: jumble[k].x, y: jumble[k].y, rotate: (k - 1.5) * 14 }} animate={still ? { x: jumble[k].x, y: jumble[k].y, rotate: (k - 1.5) * 14 } : { x: 200, y: 116, rotate: 0 }} transition={{ delay: 0.3 + k * 0.3, duration: 0.7, type: "spring", stiffness: 120, damping: 15 }}>
           <defs>
             <clipPath id={`re-${k}`}>
               <rect x={sx < 0 ? -w / 2 : 0} y={sy < 0 ? -h / 2 : 0} width={w / 2} height={h / 2} />
@@ -243,7 +240,7 @@ function ReassembleScene() {
           <g clipPath={`url(#re-${k})`}>
             <Photo w={w} h={h} clipId={`re-ph-${k}`} />
           </g>
-          <motion.g initial={{ opacity: 1 }} animate={{ opacity: 0 }} transition={{ delay: 1.8 }}>
+          <motion.g initial={{ opacity: 1 }} animate={{ opacity: still ? 1 : 0 }} transition={{ delay: 1.8 }}>
             <circle cx={sx * (w / 4)} cy={sy * (h / 4)} r={13} fill={PIECE_COLORS[k]} stroke={INK} strokeWidth={2} />
             <text x={sx * (w / 4)} y={sy * (h / 4) + 5} textAnchor="middle" fontSize={14} fontWeight={900} fill="#fff">
               {k + 1}
@@ -256,294 +253,127 @@ function ReassembleScene() {
 }
 
 /* ------------------------------------------------------------------ */
-/* Try: send a message across a network you can break                 */
+/* Guided mission                                                      */
 /* ------------------------------------------------------------------ */
 
-const N: Record<string, P> = {
-  L: { x: 34, y: 120 },
-  A: { x: 124, y: 48 },
-  B: { x: 124, y: 192 },
-  C: { x: 215, y: 120 },
-  D: { x: 306, y: 48 },
-  E: { x: 306, y: 192 },
-  T: { x: 398, y: 120 },
-};
-const EDGES: [string, string][] = [
-  ["L", "A"],
-  ["L", "B"],
-  ["A", "C"],
-  ["B", "C"],
-  ["A", "D"],
-  ["B", "E"],
-  ["C", "D"],
-  ["C", "E"],
-  ["D", "T"],
-  ["E", "T"],
-  ["A", "B"],
-  ["D", "E"],
-];
-const ROUTERS = ["A", "B", "C", "D", "E"];
-const WORDS = ["SEE", "YOU", "AT", "TEA!"];
-
-const nbrs = (n: string) => EDGES.flatMap(([a, b]) => (a === n ? [b] : b === n ? [a] : []));
-
-/** A random simple path L → T that avoids switched-off routers. */
-function randomPath(off: Set<string>): string[] | null {
-  const seen = new Set<string>(["L"]);
-  const dfs = (node: string, path: string[]): string[] | null => {
-    if (node === "T") return path;
-    const next = nbrs(node)
-      .filter((m) => !seen.has(m) && !off.has(m))
-      .sort(() => Math.random() - 0.5)
-      // prefer moving right a little, so routes look sensible
-      .sort((a, b) => N[b].x - N[a].x + (Math.random() - 0.5) * 160);
-    for (const m of next) {
-      seen.add(m);
-      const r = dfs(m, [...path, m]);
-      if (r) return r;
-    }
-    return null;
-  };
-  return dfs("L", ["L"]);
-}
-
-interface Flight {
-  key: string;
-  n: number;
-  path: string[];
-  lose: boolean;
-  dur: number;
-  delay: number;
-}
-
-function InternetTry() {
-  const [off, setOff] = useState<Set<string>>(new Set());
-  const [busy, setBusy] = useState(false);
-  const [flights, setFlights] = useState<Flight[]>([]);
-  const [arrived, setArrived] = useState<number[]>([]);
-  const [lost, setLost] = useState<{ n: number; at: string }[]>([]);
-  const [placed, setPlaced] = useState<number[]>([]);
-  const [shake, setShake] = useState<number | null>(null);
-  const [note, setNote] = useState<string | null>(null);
-  const [attempt, setAttempt] = useState(0);
-
-  const inFlight = flights.length > 0;
-  const started = attempt > 0;
-  const complete = placed.length === 4;
-
-  const launch = (nums: number[]) => {
-    const a = attempt + 1;
-    setAttempt(a);
-    const fl: Flight[] = [];
-    const nowLost: { n: number; at: string }[] = [];
-    nums.forEach((n, i) => {
-      const path = randomPath(off);
-      if (!path) {
-        nowLost.push({ n, at: "L" });
-        return;
-      }
-      const lose = busy && Math.random() < 0.35;
-      const cut = lose ? path.slice(0, 2 + Math.floor(Math.random() * (path.length - 2))) : path;
-      fl.push({ key: `${a}-${n}`, n, path: cut, lose, dur: 0.5 * (cut.length - 1) + Math.random() * 0.9, delay: i * 0.3 });
-    });
-    if (nowLost.length) {
-      setNote("No road is open from Mia to Grandma! Switch a router back on.");
-      sfx("wrong");
-    } else setNote(null);
-    setLost((l) => [...l.filter((x) => !nums.includes(x.n)), ...nowLost]);
-    setFlights(fl);
-    sfx("pop");
-  };
-
-  const land = (f: Flight) => {
-    setFlights((all) => all.filter((x) => x.key !== f.key));
-    if (f.lose) {
-      setLost((l) => [...l, { n: f.n, at: f.path[f.path.length - 1] }]);
-      sfx("wrong");
-    } else {
-      setArrived((a) => (a.includes(f.n) || placed.includes(f.n) ? a : [...a, f.n]));
-      sfx("coin");
-    }
-  };
-
-  const send = () => {
-    setArrived([]);
-    setLost([]);
-    setPlaced([]);
-    launch([1, 2, 3, 4]);
-  };
-
-  const resend = () => launch(lost.map((l) => l.n));
-
-  const toggleRouter = (r: string) => {
-    if (inFlight) return;
-    setOff((o) => {
-      const n = new Set(o);
-      if (n.has(r)) n.delete(r);
-      else n.add(r);
-      return n;
-    });
-    sfx("tap");
-  };
-
-  const pick = (n: number) => {
-    const want = placed.length + 1;
-    if (n !== want) {
-      setShake(n);
-      setNote(`That's packet ${n}. The label says it goes in place ${n} — which one comes next?`);
-      sfx("wrong");
-      setTimeout(() => setShake(null), 400);
-      return;
-    }
-    const p = [...placed, n];
-    setPlaced(p);
-    setArrived((a) => a.filter((x) => x !== n));
-    setNote(null);
-    sfx("correct");
-    if (p.length === 4) {
-      sfx("fanfare");
-      burst();
-    }
-  };
-
-  const reset = () => {
-    setOff(new Set());
-    setBusy(false);
-    setFlights([]);
-    setArrived([]);
-    setLost([]);
-    setPlaced([]);
-    setNote(null);
-    setAttempt(0);
-  };
-
-  const missing = !inFlight && lost.length > 0;
-  const waitingFor = [1, 2, 3, 4].filter((n) => !placed.includes(n) && !arrived.includes(n));
-
+/** Cut Mia's photo into 4 numbered packets. */
+function StepCut({ done, complete }: MissionApi) {
+  const [cut, setCut] = useState(false);
   return (
-    <div className="select-none">
-      <p className="mb-3 font-extrabold">Send “SEE YOU AT TEA!” to Grandma in 4 packets. Tap a router to break it — the packets will find another way.</p>
-
-      <div className="overflow-hidden rounded-2xl border-2 border-line bg-surface-2">
-        <svg viewBox="0 0 432 240" role="img" aria-label={`Network with routers ${ROUTERS.join(", ")}. ${off.size ? `Switched off: ${[...off].join(", ")}.` : "All routers working."}`} className="h-auto w-full" style={{ maxHeight: 300 }}>
-          {EDGES.map(([a, b]) => {
-            const dead = off.has(a) || off.has(b);
-            return <line key={a + b} x1={N[a].x} y1={N[a].y} x2={N[b].x} y2={N[b].y} stroke={dead ? "#9CA3AF" : "rgb(var(--line))"} strokeDasharray={dead ? "5 6" : undefined} strokeWidth={6} strokeLinecap="round" />;
-          })}
-          {ROUTERS.map((r) => (
-            <g key={r} transform={`translate(${N[r].x} ${N[r].y})`} onClick={() => toggleRouter(r)} style={{ cursor: inFlight ? "default" : "pointer" }} role="button" tabIndex={0} aria-label={`Router ${r}, ${off.has(r) ? "off" : "on"}. Tap to switch`} onKeyDown={(e) => (e.key === "Enter" || e.key === " ") && toggleRouter(r)}>
-              <circle r={30} fill="transparent" />
-              <RouterIcon off={off.has(r)} />
-              <text y={28} textAnchor="middle" fontSize={11} fontWeight={900} fill={STAGE_MUTED}>
-                {r}
-              </text>
-            </g>
-          ))}
-          <g transform={`translate(${N.L.x + 4} ${N.L.y})`}>
-            <g transform="scale(0.8)">
-              <Laptop />
-            </g>
-            <text y={30} textAnchor="middle" fontSize={11} fontWeight={800} fill={STAGE_INK}>
-              Mia
+    <div>
+      <Stage label={cut ? "The photo is cut into four numbered packets" : "Mia's whole photo, ready to send"}>
+        <PhotoPieces cx={200} cy={110} w={180} h={130} spread={cut ? 22 : 0} id="m-cut" />
+        {cut && (
+          <motion.g initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 1.4 }}>
+            <rect x={110} y={204} width={180} height={28} rx={8} fill="#FFFBEB" stroke={INK} strokeWidth={2} />
+            <text x={200} y={223} textAnchor="middle" fontSize={13} fontWeight={800} fill={INK}>
+              To: Grandma · 2 of 4
             </text>
-          </g>
-          <g transform={`translate(${N.T.x} ${N.T.y})`}>
-            <g transform="scale(0.8)">
-              <Tablet />
-            </g>
-            <text y={40} textAnchor="middle" fontSize={11} fontWeight={800} fill={STAGE_INK}>
-              Grandma
-            </text>
-          </g>
-          {lost.map((l) => (
-            <motion.text key={`lost-${l.n}-${l.at}`} x={N[l.at].x + 16} y={N[l.at].y - 20} fontSize={16} initial={{ opacity: 1, y: 0 }} animate={{ opacity: 0, y: -16 }} transition={{ duration: 1.4 }}>
-              💨
-            </motion.text>
-          ))}
-          {flights.map((f) => (
-            <motion.g
-              key={f.key}
-              initial={{ x: N.L.x, y: N.L.y, opacity: 0, scale: 1 }}
-              animate={{ x: f.path.map((n) => N[n].x), y: f.path.map((n) => N[n].y), opacity: 1, scale: f.lose ? [1, ...f.path.slice(2).map(() => 1), 0.2] : 1 }}
-              transition={{ duration: f.dur, delay: f.delay, ease: "easeInOut" }}
-              onAnimationComplete={() => land(f)}
-            >
-              <PacketIcon n={f.n} color={PIECE_COLORS[f.n - 1]} />
-            </motion.g>
-          ))}
-        </svg>
-      </div>
-
-      <div className="mt-3 flex flex-wrap items-center gap-2">
-        <button type="button" className="btn-primary min-h-[48px]" onClick={send} disabled={inFlight}>
-          <Send className="h-4 w-4" /> {started ? "Send again" : "Send message"}
-        </button>
-        {missing && (
-          <button type="button" className="btn-gold min-h-[48px]" onClick={resend}>
-            <Repeat className="h-4 w-4" /> Ask for packet{lost.length > 1 ? "s" : ""} {lost.map((l) => l.n).join(", ")} again
-          </button>
+          </motion.g>
         )}
-        <label className="flex min-h-[48px] cursor-pointer items-center gap-2 rounded-2xl border-2 border-line px-3 text-sm font-extrabold">
-          <input type="checkbox" className="h-5 w-5 accent-teal-600" checked={busy} onChange={(e) => setBusy(e.target.checked)} />
-          Busy network (packets can get lost)
-        </label>
-        <button type="button" className="btn-ghost min-h-[48px]" onClick={reset} aria-label="Reset network">
-          <RotateCcw className="h-4 w-4" />
-        </button>
-      </div>
-
-      {/* Grandma's inbox */}
-      <div className="mt-4 grid gap-3 sm:grid-cols-2">
-        <div className="rounded-2xl border-2 border-line p-3">
-          <p className="mb-2 text-xs font-extrabold uppercase tracking-wide text-muted">Arrived (in the order they came)</p>
-          <div className="flex min-h-[56px] flex-wrap gap-2">
-            {arrived.length === 0 && <span className="text-sm font-semibold text-muted">{inFlight ? "Packets on the way…" : started ? "—" : "Nothing yet. Press Send!"}</span>}
-            {arrived.map((n) => (
-              <motion.button
-                key={n}
-                type="button"
-                layout
-                initial={{ scale: 0 }}
-                animate={{ scale: 1, x: shake === n ? [0, -8, 8, -6, 0] : 0 }}
-                onClick={() => pick(n)}
-                className="flex min-h-[52px] items-center gap-2 rounded-xl border-2 border-[#1c2333]/70 bg-amber-50 px-3 font-mono font-black text-[#1c2333]"
-                aria-label={`Packet ${n}: ${WORDS[n - 1]}. Tap to put it in the message`}
-              >
-                <span className="grid h-7 w-7 place-items-center rounded-full text-sm text-white" style={{ background: PIECE_COLORS[n - 1] }}>
-                  {n}
-                </span>
-                {WORDS[n - 1]}
-              </motion.button>
-            ))}
-          </div>
-        </div>
-        <div className={clsx("rounded-2xl border-2 p-3", complete ? "border-good/50 bg-good/10" : "border-line")}>
-          <p className="mb-2 text-xs font-extrabold uppercase tracking-wide text-muted">Grandma&apos;s screen — tap packets in number order</p>
-          <div className="grid grid-cols-4 gap-2">
-            {[1, 2, 3, 4].map((n) => (
-              <div key={n} className={clsx("grid min-h-[52px] place-items-center rounded-xl border-2 border-dashed font-mono text-lg font-black", placed.includes(n) ? "border-transparent text-white" : "border-line text-muted")} style={placed.includes(n) ? { background: PIECE_COLORS[n - 1] } : undefined}>
-                {placed.includes(n) ? WORDS[n - 1] : n}
-              </div>
-            ))}
-          </div>
-        </div>
-      </div>
-
-      <p className={clsx("mt-3 min-h-[3rem] rounded-2xl px-4 py-2 font-bold", complete ? "bg-good/10 text-good" : missing ? "bg-warn/15 text-ink" : "bg-surface-2 text-muted")} aria-live="polite">
-        {complete
-          ? "Grandma reads: SEE YOU AT TEA! The packets took different roads and came in a jumble, but the numbers put them back in order."
-          : note ??
-            (missing
-              ? `Packet${lost.length > 1 ? "s" : ""} ${lost.map((l) => l.n).join(", ")} never arrived. Grandma's tablet can spot the gap from the numbers — ask for ${lost.length > 1 ? "them" : "it"} again!`
-              : inFlight
-                ? "Each router passes packets to a neighbour. Watch them take different roads."
-                : started && waitingFor.length === 0 && arrived.length
-                  ? "All here! Now put them in order: 1, 2, 3, 4."
-                  : "Tip: switch off routers A and B and see what happens.")}
-      </p>
+      </Stage>
+      <MissionButton
+        color={COLOR}
+        disabled={complete}
+        onClick={() => {
+          setCut(true);
+          done();
+        }}
+      >
+        <Scissors className="h-5 w-5" /> Cut into packets
+      </MissionButton>
     </div>
   );
 }
+
+/** Send the packets while router R1 has a traffic jam. */
+function StepSend({ done, complete }: MissionApi) {
+  const [sent, setSent] = useState(false);
+  return (
+    <div>
+      <Stage label={sent ? "Packets go round the jammed router and arrive in the order 2, 4, 1, 3" : "Mia's laptop, four routers and Grandma's tablet. Router R1 has a traffic jam"}>
+        <Net busy="R1">
+          {sent && (
+            <>
+              <Hop path={["L", "R2", "R4", "T"]} delay={0} n={2} dur={1.8} loop={false} />
+              <Hop path={["L", "R2", "R4", "T"]} delay={0.5} n={4} dur={1.8} loop={false} />
+              <Hop path={["L", "R1", "R1", "R3", "T"]} delay={0.2} n={1} dur={3.2} loop={false} />
+              <Hop path={["L", "R2", "R1", "R1", "R3", "T"]} delay={0.4} n={3} dur={4} loop={false} />
+            </>
+          )}
+        </Net>
+        {sent && (
+          <motion.text x={200} y={234} textAnchor="middle" fontSize={13} fontWeight={900} fill={STAGE_INK} initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 4.2 }}>
+            arrived: 2, 4, 1, 3
+          </motion.text>
+        )}
+      </Stage>
+      <MissionButton
+        color={COLOR}
+        disabled={complete}
+        onClick={() => {
+          setSent(true);
+          done();
+        }}
+      >
+        <Send className="h-5 w-5" /> Send
+      </MissionButton>
+    </div>
+  );
+}
+
+/** Grandma's tablet puts the jumbled packets back in number order. */
+function StepRebuild({ done, complete }: MissionApi) {
+  const [go, setGo] = useState(false);
+  return (
+    <div>
+      <Stage label={go ? "The pieces slide together in number order and make the whole photo" : "Four jumbled pieces of the photo, numbered 1 to 4"}>
+        <g transform="translate(200 116)">
+          <rect x={-104} y={-82} width={208} height={168} rx={16} fill="#111827" stroke={INK} strokeWidth={2.5} />
+        </g>
+        <ReassembleScene key={go ? "go" : "still"} still={!go} />
+      </Stage>
+      <MissionButton
+        color={COLOR}
+        disabled={complete}
+        onClick={() => {
+          setGo(true);
+          done();
+        }}
+      >
+        <ListOrdered className="h-5 w-5" /> Put them in order
+      </MissionButton>
+    </div>
+  );
+}
+
+const mission: Mission = {
+  goal: "Send a photo from Mia to Grandma the way the internet really does it.",
+  steps: [
+    {
+      task: "Cut the photo into packets.",
+      predict: { question: "How does a photo travel across the internet?", options: ["In one big piece, all at once", "Cut into small numbered pieces"], answer: 1 },
+      scene: (api) => <StepCut {...api} />,
+      hint: "Tap the green button under the photo.",
+      explain: "Data is cut into small pieces called **packets**. Each packet has a label saying who it is for and its number, like *2 of 4*.",
+    },
+    {
+      task: "Send the packets to Grandma.",
+      predict: { question: "Router R1 has a traffic jam. What will the packets do?", options: ["Wait up in the cloud until it clears", "Take another road around it"], answer: 1 },
+      scene: (api) => <StepSend {...api} />,
+      hint: "Tap Send and watch the packets hop.",
+      explain: "**Routers** are computers that pass each packet to a neighbour closer to Grandma. They are joined by real cables, not a cloud in the sky, and there are many roads, so packets go round a jam. Some roads are longer, so they arrive **jumbled**.",
+    },
+    {
+      task: "Rebuild the photo on Grandma's tablet.",
+      predict: { question: "The packets came as 2, 4, 1, 3. Can the tablet fix the order?", options: ["No — the photo stays scrambled", "Yes — it sorts them by their numbers"], answer: 1 },
+      scene: (api) => <StepRebuild {...api} />,
+      hint: "Tap the button under the pieces.",
+      explain: "The number on each packet tells the tablet where it goes, so it puts them back as 1, 2, 3, 4 and the **whole photo** appears. If one is missing, the tablet asks for it again.",
+    },
+  ],
+  takeaway: "The internet sends data as small numbered packets that hop through routers by different roads and are put back in order at the end.",
+};
 
 /* ------------------------------------------------------------------ */
 /* Story + analogy                                                     */
@@ -678,12 +508,13 @@ export const internetExplainer: Explainer = {
   title: "How a message travels the internet",
   tagline: "Chop it into packets, hop through routers, rebuild it at the other end.",
   area: "Computer science",
-  ages: "8–18",
+  ages: "11–15",
   lessons: ["javascript/async/async-await-fetch", "html/getting-started/what-is-html"],
   color: COLOR,
   icon: "🌐",
   watch,
-  try: InternetTry,
+  misconception: { myth: "The internet is a cloud in the sky, and a message travels through it in one piece.", truth: "The internet is millions of computers and routers joined by real cables (even under the sea). Messages are cut into small packets that can take different roads." },
+  mission,
   story,
   like,
 };

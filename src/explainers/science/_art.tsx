@@ -132,7 +132,9 @@ export function Sun({ x, y, r = 26, face = true, spin = true, glow = false }: { 
       <motion.g animate={spin ? { rotate: 360 } : undefined} transition={{ duration: 24, repeat: Infinity, ease: "linear" }}>
         {Array.from({ length: 12 }, (_, i) => {
           const a = (i / 12) * Math.PI * 2;
-          return <line key={i} x1={Math.cos(a) * (r + 5)} y1={Math.sin(a) * (r + 5)} x2={Math.cos(a) * (r + (i % 2 ? 12 : 17))} y2={Math.sin(a) * (r + (i % 2 ? 12 : 17))} stroke="#F59F00" strokeWidth={4} strokeLinecap="round" />;
+          // Rounded so server and client render the same numbers (no hydration mismatch).
+          const at = (v: number) => Math.round(v * 100) / 100;
+          return <line key={i} x1={at(Math.cos(a) * (r + 5))} y1={at(Math.sin(a) * (r + 5))} x2={at(Math.cos(a) * (r + (i % 2 ? 12 : 17)))} y2={at(Math.sin(a) * (r + (i % 2 ? 12 : 17)))} stroke="#F59F00" strokeWidth={4} strokeLinecap="round" />;
         })}
       </motion.g>
       <circle r={r} fill="#FFD43B" stroke="#F59F00" strokeWidth={3} />

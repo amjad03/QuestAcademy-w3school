@@ -6,7 +6,7 @@
  * SVG so every scene stays crisp and theme-friendly.
  */
 
-import type { ReactNode } from "react";
+import { useEffect, type ReactNode } from "react";
 import { motion } from "framer-motion";
 
 /** Ink that is always dark (for drawings on light comic / analogy panels). */
@@ -282,4 +282,22 @@ export function shade(hex: string, amt: number) {
   const g = ch((n >> 8) & 255);
   const b = ch(n & 255);
   return `#${((r << 16) | (g << 8) | b).toString(16).padStart(6, "0")}`;
+}
+
+/** One big action button for a guided-mission step (at least 52px tall, full colour). */
+export function MissionButton({ onClick, disabled, color, children }: { onClick: () => void; disabled?: boolean; color: string; children: ReactNode }) {
+  return (
+    <button type="button" onClick={onClick} disabled={disabled} className="mx-auto mt-3 flex min-h-[52px] items-center justify-center gap-2 rounded-2xl px-6 text-lg font-black text-white shadow-sm transition active:scale-95 disabled:opacity-50" style={{ background: color }}>
+      {children}
+    </button>
+  );
+}
+
+/** Run `tick` every `ms` while `running` is true (for step-by-step mission animations). */
+export function useTicker(running: boolean, ms: number, tick: () => void) {
+  useEffect(() => {
+    if (!running) return;
+    const id = setTimeout(tick, ms);
+    return () => clearTimeout(id);
+  });
 }

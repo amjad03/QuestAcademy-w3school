@@ -1,11 +1,9 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useState } from "react";
 import { motion } from "framer-motion";
-import { FlipHorizontal } from "lucide-react";
-import type { Explainer } from "../types";
-import { Segmented, useSvgDrag } from "@/components/widgets/_shared";
-import { Arrow, BigButton, Kid, Label, Panel, Scene, Tag, TryShell } from "./_art";
+import type { Explainer, Mission, MissionApi } from "../types";
+import { Arrow, Kid, Label, Panel, Scene, StepButton, StepNote, Tag } from "./_art";
 
 const C = "#DC2626";
 const RED = "#ef4444";
@@ -223,206 +221,125 @@ function MagnetScene({ stage }: { stage: number }) {
 }
 
 /* ------------------------------------------------------------------ */
-/* Try it                                                              */
+/* Guided mission: push, pull and pick up                              */
 /* ------------------------------------------------------------------ */
 
 const FIXED_X = 290;
 const MW = 120;
 const TOUCH = FIXED_X - MW; // centre of the moving magnet when touching
+const FLOOR = 228;
 
-function TwoMagnets({ onStatus }: { onStatus: (s: string, done: boolean) => void }) {
-  const svg = useRef<SVGSVGElement>(null);
-  const [mx, setMx] = useState(70);
-  const [flipL, setFlipL] = useState(false);
-  const [flipR, setFlipR] = useState(true);
-  const [seen, setSeen] = useState<{ a: boolean; r: boolean }>({ a: false, r: false });
-  const facingL = flipL ? "N" : "S";
-  const facingR = flipR ? "S" : "N";
-  const attract = facingL !== facingR;
-  const gap = TOUCH - mx;
-
-  const drag = useSvgDrag(
-    svg,
-    (p) => {
-      let t = Math.max(60, Math.min(TOUCH, p.x));
-      if (attract && TOUCH - t < 34) t = TOUCH;
-      if (!attract) t = Math.min(t, TOUCH - 40);
-      setMx(t);
-      if (attract && t === TOUCH) setSeen((s) => ({ ...s, a: true }));
-      if (!attract && t >= TOUCH - 44) setSeen((s) => ({ ...s, r: true }));
-    },
-    () => {
-      if (!attract) setMx((m) => (TOUCH - m < 70 ? TOUCH - 80 : m));
-    },
-  );
-
-  const near = gap < 90;
-  const strength = Math.max(0, 1 - gap / 90);
-  const done = seen.a && seen.r;
-  const msg = gap <= 0 ? `Click! ${facingL} and ${facingR} are opposites, so they attract and stick together.` : near ? (attract ? `${facingL} and ${facingR} are opposites: feel them pull together!` : `${facingL} and ${facingR} are the same: they push apart! You can't make them touch.`) : "Drag the left magnet towards the other one.";
-  const full = done ? `${msg} You found both: opposites attract and same poles repel!` : `${msg} ${!seen.a ? "Can you make them stick?" : "Now flip one and see if they push apart."}`;
-  useEffect(() => {
-    onStatus(full, done);
-  }, [full, done]); // eslint-disable-line react-hooks/exhaustive-deps
-
+/** Two magnets on a table. `same` = the facing poles match (N faces N). */
+function StepPush({ api, same }: { api: MissionApi; same?: boolean }) {
+  const [pushed, setPushed] = useState(false);
+  const start = 70;
+  const push = () => {
+    setPushed(true);
+    setTimeout(api.done, 1300);
+  };
+  const facingL = same ? "N" : "S";
   return (
     <div>
       <div className="overflow-hidden rounded-2xl border-2 border-line">
-        <svg ref={svg} viewBox="0 0 400 200" role="img" aria-label={`Two magnets. Facing poles ${facingL} and ${facingR}.`} className="block h-auto w-full select-none" style={{ maxHeight: 280, touchAction: "none" }}>
+        <svg viewBox="0 0 400 200" role="img" aria-label={`Two magnets: ${facingL} faces N. ${pushed ? (same ? "They push apart." : "They snap together.") : ""}`} className="block h-auto w-full select-none" style={{ maxHeight: 260 }}>
           <rect width="400" height="200" fill="#fef2f2" />
           <rect y={150} width="400" height={50} fill="#e7e5e4" />
-          <motion.g animate={!attract && near ? { x: [0, 3, -3, 0] } : { x: 0 }} transition={{ duration: 0.25, repeat: !attract && near ? Infinity : 0 }}>
-            <BarMagnet x={FIXED_X} y={110} w={MW} h={40} flip={flipR} />
+          <motion.g initial={false} animate={pushed && same ? { x: [0, 0, 0, 18] } : { x: 0 }} transition={{ duration: 1, times: [0, 0.4, 0.6, 1] }}>
+            <BarMagnet x={FIXED_X} y={110} w={MW} h={40} />
           </motion.g>
-          <g {...drag} role="button" aria-label="Drag this magnet">
-            <rect x={mx - MW / 2 - 10} y={70} width={MW + 20} height={80} fill="transparent" />
-            <BarMagnet x={mx} y={110} w={MW} h={40} flip={flipL} />
-            <text x={mx} y={70} textAnchor="middle" fontSize={20}>
-              ✋
-            </text>
-          </g>
-          {near && gap > 0 && (
-            <g opacity={0.4 + strength * 0.6}>
-              {attract ? (
-                <>
-                  <Arrow x1={mx + 30} y1={156} x2={mx + 60 + gap / 2 - 6} y2={156} color="#16a34a" w={2 + strength * 5} draw={false} />
-                  <Arrow x1={FIXED_X - 30} y1={156} x2={FIXED_X - 60 - gap / 2 + 6} y2={156} color="#16a34a" w={2 + strength * 5} draw={false} />
-                </>
-              ) : (
-                <>
-                  <Arrow x1={mx + 20} y1={156} x2={mx - 20} y2={156} color="#dc2626" w={2 + strength * 5} draw={false} />
-                  <Arrow x1={FIXED_X - 20} y1={156} x2={FIXED_X + 20} y2={156} color="#dc2626" w={2 + strength * 5} draw={false} />
-                </>
-              )}
-            </g>
+          <motion.g initial={false} animate={pushed ? (same ? { x: [0, TOUCH - start - 40, TOUCH - start - 40, 0] } : { x: TOUCH - start }) : { x: 0 }} transition={pushed && same ? { duration: 1, times: [0, 0.4, 0.6, 1] } : { duration: 0.7, ease: "easeIn" }}>
+            <BarMagnet x={start} y={110} w={MW} h={40} flip={same} />
+          </motion.g>
+          {pushed && !same && <Spark x={TOUCH + MW / 2} y={110} />}
+          {pushed && same && (
+            <>
+              <Arrow x1={160} y1={168} x2={110} y2={168} color="#dc2626" w={5} delay={0.8} />
+              <Arrow x1={260} y1={168} x2={310} y2={168} color="#dc2626" w={5} delay={0.8} />
+            </>
           )}
-          {gap <= 0 && <Spark x={TOUCH + MW / 2} y={110} />}
-          <Label x={200} y={34} size={16} color={near ? (attract ? "#16a34a" : "#dc2626") : "#64748b"}>
-            {near ? (attract ? "PULL! Opposites attract" : "PUSH! Same poles repel") : `${facingL} faces ${facingR}`}
-          </Label>
         </svg>
       </div>
-      <div className="mt-3 flex flex-wrap gap-2">
-        <BigButton onClick={() => { setFlipL((f) => !f); setMx((m) => Math.min(m, TOUCH - 80)); }} color={C}>
-          <FlipHorizontal className="h-5 w-5" /> Flip left magnet
-        </BigButton>
-        <BigButton onClick={() => { setFlipR((f) => !f); setMx((m) => Math.min(m, TOUCH - 80)); }} color={C}>
-          <FlipHorizontal className="h-5 w-5" /> Flip right magnet
-        </BigButton>
-      </div>
+      <StepNote color={pushed ? (same ? "#dc2626" : "#16a34a") : undefined}>{pushed ? (same ? "PUSH! ↔" : "CLICK! 🧲") : `${facingL} → N`}</StepNote>
+      <StepButton color={C} disabled={pushed || api.complete} onClick={push}>
+        👉 Push them together
+      </StepButton>
     </div>
   );
 }
 
-type Obj = { id: string; name: string; x: number; magnetic: boolean; Art: (p: { x: number; y: number }) => React.ReactElement };
-const OBJS: Obj[] = [
-  { id: "clip", name: "paper clip", x: 40, magnetic: true, Art: Clip },
-  { id: "block", name: "wooden block", x: 100, magnetic: false, Art: Block },
-  { id: "nail", name: "iron nail", x: 160, magnetic: true, Art: Nail },
-  { id: "duck", name: "plastic duck", x: 220, magnetic: false, Art: Duck },
-  { id: "can", name: "aluminium drinks can", x: 290, magnetic: false, Art: Can },
-  { id: "tin", name: "steel food tin", x: 355, magnetic: true, Art: Tin },
-];
-const FLOOR = 228;
-
-function WhatSticks({ onStatus }: { onStatus: (s: string, done: boolean) => void }) {
-  const svg = useRef<SVGSVGElement>(null);
-  const [m, setM] = useState({ x: 200, y: 70 });
-  const [stuck, setStuck] = useState<Record<string, { dx: number; dy: number }>>({});
-  const [tested, setTested] = useState<Record<string, boolean>>({});
-
-  const drag = useSvgDrag(svg, (p) => {
-    const nm = { x: Math.max(60, Math.min(340, p.x)), y: Math.max(30, Math.min(180, p.y)) };
-    setM(nm);
-    const newly: Record<string, boolean> = {};
-    const newStuck: Record<string, { dx: number; dy: number }> = {};
-    for (const o of OBJS) {
-      if (stuck[o.id]) continue;
-      const near = Math.abs(o.x - nm.x) < 75 && FLOOR - 20 - nm.y < 70;
-      if (near) {
-        if (!tested[o.id]) newly[o.id] = true;
-        if (o.magnetic) newStuck[o.id] = { dx: Math.max(-50, Math.min(50, o.x - nm.x)), dy: 20 + (o.id === "tin" ? 34 : o.id === "nail" ? 36 : 32) };
-      }
-    }
-    if (Object.keys(newly).length) setTested((t) => ({ ...t, ...newly }));
-    if (Object.keys(newStuck).length) setStuck((s) => ({ ...s, ...newStuck }));
-  });
-
-  const count = Object.keys(tested).length;
-  const done = count === OBJS.length;
-  const yes = OBJS.filter((o) => tested[o.id] && o.magnetic).map((o) => o.name);
-  const no = OBJS.filter((o) => tested[o.id] && !o.magnetic).map((o) => o.name);
-  const full = done
-    ? `All tested! Magnetic: ${yes.join(", ")} (they all contain iron). Not magnetic: ${no.join(", ")}.`
-    : count === 0
-      ? "Drag the magnet down close to each object. Which ones jump up and stick?"
-      : `Tested ${count} of ${OBJS.length}. ${yes.length ? `Sticks: ${yes.join(", ")}.` : ""} ${no.length ? `Doesn't stick: ${no.join(", ")}.` : ""}`;
-  useEffect(() => {
-    onStatus(full, done);
-  }, [full, done]); // eslint-disable-line react-hooks/exhaustive-deps
-
+/** A magnet lowered over a paper clip, a drinks can and a food tin. */
+function StepPickUp({ done, complete }: MissionApi) {
+  const [down, setDown] = useState(false);
+  const items = [
+    { x: 130, Art: Clip, magnetic: true, h: 32 },
+    { x: 200, Art: Can, magnetic: false, h: 41 },
+    { x: 270, Art: Tin, magnetic: true, h: 34 },
+  ];
+  const my = down ? 150 : 56;
   return (
-    <div className="overflow-hidden rounded-2xl border-2 border-line">
-      <svg ref={svg} viewBox="0 0 400 260" role="img" aria-label={`Magnet test. ${full}`} className="block h-auto w-full select-none" style={{ maxHeight: 320, touchAction: "none" }}>
-        <Room />
-        {OBJS.map((o) => {
-          const s = stuck[o.id];
-          const x = s ? m.x + s.dx : o.x;
-          const y = s ? m.y + s.dy : FLOOR;
-          return (
-            <g key={o.id}>
-              <motion.g initial={false} animate={{ x: x - o.x, y: y - FLOOR }} transition={s ? { type: "spring", stiffness: 500, damping: 30 } : { duration: 0 }}>
-                <o.Art x={o.x} y={FLOOR} />
+    <div>
+      <div className="overflow-hidden rounded-2xl border-2 border-line">
+        <svg viewBox="70 28 260 232" role="img" aria-label={down ? "The paper clip and the steel tin jump up to the magnet. The aluminium can stays on the table." : "A magnet above a paper clip, an aluminium drinks can and a steel food tin"} className="block h-auto w-full select-none" style={{ maxHeight: 300 }}>
+          <Room />
+          {items.map(({ x, Art, magnetic, h }) => (
+            <g key={x}>
+              <motion.g initial={false} animate={{ y: down && magnetic ? 167 - (FLOOR - h) : 0 }} transition={{ delay: 0.75, type: "spring", stiffness: 260, damping: 14 }}>
+                <Art x={x} y={FLOOR} />
               </motion.g>
-              {tested[o.id] && (
-                <text x={o.x} y={252} textAnchor="middle" fontSize={16} fontWeight={900} fill={o.magnetic ? "#16a34a" : "#dc2626"}>
-                  {o.magnetic ? "✓" : "✗"}
-                </text>
+              {down && (
+                <motion.text x={x} y={252} textAnchor="middle" fontSize={20} fontWeight={900} fill={magnetic ? "#16a34a" : "#dc2626"} initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 1.2 }}>
+                  {magnetic ? "✓" : "✗"}
+                </motion.text>
               )}
             </g>
-          );
-        })}
-        <g {...drag} role="button" aria-label="Drag the magnet">
-          <rect x={m.x - 80} y={m.y - 40} width={160} height={70} fill="transparent" />
-          <BarMagnet x={m.x} y={m.y} w={120} h={34} />
-          <text x={m.x} y={m.y - 22} textAnchor="middle" fontSize={18}>
-            ✋
-          </text>
-        </g>
-      </svg>
+          ))}
+          <motion.g initial={false} animate={{ y: my - 56 }} transition={{ duration: 0.7, ease: "easeInOut" }}>
+            <BarMagnet x={200} y={56} w={200} h={34} />
+          </motion.g>
+        </svg>
+      </div>
+      <StepButton
+        color={C}
+        disabled={down || complete}
+        onClick={() => {
+          setDown(true);
+          setTimeout(done, 1500);
+        }}
+      >
+        ⬇️ Lower the magnet
+      </StepButton>
     </div>
   );
 }
 
-function MagnetLab() {
-  const [mode, setMode] = useState<"two" | "test">("two");
-  const [status, setStatus] = useState({ text: "", done: false });
-  const [reset, setReset] = useState(0);
-  const onStatus = (text: string, done: boolean) => setStatus((s) => (s.text === text && s.done === done ? s : { text, done }));
-  return (
-    <TryShell
-      title="Magnet lab"
-      hint="Drag the magnets with your finger or mouse."
-      onReset={() => setReset((r) => r + 1)}
-      status={status.text || " "}
-      color={C}
-      done={status.done}
-    >
-      <div className="mb-3">
-        <Segmented
-          label="Activity"
-          value={mode}
-          onChange={setMode}
-          options={[
-            { value: "two", label: "🧲 Two magnets" },
-            { value: "test", label: "📎 What sticks?" },
-          ]}
-        />
-      </div>
-      {mode === "two" ? <TwoMagnets key={`two-${reset}`} onStatus={onStatus} /> : <WhatSticks key={`test-${reset}`} onStatus={onStatus} />}
-    </TryShell>
-  );
-}
+
+const mission: Mission = {
+  goal: "Find out when magnets pull, when they push, and what they pick up.",
+  steps: [
+    {
+      task: "Push the two magnets together.",
+      predict: { question: "The S end faces the N end. What will happen?", options: ["They pull together and stick", "They push apart"], answer: 0 },
+      scene: (api) => <StepPush api={api} />,
+      hint: "Look at the letters on the ends that face each other, then tap the button.",
+      explain: "S and N are **opposite** poles, and opposites **attract**: they pull together. Click!",
+    },
+    {
+      task: "Now N faces N. Push them together.",
+      predict: { question: "Two N ends face each other. What will happen?", options: ["They stick even harder", "They push apart"], answer: 1 },
+      scene: (api) => <StepPush api={api} same />,
+      hint: "Both ends that touch are red N poles. Tap the button.",
+      explain: "Two N poles are the **same**, and same poles **repel**: they push each other away. You can feel the push with real magnets!",
+    },
+    {
+      task: "Lower the magnet over the three things.",
+      predict: { question: "The drinks can is metal (aluminium). Will the magnet pick it up?", options: ["Yes: magnets pick up all metals", "No: it will stay on the table"], answer: 1 },
+      scene: (api) => <StepPickUp {...api} />,
+      hint: "Left to right: a paper clip, a drinks can and a tin of beans. Tap the button.",
+      explain: "Magnets only pull things with **iron** in them, like steel paper clips and food tins. Aluminium cans, copper and gold are metals too, but magnets don't pull them.",
+    },
+  ],
+  takeaway: "Opposite poles attract, same poles repel, and magnets only pull things made with iron, like steel.",
+};
 
 /* ------------------------------------------------------------------ */
 /* Story + analogy                                                     */
@@ -596,7 +513,8 @@ export const magnets: Explainer = {
     { title: "An invisible pull", say: "A magnet's pull reaches out through the air around it, and even through paper. This invisible area is called a magnetic field.", scene: <MagnetScene stage={4} /> },
     { title: "Earth is a giant magnet", say: "The Earth acts like a giant magnet too. A compass needle is a tiny magnet, so it always swings round to point north.", scene: <MagnetScene stage={5} /> },
   ],
-  try: MagnetLab,
+  mission,
+  misconception: { myth: "Magnets attract all metals.", truth: "Magnets only pull a few metals, mainly iron and steel (which is mostly iron). Aluminium cans, copper and gold are not pulled." },
   story,
   like,
 };

@@ -1,13 +1,10 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { useState } from "react";
 import { motion } from "framer-motion";
-import { ArrowRight, Divide, RotateCcw, Shuffle } from "lucide-react";
-import clsx from "clsx";
-import type { Explainer } from "../types";
-import { sfx } from "@/lib/sound";
-import { burst } from "@/lib/confetti";
-import { Art, INK, Kid, Robot, Stage, STAGE_INK, STAGE_MUTED } from "./_art";
+import { Copy, Flag, Search } from "lucide-react";
+import type { Explainer, Mission, MissionApi } from "../types";
+import { Art, INK, Kid, MissionButton, Robot, Stage, STAGE_INK, STAGE_MUTED, useTicker } from "./_art";
 
 const COLOR = "#DC2626";
 const LINEAR = "#F97316";
@@ -212,175 +209,195 @@ const watch: Explainer["watch"] = [
 ];
 
 /* ------------------------------------------------------------------ */
-/* Try: find the name by opening pages                                 */
+/* Guided mission                                                      */
 /* ------------------------------------------------------------------ */
 
-const NAMES = [
-  "Aaron", "Abby", "Adam", "Aisha", "Alex", "Amara", "Amir", "Ana", "Ben", "Bella", "Caleb", "Chen", "Chloe", "Dan", "Dara", "Eli",
-  "Ella", "Emil", "Eva", "Faisal", "Finn", "Gita", "Grace", "Hana", "Harry", "Ian", "Iris", "Jack", "Jade", "Jamal", "Kai", "Kira",
-  "Leo", "Lila", "Lucas", "Maya", "Mia", "Milo", "Nadia", "Noah", "Nora", "Omar", "Olive", "Priya", "Quinn", "Rafael", "Rosa", "Ruby",
-  "Sam", "Sara", "Theo", "Tia", "Uma", "Victor", "Vera", "Wes", "Willow", "Xander", "Yara", "Yusuf", "Zack", "Zara", "Zoe", "Zuri",
-].sort((a, b) => a.localeCompare(b));
+/** A 16-name phone book in A–Z order; Mia is on page 13. */
+const BOOK = ["Aaron", "Ben", "Chloe", "Dan", "Eli", "Finn", "Grace", "Hana", "Iris", "Jack", "Kai", "Leo", "Mia", "Noah", "Omar", "Priya"];
+const TARGET = BOOK.indexOf("Mia");
 
-const SIZES = [16, 32, 64] as const;
-
-function pickBook(n: number) {
-  const idx = new Set<number>();
-  while (idx.size < n) idx.add(Math.floor(Math.random() * NAMES.length));
-  const names = [...idx].sort((a, b) => a - b).map((i) => NAMES[i]);
-  return { names, target: names[Math.floor(Math.random() * n)] };
-}
-
-function PhoneBookTry() {
-  const [size, setSize] = useState<number>(32);
-  const [book, setBook] = useState(() => {
-    const names = NAMES.filter((_, i) => i % 2 === 0);
-    return { names, target: names[22] };
-  });
-  const [lo, setLo] = useState(0);
-  const [hi, setHi] = useState(book.names.length - 1);
-  const [opened, setOpened] = useState<number[]>([]);
-  const [msg, setMsg] = useState<string | null>(null);
-
-  const n = book.names.length;
-  const found = opened.some((i) => book.names[i] === book.target);
-  const maxHalving = Math.floor(Math.log2(n)) + 1;
-  const cols = 8;
-
-  const restart = (newSize = size) => {
-    const b = pickBook(newSize);
-    setBook(b);
-    setLo(0);
-    setHi(newSize - 1);
-    setOpened([]);
-    setMsg(null);
-  };
-
-  const open = (i: number) => {
-    if (found || opened.includes(i)) return;
-    if (i < lo || i > hi) {
-      setMsg(`We already know ${book.target} can't be there — that part is crossed out.`);
-      sfx("wrong");
-      return;
+/** Pages opened by each method, in order, with the range still possible after each check. */
+const LINEAR_RUN = Array.from({ length: TARGET + 1 }, (_, i) => ({ open: i, lo: i + 1, hi: BOOK.length - 1 }));
+const HALVING_RUN = (() => {
+  const out: { open: number; lo: number; hi: number }[] = [];
+  let lo = 0;
+  let hi = BOOK.length - 1;
+  for (;;) {
+    const mid = Math.floor((lo + hi) / 2);
+    if (mid === TARGET) {
+      out.push({ open: mid, lo, hi });
+      return out;
     }
-    const name = book.names[i];
-    const next = [...opened, i];
-    setOpened(next);
-    const cmp = name.localeCompare(book.target);
-    if (cmp === 0) {
-      setMsg(null);
-      sfx("fanfare");
-      burst();
-    } else if (cmp < 0) {
-      setLo(i + 1);
-      setMsg(`${name} comes before ${book.target} in A–Z order, so ${book.target} must be further on. Everything up to ${name} is crossed out.`);
-      sfx("flip");
-    } else {
-      setHi(i - 1);
-      setMsg(`${name} comes after ${book.target}, so ${book.target} must be earlier. Everything from ${name} on is crossed out.`);
-      sfx("flip");
-    }
-  };
+    if (mid < TARGET) lo = mid + 1;
+    else hi = mid - 1;
+    out.push({ open: mid, lo, hi });
+  }
+})();
 
-  const nextPage = () => {
-    // linear search: the first page we haven't ruled out
-    open(lo);
-  };
-  const middle = () => {
-    open(Math.floor((lo + hi) / 2));
-  };
-
-  const verdict = useMemo(() => {
-    if (!found) return null;
-    const k = opened.length;
-    return `Found ${book.target} in ${k} check${k === 1 ? "" : "s"}! Page by page could take up to ${n}. Always opening the middle never needs more than ${maxHalving}.`;
-  }, [found, opened.length, book.target, n, maxHalving]);
-
+/** The 16 pages as a 4 × 4 grid; Run opens pages one check at a time. */
+function StepSearch({ done, complete, run, color, button }: MissionApi & { run: { open: number; lo: number; hi: number }[]; color: string; button: string }) {
+  const [k, setK] = useState(-1); // checks done - 1
+  const running = k >= 0 && k < run.length - 1;
+  useTicker(running, run.length > 6 ? 260 : 800, () => setK((x) => x + 1));
+  const opened = run.slice(0, k + 1).map((r) => r.open);
+  const range = k >= 0 ? run[k] : { lo: 0, hi: BOOK.length - 1 };
+  const found = k === run.length - 1;
   return (
-    <div className="select-none">
-      <div className="mb-3 flex flex-wrap items-center justify-between gap-3">
-        <div className="flex items-center gap-2 rounded-2xl border-2 border-line bg-surface-2 px-4 py-2">
-          <span className="font-extrabold">Find</span>
-          <span className="text-2xl font-black" style={{ color: COLOR }}>
-            {book.target}
-          </span>
-        </div>
-        <div className="flex items-center gap-2">
-          <span className="chip !text-sm">checks: {opened.length}</span>
-          <div className="flex rounded-xl border-2 border-line p-0.5" role="radiogroup" aria-label="Book size">
-            {SIZES.map((s) => (
-              <button
-                key={s}
-                type="button"
-                role="radio"
-                aria-checked={size === s && n === s}
-                onClick={() => {
-                  setSize(s);
-                  restart(s);
-                }}
-                className={clsx("h-10 rounded-lg px-3 text-sm font-black", n === s ? "text-white" : "text-muted")}
-                style={n === s ? { background: COLOR } : undefined}
-              >
-                {s}
-              </button>
-            ))}
-          </div>
-        </div>
-      </div>
-
-      <p className="mb-2 text-sm font-bold text-muted">The pages are in A–Z order. Tap any page to open it.</p>
-      <div className="grid gap-1.5" style={{ gridTemplateColumns: `repeat(${cols}, minmax(0, 1fr))` }}>
-        {book.names.map((name, i) => {
+    <div>
+      <Stage label={found ? `Found Mia after ${k + 1} checks` : `A phone book of 16 names in A to Z order. Find Mia.`}>
+        <text x={14} y={23} fontSize={16} fontWeight={900} fill={STAGE_INK}>
+          Find Mia
+        </text>
+        <text x={386} y={23} textAnchor="end" fontSize={16} fontWeight={900} fill={color}>
+          checks: {k + 1}
+        </text>
+        {BOOK.map((name, i) => {
+          const x = 14 + (i % 4) * 94;
+          const y = 34 + Math.floor(i / 4) * 51;
           const isOpen = opened.includes(i);
-          const out = !isOpen && (i < lo || i > hi) && !found;
-          const hit = isOpen && name === book.target;
+          const hit = isOpen && i === TARGET;
+          const out = !isOpen && (i < range.lo || i > range.hi);
           return (
-            <motion.button
-              key={`${name}-${i}`}
-              type="button"
-              onClick={() => open(i)}
-              whileTap={{ scale: 0.9 }}
-              aria-label={isOpen ? `Page ${i + 1}: ${name}` : out ? `Page ${i + 1}, ruled out` : `Page ${i + 1}, closed`}
-              className={clsx(
-                "relative grid min-h-[44px] place-items-center rounded-lg border-2 px-0.5 text-[11px] font-black leading-tight transition sm:text-xs",
-                hit ? "border-good bg-good text-white" : isOpen ? "border-[#1c2333]/60 bg-amber-50 text-[#1c2333]" : out ? "border-line bg-surface-2 text-muted opacity-35" : "border-red-800/60 bg-red-700 text-red-100 hover:brightness-110",
-              )}
-            >
-              {isOpen ? name : out ? "✕" : i + 1}
-            </motion.button>
+            <g key={name} opacity={out ? 0.3 : 1}>
+              <rect x={x} y={y} width={86} height={44} rx={8} fill={hit ? "#16A34A" : isOpen ? "#FFFBEB" : "#B91C1C"} stroke={INK} strokeWidth={2} />
+              <text x={x + 43} y={y + 28} textAnchor="middle" fontSize={15} fontWeight={900} fill={hit ? "#fff" : isOpen ? INK : "#FECACA"}>
+                {isOpen ? name : out ? "✕" : i + 1}
+              </text>
+            </g>
           );
         })}
-      </div>
-
-      <p className={clsx("mt-3 min-h-[3rem] rounded-2xl px-4 py-2 font-bold", found ? "bg-good/10 text-good" : "bg-surface-2 text-muted")} aria-live="polite">
-        {verdict ?? msg ?? `Still possible: pages ${lo + 1} to ${hi + 1} (${hi - lo + 1} pages). Try opening the middle one!`}
-      </p>
-
-      <div className="mt-3 flex flex-wrap justify-center gap-2">
-        <button type="button" className="btn min-h-[48px] border-orange-700 bg-orange-500 text-white" onClick={nextPage} disabled={found}>
-          <ArrowRight className="h-4 w-4" /> Next page
-        </button>
-        <button type="button" className="btn-primary min-h-[48px]" onClick={middle} disabled={found}>
-          <Divide className="h-4 w-4" /> Open the middle
-        </button>
-        <button type="button" className="btn-ghost min-h-[48px]" onClick={() => restart()}>
-          {found ? <Shuffle className="h-4 w-4" /> : <RotateCcw className="h-4 w-4" />} New name
-        </button>
-      </div>
-
-      <div className="mt-4 grid grid-cols-2 gap-2 text-center text-sm font-bold">
-        <div className="rounded-2xl border-2 p-2" style={{ borderColor: LINEAR }}>
-          <p style={{ color: LINEAR }}>Page by page — O(n)</p>
-          <p className="text-muted">worst case {n} checks</p>
-        </div>
-        <div className="rounded-2xl border-2 p-2" style={{ borderColor: HALVE }}>
-          <p style={{ color: HALVE }}>Halving — O(log n)</p>
-          <p className="text-muted">worst case {maxHalving} checks</p>
-        </div>
-      </div>
+      </Stage>
+      <MissionButton color={color} disabled={complete || k >= 0} onClick={() => {
+          setK(0);
+          done();
+        }}>
+        <Search className="h-5 w-5" /> {button}
+      </MissionButton>
     </div>
   );
 }
+
+/** Double the book: bars show the checks for each method before and after. */
+function StepDouble({ done, complete }: MissionApi) {
+  const [big, setBig] = useState(false);
+  const n = big ? 32 : 16;
+  const rows = [
+    { name: "page by page", v: n, was: 16, color: LINEAR },
+    { name: "halving", v: Math.log2(n), was: 4, color: HALVE },
+  ];
+  return (
+    <div>
+      <Stage label={`With ${n} names: page by page up to ${n} checks, halving about ${Math.log2(n)} checks`}>
+        <text x={200} y={40} textAnchor="middle" fontSize={20} fontWeight={900} fill={STAGE_INK}>
+          {n} names
+        </text>
+        {rows.map((r, k) => (
+          <g key={r.name}>
+            <text x={20} y={86 + k * 80} fontSize={16} fontWeight={900} fill={r.color}>
+              {r.name}
+            </text>
+            <motion.rect x={20} y={96 + k * 80} height={30} rx={8} fill={r.color} initial={false} animate={{ width: Math.max(10, (r.v / 32) * 300) }} transition={{ duration: 0.8 }} />
+            <text x={Math.max(10, (r.v / 32) * 300) + 30} y={118 + k * 80} fontSize={18} fontWeight={900} fill={STAGE_INK}>
+              {r.v}
+              {big && (
+                <tspan fontSize={13} fill={STAGE_MUTED}>
+                  {" "}
+                  (was {r.was})
+                </tspan>
+              )}
+            </text>
+          </g>
+        ))}
+      </Stage>
+      <MissionButton
+        color={COLOR}
+        disabled={complete}
+        onClick={() => {
+          setBig(true);
+          done();
+        }}
+      >
+        <Copy className="h-5 w-5" /> Double the names
+      </MissionButton>
+    </div>
+  );
+}
+
+/** A million names: the slow method on a 10× faster computer against halving on a normal one. */
+function StepRace({ done, complete }: MissionApi) {
+  const [go, setGo] = useState(false);
+  return (
+    <div>
+      <Stage label={go ? "Halving finishes after 20 steps of time. Page by page on the fast computer still needs 100,000" : "A race to search one million names"}>
+        <text x={200} y={34} textAnchor="middle" fontSize={16} fontWeight={900} fill={STAGE_INK}>
+          1,000,000 names
+        </text>
+        <text x={20} y={78} fontSize={15} fontWeight={900} fill={LINEAR}>
+          page by page · 10× faster computer
+        </text>
+        <rect x={20} y={88} width={360} height={30} rx={8} fill="rgb(var(--line))" />
+        <motion.rect x={20} y={88} height={30} rx={8} fill={LINEAR} initial={{ width: 0 }} animate={{ width: go ? 30 : 0 }} transition={{ duration: 2.5, ease: "linear" }} />
+        <text x={20} y={142} fontSize={14} fontWeight={800} fill={STAGE_MUTED}>
+          {go ? "needs 100,000 steps… still going" : "time needed: ?"}
+        </text>
+        <text x={20} y={176} fontSize={15} fontWeight={900} fill={HALVE}>
+          halving · normal computer
+        </text>
+        <rect x={20} y={186} width={360} height={30} rx={8} fill="rgb(var(--line))" />
+        <motion.rect x={20} y={186} height={30} rx={8} fill={HALVE} initial={{ width: 0 }} animate={{ width: go ? 360 : 0 }} transition={{ duration: 0.4 }} />
+        {go && (
+          <motion.text x={200} y={207} textAnchor="middle" fontSize={15} fontWeight={900} fill="#fff" initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.4 }}>
+            done in 20 steps ✓
+          </motion.text>
+        )}
+      </Stage>
+      <MissionButton
+        color={COLOR}
+        disabled={complete}
+        onClick={() => {
+          setGo(true);
+          done();
+        }}
+      >
+        <Flag className="h-5 w-5" /> Start the race
+      </MissionButton>
+    </div>
+  );
+}
+
+const mission: Mission = {
+  goal: "Find a name two ways, then see which way copes with a huge book.",
+  steps: [
+    {
+      task: "Search for Mia page by page.",
+      scene: (api) => <StepSearch {...api} run={LINEAR_RUN} color={LINEAR} button="Search page by page" />,
+      hint: "Tap the orange button and watch the counter.",
+      explain: "Checking every item in turn is called **linear search**. Mia is on page 13, so it took **13 checks**. In the worst case it checks all 16.",
+    },
+    {
+      task: "Now search by opening the middle.",
+      predict: { question: "Open the middle, throw away the half Mia can't be in, repeat. How many checks?", options: ["About 4", "About 8", "16, same as before"], answer: 0 },
+      scene: (api) => <StepSearch {...api} run={HALVING_RUN} color={HALVE} button="Search by halving" />,
+      hint: "Tap the blue button. Crossed-out pages are ruled out.",
+      explain: "This is **binary search**. It only works because the names are **sorted** A–Z. Each check throws away half: 16 → 8 → 4 → 2 → 1, so it found Mia in **4 checks**.",
+    },
+    {
+      task: "Double the book to 32 names.",
+      predict: { question: "Twice as many names. What happens to the halving checks?", options: ["They double, to about 8", "Just one more, about 5"], answer: 1 },
+      scene: (api) => <StepDouble {...api} />,
+      hint: "Tap Double the names and compare the two bars.",
+      explain: "**Big-O** describes how the work grows as the input grows. Page by page is **O(n)**: twice the names, twice the checks. Halving is **O(log n)**: twice the names, just **one** more check.",
+    },
+    {
+      task: "Race them on a million names.",
+      predict: { question: "Page by page gets a computer 10× faster. Halving stays on a normal one. Who wins?", options: ["Page by page — a faster computer fixes a slow method", "Halving, by a huge amount"], answer: 1 },
+      scene: (api) => <StepRace {...api} />,
+      hint: "Tap Start the race.",
+      explain: "A 10× faster computer only divides the time by 10: 1,000,000 checks become 100,000. Halving needs about **20**. A better **algorithm** (step-by-step method) beats faster hardware as the input grows.",
+    },
+  ],
+  takeaway: "Big-O says how an algorithm's work grows with the input: O(log n) halving barely grows, O(n) grows in step, and no faster computer makes up for the gap.",
+};
 
 /* ------------------------------------------------------------------ */
 /* Story + analogy                                                     */
@@ -528,12 +545,13 @@ export const bigOExplainer: Explainer = {
   title: "Algorithms & Big-O: search smarter",
   tagline: "Find a name page by page, or by halving — and see why one is so much faster.",
   area: "Computer science",
-  ages: "9–18",
+  ages: "14–16",
   lessons: ["dsa/complexity/big-o-notation", "dsa/sorting-searching/binary-search", "dsa/complexity/analysing-code"],
   color: COLOR,
   icon: "🔎",
   watch,
-  try: PhoneBookTry,
+  misconception: { myth: "A slow algorithm can always be fixed by buying a faster computer.", truth: "A faster computer only speeds things up by a fixed amount. A better algorithm changes how the work grows, which matters far more for big inputs." },
+  mission,
   story,
   like,
 };

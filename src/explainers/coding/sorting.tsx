@@ -1,13 +1,10 @@
 "use client";
 
-import { useEffect, useState, type ReactElement } from "react";
+import { useState, type ReactElement } from "react";
 import { motion } from "framer-motion";
-import { ArrowLeftRight, Play, Shuffle, Square } from "lucide-react";
-import clsx from "clsx";
-import type { Explainer } from "../types";
-import { sfx } from "@/lib/sound";
-import { burst } from "@/lib/confetti";
-import { Art, INK, Kid, Stage, STAGE_INK, STAGE_MUTED } from "./_art";
+import { Play } from "lucide-react";
+import type { Explainer, Mission, MissionApi } from "../types";
+import { Art, INK, Kid, MissionButton, Stage, STAGE_INK, STAGE_MUTED, useTicker } from "./_art";
 
 const COLOR = "#DB2777";
 
@@ -36,7 +33,7 @@ const SLOT = (i: number) => 60 + i * 70;
 const GROUND = 205;
 
 /** A row of kids. `order` lists cast ids by position; `from` is the order they animate from. */
-function Line({ order, from, cmp, sorted = [], swapPair }: { order: number[]; from?: number[]; cmp?: [number, number]; sorted?: number[]; swapPair?: number[] }) {
+function Line({ order, from, cmp, sorted = [], swapPair, delay = 0.5, dur = 0.9 }: { order: number[]; from?: number[]; cmp?: [number, number]; sorted?: number[]; swapPair?: number[]; delay?: number; dur?: number }) {
   return (
     <>
       <rect x={10} y={GROUND} width={380} height={8} rx={4} fill="rgb(var(--line))" />
@@ -48,7 +45,7 @@ function Line({ order, from, cmp, sorted = [], swapPair }: { order: number[]; fr
         const start = from ? from.indexOf(id) : slot;
         const hop = swapPair?.includes(id);
         return (
-          <motion.g key={id} initial={{ x: SLOT(start), y: 0 }} animate={{ x: SLOT(slot), y: hop ? [0, -18, 0] : 0 }} transition={{ delay: 0.5, duration: 0.9, ease: "easeInOut" }}>
+          <motion.g key={id} initial={{ x: SLOT(start), y: 0 }} animate={{ x: SLOT(slot), y: hop ? [0, -18, 0] : 0 }} transition={{ delay, duration: dur, ease: "easeInOut" }}>
             <g transform={`translate(0 ${GROUND})`}>
               <Kid h={kid.h} shirt={kid.shirt} hair={kid.hair} bow={kid.bow} mood={sorted.includes(slot) ? "happy" : "wow"} />
             </g>
@@ -173,203 +170,87 @@ const watch: Explainer["watch"] = [
 ];
 
 /* ------------------------------------------------------------------ */
-/* Try: sort the line yourself                                         */
+/* Guided mission                                                      */
 /* ------------------------------------------------------------------ */
 
-const PALETTE: [string, string, boolean][] = [
-  ["#3B82F6", "#4B2E1E", false],
-  ["#F59E0B", "#111827", true],
-  ["#10B981", "#7C2D12", false],
-  ["#EC4899", "#FACC15", true],
-  ["#8B5CF6", "#1F2937", false],
-  ["#EF4444", "#78350F", true],
-];
+type Frame = { order: number[]; cmp: number; swapped: boolean };
 
-interface Person {
-  id: number;
-  cm: number;
-}
-
-const inversions = (a: Person[]) => {
-  let n = 0;
-  for (let i = 0; i < a.length; i++) for (let j = i + 1; j < a.length; j++) if (a[i].cm > a[j].cm) n++;
-  return n;
-};
-
-function shuffled(): Person[] {
-  const heights = [112, 120, 128, 136, 144, 152].sort(() => Math.random() - 0.5);
-  const out = heights.map((cm, id) => ({ id, cm }));
-  return inversions(out) < 4 ? shuffled() : out;
-}
-
-type Frame = { order: Person[]; cmp: number; swapped: boolean };
-
-function bubbleFrames(start: Person[]): Frame[] {
+/** Bubble-sort frames: compare positions from..to-1 with their right neighbour, swapping when the left is taller. */
+function pass(start: number[], from: number, to: number): Frame[] {
   const a = start.slice();
   const out: Frame[] = [];
-  for (let end = a.length - 1; end > 0; end--) {
-    let any = false;
-    for (let i = 0; i < end; i++) {
-      out.push({ order: a.slice(), cmp: i, swapped: false });
-      if (a[i].cm > a[i + 1].cm) {
-        [a[i], a[i + 1]] = [a[i + 1], a[i]];
-        any = true;
-        out.push({ order: a.slice(), cmp: i, swapped: true });
-      }
-    }
-    if (!any) break;
+  for (let i = from; i < to; i++) {
+    const swapped = CAST[a[i]].cm > CAST[a[i + 1]].cm;
+    if (swapped) [a[i], a[i + 1]] = [a[i + 1], a[i]];
+    out.push({ order: a.slice(), cmp: i, swapped });
   }
-  out.push({ order: a.slice(), cmp: -1, swapped: false });
   return out;
 }
 
-function SortingTry() {
-  const [line, setLine] = useState<Person[]>(() => [0, 1, 2, 3, 4, 5].map((id) => ({ id, cm: [136, 112, 152, 120, 144, 128][id] })));
-  const [start, setStart] = useState(() => inversions(line));
-  const [swaps, setSwaps] = useState(0);
-  const [msg, setMsg] = useState<string | null>(null);
-  const [auto, setAuto] = useState<{ frames: Frame[]; k: number; comps: number } | null>(null);
-
-  const left = inversions(line);
-  const sorted = left === 0;
-  const cmp = auto ? auto.frames[auto.k].cmp : -1;
-
-  useEffect(() => {
-    if (!auto) return;
-    if (auto.k >= auto.frames.length - 1) {
-      setMsg(`Bubble sort finished with ${auto.comps} comparisons.`);
-      setAuto(null);
-      return;
-    }
-    const id = setTimeout(() => {
-      const k = auto.k + 1;
-      const f = auto.frames[k];
-      setLine(f.order);
-      if (f.swapped) {
-        setSwaps((s) => s + 1);
-        sfx("pop");
-      }
-      setAuto({ ...auto, k, comps: auto.comps + (f.swapped || f.cmp < 0 ? 0 : 1) });
-    }, 520);
-    return () => clearTimeout(id);
-  }, [auto]);
-
-  useEffect(() => {
-    if (sorted && swaps > 0) {
-      sfx("fanfare");
-      burst();
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [sorted]);
-
-  const swap = (i: number) => {
-    if (auto || sorted) return;
-    const before = line[i].cm > line[i + 1].cm;
-    const next = line.slice();
-    [next[i], next[i + 1]] = [next[i + 1], next[i]];
-    setLine(next);
-    setSwaps((s) => s + 1);
-    if (before) {
-      setMsg(`${line[i].cm} is taller than ${line[i + 1].cm} — good swap!`);
-      sfx("pop");
-    } else {
-      setMsg(`Oops — ${line[i].cm} was already shorter than ${line[i + 1].cm}. That swap made the line less sorted.`);
-      sfx("wrong");
-    }
-  };
-
-  const reshuffle = () => {
-    const s = shuffled();
-    setLine(s);
-    setStart(inversions(s));
-    setSwaps(0);
-    setMsg(null);
-    setAuto(null);
-  };
-
-  const runBubble = () => {
-    const frames = bubbleFrames(line);
-    setMsg("Bubble sort: compare each pair of neighbours, swap if the left one is taller…");
-    setAuto({ frames, k: 0, comps: frames[0].cmp >= 0 ? 1 : 0 });
-  };
-
-  const maxCm = 160;
-  const n = line.length;
-
+/** One Run button: Bolt's bubble sort walks the line comparing one pair of neighbours at a time. */
+function StepPass({ done, complete, start, from, to, sorted, button }: MissionApi & { start: number[]; from: number; to: number; sorted: number[]; button: string }) {
+  const frames = pass(start, from, to);
+  const [k, setK] = useState(-1); // frames shown - 1
+  const running = k >= 0 && k < frames.length;
+  useTicker(running, 1100, () => setK((x) => x + 1));
+  const f = k >= 0 ? frames[Math.min(k, frames.length - 1)] : null;
+  const order = f ? f.order : start;
+  const shown = k >= 0 ? frames.slice(0, k + 1) : [];
+  const swaps = shown.filter((x) => x.swapped).length;
+  const finished = k >= frames.length;
+  const left = f && !finished ? CAST[order[f.cmp]] : null;
+  const right = f && !finished ? CAST[order[f.cmp + 1]] : null;
   return (
-    <div className="select-none">
-      <p className="mb-3 font-extrabold">Tap ⇄ between two neighbours to swap them. Get everyone from shortest to tallest!</p>
-
-      <div className="relative rounded-2xl border-2 border-line bg-surface-2 px-1 pb-14 pt-2">
-        <div className="grid" style={{ gridTemplateColumns: `repeat(${n}, minmax(0, 1fr))` }}>
-          {line.map((p, i) => {
-            const [shirt, hair, bow] = PALETTE[p.id];
-            const inPair = cmp >= 0 && (i === cmp || i === cmp + 1);
-            const settled = sorted;
-            return (
-              <motion.div key={p.id} layout transition={{ type: "spring", stiffness: 380, damping: 30 }} className={clsx("flex flex-col items-center rounded-xl pt-1", inPair && "bg-amber-200/60")}>
-                <svg viewBox={`-26 ${-maxCm * 0.8 - 6} 52 ${maxCm * 0.8 + 10}`} className="h-36 w-full sm:h-44" role="img" aria-label={`Child ${p.cm} centimetres tall`}>
-                  <Kid h={p.cm * 0.8} shirt={shirt} hair={hair} bow={bow} mood={settled ? "happy" : "wow"} />
-                </svg>
-                <span className={clsx("font-mono text-sm font-black", settled ? "text-good" : "text-ink")}>{p.cm}</span>
-              </motion.div>
-            );
-          })}
-        </div>
-        {/* swap buttons between neighbours */}
-        {Array.from({ length: n - 1 }, (_, i) => (
-          <button
-            key={i}
-            type="button"
-            onClick={() => swap(i)}
-            disabled={!!auto || sorted}
-            aria-label={`Swap ${line[i].cm} and ${line[i + 1].cm}`}
-            className="absolute bottom-2 grid h-11 w-11 -translate-x-1/2 place-items-center rounded-full border-2 border-[#1c2333]/70 bg-white text-[#1c2333] shadow transition hover:scale-110 active:scale-90 disabled:opacity-30"
-            style={{ left: `calc(4px + (100% - 8px) * ${(i + 1) / n})` }}
-          >
-            <ArrowLeftRight className="h-5 w-5" />
-          </button>
-        ))}
-      </div>
-
-      <div className="mt-3 grid grid-cols-3 gap-2 text-center">
-        <div className="rounded-2xl bg-surface-2 p-2">
-          <p className="text-[11px] font-bold uppercase text-muted">Swaps</p>
-          <p className="font-mono text-xl font-black">{swaps}</p>
-        </div>
-        <div className="rounded-2xl bg-surface-2 p-2">
-          <p className="text-[11px] font-bold uppercase text-muted">Pairs out of order</p>
-          <p className={clsx("font-mono text-xl font-black", sorted ? "text-good" : "text-bad")}>{left}</p>
-        </div>
-        <div className="rounded-2xl bg-surface-2 p-2">
-          <p className="text-[11px] font-bold uppercase text-muted">Fewest possible</p>
-          <p className="font-mono text-xl font-black">{start}</p>
-        </div>
-      </div>
-
-      <p className={clsx("mt-3 min-h-[3rem] rounded-2xl px-4 py-2 font-bold", sorted ? "bg-good/10 text-good" : "bg-surface-2 text-muted")} aria-live="polite">
-        {sorted
-          ? `Sorted! You used ${swaps} swap${swaps === 1 ? "" : "s"}; the fewest possible was ${start}. Each good neighbour swap fixes exactly one out-of-order pair — and bubble sort always uses exactly that many swaps too.`
-          : msg ?? "Hint: find a taller person standing just left of a shorter one."}
-      </p>
-
-      <div className="mt-3 flex flex-wrap justify-center gap-2">
-        {auto ? (
-          <button type="button" className="btn-ghost min-h-[48px]" onClick={() => setAuto(null)}>
-            <Square className="h-4 w-4" /> Stop
-          </button>
-        ) : (
-          <button type="button" className="btn-primary min-h-[48px]" onClick={runBubble} disabled={sorted}>
-            <Play className="h-4 w-4" /> Watch bubble sort
-          </button>
-        )}
-        <button type="button" className="btn-ghost min-h-[48px]" onClick={reshuffle}>
-          <Shuffle className="h-4 w-4" /> Shuffle
-        </button>
-      </div>
+    <div>
+      <Stage label={finished ? `Done: ${shown.length} comparisons and ${swaps} swaps` : "Five friends in a line, waiting to be sorted"}>
+        <Line order={order} cmp={f && !finished ? [f.cmp, f.cmp + 1] : undefined} sorted={finished ? sorted : []} delay={0.1} dur={0.6} />
+        <text x={200} y={40} textAnchor="middle" fontSize={18} fontWeight={900} fill={finished ? "#16A34A" : STAGE_INK}>
+          {left && right && f
+            ? f.swapped
+              ? `${right.cm} > ${left.cm}? yes: swap`
+              : `${left.cm} > ${right.cm}? no: stay`
+            : k >= 0
+              ? `${shown.length} compared · ${swaps} swapped`
+              : ""}
+        </text>
+      </Stage>
+      <MissionButton color={COLOR} disabled={complete || k >= 0} onClick={() => {
+          setK(0);
+          done();
+        }}>
+        <Play className="h-5 w-5" /> {button}
+      </MissionButton>
     </div>
   );
 }
+
+const mission: Mission = {
+  goal: "Sort five friends from shortest to tallest, the way a computer does.",
+  steps: [
+    {
+      task: "Compare the first two friends.",
+      predict: { question: "How does the computer find out who is in the wrong place?", options: ["It looks at the whole line at once and just knows", "It compares two neighbours at a time"], answer: 1 },
+      scene: (api) => <StepPass {...api} start={O0} from={0} to={1} sorted={[]} button="Compare" />,
+      hint: "Tap the pink Compare button.",
+      explain: "A computer cannot *see* the whole line. It can only **compare** two numbers at a time. 140 > 115, so the left friend is taller and they **swap**. That one rule is **bubble sort**.",
+    },
+    {
+      task: "Finish walking down the line.",
+      predict: { question: "After one walk down the line, who will be at the end?", options: ["The tallest friend (160)", "Everyone will be sorted", "The shortest friend (115)"], answer: 0 },
+      scene: (api) => <StepPass {...api} start={O1} from={1} to={4} sorted={[4]} button="Keep comparing" />,
+      hint: "Tap the button and watch each pair get checked.",
+      explain: "One walk down the line is called a **pass**. Each time the tallest so far meets a shorter friend they swap, so the tallest **bubbles** to the end. The others are still not in order.",
+    },
+    {
+      task: "Do a second pass.",
+      predict: { question: "On the second pass, how many swaps will there be?", options: ["0", "1", "4"], answer: 1 },
+      scene: (api) => <StepPass {...api} start={O2} from={0} to={3} sorted={[0, 1, 2, 3, 4]} button="Second pass" />,
+      hint: "Tap the button and count the swaps.",
+      explain: "Only **1 swap** (140 and 125) was needed, and now the line is sorted. A computer knows it is finished when a whole pass makes **no swaps**.",
+    },
+  ],
+  takeaway: "Bubble sort compares two neighbours at a time and swaps them if they are the wrong way round, walking the line again and again until nothing swaps.",
+};
 
 /* ------------------------------------------------------------------ */
 /* Story + analogy                                                     */
@@ -472,12 +353,13 @@ export const sortingExplainer: Explainer = {
   title: "Sorting: swap the neighbours",
   tagline: "Line friends up by height with bubble sort — one neighbour swap at a time.",
   area: "Computer science",
-  ages: "8–18",
+  ages: "11–15",
   lessons: ["dsa/sorting-searching/sorting-algorithms", "sql/querying-basics/order-by-limit"],
   color: COLOR,
   icon: "📊",
   watch,
-  try: SortingTry,
+  misconception: { myth: "A computer looks at the whole list at once and sees what order it should be in.", truth: "A computer can only compare two items at a time. A sorting algorithm is a plan for which pairs to compare and when to swap." },
+  mission,
   story,
   like,
 };

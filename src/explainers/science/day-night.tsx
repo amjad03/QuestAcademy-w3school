@@ -1,11 +1,10 @@
 "use client";
 
-import { useEffect, useRef, useState, type PointerEvent as ReactPointerEvent } from "react";
+import { useState } from "react";
 import { motion } from "framer-motion";
-import { Pause, Play } from "lucide-react";
-import type { Explainer } from "../types";
-import { svgPoint, useFrame } from "@/components/widgets/_shared";
-import { Arrow, BigButton, Kid, Label, Panel, Scene, Sun, Tag, TryShell, rng } from "./_art";
+import type { Explainer, Mission, MissionApi } from "../types";
+import { useFrame } from "@/components/widgets/_shared";
+import { Arrow, Kid, Label, Panel, Scene, StepButton, StepNote, Sun, Tag, rng } from "./_art";
 
 const C = "#6366F1";
 
@@ -99,14 +98,8 @@ function DayNightScene({ stage }: { stage: number }) {
 }
 
 /* ------------------------------------------------------------------ */
-/* Try it: spin the Earth                                              */
+/* Guided mission: spin the Earth                                      */
 /* ------------------------------------------------------------------ */
-
-const MISSIONS = [
-  { text: "Spin the Earth to make it daytime at Mia's house.", check: (alt: number) => alt > 0.5 },
-  { text: "Now make it night-time, so Mia can sleep.", check: (alt: number) => alt < -0.5 },
-  { text: "Can you find sunrise? Spin until the Sun peeks up.", check: (alt: number, top: boolean) => Math.abs(alt) < 0.18 && top },
-];
 
 function sky(alt: number) {
   if (alt > 0.25) return ["#38bdf8", "#bae6fd"];
@@ -114,142 +107,134 @@ function sky(alt: number) {
   return ["#020617", "#1e1b4b"];
 }
 
-function SpinTheEarth() {
-  const svg = useRef<SVGSVGElement>(null);
-  const [rot, setRot] = useState(90);
-  const [auto, setAuto] = useState(false);
-  const [mission, setMission] = useState(0);
-  const drag = useRef<{ a: number; r: number } | null>(null);
-
+/** Earth from above plus Mia's window. `rot` 90 = midnight, -90 = noon; it falls as the Earth spins. */
+function SpinView({ rot }: { rot: number }) {
   const cx = 160;
   const cy = 130;
   const R = 92;
-
-  useFrame((dt) => setRot((r) => r - dt * 30), auto);
-
-  const theta = (((90 - rot) % 360) + 360) % 360; // home's direction, maths angle
+  const theta = (((90 - rot) % 360) + 360) % 360; // home's direction
   const rad = (theta * Math.PI) / 180;
   const alt = -Math.cos(rad); // how high the Sun is (1 = overhead)
-  const top = Math.sin(rad) > 0; // upper half = morning side
+  const top = Math.sin(rad) > 0;
   const hour = theta / 15;
-  const hh = Math.floor(hour);
-  const mm = Math.floor((hour - hh) * 60);
-  const clock = `${((hh + 11) % 12) + 1}:${String(mm).padStart(2, "0")} ${hh < 12 ? "am" : "pm"}`;
   const phase = alt > 0.18 ? "day" : alt < -0.18 ? "night" : top ? "sunrise" : "sunset";
-
-  useEffect(() => {
-    if (mission < MISSIONS.length && MISSIONS[mission].check(alt, top)) setMission(mission + 1);
-  }, [alt, top, mission]);
-
-  const angleAt = (e: ReactPointerEvent) => {
-    const p = svgPoint(svg.current, e.clientX, e.clientY);
-    return (Math.atan2(p.y - cy, p.x - cx) * 180) / Math.PI;
-  };
-  const onDown = (e: ReactPointerEvent<SVGGElement>) => {
-    e.preventDefault();
-    e.currentTarget.setPointerCapture(e.pointerId);
-    setAuto(false);
-    drag.current = { a: angleAt(e), r: rot };
-  };
-  const onMove = (e: ReactPointerEvent<SVGGElement>) => {
-    if (!drag.current) return;
-    let d = angleAt(e) - drag.current.a;
-    if (d > 180) d -= 360;
-    if (d < -180) d += 360;
-    drag.current.a += d;
-    drag.current.r += d;
-    setRot(drag.current.r);
-  };
-  const onUp = (e: ReactPointerEvent<SVGGElement>) => {
-    e.currentTarget.releasePointerCapture(e.pointerId);
-    drag.current = null;
-  };
-
-  const reset = () => {
-    setRot(90);
-    setAuto(false);
-    setMission(0);
-  };
-
   const [s1, s2] = sky(alt);
   const sunX = 20 + ((hour - 6) / 12) * 120;
   const sunY = 120 - alt * 95;
-  const done = mission >= MISSIONS.length;
-  const status = done
-    ? `All done! As the Earth spins, Mia's home turns into the sunlight (day) and out of it (night). It's ${clock} now.`
-    : `${MISSIONS[mission].text} (Now it's ${phase} at ${clock}.)`;
-
   return (
-    <TryShell title="Spin the Earth" hint="Drag round the Earth to spin it. The Sun stays still. Watch Mia's window!" onReset={reset} status={status} color={C} done={done}>
-      <div className="grid gap-3 sm:grid-cols-[1.45fr_1fr]">
-        <div className="overflow-hidden rounded-2xl border-2 border-line">
-          <svg ref={svg} viewBox="0 0 300 260" role="img" aria-label={`Earth seen from above. Mia's house has ${phase}.`} className="block h-auto w-full select-none" style={{ maxHeight: 300, touchAction: "none" }}>
-            <rect width="300" height="260" fill="#0b1026" />
-            <Stars n={20} w={300} />
-            <Sun x={-20} y={130} r={50} face={false} glow />
-            <g onPointerDown={onDown} onPointerMove={onMove} onPointerUp={onUp} onPointerCancel={onUp} style={{ cursor: "grab", touchAction: "none" }}>
-              <circle cx={cx} cy={cy} r={R + 30} fill="transparent" />
-              <EarthTop cx={cx} cy={cy} r={R} rotate={rot} />
-            </g>
-            <Arrow x1={cx + 70} y1={28} x2={cx - 50} y2={22} cx={cx + 10} cy={-2} color="#f472b6" w={3} draw={false} />
-            <Label x={cx} y={252} color="#c7d2fe" size={12}>
-              Earth spins this way ↺
-            </Label>
-          </svg>
-        </div>
-        <div className="overflow-hidden rounded-2xl border-2 border-line">
-          <svg viewBox="0 0 160 200" role="img" aria-label={`Mia's window: ${phase}, ${clock}`} className="block h-auto w-full" style={{ maxHeight: 300 }}>
-            <defs>
-              <linearGradient id="dn-win" x1="0" y1="0" x2="0" y2="1">
-                <stop offset="0" stopColor={s1} />
-                <stop offset="1" stopColor={s2} />
-              </linearGradient>
-            </defs>
-            <rect width="160" height="200" fill="#fef3c7" />
-            <rect x={14} y={14} width={132} height={112} rx={6} fill="url(#dn-win)" stroke="#92400e" strokeWidth={6} />
-            <clipPath id="dn-clip">
-              <rect x={17} y={17} width={126} height={106} />
-            </clipPath>
-            <g clipPath="url(#dn-clip)">
-              {alt < -0.18 && <Stars n={14} seed={9} w={130} h={80} />}
-              {alt > -0.2 && <Sun x={Math.max(26, Math.min(134, sunX))} y={Math.min(132, sunY)} r={13} face={false} spin={false} />}
-              <path d="M 17 126 L 17 102 Q 50 90 80 104 T 143 100 L 143 126 Z" fill={alt > 0 ? "#65a30d" : "#14532d"} />
-            </g>
-            <line x1={80} y1={14} x2={80} y2={126} stroke="#92400e" strokeWidth={4} />
-            <line x1={14} y1={70} x2={146} y2={70} stroke="#92400e" strokeWidth={4} />
-            <rect x={0} y={150} width={160} height={50} fill="#d6a76c" />
-            {phase === "night" ? (
-              <g>
-                <rect x={44} y={150} width={80} height={22} rx={6} fill="#a78bfa" />
-                <circle cx={56} cy={146} r={12} fill="#F1C27D" />
-                <path d="M 50 146 q 3 3 6 0 M 58 146 q 3 3 6 0" stroke="#1e293b" strokeWidth={1.5} fill="none" />
-                <text x={78} y={140} fontSize={14} fontWeight={900} fill="#6d28d9">
-                  z z z
-                </text>
-              </g>
-            ) : (
-              <Kid x={80} y={196} s={0.6} shirt="#f97316" arm={phase === "day" ? "up" : "down"} mood={phase === "day" ? "happy" : "wow"} />
-            )}
-            <rect x={10} y={130} width={140} height={18} rx={9} fill="#fff" stroke="#cbd5e1" />
-            <text x={80} y={143} textAnchor="middle" fontSize={11} fontWeight={900} fill="#1e293b">
-              {phase.toUpperCase()} · {clock}
-            </text>
-          </svg>
-        </div>
+    <div className="grid grid-cols-[1.45fr_1fr] gap-2 sm:gap-3">
+      <div className="overflow-hidden rounded-2xl border-2 border-line">
+        <svg viewBox="0 0 300 260" role="img" aria-label={`Earth seen from above. Mia's house has ${phase}.`} className="block h-auto w-full select-none" style={{ maxHeight: 300, overflow: "hidden" }}>
+          <rect width="300" height="260" fill="#0b1026" />
+          <Stars n={20} w={300} />
+          <Sun x={-20} y={130} r={50} face={false} glow />
+          <EarthTop cx={cx} cy={cy} r={R} rotate={rot} />
+          <Arrow x1={cx + 70} y1={28} x2={cx - 50} y2={22} cx={cx + 10} cy={-2} color="#f472b6" w={3} draw={false} />
+        </svg>
       </div>
-      <div className="mt-3 flex flex-wrap gap-2">
-        <BigButton onClick={() => setAuto((a) => !a)} color={C} active={auto}>
-          {auto ? <Pause className="h-5 w-5" /> : <Play className="h-5 w-5" />} {auto ? "Stop spinning" : "Spin by itself"}
-        </BigButton>
-        <div className="flex items-center gap-1.5 px-2" aria-label={`Mission ${Math.min(mission + 1, 3)} of 3`}>
-          {MISSIONS.map((_, k) => (
-            <span key={k} className="h-3 w-8 rounded-full" style={{ background: k < mission ? C : "rgb(var(--line))" }} />
-          ))}
-        </div>
+      <div className="overflow-hidden rounded-2xl border-2 border-line">
+        <svg viewBox="0 0 160 200" role="img" aria-label={`Mia's window: ${phase}`} className="block h-auto w-full" style={{ maxHeight: 300 }}>
+          <defs>
+            <linearGradient id="dn-win" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0" stopColor={s1} />
+              <stop offset="1" stopColor={s2} />
+            </linearGradient>
+          </defs>
+          <rect width="160" height="200" fill="#fef3c7" />
+          <rect x={14} y={14} width={132} height={112} rx={6} fill="url(#dn-win)" stroke="#92400e" strokeWidth={6} />
+          <clipPath id="dn-clip">
+            <rect x={17} y={17} width={126} height={106} />
+          </clipPath>
+          <g clipPath="url(#dn-clip)">
+            {alt < -0.18 && <Stars n={14} seed={9} w={130} h={80} />}
+            {alt > -0.2 && <Sun x={Math.max(26, Math.min(134, sunX))} y={Math.min(132, sunY)} r={13} face={false} spin={false} />}
+            <path d="M 17 126 L 17 102 Q 50 90 80 104 T 143 100 L 143 126 Z" fill={alt > 0 ? "#65a30d" : "#14532d"} />
+          </g>
+          <line x1={80} y1={14} x2={80} y2={126} stroke="#92400e" strokeWidth={4} />
+          <line x1={14} y1={70} x2={146} y2={70} stroke="#92400e" strokeWidth={4} />
+          <rect x={0} y={150} width={160} height={50} fill="#d6a76c" />
+          {phase === "night" ? (
+            <g>
+              <rect x={44} y={150} width={80} height={22} rx={6} fill="#a78bfa" />
+              <circle cx={56} cy={146} r={12} fill="#F1C27D" />
+              <path d="M 50 146 q 3 3 6 0 M 58 146 q 3 3 6 0" stroke="#1e293b" strokeWidth={1.5} fill="none" />
+              <text x={78} y={140} fontSize={14} fontWeight={900} fill="#6d28d9">
+                z z z
+              </text>
+            </g>
+          ) : (
+            <Kid x={80} y={196} s={0.6} shirt="#f97316" arm={phase === "day" ? "up" : "down"} mood={phase === "day" ? "happy" : "wow"} />
+          )}
+        </svg>
       </div>
-    </TryShell>
+    </div>
   );
 }
+
+const PHASE_WORD = { day: "Day ☀️", night: "Night 🌙", sunrise: "Sunrise 🌅", sunset: "Sunset 🌇" } as const;
+
+function phaseOf(rot: number) {
+  const theta = (((90 - rot) % 360) + 360) % 360;
+  const rad = (theta * Math.PI) / 180;
+  const alt = -Math.cos(rad);
+  return alt > 0.18 ? "day" : alt < -0.18 ? "night" : Math.sin(rad) > 0 ? "sunrise" : "sunset";
+}
+
+/** One spin step: tap the button and the Earth turns by `turn` degrees (anticlockwise, as seen from above). */
+function StepSpin({ api, from, turn, button, showHours }: { api: MissionApi; from: number; turn: number; button: string; showHours?: boolean }) {
+  const [rot, setRot] = useState(from);
+  const [spinning, setSpinning] = useState(false);
+  const target = from - turn;
+  useFrame((dt) => {
+    const next = Math.max(target, rot - dt * (turn > 200 ? 150 : 110));
+    setRot(next);
+    if (next <= target) {
+      setSpinning(false);
+      api.done();
+    }
+  }, spinning);
+  const hours = Math.round(((from - rot) / 360) * 24);
+  return (
+    <div>
+      <SpinView rot={rot} />
+      <StepNote color={C}>
+        {PHASE_WORD[phaseOf(rot)]}
+        {showHours && ` · ${hours} h`}
+      </StepNote>
+      <StepButton color={C} disabled={spinning || api.complete} onClick={() => setSpinning(true)}>
+        ↺ {button}
+      </StepButton>
+    </div>
+  );
+}
+
+const mission: Mission = {
+  goal: "Spin the Earth to give Mia day, then night, then a whole day.",
+  steps: [
+    {
+      task: "It's night at Mia's house. Spin the Earth.",
+      predict: { question: "What must move to bring morning to Mia?", options: ["The Sun moves over to her side", "The Earth spins her house round"], answer: 1 },
+      scene: (api) => <StepSpin api={api} from={90} turn={180} button="Spin the Earth" />,
+      hint: "Mia's house is the little red roof on the Earth. Tap the button.",
+      explain: "The Sun stayed still. The **Earth spun**, and Mia's house turned into the sunlight. First came sunrise, then day.",
+    },
+    {
+      task: "Spin again to make night.",
+      predict: { question: "When it is night for Mia, what is the Sun doing?", options: ["It switches off", "It hides behind the hills", "It is still shining on the other side of Earth"], answer: 2 },
+      scene: (api) => <StepSpin api={api} from={-90} turn={180} button="Spin the Earth" />,
+      hint: "Tap the button and watch Mia's window.",
+      explain: "The Sun never stops shining. Mia's house turned away into the Earth's own **shadow**, so it is night for her and day for children on the other side.",
+    },
+    {
+      task: "Spin the Earth one whole turn.",
+      predict: { question: "How long does one whole spin take?", options: ["One hour", "One day (24 hours)", "One year"], answer: 1 },
+      scene: (api) => <StepSpin api={api} from={90} turn={360} button="One whole turn" showHours />,
+      hint: "Tap the button and watch the hours count up.",
+      explain: "One whole spin takes **24 hours**: one day and one night. Going all the way round the Sun is much slower: that takes a year.",
+    },
+  ],
+  takeaway: "The Sun stays still and the Earth spins: the side facing the Sun has day, the side facing away has night.",
+};
 
 /* ------------------------------------------------------------------ */
 /* Story + analogy                                                     */
@@ -399,13 +384,14 @@ export const dayNight: Explainer = {
   color: C,
   icon: "🌍",
   watch: [
-    { title: "The Sun stays put", say: "The Sun is a giant star that always shines. It doesn't really move across the sky. We are the ones moving!", scene: <DayNightScene stage={0} /> },
+    { title: "The Sun stays still", say: "The Sun is a giant star that always shines. It only looks like it moves across the sky. Really, we are the ones moving!", scene: <DayNightScene stage={0} /> },
     { title: "The Earth spins", say: "Our Earth is always spinning, like a slow spinning top. One whole spin takes twenty-four hours: that's one day.", scene: <DayNightScene stage={1} /> },
     { title: "Facing the Sun: day", say: "The half of the Earth facing the Sun gets sunlight. Over there, it is daytime.", scene: <DayNightScene stage={2} /> },
     { title: "Facing away: night", say: "The half facing away from the Sun is in the Earth's own shadow. Over there, it is night-time.", scene: <DayNightScene stage={3} /> },
     { title: "Sunrise and sunset", say: "As the Earth turns, your home spins out of the dark into the light: sunrise! Later it spins back into the dark: sunset.", scene: <DayNightScene stage={4} /> },
   ],
-  try: SpinTheEarth,
+  mission,
+  misconception: { myth: "The Sun moves around the Earth, making day and night.", truth: "The Sun stays still. The Earth spins once a day, so your home turns into the sunlight (day) and out of it (night)." },
   story,
   like,
 };

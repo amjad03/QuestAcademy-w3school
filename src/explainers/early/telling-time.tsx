@@ -1,11 +1,8 @@
 "use client";
 
-import { useMemo, useRef, useState } from "react";
 import { motion, type Transition } from "framer-motion";
-import type { Explainer } from "../types";
-import { say } from "@/lib/voice";
-import { svgPoint } from "@/components/widgets/_shared";
-import { Emo, Kid, Panel, Stage, T, TryFrame, pop, rand, rise, type Status } from "./_kit";
+import type { Explainer, Mission } from "../types";
+import { Emo, Kid, Panel, Stage, T, TapStep, pop, rise } from "./_kit";
 
 const C = "#0284C7";
 const HOUR = "#E11D48";
@@ -30,6 +27,9 @@ function Hand({ cx, cy, len, w, color, angle, from, transition, grow }: { cx: nu
   );
 }
 
+/** Round to 2 decimals so server and browser trig give identical SVG attributes (no hydration mismatch). */
+const r2 = (v: number) => Math.round(v * 100) / 100;
+
 function Face({ cx, cy, r, numbersDelay, mark, shadeHalf }: { cx: number; cy: number; r: number; numbersDelay?: number; mark?: number; shadeHalf?: boolean }) {
   return (
     <g>
@@ -40,13 +40,13 @@ function Face({ cx, cy, r, numbersDelay, mark, shadeHalf }: { cx: number; cy: nu
       {Array.from({ length: 60 }, (_, k) => {
         const a = (k / 60) * Math.PI * 2;
         const big = k % 5 === 0;
-        return <line key={k} x1={cx + Math.sin(a) * r * (big ? 0.9 : 0.94)} y1={cy - Math.cos(a) * r * (big ? 0.9 : 0.94)} x2={cx + Math.sin(a) * r * 0.98} y2={cy - Math.cos(a) * r * 0.98} stroke="#94A3B8" strokeWidth={big ? 2.5 : 1} />;
+        return <line key={k} x1={r2(cx + Math.sin(a) * r * (big ? 0.9 : 0.94))} y1={r2(cy - Math.cos(a) * r * (big ? 0.9 : 0.94))} x2={r2(cx + Math.sin(a) * r * 0.98)} y2={r2(cy - Math.cos(a) * r * 0.98)} stroke="#94A3B8" strokeWidth={big ? 2.5 : 1} />;
       })}
       {Array.from({ length: 12 }, (_, k) => {
         const n = k + 1;
         const a = (n / 12) * Math.PI * 2;
-        const x = cx + Math.sin(a) * r * 0.79;
-        const y = cy - Math.cos(a) * r * 0.79;
+        const x = r2(cx + Math.sin(a) * r * 0.79);
+        const y = r2(cy - Math.cos(a) * r * 0.79);
         return (
           <motion.g key={n} {...(numbersDelay !== undefined ? pop(numbersDelay + k * 0.18) : {})}>
             {mark === n && <motion.circle cx={x} cy={y} r={r * 0.15} fill="#FECDD3" {...pop(0.9)} />}
@@ -167,112 +167,48 @@ function DayScene() {
 }
 
 /* ------------------------------------------------------------------ */
-/* Try: drag the hands                                                 */
+/* Guided mission                                                      */
 /* ------------------------------------------------------------------ */
 
-const TK = { cx: 150, cy: 150, r: 124 };
-
-function words(total: number) {
-  const h = Math.floor(total / 60) % 12 || 12;
-  const m = total % 60;
-  return m === 0 ? `${h} o'clock` : m === 30 ? `half past ${h}` : `${h}:${String(m).padStart(2, "0")}`;
-}
-
-function TimeTry() {
-  const [round, setRound] = useState(0);
-  const target = useMemo(() => {
-    let t = 0;
-    while (t === 0) t = (rand(1, 12) % 12) * 60 + (Math.random() < 0.5 ? 0 : 30);
-    return t;
-  }, [round]);
-  const [total, setTotal] = useState(0); // minutes after 12:00, 0..719
-  const svg = useRef<SVGSVGElement>(null);
-  const status: Status = total === target ? "good" : "play";
-  const done = useRef(false);
-
-  const angleAt = (clientX: number, clientY: number) => {
-    const p = svgPoint(svg.current, clientX, clientY);
-    const a = (Math.atan2(p.x - TK.cx, -(p.y - TK.cy)) * 180) / Math.PI;
-    return (a + 360) % 360;
-  };
-  const set = (t: number) => {
-    const v = ((t % 720) + 720) % 720;
-    setTotal(v);
-    if (v === target && !done.current) {
-      done.current = true;
-      say(`Yes! It's ${words(v)}!`);
-    }
-  };
-  const dragMinute = (cx: number, cy: number) => {
-    const m = (Math.round(angleAt(cx, cy) / 30) * 5) % 60;
-    setTotal((t) => {
-      let d = m - (t % 60);
-      if (d > 30) d -= 60;
-      if (d < -30) d += 60;
-      const v = (((t + d) % 720) + 720) % 720;
-      if (v === target && !done.current) {
-        done.current = true;
-        say(`Yes! It's ${words(v)}!`);
-      }
-      return v;
-    });
-  };
-  const dragHour = (cx: number, cy: number) => set(Math.round((angleAt(cx, cy) * 2) / 5) * 5);
-
-  const handlers = (fn: (x: number, y: number) => void) => ({
-    onPointerDown: (e: React.PointerEvent<SVGGElement>) => {
-      e.preventDefault();
-      e.currentTarget.setPointerCapture(e.pointerId);
-    },
-    onPointerMove: (e: React.PointerEvent<SVGGElement>) => {
-      if (e.currentTarget.hasPointerCapture(e.pointerId)) fn(e.clientX, e.clientY);
-    },
-    onPointerUp: (e: React.PointerEvent<SVGGElement>) => e.currentTarget.releasePointerCapture(e.pointerId),
-    style: { cursor: "grab", touchAction: "none" as const },
-  });
-
-  const another = () => {
-    done.current = false;
-    setTotal(0);
-    setRound((x) => x + 1);
-  };
-
-  const ha = total * 0.5;
-  const ma = (total % 60) * 6;
-  const hand = (angle: number, len: number, w: number, color: string, knob: number) => (
-    <g transform={`rotate(${angle} ${TK.cx} ${TK.cy})`}>
-      <line x1={TK.cx} y1={TK.cy} x2={TK.cx} y2={TK.cy - len} stroke="transparent" strokeWidth={36} strokeLinecap="round" />
-      <line x1={TK.cx} y1={TK.cy + 12} x2={TK.cx} y2={TK.cy - len} stroke={color} strokeWidth={w} strokeLinecap="round" />
-      <circle cx={TK.cx} cy={TK.cy - len} r={knob} fill={color} stroke="white" strokeWidth={3} />
-    </g>
-  );
-
+/** Clock with both hands; changing an angle turns that hand over `secs` seconds. */
+function ClockAt({ h, m, secs = 1.2, time, label }: { h: number; m: number; secs?: number; time: string; label: string }) {
+  const t: Transition = { duration: secs, ease: secs > 2 ? "linear" : "easeInOut", delay: 0.2 };
   return (
-    <TryFrame color={C} round={round} status={status} onAnother={another} picture="⏰" prompt={`Drag the hands to make ${words(target)}.`}>
-      <div className="grid items-center gap-4 sm:grid-cols-[1fr_auto]">
-        <svg ref={svg} viewBox="0 0 300 300" className="mx-auto block h-auto w-full max-w-[320px]" role="group" aria-label={`Clock showing ${words(total)}. Drag the long blue hand or the short red hand.`}>
-          <Face {...TK} />
-          <g {...handlers(dragHour)} tabIndex={0} onKeyDown={(e) => { if (e.key === "ArrowRight" || e.key === "ArrowUp") { e.preventDefault(); set(total + 60); } else if (e.key === "ArrowLeft" || e.key === "ArrowDown") { e.preventDefault(); set(total - 60); } }} role="slider" aria-label="Short hour hand" aria-valuetext={words(total)}>
-            {hand(ha, TK.r * 0.38, 12, HOUR, 13)}
-          </g>
-          <g {...handlers(dragMinute)} tabIndex={0} onKeyDown={(e) => { if (e.key === "ArrowRight" || e.key === "ArrowUp") { e.preventDefault(); set(total + 5); } else if (e.key === "ArrowLeft" || e.key === "ArrowDown") { e.preventDefault(); set(total - 5); } }} role="slider" aria-label="Long minute hand" aria-valuetext={words(total)}>
-            {hand(ma, TK.r * 0.6, 8, MIN, 15)}
-          </g>
-          <circle cx={TK.cx} cy={TK.cy} r={8} fill="#1c2333" pointerEvents="none" />
-        </svg>
-        <div className="flex flex-row items-center justify-center gap-3 sm:flex-col" aria-live="polite">
-          <motion.div key={total} initial={{ scale: 1.08 }} animate={{ scale: 1 }} className="rounded-2xl bg-[#1c2333] px-4 py-2 font-mono text-4xl font-black text-[#A7F3D0]">
-            {Math.floor(total / 60) % 12 || 12}:{String(total % 60).padStart(2, "0")}
-          </motion.div>
-          <div className="text-center text-sm font-extrabold">
-            <p style={{ color: HOUR }}>● short = hour</p>
-            <p style={{ color: MIN }}>● long = minutes</p>
-          </div>
-        </div>
-      </div>
-    </TryFrame>
+    <Stage label={label}>
+      <Face {...K} />
+      <Hand {...K} len={K.r * 0.4} w={11} color={HOUR} angle={h} transition={t} />
+      <Hand {...K} len={K.r * 0.6} w={7} color={MIN} angle={m} transition={t} />
+      <Pin cx={K.cx} cy={K.cy} />
+      <TimeTag key={time} text={time} sub="" delay={secs * 0.8} />
+    </Stage>
   );
 }
+
+const mission: Mission = {
+  goal: "Move the clock hands and read the time.",
+  steps: [
+    {
+      task: "Make it 3 o'clock.",
+      predict: { question: "At 3 o'clock, where does the long hand point?", options: ["🕛 Up to 12", "🕒 To the 3"], answer: 0, trap: 1 },
+      scene: (api) => <TapStep api={api} color={C} button="🕒 Make it 3" render={(on) => <ClockAt h={on ? 90 : 0} m={0} time={on ? "3:00" : "12:00"} label={on ? "Short hand on 3, long hand on 12: three o'clock" : "Both hands point up to 12: twelve o'clock"} />} />,
+      hint: "Tap the big blue button.",
+      explain: "The **short hand** shows the hour: 3. The **long hand** points up to 12. That means **o'clock**.",
+    },
+    {
+      task: "Let one hour go by.",
+      predict: { question: "One hour goes by. What does the long hand do?", options: ["🔄 Goes all the way round", "➡️ Moves on to the 4"], answer: 0, trap: 1 },
+      scene: (api) => <TapStep api={api} color={C} button="⏩ 1 hour" render={(on) => <ClockAt h={on ? 120 : 90} m={on ? 360 : 0} secs={on ? 4 : 1.2} time={on ? "4:00" : "3:00"} label={on ? "The long hand goes all the way round and the short hand moves to 4: four o'clock" : "Three o'clock"} />} />,
+      explain: "In one hour the long hand goes **all the way round**. The short hand moves on to 4. Now it is **4 o'clock**.",
+    },
+    {
+      task: "Let half an hour go by.",
+      predict: { question: "At half past 4, where is the short hand?", options: ["🎯 Right on the 4", "↔️ Between 4 and 5"], answer: 1, trap: 0 },
+      scene: (api) => <TapStep api={api} color={C} button="⏩ Half an hour" render={(on) => <ClockAt h={on ? 135 : 120} m={on ? 180 : 0} secs={on ? 2.5 : 1.2} time={on ? "4:30" : "4:00"} label={on ? "The long hand points down to 6 and the short hand is half way between 4 and 5: half past four" : "Four o'clock"} />} />,
+      explain: "The long hand points **down to 6**: half way round. The short hand is **half way** from 4 to 5. It is **half past 4**.",
+    },
+  ],
+  takeaway: "The short hand tells the hour. The long hand goes round once every hour.",
+};
 
 /* ------------------------------------------------------------------ */
 /* Story + analogy                                                     */
@@ -363,7 +299,11 @@ export const tellingTime: Explainer = {
     { title: "Half past", say: "When the long hand points down to six, it has gone half way round. That's half past four.", scene: <ClockScene stage="half" /> },
     { title: "Clocks tell our day", say: "Clocks tell us when it's time for breakfast, lunch and bed!", scene: <DayScene /> },
   ],
-  try: TimeTry,
+  mission,
+  misconception: {
+    myth: "The long hand tells the hour, because it is the biggest.",
+    truth: "The short hand tells the hour. The long hand tells the minutes and goes round once every hour.",
+  },
   story,
   like: {
     headline: "The clock hands are like a fast rabbit and a slow turtle running round a track.",

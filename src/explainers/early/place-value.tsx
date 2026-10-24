@@ -1,10 +1,8 @@
 "use client";
 
-import { useEffect, useMemo, useState } from "react";
 import { motion } from "framer-motion";
-import type { Explainer } from "../types";
-import { say } from "@/lib/voice";
-import { Kid, NumberChoices, Panel, Stage, T, TryFrame, pop, rand, rise, shuffle, type Status } from "./_kit";
+import type { Explainer, Mission } from "../types";
+import { Kid, Panel, Stage, T, TapStep, pop, rise } from "./_kit";
 
 const C = "#7C3AED";
 const TENS = "#2563EB";
@@ -53,7 +51,8 @@ function posAt(i: number, stage: number) {
   return scatter(i);
 }
 
-function SticksScene({ stage }: { stage: number }) {
+/** `still`: start already at `stage` (no entry animation), for a mission step that then moves on. */
+function SticksScene({ stage, still }: { stage: number; still?: boolean }) {
   const mat = stage >= 4;
   return (
     <Stage label={["Twenty-three loose sticks", "Ten sticks tied into one bundle", "Two bundles of ten", "Two bundles of ten and three loose sticks", "Two tens and three ones make twenty-three"][stage]}>
@@ -70,18 +69,18 @@ function SticksScene({ stage }: { stage: number }) {
         </motion.g>
       )}
       {Array.from({ length: 23 }, (_, i) => {
-        const from = posAt(i, Math.max(0, stage - 1));
+        const from = still ? posAt(i, stage) : posAt(i, Math.max(0, stage - 1));
         const to = posAt(i, stage);
         const moves = from.x !== to.x || from.y !== to.y;
         const group = i < 10 ? i : i < 20 ? i - 10 : i - 20;
         return (
-          <motion.g key={i} initial={stage === 0 ? { ...to, scale: 0 } : from} animate={{ ...to, scale: 1 }} transition={{ duration: 0.7, delay: stage === 0 ? i * 0.05 : moves ? 0.3 + group * 0.16 : 0, ease: "easeInOut" }}>
+          <motion.g key={i} initial={stage === 0 && !still ? { ...to, scale: 0 } : from} animate={{ ...to, scale: 1 }} transition={{ duration: 0.7, delay: stage === 0 ? i * 0.05 : moves ? 0.3 + group * 0.16 : 0, ease: "easeInOut" }}>
             <StickArt />
           </motion.g>
         );
       })}
-      {stage >= 1 && <Band x={BUNDLE_X[0]} y={ROW_Y} delay={stage === 1 ? 2.3 : undefined} />}
-      {stage >= 2 && <Band x={BUNDLE_X[1]} y={ROW_Y} delay={stage === 2 ? 2.3 : undefined} />}
+      {stage >= 1 && <Band x={BUNDLE_X[0]} y={ROW_Y} delay={stage === 1 && !still ? 2.3 : undefined} />}
+      {stage >= 2 && <Band x={BUNDLE_X[1]} y={ROW_Y} delay={stage === 2 && !still ? 2.3 : undefined} />}
       {stage === 3 && (
         <motion.g {...pop(1.4)}>
           {[0, 1, 2].map((j) => (
@@ -179,132 +178,33 @@ function SwapScene() {
 }
 
 /* ------------------------------------------------------------------ */
-/* Try: tap sticks into the band until you have ten                    */
+/* Guided mission                                                      */
 /* ------------------------------------------------------------------ */
 
-const RING = { x: 300, y: 64 };
-
-function PlaceTry() {
-  const [round, setRound] = useState(0);
-  const n = useMemo(() => rand(11, 34), [round]);
-  const [order, setOrder] = useState<number[]>([]);
-  const [bundles, setBundles] = useState(0);
-  const [status, setStatus] = useState<Status>("play");
-  const tens = Math.floor(n / 10);
-  const ones = n % 10;
-  const done = bundles === tens;
-  const inRing = order.length - bundles * 10;
-
-  useEffect(() => {
-    if (inRing < 10) return;
-    const t = setTimeout(() => {
-      setBundles((b) => b + 1);
-      say("Ten! That's one bundle.");
-    }, 650);
-    return () => clearTimeout(t);
-  }, [inRing]);
-
-  const choices = useMemo(() => {
-    const set = new Set([n]);
-    const swapped = ones * 10 + tens;
-    if (ones > 0 && swapped !== n && swapped <= 99) set.add(swapped);
-    for (const d of shuffle([10, -10, 1, -1])) {
-      if (set.size >= 3) break;
-      if (n + d > 0) set.add(n + d);
-    }
-    return shuffle([...set]);
-  }, [n, ones, tens]);
-
-  const tap = (i: number) => {
-    if (done || inRing >= 10 || order.includes(i)) return;
-    const next = [...order, i];
-    setOrder(next);
-    say(String(next.length - bundles * 10));
-  };
-  const another = () => {
-    setOrder([]);
-    setBundles(0);
-    setStatus("play");
-    setRound((x) => x + 1);
-  };
-
-  const loose = Array.from({ length: n }, (_, i) => i).filter((i) => !order.includes(i));
-  const pos = (i: number) => {
-    const q = order.indexOf(i);
-    if (q >= 0) {
-      const b = Math.floor(q / 10);
-      const j = q % 10;
-      if (b < bundles) return { x: 40 + b * 62 - 18 + j * 4, y: 196, rotate: 0 };
-      return { x: RING.x - 18 + j * 4, y: RING.y, rotate: 0 };
-    }
-    if (done) return { x: 254 + loose.indexOf(i) * 11, y: 196, rotate: 0 };
-    const s = scatter(i + round * 40, 18, 222, 36, 104);
-    return s;
-  };
-
-  return (
-    <TryFrame color={C} round={round} status={status} onAnother={another} picture="🪵" prompt="Tap the sticks to make bundles of ten. What number is it?">
-      <div className="overflow-hidden rounded-2xl border-2 border-line bg-white">
-        <svg viewBox="0 0 360 262" className="block h-auto w-full" style={{ maxHeight: 340, touchAction: "manipulation" }} role="group" aria-label={`${n} sticks. ${bundles} bundles of ten made.${done ? ` ${tens} tens and ${ones} ones.` : ""}`}>
-          <rect x={6} y={8} width={226} height={118} rx={14} fill="#FEF9C3" />
-          <circle cx={RING.x} cy={RING.y} r={52} fill={inRing >= 10 ? "#EDE9FE" : "#F8FAFC"} stroke={C} strokeWidth={3} strokeDasharray="7 6" />
-          <T x={RING.x} y={RING.y + 64} size={13} color={C}>
-            {Math.min(inRing, 10)} / 10
-          </T>
-          <rect x={6} y={136} width={232} height={120} rx={14} fill="#DBEAFE" />
-          <rect x={244} y={136} width={110} height={120} rx={14} fill="#FFEDD5" />
-          <T x={122} y={150} size={13} color={TENS}>
-            TENS
-          </T>
-          <T x={299} y={150} size={13} color={ONES}>
-            ONES
-          </T>
-          {Array.from({ length: n }, (_, i) => {
-            const p = pos(i);
-            return (
-              <motion.g key={`${round}-${i}`} initial={{ ...p, scale: 0 }} animate={{ ...p, scale: 1 }} transition={{ duration: 0.45, ease: "easeOut", scale: { delay: order.length ? 0 : i * 0.02 } }} onClick={() => tap(i)} tabIndex={0} onKeyDown={(e) => (e.key === "Enter" || e.key === " ") && (e.preventDefault(), tap(i))} role="button" aria-label="Stick" style={{ cursor: done ? "default" : "pointer" }}>
-                <rect x={-12} y={-30} width={24} height={60} fill="transparent" />
-                <StickArt h={46} />
-              </motion.g>
-            );
-          })}
-          {Array.from({ length: bundles }, (_, b) => (
-            <Band key={`${round}-b${b}`} x={40 + b * 62} y={196} delay={0.3} />
-          ))}
-          {done && (
-            <>
-              <motion.g {...pop(0.4)}>
-                <T x={122} y={242} size={28} color={TENS}>
-                  {tens}
-                </T>
-              </motion.g>
-              <motion.g {...pop(0.8)}>
-                <T x={299} y={242} size={28} color={ONES}>
-                  {ones}
-                </T>
-              </motion.g>
-            </>
-          )}
-        </svg>
-      </div>
-      <div className="mt-3 min-h-[64px]">
-        {done && status !== "good" && (
-          <motion.div {...pop(1)}>
-            <NumberChoices key={round} options={choices} answer={n} color={C} onRight={() => setStatus("good")} onWrong={() => setStatus("oops")} />
-          </motion.div>
-        )}
-        {status === "good" && (
-          <motion.p {...pop(0)} className="text-center text-2xl font-black sm:text-3xl" onAnimationComplete={() => say(`${tens} tens and ${ones} ones make ${n}`)}>
-            <span style={{ color: TENS }}>{tens} tens</span> + <span style={{ color: ONES }}>{ones} ones</span> = <span className="text-5xl" style={{ color: C }}>
-              <span style={{ color: TENS }}>{tens}</span>
-              <span style={{ color: ONES }}>{ones}</span>
-            </span>
-          </motion.p>
-        )}
-      </div>
-    </TryFrame>
-  );
-}
+const mission: Mission = {
+  goal: "Tie the sticks in tens. Find the number without counting one by one.",
+  steps: [
+    {
+      task: "Tie 10 sticks into a bundle.",
+      scene: (api) => <TapStep api={api} color={C} button="🎀 Tie 10" render={(on) => <SticksScene stage={on ? 1 : 0} />} />,
+      hint: "Tap the big purple button.",
+      explain: "10 sticks tied together make **one ten**.",
+    },
+    {
+      task: "Tie the next 10 sticks.",
+      predict: { question: "After 2 bundles, how many sticks are left over?", options: ["🪵🪵🪵 3", "🪵 None"], answer: 0 },
+      scene: (api) => <TapStep api={api} color={C} button="🎀 Tie 10 more" render={(on) => <SticksScene stage={on ? 2 : 1} still={!on} />} />,
+      explain: "Now there are **2 tens**. 3 sticks are left. They are the **ones**.",
+    },
+    {
+      task: "Put the sticks on the mat.",
+      predict: { question: "2 tens and 3 ones. What number is it?", options: ["5", "23"], answer: 1, trap: 0 },
+      scene: (api) => <TapStep api={api} color={C} button="🧺 Sort them" render={(on) => <SticksScene stage={on ? 4 : 2} still={!on} />} />,
+      explain: "**2 tens** and **3 ones** make **23**. The 2 means two tens: 20.",
+    },
+  ],
+  takeaway: "Ten ones make a ten. In 23, the 2 tells the tens and the 3 tells the ones.",
+};
 
 /* ------------------------------------------------------------------ */
 /* Story: eggs in boxes of ten                                         */
@@ -435,9 +335,13 @@ export const placeValue: Explainer = {
     { title: "Another ten", say: "Ten more sticks make another bundle. Now we have two tens.", scene: <SticksScene stage={2} /> },
     { title: "The leftover ones", say: "Three sticks are left over. Not enough for a bundle. They are the ones.", scene: <SticksScene stage={3} /> },
     { title: "Tens and ones make 23", say: "Two tens and three ones make twenty-three. The 2 tells the tens. The 3 tells the ones.", scene: <SticksScene stage={4} /> },
-    { title: "Where a digit sits matters", say: "Swap them, and three tens and two ones make thirty-two. That's a different number!", scene: <SwapScene /> },
+    { title: "Swap the digits", say: "Swap the digits. Three tens and two ones make thirty-two. That's a different number!", scene: <SwapScene /> },
   ],
-  try: PlaceTry,
+  mission,
+  misconception: {
+    myth: "In 23, the 2 just means 2.",
+    truth: "The 2 sits in the tens place, so it means 2 tens: 20. 23 is 20 and 3.",
+  },
   story,
   like: {
     headline: "Tens and ones are like ten-coin notes and single coins.",

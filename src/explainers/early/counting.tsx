@@ -1,10 +1,8 @@
 "use client";
 
-import { useMemo, useState } from "react";
 import { motion } from "framer-motion";
-import type { Explainer } from "../types";
-import { say } from "@/lib/voice";
-import { Apple, Badge, Emo, Finger, Kid, NumberChoices, Panel, Stage, T, Table, TryFrame, choicesFor, pop, rand, shuffle, type Status } from "./_kit";
+import type { Explainer, Mission } from "../types";
+import { Apple, Badge, Emo, Finger, Kid, Panel, Stage, T, Table, TapStep, pop } from "./_kit";
 
 const C = "#F97316";
 
@@ -73,94 +71,34 @@ function CountScene({ shown = 0, fresh = 0, order = [0, 1, 2, 3, 4], total, popA
 }
 
 /* ------------------------------------------------------------------ */
-/* Try: tap each thing to count it                                    */
+/* Guided mission                                                      */
 /* ------------------------------------------------------------------ */
 
-const THINGS = ["🐞", "🍎", "⭐", "🐟", "🦆", "🍓", "🚗", "🌼"];
-const NUM_WORDS = ["", "one", "two", "three", "four", "five", "six", "seven", "eight", "nine", "ten"];
-
-function makeRound() {
-  const n = rand(3, 10);
-  const cells = shuffle(Array.from({ length: 18 }, (_, i) => i)).slice(0, n);
-  return {
-    n,
-    thing: THINGS[rand(0, THINGS.length - 1)],
-    items: cells.map((c) => ({ x: 34 + (c % 6) * 58 + rand(-6, 6), y: 82 + Math.floor(c / 6) * 62 + rand(-5, 5) })),
-  };
-}
-
-function CountTry() {
-  const [round, setRound] = useState(0);
-  const r = useMemo(() => makeRound(), [round]);
-  const [order, setOrder] = useState<number[]>([]);
-  const [shake, setShake] = useState<{ i: number; k: number } | null>(null);
-  const [status, setStatus] = useState<Status>("play");
-  const done = order.length === r.n;
-  const choices = useMemo(() => choicesFor(r.n, 1), [r]);
-
-  const tap = (i: number) => {
-    if (status === "good") return;
-    if (order.includes(i)) {
-      setShake({ i, k: Date.now() });
-      return;
-    }
-    const next = [...order, i];
-    setOrder(next);
-    say(NUM_WORDS[next.length]);
-  };
-
-  const another = () => {
-    setOrder([]);
-    setStatus("play");
-    setShake(null);
-    setRound((x) => x + 1);
-  };
-
-  const lastIdx = order[order.length - 1];
-  return (
-    <TryFrame color={C} round={round} status={status} onAnother={another} picture={r.thing} prompt="Touch each one and count. How many are there?">
-      <div className="overflow-hidden rounded-2xl border-2 border-line" style={{ background: "#F0FDF4" }}>
-        <svg viewBox="0 0 360 250" className="block h-auto w-full" style={{ maxHeight: 300, touchAction: "manipulation" }} role="group" aria-label={`${r.n} things to count. ${order.length} counted so far.`}>
-          {status === "good" && (
-            <motion.g {...pop(0)}>
-              <rect x={130} y={4} width={100} height={44} rx={16} fill="#16A34A" />
-              <T x={160} y={27} size={30} color="white">
-                {r.n}
-              </T>
-              <Emo x={200} y={27} size={24}>
-                {r.thing}
-              </Emo>
-            </motion.g>
-          )}
-          {r.items.map((p, i) => {
-            const k = order.indexOf(i);
-            const counted = k >= 0;
-            return (
-              <g key={`${round}-${i}`} onClick={() => tap(i)} tabIndex={0} onKeyDown={(e) => (e.key === "Enter" || e.key === " ") && (e.preventDefault(), tap(i))} style={{ cursor: "pointer", outline: "none" }} role="button" aria-label={counted ? `Counted ${k + 1}` : "Not counted yet"}>
-                <motion.g {...pop(i * 0.06)}>
-                  <motion.g key={shake?.i === i ? shake.k : 0} animate={shake?.i === i ? { x: [0, -6, 6, -4, 4, 0] } : { scale: counted ? 0.92 : 1 }} transition={{ duration: 0.4 }}>
-                    <circle cx={p.x} cy={p.y} r={27} fill={counted ? "#FFEDD5" : "white"} stroke={counted ? C : "#CBD5E1"} strokeWidth={3} strokeDasharray={counted ? undefined : "5 4"} />
-                    <Emo x={p.x} y={p.y + 1} size={32}>
-                      {r.thing}
-                    </Emo>
-                  </motion.g>
-                </motion.g>
-                {counted && <Badge x={p.x + 20} y={p.y - 22} n={k + 1} delay={0} color={done && status === "good" && i === lastIdx ? "#16A34A" : C} r={12} />}
-              </g>
-            );
-          })}
-        </svg>
-      </div>
-      <div className="mt-3 min-h-[64px]">
-        {done && (
-          <motion.div {...pop(0.2)}>
-            <NumberChoices key={round} options={choices} answer={r.n} color={C} onRight={() => setStatus("good")} onWrong={() => setStatus("oops")} />
-          </motion.div>
-        )}
-      </div>
-    </TryFrame>
-  );
-}
+const mission: Mission = {
+  goal: "Count the apples. Find out how many!",
+  steps: [
+    {
+      task: "Tap to count the apples.",
+      scene: (api) => <TapStep api={api} color={C} button="👆 Count!" render={(on) => <CountScene shown={on ? 5 : 0} fresh={0} />} />,
+      hint: "Tap the big orange button.",
+      explain: "We said **one number** for each apple: 1, 2, 3, 4, 5.",
+    },
+    {
+      task: "Tap to see how many.",
+      predict: { question: "We said 5 last. What does the 5 tell us?", options: ["🍎 The name of one apple", "🍎🍎🍎🍎🍎 There are 5 apples"], answer: 1, trap: 0 },
+      scene: (api) => <TapStep api={api} color={C} button="🍎 How many?" render={(on) => <CountScene shown={5} fresh={5} total={on} />} />,
+      explain: "The **last number** tells how many. There are **5** apples!",
+    },
+    {
+      task: "Count them in a new order.",
+      predict: { question: "We count in a new order. How many now?", options: ["🍎🍎🍎🍎🍎 Still 5", "🤔 A new number"], answer: 0, trap: 1 },
+      scene: (api) => <TapStep api={api} color={C} button="🔀 Count again!" render={(on) => <CountScene key={on ? "b" : "a"} shown={on ? 5 : 0} fresh={0} order={[4, 2, 0, 3, 1]} total={on} />} />,
+      hint: "Tap the big orange button.",
+      explain: "Any order works. Count each apple once, and it is **still 5**.",
+    },
+  ],
+  takeaway: "Say one number for each thing. The last number tells how many.",
+};
 
 /* ------------------------------------------------------------------ */
 /* Story + analogy art                                                 */
@@ -270,12 +208,16 @@ export const counting: Explainer = {
   watch: [
     { title: "How many apples?", say: "Here are some apples. How many are there? Let's count them!", scene: <CountScene popApples question /> },
     { title: "Touch one, say one", say: "Touch one apple and say one number. One!", scene: <CountScene shown={1} fresh={0} /> },
-    { title: "Keep going", say: "Move to the next apple and say the next number. Two, three!", scene: <CountScene shown={3} fresh={1} /> },
-    { title: "Every apple gets one number", say: "Don't skip any, and don't touch one twice. Four, five!", scene: <CountScene shown={5} fresh={3} /> },
+    { title: "Keep going", say: "Touch the next apple. Say the next number. Two, three!", scene: <CountScene shown={3} fresh={1} /> },
+    { title: "Every apple gets one number", say: "Don't skip one. Don't touch one twice. Four, five!", scene: <CountScene shown={5} fresh={3} /> },
     { title: "The last number tells how many", say: "The last number we said was five. So there are five apples!", scene: <CountScene shown={5} fresh={5} total /> },
     { title: "Any order works", say: "Count them in a different order. It is still five!", scene: <CountScene shown={5} fresh={0} order={[4, 2, 0, 3, 1]} total /> },
   ],
-  try: CountTry,
+  mission,
+  misconception: {
+    myth: "The last number you say is just the name of that one thing.",
+    truth: "The last number you say tells how many there are in all.",
+  },
   story,
   like: {
     headline: "Counting is like giving each person in a line one ticket.",

@@ -1,13 +1,11 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { motion } from "framer-motion";
-import { Plus, RotateCcw, Shuffle, Trophy } from "lucide-react";
+import { Plus } from "lucide-react";
 import clsx from "clsx";
-import type { Explainer } from "../types";
-import { sfx } from "@/lib/sound";
-import { burst } from "@/lib/confetti";
-import { Art, INK, Kid, Robot, Stage, STAGE_INK, STAGE_MUTED } from "./_art";
+import type { Explainer, Mission, MissionApi } from "../types";
+import { Art, INK, Kid, MissionButton, Robot, Stage, STAGE_INK, STAGE_MUTED } from "./_art";
 
 const COLOR = "#0284C7";
 
@@ -237,137 +235,115 @@ const watch: Explainer["watch"] = [
 ];
 
 /* ------------------------------------------------------------------ */
-/* Try: flip switches to make the target                               */
+/* Guided mission                                                      */
 /* ------------------------------------------------------------------ */
 
-const SIZES = [4, 5, 8] as const;
-
-function BinaryTry() {
-  const [bits, setBits] = useState<number>(4);
-  const [value, setValue] = useState(0);
-  const [target, setTarget] = useState(6);
-  const [score, setScore] = useState(0);
-  const [won, setWon] = useState(false);
-
-  const max = (1 << bits) - 1;
-  const places = Array.from({ length: bits }, (_, i) => 1 << (bits - 1 - i));
-  const onPlaces = places.filter((p) => value & p);
-  const solved = value === target;
-
-  useEffect(() => {
-    if (solved && !won) {
-      setWon(true);
-      setScore((s) => s + 1);
-      sfx("correct");
-      burst();
-    }
-  }, [solved, won]);
-
-  const newTarget = (n = bits) => {
-    const m = (1 << n) - 1;
-    let t = 1 + Math.floor(Math.random() * m);
-    if (t === target) t = (t % m) + 1;
-    setTarget(t);
-    setValue(0);
-    setWon(false);
-  };
-
-  const flip = (p: number) => {
-    setValue((v) => v ^ p);
-    sfx("flip");
-  };
-
-  const plusOne = () => {
-    setValue((v) => (v + 1) & max);
-    sfx("tap");
-  };
-
-  const letter = bits === 8 && ((value >= 65 && value <= 90) || (value >= 97 && value <= 122)) ? String.fromCharCode(value) : null;
-
+/**
+ * A row of bulbs and switches. Only the switch worth `tap` is a button (it pulses);
+ * the others are just pictures, so there is exactly one thing to press.
+ */
+function SwitchRow({ places, value, tap, onTap, disabled }: { places: number[]; value: number; tap?: number; onTap?: () => void; disabled?: boolean }) {
+  const on = places.filter((p) => value & p);
   return (
-    <div className="select-none">
-      <div className="mb-4 flex flex-wrap items-center justify-between gap-3">
-        <div className={clsx("flex items-center gap-3 rounded-2xl border-2 px-4 py-2", solved ? "border-good/50 bg-good/10" : "border-line bg-surface-2")} aria-live="polite">
-          <span className="font-extrabold">Make</span>
-          <span className="font-mono text-3xl font-black" style={{ color: COLOR }}>
-            {target}
-          </span>
-          {solved && <span className="font-extrabold text-good">Got it! 🎉</span>}
-        </div>
-        <div className="flex items-center gap-2">
-          <span className="chip !text-sm">
-            <Trophy className="h-4 w-4 text-warn" /> {score}
-          </span>
-          <div className="flex rounded-xl border-2 border-line p-0.5" role="radiogroup" aria-label="Number of switches">
-            {SIZES.map((n) => (
-              <button
-                key={n}
-                type="button"
-                role="radio"
-                aria-checked={bits === n}
-                onClick={() => {
-                  setBits(n);
-                  newTarget(n);
-                }}
-                className={clsx("h-10 rounded-lg px-3 text-sm font-black", bits === n ? "text-white" : "text-muted")}
-                style={bits === n ? { background: COLOR } : undefined}
-              >
-                {n} bits
-              </button>
-            ))}
-          </div>
-        </div>
-      </div>
-
-      <div className="grid gap-1.5 sm:gap-3" style={{ gridTemplateColumns: `repeat(${bits}, minmax(0, 1fr))` }}>
+    <div>
+      <div className="mx-auto grid max-w-md gap-2" style={{ gridTemplateColumns: `repeat(${places.length}, minmax(0, 1fr))` }}>
         {places.map((p) => {
-          const on = (value & p) !== 0;
-          return (
-            <button key={p} type="button" role="switch" aria-checked={on} aria-label={`Switch worth ${p}`} onClick={() => flip(p)} className={clsx("flex flex-col items-center rounded-2xl border-2 pb-2 pt-1 transition active:scale-95", on ? "border-amber-400 bg-amber-100/60" : "border-line bg-surface-2")}>
+          const lit = (value & p) !== 0;
+          const body = (
+            <>
               <svg viewBox="-30 -32 60 128" className="h-auto w-full max-w-[64px]" aria-hidden>
-                <Bulb on={on} />
+                <Bulb on={lit} />
                 <g transform="translate(0 62)">
-                  <Switch on={on} />
+                  <Switch on={lit} />
                 </g>
               </svg>
-              <span className={clsx("font-mono text-xl font-black", on ? "text-good" : "text-muted")}>{on ? 1 : 0}</span>
-              <span className="text-xs font-extrabold text-muted sm:text-sm">{p}</span>
+              <span className={clsx("font-mono text-xl font-black", lit ? "text-good" : "text-muted")}>{lit ? 1 : 0}</span>
+              <span className="text-sm font-extrabold text-muted">{p}</span>
+            </>
+          );
+          const cls = clsx("flex flex-col items-center rounded-2xl border-2 pb-2 pt-1", lit ? "border-amber-400 bg-amber-100/60" : "border-line bg-surface-2");
+          return p === tap && !lit ? (
+            <button key={p} type="button" role="switch" aria-checked={lit} aria-label={`Switch worth ${p}`} disabled={disabled} onClick={onTap} className={clsx(cls, "ring-4 ring-sky-400/70 transition active:scale-95", !disabled && "animate-pulse")}>
+              {body}
             </button>
+          ) : (
+            <div key={p} className={cls} aria-label={`Switch worth ${p}, ${lit ? "on" : "off"}`}>
+              {body}
+            </div>
           );
         })}
       </div>
-
-      <div className="mt-4 rounded-2xl bg-surface-2 p-3 text-center font-mono text-lg font-bold" aria-live="polite">
-        {onPlaces.length ? onPlaces.join(" + ") : "0"} = <span className="text-2xl font-black text-ink">{value}</span>
-        <span className="ml-3 text-sm text-muted">binary {value.toString(2).padStart(bits, "0")}</span>
-        {letter && <span className="ml-3 text-sm text-muted">· as a letter: “{letter}”</span>}
-      </div>
-
-      <p className={clsx("mt-3 min-h-[2.5rem] rounded-2xl px-4 py-2 text-center font-bold", solved ? "text-good" : "text-muted")}>
-        {solved
-          ? `${target} in binary is ${target.toString(2).padStart(bits, "0")}. Every whole number has exactly one switch pattern!`
-          : value < target
-            ? `You have ${value}. You need ${target - value} more — which switch could add that?`
-            : `Too big by ${value - target}! Switch something off.`}
-      </p>
-
-      <div className="mt-3 flex flex-wrap justify-center gap-2">
-        <button type="button" className="btn-primary min-h-[48px]" onClick={() => newTarget()}>
-          <Shuffle className="h-4 w-4" /> New number
-        </button>
-        <button type="button" className="btn-ghost min-h-[48px]" onClick={plusOne} title="Count up by one and watch the switches carry">
-          <Plus className="h-4 w-4" /> Add 1
-        </button>
-        <button type="button" className="btn-ghost min-h-[48px]" onClick={() => setValue(0)} aria-label="All switches off">
-          <RotateCcw className="h-4 w-4" /> All off
-        </button>
-      </div>
-      <p className="mt-2 text-center text-xs font-semibold text-muted">
-        {bits} switches can make every number from 0 to {max} — that&apos;s {max + 1} different patterns.
+      <p className="mt-3 text-center font-mono text-lg font-bold" aria-live="polite">
+        binary <span className="font-black text-ink">{value.toString(2).padStart(places.length, "0")}</span> = {on.length ? on.join(" + ") : "0"} = <span className="text-2xl font-black text-ink">{value}</span>
       </p>
     </div>
   );
 }
+
+/** Tap the one highlighted switch on. */
+function StepFlip({ done, complete, places, start, tap }: MissionApi & { places: number[]; start: number; tap: number }) {
+  const [value, setValue] = useState(start);
+  return (
+    <SwitchRow
+      places={places}
+      value={value}
+      tap={tap}
+      disabled={complete}
+      onTap={() => {
+        setValue((v) => v | tap);
+        done();
+      }}
+    />
+  );
+}
+
+/** Add 1 to 0111 and watch every switch change. */
+function StepCarry({ done, complete }: MissionApi) {
+  const [value, setValue] = useState(7);
+  return (
+    <div>
+      <SwitchRow places={PLACES4} value={value} />
+      <MissionButton
+        color={COLOR}
+        disabled={complete}
+        onClick={() => {
+          setValue(8);
+          done();
+        }}
+      >
+        <Plus className="h-5 w-5" /> Add 1
+      </MissionButton>
+    </div>
+  );
+}
+
+const mission: Mission = {
+  goal: "Flip light switches to find out what binary numbers really mean.",
+  steps: [
+    {
+      task: "Switch on the switch worth 2.",
+      predict: { question: "With the 2 on and the 1 off, the switches read 10. What number is binary 10?", options: ["Ten", "Two"], answer: 1 },
+      scene: (api) => <StepFlip {...api} places={[2, 1]} start={0} tap={2} />,
+      hint: "Tap the glowing switch on the left.",
+      explain: "**Binary** writes numbers using only 0 (off) and 1 (on). Each switch is worth a number, and you add up the ones that are on. Binary 10 means one 2 and no 1s, so it is **two**, not ten.",
+    },
+    {
+      task: "Switch on the 1 as well.",
+      predict: { question: "The 4 is on. Turn on the 1 too, and the switches read 0101. What number is that?", options: ["101", "5", "6"], answer: 1 },
+      scene: (api) => <StepFlip {...api} places={PLACES4} start={4} tap={1} />,
+      hint: "Tap the glowing switch on the far right.",
+      explain: "Going left, each switch is worth **double** the one before: 1, 2, 4, 8. Add the ones that are on: 4 + 1 = **5**. Each 0 or 1 is called a **bit**.",
+    },
+    {
+      task: "The switches show 7. Add 1.",
+      predict: { question: "0111 is 7. What will 7 + 1 look like?", options: ["0112", "1000", "1111"], answer: 1 },
+      scene: (api) => <StepCarry {...api} />,
+      hint: "Tap the blue Add 1 button.",
+      explain: "There is no digit 2 in binary, so 1 + 1 **carries** to the next switch, just like 9 + 1 carries in normal counting. All three 1s flip off and the 8 turns on: **1000** is 8.",
+    },
+  ],
+  takeaway: "In binary each switch is worth double the one to its right (1, 2, 4, 8…), and the number is the total of the switches that are on.",
+};
 
 /* ------------------------------------------------------------------ */
 /* Story + analogy                                                     */
@@ -515,12 +491,13 @@ export const binaryExplainer: Explainer = {
   title: "Binary: counting with switches",
   tagline: "Flip light switches worth 1, 2, 4, 8 and see how computers store every number.",
   area: "Computer science",
-  ages: "8–18",
+  ages: "11–15",
   lessons: ["electrical-engineering/digital-logic/binary-number-systems", "electrical-engineering/digital-logic/logic-gates"],
   color: COLOR,
   icon: "💡",
   watch,
-  try: BinaryTry,
+  misconception: { myth: "Binary 10 means ten.", truth: "Binary 10 means one 2 and no 1s, which is two. In binary each place is worth double the one to its right: 1, 2, 4, 8…" },
+  mission,
   story,
   like,
 };

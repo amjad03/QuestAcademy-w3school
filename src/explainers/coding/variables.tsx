@@ -1,12 +1,10 @@
 "use client";
 
-import { useEffect, useRef, useState, type PointerEvent as ReactPointerEvent } from "react";
-import { AnimatePresence, motion } from "framer-motion";
-import { Check, Printer, RotateCcw, Sparkles } from "lucide-react";
-import clsx from "clsx";
-import type { Explainer } from "../types";
-import { sfx } from "@/lib/sound";
-import { Art, CodeChip, INK, Kid, LabelBox, Robot, Stage, STAGE_INK, STAGE_MUTED, Token } from "./_art";
+import { useState } from "react";
+import { motion } from "framer-motion";
+import { Play } from "lucide-react";
+import type { Explainer, Mission, MissionApi } from "../types";
+import { Art, CodeChip, INK, Kid, LabelBox, MissionButton, Robot, Stage, STAGE_INK, STAGE_MUTED, Token } from "./_art";
 
 const COLOR = "#F97316";
 
@@ -159,255 +157,107 @@ const watch: Explainer["watch"] = [
 ];
 
 /* ------------------------------------------------------------------ */
-/* Try: drag values into named boxes                                   */
+/* Guided mission                                                      */
 /* ------------------------------------------------------------------ */
 
-interface Val {
-  id: string;
-  text: string;
-  kind: "text" | "number";
-}
-
-const SHELF: Val[] = [
-  { id: "mia", text: "Mia", kind: "text" },
-  { id: "leo", text: "Leo", kind: "text" },
-  { id: "n9", text: "9", kind: "number" },
-  { id: "n10", text: "10", kind: "number" },
-  { id: "cat", text: "cat", kind: "text" },
-  { id: "dog", text: "dog", kind: "text" },
-];
-
-type BoxName = "name" | "age" | "pet";
-const BOXES: BoxName[] = ["name", "age", "pet"];
-type Boxes = Record<BoxName, Val | null>;
-const EMPTY: Boxes = { name: null, age: null, pet: null };
-
-const lit = (v: Val) => (v.kind === "text" ? `"${v.text}"` : v.text);
-
-interface Line {
-  code: string;
-  out?: string;
-}
-
-interface Mission {
-  ask: string;
-  done: (b: Boxes, log: Line[]) => boolean;
-}
-
-const MISSIONS: Mission[] = [
-  { ask: "Drag 9 into the box called age.", done: (b) => b.age?.text === "9" },
-  { ask: "Put the word Mia in the box called name.", done: (b) => b.name?.text === "Mia" },
-  { ask: "Mia has a pet cat. Put cat in the pet box.", done: (b) => b.pet?.text === "cat" },
-  { ask: "Happy birthday Mia! Make age 10 (drag 10 in, or press +1).", done: (b) => b.age?.text === "10" },
-  { ask: "Read the boxes: press the print button.", done: (_b, log) => log.some((l) => l.out?.includes("Mia is 10")) },
-];
-
-function VariablesTry() {
-  const [boxes, setBoxes] = useState<Boxes>(EMPTY);
-  const [log, setLog] = useState<Line[]>([]);
-  const [picked, setPicked] = useState<Val | null>(null);
-  const [drag, setDrag] = useState<{ v: Val; x: number; y: number } | null>(null);
-  const [hover, setHover] = useState<BoxName | null>(null);
-  const [warn, setWarn] = useState<string | null>(null);
-  const start = useRef<{ x: number; y: number; moved: boolean } | null>(null);
-
-  const [missionIdx, setMissionIdx] = useState(0);
-  const allDone = missionIdx >= MISSIONS.length;
-  useEffect(() => {
-    if (missionIdx < MISSIONS.length && MISSIONS[missionIdx].done(boxes, log)) {
-      setMissionIdx((i) => i + 1);
-      sfx(missionIdx === MISSIONS.length - 1 ? "fanfare" : "correct");
-    }
-  }, [boxes, log, missionIdx]);
-
-  const run = (line: Line) => setLog((l) => [...l.slice(-5), line]);
-
-  const assign = (box: BoxName, v: Val) => {
-    setBoxes((b) => ({ ...b, [box]: v }));
-    run({ code: `${box} = ${lit(v)}` });
-    setPicked(null);
-    setWarn(null);
-    sfx("pop");
-  };
-
-  const plusOne = () => {
-    const a = boxes.age;
-    if (!a) {
-      setWarn("The age box is empty, so there is nothing to add 1 to. Put a number in first!");
-      sfx("wrong");
-      return;
-    }
-    if (a.kind !== "number") {
-      setWarn(`age holds the word "${a.text}". You can't add 1 to a word! (Python says: TypeError)`);
-      sfx("wrong");
-      return;
-    }
-    const next: Val = { id: `n${Number(a.text) + 1}-${Date.now()}`, text: String(Number(a.text) + 1), kind: "number" };
-    setBoxes((b) => ({ ...b, age: next }));
-    run({ code: "age = age + 1" });
-    setWarn(null);
-    sfx("coin");
-  };
-
-  const print = () => {
-    const show = (k: BoxName) => boxes[k]?.text ?? "None";
-    run({ code: 'print(name, "is", age)', out: `${show("name")} is ${show("age")}` });
-    sfx("tap");
-  };
-
-  const reset = () => {
-    setBoxes(EMPTY);
-    setLog([]);
-    setPicked(null);
-    setWarn(null);
-    setMissionIdx(0);
-  };
-
-  const boxAt = (x: number, y: number) => {
-    const el = document.elementFromPoint(x, y)?.closest<HTMLElement>("[data-box]");
-    return (el?.dataset.box as BoxName | undefined) ?? null;
-  };
-
-  const down = (v: Val) => (e: ReactPointerEvent<HTMLButtonElement>) => {
-    e.currentTarget.setPointerCapture(e.pointerId);
-    start.current = { x: e.clientX, y: e.clientY, moved: false };
-    setDrag({ v, x: e.clientX, y: e.clientY });
-  };
-  const move = (e: ReactPointerEvent<HTMLButtonElement>) => {
-    if (!drag || !start.current) return;
-    if (Math.hypot(e.clientX - start.current.x, e.clientY - start.current.y) > 6) start.current.moved = true;
-    setDrag({ ...drag, x: e.clientX, y: e.clientY });
-    setHover(boxAt(e.clientX, e.clientY));
-  };
-  const up = (e: ReactPointerEvent<HTMLButtonElement>) => {
-    if (!drag) return;
-    const target = boxAt(e.clientX, e.clientY);
-    if (start.current?.moved && target) assign(target, drag.v);
-    else if (!start.current?.moved) setPicked((p) => (p?.id === drag.v.id ? null : drag.v));
-    setDrag(null);
-    setHover(null);
-    start.current = null;
-  };
-
+/**
+ * The score box for one mission step. Before `run` it shows `from` (if any);
+ * after `run` the old value leaves (thrown out, or through the +1 machine) and `to` drops in.
+ */
+function ScoreBox({ code, from, to, run, machine }: { code: string; from?: string; to: string; run: boolean; machine?: boolean }) {
+  const bx = machine ? 150 : 200;
   return (
-    <div className="select-none">
-      <div className={clsx("mb-4 flex items-center gap-3 rounded-2xl border-2 p-3", allDone ? "border-good/50 bg-good/10" : "border-line bg-surface-2")} aria-live="polite">
-        {allDone ? <Sparkles className="h-6 w-6 shrink-0 text-good" /> : <span className="grid h-7 w-7 shrink-0 place-items-center rounded-full text-sm font-black text-white" style={{ background: COLOR }}>{missionIdx + 1}</span>}
-        <p className="font-extrabold">{allDone ? "All missions done! You stored, replaced and read variables like a real coder." : MISSIONS[missionIdx].ask}</p>
-      </div>
-
-      {/* shelf of values */}
-      <p className="mb-2 text-sm font-bold text-muted">Values — drag one onto a box (or tap a value, then tap a box)</p>
-      <div className="flex flex-wrap gap-2">
-        {SHELF.map((v) => (
-          <button
-            key={v.id}
-            type="button"
-            onPointerDown={down(v)}
-            onPointerMove={move}
-            onPointerUp={up}
-            onPointerCancel={() => setDrag(null)}
-            style={{ touchAction: "none" }}
-            aria-pressed={picked?.id === v.id}
-            aria-label={`Value ${lit(v)}`}
-            className={clsx(
-              "min-h-[48px] min-w-[64px] cursor-grab rounded-full border-[3px] px-4 font-mono text-lg font-black text-[#1c2333] transition active:cursor-grabbing",
-              v.kind === "number" ? "bg-sky-200" : "bg-amber-200",
-              picked?.id === v.id ? "border-[#1c2333] ring-4 ring-orange-400/60" : "border-[#1c2333]/70",
-              drag?.v.id === v.id && "opacity-40",
-            )}
+    <Stage label={run ? `After ${code}, the box called score holds ${to}` : `The box called score holds ${from ?? "nothing yet"}`}>
+      <CodeChip x={200} y={30} text={code} glow={run ? COLOR : undefined} />
+      {machine && (
+        <g transform="translate(330 120)">
+          <rect x={-40} y={-30} width={80} height={60} rx={10} fill="#A78BFA" stroke={INK} strokeWidth={2.5} />
+          <text x={0} y={8} textAnchor="middle" fontSize={24} fontWeight={900} fill="#fff">
+            + 1
+          </text>
+        </g>
+      )}
+      <LabelBox x={bx} y={BOX_Y} w={130} h={84} name="score" color={COLOR}>
+        {from && !run && (
+          <g transform={`translate(${bx} ${IN_Y})`}>
+            <Token text={from} />
+          </g>
+        )}
+        {from && run && (
+          <motion.g
+            initial={{ x: bx, y: IN_Y, opacity: 1, rotate: 0 }}
+            animate={machine ? { x: [bx, 240, 300], y: [IN_Y, 70, 120], opacity: [1, 1, 0] } : { x: 330, y: 70, opacity: 0, rotate: 90 }}
+            transition={{ duration: 0.8 }}
           >
-            {lit(v)}
-          </button>
-        ))}
-      </div>
-
-      {/* boxes */}
-      <div className="mt-5 grid grid-cols-3 gap-3">
-        {BOXES.map((name) => {
-          const v = boxes[name];
-          return (
-            <button
-              key={name}
-              type="button"
-              data-box={name}
-              onClick={() => picked && assign(name, picked)}
-              aria-label={`Box ${name}, holds ${v ? lit(v) : "nothing"}`}
-              className={clsx("relative flex flex-col items-center rounded-2xl pt-12 transition", (hover === name || (picked && !drag)) && "scale-[1.03]")}
-            >
-              <div className="pointer-events-none absolute inset-x-2 top-6 h-14 overflow-visible">
-                <AnimatePresence initial={false}>
-                  {v && (
-                    <motion.span
-                      key={v.id}
-                      initial={{ y: -40, opacity: 0 }}
-                      animate={{ y: 0, opacity: 1 }}
-                      exit={{ y: -50, x: 40, rotate: 40, opacity: 0 }}
-                      transition={{ type: "spring", stiffness: 260, damping: 18 }}
-                      className={clsx("absolute left-1/2 top-0 -translate-x-1/2 whitespace-nowrap rounded-full border-[3px] border-[#1c2333] px-3 py-1 font-mono text-lg font-black text-[#1c2333]", v.kind === "number" ? "bg-sky-200" : "bg-amber-200")}
-                    >
-                      {lit(v)}
-                    </motion.span>
-                  )}
-                </AnimatePresence>
-              </div>
-              <div
-                className={clsx("relative z-10 grid h-24 w-full place-items-center rounded-b-2xl rounded-t-md border-[3px] border-[#1c2333]", hover === name && "ring-4 ring-orange-300")}
-                style={{ background: `linear-gradient(180deg, ${COLOR}, #EA580C)` }}
-              >
-                <span className="rounded-lg border-2 border-[#1c2333] bg-amber-50 px-3 py-1 font-mono text-base font-black text-[#1c2333]">{name}</span>
-              </div>
-            </button>
-          );
-        })}
-      </div>
-
-      <div className="mt-4 flex flex-wrap gap-2">
-        <button type="button" className="btn-ghost min-h-[48px]" onClick={plusOne}>
-          age = age + 1
-        </button>
-        <button type="button" className="btn-primary min-h-[48px]" onClick={print}>
-          <Printer className="h-4 w-4" /> print(name, &quot;is&quot;, age)
-        </button>
-        <button type="button" className="btn-ghost min-h-[48px]" onClick={reset} aria-label="Reset">
-          <RotateCcw className="h-4 w-4" /> Reset
-        </button>
-      </div>
-
-      {warn && (
-        <p className="mt-3 rounded-xl bg-bad/10 px-3 py-2 text-sm font-bold text-bad" role="alert">
-          {warn}
-        </p>
+            <Token text={from} color={machine ? undefined : "#E5E7EB"} />
+          </motion.g>
+        )}
+        {run && (
+          <motion.g
+            initial={machine ? { x: 330, y: 120, opacity: 0 } : { x: bx, y: 40, opacity: 0 }}
+            animate={machine ? { x: [330, 240, bx], y: [120, 60, IN_Y], opacity: [0, 1, 1] } : { x: bx, y: IN_Y, opacity: 1 }}
+            transition={machine ? { delay: 0.9, duration: 1 } : { delay: from ? 0.7 : 0.1, type: "spring", stiffness: 120, damping: 12 }}
+          >
+            <Token text={to} color={machine ? "#BBF7D0" : undefined} />
+          </motion.g>
+        )}
+      </LabelBox>
+      {from && run && !machine && (
+        <motion.text initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.6 }} x={334} y={104} textAnchor="middle" fontSize={12} fontWeight={800} fill={STAGE_MUTED}>
+          bye, {from}!
+        </motion.text>
       )}
+    </Stage>
+  );
+}
 
-      {/* program so far */}
-      <div className="mt-4 rounded-2xl bg-[#111827] p-3 font-mono text-sm" aria-live="polite">
-        <p className="mb-1 text-xs font-bold uppercase tracking-wide text-gray-400">Your program</p>
-        {log.length === 0 && <p className="text-gray-500"># nothing yet — put a value in a box</p>}
-        {log.map((l, k) => (
-          <div key={k}>
-            <p className="text-amber-200">{l.code}</p>
-            {l.out !== undefined && <p className="text-green-400">→ {l.out}</p>}
-          </div>
-        ))}
-      </div>
-
-      {drag && start.current?.moved && (
-        <div className="pointer-events-none fixed z-50 -translate-x-1/2 -translate-y-1/2 rounded-full border-[3px] border-[#1c2333] bg-amber-200 px-4 py-2 font-mono text-lg font-black text-[#1c2333] shadow-lg" style={{ left: drag.x, top: drag.y }}>
-          {lit(drag.v)}
-        </div>
-      )}
-
-      <div className="mt-3 flex flex-wrap gap-2 text-xs font-bold text-muted">
-        {MISSIONS.map((m, k) => (
-          <span key={k} className={clsx("flex items-center gap-1 rounded-lg px-2 py-1", k < missionIdx ? "bg-good/15 text-good" : "bg-surface-2")}>
-            {k < missionIdx && <Check className="h-3 w-3" />} Mission {k + 1}
-          </span>
-        ))}
-      </div>
+/** One step: a single Run button that carries out one line of code on the score box. */
+function StepRun({ done, complete, code, from, to, machine }: MissionApi & { code: string; from?: string; to: string; machine?: boolean }) {
+  const [run, setRun] = useState(false);
+  return (
+    <div>
+      <ScoreBox code={code} from={from} to={to} run={run} machine={machine} />
+      <MissionButton
+        color={COLOR}
+        disabled={complete}
+        onClick={() => {
+          setRun(true);
+          done();
+        }}
+      >
+        <Play className="h-5 w-5" /> Run {code}
+      </MissionButton>
     </div>
   );
 }
+
+const mission: Mission = {
+  goal: "Store a number in a variable, change it, then add 1 to it.",
+  steps: [
+    {
+      task: "Run the line score = 5.",
+      predict: { question: "What does score = 5 tell the computer?", options: ["Put 5 in the box called score", "Check whether score is equal to 5"], answer: 0 },
+      scene: (api) => <StepRun {...api} code="score = 5" to="5" />,
+      hint: "Tap the orange Run button under the box.",
+      explain: "A **variable** is a box in the computer's memory with a name on it. The **=** sign means *store*: put the value on the right into the box on the left. Now `score` holds 5.",
+    },
+    {
+      task: "Run the line score = 8.",
+      predict: { question: "score holds 5. After score = 8, what is in the box?", options: ["8 — the 5 is thrown away", "Both 5 and 8", "13"], answer: 0 },
+      scene: (api) => <StepRun {...api} code="score = 8" from="5" to="8" />,
+      hint: "Tap the orange Run button.",
+      explain: "A variable holds **one value at a time**. Storing 8 throws the old 5 away. That is why it is called a *variable*: its value can vary.",
+    },
+    {
+      task: "Run the line score = score + 1.",
+      predict: { question: "score holds 8. What does score = score + 1 do?", options: ["Nothing — it is impossible maths", "Makes score 9", "Gives an error"], answer: 1 },
+      scene: (api) => <StepRun {...api} code="score = score + 1" from="8" to="9" machine />,
+      hint: "Tap Run and watch the 8 go through the +1 machine.",
+      explain: "In code, = does not mean *is equal to*. The computer works out the **right side first** (8 + 1 = 9), then stores the answer back in `score`. This is how games add points.",
+    },
+  ],
+  takeaway: "A variable is a named box: = stores a new value in it (the old one is thrown away), and the right side is worked out first.",
+};
 
 /* ------------------------------------------------------------------ */
 /* Story + analogy                                                     */
@@ -538,12 +388,13 @@ export const variablesExplainer: Explainer = {
   title: "Variables are labelled boxes",
   tagline: "Put a value in, swap it for a new one, and read it back.",
   area: "Coding",
-  ages: "8–16",
+  ages: "10–14",
   lessons: ["python/python-basics/variables-and-types", "javascript/basics/variables-types"],
   color: COLOR,
   icon: "📦",
   watch,
-  try: VariablesTry,
+  misconception: { myth: "x = x + 1 is impossible, because nothing can equal itself plus 1.", truth: "In code, = means store, not equals: the computer works out x + 1, then puts the answer back in x." },
+  mission,
   story,
   like,
 };

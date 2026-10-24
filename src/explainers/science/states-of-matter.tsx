@@ -2,10 +2,9 @@
 
 import { useRef, useState } from "react";
 import { motion } from "framer-motion";
-import { Flame, Snowflake } from "lucide-react";
-import type { Explainer } from "../types";
+import type { Explainer, Mission, MissionApi } from "../types";
 import { useFrame } from "@/components/widgets/_shared";
-import { Arrow, BigButton, BigSlider, Face, Label, Panel, Scene, Tag, TryShell, rng } from "./_art";
+import { Arrow, Face, Label, Panel, Scene, StepButton, Tag, rng } from "./_art";
 
 const C = "#A855F7";
 const SOLID = "#60a5fa";
@@ -153,7 +152,7 @@ function StatesScene({ stage }: { stage: number }) {
 }
 
 /* ------------------------------------------------------------------ */
-/* Try it: heat and cool the particles                                 */
+/* Guided mission: heat and cool the particles                         */
 /* ------------------------------------------------------------------ */
 
 const N = 24;
@@ -180,147 +179,190 @@ function stateOf(t: number) {
   return t < 0 ? "solid" : t < 100 ? "liquid" : "gas";
 }
 
-function HeatAndCool() {
-  const [temp, setTemp] = useState(-15);
-  const [, setTick] = useState(0);
-  const ps = useRef<Pt[]>(makeParticles());
-  const time = useRef(0);
-  const rand = useRef(rng(9));
-  const seen = useRef(new Set<string>(["solid"]));
-  const st = stateOf(temp);
-  seen.current.add(st);
-
-  useFrame((dt) => {
-    time.current += dt;
-    const r = rand.current;
-    const P = ps.current;
-    const s = stateOf(temp);
-    if (s === "solid") {
-      const amp = 1 + Math.max(0, (temp + 30) / 30) * 2.5;
-      for (const p of P) {
-        const tx = p.hx + Math.sin(time.current * 22 + p.ph) * amp;
-        const ty = p.hy + Math.cos(time.current * 19 + p.ph) * amp;
-        p.x += (tx - p.x) * Math.min(1, dt * 4);
-        p.y += (ty - p.y) * Math.min(1, dt * 4);
-        p.vx = 0;
-        p.vy = 0;
-      }
+/** Move the particles on by `dt` seconds at temperature `temp`. */
+function simulate(P: Pt[], temp: number, dt: number, time: number, r: () => number) {
+  const s = stateOf(temp);
+  if (s === "solid") {
+    const amp = 1 + Math.max(0, (temp + 30) / 30) * 2.5;
+    for (const p of P) {
+      const tx = p.hx + Math.sin(time * 22 + p.ph) * amp;
+      const ty = p.hy + Math.cos(time * 19 + p.ph) * amp;
+      p.x += (tx - p.x) * Math.min(1, dt * 4);
+      p.y += (ty - p.y) * Math.min(1, dt * 4);
+      p.vx = 0;
+      p.vy = 0;
+    }
+    return;
+  }
+  const gas = s === "gas";
+  const target = gas ? 150 + (temp - 100) * 4 : 30 + temp * 0.8;
+  for (const p of P) {
+    if (!gas) p.vy += 420 * dt;
+    p.vx += (r() - 0.5) * target * 6 * dt;
+    p.vy += (r() - 0.5) * target * 6 * dt;
+    const sp = Math.hypot(p.vx, p.vy) || 1;
+    if (gas) {
+      const k = target / sp;
+      p.vx *= 1 + (k - 1) * Math.min(1, dt * 3);
+      p.vy *= 1 + (k - 1) * Math.min(1, dt * 3);
     } else {
-      const gas = s === "gas";
-      const target = gas ? 150 + (temp - 100) * 4 : 30 + temp * 0.8;
-      for (const p of P) {
-        if (!gas) p.vy += 420 * dt;
-        p.vx += (r() - 0.5) * target * 6 * dt;
-        p.vy += (r() - 0.5) * target * 6 * dt;
-        const sp = Math.hypot(p.vx, p.vy) || 1;
+      p.vx *= Math.pow(0.2, dt);
+      p.vy *= Math.pow(0.6, dt);
+    }
+    p.x += p.vx * dt;
+    p.y += p.vy * dt;
+    if (p.x < BX0 + PR) { p.x = BX0 + PR; p.vx = Math.abs(p.vx); }
+    if (p.x > BX1 - PR) { p.x = BX1 - PR; p.vx = -Math.abs(p.vx); }
+    if (p.y < BY0 + PR) { p.y = BY0 + PR; p.vy = Math.abs(p.vy); }
+    if (p.y > BY1 - PR) { p.y = BY1 - PR; p.vy = -Math.abs(p.vy) * (gas ? 1 : 0.3); }
+  }
+  // keep particles from overlapping
+  for (let i = 0; i < P.length; i++)
+    for (let j = i + 1; j < P.length; j++) {
+      const a = P[i];
+      const b = P[j];
+      const dx = b.x - a.x;
+      const dy = b.y - a.y;
+      const d = Math.hypot(dx, dy) || 0.01;
+      if (d < PR * 2) {
+        const push = (PR * 2 - d) / 2;
+        const nx = dx / d;
+        const ny = dy / d;
+        a.x -= nx * push;
+        a.y -= ny * push;
+        b.x += nx * push;
+        b.y += ny * push;
         if (gas) {
-          const k = target / sp;
-          p.vx *= 1 + (k - 1) * Math.min(1, dt * 3);
-          p.vy *= 1 + (k - 1) * Math.min(1, dt * 3);
-        } else {
-          p.vx *= Math.pow(0.2, dt);
-          p.vy *= Math.pow(0.6, dt);
-        }
-        p.x += p.vx * dt;
-        p.y += p.vy * dt;
-        if (p.x < BX0 + PR) { p.x = BX0 + PR; p.vx = Math.abs(p.vx); }
-        if (p.x > BX1 - PR) { p.x = BX1 - PR; p.vx = -Math.abs(p.vx); }
-        if (p.y < BY0 + PR) { p.y = BY0 + PR; p.vy = Math.abs(p.vy); }
-        if (p.y > BY1 - PR) { p.y = BY1 - PR; p.vy = -Math.abs(p.vy) * (gas ? 1 : 0.3); }
-      }
-      // keep particles from overlapping
-      for (let i = 0; i < P.length; i++)
-        for (let j = i + 1; j < P.length; j++) {
-          const a = P[i];
-          const b = P[j];
-          const dx = b.x - a.x;
-          const dy = b.y - a.y;
-          const d = Math.hypot(dx, dy) || 0.01;
-          if (d < PR * 2) {
-            const push = (PR * 2 - d) / 2;
-            const nx = dx / d;
-            const ny = dy / d;
-            a.x -= nx * push;
-            a.y -= ny * push;
-            b.x += nx * push;
-            b.y += ny * push;
-            if (gas) {
-              const rel = (b.vx - a.vx) * nx + (b.vy - a.vy) * ny;
-              if (rel < 0) {
-                a.vx += rel * nx; a.vy += rel * ny;
-                b.vx -= rel * nx; b.vy -= rel * ny;
-              }
-            }
+          const rel = (b.vx - a.vx) * nx + (b.vy - a.vy) * ny;
+          if (rel < 0) {
+            a.vx += rel * nx; a.vy += rel * ny;
+            b.vx -= rel * nx; b.vy -= rel * ny;
           }
         }
+      }
     }
+}
+
+/** A box of moving particles over a burner, with a thermometer. */
+function ParticleBox({ temp, heating }: { temp: number; heating: boolean }) {
+  const [, setTick] = useState(0);
+  const time = useRef(0);
+  const rand = useRef(rng(9));
+  const ps = useRef<Pt[] | null>(null);
+  if (!ps.current) {
+    // settle the particles into the starting state before the first paint
+    const P = makeParticles();
+    for (let k = 0; k < 120; k++) simulate(P, temp, 1 / 60, k / 60, rand.current);
+    ps.current = P;
+    time.current = 2;
+  }
+  useFrame((dt) => {
+    time.current += dt;
+    simulate(ps.current!, temp, dt, time.current, rand.current);
     setTick((t) => (t + 1) % 1000000);
   });
 
-  const reset = () => {
-    ps.current = makeParticles();
-    seen.current = new Set(["solid"]);
-    setTemp(-15);
-  };
-
+  const st = stateOf(temp);
   const P = ps.current;
   const top = st === "liquid" ? Math.min(...P.map((p) => p.y)) - PR : BY1;
   const color = st === "solid" ? SOLID : st === "liquid" ? LIQUID : GAS;
-  const name = st === "solid" ? "SOLID: ice 🧊" : st === "liquid" ? "LIQUID: water 💧" : "GAS: steam 💨";
-  const done = seen.current.size === 3;
-  const msg =
-    st === "solid"
-      ? "Solid ice: the particles are locked in rows and can only wiggle."
-      : st === "liquid"
-        ? "Liquid water: the particles slide around but stay close together."
-        : "Gas (steam): the particles fly apart and zoom all over the box!";
-  const status = done ? `${msg} You've made all three states! Now try cooling it back down.` : `${msg} ${st === "solid" ? "Heat it up to melt it!" : st === "liquid" ? "Heat it more to boil it, or cool it to freeze it." : "Cool it to turn it back into water."}`;
-  const flame = Math.max(0, temp) / 130;
-
+  const flame = heating ? Math.max(0.3, temp / 130) : 0;
+  const bubbling = heating && temp >= 80 && temp < 100;
   return (
-    <TryShell title="Heat and cool the particles" hint="Slide or tap to change the temperature. Watch what the tiny particles do!" onReset={reset} status={status} color={C} done={done}>
-      <div className="overflow-hidden rounded-2xl border-2 border-line">
-        <svg viewBox="0 0 400 260" role="img" aria-label={`Particles in a box at ${temp} degrees: ${st}`} className="block h-auto w-full select-none" style={{ maxHeight: 320 }}>
-          <rect width="400" height="260" fill={temp < 0 ? "#eff6ff" : temp < 100 ? "#f5f3ff" : "#fff1f2"} />
-          <rect x={BX0 - 4} y={BY0 - 4} width={BX1 - BX0 + 8} height={BY1 - BY0 + 8} rx={10} fill="#fff" stroke="#94a3b8" strokeWidth={4} />
-          {st === "liquid" && <rect x={BX0} y={top} width={BX1 - BX0} height={BY1 - top} fill="#bfdbfe" opacity={0.7} />}
-          {P.map((p, i) => (
-            <circle key={i} cx={p.x} cy={p.y} r={PR} fill={color} stroke={st === "gas" ? "#9d174d" : "#1e3a8a"} strokeWidth={1.5} />
-          ))}
-          {/* burner */}
-          <rect x={110} y={206} width={120} height={12} rx={4} fill="#475569" />
-          {flame > 0 &&
-            [130, 150, 170, 190, 210].map((x, i) => (
-              <motion.path key={x} d={`M ${x - 7} 206 Q ${x} ${206 - 30 * flame - 6} ${x + 7} 206 Z`} fill={i % 2 ? "#f97316" : "#facc15"} animate={{ scaleY: [1, 1.25, 1] }} transition={{ duration: 0.4, delay: i * 0.07, repeat: Infinity }} />
-            ))}
-          {temp < 0 && <text x={170} y={244} textAnchor="middle" fontSize={20}>❄️</text>}
-          {/* thermometer */}
-          <g>
-            <rect x={338} y={24} width={20} height={176} rx={10} fill="#fff" stroke="#64748b" strokeWidth={3} />
-            <circle cx={348} cy={212} r={16} fill="#ef4444" stroke="#64748b" strokeWidth={3} />
-            <rect x={343} y={200 - ((temp + 30) / 160) * 170} width={10} height={((temp + 30) / 160) * 170 + 4} fill="#ef4444" />
-            <line x1={334} y1={200 - (30 / 160) * 170} x2={362} y2={200 - (30 / 160) * 170} stroke="#2563eb" strokeWidth={2} />
-            <line x1={334} y1={200 - (130 / 160) * 170} x2={362} y2={200 - (130 / 160) * 170} stroke="#db2777" strokeWidth={2} />
-            <text x={366} y={204 - (30 / 160) * 170} fontSize={9} fontWeight={800} fill="#2563eb">0°</text>
-            <text x={366} y={204 - (130 / 160) * 170} fontSize={9} fontWeight={800} fill="#db2777">100°</text>
-          </g>
-          <Label x={170} y={256} color={st === "gas" ? "#be185d" : st === "liquid" ? LIQUID : "#1d4ed8"} size={15}>
-            {`${name} · ${temp}°C`}
-          </Label>
-        </svg>
-      </div>
-      <div className="mt-3 grid gap-2 sm:grid-cols-[auto_1fr_auto] sm:items-center">
-        <BigButton onClick={() => setTemp((t) => Math.max(-30, t - 20))} color="#0284c7" label="Cool down">
-          <Snowflake className="h-5 w-5" /> Cool
-        </BigButton>
-        <BigSlider label="Temperature" value={temp} min={-30} max={130} onChange={setTemp} left="🧊" right="🔥" color={C} />
-        <BigButton onClick={() => setTemp((t) => Math.min(130, t + 20))} color="#ea580c" label="Heat up">
-          <Flame className="h-5 w-5" /> Heat
-        </BigButton>
-      </div>
-    </TryShell>
+    <svg viewBox="0 0 400 260" role="img" aria-label={`Particles in a box at ${Math.round(temp)} degrees: ${st}`} className="block h-auto w-full select-none" style={{ maxHeight: 320 }}>
+      <rect width="400" height="260" fill={temp < 0 ? "#eff6ff" : temp < 100 ? "#f5f3ff" : "#fff1f2"} />
+      <rect x={BX0 - 4} y={BY0 - 4} width={BX1 - BX0 + 8} height={BY1 - BY0 + 8} rx={10} fill="#fff" stroke="#94a3b8" strokeWidth={4} />
+      {st === "liquid" && <rect x={BX0} y={top} width={BX1 - BX0} height={BY1 - top} fill="#bfdbfe" opacity={0.7} />}
+      {P.map((p, i) => (
+        <circle key={i} cx={p.x} cy={p.y} r={PR} fill={color} stroke={st === "gas" ? "#9d174d" : "#1e3a8a"} strokeWidth={1.5} />
+      ))}
+      {/* steam bubbles: a gas particle inside a bubble, rising */}
+      {bubbling &&
+        [90, 170, 240].map((x, i) => (
+          <motion.g key={x} initial={{ y: 0, opacity: 0 }} animate={{ y: [0, -(BY1 - top) + 12], opacity: [0, 1, 0.9] }} transition={{ duration: 0.9, delay: i * 0.25, repeat: Infinity }}>
+            <circle cx={x} cy={BY1 - 14} r={13} fill="#fff" opacity={0.6} stroke="#f472b6" strokeWidth={2} />
+            <circle cx={x} cy={BY1 - 14} r={5} fill={GAS} />
+          </motion.g>
+        ))}
+      {/* burner */}
+      <rect x={110} y={206} width={120} height={12} rx={4} fill="#475569" />
+      {flame > 0 &&
+        [130, 150, 170, 190, 210].map((x, i) => (
+          <motion.path key={x} d={`M ${x - 7} 206 Q ${x} ${206 - 30 * flame - 6} ${x + 7} 206 Z`} fill={i % 2 ? "#f97316" : "#facc15"} animate={{ scaleY: [1, 1.25, 1] }} transition={{ duration: 0.4, delay: i * 0.07, repeat: Infinity }} />
+        ))}
+      {!heating && temp < 100 && (
+        <text x={170} y={244} textAnchor="middle" fontSize={20}>
+          ❄️
+        </text>
+      )}
+      {/* thermometer */}
+      <g>
+        <rect x={338} y={24} width={20} height={176} rx={10} fill="#fff" stroke="#64748b" strokeWidth={3} />
+        <circle cx={348} cy={212} r={16} fill="#ef4444" stroke="#64748b" strokeWidth={3} />
+        <rect x={343} y={200 - ((temp + 30) / 160) * 170} width={10} height={((temp + 30) / 160) * 170 + 4} fill="#ef4444" />
+        <line x1={334} y1={200 - (30 / 160) * 170} x2={362} y2={200 - (30 / 160) * 170} stroke="#2563eb" strokeWidth={2} />
+        <line x1={334} y1={200 - (130 / 160) * 170} x2={362} y2={200 - (130 / 160) * 170} stroke="#db2777" strokeWidth={2} />
+        <text x={366} y={204 - (30 / 160) * 170} fontSize={9} fontWeight={800} fill="#2563eb">0°</text>
+        <text x={366} y={204 - (130 / 160) * 170} fontSize={9} fontWeight={800} fill="#db2777">100°</text>
+      </g>
+      <Label x={170} y={256} color={st === "gas" ? "#be185d" : st === "liquid" ? LIQUID : "#1d4ed8"} size={15}>
+        {`${st === "solid" ? "🧊" : st === "liquid" ? "💧" : "💨"} ${Math.round(temp)}°C`}
+      </Label>
+    </svg>
   );
 }
+
+/** One step: tap the button and the temperature moves from `from` to `to`. */
+function StepTemp({ api, from, to, button }: { api: MissionApi; from: number; to: number; button: string }) {
+  const [temp, setTemp] = useState(from);
+  const [going, setGoing] = useState(false);
+  const up = to > from;
+  useFrame((dt) => {
+    const rate = up && temp >= 80 && temp < 100 ? 12 : 40; // linger while it bubbles
+    const next = up ? Math.min(to, temp + rate * dt) : Math.max(to, temp - rate * dt);
+    setTemp(next);
+    if (next === to) {
+      setGoing(false);
+      setTimeout(api.done, 500);
+    }
+  }, going);
+  return (
+    <div>
+      <ParticleBox temp={temp} heating={up ? going || temp !== from : false} />
+      <StepButton color={up ? "#ea580c" : "#0284c7"} disabled={going || api.complete} onClick={() => setGoing(true)}>
+        {button}
+      </StepButton>
+    </div>
+  );
+}
+
+const mission: Mission = {
+  goal: "Heat ice until it boils, then cool it, and watch the tiny particles.",
+  steps: [
+    {
+      task: "Heat the ice.",
+      predict: { question: "What happens to the tiny ice particles when you heat them?", options: ["Each particle melts into smaller bits", "They wiggle faster and break out of their rows"], answer: 1 },
+      scene: (api) => <StepTemp api={api} from={-15} to={40} button="🔥 Heat" />,
+      hint: "Tap Heat and watch the blue balls.",
+      explain: "Heat gives the particles more energy. They wiggle so hard they break out of their rows and slide around: the ice has **melted** into water. The particles themselves don't change.",
+    },
+    {
+      task: "Heat the water until it boils.",
+      predict: { question: "When water boils, what are the bubbles made of?", options: ["Air", "Water that has turned into a gas"], answer: 1 },
+      scene: (api) => <StepTemp api={api} from={40} to={120} button="🔥 Heat more" />,
+      hint: "Tap the button and look for bubbles in the water.",
+      explain: "The bubbles are **steam**: water particles that got so much energy they broke free and zoom about as a **gas**. They are not air.",
+    },
+    {
+      task: "Cool the steam down.",
+      predict: { question: "What will the steam turn into?", options: ["Water again", "Nothing: it's gone for good"], answer: 0 },
+      scene: (api) => <StepTemp api={api} from={120} to={50} button="❄️ Cool" />,
+      hint: "Tap Cool and watch the pink balls.",
+      explain: "Cooling takes energy away. The particles slow down and gather back together: the steam **condenses** into water. Nothing was lost!",
+    },
+  ],
+  takeaway: "Heating makes particles move faster (solid → liquid → gas); cooling slows them down again. The particles stay the same.",
+};
 
 /* ------------------------------------------------------------------ */
 /* Story + analogy                                                     */
@@ -483,9 +525,10 @@ export const statesOfMatter: Explainer = {
     { title: "Solids", say: "In a solid, like ice, the particles are packed tightly in rows. They can only wiggle on the spot, so a solid keeps its shape.", scene: <StatesScene stage={1} /> },
     { title: "Liquids", say: "In a liquid, like water, the particles are still close, but they slide past each other. So liquids flow and take the shape of their cup.", scene: <StatesScene stage={2} /> },
     { title: "Gases", say: "In a gas, like steam, the particles are far apart and zoom about everywhere. A gas spreads out to fill any space.", scene: <StatesScene stage={3} /> },
-    { title: "Melting and boiling", say: "Heating gives particles more energy: ice melts into water, and water boils into steam. Cooling does the opposite: steam condenses and water freezes.", scene: <StatesScene stage={4} /> },
+    { title: "Melting and boiling", say: "Heating gives particles more energy: ice melts into water, and water boils into steam. Cooling does the opposite: steam turns back into water (condenses), and water freezes.", scene: <StatesScene stage={4} /> },
   ],
-  try: HeatAndCool,
+  mission,
+  misconception: { myth: "When water boils, the bubbles are air.", truth: "The bubbles are steam: water that has turned into a gas. The water particles get so much energy that they break free and zoom apart." },
   story,
   like,
 };

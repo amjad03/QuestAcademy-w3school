@@ -2,8 +2,8 @@
 
 import { useState } from "react";
 import { motion } from "framer-motion";
-import type { Explainer } from "../types";
-import { Arrow, Face, Kid, Label, Panel, Scene, Tag, TryShell } from "./_art";
+import type { Explainer, Mission, MissionApi } from "../types";
+import { Arrow, Face, Kid, Label, Panel, Scene, StepButton, Tag } from "./_art";
 
 const C = "#EC4899";
 
@@ -16,7 +16,7 @@ const PATHS = {
   large: "M 178 228 L 148 228 L 148 166 L 260 166 L 260 232 L 212 236 L 206 252",
 };
 
-/** Where the food sits at each organ (for the tap game). */
+/** Where the food sits at each organ. */
 const SPOT: Record<Organ, { x: number; y: number }> = {
   mouth: { x: 200, y: 50 },
   pipe: { x: 200, y: 90 },
@@ -30,25 +30,8 @@ const JOURNEY = {
   cy: [50, 92, 118, 130, 152, 172, 188, 204, 218, 226, 228, 166, 166, 232, 246],
 };
 
-function Body({ active, seen, onTap, wrong }: { active?: Organ | null; seen: Organ[]; onTap?: (o: Organ) => void; wrong?: Organ | null }) {
+function Body({ active, seen }: { active?: Organ | null; seen: Organ[] }) {
   const lit = (o: Organ) => (active === o || seen.includes(o) ? 1 : 0.3);
-  const tap = (o: Organ) =>
-    onTap
-      ? {
-          onClick: () => onTap(o),
-          onKeyDown: (e: React.KeyboardEvent) => {
-            if (e.key === "Enter" || e.key === " ") {
-              e.preventDefault();
-              onTap(o);
-            }
-          },
-          role: "button",
-          tabIndex: 0,
-          "aria-label": NAMES[o],
-          style: { cursor: "pointer", outline: "none" },
-        }
-      : {};
-  const shake = (o: Organ) => (wrong === o ? { x: [0, -6, 6, -4, 4, 0] } : { x: 0 });
   return (
     <g>
       {/* body outline */}
@@ -59,26 +42,22 @@ function Body({ active, seen, onTap, wrong }: { active?: Organ | null; seen: Org
       <circle cx={210} cy={36} r={3} fill="#1e293b" />
       <path d="M 180 18 Q 200 2 222 18" stroke="#4a2c17" strokeWidth={8} fill="none" strokeLinecap="round" />
 
-      <motion.g {...tap("large")} opacity={lit("large")} animate={shake("large")}>
+      <motion.g opacity={lit("large")}>
         <path d={PATHS.large} stroke="#c2410c" strokeWidth={16} fill="none" strokeLinejoin="round" strokeLinecap="round" />
         <path d={PATHS.large} stroke="#fb923c" strokeWidth={11} fill="none" strokeLinejoin="round" strokeLinecap="round" />
-        {onTap && <rect x={136} y={156} width={136} height={100} fill="transparent" />}
       </motion.g>
-      <motion.g {...tap("small")} opacity={lit("small")} animate={shake("small")}>
-        {onTap && <rect x={160} y={160} width={80} height={70} fill="transparent" />}
+      <motion.g opacity={lit("small")}>
         <path d={PATHS.small} stroke="#be185d" strokeWidth={10} fill="none" strokeLinecap="round" />
         <path d={PATHS.small} stroke="#f9a8d4" strokeWidth={6} fill="none" strokeLinecap="round" />
       </motion.g>
-      <motion.g {...tap("pipe")} opacity={lit("pipe")} animate={shake("pipe")}>
-        {onTap && <rect x={184} y={60} width={34} height={56} fill="transparent" />}
+      <motion.g opacity={lit("pipe")}>
         <path d={PATHS.pipe} stroke="#be123c" strokeWidth={12} fill="none" strokeLinecap="round" />
         <path d={PATHS.pipe} stroke="#fda4af" strokeWidth={7} fill="none" strokeLinecap="round" />
       </motion.g>
-      <motion.g {...tap("stomach")} opacity={lit("stomach")} animate={active === "stomach" ? { scale: [1, 1.07, 0.96, 1] } : shake("stomach")} transition={active === "stomach" ? { duration: 1.2, repeat: Infinity } : { duration: 0.4 }}>
+      <motion.g opacity={lit("stomach")} animate={active === "stomach" ? { scale: [1, 1.07, 0.96, 1] } : { scale: 1 }} transition={active === "stomach" ? { duration: 1.2, repeat: Infinity } : { duration: 0.4 }}>
         <path d={PATHS.stomach} fill="#f472b6" stroke="#be185d" strokeWidth={3} />
       </motion.g>
-      <motion.g {...tap("mouth")} opacity={active === "mouth" || seen.includes("mouth") ? 1 : 0.6} animate={shake("mouth")}>
-        {onTap && <circle cx={200} cy={50} r={20} fill="transparent" />}
+      <motion.g opacity={active === "mouth" || seen.includes("mouth") ? 1 : 0.6}>
         <path d="M 186 48 Q 200 62 214 48 Z" fill="#be123c" stroke="#7f1d1d" strokeWidth={2} />
         <rect x={192} y={48} width={6} height={4} fill="#fff" />
         <rect x={202} y={48} width={6} height={4} fill="#fff" />
@@ -195,113 +174,125 @@ function DigestionScene({ stage }: { stage: number }) {
 }
 
 /* ------------------------------------------------------------------ */
-/* Try it: guide the food                                              */
+/* Guided mission: guide the food                                      */
 /* ------------------------------------------------------------------ */
 
-const ORDER: Organ[] = ["mouth", "pipe", "stomach", "small", "large"];
-const BUTTON_ORDER: Organ[] = ["stomach", "large", "mouth", "small", "pipe"];
-const FACTS: Record<Organ, string> = {
-  mouth: "Chomp! Teeth chop the apple into little bits and spit makes it soft and slippery.",
-  pipe: "Gulp! Muscles in the food pipe squeeze the food down to the stomach.",
-  stomach: "Slosh! The stomach churns the food with strong juices until it's like soup.",
-  small: "Zoom! In the small intestine the goodness goes into the blood. Energy for Kai!",
-  large: "Last stop! The large intestine soaks up water. The leftovers leave as waste when Kai goes to the toilet.",
+/** Keyframes (from JOURNEY) for each move of the food. */
+const TRIPS = {
+  swallow: { cx: JOURNEY.cx.slice(0, 4), cy: JOURNEY.cy.slice(0, 4) },
+  intestine: { cx: JOURNEY.cx.slice(3, 10), cy: JOURNEY.cy.slice(3, 10) },
 };
 
-function GuideTheFood() {
-  const [step, setStep] = useState(0);
-  const [chews, setChews] = useState(0);
-  const [wrong, setWrong] = useState<Organ | null>(null);
-  const [msg, setMsg] = useState<string | null>(null);
-  const done = step >= ORDER.length;
-  const seen = ORDER.slice(0, step);
-  const at = step === 0 ? null : ORDER[Math.min(step, ORDER.length) - 1];
-  const food = done ? { x: 206, y: 252 } : at ? SPOT[at] : { x: 200, y: 50 };
-  const chewing = step === 0;
-  const energy = step >= 4 ? 1 : step >= 3 ? 0.4 : 0.1;
-
-  const tap = (o: Organ) => {
-    if (done) return;
-    if (step === 0 && o === "mouth") {
-      const c = chews + 1;
-      setChews(c);
-      if (c >= 3) {
-        setStep(1);
-        setMsg(FACTS.mouth);
-      } else setMsg(`Chomp ${c}! Keep chewing: tap the mouth again.`);
-      return;
-    }
-    if (o === ORDER[step]) {
-      setStep(step + 1);
-      setMsg(FACTS[o]);
-    } else {
-      setWrong(o);
-      setTimeout(() => setWrong(null), 450);
-      const prev = step === 0 ? "" : NAMES[ORDER[step - 1]].toLowerCase();
-      setMsg(step === 0 ? "Not yet! Food always starts in the mouth. Tap the mouth to chew." : `Not that one yet! Where does food go after the ${prev}?`);
-    }
-  };
-
-  const reset = () => {
-    setStep(0);
-    setChews(0);
-    setMsg(null);
-  };
-
-  const status = done ? "Hooray! You guided the apple all the way: mouth → food pipe → stomach → small intestine → large intestine. Kai is full of energy!" : msg ?? "Kai bit an apple! Tap the mouth 3 times to chew it, then tap where the food goes next.";
-  const pieces = 3 - Math.min(3, chews);
-
+/** Kai's body with the apple at one place on its trip, and an energy meter. */
+function FoodTrip({ at, chewed, trip, energy, seen }: { at: Organ; chewed: boolean; trip?: keyof typeof TRIPS; energy: number; seen: Organ[] }) {
+  const p = SPOT[at];
+  const keys = trip ? TRIPS[trip] : null;
   return (
-    <TryShell title="Guide the food" hint="Tap each part of the body in the right order. You can tap the picture or the buttons." onReset={reset} status={status} color={C} done={done}>
-      <div className="grid gap-3 sm:grid-cols-[1.4fr_1fr]">
-        <div className="overflow-hidden rounded-2xl border-2 border-line">
-          <svg viewBox="80 0 240 260" role="img" aria-label={`Kai's digestive system. ${status}`} className="block h-auto w-full select-none" style={{ maxHeight: 340 }}>
-            <rect x={80} width="240" height="260" fill="#fdf2f8" />
-            <Body active={done ? null : ORDER[step]} seen={seen} onTap={tap} wrong={wrong} />
-            <motion.g initial={false} animate={{ x: food.x - 200, y: food.y - 50 }} transition={{ type: "spring", stiffness: 70, damping: 14 }} style={{ pointerEvents: "none" }}>
-              {chewing ? (
-                <g>
-                  <circle cx={200} cy={50} r={9 - (3 - pieces) * 1.5} fill="#ef4444" stroke="#7f1d1d" strokeWidth={2} />
-                  {pieces < 3 && <circle cx={210} cy={46} r={3} fill="#ef4444" />}
-                  {pieces < 2 && <circle cx={190} cy={46} r={3} fill="#ef4444" />}
-                </g>
-              ) : (
-                <circle cx={200} cy={50} r={7} fill={done ? "#a16207" : "#ef4444"} stroke="#7f1d1d" strokeWidth={2} />
-              )}
-            </motion.g>
-            {/* energy meter */}
-            <g>
-              <rect x={290} y={60} width={16} height={120} rx={8} fill="#fff" stroke="#cbd5e1" strokeWidth={2} />
-              <motion.rect x={292} width={12} rx={6} fill="#facc15" initial={false} animate={{ y: 178 - 116 * energy, height: 116 * energy }} />
-              <text x={298} y={196} textAnchor="middle" fontSize={14}>
-                ⚡
-              </text>
-            </g>
-          </svg>
-        </div>
-        <div className="grid content-start gap-2">
-          {BUTTON_ORDER.map((o) => {
-            const ok = seen.includes(o);
-            return (
-              <motion.button
-                key={o}
-                type="button"
-                onClick={() => tap(o)}
-                animate={wrong === o ? { x: [0, -8, 8, -5, 5, 0] } : { x: 0 }}
-                transition={{ duration: 0.4 }}
-                className="flex min-h-[52px] items-center justify-between rounded-2xl border-2 border-b-4 px-4 text-left text-base font-extrabold active:translate-y-[2px]"
-                style={{ borderColor: ok ? C : "rgb(var(--line))", background: ok ? "color-mix(in srgb, #EC4899 14%, rgb(var(--surface)))" : "rgb(var(--surface))" }}
-              >
-                <span>{NAMES[o]}</span>
-                <span aria-hidden>{ok ? "✅" : o === "mouth" && chews > 0 && step === 0 ? `${chews}/3` : ""}</span>
-              </motion.button>
-            );
-          })}
-        </div>
-      </div>
-    </TryShell>
+    <svg viewBox="80 0 240 260" role="img" aria-label={`Kai's digestive system. The apple is in the ${NAMES[at].toLowerCase()}.`} className="mx-auto block h-auto w-full select-none" style={{ maxHeight: 320 }}>
+      <rect x={80} width="240" height="260" fill="#fdf2f8" />
+      <Body active={at} seen={seen} />
+      {keys ? (
+        <motion.circle cx={keys.cx[0]} cy={keys.cy[0]} r={7} fill="#ef4444" stroke="#7f1d1d" strokeWidth={2} initial={{ cx: keys.cx[0], cy: keys.cy[0] }} animate={{ cx: keys.cx, cy: keys.cy }} transition={{ duration: 1.4, ease: "easeInOut" }} />
+      ) : chewed ? (
+        <g>
+          <circle cx={p.x - 5} cy={p.y} r={4} fill="#ef4444" stroke="#7f1d1d" strokeWidth={1.5} />
+          <circle cx={p.x + 5} cy={p.y - 3} r={3.5} fill="#ef4444" stroke="#7f1d1d" strokeWidth={1.5} />
+          <circle cx={p.x + 3} cy={p.y + 4} r={3} fill="#ef4444" stroke="#7f1d1d" strokeWidth={1.5} />
+        </g>
+      ) : (
+        <g>
+          <circle cx={p.x} cy={p.y} r={11} fill="#ef4444" stroke="#7f1d1d" strokeWidth={2} />
+          <path d={`M ${p.x} ${p.y - 11} q 2 -6 5 -8`} stroke="#78350f" strokeWidth={2.5} fill="none" />
+        </g>
+      )}
+      <g>
+        <rect x={290} y={60} width={16} height={120} rx={8} fill="#fff" stroke="#cbd5e1" strokeWidth={2} />
+        <motion.rect x={292} width={12} rx={6} fill="#facc15" initial={false} animate={{ y: 178 - 116 * energy, height: 116 * energy }} transition={{ delay: energy > 0.5 ? 1.2 : 0, duration: 0.6 }} />
+        <text x={298} y={196} textAnchor="middle" fontSize={14}>
+          ⚡
+        </text>
+      </g>
+    </svg>
   );
 }
+
+function StepChew({ done, complete }: MissionApi) {
+  const [chewed, setChewed] = useState(false);
+  return (
+    <div>
+      <FoodTrip at="mouth" chewed={chewed} energy={0.1} seen={[]} />
+      <StepButton color={C} disabled={complete} onClick={() => (setChewed(true), done())}>
+        🦷 Chew the apple
+      </StepButton>
+    </div>
+  );
+}
+
+function StepSwallow({ done, complete }: MissionApi) {
+  const [gone, setGone] = useState(false);
+  return (
+    <div>
+      <FoodTrip at={gone ? "stomach" : "mouth"} chewed trip={gone ? "swallow" : undefined} energy={0.1} seen={gone ? ["mouth", "pipe"] : []} />
+      <StepButton
+        color={C}
+        disabled={gone || complete}
+        onClick={() => {
+          setGone(true);
+          setTimeout(done, 1500);
+        }}
+      >
+        😋 Swallow
+      </StepButton>
+    </div>
+  );
+}
+
+function StepIntestine({ done, complete }: MissionApi) {
+  const [gone, setGone] = useState(false);
+  return (
+    <div>
+      <FoodTrip at={gone ? "small" : "stomach"} chewed trip={gone ? "intestine" : undefined} energy={gone ? 1 : 0.1} seen={["mouth", "pipe", "stomach"]} />
+      <StepButton
+        color={C}
+        disabled={gone || complete}
+        onClick={() => {
+          setGone(true);
+          setTimeout(done, 1800);
+        }}
+      >
+        ➡️ Send the food on
+      </StepButton>
+    </div>
+  );
+}
+
+const mission: Mission = {
+  goal: "Kai bit an apple! Help the food on its trip through his body.",
+  steps: [
+    {
+      task: "Chew the apple.",
+      predict: { question: "Where does digestion start?", options: ["In the stomach", "In the mouth"], answer: 1 },
+      scene: (api) => <StepChew {...api} />,
+      hint: "Tap the pink button under Kai.",
+      explain: "Digestion starts in the **mouth**. Teeth chop the apple into little bits, and spit (saliva) makes them soft.",
+    },
+    {
+      task: "Swallow the food.",
+      predict: { question: "How does food get down to your stomach?", options: ["It just falls down", "Muscles squeeze it down"], answer: 1 },
+      scene: (api) => <StepSwallow {...api} />,
+      hint: "Tap Swallow and watch the red dot.",
+      explain: "The food pipe has **muscles** that squeeze food down, like toothpaste in a tube. That's why you can swallow even lying down! In the stomach, juices churn it into soup.",
+    },
+    {
+      task: "Send the food out of the stomach.",
+      predict: { question: "Where does the goodness go into Kai's blood?", options: ["In the stomach", "In the small intestine", "In the large intestine"], answer: 1 },
+      scene: (api) => <StepIntestine {...api} />,
+      hint: "Tap the button and watch the yellow energy bar.",
+      explain: "In the long, curly **small intestine**, the goodness passes into the blood and gives Kai energy. Later, the large intestine soaks up water and the rest leaves as waste.",
+    },
+  ],
+  takeaway: "Food goes mouth → food pipe → stomach → small intestine → large intestine, and the goodness gets into your blood in the small intestine.",
+};
 
 /* ------------------------------------------------------------------ */
 /* Story + analogy                                                     */
@@ -462,12 +453,13 @@ export const digestion: Explainer = {
   watch: [
     { title: "1. The mouth", say: "Digestion starts in your mouth. Your teeth chop the food into little bits, and spit, called saliva, makes it soft and starts breaking it down.", scene: <DigestionScene stage={0} /> },
     { title: "2. The food pipe", say: "When you swallow, the food goes down a tube called the food pipe. Its muscles squeeze the food along, like toothpaste in a tube.", scene: <DigestionScene stage={1} /> },
-    { title: "3. The stomach", say: "Your stomach is a stretchy, muscly bag. It churns the food with strong juices until it becomes a thick soup.", scene: <DigestionScene stage={2} /> },
-    { title: "4. The small intestine", say: "Next comes the small intestine, a very long, coiled-up tube. Here the goodness from food passes into your blood, to feed your whole body.", scene: <DigestionScene stage={3} /> },
+    { title: "3. The stomach", say: "Your stomach is a stretchy, muscly bag. It squishes and mixes the food with strong juices until it becomes a thick soup.", scene: <DigestionScene stage={2} /> },
+    { title: "4. The small intestine", say: "Next comes the small intestine, a very long, curly tube. Here the goodness from food passes into your blood, to feed your whole body.", scene: <DigestionScene stage={3} /> },
     { title: "5. The large intestine", say: "Leftovers move into the large intestine, which soaks up water. What's left is waste, and it leaves your body when you go to the toilet.", scene: <DigestionScene stage={4} /> },
     { title: "The whole journey", say: "Mouth, food pipe, stomach, small intestine, large intestine. The whole trip can take one to three days!", scene: <DigestionScene stage={5} /> },
   ],
-  try: GuideTheFood,
+  mission,
+  misconception: { myth: "The stomach does all the work of digestion.", truth: "The stomach churns food into soup, but most of the goodness gets into your blood in the small intestine, a curly tube longer than a car." },
   story,
   like,
 };

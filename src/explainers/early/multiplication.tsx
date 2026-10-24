@@ -1,11 +1,8 @@
 "use client";
 
-import { useMemo, useState } from "react";
 import { motion } from "framer-motion";
-import { Minus, Plus } from "lucide-react";
-import type { Explainer } from "../types";
-import { say } from "@/lib/voice";
-import { Cookie, Emo, Kid, Panel, Plate, Stage, T, TryFrame, pop, rand, rise, spring, type Status } from "./_kit";
+import type { Explainer, Mission } from "../types";
+import { Cookie, Emo, Kid, Panel, Plate, Stage, T, TapStep, pop, rise, spring } from "./_kit";
 
 const C = "#DB2777";
 const PLATES = [75, 200, 325];
@@ -97,123 +94,33 @@ function CookieScene({ stage }: { stage: number }) {
 }
 
 /* ------------------------------------------------------------------ */
-/* Try: make the target with equal plates                              */
+/* Guided mission                                                      */
 /* ------------------------------------------------------------------ */
 
-const TARGETS = [4, 6, 8, 9, 10, 12, 15, 16, 20];
-/** Dice-like spots for 1–5 cookies on a plate (in a 80×50 box). */
-const SPOTS: Record<number, [number, number][]> = {
-  1: [[40, 25]],
-  2: [
-    [26, 25],
-    [54, 25],
+const mission: Mission = {
+  goal: "Fill the plates with cookies. Find a fast way to count them.",
+  steps: [
+    {
+      task: "Put 4 cookies on each plate.",
+      predict: { question: "3 plates, 4 cookies on each. How many cookies?", options: ["🍪 7", "🍪 12"], answer: 1, trap: 0 },
+      scene: (api) => <TapStep api={api} color={C} button="🍪 Fill the plates" render={(on) => <CookieScene stage={on ? 1 : 0} />} />,
+      hint: "Tap the big pink button.",
+      explain: "Every plate has **the same**: 4 cookies. These are **equal groups**.",
+    },
+    {
+      task: "Count plate by plate.",
+      scene: (api) => <TapStep api={api} color={C} button="👆 Count by 4s" render={(on) => <CookieScene stage={on ? 2 : 1} />} />,
+      explain: "4, 8, 12. Three groups of four make twelve. We write **3 × 4 = 12**.",
+    },
+    {
+      task: "Turn the rows round.",
+      predict: { question: "Now it is 4 rows of 3. How many cookies?", options: ["🍪 Still 12", "🤔 A new number"], answer: 0, trap: 1 },
+      scene: (api) => <TapStep api={api} color={C} button="🔄 Turn it" render={(on) => <CookieScene stage={on ? 5 : 4} />} />,
+      explain: "**4 × 3 = 12** too. Turning the rows round does not change how many.",
+    },
   ],
-  3: [
-    [22, 30],
-    [40, 18],
-    [58, 30],
-  ],
-  4: [
-    [26, 17],
-    [54, 17],
-    [26, 33],
-    [54, 33],
-  ],
-  5: [
-    [22, 16],
-    [58, 16],
-    [40, 25],
-    [22, 34],
-    [58, 34],
-  ],
+  takeaway: "Times means equal groups: 3 × 4 is 3 groups of 4.",
 };
-
-function BigStep({ icon, value, onChange, label }: { icon: string; value: number; onChange: (v: number) => void; label: string }) {
-  return (
-    <div className="flex items-center gap-2" role="group" aria-label={label}>
-      <button type="button" onClick={() => onChange(Math.max(1, value - 1))} disabled={value <= 1} className="grid h-14 w-14 place-items-center rounded-2xl border-2 border-b-4 border-line bg-surface active:translate-y-[2px] disabled:opacity-40" aria-label={`Fewer ${label}`}>
-        <Minus className="h-6 w-6" />
-      </button>
-      <motion.span key={value} initial={{ scale: 1.4 }} animate={{ scale: 1 }} className="flex min-w-[88px] items-center justify-center gap-1 text-3xl font-black">
-        <span aria-hidden>{icon}</span>
-        {value}
-      </motion.span>
-      <button type="button" onClick={() => onChange(Math.min(5, value + 1))} disabled={value >= 5} className="grid h-14 w-14 place-items-center rounded-2xl border-2 border-b-4 border-line bg-surface active:translate-y-[2px] disabled:opacity-40" aria-label={`More ${label}`}>
-        <Plus className="h-6 w-6" />
-      </button>
-    </div>
-  );
-}
-
-function MulTry() {
-  const [round, setRound] = useState(0);
-  const target = useMemo(() => TARGETS[rand(0, TARGETS.length - 1)], [round]);
-  const [plates, setPlates] = useState(1);
-  const [each, setEach] = useState(1);
-  const [found, setFound] = useState<string[]>([]);
-  const total = plates * each;
-  const status: Status = total === target ? "good" : "play";
-
-  const change = (p: number, e: number) => {
-    setPlates(p);
-    setEach(e);
-    if (p * e === target) {
-      const k = `${p} × ${e}`;
-      setFound((f) => (f.includes(k) ? f : [...f, k]));
-      say(`${p} plates of ${e} make ${target}!`);
-    }
-  };
-  const another = () => {
-    setPlates(1);
-    setEach(1);
-    setFound([]);
-    setRound((x) => x + 1);
-  };
-
-  return (
-    <TryFrame color={C} round={round} status={status} onAnother={another} picture="🍪" prompt={`Make ${target} cookies. Every plate must have the same!`}>
-      <div className="mb-3 flex flex-wrap items-center justify-center gap-x-6 gap-y-3">
-        <BigStep icon="🍽️" label="plates" value={plates} onChange={(v) => change(v, each)} />
-        <BigStep icon="🍪" label="cookies on each plate" value={each} onChange={(v) => change(plates, v)} />
-      </div>
-      <div className="flex min-h-[132px] flex-wrap items-center justify-center gap-2 rounded-2xl border-2 border-line bg-[#FDF2F8] p-3">
-        {Array.from({ length: plates }, (_, p) => (
-          <motion.div key={p} layout initial={{ scale: 0 }} animate={{ scale: 1 }} transition={spring} className="relative">
-            <svg viewBox="0 0 80 50" className="h-[70px] w-[112px]" role="img" aria-label={`Plate with ${each} cookies`}>
-              <ellipse cx={40} cy={27} rx={38} ry={22} fill="white" stroke="#CBD5E1" strokeWidth={2} />
-              <ellipse cx={40} cy={27} rx={28} ry={15} fill="#F1F5F9" />
-              {SPOTS[each].map(([x, y], k) => (
-                <motion.g key={`${each}-${k}`} initial={{ scale: 0 }} animate={{ scale: 1 }} transition={{ ...spring, delay: k * 0.04 }}>
-                  <Cookie x={x} y={y} r={8.5} />
-                </motion.g>
-              ))}
-            </svg>
-            <span className="absolute -bottom-1 left-1/2 grid h-7 min-w-7 -translate-x-1/2 place-items-center rounded-full px-1.5 text-sm font-black text-white" style={{ background: C }}>
-              {(p + 1) * each}
-            </span>
-          </motion.div>
-        ))}
-      </div>
-      <div className="mt-3 flex flex-wrap items-center justify-center gap-3" aria-live="polite">
-        <p className="text-4xl font-black">
-          {plates} × {each} = <span style={{ color: total === target ? "#16A34A" : total > target ? "#E11D48" : "#64748B" }}>{total}</span>
-        </p>
-        <span className="text-3xl" aria-label={total === target ? "Just right" : total > target ? "Too many" : "Too few"}>
-          {total === target ? "✅" : total > target ? "⬇️" : "⬆️"}
-        </span>
-      </div>
-      {found.length > 0 && (
-        <div className="mt-2 flex flex-wrap justify-center gap-2" aria-label="Ways you found">
-          {found.map((f) => (
-            <motion.span key={f} {...pop(0)} className="rounded-xl px-3 py-1 text-lg font-black text-white" style={{ background: "#16A34A" }}>
-              ⭐ {f}
-            </motion.span>
-          ))}
-        </div>
-      )}
-    </TryFrame>
-  );
-}
 
 /* ------------------------------------------------------------------ */
 /* Story + analogy                                                     */
@@ -336,7 +243,11 @@ export const multiplication: Explainer = {
     { title: "Make an array", say: "Line the cookies up in rows. Three rows of four. That's called an array.", scene: <CookieScene stage={4} /> },
     { title: "Turn it round", say: "Turn the array. Now it's four rows of three. Still twelve!", scene: <CookieScene stage={5} /> },
   ],
-  try: MulTry,
+  mission,
+  misconception: {
+    myth: "3 × 4 means 3 + 4, so it is 7.",
+    truth: "3 × 4 means 3 groups of 4. That makes 12.",
+  },
   story,
   like: {
     headline: "Multiplying is like buying juice in packs.",

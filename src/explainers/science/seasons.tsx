@@ -1,10 +1,10 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useState } from "react";
 import { motion } from "framer-motion";
-import type { Explainer } from "../types";
-import { useSvgDrag } from "@/components/widgets/_shared";
-import { Arrow, Kid, Label, Panel, Scene, Sun, Tag, Tree, TryShell, rng } from "./_art";
+import type { Explainer, Mission, MissionApi } from "../types";
+import { useFrame } from "@/components/widgets/_shared";
+import { Arrow, Kid, Label, Panel, Scene, StepButton, Sun, Tag, Tree, rng } from "./_art";
 
 const C = "#14B8A6";
 const TILT = 23.5;
@@ -220,10 +220,10 @@ function SeasonsScene({ stage }: { stage: number }) {
 }
 
 /* ------------------------------------------------------------------ */
-/* Try it: move the Earth round the Sun                                */
+/* Guided mission: move the Earth round the Sun                        */
 /* ------------------------------------------------------------------ */
 
-const MONTHS = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+const MONTHS = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
 
 function seasonFor(phi: number): Season {
   const p = ((phi % 360) + 360) % 360;
@@ -233,83 +233,113 @@ function seasonFor(phi: number): Season {
   return "winter";
 }
 
-const SEASON_MISSIONS: { text: string; want: Season }[] = [
-  { text: "Drag the Earth round its path to make it summer in the North (red pin).", want: "summer" },
-  { text: "Keep going round! Make it winter in the North.", want: "winter" },
-  { text: "Now find spring in the North.", want: "spring" },
-];
-
-function MoveTheEarth() {
-  const svg = useRef<SVGSVGElement>(null);
-  const [phi, setPhi] = useState(90);
-  const [mission, setMission] = useState(0);
-  const drag = useSvgDrag(svg, (p) => {
-    const a = Math.atan2(-(p.y - SY) / RY, (p.x - SX) / RX);
-    setPhi(((a * 180) / Math.PI + 360) % 360);
-  });
-
+/** The orbit seen from the side, the Earth at angle `phi`, and a window onto the North (and the South once `south` is set). */
+function OrbitView({ phi, south }: { phi: number; south?: boolean }) {
   const north = seasonFor(phi);
-  const south = OPP[north];
-  const month = MONTHS[Math.floor((((phi - 180) / 30 + 5.67) % 12 + 12) % 12)];
+  const month = MONTHS[Math.round((((phi - 180) / 30 + 5) % 12) + 12) % 12];
   const pos = orbitAt(phi);
   const strength = (1 - Math.cos((phi * Math.PI) / 180)) / 2; // northern sunlight strength
-
-  useEffect(() => {
-    if (mission < SEASON_MISSIONS.length && north === SEASON_MISSIONS[mission].want) setMission(mission + 1);
-  }, [north, mission]);
-
-  const done = mission >= SEASON_MISSIONS.length;
-  const status = done
-    ? `Great! You saw it: the North has summer when it leans towards the Sun and winter when it leans away. The distance to the Sun barely changes.`
-    : `${SEASON_MISSIONS[mission].text}  It's ${month}: ${north} in the North, ${south} in the South.`;
-
+  const behind = Math.sin((phi * Math.PI) / 180) > 0.05;
+  const earth = <TiltedEarth x={pos.x} y={pos.y} r={behind ? 20 : 24} sun={{ x: SX, y: SY }} south={south} />;
   return (
-    <TryShell title="Move the Earth round the Sun" hint="Drag the Earth along its path. See how the tilt changes the seasons. Look at the trees!" onReset={() => { setPhi(90); setMission(0); }} status={status} color={C} done={done}>
-      <div className="overflow-hidden rounded-2xl border-2 border-line">
-        <svg ref={svg} viewBox="0 0 400 260" role="img" aria-label={`Earth in ${month}. ${north} in the north, ${south} in the south.`} className="block h-auto w-full select-none" style={{ maxHeight: 320, touchAction: "none" }}>
-          <Space />
-          <Orbit />
-          {[["Jun", 180], ["Sep", 270], ["Dec", 0], ["Mar", 90]].map(([m, a]) => {
-            const p = orbitAt(a as number);
-            const off = { x: (p.x - SX) * 0.18, y: (p.y - SY) * 0.5 };
-            return (
-              <text key={m} x={p.x + off.x} y={p.y + off.y + 4} textAnchor="middle" fontSize={11} fontWeight={900} fill="#94a3b8">
-                {m}
-              </text>
-            );
-          })}
-          {/* draw the Earth behind the Sun when it is on the far side */}
-          {Math.sin((phi * Math.PI) / 180) > 0 && (
-            <g {...drag} role="button" aria-label="Drag the Earth">
-              <circle cx={pos.x} cy={pos.y} r={34} fill="transparent" />
-              <TiltedEarth x={pos.x} y={pos.y} r={20} sun={{ x: SX, y: SY }} south />
-            </g>
-          )}
-          <Sun x={SX} y={SY} r={30} glow />
-          {Math.sin((phi * Math.PI) / 180) <= 0 && (
-            <g {...drag} role="button" aria-label="Drag the Earth">
-              <circle cx={pos.x} cy={pos.y} r={34} fill="transparent" />
-              <TiltedEarth x={pos.x} y={pos.y} r={24} sun={{ x: SX, y: SY }} south />
-            </g>
-          )}
-          <Label x={pos.x} y={pos.y - 36} color="#fde68a" size={12}>
-            {month}
-          </Label>
-          <SeasonView id="sv-n" x={10} y={186} w={120} h={68} season={north} title={`North: ${north} ${SEASON_EMOJI[north]}`} />
-          <SeasonView id="sv-s" x={270} y={186} w={120} h={68} season={south} title={`South: ${south} ${SEASON_EMOJI[south]}`} />
-          <g>
-            <text x={200} y={214} textAnchor="middle" fontSize={10} fontWeight={800} fill="#cbd5e1">
-              sunlight in the North
-            </text>
-            <rect x={146} y={222} width={108} height={12} rx={6} fill="#334155" />
-            <rect x={146} y={222} width={108 * (0.15 + 0.85 * strength)} height={12} rx={6} fill="#facc15" />
-          </g>
-        </svg>
-      </div>
-      <p className="mt-2 text-sm font-semibold text-muted">🔴 Red pin: a place in the North (like the UK). 🟠 Orange pin: a place in the South (like Australia).</p>
-    </TryShell>
+    <svg viewBox="0 0 400 260" role="img" aria-label={`Earth in ${month}. ${north} in the north${south ? `, ${OPP[north]} in the south` : ""}.`} className="block h-auto w-full select-none" style={{ maxHeight: 320 }}>
+      <Space />
+      <Orbit />
+      {[["Jun", 180], ["Sep", 270], ["Dec", 0], ["Mar", 90]].map(([m, a]) => {
+        const p = orbitAt(a as number);
+        const off = { x: (p.x - SX) * 0.18, y: (p.y - SY) * 0.5 };
+        return (
+          <text key={m} x={p.x + off.x} y={p.y + off.y + 4} textAnchor="middle" fontSize={11} fontWeight={900} fill="#94a3b8">
+            {m}
+          </text>
+        );
+      })}
+      {behind && earth}
+      <Sun x={SX} y={SY} r={30} glow />
+      {!behind && earth}
+      <SeasonView id="sv-n" x={10} y={186} w={120} h={68} season={north} title={`N ${SEASON_EMOJI[north]}`} />
+      {south ? (
+        <SeasonView id="sv-s" x={270} y={186} w={120} h={68} season={OPP[north]} title={`S ${SEASON_EMOJI[OPP[north]]}`} />
+      ) : (
+        <g>
+          <rect x={270} y={186} width={120} height={68} rx={10} fill="#1e293b" stroke="#475569" strokeWidth={3} strokeDasharray="6 5" />
+          <text x={330} y={230} textAnchor="middle" fontSize={30} fontWeight={900} fill="#64748b">
+            ?
+          </text>
+        </g>
+      )}
+      <g>
+        <text x={200} y={214} textAnchor="middle" fontSize={14}>
+          ☀️
+        </text>
+        <rect x={146} y={222} width={108} height={12} rx={6} fill="#334155" />
+        <rect x={146} y={222} width={108 * (0.15 + 0.85 * strength)} height={12} rx={6} fill="#facc15" />
+      </g>
+    </svg>
   );
 }
+
+/** Tap to move the Earth along its path from `from` to `to` degrees. */
+function StepOrbit({ api, from, to, button }: { api: MissionApi; from: number; to: number; button: string }) {
+  const [phi, setPhi] = useState(from);
+  const [moving, setMoving] = useState(false);
+  useFrame((dt) => {
+    const next = Math.min(to, phi + dt * 110);
+    setPhi(next);
+    if (next >= to) {
+      setMoving(false);
+      api.done();
+    }
+  }, moving);
+  return (
+    <div>
+      <OrbitView phi={phi} />
+      <StepButton color={C} disabled={moving || api.complete} onClick={() => setMoving(true)}>
+        {button}
+      </StepButton>
+    </div>
+  );
+}
+
+function StepSouth({ done, complete }: MissionApi) {
+  const [look, setLook] = useState(false);
+  return (
+    <div>
+      <OrbitView phi={0} south={look} />
+      <StepButton color={C} disabled={look || complete} onClick={() => (setLook(true), setTimeout(done, 800))}>
+        🔍 Look at the South
+      </StepButton>
+    </div>
+  );
+}
+
+const mission: Mission = {
+  goal: "Move the Earth round the Sun and find out what really makes summer and winter.",
+  steps: [
+    {
+      task: "Move the Earth on to June.",
+      predict: { question: "June is summer in the North. Why?", options: ["The Earth is closer to the Sun", "The North leans towards the Sun"], answer: 1 },
+      scene: (api) => <StepOrbit api={api} from={90} to={180} button="➡️ Move to June" />,
+      hint: "The red pin is a place in the North, like the UK. Tap the button.",
+      explain: "In June the North **leans towards** the Sun. Its sunlight is strong and direct and the days are long: **summer**. The distance to the Sun hardly changes.",
+    },
+    {
+      task: "Keep going, on to December.",
+      predict: { question: "Does the Earth's lean change during the year?", options: ["Yes, it flips the other way", "No, it always leans the same way"], answer: 1 },
+      scene: (api) => <StepOrbit api={api} from={180} to={360} button="➡️ Move to December" />,
+      hint: "Watch the white stick through the Earth as it moves.",
+      explain: "The Earth **always leans the same way**. But in December it is on the other side of the Sun, so now the North leans **away**. The sunlight is weak and spread out: **winter**.",
+    },
+    {
+      task: "Look at a place in the South, like Australia.",
+      predict: { question: "It's December. What season is it in the South?", options: ["Winter, the same as the North", "Summer"], answer: 1 },
+      scene: (api) => <StepSouth {...api} />,
+      hint: "Tap the button to uncover the South window.",
+      explain: "When the North leans away, the South leans **towards** the Sun, so it has **summer**. That's why Christmas is a beach day in Australia!",
+    },
+  ],
+  takeaway: "Seasons come from the Earth's tilt, not its distance: the half leaning towards the Sun has summer.",
+};
 
 /* ------------------------------------------------------------------ */
 /* Story + analogy                                                     */
@@ -447,13 +477,14 @@ export const seasons: Explainer = {
   icon: "🍂",
   watch: [
     { title: "A year-long trip", say: "The Earth travels all the way around the Sun. One whole trip takes a year: three hundred and sixty-five days.", scene: <SeasonsScene stage={0} /> },
-    { title: "Earth is tilted", say: "The Earth leans to one side, like a tilted spinning top. And it always leans the same way, all year long.", scene: <SeasonsScene stage={1} /> },
+    { title: "Earth is tilted", say: "The Earth leans to one side, like a spinning top that leans over. And it always leans the same way, all year long.", scene: <SeasonsScene stage={1} /> },
     { title: "Leaning in: summer", say: "When our half of the Earth leans towards the Sun, sunlight hits us more directly and the days are long. It's summer!", scene: <SeasonsScene stage={2} /> },
     { title: "Leaning away: winter", say: "Half a year later, our half leans away from the Sun. The sunlight is spread out and weaker, and days are short. It's winter!", scene: <SeasonsScene stage={3} /> },
-    { title: "Not because we're closer!", say: "Seasons are NOT because the Earth gets closer to the Sun. Our distance hardly changes. It's the tilt that matters!", scene: <SeasonsScene stage={4} /> },
+    { title: "Not because we're closer!", say: "Seasons do NOT happen because the Earth gets closer to the Sun. Our distance hardly changes. It's the lean that matters!", scene: <SeasonsScene stage={4} /> },
     { title: "Opposite seasons", say: "So when the north has summer, the south has winter. That's why Christmas is in summer in Australia!", scene: <SeasonsScene stage={5} /> },
   ],
-  try: MoveTheEarth,
+  mission,
+  misconception: { myth: "Summer is when the Earth is closer to the Sun.", truth: "Our distance to the Sun hardly changes. Summer comes when your half of the Earth leans towards the Sun, so the sunlight is stronger and the days are longer." },
   story,
   like,
 };

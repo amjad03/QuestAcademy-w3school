@@ -1,10 +1,8 @@
 "use client";
 
-import { useMemo, useRef, useState } from "react";
 import { motion } from "framer-motion";
-import type { Explainer } from "../types";
-import { say } from "@/lib/voice";
-import { Badge, Bird, Cookie, Emo, NumberChoices, Panel, Plate, Stage, T, TryFrame, choicesFor, pointInside, pop, rand, rise, type Status } from "./_kit";
+import type { Explainer, Mission } from "../types";
+import { Badge, Bird, Cookie, Emo, Panel, Plate, Stage, T, TapStep, pop, rise } from "./_kit";
 
 const C = "#E11D48";
 const BIRDS = [80, 140, 200, 260, 320];
@@ -112,119 +110,28 @@ function DrawScene() {
 }
 
 /* ------------------------------------------------------------------ */
-/* Try: feed the monster                                               */
+/* Guided mission                                                      */
 /* ------------------------------------------------------------------ */
 
-function Monster({ chomp, full, shake }: { chomp: number; full: boolean; shake: number }) {
-  return (
-    <motion.svg key={`s${shake}`} viewBox="0 0 120 120" className="h-28 w-28 sm:h-32 sm:w-32" animate={shake ? { rotate: [0, -10, 10, -6, 6, 0] } : {}} transition={{ duration: 0.5 }} role="img" aria-label={full ? "The monster is full and happy" : "A hungry monster with its mouth open"}>
-      <path d="M20 60 q 0 -48 40 -48 q 40 0 40 48 v 40 q -6 10 -13 0 q -7 10 -14 0 q -7 10 -13 0 q -7 10 -14 0 q -7 10 -13 0 q -7 10 -13 0 z" fill="#8B5CF6" />
-      <circle cx={44} cy={42} r={11} fill="white" />
-      <circle cx={76} cy={42} r={11} fill="white" />
-      <circle cx={46} cy={44} r={5} fill="#1c2333" />
-      <circle cx={74} cy={44} r={5} fill="#1c2333" />
-      <path d="M30 20 l -8 -12 M90 20 l 8 -12" stroke="#8B5CF6" strokeWidth={6} strokeLinecap="round" />
-      {full ? (
-        <path d="M40 70 q 20 18 40 0" stroke="#1c2333" strokeWidth={5} fill="none" strokeLinecap="round" />
-      ) : (
-        <motion.g key={chomp} initial={{ scaleY: 0.2 }} animate={{ scaleY: 1 }} transition={{ type: "spring", stiffness: 300, damping: 10 }}>
-          <ellipse cx={60} cy={76} rx={22} ry={15} fill="#3B0764" />
-          <path d="M44 66 l 5 7 l 5 -7 M66 66 l 5 7 l 5 -7" fill="white" />
-        </motion.g>
-      )}
-    </motion.svg>
-  );
-}
-
-function SubTry() {
-  const [round, setRound] = useState(0);
-  const r = useMemo(() => {
-    const n = rand(4, 10);
-    return { n, k: rand(1, Math.min(5, n - 1)) };
-  }, [round]);
-  const [eaten, setEaten] = useState<number[]>([]);
-  const [status, setStatus] = useState<Status>("play");
-  const [shake, setShake] = useState(0);
-  const mouth = useRef<HTMLDivElement>(null);
-  const full = eaten.length >= r.k;
-  const left = r.n - r.k;
-  const choices = useMemo(() => choicesFor(left, 0), [left, r]);
-
-  const eat = (i: number) => {
-    if (eaten.includes(i)) return;
-    if (full) {
-      setShake((s) => s + 1);
-      return;
-    }
-    const next = [...eaten, i];
-    setEaten(next);
-    say(next.length === r.k ? "Yum! I'm full!" : "Yum!");
-  };
-  const another = () => {
-    setEaten([]);
-    setStatus("play");
-    setShake(0);
-    setRound((x) => x + 1);
-  };
-
-  return (
-    <TryFrame color={C} round={round} status={status} onAnother={another} picture="🍪" prompt={`The monster wants ${r.k} ${r.k === 1 ? "cookie" : "cookies"}. Feed it! How many are left?`}>
-      <div className="grid items-center gap-3 sm:grid-cols-[auto_1fr]">
-        <div ref={mouth} className="flex flex-col items-center rounded-2xl border-2 border-line bg-[#F5F3FF] p-2">
-          <Monster chomp={eaten.length} full={full} shake={shake} />
-          <div className="mt-1 flex gap-1" aria-label={`Wants ${r.k}, ate ${eaten.length}`}>
-            {Array.from({ length: r.k }, (_, i) => (
-              <span key={i} className="grid h-7 w-7 place-items-center rounded-full border-2 text-sm" style={{ borderColor: "#8B5CF6", background: i < eaten.length ? "#8B5CF6" : "white" }}>
-                {i < eaten.length ? "✓" : ""}
-              </span>
-            ))}
-          </div>
-        </div>
-        <div className="relative rounded-[40px] border-4 border-[#CBD5E1] bg-white p-3">
-          <div className="grid grid-cols-5 justify-items-center gap-2">
-            {Array.from({ length: r.n }, (_, i) =>
-              eaten.includes(i) ? (
-                <motion.span key={`${round}-${i}-c`} initial={{ scale: 1.4 }} animate={{ scale: 1 }} className="grid h-14 w-14 place-items-center rounded-full border-2 border-dashed border-[#E2E8F0] text-lg text-[#D6A15E]" aria-label="Eaten">
-                  ·∙·
-                </motion.span>
-              ) : (
-                <motion.button
-                  type="button"
-                  key={`${round}-${i}`}
-                  {...pop(i * 0.05)}
-                  drag
-                  dragSnapToOrigin
-                  whileDrag={{ scale: 1.15, zIndex: 30 }}
-                  onDragEnd={(_, info) => pointInside(mouth.current, info.point) && eat(i)}
-                  onClick={() => eat(i)}
-                  className="relative z-10 grid h-14 w-14 cursor-grab place-items-center rounded-full active:cursor-grabbing"
-                  style={{ touchAction: "none" }}
-                  aria-label="Cookie. Drag to the monster."
-                >
-                  <svg viewBox="-16 -16 32 32" className="h-12 w-12" aria-hidden>
-                    <Cookie x={0} y={0} r={15} />
-                  </svg>
-                </motion.button>
-              ),
-            )}
-          </div>
-        </div>
-      </div>
-      <div className="mt-3 min-h-[64px]">
-        {full && status !== "good" && (
-          <motion.div {...pop(0.4)}>
-            <NumberChoices key={round} options={choices} answer={left} color={C} onRight={() => setStatus("good")} onWrong={() => setStatus("oops")} />
-          </motion.div>
-        )}
-        {status === "good" && (
-          <motion.p {...pop(0)} className="text-center text-5xl font-black" onAnimationComplete={() => say(`${r.n} take away ${r.k} leaves ${left}`)}>
-            {r.n} <span style={{ color: C }}>−</span> <span className="text-[#8B5CF6]">{r.k}</span> = <span style={{ color: C }}>{left}</span>
-          </motion.p>
-        )}
-      </div>
-    </TryFrame>
-  );
-}
+const mission: Mission = {
+  goal: "Some birds fly away. Find out how many are left!",
+  steps: [
+    {
+      task: "Make 2 birds fly away.",
+      predict: { question: "2 birds fly away. Will there be more birds, or fewer?", options: ["🐦🐦🐦🐦🐦🐦🐦 More", "🐦🐦🐦 Fewer"], answer: 1, trap: 0 },
+      scene: (api) => <TapStep api={api} color={C} button="👋 Fly away!" render={(on) => <BirdScene flyAway={on} />} />,
+      hint: "Tap the big red button.",
+      explain: "Two birds flew away. **Taking away** makes the group smaller.",
+    },
+    {
+      task: "Count the birds that are left.",
+      predict: { question: "How many birds are left on the wire?", options: ["🐦🐦 2", "🐦🐦🐦 3"], answer: 1, trap: 0 },
+      scene: (api) => <TapStep api={api} color={C} button="👆 Count!" render={(on) => <BirdScene gone count={on} eq={on} />} />,
+      explain: "1, 2, 3. Three birds are left. Five take away two is three: **5 − 2 = 3**.",
+    },
+  ],
+  takeaway: "Start with some, take some away, and count what is left.",
+};
 
 /* ------------------------------------------------------------------ */
 /* Story + analogy art                                                 */
@@ -337,9 +244,13 @@ export const subtraction: Explainer = {
     { title: "Two fly away", say: "Two birds fly away. Bye-bye, birds!", scene: <BirdScene flyAway /> },
     { title: "How many are left?", say: "Count the birds still on the wire. One, two, three.", scene: <BirdScene gone count /> },
     { title: "5 − 2 = 3", say: "Five take away two leaves three. We write five minus two equals three.", scene: <BirdScene gone eq /> },
-    { title: "Draw it yourself", say: "You can draw it too. Draw five, cross out two, and count what is left.", scene: <DrawScene /> },
+    { title: "Draw it yourself", say: "You can draw it too. Draw five. Cross out two. Count what is left.", scene: <DrawScene /> },
   ],
-  try: SubTry,
+  mission,
+  misconception: {
+    myth: "The answer is how many went away.",
+    truth: "The answer is how many are left. 5 birds, 2 fly away: 3 are left.",
+  },
   story,
   like: {
     headline: "Taking away is like eating cookies from a plate.",

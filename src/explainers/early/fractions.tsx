@@ -1,11 +1,8 @@
 "use client";
 
-import { useMemo, useState } from "react";
 import { motion } from "framer-motion";
-import { Minus, Plus, Undo2 } from "lucide-react";
-import type { Explainer } from "../types";
-import { say } from "@/lib/voice";
-import { Kid, Panel, Stage, T, TryFrame, pop, rand, rise, type Mood, type Status } from "./_kit";
+import type { Explainer, Mission } from "../types";
+import { Kid, Panel, Stage, T, TapStep, pop, rise, type Mood } from "./_kit";
 
 const C = "#D97706";
 const SHIRTS = ["#3B82F6", "#EC4899", "#22C55E", "#8B5CF6", "#F97316", "#06B6D4"];
@@ -218,102 +215,84 @@ function CompareScene() {
 }
 
 /* ------------------------------------------------------------------ */
-/* Try: cut so everyone gets a fair share                              */
+/* Guided mission                                                      */
 /* ------------------------------------------------------------------ */
 
-function FairTry() {
-  const [round, setRound] = useState(0);
-  const r = useMemo(() => ({ kids: rand(2, 4), food: (Math.random() < 0.5 ? "pizza" : "bar") as "pizza" | "bar" }), [round]);
-  const [n, setN] = useState(1);
-  const [shared, setShared] = useState(false);
-  const fair = n % r.kids === 0;
-  const status: Status = !shared ? "play" : fair ? "good" : "oops";
-  const xs = kidXs(r.kids);
-  const got = xs.map((_, i) => Array.from({ length: n }, (_, p) => p).filter((p) => p % r.kids === i).length);
-  const max = Math.max(...got);
-  const moods: Mood[] = got.map((g) => (!shared ? "think" : fair ? "happy" : g < max ? "sad" : "think"));
-
-  const FC = { cx: 200, cy: 92, r: 74 };
-  const BAR = { x: 70, y: 52, w: 260, h: 80 };
-
-  /** Centre of piece p, and where it lands in its kid's hands. */
-  const piece = (p: number) => {
-    const kid = p % r.kids;
-    const stack = Math.floor(p / r.kids);
-    const land = { x: xs[kid] + 22 + stack * 7, y: 214 - stack * 9 };
-    if (r.food === "pizza") {
-      const d = dir((p + 0.5) / n);
-      const c = n === 1 ? { x: FC.cx, y: FC.cy } : { x: FC.cx + d.x * FC.r * 0.55, y: FC.cy + d.y * FC.r * 0.55 };
-      return { c, land };
-    }
-    return { c: { x: BAR.x + (p + 0.5) * (BAR.w / n), y: BAR.y + BAR.h / 2 }, land };
-  };
-
-  const share = () => {
-    setShared(true);
-    if (n % r.kids === 0) say(n === r.kids ? `Fair! Everyone gets one ${["", "", "half", "third", "quarter"][r.kids]}.` : "Fair! Everyone gets the same.");
-    else say(n < r.kids ? "Oh no, someone has no piece!" : "Oh no, that's not fair!");
-  };
-  const another = () => {
-    setN(1);
-    setShared(false);
-    setRound((x) => x + 1);
-  };
-
+/** The pizza cut into `n` equal slices for `k` friends, with ¹⁄ₙ on each slice once `labels` is on. */
+function CutScene({ n, k, labels }: { n: number; k: number; labels?: boolean }) {
   return (
-    <TryFrame color={C} round={round} status={status} onAnother={another} picture={r.food === "pizza" ? "🍕" : "🍫"} prompt={`Cut the ${r.food === "pizza" ? "pizza" : "chocolate"} so all ${r.kids} friends get a fair share.`}>
-      <div className="overflow-hidden rounded-2xl border-2 border-line" style={{ background: "#FFFBEB" }}>
-        <svg viewBox="0 0 400 270" className="block h-auto w-full" style={{ maxHeight: 320 }} role="img" aria-label={`${r.food === "pizza" ? "Pizza" : "Chocolate bar"} cut into ${n} equal ${n === 1 ? "piece" : "pieces"} for ${r.kids} friends${shared ? (fair ? ". Everyone gets the same." : ". Not fair.") : ""}`}>
-          {Array.from({ length: n }, (_, p) => {
-            const { c, land } = piece(p);
-            return (
-              <motion.g key={`${round}-${n}-${p}`} initial={{ x: 0, y: 0, scale: 1 }} animate={shared ? { x: land.x - c.x, y: land.y - c.y, scale: r.food === "pizza" ? 0.5 : 0.45 } : { x: 0, y: 0, scale: 1 }} transition={{ duration: 0.7, delay: shared ? p * 0.12 : 0, ease: "easeInOut" }}>
-                {r.food === "pizza" ? (
-                  <Slice {...FC} a0={p / n} a1={(p + 1) / n} gap={n > 1 ? 4 : 0} />
-                ) : (
-                  <g>
-                    <rect x={BAR.x + p * (BAR.w / n) + 2} y={BAR.y} width={BAR.w / n - 4} height={BAR.h} rx={4} fill="#7C3F1D" stroke="#4A2410" strokeWidth={2} />
-                    <rect x={BAR.x + p * (BAR.w / n) + 7} y={BAR.y + 6} width={Math.max(2, BAR.w / n - 14)} height={BAR.h - 12} rx={3} fill="#93502A" />
-                  </g>
-                )}
-              </motion.g>
-            );
-          })}
-          <Kids k={r.kids} moods={moods} y={262} s={0.78} />
-          {shared && fair && (
-            <motion.g {...pop(0.9)}>
-              <Frac x={200} y={150} n={n / r.kids} d={n} size={22} color={C} />
+    <Stage label={n === 1 ? `One whole pizza and ${k} friends` : `The pizza is cut into ${n} equal parts for ${k} friends. Each part is one ${n === 2 ? "half" : "quarter"}.`}>
+      {Array.from({ length: n }, (_, i) => (
+        <motion.g key={`${n}-${i}`} {...pop(i * 0.12)}>
+          <Slice {...P} a0={i / n} a1={(i + 1) / n} gap={n > 1 ? 5 : 0} />
+        </motion.g>
+      ))}
+      {labels &&
+        Array.from({ length: n }, (_, i) => {
+          const d = dir((i + 0.5) / n);
+          return (
+            <motion.g key={`f${n}-${i}`} {...pop(0.6 + i * 0.12)}>
+              <Frac x={P.cx + d.x * 42} y={P.cy + d.y * 38} d={n} size={n > 2 ? 15 : 18} />
             </motion.g>
-          )}
-        </svg>
-      </div>
-
-      <div className="mt-3 flex flex-wrap items-center justify-center gap-3">
-        <div className="flex items-center gap-2" role="group" aria-label="Number of pieces">
-          <button type="button" disabled={shared || n <= 1} onClick={() => setN((v) => Math.max(1, v - 1))} className="grid h-14 w-14 place-items-center rounded-2xl border-2 border-b-4 border-line bg-surface active:translate-y-[2px] disabled:opacity-40" aria-label="Fewer pieces">
-            <Minus className="h-6 w-6" />
-          </button>
-          <motion.span key={n} initial={{ scale: 1.4 }} animate={{ scale: 1 }} className="flex min-w-[84px] items-center justify-center gap-1 text-3xl font-black">
-            <span aria-hidden>🔪</span>
-            {n}
-          </motion.span>
-          <button type="button" disabled={shared || n >= 8} onClick={() => setN((v) => Math.min(8, v + 1))} className="grid h-14 w-14 place-items-center rounded-2xl border-2 border-b-4 border-line bg-surface active:translate-y-[2px] disabled:opacity-40" aria-label="More pieces">
-            <Plus className="h-6 w-6" />
-          </button>
-        </div>
-        {!shared ? (
-          <button type="button" onClick={share} className="btn h-14 !px-6 text-white" style={{ background: C, borderColor: "#92400E" }}>
-            🤲 Share!
-          </button>
-        ) : (
-          <button type="button" onClick={() => setShared(false)} className="btn-ghost h-14 !px-5" aria-label="Take the pieces back and cut again">
-            <Undo2 className="h-5 w-5" /> 🔪
-          </button>
-        )}
-      </div>
-    </TryFrame>
+          );
+        })}
+      <Kids k={k} moods={Array.from({ length: k }, () => (labels ? "happy" : "think"))} />
+    </Stage>
   );
 }
+
+const HALF = { cx: 105, cy: 110, r: 78 };
+const QUARTER = { cx: 295, cy: 110, r: 78 };
+
+/** A half and a quarter of the same pizza; `moved` lays the quarter on top of the half. */
+function CompareScene2({ moved }: { moved: boolean }) {
+  return (
+    <Stage label={moved ? "The quarter slice is laid on top of the half: it covers only part of it, so one half is bigger" : "One half of a pizza and one quarter of the same size pizza"}>
+      <Round {...HALF} n={2} highlight={0} />
+      <Round {...QUARTER} n={4} highlight={0} />
+      <path d={wedge(QUARTER.cx, QUARTER.cy, QUARTER.r, 0, 0.25)} fill="white" opacity={0.85} />
+      <motion.g initial={{ x: 0 }} animate={{ x: moved ? HALF.cx - QUARTER.cx : 0 }} transition={{ duration: 1, ease: "easeInOut" }}>
+        <Slice {...QUARTER} a0={0} a1={0.25} />
+        <path d={wedge(QUARTER.cx, QUARTER.cy, QUARTER.r, 0, 0.25)} fill="none" stroke={C} strokeWidth={4} strokeLinejoin="round" />
+      </motion.g>
+      <Frac x={HALF.cx} y={228} d={2} size={20} color={C} />
+      <Frac x={QUARTER.cx} y={228} d={4} size={20} color={C} />
+      {moved && (
+        <motion.g {...pop(1.1)}>
+          <T x={200} y={228} size={34} color={C}>
+            {">"}
+          </T>
+        </motion.g>
+      )}
+    </Stage>
+  );
+}
+
+const mission: Mission = {
+  goal: "Cut the pizza so every friend gets a fair share.",
+  steps: [
+    {
+      task: "Cut the pizza for 2 friends.",
+      scene: (api) => <TapStep api={api} color={C} button="🔪 Cut in 2" render={(on) => <CutScene n={on ? 2 : 1} k={2} labels={on} />} />,
+      hint: "Tap the big orange button.",
+      explain: "Two **equal** parts. Each part is **one half**: ½.",
+    },
+    {
+      task: "Now cut it for 4 friends.",
+      predict: { question: "4 friends share the pizza. Will each piece be bigger or smaller?", options: ["🍕 Bigger", "🤏 Smaller"], answer: 1, trap: 0 },
+      scene: (api) => <TapStep api={api} color={C} button="🔪 Cut in 4" render={(on) => <CutScene n={on ? 4 : 2} k={4} labels={on} />} />,
+      explain: "More friends means **smaller** pieces. Each piece is **one quarter**: ¼.",
+    },
+    {
+      task: "Put the ¼ on top of the ½.",
+      predict: { question: "Which piece is bigger?", options: ["½ One half", "¼ One quarter"], answer: 0, trap: 1 },
+      scene: (api) => <TapStep api={api} color={C} button="⬅️ Move ¼" render={(on) => <CompareScene2 moved={on} />} />,
+      hint: "Tap the button. The quarter slides over.",
+      explain: "4 is a bigger number, but **¼ is a smaller piece**. The bottom number tells how many pieces the pizza is cut into.",
+    },
+  ],
+  takeaway: "A fraction is an equal part. More equal parts means smaller pieces.",
+};
 
 /* ------------------------------------------------------------------ */
 /* Story + analogy                                                     */
@@ -397,12 +376,16 @@ export const fractions: Explainer = {
   watch: [
     { title: "One pizza, two friends", say: "Here is one whole pizza, and two hungry friends.", scene: <HalvesScene /> },
     { title: "Two equal halves", say: "Cut it into two equal parts. Each part is one half.", scene: <HalvesScene cut /> },
-    { title: "Not fair!", say: "If one piece is bigger, that's not fair. Fraction parts must be the same size.", scene: <UnfairScene /> },
+    { title: "Not fair!", say: "If one piece is bigger, that's not fair. The parts must be the same size.", scene: <UnfairScene /> },
     { title: "Thirds", say: "Three friends? Cut three equal parts. Each part is one third.", scene: <ThirdsScene /> },
     { title: "Quarters", say: "Four friends share a chocolate bar. Four equal parts are called quarters.", scene: <QuartersScene /> },
     { title: "More friends, smaller pieces", say: "The more friends share, the smaller each piece gets. A half is bigger than a quarter!", scene: <CompareScene /> },
   ],
-  try: FairTry,
+  mission,
+  misconception: {
+    myth: "A bigger bottom number means a bigger piece, so ¼ is bigger than ½.",
+    truth: "A bigger bottom number means more pieces, so each piece is smaller. ½ is bigger than ¼.",
+  },
   story,
   like: {
     headline: "A fraction is like sharing a pizza fairly with friends.",

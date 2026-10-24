@@ -1,11 +1,8 @@
 "use client";
 
-import { useMemo, useState } from "react";
 import { motion } from "framer-motion";
-import { Eraser } from "lucide-react";
-import type { Explainer } from "../types";
-import { say } from "@/lib/voice";
-import { Badge, Emo, Kid, Panel, Stage, T, TryFrame, pop, rand, type Status } from "./_kit";
+import type { Explainer, Mission } from "../types";
+import { Badge, Emo, Kid, Panel, Stage, T, TapStep, pop } from "./_kit";
 
 const C = "#0D9488";
 const SIDE_COLORS = ["#2563EB", "#E11D48", "#16A34A", "#F59E0B"];
@@ -168,154 +165,66 @@ function HouseScene() {
 }
 
 /* ------------------------------------------------------------------ */
-/* Try: join the dots to build a shape                                 */
+/* Guided mission                                                      */
 /* ------------------------------------------------------------------ */
 
-const COLS = 5;
-const ROWS = 4;
-const GAP = 70;
-const DOTS: Pt[] = Array.from({ length: COLS * ROWS }, (_, i) => ({ x: 40 + (i % COLS) * GAP, y: 40 + Math.floor(i / COLS) * GAP }));
-
-type Target = "triangle" | "square" | "rectangle";
-const NAMES: Record<Target, string> = { triangle: "triangle", square: "square", rectangle: "rectangle" };
-
-function simplify(pts: Pt[]): Pt[] {
-  let cur = pts;
-  let changed = true;
-  while (changed && cur.length > 2) {
-    changed = false;
-    for (let i = 0; i < cur.length; i++) {
-      const a = cur[(i - 1 + cur.length) % cur.length];
-      const b = cur[i];
-      const c = cur[(i + 1) % cur.length];
-      if ((b.x - a.x) * (c.y - b.y) - (b.y - a.y) * (c.x - b.x) === 0) {
-        cur = cur.filter((_, k) => k !== i);
-        changed = true;
-        break;
-      }
-    }
-  }
-  return cur;
-}
-
-function classify(pts: Pt[]): { kind: Target | "other" | "none"; n: number } {
-  const s = simplify(pts);
-  const n = s.length;
-  if (n < 3) return { kind: "none", n };
-  if (n === 3) return { kind: "triangle", n };
-  if (n === 4) {
-    const e = s.map((p, i) => ({ x: s[(i + 1) % 4].x - p.x, y: s[(i + 1) % 4].y - p.y }));
-    const right = e.every((v, i) => v.x * e[(i + 1) % 4].x + v.y * e[(i + 1) % 4].y === 0);
-    if (right) {
-      const L = e.map((v) => v.x * v.x + v.y * v.y);
-      return { kind: L.every((l) => l === L[0]) ? "square" : "rectangle", n };
-    }
-  }
-  return { kind: "other", n };
-}
-
-function TargetIcon({ t }: { t: Target }) {
+/** Faint dotted outline of a shape still to be drawn. */
+function Ghost({ pts, label }: { pts: Pt[] | "circle"; label: string }) {
+  const ghost = { fill: "none", stroke: "#94A3B8", strokeWidth: 4, strokeDasharray: "8 8" };
   return (
-    <svg viewBox="0 0 40 40" className="h-10 w-10" aria-hidden>
-      {t === "triangle" && <polygon points="20,5 36,34 4,34" fill="#CCFBF1" stroke={C} strokeWidth={3} strokeLinejoin="round" />}
-      {t === "square" && <rect x={6} y={6} width={28} height={28} fill="#CCFBF1" stroke={C} strokeWidth={3} />}
-      {t === "rectangle" && <rect x={2} y={11} width={36} height={18} fill="#CCFBF1" stroke={C} strokeWidth={3} />}
-    </svg>
+    <Stage label={label}>
+      {pts === "circle" ? <circle cx={200} cy={130} r={90} {...ghost} /> : <polygon points={pts.map((p) => `${p.x},${p.y}`).join(" ")} strokeLinejoin="round" {...ghost} />}
+    </Stage>
   );
 }
 
-function ShapeTry() {
-  const [round, setRound] = useState(0);
-  const target = useMemo<Target>(() => (["triangle", "square", "rectangle"] as const)[rand(0, 2)], [round]);
-  const [path, setPath] = useState<number[]>([]);
-  const [closed, setClosed] = useState(false);
-  const pts = path.map((i) => DOTS[i]);
-  const result = closed ? classify(pts) : null;
-  const good = !!result && (result.kind === target || (target === "rectangle" && result.kind === "square"));
-  const status: Status = !closed ? "play" : good ? "good" : "oops";
-  const shape = closed ? simplify(pts) : pts;
-
-  const tap = (i: number) => {
-    if (closed) return;
-    if (path.length >= 3 && i === path[0]) {
-      const r = classify(pts);
-      if (r.kind === "none") {
-        setPath([]);
-        return;
-      }
-      setClosed(true);
-      const ok = r.kind === target || (target === "rectangle" && r.kind === "square");
-      const name = r.kind === "other" ? `a shape with ${r.n} sides` : `a ${r.kind}`;
-      say(ok ? `Yes! You made ${name}. ${r.n} sides and ${r.n} corners!` : `You made ${name}. Try again!`);
-      return;
-    }
-    if (path.includes(i)) {
-      if (i === path[path.length - 1]) setPath(path.slice(0, -1));
-      return;
-    }
-    setPath([...path, i]);
-    say(String(path.length + 1));
-  };
-  const clear = () => {
-    setPath([]);
-    setClosed(false);
-  };
-  const another = () => {
-    clear();
-    setRound((x) => x + 1);
-  };
-  const c = shape.length ? { x: shape.reduce((a, p) => a + p.x, 0) / shape.length, y: shape.reduce((a, p) => a + p.y, 0) / shape.length } : { x: 0, y: 0 };
-
+/** A square with equal-side ticks and corners; `turned` spins it onto its point. */
+function TurnScene({ turned }: { turned: boolean }) {
+  const c = { x: 205, y: 130 };
   return (
-    <TryFrame color={C} round={round} status={status} onAnother={another} picture={<TargetIcon t={target} />} prompt={`Join the dots to make a ${NAMES[target]}. Tap the first dot again to close it.`}>
-      <div className="overflow-hidden rounded-2xl border-2 border-line bg-white">
-        <svg viewBox="0 0 360 290" className="block h-auto w-full" style={{ maxHeight: 340, touchAction: "manipulation" }} role="group" aria-label={closed && result ? `You made a shape with ${result.n} sides and ${result.n} corners` : `Dot grid. ${path.length} dots joined.`}>
-          {closed && <motion.polygon points={shape.map((p) => `${p.x},${p.y}`).join(" ")} fill={good ? "#CCFBF1" : "#FEF3C7"} initial={{ opacity: 0 }} animate={{ opacity: 1 }} />}
-          {pts.map((p, k) => {
-            if (k === pts.length - 1 && !closed) return null;
-            const q = pts[(k + 1) % pts.length];
-            return <motion.line key={`${path[k]}-${k}`} x1={p.x} y1={p.y} x2={q.x} y2={q.y} stroke={closed ? (good ? C : "#D97706") : "#334155"} strokeWidth={7} strokeLinecap="round" initial={{ pathLength: 0 }} animate={{ pathLength: 1 }} transition={{ duration: 0.25 }} />;
-          })}
-          {DOTS.map((d, i) => {
-            const k = path.indexOf(i);
-            const isFirst = k === 0 && path.length >= 3 && !closed;
-            return (
-              <g key={i} onClick={() => tap(i)} tabIndex={0} onKeyDown={(e) => (e.key === "Enter" || e.key === " ") && (e.preventDefault(), tap(i))} style={{ cursor: closed ? "default" : "pointer" }} role="button" aria-label={`Dot ${i + 1}${k >= 0 ? ", joined" : ""}`}>
-                <circle cx={d.x} cy={d.y} r={30} fill="transparent" />
-                {isFirst && <motion.circle cx={d.x} cy={d.y} r={18} fill="none" stroke={C} strokeWidth={3} animate={{ scale: [1, 1.35, 1], opacity: [1, 0.3, 1] }} transition={{ repeat: Infinity, duration: 1.2 }} />}
-                <circle cx={d.x} cy={d.y} r={k >= 0 ? 11 : 8} fill={k >= 0 ? C : "#CBD5E1"} />
-              </g>
-            );
-          })}
-          {closed &&
-            shape.map((p, i) => {
-              const q = shape[(i + 1) % shape.length];
-              const m = out(mid(p, q), c, 18);
-              return (
-                <g key={`l${i}`}>
-                  <Badge x={m.x} y={m.y} n={i + 1} r={11} color="#2563EB" delay={0.2 + i * 0.3} />
-                  <motion.circle cx={p.x} cy={p.y} r={13} fill="#F59E0B" stroke="white" strokeWidth={3} {...pop(0.4 + shape.length * 0.3 + i * 0.25)} />
-                </g>
-              );
-            })}
-        </svg>
-      </div>
-      <div className="mt-3 flex min-h-[56px] flex-wrap items-center justify-center gap-3">
-        {closed && result && (
-          <motion.p {...pop(0.3)} className="text-center text-2xl font-black" aria-live="polite">
-            {result.kind === "other" ? `${result.n} sides` : result.kind.charAt(0).toUpperCase() + result.kind.slice(1)}
-            {result.kind === "square" && target === "rectangle" && <span className="block text-base text-muted">A square is a special rectangle!</span>}
-            <span className="ml-3 text-lg text-[#2563EB]">▬ {result.n}</span>
-            <span className="ml-3 text-lg text-[#D97706]">● {result.n}</span>
-          </motion.p>
-        )}
-        <button type="button" onClick={clear} disabled={!path.length} className="btn-ghost h-12 !px-4 disabled:opacity-40" aria-label="Clear the dots">
-          <Eraser className="h-5 w-5" />
-        </button>
-      </div>
-    </TryFrame>
+    <Stage label={turned ? "The square is turned onto its point. It still has four equal sides and four corners." : "A square with four equal sides and four corners"}>
+      <motion.g initial={{ rotate: 0 }} animate={{ rotate: turned ? 45 : 0 }} transition={{ duration: 1.2, ease: "easeInOut" }}>
+        <polygon points={SQ.map((p) => `${p.x},${p.y}`).join(" ")} fill="#CCFBF1" stroke="#2563EB" strokeWidth={9} strokeLinejoin="round" />
+        {SQ.map((p, i) => {
+          const q = SQ[(i + 1) % 4];
+          const m = mid(p, q);
+          const v = out(m, c, 9);
+          return <line key={`t${i}`} x1={m.x - (v.x - m.x)} y1={m.y - (v.y - m.y)} x2={v.x} y2={v.y} stroke="#1c2333" strokeWidth={3} strokeLinecap="round" />;
+        })}
+        {SQ.map((p, i) => (
+          <circle key={i} cx={p.x} cy={p.y} r={11} fill="#F59E0B" stroke="white" strokeWidth={3} />
+        ))}
+      </motion.g>
+      <Tally sides={4} corners={4} />
+    </Stage>
   );
 }
+
+const mission: Mission = {
+  goal: "Draw shapes and count their sides and corners.",
+  steps: [
+    {
+      task: "Tap to draw a triangle.",
+      predict: { question: "How many corners will the triangle have?", options: ["🔺 3", "🔺 4"], answer: 0 },
+      scene: (api) => <TapStep api={api} color={C} button="✏️ Draw!" render={(on) => (on ? <PolyScene pts={TRI} label="A triangle with three sides and three corners" /> : <Ghost pts={TRI} label="A dotted triangle, not drawn yet" />)} />,
+      hint: "Tap the big green button.",
+      explain: "A triangle has **3 sides** and **3 corners**.",
+    },
+    {
+      task: "Turn the square.",
+      predict: { question: "We turn the square. Is it still a square?", options: ["⬜ Yes, a square", "🔷 No, not a square"], answer: 0, trap: 1 },
+      scene: (api) => <TapStep api={api} color={C} button="🔄 Turn it" render={(on) => <TurnScene turned={on} />} />,
+      explain: "It is still a **square**: 4 equal sides and 4 corners. Turning does not change a shape.",
+    },
+    {
+      task: "Go round the circle.",
+      predict: { question: "How many corners does a circle have?", options: ["⭕ 0", "⭕ 4"], answer: 0 },
+      scene: (api) => <TapStep api={api} color={C} button="⭕ Go round" render={(on) => (on ? <CircleScene /> : <Ghost pts="circle" label="A dotted circle, not drawn yet" />)} />,
+      explain: "The dot goes all the way round and finds **no corners**. A circle is round, with no straight sides.",
+    },
+  ],
+  takeaway: "Count the sides and corners to name a shape. Turning it does not change it.",
+};
 
 /* ------------------------------------------------------------------ */
 /* Story + analogy                                                     */
@@ -391,12 +300,16 @@ export const shapes: Explainer = {
   watch: [
     { title: "Sides and corners", say: "A side is a straight line. A corner is where two sides meet.", scene: <PolyScene pts={TRI} label="A triangle being drawn, with a side and a corner pointed out" mode="plain" numbers={false} tally={false} intro /> },
     { title: "Triangle", say: "A triangle has three sides and three corners.", scene: <PolyScene pts={TRI} label="A triangle with three sides and three corners" /> },
-    { title: "Square", say: "A square has four sides, all the same length, and four corners.", scene: <PolyScene pts={SQ} label="A square with four equal sides and four corners" mode="equal" /> },
-    { title: "Rectangle", say: "A rectangle has four sides and four corners too. Two sides are long and two are short.", scene: <PolyScene pts={RECT} label="A rectangle with two long sides, two short sides and four corners" mode="pairs" /> },
+    { title: "Square", say: "A square has four sides. They are all the same length. It has four corners.", scene: <PolyScene pts={SQ} label="A square with four equal sides and four corners" mode="equal" /> },
+    { title: "Rectangle", say: "A rectangle has four sides and four corners too. Two sides are long. Two are short.", scene: <PolyScene pts={RECT} label="A rectangle with two long sides, two short sides and four corners" mode="pairs" /> },
     { title: "Circle", say: "A circle is round. It has no straight sides and no corners at all!", scene: <CircleScene /> },
     { title: "Shapes all around", say: "Look! A house made of shapes. Can you find a triangle, a rectangle, a square and a circle?", scene: <HouseScene /> },
   ],
-  try: ShapeTry,
+  mission,
+  misconception: {
+    myth: "A square turned onto its point is not a square any more.",
+    truth: "Turning a shape does not change it. It still has 4 equal sides and 4 corners, so it is still a square.",
+  },
   story,
   like: {
     headline: "Counting sides and corners is like walking round a fence.",

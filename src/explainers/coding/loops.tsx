@@ -1,14 +1,10 @@
 "use client";
 
-import { useEffect, useMemo, useState } from "react";
+import { useState } from "react";
 import { motion } from "framer-motion";
-import { Check, Play, RotateCcw } from "lucide-react";
-import clsx from "clsx";
-import type { Explainer } from "../types";
-import { sfx } from "@/lib/sound";
-import { burst } from "@/lib/confetti";
-import { Stepper } from "@/components/widgets/_shared";
-import { Art, INK, Kid, LabelBox, Robot, Stage, STAGE_INK, STAGE_MUTED, Token } from "./_art";
+import { Play } from "lucide-react";
+import type { Explainer, Mission, MissionApi } from "../types";
+import { Art, INK, Kid, LabelBox, MissionButton, Robot, Stage, STAGE_INK, STAGE_MUTED, Token, useTicker } from "./_art";
 
 const COLOR = "#16A34A";
 const TRAIL = "#22C55E";
@@ -251,160 +247,111 @@ const watch: Explainer["watch"] = [
 ];
 
 /* ------------------------------------------------------------------ */
-/* Try: program Bolt with a loop                                       */
+/* Guided mission                                                      */
 /* ------------------------------------------------------------------ */
 
-const TURNS = [45, 60, 72, 90, 120, 144] as const;
-const SHAPES: { name: string; n: number; turn: number; emoji: string }[] = [
-  { name: "Square", n: 4, turn: 90, emoji: "🟩" },
-  { name: "Triangle", n: 3, turn: 120, emoji: "🔺" },
-  { name: "Pentagon", n: 5, turn: 72, emoji: "⬟" },
-  { name: "Hexagon", n: 6, turn: 60, emoji: "⬢" },
-  { name: "Octagon", n: 8, turn: 45, emoji: "🛑" },
-  { name: "Star", n: 5, turn: 144, emoji: "⭐" },
-];
-
-function LoopTry() {
-  const [reps, setReps] = useState(2);
-  const [steps, setSteps] = useState(2);
-  const [turn, setTurn] = useState<number>(90);
-  /** Number of actions done (each lap = forward + turn). -1 = idle. */
-  const [t, setT] = useState(-1);
-  const [made, setMade] = useState<string[]>([]);
-
-  const side = steps * 40;
-  const pts = useMemo(() => walk(reps, side, turn), [reps, side, turn]);
-  const total = reps * 2;
+/** Bolt runs `repeat n: forward, turn right` one action at a time after Run is pressed. */
+function StepShape({ done, complete, pts, turn, code, color }: MissionApi & { pts: Pt[]; turn: number; code: string[]; color: string }) {
+  const n = pts.length - 1;
+  const total = n * 2;
+  const [t, setT] = useState(-1); // actions done; -1 = not started
   const running = t >= 0 && t < total;
-  const finished = t >= total;
-
-  // viewBox that fits the whole planned path
-  const vb = useMemo(() => {
-    const xs = pts.map((p) => p.x);
-    const ys = pts.map((p) => p.y);
-    const pad = 34;
-    let minX = Math.min(...xs) - pad;
-    let minY = Math.min(...ys) - pad;
-    let w = Math.max(...xs) - Math.min(...xs) + pad * 2;
-    let h = Math.max(...ys) - Math.min(...ys) + pad * 2;
-    const size = Math.max(w, h, 200);
-    minX -= (size - w) / 2;
-    minY -= (size - h) / 2;
-    w = h = size;
-    return { minX, minY, size };
-  }, [pts]);
-
-  useEffect(() => {
-    if (!running) return;
-    const id = setTimeout(() => setT((x) => x + 1), 420);
-    return () => clearTimeout(id);
-  }, [running, t]);
-
-  const home = Math.hypot(pts[pts.length - 1].x, pts[pts.length - 1].y) < 0.5;
-  const shape = SHAPES.find((s) => s.n === reps && s.turn === turn);
-
-  useEffect(() => {
-    if (t !== total) return;
-    if (home) {
-      sfx("correct");
-      if (shape && !made.includes(shape.name)) {
-        setMade((m) => [...m, shape.name]);
-        burst();
-      }
-    } else sfx("wrong");
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [t]);
-
-  // where Bolt is right now
-  const lap = Math.max(0, Math.min(reps - 1, Math.floor(Math.max(t, 0) / 2)));
+  useTicker(running, 300, () => setT((x) => x + 1));
   const corners = t < 0 ? 0 : Math.ceil(t / 2);
-  const pos = pts[Math.min(corners, pts.length - 1)];
+  const pos = pts[Math.min(corners, n)];
   const heading = t < 0 ? 0 : Math.floor(t / 2) * turn;
-  const trail = pts.slice(0, corners + 1);
-  const line = !running ? -1 : t % 2 === 0 ? 1 : 2;
-
-  const change = (fn: () => void) => {
-    fn();
-    setT(-1);
-  };
-
+  const lap = t < 0 ? 0 : Math.min(n, Math.floor(t / 2) + 1);
   return (
-    <div className="select-none">
-      <div className="grid gap-4 md:grid-cols-[1fr_260px]">
-        <div className="overflow-hidden rounded-2xl border-2 border-line bg-surface-2">
-          <svg viewBox={`${vb.minX} ${vb.minY} ${vb.size} ${vb.size}`} role="img" aria-label={`Bolt's drawing area. Bolt has drawn ${Math.max(0, trail.length - 1)} sides.`} className="mx-auto h-auto w-full" style={{ maxHeight: 320 }}>
-            {/* home pad */}
-            <circle cx={0} cy={0} r={18} fill="rgb(var(--warn) / 0.25)" stroke="rgb(var(--warn))" strokeWidth={2} strokeDasharray="4 3" />
-            <text x={0} y={34} textAnchor="middle" fontSize={11} fontWeight={800} fill={STAGE_MUTED}>
-              home
-            </text>
-            {/* ghost of the plan */}
-            <path d={toPath(pts)} stroke="rgb(var(--line))" strokeWidth={4} strokeDasharray="6 6" fill="none" strokeLinejoin="round" />
-            {trail.length > 1 && <path d={toPath(trail)} stroke={TRAIL} strokeWidth={7} strokeLinecap="round" strokeLinejoin="round" fill="none" />}
-            <motion.g initial={false} animate={{ x: pos.x, y: pos.y, rotate: heading }} transition={{ duration: 0.38, ease: "easeInOut" }}>
-              <TopBot s={1.1} />
-            </motion.g>
-          </svg>
-        </div>
-
-        <div className="flex flex-col gap-3">
-          {/* the program */}
-          <div className="rounded-2xl bg-[#111827] p-3 font-mono text-[15px] font-bold text-gray-100" aria-live="polite">
-            <p className={clsx("rounded px-1", running && "bg-green-800")}>
-              repeat <span className="text-green-300">{reps}</span>:
-            </p>
-            <p className={clsx("rounded px-1 pl-6 transition-colors", line === 1 && "bg-amber-600")}>
-              forward(<span className="text-sky-300">{steps}</span>)
-            </p>
-            <p className={clsx("rounded px-1 pl-6 transition-colors", line === 2 && "bg-amber-600")}>
-              turn_right(<span className="text-pink-300">{turn}</span>)
-            </p>
-            <p className="mt-2 text-xs text-gray-400">{t >= 0 ? `lap ${lap + 1} of ${reps}` : "press Run"}</p>
-          </div>
-
-          <Stepper label="Repeat" value={reps} min={1} max={8} onChange={(v) => change(() => setReps(v))} />
-          <Stepper label="Steps" value={steps} min={1} max={3} onChange={(v) => change(() => setSteps(v))} />
-          <div>
-            <p className="mb-1 text-sm font-medium text-muted">Turn right by</p>
-            <div className="grid grid-cols-6 gap-1">
-              {TURNS.map((d) => (
-                <button key={d} type="button" aria-pressed={turn === d} onClick={() => change(() => setTurn(d))} className={clsx("h-11 rounded-xl border-2 font-mono text-sm font-black", turn === d ? "border-transparent text-white" : "border-line bg-surface text-ink")} style={turn === d ? { background: COLOR } : undefined}>
-                  {d}°
-                </button>
-              ))}
-            </div>
-          </div>
-          <div className="flex gap-2">
-            <button type="button" className="btn-good min-h-[48px] flex-1" onClick={() => setT(0)} disabled={running}>
-              <Play className="h-4 w-4" /> Run
-            </button>
-            <button type="button" className="btn-ghost min-h-[48px]" onClick={() => setT(-1)} aria-label="Reset Bolt">
-              <RotateCcw className="h-4 w-4" />
-            </button>
-          </div>
-        </div>
-      </div>
-
-      <div className={clsx("mt-4 min-h-[3rem] rounded-2xl px-4 py-3 font-bold", finished ? (home ? "bg-good/10 text-good" : "bg-warn/15 text-ink") : "bg-surface-2 text-muted")} aria-live="polite">
-        {!finished && !running && "Set the numbers, then press Run. Can Bolt get back home?"}
-        {running && `Bolt is running lap ${lap + 1}… the same two lines, again and again.`}
-        {finished && home && `Back home! ${reps} laps × ${turn}° = ${reps * turn}° of turning${reps * turn > 360 ? ` — that's ${reps * turn / 360} full spins` : " — one full spin"}.${shape ? ` You drew a ${shape.name.toLowerCase()}!` : ""}`}
-        {finished && !home && `Not home yet. Bolt turned ${reps} × ${turn}° = ${reps * turn}° in total. To come home, the turns must add up to 360° (or 720°…). Try more laps!`}
-      </div>
-
-      <div className="mt-3 flex flex-wrap gap-2" aria-label="Shapes to discover">
-        {SHAPES.map((s) => {
-          const got = made.includes(s.name);
-          return (
-            <span key={s.name} className={clsx("flex items-center gap-1 rounded-xl border-2 px-2.5 py-1 text-sm font-extrabold", got ? "border-good/50 bg-good/10 text-good" : "border-line text-muted")}>
-              {got ? <Check className="h-4 w-4" /> : <span aria-hidden>{s.emoji}</span>} {s.name}
-            </span>
-          );
-        })}
-      </div>
+    <div>
+      <Stage label={t < 0 ? "Bolt waits at the start of the grid" : `Bolt has drawn ${Math.max(0, corners)} sides`}>
+        <Grid />
+        {corners > 0 && <path d={toPath(pts.slice(0, corners + 1))} stroke={color} strokeWidth={6} strokeLinecap="round" strokeLinejoin="round" fill="none" />}
+        <motion.g initial={false} animate={{ x: pos.x, y: pos.y, rotate: heading }} transition={{ duration: 0.34, ease: "easeInOut" }}>
+          <TopBot />
+        </motion.g>
+        <CodeCard x={252} y={52} w={146} lines={code} hl={running ? [t % 2 === 0 ? 1 : 2] : []} />
+        <text x={325} y={150} textAnchor="middle" fontSize={12} fontWeight={800} fill={STAGE_MUTED}>
+          lap
+        </text>
+        <text x={325} y={188} textAnchor="middle" fontSize={34} fontWeight={900} fill={COLOR}>
+          {lap}
+        </text>
+      </Stage>
+      <MissionButton color={COLOR} disabled={complete || t >= 0} onClick={() => {
+          setT(0);
+          done();
+        }}>
+        <Play className="h-5 w-5" /> Run
+      </MissionButton>
     </div>
   );
 }
+
+/** Runs `for i in range(4): print(i)`: the box i shows each value and the output fills up. */
+function StepRange({ done, complete }: MissionApi) {
+  const [k, setK] = useState(-1); // values printed so far - 1
+  const running = k >= 0 && k < 3;
+  useTicker(running, 600, () => setK((x) => x + 1));
+  return (
+    <div>
+      <Stage label={k < 0 ? "A for loop that has not run yet" : `The loop has printed ${Array.from({ length: k + 1 }, (_, n) => n).join(", ")}`}>
+        <CodeCard x={14} y={40} w={180} lines={["for i in range(4):", "    print(i)"]} hl={k >= 0 ? [1] : []} />
+        <LabelBox x={104} y={140} w={100} h={64} name="i" color="#F97316">
+          {k >= 0 && (
+            <motion.g key={k} initial={{ x: 104, y: 100, opacity: 0 }} animate={{ x: 104, y: 132, opacity: 1 }} transition={{ type: "spring", stiffness: 200, damping: 16 }}>
+              <Token text={String(k)} />
+            </motion.g>
+          )}
+        </LabelBox>
+        <g transform="translate(240 40)">
+          <rect width={140} height={160} rx={10} fill="#111827" stroke={INK} strokeWidth={2} />
+          <text x={12} y={20} fontFamily="ui-monospace, Menlo, monospace" fontSize={11} fill="#9CA3AF">
+            output
+          </text>
+          {Array.from({ length: k + 1 }, (_, n) => (
+            <motion.text key={n} x={16} y={50 + n * 28} fontFamily="ui-monospace, Menlo, monospace" fontSize={20} fontWeight={800} fill="#4ADE80" initial={{ opacity: 0 }} animate={{ opacity: 1 }}>
+              {n}
+            </motion.text>
+          ))}
+        </g>
+      </Stage>
+      <MissionButton color={COLOR} disabled={complete || k >= 0} onClick={() => {
+          setK(0);
+          done();
+        }}>
+        <Play className="h-5 w-5" /> Run
+      </MissionButton>
+    </div>
+  );
+}
+
+const mission: Mission = {
+  goal: "Make Bolt draw shapes with a loop, then run a real Python loop.",
+  steps: [
+    {
+      task: "Press Run and count Bolt's sides.",
+      predict: { question: "The loop says repeat 4. How many sides will Bolt draw?", options: ["3", "4", "5"], answer: 1 },
+      scene: (api) => <StepShape {...api} pts={SQ} turn={90} code={["repeat 4:", "    forward", "    turn right"]} color={TRAIL} />,
+      hint: "Tap the green Run button and watch the lap number.",
+      explain: "A **loop** repeats the lines inside it. Each time round is called a **lap** (or *iteration*). repeat 4 means exactly 4 laps, so Bolt draws exactly 4 sides — not one more, not one less.",
+    },
+    {
+      task: "Run the loop with repeat 6.",
+      predict: { question: "Now it says repeat 6 and turn 60°. What will Bolt draw?", options: ["A square again", "A shape with 6 sides", "Just one long line"], answer: 1 },
+      scene: (api) => <StepShape {...api} pts={HEX} turn={60} code={["repeat 6:", "    forward", "    turn right 60"]} color="#0EA5E9" />,
+      hint: "The 4 is already changed to 6 for you. Just tap Run.",
+      explain: "Changing **one number** gives a whole new shape: 6 laps make a **hexagon**. Without a loop you would have to write 12 lines; with it, just 3.",
+    },
+    {
+      task: "Run this Python loop.",
+      predict: { question: "What will for i in range(4) print?", options: ["1 2 3 4", "0 1 2 3", "0 1 2 3 4"], answer: 1 },
+      scene: (api) => <StepRange {...api} />,
+      hint: "Tap Run and watch the box called i.",
+      explain: "range(4) gives 4 numbers, but Python **starts counting at 0**: 0, 1, 2, 3. The **loop variable** i holds the lap number, so the loop still runs exactly 4 times.",
+    },
+  ],
+  takeaway: "A loop repeats the same lines a set number of times — range(4) runs 4 laps, counting 0, 1, 2, 3.",
+};
 
 /* ------------------------------------------------------------------ */
 /* Story + analogy                                                     */
@@ -524,12 +471,13 @@ export const loopsExplainer: Explainer = {
   title: "Loops repeat steps",
   tagline: "Write it once, repeat it many times — watch Bolt draw shapes.",
   area: "Coding",
-  ages: "7–16",
+  ages: "10–14",
   lessons: ["python/control-flow/loops", "javascript/loops-functions/loops"],
   color: COLOR,
   icon: "🔁",
   watch,
-  try: LoopTry,
+  misconception: { myth: "A loop runs one time more (or one time less) than the number you give it.", truth: "repeat 4 or range(4) runs exactly 4 times. Python just counts those laps from 0: 0, 1, 2, 3." },
+  mission,
   story,
   like,
 };
