@@ -3039,7 +3039,7 @@ public class BinarySearch
             rows: [
               ["`equals(t)`", "true if exactly the same, case included", "`s.equals(\"kolkata\")` → false"],
               ["`equalsIgnoreCase(t)`", "true if same, ignoring case", "`s.equalsIgnoreCase(\"kolkata\")` → true"],
-              ["`compareTo(t)`", "0 if equal; else the difference of the first unequal characters' codes", "`s.compareTo(\"Kochi\")` → 9"],
+              ["`compareTo(t)`", "0 if equal; else the difference of the first unequal characters' codes (or of the lengths, if one String is the start of the other)", "`s.compareTo(\"Kochi\")` → 9"],
               ["`compareToIgnoreCase(t)`", "same as compareTo, ignoring case", "`\"apple\".compareToIgnoreCase(\"APPLE\")` → 0"],
             ],
           },

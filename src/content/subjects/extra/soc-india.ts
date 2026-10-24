@@ -1402,7 +1402,7 @@ export const topics: Topic[] = [
               ["**Satyashodhak Samaj**", "Jyotiba Phule, 1873", "Equality for lower castes and women; against caste domination"],
               ["**Arya Samaj**", "Swami Dayananda Saraswati, 1875, Bombay", "'Go back to the Vedas'; against idol worship, caste by birth and child marriage; book *Satyarth Prakash*; DAV schools"],
               ["**Ramakrishna Mission**", "Swami Vivekananda, 1897", "Teachings of Ramakrishna Paramahamsa; service to the poor as service to God; spoke at Chicago in 1893"],
-              ["**Aligarh Movement**", "Sir Syed Ahmad Khan", "Modern Western education for Muslims; Muhammadan Anglo-Oriental College, Aligarh (1875)"],
+              ["**Aligarh Movement**", "Sir Syed Ahmad Khan", "Modern Western education for Muslims; Muhammadan Anglo-Oriental (MAO) school at Aligarh (1875), which became MAO College"],
               ["**SNDP Yogam**", "Sri Narayana Guru, 1903, Kerala", "'One caste, one religion, one God for man'; temples open to all"],
             ],
           },
@@ -1466,7 +1466,7 @@ export const topics: Topic[] = [
             items: [
               "Reformers fought sati, child marriage, caste and untouchability, and supported women's education.",
               "Brahmo Samaj (Roy, 1828), Prarthana Samaj (1867), Satyashodhak Samaj (Phule, 1873), Arya Samaj (Dayananda, 1875), Ramakrishna Mission (Vivekananda, 1897).",
-              "Sir Syed Ahmad Khan: modern education for Muslims, MAO College (1875).",
+              "Sir Syed Ahmad Khan: modern education for Muslims, MAO school at Aligarh (1875).",
               "Laws: abolition of sati (1829), Widow Remarriage Act (1856).",
               "Reform built pride and unity, preparing the way for nationalism.",
             ],
@@ -1479,7 +1479,7 @@ export const topics: Topic[] = [
           { front: "Satyashodhak Samaj", back: "Founded by Jyotiba Phule in 1873; equality for lower castes and women." },
           { front: "Year sati was abolished", back: "1829, under Lord William Bentinck." },
           { front: "Who campaigned for the Widow Remarriage Act (1856)?", back: "Ishwar Chandra Vidyasagar." },
-          { front: "Aligarh Movement", back: "Sir Syed Ahmad Khan; Western education for Muslims; MAO College, 1875." },
+          { front: "Aligarh Movement", back: "Sir Syed Ahmad Khan; Western education for Muslims; MAO school at Aligarh, 1875 (later MAO College)." },
         ],
         quiz: [
           {
@@ -1522,7 +1522,7 @@ export const topics: Topic[] = [
             q: "Sir Syed Ahmad Khan's main aim was to:",
             options: ["Start an armed revolt", "Spread modern Western education among Muslims", "Form the Muslim League", "Revive the Mughal empire"],
             answer: 1,
-            explain: "He founded the MAO College at Aligarh in 1875. The Muslim League came later (1906), after his death.",
+            explain: "He founded the MAO school at Aligarh in 1875, which later became a college. The Muslim League came later (1906), after his death.",
           },
         ],
       },
@@ -2260,7 +2260,7 @@ export const topics: Topic[] = [
             type: "list",
             items: [
               "**Gandhi-Irwin Pact (5 March 1931):** Gandhi called off the movement and agreed to attend the **Second Round Table Conference** in London; the government agreed to release political prisoners.",
-              "The conference (December 1931) failed. Gandhi restarted the movement, but by **1934** it had lost momentum.",
+              "The conference (September–December 1931) failed. Gandhi restarted the movement, but by **1934** it had lost momentum.",
               "**Dr B.R. Ambedkar** organised the Depressed Classes into an association in 1930 and asked for **separate electorates** for them. Gandhi fasted against this. The **Poona Pact (September 1932)** gave **reserved seats** for the Depressed Classes, elected by the general electorate.",
             ],
           },
@@ -2363,7 +2363,7 @@ export const topics: Topic[] = [
             kind: "order",
             q: "Arrange in order.",
             items: ["Lahore session", "Dandi March", "Gandhi-Irwin Pact", "Second Round Table Conference"],
-            explain: "December 1929 → March–April 1930 → March 1931 → December 1931.",
+            explain: "December 1929 → March–April 1930 → March 1931 → late 1931.",
             difficulty: 2,
             hint: "Gandhi went to the conference because of the Pact.",
           },
