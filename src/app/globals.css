@@ -69,6 +69,11 @@ body {
   -moz-osx-font-smoothing: grayscale;
 }
 
+/* Long compound words (common in Kannada and Hindi) must wrap instead of widening the page. */
+:where(h1, h2, h3) {
+  overflow-wrap: break-word;
+}
+
 ::selection {
   background: rgb(var(--accent) / 0.25);
 }
