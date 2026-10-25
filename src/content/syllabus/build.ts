@@ -7,6 +7,8 @@ export type Row = readonly [title: string, topic: TopicKey, weightage?: number];
 
 /** Build a subject from rows; chapter ids are `${prefix}:${subjectId}:${n}`. */
 export function subject(prefix: string, id: string, name: string, rows: readonly Row[]): SyllabusSubject {
+  // Lessons linked to "<grade>:<title>" (e.g. "9:Triangles") apply to that grade only and replace the shared "<title>" links.
+  const grade = prefix.split(":")[1];
   return {
     id,
     name,
@@ -17,7 +19,11 @@ export function subject(prefix: string, id: string, name: string, rows: readonly
         title,
         unitNo: i + 1,
         weightage,
-        lessonIds: [...new Set([...(CHAPTER_LESSONS[`${key.split(".")[0]}|${title}`] ?? []), ...t.lessons])],
+        lessonIds: (() => {
+          const fam = key.split(".")[0];
+          const byGrade = CHAPTER_LESSONS[`${fam}|${grade}:${title}`];
+          return [...new Set(byGrade ?? [...(CHAPTER_LESSONS[`${fam}|${title}`] ?? []), ...t.lessons])];
+        })(),
         examChapters: t.exam ? [...t.exam.chapters] : [],
         examSubject: t.exam?.subject,
         formulaChapter: t.formula,

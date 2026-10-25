@@ -6,6 +6,7 @@
 import { subject } from "./build";
 import * as N from "./ncert";
 import * as X from "./class10";
+import * as Y from "./class9";
 import type { SyllabusBoard } from "./types";
 
 const BOARD_EXAM = { name: "CBSE board exams", month: 2, day: 15 };
@@ -19,7 +20,19 @@ export const CBSE: SyllabusBoard = {
       id: "9",
       name: "Class 9",
       exam: { name: "Annual exams", month: 3, day: 1 },
-      subjects: [subject("cbse:9", "science", "Science", N.SCIENCE_9), subject("cbse:9", "maths", "Mathematics", N.MATHS_9)],
+      subjects: [
+        subject("cbse:9", "science", "Science", N.SCIENCE_9),
+        subject("cbse:9", "maths", "Mathematics", N.MATHS_9),
+        subject("cbse:9", "history", "History", Y.CBSE_HISTORY_9),
+        subject("cbse:9", "geography", "Geography", Y.CBSE_GEOGRAPHY_9),
+        subject("cbse:9", "civics", "Political Science", Y.CBSE_CIVICS_9),
+        subject("cbse:9", "economics", "Economics", Y.CBSE_ECONOMICS_9),
+        subject("cbse:9", "english", "English · Grammar and Writing", Y.CBSE_ENGLISH_9),
+        subject("cbse:9", "hindi", "Hindi · Grammar and Writing", Y.CBSE_HINDI_9),
+        subject("cbse:9", "kannada", "Kannada · Grammar and Writing", Y.KANNADA_9),
+        subject("cbse:9", "computers", "Computer Applications", Y.CBSE_COMPUTERS_9),
+        subject("cbse:9", "gk", "General Knowledge", Y.GK_9),
+      ],
     },
     {
       id: "10",
