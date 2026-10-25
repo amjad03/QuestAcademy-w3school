@@ -68,6 +68,21 @@ export const biologySchool: Subject = {
               ],
             },
             {
+              type: "activity",
+              activity: {
+                kind: "match",
+                prompt: "Match each organelle to its job.",
+                pairs: [
+                  ["Nucleus", "Holds DNA and controls the cell"],
+                  ["Mitochondria", "Release energy from food"],
+                  ["Ribosomes", "Make proteins"],
+                  ["Golgi apparatus", "Packages and sends out proteins"],
+                  ["Lysosomes", "Break down waste and worn-out parts"],
+                ],
+                explain: "Each organelle does one main job. Remember the factory: **nucleus** = head office, **mitochondria** = power station, **ribosomes** = assembly line, **Golgi** = post office, **lysosomes** = recycling crew.",
+              },
+            },
+            {
               type: "checkpoint",
               questions: [
                 {
@@ -85,6 +100,24 @@ export const biologySchool: Subject = {
               md: "**Prokaryotic** cells (bacteria) are small and simple, with no true nucleus — their DNA floats in the cytoplasm. **Eukaryotic** cells (plants, animals, fungi) have a nucleus wrapped in a membrane and many membrane-bound organelles.",
             },
             {
+              type: "example",
+              title: "Identify the cell",
+              problem: "Under a microscope, a student sees a tiny cell. Its DNA lies loose in the cytoplasm, with no membrane around it, and there are no mitochondria. Is it prokaryotic or eukaryotic? Give one example of such a cell.",
+              steps: [
+                "Check the nucleus: the DNA is not wrapped in a **nuclear membrane**, so there is no true nucleus. The region where the DNA lies is called the **nucleoid**.",
+                "Check the organelles: there are no membrane-bound organelles such as mitochondria.",
+                "No true nucleus and no membrane-bound organelles are the two signs of a **prokaryotic** cell.",
+                "Prokaryotes are bacteria (and blue-green algae, also called cyanobacteria).",
+              ],
+              answer: "It is a **prokaryotic** cell, for example a bacterium.",
+            },
+            {
+              type: "mistake",
+              wrong: "Mitochondria make energy for the cell.",
+              right: "Mitochondria **release** the energy stored in food (glucose) by **aerobic respiration**, and store it as **ATP**.",
+              why: "The nickname 'powerhouse' makes it sound as if energy is made from nothing. Energy cannot be created; mitochondria only set free the chemical energy already locked in food.",
+            },
+            {
               type: "keypoints",
               items: [
                 "All living things are made of cells, and cells come from cells.",
@@ -99,6 +132,7 @@ export const biologySchool: Subject = {
             { front: "Ribosome", back: "Site of protein synthesis." },
             { front: "Prokaryotic cell", back: "A cell without a true nucleus, e.g. a bacterium." },
             { front: "Who first named cells?", back: "Robert Hooke, in 1665, looking at cork." },
+            { front: "Lysosome", back: "A sac of digestive enzymes that breaks down waste; called the 'suicide bag' of the cell." },
           ],
           quiz: [
             {
@@ -131,6 +165,32 @@ export const biologySchool: Subject = {
               ],
               answers: [0, 2, 3],
               explain: "Cell theory says cells only come from other cells, not from non-living matter.",
+            },
+            {
+              kind: "mcq",
+              q: "Which organelle is called the 'suicide bag' of the cell?",
+              options: ["Lysosome", "Golgi apparatus", "Ribosome", "Mitochondrion"],
+              answer: 0,
+              difficulty: 2,
+              hint: "Think of the organelle full of digestive enzymes.",
+              explain: "If a lysosome bursts, its enzymes can digest the cell itself, so it is called the 'suicide bag'.",
+            },
+            {
+              kind: "truefalse",
+              q: "Mitochondria create new energy for the cell out of nothing.",
+              answer: false,
+              difficulty: 2,
+              hint: "Can energy ever be created?",
+              explain: "Mitochondria only release the energy already stored in glucose, by aerobic respiration.",
+            },
+            {
+              kind: "mcq",
+              q: "A cell has DNA but no nuclear membrane and no mitochondria. What is it most likely to be?",
+              options: ["A cheek cell", "An onion peel cell", "A bacterium", "A red blood cell"],
+              answer: 2,
+              difficulty: 3,
+              hint: "No true nucleus and no membrane-bound organelles.",
+              explain: "These are the signs of a prokaryotic cell, such as a bacterium. (A mature red blood cell has no DNA at all.)",
             },
           ],
         },
@@ -177,6 +237,41 @@ export const biologySchool: Subject = {
             {
               type: "text",
               md: "**Osmosis** is the diffusion of **water** across a partially permeable membrane, from a dilute solution (lots of water) to a concentrated solution (less water).\n\n- Plant cell in pure water → water enters, vacuole swells, cell becomes **turgid** (firm). The cell wall stops it bursting.\n- Plant cell in salty water → water leaves, cell becomes **flaccid** and the membrane may pull away from the wall (**plasmolysis**).",
+            },
+            {
+              type: "activity",
+              activity: {
+                kind: "sort",
+                prompt: "Do these cells gain water or lose water?",
+                groups: ["Gain water (swell)", "Lose water (shrink)"],
+                items: [
+                  { text: "Raisins soaked in plain water", group: 0, hint: "The water outside is more dilute than the sugary raisin." },
+                  { text: "Wilted lettuce dipped in cold water", group: 0, hint: "Water enters and the leaf becomes turgid again." },
+                  { text: "Grapes kept in thick sugar syrup", group: 1, hint: "The syrup is more concentrated than the cell sap." },
+                  { text: "Raw mango pieces covered in salt for pickle", group: 1, hint: "Salt makes the outside very concentrated." },
+                  { text: "Onion peel in strong salt solution", group: 1, hint: "This is how plasmolysis is shown in the lab." },
+                  { text: "Potato strip in pure water", group: 0, hint: "Pure water is the most dilute solution there is." },
+                ],
+                explain: "Water always moves by osmosis towards the **more concentrated** solution. Plain water outside → water goes in. Salt or sugar outside → water comes out.",
+              },
+            },
+            {
+              type: "example",
+              title: "Potato strip experiment",
+              problem: "Two potato strips are each cut 5.0 cm long. Strip A is placed in pure water and strip B in a strong salt solution. After 30 minutes, A is 5.4 cm and B is 4.6 cm. Explain both results.",
+              steps: [
+                "Find the change: A grew by 5.4 − 5.0 = 0.4 cm; B shrank by 5.0 − 4.6 = 0.4 cm.",
+                "Strip A: pure water outside is more dilute than the cell sap, so water enters the cells by **osmosis**. The cells become **turgid** and the strip gets longer and firmer.",
+                "Strip B: the salt solution is more concentrated than the cell sap, so water leaves the cells by osmosis. The cells become **flaccid** and the strip gets shorter and floppy.",
+                "The cell membrane is **partially permeable**: it lets water through but not most of the salt.",
+              ],
+              answer: "A gained water (endosmosis) and lengthened by 0.4 cm; B lost water (exosmosis) and shortened by 0.4 cm.",
+            },
+            {
+              type: "mistake",
+              wrong: "In osmosis, water moves from the concentrated solution to the dilute one.",
+              right: "Water moves from the **dilute** solution (more water) to the **concentrated** solution (less water).",
+              why: "Learners mix up the solute and the water. Think about the water itself: it moves from where there is more water to where there is less, just like any diffusion.",
             },
             {
               type: "checkpoint",
@@ -239,6 +334,23 @@ export const biologySchool: Subject = {
               q: "The green pigment in chloroplasts is called ___.",
               answer: ["chlorophyll"],
               explain: "Chlorophyll absorbs light energy, mainly red and blue light.",
+            },
+            {
+              kind: "mcq",
+              q: "A red blood cell is placed in pure water. What happens?",
+              options: ["It shrinks", "It swells and may burst", "It becomes plasmolysed", "Nothing happens"],
+              answer: 1,
+              difficulty: 3,
+              hint: "An animal cell has no cell wall to push back.",
+              explain: "Water enters by osmosis. With no cell wall to resist, the cell swells and can burst.",
+            },
+            {
+              kind: "truefalse",
+              q: "Plant cells do not have mitochondria, because chloroplasts make all their energy.",
+              answer: false,
+              difficulty: 2,
+              hint: "Do plant cells respire?",
+              explain: "Plant cells have both chloroplasts (for photosynthesis) and mitochondria (for respiration).",
             },
           ],
         },

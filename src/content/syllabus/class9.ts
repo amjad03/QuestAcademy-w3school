@@ -34,7 +34,8 @@ export const CBSE_HINDI_9 = hin([
   "Dialogue Writing (संवाद लेखन)",
   "Unseen Passage (अपठित गद्यांश)",
 ]);
-export const CBSE_COMPUTERS_9 = cmp(["Basics of Information Technology", "Cyber Safety", "Word Processing", "Presentations", "Spreadsheets", "Getting Started with Python"]);
+/** Information Technology (402) units, plus cyber safety and Python basics (Python is in AI (417)). */
+export const CBSE_COMPUTERS_9 = cmp(["Introduction to IT–ITeS Industry", "Data Entry and Keyboarding Skills", "Digital Documentation", "Electronic Spreadsheet", "Digital Presentation", "Cyber Safety", "Getting Started with Python"]);
 
 /* ---------------- ICSE ---------------- */
 export const ICSE_HISTORY_9 = soc([

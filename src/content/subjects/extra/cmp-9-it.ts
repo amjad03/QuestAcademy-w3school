@@ -2810,10 +2810,11 @@ export const topics: Topic[] = [basicsOfIt, cyberSafety, wordProcessing, present
 
 /** Class 9 chapter title ("9:<exact title>") → topic slug(s) that teach it. */
 export const links: Record<string, string | string[]> = {
-  "9:Basics of Information Technology": "c9-basics-of-it",
+  "9:Introduction to IT–ITeS Industry": "c9-basics-of-it",
+  "9:Data Entry and Keyboarding Skills": "c9-basics-of-it",
+  "9:Digital Documentation": "c9-word-processing",
+  "9:Electronic Spreadsheet": "c9-spreadsheets",
+  "9:Digital Presentation": "c9-presentations",
   "9:Cyber Safety": "c9-cyber-safety",
-  "9:Word Processing": "c9-word-processing",
-  "9:Presentations": "c9-presentations",
-  "9:Spreadsheets": "c9-spreadsheets",
   "9:Getting Started with Python": "c9-getting-started-with-python",
 };

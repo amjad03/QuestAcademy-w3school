@@ -39,6 +39,24 @@ export const topics: Topic[] = [
             md: "Calyx and corolla are **accessory whorls**: they help but do not make gametes. Androecium and gynoecium are **essential whorls** because they produce the reproductive cells.",
           },
           {
+            type: "activity",
+            activity: {
+              kind: "sort",
+              prompt: "Which whorl does each part belong to?",
+              groups: ["Androecium (male)", "Gynoecium (female)", "Accessory whorls"],
+              items: [
+                { text: "Anther", group: 0, hint: "It makes pollen, so it is part of the stamen." },
+                { text: "Filament", group: 0, hint: "The stalk of the stamen." },
+                { text: "Stigma", group: 1, hint: "The sticky tip of the carpel that receives pollen." },
+                { text: "Ovary", group: 1, hint: "It holds the ovules, so it is part of the carpel." },
+                { text: "Style", group: 1, hint: "The tube joining stigma and ovary." },
+                { text: "Sepal", group: 2, hint: "Sepals form the calyx; they protect but make no gametes." },
+                { text: "Petal", group: 2, hint: "Petals form the corolla; they attract insects but make no gametes." },
+              ],
+              explain: "A **stamen** = filament + anther. A **carpel** = stigma + style + ovary. Sepals and petals are **accessory** because they make no gametes.",
+            },
+          },
+          {
             type: "illustration",
             emoji: "🌺",
             caption: "Hibiscus (China rose): five sepals, five petals, many stamens fused into a tube around the style, and a five-lobed stigma.",
@@ -74,16 +92,17 @@ export const topics: Topic[] = [
               },
             ],
           },
-          { type: "heading", text: "Worked example: describing a mustard flower" },
           {
-            type: "list",
-            ordered: true,
-            items: [
+            type: "example",
+            title: "Describing a mustard flower",
+            problem: "Study a mustard flower whorl by whorl and classify it as complete or incomplete, bisexual or unisexual, and actinomorphic or zygomorphic.",
+            steps: [
               "Calyx: 4 free sepals. Corolla: 4 yellow petals arranged like a cross.",
               "Androecium: 6 stamens (4 long, 2 short).",
               "Gynoecium: 2 fused carpels with a superior ovary.",
-              "Conclusion: complete, bisexual and actinomorphic.",
+              "All four whorls are present, so it is **complete**; it has both stamens and carpels, so it is **bisexual**; it can be cut into equal halves along more than one plane, so it is **actinomorphic**.",
             ],
+            answer: "The mustard flower is complete, bisexual and actinomorphic.",
           },
           { type: "heading", text: "Inside the ovule" },
           {
@@ -91,10 +110,10 @@ export const topics: Topic[] = [
             md: "Each ovule is protected by **integuments**, with a small opening called the **micropyle**. Inside lies the **embryo sac**, which in most flowering plants has **7 cells and 8 nuclei**: an egg cell with two synergids at the micropylar end, three antipodal cells at the other end, and a large central cell with **two polar nuclei**.",
           },
           {
-            type: "callout",
-            tone: "exam",
-            title: "ICSE trap",
-            md: "The **anther** makes pollen, not the filament. And remember the embryo sac count: **8 nuclei but 7 cells**, because the two polar nuclei share one central cell.",
+            type: "mistake",
+            wrong: "The embryo sac has 8 cells, because it has 8 nuclei.",
+            right: "The embryo sac has **8 nuclei but only 7 cells**: egg, 2 synergids, 3 antipodals and 1 central cell.",
+            why: "Counting nuclei feels like counting cells, but the **two polar nuclei** share one large central cell. (A second ICSE trap: the **anther** makes pollen, not the filament.)",
           },
           {
             type: "keypoints",
@@ -128,6 +147,7 @@ export const topics: Topic[] = [
             answer: true,
             explain: "It lacks either the androecium or the gynoecium, so one whorl is missing.",
             difficulty: 2,
+            hint: "A complete flower must have all four whorls.",
           },
           {
             kind: "numeric",
@@ -135,6 +155,7 @@ export const topics: Topic[] = [
             answer: 8,
             explain: "There are 8 nuclei in 7 cells; the central cell holds two polar nuclei.",
             difficulty: 2,
+            hint: "Count nuclei, not cells: the central cell has two.",
           },
           {
             kind: "fill",
@@ -191,6 +212,23 @@ export const topics: Topic[] = [
             ],
           },
           {
+            type: "activity",
+            activity: {
+              kind: "sort",
+              prompt: "Insect-pollinated or wind-pollinated? Sort each feature.",
+              groups: ["Insect-pollinated", "Wind-pollinated"],
+              items: [
+                { text: "Large, bright, scented petals", group: 0, hint: "Colour and scent are signals for insects." },
+                { text: "Nectar at the base of petals", group: 0, hint: "Nectar is a reward for a visitor." },
+                { text: "Sticky or spiny pollen grains", group: 0, hint: "Sticky pollen clings to an insect's body." },
+                { text: "Huge amounts of light, dry pollen", group: 1, hint: "Wind wastes most pollen, so a lot is made." },
+                { text: "Large feathery stigma hanging out", group: 1, hint: "A net to catch pollen from the air." },
+                { text: "Small, dull petals with no scent", group: 1, hint: "The wind does not need to be attracted." },
+              ],
+              explain: "Insect flowers **attract and reward** a visitor. Wind flowers make **lots of light pollen** and have **feathery stigmas** to catch it from the air.",
+            },
+          },
+          {
             type: "callout",
             tone: "fact",
             title: "Water and birds too",
@@ -208,17 +246,17 @@ export const topics: Topic[] = [
               },
             ],
           },
-          { type: "heading", text: "Worked example: double fertilisation" },
           {
-            type: "list",
-            ordered: true,
-            items: [
-              "The pollen grain lands on the stigma and grows a **pollen tube** down the style.",
+            type: "example",
+            title: "Double fertilisation",
+            problem: "A pollen grain lands on the stigma of a pea flower. Trace what happens until fertilisation, and state the ploidy of the zygote and of the endosperm.",
+            steps: [
+              "The pollen grain grows a **pollen tube** down the style.",
               "The tube carries **two male gametes** and enters the ovule through the **micropyle**.",
-              "**Syngamy**: male gamete 1 fuses with the **egg** → **zygote (2n)** → embryo.",
-              "**Triple fusion**: male gamete 2 fuses with the **two polar nuclei** → **primary endosperm nucleus (3n)** → endosperm (food store).",
-              "Two fusions in one embryo sac = **double fertilisation**, unique to flowering plants.",
+              "**Syngamy**: male gamete 1 (n) fuses with the **egg** (n) → **zygote (2n)** → embryo.",
+              "**Triple fusion**: male gamete 2 (n) fuses with the **two polar nuclei** (n + n) → **primary endosperm nucleus (3n)** → endosperm (food store).",
             ],
+            answer: "Two fusions happen in one embryo sac (**double fertilisation**, unique to flowering plants): the zygote is **2n** and the endosperm is **3n**.",
           },
           {
             type: "formula",
@@ -238,10 +276,10 @@ export const topics: Topic[] = [
             ],
           },
           {
-            type: "callout",
-            tone: "exam",
-            title: "ICSE trap",
-            md: "Endosperm is **triploid (3n)**, the zygote is **diploid (2n)**. And pollination is *not* fertilisation: a flower can be pollinated but never fertilised if the pollen is of the wrong species.",
+            type: "mistake",
+            wrong: "Pollination and fertilisation are the same thing.",
+            right: "**Pollination** only moves pollen to the stigma. **Fertilisation** is the later fusion of a male gamete with the egg inside the ovule.",
+            why: "Both happen in the flower one after the other, so they seem like one event. But a flower can be pollinated and never fertilised, for example if the pollen is of the wrong species. (Also remember: endosperm is **3n**, zygote is **2n**.)",
           },
           {
             type: "keypoints",
@@ -282,6 +320,7 @@ export const topics: Topic[] = [
             answer: 2,
             explain: "It forms from one male gamete (n) plus two polar nuclei (n + n), so it is 3n.",
             difficulty: 2,
+            hint: "Add up the sets of chromosomes in triple fusion.",
           },
           {
             kind: "truefalse",
@@ -301,6 +340,7 @@ export const topics: Topic[] = [
             items: ["Pollen lands on stigma", "Pollen tube grows through style", "Tube enters micropyle", "Double fertilisation", "Ovary develops into fruit"],
             explain: "Pollination is followed by pollen-tube growth, entry into the ovule, fertilisation and fruit formation.",
             difficulty: 2,
+            hint: "Fertilisation happens inside the ovule; the fruit comes last.",
           },
         ],
       },
@@ -358,6 +398,21 @@ export const topics: Topic[] = [
             ],
           },
           {
+            type: "activity",
+            activity: {
+              kind: "match",
+              prompt: "Match each organism to its kingdom.",
+              pairs: [
+                ["*Anabaena* (cyanobacterium)", "Monera"],
+                ["*Amoeba*", "Protista"],
+                ["Yeast", "Fungi"],
+                ["Fern", "Plantae"],
+                ["Earthworm", "Animalia"],
+              ],
+              explain: "Ask in order: prokaryotic? → **Monera**. Unicellular eukaryote? → **Protista**. Chitin wall, absorbs food? → **Fungi**. Photosynthesises? → **Plantae**. No cell wall, eats food? → **Animalia**. Yeast is unicellular but still a fungus.",
+            },
+          },
+          {
             type: "checkpoint",
             questions: [
               {
@@ -369,17 +424,17 @@ export const topics: Topic[] = [
               },
             ],
           },
-          { type: "heading", text: "Worked example: classify the mushroom" },
           {
-            type: "list",
-            ordered: true,
-            items: [
+            type: "example",
+            title: "Classify the mushroom",
+            problem: "A mushroom grows on a rotting log. Use its features to place it in one of the five kingdoms.",
+            steps: [
               "Has a true nucleus → eukaryotic (not Monera).",
               "Multicellular body of thread-like hyphae → not Protista.",
               "No chlorophyll; absorbs food from decaying matter → heterotrophic (not Plantae).",
               "Has a cell wall made of chitin → not Animalia.",
-              "Conclusion: **Kingdom Fungi**.",
             ],
+            answer: "The mushroom belongs to **Kingdom Fungi**.",
           },
           {
             type: "callout",
@@ -388,10 +443,10 @@ export const topics: Topic[] = [
             md: "A **lichen** is a partnership (symbiosis) between a **fungus** and an **alga**: the alga makes food, the fungus gives shelter and absorbs water. Lichens grow on rocks and bark and are sensitive indicators of air pollution.",
           },
           {
-            type: "callout",
-            tone: "exam",
-            title: "Board trap",
-            md: "Fungi are **not plants**: they have no chlorophyll and their cell wall is chitin, not cellulose. In scientific names, only the **genus** starts with a capital: write *Mangifera indica*, never *Mangifera Indica*.",
+            type: "mistake",
+            wrong: "Mushrooms are plants, because they grow out of the ground and do not move.",
+            right: "Mushrooms are **fungi**: they have no chlorophyll, cannot make their own food, and their cell wall is made of **chitin**, not cellulose.",
+            why: "Fungi look like plants because they are fixed in one place, but they feed like animals, by absorbing ready-made food (**saprophytic** nutrition). (Also: in scientific names only the **genus** has a capital, so write *Mangifera indica*, never *Mangifera Indica*.)",
           },
           {
             type: "keypoints",
@@ -437,6 +492,7 @@ export const topics: Topic[] = [
             answer: ["chitin"],
             explain: "Plant cell walls are cellulose; fungal walls are chitin.",
             difficulty: 2,
+            hint: "It is the same tough material found in an insect's outer skeleton.",
           },
           {
             kind: "numeric",
@@ -451,6 +507,7 @@ export const topics: Topic[] = [
             answer: 2,
             explain: "Monera are the only prokaryotes.",
             difficulty: 2,
+            hint: "Think about the most basic difference between cells.",
           },
         ],
       },
@@ -476,6 +533,24 @@ export const topics: Topic[] = [
               ["Gymnosperms", "seeds are **naked** (not in a fruit); usually evergreen trees", "*Pinus*, *Cycas*, deodar"],
               ["Angiosperms", "seeds **enclosed in a fruit**; flowering plants", "mango, wheat, rose"],
             ],
+          },
+          {
+            type: "activity",
+            activity: {
+              kind: "sort",
+              prompt: "Sort each plant by what it has.",
+              groups: ["No vascular tissue", "Vascular tissue, no seeds", "Seeds"],
+              items: [
+                { text: "*Spirogyra*", group: 0, hint: "An alga: its body is not even divided into root, stem and leaf." },
+                { text: "Moss (*Funaria*)", group: 0, hint: "Bryophytes have no xylem or phloem." },
+                { text: "*Riccia*", group: 0, hint: "A liverwort, a bryophyte." },
+                { text: "Fern", group: 1, hint: "Pteridophytes have vascular tissue but reproduce by spores." },
+                { text: "*Marsilea*", group: 1, hint: "A water fern: spores, not seeds." },
+                { text: "*Pinus*", group: 2, hint: "A gymnosperm: naked seeds on cones." },
+                { text: "Mango", group: 2, hint: "An angiosperm: seed inside a fruit." },
+              ],
+              explain: "The three key questions: Is there **vascular tissue**? (from pteridophytes onwards) Are there **seeds**? (gymnosperms and angiosperms) Is the seed **inside a fruit**? (angiosperms only).",
+            },
           },
           {
             type: "callout",
@@ -524,10 +599,22 @@ export const topics: Topic[] = [
             ],
           },
           {
-            type: "callout",
-            tone: "exam",
-            title: "Board trap",
-            md: "**Starfish** and **jellyfish** are not fish (echinoderm and cnidarian). The **whale** and the **bat** are mammals. The **crocodile** is the reptile with a four-chambered heart. Earthworms are annelids, not nematodes.",
+            type: "example",
+            title: "Classify the whale",
+            problem: "A blue whale lives in the sea, swims with flippers and has a fish-like shape. Find its phylum and class.",
+            steps: [
+              "It has a **notochord** (replaced by a backbone), a dorsal nerve cord and gill slits in the embryo → phylum **Chordata**.",
+              "It breathes air with **lungs**, coming up to the surface to breathe → not Pisces, which use gills.",
+              "It has some **hair**, gives birth to young and feeds them **milk** from **mammary glands**.",
+              "It has a **4-chambered heart** and is **warm-blooded**.",
+            ],
+            answer: "Phylum **Chordata**, class **Mammalia**. The whale is a mammal, not a fish, even though it lives in water.",
+          },
+          {
+            type: "mistake",
+            wrong: "Starfish, jellyfish and whales are fish, because they live in the sea.",
+            right: "**Starfish** is an echinoderm, **jellyfish** is a cnidarian (coelenterate) and the **whale** is a mammal. Only animals with gills, fins and scales, such as rohu and shark, are **Pisces**.",
+            why: "Names and habitat mislead: classification uses body features, not where an animal lives or what it is called. Similarly the **bat** flies but is a mammal, the **crocodile** is the reptile with a four-chambered heart, and earthworms are annelids, not nematodes.",
           },
           {
             type: "keypoints",
@@ -586,6 +673,16 @@ export const topics: Topic[] = [
             items: ["Thallophyta", "Bryophyta", "Pteridophyta", "Gymnosperms", "Angiosperms"],
             explain: "Body differentiation, then vascular tissue, then seeds, then fruits appear in this order.",
             difficulty: 2,
+            hint: "Algae are simplest; flowering plants are the most advanced.",
+          },
+          {
+            kind: "mcq",
+            q: "An animal has a segmented body, a true body cavity and moves using bristles. It belongs to:",
+            options: ["Nematoda", "Annelida", "Arthropoda", "Platyhelminthes"],
+            answer: 1,
+            difficulty: 3,
+            hint: "Round worms are not segmented; flatworms have no body cavity.",
+            explain: "A segmented worm with a true body cavity, like the earthworm, is an annelid.",
           },
         ],
       },
@@ -634,6 +731,24 @@ export const topics: Topic[] = [
               ["Worms", "ascariasis (roundworm), filariasis (elephantiasis)"],
             ],
           },
+          {
+            type: "activity",
+            activity: {
+              kind: "sort",
+              prompt: "Which kind of pathogen causes each disease?",
+              groups: ["Bacteria", "Virus", "Protozoa"],
+              items: [
+                { text: "Tuberculosis", group: 0, hint: "Caused by *Mycobacterium*, a bacterium; treated with antibiotics." },
+                { text: "Cholera", group: 0, hint: "Caused by the bacterium *Vibrio cholerae*." },
+                { text: "Typhoid", group: 0, hint: "Caused by the bacterium *Salmonella typhi*." },
+                { text: "Dengue", group: 1, hint: "A virus carried by the *Aedes* mosquito." },
+                { text: "Polio", group: 1, hint: "The polio virus; prevented by drops, not cured by antibiotics." },
+                { text: "Malaria", group: 2, hint: "Caused by *Plasmodium*; the mosquito only carries it." },
+                { text: "Amoebic dysentery", group: 2, hint: "Caused by *Entamoeba*, a protozoan." },
+              ],
+              explain: "Mosquito-borne does not mean viral: **malaria** is protozoan but **dengue** is viral. Knowing the pathogen tells you the cure: antibiotics work only on **bacteria**.",
+            },
+          },
           { type: "heading", text: "Modes of transmission" },
           {
             type: "list",
@@ -668,22 +783,23 @@ export const topics: Topic[] = [
               },
             ],
           },
-          { type: "heading", text: "Worked example: tracing a cholera outbreak" },
           {
-            type: "list",
-            ordered: true,
-            items: [
-              "Many people in one colony suddenly get watery diarrhoea and vomiting: an acute, communicable illness.",
-              "All of them drink from the same tap; a sewage pipe is found leaking into the water line.",
+            type: "example",
+            title: "Tracing a cholera outbreak",
+            problem: "Many people in one colony suddenly get watery diarrhoea and vomiting. All of them drink from the same tap. Find the type of disease, its cause and mode of spread, and suggest how to control it.",
+            steps: [
+              "Sudden, short illness spreading among many people: an **acute, communicable** disease.",
+              "A sewage pipe is found leaking into the water line that feeds the common tap.",
               "The bacterium *Vibrio cholerae* in faeces has entered drinking water: **water-borne transmission**.",
               "Control: repair the pipe, chlorinate the water, boil drinking water, give **ORS** to patients.",
             ],
+            answer: "It is **cholera**, an acute bacterial disease spread through contaminated water; it is controlled by clean, chlorinated water and treated with ORS.",
           },
           {
-            type: "callout",
-            tone: "exam",
-            title: "Board trap",
-            md: "Only the **female** *Anopheles* spreads malaria, and malaria is caused by a **protozoan** (*Plasmodium*), not by the mosquito or a virus. Dengue is **viral** and spread by *Aedes*. Antibiotics act on bacteria, **not on viruses**.",
+            type: "mistake",
+            wrong: "Malaria is caused by the mosquito.",
+            right: "Malaria is caused by a **protozoan**, *Plasmodium*. The **female** *Anopheles* mosquito is only the **vector** that carries it from person to person.",
+            why: "We catch malaria after a mosquito bite, so the mosquito seems to be the cause. But the mosquito is just the carrier, like a delivery van. Likewise dengue is **viral** and carried by *Aedes*, and antibiotics act on bacteria, **not on viruses**.",
           },
           {
             type: "keypoints",
@@ -730,6 +846,7 @@ export const topics: Topic[] = [
             answer: 1,
             explain: "It is a mechanical carrier: germs from filth stick to its legs and land on food.",
             difficulty: 2,
+            hint: "A housefly cannot bite; think about where it sits.",
           },
           {
             kind: "mcq",
@@ -743,6 +860,16 @@ export const topics: Topic[] = [
             answer: 0,
             explain: "Antibiotics target bacterial structures; misuse also breeds resistant bacteria.",
             difficulty: 2,
+            hint: "What kind of pathogen causes a cold?",
+          },
+          {
+            kind: "mcq",
+            q: "In malaria, the female *Anopheles* mosquito is:",
+            options: ["the pathogen that causes the disease", "the vector that carries the pathogen", "a virus", "a bacterium"],
+            answer: 1,
+            difficulty: 3,
+            hint: "Separate the germ from the animal that carries it.",
+            explain: "The pathogen is the protozoan *Plasmodium*; the mosquito is only its vector.",
           },
         ],
       },
@@ -774,6 +901,23 @@ export const topics: Topic[] = [
               ["Natural passive", "ready-made antibodies from the mother", "through placenta and breast milk (colostrum)"],
               ["Artificial passive", "ready-made antibodies injected", "anti-rabies serum, anti-tetanus serum"],
             ],
+          },
+          {
+            type: "activity",
+            activity: {
+              kind: "sort",
+              prompt: "Active or passive immunity? Ask: who made the antibodies?",
+              groups: ["Active (own body makes antibodies)", "Passive (antibodies given ready-made)"],
+              items: [
+                { text: "Recovering from chickenpox", group: 0, hint: "Your body fought the germ and made its own antibodies." },
+                { text: "Polio drops", group: 0, hint: "A vaccine makes your own body produce antibodies." },
+                { text: "BCG injection at birth", group: 0, hint: "BCG is a vaccine, so the baby's body makes antibodies." },
+                { text: "Antibodies in mother's milk (colostrum)", group: 1, hint: "The baby receives the mother's ready-made antibodies." },
+                { text: "Anti-tetanus serum after a deep cut", group: 1, hint: "A serum contains ready-made antibodies." },
+                { text: "Antibodies crossing the placenta", group: 1, hint: "They were made by the mother, not the baby." },
+              ],
+              explain: "If **your own body** makes the antibodies, it is **active** (slow to start, long-lasting). If antibodies are **given** to you, it is **passive** (instant, short-lived).",
+            },
           },
           {
             type: "callout",
@@ -816,23 +960,23 @@ export const topics: Topic[] = [
               ["use clean toilets", "end open defecation (Swachh Bharat Mission, 2014)"],
             ],
           },
-          { type: "heading", text: "Worked example: making home-made ORS" },
           {
-            type: "list",
-            ordered: true,
-            items: [
-              "A child has diarrhoea and is losing water and salts: dehydration is the real danger.",
+            type: "example",
+            title: "Making home-made ORS",
+            problem: "A child has diarrhoea and is losing water and salts. No ORS packet is available. How do you prepare and give home-made ORS?",
+            steps: [
+              "Dehydration (loss of water and salts) is the real danger, so both must be replaced.",
               "Take **1 litre** of boiled and cooled water.",
               "Add **6 level teaspoons of sugar** and **half a level teaspoon of salt**; stir until dissolved.",
               "Give small sips often. Sugar helps the gut absorb salt and water.",
-              "See a doctor if there is blood in stools, high fever or the child stops drinking.",
             ],
+            answer: "1 L clean water + 6 level tsp sugar + ½ level tsp salt, given in small sips. See a doctor if there is blood in stools, high fever or the child stops drinking.",
           },
           {
-            type: "callout",
-            tone: "exam",
-            title: "ICSE trap",
-            md: "Vaccination gives **active** immunity (your body makes antibodies, so it lasts long). An antiserum gives **passive** immunity (instant but short). Also, BCG is for **tuberculosis**, not polio.",
+            type: "mistake",
+            wrong: "A vaccine gives ready-made antibodies, so it is passive immunity.",
+            right: "A vaccine gives **active** immunity: it contains dead or weakened germs, and **your own body** makes the antibodies and memory cells, so it lasts long. An **antiserum** gives **passive** immunity: instant but short.",
+            why: "Both are given as an injection or drops, so they seem the same. The difference is who makes the antibodies. (Also: BCG is for **tuberculosis**, not polio.)",
           },
           {
             type: "keypoints",
@@ -884,6 +1028,7 @@ export const topics: Topic[] = [
             answer: 6,
             explain: "WHO guidance: 6 level teaspoons of sugar and half a teaspoon of salt per litre.",
             difficulty: 2,
+            hint: "There is much more sugar than salt in the mix.",
           },
           {
             kind: "mcq",
@@ -924,6 +1069,24 @@ export const topics: Topic[] = [
               ["Problem", "smell, flies and disease if left in heaps", "piles up, blocks drains, enters food chains"],
             ],
           },
+          {
+            type: "activity",
+            activity: {
+              kind: "sort",
+              prompt: "Can microbes break it down? Sort each item.",
+              groups: ["Biodegradable", "Non-biodegradable"],
+              items: [
+                { text: "Vegetable peels", group: 0, hint: "Microbes rot them in a few days." },
+                { text: "Old newspaper", group: 0, hint: "Paper is made from plant fibre, so microbes can digest it, even though it is dry." },
+                { text: "Dry leaves", group: 0, hint: "Leaves decay into soil humus." },
+                { text: "Cow dung", group: 0, hint: "It is broken down quickly; it is even used in biogas plants." },
+                { text: "Plastic bottle", group: 1, hint: "Microbes cannot digest plastic in any useful time." },
+                { text: "Glass jar", group: 1, hint: "Glass does not rot at all." },
+                { text: "Old mobile phone", group: 1, hint: "E-waste: metals and plastics that do not break down." },
+              ],
+              explain: "The test is whether **microbes** can break it down, not whether it is wet or dry. Paper is dry but **biodegradable**; plastic, glass and e-waste are **non-biodegradable**.",
+            },
+          },
           { type: "heading", text: "Sources of waste" },
           {
             type: "table",
@@ -961,17 +1124,17 @@ export const topics: Topic[] = [
               "**Drains**: plastic bags block drains and worsen city flooding during the monsoon.",
             ],
           },
-          { type: "heading", text: "Worked example: biomagnification" },
           {
-            type: "list",
-            ordered: true,
-            items: [
-              "A non-biodegradable pesticide such as DDT washes into a lake at a very low level.",
+            type: "example",
+            title: "Biomagnification",
+            problem: "A small amount of the pesticide DDT washes from farms into a lake. Fish-eating birds at the lake later lay eggs with very thin shells. Explain how the birds got so much DDT.",
+            steps: [
+              "DDT is **non-biodegradable**: it enters the lake water at a very low level and stays there.",
               "Microscopic plankton absorb it; small fish eat lots of plankton.",
               "Bigger fish eat many small fish; fish-eating birds eat many big fish.",
               "Since DDT is not broken down or excreted, its concentration **rises at each level** of the food chain.",
-              "Top consumers (birds, humans) get the highest dose: this is **biomagnification**.",
             ],
+            answer: "The top consumers (the birds, and also humans) get the highest dose. This build-up up the food chain is **biomagnification**.",
           },
           {
             type: "callout",
@@ -980,10 +1143,10 @@ export const topics: Topic[] = [
             md: "The **Bhopal gas tragedy (1984)**, a leak of methyl isocyanate gas, killed thousands of people. **Minamata disease** in Japan came from mercury waste in seafood. Both show why industrial waste must be treated before release.",
           },
           {
-            type: "callout",
-            tone: "exam",
-            title: "ICSE trap",
-            md: "Paper is **biodegradable** even though it is a 'dry' waste. Biomagnification happens only with **non-biodegradable** substances, because biodegradable ones are broken down and do not accumulate.",
+            type: "mistake",
+            wrong: "Paper is non-biodegradable, because it goes in the dry-waste bin.",
+            right: "Paper is **biodegradable**: microbes can break it down. 'Dry' only describes how it is collected for recycling.",
+            why: "Learners mix up the wet/dry sorting of bins with whether microbes can digest a material. Paper is made of plant fibre (cellulose), which decays. (Also: biomagnification happens only with **non-biodegradable** substances, because biodegradable ones are broken down and do not accumulate.)",
           },
           {
             type: "keypoints",
@@ -1001,6 +1164,7 @@ export const topics: Topic[] = [
           { front: "Leachate", back: "Toxic liquid formed when water seeps through a garbage dump; pollutes groundwater." },
           { front: "Biomagnification", back: "Increase in the concentration of a non-biodegradable chemical at each higher level of a food chain." },
           { front: "E-waste", back: "Discarded electronic items; contain toxic metals like lead, mercury and cadmium." },
+          { front: "Non-biodegradable waste", back: "Waste that microbes cannot break down, or only over hundreds of years, e.g. plastics, glass, DDT." },
         ],
         quiz: [
           {
@@ -1035,6 +1199,16 @@ export const topics: Topic[] = [
             items: ["Lake water", "Plankton", "Small fish", "Large fish", "Fish-eating bird"],
             explain: "Concentration increases at every step up the food chain.",
             difficulty: 2,
+            hint: "The top consumer gets the highest dose.",
+          },
+          {
+            kind: "multi",
+            q: "Which of these are biodegradable?",
+            options: ["Newspaper", "Plastic bag", "Banana peel", "Aluminium can", "Cotton cloth"],
+            answers: [0, 2, 4],
+            difficulty: 2,
+            hint: "Ask whether it comes from a plant or animal, which microbes can digest.",
+            explain: "Paper, peels and cotton come from plants and are broken down by microbes. Plastic and metal are not.",
           },
         ],
       },
@@ -1079,6 +1253,20 @@ export const topics: Topic[] = [
             ],
           },
           {
+            type: "activity",
+            activity: {
+              kind: "match",
+              prompt: "Match each waste to the best way to handle it.",
+              pairs: [
+                ["Vegetable peels from the canteen", "Vermicomposting"],
+                ["Cow dung from a dairy", "Biogas plant"],
+                ["Old newspapers and glass bottles", "Recycling"],
+                ["Mixed waste that cannot be recovered", "Sanitary landfill"],
+              ],
+              explain: "Choose the method that **recovers the most**: biodegradable waste becomes manure or fuel, dry waste is recycled, and only what is left goes to a **sanitary landfill**.",
+            },
+          },
+          {
             type: "checkpoint",
             questions: [
               {
@@ -1090,17 +1278,17 @@ export const topics: Topic[] = [
               },
             ],
           },
-          { type: "heading", text: "Worked example: a school vermicompost pit" },
           {
-            type: "list",
-            ordered: true,
-            items: [
+            type: "example",
+            title: "A school vermicompost pit",
+            problem: "Your school canteen throws away a bucket of vegetable peels every day. Plan a vermicompost pit to turn this waste into manure for the school garden.",
+            steps: [
               "Make a shaded pit or tank; add a bottom layer of dry leaves and soil.",
               "Spread canteen vegetable peels and leftover food (no plastic, oil or meat).",
               "Add red earthworms and keep the bed moist, not waterlogged.",
               "Cover with gunny bags; turn the heap now and then.",
-              "In about 6–8 weeks, dark crumbly **vermicompost** is ready for the school garden.",
             ],
+            answer: "In about 6–8 weeks, dark crumbly **vermicompost** is ready for the school garden.",
           },
           {
             type: "callout",
@@ -1109,10 +1297,10 @@ export const topics: Topic[] = [
             md: "India's Biomedical Waste Management Rules, 2016 use **yellow** bags for infectious and anatomical waste (incinerated), **red** for contaminated recyclable plastics like tubing and gloves, **white translucent** puncture-proof containers for sharps such as needles, and **blue** boxes for glassware.",
           },
           {
-            type: "callout",
-            tone: "exam",
-            title: "ICSE trap",
-            md: "Composting and vermicomposting suit **biodegradable** waste only. A **sanitary landfill** is not an open dump: it is lined, covered daily and monitored. And biogas is mostly **methane**, not carbon dioxide.",
+            type: "mistake",
+            wrong: "A sanitary landfill is just a big open garbage dump.",
+            right: "A **sanitary landfill** is a **lined** pit: waste is compacted and covered with soil every day, and leachate and methane are collected and monitored.",
+            why: "Both hold garbage in the ground, so they look alike. But an open dump lets leachate reach groundwater and attracts flies and rats; a sanitary landfill is built to stop this. (Also: composting suits **biodegradable** waste only, and biogas is mostly **methane**, not carbon dioxide.)",
           },
           {
             type: "keypoints",
@@ -1158,6 +1346,7 @@ export const topics: Topic[] = [
             answer: ["white", "white translucent", "translucent white"],
             explain: "White translucent containers are used for sharps under the 2016 rules.",
             difficulty: 2,
+            hint: "Not yellow, red or blue: it is see-through.",
           },
           {
             kind: "mcq",
@@ -1178,6 +1367,7 @@ export const topics: Topic[] = [
             answer: 1,
             explain: "Mixed waste contaminates both streams, so less can be recovered.",
             difficulty: 2,
+            hint: "Think about what happens to compost when plastic is mixed in.",
           },
         ],
       },
@@ -1209,6 +1399,23 @@ export const topics: Topic[] = [
               ["Kharif (monsoon)", "June to October", "paddy, maize, soybean, pigeon pea (arhar), cotton, green gram, black gram"],
               ["Rabi (winter)", "November to April", "wheat, gram, peas, mustard, linseed"],
             ],
+          },
+          {
+            type: "activity",
+            activity: {
+              kind: "sort",
+              prompt: "Kharif or rabi? Sort each crop by its season.",
+              groups: ["Kharif (June–October)", "Rabi (November–April)"],
+              items: [
+                { text: "Paddy", group: 0, hint: "Paddy needs a lot of water, so it grows in the monsoon." },
+                { text: "Cotton", group: 0, hint: "Sown with the monsoon rains." },
+                { text: "Soybean", group: 0, hint: "A monsoon crop, common in Madhya Pradesh." },
+                { text: "Wheat", group: 1, hint: "Sown in winter, harvested around Baisakhi in April." },
+                { text: "Mustard", group: 1, hint: "Its yellow fields bloom in the winter months." },
+                { text: "Gram", group: 1, hint: "A winter pulse." },
+              ],
+              explain: "**Kharif** crops are sown with the monsoon and need warmth and water. **Rabi** crops are sown in winter and harvested in spring.",
+            },
           },
           { type: "heading", text: "Crop variety improvement" },
           {
@@ -1257,16 +1464,17 @@ export const topics: Topic[] = [
               "**Irrigation**: wells, canals, river-lift systems, tanks; plus rainwater harvesting and check-dams.",
             ],
           },
-          { type: "heading", text: "Worked example: planning a rotation" },
           {
-            type: "list",
-            ordered: true,
-            items: [
-              "A Punjab farmer grows wheat (rabi) every year and finds yields dropping: the soil is losing nitrogen.",
+            type: "example",
+            title: "Planning a rotation",
+            problem: "A Punjab farmer grows wheat (rabi) every year and finds her yields dropping. What should she grow in the kharif season, and why?",
+            steps: [
+              "Falling yields year after year point to the soil **losing nitrogen**, which wheat uses heavily.",
               "In the next kharif season she grows a **legume** such as green gram.",
               "*Rhizobium* bacteria in legume root nodules fix atmospheric nitrogen into the soil.",
               "Next rabi season, wheat gets this nitrogen and she can use less urea, saving money and protecting groundwater.",
             ],
+            answer: "She should follow **crop rotation**: a legume in kharif, then wheat in rabi, so the soil's nitrogen is restored naturally.",
           },
           {
             type: "callout",
@@ -1275,10 +1483,10 @@ export const topics: Topic[] = [
             md: "**Weeds** (e.g. *Parthenium*, *Xanthium*) compete for light and nutrients. **Insect pests** cut roots, suck sap or bore into stems. **Diseases** are caused by bacteria, fungi and viruses. In storage, grain is lost to **biotic** factors (insects, rodents, fungi, mites, bacteria) and **abiotic** factors (moisture, temperature). Dry the grain well, clean and fumigate godowns.",
           },
           {
-            type: "callout",
-            tone: "exam",
-            title: "Board trap",
-            md: "**Mixed cropping** has no row pattern; **intercropping** has a definite row pattern. Also there are **16** essential nutrients in all: 3 from air and water (C, H, O), 6 macro and 7 micro from soil.",
+            type: "mistake",
+            wrong: "Mixed cropping and intercropping are the same: both mean growing two crops in one field.",
+            right: "In **mixed cropping** the seeds are sown together with **no row pattern**. In **intercropping** the crops are sown in a **definite row pattern**, e.g. one row of maize after two rows of soybean.",
+            why: "Both put two crops in the same field at the same time, so they sound alike. The row pattern is the key: it lets each crop get its own share of nutrients and makes spraying and harvesting easier. (Also: there are **16** essential nutrients: C, H, O from air and water, 6 macro and 7 micro from soil.)",
           },
           {
             type: "keypoints",
@@ -1312,6 +1520,7 @@ export const topics: Topic[] = [
             answer: 7,
             explain: "Iron, manganese, boron, zinc, copper, molybdenum and chlorine.",
             difficulty: 2,
+            hint: "16 nutrients in all: 3 from air and water, 6 macronutrients from soil, the rest are micro.",
           },
           {
             kind: "truefalse",
@@ -1331,6 +1540,15 @@ export const topics: Topic[] = [
             options: ["Rats", "Fungi", "High moisture", "Insects"],
             answer: 2,
             explain: "Moisture and temperature are abiotic; living agents are biotic.",
+          },
+          {
+            kind: "mcq",
+            q: "Wheat and gram seeds are mixed and sown together in one field with no row pattern. This is:",
+            options: ["intercropping", "mixed cropping", "crop rotation", "hybridisation"],
+            answer: 1,
+            difficulty: 3,
+            hint: "Is there a definite row pattern?",
+            explain: "Sowing crops together without a row pattern is mixed cropping; intercropping needs definite rows.",
           },
         ],
       },
@@ -1397,6 +1615,20 @@ export const topics: Topic[] = [
             ],
           },
           {
+            type: "activity",
+            activity: {
+              kind: "match",
+              prompt: "Match each fish to where or what it eats.",
+              pairs: [
+                ["Catla", "Surface"],
+                ["Rohu", "Middle zone"],
+                ["Mrigal", "Bottom"],
+                ["Grass carp", "Water weeds"],
+              ],
+              explain: "Each species eats in a different zone or on different food, so they do not compete and the whole pond is used. **Catla** is the surface feeder; **rohu** feeds in the middle.",
+            },
+          },
+          {
             type: "callout",
             tone: "fact",
             title: "Worked comparison: why composite culture works",
@@ -1413,16 +1645,21 @@ export const topics: Topic[] = [
             ],
           },
           {
-            type: "callout",
-            tone: "tip",
-            title: "Worked example: a dairy farmer's income",
-            md: "A farmer in Anand has 5 cross-bred cows giving 10 litres each per day. Daily milk $= 5 \\times 10 = 50$ litres. At ₹50 per litre from the cooperative, she earns $50 \\times 50 =$ **₹2,500 per day**. A longer lactation period from cross-breeding keeps this income flowing for more months.",
+            type: "example",
+            title: "A dairy farmer's income",
+            problem: "A farmer in Anand has 5 cross-bred cows giving 10 litres of milk each per day. The cooperative pays ₹50 per litre. What is her daily income?",
+            steps: [
+              "Daily milk $= 5 \\times 10 = 50$ litres.",
+              "Daily income $= 50 \\times ₹50 = ₹2,500$.",
+              "A longer **lactation period** from cross-breeding keeps this income flowing for more months.",
+            ],
+            answer: "She earns **₹2,500 per day**.",
           },
           {
-            type: "callout",
-            tone: "exam",
-            title: "Board trap",
-            md: "**Jersey and Brown Swiss** are exotic breeds chosen for long lactation; **Red Sindhi and Sahiwal** are Indian breeds chosen for disease resistance. In composite fish culture, **catla** feeds at the surface and **rohu** in the middle zone: these two are often swapped.",
+            type: "mistake",
+            wrong: "Sahiwal and Red Sindhi are crossed in for long lactation, and Jersey for disease resistance.",
+            right: "**Jersey and Brown Swiss** are **exotic** breeds chosen for **long lactation**; **Red Sindhi and Sahiwal** are **Indian** breeds chosen for **disease resistance**.",
+            why: "Learners swap the two traits. Think of where each breed comes from: local breeds have adapted to Indian heat and diseases, while exotic breeds were bred abroad for high milk. (In composite fish culture, **catla** at the surface and **rohu** in the middle are also often swapped.)",
           },
           {
             type: "keypoints",
@@ -1450,6 +1687,7 @@ export const topics: Topic[] = [
             answer: 2,
             explain: "Catla (and silver carp) feed at the surface; rohu in the middle; mrigal and common carp at the bottom.",
             difficulty: 2,
+            hint: "Do not pick rohu: rohu feeds in the middle zone.",
           },
           {
             kind: "truefalse",
@@ -1464,6 +1702,7 @@ export const topics: Topic[] = [
             unit: "₹",
             explain: "$4 \\times 12 = 48$ L; $48 \\times 45 = 2160$, so ₹2160.",
             difficulty: 2,
+            hint: "First find the total litres per day, then multiply by the price.",
           },
           {
             kind: "fill",
