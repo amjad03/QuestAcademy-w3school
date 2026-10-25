@@ -88,5 +88,8 @@ for (const b of BATCHES) {
     }
 }
 
+/* Class 9 Motion uses the school motion lessons without projectile motion (a Class 11 topic). */
+for (const title of ["9:Motion", "9:Motion in One Dimension"]) CHAPTER_LESSONS[`phy|${title}`] = ["physics-school/motion/speed-and-velocity", "physics-school/motion/acceleration-equations"];
+
 /** `${course}/${topic}` of every Class 9–12 board chapter added to a school course (not part of the course's own grade range). */
 export const EXTRA_TOPICS = new Set(BATCHES.flatMap((b) => (b.topics ?? []).map((t) => `${b.course}/${t.slug}`)));

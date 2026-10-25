@@ -231,7 +231,7 @@ export const topics: Topic[] = [
               explain: "Postulates 1–3 are about **drawing** with a ruler and compass. Postulate 4 compares angles, and Postulate 5, the **parallel postulate**, is about whether lines meet.",
             },
           },
-          { type: "illustration", emoji: "🛤️", caption: "Railway tracks: the interior angles on each side add up to exactly 180°, so by the fifth postulate they never meet." },
+          { type: "illustration", emoji: "🛤️", caption: "Railway tracks: the interior angles on each side add up to exactly 180°, never less, so the tracks meet on neither side." },
           {
             type: "callout",
             tone: "note",

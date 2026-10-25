@@ -395,7 +395,7 @@ export const topics: Topic[] = [
         blocks: [
           {
             type: "text",
-            md: "The 2001 Bhuj earthquake in Gujarat measured about **7.7** on the Richter scale, while a minor tremor in Delhi might measure 4.7. That 3-point difference means the shaking amplitude was $10^3 = 1000$ times larger. The Richter scale, decibels and pH are all **logarithmic**: they count the power of 10.",
+            md: "The 2001 Bhuj earthquake in Gujarat had a magnitude of about **7.7**, while a minor tremor in Delhi might measure 4.7. That 3-point difference means the shaking amplitude was $10^3 = 1000$ times larger. The Richter scale, decibels and pH are all **logarithmic**: they count the power of 10.",
           },
           { type: "heading", text: "Definition" },
           {

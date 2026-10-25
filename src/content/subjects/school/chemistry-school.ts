@@ -222,7 +222,7 @@ export const chemistrySchool: Subject = {
               type: "callout",
               tone: "note",
               title: "Compound vs mixture",
-              md: "Sodium is an explosive metal and chlorine is a poisonous gas — yet **chemically joined** they make harmless table salt. A compound has totally new properties. In a mixture, each part keeps its own properties (iron filings in sand are still magnetic).",
+              md: "Sodium is a dangerously reactive metal and chlorine is a poisonous gas — yet **chemically joined** they make harmless table salt. A compound has totally new properties. In a mixture, each part keeps its own properties (iron filings in sand are still magnetic).",
             },
             {
               type: "activity",
@@ -235,7 +235,7 @@ export const chemistrySchool: Subject = {
                   { text: "Water (H₂O)", group: 1, hint: "Hydrogen and oxygen chemically joined in a fixed 2 : 1 ratio." },
                   { text: "Air", group: 2, hint: "Nitrogen, oxygen and other gases just mixed, in varying amounts." },
                   { text: "Sodium chloride", group: 1, hint: "Sodium and chlorine bonded; new properties." },
-                  { text: "Brass", group: 2, hint: "An alloy of copper and zinc in any ratio — a mixture." },
+                  { text: "Brass", group: 2, hint: "An alloy of copper and zinc whose proportions can vary — a mixture." },
                   { text: "Oxygen gas", group: 0, hint: "Its molecules contain only oxygen atoms." },
                   { text: "Sugar dissolved in water", group: 2, hint: "A solution: you can get the sugar back by evaporation." },
                 ],

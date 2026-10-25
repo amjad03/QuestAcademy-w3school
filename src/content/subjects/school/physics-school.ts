@@ -272,7 +272,7 @@ export const physicsSchool: Subject = {
               type: "callout",
               tone: "fact",
               title: "Real life",
-              md: "Stopping distance grows with the **square** of speed ($s = \\tfrac{u^2}{2|a|}$). Double your speed and you need four times the braking distance, which is why speed limits near schools are so low.",
+              md: "Braking distance grows with the **square** of speed ($s = \\tfrac{u^2}{2|a|}$). Double your speed and you need four times the braking distance, which is why speed limits near schools are so low.",
             },
             {
               type: "keypoints",
