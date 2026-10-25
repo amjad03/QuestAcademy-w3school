@@ -233,7 +233,7 @@ export const topics: Topic[] = [
             title: "A bend between parallel lines",
             problem: "AB ∥ CD. Point E lies between the two lines, on the same side as A and C. If ∠ABE = 40° and ∠CDE = 35°, find ∠BED.",
             steps: [
-              "Draw a line EF through E parallel to AB, pointing towards A and C. Then EF ∥ CD too (lines parallel to the same line are parallel).",
+              "Draw a line EF through E parallel to AB, pointing away from A and C (towards the side of B and D). Then EF ∥ CD too (lines parallel to the same line are parallel).",
               "EF ∥ AB with transversal BE: ∠BEF = ∠ABE = 40° (alternate interior angles).",
               "EF ∥ CD with transversal DE: ∠DEF = ∠CDE = 35° (alternate interior angles).",
               "∠BED = ∠BEF + ∠DEF = 40° + 35°.",
