@@ -173,6 +173,9 @@ export function courseCard(slug: string) {
     lessons: o.stats.lessons,
     videos: o.stats.videos,
     lessonIds: o.units.flatMap((u) => u.lessons.map((l) => l.id)),
+    stages: getSubject(slug)?.stages ?? [],
+    /** Unit slugs and titles, in order (units are a class's chapters for course-based classes). */
+    unitList: o.units.map((u) => [u.slug, u.title] as [string, string]),
   };
 }
 

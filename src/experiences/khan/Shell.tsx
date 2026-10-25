@@ -19,6 +19,8 @@ import { worldById } from "@/content/worlds";
 import type { WorldId } from "@/content/types";
 import type { NavItem, ShellProps } from "../types";
 import { useExamCountdown, useFmt, worldOrder } from "./ui/hooks";
+import { useMyClass } from "@/lib/useMyClass";
+import { useSubjectName } from "@/components/class/data";
 
 /* ------------------------------------------------------------------ */
 /* Helpers                                                             */
@@ -30,6 +32,10 @@ const NAV_KEYS = [
   ["nav.home.explore", "Home"],
   ["nav.home.adventure", "Missions"],
   ["nav.home.focus", "Syllabus"],
+  ["nav.home.class", "My class"],
+  ["nav.practice.class", "Practice & tests"],
+  ["nav.library.class", "All classes & courses"],
+  ["nav.explain", "Explainers"],
   ["nav.home.mastery", "Dashboard"],
   ["nav.home.research", "Workspace"],
   ["nav.home.professional", "My goals"],
@@ -61,7 +67,15 @@ function useNavLabel() {
   const mode = useMode();
   return useCallback(
     (n: NavItem) => {
-      const key = n.href === "/learn" ? `nav.home.${mode.id}` : `nav.${n.href.replace(/^\//, "").replace(/\//g, ".")}`;
+      const school = mode.id === "adventure" || mode.id === "focus";
+      const key =
+        n.href === "/learn"
+          ? school
+            ? "nav.home.class"
+            : `nav.home.${mode.id}`
+          : school && (n.href === "/practice" || n.href === "/library")
+            ? `nav.${n.href.slice(1)}.class`
+            : `nav.${n.href.replace(/^\//, "").replace(/\//g, ".")}`;
       return NAV_EN[key] !== undefined ? t(key, n.label) : n.label;
     },
     [t, mode.id],
@@ -221,6 +235,12 @@ function StagePill() {
 function CoursesMenu({ pathname }: { pathname: string }) {
   const t = useT();
   const mode = useMode();
+  const tx0 = useSharedText();
+  const mc = useMyClass();
+  const myClass = mc ? { subjects: mc.subjects } : null;
+  const subjectName = useSubjectName();
+  const fmt = useFmt();
+  const classLabel = mc ? (mc.myClass.boardName ? `${tx0(mc.myClass.name)} · ${tx0(mc.myClass.boardName)}` : mc.myClass.grade === "pre" ? t("class.pre", "Pre-primary") : t("class.gradeN", "Class {n}", { n: fmt.n(Number(mc.myClass.grade)) })) : "";
   const catalog = useCatalog();
   const tx = useSharedText();
   const [open, setOpen] = useState(false);
@@ -254,6 +274,42 @@ function CoursesMenu({ pathname }: { pathname: string }) {
         .filter((g) => g.courses.length),
     [catalog, mode.id],
   );
+
+  if (myClass && (mode.id === "adventure" || mode.id === "focus"))
+    return (
+      <>
+        <button ref={trigger} type="button" className="kh-menubtn hidden md:inline-flex" aria-expanded={open} aria-controls={id} aria-haspopup="true" onClick={() => setOpen((o) => !o)}>
+          {t("class.mySubjects", "My subjects")}
+          <ChevronDown className={clsx("h-4 w-4 transition-transform", open && "rotate-180")} aria-hidden />
+        </button>
+        {open && (
+          <div ref={box} id={id} className="kh-pop absolute inset-x-0 top-full z-50 mx-auto mt-1 max-h-[calc(100vh-var(--kh-header-h)-24px)] w-[min(720px,calc(100vw-24px))] overflow-y-auto p-5 sm:p-6" role="region" aria-label={t("class.mySubjects", "My subjects")}>
+            <p className="border-b border-line pb-2 text-sm font-bold">{classLabel}</p>
+            <ul className="mt-2 grid gap-0.5 sm:grid-cols-2">
+              {myClass.subjects.map((s) => (
+                <li key={s.id}>
+                  <Link href={`/class/${s.id}`} className="kh-courselink">
+                    <CourseIcon slug={s.icon} size={20} flat />
+                    <span className="min-w-0 truncate">{subjectName(s)}</span>
+                  </Link>
+                </li>
+              ))}
+            </ul>
+            <div className="mt-5 flex flex-wrap items-center gap-x-6 gap-y-3 border-t border-line pt-4 text-sm">
+              <Link href="/learn" className="kh-link inline-flex items-center gap-1.5">
+                <BookOpen className="h-4 w-4" aria-hidden /> {t("class.backHome", "Back to my class")}
+              </Link>
+              <Link href="/explain" className="kh-link inline-flex items-center gap-1.5">
+                <Eye className="h-4 w-4" aria-hidden /> {t("khan.seeItMenu", "See it: visual explainers")}
+              </Link>
+              <Link href="/library" className="kh-link inline-flex items-center gap-1.5">
+                <LibraryBig className="h-4 w-4" aria-hidden /> {t("class.exploreOther", "Explore other classes & courses")}
+              </Link>
+            </div>
+          </div>
+        )}
+      </>
+    );
 
   return (
     <>
@@ -329,9 +385,11 @@ const SUBNAV_MAX = 6;
 function SubNav({ pathname, nav, more, isActive }: { pathname: string; nav: NavItem[]; more: NavItem[]; isActive: (h: string) => boolean }) {
   const t = useT();
   const label = useNavLabel();
+  const mode = useMode();
   const items = nav.filter((n) => n.href !== "/profile");
-  const shown = items.slice(0, SUBNAV_MAX);
-  const overflow = [...items.slice(SUBNAV_MAX), ...more.filter((m) => m.href !== "/profile")];
+  const max = mode.navPrimary ?? SUBNAV_MAX;
+  const shown = items.slice(0, max);
+  const overflow = [...items.slice(max), ...more.filter((m) => m.href !== "/profile")];
   const [open, setOpen] = useState(false);
   const close = useCallback(() => setOpen(false), []);
   const box = useRef<HTMLDivElement>(null);
@@ -520,7 +578,9 @@ function TabBar({ nav, more, isActive, onMore, sheetOpen }: { nav: NavItem[]; mo
     <nav className="kh-tabbar fixed inset-x-0 bottom-0 z-40 flex lg:hidden" aria-label={t("khan.primaryNav", "Primary")}>
       {items.map((n) => {
         const active = isActive(n.href);
-        return <TabItem key={n.href} href={n.href} active={active} icon={<n.icon className="h-[22px] w-[22px]" strokeWidth={active ? 2.2 : 1.8} aria-hidden />} label={label(n)} />;
+        // The tab bar is narrow: "Practice & tests" shortens to "Practice".
+        const text = n.href === "/practice" ? t("nav.practice", "Practice") : label(n);
+        return <TabItem key={n.href} href={n.href} active={active} icon={<n.icon className="h-[22px] w-[22px]" strokeWidth={active ? 2.2 : 1.8} aria-hidden />} label={text} />;
       })}
       <button
         type="button"

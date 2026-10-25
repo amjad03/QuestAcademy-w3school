@@ -32,12 +32,14 @@ import * as hin10 from "./hin-10";
 import * as kan10 from "./kan-10";
 import * as cmp10 from "./cmp-10";
 import * as gk10 from "./gk-10";
+import * as matAp10 from "./mat-10-ap";
+import * as phyCalorimetry from "./phy-calorimetry";
 
 /**
  * Chapters written to close syllabus gaps. Each batch file adds topics to one
  * course and maps syllabus chapter titles to them.
  */
-const BATCHES: Batch[] = [phyMech, phyHeat, phyMagnet, phyModern, phyIcse10, chePhys, cheInorg, cheOrg, cheIcse, bioDiversity, bioStructure, bioRepro, bioApplied, bioIcse10, bioBody, bioIcse9, matAlgebra, matCalcGeo, matIcse10A, matIcse10B, mat9Geo, mat9Num, socIndia, socWorld, socGeo, socCivics, socEcon, engGrammar, engWriting, hin10, kan10, cmp10, gk10];
+const BATCHES: Batch[] = [phyMech, phyHeat, phyMagnet, phyModern, phyIcse10, chePhys, cheInorg, cheOrg, cheIcse, bioDiversity, bioStructure, bioRepro, bioApplied, bioIcse10, bioBody, bioIcse9, matAlgebra, matCalcGeo, matIcse10A, matIcse10B, mat9Geo, mat9Num, socIndia, socWorld, socGeo, socCivics, socEcon, engGrammar, engWriting, hin10, kan10, cmp10, gk10, matAp10, phyCalorimetry];
 
 /** Extra topics per course slug, in batch order. */
 export function extraTopics(course: string): Topic[] {
@@ -60,3 +62,6 @@ for (const b of BATCHES) {
     }
   }
 }
+
+/** `${course}/${topic}` of every Class 9–12 board chapter added to a school course (not part of the course's own grade range). */
+export const EXTRA_TOPICS = new Set(BATCHES.flatMap((b) => b.topics.map((t) => `${b.course}/${t.slug}`)));

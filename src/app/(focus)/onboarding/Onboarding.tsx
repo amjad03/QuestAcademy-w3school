@@ -16,8 +16,12 @@ import { sfx } from "@/lib/sound";
 import { MODES, modeForAge, modeForStage, type ModeId } from "@/lib/modes";
 import { ModePicker } from "@/components/modes/ModePicker";
 import { useT } from "@/i18n";
+import { ClassPicker, boardsFor, choiceForLevel, levelForAge, stageForLevel, type ClassChoice } from "@/components/class/ClassPicker";
 
 const STEPS = ["age", "mode", "category", "course", "goal", "name", "done"] as const;
+/** School-age learners pick their class (board and subjects) instead of a category and a course. */
+const SCHOOL_STEPS = ["age", "mode", "class", "goal", "name", "done"] as const;
+type StepId = (typeof STEPS)[number] | "class";
 
 /** Ages for children; stages for adults (age alone can't tell college from postgraduate). */
 const AGES: { label: string; age: number; mode?: ModeId; stage?: Stage }[] = [
@@ -62,9 +66,11 @@ export function Onboarding() {
   const [mode, setMode] = useState<ModeId | null>(stageParam && stageById[stageParam] ? modeForStage(stageParam) : null);
   const [goal, setGoal] = useState(profile.dailyGoal || 50);
   const [name, setName] = useState(profile.name);
+  const [classChoice, setClassChoice] = useState<ClassChoice>(() => choiceForLevel(levelForAge(profile.age ?? null)));
   const t = useT();
 
-  const PROMPT: Record<(typeof STEPS)[number], string> = {
+  const PROMPT: Record<StepId, string> = {
+    class: t("onboard.prompt.class", "Which class are you in? I’ll show you only what you need."),
     age: t("onboard.prompt.age", "Hi there! I’m Questy. How old are you — or where are you in your studies?"),
     mode: t("onboard.prompt.mode", "Here’s the experience I picked for you. You can choose another any time."),
     category: t("onboard.prompt.category", "Hi there! I’m Questy. What would you like to learn?"),
@@ -101,10 +107,12 @@ export function Onboarding() {
     professional: t("shell.mode.professional", "Professional"),
   };
 
-  const id = STEPS[step];
   const choice = AGES.find((a) => a.age === age);
+  const school = age !== null && age <= 18 && !choice?.stage;
+  const steps: readonly StepId[] = school ? SCHOOL_STEPS : STEPS;
+  const id = steps[step];
   const recommended = age !== null ? (choice?.mode ?? modeForAge(age)) : undefined;
-  const canNext = id === "age" ? age !== null : id === "mode" ? Boolean(mode) : id === "category" ? Boolean(category) : id === "course" ? Boolean(course) : true;
+  const canNext = id === "age" ? age !== null : id === "mode" ? Boolean(mode) : id === "category" ? Boolean(category) : id === "course" ? Boolean(course) : id === "class" ? Boolean(classChoice.level && classChoice.grade && (!boardsFor(classChoice.level).length || classChoice.board)) : true;
   const courses = catalog.filter((c) => c.world === category);
 
   const next = () => {
@@ -114,8 +122,14 @@ export function Onboarding() {
     if (id === "mode" && mode && !category) setCategory(MODE_CATEGORY[mode]);
     if (id === "name") {
       const m = mode ?? recommended ?? modeForAge(age ?? 12);
+      if (school && classChoice.level) {
+        const stage = stageForLevel(classChoice.level);
+        const world: WorldId = stage === "preprimary" || stage === "primary" ? "kids" : stage === "aspirant" ? "exam" : "school";
+        setProfile({ name: name.trim() || t("settings.name.default", "Learner"), age, stage, mode: m, worlds: [world], course: null, board: classChoice.board, grade: classChoice.grade, subjects: classChoice.subjects, dailyGoal: goal, onboarded: true, style: profile.style });
+      } else {
       const stage = stageParam && stageById[stageParam] ? stageParam : (choice?.stage ?? stageFromAge(age ?? 12, category));
       setProfile({ name: name.trim() || t("settings.name.default", "Learner"), age, stage, mode: m, worlds: category ? [category] : [], course, dailyGoal: goal, onboarded: true, style: profile.style });
+      }
       useLearner.getState().setSettings({ sound: MODES[m].sound });
       sfx("fanfare");
     }
@@ -130,7 +144,7 @@ export function Onboarding() {
         <button onClick={() => (step ? setStep(step - 1) : router.push("/"))} className="grid h-10 w-10 place-items-center rounded-xl text-muted hover:bg-surface-2" aria-label={t("onboard.back", "Back")}>
           <ArrowLeft className="h-6 w-6" strokeWidth={2.6} />
         </button>
-        <ProgressBar value={step / (STEPS.length - 1)} height={16} />
+        <ProgressBar value={step / (steps.length - 1)} height={16} />
       </div>
 
       <div className="mx-auto flex w-full max-w-[640px] flex-1 flex-col px-5 py-10">
@@ -150,7 +164,7 @@ export function Onboarding() {
                 {AGES.map((a) => (
                   <Option key={a.label} active={age === a.age} onClick={() => {
                     // A different age means a different profile: drop choices made for the old one.
-                    if (a.age !== age) { setMode(null); setCategory(null); setCourse(null); }
+                    if (a.age !== age) { setMode(null); setCategory(null); setCourse(null); setClassChoice(choiceForLevel(levelForAge(a.age))); }
                     setAge(a.age);
                   }}>
                     <span className="w-full text-center text-lg font-extrabold">{ageLabel[a.age] ?? a.label}</span>
@@ -160,6 +174,8 @@ export function Onboarding() {
             )}
 
             {id === "mode" && <ModePicker value={mode} recommended={recommended} onChange={(m) => { setMode(m); if (MODE_CATEGORY[m] !== category) { setCategory(MODE_CATEGORY[m]); setCourse(null); } sfx("tap"); }} />}
+
+            {id === "class" && <ClassPicker value={classChoice} onChange={setClassChoice} />}
 
             {id === "category" && (
               <div className="grid gap-3">
@@ -212,7 +228,9 @@ export function Onboarding() {
             {id === "done" && (
               <div className="grid gap-3 sm:grid-cols-3">
                 {[
-                  [t("onboard.summary.course", "Your course"), catalog.find((c) => c.slug === course)?.title ?? "—"],
+                  school
+                    ? [t("onboard.summary.class", "Your class"), classChoice.level === "pre" ? t("class.pre", "Pre-primary") : classChoice.level === "exam" ? (classChoice.grade ?? "—") : t("class.gradeN", "Class {n}", { n: classChoice.level ?? "—" })]
+                    : [t("onboard.summary.course", "Your course"), catalog.find((c) => c.slug === course)?.title ?? "—"],
                   [t("onboard.summary.experience", "Experience"), mode ? t("onboard.summary.modeName", "{name} mode", { name: modeName[mode] ?? MODES[mode].name }) : "—"],
                   [t("onboard.summary.goal", "Daily goal"), goalText[goal] ? `${goalText[goal].label} · ${goalText[goal].hint}` : t("onboard.summary.goalXp", "{n} XP", { n: goal })],
                 ].map(([a, b]) => (

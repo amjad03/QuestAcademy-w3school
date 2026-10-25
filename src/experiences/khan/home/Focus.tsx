@@ -327,7 +327,7 @@ function EntranceExams({ grade }: { grade: SyllabusGrade }) {
   );
 }
 
-function TodayPlan() {
+export function TodayPlan() {
   const t = useT();
   const plan = useLearner((s) => s.plan);
   const { live } = usePlan();

@@ -29,6 +29,8 @@ export interface ModeConfig {
   sound: boolean;
   /** Primary nav items shown in the sidebar / tab bar (hrefs). */
   nav: string[];
+  /** How many of `nav` show in the tab row; the rest go under "More" (default 6). */
+  navPrimary?: number;
   /** Label for the home destination. */
   homeLabel: string;
   /** Young-learner behaviour: voice-first, stickers, grown-up gates, no social. */
@@ -86,8 +88,9 @@ export const MODES: Record<ModeId, ModeConfig> = {
     autoVoice: false,
     social: "opt-in",
     sound: true,
-    nav: ["/learn", "/courses", "/library", "/practice", "/leaderboard", "/notebook", "/insights", "/quests", "/shop", "/parent", "/profile"],
-    homeLabel: "Missions",
+    nav: ["/learn", "/practice", "/plan", "/notebook", "/explain", "/leaderboard", "/quests", "/shop", "/insights", "/library", "/parent", "/profile"],
+    navPrimary: 5,
+    homeLabel: "My class",
     young: false,
   },
   focus: {
@@ -104,8 +107,9 @@ export const MODES: Record<ModeId, ModeConfig> = {
     autoVoice: false,
     social: "on",
     sound: false,
-    nav: ["/learn", "/plan", "/library", "/practice", "/exam", "/courses", "/exam/formulas", "/worksheets", "/notebook", "/insights", "/competitions", "/profile"],
-    homeLabel: "Syllabus",
+    nav: ["/learn", "/practice", "/plan", "/notebook", "/explain", "/exam/formulas", "/exam", "/worksheets", "/insights", "/competitions", "/library", "/profile"],
+    navPrimary: 5,
+    homeLabel: "My class",
     young: false,
   },
   mastery: {

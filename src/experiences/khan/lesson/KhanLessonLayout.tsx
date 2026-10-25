@@ -88,10 +88,10 @@ export function KhanLessonLayout(p: LessonLayoutProps) {
   const progressBlock = (
     <div className="rounded-md border border-line bg-surface p-3.5">
       <div className="flex items-baseline justify-between gap-2 text-[13px]">
-        <span className="font-semibold text-ink">{t("khan.unit.progress", "Unit progress")}</span>
+        <span className="font-semibold text-ink">{p.unit.label ? t("class.chapterProgress", "Chapter progress") : t("khan.unit.progress", "Unit progress")}</span>
         <span className="font-medium text-muted">{stage}</span>
       </div>
-      <div className="mt-2 h-2 overflow-hidden rounded-full bg-surface-2" role="progressbar" aria-label={t("khan.unit.progress", "Unit progress")} aria-valuemin={0} aria-valuemax={p.unitProgress.total} aria-valuenow={p.unitProgress.done}>
+      <div className="mt-2 h-2 overflow-hidden rounded-full bg-surface-2" role="progressbar" aria-label={p.unit.label ? t("class.chapterProgress", "Chapter progress") : t("khan.unit.progress", "Unit progress")} aria-valuemin={0} aria-valuemax={p.unitProgress.total} aria-valuenow={p.unitProgress.done}>
         <div className="h-full rounded-full bg-[#7854F7] transition-[width] duration-500" style={{ width: `${pct * 100}%` }} />
       </div>
       <p className="mt-1.5 text-[12.5px] text-muted">
@@ -160,7 +160,7 @@ export function KhanLessonLayout(p: LessonLayoutProps) {
                 </li>
                 <li className="min-w-0">
                   <Link href={p.unit.href} className="block truncate rounded font-medium text-accent hover:underline">
-                    {t("khan.lesson.unitN", "Unit {n}: {title}", { n: nf.format(p.unit.index + 1), title: p.unit.title })}
+                    {p.unit.label ?? t("khan.lesson.unitN", "Unit {n}: {title}", { n: nf.format(p.unit.index + 1), title: p.unit.title })}
                   </Link>
                 </li>
               </ol>

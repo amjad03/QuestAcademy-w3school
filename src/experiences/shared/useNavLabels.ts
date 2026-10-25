@@ -8,12 +8,13 @@ import type { NavItem } from "../types";
 /** Navigation with labels in the learner's language (every shell gets these). */
 export function useTranslatedNav(mode: ModeConfig, nav: NavItem[], more: NavItem[]) {
   const t = useT();
+  const school = mode.id === "adventure" || mode.id === "focus";
   return useMemo(() => {
     const byHref: Record<string, string> = {
       "/courses": t("shell.nav.courses", "Courses"),
       "/pathways": t("shell.nav.pathways", "Pathways"),
       "/plan": t("shell.nav.plan", "Study plan"),
-      "/practice": t("shell.nav.practice", "Practice"),
+      "/practice": school ? t("shell.nav.practiceTests", "Practice & tests") : t("shell.nav.practice", "Practice"),
       "/exam": t("shell.nav.exam", "Exam prep"),
       "/exam/formulas": t("shell.nav.formulas", "Formulas"),
       "/code/playground": t("shell.nav.codeLab", "Code lab"),
@@ -22,7 +23,8 @@ export function useTranslatedNav(mode: ModeConfig, nav: NavItem[], more: NavItem
       "/leaderboard": t("shell.nav.leagues", "Leagues"),
       "/quests": t("shell.nav.quests", "Quests"),
       "/shop": t("shell.nav.shop", "Shop"),
-      "/library": t("shell.nav.library", "Library"),
+      "/library": school ? t("shell.nav.libraryClass", "All classes & courses") : t("shell.nav.library", "Library"),
+      "/explain": t("shell.nav.explainers", "Explainers"),
       "/notebook": t("shell.nav.notebook", "Notebook"),
       "/insights": t("shell.nav.insights", "Insights"),
       "/worksheets": t("shell.nav.worksheets", "Worksheets"),
@@ -33,8 +35,8 @@ export function useTranslatedNav(mode: ModeConfig, nav: NavItem[], more: NavItem
     const home: Record<string, string> = {
       sprout: t("shell.home.sprout", "Play"),
       explore: t("shell.home.explore", "Home"),
-      adventure: t("shell.home.adventure", "Missions"),
-      focus: t("shell.home.focus", "Syllabus"),
+      adventure: t("shell.home.myClass", "My class"),
+      focus: t("shell.home.myClass", "My class"),
       mastery: t("shell.home.mastery", "Dashboard"),
       research: t("shell.home.research", "Workspace"),
       professional: t("shell.home.professional", "My goals"),

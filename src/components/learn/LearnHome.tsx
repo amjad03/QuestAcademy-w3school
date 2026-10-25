@@ -13,6 +13,9 @@ import { CourseIcon } from "@/components/brand/CourseIcon";
 import { Mascot } from "@/components/brand/Mascot";
 import { LearnPath } from "./LearnPath";
 import { useExperience } from "@/experiences";
+import { useMode } from "@/lib/useMode";
+import { useMyClass } from "@/lib/useMyClass";
+import { ClassHome } from "@/components/class/ClassHome";
 
 const outlines = new Map<string, CourseOutline>();
 
@@ -53,9 +56,13 @@ export function useOutline(slug: string | null | undefined) {
 export function LearnHome() {
   const hydrated = useHydrated();
   const exp = useExperience();
+  const mode = useMode();
+  const myClass = useMyClass();
   const view = useSearchParams().get("view");
   if (!hydrated) return <PageColumns>{null}</PageColumns>;
   if (view === "path") return <PathHome />;
+  // School learners (middle and high school) land on their class: subjects, chapters, continue.
+  if (myClass && (mode.id === "adventure" || mode.id === "focus")) return <ClassHome />;
   const Home = exp.Home;
   return <Home />;
 }

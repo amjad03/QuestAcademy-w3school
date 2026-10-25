@@ -31,9 +31,16 @@ const GRADES = [
   { g: 2 as const, label: "Good", cls: "btn-good", key: "3" },
   { g: 3 as const, label: "Easy", cls: "btn-primary", key: "4" },
 ];
+import { ClassPractice, useClassLessonIds } from "@/components/class/ClassPractice";
+import { useMyClass } from "@/lib/useMyClass";
 
 export function PracticeHub() {
   const modeId = useMode().id;
+  const myClass = useMyClass();
+  const classLessons = useClassLessonIds();
+  const profile = useLearner((s) => s.profile);
+  // NEET / JEE drills only for Class 11–12 and entrance-exam learners (or learners without a class).
+  const showDrills = !myClass || /^(11|12|PUC-1|PUC-2|NEET|JEE)$/.test(myClass.myClass.grade) || profile.stage === "aspirant";
   const t = useT();
   const hydrated = useHydrated();
   const cards = useLearner((s) => s.cards);
@@ -53,10 +60,10 @@ export function PracticeHub() {
   const weak = useMemo(
     () =>
       Object.entries(mastery)
-        .filter(([id, l]) => l >= 1 && l <= 2 && lessons?.[id])
+        .filter(([id, l]) => l >= 1 && l <= 2 && lessons?.[id] && (!classLessons || classLessons.has(id)))
         .sort((a, b) => a[1] - b[1])
         .slice(0, 8),
-    [mastery, lessons],
+    [mastery, lessons, classLessons],
   );
 
   if (queue && data) return <ReviewSession queue={queue} data={data} onExit={() => setQueue(null)} />;
@@ -74,10 +81,13 @@ export function PracticeHub() {
       <div className="flex items-center gap-5">
         <Mascot pose="read" size={96} />
         <div>
-          <h1 className="text-3xl font-black">{t("practice.hub.title", "Practice")}</h1>
+          <h1 className="text-3xl font-black">{myClass ? t("class.nav.practice", "Practice & tests") : t("practice.hub.title", "Practice")}</h1>
           <p className="mt-1 font-semibold text-muted">{t("practice.hub.subtitle", "Strengthen what you’ve learned before it fades.")}</p>
         </div>
       </div>
+
+      {/* chapters of the learner's class */}
+      <ClassPractice />
 
       {/* spaced review */}
       <section className="card mt-8 overflow-hidden">
@@ -174,6 +184,7 @@ export function PracticeHub() {
           <ChevronRight className="h-5 w-5 text-muted" />
         </Link>
         )}
+        {showDrills && (
         <Link href="/exam/practice" className="tile flex items-center gap-4 p-5">
           <span className="grid h-12 w-12 place-items-center rounded-xl bg-bad text-white">
             <Layers className="h-6 w-6" />
@@ -184,6 +195,7 @@ export function PracticeHub() {
           </span>
           <ChevronRight className="h-5 w-5 text-muted" />
         </Link>
+        )}
       </section>
     </PageColumns>
   );

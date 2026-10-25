@@ -42,8 +42,10 @@ export interface Profile {
   age: number | null;
   /** Syllabus board for Focus mode. */
   board: Board | null;
-  /** Class / year within the board, e.g. "10", "PUC-1", "12". */
+  /** Class / year within the board, e.g. "10", "PUC-1", "12"; "1"–"8" or "pre" for younger classes. */
   grade: string | null;
+  /** Subjects the learner takes in their class (class subject ids); null = the board's usual set. */
+  subjects?: string[] | null;
   /** Public nickname for opt-in social features (never the real name). */
   nickname: string;
   /** Opted in to leagues / challenges (Adventure is opt-in; Explore never). */

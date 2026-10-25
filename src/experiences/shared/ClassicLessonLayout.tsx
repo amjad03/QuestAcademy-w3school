@@ -22,7 +22,7 @@ export function ClassicLessonLayout(p: LessonLayoutProps) {
             </Link>
             <span>/</span>
             <Link href={p.unit.href} className="truncate hover:text-accent">
-              Unit {p.unit.index + 1}: {p.unit.title}
+              {p.unit.label ?? `Unit ${p.unit.index + 1}: ${p.unit.title}`}
             </Link>
             <button onClick={() => setNavOpen((o) => !o)} className="ml-auto flex items-center gap-1 rounded-xl border-2 border-line px-3 py-1.5 text-xs uppercase tracking-wide xl:hidden">
               Lessons <ChevronDown className={clsx("h-4 w-4 transition", navOpen && "rotate-180")} />

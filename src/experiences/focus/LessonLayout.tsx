@@ -28,7 +28,7 @@ export function FocusLessonLayout(p: LessonLayoutProps) {
             </Link>
             <span aria-hidden>/</span>
             <Link href={p.unit.href} className="min-w-0 truncate hover:text-accent">
-              Chapter {p.unit.index + 1} · {p.unit.title}
+              {p.unit.label ?? `Chapter ${p.unit.index + 1} · ${p.unit.title}`}
             </Link>
           </nav>
 

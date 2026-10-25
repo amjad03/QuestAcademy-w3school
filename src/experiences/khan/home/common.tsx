@@ -78,7 +78,7 @@ const ITEM_ICON: Record<ItemKind, typeof Video> = { video: Video, article: FileT
  * Navy "Up next for you" panel. By default it follows the learner's current
  * course; Focus passes the next lesson from their board syllabus instead.
  */
-export function UpNextHero({ lessonId, context, eyebrow, secondary }: { lessonId?: string | null; context?: string; eyebrow?: string; secondary?: { href: string; label: string } }) {
+export function UpNextHero({ lessonId, context, eyebrow, secondary, progressLabel }: { lessonId?: string | null; context?: string; eyebrow?: string; secondary?: { href: string; label: string }; progressLabel?: string }) {
   const t = useT();
   const f = useFmt();
   const mine = useMyCourses(1);
@@ -156,7 +156,7 @@ export function UpNextHero({ lessonId, context, eyebrow, secondary }: { lessonId
           </div>
         </div>
         <div className="min-w-0 self-end rounded-lg border border-white/15 bg-white/[0.06] p-4">
-          <p className="text-sm font-semibold">{t("khan.unitProgress", "Unit {n} progress", { n: f.n(unit.index + 1) })}</p>
+          <p className="text-sm font-semibold">{progressLabel ?? t("khan.unitProgress", "Unit {n} progress", { n: f.n(unit.index + 1) })}</p>
           <p className="kh-hero-muted mt-0.5 text-xs">{t("khan.lessonsDone", "{done} of {total} lessons complete", { done: f.n(unitDone), total: f.n(unit.lessons.length) })}</p>
           <SkillSquares skills={unitSkills} size={16} className="mt-3" label={t("khan.unitSkills", "Skills in this unit")} />
         </div>

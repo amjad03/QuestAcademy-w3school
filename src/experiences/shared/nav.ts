@@ -1,6 +1,6 @@
 import type { ModeConfig } from "@/lib/modes";
 import type { NavItem } from "../types";
-import { CalendarDays, Dumbbell, Gamepad2, House, LayoutGrid, Library, NotebookPen, Printer, Route, ScrollText, ShieldHalf, Sigma, SquareTerminal, Sticker, Store, Target, TrendingUp, Trophy, UserRound, Users } from "lucide-react";
+import { Eye, CalendarDays, Dumbbell, Gamepad2, House, LayoutGrid, Library, NotebookPen, Printer, Route, ScrollText, ShieldHalf, Sigma, SquareTerminal, Sticker, Store, Target, TrendingUp, Trophy, UserRound, Users } from "lucide-react";
 
 export const NAV_ITEMS: NavItem[] = [
   { href: "/learn", label: "Learn", icon: House, color: "#2F6BFF" },
@@ -16,6 +16,7 @@ export const NAV_ITEMS: NavItem[] = [
   { href: "/leaderboard", label: "Leagues", icon: ShieldHalf, color: "#FFB800" },
   { href: "/quests", label: "Quests", icon: ScrollText, color: "#FF8A00" },
   { href: "/shop", label: "Shop", icon: Store, color: "#14B8A6" },
+  { href: "/explain", label: "Explainers", icon: Eye, color: "#7C4DFF" },
   { href: "/library", label: "Library", icon: LayoutGrid, color: "#2F6BFF" },
   { href: "/notebook", label: "Notebook", icon: NotebookPen, color: "#7C4DFF" },
   { href: "/insights", label: "Insights", icon: TrendingUp, color: "#14B8A6" },
@@ -36,11 +37,13 @@ export function navFor(mode: ModeConfig): NavItem[] {
 /** Secondary destinations for a "More" menu (kids-only pages hidden for older modes). */
 export function moreFor(mode: ModeConfig): NavItem[] {
   const primary = new Set(mode.nav);
-  return NAV_ITEMS.filter((n) => !primary.has(n.href) && (mode.young || (n.href !== "/stickers" && n.href !== "/kids/play")));
+  // School learners leave their class only through "All classes & courses" (the library).
+  const school = mode.id === "adventure" || mode.id === "focus";
+  return NAV_ITEMS.filter((n) => !primary.has(n.href) && (mode.young || (n.href !== "/stickers" && n.href !== "/kids/play")) && !(school && (n.href === "/courses" || n.href === "/pathways")));
 }
 
 export function isActivePath(pathname: string, href: string) {
-  if (href === "/learn") return pathname === "/learn";
+  if (href === "/learn") return pathname === "/learn" || pathname.startsWith("/class/");
   if (href === "/courses") return pathname.startsWith("/courses") || pathname.startsWith("/course/");
   if (href === "/exam") return pathname.startsWith("/exam") && !pathname.startsWith("/exam/formulas");
   return pathname.startsWith(href);

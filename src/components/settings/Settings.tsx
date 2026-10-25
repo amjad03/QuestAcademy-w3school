@@ -22,6 +22,8 @@ import { PageColumns } from "@/components/shell/AppShell";
 import { RailCard, RailFooter } from "@/components/shell/RailCards";
 import { useT } from "@/i18n";
 
+import { ClassPicker, choiceFromProfile, stageForLevel } from "@/components/class/ClassPicker";
+
 export function Settings() {
   const hydrated = useHydrated();
   const s = useLearner();
@@ -71,6 +73,7 @@ export function Settings() {
       <RailCard title={t("settings.title", "Settings")}>
         <nav className="space-y-1 text-[15px] font-extrabold">
           {[
+            ["#my-class", t("settings.section.myClass", "My class")],
             ["#preferences", t("settings.section.preferences", "Preferences")],
             ["#learning", t("settings.section.learning", "Learning")],
             ["#account", t("settings.section.account", "Account")],
@@ -122,6 +125,19 @@ export function Settings() {
       <Section id="language" title="Language · भाषा · ಭಾಷೆ" bare>
         <LanguagePicker />
       </Section>
+
+      {!["ug", "pg", "lifelong"].includes(s.profile.stage ?? "") && (
+        <Section id="my-class" title={t("settings.section.myClass", "My class")} bare>
+          <p className="mb-4 text-sm text-muted">{t("settings.myClass.intro", "You’ll see only your class’s subjects and chapters. Anything else is under “All classes & courses”.")}</p>
+          <div className="card p-5">
+            <ClassPicker
+              value={choiceFromProfile(s.profile)}
+              onChange={(c) => c.level && s.setProfile({ stage: stageForLevel(c.level), board: c.board, grade: c.grade, subjects: c.subjects })}
+              compact
+            />
+          </div>
+        </Section>
+      )}
 
       <Section id="design" title={t("settings.section.design", "Design")} bare>
         <SkinPicker />

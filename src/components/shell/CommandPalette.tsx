@@ -10,8 +10,12 @@ import type { SearchItem } from "@/content";
 import { worldById } from "@/content/worlds";
 import { CourseIcon } from "@/components/brand/CourseIcon";
 import { useT } from "@/i18n";
+import { useSharedText } from "@/i18n/content";
+import { useMyClass } from "@/lib/useMyClass";
+import { useClassLessonIds } from "@/components/class/ClassPractice";
+import { useSubjectName } from "@/components/class/data";
 
-const QUICK_ICON: Record<string, LucideIcon> = { "/learn": MapIcon, "/courses": BookOpen, "/practice": Dumbbell, "/exam": Target, "/code/playground": Code2 };
+const QUICK_ICON: Record<string, LucideIcon> = { "/plan": BookOpen, "/explain": Search, "/learn": MapIcon, "/courses": BookOpen, "/practice": Dumbbell, "/exam": Target, "/code/playground": Code2 };
 
 const QUICK: SearchItem[] = [
   { kind: "subject", title: "Learn", subtitle: "Your path", href: "/learn", icon: "", world: "school", course: "", keywords: "" },
@@ -42,6 +46,31 @@ export function CommandPalette() {
   const inputRef = useRef<HTMLInputElement>(null);
   const [index, setIndex] = useState<SearchItem[] | null>(null);
   const t = useT();
+  const tx = useSharedText();
+  const mc = useMyClass();
+  const classLessons = useClassLessonIds();
+  const subjectName = useSubjectName();
+  // School learners search their class by default; "Everything" widens to the whole library.
+  const [everything, setEverything] = useState(false);
+  const classItems = useMemo<SearchItem[]>(() => {
+    if (!mc) return [];
+    const out: SearchItem[] = [];
+    for (const sub of mc.subjects) {
+      const name = subjectName(sub);
+      out.push({ kind: "subject", title: name, subtitle: tx(mc.myClass.name), href: `/class/${sub.id}`, icon: "", world: "school", course: sub.icon, keywords: `${name} ${sub.name}`.toLowerCase() });
+      for (const ch of sub.chapters) {
+        const title = ch.unit ? ch.title : tx(ch.title);
+        out.push({ kind: "topic", title, subtitle: name, href: `/class/${sub.id}/${ch.slug}`, icon: "", world: "school", course: sub.icon, keywords: `${title} ${ch.title} ${name}`.toLowerCase() });
+      }
+    }
+    return out;
+  }, [mc, tx]); // eslint-disable-line react-hooks/exhaustive-deps
+  const quickClass: SearchItem[] = [
+    { kind: "subject", title: t("class.nav.home", "My class"), subtitle: t("class.quick.homeSub", "Your subjects and chapters"), href: "/learn", icon: "", world: "school", course: "", keywords: "" },
+    { kind: "subject", title: t("class.nav.practice", "Practice & tests"), subtitle: t("class.quick.practiceSub", "Practise any chapter or take a chapter test"), href: "/practice", icon: "", world: "school", course: "", keywords: "" },
+    { kind: "subject", title: t("nav.plan", "Study plan"), subtitle: t("class.quick.planSub", "Your revision plan up to the exam"), href: "/plan", icon: "", world: "school", course: "", keywords: "" },
+    { kind: "subject", title: t("class.nav.explainers", "Explainers"), subtitle: t("class.quick.explainSub", "See ideas move, step by step"), href: "/explain", icon: "", world: "school", course: "", keywords: "" },
+  ];
   const quickText: Record<string, { title: string; subtitle: string }> = {
     "/learn": { title: t("shell.quick.learn", "Learn"), subtitle: t("shell.quick.learnSub", "Your path") },
     "/courses": { title: t("shell.quick.courses", "All courses"), subtitle: t("shell.quick.coursesSub", "Browse every course") },
@@ -68,18 +97,20 @@ export function CommandPalette() {
 
   const results = useMemo(() => {
     const terms = q.toLowerCase().trim().split(/\s+/).filter(Boolean);
-    if (!terms.length) return QUICK;
-    return (index ?? [])
+    if (!terms.length) return mc && !everything ? quickClass : QUICK;
+    const pool = mc && !everything ? [...classItems, ...(index ?? []).filter((i) => i.kind === "lesson" && classLessons?.has(i.href.replace(/^\/course\//, "")))] : (index ?? []);
+    return pool
       .map((i) => ({ i, s: score(i, terms) }))
       .filter((x) => x.s > 0)
       .sort((a, b) => b.s - a.s)
       .slice(0, 12)
       .map((x) => x.i);
-  }, [q, index]);
+  }, [q, index, mc, everything, classItems, classLessons]); // eslint-disable-line react-hooks/exhaustive-deps
 
   useEffect(() => {
     if (open) {
       setQ("");
+      setEverything(false);
       setActive(0);
       setTimeout(() => inputRef.current?.focus(), 30);
     }
@@ -136,6 +167,19 @@ export function CommandPalette() {
               />
               <kbd className="rounded-md border border-line px-1.5 py-0.5 font-mono text-[10px] text-muted">ESC</kbd>
             </div>
+            {mc && (
+              <div className="flex items-center gap-2 border-b border-line px-4 py-2 text-xs font-semibold" role="radiogroup" aria-label={t("class.search.scope", "Search in")}>
+                <span className="text-muted">{t("class.search.scope", "Search in")}</span>
+                {[
+                  [false, t("class.nav.home", "My class")],
+                  [true, t("class.search.everything", "Everything")],
+                ].map(([v, label]) => (
+                  <button key={String(v)} type="button" role="radio" aria-checked={everything === v} onClick={() => setEverything(v as boolean)} className={clsx("rounded-full border px-2.5 py-1 transition", everything === v ? "border-accent bg-accent-soft text-accent" : "border-line text-muted hover:text-ink")}>
+                    {label as string}
+                  </button>
+                ))}
+              </div>
+            )}
             <ul className="max-h-[50vh] overflow-y-auto p-2">
               {!q && <li className="eyebrow px-3 pb-1 pt-2">{t("shell.search.jumpTo", "Jump to")}</li>}
               {results.map((r, i) => (
@@ -156,11 +200,11 @@ export function CommandPalette() {
                       </span>
                     )}
                     <span className="min-w-0 flex-1">
-                      <span className="block truncate font-extrabold">{(!q && quickText[r.href]?.title) || r.title}</span>
-                      <span className="block truncate text-xs font-semibold text-muted">{(!q && quickText[r.href]?.subtitle) || r.subtitle}</span>
+                      <span className="block truncate font-extrabold">{(!q && !(mc && !everything) && quickText[r.href]?.title) || r.title}</span>
+                      <span className="block truncate text-xs font-semibold text-muted">{(!q && !(mc && !everything) && quickText[r.href]?.subtitle) || r.subtitle}</span>
                     </span>
                     {!(r.kind === "subject" && !r.course) && (
-                      <span className="chip hidden sm:inline-flex">{r.kind === "subject" ? (worldName[r.world] ?? worldById[r.world].name) : r.kind === "topic" ? t("shell.search.unit", "Unit") : t("shell.search.lesson", "Lesson")}</span>
+                      <span className="chip hidden sm:inline-flex">{r.kind === "subject" ? (worldName[r.world] ?? worldById[r.world].name) : r.kind === "topic" ? (mc && !everything ? t("class.search.chapter", "Chapter") : t("shell.search.unit", "Unit")) : t("shell.search.lesson", "Lesson")}</span>
                     )}
                     {i === active && <CornerDownLeft className="h-4 w-4 text-muted" />}
                   </button>

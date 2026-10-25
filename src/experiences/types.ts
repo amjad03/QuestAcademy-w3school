@@ -45,7 +45,8 @@ export interface LessonTab {
 export interface LessonLayoutProps {
   world: WorldId;
   course: { slug: string; title: string; href: string };
-  unit: { title: string; href: string; index: number };
+  /** `label` replaces the default "Unit n: title" (lessons opened from a class chapter say "Chapter n: title"). */
+  unit: { title: string; href: string; index: number; label?: string };
   lesson: { id: string; title: string; summary: string; minutes: number; xp: number };
   tabs: LessonTab[];
   /** The current item's body (video, article/story with explainers, cards, challenge). */

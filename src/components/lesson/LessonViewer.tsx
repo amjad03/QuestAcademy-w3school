@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import { useRouter, useSearchParams } from "next/navigation";
+import { useLessonClassContext } from "@/components/class/ClassViews";
 import { useEffect, useMemo } from "react";
 import { BookOpenCheck, Check, Headphones, Pause, Trophy } from "lucide-react";
 import clsx from "clsx";
@@ -59,6 +60,8 @@ function useTabLabels(): Record<ItemKind, string> {
 }
 
 export function LessonViewer(raw: LessonViewerPayload) {
+  // Opened from the learner's class: breadcrumb, sidebar and next / previous follow the chapter.
+  const inClass = useLessonClassContext(raw.id);
   // Lesson text in the learner's language when a translation exists.
   const dict = useContentDict(raw.course.slug);
   const p = useMemo(() => localize(raw, dict), [raw, dict]);
@@ -97,9 +100,10 @@ export function LessonViewer(raw: LessonViewerPayload) {
     const i = p.items.findIndex((x) => x.id === item.id);
     const after = p.items.slice(i + 1).find((x) => !itemDone(st, p.id, x));
     if (after) return { href: after.href, label: after.kind === "practice" ? t("lesson.tab.practice", "Practice") : TAB_LABEL[after.kind], title: after.kind === "practice" ? t("lesson.upNext.practiceTitle", "Practice · {n}+ questions", { n: p.lesson.quiz?.length ?? 0 }) : after.title };
+    if (inClass) return inClass.next;
     if (p.next) return { href: p.next.href, label: t("lesson.upNext.nextLesson", "Next lesson"), title: p.next.title };
     return { href: p.unit.test.href, label: t("lesson.upNext.unitTest", "Unit test"), title: p.unit.title };
-  }, [p, item, t, st]); // eslint-disable-line react-hooks/exhaustive-deps
+  }, [p, item, t, st, inClass?.next.href, inClass?.next.title]); // eslint-disable-line react-hooks/exhaustive-deps
 
   const finishArticle = () => {
     completeLesson({ id: p.id, subject: p.course.slug, world: p.world, xp: p.lesson.xp, flashcards: p.lesson.flashcards?.length ?? 0 });
@@ -107,7 +111,7 @@ export function LessonViewer(raw: LessonViewerPayload) {
     if (currentMode().young) awardExploreSticker("lesson-complete", p.id);
   };
 
-  const sidebar = <UnitNav {...p} currentItem={item.id} onNavigate={() => {}} />;
+  const sidebar = inClass ? inClass.sidebar : <UnitNav {...p} currentItem={item.id} onNavigate={() => {}} />;
 
   const tabs: LessonTab[] = p.items.map((it) => ({
     kind: it.kind,
@@ -149,16 +153,16 @@ export function LessonViewer(raw: LessonViewerPayload) {
     <>
     <Layout
       world={p.world}
-      course={p.course}
-      unit={{ title: p.unit.title, href: p.unit.href, index: p.unit.index }}
+      course={inClass ? { ...p.course, ...inClass.course } : p.course}
+      unit={inClass ? inClass.unit : { title: p.unit.title, href: p.unit.href, index: p.unit.index }}
       lesson={{ id: p.id, title: p.lesson.title, summary: p.lesson.summary, minutes: p.lesson.minutes, xp: p.lesson.xp }}
       tabs={tabs}
       content={content}
       unitNav={sidebar}
       notebook={<NotebookDock lessonId={p.id} title={p.lesson.title} href={`/course/${p.id}`} />}
-      prev={p.prev}
+      prev={inClass ? inClass.prev : p.prev}
       upNext={upNext}
-      unitProgress={{ done: p.unit.lessons.filter((l) => Boolean(st.lessons[l.id])).length, total: p.unit.lessons.length }}
+      unitProgress={inClass ? inClass.progress : { done: p.unit.lessons.filter((l) => Boolean(st.lessons[l.id])).length, total: p.unit.lessons.length }}
       onComplete={finishArticle}
       completed={Boolean(st.lessons[p.id])}
     />
