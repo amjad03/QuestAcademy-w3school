@@ -1703,7 +1703,13 @@ export const topics: Topic[] = [
             type: "callout",
             tone: "exam",
             title: "Board trap",
-            md: "In the two-poles problem, the vertical side of the right triangle is the **difference** of heights, not either height. In classification questions, always compare the square of the **longest** side — comparing a shorter side gives a wrong conclusion.",
+            md: "In classification questions, always compare the square of the **longest** side — comparing a shorter side gives a wrong conclusion.",
+          },
+          {
+            type: "mistake",
+            wrong: t`For poles of 6 m and 11 m, 12 m apart, the distance between the tops is $\sqrt{12^2 + 11^2}$.`,
+            right: t`The vertical side of the right triangle is the **difference** of the heights: $\sqrt{12^2 + (11 - 6)^2} = 13$ m.`,
+            why: "The right triangle sits on top of the shorter pole, not on the ground. Its vertical side is only the part of the taller pole that sticks up above the shorter one.",
           },
           {
             type: "keypoints",
@@ -1738,6 +1744,7 @@ export const topics: Topic[] = [
             answer: 2,
             explain: "8² = 64 > 25 + 36 = 61, so the angle opposite 8 cm is obtuse.",
             difficulty: 2,
+            hint: "Compare 8² with 5² + 6².",
           },
           {
             kind: "numeric",
@@ -1753,6 +1760,7 @@ export const topics: Topic[] = [
             unit: "m",
             explain: "Height difference 5 m, gap 12 m: √(144 + 25) = 13 m.",
             difficulty: 2,
+            hint: "Use the difference of the heights as the vertical side.",
           },
           {
             kind: "truefalse",
@@ -1766,6 +1774,7 @@ export const topics: Topic[] = [
             answer: ["CD²", "CD^2", "DC²", "DC^2"],
             explain: "Both sides equal AD².",
             difficulty: 2,
+            hint: "Write AD² from right △ADB and from right △ADC.",
           },
         ],
       },
@@ -1807,6 +1816,22 @@ export const topics: Topic[] = [
             md: "**Proof idea:** Let ABCD and ABEF be parallelograms on base AB between parallels AB and FC. Then △ADF ≅ △BCE (AD = BC, AF = BE, ∠DAF = ∠CBE by corresponding angles). Area ABCD = area(ABED) + area(△BCE) = area(ABED) + area(△ADF) = area ABEF. ∎",
           },
           { type: "formula", tex: t`\text{Area of parallelogram} = \text{base} \times \text{corresponding height}` },
+          {
+            type: "text",
+            md: "**Try it:** rectangle ABEF and parallelogram ABCD stand on the same base AB = 10 cm, between two parallel lines 6 cm apart. The slanted side AD of the parallelogram is 8 cm.",
+          },
+          {
+            type: "activity",
+            activity: {
+              kind: "reveal",
+              prompt: "Predict the area of the slanted parallelogram.",
+              emoji: "▱",
+              options: ["60 cm²", "80 cm²", "More than 80 cm², it is longer"],
+              answer: 0,
+              trap: 1,
+              explain: "Rectangle ABEF and parallelogram ABCD share base AB = 10 cm and lie between the same parallels 6 cm apart. So both have area 10 × 6 = **60 cm²**. The slanted side (8 cm) is not the height, so 10 × 8 = 80 is wrong.",
+            },
+          },
           { type: "heading", text: "Theorem 2" },
           {
             type: "callout",
@@ -1814,15 +1839,28 @@ export const topics: Topic[] = [
             title: "Statement",
             md: "If a triangle and a parallelogram are on the same base and between the same parallels, the area of the triangle is **half** the area of the parallelogram.",
           },
-          { type: "heading", text: "Worked example 1" },
           {
-            type: "text",
-            md: "**In parallelogram ABCD, AB = 12 cm, the height to AB is 7 cm and AD = 14 cm. Find the area and the height to AD.** Area = 12 × 7 = 84 cm². Using base AD: 14 × h = 84, so h = 6 cm.",
+            type: "example",
+            title: "Two bases, two heights",
+            problem: "In parallelogram ABCD, AB = 12 cm, the height to AB is 7 cm and AD = 14 cm. Find the area and the height to AD.",
+            steps: [
+              "Area = base × corresponding height = 12 × 7 = 84 cm².",
+              "The same area can be found using base AD: 14 × h = 84.",
+              "So h = 84 ÷ 14 = 6 cm.",
+            ],
+            answer: "Area = 84 cm²; height to AD = 6 cm.",
           },
-          { type: "heading", text: "Worked example 2" },
           {
-            type: "text",
-            md: "**ABCD is a parallelogram of area 48 cm² and E is any point on side CD. Find the area of △ABE.** △ABE and ABCD share base AB and lie between AB ∥ DC, so area(△ABE) = ½ × 48 = 24 cm². Consequently area(△ADE) + area(△BCE) = 48 − 24 = 24 cm² too.",
+            type: "example",
+            title: "Triangle inside a parallelogram",
+            problem: "ABCD is a parallelogram of area 48 cm² and E is any point on side CD. Find the area of △ABE.",
+            steps: [
+              "△ABE and parallelogram ABCD share base AB.",
+              "E lies on DC and AB ∥ DC, so both lie between the same parallels.",
+              "By Theorem 2, area(△ABE) = ½ × 48 = 24 cm².",
+              "Consequently area(△ADE) + area(△BCE) = 48 − 24 = 24 cm² too.",
+            ],
+            answer: "area(△ABE) = 24 cm²",
           },
           {
             type: "checkpoint",
@@ -1840,7 +1878,13 @@ export const topics: Topic[] = [
             type: "callout",
             tone: "exam",
             title: "Board trap",
-            md: "Height must be **perpendicular** to the base you use. A common mistake is multiplying two adjacent sides (12 × 14) for a parallelogram — that only works for a rectangle. And the theorems need **both** conditions: same (or equal) base **and** same parallels.",
+            md: "Height must be **perpendicular** to the base you use, and it must be the height to **that** base. And the theorems need **both** conditions: same (or equal) base **and** same parallels.",
+          },
+          {
+            type: "mistake",
+            wrong: "Area of parallelogram ABCD with AB = 12 cm and AD = 14 cm is 12 × 14 = 168 cm².",
+            right: "Area = base × **perpendicular height** to that base. With height 7 cm to AB, area = 12 × 7 = 84 cm².",
+            why: "Side × side works for a rectangle, where the side is the height. In a slanted parallelogram the side is longer than the height, so multiplying sides gives too big an answer.",
           },
           {
             type: "keypoints",
@@ -1858,6 +1902,7 @@ export const topics: Topic[] = [
           { front: "Triangle and parallelogram on the same base, same parallels", back: "Triangle = ½ parallelogram" },
           { front: "Area of a parallelogram", back: "Base × corresponding (perpendicular) height" },
           { front: "What does 'between the same parallels' guarantee?", back: "Equal heights" },
+          { front: "Rectangle and parallelogram on the same base, same parallels", back: "Equal area (but the rectangle has the smaller perimeter)" },
         ],
         quiz: [
           {
@@ -1874,6 +1919,7 @@ export const topics: Topic[] = [
             unit: "cm",
             explain: "Area = 16 × 9 = 144 cm²; height to QR = 144/12 = 12 cm.",
             difficulty: 2,
+            hint: "Find the area first using PQ, then divide by QR.",
           },
           {
             kind: "truefalse",
@@ -1888,6 +1934,7 @@ export const topics: Topic[] = [
             answer: 1,
             explain: "Areas are equal, but the slanted sides of the parallelogram are longer than the height, so the rectangle has a smaller perimeter.",
             difficulty: 3,
+            hint: "The bases are equal. Compare a slanted side with the perpendicular height.",
           },
           {
             kind: "fill",
@@ -1933,15 +1980,40 @@ export const topics: Topic[] = [
             md: "A **median** joins a vertex to the mid-point of the opposite side. If AD is a median of △ABC, then BD = DC and △ABD, △ADC have the same height from A, so they have **equal area**.",
           },
           { type: "formula", tex: t`\text{ar}(\triangle ABD) = \text{ar}(\triangle ADC) = \tfrac12\,\text{ar}(\triangle ABC)` },
-          { type: "heading", text: "Worked example 1" },
           {
-            type: "text",
-            md: "**In △ABC of area 36 cm², AD is a median and E is the mid-point of AD. Find ar(△BED).** AD is a median, so ar(△ABD) = 18 cm². In △ABD, BE is a median (E is the mid-point of AD), so ar(△BED) = ½ × 18 = **9 cm²**, i.e. one-quarter of ar(△ABC).",
+            type: "activity",
+            activity: {
+              kind: "reveal",
+              prompt: "AD is a median of △ABC. Which must be true?",
+              emoji: "📐",
+              options: ["∠BAD = ∠DAC", "ar(△ABD) = ar(△ADC)", "AD ⊥ BC"],
+              answer: 1,
+              trap: 0,
+              explain: "A median gives **equal bases** (BD = DC) and the **same height** from A, so the two areas are equal. It does not bisect the angle at A, and it is not perpendicular to BC unless AB = AC.",
+            },
           },
-          { type: "heading", text: "Worked example 2" },
           {
-            type: "text",
-            md: "**The diagonals of trapezium ABCD (AB ∥ DC) meet at O. Prove ar(△AOD) = ar(△BOC).** △ABD and △ABC are on base AB between AB ∥ DC, so ar(△ABD) = ar(△ABC). Subtract the common ar(△AOB) from both: ar(△AOD) = ar(△BOC). ∎",
+            type: "example",
+            title: "A median of a median",
+            problem: "In △ABC of area 36 cm², AD is a median and E is the mid-point of AD. Find ar(△BED).",
+            steps: [
+              "AD is a median of △ABC, so ar(△ABD) = ½ × 36 = 18 cm².",
+              "In △ABD, E is the mid-point of AD, so BE is a median of △ABD.",
+              "So ar(△BED) = ½ × 18 = **9 cm²**.",
+            ],
+            answer: "ar(△BED) = 9 cm², one-quarter of ar(△ABC).",
+          },
+          {
+            type: "example",
+            title: "Diagonals of a trapezium",
+            problem: "The diagonals of trapezium ABCD (AB ∥ DC) meet at O. Prove ar(△AOD) = ar(△BOC).",
+            steps: [
+              "△ABD and △ABC are on the same base AB.",
+              "Their third vertices D and C lie on DC, and AB ∥ DC, so they are between the same parallels. Hence ar(△ABD) = ar(△ABC).",
+              "Subtract the common part ar(△AOB) from both sides.",
+              "ar(△ABD) − ar(△AOB) = ar(△AOD), and ar(△ABC) − ar(△AOB) = ar(△BOC). ∎",
+            ],
+            answer: "ar(△AOD) = ar(△BOC)",
           },
           {
             type: "checkpoint",
@@ -1968,7 +2040,13 @@ export const topics: Topic[] = [
             type: "callout",
             tone: "exam",
             title: "Board trap",
-            md: "Equal area does **not** mean congruent: triangles on the same base between the same parallels usually have different shapes. Don't write \"△ABD ≅ △ABC\" in an area proof. Also, the median theorem halves area, **not** the angle at the vertex.",
+            md: "The median theorem halves the **area**, **not** the angle at the vertex. Always give the reason in words (\"same base and between the same parallels\") next to each area statement.",
+          },
+          {
+            type: "mistake",
+            wrong: "△ABD and △ABC are on the same base and between the same parallels, so △ABD ≅ △ABC.",
+            right: "They are **equal in area**: ar(△ABD) = ar(△ABC). They are usually not congruent.",
+            why: "Congruent figures do have equal areas, so students run the idea backwards. But sliding the top vertex along the parallel line changes the shape while keeping base and height, so the area stays the same and the triangles stop being congruent.",
           },
           {
             type: "keypoints",
@@ -1996,6 +2074,7 @@ export const topics: Topic[] = [
             unit: "cm²",
             explain: "ar(△ABD) = 24; BE is a median of △ABD, so ar(△BED) = 12 cm².",
             difficulty: 2,
+            hint: "Halve the area once for median AD, then again for median BE of △ABD.",
           },
           {
             kind: "truefalse",
@@ -2010,6 +2089,7 @@ export const topics: Topic[] = [
             answer: 2,
             explain: "Diagonal AC halves the area; BO is a median of △ABC, halving again: 1/4.",
             difficulty: 2,
+            hint: "The diagonals of a parallelogram bisect each other, so BO is a median of △ABC.",
           },
           {
             kind: "numeric",
@@ -2036,6 +2116,7 @@ export const topics: Topic[] = [
             ],
             explain: "Same base, same parallels, then subtract the common part.",
             difficulty: 2,
+            hint: "First find two big triangles with equal area, then remove the shared piece.",
           },
         ],
       },
