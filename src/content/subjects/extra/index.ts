@@ -34,12 +34,37 @@ import * as cmp10 from "./cmp-10";
 import * as gk10 from "./gk-10";
 import * as matAp10 from "./mat-10-ap";
 import * as phyCalorimetry from "./phy-calorimetry";
+import * as soc9World from "./soc-9-world";
+import * as soc9Ancient from "./soc-9-ancient";
+import * as soc9Medieval from "./soc-9-medieval";
+import * as soc9Econ from "./soc-9-econ";
+import * as soc9IndiaGeo from "./soc-9-india-geo";
+import * as soc9KaGeo from "./soc-9-ka-geo";
+import * as soc9Earth from "./soc-9-earth";
+import * as soc9Atmos from "./soc-9-atmos";
+import * as soc9Democracy from "./soc-9-democracy";
+import * as soc9Govt from "./soc-9-govt";
+import * as eng9 from "./eng-9";
+import * as hin9 from "./hin-9";
+import * as cmp9It from "./cmp-9-it";
+import * as cmp9Java from "./cmp-9-java";
+import * as mat9Alg from "./mat-9-alg";
+import * as mat9Eq from "./mat-9-eq";
+import * as mat9Tri from "./mat-9-tri";
+import * as mat9Mens from "./mat-9-mens";
+import * as mat9Data from "./mat-9-data";
+import * as che9Ncert from "./che-9-ncert";
+import * as che9Icse from "./che-9-icse";
+import * as phy9Ncert from "./phy-9-ncert";
+import * as phy9Icse from "./phy-9-icse";
+import * as bio9Ncert from "./bio-9-ncert";
+import * as bio9Icse from "./bio-9-icse";
 
 /**
  * Chapters written to close syllabus gaps. Each batch file adds topics to one
  * course and maps syllabus chapter titles to them.
  */
-const BATCHES: Batch[] = [phyMech, phyHeat, phyMagnet, phyModern, phyIcse10, chePhys, cheInorg, cheOrg, cheIcse, bioDiversity, bioStructure, bioRepro, bioApplied, bioIcse10, bioBody, bioIcse9, matAlgebra, matCalcGeo, matIcse10A, matIcse10B, mat9Geo, mat9Num, socIndia, socWorld, socGeo, socCivics, socEcon, engGrammar, engWriting, hin10, kan10, cmp10, gk10, matAp10, phyCalorimetry];
+const BATCHES: Batch[] = [phyMech, phyHeat, phyMagnet, phyModern, phyIcse10, chePhys, cheInorg, cheOrg, cheIcse, bioDiversity, bioStructure, bioRepro, bioApplied, bioIcse10, bioBody, bioIcse9, matAlgebra, matCalcGeo, matIcse10A, matIcse10B, mat9Geo, mat9Num, socIndia, socWorld, socGeo, socCivics, socEcon, engGrammar, engWriting, hin10, kan10, cmp10, gk10, matAp10, phyCalorimetry, soc9World, soc9Ancient, soc9Medieval, soc9Econ, soc9IndiaGeo, soc9KaGeo, soc9Earth, soc9Atmos, soc9Democracy, soc9Govt, eng9, hin9, cmp9It, cmp9Java, mat9Alg, mat9Eq, mat9Tri, mat9Mens, mat9Data, che9Ncert, che9Icse, phy9Ncert, phy9Icse, bio9Ncert, bio9Icse];
 
 /** Extra topics per course slug, in batch order. */
 export function extraTopics(course: string): Topic[] {
@@ -49,18 +74,18 @@ export function extraTopics(course: string): Topic[] {
 /** Subject family of a course slug, matching the syllabus topic-key prefix. */
 const family = (course: string) => (course.startsWith("physics") ? "phy" : course.startsWith("chemistry") ? "che" : course.startsWith("biology") ? "bio" : "mat");
 
-type Batch = { course: string; family?: string; topics: Topic[]; links: Record<string, string> };
+type Batch = { course: string; family?: string; topics: Topic[]; links: Record<string, string | string[]> };
 
 /** `${family}|${syllabus chapter title}` → lesson ids written for it. */
 export const CHAPTER_LESSONS: Record<string, string[]> = {};
 for (const b of BATCHES) {
-  for (const [title, slug] of Object.entries(b.links)) {
-    const t = b.topics.find((x) => x.slug === slug);
-    if (t) {
+  for (const [title, slugs] of Object.entries(b.links))
+    for (const slug of typeof slugs === "string" ? [slugs] : slugs) {
+      const t = b.topics.find((x) => x.slug === slug);
+      if (!t) continue;
       const k = `${b.family ?? family(b.course)}|${title}`;
       CHAPTER_LESSONS[k] = [...(CHAPTER_LESSONS[k] ?? []), ...t.lessons.map((l) => `${b.course}/${t.slug}/${l.slug}`)];
     }
-  }
 }
 
 /** `${course}/${topic}` of every Class 9–12 board chapter added to a school course (not part of the course's own grade range). */

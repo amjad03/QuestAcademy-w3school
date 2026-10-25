@@ -2159,9 +2159,10 @@ export const links: Record<string, string> = {
   "Introduction to Euclid's Geometry": "euclid-geometry",
   Quadrilaterals: "quadrilaterals-9",
   "Rectilinear Figures": "quadrilaterals-9",
-  Circles: "circles-9",
+  "9:Circles": "circles-9",
   "Mid-point Theorem": "mid-point-theorem",
   "Pythagoras Theorem": "pythagoras-theorem",
   "Theorems on Area": "area-theorems",
+  "9:Areas of Parallelograms and Triangles": "area-theorems",
   Constructions: "constructions-10",
 };
