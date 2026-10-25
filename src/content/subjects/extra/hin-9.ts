@@ -240,7 +240,7 @@ const upsargPratyay: Topic = {
         },
         {
           type: "text",
-          md: "Notice that the **मूल शब्द** often changes a little when a प्रत्यय joins it. With **इक**, the first vowel of the word grows: समाज → सामाजिक (स → सा), इतिहास → ऐतिहासिक (इ → ऐ), दिन → दैनिक (दि → दै). With **आस** and **पन**, a long vowel may become short: मीठा → मिठास, बच्चा → बचपन.\n\nSome words have **both**: an उपसर्ग in front and a प्रत्यय at the end. बे + ईमान + ई = बेईमानी; प्र + गति + शील = प्रगतिशील; सु + गंध + इत = सुगंधित.",
+          md: "Notice that the **मूल शब्द** often changes a little when a प्रत्यय joins it. With **इक**, the first vowel of the word grows: समाज → सामाजिक (स → सा), इतिहास → ऐतिहासिक (इ → ऐ), दिन → दैनिक (दि → दै). With **आस** and **पन**, the root may become shorter: मीठा → मिठास (ी → ि), बच्चा → बचपन (च्चा → च).\n\nSome words have **both**: an उपसर्ग in front and a प्रत्यय at the end. बे + ईमान + ई = बेईमानी; प्र + गति + शील = प्रगतिशील; सु + गंध + इत = सुगंधित.",
         },
         {
           type: "example",
@@ -744,7 +744,7 @@ const arthVakya: Topic = {
         },
         {
           type: "text",
-          md: "Earlier you sorted sentences by their **रचना** (structure): सरल, संयुक्त, मिश्र. Now we sort them by their **अर्थ** (meaning): what the speaker wants to do with the sentence. Is it a statement, a question, an order, a wish or a doubt?\n\nBy meaning, Hindi has **आठ** (eight) kinds of sentences.",
+          md: "Sentences can be sorted by their **रचना** (structure): सरल, संयुक्त, मिश्र. Here we sort them by their **अर्थ** (meaning): what the speaker wants to do with the sentence. Is it a statement, a question, an order, a wish or a doubt?\n\nBy meaning, Hindi has **आठ** (eight) kinds of sentences.",
         },
         {
           type: "table",
@@ -798,7 +798,7 @@ const arthVakya: Topic = {
             kind: "match",
             prompt: "Match each sentence with its type.",
             pairs: [
-              ["अरे! तुम कब आए?", "विस्मयादिबोधक"],
+              ["अरे! तुम आ गए!", "विस्मयादिबोधक"],
               ["वह शायद घर पहुँच गया होगा।", "संदेहवाचक"],
               ["अगर बस मिली तो मैं समय पर पहुँचूँगा।", "संकेतवाचक"],
               ["कृपया बैठिए।", "आज्ञावाचक"],

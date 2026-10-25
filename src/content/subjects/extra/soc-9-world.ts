@@ -1245,7 +1245,7 @@ const nazism: Topic = {
           items: [
             "**1933**: Germany leaves the **League of Nations**.",
             "**1936**: the German army moves back into the **Rhineland**.",
-            "**1938**: Austria is joined to Germany; the German-speaking **Sudetenland** is taken from Czechoslovakia, and soon the whole country.",
+            "**1938**: Austria is joined to Germany; the German-speaking **Sudetenland** is taken from Czechoslovakia; in March 1939 Germany takes the rest of the country.",
             "**September 1939**: Germany invades **Poland**; France and England declare war. The **Second World War** begins.",
             "**June 1941**: Germany attacks the **Soviet Union**. After Japan bombs Pearl Harbor in December 1941, the **USA** joins the war.",
             "**May 1945**: Hitler is defeated. In **August 1945** the USA drops an atomic bomb on **Hiroshima** in Japan.",
@@ -1299,7 +1299,7 @@ const nazism: Topic = {
             "The Nazis built a totalitarian state with the SA, Gestapo, SS and concentration camps.",
             "Their racial hierarchy put Nordic Aryans at the top and Jews at the bottom; Lebensraum meant conquering land in the east.",
             "Nuremberg Laws (1935) and Kristallnacht (1938) marked rising persecution of Jews.",
-            "Germany left the League in 1933, took the Rhineland (1936), Austria and Czechoslovakia (1938), and invaded Poland in September 1939.",
+            "Germany left the League in 1933, took the Rhineland (1936), Austria and the Sudetenland (1938), and invaded Poland in September 1939.",
             "About six million Jews were killed in the Holocaust; Nazi leaders were tried at Nuremberg.",
           ],
         },

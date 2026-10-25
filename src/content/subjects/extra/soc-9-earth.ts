@@ -1009,7 +1009,7 @@ export const topics: Topic[] = [
             activity: {
               kind: "order",
               prompt: "Order the layers from the surface to the centre.",
-              items: ["Continental crust (SIAL)", "Oceanic crust (SIMA)", "Mantle", "Outer core (liquid)", "Inner core (solid)"],
+              items: ["SIAL (upper crust of the continents)", "SIMA (lower crust; also forms the ocean floor)", "Mantle", "Outer core (liquid)", "Inner core (solid)"],
               explain: "SIAL rests on SIMA; below the crust is the mantle; below 2,900 km is the liquid outer core; the solid inner core is at the centre.",
             },
           },

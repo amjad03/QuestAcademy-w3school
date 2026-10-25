@@ -338,7 +338,7 @@ export const topics: Topic[] = [
           {
             kind: "order",
             q: "Put these in the order a river meets them, from source to mouth.",
-            items: ["V-shaped valley", "Waterfall in the hills", "Meanders", "Flood plain", "Delta"],
+            items: ["V-shaped valley in the mountains", "Meanders on gentler slopes", "Flood plain with levees", "Delta at the mouth"],
             explain: "Erosional landforms come first in the mountains, then meanders as the slope eases, and depositional landforms near the sea.",
           },
           {
@@ -1521,7 +1521,7 @@ export const topics: Topic[] = [
               ["**Sirocco**", "from the Sahara towards Italy and the Mediterranean", "hot, dry, dusty wind"],
               ["**Mistral**", "Rhône valley, France", "cold, strong wind from the Alps"],
               ["**Harmattan**", "from the Sahara towards the Guinea coast of West Africa", "dry, dusty wind; called 'the doctor' because it brings relief from the humid heat"],
-              ["**Mango showers**", "Kerala and Karnataka, before the monsoon", "pre-monsoon showers that help mangoes ripen"],
+              ["**Mango showers**", "Kerala and Karnataka, before the monsoon", "pre-monsoon thundershowers (local storms, not a wind) that help mangoes ripen"],
             ],
           },
           {

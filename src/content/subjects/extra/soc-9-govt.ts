@@ -810,7 +810,7 @@ export const topics: Topic[] = [
           },
           {
             type: "text",
-            md: "The Election Commission is set up under **Article 324** of the Constitution. It was formed on **25 January 1950**, which is why 25 January is now **National Voters' Day**.\n\nIt has a **Chief Election Commissioner (CEC)** and, at present, two other **Election Commissioners**. They are appointed by the **President**. (Since a 2023 law, the President appoints them on the advice of a selection committee headed by the Prime Minister.) They hold office for **six years or until the age of 65**, whichever comes first.\n\nThe CEC can be removed only in the same way as a judge of the Supreme Court. This protects the CEC from pressure by the government.",
+            md: "The Election Commission is set up under **Article 324** of the Constitution. It was formed on **25 January 1950**, which is why 25 January is now **National Voters' Day**.\n\nIt has a **Chief Election Commissioner (CEC)** and, at present, two other **Election Commissioners**. They are appointed by the **President**. (Since a 2023 law, the President appoints them on the recommendation of a selection committee headed by the Prime Minister.) They hold office for **six years or until the age of 65**, whichever comes first.\n\nThe CEC can be removed only in the same way as a judge of the Supreme Court. This protects the CEC from pressure by the government.",
           },
           {
             type: "list",
@@ -1187,7 +1187,7 @@ export const topics: Topic[] = [
             type: "callout",
             tone: "note",
             title: "Karnataka: Grama, Taluk and Zilla Panchayat",
-            md: "In Karnataka the three tiers are the **Grama Panchayat**, the **Taluk Panchayat** and the **Zilla Panchayat**, under the **Karnataka Panchayat Raj Act, 1993**. Each is headed by an elected **Adhyaksha** (President) and **Upadhyaksha** (Vice-President), chosen by the members. The officials are the **Panchayat Development Officer (PDO)** at the Grama Panchayat, the **Executive Officer** at the Taluk Panchayat and the **Chief Executive Officer** at the Zilla Panchayat. Karnataka reserves **50%** of seats for women, more than the one-third the Constitution requires. Karnataka was also among the first states to hold elections to a strong panchayat system, with **Mandal Panchayats** in 1987.",
+            md: "In Karnataka the three tiers are the **Grama Panchayat**, the **Taluk Panchayat** and the **Zilla Panchayat**, under the **Karnataka Panchayat Raj Act, 1993** (renamed the Karnataka Gram Swaraj and Panchayat Raj Act in 2015). Each is headed by an elected **Adhyaksha** (President) and **Upadhyaksha** (Vice-President), chosen by the members. The officials are the **Panchayat Development Officer (PDO)** at the Grama Panchayat, the **Executive Officer** at the Taluk Panchayat and the **Chief Executive Officer** at the Zilla Panchayat. Karnataka reserves **50%** of seats for women, more than the one-third the Constitution requires. Karnataka was also among the first states to hold elections to a strong panchayat system, with **Mandal Panchayats** in 1987.",
           },
           {
             type: "example",

@@ -93,7 +93,7 @@ Then **Heron's formula** gives the area:`,
             type: "mistake",
             wrong: t`For sides 13, 14, 15, I put the whole perimeter 42 in place of $s$: $\sqrt{42 \times 29 \times 28 \times 27}$.`,
             right: t`Use the **semi**-perimeter: $s = 21$, so the area is $\sqrt{21 \times 8 \times 7 \times 6} = 84$.`,
-            why: t`The word "perimeter" sticks in memory, so students forget to halve it. With the full perimeter the answer comes out about four times too big, which is a quick sign that something is wrong.`,
+            why: t`The word "perimeter" sticks in memory, so students forget to halve it. With the full perimeter the answer comes out far too big (about 960 instead of 84), which is a quick sign that something is wrong.`,
           },
           {
             type: "activity",

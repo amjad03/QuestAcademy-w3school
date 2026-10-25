@@ -1208,7 +1208,7 @@ export const topics: Topic[] = [
           },
           {
             type: "text",
-            md: "The **octet rule**: atoms combine by losing, gaining or sharing electrons so that each ends up with **8 electrons** in its outermost shell (an **octet**).\n\nThe **duplet rule**: very small atoms such as hydrogen and lithium become stable with **2 electrons** in their only shell, like helium.\n\nThe force that holds two atoms together in a compound is a **chemical bond**. In this lesson we study the bond made by **transfer** of electrons.",
+            md: "The **octet rule**: atoms combine by losing, gaining or sharing electrons so that each ends up with **8 electrons** in its outermost shell (an **octet**).\n\nThe **duplet rule**: very small atoms such as hydrogen and lithium become stable with **2 electrons** in the first (K) shell, like helium. Hydrogen gets there by gaining or sharing one electron; lithium (2, 1) by losing its outer electron.\n\nThe force that holds two atoms together in a compound is a **chemical bond**. In this lesson we study the bond made by **transfer** of electrons.",
           },
           {
             type: "text",
@@ -1421,7 +1421,7 @@ export const topics: Topic[] = [
             type: "activity",
             activity: {
               kind: "sort",
-              prompt: "What is the strongest kind of bond in each molecule?",
+              prompt: "Does each molecule have only single bonds, a double bond or a triple bond?",
               groups: ["Single bonds only", "Has a double bond", "Has a triple bond"],
               items: [
                 { text: "H₂", group: 0, hint: "Each H needs just one more electron: one shared pair." },

@@ -783,11 +783,11 @@ const drainage: Topic = {
         },
         {
           type: "text",
-          md: "The **Indus** rises in Tibet near **Lake Mansarowar**. It flows west and enters India in **Ladakh**, forming a picturesque gorge. The Zaskar, Nubra, Shyok and Hunza join it in the Kashmir region.\n\nThe **Satluj, Beas, Ravi, Chenab and Jhelum** join together and enter the Indus near **Mithankot** in Pakistan. The Indus then flows south and reaches the Arabian Sea east of Karachi. Its length is about **2,900 km**.\n\nUnder the **Indus Water Treaty (1960)**, India can use only **20%** of the total water carried by the Indus system. India uses this water for irrigation in Punjab, Haryana and western Rajasthan.",
+          md: "The **Indus** rises in Tibet near **Lake Mansarowar**. It flows west and enters India in **Ladakh**, forming a picturesque gorge. The Zaskar, Nubra, Shyok and Hunza join it in the Kashmir region.\n\nThe **Satluj, Beas, Ravi, Chenab and Jhelum** join together and enter the Indus near **Mithankot** in Pakistan. The Indus then flows south and reaches the Arabian Sea east of Karachi. Its length is about **2,900 km**.\n\nUnder the **Indus Water Treaty (1960)**, India can use only **20%** of the total water carried by the Indus system. India uses this water for irrigation in Punjab, Haryana and western Rajasthan. (This is the figure the textbook gives; in 2025 India put the treaty in abeyance.)",
         },
         {
           type: "text",
-          md: "The headwater of the Ganga, the **Bhagirathi**, is fed by the **Gangotri glacier**. It is joined by the **Alaknanda** at **Devprayag** in Uttarakhand. The Ganga enters the plains at **Haridwar**.\n\nHimalayan tributaries: the **Yamuna** (rises from the Yamunotri glacier and joins the Ganga at Prayagraj), and the **Ghaghara, Gandak and Kosi** (rise in the Nepal Himalaya and often flood the plains). Tributaries from the peninsula: the **Chambal, Betwa and Son**.\n\nThe Ganga flows east to **Farakka** in West Bengal, the northernmost point of its delta. There it splits. The **Bhagirathi-Hooghly** flows south to the Bay of Bengal. The main stream enters Bangladesh, is joined by the Brahmaputra and is then called the **Meghna**. The Ganga and the Brahmaputra together form the **Sundarban Delta**, the world's largest and fastest growing delta. The Ganga is over **2,500 km** long.",
+          md: "The headwater of the Ganga, the **Bhagirathi**, is fed by the **Gangotri glacier**. It is joined by the **Alaknanda** at **Devprayag** in Uttarakhand. The Ganga enters the plains at **Haridwar**.\n\nHimalayan tributaries: the **Yamuna** (rises from the Yamunotri glacier and joins the Ganga at Prayagraj), and the **Ghaghara, Gandak and Kosi** (rise in the Nepal Himalaya and often flood the plains). Tributaries from the peninsula: the **Chambal, Betwa and Son**.\n\nThe Ganga flows east to **Farakka** in West Bengal, the northernmost point of its delta. There it splits. The **Bhagirathi-Hooghly** flows south to the Bay of Bengal. The main stream flows south into Bangladesh and is joined by the Brahmaputra; further downstream it is known as the **Meghna**. The Ganga and the Brahmaputra together form the **Sundarban Delta**, the world's largest and fastest growing delta. The Ganga is over **2,500 km** long.",
         },
         {
           type: "checkpoint",
@@ -1146,7 +1146,7 @@ const climate: Topic = {
         },
         {
           type: "text",
-          md: "The word **monsoon** comes from the Arabic word **'mausim'**, meaning season. It means the **seasonal reversal of wind direction** during a year. The monsoon is felt in the tropical belt roughly between 20°N and 20°S.\n\nIn **winter**, high pressure lies north of the Himalayas. Cold, dry winds blow from there to the low pressure over the oceans in the south. In **summer**, a low-pressure area forms over interior Asia and north-western India. The winds reverse: moist air from the high pressure over the southern Indian Ocean blows north-east, crosses the Equator, turns right and reaches India as the **south-west monsoon**.",
+          md: "The word **monsoon** comes from the Arabic word **'mausim'**, meaning season. It means the **seasonal reversal of wind direction** during a year. The monsoon is felt in the tropical belt roughly between 20°N and 20°S.\n\nIn **winter**, high pressure lies north of the Himalayas. Cold, dry winds blow from there to the low pressure over the oceans in the south. In **summer**, a low-pressure area forms over interior Asia and north-western India. The winds reverse: moist air from the high pressure over the southern Indian Ocean moves towards India as the south-east trade winds, crosses the Equator, turns right and reaches India as the **south-west monsoon**.",
         },
         {
           type: "list",
@@ -1205,7 +1205,7 @@ const climate: Topic = {
             ],
             answer: 1,
             trap: 0,
-            explain: "Latitude helps, but the textbook reason is **relief**: the high Himalayas act as a wall and stop the icy winds of Central Asia from entering India.",
+            explain: "Latitude helps, but the textbook reason (given under **altitude**) is the Himalayas: the high mountains act as a wall and stop the icy winds of Central Asia from entering India.",
           },
         },
         {
@@ -1317,7 +1317,7 @@ const climate: Topic = {
           rows: [
             ["**Cold weather season** (winter)", "mid-November to February", "December and January are coldest in the north; temperature falls from south to north; dry **north-east trade winds**; Tamil Nadu coast gets rain because these winds come from the sea there; **western cyclonic disturbances** bring rain to the north-west plains (good for **rabi** crops) and snow to the hills"],
             ["**Hot weather season** (summer)", "March to May", "heat belt moves north with the sun; about 38°C on the Deccan in March, 45°C in the north-west in May; **loo** (hot, dry, gusty day winds) in the north; dust storms; **kaal baisakhi** evening thunderstorms in West Bengal; **mango showers** in Kerala and Karnataka"],
-            ["**Advancing monsoon** (rainy season)", "June to September", "south-west monsoon winds; windward side of the Western Ghats gets over 250 cm; north-east gets the most rain; **Mawsynram** gets the highest average rainfall in the world; rain in the Ganga valley falls from east to west"],
+            ["**Advancing monsoon** (rainy season)", "June to September", "south-west monsoon winds; windward side of the Western Ghats gets over 250 cm; north-east gets the most rain; **Mawsynram** gets the highest average rainfall in the world; rainfall in the Ganga valley decreases from east to west"],
             ["**Retreating monsoon** (post-monsoon / transition)", "October to November", "monsoon trough weakens; clear skies; **'October heat'** — hot and humid; low pressure moves to the Bay of Bengal by early November; **cyclones** hit the east coast; most rain of the **Coromandel coast** comes now"],
           ],
         },
@@ -1853,7 +1853,7 @@ const population: Topic = {
         },
         {
           type: "text",
-          md: "People are the most important resource of a country: they make and use all other resources. India counts its people every ten years in the **Census**. The last complete Census was held in **2011**, and the figures in this lesson come from it.\n\nIn 2011 India's population was **1,210.6 million** — about **17.5%** of the world's people. Yet India has only **2.4%** of the world's area. That tells us how crowded India is.",
+          md: "People are the most important resource of a country: they make and use all other resources. India counts its people every ten years in the **Census**. The textbook uses the Census of **2011**, and the figures in this lesson come from it.\n\nIn 2011 India's population was **1,210.6 million** — about **17.5%** of the world's people. Yet India has only **2.4%** of the world's area. That tells us how crowded India is.",
         },
         {
           type: "table",

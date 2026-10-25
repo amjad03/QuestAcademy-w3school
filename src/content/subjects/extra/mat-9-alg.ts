@@ -974,7 +974,7 @@ Why? Division gives $p(x) = (x - a)\,q(x) + r$, where the remainder $r$ is a num
             type: "callout",
             tone: "note",
             title: "Board note",
-            md: "The current rationalised **NCERT** textbook (CBSE, and Karnataka, which uses NCERT books) keeps the **factor theorem** but no longer has a separate section on the remainder theorem. The remainder theorem is still the easiest way to *see* why the factor theorem works. **ICSE** studies both theorems in detail in Class 10.",
+            md: "The current rationalised **NCERT** textbook (CBSE) keeps the **factor theorem** but no longer has a separate section on the remainder theorem; check whether your Karnataka textbook still has it. The remainder theorem is still the easiest way to *see* why the factor theorem works. **ICSE** studies both theorems in detail in Class 10.",
           },
           {
             type: "checkpoint",

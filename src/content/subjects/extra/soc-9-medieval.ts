@@ -390,7 +390,7 @@ const delhiSultanate: Topic = {
         {
           type: "illustration",
           emoji: "🗼",
-          caption: "The Qutub Minar in Delhi, about 73 m tall, was begun by the first Sultan and finished by the next.",
+          caption: "The Qutub Minar in Delhi, about 73 m tall, was begun by the first Sultan, Qutbuddin Aibak, and finished by Iltutmish.",
         },
         {
           type: "text",
@@ -1076,7 +1076,7 @@ const vijayanagaraBahmani: Topic = {
           items: ["Founding of the Bahmani kingdom", "Execution of Mahmud Gawan", "Break-up into five Sultanates", "Battle of Talikota"],
           explain: "1347, then 1481, then the early 16th century, then 1565.",
           difficulty: 2,
-          hint: "The five Sultanates fought together at Talikota, so they must already exist.",
+          hint: "The Sultanates that fought together at Talikota must already have existed.",
         },
       ],
     },

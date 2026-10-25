@@ -24,7 +24,7 @@ const forestSociety: Topic = {
         {
           type: "illustration",
           emoji: "🚂",
-          caption: "Every kilometre of a 19th-century railway line rested on hundreds of wooden sleepers. Where did all that wood come from?",
+          caption: "Every kilometre of a 19th-century railway line rested on more than a thousand wooden sleepers. Where did all that wood come from?",
         },
         {
           type: "text",
@@ -2757,7 +2757,7 @@ const banks: Topic = {
             ["**Central bank**", "The 'bank of banks': issues currency notes, controls credit, banker to the government", "**Reserve Bank of India** (set up on 1 April **1935**, nationalised in **1949**, headquarters in Mumbai)"],
             ["**Commercial banks**", "Accept deposits from the public and give loans for business and personal needs", "State Bank of India, Canara Bank, private banks"],
             ["**Cooperative banks**", "Owned by members; give cheap credit mainly to farmers and small traders", "District central cooperative banks"],
-            ["**Regional Rural Banks (RRBs)**", "Credit to small farmers, artisans and labourers in villages (started in **1975**)", "Karnataka Gramin Bank"],
+            ["**Regional Rural Banks (RRBs)**", "Credit to small farmers, artisans and labourers in villages (started in **1975**)", "The gramin (rural) bank of each state, e.g. in Karnataka"],
             ["**Development banks**", "Long-term finance for agriculture, industry or trade", "NABARD (1982), SIDBI, EXIM Bank"],
           ],
         },

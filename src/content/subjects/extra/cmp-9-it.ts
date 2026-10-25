@@ -103,7 +103,7 @@ const basicsOfIt: Topic = {
         {
           type: "mistake",
           wrong: "My phone has 128 GB of memory, so it has 128 GB of RAM.",
-          right: "The 128 GB is **storage** (secondary memory) for apps, photos and files. RAM is a separate, much smaller primary memory, often 4–8 GB on such phones.",
+          right: "The 128 GB is **storage** (secondary memory) for apps, photos and files. RAM is a separate, much smaller primary memory, usually only a few GB.",
           why: "Shops and adverts call both of them \"memory\". But storage keeps files even when the phone is off, while RAM only holds what is running right now and is cleared when power goes.",
         },
         {

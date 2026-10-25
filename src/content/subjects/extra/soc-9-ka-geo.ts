@@ -1327,10 +1327,10 @@ export const topics: Topic[] = [
           },
           {
             kind: "mcq",
-            q: "Which district is known for its large silk cocoon market?",
-            options: ["Ramanagara", "Udupi", "Bidar", "Kodagu"],
+            q: "Which town is known for its large silk cocoon market?",
+            options: ["Ramanagara", "Udupi", "Bidar", "Madikeri"],
             answer: 0,
-            explain: "Ramanagara, near Bengaluru, is the centre of the cocoon trade.",
+            explain: "Ramanagara town, near Bengaluru, is the centre of the cocoon trade. (In 2025 Ramanagara district was renamed Bengaluru South district; the town keeps its name.)",
           },
           {
             kind: "truefalse",
@@ -1543,7 +1543,7 @@ export const topics: Topic[] = [
             headers: ["Type", "Raw material from", "Examples in Karnataka"],
             rows: [
               ["**Agro-based**", "farms", "cotton textiles (Davanagere, Ballari, Hubballi, Mysuru), sugar (Mandya, Belagavi, Bagalkote), silk (Mysuru)"],
-              ["**Forest-based**", "forests", "paper (Bhadravati, Dandeli), sandalwood oil and soap (Mysuru, Shivamogga)"],
+              ["**Forest-based**", "forests", "paper (Bhadravati, Dandeli), sandalwood oil (Mysuru, Shivamogga) and sandal soap (Bengaluru)"],
               ["**Mineral-based**", "mines", "iron and steel (Bhadravati, Toranagallu), cement (Kalaburagi, Bagalkote)"],
               ["**Engineering and knowledge-based**", "skills and parts", "aircraft, electronics, machines and software (Bengaluru)"],
             ],
@@ -2014,7 +2014,7 @@ export const topics: Topic[] = [
         blocks: [
           {
             type: "text",
-            md: "A **census** is the official count of all the people of a country, with details about them. India holds a census every ten years. The latest complete figures are from the **2011 Census**. The next census, delayed from 2021, is being carried out in 2026–27; until its results come out, we use 2011 figures.",
+            md: "A **census** is the official count of all the people of a country, with details about them. India holds a census every ten years. The latest complete figures are from the **2011 Census**. The next census was delayed from 2021; until its results are published, textbooks and exams use the 2011 figures.",
           },
           {
             type: "table",
