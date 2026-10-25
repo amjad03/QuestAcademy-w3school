@@ -68,7 +68,7 @@ const BATCHES: Batch[] = [phyMech, phyHeat, phyMagnet, phyModern, phyIcse10, che
 
 /** Extra topics per course slug, in batch order. */
 export function extraTopics(course: string): Topic[] {
-  return BATCHES.filter((b) => b.course === course).flatMap((b) => b.topics);
+  return BATCHES.filter((b) => b.course === course).flatMap((b) => b.topics ?? []);
 }
 
 /** Subject family of a course slug, matching the syllabus topic-key prefix. */
@@ -79,9 +79,9 @@ type Batch = { course: string; family?: string; topics: Topic[]; links: Record<s
 /** `${family}|${syllabus chapter title}` → lesson ids written for it. */
 export const CHAPTER_LESSONS: Record<string, string[]> = {};
 for (const b of BATCHES) {
-  for (const [title, slugs] of Object.entries(b.links))
+  for (const [title, slugs] of Object.entries(b.links ?? {}))
     for (const slug of typeof slugs === "string" ? [slugs] : slugs) {
-      const t = b.topics.find((x) => x.slug === slug);
+      const t = b.topics?.find((x) => x.slug === slug);
       if (!t) continue;
       const k = `${b.family ?? family(b.course)}|${title}`;
       CHAPTER_LESSONS[k] = [...(CHAPTER_LESSONS[k] ?? []), ...t.lessons.map((l) => `${b.course}/${t.slug}/${l.slug}`)];
@@ -89,4 +89,4 @@ for (const b of BATCHES) {
 }
 
 /** `${course}/${topic}` of every Class 9–12 board chapter added to a school course (not part of the course's own grade range). */
-export const EXTRA_TOPICS = new Set(BATCHES.flatMap((b) => b.topics.map((t) => `${b.course}/${t.slug}`)));
+export const EXTRA_TOPICS = new Set(BATCHES.flatMap((b) => (b.topics ?? []).map((t) => `${b.course}/${t.slug}`)));
