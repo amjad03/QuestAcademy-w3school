@@ -44,6 +44,23 @@ export const chemistrySchool: Subject = {
               ],
             },
             {
+              type: "activity",
+              activity: {
+                kind: "sort",
+                prompt: "Which state does each clue describe?",
+                groups: ["Solid", "Liquid", "Gas"],
+                items: [
+                  { text: "Keeps its own shape on a plate", group: 0, hint: "Only one state has a fixed shape." },
+                  { text: "Takes the shape of the glass but keeps its volume", group: 1, hint: "Fixed volume, no fixed shape." },
+                  { text: "Fills the whole room it is let into", group: 2, hint: "Particles move freely in all directions." },
+                  { text: "Particles only vibrate about fixed positions", group: 0, hint: "The particles are locked in a regular pattern." },
+                  { text: "Easily squeezed into a small cylinder (like LPG)", group: 2, hint: "Lots of empty space between particles." },
+                  { text: "Particles are close but slide past each other", group: 1, hint: "Close together, yet free to move around." },
+                ],
+                explain: "Shape and volume follow from the particles. Locked particles give a **solid**, sliding particles give a **liquid**, and free, far-apart particles give a **gas**.",
+              },
+            },
+            {
               type: "callout",
               tone: "fact",
               title: "The fourth state",
@@ -84,12 +101,34 @@ export const chemistrySchool: Subject = {
               md: "During melting or boiling, the temperature stays **constant** even though you keep heating. The energy goes into breaking the attractions between particles rather than speeding them up. This hidden energy is called **latent heat**.",
             },
             {
+              type: "text",
+              md: "Scientists often measure temperature in **kelvin (K)**, the SI unit. To change degrees Celsius to kelvin, add 273: $T(\\text{K}) = T(^\\circ\\text{C}) + 273$. To go back, subtract 273.",
+            },
+            {
+              type: "example",
+              problem: "Ice melts at 0 °C and water boils at 100 °C. Write both temperatures in kelvin. Then change 310 K (about body temperature) into °C.",
+              steps: [
+                "Use $T(\\text{K}) = T(^\\circ\\text{C}) + 273$.",
+                "Melting point: $0 + 273 = 273$ K.",
+                "Boiling point: $100 + 273 = 373$ K.",
+                "Going back, subtract 273: $310 - 273 = 37$ °C.",
+              ],
+              answer: "Ice melts at 273 K, water boils at 373 K, and 310 K = 37 °C.",
+            },
+            {
+              type: "mistake",
+              wrong: "Evaporation and boiling are the same thing. Water only turns into vapour at 100 °C.",
+              right: "**Evaporation** happens at any temperature, only from the surface. **Boiling** happens at one fixed temperature, all through the liquid.",
+              why: "We usually see vapour only when water boils, so it feels like the only way. But wet clothes dry on a line at 30 °C: the fastest surface particles escape long before 100 °C. Evaporation gets faster with more heat, wind, surface area and lower humidity.",
+            },
+            {
               type: "keypoints",
               items: [
                 "Matter has mass and occupies space.",
                 "Particles in solids vibrate; in liquids they slide; in gases they move freely.",
                 "Heating gives particles energy to overcome attractions and change state.",
                 "Temperature stays constant during a change of state (latent heat).",
+                "Evaporation is a surface process at any temperature and causes cooling; K = °C + 273.",
               ],
             },
           ],
@@ -98,6 +137,8 @@ export const chemistrySchool: Subject = {
             { front: "Sublimation", back: "A change directly from solid to gas, e.g. dry ice." },
             { front: "Latent heat", back: "Energy absorbed or released during a change of state without changing temperature." },
             { front: "Why are gases easy to compress?", back: "Their particles are far apart, with lots of empty space between them." },
+            { front: "Evaporation vs boiling", back: "Evaporation: any temperature, surface only. Boiling: fixed temperature, throughout the liquid." },
+            { front: "°C to kelvin", back: "Add 273. So 25 °C = 298 K." },
           ],
           quiz: [
             {
@@ -132,6 +173,29 @@ export const chemistrySchool: Subject = {
               unit: "°C",
               explain: "Pure water boils at 100 °C at standard atmospheric pressure.",
             },
+            {
+              kind: "numeric",
+              q: "Convert 27 °C into kelvin.",
+              answer: 300,
+              unit: "K",
+              difficulty: 2,
+              hint: "Add 273 to the Celsius value.",
+              explain: "$27 + 273 = 300$ K.",
+            },
+            {
+              kind: "mcq",
+              q: "Wet clothes dry faster on a windy day. Why?",
+              options: [
+                "Wind raises the boiling point of water",
+                "Wind carries away vapour, so more surface particles can escape",
+                "Wind makes the water boil at a lower temperature",
+                "Wind turns the water directly into a solid",
+              ],
+              answer: 1,
+              difficulty: 2,
+              hint: "Drying is evaporation, not boiling.",
+              explain: "Moving air removes the water vapour near the cloth, so evaporation from the surface speeds up. No boiling happens.",
+            },
           ],
         },
         {
@@ -159,6 +223,30 @@ export const chemistrySchool: Subject = {
               tone: "note",
               title: "Compound vs mixture",
               md: "Sodium is an explosive metal and chlorine is a poisonous gas — yet **chemically joined** they make harmless table salt. A compound has totally new properties. In a mixture, each part keeps its own properties (iron filings in sand are still magnetic).",
+            },
+            {
+              type: "activity",
+              activity: {
+                kind: "sort",
+                prompt: "Element, compound or mixture? Sort each one.",
+                groups: ["Element", "Compound", "Mixture"],
+                items: [
+                  { text: "Copper wire", group: 0, hint: "Only one kind of atom: copper." },
+                  { text: "Water (H₂O)", group: 1, hint: "Hydrogen and oxygen chemically joined in a fixed 2 : 1 ratio." },
+                  { text: "Air", group: 2, hint: "Nitrogen, oxygen and other gases just mixed, in varying amounts." },
+                  { text: "Sodium chloride", group: 1, hint: "Sodium and chlorine bonded; new properties." },
+                  { text: "Brass", group: 2, hint: "An alloy of copper and zinc in any ratio — a mixture." },
+                  { text: "Oxygen gas", group: 0, hint: "Its molecules contain only oxygen atoms." },
+                  { text: "Sugar dissolved in water", group: 2, hint: "A solution: you can get the sugar back by evaporation." },
+                ],
+                explain: "Ask two questions. One kind of atom? → **element**. Elements chemically joined in a fixed ratio? → **compound**. Otherwise the parts are only mixed → **mixture**, even when it looks uniform.",
+              },
+            },
+            {
+              type: "mistake",
+              wrong: "Salt water looks the same everywhere and cannot be filtered, so it must be a compound.",
+              right: "Salt water is a **homogeneous mixture** (a solution). It has no fixed ratio, and evaporation gives back the salt unchanged.",
+              why: "Looking uniform only means the parts are mixed very finely. A compound needs a **chemical bond** and a **fixed ratio**; salt water can be 2% or 20% salt, and each part keeps its own properties.",
             },
             { type: "heading", text: "Homogeneous or heterogeneous?" },
             {
@@ -191,6 +279,17 @@ export const chemistrySchool: Subject = {
               ],
             },
             {
+              type: "example",
+              problem: "Meera has a mixture of iron filings, sand and common salt. How can she get all three back separately?",
+              steps: [
+                "Iron is magnetic and the others are not, so move a **magnet** over the dry mixture. The iron filings stick to it.",
+                "Add water to the sand and salt and stir. Salt **dissolves**; sand does not.",
+                "**Filter** the mixture. Sand stays on the filter paper as the residue; salt solution passes through as the filtrate.",
+                "**Evaporate** the filtrate (or let it crystallise). The salt is left behind.",
+              ],
+              answer: "Magnet → dissolve in water → filter (sand) → evaporate (salt). Each step uses a property that differs.",
+            },
+            {
               type: "keypoints",
               items: [
                 "Elements have one type of atom; compounds have elements chemically bonded in fixed ratios.",
@@ -205,6 +304,8 @@ export const chemistrySchool: Subject = {
             { front: "Compound", back: "Two or more elements chemically combined in a fixed ratio." },
             { front: "Homogeneous mixture", back: "A uniform mixture, such as a solution (salt water)." },
             { front: "Chromatography separates…", back: "Different dissolved substances, such as the dyes in ink." },
+            { front: "Heterogeneous mixture", back: "A mixture with visibly separate parts, e.g. sand in water or oil on water." },
+            { front: "Why can mixtures be separated physically?", back: "Their parts are not chemically joined, so each keeps its own properties." },
           ],
           quiz: [
             {
@@ -232,6 +333,29 @@ export const chemistrySchool: Subject = {
               q: "Sand can be removed from water by ___.",
               answer: ["filtration", "filtering"],
               explain: "Sand is insoluble, so filter paper traps it while the water passes through.",
+            },
+            {
+              kind: "mcq",
+              q: "Which method separates the coloured dyes in black ink?",
+              options: ["Filtration", "Chromatography", "Magnetic separation", "Centrifugation"],
+              answer: 1,
+              explain: "The dyes dissolve and travel up the paper at different speeds, so chromatography spreads them apart.",
+            },
+            {
+              kind: "order",
+              q: "Put the steps in order to separate a mixture of sand and salt.",
+              items: ["Add water and stir", "Filter to remove the sand", "Evaporate the filtrate to get the salt"],
+              difficulty: 2,
+              hint: "First make the salt go somewhere the sand cannot follow.",
+              explain: "Dissolving puts the salt in solution, filtering holds back the sand, and evaporation leaves the salt.",
+            },
+            {
+              kind: "truefalse",
+              q: "Salt water is a compound because it looks the same throughout.",
+              answer: false,
+              difficulty: 2,
+              hint: "Is there a fixed ratio? Can you get the salt back by evaporation?",
+              explain: "It is a homogeneous mixture (solution): no fixed ratio, no chemical bond, and evaporation recovers the salt.",
             },
           ],
         },
