@@ -720,7 +720,7 @@ export const topics: Topic[] = [
               ["What it is", "amount of matter", "force of gravity on the body"],
               ["SI unit", "kilogram (kg)", "newton (N)"],
               ["Does it change from place to place?", "no", "yes, it changes with g"],
-              ["Can it be zero?", "never", "yes, far out in space where g is nearly zero"],
+              ["Can it be zero?", "never", "it becomes nearly zero far out in space, where g is nearly zero"],
               ["Measured with", "beam balance (compares masses)", "spring balance"],
             ],
           },

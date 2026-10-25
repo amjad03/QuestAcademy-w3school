@@ -548,7 +548,7 @@ export const topics: Topic[] = [
           },
           {
             type: "formula",
-            tex: "P = \\frac{F}{A} \\qquad \\text{SI unit: pascal (Pa)}, \; 1 \\text{ Pa} = 1 \\text{ N/m}^2",
+            tex: "P = \\frac{F}{A} \\qquad \\text{SI unit: pascal (Pa)}, \\; 1\\text{ Pa} = 1 \\text{ N/m}^2",
             caption: "Pressure = thrust ÷ area.",
           },
           {
@@ -2010,7 +2010,7 @@ export const topics: Topic[] = [
           },
           {
             type: "formula",
-            tex: "I = \\frac{Q}{t} \\qquad Q = n e, \; e = 1.6 \\times 10^{-19}\\text{ C}",
+            tex: "I = \\frac{Q}{t} \\qquad Q = n e, \\; e = 1.6 \\times 10^{-19}\\text{ C}",
             caption: "I = current (A), Q = charge (C), t = time (s), n = number of electrons, e = charge on one electron.",
           },
           {
