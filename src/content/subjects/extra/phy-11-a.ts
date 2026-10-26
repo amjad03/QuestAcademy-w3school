@@ -45,7 +45,7 @@ Change the unit and the number changes the other way. A bigger unit gives a smal
             type: "text",
             md: t`A small set of quantities is chosen as **fundamental (base) quantities**. Their units, the **base units**, are defined on their own. Every other quantity is a **derived quantity**, and its unit is built from base units. Speed is length ÷ time, so its unit is $\text{m s}^{-1}$.
 
-Older systems used three base units: **CGS** (centimetre, gram, second), **FPS** (foot, pound, second) and **MKS** (metre, kilogram, second). The **Système Internationale d'Unités (SI)**, adopted in 1960 and extended later, has seven base units and is used in all science today.`,
+Older systems used three base units: **CGS** (centimetre, gram, second), **FPS** (foot, pound, second) and **MKS** (metre, kilogram, second). The **Système International d'Unités (SI)**, adopted in 1960 and extended later, has seven base units and is used in all science today.`,
           },
           {
             type: "table",
@@ -1243,7 +1243,7 @@ Acceleration has a sign too. A body **speeds up** when $v$ and $a$ have the same
             type: "callout",
             tone: "exam",
             title: "Board tip",
-            md: "Derivations of the three equations (by the graphical method and, for full marks in some schools, by calculus) are standard 3–5 mark questions; draw and label the v–t graph. Fix the sign convention in the first line of every free-fall numerical. Relative velocity is in the CBSE and ISC syllabi and in every entrance exam.",
+            md: "Derivations of the three equations (by the graphical method and, for full marks in some schools, by calculus) are standard 3–5 mark questions; draw and label the v–t graph. Fix the sign convention in the first line of every free-fall numerical. Relative velocity is in the ISC syllabus and is asked in JEE Main, NEET and other entrance exams; the current CBSE syllabus does not list it by name, so check with your teacher whether your board will ask it.",
           },
           {
             type: "keypoints",

@@ -660,7 +660,7 @@ For rotation about a fixed axis the angular momentum along the axis is $L = I\om
             type: "callout",
             tone: "note",
             title: "Board note: who needs this lesson",
-            md: "The rationalised NCERT book (used by CBSE and Karnataka PUC) no longer has the sections on the theorems of perpendicular and parallel axes and on rolling motion. **ISC** Class 11 still teaches them, and **JEE Main, JEE Advanced, KCET and COMEDK** questions use them often. CBSE and Karnataka students should study this lesson for entrance exams; check your current board syllabus list for the board exam.",
+            md: "The rationalised NCERT book (used by CBSE and Karnataka PUC) no longer has the sections on the theorems of perpendicular and parallel axes and on rolling motion. **ISC** Class 11 still teaches them, the **JEE Main** syllabus still lists the theorems of axes, and **JEE Advanced** and **COMEDK** questions use them often. **KCET** follows the Karnataka PUC syllabus, so it is not expected to test them directly. CBSE and Karnataka students aiming for JEE should study this lesson; check your current board syllabus list for the board exam.",
           },
           {
             type: "text",
@@ -851,7 +851,7 @@ Then the top point moves at $v_{cm} + R\omega = 2v_{cm}$, and the contact point 
             type: "callout",
             tone: "exam",
             title: "What the exams ask",
-            md: "Rotation is one of the heaviest Class 11 chapters for engineering entrances. **JEE Main** usually has 1–2 questions (MI with theorems of axes, rolling, conservation of angular momentum). **JEE Advanced** almost always has a multi-concept problem: rolling with friction, collisions with rotation, angular impulse. **NEET** asks 1–2 direct questions (MI values, L = Iω conservation, rolling KE). **KCET and COMEDK** favour quick formula checks: radius of gyration, ratios of KE, which body reaches first.",
+            md: "Rotation is one of the heaviest Class 11 chapters for engineering entrances. **JEE Main** usually has 1–2 questions (MI with theorems of axes, rolling, conservation of angular momentum). **JEE Advanced** almost always has a multi-concept problem: rolling with friction, collisions with rotation, angular impulse. **NEET** asks 1–2 direct questions (MI values, radius of gyration, L = Iω conservation); rolling is no longer named in its syllabus, though older papers asked rolling KE. **KCET** sticks to the PUC syllabus (MI values, radius of gyration, τ = Iα, L = Iω). **COMEDK** favours quick formula checks: radius of gyration, ratios of KE, which body reaches first.",
           },
           {
             type: "table",

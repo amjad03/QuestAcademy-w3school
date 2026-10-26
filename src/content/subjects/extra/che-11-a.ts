@@ -1856,7 +1856,7 @@ A **node** is a region where the probability density is zero. **Radial (spherica
             rows: [
               ["Atomic weight", "68", "70", "72", "72.6"],
               [t`Density (g cm$^{-3}$)`, "5.9", "5.94", "5.5", "5.36"],
-              ["Melting point", "low", "302.93 K (low)", "high", "about 1211 K (high)"],
+              ["Melting point", "low", "302.93 K (low)", "high", "about 1211 K (high; the NCERT table prints 1231 K)"],
               ["Formula of oxide", t`E$_2$O$_3$`, t`Ga$_2$O$_3$`, t`EO$_2$`, t`GeO$_2$`],
             ],
           },
