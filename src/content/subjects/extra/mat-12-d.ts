@@ -2098,7 +2098,7 @@ The **order** is the order of the highest derivative in the equation. The **degr
             type: "callout",
             tone: "note",
             title: "Board note",
-            md: "Forming differential equations from families of curves was removed from the rationalised NCERT chapter, so CBSE and Karnataka PUC no longer set it. ISC still includes it, and JEE and KCET ask for the order or degree of the equation of a family.",
+            md: "Forming differential equations from families of curves was removed from the rationalised NCERT chapter, so CBSE and Karnataka PUC no longer set it. ISC still includes it, and JEE papers have asked for the order or degree of the equation of a family (KCET follows the PUC syllabus, so check the current year's list).",
           },
           {
             type: "activity",
