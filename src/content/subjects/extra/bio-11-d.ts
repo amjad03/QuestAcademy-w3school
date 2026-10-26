@@ -2405,6 +2405,11 @@ const plantGrowth: Topic = {
           md: "Two key findings:\n\n1. Not only the length of the light period but also the **length of the dark period** is important. In short-day plants an uninterrupted long night is the real need.\n2. The **leaves** perceive the photoperiod, while the shoot apex changes into a floral meristem. A hormonal substance, named **florigen** (still hypothetical), is thought to move from leaves to the shoot apex to induce flowering only when the plant gets the necessary inductive photoperiod.\n\nThe light is detected by **phytochrome**, a pigment that exists in two interconvertible forms: **Pr** absorbs red light (about 660 nm) and becomes **Pfr**; Pfr absorbs far-red light (about 730 nm) and returns to Pr. Pfr is the active form.",
         },
         {
+          type: "formula",
+          tex: t`\text{P}_\text{r} \ \underset{\text{far-red (730 nm)}}{\overset{\text{red (660 nm)}}{\rightleftharpoons}} \ \text{P}_\text{fr}`,
+          caption: "Phytochrome photoreversibility (ISC). The last flash given decides the effect.",
+        },
+        {
           type: "example",
           title: "Night-break experiment",
           problem: "A short-day plant with a critical day length of 15.5 hours is given 14 hours of light and 10 hours of darkness, but the dark period is interrupted in the middle by a brief flash of red light. It does not flower. Explain.",
