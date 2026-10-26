@@ -459,7 +459,7 @@ const digestion: Topic = {
             ["Jaundice", "The liver is affected; bile pigments build up and the skin and eyes turn yellow."],
             ["Vomiting", "Stomach contents are thrown out through the mouth; a reflex controlled by the vomit centre in the medulla."],
             ["Diarrhoea", "Frequent watery stools; food absorption falls and the body loses water and salts (treated with ORS)."],
-            ["Constipation", "Faeces stay in the colon and bowel movements are irregular."],
+            ["Constipation", "Faeces are retained in the rectum because bowel movements occur irregularly."],
             ["Indigestion", "Food is not properly digested; causes a feeling of fullness (enzyme shortage, anxiety, food poisoning, overeating, spicy food)."],
             ["PEM: kwashiorkor / marasmus", "Kwashiorkor: protein deficiency with enough calories (oedema, wasting); marasmus: deficiency of both protein and calories, usually in infants under a year."],
           ],
@@ -660,7 +660,7 @@ const digestion: Topic = {
             options: ["Pancreatic lipase, but less effectively", "No fat digestion at all", "Only salivary lipase"],
             answer: 0,
             trap: 1,
-            explain: "Bile only emulsifies fat and activates lipase. Without stored bile, lipase still works on unemulsified fat, just more slowly, so fatty meals are digested poorly.",
+            explain: "The liver still makes bile, which trickles into the duodenum; only the stored, concentrated supply released for a fatty meal is lost. Bile only emulsifies fat and activates lipase, so pancreatic lipase still works, just less efficiently, and fatty meals are digested poorly.",
           },
         },
         {

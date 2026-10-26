@@ -886,7 +886,7 @@ const photosynthesis: Topic = {
         {
           type: "mistake",
           wrong: "Light reactions happen in the stroma lamellae only, and dark reactions only at night.",
-          right: "Light reactions occur in grana and stroma lamellae (cyclic only in lamellae); the stroma reactions run in daylight using fresh ATP and NADPH.",
+          right: "Light reactions occur in grana and stroma lamellae (the stroma lamellae can run only cyclic flow); the stroma reactions run in daylight using fresh ATP and NADPH.",
           why: "'Dark reaction' is a misleading old name. The stroma reactions are light-independent but light-dependent for their supply of ATP and NADPH.",
         },
         {
@@ -1242,7 +1242,7 @@ const respiration: Topic = {
         },
         {
           type: "formula",
-          tex: t`\text{Pyruvic acid} + 4\,\text{NAD}^+ + \text{FAD}^+ + 2\,\text{H}_2\text{O} + \text{ADP} + \text{P}_i \xrightarrow{\text{mitochondrial matrix}} 3\,\text{CO}_2 + 4\,\text{NADH} + 4\,\text{H}^+ + \text{FADH}_2 + \text{ATP}`,
+          tex: t`\text{Pyruvic acid} + 4\,\text{NAD}^+ + \text{FAD} + 2\,\text{H}_2\text{O} + \text{ADP} + \text{P}_i \xrightarrow{\text{mitochondrial matrix}} 3\,\text{CO}_2 + 4\,\text{NADH} + 4\,\text{H}^+ + \text{FADH}_2 + \text{ATP}`,
           caption: "Link reaction plus one turn of the Krebs cycle, per pyruvic acid. The Krebs cycle alone gives 2 CO₂, 3 NADH, 1 FADH₂ and 1 GTP (ATP) per acetyl CoA.",
         },
         {
@@ -3350,7 +3350,7 @@ const transport: Topic = {
             "Old NCERT line: porins are in the **outer membranes** of plastids, mitochondria and some bacteria.",
             "Old NCERT line: less than **1%** of water reaching leaves is used in photosynthesis and growth.",
             "Old NCERT line: transpiration can cool leaves by **10–15 degrees**.",
-            "Old NCERT line: C4 plants are about **twice as efficient** as C3 in conserving water; they lose about half as much water per CO₂ fixed.",
+            "Old NCERT line: C4 plants are about **twice as efficient** as C3 plants in fixing carbon, and lose only about **half as much water** for the same amount of CO₂ fixed.",
             "Old NCERT line: *Pinus* seeds cannot germinate and establish without **mycorrhiza**.",
           ],
         },
@@ -3771,7 +3771,7 @@ const mineralNutrition: Topic = {
             ["Zinc", "Zn²⁺", "Activates enzymes, especially carboxylases; needed for **auxin synthesis**"],
             ["Copper", "Cu²⁺", "Overall metabolism; in redox enzymes (Cu⁺ ⇌ Cu²⁺)"],
             ["Boron", "BO₃³⁻ or B₄O₇²⁻", "Uptake and use of Ca²⁺, membrane function, **pollen germination**, cell elongation and differentiation, carbohydrate translocation"],
-            ["Molybdenum", "Molybdate ions (MoO₂²⁺)", "Part of **nitrogenase** and **nitrate reductase**"],
+            ["Molybdenum", "Molybdate ions (MoO₄²⁻; the old NCERT book prints MoO₂²⁺)", "Part of **nitrogenase** and **nitrate reductase**"],
             ["Chlorine", "Cl⁻", "With Na⁺ and K⁺ sets solute concentration and anion–cation balance; needed for **water splitting** in photosynthesis"],
           ],
         },
