@@ -1664,9 +1664,797 @@ Compared with Group 1 neighbours, their atoms are smaller (greater nuclear charg
     ],
   },
   /* END-SBLOCK */
+  /* ------------------------------------------------------------------ */
+  /* p-Block Elements (Groups 13 and 14) (ISC Class 11)                   */
+  /* ------------------------------------------------------------------ */
+  {
+    slug: "c11-che-p-block-13-14",
+    title: "p-Block Elements (Groups 13 and 14)",
+    icon: "💎",
+    description: "The boron family and the carbon family: trends in size, ionisation enthalpy, electronegativity and oxidation states, the inert pair effect, the anomalous behaviour of boron and carbon, borax, boric acid and diborane, allotropes of carbon, carbon monoxide and dioxide, silica, silicones, silicates and zeolites.",
+    lessons: [
+      /* ---------------- Lesson 1 ---------------- */
+      {
+        slug: "c11-che-pb-group-13",
+        title: "Group 13: The Boron Family",
+        summary: "Electronic configuration, the irregular trends in atomic radius and ionisation enthalpy, oxidation states and the inert pair effect, reactions with air, acids, alkalis and halogens, Lewis acidity of the trihalides, and the anomalous behaviour of boron.",
+        minutes: 22,
+        xp: 50,
+        blocks: [
+          {
+            type: "callout",
+            tone: "note",
+            title: "Board note",
+            md: "This chapter (Groups 13 and 14) was removed from the rationalised NCERT Class 11 book, so CBSE and Karnataka I PUC do not examine it; Groups 15–18 are still taught in Class 12. **ISC Class 11 keeps it.** Boron and carbon family chemistry, especially the anomalies of boron and carbon, still appears in JEE.",
+          },
+          {
+            type: "illustration",
+            emoji: "🥫",
+            caption: "Aluminium foil wraps a lunch box, gallium melts in your hand, and boron compounds make the heat-proof glass of a laboratory beaker. All three are Group 13 elements.",
+          },
+          {
+            type: "text",
+            md: "In the **p-block** the last electron enters a p orbital. **Group 13** contains boron (B), aluminium (Al), gallium (Ga), indium (In), thallium (Tl) and nihonium (Nh, synthetic). The general configuration is **ns² np¹**. Boron is a non-metal, aluminium is a metal with some non-metallic behaviour, and the others are metals. Aluminium is the most abundant metal in the earth's crust (about 8.3% by mass); boron is fairly rare and occurs as borax and kernite.\n\nGa, In and Tl have filled d orbitals (and Tl also filled 4f orbitals) under their valence shell. d and f electrons **shield the nuclear charge poorly**, so the outer electrons feel more nuclear pull than expected. This one fact explains most irregular trends in the group.",
+          },
+          {
+            type: "table",
+            headers: ["Property", "B", "Al", "Ga", "In", "Tl"],
+            rows: [
+              ["Atomic radius (pm)", "85", "143", "135", "167", "170"],
+              ["First ionisation enthalpy (kJ mol⁻¹)", "801", "577", "579", "558", "589"],
+              ["Electronegativity (Pauling)", "2.0", "1.5", "1.6", "1.7", "1.8"],
+              ["Melting point (K)", "2453", "933", "303", "430", "576"],
+              ["Stable oxidation states", "+3", "+3", "+3, +1", "+3, +1", "+1 (more stable), +3"],
+            ],
+          },
+          {
+            type: "text",
+            md: "**Atomic radius:** Ga (135 pm) is slightly **smaller** than Al (143 pm), because the ten 3d electrons in Ga shield poorly and the extra nuclear charge pulls the outer electrons in.\n\n**Ionisation enthalpy** does not fall smoothly: it falls sharply from B to Al (larger size), then rises slightly at Ga and again at Tl because of poor shielding by d and f electrons.\n\n**Electronegativity** falls from B to Al and then rises slightly down the group, for the same reason.\n\n**Melting point:** gallium melts at only 303 K (it would melt in your palm) but boils at 2676 K, so it can be used in high-temperature thermometers. Boron has a very high melting point because of its giant covalent structure.",
+          },
+          {
+            type: "text",
+            md: "**Oxidation states and the inert pair effect.** All members can use their three valence electrons to show +3. Down the group, the two s electrons become reluctant to take part in bonding (the **inert pair effect**), because poor shielding by d and f electrons holds them more tightly and the bonds formed by heavy atoms are weaker. So the **+1 state becomes more stable** down the group: for Ga and In both +1 and +3 exist, and for Tl, +1 is the more stable state. Tl³⁺ compounds are therefore good oxidising agents, while Al³⁺ is not.\n\n**Electron deficiency.** In the +3 state, compounds like BF₃ have only six electrons around the central atom. They are **electron-deficient** and act as **Lewis acids**, accepting a lone pair (BF₃ + NH₃ → F₃B←NH₃). AlCl₃ completes its octet by forming the chloride-bridged dimer Al₂Cl₆.",
+          },
+          {
+            type: "formula",
+            tex: t`\begin{aligned} 4\text{E} + 3\text{O}_2 &\xrightarrow{\Delta} 2\text{E}_2\text{O}_3 \qquad 2\text{E} + \text{N}_2 \xrightarrow{\Delta} 2\text{EN} \\ 2\text{Al} + 6\text{HCl} &\to 2\text{Al}^{3+} + 6\text{Cl}^- + 3\text{H}_2 \\ 2\text{Al} + 2\text{NaOH} + 6\text{H}_2\text{O} &\to 2\text{Na}^+[\text{Al(OH)}_4]^- + 3\text{H}_2 \end{aligned}`,
+            caption: "E = B or Al (amorphous boron and aluminium burn in air; at high temperature they form nitrides). Aluminium is amphoteric: it dissolves in both acids and alkalis, giving H₂.",
+          },
+          {
+            type: "text",
+            md: "**Reactivity.** Crystalline boron is unreactive. Aluminium forms a very thin, protective oxide film in air, and **concentrated nitric acid makes it passive** by thickening this film. Boron does not react with acids or alkalis at moderate temperature; aluminium dissolves in both.\n\n**Nature of oxides:** B₂O₃ is acidic, Al₂O₃ and Ga₂O₃ are amphoteric, and In₂O₃ and Tl₂O₃ are basic. Basic character increases down the group as metallic character increases.\n\n**Anomalous behaviour of boron.** Boron has no d orbitals in its valence shell, so its **maximum covalency is 4** (as in [BF₄]⁻), while aluminium and the heavier members can expand to 6 (as in [AlF₆]³⁻ or [Al(H₂O)₆]³⁺). Its very small size and high ionisation enthalpy mean it never forms a B³⁺ ion; boron chemistry is entirely covalent. Boron resembles silicon diagonally: both are non-metallic, form acidic oxides, and form covalent hydrides and halides that are hydrolysed by water.",
+          },
+          {
+            type: "example",
+            title: "Why does thallium prefer +1?",
+            problem: "TlCl is stable, but TlCl₃ is unstable and easily changes into TlCl. Aluminium, in the same group, forms only AlCl₃. Explain.",
+            steps: [
+              "Tl has the configuration [Xe]4f¹⁴5d¹⁰6s²6p¹.",
+              "The 4f and 5d electrons shield the 6s electrons poorly, so the 6s pair is held tightly and is hard to use in bonding (inert pair effect).",
+              "The energy released in forming two extra bonds with the large Tl atom is too small to pay for unpairing the 6s electrons.",
+              "Aluminium has no such inner d or f electrons, so using all three electrons is easy and +3 is its only stable state.",
+            ],
+            answer: "Because of the inert pair effect, the +1 state of thallium is more stable than +3; for aluminium +3 is the stable state.",
+          },
+          {
+            type: "checkpoint",
+            questions: [
+              {
+                kind: "mcq",
+                q: "Which Group 13 element has a smaller atomic radius than the element above it?",
+                options: ["Ga", "Al", "In", "Tl"],
+                answer: 0,
+                explain: "Ga (135 pm) is smaller than Al (143 pm) because the 3d electrons in Ga shield the nucleus poorly.",
+              },
+            ],
+          },
+          {
+            type: "mistake",
+            wrong: "Atomic radius increases smoothly down every group, so Ga must be bigger than Al.",
+            right: "Ga (135 pm) is slightly smaller than Al (143 pm). The ten 3d electrons added between them shield the nucleus poorly, so the effective nuclear charge rises and pulls the outer electrons inward.",
+            why: "The simple rule 'one more shell, bigger atom' ignores how well inner electrons shield. d and f electrons are diffuse and shield badly.",
+          },
+          {
+            type: "activity",
+            activity: {
+              kind: "sort",
+              prompt: "Is the oxide acidic, amphoteric or basic?",
+              groups: ["Acidic", "Amphoteric", "Basic"],
+              items: [
+                { text: "B₂O₃", group: 0, hint: "Boron is a non-metal." },
+                { text: "Al₂O₃", group: 1, hint: "It dissolves in both HCl and NaOH." },
+                { text: "Ga₂O₃", group: 1, hint: "Like aluminium oxide." },
+                { text: "In₂O₃", group: 2, hint: "Metallic character increases down the group." },
+                { text: "Tl₂O₃", group: 2, hint: "The heaviest member is most metallic." },
+              ],
+              explain: "Oxides become more basic down the group as the elements become more metallic.",
+            },
+          },
+          {
+            type: "callout",
+            tone: "exam",
+            title: "ISC exam tips",
+            md: "Expect 'give reasons' on: Ga smaller than Al; Tl⁺ more stable than Tl³⁺; boron cannot form [BF₆]³⁻; Al does not dissolve in concentrated HNO₃; BF₃ acts as a Lewis acid. Name the cause precisely: poor shielding by d/f electrons, inert pair effect, no d orbitals, oxide film, electron deficiency.",
+          },
+          {
+            type: "keypoints",
+            items: [
+              "Group 13: ns² np¹; B is a non-metal, the rest are metals.",
+              "Poor shielding by d and f electrons makes Ga smaller than Al and makes ionisation enthalpy irregular.",
+              "The inert pair effect makes +1 more stable down the group; Tl⁺ is more stable than Tl³⁺.",
+              "MX₃ compounds are electron-deficient Lewis acids; AlCl₃ dimerises to Al₂Cl₆.",
+              "Boron: maximum covalency 4, no B³⁺ ion, acidic oxide; diagonal relationship with Si.",
+            ],
+          },
+        ],
+        flashcards: [
+          { front: "General configuration of Group 13", back: "ns² np¹" },
+          { front: "Why is Ga smaller than Al?", back: "Poor shielding by the 3d electrons increases the effective nuclear charge in Ga." },
+          { front: "Inert pair effect", back: "The reluctance of the ns² electrons of heavy p-block elements to take part in bonding, making the lower oxidation state more stable." },
+          { front: "Most stable oxidation state of thallium", back: "+1" },
+          { front: "Why does boron not form [BF₆]³⁻?", back: "It has no d orbitals, so its maximum covalency is 4." },
+          { front: "Structure of aluminium chloride in the vapour (low temperature)", back: "Chloride-bridged dimer, Al₂Cl₆." },
+          { front: "Why does conc. HNO₃ not dissolve aluminium?", back: "It makes aluminium passive by forming a protective oxide layer." },
+          { front: "Nature of Group 13 oxides", back: "B₂O₃ acidic; Al₂O₃, Ga₂O₃ amphoteric; In₂O₃, Tl₂O₃ basic." },
+        ],
+        quiz: [
+          {
+            kind: "mcq",
+            q: "Which Group 13 element is liquid just above room temperature and is used in high-temperature thermometers?",
+            options: ["Ga", "In", "Tl", "Al"],
+            answer: 0,
+            explain: "Gallium melts at 303 K and boils at about 2676 K, giving a very wide liquid range.",
+          },
+          {
+            kind: "mcq",
+            q: "Aluminium reacts with aqueous NaOH to give",
+            options: ["Na[Al(OH)₄] and H₂", "Al(OH)₃ and Na", "Al₂O₃ and H₂O only", "no reaction"],
+            answer: 0,
+            explain: "2Al + 2NaOH + 6H₂O → 2Na[Al(OH)₄] + 3H₂. Aluminium is amphoteric.",
+          },
+          {
+            kind: "truefalse",
+            q: "Boron forms B³⁺ ions in its compounds, like aluminium forms Al³⁺.",
+            answer: false,
+            explain: "Boron's small size and very high sum of ionisation enthalpies prevent B³⁺ formation; its compounds are covalent.",
+          },
+          {
+            kind: "multi",
+            q: "Which are consequences of the inert pair effect?",
+            options: ["Tl⁺ is more stable than Tl³⁺.", "Tl³⁺ compounds are oxidising.", "Ga is smaller than Al.", "In shows both +1 and +3 states."],
+            answers: [0, 1, 3],
+            explain: "The small size of Ga comes from poor shielding by 3d electrons, not from the inert pair effect.",
+            difficulty: 2,
+            hint: "The inert pair effect is about oxidation states.",
+          },
+          {
+            kind: "mcq",
+            q: "The hybridisation of Al in [Al(H₂O)₆]³⁺ is",
+            options: ["sp³d²", "sp³", "sp²", "dsp²"],
+            answer: 0,
+            explain: "Six ligands in an octahedron need six hybrid orbitals: one s, three p and two d (sp³d²). Boron cannot do this.",
+          },
+          {
+            kind: "mcq",
+            q: "Which oxide is amphoteric?",
+            options: ["Al₂O₃", "B₂O₃", "Tl₂O₃", "In₂O₃"],
+            answer: 0,
+            explain: "Al₂O₃ dissolves in both acids and alkalis; B₂O₃ is acidic and the oxides of In and Tl are basic.",
+          },
+          {
+            kind: "numeric",
+            q: "How many moles of H₂ are released when 2 mol of Al dissolves completely in excess dilute HCl?",
+            answer: 3,
+            unit: "mol",
+            explain: "2Al + 6HCl → 2AlCl₃ + 3H₂.",
+          },
+        ],
+      },
+      /* ---------------- Lesson 2 ---------------- */
+      {
+        slug: "c11-che-pb-boron-compounds",
+        title: "Important Compounds of Boron and Uses of B and Al",
+        summary: "Borax and the borax bead test, orthoboric acid as a Lewis acid, diborane: preparation, reactions and its bridged structure with three-centre two-electron bonds, and the uses of boron, aluminium and their compounds.",
+        minutes: 22,
+        xp: 55,
+        blocks: [
+          {
+            type: "illustration",
+            emoji: "👁️",
+            caption: "The boric acid solution an eye doctor uses to wash your eyes and the borax used in a goldsmith's shop as a soldering flux are both made from the same mineral.",
+          },
+          {
+            type: "text",
+            md: t`**Borax** is the most important compound of boron. It is a white crystalline solid usually written Na₂B₄O₇·10H₂O; its real structure is Na₂[B₄O₅(OH)₄]·8H₂O, containing the tetranuclear unit [B₄O₅(OH)₄]²⁻.
+
+Borax dissolves in water to give an **alkaline** solution, because the borate ion is hydrolysed:
+
+$\text{Na}_2\text{B}_4\text{O}_7 + 7\text{H}_2\text{O} \to 2\text{NaOH} + 4\text{H}_3\text{BO}_3$
+
+On heating, borax first loses its water of crystallisation and swells up. On further heating it melts to a transparent glassy bead of sodium metaborate and boric anhydride.`,
+          },
+          {
+            type: "formula",
+            tex: t`\text{Na}_2\text{B}_4\text{O}_7\cdot 10\text{H}_2\text{O} \xrightarrow{\Delta} \text{Na}_2\text{B}_4\text{O}_7 \xrightarrow{\Delta} 2\text{NaBO}_2 + \text{B}_2\text{O}_3 \qquad \text{B}_2\text{O}_3 + \text{CoO} \to \text{Co(BO}_2)_2`,
+            caption: "Borax bead test: the glassy bead dissolves transition-metal oxides to give coloured metaborates; Co(BO₂)₂ is blue. Used to identify metal ions in salt analysis.",
+          },
+          {
+            type: "text",
+            md: t`**Orthoboric acid, H₃BO₃ (B(OH)₃),** is a white crystalline solid with a soapy feel. It is made by acidifying an aqueous solution of borax:
+
+$\text{Na}_2\text{B}_4\text{O}_7 + 2\text{HCl} + 5\text{H}_2\text{O} \to 2\text{NaCl} + 4\text{B(OH)}_3$
+
+It can also be made by hydrolysing boron compounds such as BCl₃ or diborane. In the solid, planar B(OH)₃ units are joined by hydrogen bonds into **layers**.
+
+Boric acid is a **weak monobasic acid**, but it is **not a proton donor**. It is a **Lewis acid**: it accepts a hydroxide ion from water, releasing a proton from the water.
+
+$\text{B(OH)}_3 + 2\text{H}_2\text{O} \to [\text{B(OH)}_4]^- + \text{H}_3\text{O}^+$
+
+On heating above 370 K it forms metaboric acid HBO₂, which on stronger heating gives boric oxide B₂O₃.`,
+          },
+          {
+            type: "checkpoint",
+            questions: [
+              {
+                kind: "mcq",
+                q: "Boric acid is an acid because it",
+                options: ["accepts OH⁻ from water (Lewis acid)", "gives three H⁺ ions", "gives one H⁺ ion from its own O–H bond", "contains boron in the +3 state only"],
+                answer: 0,
+                explain: "B(OH)₃ completes its octet by accepting OH⁻ from water; the H⁺ released comes from water. So it is monobasic and a Lewis acid.",
+              },
+            ],
+          },
+          {
+            type: "text",
+            md: t`**Diborane, B₂H₆**, is the simplest boron hydride. It is a colourless, highly toxic gas (b.p. 180 K) that catches fire spontaneously in air.
+
+**Preparation:**
+- Laboratory: oxidation of sodium borohydride with iodine, $2\text{NaBH}_4 + \text{I}_2 \to \text{B}_2\text{H}_6 + 2\text{NaI} + \text{H}_2$.
+- Reduction of BF₃ with LiAlH₄ in diethyl ether: $4\text{BF}_3 + 3\text{LiAlH}_4 \to 2\text{B}_2\text{H}_6 + 3\text{LiF} + 3\text{AlF}_3$.
+- Industrial: $2\text{BF}_3 + 6\text{NaH} \xrightarrow{450\ \text{K}} \text{B}_2\text{H}_6 + 6\text{NaF}$.
+
+**Reactions:**
+- Burns with a large release of energy: $\text{B}_2\text{H}_6 + 3\text{O}_2 \to \text{B}_2\text{O}_3 + 3\text{H}_2\text{O}$, $\Delta_cH^\circ = -1976$ kJ mol⁻¹.
+- Hydrolysed by water: $\text{B}_2\text{H}_6 + 6\text{H}_2\text{O} \to 2\text{B(OH)}_3 + 6\text{H}_2$.
+- Splits with Lewis bases: $\text{B}_2\text{H}_6 + 2\text{NMe}_3 \to 2\text{BH}_3\cdot\text{NMe}_3$; with CO it gives BH₃·CO.
+- With ammonia it first gives B₂H₆·2NH₃, written [BH₂(NH₃)₂]⁺[BH₄]⁻, which on heating gives **borazine** B₃N₃H₆ ("inorganic benzene"): $3\text{B}_2\text{H}_6 + 6\text{NH}_3 \to 3[\text{BH}_2(\text{NH}_3)_2]^+[\text{BH}_4]^- \xrightarrow{\Delta} 2\text{B}_3\text{N}_3\text{H}_6 + 12\text{H}_2$.
+- With metal hydrides it forms **borohydrides**: $2\text{MH} + \text{B}_2\text{H}_6 \to 2\text{M}^+[\text{BH}_4]^-$ (M = Li, Na). LiBH₄ and NaBH₄ are useful reducing agents in organic chemistry.`,
+          },
+          {
+            type: "text",
+            md: "**Structure of diborane.** B₂H₆ has 12 valence electrons (3 from each B, 1 from each H) but would need 14 for an ethane-like structure with seven 2-electron bonds, so it is **electron-deficient**.\n\n- Each boron is roughly **sp³ hybridised**.\n- Four **terminal** H atoms lie in one plane with the two B atoms; they form four ordinary two-centre two-electron (2c–2e) B–H bonds.\n- Two **bridging** H atoms lie above and below this plane. Each forms a **three-centre two-electron (3c–2e)** bond B–H–B, often called a **banana bond**.\n- The bridging B–H bonds are longer and weaker than the terminal ones.\n\nCount: 4 × 2 (terminal) + 2 × 2 (bridges) = 12 electrons. All are used.",
+          },
+          {
+            type: "example",
+            title: "Counting bonds in diborane",
+            problem: "In B₂H₆, how many atoms lie in one plane, how many 3c–2e bonds are there, and how many electrons are in bridging bonds?",
+            steps: [
+              "The two B atoms and four terminal H atoms lie in one plane: 6 atoms.",
+              "The two bridging H atoms form two B–H–B bonds, each with three centres and two electrons: 2 bonds.",
+              "Electrons in bridging bonds = 2 × 2 = 4.",
+            ],
+            answer: "6 coplanar atoms, two 3c–2e bonds, 4 bridging electrons",
+          },
+          {
+            type: "mistake",
+            wrong: "Boric acid, H₃BO₃, has three hydrogens on oxygen, so it is a tribasic acid that releases three protons.",
+            right: "Boric acid is monobasic. It does not give up its own protons; it accepts one OH⁻ from water to form [B(OH)₄]⁻, releasing one H⁺ from that water.",
+            why: "The formula looks like H₃PO₃ or H₃PO₄. Its acidity comes from the empty p orbital of boron (Lewis acidity), not from O–H ionisation.",
+          },
+          {
+            type: "activity",
+            activity: {
+              kind: "match",
+              prompt: "Match each boron compound to its key feature.",
+              pairs: [
+                ["Borax", "glassy bead with coloured metal metaborates"],
+                ["Boric acid", "monobasic Lewis acid with a layer structure"],
+                ["Diborane", "two three-centre two-electron bonds"],
+                ["Borazine", "inorganic benzene"],
+                ["NaBH₄", "reducing agent in organic chemistry"],
+              ],
+              explain: "Every one of these features comes back to boron's electron deficiency: three valence electrons and an empty p orbital.",
+            },
+          },
+          {
+            type: "table",
+            headers: ["Substance", "Uses"],
+            rows: [
+              ["Boron", "Boron fibres in bullet-proof vests and light composites for aircraft; the isotope boron-10 absorbs neutrons, so boron steel and boron carbide rods control nuclear reactors."],
+              ["Borax and boric acid", "Heat-resistant borosilicate glass (Pyrex), glass wool and fibreglass; borax as a flux for soldering and in glazes for pottery; boric acid as a mild antiseptic."],
+              ["Aluminium", "Light, strong and corrosion-resistant: utensils, foil and packaging, window frames, aircraft and vehicle bodies, electric transmission wires; alloys with Cu, Mn, Mg, Si and Zn."],
+              ["Aluminium compounds", "Al₂O₃ as an abrasive and in refractories; alum in water purification; AlCl₃ as a Friedel–Crafts catalyst."],
+            ],
+          },
+          {
+            type: "callout",
+            tone: "exam",
+            title: "ISC exam tips",
+            md: "Drawing the structure of diborane is a frequent 2–3 mark question: show the four terminal B–H bonds in a plane, the two bridging H atoms above and below, and label the 3c–2e bonds. Always write balanced equations for the preparation of diborane and for the reaction of boric acid with water.",
+          },
+          {
+            type: "keypoints",
+            items: [
+              "Borax is Na₂[B₄O₅(OH)₄]·8H₂O; its solution is alkaline; the borax bead test identifies coloured metal ions.",
+              "Boric acid B(OH)₃ is a weak, monobasic Lewis acid with a hydrogen-bonded layer structure.",
+              "Diborane is made from NaBH₄ + I₂ (lab) or BF₃ + NaH (industry); it burns, hydrolyses and forms borohydrides and borazine.",
+              "B₂H₆ has four terminal 2c–2e bonds and two bridging 3c–2e (banana) bonds; each B is sp³.",
+              "Boron-10 absorbs neutrons; aluminium is used for its lightness, strength and resistance to corrosion.",
+            ],
+          },
+        ],
+        flashcards: [
+          { front: "Actual formula of borax", back: "Na₂[B₄O₅(OH)₄]·8H₂O" },
+          { front: "Why is an aqueous borax solution alkaline?", back: "Hydrolysis: Na₂B₄O₇ + 7H₂O → 2NaOH + 4H₃BO₃ (NaOH is strong, H₃BO₃ weak)." },
+          { front: "Colour of the cobalt metaborate bead", back: "Blue" },
+          { front: "Reaction of boric acid with water", back: "B(OH)₃ + 2H₂O → [B(OH)₄]⁻ + H₃O⁺" },
+          { front: "Laboratory preparation of diborane", back: "2NaBH₄ + I₂ → B₂H₆ + 2NaI + H₂" },
+          { front: "Bonds in diborane", back: "Four terminal 2c–2e B–H bonds and two bridging 3c–2e B–H–B bonds." },
+          { front: "Borazine", back: "B₃N₃H₆, 'inorganic benzene', made by heating the diborane–ammonia adduct." },
+          { front: "Why is boron used in nuclear reactors?", back: "The isotope boron-10 has a high ability to absorb neutrons." },
+        ],
+        quiz: [
+          {
+            kind: "mcq",
+            q: "On heating boric acid strongly, the final product is",
+            options: ["B₂O₃", "HBO₂", "B", "B₂H₆"],
+            answer: 0,
+            explain: "H₃BO₃ → HBO₂ (above 370 K) → B₂O₃ on stronger heating.",
+          },
+          {
+            kind: "numeric",
+            q: "How many three-centre two-electron bonds are present in one molecule of diborane?",
+            answer: 2,
+            explain: "The two bridging hydrogens each form one B–H–B bond with two electrons.",
+          },
+          {
+            kind: "mcq",
+            q: "The hybridisation of each boron atom in diborane is",
+            options: ["sp³", "sp²", "sp", "sp³d"],
+            answer: 0,
+            explain: "Each B forms two terminal and two bridging bonds, arranged roughly tetrahedrally (sp³).",
+          },
+          {
+            kind: "multi",
+            q: "Which products form when diborane reacts with water?",
+            options: ["B(OH)₃", "H₂", "B₂O₃", "O₂"],
+            answers: [0, 1],
+            explain: "B₂H₆ + 6H₂O → 2B(OH)₃ + 6H₂.",
+          },
+          {
+            kind: "truefalse",
+            q: "Boric acid is a strong tribasic protic acid.",
+            answer: false,
+            explain: "It is a weak, monobasic Lewis acid.",
+          },
+          {
+            kind: "mcq",
+            q: "In the borax bead test, a transition metal oxide forms a coloured",
+            options: ["metaborate", "borohydride", "boride", "borazine"],
+            answer: 0,
+            explain: "The B₂O₃ in the bead combines with the metal oxide to form a coloured metaborate such as Co(BO₂)₂.",
+          },
+          {
+            kind: "numeric",
+            q: "Count the valence electrons in B₂H₆.",
+            answer: 12,
+            explain: "2 × 3 (B) + 6 × 1 (H) = 12, two short of the 14 needed for seven ordinary bonds.",
+          },
+        ],
+      },
+      /* ---------------- Lesson 3 ---------------- */
+      {
+        slug: "c11-che-pb-group-14",
+        title: "Group 14: The Carbon Family",
+        summary: "Trends in Group 14, oxidation states and the inert pair effect, oxides, halides and reactivity, the anomalous behaviour of carbon and catenation, allotropes of carbon, carbon monoxide and dioxide, silicon dioxide, silicones, silicates and zeolites.",
+        minutes: 25,
+        xp: 55,
+        blocks: [
+          {
+            type: "illustration",
+            emoji: "✏️",
+            caption: "A pencil 'lead' and a diamond ring are both pure carbon. One is soft enough to write with, the other is the hardest natural substance known. The difference is only in how the atoms are joined.",
+          },
+          {
+            type: "text",
+            md: "**Group 14** contains carbon (C), silicon (Si), germanium (Ge), tin (Sn), lead (Pb) and flerovium (Fl, synthetic). The general configuration is **ns² np²**. Carbon is a non-metal, Si and Ge are metalloids (semiconductors), and Sn and Pb are metals. Carbon is the 17th most abundant element in the crust but the basis of all life; silicon is the second most abundant element in the crust (about 27.7% by mass), occurring as silica and silicates.",
+          },
+          {
+            type: "table",
+            headers: ["Property", "C", "Si", "Ge", "Sn", "Pb"],
+            rows: [
+              ["Covalent radius (pm)", "77", "118", "122", "140", "146"],
+              ["First ionisation enthalpy (kJ mol⁻¹)", "1086", "786", "761", "708", "715"],
+              ["Electronegativity", "2.5", "1.8", "1.8", "1.8", "1.9"],
+              ["Melting point (K)", "4373", "1693", "1218", "505", "600"],
+              ["Stable oxidation states", "+4 (and −4)", "+4", "+4 (+2 rare)", "+4, +2", "+2 (more stable), +4"],
+            ],
+          },
+          {
+            type: "text",
+            md: "**Trends.** Radius increases down the group, but only slightly from Si to Ge (poor shielding by 3d electrons). Ionisation enthalpy falls, with small irregularities at Pb. Electronegativity is almost constant from Si to Pb.\n\n**Oxidation states.** The common states are +4 and +2. Because of the **inert pair effect**, +2 becomes more stable down the group: **Sn²⁺ is a reducing agent** (it is easily oxidised to Sn⁴⁺), and **Pb⁴⁺ is a strong oxidising agent** (PbO₂ is used as an oxidant), because Pb²⁺ is the more stable state. Germanium forms stable +4 compounds and only a few +2 ones.\n\n**Oxides.** All form MO₂ and MO. Higher oxides are more acidic than lower ones. CO₂, SiO₂ and GeO₂ are acidic; SnO₂ and PbO₂ are amphoteric. Among monoxides, CO is neutral, GeO is acidic, and SnO and PbO are amphoteric.\n\n**Water.** C, Si and Ge are not affected by water. Tin decomposes steam (Sn + 2H₂O → SnO₂ + 2H₂). Lead is not attacked by water, probably because of a protective oxide film.\n\n**Halides.** All form MX₄ except that PbI₄ does not exist (Pb⁴⁺ would oxidise I⁻), and PbBr₄ is very unstable. Except carbon, they also form MX₂, which becomes the more stable halide down the group. Except carbon, they can accept lone pairs into their d orbitals, so **SiCl₄ is hydrolysed by water but CCl₄ is not**.",
+          },
+          {
+            type: "formula",
+            tex: t`\text{SiCl}_4 + 4\text{H}_2\text{O} \to \text{Si(OH)}_4 + 4\text{HCl} \qquad \text{CCl}_4 + \text{H}_2\text{O} \to \text{no reaction}`,
+            caption: "Water's lone pair attacks Si, which can use a vacant 3d orbital to hold five groups for a moment; carbon has no such orbital and is also crowded by four Cl atoms.",
+          },
+          {
+            type: "text",
+            md: "**Anomalous behaviour of carbon.** Carbon differs from the rest because of its small size, high electronegativity, high ionisation enthalpy and absence of d orbitals. Its maximum covalency is 4. It forms strong **pπ–pπ multiple bonds** with itself and with O, N and S (C=C, C≡C, C=O, C=S, C≡N); heavier members do not, because their large p orbitals overlap poorly sideways.\n\n**Catenation**, the linking of atoms of the same element into chains and rings, is greatest for carbon because the C–C bond is strong. Bond enthalpies (kJ mol⁻¹): C–C 348, Si–Si 297, Ge–Ge 260, Sn–Sn 240. Lead shows practically no catenation. Catenation is why carbon forms millions of compounds.",
+          },
+          {
+            type: "table",
+            headers: ["Allotrope", "Structure", "Properties and uses"],
+            rows: [
+              ["Diamond", "Each C sp³ bonded to four others in a rigid 3D network; C–C = 154 pm", "Hardest natural substance, non-conductor; abrasive for sharpening hard tools, dies for drawing wire, gem stones."],
+              ["Graphite", "Layers of hexagonal rings, each C sp² bonded to three others (C–C = 141.5 pm); layers 340 pm apart held by weak van der Waals forces", "Soft, slippery, conducts electricity along the layers (delocalised π electrons); lubricant at high temperature, electrodes, crucibles. The thermodynamically most stable form of carbon."],
+              ["Fullerenes (e.g. C₆₀)", "Cage molecules; C₆₀ (buckminsterfullerene) has 20 six-membered and 12 five-membered rings, like a football; each C sp²", "Made by heating graphite in an electric arc in helium or argon; soluble in organic solvents; the only pure molecular form of carbon (no dangling bonds)."],
+            ],
+          },
+          {
+            type: "checkpoint",
+            questions: [
+              {
+                kind: "mcq",
+                q: "Graphite conducts electricity but diamond does not because",
+                options: [
+                  "graphite has delocalised π electrons from sp² carbons",
+                  "graphite contains metal impurities",
+                  "diamond's carbon atoms are sp² hybridised",
+                  "diamond is a molecular solid",
+                ],
+                answer: 0,
+                explain: "Each sp² carbon in graphite has one unhybridised p electron; these delocalise over each layer. In diamond all four electrons are in sp³ σ bonds.",
+              },
+            ],
+          },
+          {
+            type: "text",
+            md: t`**Carbon monoxide (CO).** Formed when carbon burns in limited air ($2\text{C} + \text{O}_2 \to 2\text{CO}$). In the lab it is made by dehydrating formic acid with concentrated H₂SO₄ at 373 K: $\text{HCOOH} \to \text{H}_2\text{O} + \text{CO}$. Industrially, steam over hot coke gives **water gas** (synthesis gas, CO + H₂), and air over hot coke gives **producer gas** (CO + N₂). CO is a colourless, odourless, nearly insoluble gas and a strong **reducing agent** (Fe₂O₃ + 3CO → 2Fe + 3CO₂), used in metallurgy. The lone pair on carbon lets it form **metal carbonyls**. It is highly **poisonous** because it binds to haemoglobin about 300 times more strongly than oxygen, forming carboxyhaemoglobin and stopping oxygen transport.
+
+**Carbon dioxide (CO₂).** Formed by burning carbon or fuels in excess air; in the lab, $\text{CaCO}_3 + 2\text{HCl} \to \text{CaCl}_2 + \text{CO}_2 + \text{H}_2\text{O}$; industrially by heating limestone. The molecule is **linear** (C is sp hybridised), with zero dipole moment. In water it forms the weak dibasic **carbonic acid** H₂CO₃; the H₂CO₃/HCO₃⁻ buffer helps keep blood pH between 7.26 and 7.42. Plants fix it by photosynthesis. Solid CO₂ (**dry ice**) is a refrigerant for ice cream and frozen food; gaseous CO₂ is used in soft drinks and fire extinguishers and to make urea. Burning more fossil fuel raises atmospheric CO₂, which adds to the greenhouse effect.
+
+**Silicon dioxide (SiO₂, silica).** Crystalline forms include quartz, cristobalite and tridymite. Unlike CO₂, SiO₂ is a **giant covalent network**: each Si is bonded tetrahedrally to four O atoms and each O to two Si. The strong Si–O bonds make it very unreactive, but it is attacked by HF and by NaOH:
+$\text{SiO}_2 + 4\text{HF} \to \text{SiF}_4 + 2\text{H}_2\text{O}$; $\text{SiO}_2 + 2\text{NaOH} \to \text{Na}_2\text{SiO}_3 + \text{H}_2\text{O}$.
+Quartz is a **piezoelectric** material (used in accurate clocks and radio communication); silica gel is a drying agent and a support for chromatography; kieselguhr (amorphous silica) is used in filters.`,
+          },
+          {
+            type: "text",
+            md: t`**Silicones** are organosilicon polymers with the repeating unit $-(\text{R}_2\text{SiO})-$. Methyl chloride reacts with silicon in the presence of copper at 573 K to give methyl chlorosilanes; dichlorodimethylsilane is hydrolysed and the silanol formed condenses into long chains:
+
+$(\text{CH}_3)_2\text{SiCl}_2 + 2\text{H}_2\text{O} \to (\text{CH}_3)_2\text{Si(OH)}_2 + 2\text{HCl}$, then $n\,(\text{CH}_3)_2\text{Si(OH)}_2 \to [-\text{Si(CH}_3)_2-\text{O}-]_n + n\,\text{H}_2\text{O}$.
+
+Adding (CH₃)₃SiCl caps the chain ends and controls the chain length; CH₃SiCl₃ gives cross-linked polymers. Being covered with non-polar alkyl groups, silicones are **water-repellent**; they are also thermally stable, chemically inert and good electrical insulators. Uses: sealants, greases, electrical insulators, waterproofing of fabrics, and surgical and cosmetic implants.
+
+**Silicates** are built from the **SiO₄⁴⁻ tetrahedron**, linked in chains, rings, sheets or 3D networks by sharing corner O atoms (feldspar, mica, asbestos; man-made: glass and cement). In **zeolites**, some Si atoms in the 3D network are replaced by Al³⁺, and the extra negative charge is balanced by Na⁺, K⁺ or Ca²⁺. Zeolites are used as catalysts in petrochemical cracking and isomerisation (ZSM-5 converts alcohols directly into petrol) and, when hydrated, as ion exchangers for softening hard water.`,
+          },
+          {
+            type: "example",
+            title: "CO₂ is a gas, SiO₂ a high-melting solid",
+            problem: "Carbon and silicon are in the same group, yet CO₂ is a gas and SiO₂ melts above 1900 K. Explain.",
+            steps: [
+              "Carbon is small and forms strong pπ–pπ double bonds with oxygen, so CO₂ exists as separate linear O=C=O molecules.",
+              "Only weak dispersion forces act between CO₂ molecules, so it is a gas at room temperature.",
+              "Silicon is larger; its 3p orbitals overlap poorly with oxygen's 2p orbitals sideways, so Si=O double bonds are not favoured.",
+              "Instead each Si forms four single Si–O bonds in a giant 3D network; melting needs strong covalent bonds to break.",
+            ],
+            answer: "CO₂ is molecular (C=O π bonds); SiO₂ is a covalent network of Si–O single bonds.",
+          },
+          {
+            type: "mistake",
+            wrong: "Diamond is the most stable form of carbon because it is the hardest.",
+            right: "Graphite is the thermodynamically most stable allotrope (its standard enthalpy of formation is taken as zero); diamond is about 1.9 kJ mol⁻¹ higher in enthalpy. Diamond persists only because its conversion to graphite is extremely slow.",
+            why: "Hardness is a mechanical property; thermodynamic stability is about energy. A substance can be very hard and still not be the lowest-energy form.",
+          },
+          {
+            type: "activity",
+            activity: {
+              kind: "match",
+              prompt: "Match each substance with its key use.",
+              pairs: [
+                ["Dry ice", "refrigerant for frozen food"],
+                ["Quartz", "piezoelectric crystals in clocks"],
+                ["ZSM-5 zeolite", "converting alcohols into petrol"],
+                ["Silicones", "water-repellent coatings and sealants"],
+                ["Graphite", "high-temperature lubricant"],
+              ],
+              explain: "Each use follows from structure: weak layers in graphite, alkyl surfaces in silicones, and an open aluminosilicate cage in zeolites.",
+            },
+          },
+          {
+            type: "keypoints",
+            items: [
+              "Group 14: ns² np²; +4 and +2 states; +2 more stable down the group (Sn²⁺ reducing, Pb⁴⁺ oxidising).",
+              "Carbon is anomalous: maximum covalency 4, pπ–pπ multiple bonds, strongest catenation.",
+              "Diamond (sp³ network), graphite (sp² layers, conducting, most stable), fullerenes (C₆₀ cages).",
+              "CO is a reducing, poisonous gas; CO₂ is linear and acidic; SiO₂ is a covalent network attacked by HF and NaOH.",
+              "Silicones are –(R₂SiO)– polymers; silicates are built from SiO₄⁴⁻; zeolites are aluminosilicate catalysts and ion exchangers.",
+            ],
+          },
+        ],
+        flashcards: [
+          { front: "General configuration of Group 14", back: "ns² np²" },
+          { front: "Why is PbO₂ an oxidising agent?", back: "The inert pair effect makes Pb²⁺ more stable than Pb⁴⁺, so Pb(IV) readily takes electrons." },
+          { front: "Why is SiCl₄ hydrolysed but CCl₄ is not?", back: "Si has vacant 3d orbitals that can accept a lone pair from water; C has none." },
+          { front: "Catenation", back: "Self-linking of atoms of one element into chains or rings; strongest for carbon (C–C 348 kJ mol⁻¹)." },
+          { front: "Structure of C₆₀", back: "20 six-membered and 12 five-membered rings; every carbon sp²." },
+          { front: "Most stable allotrope of carbon", back: "Graphite" },
+          { front: "Why is CO poisonous?", back: "It binds to haemoglobin about 300 times more strongly than O₂, forming carboxyhaemoglobin." },
+          { front: "Repeating unit of silicones", back: "–(R₂SiO)–" },
+          { front: "Zeolite", back: "Aluminosilicate in which some Si is replaced by Al³⁺, with cations balancing the charge; used as catalyst (ZSM-5) and water softener." },
+        ],
+        quiz: [
+          {
+            kind: "mcq",
+            q: "Which halide does not exist?",
+            options: ["PbI₄", "SnCl₄", "SiCl₄", "GeCl₄"],
+            answer: 0,
+            explain: "Pb⁴⁺ is strongly oxidising and I⁻ is reducing, so PbI₄ is not formed.",
+          },
+          {
+            kind: "mcq",
+            q: "The C–C bond length in graphite (141.5 pm) is shorter than in diamond (154 pm) because",
+            options: ["graphite bonds have partial double-bond character", "graphite has stronger van der Waals forces", "diamond has metallic bonds", "graphite carbons are sp³"],
+            answer: 0,
+            explain: "Delocalised π electrons give each C–C bond in a graphite layer some double-bond character, which shortens it.",
+            difficulty: 2,
+          },
+          {
+            kind: "multi",
+            q: "Which oxides are amphoteric?",
+            options: ["SnO₂", "PbO₂", "SiO₂", "CO"],
+            answers: [0, 1],
+            explain: "SiO₂ is acidic and CO is neutral.",
+          },
+          {
+            kind: "truefalse",
+            q: "Silicones are water-repellent because the polymer chain is surrounded by non-polar alkyl groups.",
+            answer: true,
+            explain: "The –CH₃ groups face outwards and do not attract water.",
+          },
+          {
+            kind: "mcq",
+            q: "Carbon monoxide is prepared in the laboratory by",
+            options: ["heating formic acid with concentrated H₂SO₄", "heating limestone", "adding HCl to marble", "burning carbon in excess oxygen"],
+            answer: 0,
+            explain: "HCOOH → CO + H₂O (conc. H₂SO₄ removes water, 373 K). The other methods give CO₂.",
+          },
+          {
+            kind: "mcq",
+            q: "SiO₂ dissolves in",
+            options: ["hydrofluoric acid", "hydrochloric acid", "water", "nitric acid"],
+            answer: 0,
+            explain: "SiO₂ + 4HF → SiF₄ + 2H₂O. This is why HF is stored in plastic, not glass, bottles.",
+          },
+          {
+            kind: "order",
+            q: "Arrange in decreasing order of catenation tendency.",
+            items: ["C", "Si", "Ge", "Sn"],
+            explain: "Bond enthalpy E–E falls: C–C 348, Si–Si 297, Ge–Ge 260, Sn–Sn 240 kJ mol⁻¹.",
+          },
+          {
+            kind: "mcq",
+            q: "The basic structural unit of all silicates is",
+            options: ["SiO₄⁴⁻ tetrahedron", "SiO₂ molecule", "Si₂O₇⁶⁻ only", "SiO₃²⁻ triangle"],
+            answer: 0,
+            explain: "Every silicate is built from SiO₄⁴⁻ tetrahedra linked through shared corners.",
+          },
+        ],
+      },
+      /* ---------------- Exam edge ---------------- */
+      {
+        slug: "c11-che-pb-exam-edge",
+        title: "Exam edge: Boron and Carbon Families",
+        summary: "What JEE Main, JEE Advanced and other exams ask about Groups 13 and 14: Lewis acidity and back bonding in boron halides, inert pair effect questions, diborane and borax structures, silicone polymers from chlorosilanes, and oxide and halide trends.",
+        minutes: 25,
+        xp: 60,
+        track: "exam",
+        blocks: [
+          {
+            type: "text",
+            md: "**Who needs this.** Although the chapter left rationalised NCERT Class 11, **JEE Advanced** still lists the boron and carbon families (diborane, boric acid, borax, aluminium compounds, allotropes of carbon, CO, CO₂, silicates, silicones), and the general p-block unit in JEE Main and NEET covers group trends, the inert pair effect and anomalous first members, so boron and carbon examples keep appearing. ISC examines the chapter fully. Check the current information bulletin for each exam.\n\nFavourite question types: Lewis acid order of boron halides (a trap!), inert pair effect (Tl, Pb, Sn), the structure of diborane and of the borax anion, boric acid as a Lewis acid, which silicone forms from which chlorosilane, and statement-type questions on allotropes.",
+          },
+          {
+            type: "table",
+            headers: ["Result", "Reason to quote"],
+            rows: [
+              ["Lewis acidity: BF₃ < BCl₃ < BBr₃ < BI₃", "pπ–pπ back bonding from halogen to boron is strongest for F (2p–2p, same size), reducing boron's electron deficiency"],
+              ["Stability: Tl⁺ > Tl³⁺; Pb²⁺ > Pb⁴⁺; Sn⁴⁺ > Sn²⁺", "inert pair effect grows down the group; Sn²⁺ is reducing, Pb⁴⁺ oxidising"],
+              ["Borax anion [B₄O₅(OH)₄]²⁻", "two sp² (triangular) and two sp³ (tetrahedral) boron atoms"],
+              ["R₃SiCl → dimer; R₂SiCl₂ → chains/rings; RSiCl₃ → cross-linked", "number of Si–OH groups formed on hydrolysis = number of Cl"],
+              ["CO₂ molecular, SiO₂ network", "pπ–pπ bonding only for second-period atoms"],
+            ],
+          },
+          {
+            type: "formula",
+            tex: t`\text{Na}_2\text{B}_4\text{O}_7 + 2\text{HCl} + 5\text{H}_2\text{O} \to 2\text{NaCl} + 4\text{H}_3\text{BO}_3`,
+            caption: "Borax is a primary standard for titrating acids: one mole of borax neutralises two moles of HCl (methyl orange indicator, since boric acid is too weak to affect it).",
+          },
+          {
+            type: "example",
+            title: "KCET / COMEDK level: Lewis acid order",
+            problem: "Arrange BF₃, BCl₃ and BBr₃ in increasing order of Lewis acid strength and explain why the order is not what electronegativity suggests.",
+            steps: [
+              "Electronegativity alone suggests BF₃ should be the strongest acid, since F pulls electron density away from B most.",
+              "But a filled p orbital on the halogen can donate electron density back into boron's empty 2p orbital (pπ–pπ back bonding).",
+              "This back donation works best for F, whose 2p orbital matches boron's 2p in size and energy; it is weak for Cl (3p) and Br (4p).",
+              "Strong back bonding makes BF₃ least electron-deficient, so it accepts a lone pair least readily.",
+            ],
+            answer: "BF₃ < BCl₃ < BBr₃",
+          },
+          {
+            type: "example",
+            title: "JEE Main level: borax titration",
+            problem: "What mass of borax (Na₂B₄O₇·10H₂O, M = 381.2 g mol⁻¹) exactly neutralises 25.0 mL of 0.100 M HCl?",
+            steps: [
+              "Moles of HCl = 25.0 × 0.100 = 2.50 mmol.",
+              "1 mol borax reacts with 2 mol HCl, so borax = 1.25 mmol.",
+              "Mass = 1.25 × 10⁻³ × 381.2 = 0.4765 g.",
+            ],
+            answer: "About 0.477 g",
+          },
+          {
+            type: "example",
+            title: "JEE Advanced level: designing a silicone",
+            problem: "Predict the product of hydrolysis followed by condensation of (a) (CH₃)₃SiCl, (b) (CH₃)₂SiCl₂, (c) CH₃SiCl₃. Which would you add to (b) to control the chain length?",
+            steps: [
+              "(a) Each molecule gives one Si–OH, which can condense only once: the product is the dimer (CH₃)₃Si–O–Si(CH₃)₃ (hexamethyldisiloxane).",
+              "(b) Each Si gets two –OH groups, so it can link at both ends: linear chains –[Si(CH₃)₂–O]ₙ– (or cyclic rings).",
+              "(c) Each Si gets three –OH groups and links in three directions: a cross-linked 3D silicone resin.",
+              "Adding a little (CH₃)₃SiCl to (b) caps the ends of the chains (a 'chain stopper'), controlling chain length.",
+            ],
+            answer: "(a) dimer, (b) linear or cyclic polymer, (c) cross-linked network; (CH₃)₃SiCl controls chain length.",
+          },
+          {
+            type: "example",
+            title: "JEE Advanced level: inert pair puzzle",
+            problem: "A compound of formula TlI₃ exists. Is thallium in the +3 state in it?",
+            steps: [
+              "Tl³⁺ is a strong oxidising agent (the inert pair effect makes Tl⁺ more stable), and I⁻ is a reducing agent.",
+              "So Tl³⁺ and three I⁻ cannot coexist; electron transfer would give Tl⁺ and I₂.",
+              "TlI₃ is in fact Tl⁺[I₃]⁻: thallium(I) with the triiodide ion (I₂ + I⁻).",
+            ],
+            answer: "No: TlI₃ is Tl⁺I₃⁻, with thallium in the +1 state.",
+          },
+          {
+            type: "checkpoint",
+            questions: [
+              {
+                kind: "numeric",
+                q: "How many boron atoms are sp³ hybridised in one [B₄O₅(OH)₄]²⁻ ion?",
+                answer: 2,
+                explain: "Two borons are tetrahedral (BO₄, sp³, each carrying a negative charge) and two are triangular (BO₃, sp²).",
+              },
+            ],
+          },
+          {
+            type: "mistake",
+            wrong: "Fluorine is the most electronegative halogen, so BF₃ is the strongest Lewis acid among the boron halides.",
+            right: "BF₃ is the weakest. Back bonding from F 2p into B 2p is strongest and partly fills boron's empty orbital; the order is BF₃ < BCl₃ < BBr₃ < BI₃.",
+            why: "Electronegativity is the obvious tool, but here orbital overlap matters more; this is a classic JEE trap.",
+          },
+          {
+            type: "mistake",
+            wrong: "Since lead is in Group 14 like carbon, Pb⁴⁺ should be its most stable state, so PbCl₂ should be oxidised easily.",
+            right: "For lead the +2 state is more stable (inert pair effect). PbCl₄ decomposes on warming to PbCl₂ + Cl₂, and PbO₂ is an oxidising agent.",
+            why: "Group valency works for the light members; for the heavy ones the ns² pair stays out of bonding.",
+          },
+          {
+            type: "activity",
+            activity: {
+              kind: "reveal",
+              prompt: "Which chlorosilane gives a cross-linked silicone?",
+              emoji: "🧴",
+              options: ["CH₃SiCl₃", "(CH₃)₂SiCl₂", "(CH₃)₃SiCl", "(CH₃)₄Si"],
+              answer: 0,
+              trap: 1,
+              explain: "Three Cl atoms give three Si–OH groups, so each Si links in three directions. (CH₃)₂SiCl₂ gives only linear chains; (CH₃)₄Si has no Cl and does not hydrolyse.",
+            },
+          },
+          {
+            type: "keypoints",
+            items: [
+              "Lewis acidity of boron halides rises from BF₃ to BI₃ because back bonding weakens.",
+              "Inert pair effect: Tl⁺, Pb²⁺ stable; Pb⁴⁺ and Tl³⁺ oxidising; Sn²⁺ reducing.",
+              "Diborane: 2 bridging 3c–2e bonds, 4 terminal bonds, sp³ boron; borax anion: 2 sp² + 2 sp³ boron.",
+              "Number of Cl on Si sets the silicone: 1 → end cap/dimer, 2 → chain, 3 → cross-link.",
+              "Borax titrates as a base: 1 mol borax ≡ 2 mol HCl.",
+            ],
+          },
+        ],
+        flashcards: [
+          { front: "Lewis acid order of boron halides", back: "BF₃ < BCl₃ < BBr₃ < BI₃ (back bonding weakest for I)." },
+          { front: "What is TlI₃ really?", back: "Tl⁺[I₃]⁻, thallium(I) triiodide." },
+          { front: "Hybridisation of B in the borax anion", back: "Two sp² (BO₃) and two sp³ (BO₄) boron atoms." },
+          { front: "Chain stopper in silicone making", back: "(CH₃)₃SiCl" },
+          { front: "Cross-linking agent in silicone making", back: "CH₃SiCl₃" },
+          { front: "Borax : HCl ratio in titration", back: "1 : 2" },
+          { front: "Why does PbCl₄ decompose on warming?", back: "Pb(II) is more stable: PbCl₄ → PbCl₂ + Cl₂." },
+          { front: "Which is more stable: Sn²⁺ or Sn⁴⁺?", back: "Sn⁴⁺; so Sn²⁺ salts (SnCl₂) are reducing agents." },
+        ],
+        quiz: [
+          {
+            kind: "mcq",
+            q: "Which is the strongest Lewis acid?",
+            options: ["BI₃", "BBr₃", "BCl₃", "BF₃"],
+            answer: 0,
+            explain: "Back bonding is weakest in BI₃, so boron is most electron-deficient.",
+            difficulty: 2,
+            hint: "Think of back bonding, not electronegativity.",
+          },
+          {
+            kind: "multi",
+            q: "Which statements about diborane are correct?",
+            options: [
+              "It contains two 3c–2e bonds.",
+              "All six H atoms lie in one plane.",
+              "Bridging B–H bonds are longer than terminal ones.",
+              "Each B is sp³ hybridised.",
+            ],
+            answers: [0, 2, 3],
+            explain: "Only the four terminal H atoms lie in the plane of the two B atoms; the bridging ones are above and below it.",
+            difficulty: 2,
+          },
+          {
+            kind: "mcq",
+            q: "Which acts as a reducing agent?",
+            options: ["SnCl₂", "PbO₂", "SnO₂", "CO₂"],
+            answer: 0,
+            explain: "Sn²⁺ is easily oxidised to the more stable Sn⁴⁺.",
+          },
+          {
+            kind: "numeric",
+            q: "What mass (in g) of borax decahydrate (M = 381.2 g mol⁻¹) neutralises 20.0 mL of 0.200 M HCl? Give three significant figures.",
+            answer: 0.762,
+            tolerance: 0.003,
+            unit: "g",
+            explain: "HCl = 4.00 mmol; borax = 2.00 mmol; mass = 2.00 × 10⁻³ × 381.2 = 0.762 g.",
+            difficulty: 2,
+          },
+          {
+            kind: "mcq",
+            q: "Hydrolysis of (CH₃)₃SiCl followed by condensation gives",
+            options: ["(CH₃)₃Si–O–Si(CH₃)₃", "a linear polymer", "a cross-linked polymer", "SiO₂"],
+            answer: 0,
+            explain: "Only one Si–OH forms per molecule, so two molecules join and stop.",
+            difficulty: 2,
+          },
+          {
+            kind: "mcq",
+            q: "Assertion: CCl₄ is not hydrolysed by water, but SiCl₄ is. Reason: Carbon has no vacant d orbitals in its valence shell.",
+            options: [
+              "Both true; the reason explains the assertion",
+              "Both true; the reason does not explain the assertion",
+              "Assertion true, reason false",
+              "Assertion false, reason true",
+            ],
+            answer: 0,
+            explain: "Si can accept water's lone pair into a vacant 3d orbital; carbon cannot expand its octet (and is also crowded by four Cl).",
+          },
+          {
+            kind: "mcq",
+            q: "Which is a correct statement about C₆₀?",
+            options: ["It has 12 five-membered and 20 six-membered rings.", "Its carbons are sp³.", "It is the most stable form of carbon.", "It is a covalent network solid."],
+            answer: 0,
+            explain: "C₆₀ is a molecular cage of sp² carbons; graphite is the most stable form.",
+          },
+          {
+            kind: "mcq",
+            q: "Which pair is correctly matched to its nature?",
+            options: ["CO: neutral oxide", "SnO₂: acidic only", "SiO₂: amphoteric", "PbO₂: basic only"],
+            answer: 0,
+            explain: "CO is neutral; SnO₂ and PbO₂ are amphoteric; SiO₂ is acidic.",
+          },
+        ],
+      },
+    ],
+  },
+  /* END-PBLOCK */
 ];
 
 export const links: Record<string, string | string[]> = {
   "11:States of Matter: Gaseous and Liquid States": "c11-che-states-of-matter",
   "11:s-Block Elements": "c11-che-s-block",
+  "11:p-Block Elements (Groups 13 and 14)": "c11-che-p-block-13-14",
 };

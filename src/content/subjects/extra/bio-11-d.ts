@@ -1812,9 +1812,969 @@ const respiration: Topic = {
   ],
 };
 
-export const topics: Topic[] = [photosynthesis, respiration];
+/* ------------------------------------------------------------------ */
+/* Plant Growth and Development                                        */
+/* ------------------------------------------------------------------ */
+const plantGrowth: Topic = {
+  slug: "c11-bio-plant-growth-development",
+  title: "Plant Growth and Development",
+  icon: "🌱",
+  description:
+    "Growth and how it is measured, phases and rates of growth, differentiation, dedifferentiation and redifferentiation, development and plasticity, the discovery and effects of auxins, gibberellins, cytokinins, ethylene and abscisic acid, plus photoperiodism, vernalisation and seed dormancy for ISC.",
+  lessons: [
+    /* ---------------- Lesson 1: growth ---------------- */
+    {
+      slug: "c11-bio-pgd-growth-rates",
+      title: "Growth: Measurement, Phases and Rates",
+      summary:
+        "What growth means in plants, why it is indeterminate, how it is measured, the three phases of growth, arithmetic and geometric growth with the sigmoid curve, absolute and relative growth rates, and the conditions growth needs.",
+      minutes: 20,
+      xp: 50,
+      blocks: [
+        {
+          type: "text",
+          md: "A banyan tree in a village square keeps adding new branches and roots for centuries. **Growth** is an **irreversible, permanent increase in size** of an organ, its parts or even a single cell. It is accompanied by metabolic processes, both building up and breaking down, and it uses energy. A leaf swelling with water overnight and shrinking by noon is not growth, because the change is reversible.",
+        },
+        {
+          type: "text",
+          md: "Plants keep growing throughout life because they have **meristems**, tissues whose cells can divide and renew themselves. New cells are always added to the plant body by the meristems. This is the **open form of growth**, and plant growth is generally **indeterminate**.",
+        },
+        {
+          type: "table",
+          headers: ["Meristem", "Where", "Growth produced"],
+          rows: [
+            ["Root apical meristem", "Root tip", "**Primary growth**: elongation of the root"],
+            ["Shoot apical meristem", "Shoot tip", "**Primary growth**: elongation of the stem"],
+            ["Lateral meristems: vascular cambium and cork cambium", "Along the sides of dicot and gymnosperm stems and roots", "**Secondary growth**: increase in girth"],
+          ],
+        },
+        {
+          type: "text",
+          md: "**Measuring growth.** Growth at the cell level is an increase in protoplasm, which is hard to measure directly. So we measure something roughly proportional to it: fresh weight, dry weight, length, area, volume or cell number. A single maize root apical meristem can make **more than 17,500 new cells per hour**, while cells in a watermelon may increase in size by up to **3,50,000 times**. Growth of a pollen tube is measured as length; growth of a dorsiventral leaf as surface area.",
+        },
+        {
+          type: "table",
+          headers: ["Phase", "Where in a root tip", "Features of the cells"],
+          rows: [
+            ["Meristematic", "At the very apex", "Constantly dividing; rich in protoplasm; large conspicuous nuclei; thin, primary cellulose walls with abundant plasmodesmata"],
+            ["Elongation", "Just behind the meristem", "Increased vacuolation, cell enlargement and new cell wall deposition"],
+            ["Maturation", "Further back", "Cells reach their maximum size in wall thickening and protoplasmic modifications"],
+          ],
+        },
+        {
+          type: "heading",
+          text: "Growth rates",
+        },
+        {
+          type: "formula",
+          tex: t`\text{Arithmetic: } L_t = L_0 + rt \qquad \text{Geometric: } W_1 = W_0\, e^{rt}`,
+          caption: "L and W are size (length, weight) at the start (0) and after time t; r is the growth rate. In the geometric equation r is the relative growth rate, a measure of the plant's efficiency in producing new material; e is the base of natural logarithms (about 2.718).",
+        },
+        {
+          type: "text",
+          md: "In **arithmetic growth**, after mitosis only one daughter cell keeps dividing while the other differentiates and matures. A root elongating at a constant rate is an example; length against time gives a **straight line**.\n\nIn **geometric growth**, both daughter cells keep dividing. Growth is slow at first (**lag phase**), then fast and exponential (**log or exponential phase**), then it slows when nutrients become limited and levels off (**stationary phase**). Size against time gives an S-shaped **sigmoid curve**, typical of living organisms in a natural environment and of cells, tissues and organs.\n\nThe **absolute growth rate** is growth per unit time. The **relative growth rate** is growth per unit time divided by the initial size.",
+        },
+        {
+          type: "example",
+          title: "Absolute versus relative growth",
+          problem: "In one day, leaf A grows from 5 cm² to 10 cm² and leaf B grows from 50 cm² to 55 cm². Compare their absolute and relative growth rates.",
+          steps: [
+            "Absolute growth: A gains 10 − 5 = 5 cm²; B gains 55 − 50 = 5 cm². They are equal.",
+            "Relative growth of A = 5 ÷ 5 = 1, that is 100% per day.",
+            "Relative growth of B = 5 ÷ 50 = 0.1, that is 10% per day.",
+          ],
+          answer: "Same absolute growth rate (5 cm² per day), but A's relative growth rate is 10 times that of B.",
+        },
+        {
+          type: "checkpoint",
+          questions: [
+            {
+              kind: "mcq",
+              q: "The lag, log and stationary phases are seen in:",
+              options: ["Arithmetic growth", "Geometric growth", "Reversible growth", "Secondary growth only"],
+              answer: 1,
+              explain: "Geometric growth gives the S-shaped sigmoid curve with these three phases.",
+            },
+          ],
+        },
+        {
+          type: "text",
+          md: "**Conditions for growth.** Water (for cell enlargement and as the medium for enzymes), oxygen (to release metabolic energy), nutrients (macro- and micronutrients for protoplasm and energy), and a suitable temperature range. Light and gravity also affect certain phases and stages of growth.",
+        },
+        {
+          type: "mistake",
+          wrong: "If two leaves gain the same area in a day, they are growing equally fast in every sense.",
+          right: "Their absolute growth rates are equal, but the smaller leaf has a much higher relative growth rate.",
+          why: "Absolute growth ignores starting size. Relative growth asks how much new material each unit of existing material produces, which is a better measure of efficiency.",
+        },
+        {
+          type: "activity",
+          activity: {
+            kind: "sort",
+            prompt: "Which phase of growth shows this feature?",
+            groups: ["Meristematic", "Elongation", "Maturation"],
+            items: [
+              { text: "Large, conspicuous nuclei", group: 0, hint: "Dividing cells have big nuclei." },
+              { text: "Thin primary walls with many plasmodesmata", group: 0, hint: "Walls are still thin in dividing cells." },
+              { text: "Increased vacuolation", group: 1, hint: "Cells take in water and enlarge." },
+              { text: "New cell wall deposition as cells enlarge", group: 1, hint: "Walls must grow as cells grow." },
+              { text: "Maximum wall thickening", group: 2, hint: "This is the final state." },
+              { text: "Protoplasmic modifications complete", group: 2, hint: "The cell is now specialised." },
+            ],
+            explain: "Cells divide at the apex, enlarge by vacuolation behind it, and reach their final structure further back.",
+          },
+        },
+        {
+          type: "keypoints",
+          items: [
+            "Growth is an irreversible permanent increase in size; plant growth is open and indeterminate because of meristems.",
+            "Apical meristems give primary growth; lateral meristems (vascular and cork cambium) give secondary growth.",
+            "Phases: meristematic, elongation, maturation.",
+            "Arithmetic: Lt = L0 + rt (straight line). Geometric: W1 = W0 e^(rt) (sigmoid: lag, log, stationary).",
+          ],
+        },
+      ],
+      flashcards: [
+        { front: "Define growth.", back: "An irreversible, permanent increase in size of an organ, its parts or a cell." },
+        { front: "Why is plant growth called 'open'?", back: "Meristems keep adding new cells throughout the plant's life." },
+        { front: "Rate of cell production by a maize root apical meristem", back: "More than 17,500 new cells per hour." },
+        { front: "How much can watermelon cells enlarge?", back: "Up to 3,50,000 times." },
+        { front: "Equation of arithmetic growth", back: "Lt = L0 + rt." },
+        { front: "Equation of geometric growth", back: "W1 = W0 e^(rt), where r is the relative growth rate." },
+        { front: "Three phases of the sigmoid curve", back: "Lag, log (exponential), stationary." },
+        { front: "Relative growth rate", back: "Growth per unit time divided by the initial size." },
+      ],
+      quiz: [
+        {
+          kind: "mcq",
+          q: "Secondary growth in dicot stems is due to:",
+          options: ["Root apical meristem", "Shoot apical meristem", "Vascular cambium and cork cambium", "Intercalary meristem only"],
+          answer: 2,
+          explain: "Lateral meristems produce secondary growth, an increase in girth.",
+        },
+        {
+          kind: "numeric",
+          q: "A root 3 cm long grows arithmetically at 0.5 cm per day. What is its length (cm) after 8 days?",
+          answer: 7,
+          unit: "cm",
+          explain: "Lt = L0 + rt = 3 + 0.5 × 8 = 7 cm.",
+        },
+        {
+          kind: "truefalse",
+          q: "Growth of a pollen tube is best measured as an increase in surface area.",
+          answer: false,
+          explain: "A pollen tube is measured by its increase in length; a dorsiventral leaf by surface area.",
+        },
+        {
+          kind: "mcq",
+          q: "In arithmetic growth, after mitotic division:",
+          options: [
+            "Both daughter cells continue to divide",
+            "Only one daughter cell continues to divide",
+            "Neither daughter cell divides",
+            "Daughter cells fuse",
+          ],
+          answer: 1,
+          explain: "The other daughter cell differentiates and matures, giving a constant rate.",
+        },
+        {
+          kind: "numeric",
+          q: "A seedling grows from 20 g to 25 g in a week. What is its relative growth rate for the week (as a decimal)?",
+          answer: 0.25,
+          tolerance: 0.01,
+          explain: "Relative growth = (25 − 20) ÷ 20 = 0.25, that is 25% per week.",
+          difficulty: 2,
+        },
+        {
+          kind: "order",
+          q: "Arrange the phases of the sigmoid growth curve.",
+          items: ["Lag phase", "Log (exponential) phase", "Stationary phase"],
+          explain: "Slow start, rapid growth, then levelling off as resources limit growth.",
+        },
+        {
+          kind: "multi",
+          q: "Which are features of cells in the meristematic phase?",
+          options: ["Rich protoplasm", "Large conspicuous nuclei", "Large central vacuole", "Thin primary cellulose walls"],
+          answers: [0, 1, 3],
+          explain: "Increased vacuolation begins in the elongation phase.",
+          difficulty: 2,
+        },
+      ],
+    },
+    /* ---------------- Lesson 2: differentiation, development, discovery of PGRs ---------------- */
+    {
+      slug: "c11-bio-pgd-differentiation-pgr-discovery",
+      title: "Differentiation, Development and the Discovery of PGRs",
+      summary:
+        "Differentiation, dedifferentiation and redifferentiation, open differentiation, development and plasticity with heterophylly, the chemical nature of plant growth regulators, and the experiments that discovered each one.",
+      minutes: 20,
+      xp: 50,
+      blocks: [
+        {
+          type: "text",
+          md: "Cells made by the root and shoot apical meristems and the cambium mature to carry out specific jobs. This maturing is **differentiation**. Cells change a great deal in their walls and protoplasm. To become a **tracheary element** (a xylem vessel or tracheid), a cell loses its protoplasm and develops a strong, elastic, **lignocellulosic secondary wall**, able to carry water over long distances even under extreme tension.",
+        },
+        {
+          type: "table",
+          headers: ["Term", "Meaning", "Example"],
+          rows: [
+            ["Differentiation", "Cells from meristems mature to perform specific functions", "Meristem cells becoming xylem vessels"],
+            ["Dedifferentiation", "Living differentiated cells that had lost the power to divide regain it", "Fully differentiated parenchyma cells forming **interfascicular cambium** and **cork cambium**"],
+            ["Redifferentiation", "Cells made by a dedifferentiated meristem lose the power to divide again and mature for specific functions", "Secondary xylem, secondary phloem and cork formed from these cambia"],
+          ],
+        },
+        {
+          type: "text",
+          md: "Differentiation in plants is **open**: cells from the same meristem can end up with different structures. The final structure depends on the cell's **location**. For example, cells pushed away from the root apical meristem towards the tip become root-cap cells, while those pushed to the periphery mature as epidermis.\n\n**Development** is the sum of all changes an organism goes through in its life cycle, from seed germination to senescence. It is controlled by both **intrinsic** factors (genetic factors and PGRs) and **extrinsic** factors (light, temperature, water, oxygen, nutrition).",
+        },
+        {
+          type: "text",
+          md: "**Plasticity**: plants follow different pathways in response to the environment or phases of life, forming different structures. A clear case is **heterophylly**. In cotton, coriander and larkspur, leaves of the juvenile plant differ in shape from those of the mature plant (a developmental change). In buttercup, leaves formed in air differ from those formed in water (an environmental change).",
+        },
+        {
+          type: "heading",
+          text: "Plant growth regulators",
+        },
+        {
+          type: "text",
+          md: "**Plant growth regulators (PGRs)** are small, simple molecules of diverse chemical nature. They fall into two broad groups: **promoters** (auxins, gibberellins, cytokinins), involved in cell division, enlargement, pattern formation, tropic growth, flowering, fruiting and seed formation; and **inhibitors** such as **abscisic acid**, involved in responses to wounds and stresses and in dormancy and abscission. **Ethylene** can fit either group, but it is largely an inhibitor.",
+        },
+        {
+          type: "table",
+          headers: ["PGR", "How it was found"],
+          rows: [
+            ["Auxin", "Charles and Francis Darwin saw coleoptiles of **canary grass** bend towards one-sided light (phototropism) and found that the **tip** was the site of a transmittable influence. **F. W. Went** later isolated auxin from the tips of **oat** coleoptiles."],
+            ["Gibberellin", "In the **'bakane' (foolish seedling)** disease of rice, caused by the fungus *Gibberella fujikuroi*, **E. Kurosawa** found the symptoms appeared when healthy seedlings were treated with sterile filtrates of the fungus. The active substance was identified as gibberellic acid."],
+            ["Cytokinin", "**F. Skoog** and co-workers found that callus from tobacco stem internodes grew only if, besides auxin, the medium had vascular tissue extract, yeast extract, coconut milk or DNA. **Skoog and Miller** later crystallised the active substance: **kinetin**."],
+            ["Abscisic acid", "In the mid-1960s three independent groups described **inhibitor-B**, **abscission II** and **dormin**; all proved chemically identical and were named abscisic acid."],
+            ["Ethylene", "**Cousins (1910)** confirmed that ripe oranges released a volatile substance that hastened ripening of stored unripe bananas; it was later identified as ethylene."],
+          ],
+        },
+        {
+          type: "example",
+          title: "Reasoning like the Darwins",
+          problem: "Three canary grass coleoptiles are lit from one side: (1) intact, (2) tip covered with an opaque cap, (3) tip cut off. Only (1) bends towards light. What do you conclude?",
+          steps: [
+            "(2) has its tip present but shaded and does not bend, so the tip must sense the light.",
+            "(3) has no tip and does not bend, so something from the tip is needed for the bending.",
+            "The bending happens below the tip in (1), so the influence travels from the tip downwards.",
+          ],
+          answer: "The tip perceives light and sends a transmittable influence (later shown to be auxin) down to the growing region, which bends.",
+        },
+        {
+          type: "checkpoint",
+          questions: [
+            {
+              kind: "mcq",
+              q: "Formation of cork cambium from fully differentiated parenchyma cells is an example of:",
+              options: ["Differentiation", "Dedifferentiation", "Redifferentiation", "Senescence"],
+              answer: 1,
+              explain: "Differentiated cells regain the power to divide: dedifferentiation.",
+            },
+          ],
+        },
+        {
+          type: "mistake",
+          wrong: "Dedifferentiation and redifferentiation mean the same thing: cells changing their type.",
+          right: "Dedifferentiation is regaining the ability to divide; redifferentiation is the products of that new meristem losing it again and maturing.",
+          why: "Both words describe change, so they blur. Use the cambium as the anchor: parenchyma → cambium is *de*-differentiation; cambium → secondary xylem and cork is *re*-differentiation.",
+        },
+        {
+          type: "activity",
+          activity: {
+            kind: "match",
+            prompt: "Match each PGR to its chemical nature.",
+            pairs: [
+              ["IAA (auxin)", "Indole compound"],
+              ["Kinetin", "Adenine (purine) derivative"],
+              ["Abscisic acid", "Carotenoid derivative"],
+              ["Gibberellic acid (GA₃)", "Terpene"],
+              ["Ethylene", "Gas"],
+            ],
+            explain: "PGRs are chemically very diverse: indoles, adenine derivatives, carotenoid derivatives, terpenes and even a gas.",
+          },
+        },
+        {
+          type: "callout",
+          tone: "exam",
+          title: "Board tip",
+          md: "When asked to distinguish differentiation, dedifferentiation and redifferentiation, give one example for each from the same story (parenchyma → cambium → secondary tissues). For discovery questions, name the plant or fungus: canary grass, oat, *Gibberella fujikuroi*, tobacco, oranges and bananas.",
+        },
+        {
+          type: "keypoints",
+          items: [
+            "Differentiation: maturing for a function; dedifferentiation: regaining division; redifferentiation: maturing again.",
+            "Plant differentiation is open; a cell's fate depends on its location.",
+            "Plasticity: heterophylly in cotton, coriander, larkspur (developmental) and buttercup (environmental).",
+            "Discovery: auxin (Darwins, Went), GA (Kurosawa, bakane), cytokinin (Skoog and Miller, kinetin), ABA (three inhibitors), ethylene (Cousins).",
+          ],
+        },
+      ],
+      flashcards: [
+        { front: "What is dedifferentiation?", back: "Living differentiated cells regaining the ability to divide, e.g. parenchyma forming interfascicular or cork cambium." },
+        { front: "What is redifferentiation?", back: "Cells formed by a dedifferentiated meristem losing the ability to divide again and maturing for specific functions." },
+        { front: "Two examples of developmental heterophylly", back: "Cotton, coriander or larkspur (juvenile vs mature leaves)." },
+        { front: "Example of environmental heterophylly", back: "Buttercup: leaves in air differ from those in water." },
+        { front: "Who isolated auxin and from which plant?", back: "F. W. Went, from tips of oat coleoptiles." },
+        { front: "Fungus causing bakane disease of rice", back: "*Gibberella fujikuroi*." },
+        { front: "Three names that turned out to be ABA", back: "Inhibitor-B, abscission II and dormin." },
+        { front: "Which PGR is a terpene?", back: "Gibberellic acid (GA₃)." },
+      ],
+      quiz: [
+        {
+          kind: "mcq",
+          q: "The 'foolish seedling' disease of rice led to the discovery of:",
+          options: ["Auxin", "Gibberellin", "Cytokinin", "Ethylene"],
+          answer: 1,
+          explain: "Kurosawa's work on bakane disease (*Gibberella fujikuroi*) led to gibberellic acid.",
+        },
+        {
+          kind: "mcq",
+          q: "Kinetin is chemically a derivative of:",
+          options: ["Indole", "Adenine", "Carotenoid", "Terpene"],
+          answer: 1,
+          explain: "Kinetin is a modified form of adenine, a purine.",
+        },
+        {
+          kind: "truefalse",
+          q: "Differentiation in plants is open, so cells from one meristem can mature into different structures.",
+          answer: true,
+          explain: "The final structure depends on the cell's location in the plant.",
+        },
+        {
+          kind: "fill",
+          q: "Cousins (1910) found that a volatile substance from ripe ___ hastened ripening of stored bananas.",
+          answer: ["oranges", "orange"],
+          explain: "The substance was later identified as ethylene.",
+        },
+        {
+          kind: "mcq",
+          q: "Which is a growth inhibitor?",
+          options: ["IAA", "GA₃", "Zeatin", "Abscisic acid"],
+          answer: 3,
+          explain: "ABA is the main inhibitor; the others are promoters.",
+        },
+        {
+          kind: "multi",
+          q: "Skoog's tobacco callus grew with auxin only if one of these was added. Which?",
+          options: ["Coconut milk", "Yeast extract", "Vascular tissue extract", "DNA", "Ethylene"],
+          answers: [0, 1, 2, 3],
+          explain: "Each of these supplied cytokinin-like activity; ethylene was not part of the experiment.",
+          difficulty: 2,
+        },
+        {
+          kind: "mcq",
+          q: "Development in plants is controlled by:",
+          options: [
+            "Only genes",
+            "Only light and temperature",
+            "Both intrinsic (genetic, PGRs) and extrinsic (light, temperature, water, oxygen, nutrition) factors",
+            "Only PGRs",
+          ],
+          answer: 2,
+          explain: "Development is the result of both internal and external factors.",
+        },
+      ],
+    },
+    /* ---------------- Lesson 3: effects of PGRs ---------------- */
+    {
+      slug: "c11-bio-pgd-pgr-effects",
+      title: "Physiological Effects of Plant Growth Regulators",
+      summary:
+        "What auxins, gibberellins, cytokinins, ethylene and abscisic acid do in plants and how farmers and industries use them, and how PGRs act together in apical dominance and dormancy.",
+      minutes: 24,
+      xp: 55,
+      blocks: [
+        {
+          type: "text",
+          md: "Tea gardens in Assam are plucked and hedges are trimmed so that they become bushy. Pineapple growers in Kerala spray their fields so that all the plants flower together. Both depend on plant growth regulators.",
+        },
+        {
+          type: "table",
+          headers: ["Auxins", "Gibberellins"],
+          rows: [
+            ["Natural: **IAA**, **IBA**. Synthetic: **NAA**, **2,4-D**.", "More than 100 known (GA₁, GA₂, GA₃ …); **GA₃** was first discovered and is the most studied; all are acidic."],
+            ["Initiate **rooting in stem cuttings**, used in plant propagation", "Increase length of the axis: used to lengthen **grape stalks**"],
+            ["Promote **flowering in pineapples**", "Make fruits like **apple** elongate and improve shape"],
+            ["Prevent early fruit and leaf drop, but promote **abscission** of older mature leaves and fruits", "**Delay senescence**, so fruits stay on the tree longer and the market period extends"],
+            ["Cause **apical dominance**", "GA₃ **speeds up malting** in the brewing industry"],
+            ["Induce **parthenocarpy** (e.g. tomato)", "Sprayed on **sugarcane**, lengthen the stem and raise yield by as much as **20 tonnes per acre**"],
+            ["**2,4-D** kills dicot weeds and does not affect mature monocots: used for weed-free lawns", "Sprayed on juvenile **conifers**, hasten maturity and early seed production"],
+            ["Control **xylem differentiation** and help cell division", "Promote **bolting** (internode elongation before flowering) in beet, cabbage and other rosette plants"],
+          ],
+        },
+        {
+          type: "list",
+          items: [
+            "**Cytokinins** act on cytokinesis. **Kinetin** (from autoclaved herring sperm DNA) does not occur naturally in plants; **zeatin** was found in corn kernels and coconut milk. Natural cytokinins are made where cells divide rapidly: root apices, developing shoot buds, young fruits.",
+            "Cytokinins help produce **new leaves, chloroplasts in leaves**, lateral shoot growth and adventitious shoots; they help **overcome apical dominance**; they promote **nutrient mobilisation**, which **delays leaf senescence**.",
+          ],
+        },
+        {
+          type: "table",
+          headers: ["Ethylene", "Abscisic acid (ABA)"],
+          rows: [
+            ["A simple **gas**, made in large amounts by tissues undergoing **senescence** and by **ripening fruits**", "A general **growth inhibitor** and inhibitor of plant metabolism"],
+            ["Horizontal growth of seedlings, swelling of the axis and **apical hook** formation in dicot seedlings", "**Inhibits seed germination**"],
+            ["Promotes **senescence and abscission**, especially of leaves and flowers", "Stimulates **closure of stomata**"],
+            ["Highly effective in **fruit ripening**; raises the respiration rate during ripening (**respiratory climacteric**)", "Increases tolerance to stresses: the **stress hormone**"],
+            ["Breaks seed and bud dormancy: germination of **peanut** seeds, sprouting of **potato** tubers", "Plays a role in **seed development, maturation and dormancy**, helping seeds withstand desiccation"],
+            ["Rapid internode or petiole elongation in **deep-water rice**; promotes root growth and **root hair** formation", "In most situations acts as an **antagonist to GAs**"],
+            ["Initiates flowering and synchronises fruit-set in **pineapple**; induces flowering in **mango**", "—"],
+          ],
+        },
+        {
+          type: "text",
+          md: "**Ethephon**, the most widely used source of ethylene in agriculture, is an aqueous solution that is readily absorbed, moves within the plant and releases ethylene slowly. It **hastens fruit ripening** in tomatoes and apples, **accelerates abscission** of flowers and fruits (thinning of cotton, cherry and walnut), and **promotes female flowers in cucumbers**, increasing yield.",
+        },
+        {
+          type: "text",
+          md: "**PGRs rarely act alone.** Most events in a plant's life are controlled by two or more PGRs acting together, in synergy or against each other: apical dominance (auxin against cytokinin), seed dormancy and germination (ABA against GA), abscission, senescence and so on. Extrinsic factors such as temperature and light act through PGRs too.",
+        },
+        {
+          type: "example",
+          title: "Why plucking makes a tea bush bushy",
+          problem: "Explain, in terms of PGRs, why removing the shoot tips of tea plants and hedge plants makes them branch more.",
+          steps: [
+            "The shoot apex makes auxin, which moves down the stem and keeps lateral buds dormant: apical dominance.",
+            "Removing the tip (decapitation) removes this auxin source.",
+            "Cytokinins, which promote lateral shoot growth and overcome apical dominance, now dominate, so lateral buds grow into branches.",
+          ],
+          answer: "Decapitation removes auxin-driven apical dominance; lateral buds sprout, making the plant bushy.",
+        },
+        {
+          type: "checkpoint",
+          questions: [
+            {
+              kind: "mcq",
+              q: "Which PGR is called the stress hormone?",
+              options: ["Auxin", "Gibberellin", "Cytokinin", "Abscisic acid"],
+              answer: 3,
+              explain: "ABA increases tolerance to stresses and closes stomata during water stress.",
+            },
+            {
+              kind: "mcq",
+              q: "Ethephon promotes which kind of flowers in cucumber?",
+              options: ["Male", "Female", "Bisexual", "Sterile"],
+              answer: 1,
+              explain: "More female flowers mean more fruits and a higher yield.",
+            },
+          ],
+        },
+        {
+          type: "mistake",
+          wrong: "2,4-D kills grasses and cereal weeds, so it can be sprayed on a wheat field to clear grassy weeds.",
+          right: "2,4-D kills broad-leaved (dicot) weeds and does not affect mature monocots, so it clears dicot weeds from cereal fields and lawns.",
+          why: "Students remember 'herbicide' but not which group it spares. Lawns are grasses (monocots); 2,4-D keeps them weed-free by killing the dicots growing in them.",
+        },
+        {
+          type: "activity",
+          activity: {
+            kind: "match",
+            prompt: "Match each use to the PGR behind it.",
+            pairs: [
+              ["Killing dicot weeds in a lawn", "2,4-D (synthetic auxin)"],
+              ["Speeding up malting in brewing", "Gibberellin"],
+              ["Overcoming apical dominance", "Cytokinin"],
+              ["Ripening stored tomatoes", "Ethylene (ethephon)"],
+              ["Closing stomata under drought", "Abscisic acid"],
+            ],
+            explain: "Each PGR has signature uses: auxins for rooting and weeds, GAs for length and malting, cytokinins for lateral growth and delaying senescence, ethylene for ripening and abscission, ABA for stress and dormancy.",
+          },
+        },
+        {
+          type: "callout",
+          tone: "exam",
+          title: "Board tip",
+          md: "Questions often ask for 'two physiological effects' of a named PGR. Choose the textbook examples with the plant named (pineapple, grape stalks, sugarcane, deep-water rice, cucumber). Vague answers like 'helps growth' get no marks.",
+        },
+        {
+          type: "keypoints",
+          items: [
+            "Auxins: rooting of cuttings, apical dominance, parthenocarpy, 2,4-D for dicot weeds, xylem differentiation.",
+            "Gibberellins: length of axis (grapes, sugarcane), apple shape, malting, bolting, delay senescence.",
+            "Cytokinins: cell division, new leaves and chloroplasts, overcome apical dominance, delay leaf senescence.",
+            "Ethylene: ripening, abscission, apical hook, breaks dormancy, deep-water rice; ABA: stomatal closure, dormancy, stress hormone, antagonist of GA.",
+          ],
+        },
+      ],
+      flashcards: [
+        { front: "Two natural auxins", back: "IAA (indole-3-acetic acid) and IBA (indole butyric acid)." },
+        { front: "Two synthetic auxins", back: "NAA (naphthalene acetic acid) and 2,4-D." },
+        { front: "What is bolting?", back: "Rapid internode elongation just before flowering, promoted by gibberellins in rosette plants such as beet and cabbage." },
+        { front: "Where are natural cytokinins made?", back: "In regions of rapid cell division: root apices, developing shoot buds, young fruits." },
+        { front: "What is the respiratory climacteric?", back: "The rise in respiration rate during fruit ripening, enhanced by ethylene." },
+        { front: "Three uses of ethephon", back: "Hastens ripening (tomato, apple), thins flowers and fruits (cotton, cherry, walnut), promotes female flowers in cucumber." },
+        { front: "Which PGR antagonises gibberellins in most situations?", back: "Abscisic acid." },
+        { front: "Two PGRs that both promote flowering in pineapple", back: "Auxin and ethylene." },
+      ],
+      quiz: [
+        {
+          kind: "mcq",
+          q: "Spraying sugarcane with gibberellins increases yield because they:",
+          options: [
+            "Increase stem length, where sugar is stored",
+            "Close stomata",
+            "Promote female flowers",
+            "Induce parthenocarpy",
+          ],
+          answer: 0,
+          explain: "Sugarcane stores sugar in its stem; a longer stem stores more, raising yield by up to 20 tonnes per acre.",
+        },
+        {
+          kind: "mcq",
+          q: "Which PGR promotes rapid internode elongation in deep-water rice?",
+          options: ["ABA", "Ethylene", "Cytokinin", "2,4-D"],
+          answer: 1,
+          explain: "Ethylene helps the upper shoot stay above flood water.",
+        },
+        {
+          kind: "truefalse",
+          q: "Kinetin is a naturally occurring cytokinin in plants.",
+          answer: false,
+          explain: "Kinetin does not occur naturally in plants; zeatin is a natural cytokinin.",
+        },
+        {
+          kind: "multi",
+          q: "Which effects are caused by ethylene?",
+          options: ["Apical hook in dicot seedlings", "Sprouting of potato tubers", "Inhibition of fruit ripening", "Root hair formation"],
+          answers: [0, 1, 3],
+          explain: "Ethylene promotes fruit ripening; it does not inhibit it.",
+          difficulty: 2,
+        },
+        {
+          kind: "mcq",
+          q: "Parthenocarpy in tomato can be induced by:",
+          options: ["Auxins", "ABA", "Ethylene", "Cytokinins"],
+          answer: 0,
+          explain: "Auxins induce parthenocarpy (fruit without fertilisation).",
+        },
+        {
+          kind: "fill",
+          q: "The PGR that stimulates closure of stomata is ___.",
+          answer: ["abscisic acid", "ABA"],
+          explain: "ABA closes stomata, especially during water stress.",
+        },
+        {
+          kind: "mcq",
+          q: "Delay of leaf senescence by cytokinins is due to:",
+          options: ["Stomatal closure", "Promotion of nutrient mobilisation", "Increased abscission", "Bolting"],
+          answer: 1,
+          explain: "Cytokinins draw nutrients to the treated leaf, keeping it green longer.",
+          difficulty: 2,
+        },
+        {
+          kind: "mcq",
+          q: "Which pair of PGRs acts antagonistically in seed dormancy?",
+          options: ["Auxin and ethylene", "GA and ABA", "Cytokinin and GA", "Auxin and GA"],
+          answer: 1,
+          explain: "ABA promotes dormancy; GA promotes germination.",
+        },
+      ],
+    },
+    /* ---------------- Lesson 4: ISC photoperiodism, vernalisation, dormancy ---------------- */
+    {
+      slug: "c11-bio-pgd-photoperiod-vernalisation",
+      title: "Photoperiodism, Vernalisation and Seed Dormancy",
+      summary:
+        "For ISC and older papers: long-day, short-day and day-neutral plants, the role of the dark period and the leaf, phytochrome, vernalisation in winter cereals and biennials, and the causes and breaking of seed dormancy.",
+      minutes: 20,
+      xp: 50,
+      blocks: [
+        {
+          type: "callout",
+          tone: "note",
+          title: "Board note",
+          md: "These sections were **removed from the rationalised NCERT book**, so CBSE and Karnataka I PUC do not examine them. **ISC Class 11** includes photoperiodism, vernalisation and seed dormancy under Plant Physiology. Older NEET and KCET papers asked these ideas often, so check your exam's current syllabus before skipping them.",
+        },
+        {
+          type: "text",
+          md: "Chrysanthemums in Pune flower in the shortening days of late autumn, while wheat in Punjab flowers as days lengthen in spring. Some plants need a periodic exposure to light to flower. The response of plants to the relative lengths of day and night is **photoperiodism**. Plants are grouped by the **critical day length**, a duration of light that differs from species to species.",
+        },
+        {
+          type: "table",
+          headers: ["Group", "Flowers when", "Examples"],
+          rows: [
+            ["Long-day plants (LDP)", "Light period is **longer** than a critical duration", "Wheat, spinach, radish"],
+            ["Short-day plants (SDP)", "Light period is **shorter** than a critical duration", "Chrysanthemum, soybean, *Xanthium*"],
+            ["Day-neutral plants", "No correlation between light duration and flowering", "Tomato, cucumber"],
+          ],
+        },
+        {
+          type: "text",
+          md: "Two key findings:\n\n1. Not only the length of the light period but also the **length of the dark period** is important. In short-day plants an uninterrupted long night is the real need.\n2. The **leaves** perceive the photoperiod, while the shoot apex changes into a floral meristem. A hormonal substance, named **florigen** (still hypothetical), is thought to move from leaves to the shoot apex to induce flowering only when the plant gets the necessary inductive photoperiod.\n\nThe light is detected by **phytochrome**, a pigment that exists in two interconvertible forms: **Pr** absorbs red light (about 660 nm) and becomes **Pfr**; Pfr absorbs far-red light (about 730 nm) and returns to Pr. Pfr is the active form.",
+        },
+        {
+          type: "example",
+          title: "Night-break experiment",
+          problem: "A short-day plant with a critical day length of 15.5 hours is given 14 hours of light and 10 hours of darkness, but the dark period is interrupted in the middle by a brief flash of red light. It does not flower. Explain.",
+          steps: [
+            "14 hours of light is shorter than the critical 15.5 hours, so by day length alone it should flower.",
+            "The flash splits the night into two short dark periods of about 5 hours each.",
+            "Short-day plants really measure an unbroken dark period; the flash converts Pr to Pfr, which prevents flowering in SDP.",
+          ],
+          answer: "The night was broken, so the plant never received the long uninterrupted dark period it needs; a far-red flash after the red one would reverse the effect.",
+        },
+        {
+          type: "heading",
+          text: "Vernalisation",
+        },
+        {
+          type: "text",
+          md: "In some plants flowering depends, qualitatively or quantitatively, on exposure to **low temperature**. This is **vernalisation**. It prevents early reproductive development late in the growing season and lets the plant reach maturity first.\n\n- **Wheat, barley, rye** have spring and winter varieties. Spring varieties are sown in spring and flower and set grain before the season ends. **Winter varieties** are sown in autumn, overwinter as small seedlings, resume growth in spring and are harvested around mid-summer. Sown in spring, winter varieties usually fail to flower or set mature grain within the season.\n- **Biennials** such as **sugar beet, cabbage and carrot** are monocarpic: they flower and die in the second season. A cold treatment stimulates a later photoperiodic flowering response.\n\nIn ISC books the stimulus is perceived by the **shoot apex** (meristematic cells), unlike photoperiod, which is perceived by leaves.",
+        },
+        {
+          type: "heading",
+          text: "Seed dormancy",
+        },
+        {
+          type: "text",
+          md: "Some seeds fail to germinate even when external conditions are favourable. Such seeds are **dormant**, and the cause lies within the seed (endogenous control). This differs from **quiescence**, where a seed simply waits for water, oxygen and a suitable temperature.\n\n**Causes**: an impermeable, hard seed coat; chemical inhibitors such as abscisic acid, phenolic acids and para-ascorbic acid; and immature embryos.\n\n**Breaking dormancy**: the seed coat can be broken by mechanical abrasion with knives or sandpaper, or by shaking with abrasives (in nature by microbes and by passage through an animal's gut). Inhibitors are removed by **chilling** or by applying **GA₃ and nitrates**. Changes in light and temperature also break dormancy.",
+        },
+        {
+          type: "checkpoint",
+          questions: [
+            {
+              kind: "mcq",
+              q: "Which part of the plant perceives the photoperiodic stimulus?",
+              options: ["Root tip", "Shoot apex", "Leaves", "Flower buds"],
+              answer: 2,
+              explain: "Leaves perceive the photoperiod; a signal then travels to the shoot apex.",
+            },
+          ],
+        },
+        {
+          type: "mistake",
+          wrong: "Short-day plants flower only when days are less than 12 hours, and long-day plants only when days are more than 12 hours.",
+          right: "Each species has its own critical day length. An SDP flowers when the day is shorter than its critical length, which may be more than 12 hours.",
+          why: "'Short' and 'long' sound like 'shorter or longer than half a day'. A short-day plant with a critical length of 15 hours flowers in 14-hour days, the same day length that might make a long-day plant with a 13-hour critical length flower.",
+        },
+        {
+          type: "activity",
+          activity: {
+            kind: "sort",
+            prompt: "Long-day, short-day or day-neutral plant?",
+            groups: ["Long-day", "Short-day", "Day-neutral"],
+            items: [
+              { text: "Wheat", group: 0, hint: "Flowers as days lengthen in spring." },
+              { text: "Spinach", group: 0, hint: "Bolts in long summer days." },
+              { text: "Chrysanthemum", group: 1, hint: "Flowers in autumn." },
+              { text: "Soybean", group: 1, hint: "A classic short-day crop." },
+              { text: "Tomato", group: 2, hint: "Flowers whatever the day length." },
+              { text: "Cucumber", group: 2, hint: "Flowering not tied to day length." },
+            ],
+            explain: "Photoperiodic groups are fixed by how flowering responds to day length compared with the species' critical length.",
+          },
+        },
+        {
+          type: "keypoints",
+          items: [
+            "Photoperiodism: flowering response to day and night length; LDP, SDP and day-neutral plants.",
+            "The dark period matters; leaves perceive the stimulus; florigen is hypothesised to carry it to the apex; phytochrome Pr ⇌ Pfr senses red and far-red light.",
+            "Vernalisation: low temperature promotes flowering in winter wheat, barley, rye and biennials like sugar beet, cabbage, carrot.",
+            "Seed dormancy: hard coat, inhibitors (ABA, phenolics), immature embryo; broken by abrasion, chilling, GA₃ and nitrates.",
+          ],
+        },
+      ],
+      flashcards: [
+        { front: "What is photoperiodism?", back: "The response of plants to the relative lengths of day and night, especially in flowering." },
+        { front: "Which organ perceives the photoperiod?", back: "The leaf." },
+        { front: "Name of the hypothetical flowering hormone", back: "Florigen." },
+        { front: "Two forms of phytochrome", back: "Pr (absorbs red, about 660 nm) and Pfr (absorbs far-red, about 730 nm); Pfr is active." },
+        { front: "What is vernalisation?", back: "Promotion of flowering by exposure to low temperature." },
+        { front: "Three biennials that need cold to flower", back: "Sugar beet, cabbage, carrot." },
+        { front: "Dormancy vs quiescence", back: "Dormancy: internal block to germination. Quiescence: seed waits only for favourable external conditions." },
+        { front: "Two chemicals that break seed dormancy", back: "GA₃ and nitrates." },
+      ],
+      quiz: [
+        {
+          kind: "mcq",
+          q: "Winter varieties of wheat sown in spring usually:",
+          options: [
+            "Flower earlier than spring varieties",
+            "Fail to flower or produce mature grain in that season",
+            "Become day-neutral",
+            "Germinate only after chilling of the seed",
+          ],
+          answer: 1,
+          explain: "They need the cold of winter (vernalisation) to flower on time.",
+        },
+        {
+          kind: "truefalse",
+          q: "In short-day plants, interrupting the long night with a flash of red light prevents flowering.",
+          answer: true,
+          explain: "SDP need an uninterrupted dark period; the red flash breaks it.",
+        },
+        {
+          kind: "mcq",
+          q: "Which is NOT a cause of seed dormancy?",
+          options: ["Hard, impermeable seed coat", "Abscisic acid in the seed", "Immature embryo", "High gibberellin content"],
+          answer: 3,
+          explain: "Gibberellins promote germination and are used to break dormancy.",
+        },
+        {
+          kind: "mcq",
+          q: "Phytochrome Pr is converted to Pfr by:",
+          options: ["Far-red light", "Red light", "Blue light", "Darkness only"],
+          answer: 1,
+          explain: "Red light (about 660 nm) converts Pr to Pfr; far-red reverses it.",
+          difficulty: 2,
+        },
+        {
+          kind: "fill",
+          q: "Flowering promoted by exposure to low temperature is called ___.",
+          answer: ["vernalisation", "vernalization"],
+          explain: "Seen in winter cereals and biennials.",
+        },
+        {
+          kind: "multi",
+          q: "Which methods can break seed dormancy?",
+          options: ["Scratching the seed coat with sandpaper", "Chilling", "Applying GA₃", "Applying abscisic acid"],
+          answers: [0, 1, 2],
+          explain: "ABA is itself an inhibitor that causes dormancy.",
+          difficulty: 2,
+        },
+        {
+          kind: "mcq",
+          q: "A plant flowers in 14-hour days and in 10-hour days equally well. It is a:",
+          options: ["Long-day plant", "Short-day plant", "Day-neutral plant", "Vernalised plant"],
+          answer: 2,
+          explain: "Flowering not linked to day length means day-neutral.",
+        },
+      ],
+    },
+    /* ---------------- Exam edge ---------------- */
+    {
+      slug: "c11-bio-pgd-exam-edge",
+      title: "Exam edge: Plant Growth and Development",
+      summary:
+        "How NEET and KCET test this chapter: PGR discovery and effects, pairs of PGRs that act together or against each other, growth equations and curves, differentiation terms and heterophylly, with statement, assertion–reason and calculation practice.",
+      minutes: 22,
+      xp: 55,
+      track: "exam",
+      blocks: [
+        {
+          type: "text",
+          md: "**NEET** usually takes 1–2 questions from this chapter, almost all on PGRs: who discovered what, which PGR does which job, and which PGR is used for a named crop. **KCET** adds direct questions on growth phases, the growth equations and differentiation terms. Most questions are NCERT lines, so the named plants matter.",
+        },
+        {
+          type: "list",
+          items: [
+            "NCERT line: a maize root apical meristem gives **more than 17,500 new cells per hour**; watermelon cells grow up to **3,50,000 times**.",
+            "NCERT line: GAs raise sugarcane yield by as much as **20 tonnes per acre**.",
+            "NCERT line: the most widely used compound as a source of ethylene is **ethephon**.",
+            "NCERT line: **zeatin** was isolated from **corn kernels and coconut milk**.",
+            "NCERT line: **2,4-D** kills dicot weeds and spares mature monocots.",
+            "NCERT line: heterophylly in **cotton, coriander, larkspur** (development) and **buttercup** (environment).",
+            "NCERT line: ABA is the **stress hormone** and antagonises GAs.",
+          ],
+        },
+        {
+          type: "table",
+          headers: ["Job", "PGRs involved (watch for 'two correct' options)"],
+          rows: [
+            ["Flowering in pineapple", "Auxin and ethylene"],
+            ["Delaying senescence", "Cytokinin (leaves); gibberellin (fruits)"],
+            ["Breaking dormancy", "Gibberellin and ethylene (ABA induces dormancy)"],
+            ["Abscission", "Ethylene promotes; auxin promotes it in older organs but prevents early drop; ABA is named after it"],
+            ["Apical dominance", "Auxin causes it; cytokinin overcomes it"],
+          ],
+        },
+        {
+          type: "formula",
+          tex: t`L_t = L_0 + rt \qquad W_1 = W_0\,e^{rt} \qquad \text{RGR} = \frac{\Delta W / \Delta t}{W_0}`,
+          caption: "Use the arithmetic form for steady elongation, the exponential form for the log phase, and RGR to compare organs of different starting size.",
+        },
+        {
+          type: "example",
+          title: "NEET level: statement counting",
+          problem: "How many are correct? (i) GA₃ is used to speed up malting. (ii) Cytokinins promote apical dominance. (iii) Ethylene promotes female flowers in cucumber. (iv) ABA inhibits seed germination. (v) IBA is a synthetic auxin.",
+          steps: [
+            "(i) Correct.",
+            "(ii) Wrong: cytokinins help overcome apical dominance; auxins cause it.",
+            "(iii) Correct (as ethephon).",
+            "(iv) Correct.",
+            "(v) Wrong: IBA, like IAA, is a natural auxin; NAA and 2,4-D are synthetic.",
+          ],
+          answer: "Three: (i), (iii) and (iv).",
+        },
+        {
+          type: "example",
+          title: "Assertion–reason",
+          problem: "A: Ethylene helps deep-water rice survive floods. R: Ethylene promotes rapid internode and petiole elongation.",
+          steps: [
+            "A is true: deep-water rice keeps its leaves above water as floods rise.",
+            "R is true: NCERT lists rapid internode/petiole elongation in deep-water rice as an ethylene effect.",
+            "R directly explains A.",
+          ],
+          answer: "Both A and R are true, and R is the correct explanation of A.",
+        },
+        {
+          type: "example",
+          title: "KCET style: using the growth equations",
+          problem: "(a) A root 4 cm long grows arithmetically at 0.6 cm per day; find its length after 5 days. (b) A culture of 10 mg grows geometrically with r = 0.1 per day; find its mass after 10 days (take e ≈ 2.72).",
+          steps: [
+            "(a) Lt = 4 + 0.6 × 5 = 4 + 3 = 7 cm.",
+            "(b) rt = 0.1 × 10 = 1, so W1 = 10 × e¹.",
+            "W1 ≈ 10 × 2.72 = 27.2 mg.",
+          ],
+          answer: "(a) 7 cm. (b) About 27.2 mg.",
+        },
+        {
+          type: "example",
+          title: "Harder: designing an apical dominance test",
+          problem: "Pea seedlings are split into three sets: (1) intact, (2) shoot tip removed, (3) tip removed and auxin paste put on the cut stump. Predict lateral bud growth in each and state what (3) proves.",
+          steps: [
+            "(1) Intact apex supplies auxin: lateral buds stay suppressed.",
+            "(2) No apex, no auxin from the tip: lateral buds grow out.",
+            "(3) Auxin paste replaces the tip's auxin: lateral buds stay suppressed, as in (1).",
+            "Since applied auxin alone mimics the tip, the tip's effect is due to auxin and not to some other property of the apex.",
+          ],
+          answer: "Buds grow only in set 2. Set 3 proves that auxin from the apex causes apical dominance.",
+        },
+        {
+          type: "mistake",
+          wrong: "IAA and IBA are synthetic auxins used in farming, and NAA is natural.",
+          right: "IAA and IBA are natural (isolated from plants); NAA and 2,4-D are synthetic.",
+          why: "All four are used in horticulture, so students lump them together. NEET often has one option swapping natural and synthetic.",
+        },
+        {
+          type: "mistake",
+          wrong: "Since ethylene promotes ripening and abscission, it always inhibits growth.",
+          right: "Ethylene also promotes some growth: internode elongation in deep-water rice, root growth and root hairs, and breaking of seed and bud dormancy.",
+          why: "NCERT calls ethylene 'largely an inhibitor', which students read as 'only an inhibitor'. Questions check the promoting effects.",
+        },
+        {
+          type: "mistake",
+          wrong: "Kinetin is the main natural cytokinin of plants.",
+          right: "Kinetin was found in autoclaved herring sperm DNA and does not occur naturally in plants; zeatin is a natural cytokinin.",
+          why: "Kinetin was the first cytokinin named, so it is assumed to be the plant's own.",
+        },
+        {
+          type: "activity",
+          activity: {
+            kind: "match",
+            prompt: "Match the scientist to the PGR they helped discover.",
+            pairs: [
+              ["F. W. Went", "Auxin from oat coleoptile tips"],
+              ["E. Kurosawa", "Gibberellin from bakane disease"],
+              ["Skoog and Miller", "Kinetin"],
+              ["Cousins", "Ethylene from ripe oranges"],
+            ],
+            explain: "NEET links each name to one PGR. The Darwins worked with canary grass and only proposed a transmittable influence; Went isolated auxin.",
+          },
+        },
+        {
+          type: "checkpoint",
+          questions: [
+            {
+              kind: "mcq",
+              q: "Which pair is mismatched?",
+              options: [
+                "Bolting – gibberellin",
+                "Stomatal closure – ABA",
+                "Parthenocarpy in tomato – auxin",
+                "Apical dominance – cytokinin",
+              ],
+              answer: 3,
+              explain: "Apical dominance is caused by auxin; cytokinin overcomes it.",
+            },
+          ],
+        },
+        {
+          type: "keypoints",
+          items: [
+            "Learn each PGR's named-plant uses; NEET options swap them.",
+            "Antagonist pairs: auxin–cytokinin (apical dominance), GA–ABA (dormancy and germination).",
+            "Natural auxins: IAA, IBA; synthetic: NAA, 2,4-D. Natural cytokinin: zeatin; kinetin is not natural in plants.",
+            "Growth: Lt = L0 + rt; W1 = W0 e^(rt); sigmoid curve lag–log–stationary.",
+          ],
+        },
+      ],
+      flashcards: [
+        { front: "Two PGRs that both promote pineapple flowering", back: "Auxin (NAA) and ethylene." },
+        { front: "Which PGR is named for the process it was once thought to control?", back: "Abscisic acid (abscission)." },
+        { front: "Which PGR helps deep-water rice?", back: "Ethylene: rapid internode and petiole elongation." },
+        { front: "Two crops where GAs improve the product's shape or length", back: "Grape (stalk length) and apple (fruit elongation and shape)." },
+        { front: "Natural vs synthetic auxins", back: "Natural: IAA, IBA. Synthetic: NAA, 2,4-D." },
+        { front: "Why does auxin paste on a decapitated stump keep lateral buds dormant?", back: "It replaces the auxin from the apex that causes apical dominance." },
+        { front: "PGR used to thin cotton, cherry and walnut", back: "Ethylene (as ethephon)." },
+      ],
+      quiz: [
+        {
+          kind: "mcq",
+          q: "Assertion (A): ABA is called a stress hormone. Reason (R): ABA stimulates stomatal closure and increases tolerance to various stresses.",
+          options: AR,
+          answer: 0,
+          explain: "Both are NCERT lines; R explains A.",
+          difficulty: 2,
+        },
+        {
+          kind: "mcq",
+          q: "Which PGR is used to initiate rooting in stem cuttings?",
+          options: ["Ethylene", "Auxin", "ABA", "Cytokinin"],
+          answer: 1,
+          explain: "Auxins (IBA, NAA) are used to root stem cuttings.",
+        },
+        {
+          kind: "numeric",
+          q: "A leaf grows from 40 cm² to 50 cm² in 2 days. What is its relative growth rate per day (as a decimal)?",
+          answer: 0.125,
+          tolerance: 0.005,
+          explain: "Growth per day = (50 − 40) ÷ 2 = 5 cm² per day; RGR = 5 ÷ 40 = 0.125 per day.",
+          difficulty: 3,
+          hint: "Divide the growth per day by the starting area.",
+        },
+        {
+          kind: "multi",
+          q: "Which effects are due to gibberellins?",
+          options: ["Bolting in cabbage", "Malting in brewing", "Promoting female flowers in cucumber", "Hastening maturity in juvenile conifers"],
+          answers: [0, 1, 3],
+          explain: "Female flowers in cucumber are promoted by ethylene (ethephon).",
+          difficulty: 2,
+        },
+        {
+          kind: "mcq",
+          q: "Formation of interfascicular cambium from parenchyma, followed by its producing secondary xylem, shows in order:",
+          options: [
+            "Differentiation, then dedifferentiation",
+            "Dedifferentiation, then redifferentiation",
+            "Redifferentiation, then dedifferentiation",
+            "Differentiation, then senescence",
+          ],
+          answer: 1,
+          explain: "Parenchyma regains division (dedifferentiation); the cambium's products mature (redifferentiation).",
+          difficulty: 2,
+        },
+        {
+          kind: "numeric",
+          q: "A root grows arithmetically from 2.5 cm at 0.4 cm per day. After how many days will it be 6.5 cm long?",
+          answer: 10,
+          explain: "6.5 = 2.5 + 0.4t, so 0.4t = 4 and t = 10 days.",
+        },
+        {
+          kind: "mcq",
+          q: "Heterophylly due to the environment is seen in:",
+          options: ["Cotton", "Coriander", "Larkspur", "Buttercup"],
+          answer: 3,
+          explain: "Buttercup forms different leaves in air and water; the others show developmental heterophylly.",
+        },
+        {
+          kind: "mcq",
+          q: "The most widely used compound as a source of ethylene is:",
+          options: ["Ethephon", "2,4-D", "NAA", "Zeatin"],
+          answer: 0,
+          explain: "Ethephon, an aqueous solution, is absorbed readily and releases ethylene slowly. 2,4-D and NAA are synthetic auxins; zeatin is a cytokinin.",
+        },
+      ],
+    },
+  ],
+};
+
+export const topics: Topic[] = [photosynthesis, respiration, plantGrowth];
 
 export const links: Record<string, string | string[]> = {
   "11:Photosynthesis in Higher Plants": "c11-bio-photosynthesis",
   "11:Respiration in Plants": "c11-bio-respiration-in-plants",
+  "11:Plant Growth and Development": "c11-bio-plant-growth-development",
 };
