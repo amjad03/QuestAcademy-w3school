@@ -486,7 +486,7 @@ The **critical temperature** $T_c$ is the highest temperature at which a gas can
           },
           {
             type: "text",
-            md: "**Liquefaction of gases.** To liquefy a gas it must first be cooled below its critical temperature and then compressed. Gases such as NH₃ and CO₂ have critical temperatures above or near room temperature and are liquefied easily; O₂, N₂, H₂ and He have very low critical temperatures, so they are first cooled by expansion (the Joule–Thomson effect, used in the Linde process) before compression.",
+            md: "**Liquefaction of gases.** To liquefy a gas it must first be cooled below its critical temperature and then compressed. Gases such as NH₃ and CO₂ have critical temperatures above or near room temperature and are liquefied easily; O₂, N₂, H₂ and He have very low critical temperatures, so they must be cooled far below room temperature by repeated compression, cooling and expansion (the Joule–Thomson effect, used in the Linde process); H₂ and He must first be pre-cooled below their low inversion temperatures, or expansion warms them.",
           },
           {
             type: "checkpoint",
@@ -620,7 +620,7 @@ The **critical temperature** $T_c$ is the highest temperature at which a gas can
               "It is less compressible than an ideal gas.",
               "The effect of molecular volume outweighs attraction.",
               "Its molar volume is smaller than the ideal value at that P and T.",
-              "Its attractive forces are stronger than those in an ideal gas would allow.",
+              "Attractive forces outweigh the effect of molecular size.",
             ],
             answers: [0, 1],
             explain: "Z > 1 means V(real) > V(ideal), so the third statement is false. H₂ has very weak attractions (small a), so the molecular-size effect (b) dominates.",
@@ -647,7 +647,7 @@ The **critical temperature** $T_c$ is the highest temperature at which a gas can
         blocks: [
           {
             type: "text",
-            md: t`**Who needs this.** States of Matter was dropped from rationalised NCERT, so NEET and KCET (which follow the rationalised books) no longer set separate questions on it, and the current JEE Main syllabus has also trimmed it. It still matters because: (1) **JEE Advanced** lists the gaseous state (gas laws, kinetic theory, Graham's law, Dalton's law, real gases and van der Waals) in its syllabus; (2) PV = nRT and partial pressures are used in thermodynamics, Kp, solutions and mole-concept questions in every exam; (3) ISC Class 11 examines it in full. Check the current year's information bulletin for each exam.
+            md: t`**Who needs this.** States of Matter was dropped from rationalised NCERT, so NEET and KCET (which follow the rationalised books) no longer set separate questions on it, and the current JEE Main syllabus has also dropped it as a separate unit. It still matters because: (1) **JEE Advanced** lists the gaseous state (gas laws, kinetic theory, Graham's law, Dalton's law, real gases and van der Waals) in its syllabus; (2) PV = nRT and partial pressures are used in thermodynamics, Kp, solutions and mole-concept questions in every exam; (3) ISC Class 11 examines it in full. Check the current year's information bulletin for each exam.
 
 The favourite question types are: ratio problems from the gas laws, gas escaping from an open vessel, Graham's law with mixtures, ratios of molecular speeds, and Z / van der Waals reasoning (which term dominates, critical constants).`,
           },
@@ -1142,7 +1142,7 @@ Washing soda effloresces (loses water) in air; on heating it loses water to form
           {
             type: "formula",
             tex: t`\begin{aligned} \text{Cathode: } &\text{Na}^+ + e^- \xrightarrow{\text{Hg}} \text{Na-amalgam} \\ \text{Anode: } &\text{Cl}^- \to \tfrac{1}{2}\text{Cl}_2 + e^- \\ &2\text{Na-amalgam} + 2\text{H}_2\text{O} \to 2\text{NaOH} + 2\text{Hg} + \text{H}_2 \end{aligned}`,
-            caption: "Castner–Kellner cell. Using a mercury cathode stops Na⁺ ions being reduced to H₂ instead; the amalgam is removed and decomposed with water separately.",
+            caption: "Castner–Kellner cell. With a mercury cathode, Na⁺ is discharged as an amalgam instead of water being reduced to H₂; the amalgam is removed and decomposed with water separately.",
           },
           {
             type: "mistake",
@@ -1335,7 +1335,7 @@ Compared with Group 1 neighbours, their atoms are smaller (greater nuclear charg
           },
           {
             type: "text",
-            md: "**Cement (Portland cement)** is made by heating limestone with clay (which supplies SiO₂, Al₂O₃ and Fe₂O₃) to give **clinker**, then grinding it with 2–3% gypsum to slow down setting. A typical composition is CaO 50–60%, SiO₂ 20–25%, Al₂O₃ 5–10%, MgO 2–3%, Fe₂O₃ 1–2% and SO₃ 1–2%. For good quality the ratio of SiO₂ to (Al₂O₃ + Fe₂O₃) should be between 2.5 and 4, and the ratio of CaO to (SiO₂ + Al₂O₃ + Fe₂O₃) close to 2. The main constituents of clinker are tricalcium silicate Ca₃SiO₅ (about 51%), dicalcium silicate Ca₂SiO₄ (26%) and tricalcium aluminate Ca₃Al₂O₆ (11%). Setting is due to hydration of these silicates and aluminates, which link into a hard network.\n\n**Biological importance of Mg and Ca.** An adult body has about 25 g of Mg and 1200 g of Ca. Enzymes that use ATP need Mg²⁺, and chlorophyll contains magnesium. About 99% of the body's calcium is in bones and teeth; Ca²⁺ is also needed for nerve and muscle function, blood clotting and membranes. Plasma calcium is held near 100 mg L⁻¹ by the hormones calcitonin and parathyroid hormone.",
+            md: "**Cement (Portland cement)** is made by heating limestone with clay (which supplies SiO₂, Al₂O₃ and Fe₂O₃) to give **clinker**, then grinding it with 2–3% gypsum to slow down setting. A typical composition is CaO 50–60%, SiO₂ 20–25%, Al₂O₃ 5–10%, MgO 2–3%, Fe₂O₃ 1–2% and SO₃ 1–2%. For good quality the ratio of silica (SiO₂) to alumina (Al₂O₃) should be between 2.5 and 4, and the ratio of CaO to (SiO₂ + Al₂O₃ + Fe₂O₃) close to 2. The main constituents of clinker are tricalcium silicate Ca₃SiO₅ (about 51%), dicalcium silicate Ca₂SiO₄ (26%) and tricalcium aluminate Ca₃Al₂O₆ (11%). Setting is due to hydration of these silicates and aluminates, which link into a hard network.\n\n**Biological importance of Mg and Ca.** An adult body has about 25 g of Mg and 1200 g of Ca. Enzymes that use ATP need Mg²⁺, and chlorophyll contains magnesium. About 99% of the body's calcium is in bones and teeth; Ca²⁺ is also needed for nerve and muscle function, blood clotting and membranes. Plasma calcium is held near 100 mg L⁻¹ by the hormones calcitonin and parathyroid hormone.",
           },
           {
             type: "example",
@@ -3025,7 +3025,7 @@ When sunlight returns in spring, HOCl and Cl₂ are split by light into chlorine
         blocks: [
           {
             type: "text",
-            md: "**Who needs this.** Environmental Chemistry left rationalised NCERT, and the current JEE Main, NEET and KCET syllabi follow that, so direct questions are now rare; it was never a JEE Advanced topic. **ISC Class 11 examines it**, and its chemistry keeps reappearing elsewhere: oxides of nitrogen and sulphur and ozone in Class 12 p-block, free-radical chain reactions in organic chemistry, and pH and ppm calculations in solutions and ionic equilibrium. Check the current information bulletin.\n\nOld entrance papers liked: the pH of normal rain and acid rain, classical vs photochemical smog, CFC chain reactions, the ozone hole sequence, BOD values, the drinking-water limits for F⁻, Pb, NO₃⁻ and SO₄²⁻, and green-chemistry examples.",
+            md: "**Who needs this.** Environmental Chemistry left rationalised NCERT, and the current JEE Main, NEET and KCET syllabi follow that, so direct questions there are now rare. The revised JEE Advanced syllabus does list environmental chemistry (air, water and soil pollution, industrial waste, green chemistry), though questions on it are uncommon. **ISC Class 11 examines it**, and its chemistry keeps reappearing elsewhere: oxides of nitrogen and sulphur and ozone in Class 12 p-block, free-radical chain reactions in organic chemistry, and pH and ppm calculations in solutions and ionic equilibrium. Check the current information bulletin.\n\nOld entrance papers liked: the pH of normal rain and acid rain, classical vs photochemical smog, CFC chain reactions, the ozone hole sequence, BOD values, the drinking-water limits for F⁻, Pb, NO₃⁻ and SO₄²⁻, and green-chemistry examples.",
           },
           {
             type: "table",

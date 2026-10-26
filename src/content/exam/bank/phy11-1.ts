@@ -856,7 +856,7 @@ const ch2: Q[] = [
     options: [t`$4$ m s$^{-2}$`, t`$0.4$ m s$^{-2}$`, t`$2$ m s$^{-2}$`, t`$51.8$ m s$^{-2}$`],
     answer: 0,
     hint: "Convert to m/s first.",
-    explain: t`$72$ km h$^{-1}$ $= 20$ m s$^{-1}$. $0 = 20^2 - 2a(50) \Rightarrow a = 4$ m s$^{-2}$. 51.8 m s$^{-2}$ comes from using 72 without converting units; 2 m s$^{-2}$ forgets the factor 2.`,
+    explain: t`$72$ km h$^{-1}$ $= 20$ m s$^{-1}$. $0 = 20^2 - 2a(50) \Rightarrow a = 4$ m s$^{-2}$. 51.8 m s$^{-2}$ comes from using 72 without converting units; 2 m s$^{-2}$ uses $u^2 = 4as$ (an extra factor 2), and 0.4 m s$^{-2}$ is just $u/s$.`,
   },
   {
     kind: "numeric",
@@ -1817,7 +1817,7 @@ const ch4: Q[] = [
     q: t`The maximum speed at which a car can take an unbanked circular turn of radius 40 m, if $\mu_s = 0.4$ between tyres and road, is ($g = 10$ m s$^{-2}$):`,
     options: [t`$16$ m s$^{-1}$`, t`$4$ m s$^{-1}$`, t`$12.6$ m s$^{-1}$`, t`$160$ m s$^{-1}$`],
     answer: 2,
-    explain: t`Static friction supplies the centripetal force: $\dfrac{mv^2}{r} \le \mu_smg \Rightarrow v_{\max} = \sqrt{\mu_srg} = \sqrt{160} \approx 12.6$ m s$^{-1}$, independent of the mass. 16 and 160 forget the square root.`,
+    explain: t`Static friction supplies the centripetal force: $\dfrac{mv^2}{r} \le \mu_smg \Rightarrow v_{\max} = \sqrt{\mu_srg} = \sqrt{160} \approx 12.6$ m s$^{-1}$, independent of the mass. 160 forgets the square root; 16 m s$^{-1}$ is $\mu_sr$, leaving out $g$.`,
   },
   {
     kind: "mcq",
@@ -2257,7 +2257,7 @@ export const formulas: FormulaSheet[] = [
     subject: "physics",
     chapter: CH1,
     items: [
-      { name: "SI base quantities", tex: t`\text{m, kg, s, A, K, mol, cd}`, note: "Supplementary (dimensionless): radian (plane angle), steradian (solid angle)." },
+      { name: "SI base quantities", tex: t`\text{m, kg, s, A, K, mol, cd}`, note: "Also defined (dimensionless, once called supplementary units): radian (plane angle), steradian (solid angle)." },
       { name: "Plane and solid angle", tex: t`d\theta = \dfrac{ds}{r}\ (\text{rad}),\qquad d\Omega = \dfrac{dA}{r^2}\ (\text{sr})` },
       { name: "Parallax method", tex: t`D = \dfrac{b}{\theta}\ (\theta\ \text{in rad})` },
       { name: "Useful units", tex: t`1\ \text{ly} = 9.46\times10^{15}\ \text{m},\ 1\ \text{AU} = 1.496\times10^{11}\ \text{m},\ 1\ \text{pc} = 3.08\times10^{16}\ \text{m},\ 1\ \text{Å} = 10^{-10}\ \text{m},\ 1\ \text{fermi} = 10^{-15}\ \text{m}` },

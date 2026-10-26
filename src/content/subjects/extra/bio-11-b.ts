@@ -292,7 +292,7 @@ export const topics: Topic[] = [
           {
             type: "example",
             title: "Reading a flower",
-            problem: "A flower has five united sepals, five united petals, five stamens fused to the petals and a two-carpelled ovary with ovules on a central swollen axis. Petals of every flower can be split into equal halves in any plane through the centre. Describe it in botanical terms.",
+            problem: "A flower has five united sepals, five united petals, five stamens fused to the petals and a two-carpelled ovary with ovules on a central swollen axis. The flower can be cut into two equal halves along any radial plane through its centre. Describe it in botanical terms.",
             steps: [
               "Any radial plane gives equal halves, so the flower is **actinomorphic**.",
               "United sepals and petals: **gamosepalous** and **gamopetalous**.",
@@ -2429,10 +2429,10 @@ export const topics: Topic[] = [
         quiz: [
           {
             kind: "mcq",
-            q: "Assertion: Compound epithelium has a limited role in secretion and absorption. Reason: Its main function is protection against chemical and mechanical stresses.",
+            q: "Assertion: Compound epithelium has a limited role in secretion and absorption. Reason: It is made of more than one layer of cells.",
             options: ["Both true; R explains A", "Both true; R does not explain A", "A true, R false", "A false, R true"],
             answer: 0,
-            explain: "Being many-layered, compound epithelium is built for protection, which is why it does little secretion or absorption.",
+            explain: "NCERT: compound epithelium is multi-layered and thus has a limited role in secretion and absorption. Its main function is protection against chemical and mechanical stresses.",
             difficulty: 2,
           },
           {
