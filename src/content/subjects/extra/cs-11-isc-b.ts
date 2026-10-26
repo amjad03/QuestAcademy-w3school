@@ -1295,7 +1295,7 @@ const arrays: Topic = {
         },
         {
           type: "text",
-          md: "**Storing a matrix in memory.** Memory is a single line of locations, so a 2-D array must be laid out in one of two orders:\n\n- **Row-major**: all of row 0, then all of row 1, and so on (Java, C, C++ use this idea).\n- **Column-major**: all of column 0, then all of column 1, and so on (FORTRAN uses this).\n\nFor an array A[Lr … Ur][Lc … Uc] with M rows, N columns, base address B and element size W:",
+          md: "**Storing a matrix in memory.** Memory is a single line of locations, so a 2-D array must be laid out in one of two orders:\n\n- **Row-major**: all of row 0, then all of row 1, and so on (C and C++ store arrays this way).\n- **Column-major**: all of column 0, then all of column 1, and so on (FORTRAN uses this).\n\nFor an array A[Lr … Ur][Lc … Uc] with M rows, N columns, base address B and element size W:",
         },
         {
           type: "formula",
