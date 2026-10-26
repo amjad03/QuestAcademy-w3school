@@ -2349,7 +2349,7 @@ print("Total fee:", students * fee)`,
         },
         {
           type: "text",
-          md: "**Rules for identifiers:** they may contain letters (a–z, A–Z), digits (0–9) and the underscore `_`; they **must not start with a digit**; they **cannot contain spaces or special symbols** such as `@ $ % -`; and they **cannot be a keyword**. Python is case-sensitive, so `Total` and `total` are different identifiers. Choose meaningful names like `marks_maths`, not `mm`.\n\nA **variable** is an identifier that refers to a value stored in memory. In Python a variable is created the moment a value is **assigned** to it with `=`; no separate declaration is needed: `students = 42`.\n\nA **comment** starts with `#`; the interpreter ignores everything after it on that line. Comments explain the code to people.",
+          md: "**Rules for identifiers:** they may contain letters (a–z, A–Z), digits (0–9) and the underscore `_`; they **must not start with a digit**; they **cannot contain spaces or special symbols** such as `@ % & -`; and they **cannot be a keyword**. Python is case-sensitive, so `Total` and `total` are different identifiers. Choose meaningful names like `marks_maths`, not `mm`.\n\nA **variable** is an identifier that refers to a value stored in memory. In Python a variable is created the moment a value is **assigned** to it with `=`; no separate declaration is needed: `students = 42`.\n\nA **comment** starts with `#`; the interpreter ignores everything after it on that line. Comments explain the code to people.",
         },
         {
           type: "activity",

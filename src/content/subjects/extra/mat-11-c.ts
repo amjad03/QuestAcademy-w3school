@@ -53,7 +53,7 @@ Three patterns appear. The power $n$ gives $n + 1$ terms. The power of $a$ falls
           },
           {
             type: "text",
-            md: t`In this array, called **Pascal's triangle** (in India it was known much earlier as *Meru Prastara*, described by Pingala), each row starts and ends with 1, and every inner number is the **sum of the two numbers just above it**: $4 + 6 = 10$ in row 5.
+            md: t`In this array, called **Pascal's triangle** (known in ancient India as *Meru Prastara*, from the tradition of Pingala's work on poetic metres), each row starts and ends with 1, and every inner number is the **sum of the two numbers just above it**: $4 + 6 = 10$ in row 5.
 
 The entries are exactly the combinations $\binom{n}{r} = \frac{n!}{r!\,(n-r)!}$ from the chapter on permutations and combinations. The rule "add the two above" is **Pascal's rule**: $\binom{n}{r} + \binom{n}{r-1} = \binom{n+1}{r}$.`,
           },
@@ -179,7 +179,7 @@ The entries are exactly the combinations $\binom{n}{r} = \frac{n!}{r!\,(n-r)!}$ 
           },
           {
             kind: "mcq",
-            q: t`Which term of $(x + 2)^6$ contains $x^3$, and what is it?`,
+            q: t`The term containing $x^3$ in $(x + 2)^6$ is`,
             options: [t`$160x^3$`, t`$20x^3$`, t`$120x^3$`, t`$80x^3$`],
             answer: 0,
             explain: t`$\binom{6}{3}x^3 \cdot 2^3 = 20 \cdot 8x^3 = 160x^3$. Forgetting to power the 2 gives $20x^3$.`,
@@ -198,7 +198,7 @@ The entries are exactly the combinations $\binom{n}{r} = \frac{n!}{r!\,(n-r)!}$ 
           },
           {
             kind: "fill",
-            q: t`In row $n = 5$ of Pascal's triangle (1, 5, ___, 10, 5, 1) the missing entry is ___.`,
+            q: t`Row $n = 5$ of Pascal's triangle reads 1, 5, ___, 10, 5, 1.`,
             answer: ["10"],
             explain: t`$\binom{5}{2} = 10$; also $4 + 6 = 10$ from the row above.`,
           },
@@ -442,3 +442,437 @@ If $n$ is **odd**, $n + 1$ is even and there are **two** middle terms, the $\lef
           },
         ],
       },
+      {
+        slug: "c11-binomial-exam-terms",
+        title: "Exam edge: terms, remainders and the greatest term",
+        summary: "What JEE, KCET and COMEDK ask from the general term: rational terms, remainders, last digits, the greatest term, coefficients in products and the integral-part trick.",
+        minutes: 25,
+        xp: 60,
+        track: "exam",
+        blocks: [
+          {
+            type: "callout",
+            tone: "exam",
+            title: "What the exams ask",
+            md: t`**JEE Main** has about one binomial question in most shifts: a coefficient or constant term, the number of rational terms, a remainder, or a coefficient sum (next lesson). **JEE Advanced** mixes binomial coefficients with series or with the integral part of $(a + \sqrt{b})^n$. **KCET** and **COMEDK** ask direct general-term and middle-term questions that reward speed. Everything starts from $T_{r+1}$.`,
+          },
+          {
+            type: "text",
+            md: t`**Consecutive-term ratio.** Dividing two neighbouring general terms of $(a + b)^n$ gives
+
+$\dfrac{T_{r+1}}{T_r} = \dfrac{n - r + 1}{r}\cdot\dfrac{b}{a}$.
+
+The terms keep growing while this ratio is more than 1. That gives the **greatest term**. For $(1 + x)^n$ with $x > 0$, compute $m = \dfrac{(n+1)x}{1 + x}$. If $m$ is an integer, $T_m$ and $T_{m+1}$ are equal and both greatest. If not, the greatest term is $T_{[m]+1}$, where $[m]$ is the integer part. For $(a + b)^n$, take out $a^n$ first and use $x = b/a$.`,
+          },
+          {
+            type: "formula",
+            tex: t`\frac{T_{r+1}}{T_r} = \frac{n-r+1}{r}\cdot\frac{b}{a} \qquad m = \frac{(n+1)\,x}{1+x}`,
+            caption: "Greatest term of (1 + x)^n, x > 0. Use |x| when x is negative (sizes of terms only).",
+          },
+          {
+            type: "text",
+            md: t`**Greatest coefficient** is a different question: the coefficients $\binom{n}{r}$ alone are largest in the middle, $\binom{n}{n/2}$ for even $n$, and $\binom{n}{(n-1)/2} = \binom{n}{(n+1)/2}$ for odd $n$. The greatest **term** also depends on the value of $x$.
+
+**Remainders.** Write the base as (multiple of the divisor) ± 1, expand, and keep only the last one or two terms; every other term is a multiple of the divisor.`,
+          },
+          {
+            type: "example",
+            title: "KCET level: rational terms",
+            problem: t`How many rational terms are there in the expansion of $\left(\sqrt{3} + 2^{1/4}\right)^{12}$?`,
+            steps: [
+              t`$T_{r+1} = \binom{12}{r}3^{(12-r)/2}\,2^{r/4}$.`,
+              t`The term is rational when both exponents are whole numbers: $\frac{r}{4}$ needs $r$ to be a multiple of 4, and $\frac{12-r}{2}$ needs $r$ even.`,
+              t`Multiples of 4 from 0 to 12 are $0, 4, 8, 12$, and all are even.`,
+            ],
+            answer: "4 rational terms (r = 0, 4, 8, 12).",
+          },
+          {
+            type: "example",
+            title: "JEE Main level: a remainder",
+            problem: t`Find the remainder when $7^{103}$ is divided by 25.`,
+            steps: [
+              t`$7^2 = 49 = 50 - 1$, so $7^{103} = 7 \cdot (49)^{51} = 7(50 - 1)^{51}$.`,
+              t`$(50 - 1)^{51} = 50^{51} - \binom{51}{1}50^{50} + \cdots + \binom{51}{50}50 - 1 = 50k - 1$ for some integer $k$ (51 is odd, so the last term is $-1$).`,
+              t`$7^{103} = 350k - 7$. Now $350k$ is a multiple of 25, so $7^{103} \equiv -7 \pmod{25}$.`,
+              t`A remainder cannot be negative: $-7 + 25 = 18$.`,
+            ],
+            answer: t`The remainder is 18. (Check: $7^4 = 2401 = 96 \times 25 + 1$, and $7^{103} = (7^4)^{25}\cdot 7^3$, with $7^3 = 343 = 13 \times 25 + 18$.)`,
+          },
+          {
+            type: "checkpoint",
+            questions: [
+              {
+                kind: "numeric",
+                q: t`Find the remainder when $5^{99}$ is divided by 13.`,
+                answer: 8,
+                hint: t`$5^2 = 25 = 26 - 1$.`,
+                explain: t`$5^{99} = 5 \cdot 25^{49} = 5(26 - 1)^{49} = 5(26k - 1) = 130k - 5 \equiv -5 \equiv 8 \pmod{13}$.`,
+              },
+            ],
+          },
+          {
+            type: "example",
+            title: "JEE Main level: the greatest term",
+            problem: t`Find the greatest term in the expansion of $(3 + 2x)^9$ when $x = 1$.`,
+            steps: [
+              t`$(3 + 2x)^9 = 3^9\left(1 + \frac{2x}{3}\right)^9$; at $x = 1$ the inner $x$ is $\frac{2}{3}$.`,
+              t`$m = \frac{(n+1)x}{1+x} = \frac{10 \cdot \frac{2}{3}}{\frac{5}{3}} = 4$, an integer.`,
+              t`So $T_4$ and $T_5$ are equal and greatest. $T_4 = \binom{9}{3}3^6 2^3 = 84 \times 729 \times 8 = 489\,888$.`,
+              t`Check: $T_5 = \binom{9}{4}3^5 2^4 = 126 \times 243 \times 16 = 489\,888$. ✓`,
+            ],
+            answer: t`$T_4 = T_5 = 489\,888$ are the greatest terms.`,
+          },
+          {
+            type: "example",
+            title: "JEE Main level: coefficient in a trinomial",
+            problem: t`Find the coefficient of $x^4$ in $(1 + x + x^2)^4$.`,
+            steps: [
+              t`Group as a binomial: $(1 + x(1 + x))^4 = \sum_{k=0}^{4}\binom{4}{k}x^k(1 + x)^k$.`,
+              t`From the $k$th piece we need $x^{4-k}$ from $(1+x)^k$, i.e. $\binom{k}{4-k}$; this needs $4 - k \le k$, so $k = 2, 3, 4$.`,
+              t`$k = 2$: $\binom{4}{2}\binom{2}{2} = 6$. $k = 3$: $\binom{4}{3}\binom{3}{1} = 12$. $k = 4$: $\binom{4}{4}\binom{4}{0} = 1$.`,
+              t`Total $6 + 12 + 1 = 19$.`,
+            ],
+            answer: t`19`,
+          },
+          {
+            type: "example",
+            title: "JEE Advanced level: the integral-part trick",
+            problem: t`Let $(5 + 2\sqrt{6})^n = I + f$, where $n$ is a positive integer, $I$ is an integer and $0 < f < 1$. Show that $(I + f)(1 - f) = 1$.`,
+            steps: [
+              t`Let $f' = (5 - 2\sqrt{6})^n$. Since $0 < 5 - 2\sqrt{6} < 1$ (it is about 0.10), $0 < f' < 1$.`,
+              t`Add the two expansions: the terms with odd powers of $2\sqrt{6}$ cancel, so $I + f + f' = 2\left[5^n + \binom{n}{2}5^{n-2}\cdot 24 + \cdots\right]$, an even integer.`,
+              t`Hence $f + f'$ is an integer. As $0 < f + f' < 2$, it must be 1, so $1 - f = f'$.`,
+              t`$(I + f)(1 - f) = (5 + 2\sqrt{6})^n(5 - 2\sqrt{6})^n = (25 - 24)^n = 1$.`,
+            ],
+            answer: t`$(I+f)(1-f) = 1$. Also, $I = \text{even} - 1$ is odd.`,
+          },
+          {
+            type: "mistake",
+            wrong: t`The greatest term of $(1 + x)^n$ is always the middle term.`,
+            right: t`The middle term has the greatest **coefficient**. The greatest **term** depends on $x$: use $m = \frac{(n+1)x}{1+x}$. For $(1 + x)^{10}$ at $x = \frac{1}{2}$ it is $T_4$, not the middle term $T_6$.`,
+            why: t`For $x = 1$ the two questions have the same answer, which makes the shortcut feel general. A small $x$ shrinks the later terms, so the peak moves towards the start.`,
+          },
+          {
+            type: "mistake",
+            wrong: t`$7^{103} \equiv -7 \pmod{25}$, so the remainder is $-7$.`,
+            right: "A remainder must lie between 0 and divisor − 1. Add the divisor: −7 + 25 = 18.",
+            why: "The (multiple ± 1) trick naturally produces negative leftovers. Options in MCQs often include the negative value or its absolute value, 7, as traps.",
+          },
+          {
+            type: "activity",
+            activity: {
+              kind: "reveal",
+              prompt: t`Which is the greatest term of $(1 + x)^{10}$ at $x = \frac{1}{2}$?`,
+              emoji: "📈",
+              options: [t`$T_6$, the middle term`, t`$T_4$`, t`$T_1$`, t`$T_{11}$`],
+              answer: 1,
+              trap: 0,
+              explain: t`$m = \frac{11 \cdot \frac{1}{2}}{\frac{3}{2}} = \frac{11}{3} \approx 3.67$, not an integer, so the greatest term is $T_{[m]+1} = T_4 = \binom{10}{3}\left(\frac{1}{2}\right)^3 = 15$. Its neighbours are $T_3 = 11.25$ and $T_5 = 13.125$.`,
+            },
+          },
+          {
+            type: "callout",
+            tone: "tip",
+            title: "Shortcuts and when they are safe",
+            md: t`Last two digits of $9^k$, $11^k$, $21^k$ and the like: expand about 10 and keep two terms. The ratio test for the greatest term needs $x > 0$ in $(1 + x)^n$; for negative $x$ use $|x|$ to find the term of greatest **size**. The "add the conjugate" trick works only when the conjugate lies strictly between 0 and 1 (or between −1 and 0, where you subtract instead).`,
+          },
+          {
+            type: "keypoints",
+            items: [
+              t`Rational terms: make every exponent in $T_{r+1}$ a whole number; count the allowed $r$.`,
+              "Remainders: write the base as (multiple of the divisor) ± 1; correct a negative leftover by adding the divisor.",
+              t`Greatest term of $(1 + x)^n$: $m = \frac{(n+1)x}{1+x}$; integer $m$ gives two equal greatest terms $T_m$, $T_{m+1}$, otherwise $T_{[m]+1}$.`,
+              "Greatest coefficient is always the middle one; greatest term depends on x.",
+              t`$(a + \sqrt{b})^n + (a - \sqrt{b})^n$ is an integer: the base of every integral-part question.`,
+            ],
+          },
+        ],
+        flashcards: [
+          { front: t`$\frac{T_{r+1}}{T_r}$ in $(a + b)^n$`, back: t`$\frac{n - r + 1}{r}\cdot\frac{b}{a}$` },
+          { front: t`Greatest term of $(1+x)^n$, $x > 0$`, back: t`$m = \frac{(n+1)x}{1+x}$: if integer, $T_m = T_{m+1}$ both greatest; else $T_{[m]+1}$.` },
+          { front: "Greatest binomial coefficient", back: t`$\binom{n}{n/2}$ for even $n$; $\binom{n}{(n\pm1)/2}$ for odd $n$.` },
+          { front: "Rational terms in a surd expansion", back: t`Values of $r$ that make every fractional exponent in $T_{r+1}$ a whole number.` },
+          { front: "Remainder trick", back: t`Base = (multiple of divisor) ± 1; e.g. $7^2 = 50 - 1$ for division by 25.` },
+          { front: t`$(a+\sqrt b)^n + (a-\sqrt b)^n$`, back: t`An integer (twice the sum of the odd-numbered terms), the key to integral-part problems.` },
+          { front: t`Coefficient of $x^k$ in $(1 + x + x^2)^n$`, back: t`Write it as $(1 + x(1+x))^n$ and expand twice, or use the trinomial row.` },
+        ],
+        quiz: [
+          {
+            kind: "numeric",
+            q: t`How many rational terms are there in $\left(2^{1/2} + 3^{1/5}\right)^{20}$?`,
+            answer: 3,
+            difficulty: 2,
+            hint: t`$r$ must be a multiple of 5 and $20 - r$ must be even.`,
+            explain: t`$T_{r+1} = \binom{20}{r}2^{(20-r)/2}3^{r/5}$. $r$ must be a multiple of 5 and even, so a multiple of 10: $r = 0, 10, 20$, giving 3 terms.`,
+          },
+          {
+            kind: "mcq",
+            q: t`The greatest term in $(1 + x)^{10}$ at $x = \frac{1}{2}$ is`,
+            options: [t`$T_4 = 15$`, t`$T_6 = \frac{63}{8}$`, t`$T_5 = \frac{105}{8}$`, t`$T_3 = \frac{45}{4}$`],
+            answer: 0,
+            difficulty: 2,
+            explain: t`$m = \frac{11/2}{3/2} = \frac{11}{3}$, so $T_4 = \binom{10}{3}\frac{1}{8} = 15$. The middle term $T_6 = \frac{252}{32} = \frac{63}{8}$ is smaller.`,
+          },
+          {
+            kind: "numeric",
+            q: t`Find the coefficient of $x^3$ in $(1 + x + x^2)^3$.`,
+            answer: 7,
+            explain: t`$(1 + x(1+x))^3$: $k = 2$ gives $\binom{3}{2}\binom{2}{1} = 6$; $k = 3$ gives $\binom{3}{3}\binom{3}{0} = 1$. Total 7.`,
+          },
+          {
+            kind: "multi",
+            q: t`Let $(2 + \sqrt{3})^n = I + f$, with $n$ a positive integer, $I$ an integer and $0 < f < 1$. Which are true?`,
+            options: [t`$I$ is odd`, t`$(I + f)(1 - f) = 1$`, t`$f + (2 - \sqrt{3})^n = 1$`, t`$I$ is even`],
+            answers: [0, 1, 2],
+            difficulty: 3,
+            hint: t`$0 < 2 - \sqrt{3} < 1$, and the sum of the two powers is an even integer.`,
+            explain: t`With $f' = (2-\sqrt3)^n$, $I + f + f'$ is an even integer and $0 < f + f' < 2$, so $f + f' = 1$ and $I$ = even − 1 is odd. Then $(I+f)(1-f) = (2+\sqrt3)^n(2-\sqrt3)^n = 1$.`,
+          },
+          {
+            kind: "mcq",
+            q: t`The term independent of $x$ in $\left(x^2 - \frac{1}{x}\right)^9$ is`,
+            options: ["84", "−84", "126", "There is no such term"],
+            answer: 0,
+            explain: t`$T_{r+1} = \binom{9}{r}(-1)^r x^{18-3r}$; $r = 6$: $\binom{9}{6}(+1) = 84$. The sign is + because $r$ is even.`,
+          },
+          {
+            kind: "numeric",
+            q: t`Find the coefficient of $x^4$ in $(1 + x)^5(1 - x)^5$.`,
+            answer: 10,
+            difficulty: 2,
+            hint: "Multiply the bases before expanding.",
+            explain: t`$(1+x)^5(1-x)^5 = (1 - x^2)^5$. The $x^4$ term is $\binom{5}{2}(-x^2)^2 = 10x^4$.`,
+          },
+          {
+            kind: "mcq",
+            q: t`The last two digits of $3^{100}$ are`,
+            options: ["01", "81", "49", "41"],
+            answer: 0,
+            difficulty: 2,
+            explain: t`$3^{100} = 9^{50} = (10 - 1)^{50} = 1 - 50 \cdot 10 + (\text{multiples of } 100) = 1 - 500 + \ldots \equiv 1 \pmod{100}$. Last two digits 01.`,
+          },
+          {
+            kind: "numeric",
+            q: t`Find the remainder when $2^{31}$ is divided by 9.`,
+            answer: 2,
+            difficulty: 2,
+            hint: t`$2^3 = 9 - 1$.`,
+            explain: t`$2^{31} = 2 \cdot 8^{10} = 2(9 - 1)^{10} = 2(9k + 1) = 18k + 2$, so the remainder is 2.`,
+          },
+        ],
+      },
+      {
+        slug: "c11-binomial-exam-coefficients",
+        title: "Exam edge: binomial coefficient sums and identities",
+        summary: "Substituting values of x, the identity r·C(n, r) = n·C(n − 1, r − 1), sums of squares and products of coefficients (Vandermonde), and the number of terms in a multinomial.",
+        minutes: 25,
+        xp: 60,
+        track: "exam",
+        blocks: [
+          {
+            type: "callout",
+            tone: "exam",
+            title: "What the exams ask",
+            md: t`Coefficient sums are a JEE Main favourite and appear in JEE Advanced as one step of a longer problem. KCET and COMEDK ask the basic sums ($2^n$, $2^{n-1}$) directly. Write $C_r$ for $\binom{n}{r}$ throughout, and start from $(1 + x)^n = C_0 + C_1x + C_2x^2 + \cdots + C_nx^n$.`,
+          },
+          {
+            type: "text",
+            md: t`**Substitution.** Put $x = 1$: $C_0 + C_1 + \cdots + C_n = 2^n$. Put $x = -1$: $C_0 - C_1 + C_2 - \cdots = 0$.
+
+Adding and subtracting these two results: $C_0 + C_2 + C_4 + \cdots = C_1 + C_3 + C_5 + \cdots = 2^{n-1}$.
+
+**Absorption identity.** $r\binom{n}{r} = r\cdot\frac{n!}{r!(n-r)!} = n\cdot\frac{(n-1)!}{(r-1)!(n-r)!} = n\binom{n-1}{r-1}$. It turns a weighted sum into a plain one, with no calculus needed. Similarly $\frac{1}{r+1}\binom{n}{r} = \frac{1}{n+1}\binom{n+1}{r+1}$.`,
+          },
+          {
+            type: "formula",
+            tex: t`\sum_{r=0}^{n} C_r = 2^n \qquad \sum_{r=0}^{n}(-1)^r C_r = 0 \qquad \sum_{r=1}^{n} r\,C_r = n\,2^{n-1}`,
+            caption: "The three most used sums (C_r = C(n, r), n ≥ 1).",
+          },
+          {
+            type: "example",
+            title: "KCET level: a weighted sum",
+            problem: t`Evaluate $\sum_{r=1}^{10} r\binom{10}{r}$.`,
+            steps: [
+              t`Absorb: $r\binom{10}{r} = 10\binom{9}{r-1}$.`,
+              t`So the sum is $10\sum_{r=1}^{10}\binom{9}{r-1} = 10\sum_{s=0}^{9}\binom{9}{s} = 10 \cdot 2^9$.`,
+            ],
+            answer: t`$10 \times 512 = 5120$`,
+          },
+          {
+            type: "text",
+            md: t`**Vandermonde's identity.** Compare the coefficient of $x^r$ on both sides of $(1+x)^m(1+x)^n = (1+x)^{m+n}$:
+
+$\sum_{k}\binom{m}{k}\binom{n}{r-k} = \binom{m+n}{r}$.
+
+With $m = n$ and $r = n$, and $\binom{n}{n-k} = \binom{n}{k}$, this gives the sum of squares: $C_0^2 + C_1^2 + \cdots + C_n^2 = \binom{2n}{n}$.`,
+          },
+          {
+            type: "formula",
+            tex: t`\sum_{r=0}^{n} C_r^{\,2} = \binom{2n}{n} \qquad \sum_{r=0}^{n-1} C_r\,C_{r+1} = \binom{2n}{n-1}`,
+            caption: "Both come from comparing coefficients in (1 + x)^n · (1 + x)^n.",
+          },
+          {
+            type: "example",
+            title: "JEE Main level: sum of squares",
+            problem: t`Find $C_0^2 + C_1^2 + \cdots + C_5^2$ for $n = 5$.`,
+            steps: [
+              t`By the identity it equals $\binom{10}{5} = 252$.`,
+              t`Check directly: $1 + 25 + 100 + 100 + 25 + 1 = 252$. ✓`,
+            ],
+            answer: "252",
+          },
+          {
+            type: "checkpoint",
+            questions: [
+              {
+                kind: "mcq",
+                q: t`For $n = 11$, $C_1 + C_3 + C_5 + \cdots + C_{11} = ?$`,
+                options: ["1024", "2048", "512", "1023"],
+                answer: 0,
+                explain: t`The odd-index coefficients add to $2^{n-1} = 2^{10} = 1024$.`,
+              },
+              {
+                kind: "numeric",
+                q: t`How many terms are there in the expansion of $(a + b + c)^8$?`,
+                answer: 45,
+                explain: t`Terms $a^pb^qc^s$ with $p + q + s = 8$: $\binom{8+2}{2} = 45$.`,
+              },
+            ],
+          },
+          {
+            type: "example",
+            title: "JEE Main level: dividing by r + 1",
+            problem: t`Evaluate $\sum_{r=0}^{5}\frac{\binom{5}{r}}{r+1}$.`,
+            steps: [
+              t`Use $\frac{1}{r+1}\binom{5}{r} = \frac{1}{6}\binom{6}{r+1}$.`,
+              t`The sum becomes $\frac{1}{6}\left[\binom{6}{1} + \binom{6}{2} + \cdots + \binom{6}{6}\right] = \frac{1}{6}(2^6 - 1)$.`,
+              t`$= \frac{63}{6} = \frac{21}{2}$. Direct check: $1 + \frac{5}{2} + \frac{10}{3} + \frac{10}{4} + \frac{5}{5} + \frac{1}{6} = 10.5$. ✓`,
+            ],
+            answer: t`$\frac{21}{2}$; in general $\sum_{r=0}^{n}\frac{C_r}{r+1} = \frac{2^{n+1} - 1}{n+1}$.`,
+          },
+          {
+            type: "example",
+            title: "JEE Advanced level: a product sum",
+            problem: t`Prove that $C_0C_1 + C_1C_2 + \cdots + C_{n-1}C_n = \binom{2n}{n-1}$, and check it for $n = 4$.`,
+            steps: [
+              t`Rewrite each product with symmetry: $C_rC_{r+1} = \binom{n}{r}\binom{n}{n-r-1}$.`,
+              t`In $(1+x)^n(1+x)^n$, the coefficient of $x^{n-1}$ collects exactly $\sum_r \binom{n}{r}\binom{n}{n-1-r}$.`,
+              t`On the other side it is the coefficient of $x^{n-1}$ in $(1+x)^{2n}$, which is $\binom{2n}{n-1}$.`,
+              t`For $n = 4$: $1\cdot4 + 4\cdot6 + 6\cdot4 + 4\cdot1 = 56$, and $\binom{8}{3} = 56$. ✓`,
+            ],
+            answer: t`$\sum_{r=0}^{n-1}C_rC_{r+1} = \binom{2n}{n-1}$`,
+          },
+          {
+            type: "mistake",
+            wrong: t`$C_0^2 + C_1^2 + \cdots + C_n^2 = (2^n)^2 = 4^n$.`,
+            right: t`The sum of squares is $\binom{2n}{n}$. For $n = 2$: $1 + 4 + 1 = 6 = \binom{4}{2}$, not $4^2 = 16$.`,
+            why: "Squaring the sum adds all the cross products C_iC_j as well. Always test a remembered identity with n = 2 before trusting it.",
+          },
+          {
+            type: "mistake",
+            wrong: t`$(a + b + c)^n$ has $n + 1$ terms, just like a binomial.`,
+            right: t`It has $\binom{n+2}{2} = \frac{(n+1)(n+2)}{2}$ terms, one for each solution of $p + q + s = n$ in whole numbers.`,
+            why: "The n + 1 rule counts only two-letter terms. With three letters the exponents can be shared out in many more ways.",
+          },
+          {
+            type: "activity",
+            activity: {
+              kind: "match",
+              prompt: "Match each sum with its value.",
+              pairs: [
+                [t`$\sum C_r$`, t`$2^n$`],
+                [t`$\sum (-1)^r C_r$`, "0"],
+                [t`$\sum r\,C_r$`, t`$n\,2^{n-1}$`],
+                [t`$\sum C_r^{\,2}$`, t`$\binom{2n}{n}$`],
+                [t`$C_0 + C_2 + C_4 + \cdots$`, t`$2^{n-1}$`],
+              ],
+              explain: t`All five come from $(1+x)^n$: substitute $x = \pm 1$, absorb with $r\binom{n}{r} = n\binom{n-1}{r-1}$, or compare coefficients in $(1+x)^{2n}$.`,
+            },
+          },
+          {
+            type: "keypoints",
+            items: [
+              t`$x = 1$ gives $\sum C_r = 2^n$; $x = -1$ gives $\sum(-1)^rC_r = 0$; even and odd parts are each $2^{n-1}$.`,
+              t`$r\binom{n}{r} = n\binom{n-1}{r-1}$ and $\frac{1}{r+1}\binom{n}{r} = \frac{1}{n+1}\binom{n+1}{r+1}$ turn weighted sums into plain ones.`,
+              t`Products of coefficients: compare coefficients in $(1+x)^m(1+x)^n = (1+x)^{m+n}$ (Vandermonde); $\sum C_r^2 = \binom{2n}{n}$.`,
+              t`Sum of coefficients of any polynomial expression = its value when every variable is 1.`,
+              "Test any remembered identity with n = 2 or n = 3.",
+            ],
+          },
+        ],
+        flashcards: [
+          { front: t`$C_0 + C_1 + \cdots + C_n$`, back: t`$2^n$` },
+          { front: t`$C_0 + C_2 + C_4 + \cdots$`, back: t`$2^{n-1}$ (same as the odd-index sum)` },
+          { front: "Absorption identity", back: t`$r\binom{n}{r} = n\binom{n-1}{r-1}$` },
+          { front: t`$\sum r\,C_r$`, back: t`$n\,2^{n-1}$` },
+          { front: t`$\sum C_r^{\,2}$`, back: t`$\binom{2n}{n}$` },
+          { front: "Vandermonde's identity", back: t`$\sum_k \binom{m}{k}\binom{n}{r-k} = \binom{m+n}{r}$` },
+          { front: t`Number of terms in $(a + b + c)^n$`, back: t`$\binom{n+2}{2}$` },
+          { front: t`$\sum_{r=0}^{n}\frac{C_r}{r+1}$`, back: t`$\frac{2^{n+1}-1}{n+1}$` },
+        ],
+        quiz: [
+          {
+            kind: "numeric",
+            q: t`Find the sum of the coefficients in the expansion of $(2x - 3)^5$.`,
+            answer: -1,
+            explain: t`Put $x = 1$: $(2 - 3)^5 = (-1)^5 = -1$.`,
+          },
+          {
+            kind: "numeric",
+            q: t`Evaluate $\sum_{r=1}^{8} r\binom{8}{r}$.`,
+            answer: 1024,
+            explain: t`$n2^{n-1} = 8 \times 2^7 = 1024$.`,
+          },
+          {
+            kind: "mcq",
+            q: t`For $n = 6$, $C_0^2 + C_1^2 + \cdots + C_6^2 = ?$`,
+            options: ["924", "4096", "64", "462"],
+            answer: 0,
+            explain: t`$\binom{12}{6} = 924$. 4096 is the trap $(2^6)^2$.`,
+          },
+          {
+            kind: "multi",
+            q: t`Which are true for $n \ge 1$, with $C_r = \binom{n}{r}$?`,
+            options: [
+              t`$\sum_{r=0}^{n}(-1)^rC_r = 0$`,
+              t`$\sum_{r=0}^{n}C_r$ is odd`,
+              t`$\binom{n}{r} + \binom{n}{r-1} = \binom{n+1}{r}$`,
+              t`$r\binom{n}{r} = n\binom{n-1}{r-1}$`,
+            ],
+            answers: [0, 2, 3],
+            explain: t`$\sum C_r = 2^n$ is even for $n \ge 1$, so the second is false. The others are the alternating sum, Pascal's rule and the absorption identity.`,
+          },
+          {
+            kind: "numeric",
+            q: t`Evaluate $\sum_{r=0}^{9}\frac{(-1)^r\binom{9}{r}}{r+1}$.`,
+            answer: 0.1,
+            tolerance: 0.001,
+            difficulty: 3,
+            hint: t`Use $\frac{1}{r+1}\binom{9}{r} = \frac{1}{10}\binom{10}{r+1}$.`,
+            explain: t`The sum is $\frac{1}{10}\sum_{r=0}^{9}(-1)^r\binom{10}{r+1} = \frac{1}{10}\left[-\sum_{s=1}^{10}(-1)^s\binom{10}{s}\right] = \frac{1}{10}[-(0 - 1)] = \frac{1}{10}$.`,
+          },
+          {
+            kind: "numeric",
+            q: t`For $n = 5$, evaluate $C_0C_1 + C_1C_2 + C_2C_3 + C_3C_4 + C_4C_5$.`,
+            answer: 210,
+            difficulty: 3,
+            explain: t`$\binom{2n}{n-1} = \binom{10}{4} = 210$. Directly: $5 + 50 + 100 + 50 + 5 = 210$.`,
+          },
+          {
+            kind: "mcq",
+            q: t`$\binom{10}{0}\binom{8}{4} + \binom{10}{1}\binom{8}{3} + \binom{10}{2}\binom{8}{2} + \binom{10}{3}\binom{8}{1} + \binom{10}{4}\binom{8}{0}$ equals`,
+            options: [t`$\binom{18}{4}$`, t`$\binom{18}{8}$`, t`$\binom{80}{4}$`, t`$2^{18}$`],
+            answer: 0,
+            difficulty: 2,
+            explain: t`Vandermonde with $m = 10$, $n = 8$, $r = 4$: the sum is the coefficient of $x^4$ in $(1+x)^{18}$, i.e. $\binom{18}{4}$.`,
+          },
+          {
+            kind: "numeric",
+            q: t`In $(1 + x)^{n}$ the sum of the even-index coefficients $C_0 + C_2 + \cdots$ is 256. Find $n$.`,
+            answer: 9,
+            explain: t`$2^{n-1} = 256 = 2^8$, so $n = 9$.`,
+          },
+        ],
+      },
+    ],
+  },

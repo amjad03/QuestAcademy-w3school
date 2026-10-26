@@ -2112,11 +2112,697 @@ const hardware: Topic = {
   ],
 };
 
-export const topics: Topic[] = [numbers, propLogic, hardware];
+/* ------------------------------------------------------------------ */
+/* 4. Objects and Classes                                              */
+/* ------------------------------------------------------------------ */
+const objectsClasses: Topic = {
+  slug: "c11-isc-objects-classes",
+  title: "Objects and Classes",
+  icon: "🧱",
+  description: "Objects as data (attributes) plus behaviour (methods), a class as the blueprint and an object as its instance, creating objects with new, reference variables, constructors of every kind, the keyword this, and analysing real-world problems as classes.",
+  lessons: [
+    {
+      slug: "c11-isc-objects-as-instances",
+      title: "Objects, Classes and Instances",
+      summary: "State, behaviour and identity; a class as a blueprint and user-defined type; instance variables and methods; creating objects with new; reference variables and the dot operator; modelling real-world things as classes.",
+      minutes: 22,
+      xp: 50,
+      blocks: [
+        {
+          type: "illustration",
+          emoji: "📚",
+          caption: "A bookshop in Pune has thousands of books. Each one is different, but every book has a title, a price and a number of copies, and the shop can sell any of them. That shared plan is a class; each actual book is an object.",
+        },
+        {
+          type: "text",
+          md: "An **object** is a thing in the problem that has:\n\n- **State (attributes, data)**: the values it holds, such as a book's title, price and copies.\n- **Behaviour (methods)**: what it can do or what can be done to it, such as `sell()` or `stockValue()`.\n- **Identity**: it is a separate thing, even if another object has the same values.\n\nSo an object = **data + behaviour**, kept together. This is **encapsulation**.",
+        },
+        {
+          type: "text",
+          md: "A **class** is the blueprint (template) from which objects are made. It declares which attributes every object will have and defines the methods they can use. An object is an **instance** of a class; making one is called **instantiation**.\n\nBecause a class describes a new kind of value, it is a **user-defined data type**. A class is also called an **object factory**: one class can produce any number of objects, each with its own copy of the attributes.",
+        },
+        {
+          type: "table",
+          headers: ["Class", "Object"],
+          rows: [
+            ["a blueprint or template", "an instance made from the blueprint"],
+            ["a logical idea; no memory for attributes is set aside when it is declared", "a real entity; memory is allotted when it is created with `new`"],
+            ["declared once", "any number can be created"],
+            ["e.g. `Book`", "e.g. the book \"Panchatantra\" with price ₹150"],
+          ],
+        },
+        {
+          type: "code",
+          lang: "java",
+          caption: "Book.java: one class, several objects",
+          code: `public class Book
+{
+    // attributes (instance variables): the state of each object
+    String title;
+    double price;
+    int copies;
+
+    // behaviour (methods)
+    void sell(int n)
+    {
+        if (n <= copies)
+            copies = copies - n;
+        else
+            System.out.println("Only " + copies + " copies of " + title + " left");
+    }
+
+    double stockValue()
+    {
+        return price * copies;
+    }
+
+    public static void main(String[] args)
+    {
+        Book b1 = new Book();
+        b1.title = "Panchatantra";
+        b1.price = 150.0;
+        b1.copies = 10;
+
+        Book b2 = new Book();
+        b2.title = "Wings of Fire";
+        b2.price = 299.5;
+        b2.copies = 4;
+
+        b1.sell(3);
+        b2.sell(6);
+        System.out.println(b1.title + ": " + b1.copies + " copies, value " + b1.stockValue());
+        System.out.println(b2.title + ": " + b2.copies + " copies, value " + b2.stockValue());
+
+        Book b3 = b1;           // b3 refers to the SAME object as b1
+        b3.sell(2);
+        System.out.println(b1.copies);
+    }
+}`,
+        },
+        {
+          type: "text",
+          md: "`Book b1 = new Book();` does three things: it declares a **reference variable** `b1` of type Book, `new` creates an object in memory (the heap) and runs the constructor, and the **address** of the new object is stored in `b1`.\n\nThe **dot operator** reaches an object's members: `b1.price` is b1's price, `b1.sell(3)` asks b1 to run `sell` on its own data. Calling a method on an object is also described as **sending a message** to it.",
+        },
+        {
+          type: "example",
+          title: "Trace Book.java",
+          problem: "Give the exact output of Book.java.",
+          steps: [
+            "b1 starts with 10 copies; `b1.sell(3)` leaves 7.",
+            "b2 has 4 copies; `b2.sell(6)` asks for more than it has, so it prints the message and copies stays 4.",
+            "b1's value: 150.0 × 7 = 1050.0. b2's value: 299.5 × 4 = 1198.0 (a double prints with .0).",
+            "`Book b3 = b1;` copies the reference, not the object. b3 and b1 are two names for one book, so `b3.sell(2)` changes b1's copies to 5.",
+          ],
+          answer: "Only 4 copies of Wings of Fire left\nPanchatantra: 7 copies, value 1050.0\nWings of Fire: 4 copies, value 1198.0\n5",
+        },
+        {
+          type: "mistake",
+          wrong: "`Book b3 = b1;` makes a new book b3 that is a copy of b1, so changing b3 does not affect b1.",
+          right: "A variable of a class type holds a **reference** (address), not the object. `b3 = b1` copies the address, so both names point to the **same** object. Only `new` creates a new object.",
+          why: "With primitives, `int y = x;` really does copy the value, and the habit carries over. Objects are handled through references, so assignment shares the object instead of duplicating it.",
+        },
+        {
+          type: "checkpoint",
+          questions: [
+            {
+              kind: "mcq",
+              q: "How many Book objects exist after `Book p = new Book(); Book q = new Book(); Book r = q;`?",
+              options: ["2", "3", "1", "0"],
+              answer: 0,
+              explain: "`new` runs twice, so there are 2 objects. r is a third reference to the second object.",
+            },
+          ],
+        },
+        {
+          type: "example",
+          title: "Analysing a real-world problem",
+          problem: "A metro card system stores the card number, the holder's name and the balance. A card can be recharged, a fare can be deducted, and the balance can be shown. Identify the class, attributes and methods.",
+          steps: [
+            "The \"thing\" with its own data is a card, so the class is `MetroCard`.",
+            "Each card holds: `long cardNo`, `String name`, `double balance`. These are the attributes.",
+            "Actions on a card: `recharge(double amt)`, `payFare(double fare)` (only if the balance is enough), `showBalance()`. These are the methods.",
+            "Every passenger's card is an object of MetroCard with its own balance.",
+          ],
+          answer: "Class MetroCard; attributes cardNo, name, balance; methods recharge(), payFare(), showBalance().",
+        },
+        {
+          type: "activity",
+          activity: {
+            kind: "sort",
+            prompt: "For a class MobilePhone, is each item an attribute or a method?",
+            groups: ["Attribute (data)", "Method (behaviour)"],
+            items: [
+              { text: "batteryLevel", group: 0, hint: "It is a value the phone holds." },
+              { text: "brand", group: 0, hint: "Each phone stores its brand name." },
+              { text: "makeCall()", group: 1, hint: "It is an action the phone performs." },
+              { text: "storageGB", group: 0, hint: "A number stored for each phone." },
+              { text: "charge(int minutes)", group: 1, hint: "It changes the battery level: an action." },
+              { text: "takePhoto()", group: 1, hint: "An action, shown by the brackets." },
+            ],
+            explain: "Nouns describing the object's values are attributes; verbs describing what it does are methods. In Java, methods are written with brackets.",
+          },
+        },
+        {
+          type: "callout",
+          tone: "exam",
+          title: "ISC tip",
+          md: "\"Why is a class called an object factory?\" and \"Why is a class a user-defined data type?\" are 1-mark favourites. Answer in one sentence each: a class can create any number of objects; a class lets the programmer create a new type, whose variables are objects. When a question gives a real situation, list the attributes with their **data types** and the methods with their **parameters**.",
+        },
+        {
+          type: "keypoints",
+          items: [
+            "An object has state (attributes), behaviour (methods) and identity.",
+            "A class is the blueprint; an object is an instance of a class.",
+            "A class is a user-defined data type and an object factory.",
+            "`new` creates an object; a class-type variable stores a reference to it.",
+            "Assigning one reference to another shares the same object.",
+          ],
+        },
+      ],
+      flashcards: [
+        { front: "Object", back: "An identifiable entity with state (attributes) and behaviour (methods); an instance of a class." },
+        { front: "Class", back: "A blueprint or template that defines the attributes and methods common to a set of objects." },
+        { front: "Instance variable", back: "An attribute declared in a class (without static); every object gets its own copy." },
+        { front: "Instantiation", back: "Creating an object of a class, done with the new operator." },
+        { front: "Why a class is an object factory", back: "Because any number of objects can be produced from one class." },
+        { front: "Why a class is a user-defined data type", back: "It lets the programmer define a new type; its variables are objects of that class." },
+        { front: "Reference variable", back: "A variable of a class type; it stores the address of an object, not the object itself." },
+        { front: "Message passing", back: "Objects interact by calling one another's methods, e.g. b1.sell(3)." },
+      ],
+      quiz: [
+        {
+          kind: "mcq",
+          q: "Which keyword allots memory for a new object?",
+          options: ["new", "class", "this", "static"],
+          answer: 0,
+          explain: "`new` creates the object on the heap and calls its constructor.",
+        },
+        {
+          kind: "truefalse",
+          q: "Declaring a class sets aside memory for the attributes of all its future objects.",
+          answer: false,
+          explain: "A class is only a plan. Memory for instance variables is allotted when each object is created with new.",
+        },
+        {
+          kind: "fill",
+          q: "An object is called an ___ of its class.",
+          answer: ["instance"],
+          explain: "Creating an object is instantiation; the object is an instance.",
+        },
+        {
+          kind: "mcq",
+          q: "In `Book b = new Book();`, what does b store?",
+          options: ["the address (reference) of the Book object", "a copy of the class Book", "the title of the book", "nothing until a method is called"],
+          answer: 0,
+          explain: "b is a reference variable; the object itself lives in memory created by new.",
+        },
+        {
+          kind: "numeric",
+          q: "`Book x = new Book(); x.copies = 8; Book y = x; y.copies = y.copies - 3;` What is `x.copies` now?",
+          answer: 5,
+          explain: "x and y refer to the same object, so the change through y is seen through x: 8 − 3 = 5.",
+          difficulty: 2,
+        },
+        {
+          kind: "multi",
+          q: "Which are characteristics of every object? (Choose all that apply)",
+          options: ["State", "Behaviour", "Identity", "A main() method"],
+          answers: [0, 1, 2],
+          explain: "Objects have state, behaviour and identity. main() is a method of one class, not part of every object.",
+        },
+        {
+          kind: "mcq",
+          q: "For a class `Train`, which is the best choice of an attribute?",
+          options: ["int coaches", "void depart()", "Train()", "new Train"],
+          answer: 0,
+          explain: "An attribute is data with a type. depart() is a method, Train() is a constructor, and new Train creates an object.",
+        },
+        {
+          kind: "mcq",
+          q: "The principle of keeping data and the methods that work on it together in a class is:",
+          options: ["Encapsulation", "Inheritance", "Polymorphism", "Instantiation"],
+          answer: 0,
+          explain: "Wrapping data and methods into one unit is encapsulation.",
+        },
+      ],
+    },
+    {
+      slug: "c11-isc-constructors",
+      title: "Constructors and the Keyword this",
+      summary: "What a constructor is and how it differs from a method; default, non-parameterised, parameterised and copy constructors; constructor overloading; default values of instance variables; using this.",
+      minutes: 23,
+      xp: 55,
+      blocks: [
+        {
+          type: "text",
+          md: "In Book.java we set every attribute by hand after `new`. That is slow and easy to forget. A **constructor** does it for us.\n\nA **constructor** is a special member method that has the **same name as the class**, has **no return type** (not even `void`), and is **called automatically** when an object is created with `new`. Its job is to **initialise** the object's instance variables.",
+        },
+        {
+          type: "table",
+          headers: ["Kind", "What it is"],
+          rows: [
+            ["**Default constructor**", "supplied by the compiler **only if the class has no constructor at all**; it takes no arguments and leaves every instance variable at its default value"],
+            ["**Non-parameterised constructor**", "written by the programmer with no parameters; sets fixed starting values"],
+            ["**Parameterised constructor**", "takes parameters and copies them into the instance variables"],
+            ["**Copy constructor**", "takes an object of the same class and copies its values into the new object (Java does not supply one; you write it)"],
+          ],
+        },
+        {
+          type: "code",
+          lang: "java",
+          caption: "Student.java: three overloaded constructors",
+          code: `public class Student
+{
+    String name;
+    int roll;
+    double marks;
+
+    // non-parameterised constructor
+    Student()
+    {
+        name = "Not set";
+        roll = 0;
+        marks = 0.0;
+    }
+
+    // parameterised constructor
+    Student(String name, int roll, double marks)
+    {
+        this.name = name;       // this.name is the instance variable
+        this.roll = roll;
+        this.marks = marks;
+    }
+
+    // copy constructor
+    Student(Student s)
+    {
+        name = s.name;
+        roll = s.roll;
+        marks = s.marks;
+    }
+
+    void display()
+    {
+        System.out.println(roll + " " + name + " " + marks);
+    }
+
+    public static void main(String[] args)
+    {
+        Student s1 = new Student();
+        Student s2 = new Student("Kavya", 12, 88.5);
+        Student s3 = new Student(s2);
+        s3.marks = 91;
+        s1.display();
+        s2.display();
+        s3.display();
+    }
+}`,
+        },
+        {
+          type: "example",
+          title: "Trace Student.java",
+          problem: "Give the output of Student.java and say which constructor each `new` calls.",
+          steps: [
+            "`new Student()` has no arguments, so the non-parameterised constructor runs: s1 = (\"Not set\", 0, 0.0).",
+            "`new Student(\"Kavya\", 12, 88.5)` matches (String, int, double): the parameterised constructor runs.",
+            "`new Student(s2)` matches (Student): the copy constructor makes a **separate** object with s2's values.",
+            "`s3.marks = 91;` changes only s3 (it is a different object). The int 91 is stored in a double, so it prints as 91.0.",
+          ],
+          answer: "0 Not set 0.0\n12 Kavya 88.5\n12 Kavya 91.0",
+        },
+        {
+          type: "text",
+          md: "Having several constructors with different parameter lists is **constructor overloading**; Java picks the one whose parameters match the arguments in number, type and order.\n\nThe keyword **this** refers to the **current object**, the one whose constructor or method is running. In the parameterised constructor the parameter `name` hides the instance variable `name`; `this.name = name;` says \"store the parameter in this object's attribute\". Without `this`, `name = name;` would just copy the parameter into itself.",
+        },
+        {
+          type: "mistake",
+          wrong: "If I write only a parameterised constructor, Java still gives me the default constructor, so `new Student()` will work.",
+          right: "The compiler adds the default constructor **only when the class has no constructor at all**. Once you write any constructor, `new Student()` compiles only if you also write a no-argument constructor yourself.",
+          why: "Learners see objects created with `new Student()` in classes that have no constructor and assume this always works. The rule exists because a class with its own constructor has said how its objects must be set up.",
+        },
+        {
+          type: "checkpoint",
+          questions: [
+            {
+              kind: "mcq",
+              q: "Which of these is a valid constructor for a class `Box`?",
+              options: ["Box(int side)", "void Box(int side)", "int Box()", "box()"],
+              answer: 0,
+              explain: "A constructor has the class name exactly (Java is case-sensitive) and no return type. With `void` or `int` in front it becomes an ordinary method.",
+            },
+          ],
+        },
+        {
+          type: "table",
+          headers: ["Constructor", "Method"],
+          rows: [
+            ["same name as the class", "any valid name"],
+            ["no return type, not even void", "must have a return type (void if nothing is returned)"],
+            ["called automatically by `new`, once per object", "called explicitly, any number of times"],
+            ["initialises the object", "performs any task"],
+            ["not inherited", "inherited (unless private)"],
+          ],
+        },
+        {
+          type: "code",
+          lang: "java",
+          caption: "Defaults.java: what the default constructor leaves in each instance variable",
+          code: `public class Defaults
+{
+    int count;
+    double rate;
+    boolean done;
+    char grade;
+    String name;
+
+    public static void main(String[] args)
+    {
+        Defaults d = new Defaults();
+        System.out.println(d.count + " " + d.rate + " " + d.done + " " + (int) d.grade + " " + d.name);
+    }
+}`,
+        },
+        {
+          type: "text",
+          md: "Output: `0 0.0 false 0 null`\n\nInstance variables get default values: 0 for whole numbers, 0.0 for decimals, false for boolean, the null character (code 0, written '\\u0000') for char, and **null** for any reference such as a String. Local variables inside a method get **no** default value and must be assigned before use.",
+        },
+        {
+          type: "activity",
+          activity: {
+            kind: "reveal",
+            prompt: "A class has only `Shop(String n)`. What happens with `new Shop()`?",
+            emoji: "🏪",
+            options: ["Compile-time error", "The compiler adds a default constructor", "name is set to null", "Run-time error"],
+            answer: 0,
+            trap: 1,
+            explain: "The class already has a constructor, so no default constructor is added. No constructor matches an empty argument list, so the code does not compile.",
+          },
+        },
+        {
+          type: "callout",
+          tone: "exam",
+          title: "ISC tip",
+          md: "In ISC program questions the class design usually lists \"a parameterised constructor to initialise the data members\". Write it as `ClassName(type a, ...)` with no return type, and assign every data member in it. Differences between a constructor and a method, and the use of `this`, are common 2-mark theory questions.",
+        },
+        {
+          type: "keypoints",
+          items: [
+            "A constructor has the class's name, no return type, and runs automatically with `new`.",
+            "Kinds: default (compiler, only if none written), non-parameterised, parameterised, copy.",
+            "Constructor overloading: several constructors with different parameter lists.",
+            "`this` refers to the current object; `this.x = x` resolves a name clash.",
+            "Default values: 0, 0.0, false, the null character, null.",
+          ],
+        },
+      ],
+      flashcards: [
+        { front: "Constructor", back: "A member method with the same name as the class and no return type, called automatically when an object is created, to initialise it." },
+        { front: "Default constructor", back: "A no-argument constructor added by the compiler only when the class defines no constructor; it leaves attributes at default values." },
+        { front: "Parameterised constructor", back: "A constructor that receives values as parameters and uses them to initialise the object." },
+        { front: "Copy constructor", back: "A constructor that takes an object of the same class and copies its data into the new object." },
+        { front: "Constructor overloading", back: "Defining more than one constructor in a class with different parameter lists." },
+        { front: "this", back: "A reference to the current object; used to tell an instance variable apart from a parameter of the same name." },
+        { front: "Default value of a String attribute", back: "null (it is a reference type)." },
+        { front: "Constructor vs method: return type", back: "A constructor has none, not even void; a method must have one." },
+      ],
+      quiz: [
+        {
+          kind: "mcq",
+          q: "When is a constructor called?",
+          options: ["Automatically when an object is created with new", "Whenever any method is called", "When the program ends", "Only when called by name"],
+          answer: 0,
+          explain: "`new` creates the object and runs the matching constructor once.",
+        },
+        {
+          kind: "truefalse",
+          q: "A constructor can be declared with the return type void.",
+          answer: false,
+          explain: "Adding void makes it an ordinary method that happens to share the class's name; it will not run automatically.",
+        },
+        {
+          kind: "fill",
+          q: "The keyword ___ refers to the object whose method or constructor is currently running.",
+          answer: ["this"],
+          explain: "`this.name = name;` stores the parameter in the current object's attribute.",
+        },
+        {
+          kind: "mcq",
+          q: "What is printed by `System.out.println(new Defaults().done);` for the Defaults class in this lesson?",
+          options: ["false", "true", "0", "null"],
+          answer: 0,
+          explain: "A boolean instance variable defaults to false.",
+        },
+        {
+          kind: "mcq",
+          q: "In a parameterised constructor `Item(int price) { price = price; }`, what happens?",
+          options: ["The instance variable stays 0, because the parameter is assigned to itself", "The instance variable gets the parameter's value", "It does not compile", "A run-time error occurs"],
+          answer: 0,
+          explain: "Inside the constructor, `price` means the parameter. Write `this.price = price;` to set the attribute.",
+          difficulty: 3,
+        },
+        {
+          kind: "multi",
+          q: "Which statements about constructors are true? (Choose all that apply)",
+          options: ["They can be overloaded", "They have no return type", "They are called explicitly like methods, e.g. s.Student()", "They have the same name as the class"],
+          answers: [0, 1, 3],
+          explain: "A constructor cannot be called with the dot operator like a method; it runs through new.",
+          difficulty: 2,
+        },
+        {
+          kind: "mcq",
+          q: "Student.java creates s3 with `new Student(s2)` and then sets `s3.marks = 91`. What is s2.marks?",
+          options: ["88.5", "91.0", "0.0", "null"],
+          answer: 0,
+          explain: "The copy constructor made a separate object, so changing s3 does not change s2.",
+          difficulty: 2,
+        },
+      ],
+    },
+    {
+      slug: "c11-isc-objects-classes-board-practice",
+      title: "Board Practice: Objects and Classes",
+      summary: "Mixed ISC-style questions: theory on classes, objects and constructors, output questions, finding errors, and a full class program (Disarium number) in the ISC format.",
+      minutes: 24,
+      xp: 60,
+      blocks: [
+        {
+          type: "text",
+          md: "ISC program questions describe a class in a fixed format: the **class name**, the **data members** with their purpose, and the **member methods** with what each must do. You write the class exactly as described, then a `main()` that creates an object and calls the methods.",
+        },
+        {
+          type: "example",
+          title: "Reading an ISC-style class design",
+          problem: "A **Disarium number** is one in which the sum of its digits raised to their positions (1st, 2nd, 3rd... from the left) equals the number, e.g. 135 = 1¹ + 3² + 5³. Design: class `Disarium`; data members `int num`, `int size`; methods: `Disarium(int n)` sets num = n and size = 0; `void countDigit()` counts the digits into size; `int sumOfDigits()` returns the sum of the digits raised to their positions; `void check()` prints whether num is a Disarium number. Plan the program.",
+          steps: [
+            "The constructor copies n into num and sets size to 0.",
+            "countDigit(): copy num into a temporary t (so num is not destroyed) and divide by 10 until 0, adding 1 to size each time.",
+            "sumOfDigits(): the last digit is at position size, the next at size − 1, and so on. Take d = t % 10, add $d^p$, then decrease p.",
+            "check(): call countDigit(), then compare sumOfDigits() with num.",
+          ],
+          answer: "For 135: size = 3; 5³ + 3² + 1¹ = 125 + 9 + 1 = 135, so it is a Disarium number.",
+        },
+        {
+          type: "code",
+          lang: "java",
+          caption: "Disarium.java: the class written to the design",
+          code: `public class Disarium
+{
+    int num;        // the number to test
+    int size;       // number of digits
+
+    Disarium(int n)
+    {
+        num = n;
+        size = 0;
+    }
+
+    void countDigit()
+    {
+        int t = num;
+        while (t > 0)
+        {
+            size++;
+            t = t / 10;
+        }
+    }
+
+    int sumOfDigits()
+    {
+        int t = num, p = size, sum = 0;
+        while (t > 0)
+        {
+            int d = t % 10;                     // last digit
+            sum = sum + (int) Math.pow(d, p);   // raised to its position
+            p--;
+            t = t / 10;
+        }
+        return sum;
+    }
+
+    void check()
+    {
+        countDigit();
+        int s = sumOfDigits();
+        if (s == num)
+            System.out.println(num + " is a Disarium number");
+        else
+            System.out.println(num + " is not a Disarium number (sum = " + s + ")");
+    }
+
+    public static void main(String[] args)
+    {
+        Disarium a = new Disarium(135);
+        Disarium b = new Disarium(136);
+        a.check();
+        b.check();
+    }
+}`,
+        },
+        {
+          type: "example",
+          title: "Output",
+          problem: "Give the output of Disarium.java.",
+          steps: [
+            "a: 135 → 5³ + 3² + 1¹ = 125 + 9 + 1 = 135, equal.",
+            "b: 136 → 6³ + 3² + 1¹ = 216 + 9 + 1 = 226, not equal.",
+            "`Math.pow` returns a double, so it is cast to int before adding.",
+          ],
+          answer: "135 is a Disarium number\n136 is not a Disarium number (sum = 226)",
+        },
+        {
+          type: "mistake",
+          wrong: "In countDigit() I can loop on num directly: `while (num > 0) { size++; num = num / 10; }`.",
+          right: "Work on a **copy**: `int t = num;`. Dividing num itself leaves it 0, so sumOfDigits() and check() would then work on 0 and every number would look wrong.",
+          why: "In a single method it looks harmless. But num is an instance variable shared by all the methods of the object, so changing it in one method changes it for all the others.",
+        },
+        {
+          type: "checkpoint",
+          questions: [
+            {
+              kind: "mcq",
+              q: "Which line has an error? `class Pen { int ink; void Pen() { ink = 100; } }` is meant to set ink to 100 when a Pen is created.",
+              options: ["`void Pen()` should be `Pen()`", "`int ink;` should be `ink int;`", "`class` should be `Class`", "There is no error"],
+              answer: 0,
+              explain: "With void, Pen() is an ordinary method and never runs automatically, so ink stays 0. A constructor has no return type.",
+            },
+          ],
+        },
+        {
+          type: "activity",
+          activity: {
+            kind: "order",
+            prompt: "Order what happens when `Disarium a = new Disarium(135);` runs.",
+            items: [
+              "Memory for a new Disarium object is allotted",
+              "Instance variables get default values (0)",
+              "The constructor runs: num = 135, size = 0",
+              "The object's reference is stored in a",
+            ],
+            explain: "new allots memory and sets defaults, the constructor then initialises, and finally the reference is assigned to the variable.",
+          },
+        },
+        {
+          type: "callout",
+          tone: "tip",
+          title: "Practical-exam tip",
+          md: "Use the **exact** names of the class, data members and methods given in the question; examiners mark against them. Write a comment beside every data member (that is your variable description). Test with one number that passes and one that fails, as main() does here.",
+        },
+        {
+          type: "callout",
+          tone: "exam",
+          title: "ISC tip",
+          md: "In a question that says \"Specify the class giving details of the constructor and the methods\", you may skip `main()`; when it says \"define main() to create an object and call the methods\", you must write it. Read the last line of the question for this.",
+        },
+        {
+          type: "checkpoint",
+          questions: [
+            {
+              kind: "numeric",
+              q: "What would sumOfDigits() return for num = 89 (after countDigit())?",
+              answer: 89,
+              explain: "size = 2: 9² + 8¹ = 81 + 8 = 89, so 89 is a Disarium number.",
+              difficulty: 2,
+            },
+          ],
+        },
+        {
+          type: "keypoints",
+          items: [
+            "Follow the given class design exactly: names, types and method headers.",
+            "Work on a copy of a data member when a loop would destroy it.",
+            "A constructor has no return type; `void ClassName()` is just a method.",
+            "Test the class with a passing and a failing value.",
+          ],
+        },
+      ],
+      flashcards: [
+        { front: "Disarium number", back: "A number equal to the sum of its digits raised to their positions, e.g. 135 = 1¹ + 3² + 5³, 89 = 8¹ + 9²." },
+        { front: "Why copy num before a digit loop", back: "Dividing the data member itself would leave it 0 for the other methods." },
+        { front: "Math.pow return type", back: "double, so cast to int when the result is stored in an int." },
+        { front: "Parts of an ISC class question", back: "Class name, data members (with purpose) and member methods (with their task)." },
+        { front: "`void Pen()` inside class Pen", back: "An ordinary method, not a constructor; it does not run automatically." },
+        { front: "Order of events in new", back: "Allot memory → default values → constructor → reference stored." },
+      ],
+      quiz: [
+        {
+          kind: "mcq",
+          q: "Which statement creates an object of Disarium for the number 175?",
+          options: ["Disarium d = new Disarium(175);", "Disarium d = Disarium(175);", "new d = Disarium(175);", "Disarium(175) d;"],
+          answer: 0,
+          explain: "Declare a reference and use new with the constructor's arguments.",
+        },
+        {
+          kind: "numeric",
+          q: "For num = 175, what is the sum of digits raised to their positions?",
+          answer: 175,
+          explain: "1¹ + 7² + 5³ = 1 + 49 + 125 = 175. So 175 is also a Disarium number.",
+          difficulty: 2,
+        },
+        {
+          kind: "truefalse",
+          q: "If countDigit() is called twice on the same object, size will be wrong.",
+          answer: true,
+          explain: "size is never reset inside countDigit(), so a second call adds the digits again (3 becomes 6 for 135).",
+          difficulty: 3,
+        },
+        {
+          kind: "mcq",
+          q: "A class has data members `int a, b;` and no constructor. What does `new Pair().a` give?",
+          options: ["0", "null", "garbage value", "compile-time error"],
+          answer: 0,
+          explain: "The compiler supplies a default constructor and int instance variables default to 0. Java never has garbage values in fields.",
+        },
+        {
+          kind: "fill",
+          q: "The values of an object's instance variables at any moment are called its ___.",
+          answer: ["state"],
+          explain: "State = the current values of the attributes; behaviour = the methods.",
+        },
+        {
+          kind: "mcq",
+          q: "Which is the correct header for a parameterised constructor of class `Time` taking hours and minutes?",
+          options: ["Time(int h, int m)", "void Time(int h, int m)", "Time(int h, m)", "public int Time(int h, int m)"],
+          answer: 0,
+          explain: "No return type, and each parameter needs its own type.",
+        },
+        {
+          kind: "multi",
+          q: "Which belong in a class `Account` as data members? (Choose all that apply)",
+          options: ["long accNo", "double balance", "void deposit(double amt)", "String holder"],
+          answers: [0, 1, 3],
+          explain: "deposit() is a member method, not a data member.",
+        },
+      ],
+    },
+  ],
+};
+
+export const topics: Topic[] = [numbers, propLogic, hardware, objectsClasses];
 
 /** Chapter title ("11:" / "12:" + exact title) → topic slug(s) that teach it. */
 export const links: Record<string, string | string[]> = {
   "11:Numbers": "c11-isc-numbers",
   "11:Propositional Logic": "c11-isc-propositional-logic",
   "11:Computer Hardware": "c11-isc-computer-hardware",
+  "11:Objects and Classes": "c11-isc-objects-classes",
 };

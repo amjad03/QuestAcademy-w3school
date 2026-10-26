@@ -4258,6 +4258,73 @@ Square 9.00
             answer: "The object's class decides at run time (dynamic method dispatch).",
           },
           {
+            type: "heading",
+            text: "An abstract class in code",
+          },
+          {
+            type: "code",
+            lang: "java",
+            caption: "Electricity.java: an abstract superclass with one abstract method",
+            code: `abstract class Bill
+{
+    protected int units;
+
+    Bill(int u)
+    {
+        units = u;
+    }
+
+    abstract double charge();     // no body: each subclass decides
+
+    void print()
+    {
+        System.out.println(units + " units: Rs " + charge());
+    }
+}
+
+class Domestic extends Bill
+{
+    Domestic(int u)
+    {
+        super(u);
+    }
+
+    double charge()
+    {
+        return units * 5.5;
+    }
+}
+
+class Commercial extends Bill
+{
+    Commercial(int u)
+    {
+        super(u);
+    }
+
+    double charge()
+    {
+        return units * 9.0 + 200;
+    }
+}
+
+public class Electricity
+{
+    public static void main(String[] args)
+    {
+        Bill b1 = new Domestic(120);
+        Bill b2 = new Commercial(120);
+        b1.print();
+        b2.print();
+    }
+}
+
+/* Output:
+120 units: Rs 660.0
+120 units: Rs 1280.0
+*/`,
+          },
+          {
             type: "mistake",
             wrong: "With P r = new Q();, r.v gives Q's field and r.hello() calls Q's static method, just as r.show() calls Q's show().",
             right: "Only **instance methods** are dispatched dynamically. **Fields** and **static methods** are chosen by the **reference type**, so r.v and r.hello() use P's versions.",
@@ -4543,6 +4610,26 @@ Total: 2360.0
               trap: 1,
               explain: "show() is overridden, so the object's class (Taxed) decides at run time. Calling i.compute() would not compile, because Item has no compute(): the reference type limits which methods can be named.",
             },
+          },
+          {
+            type: "checkpoint",
+            questions: [
+              {
+                kind: "mcq",
+                q: "Bill b = new Bill(50); (from Electricity.java) gives:",
+                options: ["a compile-time error, because Bill is abstract", "an object with charge() = 0", "a run-time error", "a Domestic object"],
+                answer: 0,
+                explain: "An abstract class cannot be instantiated; only its concrete subclasses can.",
+              },
+            ],
+          },
+          {
+            type: "heading",
+            text: "Program to write",
+          },
+          {
+            type: "text",
+            md: "**Question.** A superclass **Account** has protected data members String **holder** and double **balance**, a constructor and a method void **show()**. Write a subclass **Savings** with data member double **rate** (annual interest %) and methods: **Savings(String h, double b, double r)**; void **addInterest()**: adds one year's simple interest to balance; void **show()**: prints all data using the superclass method. For holder Ravi, balance ₹12,000 and rate 6.5%, the new balance should be ₹12,780.0.",
           },
           {
             type: "table",

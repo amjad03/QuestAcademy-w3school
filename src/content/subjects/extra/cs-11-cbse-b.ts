@@ -2963,7 +2963,671 @@ print("Rolls:", rolls, "Sixes:", rolls.count(6))`,
   ],
 };
 
-export const topics: Topic[] = [flowOfControl, strings, lists, tuplesDicts, modules];
+/* ------------------------------------------------------------------ */
+/* Society, Law and Ethics                                              */
+/* ------------------------------------------------------------------ */
+const society: Topic = {
+  slug: "c11-cs-society-law-ethics",
+  title: "Society, Law and Ethics",
+  icon: "⚖️",
+  description: "Digital footprints, netiquette, data protection, intellectual property rights and licences, cyber crime and cyber safety, malware, the IT Act, privacy, e-waste management, health, and gender and disability issues in computing.",
+  lessons: [
+    {
+      slug: "footprints-netiquette-ipr",
+      title: "Digital Footprints, Netiquette and Intellectual Property",
+      summary: "Active and passive digital footprints, being a good netizen, net, communication and social-media etiquette, intellectual property rights (copyright, patent, trademark), their violation, and open-source licences (GPL, Creative Commons, Apache).",
+      minutes: 22,
+      xp: 50,
+      blocks: [
+        {
+          type: "illustration",
+          emoji: "👣",
+          caption: "Footprints in wet sand show where you walked. Online, every search, post and click leaves a trail too, and it does not wash away.",
+        },
+        {
+          type: "text",
+          md: "A **digital footprint** is the record or trail of data a person leaves behind while using the Internet or digital devices.\n\n- An **active digital footprint** is data you share **on purpose**: posts, comments, photos, e-mails, forms you fill.\n- A **passive digital footprint** is data collected **without you actively sharing it**: browsing history, cookies, your IP address, location data, the time spent on a page.\n\nFootprints are hard to delete completely, can be copied by others and may be seen years later by colleges or employers. So think before you post.",
+        },
+        {
+          type: "text",
+          md: "Anyone who uses digital technology and the Internet is part of the **digital society**; a responsible user is called a **digital citizen** or **netizen**. Good netizens follow **etiquette** (polite rules of behaviour):\n\n- **Net etiquette**: be **ethical** (no piracy, share knowledge), be **respectful** (respect privacy and diversity of others), be **responsible** (do not bully; do not \"feed the troll\" by reacting to provocations).\n- **Communication etiquette** (e-mail, chat, forums): be **precise** (respect others' time and data; no huge unnecessary attachments), be **polite**, be **credible** (check before you comment; your words are recorded).\n- **Social-media etiquette**: be **secure** (strong passwords, know who you befriend, beware of fake information), be **reliable** (think before uploading; posts may be permanent).",
+        },
+        {
+          type: "heading",
+          text: "Intellectual property rights",
+        },
+        {
+          type: "text",
+          md: "**Intellectual property** is a creation of the mind: inventions, software, books, music, designs, brand names. **Intellectual property rights (IPR)** are the legal rights of its creator to control its use and earn from it. The three main kinds:",
+        },
+        {
+          type: "table",
+          headers: ["Right", "Protects", "Example"],
+          rows: [
+            ["**Copyright**", "Original creative expression: books, music, films, photos, drawings, **computer programs**. It arises automatically once the work is created; it protects the expression, not the underlying idea.", "The code of an app; a novel; a song"],
+            ["**Patent**", "An **invention** (a new, useful, non-obvious product or process). Granted by the government for a limited time (20 years in India), after which anyone may use it.", "A new type of battery cell"],
+            ["**Trademark**", "A word, name, symbol, logo, sound or colour scheme that identifies a brand and separates it from others.", "A company's logo and brand name"],
+          ],
+        },
+        {
+          type: "text",
+          md: "**Violations of IPR**:\n\n- **Plagiarism**: presenting someone else's work or ideas as your own without giving credit (e.g. copying an article into a project without citing it).\n- **Copyright infringement**: using copyrighted work without the owner's permission or without paying, e.g. downloading pirated films or software.\n- **Trademark infringement**: unauthorised use of another's trademark, or a confusingly similar one, on your products.",
+        },
+        {
+          type: "mistake",
+          wrong: "If something is on the Internet and I can download it for free, I am allowed to reuse it in my project.",
+          right: "Free to view is not free to reuse. Check the licence or ask permission, and always credit the source; otherwise it can be copyright infringement or plagiarism.",
+          why: "Copyright exists from the moment a work is created, even if no © sign is shown. Easy access feels like permission, but the law depends on the owner's licence.",
+        },
+        {
+          type: "text",
+          md: "Creators can choose to share their work through **licences**, which state what others may do with it. **Free and open source software (FOSS)** lets anyone use, study, modify and share the source code; Linux and LibreOffice are examples.\n\n- **GPL** (GNU General Public License): a **copyleft** software licence. You may use, change and distribute the software, but any modified version you distribute must also be released under the GPL with its source code.\n- **Creative Commons (CC)**: licences mostly for creative works (images, text, music, videos), built from conditions such as BY (give credit), SA (share alike), NC (non-commercial) and ND (no derivatives).\n- **Apache License**: a **permissive** licence from the Apache Software Foundation. You may modify and redistribute the software, even inside closed-source products, as long as you keep the licence and notices.",
+        },
+        {
+          type: "example",
+          title: "Case: the school magazine",
+          problem: "Neha copies a paragraph from a website into her magazine article without credit, uses a CC BY photograph with the photographer's name, and puts a soft-drink company's logo on the cover without permission. Classify each act.",
+          steps: [
+            "Copying text as if it were her own, without credit, is **plagiarism** (and possibly copyright infringement).",
+            "A CC BY image may be reused if the creator is credited. She credited the photographer, so this use is **allowed**.",
+            "Using a company's logo without permission is **trademark infringement**.",
+          ],
+          answer: "Paragraph: plagiarism. Photo: fair use under its CC BY licence. Logo: trademark infringement.",
+        },
+        {
+          type: "checkpoint",
+          questions: [
+            {
+              kind: "mcq",
+              q: "Which is part of your **passive** digital footprint?",
+              options: ["A comment you post on a video", "The cookies a website stores while you browse", "A photo you upload", "An e-mail you send"],
+              answer: 1,
+              explain: "Cookies, IP address and browsing history are collected without you actively sharing them. The others are active footprints.",
+            },
+          ],
+        },
+        {
+          type: "activity",
+          activity: {
+            kind: "match",
+            prompt: "Match each item to the IPR that protects it.",
+            pairs: [
+              ["A new water-purifying process", "Patent"],
+              ["The source code of a game", "Copyright"],
+              ["A sports brand's swoosh logo", "Trademark"],
+              ["Copying a classmate's essay as your own", "Plagiarism (a violation)"],
+            ],
+            explain: "Inventions get patents, creative expression (including code) gets copyright, and brand identifiers get trademarks. Taking credit for others' work is plagiarism.",
+          },
+        },
+        {
+          type: "callout",
+          tone: "exam",
+          title: "Board tip",
+          md: "Common 2-mark questions: \"active vs passive digital footprint\" (with one example each), \"copyright vs patent vs trademark\", and \"what is plagiarism and how to avoid it\" (cite sources, use quotation marks, paraphrase in your own words). For GPL say **copyleft**; for Apache say **permissive**.",
+        },
+        {
+          type: "keypoints",
+          items: [
+            "Digital footprints are active (shared on purpose) or passive (collected silently).",
+            "A good netizen is ethical, respectful, responsible, precise, polite, credible, secure and reliable.",
+            "Copyright protects creative work and code; patent protects inventions; trademark protects brand identity.",
+            "Plagiarism, copyright infringement and trademark infringement violate IPR.",
+            "GPL is copyleft, Apache is permissive, CC licences suit creative works.",
+          ],
+        },
+      ],
+      flashcards: [
+        { front: "Digital footprint", back: "The trail of data a person leaves behind while using the Internet or digital devices." },
+        { front: "Active vs passive footprint", back: "Active: shared on purpose (posts, e-mails). Passive: collected without active sharing (cookies, IP address, history)." },
+        { front: "Netizen", back: "A responsible citizen of the digital society: anyone who uses the Internet and behaves ethically online." },
+        { front: "Copyright", back: "Legal right of the creator over original creative work (including software); arises automatically on creation." },
+        { front: "Patent", back: "Exclusive right over an invention, granted by the government for a limited period (20 years in India)." },
+        { front: "Trademark", back: "A word, logo, symbol or sound that identifies a brand." },
+        { front: "Plagiarism", back: "Presenting someone else's work or ideas as your own without giving credit." },
+        { front: "GPL vs Apache licence", back: "GPL is copyleft (modified versions must stay GPL); Apache is permissive (can be used in closed products if notices are kept)." },
+      ],
+      quiz: [
+        {
+          kind: "mcq",
+          q: "Which IPR protects the logo of a company?",
+          options: ["Trademark", "Patent", "Copyright", "Licence"],
+          answer: 0,
+          explain: "A logo identifies a brand, so it is protected as a trademark.",
+        },
+        {
+          kind: "truefalse",
+          q: "A work must carry the © symbol to be protected by copyright.",
+          answer: false,
+          explain: "Copyright arises automatically when the original work is created; the symbol is optional.",
+        },
+        {
+          kind: "multi",
+          q: "Which belong to a person's active digital footprint?",
+          options: ["A tweet they post", "An online form they fill", "Their IP address logged by a site", "Their location tracked by an app in the background"],
+          answers: [0, 1],
+          explain: "Posts and forms are shared on purpose. IP logs and background tracking are passive.",
+        },
+        {
+          kind: "mcq",
+          q: "Under which licence must modified versions that you distribute also be released under the same licence?",
+          options: ["GPL", "Apache", "Proprietary licence", "Freeware"],
+          answer: 0,
+          explain: "GPL is a copyleft licence: derivatives must stay GPL. Apache is permissive.",
+        },
+        {
+          kind: "fill",
+          q: "Using another person's words or ideas as your own without credit is called ___.",
+          answer: ["plagiarism"],
+          explain: "Plagiarism is avoided by citing sources and putting ideas in your own words.",
+        },
+        {
+          kind: "mcq",
+          q: "Responding angrily to a person who posts provocative comments to upset others is called…",
+          options: ["feeding the troll", "phishing", "eavesdropping", "spamming"],
+          answer: 0,
+          explain: "Trolls want a reaction. Good net etiquette says ignore them and do not \"feed the troll\".",
+        },
+        {
+          kind: "mcq",
+          q: "Which etiquette is broken by e-mailing a 50 MB video to the whole class when a link would do?",
+          options: ["Be precise (respect others' time and data)", "Be secure", "Be credible", "Be reliable"],
+          answer: 0,
+          explain: "Communication etiquette asks you to be precise: avoid needless large attachments and messages.",
+          difficulty: 2,
+        },
+      ],
+    },
+    {
+      slug: "cyber-crime-safety",
+      title: "Cyber Crime, Cyber Safety and Malware",
+      summary: "What cyber crime is: hacking, eavesdropping, phishing and fraud e-mails, identity theft, ransomware, cyber trolls and cyber bullying; staying safe online; and the kinds of malware (virus, worm, Trojan, spyware, adware, keylogger) with ways to fight them.",
+      minutes: 22,
+      xp: 50,
+      blocks: [
+        {
+          type: "illustration",
+          emoji: "🎣",
+          caption: "A fisherman hides a hook inside tasty bait. Phishing hides a trap inside a tempting message: \"You have won ₹50,000! Click here.\"",
+        },
+        {
+          type: "text",
+          md: "**Cyber crime** is any criminal act in which a computer or network is the **target**, the **tool**, or both. Common cyber crimes:\n\n- **Hacking**: gaining **unauthorised access** to a computer or network. **Ethical (white-hat) hackers** are hired to find weaknesses so they can be fixed; **black-hat hackers** break in to steal or damage.\n- **Eavesdropping**: secretly listening to or intercepting private communication on a network.\n- **Phishing**: fake e-mails, SMS or websites that look genuine and trick people into giving passwords, card numbers or OTPs. **Fraud e-mails** promise prizes or jobs for a \"fee\".\n- **Identity theft**: stealing someone's personal details to pose as them, for example to take loans.\n- **Ransomware**: malware that locks or encrypts a victim's data and demands payment to release it.\n- **Cyber trolling**: posting insulting or provocative comments to upset people; **cyber bullying**: using technology to repeatedly harass, threaten or humiliate someone.",
+        },
+        {
+          type: "example",
+          title: "Spot the phishing message",
+          problem: "An SMS says: \"Dear customer, your bank KYC has expired. Your account will be blocked today. Update now at bank-kyc-update.example.xyz and enter your OTP.\" List the warning signs and what to do.",
+          steps: [
+            "**Urgency and fear** (\"blocked today\") push you to act without thinking.",
+            "The link is **not the bank's official domain**, and real banks never ask for an OTP.",
+            "The greeting is generic (\"Dear customer\"), not your name.",
+            "Action: do not click; check through the bank's official app or branch; report it (in India, at cybercrime.gov.in or the helpline 1930).",
+          ],
+          answer: "It is a phishing attempt. Never share OTP, PIN or passwords; verify through official channels and report it.",
+        },
+        {
+          type: "mistake",
+          wrong: "Only careless or non-technical people fall for phishing, and hackers only attack big companies.",
+          right: "Phishing messages are designed to fool everyone, and attackers target ordinary users because they are easier. Everyone needs safe habits.",
+          why: "Feeling \"too smart to be fooled\" makes people skip checks. Modern fake messages copy real logos and language, so verifying the source matters more than confidence.",
+        },
+        {
+          type: "heading",
+          text: "Cyber safety",
+        },
+        {
+          type: "list",
+          items: [
+            "**Safe browsing**: use updated browsers; look for **https** and the padlock before entering data; avoid unknown links, pop-ups and pirated sites; download only from trusted sources.",
+            "**Identity protection**: share as little personal information as possible; use strong, different passwords and two-factor authentication; never share OTPs.",
+            "**Confidentiality**: use a firewall; avoid public Wi-Fi for banking; on shared computers, use private browsing, do not save passwords and always log out; clear history when done.",
+          ],
+        },
+        {
+          type: "table",
+          headers: ["Malware", "What it does", "Key feature"],
+          rows: [
+            ["**Virus**", "Attaches itself to a program or file and damages data when the host is run", "Needs a host file and usually a user action to spread"],
+            ["**Worm**", "Copies itself across networks, using up bandwidth and storage", "Spreads **on its own**, no host file needed"],
+            ["**Trojan horse**", "Looks like useful software but secretly harms or opens a back door", "Disguised; does not copy itself"],
+            ["**Spyware**", "Secretly collects information about the user and sends it to others", "Works silently in the background"],
+            ["**Adware**", "Floods the user with unwanted advertisements", "Often bundled with free software"],
+            ["**Keylogger**", "Records every key pressed to capture passwords", "Can be software or a hardware device"],
+            ["**Ransomware**", "Encrypts or locks data and demands a ransom", "Back-ups are the best defence"],
+          ],
+        },
+        {
+          type: "checkpoint",
+          questions: [
+            {
+              kind: "mcq",
+              q: "Which malware spreads across a network by itself, without attaching to a file?",
+              options: ["Worm", "Virus", "Trojan horse", "Adware"],
+              answer: 0,
+              explain: "A worm is self-replicating and standalone. A virus needs a host file; a Trojan does not replicate.",
+            },
+          ],
+        },
+        {
+          type: "text",
+          md: "Malware spreads through infected e-mail attachments, downloads from untrusted sites, pirated software, infected pen drives and malicious links. To **combat** it: install and update **antivirus/anti-malware** software, keep the operating system and apps updated, use a firewall, do not open unexpected attachments, scan removable drives, and keep regular **back-ups** of important data.",
+        },
+        {
+          type: "activity",
+          activity: {
+            kind: "sort",
+            prompt: "Is this a safe or unsafe online habit?",
+            groups: ["Safe", "Unsafe"],
+            items: [
+              { text: "Using the same password everywhere", group: 1, hint: "One leak would unlock every account." },
+              { text: "Turning on two-factor authentication", group: 0, hint: "A second check stops most stolen-password attacks." },
+              { text: "Logging out of a cyber café computer", group: 0, hint: "The next user cannot open your account." },
+              { text: "Sharing an OTP with a \"bank officer\" on the phone", group: 1, hint: "Banks never ask for OTPs." },
+              { text: "Keeping regular back-ups", group: 0, hint: "Back-ups defeat ransomware." },
+              { text: "Installing a cracked (pirated) game", group: 1, hint: "Pirated software is a common malware carrier." },
+            ],
+            explain: "Safe habits limit what an attacker can do even if one thing goes wrong; unsafe ones hand them the keys.",
+          },
+        },
+        {
+          type: "callout",
+          tone: "exam",
+          title: "Board tip",
+          md: "\"Differentiate virus and worm\" and \"virus and Trojan\" are frequent. Give two points each: host needed or not, self-replicating or not, disguised or not. For phishing, mention the fake look-alike and the aim (stealing credentials).",
+        },
+        {
+          type: "keypoints",
+          items: [
+            "Cyber crime uses a computer as the target, the tool, or both.",
+            "Hacking, eavesdropping, phishing, identity theft, ransomware, trolling and bullying are cyber crimes.",
+            "Safe browsing, identity protection and confidentiality keep users safe.",
+            "Virus needs a host; worm spreads alone; Trojan is disguised.",
+            "Antivirus, updates, caution with attachments and back-ups combat malware.",
+          ],
+        },
+      ],
+      flashcards: [
+        { front: "Cyber crime", back: "A crime in which a computer or network is the target, the tool, or both." },
+        { front: "Ethical hacking", back: "Authorised hacking to find and fix security weaknesses (white-hat)." },
+        { front: "Phishing", back: "Fake e-mails, SMS or sites made to look genuine, to steal passwords, card details or OTPs." },
+        { front: "Ransomware", back: "Malware that encrypts or locks data and demands payment to restore it." },
+        { front: "Cyber bullying", back: "Using digital technology to repeatedly harass, threaten or humiliate someone." },
+        { front: "Virus vs worm", back: "A virus attaches to a host file and needs it to run; a worm copies itself across networks on its own." },
+        { front: "Trojan horse", back: "Malware disguised as useful software; it does not replicate itself." },
+        { front: "Keylogger", back: "Software or hardware that records keystrokes to capture passwords." },
+      ],
+      quiz: [
+        {
+          kind: "mcq",
+          q: "Secretly intercepting a private chat on a network is called…",
+          options: ["Eavesdropping", "Phishing", "Trolling", "Spamming"],
+          answer: 0,
+          explain: "Eavesdropping is listening in on communication without permission.",
+        },
+        {
+          kind: "mcq",
+          q: "A free \"speed booster\" app secretly opens a back door for an attacker. It is a…",
+          options: ["Trojan horse", "Worm", "Adware", "Keylogger"],
+          answer: 0,
+          explain: "It is disguised as useful software but does harm in secret: the definition of a Trojan.",
+        },
+        {
+          kind: "truefalse",
+          q: "Ethical hackers break into systems with the owner's permission to find weaknesses.",
+          answer: true,
+          explain: "White-hat hacking is authorised and aims to fix vulnerabilities.",
+        },
+        {
+          kind: "multi",
+          q: "Which are signs of a phishing e-mail?",
+          options: ["Urgent threats like \"account blocked today\"", "A link to a look-alike domain", "A request for your password or OTP", "Your teacher's usual school e-mail address with a class notice"],
+          answers: [0, 1, 2],
+          explain: "Urgency, look-alike links and requests for secrets are classic signs. A normal notice from a known, genuine address is not.",
+        },
+        {
+          kind: "mcq",
+          q: "Which is the best protection against losing data to ransomware?",
+          options: ["Regular back-ups kept separately", "Paying the ransom", "Using a bigger hard disk", "Turning off the monitor"],
+          answer: 0,
+          explain: "With a recent back-up you can restore your files without paying; paying does not guarantee recovery.",
+        },
+        {
+          kind: "fill",
+          q: "Before entering a password on a website, check that the address begins with ___ and shows a padlock.",
+          answer: ["https", "https://"],
+          explain: "https means the connection between your browser and the site is encrypted.",
+        },
+        {
+          kind: "mcq",
+          q: "Which malware mainly shows unwanted advertisements?",
+          options: ["Adware", "Spyware", "Worm", "Ransomware"],
+          answer: 0,
+          explain: "Adware floods the screen with ads; spyware secretly collects information.",
+        },
+      ],
+    },
+    {
+      slug: "it-act-ewaste-health",
+      title: "IT Act, Privacy, E-waste and Technology in Society",
+      summary: "India's Information Technology Act, 2000 and its 2008 amendment, data protection and privacy, e-waste hazards and management, health and computers, and gender and disability issues in teaching and using computers.",
+      minutes: 20,
+      xp: 50,
+      blocks: [
+        {
+          type: "illustration",
+          emoji: "🏛️",
+          caption: "Traffic rules keep roads safe. Cyber laws are the traffic rules of the Internet.",
+        },
+        {
+          type: "text",
+          md: "India's main cyber law is the **Information Technology Act, 2000 (IT Act)**, amended in **2008**. It:\n\n- gives **legal recognition to electronic records and digital signatures**, which made e-commerce and e-governance possible;\n- defines **cyber crimes** and their penalties, such as tampering with computer source documents, hacking-type offences, identity theft, cheating by impersonation online, and publishing obscene material electronically;\n- sets up authorities to handle disputes and appeals, and gives **CERT-In** (Indian Computer Emergency Response Team) the role of national agency for responding to cyber security incidents.\n\nVictims in India can report cyber crime on the **National Cyber Crime Reporting Portal** (cybercrime.gov.in) or call **1930** for online financial fraud.",
+        },
+        {
+          type: "text",
+          md: "**Data protection** means keeping personal data safe from misuse, theft and unauthorised sharing. **Privacy** is a person's right to control information about themselves. **Sensitive personal data** includes bank details, passwords, health records and biometric data (fingerprints, face). India passed the **Digital Personal Data Protection Act** in **2023**, which requires organisations to collect personal data only for a lawful purpose, with consent, and to protect it.",
+        },
+        {
+          type: "mistake",
+          wrong: "Anything I do online is anonymous, so cyber laws cannot reach me.",
+          right: "Online actions leave traces (IP addresses, device and account logs) that investigators can follow, and the IT Act makes cyber crimes punishable.",
+          why: "A screen name feels like a mask, but every connection passes through service providers who keep records. Passive footprints make most offenders traceable.",
+        },
+        {
+          type: "heading",
+          text: "E-waste",
+        },
+        {
+          type: "text",
+          md: "**E-waste** (electronic waste) is discarded electrical and electronic equipment: old phones, computers, TVs, batteries, chargers. It contains **toxic substances** such as **lead**, **mercury**, **cadmium**, **beryllium** and brominated flame retardants. Dumped in landfills or burnt in the open, these leak into soil, water and air:\n\n- **lead** harms the nervous system, kidneys and blood;\n- **mercury** damages the brain and nerves;\n- **cadmium** harms the kidneys and bones;\n- **beryllium** dust can cause lung disease.\n\n**Management**: **reduce** (buy only what you need, use devices longer), **reuse** (repair, resell or donate), **recycle** (give to authorised e-waste recyclers, not scrap dealers who burn wires). Under India's E-Waste (Management) Rules, producers have **Extended Producer Responsibility (EPR)**: they must arrange collection and recycling of their products.",
+        },
+        {
+          type: "example",
+          title: "Case: the old laptop",
+          problem: "Arjun's 8-year-old laptop works but is slow. A scrap dealer offers ₹300; a local school would accept it as a donation; the company runs a take-back scheme. Which choices are responsible, in the right order?",
+          steps: [
+            "First try **reuse**: a working laptop can be upgraded (more RAM, an SSD) or donated to the school.",
+            "If it truly cannot be used, **recycle** through the company's take-back scheme or an authorised recycler.",
+            "Before giving it away, **back up and wipe** personal data (privacy).",
+            "Informal scrap dealers often burn cables and dump parts, releasing toxins, so avoid them.",
+          ],
+          answer: "Wipe the data, then donate it (reuse); if unusable, use the take-back scheme or an authorised recycler. Avoid the scrap dealer.",
+        },
+        {
+          type: "table",
+          headers: ["Health problem", "Cause", "Prevention"],
+          rows: [
+            ["Eye strain, dry eyes", "Staring at screens for long", "20-20-20 rule: every 20 minutes look 20 feet away for 20 seconds; good lighting"],
+            ["Back and neck pain", "Poor posture", "Screen at eye level, back supported, feet flat"],
+            ["Wrist pain (repetitive strain injury)", "Long typing and mouse use", "Breaks, wrist support, correct keyboard height"],
+            ["Poor sleep, Internet addiction", "Late-night screen use, endless scrolling", "Screen-time limits; no screens before bed"],
+          ],
+        },
+        {
+          type: "text",
+          md: "**Gender and disability issues.** Fewer girls choose computer science, often because of stereotypes (\"computers are for boys\"), less access to devices at home, and few visible women role models. Schools can help with equal access, mixed teams, encouragement and examples of women in computing.\n\nStudents with disabilities face a lack of special teaching aids and trained teachers, and inaccessible software. **Assistive technology** helps: **screen readers** and text-to-speech for visually impaired users, **Braille keyboards and printers**, speech recognition, on-screen keyboards, and captions for hearing-impaired users.",
+        },
+        {
+          type: "checkpoint",
+          questions: [
+            {
+              kind: "mcq",
+              q: "Which of these gave legal recognition to electronic records and digital signatures in India?",
+              options: ["IT Act, 2000", "Copyright Act", "E-Waste Rules", "Patents Act"],
+              answer: 0,
+              explain: "The Information Technology Act, 2000 recognises e-records and digital signatures and deals with cyber crime.",
+            },
+          ],
+        },
+        {
+          type: "activity",
+          activity: {
+            kind: "order",
+            prompt: "Order the e-waste choices from most to least preferred.",
+            items: ["Reduce: keep using the device longer", "Reuse: repair, resell or donate it", "Recycle: give it to an authorised recycler", "Dispose: only as a last resort, through proper channels"],
+            explain: "Avoiding waste is best, then extending a device's life, then recovering its materials safely. Throwing e-waste in the dustbin or burning it is never acceptable.",
+          },
+        },
+        {
+          type: "callout",
+          tone: "exam",
+          title: "Board tip",
+          md: "Write the IT Act as **Information Technology Act, 2000** (amended 2008), and give two of its purposes. For e-waste, name at least two toxic elements with their effects and the three Rs. For disability, name specific assistive tools such as a screen reader or a Braille keyboard.",
+        },
+        {
+          type: "keypoints",
+          items: [
+            "The IT Act, 2000 (amended 2008) recognises e-records and digital signatures and punishes cyber crimes.",
+            "Privacy is control over your personal data; India's Digital Personal Data Protection Act came in 2023.",
+            "E-waste contains lead, mercury, cadmium and other toxins; reduce, reuse, recycle.",
+            "Good posture, breaks and screen limits prevent computer-related health problems.",
+            "Equal access, role models and assistive technology address gender and disability gaps.",
+          ],
+        },
+      ],
+      flashcards: [
+        { front: "IT Act", back: "India's Information Technology Act, 2000, amended in 2008: legal recognition of e-records and digital signatures, and penalties for cyber crimes." },
+        { front: "CERT-In", back: "Indian Computer Emergency Response Team: the national agency for responding to cyber security incidents." },
+        { front: "E-waste", back: "Discarded electrical and electronic equipment such as phones, computers and batteries." },
+        { front: "Toxins in e-waste", back: "Lead, mercury, cadmium, beryllium, brominated flame retardants." },
+        { front: "EPR", back: "Extended Producer Responsibility: producers must arrange collection and recycling of their products." },
+        { front: "20-20-20 rule", back: "Every 20 minutes, look at something 20 feet away for 20 seconds." },
+        { front: "Assistive technology examples", back: "Screen readers, text-to-speech, Braille keyboards and printers, speech recognition, captions." },
+        { front: "Cyber crime helpline (India)", back: "1930, and the portal cybercrime.gov.in." },
+      ],
+      quiz: [
+        {
+          kind: "mcq",
+          q: "In which year was the IT Act of India amended?",
+          options: ["2008", "2000", "2015", "1999"],
+          answer: 0,
+          explain: "The Act was passed in 2000 and amended in 2008.",
+        },
+        {
+          kind: "multi",
+          q: "Which toxic substances are found in e-waste?",
+          options: ["Lead", "Mercury", "Cadmium", "Oxygen"],
+          answers: [0, 1, 2],
+          explain: "Lead, mercury and cadmium are toxic metals in electronics; oxygen is not a pollutant here.",
+        },
+        {
+          kind: "truefalse",
+          q: "Selling old electronics to an informal scrap dealer who burns the wires is a safe way to recycle.",
+          answer: false,
+          explain: "Open burning releases toxic fumes. Use authorised recyclers or company take-back schemes.",
+        },
+        {
+          kind: "mcq",
+          q: "A visually impaired student wants to use a computer. Which tool helps most?",
+          options: ["Screen reader", "Larger mouse pad", "Second monitor", "Faster processor"],
+          answer: 0,
+          explain: "A screen reader speaks out the text and controls on the screen.",
+        },
+        {
+          kind: "fill",
+          q: "Long hours of typing can cause repetitive ___ injury in the wrists.",
+          answer: ["strain"],
+          explain: "Repetitive strain injury (RSI) comes from the same movements done for long periods.",
+        },
+        {
+          kind: "mcq",
+          q: "Which is an example of sensitive personal data?",
+          options: ["Fingerprint (biometric) data", "The name of your school", "Today's weather", "A public news article"],
+          answer: 0,
+          explain: "Biometric, health, financial and password data are sensitive and need the strongest protection.",
+        },
+        {
+          kind: "mcq",
+          q: "Which choice for an old but working phone is best for the environment?",
+          options: ["Reuse it by donating or reselling", "Throw it in the dustbin", "Burn it", "Bury it"],
+          answer: 0,
+          explain: "Reuse keeps the device in service; dustbin, burning and burying release toxins.",
+        },
+      ],
+    },
+    {
+      slug: "board-practice",
+      title: "Board practice: Society, Law and Ethics",
+      summary: "Mixed board-style questions and case studies on footprints, netiquette, IPR, licences, cyber crime, malware, the IT Act, e-waste and health.",
+      minutes: 18,
+      xp: 45,
+      blocks: [
+        {
+          type: "text",
+          md: "This chapter is mostly 1- and 2-mark theory plus 3- or 4-mark **case-based** questions. In a case, first name the issue (e.g. \"this is phishing\"), then say why, then give the remedy or the law.",
+        },
+        {
+          type: "example",
+          title: "Case study (4 marks)",
+          problem: "Rahul finds that a stranger has created a fake profile with his photos and is sending rude messages to his friends. Meanwhile his laptop shows pop-up adverts, and a file named \"marks_list.exe\" arrived by e-mail from an unknown sender. (a) Name the crime in the fake profile. (b) What is the pop-up problem? (c) Should he open the file? (d) Where can he report?",
+          steps: [
+            "(a) Posing as Rahul using his details is **identity theft** (impersonation); the rude messages are also **cyber bullying**.",
+            "(b) Unwanted pop-up adverts point to **adware**; scan with updated anti-malware.",
+            "(c) No. An unexpected .exe from an unknown sender is likely a **Trojan or virus**; delete it.",
+            "(d) Report the profile to the platform and the crime on cybercrime.gov.in; tell a trusted adult. Keep screenshots as evidence.",
+          ],
+          answer: "(a) Identity theft and cyber bullying (b) Adware (c) No — likely malware (d) The platform, cybercrime.gov.in, and a trusted adult; save evidence.",
+        },
+        {
+          type: "example",
+          title: "Short answers (2 marks each)",
+          problem: "(i) Give one difference between a virus and a worm. (ii) Give one difference between GPL and Apache licences. (iii) Give two net etiquettes.",
+          steps: [
+            "(i) A virus needs a host file to spread; a worm spreads on its own across networks.",
+            "(ii) GPL is copyleft (distributed changes must stay GPL); Apache is permissive (can be used in closed-source products with notices kept).",
+            "(iii) Be respectful of others' privacy and views; do not feed the troll. (Others: be ethical, share expertise, avoid cyber bullying.)",
+          ],
+          answer: "Any correct pair of points earns full marks; one example each makes the answer stronger.",
+        },
+        {
+          type: "mistake",
+          wrong: "Deleting a post removes it from the Internet completely.",
+          right: "Copies, screenshots, caches and archives may survive. Digital footprints are hard to erase, so think before posting.",
+          why: "The post disappears from your profile, so it feels gone. But others may already have saved or shared it.",
+        },
+        {
+          type: "checkpoint",
+          questions: [
+            {
+              kind: "mcq",
+              q: "A student downloads a paid movie from a pirate website. Which IPR violation is this?",
+              options: ["Copyright infringement", "Trademark infringement", "Patent infringement", "Plagiarism"],
+              answer: 0,
+              explain: "Using a copyrighted work without the owner's permission or payment is copyright infringement.",
+            },
+            {
+              kind: "mcq",
+              q: "Which is passive data collection?",
+              options: ["A shopping site noting what you viewed", "Writing a review", "Uploading a selfie", "Sending a message"],
+              answer: 0,
+              explain: "Viewing history is recorded without you actively sharing it.",
+            },
+          ],
+        },
+        {
+          type: "activity",
+          activity: {
+            kind: "match",
+            prompt: "Match each situation to its correct term.",
+            pairs: [
+              ["Fake lottery e-mail asking for bank details", "Phishing"],
+              ["Data locked until a payment is made", "Ransomware"],
+              ["Repeated threatening messages to a classmate", "Cyber bullying"],
+              ["Secretly recording keystrokes", "Keylogger"],
+              ["Old monitors dumped in a landfill", "Improper e-waste disposal"],
+            ],
+            explain: "Naming the issue correctly is the first mark in every case-based answer.",
+          },
+        },
+        {
+          type: "table",
+          headers: ["Asked", "Points to write"],
+          rows: [
+            ["Ways to avoid plagiarism", "Cite the source, use quotation marks, paraphrase in your own words."],
+            ["Ways to stay safe online", "Strong unique passwords, 2FA, https, no OTP sharing, log out, updates, back-ups."],
+            ["Purposes of the IT Act", "Legal status of e-records and digital signatures; penalties for cyber crimes."],
+            ["E-waste management", "Reduce, reuse, recycle via authorised recyclers; EPR."],
+            ["Health tips", "Posture, breaks, 20-20-20 rule, screen-time limits."],
+          ],
+        },
+        {
+          type: "callout",
+          tone: "exam",
+          title: "Board tip",
+          md: "Use the exact terms: *active/passive digital footprint*, *netizen*, *copyleft*, *Trojan horse*, *Extended Producer Responsibility*. Examiners look for the keyword before the explanation. Avoid one-word answers in 2-mark questions: give the term, a one-line meaning and an example.",
+        },
+        {
+          type: "keypoints",
+          items: [
+            "Case answers: name the issue, explain, give the remedy or reporting route.",
+            "Piracy is copyright infringement; copying without credit is plagiarism.",
+            "Unknown attachments, especially .exe files, are a malware risk.",
+            "Deleted posts may survive; think before you post.",
+          ],
+        },
+      ],
+      flashcards: [
+        { front: "First step in a case-based answer", back: "Name the issue with the exact term (e.g. phishing, identity theft)." },
+        { front: "Piracy", back: "Copying or distributing copyrighted software, films or music without permission: copyright infringement." },
+        { front: "Ways to avoid plagiarism", back: "Cite sources, quote exactly, paraphrase in your own words." },
+        { front: "Evidence of cyber bullying", back: "Keep screenshots and messages; report to the platform, a trusted adult and cybercrime.gov.in." },
+        { front: "Why avoid unknown .exe attachments?", back: "They can install viruses, Trojans or ransomware when opened." },
+        { front: "Two purposes of the IT Act, 2000", back: "Legal recognition of electronic records and digital signatures; punishment of cyber crimes." },
+      ],
+      quiz: [
+        {
+          kind: "mcq",
+          q: "Posting a classmate's private photo online without consent mainly violates their…",
+          options: ["Privacy", "Patent", "Trademark", "Bandwidth"],
+          answer: 0,
+          explain: "Sharing someone's personal images without consent is a privacy violation and may be punishable.",
+        },
+        {
+          kind: "truefalse",
+          q: "Creative Commons licences are mainly used for creative works such as images, text and music.",
+          answer: true,
+          explain: "CC licences suit creative content; GPL and Apache are mainly for software.",
+        },
+        {
+          kind: "mcq",
+          q: "Which statement about a Trojan horse is correct?",
+          options: ["It pretends to be useful software", "It copies itself across networks without a host", "It only shows adverts", "It is a hardware device"],
+          answer: 0,
+          explain: "A Trojan is disguised as something useful. Self-spreading without a host describes a worm.",
+        },
+        {
+          kind: "multi",
+          q: "Which are good practices on a shared (cyber café) computer?",
+          options: ["Use private browsing", "Log out of every account", "Let the browser save your password", "Clear the browsing history"],
+          answers: [0, 1, 3],
+          explain: "Saving passwords on a shared computer lets the next user into your accounts.",
+        },
+        {
+          kind: "fill",
+          q: "A responsible citizen of the digital society is called a ___.",
+          answer: ["netizen", "digital citizen"],
+          explain: "Netizen = net + citizen.",
+        },
+        {
+          kind: "mcq",
+          q: "Which IPR would a company use to protect a new, non-obvious manufacturing process?",
+          options: ["Patent", "Copyright", "Trademark", "Creative Commons"],
+          answer: 0,
+          explain: "Inventions and new processes are protected by patents.",
+        },
+        {
+          kind: "mcq",
+          q: "Which is NOT a sign of good communication etiquette?",
+          options: ["Typing in ALL CAPITALS to make a point", "Keeping messages short and clear", "Being polite to people you disagree with", "Checking facts before sharing"],
+          answer: 0,
+          explain: "All capitals reads as shouting online. The others follow the precise, polite and credible rules.",
+        },
+      ],
+    },
+  ],
+};
+
+export const topics: Topic[] = [flowOfControl, strings, lists, tuplesDicts, modules, society];
 
 /** Chapter title ("11:" / "12:" + exact title) → topic slug(s) that teach it. */
 export const links: Record<string, string | string[]> = {
@@ -2972,4 +3636,5 @@ export const links: Record<string, string | string[]> = {
   "11:Lists": "c11-cs-lists",
   "11:Tuples and Dictionaries": "c11-cs-tuples-dictionaries",
   "11:Python Modules": "c11-cs-python-modules",
+  "11:Society, Law and Ethics": "c11-cs-society-law-ethics",
 };

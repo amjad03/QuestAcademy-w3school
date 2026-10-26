@@ -1411,6 +1411,626 @@ For $n \le x < n + 1$ (with $n$ an integer), $[x] = n$. So on $[0, 1)$ the value
       },
     ],
   },
+  /* ------------------------------------------------------------------ */
+  /* Class 11: Trigonometric Functions (NCERT Ch 3, Karnataka I PUC, ISC) */
+  /* ------------------------------------------------------------------ */
+  {
+    slug: "c11-trigonometric-functions",
+    title: "Trigonometric Functions (Class 11)",
+    icon: "📐",
+    description: "Radian measure, trigonometric functions of real numbers, signs, domains, ranges and graphs, sum and difference formulae, multiple angles, sum-product formulae and trigonometric equations.",
+    lessons: [
+      {
+        slug: "c11-radian-trig-functions",
+        title: "Angles, Radian Measure and Trigonometric Functions",
+        summary: "Degree and radian measure, l = rθ, trigonometric functions of any real number through the unit circle, standard values and signs in the four quadrants.",
+        minutes: 22,
+        xp: 55,
+        blocks: [
+          {
+            type: "illustration",
+            emoji: "🕰️",
+            caption: "In 20 minutes the minute hand of a clock turns through one third of a full turn: 120°, or 2π/3 radians.",
+          },
+          {
+            type: "text",
+            md: t`An **angle** is the amount of rotation of a ray about its end point (the **vertex**) from an **initial side** to a **terminal side**. Rotation **anticlockwise** gives a **positive** angle; **clockwise** gives a **negative** angle. Angles can be larger than one full turn: $450°$ is one turn plus $90°$.
+
+In **degree measure**, one full turn is $360°$; $1° = 60'$ (minutes) and $1' = 60''$ (seconds).`,
+          },
+          {
+            type: "text",
+            md: t`In **radian measure**, an angle at the centre of a circle that cuts off an arc **equal in length to the radius** measures **1 radian**. A full circle has circumference $2\pi r$, so a full turn is $2\pi$ radians.
+
+If an arc of length $l$ on a circle of radius $r$ subtends an angle $\theta$ radians at the centre, then $l = r\theta$. This formula works only with $\theta$ in **radians**. When no unit is written, an angle is taken to be in radians: $\sin 2$ means the sine of 2 radians.`,
+          },
+          {
+            type: "formula",
+            tex: t`\pi \text{ rad} = 180^\circ, \qquad 1 \text{ rad} = \frac{180^\circ}{\pi} \approx 57^\circ 16', \qquad 1^\circ = \frac{\pi}{180} \text{ rad} \approx 0.01746 \text{ rad}, \qquad l = r\theta`,
+            caption: "Radian measure = (π/180) × degree measure; degree measure = (180/π) × radian measure.",
+          },
+          {
+            type: "example",
+            title: "Converting between degrees and radians",
+            problem: t`(a) Convert $25^\circ 30'$ into radians. (b) Convert 3 radians into degrees, minutes and seconds (use $\pi = \frac{22}{7}$).`,
+            steps: [
+              t`(a) $30' = \frac{30}{60}^\circ = \frac{1}{2}^\circ$, so $25^\circ 30' = \frac{51}{2}^\circ$.`,
+              t`Radians $= \frac{51}{2} \times \frac{\pi}{180} = \frac{51\pi}{360} = \frac{17\pi}{120}$.`,
+              t`(b) Degrees $= 3 \times \frac{180}{\pi} = 3 \times 180 \times \frac{7}{22} = \frac{3780}{22} = 171\frac{9}{11}^\circ$.`,
+              t`$\frac{9}{11}^\circ = \frac{540}{11}' = 49\frac{1}{11}'$, and $\frac{1}{11}' = \frac{60}{11}'' \approx 5''$.`,
+            ],
+            answer: t`(a) $\frac{17\pi}{120}$ rad. (b) about $171^\circ 49' 5''$.`,
+          },
+          {
+            type: "example",
+            title: "Using l = rθ",
+            problem: t`(a) An arc of length 22 cm lies on a circle of radius 14 cm. Find the angle it subtends at the centre, in degrees (use $\pi = \frac{22}{7}$). (b) A wheel turns at 300 revolutions per minute. Through how many radians does it turn in one second?`,
+            steps: [
+              t`(a) $\theta = \frac{l}{r} = \frac{22}{14} = \frac{11}{7}$ radians.`,
+              t`In degrees: $\frac{11}{7} \times \frac{180}{\pi} = \frac{11}{7} \times 180 \times \frac{7}{22} = 90^\circ$.`,
+              t`(b) 300 revolutions per minute is $\frac{300}{60} = 5$ revolutions per second.`,
+              t`Each revolution is $2\pi$ radians, so $5 \times 2\pi = 10\pi$ radians per second.`,
+            ],
+            answer: t`(a) $90^\circ$. (b) $10\pi$ radians.`,
+          },
+          {
+            type: "checkpoint",
+            questions: [
+              {
+                kind: "mcq",
+                q: t`$210^\circ$ in radian measure is`,
+                options: [t`$\frac{5\pi}{6}$`, t`$\frac{7\pi}{6}$`, t`$\frac{4\pi}{3}$`, t`$\frac{7\pi}{4}$`],
+                answer: 1,
+                explain: t`$210 \times \frac{\pi}{180} = \frac{7\pi}{6}$.`,
+              },
+            ],
+          },
+          {
+            type: "mistake",
+            wrong: t`For an arc subtending $60^\circ$ in a circle of radius 6 cm, $l = r\theta = 6 \times 60 = 360$ cm.`,
+            right: t`Convert first: $60^\circ = \frac{\pi}{3}$ rad, so $l = 6 \times \frac{\pi}{3} = 2\pi \approx 6.28$ cm.`,
+            why: "The formula l = rθ comes from the definition of the radian, so it is false for degrees. A quick sense check: an arc can never be longer than the whole circumference (here about 37.7 cm).",
+          },
+          {
+            type: "text",
+            md: t`**Trigonometric functions of a real number.** Draw the **unit circle** $x^2 + y^2 = 1$. Start at $A(1, 0)$ and move along the circle a distance $x$ (anticlockwise if $x > 0$, clockwise if $x < 0$), reaching a point $P$. The arc $AP$ subtends $x$ radians at the centre, and we define $P = (\cos x, \sin x)$. This works for **every** real $x$, so $\sin x$ and $\cos x$ are defined on all of $\mathbf{R}$.
+
+Then $\tan x = \frac{\sin x}{\cos x}$ ($\cos x \ne 0$), $\cot x = \frac{\cos x}{\sin x}$ ($\sin x \ne 0$), $\sec x = \frac{1}{\cos x}$, $\csc x = \frac{1}{\sin x}$. Since $P$ is on the unit circle, $\sin^2 x + \cos^2 x = 1$, which gives $1 + \tan^2 x = \sec^2 x$ and $1 + \cot^2 x = \csc^2 x$.
+
+$\sin x = 0$ exactly when $x = n\pi$, and $\cos x = 0$ exactly when $x = (2n + 1)\frac{\pi}{2}$, $n \in \mathbf{Z}$. A full turn brings $P$ back: $\sin(2n\pi + x) = \sin x$ and $\cos(2n\pi + x) = \cos x$.`,
+          },
+          {
+            type: "table",
+            headers: ["x", "0", "π/6", "π/4", "π/3", "π/2", "π", "3π/2", "2π"],
+            rows: [
+              ["sin x", "0", "1/2", t`$\frac{1}{\sqrt{2}}$`, t`$\frac{\sqrt{3}}{2}$`, "1", "0", "−1", "0"],
+              ["cos x", "1", t`$\frac{\sqrt{3}}{2}$`, t`$\frac{1}{\sqrt{2}}$`, "1/2", "0", "−1", "0", "1"],
+              ["tan x", "0", t`$\frac{1}{\sqrt{3}}$`, "1", t`$\sqrt{3}$`, "not defined", "0", "not defined", "0"],
+            ],
+          },
+          {
+            type: "table",
+            headers: ["Quadrant", "Angles", "Positive functions"],
+            rows: [
+              ["I", t`$0 < x < \frac{\pi}{2}$`, "all six"],
+              ["II", t`$\frac{\pi}{2} < x < \pi$`, "sin and cosec only"],
+              ["III", t`$\pi < x < \frac{3\pi}{2}$`, "tan and cot only"],
+              ["IV", t`$\frac{3\pi}{2} < x < 2\pi$`, "cos and sec only"],
+            ],
+          },
+          {
+            type: "example",
+            title: "All six values from one",
+            problem: t`$\cos x = -\frac{3}{5}$ and $x$ lies in the third quadrant. Find the other five trigonometric functions.`,
+            steps: [
+              t`$\sin^2 x = 1 - \cos^2 x = 1 - \frac{9}{25} = \frac{16}{25}$, so $\sin x = \pm\frac{4}{5}$.`,
+              t`In the third quadrant $\sin x < 0$, so $\sin x = -\frac{4}{5}$.`,
+              t`$\tan x = \frac{\sin x}{\cos x} = \frac{-4/5}{-3/5} = \frac{4}{3}$ (positive in quadrant III, as expected), so $\cot x = \frac{3}{4}$.`,
+              t`$\sec x = \frac{1}{\cos x} = -\frac{5}{3}$ and $\csc x = \frac{1}{\sin x} = -\frac{5}{4}$.`,
+            ],
+            answer: t`$\sin x = -\frac{4}{5}$, $\tan x = \frac{4}{3}$, $\cot x = \frac{3}{4}$, $\sec x = -\frac{5}{3}$, $\csc x = -\frac{5}{4}$.`,
+          },
+          {
+            type: "activity",
+            activity: {
+              kind: "match",
+              prompt: "Match each angle to the quadrant of its terminal side.",
+              pairs: [
+                ["7π/3", "Quadrant I"],
+                ["2π/3", "Quadrant II"],
+                ["5π/4", "Quadrant III"],
+                ["−π/6", "Quadrant IV"],
+              ],
+              explain: "7π/3 = 2π + π/3 lands where π/3 does. A negative angle turns clockwise, so −π/6 ends just below the positive x-axis.",
+            },
+          },
+          {
+            type: "callout",
+            tone: "exam",
+            title: "Board exam tips",
+            md: t`In "find the other five" questions, marks are given for the quadrant reasoning: write "since $x$ lies in quadrant III, $\sin x < 0$" before choosing the sign. In conversions, show the factor $\frac{\pi}{180}$ or $\frac{180}{\pi}$, and use $\pi = \frac{22}{7}$ only if the question says so.`,
+          },
+          {
+            type: "keypoints",
+            items: [
+              t`$\pi$ radians $= 180^\circ$; $l = r\theta$ needs $\theta$ in radians.`,
+              t`On the unit circle, the point at arc length $x$ from $(1, 0)$ is $(\cos x, \sin x)$, for every real $x$.`,
+              t`$\sin^2 x + \cos^2 x = 1$, $1 + \tan^2 x = \sec^2 x$, $1 + \cot^2 x = \csc^2 x$.`,
+              "Positive functions by quadrant: I all, II sin, III tan, IV cos (with their reciprocals).",
+              t`$\sin x = 0 \iff x = n\pi$; $\cos x = 0 \iff x = (2n + 1)\frac{\pi}{2}$.`,
+            ],
+          },
+        ],
+        flashcards: [
+          { front: "One radian", back: "The angle at the centre of a circle subtended by an arc equal in length to the radius." },
+          { front: "Degrees ↔ radians", back: t`$\pi \text{ rad} = 180^\circ$; multiply degrees by $\frac{\pi}{180}$ to get radians.` },
+          { front: "Arc length formula", back: t`$l = r\theta$, with $\theta$ in radians.` },
+          { front: "1 radian in degrees", back: t`$\frac{180}{\pi}^\circ \approx 57^\circ 16'$.` },
+          { front: "Unit circle definition", back: t`The point reached after an arc of length $x$ from $(1, 0)$ is $(\cos x, \sin x)$.` },
+          { front: "Where sin x = 0 and cos x = 0", back: t`$\sin x = 0$ at $x = n\pi$; $\cos x = 0$ at $x = (2n + 1)\frac{\pi}{2}$.` },
+          { front: "Signs by quadrant", back: "I: all positive; II: sin, cosec; III: tan, cot; IV: cos, sec." },
+          { front: t`$\cos\frac{\pi}{6}$, $\sin\frac{\pi}{6}$, $\tan\frac{\pi}{6}$`, back: t`$\frac{\sqrt{3}}{2}$, $\frac{1}{2}$, $\frac{1}{\sqrt{3}}$.` },
+        ],
+        quiz: [
+          {
+            kind: "mcq",
+            q: t`$-37^\circ 30'$ in radians is`,
+            options: [t`$-\frac{5\pi}{24}$`, t`$-\frac{5\pi}{12}$`, t`$-\frac{37\pi}{180}$`, t`$-\frac{7\pi}{36}$`],
+            answer: 0,
+            explain: t`$-37\frac{1}{2}^\circ = -\frac{75}{2}^\circ$; $-\frac{75}{2} \times \frac{\pi}{180} = -\frac{75\pi}{360} = -\frac{5\pi}{24}$.`,
+          },
+          {
+            kind: "numeric",
+            q: t`Find the length (in cm) of an arc of a circle of radius 21 cm that subtends $60^\circ$ at the centre. Use $\pi = \frac{22}{7}$.`,
+            answer: 22,
+            unit: "cm",
+            explain: t`$l = r\theta = 21 \times \frac{\pi}{3} = 7\pi = 7 \times \frac{22}{7} = 22$ cm.`,
+          },
+          {
+            kind: "mcq",
+            q: t`$\cos\frac{17\pi}{3}$ equals`,
+            options: [t`$-\frac{1}{2}$`, t`$\frac{1}{2}$`, t`$\frac{\sqrt{3}}{2}$`, t`$-\frac{\sqrt{3}}{2}$`],
+            answer: 1,
+            difficulty: 2,
+            hint: t`Remove whole turns of $2\pi$.`,
+            explain: t`$\frac{17\pi}{3} = 4\pi + \frac{5\pi}{3}$, so the value is $\cos\frac{5\pi}{3}$. $\frac{5\pi}{3}$ is in quadrant IV where cosine is positive, and $\cos\frac{5\pi}{3} = \cos\frac{\pi}{3} = \frac{1}{2}$.`,
+          },
+          {
+            kind: "mcq",
+            q: t`$\sin x = \frac{3}{5}$ and $x$ lies in the second quadrant. Then $\tan x$ is`,
+            options: [t`$\frac{3}{4}$`, t`$-\frac{3}{4}$`, t`$-\frac{4}{3}$`, t`$\frac{4}{5}$`],
+            answer: 1,
+            explain: t`$\cos x = -\frac{4}{5}$ in quadrant II, so $\tan x = \frac{3/5}{-4/5} = -\frac{3}{4}$.`,
+          },
+          {
+            kind: "truefalse",
+            q: "The tangent function is positive in the third quadrant.",
+            answer: true,
+            explain: "Both sin and cos are negative there, so their ratio is positive.",
+          },
+          {
+            kind: "multi",
+            q: "Which identities hold wherever both sides are defined?",
+            options: [t`$\sin^2 x + \cos^2 x = 1$`, t`$1 + \tan^2 x = \sec^2 x$`, t`$\sin x + \cos x = 1$`, t`$\csc^2 x - \cot^2 x = 1$`],
+            answers: [0, 1, 3],
+            explain: t`Divide $\sin^2 x + \cos^2 x = 1$ by $\cos^2 x$ or by $\sin^2 x$ to get the others. $\sin x + \cos x = 1$ fails, e.g. at $x = \frac{\pi}{4}$ the sum is $\sqrt{2}$.`,
+          },
+          {
+            kind: "numeric",
+            q: "In how many seconds does the minute hand of a clock turn through π/3 radians?",
+            answer: 600,
+            unit: "s",
+            difficulty: 2,
+            explain: t`The minute hand turns $2\pi$ in 60 minutes. $\frac{\pi}{3}$ is $\frac{1}{6}$ of a turn: 10 minutes $= 600$ s.`,
+          },
+        ],
+      },
+      {
+        slug: "c11-trig-graphs-compound",
+        title: "Graphs, Allied Angles and Sum and Difference Formulae",
+        summary: "Domains, ranges, behaviour and graphs of the six functions, the proof of cos(x + y), the formulae it leads to, and allied-angle results.",
+        minutes: 24,
+        xp: 60,
+        blocks: [
+          {
+            type: "text",
+            md: t`As $x$ runs through $\mathbf{R}$, the point $(\cos x, \sin x)$ goes round the unit circle again and again. So $\sin x$ and $\cos x$ always lie between $-1$ and $1$, and their values repeat every $2\pi$: they are **periodic** with period $2\pi$. The tangent and cotangent repeat every $\pi$.
+
+Also, $-x$ is the mirror image of $x$ in the $x$-axis, so $\cos(-x) = \cos x$ (cosine is **even**) and $\sin(-x) = -\sin x$ (sine is **odd**).`,
+          },
+          {
+            type: "table",
+            headers: ["Function", "Domain", "Range", "Period"],
+            rows: [
+              ["sin x", t`$\mathbf{R}$`, t`$[-1, 1]$`, t`$2\pi$`],
+              ["cos x", t`$\mathbf{R}$`, t`$[-1, 1]$`, t`$2\pi$`],
+              ["tan x", t`$\mathbf{R} - \{(2n + 1)\frac{\pi}{2} : n \in \mathbf{Z}\}$`, t`$\mathbf{R}$`, t`$\pi$`],
+              ["cot x", t`$\mathbf{R} - \{n\pi : n \in \mathbf{Z}\}$`, t`$\mathbf{R}$`, t`$\pi$`],
+              ["sec x", t`$\mathbf{R} - \{(2n + 1)\frac{\pi}{2} : n \in \mathbf{Z}\}$`, t`$(-\infty, -1] \cup [1, \infty)$`, t`$2\pi$`],
+              ["cosec x", t`$\mathbf{R} - \{n\pi : n \in \mathbf{Z}\}$`, t`$(-\infty, -1] \cup [1, \infty)$`, t`$2\pi$`],
+            ],
+          },
+          {
+            type: "table",
+            headers: ["", "Quadrant I", "Quadrant II", "Quadrant III", "Quadrant IV"],
+            rows: [
+              ["sin x", "increases 0 to 1", "decreases 1 to 0", "decreases 0 to −1", "increases −1 to 0"],
+              ["cos x", "decreases 1 to 0", "decreases 0 to −1", "increases −1 to 0", "increases 0 to 1"],
+              ["tan x", "increases 0 to ∞", "increases −∞ to 0", "increases 0 to ∞", "increases −∞ to 0"],
+            ],
+          },
+          {
+            type: "text",
+            md: t`**Graphs.** The graph of $y = \sin x$ is a smooth wave through $(0, 0)$, rising to $1$ at $\frac{\pi}{2}$, back to $0$ at $\pi$, down to $-1$ at $\frac{3\pi}{2}$ and back to $0$ at $2\pi$, then repeating. The graph of $y = \cos x$ is the same wave shifted left by $\frac{\pi}{2}$, starting at $(0, 1)$. The graph of $y = \tan x$ is a set of increasing branches, one on each interval $\left(-\frac{\pi}{2}, \frac{\pi}{2}\right)$, $\left(\frac{\pi}{2}, \frac{3\pi}{2}\right)$, …, with vertical asymptotes at the odd multiples of $\frac{\pi}{2}$. The graphs of $\csc x$ and $\sec x$ are U-shaped pieces that touch the sine and cosine waves at their peaks and troughs.`,
+          },
+          {
+            type: "example",
+            title: "Proof: cos(x + y) = cos x cos y − sin x sin y",
+            problem: t`Prove the formula for $\cos(x + y)$ using the unit circle.`,
+            steps: [
+              t`On the unit circle mark $P_1 = (\cos x, \sin x)$, $P_2 = (\cos(x + y), \sin(x + y))$, $P_3 = (\cos(-y), \sin(-y)) = (\cos y, -\sin y)$ and $P_4 = (1, 0)$.`,
+              t`$\angle P_1OP_3 = x + y = \angle P_4OP_2$. Equal angles at the centre cut equal chords, so $P_1P_3 = P_2P_4$, hence $P_1P_3^2 = P_2P_4^2$.`,
+              t`$P_1P_3^2 = (\cos x - \cos y)^2 + (\sin x + \sin y)^2 = 2 - 2(\cos x\cos y - \sin x\sin y)$, using $\sin^2 + \cos^2 = 1$ twice.`,
+              t`$P_2P_4^2 = (1 - \cos(x + y))^2 + \sin^2(x + y) = 2 - 2\cos(x + y)$.`,
+              t`Equate the two: $\cos(x + y) = \cos x\cos y - \sin x\sin y$.`,
+            ],
+            answer: t`$\cos(x + y) = \cos x \cos y - \sin x \sin y$ for all real $x, y$.`,
+          },
+          {
+            type: "text",
+            md: t`**Everything else follows.** Replace $y$ by $-y$: $\cos(x - y) = \cos x\cos y + \sin x\sin y$. Put $x = \frac{\pi}{2}$: $\cos\left(\frac{\pi}{2} - y\right) = \sin y$, and then $\sin\left(\frac{\pi}{2} - y\right) = \cos y$. Using these, $\sin(x + y) = \cos\left(\left(\frac{\pi}{2} - x\right) - y\right) = \sin x\cos y + \cos x\sin y$, and $y \to -y$ gives $\sin(x - y)$. Dividing the sine and cosine formulae gives $\tan(x \pm y)$ and $\cot(x \pm y)$.`,
+          },
+          {
+            type: "formula",
+            tex: t`\begin{aligned} \sin(x \pm y) &= \sin x\cos y \pm \cos x\sin y \\ \cos(x \pm y) &= \cos x\cos y \mp \sin x\sin y \\ \tan(x \pm y) &= \frac{\tan x \pm \tan y}{1 \mp \tan x\tan y} \\ \cot(x \pm y) &= \frac{\cot x\cot y \mp 1}{\cot y \pm \cot x} \end{aligned}`,
+            caption: "The tan formula needs x, y and x ± y not to be odd multiples of π/2; the cot formula needs them not to be multiples of π.",
+          },
+          {
+            type: "table",
+            headers: ["Angle", "sin", "cos"],
+            rows: [
+              [t`$\frac{\pi}{2} - x$`, t`$\cos x$`, t`$\sin x$`],
+              [t`$\frac{\pi}{2} + x$`, t`$\cos x$`, t`$-\sin x$`],
+              [t`$\pi - x$`, t`$\sin x$`, t`$-\cos x$`],
+              [t`$\pi + x$`, t`$-\sin x$`, t`$-\cos x$`],
+              [t`$2\pi - x$`, t`$-\sin x$`, t`$\cos x$`],
+            ],
+          },
+          {
+            type: "example",
+            title: "Exact values",
+            problem: t`Find (a) $\cos 15^\circ$ and (b) $\tan 105^\circ$.`,
+            steps: [
+              t`(a) $\cos(45^\circ - 30^\circ) = \cos 45^\circ\cos 30^\circ + \sin 45^\circ\sin 30^\circ = \frac{1}{\sqrt{2}}\cdot\frac{\sqrt{3}}{2} + \frac{1}{\sqrt{2}}\cdot\frac{1}{2}$.`,
+              t`$= \frac{\sqrt{3} + 1}{2\sqrt{2}} = \frac{\sqrt{6} + \sqrt{2}}{4}$.`,
+              t`(b) $\tan(60^\circ + 45^\circ) = \frac{\sqrt{3} + 1}{1 - \sqrt{3}}$.`,
+              t`Multiply top and bottom by $1 + \sqrt{3}$: $\frac{(\sqrt{3} + 1)^2}{1 - 3} = \frac{4 + 2\sqrt{3}}{-2} = -(2 + \sqrt{3})$.`,
+            ],
+            answer: t`$\cos 15^\circ = \frac{\sqrt{6} + \sqrt{2}}{4}$; $\tan 105^\circ = -(2 + \sqrt{3})$ (negative, as $105^\circ$ is in quadrant II).`,
+          },
+          {
+            type: "checkpoint",
+            questions: [
+              {
+                kind: "mcq",
+                q: t`$\sin 75^\circ\cos 15^\circ + \cos 75^\circ\sin 15^\circ$ equals`,
+                options: ["0", t`$\frac{1}{2}$`, "1", t`$\frac{\sqrt{3}}{2}$`],
+                answer: 2,
+                explain: t`It is $\sin(75^\circ + 15^\circ) = \sin 90^\circ = 1$.`,
+              },
+            ],
+          },
+          {
+            type: "example",
+            title: "Proving an identity",
+            problem: t`Prove that $\sin\left(\frac{\pi}{6} + x\right) + \cos\left(\frac{\pi}{3} + x\right) = \cos x$.`,
+            steps: [
+              t`$\sin\left(\frac{\pi}{6} + x\right) = \sin\frac{\pi}{6}\cos x + \cos\frac{\pi}{6}\sin x = \frac{1}{2}\cos x + \frac{\sqrt{3}}{2}\sin x$.`,
+              t`$\cos\left(\frac{\pi}{3} + x\right) = \cos\frac{\pi}{3}\cos x - \sin\frac{\pi}{3}\sin x = \frac{1}{2}\cos x - \frac{\sqrt{3}}{2}\sin x$.`,
+              t`Add: the $\sin x$ terms cancel, leaving $\frac{1}{2}\cos x + \frac{1}{2}\cos x = \cos x$.`,
+            ],
+            answer: "LHS = cos x = RHS. ∎",
+          },
+          {
+            type: "mistake",
+            wrong: t`$\sin(x + y) = \sin x + \sin y$, so $\sin 90^\circ = \sin 60^\circ + \sin 30^\circ$.`,
+            right: t`$\sin(x + y) = \sin x\cos y + \cos x\sin y$. Check: $\sin 60^\circ + \sin 30^\circ = \frac{\sqrt{3} + 1}{2} \approx 1.37$, which is not even a possible sine value.`,
+            why: "Sine is not linear, so it does not distribute over addition. Testing one pair of angles exposes the error at once.",
+          },
+          {
+            type: "activity",
+            activity: {
+              kind: "reveal",
+              prompt: t`What is $\sin(\pi + x)$?`,
+              emoji: "🔄",
+              options: [t`$\sin x$`, t`$-\sin x$`, t`$\cos x$`, t`$-\cos x$`],
+              answer: 1,
+              trap: 0,
+              explain: t`$\sin(\pi + x) = \sin\pi\cos x + \cos\pi\sin x = -\sin x$. Adding $\pi$ moves the point to the opposite side of the circle, flipping both coordinates.`,
+            },
+          },
+          {
+            type: "callout",
+            tone: "exam",
+            title: "Board exam tips",
+            md: t`The proof of $\cos(x + y)$ is a standard long-answer question: draw the unit circle with all four points labelled, state why the chords are equal, then expand. For allied angles, a quick method: if the angle is $\pi \pm x$ or $2\pi - x$, keep the same function; if it is $\frac{\pi}{2} \pm x$, change sin ↔ cos; then fix the sign from the quadrant, treating $x$ as acute.`,
+          },
+          {
+            type: "keypoints",
+            items: [
+              t`sin and cos: domain $\mathbf{R}$, range $[-1, 1]$, period $2\pi$; tan and cot have period $\pi$.`,
+              t`$\cos(-x) = \cos x$ and $\sin(-x) = -\sin x$.`,
+              t`$\cos(x + y) = \cos x\cos y - \sin x\sin y$ is proved with chords on the unit circle; the other formulae follow.`,
+              t`$\tan(x + y) = \frac{\tan x + \tan y}{1 - \tan x\tan y}$.`,
+              "Allied angles: same function for π ± x, 2π − x; co-function for π/2 ± x; sign from the quadrant.",
+            ],
+          },
+        ],
+        flashcards: [
+          { front: "Range of sec x and cosec x", back: t`$(-\infty, -1] \cup [1, \infty)$.` },
+          { front: "Period of tan x", back: t`$\pi$.` },
+          { front: "Domain of tan x", back: t`$\mathbf{R} - \{(2n+1)\frac{\pi}{2} : n \in \mathbf{Z}\}$.` },
+          { front: t`$\cos(x - y)$`, back: t`$\cos x\cos y + \sin x\sin y$.` },
+          { front: t`$\sin(x - y)$`, back: t`$\sin x\cos y - \cos x\sin y$.` },
+          { front: t`$\tan(x - y)$`, back: t`$\frac{\tan x - \tan y}{1 + \tan x\tan y}$.` },
+          { front: t`$\cos\left(\frac{\pi}{2} + x\right)$`, back: t`$-\sin x$.` },
+          { front: t`$\cos 15^\circ$`, back: t`$\frac{\sqrt{6} + \sqrt{2}}{4}$.` },
+        ],
+        quiz: [
+          {
+            kind: "mcq",
+            q: t`$\cos 105^\circ$ equals`,
+            options: [t`$\frac{1 - \sqrt{3}}{2\sqrt{2}}$`, t`$\frac{1 + \sqrt{3}}{2\sqrt{2}}$`, t`$\frac{\sqrt{3} - 1}{2\sqrt{2}}$`, t`$-\frac{1 + \sqrt{3}}{2\sqrt{2}}$`],
+            answer: 0,
+            explain: t`$\cos(60^\circ + 45^\circ) = \frac{1}{2}\cdot\frac{1}{\sqrt{2}} - \frac{\sqrt{3}}{2}\cdot\frac{1}{\sqrt{2}} = \frac{1 - \sqrt{3}}{2\sqrt{2}}$, which is negative, as it should be in quadrant II.`,
+          },
+          {
+            kind: "mcq",
+            q: t`$\cos(\pi - x)$ equals`,
+            options: [t`$\cos x$`, t`$-\cos x$`, t`$\sin x$`, t`$-\sin x$`],
+            answer: 1,
+            explain: t`$\cos\pi\cos x + \sin\pi\sin x = -\cos x$.`,
+          },
+          {
+            kind: "numeric",
+            q: t`$\tan A = 2$ and $\tan B = 3$. Find $\tan(A + B)$.`,
+            answer: -1,
+            explain: t`$\frac{2 + 3}{1 - 6} = \frac{5}{-5} = -1$.`,
+          },
+          {
+            kind: "truefalse",
+            q: "The cosine function is an even function.",
+            answer: true,
+            explain: t`$\cos(-x) = \cos x$ for every $x$, because $-x$ is the reflection of $x$ in the $x$-axis and cosine is the $x$-coordinate.`,
+          },
+          {
+            kind: "mcq",
+            q: t`The range of $\sec x$ is`,
+            options: [t`$[-1, 1]$`, t`$\mathbf{R}$`, t`$(-\infty, -1] \cup [1, \infty)$`, t`$[1, \infty)$`],
+            answer: 2,
+            explain: t`$\sec x = \frac{1}{\cos x}$ with $0 < |\cos x| \le 1$, so $|\sec x| \ge 1$, and both signs occur.`,
+          },
+          {
+            kind: "multi",
+            q: t`On the interval $\left(\frac{\pi}{2}, \pi\right)$ (quadrant II), which statements are true?`,
+            options: ["sin x decreases from 1 to 0", "cos x decreases from 0 to −1", "tan x increases from −∞ to 0", "cos x increases from −1 to 0"],
+            answers: [0, 1, 2],
+            explain: "In quadrant II the point moves from (0, 1) to (−1, 0): its y-coordinate falls and its x-coordinate falls from 0 to −1. tan rises from −∞ to 0.",
+          },
+          {
+            kind: "mcq",
+            q: t`$\dfrac{\tan 69^\circ + \tan 66^\circ}{1 - \tan 69^\circ\tan 66^\circ}$ equals`,
+            options: ["1", "−1", t`$\sqrt{3}$`, "0"],
+            answer: 1,
+            difficulty: 2,
+            explain: t`It is $\tan(69^\circ + 66^\circ) = \tan 135^\circ = -1$.`,
+          },
+        ],
+      },
+      {
+        slug: "c11-multiple-angles",
+        title: "Multiple Angles, Sum-to-Product and Product-to-Sum",
+        summary: "Formulae for 2x and 3x, half-angle values, and converting sums of sines and cosines into products and back.",
+        minutes: 24,
+        xp: 60,
+        blocks: [
+          {
+            type: "text",
+            md: t`Put $y = x$ in the sum formulae and you get the **double-angle** formulae. Using $\sin^2 x + \cos^2 x = 1$, $\cos 2x$ can be written in three useful ways; rearranged, they give $\cos^2 x$ and $\sin^2 x$ in terms of $\cos 2x$, which is how we find half-angle values.`,
+          },
+          {
+            type: "formula",
+            tex: t`\cos 2x = \cos^2 x - \sin^2 x = 2\cos^2 x - 1 = 1 - 2\sin^2 x = \frac{1 - \tan^2 x}{1 + \tan^2 x}`,
+            caption: t`So 2cos²x = 1 + cos 2x and 2sin²x = 1 − cos 2x.`,
+          },
+          {
+            type: "formula",
+            tex: t`\sin 2x = 2\sin x\cos x = \frac{2\tan x}{1 + \tan^2 x}, \qquad \tan 2x = \frac{2\tan x}{1 - \tan^2 x}`,
+            caption: "tan 2x needs tan x ≠ ±1 (and x not an odd multiple of π/2).",
+          },
+          {
+            type: "formula",
+            tex: t`\sin 3x = 3\sin x - 4\sin^3 x, \qquad \cos 3x = 4\cos^3 x - 3\cos x, \qquad \tan 3x = \frac{3\tan x - \tan^3 x}{1 - 3\tan^2 x}`,
+            caption: "Triple-angle formulae.",
+          },
+          {
+            type: "example",
+            title: "Derivation: sin 3x",
+            problem: t`Prove that $\sin 3x = 3\sin x - 4\sin^3 x$.`,
+            steps: [
+              t`$\sin 3x = \sin(2x + x) = \sin 2x\cos x + \cos 2x\sin x$.`,
+              t`$= 2\sin x\cos^2 x + (1 - 2\sin^2 x)\sin x$.`,
+              t`Replace $\cos^2 x$ by $1 - \sin^2 x$: $= 2\sin x - 2\sin^3 x + \sin x - 2\sin^3 x$.`,
+              t`$= 3\sin x - 4\sin^3 x$.`,
+            ],
+            answer: t`$\sin 3x = 3\sin x - 4\sin^3 x$. ∎ (For $\cos 3x$, start from $\cos(2x + x)$ and use $\cos 2x = 2\cos^2 x - 1$.)`,
+          },
+          {
+            type: "example",
+            title: "Half-angle values",
+            problem: t`$\tan x = -\frac{4}{3}$ and $x$ lies in the second quadrant. Find $\sin\frac{x}{2}$, $\cos\frac{x}{2}$ and $\tan\frac{x}{2}$.`,
+            steps: [
+              t`In quadrant II, $\cos x < 0$: $\sec^2 x = 1 + \frac{16}{9} = \frac{25}{9}$, so $\cos x = -\frac{3}{5}$.`,
+              t`$\frac{\pi}{2} < x < \pi$ gives $\frac{\pi}{4} < \frac{x}{2} < \frac{\pi}{2}$: quadrant I, so all half-angle values are positive.`,
+              t`$\cos^2\frac{x}{2} = \frac{1 + \cos x}{2} = \frac{1 - 3/5}{2} = \frac{1}{5}$, so $\cos\frac{x}{2} = \frac{1}{\sqrt{5}}$.`,
+              t`$\sin^2\frac{x}{2} = \frac{1 - \cos x}{2} = \frac{1 + 3/5}{2} = \frac{4}{5}$, so $\sin\frac{x}{2} = \frac{2}{\sqrt{5}}$, and $\tan\frac{x}{2} = 2$.`,
+            ],
+            answer: t`$\sin\frac{x}{2} = \frac{2}{\sqrt{5}}$, $\cos\frac{x}{2} = \frac{1}{\sqrt{5}}$, $\tan\frac{x}{2} = 2$.`,
+          },
+          {
+            type: "checkpoint",
+            questions: [
+              {
+                kind: "numeric",
+                q: t`$\sin x = \frac{3}{5}$ with $x$ acute. Find $\sin 2x$ as a decimal.`,
+                answer: 0.96,
+                tolerance: 0.001,
+                explain: t`$\cos x = \frac{4}{5}$, so $\sin 2x = 2 \cdot \frac{3}{5} \cdot \frac{4}{5} = \frac{24}{25} = 0.96$.`,
+              },
+            ],
+          },
+          {
+            type: "mistake",
+            wrong: t`$\sin 2x = 2\sin x$, so $\sin 60^\circ = 2\sin 30^\circ = 1$.`,
+            right: t`$\sin 2x = 2\sin x\cos x$. Here $\sin 60^\circ = 2 \cdot \frac{1}{2} \cdot \frac{\sqrt{3}}{2} = \frac{\sqrt{3}}{2}$.`,
+            why: "The 2 inside the bracket multiplies the angle, not the value. Doubling an angle never simply doubles its sine (the sine can never exceed 1).",
+          },
+          {
+            type: "formula",
+            tex: t`\begin{aligned} \sin x + \sin y &= 2\sin\tfrac{x + y}{2}\cos\tfrac{x - y}{2} & \sin x - \sin y &= 2\cos\tfrac{x + y}{2}\sin\tfrac{x - y}{2} \\ \cos x + \cos y &= 2\cos\tfrac{x + y}{2}\cos\tfrac{x - y}{2} & \cos x - \cos y &= -2\sin\tfrac{x + y}{2}\sin\tfrac{x - y}{2} \end{aligned}`,
+            caption: "Sum-to-product formulae. Note the minus sign in cos x − cos y.",
+          },
+          {
+            type: "formula",
+            tex: t`\begin{aligned} 2\sin x\cos y &= \sin(x + y) + \sin(x - y) & 2\cos x\sin y &= \sin(x + y) - \sin(x - y) \\ 2\cos x\cos y &= \cos(x + y) + \cos(x - y) & -2\sin x\sin y &= \cos(x + y) - \cos(x - y) \end{aligned}`,
+            caption: "Product-to-sum formulae: add or subtract the compound-angle formulae in pairs.",
+          },
+          {
+            type: "example",
+            title: "Using sum-to-product",
+            problem: t`Prove that $\dfrac{\sin 5x + \sin 3x}{\cos 5x + \cos 3x} = \tan 4x$.`,
+            steps: [
+              t`Numerator: $\sin 5x + \sin 3x = 2\sin\frac{5x + 3x}{2}\cos\frac{5x - 3x}{2} = 2\sin 4x\cos x$.`,
+              t`Denominator: $\cos 5x + \cos 3x = 2\cos 4x\cos x$.`,
+              t`Cancel $2\cos x$ (where it is non-zero): $\frac{\sin 4x}{\cos 4x} = \tan 4x$.`,
+            ],
+            answer: "LHS = tan 4x = RHS. ∎",
+          },
+          {
+            type: "example",
+            title: "A sum that vanishes",
+            problem: t`Show that $\cos 20^\circ + \cos 100^\circ + \cos 140^\circ = 0$.`,
+            steps: [
+              t`Pair the last two: $\cos 100^\circ + \cos 140^\circ = 2\cos 120^\circ\cos 20^\circ$ (note $\cos(-20^\circ) = \cos 20^\circ$).`,
+              t`$\cos 120^\circ = -\frac{1}{2}$, so this pair equals $-\cos 20^\circ$.`,
+              t`Adding $\cos 20^\circ$ gives 0.`,
+            ],
+            answer: "The sum is 0. ∎",
+          },
+          {
+            type: "activity",
+            activity: {
+              kind: "match",
+              prompt: "Match each expression to its product form.",
+              pairs: [
+                ["sin A + sin B", "2 sin((A+B)/2) cos((A−B)/2)"],
+                ["sin A − sin B", "2 cos((A+B)/2) sin((A−B)/2)"],
+                ["cos A + cos B", "2 cos((A+B)/2) cos((A−B)/2)"],
+                ["cos A − cos B", "−2 sin((A+B)/2) sin((A−B)/2)"],
+              ],
+              explain: "Sums of like functions give cos of the half-difference; only cos A − cos B carries a minus sign and two sines.",
+            },
+          },
+          {
+            type: "callout",
+            tone: "exam",
+            title: "Board exam tips",
+            md: t`In identity proofs, work on one side only (usually the more complicated one) and end with "= RHS". For half-angle questions, the mark for the **sign** comes from stating the quadrant of $\frac{x}{2}$, not of $x$. Pair terms in sum-to-product so that the half-sums or half-differences become standard angles.`,
+          },
+          {
+            type: "keypoints",
+            items: [
+              t`$\cos 2x = \cos^2 x - \sin^2 x = 2\cos^2 x - 1 = 1 - 2\sin^2 x$; $\sin 2x = 2\sin x\cos x$.`,
+              t`$\sin 3x = 3\sin x - 4\sin^3 x$; $\cos 3x = 4\cos^3 x - 3\cos x$.`,
+              t`Half angles: $\cos^2\frac{x}{2} = \frac{1 + \cos x}{2}$, $\sin^2\frac{x}{2} = \frac{1 - \cos x}{2}$; sign from the quadrant of $\frac{x}{2}$.`,
+              "Sum-to-product turns sums into products (useful for factorising and proofs); product-to-sum does the reverse.",
+            ],
+          },
+        ],
+        flashcards: [
+          { front: "Three forms of cos 2x", back: t`$\cos^2 x - \sin^2 x$, $2\cos^2 x - 1$, $1 - 2\sin^2 x$.` },
+          { front: "sin 2x in terms of tan x", back: t`$\frac{2\tan x}{1 + \tan^2 x}$.` },
+          { front: "tan 2x", back: t`$\frac{2\tan x}{1 - \tan^2 x}$.` },
+          { front: "sin 3x", back: t`$3\sin x - 4\sin^3 x$.` },
+          { front: "cos 3x", back: t`$4\cos^3 x - 3\cos x$.` },
+          { front: "tan 3x", back: t`$\frac{3\tan x - \tan^3 x}{1 - 3\tan^2 x}$.` },
+          { front: "cos x − cos y", back: t`$-2\sin\frac{x+y}{2}\sin\frac{x-y}{2}$.` },
+          { front: "2 cos x cos y", back: t`$\cos(x + y) + \cos(x - y)$.` },
+        ],
+        quiz: [
+          {
+            kind: "mcq",
+            q: t`$\cos^2 15^\circ - \sin^2 15^\circ$ equals`,
+            options: [t`$\frac{1}{2}$`, t`$\frac{\sqrt{3}}{2}$`, "1", t`$\frac{1}{\sqrt{2}}$`],
+            answer: 1,
+            explain: t`It is $\cos 30^\circ = \frac{\sqrt{3}}{2}$.`,
+          },
+          {
+            kind: "mcq",
+            q: t`$2\sin 75^\circ\cos 15^\circ$ equals`,
+            options: [t`$1 + \frac{\sqrt{3}}{2}$`, t`$\frac{\sqrt{3}}{2}$`, "1", t`$1 - \frac{\sqrt{3}}{2}$`],
+            answer: 0,
+            explain: t`$2\sin x\cos y = \sin(x + y) + \sin(x - y) = \sin 90^\circ + \sin 60^\circ = 1 + \frac{\sqrt{3}}{2}$.`,
+          },
+          {
+            kind: "mcq",
+            q: t`$\dfrac{1 - \cos 2x}{\sin 2x}$ simplifies to`,
+            options: [t`$\cot x$`, t`$\tan x$`, t`$\tan 2x$`, t`$2\tan x$`],
+            answer: 1,
+            explain: t`$\frac{2\sin^2 x}{2\sin x\cos x} = \frac{\sin x}{\cos x} = \tan x$.`,
+          },
+          {
+            kind: "truefalse",
+            q: t`$\cos 3x = 4\cos^3 x - 3\cos x$ for all real $x$.`,
+            answer: true,
+            explain: t`Expand $\cos(2x + x)$ with $\cos 2x = 2\cos^2 x - 1$ and $\sin^2 x = 1 - \cos^2 x$.`,
+          },
+          {
+            kind: "numeric",
+            q: t`$\tan x = \frac{1}{2}$. Find $\cos 2x$ as a decimal.`,
+            answer: 0.6,
+            tolerance: 0.001,
+            explain: t`$\cos 2x = \frac{1 - \tan^2 x}{1 + \tan^2 x} = \frac{3/4}{5/4} = \frac{3}{5} = 0.6$.`,
+          },
+          {
+            kind: "mcq",
+            q: t`$\sin 50^\circ - \sin 70^\circ + \sin 10^\circ$ equals`,
+            options: ["1", "0", t`$\frac{1}{2}$`, t`$2\sin 10^\circ$`],
+            answer: 1,
+            difficulty: 2,
+            hint: "Combine the first two with sin x − sin y.",
+            explain: t`$\sin 50^\circ - \sin 70^\circ = 2\cos 60^\circ\sin(-10^\circ) = -\sin 10^\circ$. Adding $\sin 10^\circ$ gives 0.`,
+          },
+          {
+            kind: "multi",
+            q: t`Which expressions are equal to $\cos 2x$ (where defined)?`,
+            options: [t`$\cos^2 x - \sin^2 x$`, t`$2\cos^2 x - 1$`, t`$1 - 2\sin^2 x$`, t`$\frac{1 - \tan^2 x}{1 + \tan^2 x}$`, t`$2\sin x\cos x$`],
+            answers: [0, 1, 2, 3],
+            explain: t`All four are forms of $\cos 2x$; $2\sin x\cos x$ is $\sin 2x$.`,
+          },
+          {
+            kind: "numeric",
+            q: t`$\cos x = -\frac{1}{3}$ and $\pi < x < \frac{3\pi}{2}$. Find $\cos\frac{x}{2}$ correct to 3 decimal places.`,
+            answer: -0.577,
+            tolerance: 0.002,
+            difficulty: 3,
+            hint: t`Find the quadrant of $\frac{x}{2}$ first.`,
+            explain: t`$\frac{\pi}{2} < \frac{x}{2} < \frac{3\pi}{4}$: quadrant II, so $\cos\frac{x}{2} < 0$. $\cos^2\frac{x}{2} = \frac{1 - 1/3}{2} = \frac{1}{3}$, so $\cos\frac{x}{2} = -\frac{1}{\sqrt{3}} \approx -0.577$.`,
+          },
+        ],
+      },
+    ],
+  },
   /* END TOPICS */
 ];
 

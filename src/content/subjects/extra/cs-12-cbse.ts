@@ -3,6 +3,27 @@ import type { Topic } from "@/content/types";
 /** String.raw keeps code backslashes (\n, \t) exactly as written. */
 const r = String.raw;
 
+/** Seed data for the runnable SQL examples (SQLite in the browser; the same statements work in MySQL). */
+const STAFF_SQL = `CREATE TABLE STAFF (
+  SID INT PRIMARY KEY,
+  Name VARCHAR(20) NOT NULL,
+  Dept VARCHAR(10),
+  Salary INT,
+  City VARCHAR(15),
+  Bonus INT
+);
+INSERT INTO STAFF VALUES (101, 'Anil', 'Sales', 42000, 'Pune', 3000);
+INSERT INTO STAFF VALUES (102, 'Bhavya', 'IT', 65000, 'Bengaluru', NULL);
+INSERT INTO STAFF VALUES (103, 'Chirag', 'HR', 38000, 'Mysuru', 2000);
+INSERT INTO STAFF VALUES (104, 'Deepa', 'IT', 72000, 'Bengaluru', 5000);
+INSERT INTO STAFF VALUES (105, 'Esha', 'Sales', 45000, 'Mangaluru', NULL);
+INSERT INTO STAFF VALUES (106, 'Farooq', 'HR', 40000, 'Pune', 2500);
+INSERT INTO STAFF VALUES (107, 'Gita', 'IT', 58000, 'Mysuru', 4000);`;
+const DEPT_SQL = `CREATE TABLE DEPT (Dept VARCHAR(10) PRIMARY KEY, HOD VARCHAR(20), Floor INT);
+INSERT INTO DEPT VALUES ('Sales', 'Rao', 1);
+INSERT INTO DEPT VALUES ('IT', 'Iyer', 3);
+INSERT INTO DEPT VALUES ('HR', 'Khan', 2);`;
+
 /** Course these chapters belong to. */
 export const course = "computer-science";
 /** Syllabus family: chapter titles below are matched against `cmp` rows in src/content/syllabus/. */
@@ -3771,6 +3792,609 @@ POP_ALL(ST)`,
       },
     ],
   },
+  /* ------------------------------------------------------------------ */
+  /* Class 12 · Structured Query Language (SQL)                          */
+  /* ------------------------------------------------------------------ */
+  {
+    slug: "c12-cs-sql",
+    title: "Structured Query Language (SQL)",
+    icon: "🔎",
+    description: "MySQL: data types and constraints, DDL (CREATE, ALTER, DROP) and DML (INSERT, UPDATE, DELETE), SELECT with WHERE, IN, BETWEEN, LIKE, NULL and ORDER BY, aggregate functions, GROUP BY, HAVING and joins.",
+    lessons: [
+      {
+        slug: "c12-cs-sql-ddl-dml",
+        title: "SQL Basics: Data Types, Constraints, DDL and DML",
+        summary: "What SQL is, DDL versus DML, CHAR, VARCHAR, INT, FLOAT and DATE, the constraints, creating and altering databases and tables in MySQL, and inserting, updating and deleting rows.",
+        minutes: 24,
+        xp: 60,
+        blocks: [
+          {
+            type: "text",
+            md: "**SQL (Structured Query Language)** is the standard language for working with relational databases. It is used in MySQL, Oracle, PostgreSQL and SQLite. SQL keywords are **not case-sensitive** (`select` = `SELECT`), and each statement ends with a semicolon.\n\nSQL commands fall into groups. **DDL (Data Definition Language)** defines and changes the **structure**: `CREATE`, `ALTER`, `DROP`. **DML (Data Manipulation Language)** works with the **data** in the tables: `INSERT`, `UPDATE`, `DELETE` and (in the NCERT grouping) the query command `SELECT`.",
+          },
+          {
+            type: "table",
+            headers: ["Data type", "Stores", "Example"],
+            rows: [
+              ["`CHAR(n)`", "fixed-length text of exactly n characters (shorter values are padded with spaces); n up to 255", "`CHAR(4)` for a stream code like 'PCMC'"],
+              ["`VARCHAR(n)`", "variable-length text up to n characters; uses only the space needed", "`VARCHAR(30)` for names"],
+              ["`INT`", "whole numbers", "`AdmNo INT`"],
+              ["`FLOAT`", "numbers with a decimal part", "`Fee FLOAT`"],
+              ["`DATE`", "a date in the format 'YYYY-MM-DD'", "'2025-06-10'"],
+            ],
+          },
+          {
+            type: "text",
+            md: "**Constraints** are rules on a column. **NOT NULL**: a value must be given. **UNIQUE**: no two rows may have the same value (NULLs allowed). **DEFAULT**: the value used when none is supplied. **PRIMARY KEY**: unique and not null, identifies each row. **FOREIGN KEY**: values must exist in the primary key of another table.",
+          },
+          {
+            type: "code",
+            lang: "sql",
+            caption: "MySQL commands for databases and tables (display only)",
+            code: r`CREATE DATABASE school;
+SHOW DATABASES;
+USE school;
+CREATE TABLE STUDENT (
+  AdmNo  INT PRIMARY KEY,
+  Name   VARCHAR(25) NOT NULL,
+  Class  INT DEFAULT 12,
+  Stream CHAR(4),
+  Email  VARCHAR(30) UNIQUE
+);
+CREATE TABLE FEES (
+  ReceiptNo CHAR(5) PRIMARY KEY,
+  AdmNo     INT,
+  Amount    FLOAT,
+  PaidOn    DATE,
+  FOREIGN KEY (AdmNo) REFERENCES STUDENT(AdmNo)
+);
+SHOW TABLES;
+DESCRIBE STUDENT;`,
+          },
+          {
+            type: "code",
+            lang: "sql",
+            caption: "Changing and removing structure (display only)",
+            code: r`ALTER TABLE STUDENT ADD Phone CHAR(10);      -- add an attribute
+ALTER TABLE STUDENT DROP Phone;               -- remove an attribute
+ALTER TABLE STUDENT DROP PRIMARY KEY;         -- remove the primary key
+ALTER TABLE STUDENT ADD PRIMARY KEY (AdmNo);  -- add a primary key
+ALTER TABLE STUDENT MODIFY Name VARCHAR(40);  -- change a column's type
+DROP TABLE FEES;                              -- delete the table itself
+DROP DATABASE school;                         -- delete the whole database`,
+          },
+          {
+            type: "text",
+            md: "**DML commands.** `INSERT INTO STUDENT VALUES (...)` adds a row with values for every column in order; `INSERT INTO STUDENT (AdmNo, Name) VALUES (...)` fills only the named columns (others take their default or NULL). `UPDATE table SET column = value WHERE condition` changes existing rows. `DELETE FROM table WHERE condition` removes rows. Text and dates go in single quotes; numbers do not.",
+          },
+          {
+            type: "code",
+            lang: "sql",
+            runnable: true,
+            caption: "Run it, then remove the WHERE from the DELETE and run again.",
+            code: r`CREATE TABLE STUDENT (
+  AdmNo INT PRIMARY KEY,
+  Name VARCHAR(25) NOT NULL,
+  Class INT DEFAULT 12,
+  Stream CHAR(4),
+  Email VARCHAR(30) UNIQUE
+);
+INSERT INTO STUDENT VALUES (1201, 'Kavya', 12, 'PCMC', 'kavya@sch.in');
+INSERT INTO STUDENT (AdmNo, Name, Stream) VALUES (1202, 'Imran', 'PCMB');
+INSERT INTO STUDENT VALUES (1105, 'Pooja', 11, 'PCMC', NULL);
+UPDATE STUDENT SET Email = 'imran@sch.in' WHERE AdmNo = 1202;
+UPDATE STUDENT SET Class = Class + 1 WHERE Class = 11;
+DELETE FROM STUDENT WHERE Stream = 'PCMB';
+SELECT * FROM STUDENT;`,
+          },
+          {
+            type: "example",
+            title: "What is left in the table?",
+            problem: "Trace the program above and give the final rows.",
+            steps: [
+              "Three rows are inserted. Imran's Class takes the DEFAULT 12 and his Email is NULL.",
+              "The first UPDATE gives Imran an email.",
+              "The second UPDATE changes Pooja's Class from 11 to 12.",
+              "DELETE removes every row with Stream 'PCMB', which is Imran's row.",
+            ],
+            answer: "Two rows: (1201, Kavya, 12, PCMC, kavya@sch.in) and (1105, Pooja, 12, PCMC, NULL).",
+          },
+          {
+            type: "mistake",
+            wrong: "`DELETE FROM STUDENT;` and `DROP TABLE STUDENT;` do the same thing.",
+            right: "`DELETE` is DML: it removes **rows** but the empty table (its structure) remains. `DROP TABLE` is DDL: it removes the **table itself**, structure and data.",
+            why: "Both \"get rid of\" data, so they feel alike. After DELETE you can still INSERT into the table; after DROP the table no longer exists.",
+          },
+          {
+            type: "checkpoint",
+            questions: [
+              {
+                kind: "mcq",
+                q: "Which command adds a new column Phone to STUDENT?",
+                options: ["`ALTER TABLE STUDENT ADD Phone CHAR(10);`", "`UPDATE STUDENT ADD Phone CHAR(10);`", "`INSERT INTO STUDENT Phone CHAR(10);`", "`CREATE Phone IN STUDENT;`"],
+                answer: 0,
+                explain: "Changing structure is DDL, done with ALTER TABLE.",
+              },
+              {
+                kind: "truefalse",
+                q: "A column declared UNIQUE can hold NULL, but a PRIMARY KEY column cannot.",
+                answer: true,
+                explain: "PRIMARY KEY = UNIQUE + NOT NULL.",
+              },
+            ],
+          },
+          {
+            type: "activity",
+            activity: {
+              kind: "sort",
+              prompt: "DDL (structure) or DML (data)?",
+              groups: ["DDL", "DML"],
+              items: [
+                { text: "CREATE TABLE", group: 0, hint: "It defines a new structure." },
+                { text: "ALTER TABLE", group: 0, hint: "It changes columns or keys." },
+                { text: "DROP TABLE", group: 0, hint: "It removes the structure itself." },
+                { text: "INSERT INTO", group: 1, hint: "It adds rows of data." },
+                { text: "UPDATE", group: 1, hint: "It changes values in rows." },
+                { text: "DELETE FROM", group: 1, hint: "It removes rows, not the table." },
+              ],
+              explain: "DDL commands change the schema; DML commands change the instance (the data).",
+            },
+          },
+          {
+            type: "callout",
+            tone: "exam",
+            title: "Board tip",
+            md: "\"CHAR vs VARCHAR\", \"DELETE vs DROP\" and \"DDL vs DML\" are common 2-mark questions. In a query answer, put text and date values in single quotes, end with a semicolon, and never forget the WHERE clause in UPDATE and DELETE unless every row should change.",
+          },
+          {
+            type: "keypoints",
+            items: [
+              "DDL: CREATE, ALTER, DROP (structure). DML: INSERT, UPDATE, DELETE, SELECT (data).",
+              "CHAR(n) is fixed length; VARCHAR(n) is variable length; DATE is 'YYYY-MM-DD'.",
+              "Constraints: NOT NULL, UNIQUE, DEFAULT, PRIMARY KEY, FOREIGN KEY.",
+              "ALTER TABLE ... ADD / DROP a column or the primary key.",
+              "DELETE removes rows; DROP removes the table or database.",
+            ],
+          },
+        ],
+        flashcards: [
+          { front: "DDL vs DML?", back: "DDL defines structure (CREATE, ALTER, DROP); DML works with data (INSERT, UPDATE, DELETE, SELECT)." },
+          { front: "CHAR vs VARCHAR?", back: "CHAR(n) always stores n characters (padded); VARCHAR(n) stores only the characters given, up to n." },
+          { front: "Date format in MySQL?", back: "'YYYY-MM-DD', e.g. '2025-06-10'." },
+          { front: "Command to see a table's structure?", back: "`DESCRIBE table;` (or `DESC table;`)." },
+          { front: "Command to list tables in the current database?", back: "`SHOW TABLES;`" },
+          { front: "How to remove a column?", back: "`ALTER TABLE t DROP column;`" },
+          { front: "What does DEFAULT do?", back: "Supplies a value when an INSERT gives none for that column." },
+          { front: "DELETE vs DROP?", back: "DELETE removes rows and keeps the table; DROP removes the table itself." },
+        ],
+        quiz: [
+          {
+            kind: "mcq",
+            q: "Which is a DDL command?",
+            options: ["`ALTER`", "`UPDATE`", "`INSERT`", "`DELETE`"],
+            answer: 0,
+            explain: "ALTER changes the structure of a table.",
+          },
+          {
+            kind: "mcq",
+            q: "Which statement selects the database `school` for use?",
+            options: ["`USE school;`", "`OPEN school;`", "`SELECT school;`", "`SHOW school;`"],
+            answer: 0,
+            explain: "USE makes it the current database.",
+          },
+          {
+            kind: "fill",
+            q: "To change Kavya's class to 11, write `___ STUDENT SET Class = 11 WHERE Name = 'Kavya';`",
+            answer: ["UPDATE"],
+            explain: "UPDATE ... SET ... WHERE changes existing rows.",
+          },
+          {
+            kind: "truefalse",
+            q: "`DELETE FROM STUDENT;` without WHERE deletes every row.",
+            answer: true,
+            explain: "With no condition, every row matches.",
+          },
+          {
+            kind: "mcq",
+            q: "A value 'PCM' is stored in a `CHAR(4)` column. How many characters are stored?",
+            options: ["4", "3", "1", "255"],
+            answer: 0,
+            explain: "CHAR is fixed length, so the value is padded with one space to 4 characters.",
+            difficulty: 2,
+          },
+          {
+            kind: "mcq",
+            q: "`INSERT INTO STUDENT (AdmNo, Stream) VALUES (1300, 'PCMC');` fails. Why?",
+            options: ["Name is NOT NULL and was not given", "Stream must be CHAR(5)", "AdmNo cannot be 1300", "INSERT needs all columns"],
+            answer: 0,
+            explain: "Name has no default and is NOT NULL, so the row is rejected.",
+          },
+          {
+            kind: "multi",
+            q: "Which keep the table structure in place?",
+            options: ["`DELETE FROM T;`", "`DROP TABLE T;`", "`UPDATE T SET x = 0;`", "`ALTER TABLE T ADD y INT;`"],
+            answers: [0, 2, 3],
+            explain: "Only DROP removes the table. ALTER changes the structure but the table still exists.",
+          },
+        ],
+      },
+      {
+        slug: "c12-cs-sql-select",
+        title: "SELECT Queries: WHERE, IN, BETWEEN, LIKE, NULL, ORDER BY",
+        summary: "Retrieving data with SELECT: columns, expressions and aliases, DISTINCT, relational and logical operators, IN, BETWEEN, LIKE patterns, IS NULL and sorting with ORDER BY.",
+        minutes: 24,
+        xp: 60,
+        blocks: [
+          {
+            type: "text",
+            md: "`SELECT` retrieves data. Its basic form is `SELECT columns FROM table WHERE condition ORDER BY column;`. `SELECT *` means all columns. You can calculate in the column list (`Salary * 12`) and rename a result column with an **alias**: `Salary * 12 AS Annual`. **DISTINCT** removes duplicate rows from the result.\n\nAll the queries in this lesson use the STAFF table below.",
+          },
+          {
+            type: "table",
+            headers: ["SID", "Name", "Dept", "Salary", "City", "Bonus"],
+            rows: [
+              ["101", "Anil", "Sales", "42000", "Pune", "3000"],
+              ["102", "Bhavya", "IT", "65000", "Bengaluru", "NULL"],
+              ["103", "Chirag", "HR", "38000", "Mysuru", "2000"],
+              ["104", "Deepa", "IT", "72000", "Bengaluru", "5000"],
+              ["105", "Esha", "Sales", "45000", "Mangaluru", "NULL"],
+              ["106", "Farooq", "HR", "40000", "Pune", "2500"],
+              ["107", "Gita", "IT", "58000", "Mysuru", "4000"],
+            ],
+          },
+          {
+            type: "code",
+            lang: "sql",
+            runnable: true,
+            caption: "The table is created first; change the last query and run.",
+            code: r`${STAFF_SQL}
+SELECT Name, Salary * 12 AS Annual FROM STAFF WHERE Dept = 'IT';`,
+          },
+          {
+            type: "table",
+            headers: ["Operator", "Meaning", "Example condition"],
+            rows: [
+              ["`= <> != < > <= >=`", "relational comparison", "`Salary >= 45000`"],
+              ["`AND`, `OR`, `NOT`", "logical (NOT first, then AND, then OR)", "`Dept = 'IT' AND City = 'Mysuru'`"],
+              ["`BETWEEN a AND b`", "a range, **both ends included**", "`Salary BETWEEN 40000 AND 58000`"],
+              ["`IN (...)`", "matches any value in the list", "`City IN ('Pune', 'Mysuru')`"],
+              ["`LIKE`", "pattern: `%` = any number of characters, `_` = exactly one", "`Name LIKE '_h%'`"],
+              ["`IS NULL`, `IS NOT NULL`", "tests for a missing value", "`Bonus IS NULL`"],
+            ],
+          },
+          {
+            type: "example",
+            title: "Predict the rows",
+            problem: "Give the output of: (a) `SELECT Name FROM STAFF WHERE Salary BETWEEN 40000 AND 58000;` (b) `SELECT Name FROM STAFF WHERE Name LIKE '%a';` (c) `SELECT Name FROM STAFF WHERE Name LIKE '_h%';` (d) `SELECT DISTINCT City FROM STAFF;`",
+            steps: [
+              "(a) Salaries from 40000 to 58000 inclusive: Anil 42000, Esha 45000, Farooq 40000, Gita 58000.",
+              "(b) Names ending in a: Bhavya, Deepa, Esha, Gita.",
+              "(c) Second letter h (`_` is exactly one letter before it): Bhavya, Chirag.",
+              "(d) Each city once: Pune, Bengaluru, Mysuru, Mangaluru.",
+            ],
+            answer: "(a) Anil, Esha, Farooq, Gita (b) Bhavya, Deepa, Esha, Gita (c) Bhavya, Chirag (d) 4 cities.",
+          },
+          {
+            type: "mistake",
+            wrong: "To find staff with no bonus I write `WHERE Bonus = NULL`.",
+            right: "Write `WHERE Bonus IS NULL`. Any comparison with NULL using `=` gives *unknown*, so `= NULL` matches no rows at all.",
+            why: "In Python `x == None` works, so `= NULL` looks natural. In SQL, NULL means \"unknown\", and an unknown cannot be equal to anything, not even another NULL.",
+          },
+          {
+            type: "checkpoint",
+            questions: [
+              {
+                kind: "mcq",
+                q: "`SELECT Name, Salary + Bonus AS Total FROM STAFF WHERE Dept = 'Sales';` What is Esha's Total?",
+                options: ["NULL", "45000", "0", "Error"],
+                answer: 0,
+                explain: "Any arithmetic with NULL gives NULL. Anil's total is 45000; Esha's bonus is NULL so her total is NULL.",
+              },
+              {
+                kind: "numeric",
+                q: "How many rows does `SELECT * FROM STAFF WHERE Dept = 'IT' AND Salary > 60000 OR City = 'Pune';` return?",
+                answer: 4,
+                explain: "AND is evaluated first: (IT and over 60000) gives Bhavya and Deepa; OR City = 'Pune' adds Anil and Farooq. 4 rows.",
+              },
+            ],
+          },
+          {
+            type: "text",
+            md: "**ORDER BY** sorts the result: `ASC` (ascending, the default) or `DESC`. You can sort on more than one column: `ORDER BY Dept, Salary DESC` sorts by Dept A–Z, and within each Dept by Salary from high to low. ORDER BY comes **last** in the query.",
+          },
+          {
+            type: "code",
+            lang: "sql",
+            runnable: true,
+            code: r`${STAFF_SQL}
+SELECT Name, Dept, Salary FROM STAFF ORDER BY Dept, Salary DESC;`,
+          },
+          {
+            type: "activity",
+            activity: {
+              kind: "match",
+              prompt: "Match each condition to the names it selects.",
+              pairs: [
+                ["`City IN ('Pune', 'Mysuru')`", "Anil, Chirag, Farooq, Gita"],
+                ["`Bonus IS NULL`", "Bhavya, Esha"],
+                ["`NOT City = 'Bengaluru' AND Bonus > 2500`", "Anil, Gita"],
+                ["`Salary > 60000`", "Bhavya, Deepa"],
+              ],
+              explain: "Bonus > 2500 is unknown for NULL bonuses, so Esha is not selected by the third condition.",
+            },
+          },
+          {
+            type: "callout",
+            tone: "note",
+            title: "Also in the NCERT book (Karnataka PUC)",
+            md: "Single-row functions: `ROUND(2912.554, 1)` → 2912.6, `POWER(2, 3)` → 8, `MOD(21, 2)` → 1; `UCASE()`, `LCASE()`, `MID('Informatics', 3, 4)` → 'form', `LENGTH('Hello World')` → 11, `LEFT('Mysuru', 3)` → 'Mys', `RIGHT('Mysuru', 3)` → 'uru', `INSTR('Informatics', 'for')` → 3, `TRIM()`; `NOW()`, `YEAR('2025-03-14')` → 2025, `MONTHNAME('2025-03-14')` → 'March', `DAYNAME('2025-03-14')` → 'Friday'. Set operations: `UNION` combines the rows of two queries without duplicates. CBSE 083 does not test these.",
+          },
+          {
+            type: "callout",
+            tone: "exam",
+            title: "Board tip",
+            md: "Write the output of a query as a small table with the column headings exactly as they appear (use the alias if there is one). Remember `BETWEEN` includes both ends, `_` matches exactly one character, and NULL needs `IS NULL`.",
+          },
+          {
+            type: "keypoints",
+            items: [
+              "`SELECT cols FROM t WHERE cond ORDER BY col;` with `*`, expressions, `AS` aliases and `DISTINCT`.",
+              "NOT > AND > OR; use brackets to make the meaning clear.",
+              "BETWEEN is inclusive; IN matches a list; LIKE uses `%` (any) and `_` (one).",
+              "Test NULL with IS NULL / IS NOT NULL; arithmetic with NULL gives NULL.",
+              "ORDER BY is last; ASC is the default; several sort columns are allowed.",
+            ],
+          },
+        ],
+        flashcards: [
+          { front: "What does DISTINCT do?", back: "Removes duplicate rows from the query result." },
+          { front: "Is BETWEEN inclusive?", back: "Yes, both end values are included." },
+          { front: "LIKE wildcards?", back: "`%` matches any number of characters (even zero); `_` matches exactly one." },
+          { front: "Names starting with S?", back: "`WHERE Name LIKE 'S%'`" },
+          { front: "Test for a missing value?", back: "`IS NULL` (never `= NULL`)." },
+          { front: "What is a column alias?", back: "A new heading for a result column, given with AS: `Salary * 12 AS Annual`." },
+          { front: "Default sort order?", back: "ASC (ascending)." },
+          { front: "Result of 5000 + NULL?", back: "NULL." },
+        ],
+        quiz: [
+          {
+            kind: "mcq",
+            q: "Which query lists names that have exactly 4 letters?",
+            options: ["`WHERE Name LIKE '____'`", "`WHERE Name LIKE '%4%'`", "`WHERE Name = 4`", "`WHERE Name LIKE '4_'`"],
+            answer: 0,
+            explain: "Four underscores match exactly four characters.",
+          },
+          {
+            kind: "mcq",
+            q: "`SELECT Name FROM STAFF WHERE City IN ('Pune', 'Mysuru') ORDER BY Name DESC;` First name shown?",
+            options: ["Gita", "Anil", "Farooq", "Chirag"],
+            answer: 0,
+            explain: "Selected: Anil, Chirag, Farooq, Gita; in descending order Gita comes first.",
+          },
+          {
+            kind: "truefalse",
+            q: "`WHERE Bonus = NULL` returns the rows where Bonus is missing.",
+            answer: false,
+            explain: "Comparing with = NULL is never true; use IS NULL.",
+          },
+          {
+            kind: "numeric",
+            q: "How many rows does `SELECT DISTINCT Dept FROM STAFF;` return?",
+            answer: 3,
+            explain: "Sales, IT and HR.",
+          },
+          {
+            kind: "fill",
+            q: "To sort from highest salary to lowest, write `ORDER BY Salary ___`.",
+            answer: ["DESC"],
+            explain: "DESC means descending.",
+          },
+          {
+            kind: "mcq",
+            q: "Which condition is the same as `Salary >= 40000 AND Salary <= 45000`?",
+            options: ["`Salary BETWEEN 40000 AND 45000`", "`Salary IN (40000, 45000)`", "`Salary LIKE '4%'`", "`Salary > 40000 OR Salary < 45000`"],
+            answer: 0,
+            explain: "BETWEEN includes both ends. IN would match only those two exact values.",
+          },
+          {
+            kind: "multi",
+            q: "Which rows does `WHERE Name LIKE '%a%' AND Dept <> 'IT'` select?",
+            options: ["Anil", "Chirag", "Esha", "Farooq", "Bhavya"],
+            answers: [0, 1, 2, 3],
+            explain: "Anil, Chirag, Esha and Farooq contain the letter a and are not in IT (the match is case-insensitive in MySQL, so the A in Anil counts). Bhavya is in IT.",
+            difficulty: 2,
+          },
+          {
+            kind: "mcq",
+            q: "In which clause can a column alias such as Annual **not** be used in standard MySQL?",
+            options: ["WHERE", "ORDER BY", "the SELECT list where it is defined", "none of these"],
+            answer: 0,
+            explain: "WHERE is evaluated before the SELECT list, so aliases are not yet known there; ORDER BY can use them.",
+            difficulty: 3,
+          },
+        ],
+      },
+      {
+        slug: "c12-cs-sql-aggregates-joins",
+        title: "Aggregate Functions, GROUP BY, HAVING and Joins",
+        summary: "MAX, MIN, AVG, SUM and COUNT; grouping rows with GROUP BY and filtering groups with HAVING; Cartesian product, equi-join and natural join; and board-style output questions.",
+        minutes: 25,
+        xp: 60,
+        blocks: [
+          {
+            type: "text",
+            md: "An **aggregate function** works on a set of rows and returns **one** value: `MAX()`, `MIN()`, `AVG()`, `SUM()` and `COUNT()`. Aggregate functions **ignore NULL** values. `COUNT(*)` counts rows; `COUNT(column)` counts only the non-NULL values in that column; `COUNT(DISTINCT column)` counts different values.",
+          },
+          {
+            type: "example",
+            title: "Aggregates on STAFF",
+            problem: "Find the output of `SELECT COUNT(*), COUNT(Bonus), SUM(Bonus), AVG(Bonus), MAX(Salary), COUNT(DISTINCT City) FROM STAFF;`",
+            steps: [
+              "COUNT(*) counts all 7 rows.",
+              "Bonus is NULL for Bhavya and Esha, so COUNT(Bonus) = 5.",
+              "SUM(Bonus) = 3000 + 2000 + 5000 + 2500 + 4000 = 16500.",
+              "AVG(Bonus) = 16500 / 5 = 3300 (NULLs are not counted, so not 16500 / 7). MAX(Salary) = 72000. Distinct cities: 4.",
+            ],
+            answer: "`7 | 5 | 16500 | 3300 | 72000 | 4` (MySQL shows the average as 3300.0000).",
+          },
+          {
+            type: "text",
+            md: "**GROUP BY** collects rows with the same value in a column into groups, and an aggregate then gives one result **per group**. **HAVING** sets a condition on groups, usually on an aggregate. **WHERE** filters individual rows **before** grouping; HAVING filters groups **after** grouping. The clause order is: `SELECT … FROM … WHERE … GROUP BY … HAVING … ORDER BY …`.",
+          },
+          {
+            type: "code",
+            lang: "sql",
+            runnable: true,
+            caption: "Try adding HAVING SUM(Salary) > 80000 before ORDER BY.",
+            code: r`${STAFF_SQL}
+SELECT Dept, COUNT(*) AS Staff, SUM(Salary) AS Total, AVG(Salary) AS AvgSal
+FROM STAFF
+GROUP BY Dept
+ORDER BY Dept;`,
+          },
+          {
+            type: "example",
+            title: "WHERE and HAVING together",
+            problem: "Find the output of (a) `SELECT Dept, SUM(Salary) FROM STAFF GROUP BY Dept HAVING SUM(Salary) > 80000;` and (b) `SELECT City, COUNT(*) FROM STAFF WHERE Salary > 40000 GROUP BY City;`",
+            steps: [
+              "(a) Totals: HR 38000 + 40000 = 78000; IT 65000 + 72000 + 58000 = 195000; Sales 42000 + 45000 = 87000.",
+              "HAVING keeps groups over 80000: IT 195000 and Sales 87000.",
+              "(b) WHERE first removes Chirag (38000) and Farooq (40000 is not > 40000).",
+              "Grouping the remaining five: Bengaluru 2 (Bhavya, Deepa), Mangaluru 1, Mysuru 1 (Gita), Pune 1 (Anil).",
+            ],
+            answer: "(a) IT 195000, Sales 87000. (b) Bengaluru 2, Mangaluru 1, Mysuru 1, Pune 1.",
+          },
+          {
+            type: "mistake",
+            wrong: "`SELECT Dept, SUM(Salary) FROM STAFF WHERE SUM(Salary) > 80000 GROUP BY Dept;`",
+            right: "An aggregate cannot be used in WHERE. Conditions on groups go in **HAVING**: `... GROUP BY Dept HAVING SUM(Salary) > 80000;`",
+            why: "WHERE works row by row before the groups exist, so there is no SUM to test yet. HAVING runs after the groups are formed.",
+          },
+          {
+            type: "checkpoint",
+            questions: [
+              {
+                kind: "numeric",
+                q: "What does `SELECT AVG(Salary) FROM STAFF WHERE Dept = 'HR';` return?",
+                answer: 39000,
+                explain: "(38000 + 40000) / 2 = 39000.",
+              },
+            ],
+          },
+          {
+            type: "heading",
+            text: "Joins: querying two tables",
+          },
+          {
+            type: "text",
+            md: "Take a second table DEPT(Dept, HOD, Floor) with rows ('Sales', 'Rao', 1), ('IT', 'Iyer', 3), ('HR', 'Khan', 2).\n\nThe **Cartesian product** `SELECT * FROM STAFF, DEPT;` pairs **every** row of STAFF with **every** row of DEPT. Its **degree** is the sum of the degrees (6 + 3 = 9 columns) and its **cardinality** is the product of the cardinalities (7 × 3 = 21 rows). Most of those pairs are meaningless.\n\nAn **equi-join** keeps only the pairs where the common column is equal: `WHERE STAFF.Dept = DEPT.Dept`. Both Dept columns appear in `SELECT *`, so the column name must be qualified with the table name (or an alias) when it is ambiguous. A **natural join** (`STAFF NATURAL JOIN DEPT`) joins on columns with the same name automatically and shows the common column **only once** (8 columns here).",
+          },
+          {
+            type: "code",
+            lang: "sql",
+            runnable: true,
+            code: r`${STAFF_SQL}
+${DEPT_SQL}
+SELECT S.Name, S.Dept, D.HOD, D.Floor
+FROM STAFF AS S, DEPT AS D
+WHERE S.Dept = D.Dept AND S.City = 'Pune';`,
+          },
+          {
+            type: "activity",
+            activity: {
+              kind: "reveal",
+              prompt: "STAFF has 7 rows, 6 columns; DEPT has 3 rows, 3 columns. Cartesian product size?",
+              emoji: "✖️",
+              options: ["21 rows, 9 columns", "10 rows, 9 columns", "21 rows, 18 columns", "7 rows, 9 columns"],
+              answer: 0,
+              trap: 1,
+              explain: "Rows multiply (7 × 3 = 21) because each row pairs with every row; columns add (6 + 3 = 9) because each result row holds both rows side by side.",
+            },
+          },
+          {
+            type: "callout",
+            tone: "exam",
+            title: "Board tip",
+            md: "In the 4–5 mark SQL question, write each output as a table with headings, count NULLs correctly (COUNT(column) and AVG skip them), and for joins name the common column with the table name, e.g. `STAFF.Dept`. Equi-join output shows the common column twice; natural join shows it once.",
+          },
+          {
+            type: "keypoints",
+            items: [
+              "MAX, MIN, AVG, SUM, COUNT return one value and ignore NULLs; COUNT(*) counts all rows.",
+              "GROUP BY makes groups; HAVING filters groups; WHERE filters rows before grouping.",
+              "Clause order: SELECT, FROM, WHERE, GROUP BY, HAVING, ORDER BY.",
+              "Cartesian product: degree adds, cardinality multiplies.",
+              "Equi-join matches on equal common columns; natural join does it automatically and shows the common column once.",
+            ],
+          },
+        ],
+        flashcards: [
+          { front: "Name the five aggregate functions.", back: "MAX, MIN, AVG, SUM, COUNT." },
+          { front: "COUNT(*) vs COUNT(column)?", back: "COUNT(*) counts all rows; COUNT(column) counts non-NULL values in that column." },
+          { front: "Do aggregates include NULLs?", back: "No, they ignore NULLs (except COUNT(*), which counts rows)." },
+          { front: "WHERE vs HAVING?", back: "WHERE filters rows before grouping; HAVING filters groups after GROUP BY." },
+          { front: "Order of clauses?", back: "SELECT, FROM, WHERE, GROUP BY, HAVING, ORDER BY." },
+          { front: "Cartesian product of R (d1, c1) and S (d2, c2)?", back: "Degree d1 + d2; cardinality c1 × c2." },
+          { front: "Equi-join?", back: "A join that keeps rows where the common columns are equal, shown with `=` in WHERE." },
+          { front: "Natural join vs equi-join?", back: "A natural join matches same-named columns automatically and shows the common column once." },
+        ],
+        quiz: [
+          {
+            kind: "mcq",
+            q: "Output of `SELECT COUNT(Bonus) FROM STAFF;`?",
+            options: ["5", "7", "2", "16500"],
+            answer: 0,
+            explain: "Two of the seven bonuses are NULL and are not counted.",
+          },
+          {
+            kind: "numeric",
+            q: "Two tables have 5 rows × 4 columns and 6 rows × 3 columns. How many rows are in their Cartesian product?",
+            answer: 30,
+            explain: "Rows multiply: 5 × 6 = 30 (and the degree is 4 + 3 = 7).",
+          },
+          {
+            kind: "mcq",
+            q: "Which query lists cities having at least 2 staff?",
+            options: ["`SELECT City FROM STAFF GROUP BY City HAVING COUNT(*) >= 2;`", "`SELECT City FROM STAFF WHERE COUNT(*) >= 2;`", "`SELECT City FROM STAFF HAVING City >= 2;`", "`SELECT COUNT(City) >= 2 FROM STAFF;`"],
+            answer: 0,
+            explain: "Group by city, then keep groups with a count of 2 or more (Bengaluru, Mysuru, Pune).",
+          },
+          {
+            kind: "truefalse",
+            q: "In a natural join of STAFF and DEPT, the Dept column appears twice.",
+            answer: false,
+            explain: "A natural join shows the common column only once; an equi-join with `SELECT *` shows it twice.",
+          },
+          {
+            kind: "numeric",
+            q: "What is `SELECT MAX(Salary) - MIN(Salary) FROM STAFF WHERE Dept = 'IT';`?",
+            answer: 14000,
+            explain: "IT salaries: 65000, 72000, 58000. 72000 − 58000 = 14000.",
+          },
+          {
+            kind: "order",
+            q: "Put the clauses of a SELECT statement in the order they must be written.",
+            items: ["SELECT", "FROM", "WHERE", "GROUP BY", "HAVING", "ORDER BY"],
+            explain: "This order is fixed; HAVING needs GROUP BY before it in board answers.",
+          },
+          {
+            kind: "mcq",
+            q: "`SELECT Name, HOD FROM STAFF, DEPT WHERE STAFF.Dept = DEPT.Dept AND Floor = 3;` How many rows?",
+            options: ["3", "1", "21", "7"],
+            answer: 0,
+            explain: "Floor 3 is IT, which has three staff: Bhavya, Deepa and Gita.",
+          },
+          {
+            kind: "multi",
+            q: "Which are correct about `AVG(Bonus)` on STAFF?",
+            options: ["It equals 3300", "It divides by 7", "It ignores the NULL bonuses", "It equals SUM(Bonus)/COUNT(Bonus)"],
+            answers: [0, 2, 3],
+            explain: "16500 / 5 = 3300; the two NULLs are left out of both the sum and the count.",
+          },
+        ],
+      },
+    ],
+  },
 ];
 
 /** Chapter title ("11:" / "12:" + exact title) → topic slug(s) that teach it. */
@@ -3782,4 +4406,5 @@ export const links: Record<string, string | string[]> = {
   "12:Stack": "c12-cs-stack",
   "12:Computer Networks": "c12-cs-computer-networks",
   "12:Database Concepts": "c12-cs-database-concepts",
+  "12:Structured Query Language (SQL)": "c12-cs-sql",
 };

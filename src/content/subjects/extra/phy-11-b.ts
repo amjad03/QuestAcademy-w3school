@@ -1061,8 +1061,874 @@ First decide whether there is sliding. If there is not, static friction is whate
       },
     ],
   },
+  /* ------------------------------------------------------------------ */
+  /* Work, Energy and Power (NCERT / Karnataka I PUC)                     */
+  /* = Work, Power and Energy (ISC Class 11)                              */
+  /* ------------------------------------------------------------------ */
+  {
+    slug: "c11-work-energy-power",
+    title: "Work, Energy and Power",
+    icon: "⚡",
+    description: "Scalar product, work by constant and variable forces, kinetic energy and the work–energy theorem, conservative forces, potential energy of a spring, conservation of mechanical energy, power and collisions in one and two dimensions.",
+    lessons: [
+      {
+        slug: "c11-work-kinetic-energy",
+        title: "Work, Kinetic Energy and the Work–Energy Theorem",
+        summary: "The scalar product, work done by a constant force, kinetic energy, the work–energy theorem and work done by a variable force as the area under a force–displacement graph.",
+        minutes: 22,
+        xp: 50,
+        blocks: [
+          {
+            type: "illustration",
+            emoji: "🏋️",
+            caption: "A weightlifter holding a barbell still above her head is tired, but in physics she is doing no work on it: the barbell is not moving.",
+          },
+          {
+            type: "text",
+            md: t`The **scalar (dot) product** of two vectors is $\vec A \cdot \vec B = AB\cos\theta$, where $\theta$ is the angle between them. It is a scalar. It obeys the commutative law ($\vec A \cdot \vec B = \vec B \cdot \vec A$) and the distributive law. In components, $\vec A \cdot \vec B = A_xB_x + A_yB_y + A_zB_z$, and $\hat i \cdot \hat i = 1$, $\hat i \cdot \hat j = 0$. Two non-zero vectors are perpendicular exactly when their dot product is zero.`,
+          },
+          {
+            type: "text",
+            md: t`The **work** done by a constant force $\vec F$ on a body that undergoes displacement $\vec d$ is $W = \vec F \cdot \vec d = Fd\cos\theta$. Only the component of the force along the displacement does work.
+
+Work is a scalar. Its SI unit is the **joule** (1 J = 1 N m) and its dimensions are $[ML^2T^{-2}]$. Other units: 1 erg = $10^{-7}$ J, 1 eV = $1.6 \times 10^{-19}$ J, 1 kWh = $3.6 \times 10^6$ J.`,
+          },
+          {
+            type: "formula",
+            tex: t`W = \vec F \cdot \vec d = Fd\cos\theta`,
+            caption: "Work is zero if F = 0, if d = 0, or if the force is perpendicular to the displacement (θ = 90°).",
+          },
+          {
+            type: "table",
+            headers: ["Angle θ", "Work", "Example"],
+            rows: [
+              ["0° ≤ θ < 90°", "positive", "gravity on a falling ball; a horse pulling a cart forward"],
+              ["θ = 90°", "zero", "normal force on a block sliding on a level floor; tension in the string of a stone in uniform circular motion"],
+              ["90° < θ ≤ 180°", "negative", "kinetic friction on a block sliding to rest; gravity on a ball thrown upward"],
+            ],
+          },
+          {
+            type: "text",
+            md: t`**Kinetic energy** is the energy a body has because of its motion: $K = \tfrac12 mv^2$. It is a scalar and is never negative. In terms of momentum, $K = \dfrac{p^2}{2m}$.
+
+The **work–energy theorem** says: the change in kinetic energy of a particle equals the work done on it by the **net** force. It follows from Newton's second law, as shown below for a constant force.`,
+          },
+          {
+            type: "list",
+            ordered: true,
+            items: [
+              t`A constant net force $F$ gives constant acceleration $a = F/m$ along a straight line.`,
+              t`For a displacement $d$ along the force: $v^2 - u^2 = 2ad$.`,
+              t`Multiply both sides by $\tfrac{m}{2}$: $\tfrac12 mv^2 - \tfrac12 mu^2 = mad$.`,
+              t`Since $ma = F$, the right side is $Fd = W_{\text{net}}$. So $K_f - K_i = W_{\text{net}}$.`,
+              t`For a variable force, $\dfrac{dK}{dt} = mv\dfrac{dv}{dt} = Fv = F\dfrac{dx}{dt}$, so $dK = F\,dx$; integrating gives the same theorem.`,
+            ],
+          },
+          {
+            type: "formula",
+            tex: t`K_f - K_i = W_{\text{net}} \qquad W = \int_{x_i}^{x_f} F(x)\,dx`,
+            caption: "Work by a variable force is the area under the F–x graph between the two positions (area below the x-axis counts as negative).",
+          },
+          {
+            type: "example",
+            title: "Pushing a block on a rough floor",
+            problem: t`A 2 kg block starts from rest on a floor with $\mu_k = 0.3$. A horizontal force of 20 N pushes it through 5 m. Find its final speed using the work–energy theorem. $g = 10$ m/s².`,
+            steps: [
+              t`Work by the push: $W_F = 20 \times 5 = 100$ J.`,
+              t`Kinetic friction $= 0.3 \times 2 \times 10 = 6$ N, opposite to motion: $W_f = -6 \times 5 = -30$ J.`,
+              t`Gravity and the normal force are perpendicular to the motion, so they do no work. $W_{\text{net}} = 70$ J.`,
+              t`$\tfrac12 \times 2 \times v^2 - 0 = 70$, so $v^2 = 70$ and $v \approx 8.37$ m/s.`,
+            ],
+            answer: "v ≈ 8.37 m/s. Friction took 30 J of the 100 J supplied and turned it into heat.",
+          },
+          {
+            type: "mistake",
+            wrong: "A coolie carrying a heavy box on his head along a level platform does a lot of work on the box against gravity.",
+            right: "Gravity (and the upward support force) act vertically while the box moves horizontally, so θ = 90° and the work done by each on the box is zero.",
+            why: "He feels tired, because his muscles use energy internally, and in everyday speech that is 'work'. In physics, work needs a displacement with a component along the force.",
+          },
+          {
+            type: "checkpoint",
+            questions: [
+              {
+                kind: "numeric",
+                q: "A 2 kg ball falls freely through 3 m. How much work (J) does gravity do on it? g = 10 m/s².",
+                answer: 60,
+                unit: "J",
+                explain: t`$W = mgh = 2 \times 10 \times 3 = 60$ J (positive: force and displacement are both downward).`,
+              },
+              {
+                kind: "mcq",
+                q: "A block slides on a rough floor and comes to rest. The work done on it by kinetic friction is:",
+                options: ["negative", "positive", "zero", "positive at first, then negative"],
+                answer: 0,
+                explain: "Friction points opposite to the displacement (θ = 180°), so its work is negative and the kinetic energy falls.",
+              },
+            ],
+          },
+          {
+            type: "example",
+            title: "Work from a force–position graph",
+            problem: t`A force along the x-axis grows uniformly from 0 to 10 N as $x$ goes from 0 to 4 m, then stays at 10 N up to $x = 6$ m. Find the work done from $x = 0$ to $x = 6$ m.`,
+            steps: [
+              t`From 0 to 4 m the graph is a triangle: area $= \tfrac12 \times 4 \times 10 = 20$ J.`,
+              t`From 4 m to 6 m it is a rectangle: area $= 2 \times 10 = 20$ J.`,
+              t`Total work $= 20 + 20 = 40$ J.`,
+            ],
+            answer: "40 J.",
+          },
+          {
+            type: "activity",
+            activity: {
+              kind: "sort",
+              prompt: "Is the work done by the named force positive, negative or zero?",
+              groups: ["Positive", "Negative", "Zero"],
+              items: [
+                { text: "Gravity on a mango falling from a tree", group: 0, hint: "Force down, motion down." },
+                { text: "Your pull on a suitcase you drag forward", group: 0, hint: "The pull has a component along the motion." },
+                { text: "Gravity on a ball thrown straight up, while rising", group: 1, hint: "Force down, motion up." },
+                { text: "Brakes' friction on a car that is stopping", group: 1, hint: "Friction opposes the car's motion." },
+                { text: "Normal force on a box sliding along a level floor", group: 2, hint: "The normal force is perpendicular to the motion." },
+                { text: "String tension on a stone in uniform circular motion", group: 2, hint: "Tension points to the centre; velocity is along the tangent." },
+              ],
+              explain: "Look at the angle between the force and the displacement: less than 90° gives positive work, more than 90° gives negative work, exactly 90° gives zero.",
+            },
+          },
+          {
+            type: "callout",
+            tone: "exam",
+            title: "Board tip",
+            md: t`The work–energy theorem derivation (constant force, and the variable-force form using $dK = F\,dx$) is often asked for 3 marks. Say clearly that $W$ is the work done by the **net** force. In graph questions, show the shapes you split the area into and add areas below the axis as negative.`,
+          },
+          {
+            type: "keypoints",
+            items: [
+              t`$\vec A \cdot \vec B = AB\cos\theta = A_xB_x + A_yB_y + A_zB_z$.`,
+              t`Work $W = Fd\cos\theta$: positive, zero or negative depending on θ. Unit: joule.`,
+              t`Kinetic energy $K = \tfrac12 mv^2 = p^2/(2m)$.`,
+              t`Work–energy theorem: $W_{\text{net}} = K_f - K_i$, for constant and variable forces.`,
+              "Work by a variable force = area under the F–x graph.",
+            ],
+          },
+        ],
+        flashcards: [
+          { front: "Scalar product in components", back: t`$\vec A \cdot \vec B = A_xB_x + A_yB_y + A_zB_z$.` },
+          { front: "Work done by a constant force", back: t`$W = \vec F \cdot \vec d = Fd\cos\theta$.` },
+          { front: "SI unit and dimensions of work", back: t`Joule (N m); $[ML^2T^{-2}]$.` },
+          { front: "1 kWh in joules", back: t`$3.6 \times 10^6$ J. The kWh is a unit of energy, not power.` },
+          { front: "Work–energy theorem", back: "The work done by the net force on a particle equals the change in its kinetic energy." },
+          { front: "Kinetic energy in terms of momentum", back: t`$K = p^2/(2m)$.` },
+          { front: "Work by a variable force", back: t`$W = \int F\,dx$, the area under the F–x graph.` },
+        ],
+        quiz: [
+          {
+            kind: "mcq",
+            q: t`A force $\vec F = (3\hat i + 4\hat j)$ N moves a body through $\vec d = (2\hat i - \hat j)$ m. The work done is:`,
+            options: ["2 J", "10 J", "5 J", "−2 J"],
+            answer: 0,
+            explain: t`$W = 3 \times 2 + 4 \times (-1) = 6 - 4 = 2$ J.`,
+          },
+          {
+            kind: "numeric",
+            q: "A 10 N force acts at 60° to a displacement of 4 m. Find the work done (J).",
+            answer: 20,
+            unit: "J",
+            explain: t`$W = 10 \times 4 \times \cos 60^\circ = 40 \times 0.5 = 20$ J.`,
+          },
+          {
+            kind: "truefalse",
+            q: "In uniform circular motion, the centripetal force does no work on the body.",
+            answer: true,
+            explain: "The force points to the centre and the velocity is along the tangent, so they are perpendicular at every instant.",
+          },
+          {
+            kind: "numeric",
+            q: "Find the kinetic energy (J) of a 0.5 kg ball moving at 4 m/s.",
+            answer: 4,
+            unit: "J",
+            explain: t`$K = \tfrac12 \times 0.5 \times 16 = 4$ J.`,
+          },
+          {
+            kind: "mcq",
+            q: "If the momentum of a body is doubled (mass unchanged), its kinetic energy becomes:",
+            options: ["4 times", "2 times", "√2 times", "unchanged"],
+            answer: 0,
+            explain: t`$K = p^2/(2m)$, so doubling $p$ multiplies $K$ by 4.`,
+            difficulty: 2,
+          },
+          {
+            kind: "numeric",
+            q: "How much work (in kJ) must the brakes do to stop a 1000 kg car moving at 20 m/s? Give the magnitude.",
+            answer: 200,
+            unit: "kJ",
+            explain: t`$W = 0 - \tfrac12 \times 1000 \times 400 = -2 \times 10^5$ J, i.e. 200 kJ of negative work.`,
+            difficulty: 2,
+            hint: "Use the work–energy theorem: work = change in kinetic energy.",
+          },
+          {
+            kind: "multi",
+            q: "In which cases is the work done by the named force zero?",
+            options: [
+              "Gravity on a load carried along a level road",
+              "The normal force on a box sliding along a level floor",
+              "String tension on the bob of a conical pendulum moving uniformly",
+              "Kinetic friction on a block sliding to rest",
+              "Gravity on a ball falling freely",
+            ],
+            answers: [0, 1, 2],
+            explain: "In the first three the force is perpendicular to the velocity at every instant. Friction does negative work; gravity on a falling ball does positive work.",
+            difficulty: 2,
+          },
+          {
+            kind: "numeric",
+            q: "A force rises uniformly from 0 to 8 N as a body moves from x = 0 to x = 5 m. Find the work done (J).",
+            answer: 20,
+            unit: "J",
+            explain: t`Area of the triangle $= \tfrac12 \times 5 \times 8 = 20$ J.`,
+          },
+        ],
+      },
+      {
+        slug: "c11-potential-energy-power",
+        title: "Potential Energy, Conservation of Energy and Power",
+        summary: "Conservative forces, potential energy, conservation of mechanical energy, the potential energy of a spring, and power.",
+        minutes: 22,
+        xp: 50,
+        blocks: [
+          {
+            type: "illustration",
+            emoji: "🎢",
+            caption: "A roller coaster car is hauled to the top once. After that, it trades height for speed and speed for height all the way round the track.",
+          },
+          {
+            type: "text",
+            md: t`**Potential energy** is energy stored because of the position or configuration of a body. Lifting a body of mass $m$ through height $h$ near the Earth's surface stores **gravitational potential energy** $mgh$. Potential energy can be defined only for **conservative forces**.
+
+A force is **conservative** if (i) the work it does depends only on the initial and final positions, not on the path, or equivalently (ii) the work it does around any closed path is zero. Gravity, the spring force and the electrostatic force are conservative. Friction and air drag are **non-conservative**: their work depends on the path and the energy goes into heat.
+
+For a conservative force in one dimension, $F(x) = -\dfrac{dV}{dx}$. The force points towards lower potential energy. Only **changes** in potential energy matter, so we may choose the zero of $V$ wherever convenient.`,
+          },
+          {
+            type: "list",
+            ordered: true,
+            items: [
+              t`Let only a conservative force $F$ act on a body as it moves through $\Delta x$.`,
+              t`By the work–energy theorem, $\Delta K = F\,\Delta x$.`,
+              t`By the definition of potential energy, $\Delta V = -F\,\Delta x$.`,
+              t`So $\Delta K = -\Delta V$, i.e. $\Delta K + \Delta V = 0$ and $\Delta(K + V) = 0$.`,
+              t`Hence $K + V$, the total **mechanical energy**, stays constant when only conservative forces do work.`,
+            ],
+          },
+          {
+            type: "formula",
+            tex: t`F(x) = -\frac{dV}{dx} \qquad K_i + V_i = K_f + V_f`,
+            caption: "Conservation of mechanical energy. If friction acts, K + V decreases by the work done against friction.",
+          },
+          {
+            type: "example",
+            title: "A stone dropped from a roof",
+            problem: t`A stone is dropped from a roof 20 m high. Find its speed when it is 5 m above the ground and just before it lands. Ignore air resistance; $g = 10$ m/s².`,
+            steps: [
+              t`Take $V = 0$ at the ground. At the top: $K = 0$, $V = 20mg$.`,
+              t`At 5 m: $\tfrac12 mv^2 + 5mg = 20mg$, so $v^2 = 2g \times 15 = 300$ and $v \approx 17.3$ m/s.`,
+              t`At the ground: $\tfrac12 mv^2 = 20mg$, so $v^2 = 400$ and $v = 20$ m/s.`,
+            ],
+            answer: "About 17.3 m/s at 5 m height and 20 m/s just before landing. The mass cancels.",
+          },
+          {
+            type: "text",
+            md: t`**Spring force.** For an ideal spring, the restoring force is proportional to the extension or compression $x$ from its natural length: $F = -kx$ (Hooke's law). The **spring constant** $k$ (unit N/m) measures stiffness.
+
+As the spring is stretched from 0 to $x$, the work done by the spring force is $-\tfrac12 kx^2$, the area of the triangle under the $F$–$x$ graph. The spring force is conservative, so it has a potential energy, which is the same for a stretch or a compression of the same size.`,
+          },
+          {
+            type: "formula",
+            tex: t`F = -kx \qquad V(x) = \tfrac12 kx^2`,
+            caption: "x is the extension or compression from the natural length, not the length of the spring.",
+          },
+          {
+            type: "example",
+            title: "A block hits a spring",
+            problem: t`A 0.5 kg block slides at 2 m/s on a smooth floor and runs into a light spring with $k = 200$ N/m. Find the maximum compression.`,
+            steps: [
+              t`Kinetic energy of the block $= \tfrac12 \times 0.5 \times 2^2 = 1$ J.`,
+              t`At maximum compression the block is momentarily at rest, so all of it is stored: $\tfrac12 kx^2 = 1$ J.`,
+              t`$100x^2 = 1$, so $x^2 = 0.01$ and $x = 0.1$ m.`,
+            ],
+            answer: "The maximum compression is 0.1 m (10 cm). The spring then pushes the block back at 2 m/s.",
+          },
+          {
+            type: "mistake",
+            wrong: "Potential energy at a point is a fixed, absolute number, so two students who choose different zero levels cannot both be right.",
+            right: "Only differences in potential energy have physical meaning. Any convenient level can be chosen as zero; the change in V between two points, and hence every speed you calculate, is the same.",
+            why: "We write V = mgh, which makes V look like a property of the point. But h is measured from a level we chose. Moving the zero adds the same constant to every V, which cancels in ΔV.",
+          },
+          {
+            type: "text",
+            md: t`**Power** is the rate of doing work. Average power $P_{\text{av}} = W/t$; instantaneous power $P = dW/dt$. Since $dW = \vec F \cdot d\vec r$, instantaneous power is $P = \vec F \cdot \vec v$. Power is a scalar with SI unit the **watt** (1 W = 1 J/s). One horsepower (hp) = 746 W. Electricity bills charge for energy in kilowatt-hours (1 kWh = $3.6 \times 10^6$ J).`,
+          },
+          {
+            type: "formula",
+            tex: t`P = \frac{dW}{dt} = \vec F \cdot \vec v`,
+            caption: "For a vehicle at constant speed, the engine's force equals the resistive force, so P = F_resistive × v.",
+          },
+          {
+            type: "example",
+            title: "Pumping water to a tank",
+            problem: t`A motor lifts 600 kg of water into a tank 15 m above the ground in 5 minutes. Find the useful power. If the motor is 60% efficient, what power does it draw? $g = 10$ m/s².`,
+            steps: [
+              t`Work done on the water $= mgh = 600 \times 10 \times 15 = 90\,000$ J.`,
+              t`Time $= 5 \times 60 = 300$ s, so useful power $= 90\,000/300 = 300$ W.`,
+              t`Input power $= 300/0.6 = 500$ W.`,
+            ],
+            answer: "Useful power 300 W; the motor draws 500 W.",
+          },
+          {
+            type: "checkpoint",
+            questions: [
+              {
+                kind: "numeric",
+                q: "A 60 kg student climbs a 10 m high staircase in 20 s. What is her average power (W) against gravity? g = 10 m/s².",
+                answer: 300,
+                unit: "W",
+                explain: t`$P = mgh/t = 60 \times 10 \times 10/20 = 300$ W.`,
+              },
+            ],
+          },
+          {
+            type: "activity",
+            activity: {
+              kind: "match",
+              prompt: "Match each quantity to its unit or value.",
+              pairs: [
+                ["Work or energy", "joule"],
+                ["Power", "watt"],
+                ["Spring constant", "newton per metre"],
+                ["One horsepower", "746 W"],
+                ["One kilowatt-hour", t`$3.6 \times 10^6$ J`],
+              ],
+              explain: "Power is energy per second (watt). The kilowatt-hour is an energy unit, even though its name contains 'watt'.",
+            },
+          },
+          {
+            type: "callout",
+            tone: "exam",
+            title: "Board tip",
+            md: t`State both definitions of a conservative force and give two examples of each kind. In energy problems, write a clear energy equation (initial K + V = final K + V, plus work against friction if any) before substituting numbers. **Board note:** all three boards expect the general principle too: energy changes from one form to another (mechanical, heat, electrical, chemical), but the total energy of an isolated system stays constant.`,
+          },
+          {
+            type: "keypoints",
+            items: [
+              "Conservative force: work independent of path; zero work around a closed path. Potential energy is defined only for such forces.",
+              t`$F = -dV/dx$; only differences in V matter.`,
+              t`Only conservative forces working: $K + V$ is constant.`,
+              t`Spring: $F = -kx$, $V = \tfrac12 kx^2$.`,
+              t`Power $P = dW/dt = \vec F \cdot \vec v$; 1 hp = 746 W; 1 kWh = $3.6 \times 10^6$ J.`,
+            ],
+          },
+        ],
+        flashcards: [
+          { front: "Conservative force", back: "A force whose work depends only on the end points, so its work around any closed path is zero (gravity, spring, electrostatic)." },
+          { front: "Relation between force and potential energy", back: t`$F(x) = -dV/dx$.` },
+          { front: "Conservation of mechanical energy", back: "If only conservative forces do work, K + V stays constant." },
+          { front: "Potential energy of a spring", back: t`$V = \tfrac12 kx^2$, with $x$ the extension or compression.` },
+          { front: "Instantaneous power", back: t`$P = \vec F \cdot \vec v$.` },
+          { front: "1 horsepower", back: "746 W." },
+          { front: "Examples of non-conservative forces", back: "Friction and air resistance (viscous drag)." },
+        ],
+        quiz: [
+          {
+            kind: "mcq",
+            q: t`The potential energy of a particle is $V(x) = 3x^2$ (SI units). The force on it is:`,
+            options: [t`$-6x$`, t`$6x$`, t`$-3x^2$`, t`$x^3$`],
+            answer: 0,
+            explain: t`$F = -dV/dx = -6x$. The force points back towards $x = 0$.`,
+          },
+          {
+            kind: "numeric",
+            q: "A spring with k = 400 N/m is compressed by 5 cm. Find the stored energy (J).",
+            answer: 0.5,
+            unit: "J",
+            explain: t`$V = \tfrac12 \times 400 \times 0.05^2 = 200 \times 0.0025 = 0.5$ J. Remember to convert cm to m.`,
+          },
+          {
+            kind: "truefalse",
+            q: "The work done by a conservative force around any closed path is zero.",
+            answer: true,
+            explain: "That is one of the two equivalent definitions of a conservative force.",
+          },
+          {
+            kind: "numeric",
+            q: "A ball is thrown straight up at 15 m/s. Using energy conservation, find the maximum height (m). g = 10 m/s².",
+            answer: 11.25,
+            unit: "m",
+            explain: t`$\tfrac12 mv^2 = mgh \Rightarrow h = v^2/(2g) = 225/20 = 11.25$ m.`,
+          },
+          {
+            kind: "mcq",
+            q: "One kilowatt-hour is equal to:",
+            options: [t`$3.6 \times 10^6$ J`, t`$3.6 \times 10^3$ J`, "1000 W", "746 W"],
+            answer: 0,
+            explain: t`$1000 \text{ W} \times 3600 \text{ s} = 3.6 \times 10^6$ J. It is energy, so a watt value cannot be the answer.`,
+          },
+          {
+            kind: "numeric",
+            q: "A car engine delivers 20 kW while the car moves at a steady 25 m/s. Find the total resistive force (N).",
+            answer: 800,
+            unit: "N",
+            explain: t`At constant speed, driving force = resistive force $= P/v = 20\,000/25 = 800$ N.`,
+            difficulty: 2,
+            hint: "Use P = Fv.",
+          },
+          {
+            kind: "multi",
+            q: "Which of these forces are conservative?",
+            options: ["Gravitational force", "Spring force", "Electrostatic force", "Kinetic friction", "Air resistance"],
+            answers: [0, 1, 2],
+            explain: "Friction and air resistance turn mechanical energy into heat, and their work depends on the path.",
+          },
+          {
+            kind: "mcq",
+            q: "The extension of a spring is doubled. Its stored potential energy becomes:",
+            options: ["4 times", "2 times", "half", "unchanged"],
+            answer: 0,
+            explain: t`$V \propto x^2$, so doubling $x$ quadruples $V$.`,
+          },
+        ],
+      },
+      {
+        slug: "c11-collisions",
+        title: "Collisions in One and Two Dimensions",
+        summary: "Elastic and inelastic collisions, the head-on elastic collision derived, completely inelastic collisions, special cases and two-dimensional collisions.",
+        minutes: 22,
+        xp: 50,
+        blocks: [
+          {
+            type: "illustration",
+            emoji: "🎯",
+            caption: "On a carrom board, the striker hits a coin and the two fly apart. What is shared between them, and what is lost?",
+          },
+          {
+            type: "text",
+            md: t`In a **collision**, two bodies exert large forces on each other for a short time. External forces (like friction from the board) are small during that time, so the **total linear momentum is conserved in every collision**. Total energy is also conserved, but some kinetic energy may change into heat, sound or deformation.
+
+A collision in which total kinetic energy is also conserved is **elastic**. One in which kinetic energy is lost is **inelastic**. If the bodies stick together and move as one afterwards, it is **completely (perfectly) inelastic**, and the loss of kinetic energy is the largest possible.`,
+          },
+          {
+            type: "table",
+            headers: ["Type", "Momentum", "Kinetic energy", "Example"],
+            rows: [
+              ["Elastic", "conserved", "conserved", "collisions of atoms or molecules; nearly so for steel or ivory balls"],
+              ["Inelastic", "conserved", "partly lost", "a cricket ball hitting a bat"],
+              ["Completely inelastic", "conserved", "maximum loss; bodies move together", "a bullet embedding in a block; two railway wagons coupling"],
+            ],
+          },
+          {
+            type: "text",
+            md: t`**Completely inelastic collision in one dimension.** A body $m_1$ moving at $v_{1i}$ hits $m_2$ at rest and they stick: $m_1v_{1i} = (m_1 + m_2)v_f$, so $v_f = \dfrac{m_1v_{1i}}{m_1 + m_2}$. The loss of kinetic energy is $\Delta K = \dfrac12 \cdot \dfrac{m_1m_2}{m_1 + m_2}\,v_{1i}^2$, which is always positive.`,
+          },
+          {
+            type: "example",
+            title: "Two wagons couple",
+            problem: t`A 4 kg trolley moving at 5 m/s hits a 1 kg trolley at rest and they lock together. Find their common speed and the kinetic energy lost.`,
+            steps: [
+              t`Momentum: $4 \times 5 = (4 + 1)v_f$, so $v_f = 4$ m/s.`,
+              t`Initial KE $= \tfrac12 \times 4 \times 25 = 50$ J. Final KE $= \tfrac12 \times 5 \times 16 = 40$ J.`,
+              t`Loss $= 10$ J. Check: $\tfrac12 \times \tfrac{4 \times 1}{5} \times 25 = 10$ J. ✓`,
+            ],
+            answer: "Common speed 4 m/s; 10 J of kinetic energy becomes heat, sound and deformation.",
+          },
+          {
+            type: "list",
+            ordered: true,
+            items: [
+              t`Elastic head-on collision: $m_1$ at $v_{1i}$ hits $m_2$ at rest. Momentum: $m_1v_{1i} = m_1v_{1f} + m_2v_{2f}$.`,
+              t`Kinetic energy: $\tfrac12 m_1v_{1i}^2 = \tfrac12 m_1v_{1f}^2 + \tfrac12 m_2v_{2f}^2$.`,
+              t`Rearrange: $m_1(v_{1i} - v_{1f}) = m_2v_{2f}$ and $m_1(v_{1i}^2 - v_{1f}^2) = m_2v_{2f}^2$.`,
+              t`Divide the second by the first: $v_{1i} + v_{1f} = v_{2f}$ (relative speed of approach = relative speed of separation).`,
+              t`Substitute back and solve for $v_{1f}$ and $v_{2f}$ (results below).`,
+            ],
+          },
+          {
+            type: "formula",
+            tex: t`v_{1f} = \frac{m_1 - m_2}{m_1 + m_2}\,v_{1i} \qquad v_{2f} = \frac{2m_1}{m_1 + m_2}\,v_{1i}`,
+            caption: "One-dimensional elastic collision with the second body initially at rest.",
+          },
+          {
+            type: "example",
+            title: "An elastic head-on collision",
+            problem: t`A 2 kg ball moving at 6 m/s collides elastically and head-on with a 1 kg ball at rest. Find their velocities after the collision.`,
+            steps: [
+              t`$v_{1f} = \dfrac{2 - 1}{3} \times 6 = 2$ m/s.`,
+              t`$v_{2f} = \dfrac{2 \times 2}{3} \times 6 = 8$ m/s.`,
+              t`Check momentum: $12 = 2 \times 2 + 1 \times 8$. ✓ Check KE: $36 = 4 + 32$ J. ✓`,
+            ],
+            answer: "The 2 kg ball goes on at 2 m/s and the 1 kg ball moves off at 8 m/s, both forward.",
+          },
+          {
+            type: "text",
+            md: t`**Special cases** of the elastic result: if $m_1 = m_2$, then $v_{1f} = 0$ and $v_{2f} = v_{1i}$: the bodies **exchange velocities**. This is why heavy water and graphite, whose light nuclei are close in mass to the neutron, are used to slow neutrons in nuclear reactors. If $m_2 \gg m_1$ (a ball hitting a wall), the light body rebounds with almost its original speed. If $m_1 \gg m_2$, the heavy body carries on almost unchanged and the light one moves off at nearly $2v_{1i}$.
+
+**Collisions in two dimensions.** Momentum is conserved separately along $x$ and $y$. For $m_2$ initially at rest: $m_1v_{1i} = m_1v_{1f}\cos\theta_1 + m_2v_{2f}\cos\theta_2$ and $0 = m_1v_{1f}\sin\theta_1 - m_2v_{2f}\sin\theta_2$. With four unknowns and only these equations (plus KE for an elastic collision), one quantity such as an angle must be measured. For an elastic glancing collision of equal masses with one at rest, the two bodies move off at **90°** to each other.`,
+          },
+          {
+            type: "example",
+            title: "Two bodies stick in two dimensions",
+            problem: t`A 2 kg ball moving east at 3 m/s and a 1 kg ball moving north at 6 m/s collide and stick together. Find their common velocity.`,
+            steps: [
+              t`x (east): $2 \times 3 = 6$ kg m/s. y (north): $1 \times 6 = 6$ kg m/s.`,
+              t`Combined mass 3 kg: $v_x = 6/3 = 2$ m/s, $v_y = 6/3 = 2$ m/s.`,
+              t`Speed $= \sqrt{2^2 + 2^2} = 2\sqrt2 \approx 2.83$ m/s; direction $\tan\phi = 2/2 = 1$, $\phi = 45^\circ$ north of east.`,
+            ],
+            answer: "About 2.83 m/s at 45° north of east. (KE falls from 27 J to 12 J.)",
+          },
+          {
+            type: "mistake",
+            wrong: "In an inelastic collision some momentum is lost, just like some kinetic energy.",
+            right: "Momentum is conserved in every collision, elastic or not. Only kinetic energy can be lost (into heat, sound and deformation).",
+            why: "Momentum and kinetic energy both depend on mass and speed, so it feels as if they should behave alike. But momentum is a vector changed only by external forces, while kinetic energy can be converted into other forms by internal forces.",
+          },
+          {
+            type: "checkpoint",
+            questions: [
+              {
+                kind: "mcq",
+                q: "In a reactor, fast neutrons are best slowed down by elastic collisions with nuclei that are:",
+                options: ["light, with mass close to the neutron's", "very heavy, like lead", "electrically charged and fast moving", "of any mass; it makes no difference"],
+                answer: 0,
+                explain: "Equal masses exchange velocities, so a neutron hitting a light nucleus head-on hands over most of its energy. A heavy nucleus would just bounce it back with almost the same speed.",
+              },
+            ],
+          },
+          {
+            type: "activity",
+            activity: {
+              kind: "reveal",
+              prompt: "Equal balls, elastic head-on hit, B at rest. Afterwards?",
+              emoji: "🎱",
+              options: [
+                "A stops and B moves off with A's speed",
+                "A and B both move forward at half of A's speed",
+                "A bounces back and B stays at rest",
+              ],
+              answer: 0,
+              trap: 1,
+              explain: "With equal masses the elastic result gives v₁f = 0 and v₂f = v₁i: they exchange velocities. Moving together at half speed is the completely inelastic case, which loses half the kinetic energy.",
+            },
+          },
+          {
+            type: "callout",
+            tone: "exam",
+            title: "Board note",
+            md: t`NCERT derives the elastic one-dimensional formulas only for the second body at rest and treats two-dimensional collisions through component equations. ISC (and JEE) also use the **coefficient of restitution** $e = \dfrac{\text{relative speed of separation}}{\text{relative speed of approach}}$: $e = 1$ for elastic, $0 < e < 1$ for inelastic and $e = 0$ for completely inelastic collisions. In answers, always check momentum and (for elastic collisions) kinetic energy at the end.`,
+          },
+          {
+            type: "keypoints",
+            items: [
+              "Momentum is conserved in every collision; kinetic energy only in elastic ones.",
+              t`Completely inelastic: $v_f = m_1v_{1i}/(m_1 + m_2)$; KE loss $= \tfrac12\,\tfrac{m_1m_2}{m_1 + m_2}\,v_{1i}^2$.`,
+              t`Elastic, $m_2$ at rest: $v_{1f} = \tfrac{m_1 - m_2}{m_1 + m_2}v_{1i}$, $v_{2f} = \tfrac{2m_1}{m_1 + m_2}v_{1i}$.`,
+              "Equal masses in an elastic head-on collision exchange velocities.",
+              "In 2D, conserve each momentum component; equal masses, elastic, one at rest: they separate at 90°.",
+            ],
+          },
+        ],
+        flashcards: [
+          { front: "Elastic collision", back: "Both total momentum and total kinetic energy are conserved." },
+          { front: "Completely inelastic collision", back: "The bodies stick together; momentum is conserved and the loss of kinetic energy is maximum." },
+          { front: "Elastic head-on collision of equal masses, one at rest", back: "They exchange velocities: the moving body stops, the other moves off with its velocity." },
+          { front: t`$v_{2f}$ in a 1D elastic collision ($m_2$ at rest)`, back: t`$v_{2f} = \dfrac{2m_1}{m_1 + m_2}\,v_{1i}$.` },
+          { front: "Relative velocity in a 1D elastic collision", back: "Relative speed of separation equals relative speed of approach." },
+          { front: "Angle between paths after an elastic glancing collision of equal masses (one at rest)", back: "90°." },
+          { front: "Coefficient of restitution e", back: "Relative speed of separation ÷ relative speed of approach; e = 1 elastic, e = 0 completely inelastic." },
+        ],
+        quiz: [
+          {
+            kind: "mcq",
+            q: "In a completely inelastic collision:",
+            options: ["momentum is conserved but kinetic energy is not", "kinetic energy is conserved but momentum is not", "both are conserved", "neither is conserved"],
+            answer: 0,
+            explain: "Momentum is always conserved in a collision; in a completely inelastic one the bodies stick and kinetic energy is lost.",
+          },
+          {
+            kind: "numeric",
+            q: "A 3 kg cart at 4 m/s hits a 1 kg cart at rest and they stick. Find the common speed (m/s).",
+            answer: 3,
+            unit: "m/s",
+            explain: t`$v = \dfrac{3 \times 4}{3 + 1} = 3$ m/s.`,
+          },
+          {
+            kind: "numeric",
+            q: "For the same collision (3 kg at 4 m/s sticking to 1 kg at rest), how much kinetic energy (J) is lost?",
+            answer: 6,
+            unit: "J",
+            explain: t`Initial $= \tfrac12 \times 3 \times 16 = 24$ J; final $= \tfrac12 \times 4 \times 9 = 18$ J; loss = 6 J.`,
+            difficulty: 2,
+          },
+          {
+            kind: "truefalse",
+            q: "In a head-on elastic collision between equal masses with one at rest, the bodies exchange velocities.",
+            answer: true,
+            explain: t`With $m_1 = m_2$, $v_{1f} = 0$ and $v_{2f} = v_{1i}$.`,
+          },
+          {
+            kind: "mcq",
+            q: "A very heavy ball moving at u hits a very light ball at rest, head-on and elastically. The light ball moves off at about:",
+            options: ["2u", "u", "u/2", "0"],
+            answer: 0,
+            explain: t`$v_{2f} = \dfrac{2m_1}{m_1 + m_2}u \to 2u$ when $m_1 \gg m_2$.`,
+            difficulty: 2,
+          },
+          {
+            kind: "multi",
+            q: "In an elastic collision, which of these are conserved?",
+            options: ["Total linear momentum", "Total kinetic energy", "Total energy", "The kinetic energy of each body separately"],
+            answers: [0, 1, 2],
+            explain: "Totals are conserved; individual kinetic energies change as energy is transferred between the bodies.",
+          },
+          {
+            kind: "numeric",
+            q: "A 1 kg ball at 6 m/s hits a 2 kg ball at rest, head-on and elastically. Find the speed (m/s) of the 2 kg ball afterwards.",
+            answer: 4,
+            unit: "m/s",
+            explain: t`$v_{2f} = \dfrac{2 \times 1}{3} \times 6 = 4$ m/s. (The 1 kg ball rebounds at 2 m/s; momentum $6 = -2 + 8$. ✓)`,
+            difficulty: 2,
+          },
+          {
+            kind: "mcq",
+            q: "Two equal masses collide elastically, one initially at rest, in a glancing (not head-on) collision. The angle between their final velocities is:",
+            options: ["90°", "45°", "180°", "60°"],
+            answer: 0,
+            explain: t`Momentum gives $\vec v_1 = \vec v_1' + \vec v_2'$ and KE gives $v_1^2 = v_1'^2 + v_2'^2$; together these force $\vec v_1' \cdot \vec v_2' = 0$.`,
+            difficulty: 3,
+            hint: "Square the momentum equation and compare it with the kinetic energy equation.",
+          },
+        ],
+      },
+      {
+        slug: "c11-wep-exam",
+        title: "Exam edge: Energy Methods, Vertical Circle and Collisions",
+        summary: "What JEE, NEET and the CETs ask from Work, Energy and Power: variable forces, potential energy curves, the vertical circle, constant-power motion and collisions with a coefficient of restitution.",
+        minutes: 25,
+        xp: 60,
+        track: "exam",
+        blocks: [
+          {
+            type: "text",
+            md: t`Work, Energy and Power is one of the most tested Class 11 chapters. JEE Main and NEET regularly set questions on work by a variable force, the work–energy theorem with friction, the vertical circle, power and collisions. KCET and COMEDK ask direct formula-based ones. JEE Advanced joins this chapter with Laws of Motion: momentum in the instant of impact, then energy for the motion that follows.
+
+The big habit: **use energy when the question asks for speed at a position, and momentum when it asks about an impact.**`,
+          },
+          {
+            type: "table",
+            headers: ["Result", "Formula", "Safe when"],
+            rows: [
+              ["Vertical circle (string): least speed at top", t`$v_{\text{top}} = \sqrt{gL}$`, "string stays just taut at the top"],
+              ["Vertical circle (string): least speed at bottom", t`$v_{\text{bottom}} = \sqrt{5gL}$`, "to complete the circle"],
+              ["Tension difference bottom − top", t`$T_b - T_t = 6mg$`, "string, full circle, any speed"],
+              ["Vertical circle (rod or tube)", t`$v_{\text{top}} \ge 0$, $v_{\text{bottom}} \ge 2\sqrt{gL}$`, "a rod can push as well as pull"],
+              ["KE loss in a 1D collision", t`$\Delta K = \tfrac12\,\dfrac{m_1m_2}{m_1 + m_2}(1 - e^2)\,u_{\text{rel}}^2$`, "head-on collision, any e"],
+              ["Constant power from rest", t`$v = \sqrt{2Pt/m}$`, "no friction, constant P"],
+            ],
+          },
+          {
+            type: "formula",
+            tex: t`v_1' = \frac{(m_1 - e m_2)u_1 + (1 + e)m_2u_2}{m_1 + m_2} \qquad v_2' = \frac{(m_2 - e m_1)u_2 + (1 + e)m_1u_1}{m_1 + m_2}`,
+            caption: "Head-on collision with coefficient of restitution e (velocities with signs along one line). e = 1 gives the elastic result.",
+          },
+          {
+            type: "example",
+            title: "Level 1 (KCET / NEET): work by a variable force",
+            problem: t`A force $F = 3x^2$ N acts along the x-axis. Find the work done as the body moves from $x = 0$ to $x = 2$ m.`,
+            steps: [
+              t`$W = \int_0^2 3x^2\,dx = [x^3]_0^2$.`,
+              t`$W = 8 - 0 = 8$ J.`,
+            ],
+            answer: "8 J.",
+          },
+          {
+            type: "example",
+            title: "Level 2 (NEET / JEE Main): just completing a vertical circle",
+            problem: t`A 0.2 kg stone on a 0.5 m string is whirled in a vertical circle. Find the least speed at the bottom for it to complete the circle, and the tension at the bottom at that speed. $g = 10$ m/s².`,
+            steps: [
+              t`At the top, the least speed has $T = 0$: $mg = mv_t^2/L$, so $v_t^2 = gL$.`,
+              t`Energy from bottom to top (rise $2L$): $v_b^2 = v_t^2 + 4gL = 5gL = 5 \times 10 \times 0.5 = 25$, so $v_b = 5$ m/s.`,
+              t`At the bottom: $T - mg = mv_b^2/L$, so $T = 2 + 0.2 \times 25/0.5 = 2 + 10 = 12$ N.`,
+            ],
+            answer: "Least speed at the bottom = 5 m/s; tension there = 12 N (= 6mg, since the tension at the top is zero).",
+          },
+          {
+            type: "example",
+            title: "Level 2 (JEE Main): collision with e = 0.5",
+            problem: t`A 1 kg ball at 4 m/s hits a 2 kg ball at rest head-on, with coefficient of restitution 0.5. Find the velocities after impact and the kinetic energy lost.`,
+            steps: [
+              t`$v_1' = \dfrac{(1 - 0.5 \times 2) \times 4}{3} = 0$ m/s.`,
+              t`$v_2' = \dfrac{(1 + 0.5) \times 1 \times 4}{3} = 2$ m/s. Check momentum: $4 = 0 + 2 \times 2$. ✓`,
+              t`KE before $= 8$ J; after $= \tfrac12 \times 2 \times 4 = 4$ J; loss = 4 J.`,
+              t`Shortcut check: $\tfrac12 \times \tfrac23 \times (1 - 0.25) \times 16 = 4$ J. ✓`,
+            ],
+            answer: "The 1 kg ball stops, the 2 kg ball moves at 2 m/s, and 4 J of kinetic energy is lost.",
+          },
+          {
+            type: "example",
+            title: "Level 3 (JEE Advanced): bullet, block and a vertical circle",
+            problem: t`A 10 g bullet hits and embeds in a 0.99 kg block hanging at rest from a light 0.4 m string. Find the least bullet speed for the block to then complete a vertical circle. Treat the block as a particle; $g = 10$ m/s².`,
+            steps: [
+              t`After impact the block-and-bullet (1 kg) must have at least $V = \sqrt{5gL} = \sqrt{5 \times 10 \times 0.4} = \sqrt{20} \approx 4.47$ m/s at the bottom.`,
+              t`The impact is completely inelastic, so use momentum (not energy): $0.01u = (0.01 + 0.99)V = 1 \times V$.`,
+              t`$u = V/0.01 = 100\sqrt{20} \approx 447$ m/s.`,
+              t`Only $\dfrac{m}{m + M} = 1\%$ of the bullet's kinetic energy survives the impact; 99% becomes heat and deformation.`,
+            ],
+            answer: "About 447 m/s.",
+          },
+          {
+            type: "mistake",
+            wrong: "For a stone on a string to complete a vertical circle, its speed at the top only needs to be just above zero.",
+            right: "A string can only pull. At the top it stays taut only if mv²/L ≥ mg, so the least speed there is √(gL), and √(5gL) at the bottom. Zero speed at the top is allowed only for a rod or a bead on a ring.",
+            why: "Students borrow the rod result or imagine the stone 'just reaching' the top. With a string, below √(gL) the string goes slack before the top and the stone falls inside the circle.",
+          },
+          {
+            type: "mistake",
+            wrong: "In the bullet-and-block problem I equated the bullet's kinetic energy to (m + M)gh.",
+            right: "Use momentum conservation for the impact (it is completely inelastic), then energy conservation for the swing afterwards.",
+            why: "Energy conservation feels universal, but kinetic energy is not conserved during the impact; most of it becomes heat. Mixing the stages gives answers about ten times too small for the bullet speed.",
+          },
+          {
+            type: "checkpoint",
+            questions: [
+              {
+                kind: "mcq",
+                q: t`A particle's potential energy is $U(x) = x^2 - 4x$ (SI units). Its equilibrium point and its nature are:`,
+                options: ["x = 2 m, stable", "x = 2 m, unstable", "x = 4 m, stable", "x = 0, neutral"],
+                answer: 0,
+                explain: t`$F = -dU/dx = -(2x - 4) = 0$ at $x = 2$. $d^2U/dx^2 = 2 > 0$, a minimum of $U$, so the equilibrium is stable.`,
+              },
+            ],
+          },
+          {
+            type: "activity",
+            activity: {
+              kind: "order",
+              prompt: "Order the steps for a bullet-into-hanging-block problem.",
+              items: [
+                "Conserve momentum during the impact to find the common speed",
+                "Write the kinetic energy of block and bullet just after impact",
+                "Conserve mechanical energy during the swing",
+                "Apply the condition at the highest point (height reached, or string taut)",
+                "Solve back for the bullet's speed",
+              ],
+              explain: "Momentum for the impact, energy for the swing. The two stages must never be merged into one energy equation.",
+            },
+          },
+          {
+            type: "callout",
+            tone: "exam",
+            title: "Exam strategy",
+            md: t`For potential energy curves: force $= -$slope, stable equilibrium at a minimum of $U$, unstable at a maximum. For power questions with friction, the engine's force is not $ma$ alone: $F = ma + f$ and $P = Fv$. For a uniform chain hanging over a table edge, treat the hanging part's weight as acting at its midpoint.`,
+          },
+          {
+            type: "keypoints",
+            items: [
+              t`String vertical circle: $v_{\text{top}} \ge \sqrt{gL}$, $v_{\text{bottom}} \ge \sqrt{5gL}$, $T_b - T_t = 6mg$.`,
+              "Impact: momentum. Motion afterwards: energy. Never one energy equation through an inelastic impact.",
+              t`Coefficient of restitution $e$: KE loss $= \tfrac12\mu_r(1 - e^2)u_{\text{rel}}^2$, with $\mu_r = m_1m_2/(m_1 + m_2)$.`,
+              t`$U(x)$ curves: $F = -dU/dx$; minimum = stable equilibrium.`,
+              t`Constant power from rest: $v = \sqrt{2Pt/m}$, so $v \propto \sqrt t$.`,
+            ],
+          },
+        ],
+        flashcards: [
+          { front: "Least speed at the top of a vertical circle (string)", back: t`$\sqrt{gL}$; at the bottom $\sqrt{5gL}$.` },
+          { front: "Least speed at the bottom for a rod or tube", back: t`$2\sqrt{gL}$, since speed at the top can be zero.` },
+          { front: "Tension at bottom minus tension at top (string, full circle)", back: "6mg." },
+          { front: "KE loss in a head-on collision with restitution e", back: t`$\tfrac12\,\tfrac{m_1m_2}{m_1 + m_2}(1 - e^2)u_{\text{rel}}^2$.` },
+          { front: "Ball dropped from height h on a floor with restitution e", back: t`Rebound speed $e\sqrt{2gh}$, rebound height $e^2h$.` },
+          { front: "Stable equilibrium on a U–x curve", back: t`Where $dU/dx = 0$ and $d^2U/dx^2 > 0$ (a minimum of $U$).` },
+          { front: "Velocity under constant power from rest", back: t`$v = \sqrt{2Pt/m}$; distance $\propto t^{3/2}$.` },
+        ],
+        quiz: [
+          {
+            kind: "numeric",
+            q: "A force F = (2x + 1) N acts along the x-axis. Find the work done (J) from x = 0 to x = 3 m.",
+            answer: 12,
+            unit: "J",
+            explain: t`$W = [x^2 + x]_0^3 = 9 + 3 = 12$ J.`,
+            difficulty: 1,
+          },
+          {
+            kind: "mcq",
+            q: t`For $U(x) = 2x^3 - 6x$ (SI units, $x > 0$), the equilibrium point is:`,
+            options: ["x = 1 m, stable", "x = 1 m, unstable", "x = √3 m, stable", "x = 3 m, unstable"],
+            answer: 0,
+            explain: t`$dU/dx = 6x^2 - 6 = 0 \Rightarrow x = 1$. $d^2U/dx^2 = 12x = 12 > 0$, so it is a minimum: stable.`,
+            difficulty: 2,
+            hint: "Set dU/dx = 0, then check the sign of the second derivative.",
+          },
+          {
+            kind: "numeric",
+            q: "A stone on a 1 m string moves in a vertical circle. Find the least speed (m/s) at the lowest point for it to complete the circle. g = 10 m/s².",
+            answer: 7.07,
+            tolerance: 0.05,
+            unit: "m/s",
+            explain: t`$v = \sqrt{5gL} = \sqrt{50} \approx 7.07$ m/s.`,
+            difficulty: 2,
+          },
+          {
+            kind: "numeric",
+            q: "A 2 kg ball at 3 m/s hits a 1 kg ball at rest head-on, with e = 0.5. Find the speed (m/s) of the 1 kg ball after impact.",
+            answer: 3,
+            unit: "m/s",
+            explain: t`$v_2' = \dfrac{(1 + e)m_1u_1}{m_1 + m_2} = \dfrac{1.5 \times 2 \times 3}{3} = 3$ m/s. The 2 kg ball continues at 1.5 m/s; momentum $6 = 3 + 3$. ✓`,
+            difficulty: 2,
+          },
+          {
+            kind: "multi",
+            q: "Which statements about motion in a vertical circle of radius L are correct?",
+            options: [
+              t`With a string, the least speed at the top is $\sqrt{gL}$`,
+              "With a light rod, the speed at the top may be zero",
+              "With a string, the tension at the bottom exceeds that at the top by 6mg",
+              t`With a light rod, the least speed at the bottom is $\sqrt{5gL}$`,
+            ],
+            answers: [0, 1, 2],
+            explain: t`A rod can push, so $v_{\text{top}} = 0$ is enough and $v_{\text{bottom}} = \sqrt{4gL} = 2\sqrt{gL}$, not $\sqrt{5gL}$.`,
+            difficulty: 3,
+            hint: "A rod can push as well as pull; a string can only pull.",
+          },
+          {
+            kind: "numeric",
+            q: "A uniform 4 kg chain 2 m long lies on a smooth table with one-third of its length hanging over the edge. Find the work (J) needed to pull the hanging part back onto the table. g = 10 m/s².",
+            answer: 4.44,
+            tolerance: 0.05,
+            unit: "J",
+            explain: t`Hanging mass $= 4/3$ kg, hanging length $= 2/3$ m, centre of mass $1/3$ m below the edge. $W = \tfrac43 \times 10 \times \tfrac13 = 40/9 \approx 4.44$ J.`,
+            difficulty: 3,
+            hint: "Lift the hanging part's centre of mass up to the table.",
+          },
+          {
+            kind: "mcq",
+            q: "A car starts from rest and its engine delivers constant power on a smooth level road. Its speed varies with time as:",
+            options: [t`$v \propto \sqrt t$`, t`$v \propto t$`, t`$v \propto t^2$`, "v stays constant"],
+            answer: 0,
+            explain: t`$P = Fv = mv\,\dfrac{dv}{dt}$, so $v\,dv = (P/m)\,dt$ and $v^2 = 2Pt/m$.`,
+            difficulty: 2,
+          },
+          {
+            kind: "numeric",
+            q: "A ball is dropped from 5 m onto a floor with coefficient of restitution 0.6. How high (m) does it rise after the first bounce?",
+            answer: 1.8,
+            unit: "m",
+            explain: t`Rebound speed $= e\sqrt{2gh}$, so the height is $e^2h = 0.36 \times 5 = 1.8$ m.`,
+            difficulty: 2,
+          },
+        ],
+      },
+    ],
+  },
 ];
 
 export const links: Record<string, string | string[]> = {
   "11:Laws of Motion": "c11-laws-of-motion",
+  "11:Work, Energy and Power": "c11-work-energy-power",
+  "11:Work, Power and Energy": "c11-work-energy-power",
 };
