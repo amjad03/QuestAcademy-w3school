@@ -4395,6 +4395,436 @@ WHERE S.Dept = D.Dept AND S.City = 'Pune';`,
       },
     ],
   },
+  /* ------------------------------------------------------------------ */
+  /* Class 12 · Interface of Python with SQL                             */
+  /* ------------------------------------------------------------------ */
+  {
+    slug: "c12-cs-python-sql-interface",
+    title: "Interface of Python with SQL",
+    icon: "🔗",
+    description: "Connecting Python to MySQL with mysql.connector: connect, cursor, execute, fetchone, fetchmany, fetchall, rowcount, commit, and parameterised queries with %s and format().",
+    lessons: [
+      {
+        slug: "c12-cs-mysql-connector-basics",
+        title: "Connecting Python to MySQL and Fetching Rows",
+        summary: "The steps of a database program: import mysql.connector, connect, create a cursor, execute a query, fetch rows with fetchone, fetchmany and fetchall, read rowcount and close.",
+        minutes: 22,
+        xp: 55,
+        blocks: [
+          {
+            type: "illustration",
+            emoji: "🎫",
+            caption: "A school's result website is a Python (or other) program in front and a MySQL database behind. The program sends SQL and shows the rows that come back.",
+          },
+          {
+            type: "text",
+            md: "A Python program can send SQL statements to a MySQL server and use the results like ordinary Python data. The library used in the CBSE syllabus is **mysql.connector**, installed once with `pip install mysql-connector-python`. (These examples need a running MySQL server, so they are shown with their expected output instead of a Run button.)\n\nEvery database program follows the same steps: **import** the module, **connect** to the database, create a **cursor**, **execute** the query, **fetch** the results (for SELECT) or **commit** the changes (for INSERT, UPDATE, DELETE), and finally **close** the connection.",
+          },
+          {
+            type: "table",
+            headers: ["Statement", "Purpose"],
+            rows: [
+              ["`import mysql.connector as sqltor`", "loads the connector (any alias is fine)"],
+              ["`con = sqltor.connect(host=\"localhost\", user=\"root\", passwd=\"tiger\", database=\"school\")`", "opens a **connection object** to the MySQL server and the named database (`password=` also works)"],
+              ["`con.is_connected()`", "True if the connection succeeded"],
+              ["`cur = con.cursor()`", "creates a **cursor**, the object that sends queries and holds the result set"],
+              ["`cur.execute(query)`", "runs one SQL statement"],
+              ["`cur.fetchone()`", "next row as a tuple, or `None` if no rows are left"],
+              ["`cur.fetchmany(n)`", "next n rows as a list of tuples"],
+              ["`cur.fetchall()`", "all remaining rows as a list of tuples (`[]` if none)"],
+              ["`cur.rowcount`", "rows fetched so far (SELECT) or rows affected (INSERT / UPDATE / DELETE)"],
+              ["`con.commit()`", "saves changes made by INSERT, UPDATE or DELETE"],
+              ["`con.close()`", "closes the connection"],
+            ],
+          },
+          {
+            type: "text",
+            md: "The STUDENT table in the database `school` holds: (1201, 'Kavya', 12, 92), (1202, 'Imran', 12, 84), (1105, 'Pooja', 11, 88), (1107, 'Tenzing', 11, 76), with columns AdmNo, Name, Class, Marks.",
+          },
+          {
+            type: "code",
+            lang: "python",
+            caption: "Display only: needs a MySQL server. The expected output is shown below.",
+            code: r`import mysql.connector as sqltor
+
+con = sqltor.connect(host="localhost", user="root",
+                     passwd="tiger", database="school")
+if con.is_connected():
+    print("Connected")
+cur = con.cursor()
+cur.execute("SELECT AdmNo, Name, Marks FROM STUDENT ORDER BY Marks DESC")
+first = cur.fetchone()
+print(first)
+two = cur.fetchmany(2)
+print(two)
+rest = cur.fetchall()
+print(rest)
+print("Rows read:", cur.rowcount)
+con.close()`,
+          },
+          {
+            type: "code",
+            lang: "python",
+            caption: "Expected output",
+            code: r`Connected
+(1201, 'Kavya', 92)
+[(1105, 'Pooja', 88), (1202, 'Imran', 84)]
+[(1107, 'Tenzing', 76)]
+Rows read: 4`,
+          },
+          {
+            type: "example",
+            title: "Why the fetches return these rows",
+            problem: "Explain each printed line after the query sorts the four rows by Marks, highest first.",
+            steps: [
+              "The sorted result set is: Kavya 92, Pooja 88, Imran 84, Tenzing 76. The cursor starts before the first row.",
+              "`fetchone()` returns the first row as a **tuple**: (1201, 'Kavya', 92).",
+              "`fetchmany(2)` returns the **next** two rows as a **list of tuples**.",
+              "`fetchall()` returns whatever is left: a list with one tuple.",
+              "`rowcount` counts the rows fetched so far: 1 + 2 + 1 = 4.",
+            ],
+            answer: "Each fetch continues from where the previous one stopped; fetchone gives a tuple, fetchmany and fetchall give lists.",
+          },
+          {
+            type: "mistake",
+            wrong: "After `fetchone()`, calling `fetchall()` gives me all four rows again.",
+            right: "The cursor moves forward as rows are fetched. `fetchall()` returns only the rows **not yet fetched**. To get all rows again, execute the query again.",
+            why: "A list can be read from the start any number of times, so learners expect the result set to behave the same way. A cursor is more like a reading pointer in a file.",
+          },
+          {
+            type: "checkpoint",
+            questions: [
+              {
+                kind: "mcq",
+                q: "What does `fetchone()` return when no rows are left?",
+                options: ["`None`", "`[]`", "`()`", "an error"],
+                answer: 0,
+                explain: "fetchone returns None at the end; fetchall would return an empty list.",
+              },
+              {
+                kind: "numeric",
+                q: "A SELECT gives 10 rows. After `fetchmany(3)` and then `fetchone()`, what is `cur.rowcount`?",
+                answer: 4,
+                explain: "rowcount counts rows fetched so far: 3 + 1 = 4.",
+              },
+            ],
+          },
+          {
+            type: "activity",
+            activity: {
+              kind: "order",
+              prompt: "Put the steps of a database program in order.",
+              items: [
+                "import mysql.connector",
+                "con = connect(host, user, passwd, database)",
+                "cur = con.cursor()",
+                "cur.execute(query)",
+                "fetch rows, or con.commit() for changes",
+                "con.close()",
+              ],
+              explain: "Connect, get a cursor, execute, then fetch or commit, and close at the end.",
+            },
+          },
+          {
+            type: "callout",
+            tone: "exam",
+            title: "Board tip",
+            md: "The 1–2 mark questions ask for the **return type** of fetchone (tuple), fetchmany and fetchall (list of tuples), the meaning of `rowcount`, and the purpose of `connect()`, `cursor()` and `commit()`. Learn the four connect arguments: host, user, passwd (or password), database.",
+          },
+          {
+            type: "keypoints",
+            items: [
+              "Steps: import, connect, cursor, execute, fetch or commit, close.",
+              "`connect(host=..., user=..., passwd=..., database=...)` returns a connection object.",
+              "`cursor()` creates the object that runs queries and holds results.",
+              "fetchone → one tuple or None; fetchmany(n) and fetchall → list of tuples.",
+              "rowcount: rows fetched so far for SELECT, rows affected for changes.",
+            ],
+          },
+        ],
+        flashcards: [
+          { front: "Module used to connect Python with MySQL?", back: "`mysql.connector` (install: `pip install mysql-connector-python`)." },
+          { front: "Four main arguments of connect()?", back: "host, user, passwd (or password), database." },
+          { front: "What is a cursor?", back: "An object created from the connection that executes SQL and holds the result set." },
+          { front: "Return type of fetchone()?", back: "A tuple (or None if no row is left)." },
+          { front: "Return type of fetchall()?", back: "A list of tuples (empty list if none left)." },
+          { front: "What does fetchmany(3) return?", back: "The next 3 rows as a list of tuples." },
+          { front: "Meaning of rowcount after a SELECT?", back: "The number of rows fetched so far." },
+          { front: "How to check the connection worked?", back: "`con.is_connected()` returns True." },
+        ],
+        quiz: [
+          {
+            kind: "mcq",
+            q: "Which method creates a cursor?",
+            options: ["`con.cursor()`", "`sqltor.cursor()`", "`con.execute()`", "`cur.connect()`"],
+            answer: 0,
+            explain: "A cursor is created from the connection object.",
+          },
+          {
+            kind: "mcq",
+            q: "What is the type of `cur.fetchmany(2)`?",
+            options: ["list", "tuple", "dict", "str"],
+            answer: 0,
+            explain: "It is a list of up to 2 tuples.",
+          },
+          {
+            kind: "truefalse",
+            q: "`fetchall()` always returns every row of the result, even if some were fetched earlier.",
+            answer: false,
+            explain: "It returns only the remaining rows.",
+          },
+          {
+            kind: "fill",
+            q: "The argument that names the database in connect() is ___.",
+            answer: ["database", "db"],
+            explain: "`database=\"school\"` (the connector also accepts `db`).",
+          },
+          {
+            kind: "numeric",
+            q: "A query returns 6 rows. The program calls `fetchone()` twice and then `fetchall()`. How many tuples are in the list from fetchall?",
+            answer: 4,
+            explain: "6 − 2 = 4 rows remain.",
+          },
+          {
+            kind: "mcq",
+            q: "Which call ends the connection with the server?",
+            options: ["`con.close()`", "`cur.end()`", "`con.commit()`", "`sqltor.close()`"],
+            answer: 0,
+            explain: "close() on the connection object releases it.",
+          },
+          {
+            kind: "multi",
+            q: "Which return a list?",
+            options: ["`fetchall()`", "`fetchmany(4)`", "`fetchone()`", "`is_connected()`"],
+            answers: [0, 1],
+            explain: "fetchone gives a tuple; is_connected gives a bool.",
+          },
+        ],
+      },
+      {
+        slug: "c12-cs-python-sql-programs",
+        title: "Inserting, Updating and Searching from Python (Board Practice)",
+        summary: "Building queries with format() and %s placeholders, commit after changes, rowcount for affected rows, and complete board-style programs that add, update, delete and search records.",
+        minutes: 24,
+        xp: 60,
+        blocks: [
+          {
+            type: "text",
+            md: "Real programs use values typed by the user, so the query must include Python variables. There are two common ways.\n\n**String formatting**: build the query text with `format()` (or an f-string): `\"SELECT * FROM STUDENT WHERE Marks > {}\".format(m)`. Text values must be put inside quotes in the SQL: `\"... WHERE Name = '{}'\".format(nm)`.\n\n**Parameterised query** (preferred): write `%s` for each value and pass a tuple as the second argument of execute: `cur.execute(\"INSERT INTO STUDENT VALUES (%s, %s, %s, %s)\", (adm, nm, cls, mk))`. The connector inserts the values safely and adds quotes where needed, which also protects against SQL injection.",
+          },
+          {
+            type: "text",
+            md: "INSERT, UPDATE and DELETE change the data, so they must be followed by **`con.commit()`**. Without it the changes are not saved and are lost when the connection closes. After such a statement, `cur.rowcount` is the number of rows **affected**.",
+          },
+          {
+            type: "code",
+            lang: "python",
+            caption: "Display only: needs a MySQL server. Starts from the four-row STUDENT table of the previous lesson.",
+            code: r`import mysql.connector as sqltor
+
+con = sqltor.connect(host="localhost", user="root",
+                     passwd="tiger", database="school")
+cur = con.cursor()
+
+cur.execute("INSERT INTO STUDENT VALUES (%s, %s, %s, %s)", (1210, "Ritu", 12, 81))
+con.commit()
+print("Inserted:", cur.rowcount)
+
+cur.execute("UPDATE STUDENT SET Marks = Marks + 5 WHERE Class = %s", (11,))
+con.commit()
+print("Updated:", cur.rowcount)
+
+cur.execute("DELETE FROM STUDENT WHERE Marks < %s", (82,))
+con.commit()
+print("Deleted:", cur.rowcount)
+
+cur.execute("SELECT Name, Marks FROM STUDENT WHERE Class = 12 ORDER BY Name")
+for row in cur.fetchall():
+    print(row[0], row[1])
+con.close()`,
+          },
+          {
+            type: "code",
+            lang: "python",
+            caption: "Expected output",
+            code: r`Inserted: 1
+Updated: 2
+Deleted: 2
+Imran 84
+Kavya 92`,
+          },
+          {
+            type: "example",
+            title: "Tracing the changes",
+            problem: "Explain the output, starting from Kavya 92 (12), Imran 84 (12), Pooja 88 (11), Tenzing 76 (11).",
+            steps: [
+              "INSERT adds Ritu (Class 12, 81): 1 row affected.",
+              "UPDATE adds 5 to Class 11 rows: Pooja 93 and Tenzing 81: 2 rows affected.",
+              "DELETE removes Marks below 82: Ritu 81 and Tenzing 81: 2 rows affected.",
+              "Class 12 students left, sorted by name: Imran 84 and Kavya 92.",
+            ],
+            answer: "`Inserted: 1`, `Updated: 2`, `Deleted: 2`, then `Imran 84` and `Kavya 92`.",
+          },
+          {
+            type: "mistake",
+            wrong: "`cur.execute(\"UPDATE STUDENT SET Marks = 90 WHERE AdmNo = %s\", (1201))` passes the value correctly.",
+            right: "`(1201)` is just the int 1201, not a tuple. A one-value parameter needs a trailing comma: `(1201,)`. Without it the connector reports an error.",
+            why: "Brackets look like a tuple. This is the same one-item-tuple rule from the Python revision tour: the comma, not the bracket, makes a tuple.",
+          },
+          {
+            type: "checkpoint",
+            questions: [
+              {
+                kind: "mcq",
+                q: "A program runs an INSERT but the new row is missing when checked in MySQL. The most likely cause?",
+                options: ["`con.commit()` was not called", "`fetchall()` was not called", "The cursor was not closed", "rowcount was not printed"],
+                answer: 0,
+                explain: "Changes must be committed to be saved.",
+              },
+              {
+                kind: "mcq",
+                q: "For `nm = \"Pooja\"`, which query string is correct with format()?",
+                options: ["`\"SELECT * FROM STUDENT WHERE Name = '{}'\".format(nm)`", "`\"SELECT * FROM STUDENT WHERE Name = {}\".format(nm)`", "`\"SELECT * FROM STUDENT WHERE Name = %s\".format(nm)`", "`\"SELECT * FROM STUDENT WHERE Name = 'nm'\"`"],
+                answer: 0,
+                explain: "A text value needs single quotes inside the SQL. Without them MySQL reads Pooja as a column name.",
+              },
+            ],
+          },
+          {
+            type: "heading",
+            text: "A complete board-style program",
+          },
+          {
+            type: "code",
+            lang: "python",
+            caption: "Display only. A menu-free version of the usual 4-mark question.",
+            code: r`import mysql.connector as sqltor
+
+def add_student(con):
+    adm = int(input("AdmNo: "))
+    nm = input("Name: ")
+    cls = int(input("Class: "))
+    mk = int(input("Marks: "))
+    cur = con.cursor()
+    cur.execute("INSERT INTO STUDENT VALUES (%s, %s, %s, %s)", (adm, nm, cls, mk))
+    con.commit()
+    print("Record added")
+
+def show_toppers(con, cutoff):
+    cur = con.cursor()
+    cur.execute("SELECT Name, Marks FROM STUDENT WHERE Marks > {} ORDER BY Name".format(cutoff))
+    rows = cur.fetchall()
+    for r in rows:
+        print(r[0], "-", r[1])
+    print("Total:", cur.rowcount)
+
+con = sqltor.connect(host="localhost", user="root",
+                     passwd="tiger", database="school")
+show_toppers(con, 85)
+con.close()`,
+          },
+          {
+            type: "text",
+            md: "Expected output on the table left after the earlier changes (Pooja 93, Kavya 92, Imran 84): `Kavya - 92`, `Pooja - 93`, `Total: 2`.",
+          },
+          {
+            type: "activity",
+            activity: {
+              kind: "sort",
+              prompt: "Does this statement need con.commit() afterwards?",
+              groups: ["Needs commit()", "No commit needed"],
+              items: [
+                { text: "INSERT INTO STUDENT ...", group: 0, hint: "It changes the data." },
+                { text: "UPDATE STUDENT SET ...", group: 0, hint: "It changes existing rows." },
+                { text: "DELETE FROM STUDENT ...", group: 0, hint: "It removes rows." },
+                { text: "SELECT * FROM STUDENT", group: 1, hint: "It only reads data." },
+                { text: "fetchall()", group: 1, hint: "Fetching reads the result set." },
+              ],
+              explain: "Only statements that change data need commit(). Reading never does.",
+            },
+          },
+          {
+            type: "callout",
+            tone: "exam",
+            title: "Board tip",
+            md: "In the program question, write the import, the connect line with all four arguments, `cursor()`, `execute()`, and `commit()` after any change. Marks are often lost for a missing commit or for leaving out the quotes around a text value in a format() query.",
+          },
+          {
+            type: "keypoints",
+            items: [
+              "Insert values with `%s` placeholders and a tuple, or build the query with `format()`.",
+              "Text values need quotes inside the SQL when using format(); `%s` adds them for you.",
+              "One parameter still needs a tuple: `(x,)`.",
+              "Call `con.commit()` after INSERT, UPDATE and DELETE; rowcount then gives rows affected.",
+              "Loop over `fetchall()` and use `row[0]`, `row[1]` to show columns.",
+            ],
+          },
+        ],
+        flashcards: [
+          { front: "Why is commit() needed?", back: "To save changes made by INSERT, UPDATE or DELETE; without it they are lost." },
+          { front: "Parameterised insert syntax?", back: "`cur.execute(\"INSERT INTO T VALUES (%s, %s)\", (a, b))`" },
+          { front: "One-value parameter tuple?", back: "`(x,)` with a trailing comma." },
+          { front: "Query with format() for a text value?", back: "`\"... WHERE Name = '{}'\".format(nm)` with quotes around {}." },
+          { front: "rowcount after an UPDATE?", back: "The number of rows changed (affected)." },
+          { front: "Advantage of %s placeholders?", back: "The connector inserts values safely and adds quotes, protecting against SQL injection." },
+          { front: "How to read the second column of a fetched row?", back: "`row[1]`, since each row is a tuple." },
+        ],
+        quiz: [
+          {
+            kind: "mcq",
+            q: "Which correctly inserts (1301, 'Arun') using placeholders?",
+            options: [
+              "`cur.execute(\"INSERT INTO T VALUES (%s, %s)\", (1301, \"Arun\"))`",
+              "`cur.execute(\"INSERT INTO T VALUES (%s, %s)\" % 1301, \"Arun\")`",
+              "`cur.execute(\"INSERT INTO T VALUES (1301, Arun)\")`",
+              "`cur.insert(1301, \"Arun\")`",
+            ],
+            answer: 0,
+            explain: "Placeholders in the query and a tuple of values as the second argument.",
+          },
+          {
+            kind: "truefalse",
+            q: "A SELECT statement must be followed by `con.commit()`.",
+            answer: false,
+            explain: "SELECT only reads data; commit is for changes.",
+          },
+          {
+            kind: "numeric",
+            q: "A table has 8 rows, 3 of them with Class 11. After `UPDATE ... WHERE Class = 11` and commit, what is `cur.rowcount`?",
+            answer: 3,
+            explain: "rowcount is the number of rows affected by the update.",
+          },
+          {
+            kind: "fill",
+            q: "After an INSERT, call con.___() to save the change.",
+            answer: ["commit"],
+            explain: "commit() makes the change permanent.",
+          },
+          {
+            kind: "mcq",
+            q: "`m = 85`. Which string gives `SELECT * FROM STUDENT WHERE Marks > 85`?",
+            options: ["`\"SELECT * FROM STUDENT WHERE Marks > {}\".format(m)`", "`\"SELECT * FROM STUDENT WHERE Marks > m\"`", "`\"SELECT * FROM STUDENT WHERE Marks > '{}'\".format(\"m\")`", "`\"SELECT * FROM STUDENT WHERE Marks > %s\".format(m)`"],
+            answer: 0,
+            explain: "format replaces {} with 85. The %s version would stay as %s because format only fills braces.",
+          },
+          {
+            kind: "mcq",
+            q: "What is wrong in `cur.execute(\"DELETE FROM STUDENT WHERE AdmNo = %s\", (1202))`?",
+            options: ["`(1202)` is not a tuple; write `(1202,)`", "DELETE cannot use %s", "AdmNo must be quoted", "Nothing"],
+            answer: 0,
+            explain: "A one-item tuple needs a comma.",
+          },
+          {
+            kind: "multi",
+            q: "Which lines are needed in a program that adds one record?",
+            options: ["`con = sqltor.connect(...)`", "`cur = con.cursor()`", "`cur.execute(insert_query, values)`", "`con.commit()`", "`cur.fetchall()`"],
+            answers: [0, 1, 2, 3],
+            explain: "Nothing needs to be fetched after an INSERT.",
+          },
+        ],
+      },
+    ],
+  },
 ];
 
 /** Chapter title ("11:" / "12:" + exact title) → topic slug(s) that teach it. */
@@ -4407,4 +4837,5 @@ export const links: Record<string, string | string[]> = {
   "12:Computer Networks": "c12-cs-computer-networks",
   "12:Database Concepts": "c12-cs-database-concepts",
   "12:Structured Query Language (SQL)": "c12-cs-sql",
+  "12:Interface of Python with SQL": "c12-cs-python-sql-interface",
 };

@@ -2932,7 +2932,851 @@ const recursion: Topic = {
   ],
 };
 
-export const topics: Topic[] = [methods, arrays, strings, recursion];
+/* ------------------------------------------------------------------ */
+/* 5. Basic Input/Output and Packages                                  */
+/* ------------------------------------------------------------------ */
+const inputOutput: Topic = {
+  slug: "c11-isc-cs-io-packages",
+  title: "Basic Input/Output and Packages",
+  icon: "⌨️",
+  description: "Reading input with Scanner and BufferedReader, tokens and whitespace, StringTokenizer, formatted output with printf, input/output exceptions, and Java packages.",
+  lessons: [
+    {
+      slug: "c11-isc-io-scanner-output",
+      title: "Input with Scanner and Formatted Output",
+      summary: "Tokens and whitespace, the Scanner methods next, nextInt, nextDouble and nextLine, checking input with hasNextInt, and print, println and printf.",
+      minutes: 20,
+      xp: 50,
+      blocks: [
+        {
+          type: "illustration",
+          emoji: "⌨️",
+          caption: "At a railway reservation counter the clerk types your name, age and station one after another, pressing space or Enter between them. A Java program reads keyboard input the same way: as separate pieces split by spaces and line breaks.",
+        },
+        {
+          type: "text",
+          md: "Keyboard input arrives as a **stream** of characters. **Whitespace** characters (space, tab, newline) separate it into **tokens**: the input `Priya 16` has two tokens, \"Priya\" and \"16\".\n\nThe class **`Scanner`** in the package `java.util` reads tokens and converts them to the type we ask for. We create one object attached to the standard input stream `System.in`:\n\n`Scanner sc = new Scanner(System.in);`",
+        },
+        {
+          type: "table",
+          headers: ["Method", "Reads", "Returns"],
+          rows: [
+            ["`next()`", "the next token (up to whitespace)", "String"],
+            ["`nextInt()` / `nextLong()`", "the next token as a whole number", "int / long"],
+            ["`nextDouble()` / `nextFloat()`", "the next token as a decimal number", "double / float"],
+            ["`nextBoolean()`", "the token true or false", "boolean"],
+            ["`nextLine()`", "everything up to the end of the current line (spaces included); the newline is used up but not returned", "String"],
+            ["`hasNext()` / `hasNextInt()`", "only checks whether another token (an int token) is waiting", "boolean"],
+          ],
+        },
+        {
+          type: "code",
+          lang: "java",
+          caption: "ScanDemo.java",
+          code: java`import java.util.Scanner;
+
+public class ScanDemo
+{
+    public static void main(String[] args)
+    {
+        Scanner sc = new Scanner(System.in);
+        System.out.print("Name and age: ");
+        String name = sc.next();
+        int age = sc.nextInt();
+        System.out.print("Fee per month: ");
+        double fee = sc.nextDouble();
+        sc.nextLine();                 // use up the rest of the line
+        System.out.print("City: ");
+        String city = sc.nextLine();
+        System.out.println(name + " (" + age + ") from " + city);
+        System.out.printf("Yearly fee: %.2f%n", fee * 12);
+        System.out.printf("%-8s|%5d|%n", name, age);
+    }
+}`,
+        },
+        {
+          type: "text",
+          md: "A sample run (what the user types appears after each prompt):\n\n`Name and age: Priya 16`\n`Fee per month: 1250.5`\n`City: New Delhi`\n`Priya (16) from New Delhi`\n`Yearly fee: 15006.00`\n`Priya   |   16|`\n\n`next()` would read only \"New\" from \"New Delhi\", so the city is read with `nextLine()`.",
+        },
+        {
+          type: "mistake",
+          wrong: "After `int age = sc.nextInt();` I can call `sc.nextLine()` and it will wait for the user to type the city.",
+          right: "`nextInt()` leaves the newline after the number in the stream. The next `nextLine()` reads that leftover empty line at once and returns \"\". Call `sc.nextLine();` once to use up the rest of the line, then read the real line.",
+          why: "Typing a number and pressing Enter feels like one complete action, but nextInt() takes only the digits; the Enter key's newline stays waiting.",
+        },
+        {
+          type: "checkpoint",
+          questions: [
+            {
+              kind: "mcq",
+              q: "The user types `Rahul Dravid` and presses Enter. What does `sc.next()` return?",
+              options: ["\"Rahul\"", "\"Rahul Dravid\"", "\"Dravid\"", "\"\""],
+              answer: 0,
+              explain: "next() reads one token, stopping at the space. nextLine() would return the whole line.",
+            },
+          ],
+        },
+        {
+          type: "text",
+          md: "**Output.** `System.out` is an object of the class **`PrintStream`** connected to the screen. `print()` leaves the cursor on the same line; `println()` moves to the next line; `printf(format, values...)` (also called `format`) prints values using **format specifiers**:\n\n- `%d` integer, `%f` decimal, `%.2f` decimal with 2 places, `%s` String, `%c` char, `%n` new line;\n- a width pads with spaces: `%5d` right-justifies in 5 places, `%-8s` left-justifies in 8.\n\nThe class `PrintWriter` (in `java.io`) offers the same print methods and can also write to files.",
+        },
+        {
+          type: "code",
+          lang: "java",
+          caption: "SafeInput.java",
+          code: java`import java.util.Scanner;
+
+public class SafeInput
+{
+    public static void main(String[] args)
+    {
+        Scanner sc = new Scanner(System.in);
+        int count = 0;
+        while (sc.hasNext())
+        {
+            if (sc.hasNextInt())
+            {
+                int n = sc.nextInt();
+                count++;
+                System.out.println("Got " + n);
+            }
+            else
+                System.out.println("Skipped " + sc.next());
+        }
+        System.out.println(count + " numbers");
+    }
+}`,
+        },
+        {
+          type: "example",
+          title: "Checking tokens before reading",
+          problem: "SafeInput.java is given the input `45 abc 7` on one line and `3.5 -2` on the next. What is printed?",
+          steps: [
+            "Tokens, split by whitespace (the newline counts too): 45, abc, 7, 3.5, −2.",
+            "`hasNextInt()` is true for 45, 7 and −2, so they are read with nextInt() and counted.",
+            "\"abc\" and \"3.5\" are not ints, so they are read with next() as Strings and skipped. Calling `nextInt()` on them would throw an **InputMismatchException**.",
+          ],
+          answer: "Got 45\nSkipped abc\nGot 7\nSkipped 3.5\nGot -2\n3 numbers",
+        },
+        {
+          type: "activity",
+          activity: {
+            kind: "match",
+            prompt: "Match each printf call to its output.",
+            pairs: [
+              ["printf(\"%.1f\", 2.456)", "2.5"],
+              ["printf(\"%4d\", 7)", "   7"],
+              ["printf(\"%-4d|\", 7)", "7   |"],
+              ["printf(\"%s-%c\", \"ab\", 'z')", "ab-z"],
+            ],
+            explain: "%.1f rounds to one decimal place; %4d right-justifies in 4 places; the minus sign left-justifies; %s and %c print a String and a char.",
+          },
+        },
+        {
+          type: "callout",
+          tone: "exam",
+          title: "ISC tip",
+          md: "In practical programs, write `import java.util.*;` (or `import java.util.Scanner;`) at the top, show a prompt before every input, and print output in exactly the format given in the question. If input is invalid (for example, a size out of range), print the message the question asks for, such as INVALID INPUT.",
+        },
+        {
+          type: "keypoints",
+          items: [
+            "Input is a stream split into tokens by whitespace (spaces, tabs, newlines).",
+            "Scanner (java.util): next, nextInt, nextDouble read one token; nextLine reads the rest of the line.",
+            "After nextInt / nextDouble, call nextLine once before reading a full line.",
+            "hasNextInt() checks the next token without reading it; a wrong type causes InputMismatchException.",
+            "System.out is a PrintStream: print, println, printf with %d, %.2f, %s, %n and widths.",
+          ],
+        },
+      ],
+      flashcards: [
+        { front: "Token", back: "A piece of input separated from the next by whitespace." },
+        { front: "Whitespace", back: "Space, tab and newline characters; they separate tokens." },
+        { front: "Creating a Scanner for the keyboard", back: "`Scanner sc = new Scanner(System.in);` (import java.util.Scanner)." },
+        { front: "`next()` vs `nextLine()`", back: "next() reads one token; nextLine() reads the rest of the current line, spaces included." },
+        { front: "InputMismatchException", back: "Thrown when, for example, nextInt() meets a token that is not an integer." },
+        { front: "`%8.3f` in printf", back: "A decimal number in a field 8 wide with 3 digits after the point." },
+        { front: "Class of `System.out`", back: "PrintStream." },
+      ],
+      quiz: [
+        {
+          kind: "numeric",
+          q: "How many tokens are in the input `  12   apples and\n  3 mangoes `?",
+          answer: 5,
+          explain: "12, apples, and, 3, mangoes. Extra spaces and the newline only separate tokens.",
+        },
+        {
+          kind: "mcq",
+          q: "Which package contains the Scanner class?",
+          options: ["java.util", "java.lang", "java.io", "java.scanner"],
+          answer: 0,
+          explain: "Scanner is in java.util, so it must be imported.",
+        },
+        {
+          kind: "mcq",
+          q: "What does `System.out.printf(\"%.2f\", 10.0 / 3);` print?",
+          options: ["3.33", "3.3", "3.333333", "3"],
+          answer: 0,
+          explain: "%.2f shows two decimal places: 3.33.",
+        },
+        {
+          kind: "truefalse",
+          q: "`nextInt()` reads the number and also the newline typed after it.",
+          answer: false,
+          explain: "It reads only the number; the newline stays in the stream for the next read.",
+        },
+        {
+          kind: "fill",
+          q: "To check whether the next token is an integer without reading it, call sc.___().",
+          answer: ["hasNextInt"],
+          explain: "hasNextInt() returns true or false and leaves the token in place.",
+        },
+        {
+          kind: "mcq",
+          q: "The input is `abc`. What happens on `int n = sc.nextInt();`?",
+          options: ["InputMismatchException at run time", "n becomes 0", "Compile-time error", "n becomes the code of 'a'"],
+          answer: 0,
+          explain: "The token is not an integer, so the Scanner throws InputMismatchException.",
+          difficulty: 2,
+        },
+        {
+          kind: "mcq",
+          q: "What is printed by `System.out.printf(\"[%5s]\", \"Goa\");`?",
+          options: ["[  Goa]", "[Goa  ]", "[Goa]", "[    Goa]"],
+          answer: 0,
+          explain: "Width 5, right-justified by default: two spaces and then Goa.",
+        },
+      ],
+    },
+    {
+      slug: "c11-isc-io-tokenizer-exceptions",
+      title: "StringTokenizer, BufferedReader and Input/Output Exceptions",
+      summary: "Extracting tokens with StringTokenizer and custom delimiters, reading lines with BufferedReader, converting text to numbers, and handling IOException and NumberFormatException.",
+      minutes: 22,
+      xp: 55,
+      blocks: [
+        {
+          type: "illustration",
+          emoji: "✂️",
+          caption: "A date like 2024-08-15 is three numbers glued together with dashes. To use them, a program must cut the text at each dash. Cutting text into tokens is called tokenising.",
+        },
+        {
+          type: "text",
+          md: "The class **`StringTokenizer`** (in `java.util`) breaks a String into tokens.\n\n- `new StringTokenizer(str)` splits at whitespace;\n- `new StringTokenizer(str, delims)` splits at **any** of the characters in `delims`, for example \" ,.\";\n- `countTokens()` gives the number of tokens left, `hasMoreTokens()` tells whether any remain, and `nextToken()` returns the next one.\n\nDelimiters are never part of a token, and several delimiters in a row count as one break, so no empty tokens are produced. (StringTokenizer is an older class; newer code often uses `String.split()`, but ISC asks about StringTokenizer.)",
+        },
+        {
+          type: "code",
+          lang: "java",
+          caption: "Tokens.java",
+          code: java`import java.util.StringTokenizer;
+
+public class Tokens
+{
+    public static void main(String[] args)
+    {
+        String line = "  Ravi   scored 87,  Meena 92 ";
+        StringTokenizer st = new StringTokenizer(line);
+        System.out.println("Tokens: " + st.countTokens());
+        while (st.hasMoreTokens())
+            System.out.print("[" + st.nextToken() + "]");
+        System.out.println();
+
+        StringTokenizer st2 = new StringTokenizer("2024-08-15", "-");
+        int sum = 0;
+        while (st2.hasMoreTokens())
+            sum += Integer.parseInt(st2.nextToken());
+        System.out.println("Sum = " + sum);
+    }
+}`,
+        },
+        {
+          type: "example",
+          title: "Tracing Tokens.java",
+          problem: "Give the output of Tokens.java.",
+          steps: [
+            "With the default delimiters (whitespace), the tokens are Ravi, scored, 87, (with the comma), Meena, 92. Leading, trailing and repeated spaces make no empty tokens: 5 tokens.",
+            "The comma is not a delimiter here, so it stays inside \"87,\".",
+            "With \"-\" as delimiter, \"2024-08-15\" gives 2024, 08, 15. `Integer.parseInt` turns \"08\" into 8, so the sum is 2024 + 8 + 15 = 2047.",
+          ],
+          answer: "Tokens: 5\n[Ravi][scored][87,][Meena][92]\nSum = 2047",
+        },
+        {
+          type: "checkpoint",
+          questions: [
+            {
+              kind: "numeric",
+              q: "How many tokens does `new StringTokenizer(\"a,b,,c\", \",\")` produce?",
+              answer: 3,
+              explain: "a, b, c. The two commas together count as one break; no empty token is made.",
+            },
+          ],
+        },
+        {
+          type: "text",
+          md: "**BufferedReader.** Another way to read the keyboard joins two classes from `java.io`: `InputStreamReader` turns the byte stream `System.in` into characters, and `BufferedReader` collects them and reads a whole line with `readLine()`. Every value comes in as a String, so we convert it with **wrapper class** methods such as `Integer.parseInt()` or `Double.parseDouble()`.\n\n`readLine()` can throw an **IOException** (a checked exception), so the method must either handle it with `try`–`catch` or declare it with **`throws IOException`** in its header.",
+        },
+        {
+          type: "code",
+          lang: "java",
+          caption: "ReadDemo.java",
+          code: java`import java.io.*;
+
+public class ReadDemo
+{
+    public static void main(String[] args) throws IOException
+    {
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        System.out.print("Enter marks: ");
+        int m = Integer.parseInt(br.readLine().trim());
+        System.out.println("Marks + 5 = " + (m + 5));
+    }
+}`,
+        },
+        {
+          type: "text",
+          md: "If the user types `78`, the program prints `Marks + 5 = 83`. `trim()` removes any stray spaces, because `parseInt(\" 78\")` would fail.\n\n**Exceptions** are run-time error events. When one is **thrown** and not **caught**, the program stops with an error message. Common ones in input/output work:",
+        },
+        {
+          type: "table",
+          headers: ["Exception", "Thrown when", "Checked?"],
+          rows: [
+            ["`IOException`", "a read or write fails (java.io)", "checked: must be caught or declared with throws"],
+            ["`NumberFormatException`", "`Integer.parseInt(\"12a\")`: text is not a valid number", "unchecked"],
+            ["`InputMismatchException`", "Scanner's nextInt() meets a non-integer token", "unchecked"],
+            ["`NoSuchElementException`", "nextToken() or next() is called when no tokens remain", "unchecked"],
+          ],
+        },
+        {
+          type: "code",
+          lang: "java",
+          caption: "ParseCheck.java",
+          code: java`public class ParseCheck
+{
+    static int toInt(String s)
+    {
+        try
+        {
+            return Integer.parseInt(s);
+        }
+        catch (NumberFormatException e)
+        {
+            System.out.println("Bad input: " + s);
+            return 0;
+        }
+    }
+
+    public static void main(String[] args)
+    {
+        System.out.println(toInt("250") + toInt("12a") + toInt("-50"));
+    }
+}`,
+        },
+        {
+          type: "mistake",
+          wrong: "`throws IOException` in the header handles the error, so the program can never crash on bad input.",
+          right: "`throws` only **declares** that the method may pass the exception on to its caller; it does not handle it. Handling means catching it in a `try`–`catch` block. Also, `throws IOException` does nothing for a `NumberFormatException` from parseInt.",
+          why: "The keyword sits next to the exception name and looks like protection. It is really a warning label that satisfies the compiler's rule for checked exceptions.",
+        },
+        {
+          type: "activity",
+          activity: {
+            kind: "reveal",
+            prompt: "What does ParseCheck.java print?",
+            emoji: "🧮",
+            options: ["Bad input: 12a, then 200", "200 only", "Bad input: 12a, then 0", "The program stops with NumberFormatException"],
+            answer: 0,
+            trap: 3,
+            explain: "The exception from \"12a\" is caught inside toInt, which prints the message and returns 0. The sum is 250 + 0 + (−50) = 200, printed after the message.",
+          },
+        },
+        {
+          type: "callout",
+          tone: "exam",
+          title: "ISC tip",
+          md: "Learn the full BufferedReader line by heart: `BufferedReader br = new BufferedReader(new InputStreamReader(System.in));`. Remember `import java.io.*;` and `throws IOException` in `main`. Questions also ask you to name the exception a given statement throws.",
+        },
+        {
+          type: "keypoints",
+          items: [
+            "StringTokenizer(str) splits at whitespace; StringTokenizer(str, delims) splits at any delimiter character.",
+            "countTokens, hasMoreTokens and nextToken work through the tokens; delimiters never appear in tokens.",
+            "BufferedReader + InputStreamReader read whole lines as Strings; convert with Integer.parseInt / Double.parseDouble.",
+            "IOException is checked: catch it or declare `throws IOException`.",
+            "NumberFormatException comes from parsing bad text; try–catch lets the program continue.",
+          ],
+        },
+      ],
+      flashcards: [
+        { front: "StringTokenizer", back: "A java.util class that splits a String into tokens using delimiter characters." },
+        { front: "Default delimiters of StringTokenizer", back: "Whitespace: space, tab, newline, carriage return, form feed." },
+        { front: "`countTokens()`", back: "Returns how many tokens are still left to read." },
+        { front: "BufferedReader declaration", back: "`BufferedReader br = new BufferedReader(new InputStreamReader(System.in));`" },
+        { front: "`Integer.parseInt(\"12a\")`", back: "Throws NumberFormatException." },
+        { front: "Checked exception", back: "An exception (like IOException) that the compiler forces you to catch or declare with throws." },
+        { front: "`throws` vs `try`–`catch`", back: "throws declares and passes the exception on; try–catch actually handles it." },
+      ],
+      quiz: [
+        {
+          kind: "numeric",
+          q: "How many tokens does `new StringTokenizer(\"Hi! How are you?\", \" !?\")` produce?",
+          answer: 4,
+          explain: "Hi, How, are, you. Space, ! and ? are all delimiters.",
+        },
+        {
+          kind: "mcq",
+          q: "Which package must be imported for BufferedReader and InputStreamReader?",
+          options: ["java.io", "java.util", "java.lang", "java.net"],
+          answer: 0,
+          explain: "Both are in java.io.",
+        },
+        {
+          kind: "mcq",
+          q: "Which exception does `Integer.parseInt(\"4.5\")` throw?",
+          options: ["NumberFormatException", "IOException", "InputMismatchException", "ArithmeticException"],
+          answer: 0,
+          explain: "\"4.5\" is not a valid int, so parseInt throws NumberFormatException.",
+        },
+        {
+          kind: "truefalse",
+          q: "If main uses `br.readLine()` and has no try–catch, it must declare `throws IOException`.",
+          answer: true,
+          explain: "IOException is checked, so the compiler requires it to be caught or declared.",
+        },
+        {
+          kind: "numeric",
+          q: "What is printed? `StringTokenizer s = new StringTokenizer(\"10 20 30\"); s.nextToken(); System.out.println(s.countTokens());`",
+          answer: 2,
+          explain: "countTokens counts only the tokens still left: 20 and 30.",
+          difficulty: 2,
+        },
+        {
+          kind: "fill",
+          q: "To convert the String \"3.75\" into a double, use Double.___(\"3.75\").",
+          answer: ["parseDouble"],
+          explain: "Double.parseDouble returns the double value 3.75.",
+        },
+        {
+          kind: "mcq",
+          q: "With the line `  Ravi   scored 87,  Meena 92 `, what would `new StringTokenizer(line, \" ,\").countTokens()` give?",
+          options: ["5", "6", "4", "8"],
+          answer: 0,
+          explain: "The comma is now a delimiter too, so the tokens are Ravi, scored, 87, Meena, 92: still 5, but \"87\" no longer has the comma.",
+          difficulty: 2,
+        },
+      ],
+    },
+    {
+      slug: "c11-isc-io-packages",
+      title: "Packages and the Java Library",
+      summary: "What a package is, the main built-in packages, the import statement, creating and using a user-defined package, and access specifiers across packages.",
+      minutes: 20,
+      xp: 50,
+      blocks: [
+        {
+          type: "illustration",
+          emoji: "🗄️",
+          caption: "A school office keeps files in labelled cabinets: Admissions, Fees, Exams. Two files can both be called \"List\" if they are in different cabinets. Java keeps its classes in labelled groups called packages.",
+        },
+        {
+          type: "text",
+          md: "A **package** is a named group of related classes and interfaces. Java's own library (the **Java API**) is organised into packages, and we can make our own.\n\nPackages help in three ways: they **organise** classes by purpose, they **prevent name clashes** (two classes may share a name if they are in different packages), and they **control access** (members with default access are visible only inside their own package).",
+        },
+        {
+          type: "table",
+          headers: ["Package", "Contains (examples)", "Import needed?"],
+          rows: [
+            ["`java.lang`", "String, Math, System, Integer, Character, StringBuffer", "No: imported automatically"],
+            ["`java.util`", "Scanner, StringTokenizer, Arrays, ArrayList, Random", "Yes"],
+            ["`java.io`", "BufferedReader, InputStreamReader, PrintWriter, IOException", "Yes"],
+            ["`java.math`", "BigInteger, BigDecimal", "Yes"],
+            ["`java.net`", "URL, Socket", "Yes"],
+          ],
+        },
+        {
+          type: "text",
+          md: "**The import statement** comes before the class and lets us use a class by its short name:\n\n- `import java.util.Scanner;` imports one class (**single-type import**);\n- `import java.util.*;` makes every class of `java.util` available (**import on demand**). The `*` does **not** include sub-packages: `import java.util.*;` does not import classes of `java.util.regex`.\n\nWithout an import, we can still use a class by its **fully qualified name**: `java.util.Scanner sc = new java.util.Scanner(System.in);`.",
+        },
+        {
+          type: "checkpoint",
+          questions: [
+            {
+              kind: "mcq",
+              q: "Why can a program use `Math.sqrt()` and `String` without any import?",
+              options: ["They are in java.lang, which is imported automatically", "They are keywords", "They are in java.util", "Because main is static"],
+              answer: 0,
+              explain: "Every Java program imports java.lang automatically.",
+            },
+          ],
+        },
+        {
+          type: "text",
+          md: "**Making your own package.** Put a `package` statement as the **first statement** of the file. The folder structure must match the package name: the class `Grade` in package `school.util` is saved as `school/util/Grade.java`. Classes and methods meant for use outside the package must be `public`.",
+        },
+        {
+          type: "code",
+          lang: "java",
+          caption: "Grade.java (saved in school/util/)",
+          code: java`package school.util;
+
+public class Grade
+{
+    public static char grade(int marks)
+    {
+        if (marks >= 90)
+            return 'A';
+        if (marks >= 75)
+            return 'B';
+        if (marks >= 50)
+            return 'C';
+        return 'D';
+    }
+}`,
+        },
+        {
+          type: "code",
+          lang: "java",
+          caption: "Report.java",
+          code: java`import school.util.Grade;
+
+public class Report
+{
+    public static void main(String[] args)
+    {
+        int[] m = {93, 76, 48};
+        for (int i = 0; i < m.length; i++)
+            System.out.println(m[i] + " -> " + Grade.grade(m[i]));
+        System.out.println(java.lang.Math.max(3, 9) + " " + Math.abs(-7));
+    }
+}`,
+        },
+        {
+          type: "example",
+          title: "Using the package",
+          problem: "Give the output of Report.java and explain how it finds the class Grade.",
+          steps: [
+            "`import school.util.Grade;` tells the compiler where Grade lives; Java looks for `school/util/Grade.class` from the class path.",
+            "93 ≥ 90 gives A; 76 ≥ 75 gives B; 48 is below 50, so D.",
+            "`java.lang.Math.max(3, 9)` uses the fully qualified name and gives 9; `Math.abs(-7)` uses the short name, allowed because java.lang is automatic, and gives 7.",
+          ],
+          answer: "93 -> A\n76 -> B\n48 -> D\n9 7",
+        },
+        {
+          type: "table",
+          headers: ["Access specifier", "Same class", "Same package", "Subclass in another package", "Any class in another package"],
+          rows: [
+            ["`public`", "yes", "yes", "yes", "yes"],
+            ["`protected`", "yes", "yes", "yes", "no"],
+            ["default (none written)", "yes", "yes", "no", "no"],
+            ["`private`", "yes", "no", "no", "no"],
+          ],
+        },
+        {
+          type: "mistake",
+          wrong: "`import java.util.*;` copies all the classes of java.util into my program, so it makes the program bigger and slower.",
+          right: "An import only tells the compiler **where to look** for class names. Nothing is copied, and only the classes actually used are loaded when the program runs.",
+          why: "In some other languages \"include\" really pastes code into the file, so learners expect the same. Java's import is just a naming shortcut.",
+        },
+        {
+          type: "activity",
+          activity: {
+            kind: "sort",
+            prompt: "Which package is each class in?",
+            groups: ["java.lang", "java.util", "java.io"],
+            items: [
+              { text: "Math", group: 0, hint: "Used without any import." },
+              { text: "Character", group: 0, hint: "A wrapper class; wrappers are automatic." },
+              { text: "Scanner", group: 1, hint: "A utility for reading tokens." },
+              { text: "StringTokenizer", group: 1, hint: "Another utility class for tokens." },
+              { text: "BufferedReader", group: 2, hint: "Input/output stream class." },
+              { text: "IOException", group: 2, hint: "The input/output exception." },
+            ],
+            explain: "java.lang holds the core classes and needs no import; java.util holds utilities like Scanner and StringTokenizer; java.io holds stream classes and IOException.",
+          },
+        },
+        {
+          type: "callout",
+          tone: "exam",
+          title: "ISC tip",
+          md: "Common short questions: \"Name the package that is imported by default\" (java.lang), \"What is the use of the `*` in an import statement?\", and \"Which keyword creates a package?\" (`package`, written as the first statement of the file).",
+        },
+        {
+          type: "keypoints",
+          items: [
+            "A package groups related classes; it organises code, prevents name clashes and controls access.",
+            "java.lang is imported automatically; java.util and java.io must be imported.",
+            "`import p.C;` imports one class; `import p.*;` imports all classes of p but not its sub-packages.",
+            "`package name;` must be the first statement; the folder path must match the package name.",
+            "Access: public everywhere, protected adds subclasses, default stays in the package, private stays in the class.",
+          ],
+        },
+      ],
+      flashcards: [
+        { front: "Package", back: "A named group of related classes and interfaces, e.g. java.util." },
+        { front: "Package imported by default", back: "java.lang." },
+        { front: "Single-type import vs import on demand", back: "`import java.util.Scanner;` imports one class; `import java.util.*;` imports all classes of java.util." },
+        { front: "Fully qualified name", back: "A class name with its package, e.g. java.util.Scanner." },
+        { front: "Creating a package", back: "Write `package name;` as the first statement and save the file in a folder path matching the name." },
+        { front: "Default (package) access", back: "No access specifier written: visible only to classes in the same package." },
+        { front: "Does `import java.util.*;` import java.util.regex classes?", back: "No; `*` does not include sub-packages." },
+      ],
+      quiz: [
+        {
+          kind: "mcq",
+          q: "Which statement must come first in a file that defines a class in a package?",
+          options: ["package school.util;", "import java.util.*;", "public class Grade", "import school.util.*;"],
+          answer: 0,
+          explain: "The package statement must be the first statement (only comments may come before it).",
+        },
+        {
+          kind: "truefalse",
+          q: "A class in package A can use a member with default access of a class in package B.",
+          answer: false,
+          explain: "Default access is limited to the same package.",
+        },
+        {
+          kind: "fill",
+          q: "The package that contains the wrapper classes Integer and Character is ___.",
+          answer: ["java.lang"],
+          explain: "Wrapper classes are in java.lang.",
+        },
+        {
+          kind: "mcq",
+          q: "Using Grade.java, what does `Grade.grade(75)` return?",
+          options: ["'B'", "'A'", "'C'", "'D'"],
+          answer: 0,
+          explain: "75 is not ≥ 90, but it is ≥ 75, so the method returns 'B'.",
+        },
+        {
+          kind: "multi",
+          q: "Which are benefits of packages?",
+          options: ["Avoiding name clashes between classes", "Grouping related classes", "Controlling access to members", "Making every method run faster"],
+          answers: [0, 1, 2],
+          explain: "Packages organise code and control names and access; they do not affect speed.",
+        },
+        {
+          kind: "mcq",
+          q: "A member declared `protected` in package p is visible to which of these?",
+          options: ["Classes in p and subclasses anywhere", "Only its own class", "Only classes in p", "Every class in every package"],
+          answer: 0,
+          explain: "protected = package access plus access from subclasses in other packages.",
+          difficulty: 2,
+        },
+        {
+          kind: "mcq",
+          q: "Which line uses Scanner without any import statement?",
+          options: ["`java.util.Scanner sc = new java.util.Scanner(System.in);`", "`Scanner sc = new Scanner(System.in);`", "`util.Scanner sc = new util.Scanner(System.in);`", "`Scanner sc = new java.Scanner(System.in);`"],
+          answer: 0,
+          explain: "A fully qualified name (package + class) works without an import.",
+        },
+      ],
+    },
+    {
+      slug: "c11-isc-io-board-practice",
+      title: "Board Practice: Basic Input/Output and Packages",
+      summary: "Mixed ISC-style questions: the nextInt–nextLine trap, printf output, naming exceptions and packages, and a program that reads a sentence and finds its longest word.",
+      minutes: 22,
+      xp: 55,
+      blocks: [
+        {
+          type: "text",
+          md: "These questions mix the short-answer and program questions ISC sets on input, output and packages.",
+        },
+        {
+          type: "code",
+          lang: "java",
+          caption: "Trap.java",
+          code: java`import java.util.Scanner;
+
+public class Trap
+{
+    public static void main(String[] args)
+    {
+        Scanner sc = new Scanner(System.in);
+        int n = sc.nextInt();
+        String city = sc.nextLine();
+        System.out.println("n = " + n);
+        System.out.println("city = [" + city + "]");
+        System.out.printf("%05d|%6.2f|%-6s|%n", n, n / 8.0, "ok");
+    }
+}`,
+        },
+        {
+          type: "example",
+          title: "Output question",
+          problem: "The user types `42`, presses Enter, then types `Mumbai` and presses Enter. What does Trap.java print?",
+          steps: [
+            "`nextInt()` reads 42 and stops before the newline.",
+            "`nextLine()` reads from there to the end of that same line: nothing, so city = \"\". \"Mumbai\" is never read.",
+            "`%05d` pads 42 with zeros to 5 places: 00042. `%6.2f` prints 42 / 8.0 = 5.25 in 6 places: \"  5.25\". `%-6s` left-justifies \"ok\" in 6 places: \"ok    \".",
+          ],
+          answer: "n = 42\ncity = []\n00042|  5.25|ok    |",
+        },
+        {
+          type: "mistake",
+          wrong: "`n / 8` and `n / 8.0` give the same value, 5.25, for n = 42.",
+          right: "`42 / 8` is **integer division** and gives 5. Only when one operand is a double (`8.0`) is the result 5.25. Also, `printf(\"%f\", 42 / 8)` would throw an IllegalFormatConversionException, because %f needs a decimal value, not an int.",
+          why: "On a calculator, 42 ÷ 8 is always 5.25. In Java, the types of the operands decide the type of the result.",
+        },
+        {
+          type: "checkpoint",
+          questions: [
+            {
+              kind: "fill",
+              q: "`System.out.printf(\"%04d\", 7);` prints ___.",
+              answer: ["0007"],
+              explain: "The 0 flag pads with zeros to a width of 4.",
+            },
+          ],
+        },
+        {
+          type: "text",
+          md: "**Program to write.** Read a sentence that ends with a full stop. Using StringTokenizer, count the words and find the longest word (the first one if there is a tie). Treat space, comma and full stop as delimiters.",
+        },
+        {
+          type: "code",
+          lang: "java",
+          caption: "LongWord.java",
+          code: java`import java.util.*;
+
+public class LongWord
+{
+    public static void main(String[] args)
+    {
+        Scanner sc = new Scanner(System.in);
+        System.out.print("Enter a sentence: ");
+        String s = sc.nextLine().trim();
+        if (!s.endsWith("."))
+        {
+            System.out.println("INVALID INPUT");
+            return;
+        }
+        StringTokenizer st = new StringTokenizer(s, " ,.");
+        int count = st.countTokens();
+        String longest = "";
+        while (st.hasMoreTokens())
+        {
+            String w = st.nextToken();
+            if (w.length() > longest.length())
+                longest = w;
+        }
+        System.out.println("Words: " + count);
+        System.out.println("Longest: " + longest + " (" + longest.length() + " letters)");
+    }
+}`,
+        },
+        {
+          type: "example",
+          title: "Sample run",
+          problem: "Input: `India launched Aditya L1 to study the Sun.` Give the output and explain the tie rule.",
+          steps: [
+            "The ending full stop is present, so the input is valid.",
+            "Tokens: India, launched, Aditya, L1, to, study, the, Sun: 8 words. The full stop is a delimiter and is not part of \"Sun\".",
+            "Lengths 5, 8, 6, 2, 2, 5, 3, 3. Since the test is `>` (not `>=`), a later word of equal length would not replace the first; \"launched\" is the longest.",
+          ],
+          answer: "Enter a sentence: India launched Aditya L1 to study the Sun.\nWords: 8\nLongest: launched (8 letters)",
+        },
+        {
+          type: "activity",
+          activity: {
+            kind: "match",
+            prompt: "Match each statement to the exception it can throw.",
+            pairs: [
+              ["Integer.parseInt(\"7up\")", "NumberFormatException"],
+              ["sc.nextInt() when the token is \"seven\"", "InputMismatchException"],
+              ["br.readLine() when the stream fails", "IOException"],
+              ["st.nextToken() with no tokens left", "NoSuchElementException"],
+            ],
+            explain: "Parsing bad text gives NumberFormatException; Scanner type mismatches give InputMismatchException; stream failures give IOException; reading past the last token gives NoSuchElementException.",
+          },
+        },
+        {
+          type: "callout",
+          tone: "exam",
+          title: "ISC tip",
+          md: "Validate first and stop early: check the terminating character, print the exact error message, and `return`. Then do the work. Always give at least two test runs in the practical, one valid and one invalid.",
+        },
+        {
+          type: "checkpoint",
+          questions: [
+            {
+              kind: "truefalse",
+              q: "In LongWord.java, changing `>` to `>=` would make the last of several equally long words the answer.",
+              answer: true,
+              explain: "With `>=`, a word of equal length replaces the current longest, so the last such word wins.",
+            },
+          ],
+        },
+        {
+          type: "keypoints",
+          items: [
+            "nextInt followed by nextLine reads an empty line; use up the newline first.",
+            "printf flags: 0 pads with zeros, − left-justifies; %f needs a decimal value.",
+            "Name the exception: NumberFormatException, InputMismatchException, IOException, NoSuchElementException.",
+            "StringTokenizer with \" ,.\" removes punctuation from words; countTokens gives the word count.",
+          ],
+        },
+      ],
+      flashcards: [
+        { front: "`%05d` with 42", back: "00042." },
+        { front: "`%-6s|` with \"ok\"", back: "\"ok    |\": left-justified in 6 places." },
+        { front: "42 / 8 in Java", back: "5 (integer division); 42 / 8.0 is 5.25." },
+        { front: "NoSuchElementException", back: "Thrown by nextToken() or next() when no tokens remain." },
+        { front: "Word count with StringTokenizer", back: "Call countTokens() before reading any token." },
+        { front: "Tie rule: `>` vs `>=` when finding the longest", back: "`>` keeps the first longest; `>=` ends with the last longest." },
+      ],
+      quiz: [
+        {
+          kind: "mcq",
+          q: "What does `System.out.printf(\"%6.1f|\", 3.14159);` print?",
+          options: ["\"   3.1|\"", "\"3.1   |\"", "\"3.14159|\"", "\"  3.14|\""],
+          answer: 0,
+          explain: "One decimal place gives 3.1, right-justified in a width of 6: three spaces then 3.1.",
+        },
+        {
+          kind: "numeric",
+          q: "How many words does LongWord.java report for `Chess, cricket and kabaddi are played here.`?",
+          answer: 7,
+          explain: "Chess, cricket, and, kabaddi, are, played, here: 7 (the comma and full stop are delimiters).",
+        },
+        {
+          kind: "mcq",
+          q: "What does LongWord.java print for the input `We love Bharat` (no full stop)?",
+          options: ["INVALID INPUT", "Words: 3", "Longest: Bharat (6 letters)", "Nothing"],
+          answer: 0,
+          explain: "The sentence does not end with \".\", so the program prints INVALID INPUT and returns.",
+        },
+        {
+          kind: "truefalse",
+          q: "`import java.io.*;` is needed to use the String class.",
+          answer: false,
+          explain: "String is in java.lang, which is imported automatically.",
+        },
+        {
+          kind: "fill",
+          q: "In Trap.java, `n / 8.0` for n = 42 equals ___.",
+          answer: ["5.25"],
+          explain: "42 ÷ 8 = 5.25, a double because 8.0 is a double.",
+        },
+        {
+          kind: "mcq",
+          q: "Which method of Scanner reads `New Delhi` as one String?",
+          options: ["nextLine()", "next()", "nextWord()", "readLine()"],
+          answer: 0,
+          explain: "nextLine() reads the whole line including spaces. readLine() belongs to BufferedReader; nextWord() does not exist.",
+        },
+        {
+          kind: "multi",
+          q: "Which statements are correct?",
+          options: ["System.out is an object of PrintStream", "Scanner is in java.util", "IOException is an unchecked exception", "BufferedReader.readLine() returns a String"],
+          answers: [0, 1, 3],
+          explain: "IOException is a checked exception; the others are correct.",
+        },
+      ],
+    },
+  ],
+};
+
+export const topics: Topic[] = [methods, arrays, strings, recursion, inputOutput];
 
 /** Chapter title ("11:" / "12:" + exact title) → topic slug(s) that teach it. */
 export const links: Record<string, string | string[]> = {
@@ -2940,4 +3784,5 @@ export const links: Record<string, string | string[]> = {
   "11:Arrays": "c11-isc-cs-arrays",
   "11:Strings in Java": "c11-isc-cs-strings",
   "11:Recursion": "c11-isc-cs-recursion",
+  "11:Basic Input/Output and Packages": "c11-isc-cs-io-packages",
 };
