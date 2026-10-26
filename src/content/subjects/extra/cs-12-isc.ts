@@ -1464,12 +1464,12 @@ S1S0=11 -> Y=1
             type: "activity",
             activity: {
               kind: "reveal",
-              prompt: "An 8:1 MUX has select inputs S2 S1 S0 = 1 0 1. Which data input reaches the output?",
+              prompt: "An 8:1 MUX has select inputs S2 S1 S0 = 1 1 0. Which data input reaches the output?",
               emoji: "🎛️",
-              options: ["I5", "I2", "I6", "I1"],
+              options: ["I6", "I3", "I5", "I1"],
               answer: 0,
               trap: 1,
-              explain: "101 in binary is 5, so I5 is selected. Reading the bits in the wrong order (S0 as the most significant) gives the trap answer.",
+              explain: "S2 S1 S0 = 110 is 6 in binary, so I6 is selected. Reading the bits in the wrong order (S0 as the most significant bit) gives 011 = 3, the trap answer.",
             },
           },
           {

@@ -1129,6 +1129,18 @@ const propLogic: Topic = {
           md: "Board papers ask propositional logic in three ways: build a truth table, translate between words and symbols, and prove or simplify using laws. This lesson has one of each, plus a program.",
         },
         {
+          type: "table",
+          headers: ["English phrase", "Formula"],
+          rows: [
+            ["not p; it is not true that p", "~p"],
+            ["p and q; p but q; both p and q", "p ∧ q"],
+            ["p or q (or both)", "p ∨ q"],
+            ["if p then q; q if p; p only if q; p is sufficient for q; q is necessary for p", "p ⇒ q"],
+            ["p if and only if q; p is necessary and sufficient for q", "p ⇔ q"],
+            ["neither p nor q", "~p ∧ ~q"],
+          ],
+        },
+        {
           type: "example",
           title: "Truth table with intermediate columns",
           problem: "Using a truth table, state whether (p ⇒ q) ∧ (q ⇒ p) and p ⇔ q are equivalent.",
@@ -1940,6 +1952,17 @@ const hardware: Topic = {
           md: "Board questions on hardware usually ask you to (1) find the output of a given circuit, (2) draw a circuit for an expression, often with NAND or NOR only, and (3) give the truth table, expressions and diagram of an adder, decoder, encoder or multiplexer.",
         },
         {
+          type: "table",
+          headers: ["Circuit", "Inputs", "Outputs", "Gates in the basic design"],
+          rows: [
+            ["Half adder", "2 (A, B)", "2 (S, C)", "1 XOR, 1 AND"],
+            ["Full adder", "3 (A, B, Cin)", "2 (S, Cout)", "2 half adders + 1 OR"],
+            ["2-to-4 decoder", "2", "4", "2 NOT, 4 AND"],
+            ["8-to-3 (octal-to-binary) encoder", "8", "3", "3 OR (4 inputs each)"],
+            ["4:1 multiplexer", "4 data + 2 select", "1", "2 NOT, 4 AND (3 inputs each), 1 OR (4 inputs)"],
+          ],
+        },
+        {
           type: "example",
           title: "Expression from a circuit description",
           problem: "A and B feed a NAND gate. B and C feed a NOR gate. The two outputs feed an XOR gate giving X. Write X and find it for A = 1, B = 1, C = 0.",
@@ -2702,6 +2725,18 @@ const objectsClasses: Topic = {
           },
         },
         {
+          type: "table",
+          headers: ["Variable", "Type", "Purpose"],
+          rows: [
+            ["`num`", "int", "the number being tested (data member)"],
+            ["`size`", "int", "the number of digits in num (data member)"],
+            ["`t`", "int", "a working copy of num, divided by 10 in the loops (local)"],
+            ["`p`", "int", "the position of the current digit, counting down from size (local)"],
+            ["`d`", "int", "the current last digit (local)"],
+            ["`sum`", "int", "running total of the digits raised to their positions (local)"],
+          ],
+        },
+        {
           type: "callout",
           tone: "tip",
           title: "Practical-exam tip",
@@ -2888,6 +2923,16 @@ const primitives: Topic = {
               explain: "012 is octal = 10 and 0x12 is hex = 18; 10 + 18 = 28.",
               difficulty: 2,
             },
+          ],
+        },
+        {
+          type: "table",
+          headers: ["Primitive type", "Reference type"],
+          rows: [
+            ["built into the language (8 types)", "defined by classes, arrays and interfaces (e.g. String, Book)"],
+            ["the variable holds the value itself", "the variable holds a reference (address) of an object"],
+            ["fixed size, e.g. int is always 32 bits", "the object's size depends on its contents"],
+            ["cannot be null", "can be null (refers to no object)"],
           ],
         },
         {
@@ -3341,6 +3386,19 @@ const primitives: Topic = {
           md: "In output questions, underline every place where a String meets + : from that point on, + joins. Before it, + adds. Write the type of each intermediate result in rough work.",
         },
         {
+          type: "checkpoint",
+          questions: [
+            {
+              kind: "mcq",
+              q: "What does `System.out.println('A' + 1 + \"B\");` print?",
+              options: ["66B", "A1B", "BB", "131"],
+              answer: 0,
+              explain: "'A' + 1 is int arithmetic (65 + 1 = 66); then + \"B\" joins: 66B.",
+              difficulty: 2,
+            },
+          ],
+        },
+        {
           type: "keypoints",
           items: [
             "char arithmetic uses codes: '0' = 48, 'A' = 65, 'a' = 97.",
@@ -3457,6 +3515,17 @@ const exprStatements: Topic = {
         {
           type: "text",
           md: "**Precedence** decides which operator is applied first; **associativity** decides the order between operators of the same level. Brackets override both.\n\nInteger division `/` drops the fraction (17 / 5 = 3), and `%` gives the remainder with the **sign of the left operand** (−17 % 5 = −2).\n\n**Increment and decrement.** Prefix `++x` changes x first and then uses the new value; postfix `x++` uses the current value and then changes x.\n\n**Short-circuit evaluation.** In `A && B`, if A is false, B is not evaluated at all; in `A || B`, if A is true, B is skipped.",
+        },
+        {
+          type: "table",
+          headers: ["Compound form", "Means", "If x = 20, x becomes"],
+          rows: [
+            ["`x += 4`", "`x = x + 4`", "24"],
+            ["`x -= 4`", "`x = x - 4`", "16"],
+            ["`x *= 4`", "`x = x * 4`", "80"],
+            ["`x /= 3`", "`x = x / 3`", "6 (integer division)"],
+            ["`x %= 3`", "`x = x % 3`", "2"],
+          ],
         },
         {
           type: "code",
@@ -3755,6 +3824,16 @@ const exprStatements: Topic = {
             trap: 1,
             explain: "Execution enters at case 3 (n = 4), falls through to case 4 (n = 5) and stops at break. Case 5 never runs.",
           },
+        },
+        {
+          type: "table",
+          headers: ["switch", "if-else-if"],
+          rows: [
+            ["tests one expression for **equality** with constant values", "can test any boolean condition, including ranges such as `marks >= 60`"],
+            ["works on int, char, byte, short, String, enums", "works with any type, including double and boolean"],
+            ["cases fall through unless break is used", "only one branch runs; no fall-through"],
+            ["often neater for menus and fixed choices", "needed for ranges, slabs and combined conditions"],
+          ],
         },
         {
           type: "callout",
@@ -4173,6 +4252,19 @@ const exprStatements: Topic = {
             ],
             explain: "do-while runs once even when the test fails; while may not run at all. 1 + 2 + 3 + 4 = 10; 2 + 3 = 5.",
           },
+        },
+        {
+          type: "checkpoint",
+          questions: [
+            {
+              kind: "mcq",
+              q: "What is printed? `int x = 3; if (x > 5); System.out.println(\"Big\");`",
+              options: ["Big", "Nothing", "Compile-time error", "Big, then a run-time error"],
+              answer: 0,
+              explain: "The semicolon right after the condition is an empty statement that acts as the if body. The println is a separate statement and always runs.",
+              difficulty: 2,
+            },
+          ],
         },
         {
           type: "callout",

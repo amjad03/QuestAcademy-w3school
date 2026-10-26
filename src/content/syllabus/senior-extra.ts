@@ -35,7 +35,7 @@ export const ELECTRONICS_12 = ele([
   "Microcontrollers and Embedded Systems",
 ]);
 
-/* ---------------- Computer Science · CBSE 083 (also Karnataka PUC, which follows NCERT) ---------------- */
+/* ---------------- Computer Science · CBSE 083 ---------------- */
 export const CS_CBSE_11 = cs([
   "Computer Systems and Organisation",
   "Number Systems and Encoding",
@@ -59,6 +59,35 @@ export const CS_CBSE_12 = cs([
   "Database Concepts",
   "Structured Query Language (SQL)",
   "Interface of Python with SQL",
+]);
+
+/* ---------------- Computer Science · Karnataka PUC (the full NCERT CS books, not the CBSE 083 cut) ---------------- */
+export const CS_PUC_11 = cs([
+  "Computer Systems and Organisation",
+  "Number Systems and Encoding",
+  "Emerging Trends",
+  "Introduction to Problem Solving",
+  "Getting Started with Python",
+  "Flow of Control",
+  "Functions",
+  "Strings",
+  "Lists",
+  "Tuples and Dictionaries",
+  "Society, Law and Ethics",
+]);
+export const CS_PUC_12 = cs([
+  "Exception Handling",
+  "File Handling",
+  "Stack",
+  "Queue",
+  "Sorting",
+  "Searching",
+  "Understanding Data",
+  "Database Concepts",
+  "Structured Query Language (SQL)",
+  "Computer Networks",
+  "Data Communication",
+  "Security Aspects",
 ]);
 
 /* ---------------- Computer Science · ISC (Java) ---------------- */

@@ -26,7 +26,7 @@ export const PUE: SyllabusBoard = {
         subject("pue:PUC-1", "maths", "Mathematics", N.MATHS_11),
         subject("pue:PUC-1", "biology", "Biology", N.BIOLOGY_11),
         subject("pue:PUC-1", "electronics", "Electronics", S.ELECTRONICS_11),
-        subject("pue:PUC-1", "cs", "Computer Science", S.CS_CBSE_11),
+        subject("pue:PUC-1", "cs", "Computer Science", S.CS_PUC_11),
       ],
     },
     {
@@ -39,7 +39,7 @@ export const PUE: SyllabusBoard = {
         subject("pue:PUC-2", "maths", "Mathematics", N.MATHS_12),
         subject("pue:PUC-2", "biology", "Biology", N.BIOLOGY_12),
         subject("pue:PUC-2", "electronics", "Electronics", S.ELECTRONICS_12),
-        subject("pue:PUC-2", "cs", "Computer Science", S.CS_CBSE_12),
+        subject("pue:PUC-2", "cs", "Computer Science", S.CS_PUC_12),
       ],
     },
   ],
