@@ -1543,7 +1543,7 @@ The **modulation index** of FM is $m_f = \Delta f / f_m$. Unlike AM, $m_f$ can b
           {
             kind: "mcq",
             q: "Simplify F(A, B, C, D) = Σm(1, 3, 5, 7, 9) + d(11, 13).",
-            options: ["A′D + C′D", "D", "A′D + B′C′D", "A′B′ + D"],
+            options: ["A′D + C′D", "D", "A′D + BC′D", "A′B′ + D"],
             answer: 0,
             difficulty: 2,
             explain: "Quad m1, m3, m5, m7 gives A′D. m9 joins m1, m5 and X13 in the quad C′D. (A′D + B′D is equally minimal.) D alone would wrongly include m15.",
@@ -1631,7 +1631,7 @@ The **modulation index** of FM is $m_f = \Delta f / f_m$. Unlike AM, $m_f$ can b
               ["0", "0", "Qn", "No change (memory)"],
               ["0", "1", "0", "Reset"],
               ["1", "0", "1", "Set"],
-              ["1", "1", "?", "Forbidden: both outputs go to 0; final state unpredictable when inputs return to 0"],
+              ["1", "1", "?", "Forbidden: Q and Q′ become equal (both 0 in a NOR latch, both 1 in a NAND-gate clocked SR); final state unpredictable when the inputs are removed"],
             ],
           },
           {

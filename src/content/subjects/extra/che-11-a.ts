@@ -499,7 +499,7 @@ For $\text{CH}_4(g) + 2\text{O}_2(g) \rightarrow \text{CO}_2(g) + 2\text{H}_2\te
           {
             type: "mistake",
             wrong: "The reactant with the smaller mass is always the limiting reagent.",
-            right: "Compare moles divided by stoichiometric coefficients. In the example above H₂ (9 kg) is limiting, but so would N₂ be if only a little were present: mass alone does not decide.",
+            right: "Compare moles divided by stoichiometric coefficients. With 28 g N₂ (1 mol) and 10 g H₂ (5 mol), N₂ is limiting even though its mass is larger: 1 mol N₂ needs only 3 mol H₂. Mass alone does not decide.",
             why: "Equations count particles, not grams. Light molecules like H₂ give many moles from a small mass, and a large coefficient means a reactant is used up faster.",
           },
           {
@@ -2105,7 +2105,7 @@ Across a period, metallic character falls and non-metallic character rises; down
           {
             type: "mistake",
             wrong: "Zinc, cadmium and mercury are typical transition metals because they are in the d-block.",
-            right: "They are d-block elements (groups 12) but have full (n−1)d¹⁰ subshells in the atom and in their common ions, so they show few typical transition-metal properties (colour, variable oxidation state).",
+            right: "They are d-block elements (group 12) but have full (n−1)d¹⁰ subshells in the atom and in their common ions, so they show few typical transition-metal properties (colour, variable oxidation state).",
             why: "Being in the d-block is about where the electron goes; being a typical transition metal needs a partly filled d subshell. Zn²⁺ is 3d¹⁰ and its salts are colourless.",
           },
           {
@@ -2531,7 +2531,7 @@ In general $\Delta_{eg}H$ becomes **more negative across a period** (higher effe
             q: "Which pairs show a diagonal relationship?",
             options: ["Li and Mg", "Be and Al", "Na and Ca", "B and Si"],
             answers: [0, 1, 3],
-            explain: "Li–Mg, Be–Al and B–Si are diagonal pairs in periods 2 and 3. Na and Ca are period 3 and 4, not the classic pair.",
+            explain: "Li–Mg, Be–Al and B–Si are diagonal pairs in periods 2 and 3. Na and Ca also sit diagonally, but the diagonal resemblance is marked only between second- and third-period elements, so they are not counted as a diagonal pair.",
           },
           {
             kind: "mcq",
@@ -2571,7 +2571,7 @@ In general $\Delta_{eg}H$ becomes **more negative across a period** (higher effe
             type: "callout",
             tone: "tip",
             title: "Shortcuts and when they are safe",
-            md: "For isoelectronic ions, the order of size is simply the reverse order of Z: safe always. For successive ionisation data, the group is the number of values before the first huge jump (ratio about 4 or more): safe for s- and p-block elements. Group number of a p-block element = 10 + valence electrons. For a heavy element, write the noble-gas core and count forward: Z = 87 (Fr) and Z = 88 (Ra) start period 7.",
+            md: "For isoelectronic ions, the order of size is simply the reverse order of Z: safe always. For successive ionisation data, the number of valence electrons is the number of values before the first huge jump (ratio about 4 or more); that is the group for the s-block, and 10 + that number for the p-block. Safe for s- and p-block elements. Group number of a p-block element = 10 + valence electrons. For a heavy element, write the noble-gas core and count forward: Z = 87 (Fr) and Z = 88 (Ra) start period 7.",
           },
           {
             type: "example",
@@ -2673,7 +2673,7 @@ In general $\Delta_{eg}H$ becomes **more negative across a period** (higher effe
           { front: "Why is Ga about the same size as Al?", back: "Poor shielding by the ten 3d electrons raises the effective nuclear charge in Ga." },
           { front: "Z = 114: period, group, name", back: "Period 7, group 14; ununquadium (Uuq), now flerovium (Fl)." },
           { front: "Order of size: Fe, Fe²⁺, Fe³⁺", back: "Fe > Fe²⁺ > Fe³⁺." },
-          { front: "Group from successive ionisation data", back: "Number of electrons removed before the first very large jump." },
+          { front: "Group from successive ionisation data", back: "Valence electrons = number removed before the first very large jump; group = that number (s-block) or 10 + that number (p-block)." },
         ],
         quiz: [
           {
