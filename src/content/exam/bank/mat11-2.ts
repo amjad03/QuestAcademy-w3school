@@ -45,6 +45,12 @@ const ADV: ExamId[] = ["JEE_ADV", "JEE"];
 const NUM: ExamId[] = ["JEE"];
 /** Two-variable inequalities (graphs, half-planes, feasible regions): dropped from rationalised NCERT Class 11 and not in the JEE Main 2024 syllabus; KCET / COMEDK still meet them through Class 12 linear programming. */
 const REGION: ExamId[] = ["KCET", "COMEDK"];
+/** Binomial general term / middle term / term independent of x / coefficient of a term: dropped from rationalised NCERT (hence Karnataka PUC and KCET) but kept in JEE Main 2024. */
+const BINOM_TERM: ExamId[] = ["JEE", "COMEDK"];
+/** Sums of special series, arithmetico-geometric and telescoping series: dropped from rationalised NCERT and not named in JEE Main 2024; JEE Advanced lists them. */
+const SERIES: ExamId[] = ["JEE_ADV"];
+/** Easy single-answer MCQ versions of the SERIES topics, which COMEDK still sets. */
+const SERIES_MCQ: ExamId[] = ["JEE_ADV", "COMEDK"];
 
 const AR = [
   "Both A and R are true and R is the correct explanation of A",
@@ -663,21 +669,21 @@ const ch7: ExamQuestion[] = [
     answer: 3,
     explain: t`$(a + b)^n$ has $n + 1$ terms, so there are $10$. The coefficients do not change the count.`,
   }),
-  q7(1, BASIC, 40, {
+  q7(1, BINOM_TERM, 40, {
     kind: "mcq",
     q: t`The coefficient of $x^3$ in $(1 + x)^7$ is:`,
     options: [t`$35$`, t`$7$`, t`$21$`, t`$210$`],
     answer: 0,
     explain: t`The term in $x^3$ is $^7C_3x^3$ and $^7C_3 = 35$. $21 = {}^7C_2$ (the coefficient of $x^2$); $210 = {}^7P_3$.`,
   }),
-  q7(1, BASIC, 45, {
+  q7(1, BINOM_TERM, 45, {
     kind: "mcq",
     q: t`The 4th term in the expansion of $(x + 2)^6$ is:`,
     options: [t`$20x^3$`, t`$240x^2$`, t`$80x^3$`, t`$160x^3$`],
     answer: 3,
     explain: t`$T_{r+1} = {}^6C_r\,x^{6-r}2^r$; the 4th term has $r = 3$: $^6C_3\,x^3\cdot 8 = 20\cdot8x^3 = 160x^3$. $240x^2$ is $T_5$ (taking $r = 4$); $20x^3$ forgets the factor $2^3$.`,
   }),
-  q7(1, BASIC, 45, {
+  q7(1, BINOM_TERM, 45, {
     kind: "mcq",
     q: t`The middle term of $\left(x - \dfrac1x\right)^{10}$ is:`,
     options: [t`$252$`, t`$-210$`, t`$210$`, t`$-252$`],
@@ -711,7 +717,7 @@ const ch7: ExamQuestion[] = [
     answer: 0,
     explain: t`$(100 - 1)^3 = 100^3 - 3\cdot100^2 + 3\cdot100 - 1 = 1000000 - 30000 + 300 - 1 = 970299$. Taking the last term as $+1$ gives $970301$.`,
   }),
-  q7(1, BASIC, 40, {
+  q7(1, BINOM_TERM, 40, {
     kind: "mcq",
     q: t`The coefficient of $x^2$ in $(1 - 2x)^5$ is:`,
     options: [t`$40$`, t`$10$`, t`$-40$`, t`$-80$`],
@@ -760,7 +766,7 @@ const ch7: ExamQuestion[] = [
     hint: "Write the general term and set the power of x to zero.",
     explain: t`$T_{r+1} = {}^9C_r(2x^2)^{9-r}\left(-\tfrac1x\right)^r = {}^9C_r\,2^{9-r}(-1)^r x^{18-3r}$. Constant when $r = 6$: $^9C_6\cdot2^3\cdot(+1) = 84\cdot8 = 672$.`,
   }),
-  q7(2, MAIN, 75, {
+  q7(2, BINOM_TERM, 75, {
     kind: "mcq",
     q: t`The coefficient of $x^7$ in $\left(x^2 - \dfrac2x\right)^8$ is:`,
     options: [t`$448$`, t`$-56$`, t`$-448$`, t`$224$`],
@@ -768,7 +774,7 @@ const ch7: ExamQuestion[] = [
     hint: "Power of x in the general term: 16 − 3r.",
     explain: t`$T_{r+1} = {}^8C_r x^{2(8-r)}(-2)^r x^{-r} = {}^8C_r(-2)^r x^{16-3r}$. $16 - 3r = 7 \Rightarrow r = 3$: $56\cdot(-8) = -448$. Ignoring the sign gives 448; forgetting $2^3$ gives $-56$.`,
   }),
-  q7(2, MAIN, 120, {
+  q7(2, BINOM_TERM, 120, {
     kind: "mcq",
     q: t`The middle terms in the expansion of $\left(2x - \dfrac{x^2}{4}\right)^9$ are:`,
     options: [
@@ -788,7 +794,7 @@ const ch7: ExamQuestion[] = [
     hint: t`$2\,{}^nC_2 = {}^nC_1 + {}^nC_3$.`,
     explain: t`$2\cdot\dfrac{n(n-1)}{2} = n + \dfrac{n(n-1)(n-2)}{6}$. Divide by $n$: $n - 1 = 1 + \dfrac{(n-1)(n-2)}{6} \Rightarrow 6n - 12 = n^2 - 3n + 2 \Rightarrow n^2 - 9n + 14 = 0$, so $n = 2$ or $7$. With $n = 2$ there is no 4th term, so $n = 7$ (coefficients 7, 21, 35).`,
   }),
-  q7(2, MAIN, 90, {
+  q7(2, BINOM_TERM, 90, {
     kind: "mcq",
     q: t`The coefficient of $x^4$ in $(1 + x)^5(1 - x)^4$ is:`,
     options: [t`$6$`, t`$-6$`, t`$4$`, t`$10$`],
@@ -812,7 +818,7 @@ const ch7: ExamQuestion[] = [
     hint: t`$7^2 = 49 = 50 - 1$.`,
     explain: t`$7^{103} = 7\cdot(49)^{51} = 7(50 - 1)^{51}$. Every term of $(50-1)^{51}$ except $(-1)^{51}$ has a factor 50, hence 25. So $7^{103} \equiv 7(-1) = -7 \equiv 18 \pmod{25}$. Taking $(-1)^{51} = +1$ gives the wrong answer 7.`,
   }),
-  q7(2, MAIN, 120, {
+  q7(2, BINOM_TERM, 120, {
     kind: "mcq",
     q: t`The greatest coefficient in the expansion of $(1 + 2x)^8$ is:`,
     options: [t`$1120$`, t`$70$`, t`$1792$`, t`$3584$`],
@@ -820,7 +826,7 @@ const ch7: ExamQuestion[] = [
     hint: t`Compare consecutive coefficients $a_r = {}^8C_r2^r$: $\dfrac{a_r}{a_{r-1}} = \dfrac{2(9-r)}{r}$.`,
     explain: t`$\dfrac{a_r}{a_{r-1}} = \dfrac{2(9-r)}{r} \ge 1 \iff r \le 6$, with equality at $r = 6$. So $a_5 = a_6$ is the greatest: $^8C_5\cdot32 = 56\cdot32 = 1792 = {}^8C_6\cdot64$. $70 = {}^8C_4$ is the greatest binomial coefficient, which ignores the factor $2^r$; $1120 = a_4$.`,
   }),
-  q7(2, MAIN, 90, {
+  q7(2, BINOM_TERM, 90, {
     kind: "mcq",
     q: t`Statement I: The expansion of $\left(x - \dfrac1{x^2}\right)^{10}$ has no term independent of $x$.<br>Statement II: The expansion of $\left(x + \dfrac1x\right)^n$ has a term independent of $x$ if and only if $n$ is even.`,
     options: S12,
@@ -860,7 +866,7 @@ const ch7: ExamQuestion[] = [
     hint: "Keep terms until they stop affecting the 4th decimal place.",
     explain: t`$(1 + 0.002)^{10} = 1 + 10(0.002) + 45(0.002)^2 + 120(0.002)^3 + \dots = 1 + 0.02 + 0.00018 + 0.00000096 + \dots \approx 1.020181$. To four decimal places: $1.0202$. Stopping after two terms gives $1.0200$, which is off in the 4th place.`,
   }),
-  q7(2, MAIN, 90, {
+  q7(2, BINOM_TERM, 90, {
     kind: "mcq",
     q: t`In the expansion of $\left(x^{1/3} + x^{-1/2}\right)^{15}$, the term independent of $x$ is:`,
     options: [t`$T_6 = 3003$`, t`$T_7 = 3003$`, t`$T_8 = 6435$`, t`$T_7 = 5005$`],
@@ -868,7 +874,7 @@ const ch7: ExamQuestion[] = [
     hint: t`Power of $x$ in $T_{r+1}$: $\dfrac{15 - r}{3} - \dfrac r2$.`,
     explain: t`$\dfrac{15-r}{3} - \dfrac r2 = 0 \Rightarrow 30 - 2r = 3r \Rightarrow r = 6$, so it is $T_7 = {}^{15}C_6 = 5005$. $3003 = {}^{15}C_5$ comes from mixing up $r$ and the term number.`,
   }),
-  q7(2, MAIN, 90, {
+  q7(2, BINOM_TERM, 90, {
     kind: "mcq",
     q: t`The coefficient of $x^5$ in $(1 + x + x^2)(1 - x)^6$ is:`,
     options: [t`$11$`, t`$-11$`, t`$-6$`, t`$9$`],
@@ -912,7 +918,7 @@ const ch7: ExamQuestion[] = [
     hint: t`$T_{r+1}$ contains $3^{(12-r)/2}\,5^{r/4}$.`,
     explain: t`$T_{r+1} = {}^{12}C_r\,3^{(12-r)/2}5^{r/4}$ is rational when $r$ is a multiple of 4 and $12 - r$ is even. $r \in \{0, 4, 8, 12\}$ all satisfy both, so there are 4 rational terms.`,
   }),
-  q7(2, MAIN, 90, {
+  q7(2, BINOM_TERM, 90, {
     kind: "mcq",
     q: t`The number of irrational terms in the expansion of $\left(2^{1/2} + 3^{1/3}\right)^{20}$ is:`,
     options: [t`$4$`, t`$17$`, t`$21$`, t`$16$`],
@@ -1075,7 +1081,7 @@ const ch8: ExamQuestion[] = [
     answer: 0,
     explain: t`$a_n = a + (n-1)d = 7 + 14\cdot4 = 63$. Using $n\,d$ instead of $(n-1)d$ gives 67.`,
   }),
-  q8(1, BASIC, 40, {
+  q8(1, SERIES_MCQ, 40, {
     kind: "mcq",
     q: t`The value of $1^2 + 2^2 + 3^2 + \dots + 20^2$ is:`,
     options: [t`$2870$`, t`$2970$`, t`$210$`, t`$44100$`],
@@ -1096,7 +1102,7 @@ const ch8: ExamQuestion[] = [
     answer: 0,
     explain: t`The G.P. $1, G_1, G_2, G_3, 256$ has 5 terms, so $r^4 = 256$ and $r = 4$: the means are $4, 16, 64$. $64, 128, 192$ are arithmetic means.`,
   }),
-  q8(1, BASIC, 30, {
+  q8(1, SERIES_MCQ, 30, {
     kind: "mcq",
     q: t`The value of $1^3 + 2^3 + \dots + 10^3$ is:`,
     options: [t`$385$`, t`$3080$`, t`$55$`, t`$3025$`],
@@ -1169,7 +1175,7 @@ const ch8: ExamQuestion[] = [
     hint: "Test Statement II with 1, 2, 4.",
     explain: t`I: $2b = a + c \Rightarrow (2^b)^2 = 2^{2b} = 2^a\cdot2^c$ — true. II: $1, 2, 4$ is a G.P. but $2, 3, 5$ is not ($9 \ne 10$) — false.`,
   }),
-  q8(2, MAIN, 90, {
+  q8(2, SERIES_MCQ, 90, {
     kind: "mcq",
     q: t`The sum of the first $n$ terms of $1\cdot2 + 2\cdot3 + 3\cdot4 + \dots$ is:`,
     options: [
@@ -1212,7 +1218,7 @@ const ch8: ExamQuestion[] = [
     hint: t`Take the numbers as $\dfrac ar, a, ar$.`,
     explain: t`Product $a^3 = 216 \Rightarrow a = 6$. Sum: $\dfrac6r + 6 + 6r = 19 \Rightarrow 6r^2 - 13r + 6 = 0 \Rightarrow r = \dfrac32$ or $\dfrac23$. Either way the numbers are $4, 6, 9$; the largest is 9.`,
   }),
-  q8(2, MAIN, 90, {
+  q8(2, SERIES_MCQ, 90, {
     kind: "mcq",
     q: t`The sum of the first $n$ terms of $1\cdot3 + 3\cdot5 + 5\cdot7 + \dots$ is:`,
     options: [
@@ -1225,7 +1231,7 @@ const ch8: ExamQuestion[] = [
     hint: t`$(2k-1)(2k+1) = 4k^2 - 1$.`,
     explain: t`$\sum(4k^2 - 1) = \dfrac{4n(n+1)(2n+1)}{6} - n = \dfrac{n[2(2n^2 + 3n + 1) - 3]}{3} = \dfrac{n(4n^2 + 6n - 1)}{3}$. Check: $n = 1$ gives 3, $n = 2$ gives $18 = 3 + 15$ ✓. The other forms fail at $n = 1$ or $n = 2$.`,
   }),
-  q8(2, MAIN, 60, {
+  q8(2, SERIES_MCQ, 60, {
     kind: "mcq",
     q: t`For $|x| < 1$, the sum $1 + 2x + 3x^2 + 4x^3 + \dots$ to infinity is:`,
     options: [t`$\dfrac{1}{1 - x}$`, t`$\dfrac{1}{(1 - x)^2}$`, t`$\dfrac{x}{(1 - x)^2}$`, t`$\dfrac{1}{1 - 2x}$`],
@@ -1233,7 +1239,7 @@ const ch8: ExamQuestion[] = [
     hint: "Multiply S by x and subtract.",
     explain: t`$S - xS = 1 + x + x^2 + \dots = \dfrac{1}{1 - x}$, so $S = \dfrac{1}{(1 - x)^2}$. $\dfrac{x}{(1-x)^2}$ is the sum of $x + 2x^2 + 3x^3 + \dots$.`,
   }),
-  q8(2, NUM, 90, {
+  q8(2, SERIES, 90, {
     kind: "numeric",
     q: t`Find the value of $\displaystyle\sum_{k=1}^{\infty}\frac{k}{3^k}$.`,
     answer: 0.75,
@@ -1257,7 +1263,7 @@ const ch8: ExamQuestion[] = [
     hint: t`$(ar^2 + ar^3) = r^2(a + ar)$.`,
     explain: t`$r^2 = \dfrac{48}{12} = 4 \Rightarrow r = 2$ (terms positive). $a(1 + 2) = 12 \Rightarrow a = 4$. $T_5 = 4\cdot2^4 = 64$. $32$ is $T_4$.`,
   }),
-  q8(2, MAIN, 75, {
+  q8(2, SERIES_MCQ, 75, {
     kind: "mcq",
     q: t`Match List I with List II.<br>List I: (P) $\sum_{k=1}^n k$; (Q) $\sum_{k=1}^n k^2$; (R) $\sum_{k=1}^n k^3$; (S) $\sum_{k=1}^n (2k - 1)$.<br>List II: (1) $n^2$; (2) $\dfrac{n(n+1)}{2}$; (3) $\dfrac{n(n+1)(2n+1)}{6}$; (4) $\left[\dfrac{n(n+1)}{2}\right]^2$.`,
     options: [
@@ -1293,7 +1299,7 @@ const ch8: ExamQuestion[] = [
     hint: t`The A.P. $3, A_1, \dots, A_n, 17$ has $n + 2$ terms and $d = \dfrac{14}{n+1}$.`,
     explain: t`$A_1 = 3 + d$ and $A_n = 17 - d$. $17 - d = 3(3 + d) \Rightarrow d = 2$. Then $n + 1 = \dfrac{14}{2} = 7$, so $n = 6$ (means $5, 7, \dots, 15$; $15/5 = 3$ ✓). Answering 7 counts the gaps instead of the means.`,
   }),
-  q8(2, MAIN, 75, {
+  q8(2, SERIES_MCQ, 75, {
     kind: "mcq",
     q: t`The value of $1^2 + 3^2 + 5^2 + \dots + 19^2$ is:`,
     options: [t`$2870$`, t`$1540$`, t`$1330$`, t`$1210$`],
@@ -1314,7 +1320,7 @@ const ch8: ExamQuestion[] = [
     hint: t`Use $b^2 = ac$; test (D) with 1, 2, 4.`,
     explain: t`(A) $b = \sqrt{ac} \le \dfrac{a + c}{2}$ by AM–GM — true. (B) $(b^2)^2 = a^2c^2$ — true. (C) $\dfrac{1}{b^2} = \dfrac{1}{ac}$ — true. (D) with $1, 2, 4$: $3, 6, 5$ is not a G.P. — false. Correct: A, B, C.`,
   }),
-  q8(3, ADV, 150, {
+  q8(3, SERIES, 150, {
     kind: "numeric",
     q: t`Let $S = \displaystyle\sum_{k=1}^{10}\frac{1}{k(k+1)(k+2)}$. Find the value of $264\,S$.`,
     answer: 65,
@@ -1342,7 +1348,7 @@ const ch8: ExamQuestion[] = [
     hint: t`$a_1 = S_1$ and $a_n = S_n - S_{n-1}$ for $n \ge 2$.`,
     explain: t`$a_n = 3^n - 3^{n-1} = 2\cdot3^{n-1}$ for $n \ge 2$, and $a_1 = S_1 = 2$ fits the same formula, so (B) holds and the sequence is a G.P. $2, 6, 18, \dots$ — not an A.P. (A false). (C) $2\cdot81 = 162$. (D) $81 - 1 = 80$. Correct: B, C, D.`,
   }),
-  q8(3, ADV, 150, {
+  q8(3, SERIES, 150, {
     kind: "numeric",
     q: t`Find the value of $\displaystyle\sum_{k=1}^{10}k\cdot2^k$.`,
     answer: 18434,
@@ -1362,7 +1368,7 @@ const ch8: ExamQuestion[] = [
     hint: t`Take the A.P. as $5 - d, 5, 5 + d$.`,
     explain: t`The new numbers are $6 - d, 9, 24 + d$, so $81 = (6 - d)(24 + d) \Rightarrow d^2 + 18d - 63 = 0 \Rightarrow d = 3$ or $-21$. $d = 3$: $2, 5, 8 \to 3, 9, 27$, ratio 3. $d = -21$: $26, 5, -16 \to 27, 9, 3$, ratio $\tfrac13$. A ratio of $-3$ never occurs. Correct: A, B, D.`,
   }),
-  q8(3, ADV, 150, {
+  q8(3, SERIES, 150, {
     kind: "mcq",
     q: t`The sum to infinity of $1 + \dfrac45 + \dfrac7{25} + \dfrac{10}{125} + \dots$ is:`,
     options: [t`$\dfrac54$`, t`$\dfrac{15}{16}$`, t`$\dfrac{35}{16}$`, t`$\dfrac{25}{16}$`],
@@ -1377,7 +1383,7 @@ const ch8: ExamQuestion[] = [
     hint: "The common terms form an A.P. with common difference lcm(4, 7) = 28.",
     explain: t`Terms of the first are $\equiv 3 \pmod 4$, of the second $\equiv 2 \pmod 7$. The smallest common term is 23 (check: $23 = 3 + 4\cdot5 = 2 + 7\cdot3$). Common terms: $23, 51, 79, \dots$ with difference 28, up to $\min(407, 709) = 407$: $23 + 28t \le 407 \Rightarrow t \le 13.7$, so $t = 0, \dots, 13$ — 14 terms.`,
   }),
-  q8(3, ADV, 150, {
+  q8(3, SERIES, 150, {
     kind: "mcq",
     q: t`If $a_1, a_2, \dots, a_n$ are positive terms of a non-constant A.P., then $\displaystyle\sum_{k=1}^{n-1}\frac{1}{\sqrt{a_k} + \sqrt{a_{k+1}}}$ equals:`,
     options: [
@@ -1390,7 +1396,7 @@ const ch8: ExamQuestion[] = [
     hint: t`Rationalise each term: $\dfrac{\sqrt{a_{k+1}} - \sqrt{a_k}}{d}$.`,
     explain: t`Each term equals $\dfrac{\sqrt{a_{k+1}} - \sqrt{a_k}}{a_{k+1} - a_k} = \dfrac{\sqrt{a_{k+1}} - \sqrt{a_k}}{d}$, so the sum telescopes to $\dfrac{\sqrt{a_n} - \sqrt{a_1}}{d} = \dfrac{a_n - a_1}{d(\sqrt{a_n} + \sqrt{a_1})} = \dfrac{(n-1)d}{d(\sqrt{a_1} + \sqrt{a_n})} = \dfrac{n - 1}{\sqrt{a_1} + \sqrt{a_n}}$. Using $n$ instead of $n - 1$ miscounts the terms.`,
   }),
-  q8(3, ADV, 180, {
+  q8(3, SERIES, 180, {
     kind: "multi",
     q: t`Which of the following identities hold for every $n \in \mathbb N$?`,
     options: [
