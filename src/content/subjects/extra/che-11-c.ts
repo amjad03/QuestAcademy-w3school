@@ -1306,8 +1306,216 @@ The **ionic product** $Q_{sp}$ uses the actual ion concentrations. If $Q_{sp} > 
       /* END-EQ */
     ],
   },
+  /* ------------------------------------------------------------------ */
+  /* Redox Reactions (NCERT Class 11 Unit 7; same title in ISC and I PUC) */
+  /* ------------------------------------------------------------------ */
+  {
+    slug: "c11-che-redox",
+    title: "Redox Reactions",
+    icon: "🔋",
+    description: "Oxidation and reduction as oxygen/hydrogen transfer, electron transfer and change in oxidation number; rules for oxidation numbers; combination, decomposition, displacement and disproportionation reactions; balancing by the oxidation-number and ion-electron methods; redox titrations; electrode processes; and n-factor and equivalents for entrance exams.",
+    lessons: [
+      /* ---------------- Lesson 1 ---------------- */
+      {
+        slug: "c11-che-redox-oxidation-number",
+        title: "Oxidation, Reduction and Oxidation Number",
+        summary: "The classical and electron-transfer views of oxidation and reduction, oxidising and reducing agents, competitive electron-transfer reactions, the rules for assigning oxidation numbers, Stock notation and oxidation as an increase in oxidation number.",
+        minutes: 20,
+        xp: 50,
+        blocks: [
+          {
+            type: "illustration",
+            emoji: "🍎",
+            caption: "A cut apple turns brown, an iron gate in Mumbai's sea air rusts, and a phone battery runs down. Each is a reaction in which one substance gives up electrons and another takes them.",
+          },
+          {
+            type: "text",
+            md: t`**The classical view.** Originally **oxidation** meant addition of oxygen, or more generally of an electronegative element, to a substance, or removal of hydrogen (or an electropositive element) from it: $2\text{Mg} + \text{O}_2 \rightarrow 2\text{MgO}$, $\text{Mg} + \text{Cl}_2 \rightarrow \text{MgCl}_2$, $2\text{H}_2\text{S} + \text{O}_2 \rightarrow 2\text{S} + 2\text{H}_2\text{O}$. **Reduction** was the reverse: removal of oxygen or an electronegative element, or addition of hydrogen, e.g. $2\text{HgO} \rightarrow 2\text{Hg} + \text{O}_2$.
+
+Oxidation and reduction always happen together, so we speak of **redox** reactions. The substance that brings about oxidation is the **oxidising agent (oxidant)**, and it is itself reduced; the substance that brings about reduction is the **reducing agent (reductant)**, and it is itself oxidised.`,
+          },
+          {
+            type: "text",
+            md: t`**The electron-transfer view.** In $2\text{Na} + \text{Cl}_2 \rightarrow 2\text{NaCl}$, each sodium atom loses an electron and each chlorine atom gains one. We can split the reaction into two **half reactions**: $2\text{Na} \rightarrow 2\text{Na}^+ + 2e^-$ (oxidation) and $\text{Cl}_2 + 2e^- \rightarrow 2\text{Cl}^-$ (reduction).
+
+So **oxidation is loss of electrons** and **reduction is gain of electrons**. An oxidant is an electron acceptor; a reductant is an electron donor.`,
+          },
+          {
+            type: "example",
+            title: "Competitive electron-transfer reactions",
+            problem: "A zinc rod is dipped in blue copper sulphate solution, and separately a copper rod is dipped in zinc sulphate solution and another copper rod in silver nitrate solution. What happens in each case, and what does it tell us?",
+            steps: [
+              t`Zn in CuSO$_4$: the blue colour fades and reddish copper coats the zinc. $\text{Zn}(\text{s}) + \text{Cu}^{2+}(\text{aq}) \rightarrow \text{Zn}^{2+}(\text{aq}) + \text{Cu}(\text{s})$. Zinc is oxidised; Cu$^{2+}$ is reduced.`,
+              "Cu in ZnSO₄: no change. Copper cannot give electrons to Zn²⁺.",
+              t`Cu in AgNO$_3$: the solution turns blue and silver deposits. $\text{Cu}(\text{s}) + 2\text{Ag}^+(\text{aq}) \rightarrow \text{Cu}^{2+}(\text{aq}) + 2\text{Ag}(\text{s})$.`,
+              "Tendency to release electrons: Zn > Cu > Ag. Each metal can reduce the ions of metals below it.",
+            ],
+            answer: "Zn reduces Cu²⁺; Cu reduces Ag⁺; Cu cannot reduce Zn²⁺. Order of reducing power: Zn > Cu > Ag.",
+          },
+          {
+            type: "checkpoint",
+            questions: [
+              {
+                kind: "mcq",
+                q: t`In $\text{Fe} + \text{Cu}^{2+} \rightarrow \text{Fe}^{2+} + \text{Cu}$, the reducing agent is`,
+                options: ["Fe", "Cu²⁺", "Fe²⁺", "Cu"],
+                answer: 0,
+                explain: "Fe loses electrons (it is oxidised), so it reduces Cu²⁺: Fe is the reducing agent.",
+              },
+            ],
+          },
+          {
+            type: "heading",
+            text: "Oxidation number",
+          },
+          {
+            type: "list",
+            ordered: true,
+            items: [
+              t`**Oxidation number (oxidation state)** is the charge an atom would carry if all its bonds were fully ionic, with shared electrons given to the more electronegative atom.`,
+              "An element in the free state has oxidation number 0 (H₂, O₂, Cl₂, P₄, S₈, Na, Fe).",
+              "For a monatomic ion it equals the charge (Na⁺ +1, Mg²⁺ +2, Cl⁻ −1, O²⁻ −2). Group 1 metals are +1 and group 2 metals +2 in their compounds; Al is +3.",
+              "Oxygen is usually −2, but −1 in peroxides (H₂O₂, Na₂O₂), −½ in superoxides (KO₂), +2 in OF₂ and +1 in O₂F₂.",
+              "Hydrogen is +1 with non-metals, but −1 in metal hydrides (NaH, CaH₂). Fluorine is always −1 in compounds; other halogens are −1 except when bonded to oxygen or a more electronegative halogen.",
+              "The oxidation numbers of all atoms add up to 0 in a neutral compound and to the charge in an ion.",
+            ],
+          },
+          {
+            type: "formula",
+            tex: t`\sum (\text{oxidation numbers}) = \text{charge on the species}`,
+            caption: "Use this to find one unknown oxidation number when all the others are known.",
+          },
+          {
+            type: "example",
+            title: "Finding oxidation numbers",
+            problem: t`Find the oxidation number of (a) Cr in K$_2$Cr$_2$O$_7$, (b) Mn in KMnO$_4$, (c) N in NH$_4^+$, (d) Fe in Fe$_3$O$_4$.`,
+            steps: [
+              t`(a) $2(+1) + 2x + 7(-2) = 0 \Rightarrow 2x = 12 \Rightarrow x = +6$.`,
+              t`(b) $+1 + x + 4(-2) = 0 \Rightarrow x = +7$.`,
+              t`(c) $x + 4(+1) = +1 \Rightarrow x = -3$.`,
+              t`(d) $3x + 4(-2) = 0 \Rightarrow x = +\tfrac{8}{3}$. This is an **average**: Fe$_3$O$_4$ is FeO·Fe$_2$O$_3$, with one Fe at +2 and two at +3.`,
+            ],
+            answer: "(a) +6, (b) +7, (c) −3, (d) +8/3 (average of +2, +3, +3)",
+          },
+          {
+            type: "text",
+            md: t`**Stock notation** shows the oxidation number of a metal in Roman numerals: FeO is iron(II) oxide, Fe$_2$O$_3$ iron(III) oxide, Cu$_2$O copper(I) oxide, SnCl$_4$ tin(IV) chloride.
+
+**Redox in terms of oxidation number:** oxidation is an **increase** in oxidation number; reduction is a **decrease**. The oxidant is the species containing the atom whose oxidation number decreases; the reductant contains the atom whose oxidation number increases. This definition works even for covalent reactions where no full electron transfer occurs, such as $\text{H}_2 + \text{Cl}_2 \rightarrow 2\text{HCl}$ (H: 0 → +1; Cl: 0 → −1).`,
+          },
+          {
+            type: "mistake",
+            wrong: "Oxygen always has an oxidation number of −2, so O in H₂O₂ is −2 and H must be +2.",
+            right: "Oxygen is −1 in peroxides (H₂O₂, BaO₂), −½ in superoxides (KO₂) and positive (+2) in OF₂. Hydrogen is +1 in H₂O₂.",
+            why: "−2 is the commonest value, so it feels like a law. But there is an O–O bond in peroxides, and fluorine is more electronegative than oxygen, so the rules have exceptions that exams love.",
+          },
+          {
+            type: "activity",
+            activity: {
+              kind: "match",
+              prompt: "Match the element to its oxidation number.",
+              pairs: [
+                ["Mn in KMnO₄", "+7"],
+                ["S in H₂SO₄", "+6"],
+                ["N in HNO₃", "+5"],
+                ["O in H₂O₂", "−1"],
+                ["N in NH₃", "−3"],
+                ["Fe in Fe₃O₄", "+8/3"],
+              ],
+              explain: "In each case, the known oxidation numbers (H +1, O −2 except in peroxides, K +1) add up to the charge, which fixes the unknown one.",
+            },
+          },
+          {
+            type: "callout",
+            tone: "exam",
+            title: "Board tips",
+            md: "When asked to 'identify the species oxidised and reduced', write the oxidation number above each atom that changes; that is where the marks go. Name both the oxidising agent and the reducing agent as whole species (KMnO₄, not just Mn). Define oxidation in all three ways if a question says 'explain with examples'.",
+          },
+          {
+            type: "keypoints",
+            items: [
+              "Classical: oxidation = add O/electronegative element or remove H; reduction is the reverse.",
+              "Electronic: oxidation = loss of electrons; reduction = gain of electrons.",
+              "Oxidation number: increase = oxidation, decrease = reduction; the sum equals the charge on the species.",
+              "Oxidants are reduced; reductants are oxidised. Zn > Cu > Ag in releasing electrons.",
+              "Fractional oxidation numbers (Fe₃O₄) are averages over atoms in different states.",
+            ],
+          },
+        ],
+        flashcards: [
+          { front: "Oxidation (electronic definition)", back: "Loss of electrons." },
+          { front: "Reduction (oxidation-number definition)", back: "Decrease in oxidation number." },
+          { front: "Oxidising agent", back: "An electron acceptor; it is reduced in the reaction." },
+          { front: "Oxidation number of O in OF₂", back: "+2" },
+          { front: "Oxidation number of H in NaH", back: "−1" },
+          { front: "Stock name of Cu₂O", back: "Copper(I) oxide" },
+          { front: "Average oxidation number of Fe in Fe₃O₄", back: "+8/3 (one Fe²⁺ and two Fe³⁺)" },
+        ],
+        quiz: [
+          {
+            kind: "mcq",
+            q: "The oxidation number of Cr in K₂Cr₂O₇ is",
+            options: ["+6", "+7", "+3", "+12"],
+            answer: 0,
+            explain: "2(+1) + 2x + 7(−2) = 0 gives x = +6. +12 is the total for two Cr atoms.",
+          },
+          {
+            kind: "mcq",
+            q: "In 2Na + Cl₂ → 2NaCl, the oxidising agent is",
+            options: ["Cl₂", "Na", "NaCl", "Na⁺"],
+            answer: 0,
+            explain: "Cl₂ accepts electrons (0 → −1), so it is reduced and acts as the oxidising agent.",
+          },
+          {
+            kind: "numeric",
+            q: "Find the average oxidation number of carbon in carbon suboxide, C₃O₂ (to 2 decimal places).",
+            answer: 1.33,
+            tolerance: 0.01,
+            explain: "3x + 2(−2) = 0, so x = 4/3 ≈ +1.33.",
+            difficulty: 2,
+          },
+          {
+            kind: "truefalse",
+            q: "A copper rod placed in zinc sulphate solution gets coated with zinc.",
+            answer: false,
+            explain: "Copper releases electrons less readily than zinc, so it cannot reduce Zn²⁺. No reaction occurs.",
+          },
+          {
+            kind: "mcq",
+            q: "The oxidation number of oxygen in KO₂ is",
+            options: ["−½", "−2", "−1", "+½"],
+            answer: 0,
+            explain: "KO₂ is a superoxide (O₂⁻): 1 + 2x = 0, so x = −½.",
+          },
+          {
+            kind: "multi",
+            q: "Which of these are redox reactions?",
+            options: ["Zn + 2HCl → ZnCl₂ + H₂", "NaCl + AgNO₃ → AgCl + NaNO₃", "2Mg + O₂ → 2MgO", "CaCO₃ → CaO + CO₂"],
+            answers: [0, 2],
+            explain: "Zn (0 → +2) and Mg (0 → +2) are oxidised in the first and third. In the precipitation and the CaCO₃ decomposition, no oxidation number changes.",
+            difficulty: 2,
+          },
+          {
+            kind: "fill",
+            q: "In the electronic concept, reduction is the ___ of electrons.",
+            answer: ["gain"],
+            explain: "Reduction = gain of electrons; oxidation = loss.",
+          },
+          {
+            kind: "mcq",
+            q: "The Stock name of Fe₂O₃ is",
+            options: ["iron(III) oxide", "iron(II) oxide", "iron(VI) oxide", "di-iron trioxide(II)"],
+            answer: 0,
+            explain: "2x + 3(−2) = 0 gives x = +3, written iron(III).",
+          },
+        ],
+      },
+      /* END-REDOX */
+    ],
+  },
 ];
 
 export const links: Record<string, string | string[]> = {
   "11:Equilibrium": "c11-che-equilibrium",
+  "11:Redox Reactions": "c11-che-redox",
 };

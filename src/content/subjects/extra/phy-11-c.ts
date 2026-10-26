@@ -1882,6 +1882,16 @@ With $g = 9.8$ m/s² and $R_E = 6.4 \times 10^6$ m, $v_e = \sqrt{1.254 \times 10
             ],
           },
           {
+            type: "text",
+            md: t`**Elliptical orbits (JEE).** For a planet or satellite on an ellipse of semi-major axis $a$, the total energy is $E = -GMm/2a$, the circular-orbit result with $r$ replaced by $a$. Angular momentum about the central body is conserved, so $v_p r_p = v_a r_a$, with $r_p + r_a = 2a$. Combining the two gives the speeds at the ends of the orbit.
+
+**Field from potential.** The field is the negative slope of the potential: $E = -dV/dr$. Inside a thin shell $V$ is constant, so the field is zero; inside a solid sphere $V$ varies as $r^2$, so the field grows linearly with $r$.`,
+          },
+          {
+            type: "formula",
+            tex: t`E_{orbit} = -\frac{GMm}{2a} \qquad v_p r_p = v_a r_a \qquad v_p = \sqrt{\frac{2GM\,r_a}{r_p(r_a + r_p)}} \qquad \vec E = -\frac{dV}{dr}\hat r`,
+          },
+          {
             type: "example",
             title: "Launch at half the escape speed (KCET / NEET level)",
             problem: "A body is fired vertically upward from the Earth's surface with half the escape speed. How high does it rise? Ignore air resistance.",

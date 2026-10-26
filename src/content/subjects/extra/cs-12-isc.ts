@@ -2533,6 +2533,23 @@ Right diagonal sum = 8
 */`,
           },
           {
+            type: "text",
+            md: t`**Address calculation.** An array is stored in consecutive memory cells. If the first element is at the **base address** B and each element takes W bytes, element A[i] of an array with lower bound $L$ is at $B + W(i - L)$.
+
+A 2D array A[$L_r$..$U_r$, $L_c$..$U_c$] has $R = U_r - L_r + 1$ rows and $C = U_c - L_c + 1$ columns. In **row-major** order (row by row, as Java and C store arrays), A[i][j] is at $B + W[(i - L_r)C + (j - L_c)]$. In **column-major** order (column by column), it is at $B + W[(j - L_c)R + (i - L_r)]$. Theory papers give arrays with any lower bounds, even negative ones, although Java indices always start at 0.`,
+          },
+          {
+            type: "example",
+            title: "Address of an element",
+            problem: "An array M[−3..5, 2..12] stores 4-byte elements from base address 2500. Find the address of M[2][7] (a) in row-major order, (b) in column-major order.",
+            steps: [
+              "R = 5 − (−3) + 1 = 9 rows; C = 12 − 2 + 1 = 11 columns.",
+              "Row-major: elements before M[2][7] = (2 − (−3)) × 11 + (7 − 2) = 55 + 5 = 60. Address = 2500 + 4 × 60 = 2740.",
+              "Column-major: elements before it = (7 − 2) × 9 + (2 − (−3)) = 45 + 5 = 50. Address = 2500 + 4 × 50 = 2700.",
+            ],
+            answer: "(a) 2740 (b) 2700",
+          },
+          {
             type: "activity",
             activity: {
               kind: "match",
@@ -2609,6 +2626,12 @@ Right diagonal sum = 8
             answer: 0,
             explain: "Total of all elements is 45; the only non-boundary element is the centre, 3. So 45 − 3 = 42.",
             difficulty: 2,
+          },
+          {
+            kind: "numeric",
+            q: "A[1..10] stores 2-byte elements from base address 1000. What is the address of A[7]?",
+            answer: 1012,
+            explain: "1000 + 2 × (7 − 1) = 1012.",
           },
           {
             kind: "fill",
@@ -5927,6 +5950,419 @@ public class ListSum
       },
     ],
   },
+  /* ------------------------------------------------------------------ */
+  /* ISC Class 12 · Complexity and Big O                                  */
+  /* ------------------------------------------------------------------ */
+  {
+    slug: "c12-cs-complexity",
+    title: "Complexity and Big O",
+    icon: "📈",
+    description: "Time and space complexity, counting steps, Big O notation and the dominant term, best, average and worst cases, and the complexity of common loops, searches, sorts and recursive methods.",
+    lessons: [
+      {
+        slug: "c12-cs-big-o",
+        title: "Big O Notation and Counting Steps",
+        summary: "What complexity measures, counting the steps of loops, the formal idea of Big O, dropping constants and lower terms, the common complexity classes, and best, average and worst cases.",
+        minutes: 22,
+        xp: 55,
+        blocks: [
+          {
+            type: "illustration",
+            emoji: "📒",
+            caption: "To find a name in an unsorted attendance register you may read every line. In the sorted phone contacts list, you can open near the middle and halve the search each time. For 1,000 names that is up to 1,000 looks against about 10.",
+          },
+          {
+            type: "text",
+            md: "The **complexity** of an algorithm measures the resources it needs as the input size n grows. **Time complexity** counts the number of basic steps (comparisons, assignments, arithmetic operations); **space complexity** counts the extra memory used.\n\nWe do not measure seconds, because they depend on the computer. Instead we ask how the step count **grows** with n. **Big O notation** describes this growth as an upper bound on the step count for large n.",
+          },
+          {
+            type: "formula",
+            tex: t`f(n) = O(g(n)) \iff \exists\, c > 0,\ n_0 \text{ such that } f(n) \le c \cdot g(n) \text{ for all } n \ge n_0`,
+            caption: "f grows no faster than a constant multiple of g, once n is large enough.",
+          },
+          {
+            type: "text",
+            md: t`Two rules make Big O quick to find:
+
+1. **Keep only the dominant (fastest-growing) term.** For $3n^2 + 5n + 7$, the $n^2$ term outgrows the rest, so the order is $O(n^2)$.
+2. **Drop constant factors.** $O(3n^2)$ is written $O(n^2)$, and $O(n/2)$ is $O(n)$.
+
+For example, a selection sort makes $\frac{n(n-1)}{2} = \frac{n^2}{2} - \frac{n}{2}$ comparisons, which is $O(n^2)$.`,
+          },
+          {
+            type: "table",
+            headers: ["Big O", "Name", "Typical code or algorithm"],
+            rows: [
+              [t`$O(1)$`, "constant", "accessing arr[i]; a fixed number of statements"],
+              [t`$O(\log n)$`, "logarithmic", "binary search; a loop that halves i each time"],
+              [t`$O(n)$`, "linear", "linear search; one loop from 0 to n; sum of an array"],
+              [t`$O(n \log n)$`, "linearithmic", "merge sort; a loop to n with a halving loop inside"],
+              [t`$O(n^2)$`, "quadratic", "bubble, selection, insertion sort; two nested loops to n"],
+              [t`$O(2^n)$`, "exponential", "naive recursive Fibonacci; all subsets of n items"],
+            ],
+          },
+          {
+            type: "widget",
+            widget: "big-o",
+            caption: "Compare how quickly the growth curves separate as n increases. The ordering O(1) < O(log n) < O(n) < O(n log n) < O(n²) < O(2ⁿ) holds for all large n.",
+          },
+          {
+            type: "code",
+            lang: "java",
+            caption: "StepCount.java: counting how often each loop body runs",
+            code: `public class StepCount
+{
+    public static void main(String[] args)
+    {
+        int sizes[] = {10, 100, 1000};
+        for (int n : sizes)
+        {
+            int linear = 0, quad = 0, halve = 0, tri = 0;
+            for (int i = 0; i < n; i++)
+                linear++;
+            for (int i = 0; i < n; i++)
+                for (int j = 0; j < n; j++)
+                    quad++;
+            for (int i = n; i > 1; i = i / 2)
+                halve++;
+            for (int i = 0; i < n; i++)
+                for (int j = i + 1; j < n; j++)
+                    tri++;
+            System.out.println(n + ": " + linear + " " + quad + " " + halve + " " + tri);
+        }
+    }
+}
+
+/* Output:
+10: 10 100 3 45
+100: 100 10000 6 4950
+1000: 1000 1000000 9 499500
+*/`,
+          },
+          {
+            type: "example",
+            title: "Reading the step counts",
+            problem: "Use the output of StepCount.java to find the order of each loop.",
+            steps: [
+              t`linear: exactly n steps → $O(n)$.`,
+              t`quad: $n \times n$ steps → $O(n^2)$. Multiplying n by 10 multiplies the steps by 100.`,
+              t`halve: 3, 6, 9: it grows by about 3 each time n grows 10 times, since $\log_2 10 \approx 3.3$ → $O(\log n)$.`,
+              t`tri: $\frac{n(n-1)}{2}$ steps (45, 4950, 499500). Half of quad, but still $O(n^2)$.`,
+            ],
+            answer: t`linear $O(n)$, quad $O(n^2)$, halve $O(\log n)$, tri $O(n^2)$`,
+          },
+          {
+            type: "mistake",
+            wrong: t`An algorithm taking $2n$ steps is of a higher order than one taking $n$ steps, so it should be written $O(2n)$.`,
+            right: t`Both are $O(n)$. Big O ignores constant factors; it describes the **rate of growth**, and both double when n doubles.`,
+            why: "The constant does change the actual running time, which is why it feels important. But changing the computer or compiler changes constants too, so Big O keeps only what stays the same: the shape of the growth.",
+          },
+          {
+            type: "checkpoint",
+            questions: [
+              {
+                kind: "mcq",
+                q: t`An algorithm makes $5n^3 + 100n^2 + 2000$ steps. Its order is:`,
+                options: [t`$O(n^3)$`, t`$O(5n^3)$`, t`$O(n^2)$`, t`$O(2000)$`],
+                answer: 0,
+                explain: t`The $n^3$ term dominates for large n, and the constant 5 is dropped.`,
+              },
+            ],
+          },
+          {
+            type: "text",
+            md: t`**Best, average and worst case.** For the same n, the step count can depend on the data. In **linear search**, the best case is finding the key in the first position (1 comparison, $O(1)$); the worst case is a missing key or one in the last position (n comparisons, $O(n)$); the average for a present key is about $n/2$ comparisons, which is still $O(n)$. When people quote one Big O for an algorithm, they usually mean the **worst case**.`,
+          },
+          {
+            type: "activity",
+            activity: {
+              kind: "order",
+              prompt: "Order these from slowest-growing to fastest-growing.",
+              items: ["O(1)", "O(log n)", "O(n)", "O(n log n)", "O(n²)", "O(2ⁿ)"],
+              explain: "For large n each class eventually needs far more steps than every class before it.",
+            },
+          },
+          {
+            type: "callout",
+            tone: "exam",
+            title: "ISC board tip",
+            md: "ISC short questions ask for the complexity of a given code fragment, or the best and worst case of searching and sorting. Show how you counted (\"outer loop n times, inner loop n times, so n × n\") and then give the Big O. Learn: linear search O(n), binary search O(log n), bubble and selection sort O(n²).",
+          },
+          {
+            type: "keypoints",
+            items: [
+              "Time complexity counts basic steps as a function of input size n.",
+              "Big O gives an upper bound on growth: keep the dominant term, drop constants.",
+              "Single loop to n: O(n); two nested loops to n: O(n²); halving loop: O(log n).",
+              "Linear search: best O(1), worst O(n). Binary search: O(log n).",
+              "Order: O(1) < O(log n) < O(n) < O(n log n) < O(n²) < O(2ⁿ).",
+            ],
+          },
+        ],
+        flashcards: [
+          { front: "Time complexity", back: "A measure of how the number of basic steps of an algorithm grows with the input size n." },
+          { front: "Space complexity", back: "A measure of how the extra memory needed by an algorithm grows with n." },
+          { front: "Big O notation", back: "An upper bound on the growth rate: f(n) = O(g(n)) if f(n) ≤ c·g(n) for all n ≥ n₀." },
+          { front: "Dominant term", back: "The fastest-growing term of the step count; it alone decides the Big O." },
+          { front: "Complexity of binary search", back: "O(log n) in the worst case; O(1) in the best case." },
+          { front: "Complexity of bubble and selection sort", back: "O(n²)." },
+          { front: "Best case of linear search", back: "The key is the first element: 1 comparison, O(1)." },
+          { front: "O(n/2) simplifies to", back: "O(n)." },
+        ],
+        quiz: [
+          {
+            kind: "mcq",
+            q: "for (int i = 1; i < n; i = i * 2) { s++; } has time complexity:",
+            options: [t`$O(\log n)$`, t`$O(n)$`, t`$O(n^2)$`, t`$O(1)$`],
+            answer: 0,
+            explain: t`i takes the values 1, 2, 4, 8, ...: about $\log_2 n$ iterations.`,
+          },
+          {
+            kind: "mcq",
+            q: "Which is the worst-case complexity of linear search on n elements?",
+            options: [t`$O(n)$`, t`$O(\log n)$`, t`$O(1)$`, t`$O(n^2)$`],
+            answer: 0,
+            explain: "A missing key needs all n comparisons.",
+          },
+          {
+            kind: "numeric",
+            q: "How many times does the inner statement run? for (int i = 0; i < 6; i++) for (int j = i + 1; j < 6; j++) c++;",
+            answer: 15,
+            explain: t`5 + 4 + 3 + 2 + 1 + 0 = 15 = $\frac{6 \times 5}{2}$.`,
+          },
+          {
+            kind: "truefalse",
+            q: t`An $O(n^2)$ algorithm is always slower than an $O(n)$ algorithm, even for n = 5.`,
+            answer: false,
+            explain: "Big O describes growth for large n. For small inputs, the constants can make an O(n²) algorithm faster.",
+            difficulty: 2,
+          },
+          {
+            kind: "fill",
+            q: "Big O notation describes the ___ case unless stated otherwise.",
+            answer: ["worst"],
+            explain: "It gives an upper bound on the steps over all inputs of size n.",
+          },
+          {
+            kind: "mcq",
+            q: t`$T(n) = 4n \log_2 n + 3n + 10$. Its order is:`,
+            options: [t`$O(n \log n)$`, t`$O(n)$`, t`$O(\log n)$`, t`$O(4n \log n + 3n)$`],
+            answer: 0,
+            explain: t`$n \log n$ grows faster than n, so it dominates; the constant 4 is dropped.`,
+          },
+          {
+            kind: "multi",
+            q: "Which of these are O(1)?",
+            options: ["Reading arr[500] from an array", "Swapping two variables", "Finding the largest element of an unsorted array", "Checking if a number is even"],
+            answers: [0, 1, 3],
+            explain: "Finding the largest element must look at all n elements: O(n).",
+          },
+        ],
+      },
+      {
+        slug: "c12-cs-complexity-practice",
+        title: "Complexity: Board Practice",
+        summary: "Finding the Big O of loops, nested loops and recursive methods, comparing algorithms, and best and worst cases of searching and sorting.",
+        minutes: 20,
+        xp: 50,
+        blocks: [
+          {
+            type: "text",
+            md: t`To find the complexity of code: (1) find the statement that runs most often; (2) count how many times it runs in terms of n; (3) keep the dominant term and drop constants. Loops **one after another** add their counts; loops **one inside another** multiply them.`,
+          },
+          {
+            type: "example",
+            title: "Q1: Sequential and nested loops",
+            problem: "Find the complexity: for (i = 0; i < n; i++) a++; for (i = 0; i < n; i++) for (j = 0; j < 10; j++) b++;",
+            steps: [
+              "First loop: n steps.",
+              t`Second: the inner loop runs a fixed 10 times for each of n outer passes: $10n$ steps.`,
+              t`Total $n + 10n = 11n$ → $O(n)$. The inner loop runs a constant number of times, so it does not make this $O(n^2)$.`,
+            ],
+            answer: t`$O(n)$`,
+          },
+          {
+            type: "mistake",
+            wrong: t`Any two nested loops give $O(n^2)$.`,
+            right: t`Multiply the actual counts. An inner loop of fixed length (10) gives $O(n)$; an inner halving loop gives $O(n \log n)$; only an inner loop that grows with n gives $O(n^2)$.`,
+            why: "Nested loops to n are the most common example taught, so the shape gets memorised instead of the counting. Always ask how many times the inner loop runs for each outer pass.",
+          },
+          {
+            type: "example",
+            title: "Q2: A loop with a halving loop inside",
+            problem: "Find the complexity: for (i = 0; i < n; i++) for (j = n; j > 1; j = j / 2) c++;",
+            steps: [
+              t`The inner loop halves j from n down to 1: about $\log_2 n$ passes.`,
+              t`It runs once for each of the n outer passes: $n \log_2 n$ steps.`,
+            ],
+            answer: t`$O(n \log n)$`,
+          },
+          {
+            type: "code",
+            lang: "java",
+            caption: "LoopCheck.java: counting the steps of Q1 and Q2 for n = 16 (176 = 11 × 16, and 64 = 16 × log₂16 = 16 × 4)",
+            code: `public class LoopCheck
+{
+    public static void main(String[] args)
+    {
+        int n = 16;
+        int a = 0, b = 0, c = 0;
+        for (int i = 0; i < n; i++)            // Q1, first loop
+            a++;
+        for (int i = 0; i < n; i++)            // Q1, second loop
+            for (int j = 0; j < 10; j++)
+                b++;
+        for (int i = 0; i < n; i++)            // Q2
+            for (int j = n; j > 1; j = j / 2)
+                c++;
+        System.out.println("Q1 steps: " + (a + b));
+        System.out.println("Q2 steps: " + c);
+    }
+}
+
+/* Output:
+Q1 steps: 176
+Q2 steps: 64
+*/`,
+          },
+          {
+            type: "checkpoint",
+            questions: [
+              {
+                kind: "mcq",
+                q: "for (i = 0; i < n; i++) for (j = 0; j < i; j++) for (k = 0; k < 3; k++) x++; Its complexity is:",
+                options: [t`$O(n^2)$`, t`$O(n^3)$`, t`$O(n)$`, t`$O(3n)$`],
+                answer: 0,
+                explain: t`The j loop gives $\frac{n(n-1)}{2}$ passes and the k loop multiplies by 3: $\frac{3n(n-1)}{2}$ → $O(n^2)$.`,
+              },
+            ],
+          },
+          {
+            type: "example",
+            title: "Q3: Recursive methods",
+            problem: "Give the complexity of fact(n) (n * fact(n − 1)) and of recursive binary search, in terms of the number of calls.",
+            steps: [
+              t`fact(n) calls fact(n − 1), ..., fact(1): n calls, each doing constant work → $O(n)$.`,
+              t`Binary search on n elements calls itself on about n/2, then n/4, ... down to 1: about $\log_2 n$ calls → $O(\log n)$.`,
+              t`Naive Fibonacci fib(n) = fib(n − 1) + fib(n − 2) makes two calls per call; the number of calls roughly doubles with each level → exponential, about $O(2^n)$.`,
+            ],
+            answer: t`fact: $O(n)$; binary search: $O(\log n)$; naive Fibonacci: $O(2^n)$`,
+          },
+          {
+            type: "table",
+            headers: ["Algorithm", "Best case", "Worst case"],
+            rows: [
+              ["Linear search", t`$O(1)$`, t`$O(n)$`],
+              ["Binary search (sorted)", t`$O(1)$`, t`$O(\log n)$`],
+              ["Bubble sort with a \"no swaps\" exit", t`$O(n)$ (already sorted)`, t`$O(n^2)$`],
+              ["Selection sort", t`$O(n^2)$`, t`$O(n^2)$`],
+              ["Insertion sort", t`$O(n)$ (already sorted)`, t`$O(n^2)$`],
+              ["Merging two sorted arrays of sizes m and n", t`$O(m + n)$`, t`$O(m + n)$`],
+            ],
+          },
+          {
+            type: "activity",
+            activity: {
+              kind: "match",
+              prompt: "Match each code pattern to its complexity.",
+              pairs: [
+                ["for (i = 0; i < n; i++) s += a[i];", "O(n)"],
+                ["for (i = n; i > 0; i /= 2) c++;", "O(log n)"],
+                ["two loops, each 0 to n, one inside the other", "O(n²)"],
+                ["return a[0] + a[n - 1];", "O(1)"],
+                ["a loop to n containing a halving loop", "O(n log n)"],
+              ],
+              explain: "Count the passes of the innermost statement, multiply for nesting, then keep the dominant term.",
+            },
+          },
+          {
+            type: "example",
+            title: "Q4: Comparing two algorithms",
+            problem: t`Algorithm P takes $100n$ steps and algorithm Q takes $n^2$ steps. For which n is P faster, and which is better for large inputs?`,
+            steps: [
+              t`P is faster when $100n < n^2$, i.e. when $n > 100$.`,
+              t`For $n < 100$, Q is faster; at $n = 100$ they are equal (10,000 steps).`,
+              t`P is $O(n)$ and Q is $O(n^2)$, so P wins for every large input: at $n = 10{,}000$, P takes $10^6$ steps and Q takes $10^8$.`,
+            ],
+            answer: "P is faster for n > 100 and is the better choice for large inputs.",
+          },
+          {
+            type: "callout",
+            tone: "exam",
+            title: "ISC board tip",
+            md: "When a question asks you to state the complexity of a code fragment, write the count first (for example \"n(n + 1)/2 iterations\") and then the order. If the question also asks for the best case, look for an early exit (a break or a return inside the loop).",
+          },
+          {
+            type: "keypoints",
+            items: [
+              "Sequential loops add; nested loops multiply.",
+              "A fixed-length inner loop adds only a constant factor.",
+              "A halving loop contributes log n.",
+              "fact(n): O(n); binary search: O(log n); naive Fibonacci: O(2ⁿ).",
+              "Lower order wins for large n, even if its constant is larger.",
+            ],
+          },
+        ],
+        flashcards: [
+          { front: "Sequential loops of n and n² steps", back: "Total n + n² → O(n²)." },
+          { front: "Loop to n with an inner loop of 10", back: "10n steps → O(n)." },
+          { front: "Loop to n with an inner halving loop", back: "n log n steps → O(n log n)." },
+          { front: "Complexity of recursive factorial", back: "O(n): n calls of constant work." },
+          { front: "Best case of insertion sort", back: "O(n), when the array is already sorted." },
+          { front: "Merging sorted arrays of sizes m and n", back: "O(m + n)." },
+        ],
+        quiz: [
+          {
+            kind: "mcq",
+            q: "for (i = 0; i < n; i++) for (j = 0; j < n; j++) for (k = 0; k < n; k++) x++; has complexity:",
+            options: [t`$O(n^3)$`, t`$O(n^2)$`, t`$O(3n)$`, t`$O(n \log n)$`],
+            answer: 0,
+            explain: t`Three nested loops, each to n: $n^3$ steps.`,
+          },
+          {
+            kind: "numeric",
+            q: "A merge of two sorted arrays of sizes 40 and 25 copies how many elements into the result?",
+            answer: 65,
+            explain: "Every element is copied once: 40 + 25 = 65, which is O(m + n).",
+          },
+          {
+            kind: "mcq",
+            q: "Algorithm A takes 50n steps and B takes 2n² steps. For which n do they take the same number of steps?",
+            options: ["25", "50", "100", "5"],
+            answer: 0,
+            explain: t`$50n = 2n^2$ gives $n = 25$ (both take 1,250 steps). Beyond that, A is faster.`,
+            difficulty: 2,
+          },
+          {
+            kind: "truefalse",
+            q: "Selection sort makes the same number of comparisons whether the array is sorted or not.",
+            answer: true,
+            explain: "It always scans the whole unsorted part to find the minimum: n(n − 1)/2 comparisons in every case.",
+          },
+          {
+            kind: "fill",
+            q: "A recursive method that calls itself once on a problem half the size, doing constant work per call, has complexity O(___).",
+            answer: ["log n", "logn", "log(n)"],
+            explain: "The size halves each call, so there are about log₂ n calls, as in recursive binary search.",
+          },
+          {
+            kind: "mcq",
+            q: "int i = 1; while (i <= n) { i = i * 3; } runs about how many times?",
+            options: [t`$\log_3 n$`, t`$n/3$`, t`$3n$`, t`$n^3$`],
+            answer: 0,
+            explain: t`i takes 1, 3, 9, 27, ...; it passes n after about $\log_3 n$ steps, so the loop is $O(\log n)$.`,
+          },
+          {
+            kind: "multi",
+            q: "Which algorithms have a best case of O(n) or better on an already sorted array?",
+            options: ["Insertion sort", "Bubble sort with a \"no swaps\" exit", "Selection sort", "Linear search for the first element"],
+            answers: [0, 1, 3],
+            explain: "Selection sort is O(n²) even on sorted data. Linear search finding the first element is O(1).",
+          },
+        ],
+      },
+    ],
+  },
 ];
 
 /** Chapter title ("11:" / "12:" + exact title) → topic slug(s) that teach it. */
@@ -5938,4 +6374,5 @@ export const links: Record<string, string | string[]> = {
   "12:Recursion": "c12-cs-java-recursion",
   "12:Inheritance, Interfaces and Polymorphism": "c12-cs-java-inheritance",
   "12:Data Structures": "c12-cs-java-data-structures",
+  "12:Complexity and Big O": "c12-cs-complexity",
 };

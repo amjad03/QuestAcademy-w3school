@@ -3776,7 +3776,735 @@ public class LongWord
   ],
 };
 
-export const topics: Topic[] = [methods, arrays, strings, recursion, inputOutput];
+/* ------------------------------------------------------------------ */
+/* 6. Trends in Computing and Ethics                                   */
+/* ------------------------------------------------------------------ */
+const trends: Topic = {
+  slug: "c11-isc-cs-trends-ethics",
+  title: "Trends in Computing and Ethics",
+  icon: "🌐",
+  description: "Artificial intelligence, the Internet of Things, virtual and augmented reality, cyber security, privacy, netiquette, spam and phishing, intellectual property, free and open source software and licences.",
+  lessons: [
+    {
+      slug: "c11-isc-trends-ai-iot-vr",
+      title: "Trends: AI, Internet of Things, Virtual and Augmented Reality",
+      summary: "What artificial intelligence and machine learning are, how IoT devices sense and share data, the difference between VR and AR, and the social questions each raises.",
+      minutes: 18,
+      xp: 45,
+      blocks: [
+        {
+          type: "illustration",
+          emoji: "🤖",
+          caption: "A farmer in Punjab asks a phone app, in Punjabi, why the wheat leaves are turning yellow. The app recognises speech, looks at a photo of the leaf and suggests a cause. Several new computing trends are at work in that one answer.",
+        },
+        {
+          type: "text",
+          md: "**Artificial Intelligence (AI)** is the branch of computer science that builds systems able to do tasks that normally need human intelligence: understanding language, recognising images, making decisions, playing games. In 1950 Alan Turing proposed a test (the **Turing Test**) in which a machine counts as intelligent if a person chatting with it cannot reliably tell it from a human.\n\n**Machine Learning (ML)** is a part of AI in which a program is not given fixed rules; it **learns patterns from examples (data)**. A spam filter shown thousands of marked messages learns which words and senders suggest spam. All of today's AI is **narrow AI**, good at one kind of task. A machine with general human-level intelligence (**general AI**) does not exist yet.",
+        },
+        {
+          type: "table",
+          headers: ["Area", "Example in India"],
+          rows: [
+            ["Speech and language", "voice assistants and translation between Indian languages"],
+            ["Image recognition", "detecting crop disease from a leaf photo; reading number plates at toll plazas"],
+            ["Prediction", "weather and monsoon forecasting; detecting unusual (possibly fraudulent) payments"],
+            ["Recommendation", "suggesting videos, songs or products from what you watched or bought"],
+          ],
+        },
+        {
+          type: "text",
+          md: "The **Internet of Things (IoT)** is a network of everyday physical objects fitted with **sensors**, software and a network connection, so that they collect data and exchange it with other devices or a server over the internet, often without a human in the loop. Examples: smart electricity meters that report readings, soil-moisture sensors that switch on a pump, fitness bands, smart street lights.\n\nAn IoT system has four parts: **sensors / actuators** on the device, **connectivity** (Wi-Fi, mobile data, Bluetooth), **data processing** (often in the **cloud**: computing and storage rented over the internet), and a **user interface** such as a phone app.",
+        },
+        {
+          type: "checkpoint",
+          questions: [
+            {
+              kind: "mcq",
+              q: "How is machine learning different from ordinary programming?",
+              options: ["It learns patterns from data instead of following only hand-written rules", "It needs no computer", "It only works on robots", "It cannot make mistakes"],
+              answer: 0,
+              explain: "In ML the program builds its own rules from examples. It can still be wrong, especially when the data is poor.",
+            },
+          ],
+        },
+        {
+          type: "text",
+          md: "**Virtual Reality (VR)** places the user inside a completely **computer-generated** 3-D world, usually through a headset that blocks the real surroundings and tracks head movement. Uses: flight and surgery training, virtual tours of monuments, games.\n\n**Augmented Reality (AR)** keeps the **real world** in view and **adds** digital information on top of it, through a phone camera or smart glasses. Uses: seeing how a sofa would look in your room, labels on a star map when you point your phone at the sky, navigation arrows on a live street view.",
+        },
+        {
+          type: "table",
+          headers: ["Point", "Virtual Reality", "Augmented Reality"],
+          rows: [
+            ["What you see", "a fully artificial world", "the real world with digital layers"],
+            ["Real surroundings", "hidden", "visible"],
+            ["Typical device", "VR headset", "phone camera, smart glasses"],
+            ["Example", "practising a spacewalk in a simulator", "trying spectacle frames on your face in a shop app"],
+          ],
+        },
+        {
+          type: "example",
+          title: "Naming the trend",
+          problem: "Identify the main technology in each case: (a) a museum app that shows a 3-D Ashoka pillar standing on your table through the phone camera; (b) a headset that lets trainee pilots fly a plane with no real cockpit in sight; (c) a water tank that messages the owner when it is nearly empty; (d) a bank system that learns from past cases to flag strange card payments.",
+          steps: [
+            "(a) The real table stays visible and a digital object is added: **AR**.",
+            "(b) The real world is hidden and a full artificial cockpit is shown: **VR**.",
+            "(c) A sensor on an everyday object sends data over the network: **IoT**.",
+            "(d) The system learns patterns from past data: **AI / machine learning**.",
+          ],
+          answer: "(a) AR, (b) VR, (c) IoT, (d) AI (machine learning).",
+        },
+        {
+          type: "mistake",
+          wrong: "AI systems are neutral and objective because they are just maths.",
+          right: "An ML system learns from data collected by people. If the data is unbalanced or reflects past unfairness, the system can repeat it (**bias**). AI decisions need human checking, clear responsibility and explanation.",
+          why: "Computers do not have opinions, so their outputs look impartial. But the patterns they learn come from the examples they are given.",
+        },
+        {
+          type: "activity",
+          activity: {
+            kind: "sort",
+            prompt: "Which trend does each example show?",
+            groups: ["AI / ML", "IoT", "VR / AR"],
+            items: [
+              { text: "App that translates spoken Kannada into Hindi", group: 0, hint: "Understanding language." },
+              { text: "Email filter that learns what spam looks like", group: 0, hint: "Learning from examples." },
+              { text: "Smart meter sending power readings every hour", group: 1, hint: "A sensor on an object sharing data." },
+              { text: "Soil sensor that switches on a pump", group: 1, hint: "Device acts on sensed data." },
+              { text: "Headset tour inside a virtual Hampi", group: 2, hint: "A full artificial world." },
+              { text: "Phone shows furniture placed in your real room", group: 2, hint: "Digital layer over the real view." },
+            ],
+            explain: "AI and ML handle language, images and learning from data; IoT connects sensing objects; VR replaces the view, AR adds to it.",
+          },
+        },
+        {
+          type: "callout",
+          tone: "exam",
+          title: "ISC tip",
+          md: "Short questions ask you to define AI, IoT, VR or AR and give one example each, or to state one difference between VR and AR. Give the definition first in one exact sentence, then a real example. For \"social impact\" questions, write one benefit and one concern (for example: jobs, privacy, bias, addiction).",
+        },
+        {
+          type: "keypoints",
+          items: [
+            "AI: systems doing tasks that need human intelligence; ML is the part of AI that learns from data.",
+            "Today's AI is narrow AI; it can carry bias from its training data.",
+            "IoT: everyday objects with sensors and connectivity that exchange data, often through the cloud.",
+            "VR replaces the real world with a computer-made one; AR adds digital information to the real view.",
+            "Every trend brings benefits and concerns such as privacy, security, jobs and fairness.",
+          ],
+        },
+      ],
+      flashcards: [
+        { front: "Artificial Intelligence", back: "The design of computer systems that perform tasks normally needing human intelligence, such as understanding language or recognising images." },
+        { front: "Machine Learning", back: "A part of AI in which programs learn patterns from data instead of following only hand-written rules." },
+        { front: "Turing Test", back: "Proposed by Alan Turing (1950): a machine is called intelligent if a human questioner cannot reliably tell it from a person." },
+        { front: "Internet of Things", back: "A network of physical objects with sensors, software and connectivity that collect and exchange data." },
+        { front: "Virtual Reality", back: "A fully computer-generated 3-D environment experienced through a headset, hiding the real world." },
+        { front: "Augmented Reality", back: "Digital information overlaid on a live view of the real world." },
+        { front: "Cloud computing", back: "Using computing power, storage and software over the internet instead of on one's own machine." },
+        { front: "AI bias", back: "Unfair results from an AI system that learned from unbalanced or prejudiced data." },
+      ],
+      quiz: [
+        {
+          kind: "mcq",
+          q: "A medical student practises surgery inside a fully simulated operating theatre using a headset. This is:",
+          options: ["Virtual Reality", "Augmented Reality", "Internet of Things", "Cloud storage"],
+          answer: 0,
+          explain: "The real surroundings are replaced by a computer-generated one: VR.",
+        },
+        {
+          kind: "truefalse",
+          q: "Machine learning is a branch of artificial intelligence.",
+          answer: true,
+          explain: "ML is one approach within AI: learning from data.",
+        },
+        {
+          kind: "mcq",
+          q: "Which is the best example of IoT?",
+          options: ["A refrigerator that sends a message when its door is left open", "A calculator app", "A printed timetable", "A spreadsheet of marks"],
+          answer: 0,
+          explain: "An everyday object with a sensor that communicates over a network is IoT.",
+        },
+        {
+          kind: "fill",
+          q: "The test proposed in 1950 to judge whether a machine can think like a human is called the ___ Test.",
+          answer: ["Turing"],
+          explain: "Alan Turing proposed it.",
+        },
+        {
+          kind: "multi",
+          q: "Which are genuine concerns raised by AI and IoT?",
+          options: ["Privacy of collected personal data", "Bias in automated decisions", "Security of connected devices", "They make computers use less electricity"],
+          answers: [0, 1, 2],
+          explain: "Privacy, bias and device security are real concerns. Using less electricity is not a concern (and is not generally true either).",
+        },
+        {
+          kind: "mcq",
+          q: "Pointing a phone at the night sky shows the names of the stars on the live camera view. This is:",
+          options: ["Augmented Reality", "Virtual Reality", "Machine Learning only", "Cloud computing only"],
+          answer: 0,
+          explain: "The real sky stays visible and labels are added on top: AR.",
+        },
+        {
+          kind: "mcq",
+          q: "Which statement about present-day AI is correct?",
+          options: ["It is narrow AI, good at specific tasks", "It has general human-level intelligence", "It never makes mistakes", "It needs no data"],
+          answer: 0,
+          explain: "Today's systems are narrow; general AI does not yet exist, and AI depends on data and can err.",
+        },
+      ],
+    },
+    {
+      slug: "c11-isc-trends-cyber-security",
+      title: "Cyber Security, Privacy and Netiquette",
+      summary: "Malware, hacking, spam, phishing and its variants, protecting privacy, safe practices, netiquette, and Indian cyber laws.",
+      minutes: 20,
+      xp: 50,
+      blocks: [
+        {
+          type: "illustration",
+          emoji: "🎣",
+          caption: "\"Your electricity will be cut tonight. Call this number and share the OTP to update your account.\" Messages like this reach lakhs of phones in India. They are fishing for your secrets: that is why the trick is called phishing.",
+        },
+        {
+          type: "text",
+          md: "**Cyber security** is the protection of computers, networks, programs and data from attack, damage or unauthorised access. It aims at three things: **confidentiality** (only the right people see the data), **integrity** (data is not changed wrongly) and **availability** (the system works when needed).\n\n**Malware** (malicious software) is any program written to harm. **Hacking** is gaining unauthorised access to a computer system; doing it without permission is a crime. Testing a system *with* the owner's permission to find weaknesses is called **ethical hacking**.",
+        },
+        {
+          type: "table",
+          headers: ["Malware", "How it behaves"],
+          rows: [
+            ["**Virus**", "attaches itself to a file or program and spreads when that file is run or shared"],
+            ["**Worm**", "a standalone program that copies itself across a network on its own, without a host file"],
+            ["**Trojan horse**", "looks like useful software but secretly does harm, e.g. opens a back door"],
+            ["**Ransomware**", "locks or encrypts the victim's files and demands payment to unlock them"],
+            ["**Spyware**", "secretly records what the user does, such as keystrokes and passwords"],
+          ],
+        },
+        {
+          type: "text",
+          md: "**Spam** is unwanted bulk messages (email, SMS, chat) sent to many people, usually for advertising; some spam carries malware or scams.\n\n**Phishing** is a fraud in which the attacker pretends to be a trusted organisation (a bank, a courier, a government office) to trick people into revealing passwords, card numbers or OTPs, often through a link to a fake website. Variants: **vishing** (by voice call), **smishing** (by SMS). Warning signs: urgency or threats, spelling mistakes, odd web addresses, requests for an OTP or PIN, offers that are too good to be true.",
+        },
+        {
+          type: "checkpoint",
+          questions: [
+            {
+              kind: "mcq",
+              q: "A program spreads from computer to computer across a college network by itself, without being attached to any file. It is a:",
+              options: ["Worm", "Virus", "Trojan horse", "Cookie"],
+              answer: 0,
+              explain: "A worm is standalone and self-spreading over a network. A virus needs a host file.",
+            },
+          ],
+        },
+        {
+          type: "text",
+          md: "**Privacy** is a person's right to control how their personal information is collected, used and shared. Apps and websites collect data such as location, contacts and browsing history; everything you post leaves a **digital footprint** that is hard to erase.\n\n**Netiquette** (net + etiquette) is the set of rules for polite, responsible behaviour online: respect others and do not bully or troll; do not type in ALL CAPITALS (it reads as shouting); check facts before forwarding; respect others' privacy and do not share their photos or details without consent; give credit for content you use.",
+        },
+        {
+          type: "example",
+          title: "Spotting a phishing message",
+          problem: "An SMS says: \"Dear customer, your KYC has expired. Your account will be BLOCKED in 2 hours. Click bit-ly-link to update and enter the OTP you receive.\" List the warning signs and the correct response.",
+          steps: [
+            "Urgency and a threat (\"BLOCKED in 2 hours\") push you to act without thinking.",
+            "A shortened, unknown link instead of the bank's official site or app.",
+            "A request for the OTP: no genuine bank asks for an OTP, PIN or password.",
+            "Correct response: do not click or reply; check only through the bank's official app or branch; report the fraud (in India, at cybercrime.gov.in or the helpline 1930) and delete the message.",
+          ],
+          answer: "It is a phishing (smishing) message: urgency, an unknown link and an OTP request are the giveaways. Ignore it, verify through official channels and report it.",
+        },
+        {
+          type: "mistake",
+          wrong: "If a message shows the bank's real logo and name, it must be genuine.",
+          right: "Logos, names and even sender IDs can be copied or faked. Judge a message by **what it asks for**: any request for an OTP, PIN, password or a payment to \"unlock\" something is a scam, whatever it looks like.",
+          why: "We trust familiar branding in the physical world because it is hard to fake there. Online, copying a logo takes seconds.",
+        },
+        {
+          type: "table",
+          headers: ["Safe practice", "Why"],
+          rows: [
+            ["Long passwords mixing letters, digits and symbols; a different one for each site", "harder to guess; one leak does not open every account"],
+            ["Two-factor authentication (2FA)", "a stolen password alone is not enough"],
+            ["Update the OS and apps; use antivirus software", "patches close known holes"],
+            ["Install apps only from official stores; check permissions", "avoids Trojans and spyware"],
+            ["Back up important files", "protects against ransomware and hardware failure"],
+          ],
+        },
+        {
+          type: "activity",
+          activity: {
+            kind: "match",
+            prompt: "Match each threat to its description.",
+            pairs: [
+              ["Phishing", "Fake message or site that tricks you into giving secrets"],
+              ["Spam", "Unwanted bulk messages sent to many people"],
+              ["Ransomware", "Locks your files and demands payment"],
+              ["Trojan horse", "Harmful program disguised as a useful one"],
+              ["Vishing", "Fraud attempted through a phone call"],
+            ],
+            explain: "Phishing and vishing trick people; spam floods them; ransomware and Trojans are kinds of malware.",
+          },
+        },
+        {
+          type: "callout",
+          tone: "exam",
+          title: "ISC tip",
+          md: "Distinguish clearly in answers: a **virus** needs a host file, a **worm** does not. For India, know that the **Information Technology Act, 2000** (amended in 2008) deals with cyber crime and electronic records, and the **Digital Personal Data Protection Act, 2023** deals with how organisations handle personal data.",
+        },
+        {
+          type: "keypoints",
+          items: [
+            "Cyber security protects confidentiality, integrity and availability of systems and data.",
+            "Malware: virus (needs a host), worm (self-spreading), Trojan (disguised), ransomware, spyware.",
+            "Spam is unwanted bulk messaging; phishing (and vishing, smishing) tricks people into revealing secrets.",
+            "Never share an OTP, PIN or password; use strong passwords, 2FA, updates and backups.",
+            "Netiquette means respectful, responsible behaviour online; privacy means control over your personal data.",
+          ],
+        },
+      ],
+      flashcards: [
+        { front: "Cyber security", back: "Protecting computers, networks and data from attack, damage or unauthorised access." },
+        { front: "Virus vs worm", back: "A virus attaches to a host file and spreads when it runs; a worm is standalone and spreads over networks by itself." },
+        { front: "Trojan horse", back: "Malware disguised as useful software." },
+        { front: "Phishing", back: "Fraud that impersonates a trusted body to trick people into revealing passwords, card details or OTPs." },
+        { front: "Spam", back: "Unsolicited bulk messages sent to many recipients." },
+        { front: "Netiquette", back: "Rules of polite and responsible behaviour on the internet." },
+        { front: "Digital footprint", back: "The trail of data a person leaves online through posts, searches and app use." },
+        { front: "Indian law on cyber crime", back: "The Information Technology Act, 2000 (amended 2008)." },
+      ],
+      quiz: [
+        {
+          kind: "mcq",
+          q: "A caller claiming to be from a bank asks for the OTP just sent to you. This is:",
+          options: ["Vishing", "Spam", "A worm", "Netiquette"],
+          answer: 0,
+          explain: "Phishing done over a voice call is vishing.",
+        },
+        {
+          kind: "truefalse",
+          q: "A virus can spread across a network on its own without being attached to any file.",
+          answer: false,
+          explain: "That describes a worm. A virus needs a host file or program.",
+        },
+        {
+          kind: "multi",
+          q: "Which are warning signs of a phishing email?",
+          options: ["Urgent threat to close your account", "Request for your password or OTP", "Link to an unfamiliar web address", "Sent by your own school's official portal after you requested it"],
+          answers: [0, 1, 2],
+          explain: "Urgency, secret requests and odd links are classic signs. A message you requested from an official portal is expected.",
+        },
+        {
+          kind: "fill",
+          q: "Malware that encrypts a victim's files and demands payment is called ___.",
+          answer: ["ransomware"],
+          explain: "Ransomware holds data to ransom.",
+        },
+        {
+          kind: "mcq",
+          q: "Which is a breach of netiquette?",
+          options: ["Posting a classmate's photo without asking", "Crediting the source of an image", "Checking a news story before forwarding it", "Replying politely to a disagreement"],
+          answer: 0,
+          explain: "Sharing someone's photo without consent violates their privacy and netiquette.",
+        },
+        {
+          kind: "mcq",
+          q: "Two-factor authentication helps because:",
+          options: ["A stolen password alone is not enough to log in", "It makes passwords unnecessary", "It removes all viruses", "It speeds up the internet"],
+          answer: 0,
+          explain: "A second factor (such as an OTP on your phone) is needed as well as the password.",
+        },
+        {
+          kind: "order",
+          q: "Order the correct response to a suspicious bank SMS.",
+          items: ["Do not click the link or reply", "Check through the bank's official app or branch", "Report it to the cyber crime portal or helpline", "Delete the message"],
+          explain: "Avoid the bait, verify through official channels, report, then remove it.",
+        },
+      ],
+    },
+    {
+      slug: "c11-isc-trends-ip-licensing",
+      title: "Intellectual Property, Free and Open Source Software and Licences",
+      summary: "Copyright, patents and trademarks for software, plagiarism, the Free Software Foundation and its four freedoms, open source software, and GPL, BSD and other licence types.",
+      minutes: 20,
+      xp: 50,
+      blocks: [
+        {
+          type: "illustration",
+          emoji: "💡",
+          caption: "A team of students in Kochi spends months building an app for booking turf time. Someone copies their code, renames it and sells it. Who owns the app, and what may others do with the code? Intellectual property rules answer such questions.",
+        },
+        {
+          type: "text",
+          md: "**Intellectual property (IP)** is a creation of the mind (an invention, a program, a book, a song, a logo) that the law lets its creator own and control. **Intellectual property rights (IPR)** are the legal rights given to that owner for a period.",
+        },
+        {
+          type: "table",
+          headers: ["Right", "Protects", "Software example"],
+          rows: [
+            ["**Copyright**", "the expression of an idea: written text, code, music, art. It arises automatically when the work is created", "the source code of the turf-booking app"],
+            ["**Patent**", "a new, inventive, useful invention; must be applied for and granted; usually lasts 20 years", "a new technical method; in India a computer programme per se cannot be patented"],
+            ["**Trademark**", "a name, logo or symbol that identifies a brand", "the app's name and icon"],
+          ],
+        },
+        {
+          type: "text",
+          md: "**Software copyright** means nobody else may copy, distribute or sell the program without the owner's permission. Copying and distributing software without permission is **software piracy**. Presenting someone else's work (code, an essay, an image) as your own without credit is **plagiarism**: it is dishonest even when the work is free to use.\n\nA **licence** is the owner's written permission saying what users may and may not do with the software.",
+        },
+        {
+          type: "checkpoint",
+          questions: [
+            {
+              kind: "mcq",
+              q: "Which right protects a company's logo?",
+              options: ["Trademark", "Patent", "Copyright of the source code", "None"],
+              answer: 0,
+              explain: "Brand names, logos and symbols are protected by trademarks.",
+            },
+          ],
+        },
+        {
+          type: "text",
+          md: "**The Free Software Foundation (FSF)**, founded by Richard Stallman in 1985 to support the GNU project, holds that users should control the software they use. \"Free\" here means **freedom, not price** (\"free as in free speech, not free beer\"). Software is free if every user has four freedoms:\n\n- **Freedom 0**: to run the program for any purpose;\n- **Freedom 1**: to study how it works and change it (this needs the **source code**);\n- **Freedom 2**: to give copies to others;\n- **Freedom 3**: to distribute your modified versions.\n\nThe FSF sees proprietary software, which withholds these freedoms, as unjust to users.",
+        },
+        {
+          type: "text",
+          md: "**Open Source Software (OSS)** also makes the source code available to view, change and share. The term was promoted from 1998 by the **Open Source Initiative**, which stresses practical benefits: many people can find and fix bugs, and code can be reused. Free software and open source software cover almost the same programs; the difference is mainly in emphasis (freedom and ethics for the FSF, development benefits for OSI). Together they are often called **FOSS**. Examples: Linux, LibreOffice, Firefox, Python, BlueJ.",
+        },
+        {
+          type: "table",
+          headers: ["Licence / category", "Key rule"],
+          rows: [
+            ["**GPL** (GNU General Public License)", "**copyleft**: anyone may use, change and share the code, but modified versions that are distributed must also be under the GPL with source code"],
+            ["**BSD** (and MIT)", "**permissive**: use, change and share freely, even inside closed proprietary products, as long as the copyright notice is kept"],
+            ["**Proprietary**", "source code kept secret; the licence limits copying and changing (e.g. most paid office suites and games)"],
+            ["**Freeware**", "free of cost, but source code usually not given and changes not allowed"],
+            ["**Shareware**", "free to try for a limited time or with limited features; pay to keep using"],
+            ["**Public domain**", "no copyright at all; anyone may do anything with it"],
+          ],
+        },
+        {
+          type: "example",
+          title: "Choosing a licence",
+          problem: "The Kochi team wants others to improve their app, but they want every improved version to stay open for everyone. Should they choose GPL or BSD? What changes if they choose the other?",
+          steps: [
+            "Their condition is that improvements must remain open. That is exactly the **copyleft** rule of the GPL.",
+            "Under BSD, a company could take the code, improve it and sell a closed version without sharing the changes; only the copyright notice must be kept.",
+            "So GPL protects openness of future versions; BSD gives the widest freedom of reuse.",
+          ],
+          answer: "GPL. With BSD, others could make closed, proprietary versions of the improved app.",
+        },
+        {
+          type: "mistake",
+          wrong: "Freeware and free software are the same thing, because both cost nothing.",
+          right: "**Freeware** is only free of **cost**; its source is usually closed and you may not change it. **Free software** is about **freedom**: source available, with the right to study, change and share. Free software may even be sold.",
+          why: "In English, \"free\" means both \"no price\" and \"liberty\". The FSF uses the second meaning; freeware uses the first.",
+        },
+        {
+          type: "activity",
+          activity: {
+            kind: "reveal",
+            prompt: "A company changes GPL-licensed code and sells the new version. What must it do?",
+            emoji: "📜",
+            options: ["Nothing; once bought, the code is theirs", "Release its modified version under the GPL with source code", "Pay the original author a royalty", "It is not allowed to sell it at all"],
+            answer: 1,
+            trap: 3,
+            explain: "The GPL allows selling, but the distributed modified version must carry the same GPL freedoms, including access to the source code. That is copyleft.",
+          },
+        },
+        {
+          type: "callout",
+          tone: "exam",
+          title: "ISC tip",
+          md: "Typical questions: \"State the four freedoms of free software\", \"Differentiate between GPL and BSD licences\", \"What is copyleft?\", \"Differentiate between copyright and patent\". Use the exact terms (copyleft, permissive, source code) and one example for each.",
+        },
+        {
+          type: "keypoints",
+          items: [
+            "Copyright protects the expression (code); patents protect inventions; trademarks protect brand names and logos.",
+            "Piracy is unauthorised copying of software; plagiarism is presenting others' work as your own.",
+            "FSF (Richard Stallman, 1985): free means freedom; the four freedoms are run, study and change, share, share changes.",
+            "Open source (OSI, 1998) stresses the practical benefits of open code.",
+            "GPL is copyleft; BSD and MIT are permissive; freeware is free of cost only; shareware is try-then-pay.",
+          ],
+        },
+      ],
+      flashcards: [
+        { front: "Intellectual property", back: "A creation of the mind, such as an invention, program, text or logo, that the law allows its creator to own." },
+        { front: "Copyright vs patent", back: "Copyright protects the expression of an idea (e.g. code) automatically; a patent protects an invention and must be granted." },
+        { front: "Software piracy", back: "Copying or distributing software without the owner's permission." },
+        { front: "Four freedoms of free software", back: "Run for any purpose; study and change (needs source); redistribute copies; distribute modified versions." },
+        { front: "Copyleft", back: "A licence rule (as in the GPL) that modified versions must be shared under the same free terms." },
+        { front: "Permissive licence", back: "A licence such as BSD or MIT that allows reuse even in closed software, if the notice is kept." },
+        { front: "Freeware vs shareware", back: "Freeware is free of cost permanently; shareware is free to try, then must be paid for." },
+        { front: "Who founded the Free Software Foundation?", back: "Richard Stallman, in 1985." },
+      ],
+      quiz: [
+        {
+          kind: "mcq",
+          q: "Which licence requires that distributed modified versions stay under the same licence with source code?",
+          options: ["GPL", "BSD", "Freeware", "Shareware"],
+          answer: 0,
+          explain: "That is copyleft, the defining rule of the GPL.",
+        },
+        {
+          kind: "truefalse",
+          q: "In the sense used by the FSF, \"free software\" means software that costs nothing.",
+          answer: false,
+          explain: "It means freedom: to run, study, change and share. Free software can be sold.",
+        },
+        {
+          kind: "fill",
+          q: "Freedom 1 of free software (to study and change the program) requires access to the ___ code.",
+          answer: ["source"],
+          explain: "You cannot study or change a program properly without its source code.",
+        },
+        {
+          kind: "mcq",
+          q: "A game can be played free for 30 days, after which you must pay. It is:",
+          options: ["Shareware", "Freeware", "Open source", "Public domain"],
+          answer: 0,
+          explain: "Try first, pay later is shareware.",
+        },
+        {
+          kind: "multi",
+          q: "Which are open source software?",
+          options: ["Linux", "LibreOffice", "Python", "A paid closed-source photo editor"],
+          answers: [0, 1, 2],
+          explain: "Linux, LibreOffice and Python publish their source; the paid closed editor is proprietary.",
+        },
+        {
+          kind: "mcq",
+          q: "A student copies a program from a website and submits it as their own project without credit. This is:",
+          options: ["Plagiarism", "Copyleft", "Phishing", "Netiquette"],
+          answer: 0,
+          explain: "Presenting someone else's work as your own is plagiarism.",
+        },
+        {
+          kind: "mcq",
+          q: "What does a BSD licence allow that the GPL does not?",
+          options: ["Using the code inside a closed, proprietary product without releasing the changes", "Removing the copyright notice", "Claiming you wrote the original code", "Patenting the original code"],
+          answer: 0,
+          explain: "BSD is permissive: closed derivative products are allowed if the notice is kept.",
+          difficulty: 2,
+        },
+      ],
+    },
+    {
+      slug: "c11-isc-trends-board-practice",
+      title: "Board Practice: Trends in Computing and Ethics",
+      summary: "Mixed ISC-style short answers and case studies on trends, cyber security and licensing, plus a Java program that rates password strength.",
+      minutes: 20,
+      xp: 50,
+      blocks: [
+        {
+          type: "text",
+          md: "This chapter is examined mostly through short answers and case studies. Answer in exact terms, give an example, and where asked, state both a benefit and a concern. The lesson ends with a short program that puts a cyber-safety rule into code.",
+        },
+        {
+          type: "example",
+          title: "Case study: a smart school",
+          problem: "A school in Lucknow installs face-recognition cameras for attendance, smart lights that switch off in empty rooms, and VR headsets for science lessons. Name the trend behind each and give one ethical concern for the cameras.",
+          steps: [
+            "Face-recognition attendance learns to match faces from images: **AI / machine learning**.",
+            "Lights that sense empty rooms and act on it, linked over the network: **IoT**.",
+            "Headsets that show a fully simulated laboratory: **VR**.",
+            "Concern: face images are sensitive **personal data**. The school must get consent, store data securely, limit who can see it, and delete it when no longer needed (privacy); the system may also be less accurate for some faces (bias).",
+          ],
+          answer: "AI (cameras), IoT (lights), VR (headsets). Main concern: privacy and consent for students' biometric data, plus possible bias.",
+        },
+        {
+          type: "mistake",
+          wrong: "If a photo, program or song is on the internet, it is free to copy and use however I like.",
+          right: "Most material online is **copyrighted** even without a notice. Use it only as its licence allows (for example a Creative Commons or open source licence), and always credit the creator.",
+          why: "Downloading is easy and nobody seems to stop you, so it feels allowed. But copyright arises automatically when a work is created; ease of copying does not remove it.",
+        },
+        {
+          type: "checkpoint",
+          questions: [
+            {
+              kind: "mcq",
+              q: "A program is released with its source code; anyone may change and share it, but shared changes must use the same licence. Its licence is most likely:",
+              options: ["GPL", "BSD", "Freeware", "Proprietary"],
+              answer: 0,
+              explain: "Shared changes under the same licence = copyleft = GPL.",
+            },
+          ],
+        },
+        {
+          type: "table",
+          headers: ["Short question", "Model answer (key words)"],
+          rows: [
+            ["Define phishing.", "Fraud that pretends to be a trusted source to trick users into revealing passwords, card details or OTPs."],
+            ["Difference between a virus and a worm.", "A virus needs a host file and user action to spread; a worm spreads over a network by itself."],
+            ["What is netiquette? Give two rules.", "Good manners online. Respect others / no bullying; do not share others' data without consent."],
+            ["Difference between AR and VR.", "AR adds digital content to the real view; VR replaces it with a computer-made world."],
+            ["What is copyleft?", "A licence condition that modified versions must be distributed under the same free terms (GPL)."],
+          ],
+        },
+        {
+          type: "text",
+          md: "**Program to write.** A common cyber-safety rule: a strong password has at least 8 characters and contains an uppercase letter, a lowercase letter, a digit and a special character. Write a method that scores a password 1 point for each condition and returns Strong (5 points), Medium (3 or 4) or Weak (0 to 2).",
+        },
+        {
+          type: "code",
+          lang: "java",
+          caption: "Password.java",
+          code: java`public class Password
+{
+    // rates a password as Strong, Medium or Weak
+    static String rate(String p)
+    {
+        boolean up = false, low = false, dig = false, sp = false;
+        for (int i = 0; i < p.length(); i++)
+        {
+            char ch = p.charAt(i);
+            if (Character.isUpperCase(ch))
+                up = true;
+            else if (Character.isLowerCase(ch))
+                low = true;
+            else if (Character.isDigit(ch))
+                dig = true;
+            else
+                sp = true;
+        }
+        int score = 0;
+        if (p.length() >= 8) score++;
+        if (up) score++;
+        if (low) score++;
+        if (dig) score++;
+        if (sp) score++;
+        if (score == 5)
+            return "Strong";
+        if (score >= 3)
+            return "Medium";
+        return "Weak";
+    }
+
+    public static void main(String[] args)
+    {
+        String[] tests = {"ravi123", "Ravi@2008", "PASSWORD", "Tiger#9"};
+        for (int i = 0; i < tests.length; i++)
+            System.out.println(tests[i] + " : " + rate(tests[i]));
+    }
+}`,
+        },
+        {
+          type: "example",
+          title: "Tracing Password.java",
+          problem: "Find the score and rating of each test password.",
+          steps: [
+            "\"ravi123\": 7 characters (no), lowercase and digits only → 2 points → Weak.",
+            "\"Ravi@2008\": 9 characters, uppercase R, lowercase, digits, special @ → 5 points → Strong.",
+            "\"PASSWORD\": exactly 8 characters (yes) and uppercase → 2 points → Weak.",
+            "\"Tiger#9\": only 7 characters, but has uppercase, lowercase, # and a digit → 4 points → Medium.",
+          ],
+          answer: "ravi123 : Weak\nRavi@2008 : Strong\nPASSWORD : Weak\nTiger#9 : Medium",
+        },
+        {
+          type: "activity",
+          activity: {
+            kind: "sort",
+            prompt: "Is the action ethical or unethical?",
+            groups: ["Ethical", "Unethical"],
+            items: [
+              { text: "Using a GPL library and sharing your changes under the GPL", group: 0, hint: "That follows the licence." },
+              { text: "Testing the school network for weaknesses with written permission", group: 0, hint: "Permission makes it ethical hacking." },
+              { text: "Crediting the author of an image used in a project", group: 0, hint: "Giving credit avoids plagiarism." },
+              { text: "Installing a cracked copy of paid software", group: 1, hint: "That is software piracy." },
+              { text: "Logging into a friend's account after seeing the password", group: 1, hint: "Unauthorised access." },
+              { text: "Forwarding a classmate's private chat to a group", group: 1, hint: "Breaks privacy and netiquette." },
+            ],
+            explain: "Ethical use follows licences, gets permission and gives credit. Piracy, unauthorised access and sharing private data are unethical, and often illegal.",
+          },
+        },
+        {
+          type: "callout",
+          tone: "exam",
+          title: "ISC tip",
+          md: "Case-study questions reward structure: name the technology, explain how it fits, then give one benefit and one ethical or legal concern with a safeguard. Two or three precise lines score better than a long, vague paragraph.",
+        },
+        {
+          type: "checkpoint",
+          questions: [
+            {
+              kind: "fill",
+              q: "Using Password.java, `rate(\"Ab1!\")` returns \"___\".",
+              answer: ["Medium"],
+              explain: "Too short (no point), but uppercase, lowercase, digit and special give 4 points: Medium.",
+            },
+          ],
+        },
+        {
+          type: "keypoints",
+          items: [
+            "Case studies: name the trend, justify it, give a benefit and a concern with a safeguard.",
+            "Online material is usually copyrighted; follow its licence and give credit.",
+            "Permission separates ethical hacking from crime; consent protects privacy.",
+            "Rules such as password strength can be checked in code with Character methods.",
+          ],
+        },
+      ],
+      flashcards: [
+        { front: "Ethical hacking", back: "Testing a system's security with the owner's permission to find and fix weaknesses." },
+        { front: "Biometric data", back: "Personal data from body features, such as face or fingerprint; needs consent and strong protection." },
+        { front: "Strong password (common rule)", back: "At least 8 characters with uppercase, lowercase, a digit and a special character." },
+        { front: "Creative Commons", back: "A family of licences that let creators allow sharing and reuse on stated conditions, such as giving credit." },
+        { front: "Three parts of a good case-study answer", back: "Identify the technology, explain it, state a benefit and a concern (with a safeguard)." },
+        { front: "Is material online free to copy?", back: "No; it is usually copyrighted. Use it only as its licence allows, and credit the creator." },
+      ],
+      quiz: [
+        {
+          kind: "mcq",
+          q: "Using Password.java, what is `rate(\"mumbai2024\")`?",
+          options: ["Weak", "Medium", "Strong", "Error"],
+          answer: 1,
+          explain: "10 characters (1), lowercase (1), digits (1) = 3 points: Medium.",
+        },
+        {
+          kind: "truefalse",
+          q: "Using Password.java, \"Pass word1\" is rated Strong because the space counts as a special character.",
+          answer: true,
+          explain: "The space is not a letter or digit, so it sets sp = true; with 10 characters, uppercase, lowercase and a digit, the score is 5. (A real system might reject spaces; the program follows only its stated rules.)",
+          difficulty: 2,
+        },
+        {
+          kind: "mcq",
+          q: "A hospital app predicts patients' risk of disease from past records. Which concern is most relevant?",
+          options: ["Privacy of medical data and possible bias in predictions", "The app uses too many colours", "Phones get heavier", "It increases spam"],
+          answer: 0,
+          explain: "Health data is highly personal, and predictions learned from data can be biased.",
+        },
+        {
+          kind: "fill",
+          q: "Copying and distributing paid software without permission is called software ___.",
+          answer: ["piracy"],
+          explain: "Unauthorised copying of software is piracy.",
+        },
+        {
+          kind: "multi",
+          q: "Which actions protect privacy?",
+          options: ["Reviewing app permissions before installing", "Using two-factor authentication", "Posting your home address publicly", "Asking before sharing a friend's photo"],
+          answers: [0, 1, 3],
+          explain: "Posting your address publicly exposes personal data; the other actions protect it.",
+        },
+        {
+          kind: "mcq",
+          q: "Which statement about FOSS is correct?",
+          options: ["Its source code is available to study and change", "It can never be sold", "It always has a 30-day trial", "It cannot be used by companies"],
+          answer: 0,
+          explain: "FOSS shares source code; it can be sold and used commercially.",
+        },
+        {
+          kind: "numeric",
+          q: "How many points does Password.java give to \"INDIA@75\"?",
+          answer: 4,
+          explain: "8 characters (1), uppercase (1), special @ (1), digits (1); no lowercase: 4 points (Medium).",
+        },
+      ],
+    },
+  ],
+};
+
+export const topics: Topic[] = [methods, arrays, strings, recursion, inputOutput, trends];
 
 /** Chapter title ("11:" / "12:" + exact title) → topic slug(s) that teach it. */
 export const links: Record<string, string | string[]> = {
@@ -3785,4 +4513,5 @@ export const links: Record<string, string | string[]> = {
   "11:Strings in Java": "c11-isc-cs-strings",
   "11:Recursion": "c11-isc-cs-recursion",
   "11:Basic Input/Output and Packages": "c11-isc-cs-io-packages",
+  "11:Trends in Computing and Ethics": "c11-isc-cs-trends-ethics",
 };

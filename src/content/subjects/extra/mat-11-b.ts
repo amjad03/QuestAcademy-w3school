@@ -346,7 +346,7 @@ Purely real numbers lie on the real axis and purely imaginary numbers on the ima
             title: "Board exam tips",
             md: t`Polar-form questions carry 2–4 marks: one mark each for $r$, the correct quadrant and the final form. Simplify a fraction to $x + iy$ before finding $r$ and $\theta$. Write the angle in the principal range unless the question allows any argument.
 
-**Board note:** CBSE and Karnataka PUC follow the same NCERT sections. ISC also asks you to plot the number and to use $|z_1z_2| = |z_1||z_2|$ and $\arg(z_1z_2) = \arg z_1 + \arg z_2$ (see the Exam edge).`,
+**Board note:** CBSE and Karnataka PUC share the NCERT book. The current CBSE syllabus names the Argand plane, and the polar form may be listed as reduced or dropped in the rationalised book, so check your board's current syllabus. Learn it anyway: **ISC**, **KCET** and **JEE** all use the polar form, and ISC also uses $|z_1z_2| = |z_1||z_2|$ and $\arg(z_1z_2) = \arg z_1 + \arg z_2$ (see the Exam edge).`,
           },
           {
             type: "keypoints",

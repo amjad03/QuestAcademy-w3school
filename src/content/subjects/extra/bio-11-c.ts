@@ -427,10 +427,6 @@ const cellUnit: Topic = {
           md: "A sprinter at the Khelo India games needs ATP fast; a ripe tomato is red; a potato tuber is packed with starch. Each of these is explained by a different organelle: mitochondria, chromoplasts and amyloplasts.",
         },
         {
-          type: "heading",
-          text: "Mitochondria",
-        },
-        {
           type: "text",
           md: "Mitochondria are hard to see without special staining. Their number per cell depends on the cell's activity. They are usually sausage-shaped or cylindrical, **0.2–1.0 μm** in diameter (average 0.5 μm) and **1.0–4.1 μm** long.\n\nEach mitochondrion has **two membranes**. The **outer membrane** is the continuous limiting boundary. The **inner membrane** forms infoldings called **cristae** towards the matrix, which increase the surface area. The two membranes enclose two compartments: the outer compartment and the inner compartment filled with a dense, homogeneous **matrix**. Each membrane has its own specific enzymes.\n\nMitochondria are the sites of **aerobic respiration** and make energy as ATP: they are the 'powerhouses' of the cell. The matrix has a single **circular DNA**, a few RNA molecules, **70S ribosomes** and components for protein synthesis. Mitochondria divide by **fission**.",
         },
@@ -841,7 +837,822 @@ const cellUnit: Topic = {
   ],
 };
 
-export const topics: Topic[] = [cellUnit];
+/* ------------------------------------------------------------------ */
+/* Biomolecules                                                        */
+/* ------------------------------------------------------------------ */
+const biomolecules: Topic = {
+  slug: "c11-bio-biomolecules",
+  title: "Biomolecules",
+  icon: "🧪",
+  description:
+    "Chemical analysis of living tissue, primary and secondary metabolites, amino acids, lipids, sugars and nucleotides, proteins and their structure, polysaccharides, nucleic acids, and enzymes: action, factors, inhibition, classes and co-factors.",
+  lessons: [
+    /* ---------------- Lesson 1: analysis and micromolecules ---------------- */
+    {
+      slug: "c11-bio-analysis-micromolecules",
+      title: "Chemical Analysis and Small Biomolecules",
+      summary:
+        "How living tissue is analysed into an acid-soluble pool and an acid-insoluble fraction, the elements of life, amino acids, fatty acids and lipids, nucleotides, and primary versus secondary metabolites.",
+      minutes: 20,
+      xp: 50,
+      blocks: [
+        {
+          type: "text",
+          md: "A handful of soil and a slice of liver can both be burnt to ash and tested for elements. Both contain carbon, oxygen, calcium and more. Yet the liver is alive and the soil is not. The difference lies in **how** these elements are arranged into **biomolecules**: all the carbon compounds found in living tissue.",
+        },
+        {
+          type: "heading",
+          text: "How to analyse chemical composition",
+        },
+        {
+          type: "list",
+          ordered: true,
+          items: [
+            "Grind living tissue (a vegetable or a piece of liver) in **trichloroacetic acid** (Cl₃CCOOH) with a mortar and pestle to get a thick slurry.",
+            "Strain it through cheesecloth or cotton. Two fractions form.",
+            "The **filtrate** (what passes through) is the **acid-soluble pool**: it holds small molecules (micromolecules) with molecular weights of about 18 to 800 daltons.",
+            "The **retentate** (what stays on the cloth) is the **acid-insoluble fraction**: proteins, nucleic acids, polysaccharides and lipids.",
+            "Separate compounds by analytical techniques, then find their molecular formula and probable structure.",
+            "For inorganic content, burn a weighed sample of tissue: all carbon compounds are oxidised to gas (CO₂, water vapour) and removed; the **ash** holds inorganic elements (Ca, Mg) and compounds such as sulphate and phosphate.",
+          ],
+        },
+        {
+          type: "table",
+          headers: ["Element", "% weight in Earth's crust", "% weight in human body"],
+          rows: [
+            ["Oxygen", "46.6", "65.0"],
+            ["Carbon", "0.03", "18.5"],
+            ["Hydrogen", "0.14", "0.5"],
+            ["Nitrogen", "very little", "3.3"],
+            ["Silicon", "27.7", "negligible"],
+            ["Calcium", "3.6", "1.5"],
+          ],
+        },
+        {
+          type: "text",
+          md: "Notice that carbon and hydrogen are far richer in living matter than in the crust: life is built on carbon compounds.\n\n**Amino acids** are organic compounds with an **amino group** and an **acidic (carboxyl) group** on the same carbon, the **α-carbon**. They are therefore **α-amino acids**. They are substituted methanes: the α-carbon carries four groups: **hydrogen, carboxyl, amino and a variable R group**. The R group decides the amino acid: in **glycine** R is hydrogen, in **alanine** a methyl group, in **serine** a hydroxymethyl group.\n\nBy the number of amino and carboxyl groups, amino acids are **acidic** (glutamic acid), **basic** (lysine) or **neutral** (valine). **Tyrosine, phenylalanine and tryptophan** are aromatic. The –NH₂ and –COOH groups ionise, so the structure changes with pH; the form carrying both a positive and a negative charge is the **zwitterion**.",
+        },
+        {
+          type: "text",
+          md: "**Lipids** are generally water-insoluble. They may be simple **fatty acids**, which have a carboxyl group attached to an R group (methyl, ethyl or a long chain of –CH₂ groups). **Palmitic acid** has 16 carbons and **arachidonic acid** 20 carbons, counting the carboxyl carbon. Fatty acids are **saturated** (no double bond) or **unsaturated** (one or more C=C).\n\n**Glycerol** is trihydroxy propane. Fatty acids esterified with glycerol form **monoglycerides, diglycerides and triglycerides** (fats and oils, by melting point). **Oils** have lower melting points and stay liquid in winter, like gingelly (sesame) oil. Some lipids carry phosphorus and a phosphorylated organic compound: these are **phospholipids**, found in cell membranes, for example **lecithin**. Neural tissues have lipids with more complex structures.",
+        },
+        {
+          type: "text",
+          md: "Living organisms have many **heterocyclic** carbon compounds: the **nitrogen bases** adenine, guanine, cytosine, uracil and thymine. A base joined to a sugar is a **nucleoside** (adenosine, guanosine, thymidine, uridine, cytidine). When a phosphate is also esterified to the sugar, it is a **nucleotide** (adenylic acid, thymidylic acid, guanylic acid, uridylic acid, cytidylic acid). Nucleic acids such as DNA and RNA are made of nucleotides.",
+        },
+        {
+          type: "formula",
+          tex: t`\text{Nucleoside} = \text{N-base} + \text{sugar} \qquad \text{Nucleotide} = \text{N-base} + \text{sugar} + \text{phosphate}`,
+          caption: "Adenosine is a nucleoside; adenylic acid is a nucleotide.",
+        },
+        {
+          type: "table",
+          headers: ["Secondary metabolite class", "Examples"],
+          rows: [
+            ["Pigments", "Carotenoids, anthocyanins"],
+            ["Alkaloids", "Morphine, codeine"],
+            ["Terpenoids", "Monoterpenes, diterpenes"],
+            ["Essential oils", "Lemon grass oil"],
+            ["Toxins", "Abrin, ricin"],
+            ["Lectins", "Concanavalin A"],
+            ["Drugs", "Vinblastin, curcumin"],
+            ["Polymeric substances", "Rubber, gums, cellulose"],
+          ],
+        },
+        {
+          type: "text",
+          md: "Compounds with identifiable functions in normal physiology (amino acids, sugars, nucleotides) are **primary metabolites**, found in animal tissues too. Plants, fungi and microbes also make thousands of **secondary metabolites** whose role in the host is not fully understood, though many are useful to humans: rubber, drugs, spices, scents and pigments. Some are ecologically important.",
+        },
+        {
+          type: "example",
+          title: "Which fraction?",
+          problem: "A sample of liver is ground in trichloroacetic acid and filtered. Say where each would be found: glucose, haemoglobin, alanine, DNA, phospholipid.",
+          steps: [
+            "Glucose (180 Da) and alanine (89 Da) are small, so they stay dissolved in the **filtrate (acid-soluble pool)**.",
+            "Haemoglobin (a protein) and DNA are macromolecules, so they are in the **retentate (acid-insoluble fraction)**.",
+            "Phospholipid has a molecular weight below 800 Da, yet it appears in the **acid-insoluble** fraction: when the tissue is ground, membranes break into water-insoluble vesicles that are held back.",
+          ],
+          answer: "Filtrate: glucose, alanine. Retentate: haemoglobin, DNA, phospholipid.",
+        },
+        {
+          type: "mistake",
+          wrong: "Lipids are found in the acid-insoluble fraction because they are macromolecules.",
+          right: "Lipids are not strictly macromolecules (molecular weight does not exceed about 800 Da). They come into the acid-insoluble fraction because membranes break into insoluble vesicles on grinding.",
+          why: "All the other acid-insoluble compounds are polymers, so students assume lipids are too. NCERT treats this exception directly and NEET tests it.",
+        },
+        {
+          type: "activity",
+          activity: {
+            kind: "sort",
+            prompt: "Primary or secondary metabolite?",
+            groups: ["Primary metabolite", "Secondary metabolite"],
+            items: [
+              { text: "Glucose", group: 0, hint: "Used in normal respiration." },
+              { text: "Glycine", group: 0, hint: "An amino acid in all proteins." },
+              { text: "Uridylic acid", group: 0, hint: "A nucleotide of RNA." },
+              { text: "Morphine", group: 1, hint: "An alkaloid." },
+              { text: "Concanavalin A", group: 1, hint: "A lectin." },
+              { text: "Ricin", group: 1, hint: "A toxin from castor seeds." },
+              { text: "Curcumin", group: 1, hint: "A drug from turmeric." },
+            ],
+            explain: "Primary metabolites have known roles in normal physiology in all organisms; secondary metabolites are special products, mostly of plants, fungi and microbes.",
+          },
+        },
+        {
+          type: "checkpoint",
+          questions: [
+            {
+              kind: "mcq",
+              q: "In serine, the R group is:",
+              options: ["Hydrogen", "Methyl", "Hydroxymethyl", "Phenyl"],
+              answer: 2,
+              explain: "Glycine: H; alanine: methyl; serine: hydroxymethyl (–CH₂OH).",
+            },
+          ],
+        },
+        {
+          type: "callout",
+          tone: "exam",
+          title: "Board tip",
+          md: "For 'describe how the acid-soluble pool is obtained', write the steps in order and name trichloroacetic acid; the filtrate–retentate distinction carries a mark of its own. Always give two examples when asked for 'secondary metabolites'.",
+        },
+        {
+          type: "keypoints",
+          items: [
+            "Grinding in Cl₃CCOOH: filtrate = acid-soluble pool (18–800 Da), retentate = acid-insoluble fraction (macromolecules + lipids).",
+            "Amino acid: α-carbon with H, –COOH, –NH₂ and R; glycine (H), alanine (methyl), serine (hydroxymethyl).",
+            "Palmitic acid 16 C, arachidonic acid 20 C; lecithin is a phospholipid.",
+            "Nucleoside = base + sugar; nucleotide = base + sugar + phosphate.",
+            "Secondary metabolites: alkaloids, toxins, lectins, terpenoids, essential oils, pigments, drugs, polymers.",
+          ],
+        },
+      ],
+      flashcards: [
+        { front: "Acid used to grind tissue for analysis", back: "Trichloroacetic acid (Cl₃CCOOH)." },
+        { front: "Acid-soluble pool", back: "The filtrate: micromolecules of molecular weight about 18–800 Da." },
+        { front: "Why are lipids in the acid-insoluble fraction?", back: "Membranes break into insoluble vesicles on grinding, though lipids are small molecules." },
+        { front: "Zwitterion", back: "Form of an amino acid carrying both + (–NH₃⁺) and – (–COO⁻) charges, depending on pH." },
+        { front: "Number of carbons in palmitic acid", back: "16, including the carboxyl carbon." },
+        { front: "Example of a phospholipid", back: "Lecithin." },
+        { front: "Adenosine versus adenylic acid", back: "Adenosine is a nucleoside; adenylic acid is a nucleotide." },
+        { front: "Concanavalin A is a ___", back: "Lectin (a secondary metabolite)." },
+      ],
+      quiz: [
+        {
+          kind: "mcq",
+          q: "Which is an acidic amino acid?",
+          options: ["Lysine", "Valine", "Glutamic acid", "Glycine"],
+          answer: 2,
+          explain: "Glutamic acid has an extra carboxyl group. Lysine is basic; valine and glycine are neutral.",
+        },
+        {
+          kind: "multi",
+          q: "Which amino acids are aromatic?",
+          options: ["Tyrosine", "Phenylalanine", "Tryptophan", "Alanine", "Serine"],
+          answers: [0, 1, 2],
+          explain: "Tyrosine, phenylalanine and tryptophan have aromatic rings.",
+        },
+        {
+          kind: "fill",
+          q: "Glycerol is chemically known as trihydroxy ___.",
+          answer: ["propane"],
+          explain: "Glycerol has three –OH groups on a three-carbon propane chain.",
+        },
+        {
+          kind: "truefalse",
+          q: "Arachidonic acid has 20 carbon atoms including the carboxyl carbon.",
+          answer: true,
+          explain: "NCERT gives palmitic acid 16 and arachidonic acid 20 carbons, both counting the carboxyl carbon.",
+        },
+        {
+          kind: "mcq",
+          q: "Abrin and ricin are examples of:",
+          options: ["Alkaloids", "Lectins", "Toxins", "Pigments"],
+          answer: 2,
+          explain: "Abrin and ricin are toxins. Morphine and codeine are alkaloids; concanavalin A is a lectin.",
+        },
+        {
+          kind: "mcq",
+          q: "Thymidine is formed by joining thymine with:",
+          options: ["Ribose and phosphate", "Deoxyribose", "Phosphate only", "Ribose"],
+          answer: 1,
+          explain: "A nucleoside is a base + sugar. Thymine occurs in DNA, so the sugar is deoxyribose; there is no phosphate in a nucleoside.",
+          difficulty: 2,
+        },
+        {
+          kind: "mcq",
+          q: "Which element is about 18.5% of the human body by weight but only 0.03% of the Earth's crust?",
+          options: ["Oxygen", "Carbon", "Silicon", "Nitrogen"],
+          answer: 1,
+          explain: "Carbon is concentrated in living matter because biomolecules are carbon compounds.",
+          difficulty: 2,
+          hint: "Biomolecules are compounds of which element?",
+        },
+      ],
+    },
+    /* ---------------- Lesson 2: macromolecules ---------------- */
+    {
+      slug: "c11-bio-macromolecules",
+      title: "Proteins, Polysaccharides and Nucleic Acids",
+      summary:
+        "The average composition of a cell, proteins and their functions, primary to quaternary structure, polysaccharides such as starch, cellulose, glycogen, inulin and chitin, nucleic acids, and the bonds that link monomers.",
+      minutes: 22,
+      xp: 55,
+      blocks: [
+        {
+          type: "text",
+          md: "Dal, rice and a cotton shirt look nothing alike. Yet the protein in dal, the starch in rice and the cellulose in cotton are all long chains of small repeating units. Biomolecules with molecular weights of **more than 1000 daltons** (proteins, nucleic acids, polysaccharides) are **macromolecules** or **biomacromolecules**. They are polymers: built by joining many monomers.",
+        },
+        {
+          type: "table",
+          headers: ["Component", "% of total cellular mass"],
+          rows: [
+            ["Water", "70–90"],
+            ["Proteins", "10–15"],
+            ["Carbohydrates", "3"],
+            ["Lipids", "2"],
+            ["Nucleic acids", "5–7"],
+            ["Ions", "1"],
+          ],
+        },
+        {
+          type: "heading",
+          text: "Proteins",
+        },
+        {
+          type: "text",
+          md: "Proteins are **polypeptides**: linear chains of amino acids joined by **peptide bonds**. With 20 types of amino acids, a protein is a **heteropolymer**. Amino acids that our body cannot make and must get from food are **essential**; those it can make are **non-essential**.\n\nProteins transport nutrients across membranes, fight infection, act as hormones and enzymes, and more. **Collagen** is the most abundant protein in the **animal world**; **RuBisCO** (ribulose bisphosphate carboxylase-oxygenase) is the most abundant protein in the **whole biosphere**.",
+        },
+        {
+          type: "table",
+          headers: ["Protein", "Function"],
+          rows: [
+            ["Collagen", "Intercellular ground substance"],
+            ["Trypsin", "Enzyme"],
+            ["Insulin", "Hormone"],
+            ["Antibody", "Fights infectious agents"],
+            ["Receptor", "Sensory reception (smell, taste, hormone)"],
+            ["GLUT-4", "Enables glucose transport into cells"],
+          ],
+        },
+        {
+          type: "text",
+          md: "**Levels of protein structure.**\n\n- **Primary**: the sequence of amino acids. The first amino acid is the **N-terminal** amino acid; the last is the **C-terminal** amino acid. It tells which amino acid is first, second, and so on.\n- **Secondary**: the chain is not fully extended; parts fold into a helix. In proteins, **only right-handed helices** are observed. Other regions fold in other forms.\n- **Tertiary**: the long chain folds on itself like a hollow woollen ball, giving a 3-dimensional view. This is essential for many biological activities.\n- **Quaternary**: an assembly of more than one polypeptide (subunit). Adult human **haemoglobin** has **four subunits: two α and two β**.",
+        },
+        {
+          type: "heading",
+          text: "Polysaccharides and nucleic acids",
+        },
+        {
+          type: "text",
+          md: "**Polysaccharides** are long chains of sugars. **Cellulose** is a **homopolymer** of glucose; **starch** is a store of energy in plant tissues; **glycogen** is its animal counterpart; **inulin** is a polymer of **fructose**. In a chain such as glycogen, the right end is the **reducing end** and the left end the **non-reducing end**. Glycogen and starch are branched.\n\nStarch forms **helical secondary structures** and can hold **I₂** inside the helix, giving a **blue** colour. Cellulose lacks such helices and **cannot hold I₂**. Plant cell walls are made of cellulose; paper and cotton fibre are cellulose. **Chitin**, the exoskeleton of arthropods, is a complex polysaccharide containing amino-sugars and chemically modified sugars (glucosamine, N-acetyl galactosamine).\n\n**Nucleic acids** (DNA and RNA) are **polynucleotides**. Each nucleotide has a heterocyclic nitrogen base, a monosaccharide and a phosphate (phosphoric acid). The bases are **purines** (adenine, guanine) and **pyrimidines** (cytosine, uracil, thymine). The sugar is **ribose** in RNA and **2′-deoxyribose** in DNA.",
+        },
+        {
+          type: "table",
+          headers: ["Bond (board note)", "Links", "How it forms"],
+          rows: [
+            ["Peptide bond", "Amino acids in a protein", "Carboxyl (–COOH) of one amino acid reacts with amino (–NH₂) of the next; water is removed (dehydration)"],
+            ["Glycosidic bond", "Monosaccharides in a polysaccharide", "Between two carbon atoms of adjacent sugars by dehydration"],
+            ["Phosphodiester bond", "Nucleotides in a nucleic acid", "A phosphate links the 3′-carbon of one sugar to the 5′-carbon of the next sugar"],
+          ],
+        },
+        {
+          type: "callout",
+          tone: "note",
+          title: "Who needs the bonds section",
+          md: "The rationalised NCERT book dropped the separate section on bonds linking monomers and on metabolism. ISC still teaches peptide, glycosidic and phosphodiester bonds, and NEET and KCET questions on them remain common, so learn the table. The B-DNA details (about 10 base pairs per turn, rise 0.34 nm per base pair, pitch 3.4 nm; A=T two hydrogen bonds, G≡C three) are taught again in Class 12, Molecular Basis of Inheritance.",
+        },
+        {
+          type: "example",
+          title: "Water removed in forming a polymer",
+          problem: "A polypeptide is made of 51 amino acids in a single chain. How many peptide bonds does it have, and how many water molecules were removed in making it?",
+          steps: [
+            "In a linear chain, each bond joins two neighbours, so bonds = residues − 1.",
+            "51 − 1 = 50 peptide bonds.",
+            "Each peptide bond forms by removing one water molecule, so 50 water molecules are released.",
+          ],
+          answer: "50 peptide bonds; 50 water molecules removed.",
+        },
+        {
+          type: "mistake",
+          wrong: "Cellulose turns blue with iodine just like starch, because both are polymers of glucose.",
+          right: "Only starch gives a blue colour. Starch has helical regions that hold I₂; cellulose does not form such helices and cannot hold iodine.",
+          why: "Same monomer makes students expect the same test. The colour depends on the 3-dimensional shape of the chain, not just its monomer.",
+        },
+        {
+          type: "activity",
+          activity: {
+            kind: "match",
+            prompt: "Match each macromolecule with a correct fact.",
+            pairs: [
+              ["Inulin", "Polymer of fructose"],
+              ["Chitin", "Contains amino-sugars; arthropod exoskeleton"],
+              ["RuBisCO", "Most abundant protein in the biosphere"],
+              ["Collagen", "Most abundant protein in animals"],
+              ["Haemoglobin", "Quaternary structure: 2 α + 2 β"],
+              ["GLUT-4", "Glucose transport into cells"],
+            ],
+            explain: "NEET loves these one-to-one facts: inulin is the odd polysaccharide (fructose), and the two 'most abundant' proteins differ by scope.",
+          },
+        },
+        {
+          type: "checkpoint",
+          questions: [
+            {
+              kind: "mcq",
+              q: "The sequence of amino acids in a protein is its:",
+              options: ["Primary structure", "Secondary structure", "Tertiary structure", "Quaternary structure"],
+              answer: 0,
+              explain: "Primary structure is the order of amino acids from the N-terminal to the C-terminal end.",
+            },
+          ],
+        },
+        {
+          type: "keypoints",
+          items: [
+            "Macromolecules (over 1000 Da): proteins, polysaccharides, nucleic acids. A cell is 70–90% water and 10–15% protein.",
+            "Proteins are heteropolymers of 20 amino acids linked by peptide bonds; collagen tops animals, RuBisCO tops the biosphere.",
+            "Primary (sequence), secondary (right-handed helix), tertiary (folded ball), quaternary (subunits, e.g. haemoglobin 2α2β).",
+            "Cellulose homopolymer of glucose; inulin of fructose; starch–iodine blue, cellulose no colour; chitin has amino-sugars.",
+            "Peptide, glycosidic and phosphodiester bonds all form by dehydration.",
+          ],
+        },
+      ],
+      flashcards: [
+        { front: "Molecular weight of a biomacromolecule", back: "More than 1000 daltons." },
+        { front: "Most abundant protein in the biosphere", back: "RuBisCO." },
+        { front: "Most abundant protein in the animal world", back: "Collagen." },
+        { front: "Function of GLUT-4", back: "Enables glucose transport into cells." },
+        { front: "Quaternary structure of adult human haemoglobin", back: "Four subunits: two α and two β." },
+        { front: "Inulin", back: "A polymer of fructose." },
+        { front: "Why does starch give blue with iodine?", back: "Its helical secondary structure holds I₂; cellulose cannot." },
+        { front: "Purines and pyrimidines", back: "Purines: adenine, guanine. Pyrimidines: cytosine, uracil, thymine." },
+      ],
+      quiz: [
+        {
+          kind: "mcq",
+          q: "Which component forms the largest share of cellular mass after water?",
+          options: ["Carbohydrates", "Lipids", "Proteins", "Nucleic acids"],
+          answer: 2,
+          explain: "Proteins are 10–15% of cell mass; nucleic acids 5–7%, carbohydrates 3%, lipids 2%.",
+        },
+        {
+          kind: "mcq",
+          q: "Which polysaccharide is a homopolymer of fructose?",
+          options: ["Glycogen", "Cellulose", "Inulin", "Chitin"],
+          answer: 2,
+          explain: "Inulin is a fructose polymer. Glycogen, cellulose and starch are glucose polymers; chitin contains amino-sugars.",
+        },
+        {
+          kind: "truefalse",
+          q: "Both right-handed and left-handed helices are commonly seen in the secondary structure of proteins.",
+          answer: false,
+          explain: "NCERT states that only right-handed helices are observed in proteins.",
+        },
+        {
+          kind: "fill",
+          q: "The first amino acid of a polypeptide chain is called the ___-terminal amino acid.",
+          answer: ["N", "amino", "N-terminal"],
+          explain: "The first amino acid has a free amino group (N-terminal); the last has a free carboxyl group (C-terminal).",
+        },
+        {
+          kind: "multi",
+          q: "Which bonds are formed by removal of water (dehydration)?",
+          options: ["Peptide bond", "Glycosidic bond", "Phosphodiester bond", "Hydrogen bond between bases"],
+          answers: [0, 1, 2],
+          explain: "Peptide, glycosidic and ester (phosphodiester) bonds form by dehydration. Hydrogen bonds are weak attractions, not dehydration products.",
+          difficulty: 2,
+        },
+        {
+          kind: "numeric",
+          q: "A protein has two polypeptide chains of 21 and 30 amino acids (like insulin). How many peptide bonds does it have in total?",
+          answer: 49,
+          explain: "Chain A: 21 − 1 = 20; chain B: 30 − 1 = 29; total 49. Each chain is counted separately.",
+          difficulty: 2,
+          hint: "Bonds = residues − 1, for each chain.",
+        },
+        {
+          kind: "mcq",
+          q: "In a glycogen chain, the right end is called the:",
+          options: ["Non-reducing end", "Reducing end", "N-terminal end", "3′ end"],
+          answer: 1,
+          explain: "NCERT: in a polysaccharide chain such as glycogen, the right end is the reducing end and the left end is the non-reducing end.",
+        },
+      ],
+    },
+    /* ---------------- Lesson 3: enzymes ---------------- */
+    {
+      slug: "c11-bio-enzymes",
+      title: "Enzymes",
+      summary:
+        "What enzymes are, how they lower activation energy, the catalytic cycle, the effect of temperature, pH and substrate concentration, competitive inhibition, the six classes and co-factors.",
+      minutes: 24,
+      xp: 60,
+      blocks: [
+        {
+          type: "text",
+          md: "Chew a piece of plain rice for a minute and it starts to taste sweet. Salivary amylase is breaking starch into sugar in your mouth. Without the enzyme, the same breakdown would take a very long time at body temperature.\n\nAlmost all enzymes are **proteins**. Some **nucleic acids** also act like enzymes; these are **ribozymes**. An enzyme has a primary to tertiary structure like any protein. In the tertiary structure, the backbone folds to make crevices or pockets: one such pocket is the **active site**, into which the substrate fits.",
+        },
+        {
+          type: "text",
+          md: "Enzymes differ from inorganic catalysts. Inorganic catalysts work well at high temperature and pressure; enzymes are damaged at high temperatures (say above 40 °C). Enzymes from organisms living in hot vents and sulphur springs are **thermostable** and keep working even at **80–90 °C**.\n\n**Physical versus chemical change.** Melting ice is a physical change (shape changes, bonds are not broken). Hydrolysis of starch into glucose is a chemical reaction (bonds broken and formed). Rate = amount of product formed per unit time. For many reactions the rate **doubles or halves for every 10 °C** rise or fall. A catalysed reaction proceeds much faster.",
+        },
+        {
+          type: "formula",
+          tex: t`\mathrm{CO_2 + H_2O \xrightarrow{\text{carbonic anhydrase}} H_2CO_3}`,
+          caption: "Without enzyme: about 200 molecules of H₂CO₃ per hour. With carbonic anhydrase: about 600 000 per second, roughly 10 million times faster.",
+        },
+        {
+          type: "text",
+          md: "**How enzymes speed up reactions.** The substrate S must bind the enzyme E at the active site to form a short-lived **enzyme–substrate complex (ES)**. During binding, a new structure of the substrate, the **transition state**, forms. Energy must be supplied to reach this high-energy state; this barrier is the **activation energy**. An enzyme **lowers the activation energy**, so more molecules cross the barrier in a given time. It does not change the energy difference between S and P, and the reaction can go even when P is at lower energy than S (exothermic).",
+        },
+        {
+          type: "formula",
+          tex: t`\mathrm{E + S \;\rightleftharpoons\; ES \;\longrightarrow\; EP \;\longrightarrow\; E + P}`,
+          caption: "The enzyme comes out unchanged and is ready to bind another substrate.",
+        },
+        {
+          type: "activity",
+          activity: {
+            kind: "order",
+            prompt: "Put the steps of the catalytic cycle in order.",
+            items: [
+              "Substrate binds to the active site of the enzyme",
+              "Binding makes the enzyme change shape and fit more tightly around the substrate",
+              "The active site breaks the chemical bonds of the substrate, forming the enzyme–product complex",
+              "The enzyme releases the products and is free to bind another substrate",
+            ],
+            explain: "The change of shape on binding is the idea behind the induced-fit model; the enzyme is not used up.",
+          },
+        },
+        {
+          type: "table",
+          headers: ["Factor", "Effect on enzyme activity"],
+          rows: [
+            ["Temperature", "Activity rises to a maximum at the **optimum temperature** and falls on either side. Low temperature keeps the enzyme temporarily inactive; high temperature **denatures** it (destroys its protein structure)."],
+            ["pH", "Each enzyme has an **optimum pH**; activity falls above and below it."],
+            ["Substrate concentration", "Velocity rises with substrate concentration and then levels off at a maximum, **Vmax**, because all enzyme molecules are busy (there are no free enzyme molecules left)."],
+            ["Inhibitors", "Chemicals that bind the enzyme and stop its activity."],
+          ],
+        },
+        {
+          type: "text",
+          md: "A **competitive inhibitor** closely resembles the substrate in molecular structure. It competes for the active site, so the substrate cannot bind and activity falls. Example: **malonate** inhibits **succinic dehydrogenase** because it resembles the substrate, succinate. Such inhibitors are often used to control bacterial pathogens.\n\n**ISC note:** ISC also teaches the **lock-and-key model** (Emil Fischer: the active site is a rigid shape that only the right substrate fits) and the **induced-fit model** (Koshland: the active site changes shape to fit the substrate), and **non-competitive inhibition** (the inhibitor binds elsewhere on the enzyme and changes its shape, so raising substrate concentration does not overcome it).",
+        },
+        {
+          type: "table",
+          headers: ["Class", "What it catalyses"],
+          rows: [
+            ["1. Oxidoreductases / dehydrogenases", "Oxidation-reduction between two substrates S and S′"],
+            ["2. Transferases", "Transfer of a group G (other than hydrogen) from one substrate to another"],
+            ["3. Hydrolases", "Hydrolysis of ester, ether, peptide, glycosidic, C–C, C–halide or P–N bonds"],
+            ["4. Lyases", "Removal of groups from substrates by mechanisms **other than hydrolysis**, leaving double bonds"],
+            ["5. Isomerases", "Inter-conversion of optical, geometric or positional isomers"],
+            ["6. Ligases", "Linking together of two compounds, e.g. forming C–O, C–S, C–N, P–O bonds"],
+          ],
+        },
+        {
+          type: "text",
+          md: "**Co-factors.** Many enzymes need a non-protein **co-factor** to work. The protein part is then the **apoenzyme**; catalytic activity is lost if the co-factor is removed.\n\n- **Prosthetic groups** are organic and **tightly bound** to the apoenzyme. Example: **haem** in **peroxidase** and **catalase**, which break hydrogen peroxide into water and oxygen.\n- **Co-enzymes** are organic but bind only **transiently**, during catalysis, and serve many different enzymes. Many contain vitamins: **NAD** and **NADP** contain **niacin**.\n- **Metal ions** form coordination bonds with side chains at the active site and with the substrate. Example: **zinc** for **carboxypeptidase**.",
+        },
+        {
+          type: "example",
+          title: "Reading an enzyme experiment",
+          problem: "Succinic dehydrogenase is tested with a fixed amount of succinate. Adding malonate lowers the rate. When much more succinate is added, the rate rises again. Explain both observations.",
+          steps: [
+            "Malonate resembles succinate, so it binds the active site and blocks it: this is **competitive inhibition**.",
+            "Inhibitor and substrate compete for the same site. With more substrate, the chance that a substrate rather than malonate occupies the site rises.",
+            "So a high substrate concentration overcomes competitive inhibition, and the rate recovers.",
+          ],
+          answer: "Malonate is a competitive inhibitor of succinic dehydrogenase; extra substrate out-competes it.",
+        },
+        {
+          type: "mistake",
+          wrong: "An enzyme speeds up a reaction by supplying the energy the reaction needs.",
+          right: "An enzyme lowers the activation energy barrier. It gives no energy and does not change the energy difference between substrate and product.",
+          why: "Faster feels like 'more energy'. In fact, a lower hill lets more substrate molecules reach the transition state at the same temperature.",
+        },
+        {
+          type: "checkpoint",
+          questions: [
+            {
+              kind: "mcq",
+              q: "The enzyme that removes groups from substrates by a mechanism other than hydrolysis, leaving a double bond, belongs to class:",
+              options: ["Hydrolases", "Lyases", "Ligases", "Isomerases"],
+              answer: 1,
+              explain: "Lyases remove groups without water and leave double bonds. Ligases join two molecules.",
+            },
+            {
+              kind: "mcq",
+              q: "Haem in catalase is an example of a:",
+              options: ["Co-enzyme", "Prosthetic group", "Metal ion activator", "Apoenzyme"],
+              answer: 1,
+              explain: "Haem is tightly bound to the apoenzyme of peroxidase and catalase, so it is a prosthetic group.",
+            },
+          ],
+        },
+        {
+          type: "keypoints",
+          items: [
+            "Enzymes are mostly proteins (ribozymes are RNA); the substrate binds at the active site to form ES.",
+            "Enzymes lower activation energy; carbonic anhydrase makes CO₂ hydration about 10 million times faster.",
+            "Optimum temperature and pH; high temperature denatures; Vmax reached when all enzyme is saturated.",
+            "Competitive inhibitor resembles the substrate: malonate inhibits succinic dehydrogenase.",
+            "Six classes: oxidoreductases, transferases, hydrolases, lyases, isomerases, ligases. Co-factors: prosthetic groups (haem), co-enzymes (NAD, NADP with niacin), metal ions (Zn²⁺ for carboxypeptidase).",
+          ],
+        },
+      ],
+      flashcards: [
+        { front: "Ribozyme", back: "A nucleic acid (RNA) that acts as an enzyme." },
+        { front: "Temperature range of thermostable enzymes", back: "Work even at 80–90 °C (from organisms of hot vents and sulphur springs)." },
+        { front: "Effect of an enzyme on activation energy", back: "Lowers it." },
+        { front: "Vmax", back: "Maximum velocity reached when all enzyme molecules are saturated with substrate." },
+        { front: "Competitive inhibitor of succinic dehydrogenase", back: "Malonate." },
+        { front: "Apoenzyme", back: "The protein part of an enzyme that needs a co-factor." },
+        { front: "Vitamin in NAD and NADP", back: "Niacin." },
+        { front: "Metal co-factor of carboxypeptidase", back: "Zinc." },
+        { front: "Six enzyme classes in order", back: "Oxidoreductases, transferases, hydrolases, lyases, isomerases, ligases." },
+      ],
+      quiz: [
+        {
+          kind: "mcq",
+          q: "Low temperature affects enzymes by:",
+          options: ["Denaturing them permanently", "Keeping them temporarily inactive", "Increasing their activity", "Changing their primary structure"],
+          answer: 1,
+          explain: "Low temperature preserves the enzyme in a temporarily inactive state; high temperature destroys activity by denaturation.",
+        },
+        {
+          kind: "mcq",
+          q: "Joining of two molecules with formation of a C–N bond is catalysed by:",
+          options: ["Lyases", "Transferases", "Ligases", "Hydrolases"],
+          answer: 2,
+          explain: "Ligases link two compounds by forming bonds such as C–O, C–S, C–N and P–O.",
+        },
+        {
+          kind: "truefalse",
+          q: "Co-enzymes bind tightly and permanently to the apoenzyme.",
+          answer: false,
+          explain: "Co-enzymes bind only transiently, during catalysis. Prosthetic groups are the tightly bound co-factors.",
+        },
+        {
+          kind: "numeric",
+          q: "Without enzyme, 200 molecules of H₂CO₃ form per hour. With carbonic anhydrase, 600 000 form per second. By what factor, in millions, is the reaction faster? (Round to the nearest whole number.)",
+          answer: 11,
+          tolerance: 1,
+          explain: "Per hour with enzyme: 600 000 × 3600 = 2.16 × 10⁹. Divide by 200: 1.08 × 10⁷ ≈ 11 million, which NCERT rounds to 'about 10 million times'.",
+          difficulty: 2,
+          hint: "Change both rates to the same time unit first.",
+        },
+        {
+          kind: "order",
+          q: "Arrange the six enzyme classes in their official numbered order.",
+          items: ["Oxidoreductases", "Transferases", "Hydrolases", "Lyases", "Isomerases", "Ligases"],
+          explain: "The EC order: 1 oxidoreductases, 2 transferases, 3 hydrolases, 4 lyases, 5 isomerases, 6 ligases.",
+          difficulty: 2,
+        },
+        {
+          kind: "multi",
+          q: "Which statements about competitive inhibition are correct?",
+          options: [
+            "The inhibitor resembles the substrate in structure",
+            "The inhibitor competes for the active site",
+            "High substrate concentration can overcome it",
+            "The inhibitor always binds at a site away from the active site",
+          ],
+          answers: [0, 1, 2],
+          explain: "A competitive inhibitor looks like the substrate and binds the active site, so more substrate can out-compete it. Binding elsewhere describes non-competitive inhibition.",
+          difficulty: 2,
+        },
+        {
+          kind: "mcq",
+          q: "An enzyme–substrate curve flattens at high substrate concentration because:",
+          options: [
+            "The substrate is used up",
+            "The enzyme is denatured",
+            "All enzyme molecules are occupied, so no free enzyme remains",
+            "Products inhibit the enzyme competitively",
+          ],
+          answer: 2,
+          explain: "At saturation every active site is busy, so adding substrate cannot raise the rate beyond Vmax.",
+          difficulty: 2,
+        },
+      ],
+    },
+    /* ---------------- Exam edge ---------------- */
+    {
+      slug: "c11-bio-biomolecules-exam-edge",
+      title: "Exam edge: Biomolecules",
+      summary:
+        "How NEET and KCET test Biomolecules: NCERT tables of metabolites and proteins, acid-soluble versus insoluble fractions, protein structure, enzyme kinetics and inhibition, enzyme classes and co-factors.",
+      minutes: 22,
+      xp: 55,
+      track: "exam",
+      blocks: [
+        {
+          type: "text",
+          md: "**NEET** asks 2–3 questions from Biomolecules nearly every year, mostly from the NCERT tables (secondary metabolites, protein functions, cell composition) and the enzymes section. **KCET** asks the same facts plus enzyme classes and co-factors as one-liners. Questions on the bonds and on B-DNA still appear, so learn them even though the rationalised book cut that section.",
+        },
+        {
+          type: "list",
+          items: [
+            "NCERT line: the acid-soluble pool has compounds of molecular weight **18 to around 800 Da**.",
+            "NCERT line: lipids are not strictly macromolecules, but appear in the acid-insoluble fraction.",
+            "NCERT line: in proteins, **only right-handed helices** are observed.",
+            "NCERT line: adult human haemoglobin consists of **4 subunits**, two α and two β.",
+            "NCERT line: collagen is the most abundant protein in the animal world; RuBisCO in the whole biosphere.",
+            "NCERT line: enzymes from thermophiles retain catalytic power up to **80–90 °C**.",
+            "NCERT line: competitive inhibitors are often used in the control of bacterial pathogens.",
+          ],
+        },
+        {
+          type: "formula",
+          tex: t`K_m = [S] \text{ at which } v = \tfrac{1}{2}V_{max}`,
+          caption: "Km (Michaelis constant) appears on the NCERT graph. Competitive inhibitor: Km rises, Vmax unchanged. Non-competitive: Vmax falls, Km unchanged.",
+        },
+        {
+          type: "example",
+          title: "NEET level: odd one out in the metabolite table",
+          problem: "Which pair is wrongly matched? (a) Alkaloids – codeine (b) Lectins – concanavalin A (c) Terpenoids – vinblastin (d) Toxins – abrin",
+          steps: [
+            "Codeine is an alkaloid: correct.",
+            "Concanavalin A is a lectin: correct.",
+            "Vinblastin is listed under **drugs**; terpenoids are monoterpenes and diterpenes. So (c) is wrong.",
+            "Abrin is a toxin: correct.",
+          ],
+          answer: "(c) Terpenoids – vinblastin is wrongly matched.",
+        },
+        {
+          type: "example",
+          title: "Assertion–reason on enzymes",
+          problem: "A: The rate of an enzyme-catalysed reaction does not rise beyond Vmax even when substrate is added. R: At Vmax, the enzyme molecules are denatured.",
+          steps: [
+            "A is true: the curve plateaus at Vmax.",
+            "R is false: the plateau is due to saturation (no free active sites), not denaturation. Denaturation would lower the rate.",
+          ],
+          answer: "A is true, but R is false.",
+        },
+        {
+          type: "example",
+          title: "Statement analysis on co-factors",
+          problem: "How many are correct? (i) Zinc is a co-factor for carboxypeptidase. (ii) Haem is a co-enzyme of catalase. (iii) NAD contains niacin. (iv) Removal of the co-factor leaves the apoenzyme fully active.",
+          steps: [
+            "(i) Correct.",
+            "(ii) Wrong: haem is a prosthetic group (tightly bound), not a co-enzyme.",
+            "(iii) Correct: NAD and NADP contain niacin.",
+            "(iv) Wrong: catalytic activity is lost when the co-factor is removed.",
+          ],
+          answer: "Two statements, (i) and (iii), are correct.",
+        },
+        {
+          type: "example",
+          title: "Harder: interpreting kinetics data",
+          problem: "For an enzyme, Vmax = 40 units and Km = 2 mM. Adding substance X gives Vmax = 40 units and Km = 6 mM. Adding substance Y gives Vmax = 20 units and Km = 2 mM. Classify X and Y and find the rate with X when [S] = 6 mM.",
+          steps: [
+            "X raises Km but leaves Vmax unchanged: a **competitive** inhibitor (more substrate overcomes it).",
+            "Y halves Vmax but leaves Km unchanged: a **non-competitive** inhibitor.",
+            "With X, at [S] = Km = 6 mM, the rate is half of Vmax by the definition of Km.",
+            "Rate = 40 ÷ 2 = 20 units.",
+          ],
+          answer: "X competitive, Y non-competitive; rate with X at 6 mM = 20 units.",
+        },
+        {
+          type: "mistake",
+          wrong: "Lyases and ligases both join molecules together.",
+          right: "Lyases **remove** groups (leaving double bonds) without hydrolysis; ligases **join** two compounds.",
+          why: "The names sound alike. Remember: lig- as in 'ligament', which ties things together.",
+        },
+        {
+          type: "mistake",
+          wrong: "Nucleotides of DNA contain ribose; thymidine is a nucleotide.",
+          right: "DNA contains 2′-deoxyribose. Thymidine is a nucleoside; thymidylic acid is the nucleotide.",
+          why: "The '-idine/-osine' names are nucleosides; the '-ylic acid' names are nucleotides. NEET swaps them in options.",
+        },
+        {
+          type: "mistake",
+          wrong: "Higher temperature always means faster enzyme action.",
+          right: "Activity rises only up to the optimum temperature; beyond it the protein denatures and activity drops sharply.",
+          why: "The 'doubles every 10 °C' rule is for reactions in general; enzymes are proteins and lose their shape when heated.",
+        },
+        {
+          type: "activity",
+          activity: {
+            kind: "reveal",
+            prompt: "Which is a heteropolymer?",
+            emoji: "🧬",
+            options: ["Cellulose", "Inulin", "Protein", "Glycogen"],
+            answer: 2,
+            trap: 1,
+            explain: "Proteins are made of up to 20 different amino acids, so they are heteropolymers. Cellulose, glycogen (glucose) and inulin (fructose) each have one kind of monomer.",
+          },
+        },
+        {
+          type: "checkpoint",
+          questions: [
+            {
+              kind: "mcq",
+              q: "A: Starch gives a blue colour with iodine but cellulose does not. R: Cellulose is a heteropolymer.",
+              options: AR,
+              answer: 2,
+              explain: "A is true. R is false: cellulose is a homopolymer of glucose. The real reason is that starch forms helices that hold I₂ and cellulose does not.",
+            },
+          ],
+        },
+        {
+          type: "keypoints",
+          items: [
+            "Learn NCERT tables word for word: secondary metabolites, protein functions, composition of cells.",
+            "Nucleoside vs nucleotide naming; purines A, G; pyrimidines C, T, U.",
+            "Vmax by saturation; Km = [S] at half Vmax; competitive raises Km, non-competitive lowers Vmax.",
+            "Prosthetic group (haem) tight; co-enzyme (NAD, NADP) transient; metal ion (Zn²⁺) for carboxypeptidase.",
+          ],
+        },
+      ],
+      flashcards: [
+        { front: "Km", back: "Substrate concentration at which the reaction velocity is half of Vmax." },
+        { front: "Effect of a competitive inhibitor on Km and Vmax", back: "Km increases; Vmax unchanged." },
+        { front: "Effect of a non-competitive inhibitor", back: "Vmax decreases; Km unchanged." },
+        { front: "Vinblastin belongs to", back: "Drugs (secondary metabolites)." },
+        { front: "Monoterpenes and diterpenes", back: "Terpenoids." },
+        { front: "Sugar in DNA", back: "2′-deoxyribose." },
+        { front: "Hydrogen bonds between A–T and G–C", back: "A=T two; G≡C three." },
+      ],
+      quiz: [
+        {
+          kind: "mcq",
+          q: "Which is NOT found in the acid-insoluble fraction?",
+          options: ["Proteins", "Lipids", "Amino acids", "Nucleic acids"],
+          answer: 2,
+          explain: "Amino acids are micromolecules in the acid-soluble pool. Lipids appear in the acid-insoluble fraction as membrane vesicles.",
+        },
+        {
+          kind: "multi",
+          q: "Select the correctly matched pairs.",
+          options: ["Trypsin – enzyme", "Receptor – sensory reception", "Collagen – hormone", "Antibody – fights infectious agents"],
+          answers: [0, 1, 3],
+          explain: "Collagen is intercellular ground substance; insulin is the hormone in the NCERT table.",
+          difficulty: 2,
+        },
+        {
+          kind: "mcq",
+          q: "A: Enzymes from organisms in hot sulphur springs work at 80–90 °C. R: These enzymes are thermostable.",
+          options: AR,
+          answer: 0,
+          explain: "NCERT: enzymes from thermophiles are stable and retain catalytic power at high temperatures; stability explains activity.",
+        },
+        {
+          kind: "numeric",
+          q: "An enzyme has Vmax = 50 μmol/min and Km = 4 mM. What is the reaction velocity (μmol/min) when [S] = 4 mM?",
+          answer: 25,
+          explain: "By definition, at [S] = Km the velocity is half of Vmax: 50 ÷ 2 = 25 μmol/min.",
+          difficulty: 2,
+          hint: "Use the definition of Km.",
+        },
+        {
+          kind: "numeric",
+          q: "Using the Michaelis–Menten equation v = Vmax[S]/(Km + [S]), find v (μmol/min) for Vmax = 50 μmol/min, Km = 4 mM and [S] = 12 mM.",
+          answer: 37.5,
+          tolerance: 0.1,
+          explain: "v = 50 × 12 / (4 + 12) = 600 / 16 = 37.5 μmol/min. (The equation is beyond NCERT, but the result shows how v approaches Vmax.)",
+          difficulty: 3,
+          hint: "Substitute directly; units of Km and [S] cancel.",
+        },
+        {
+          kind: "mcq",
+          q: "Conversion of glucose-6-phosphate into fructose-6-phosphate is catalysed by an enzyme of class:",
+          options: ["Transferases", "Isomerases", "Lyases", "Oxidoreductases"],
+          answer: 1,
+          explain: "Glucose-6-phosphate and fructose-6-phosphate are isomers (same formula); inter-conversion of isomers is done by isomerases.",
+          difficulty: 3,
+          hint: "Compare the molecular formulae of the two sugars.",
+        },
+        {
+          kind: "mcq",
+          q: "Which statement about protein structure is correct?",
+          options: [
+            "Primary structure is the 3-D folding of the chain",
+            "Only left-handed helices occur in proteins",
+            "Haemoglobin shows quaternary structure",
+            "Tertiary structure is not needed for biological activity",
+          ],
+          answer: 2,
+          explain: "Haemoglobin has four subunits, so it has quaternary structure. Primary is the sequence; helices are right-handed; tertiary structure is needed for many activities.",
+          difficulty: 2,
+        },
+        {
+          kind: "multi",
+          q: "Which of these contain nitrogen?",
+          options: ["Chitin", "Cellulose", "Lecithin", "Adenylic acid", "Palmitic acid"],
+          answers: [0, 2, 3],
+          explain: "Chitin has amino-sugars, lecithin has choline (a nitrogen compound), adenylic acid has adenine. Cellulose and palmitic acid contain only C, H and O.",
+          difficulty: 3,
+          hint: "Look for amino-sugars, nitrogen bases or choline.",
+        },
+      ],
+    },
+  ],
+};
+
+export const topics: Topic[] = [cellUnit, biomolecules];
 
 export const links: Record<string, string | string[]> = {
   "11:Cell: The Unit of Life": "c11-bio-cell-unit-of-life",

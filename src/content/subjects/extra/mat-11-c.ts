@@ -1501,3 +1501,424 @@ So once we know $\sum k$, $\sum k^2$ and $\sum k^3$, we can add up any series wh
           },
         ],
       },
+      {
+        slug: "c11-sequences-exam-ap-gp",
+        title: "Exam edge: AP, GP, HP and AM–GM tricks",
+        summary: "Smart choice of terms, the ratio-of-sums trick, harmonic means and the chain A ≥ G ≥ H, and AM–GM for maxima and minima, from KCET to JEE Advanced level.",
+        minutes: 25,
+        xp: 60,
+        track: "exam",
+        blocks: [
+          {
+            type: "callout",
+            tone: "exam",
+            title: "What the exams ask",
+            md: "Sequences and series give **JEE Main** one or two questions per paper, often mixed with quadratics or logs: properties of AP and GP, the ratio of nth terms from the ratio of sums, AM–GM for a minimum or maximum, and series sums (next lesson). **JEE Advanced** uses AM–GM inequalities and combined AP/GP/HP conditions. **KCET** and **COMEDK** ask direct formula questions, so speed with the standard results pays.",
+          },
+          {
+            type: "text",
+            md: t`**Choose terms symmetrically.** Three numbers in AP: $a - d, a, a + d$ (the sum is $3a$). Four numbers in AP: $a - 3d, a - d, a + d, a + 3d$ (common difference $2d$). Three numbers in GP: $\frac{a}{r}, a, ar$ (product $a^3$).
+
+**Quick facts.** If $S_n = An^2 + Bn$ (no constant term) the sequence is an AP with $d = 2A$. In an AP, $a_m + a_n = a_p + a_q$ whenever $m + n = p + q$; in a GP, $a_m a_n = a_p a_q$ under the same condition.
+
+**Ratio of nth terms.** For an AP, $a_m = \frac{S_{2m-1}}{2m-1}$, because the middle term of $2m - 1$ terms is their average. So if two APs have sums in a known ratio, the ratio of their $m$th terms is the sum ratio with $n = 2m - 1$.`,
+          },
+          {
+            type: "text",
+            md: t`**Harmonic progression (HP).** Numbers form an HP when their reciprocals form an AP, e.g. $1, \frac{1}{2}, \frac{1}{3}, \ldots$. The **harmonic mean** of $a$ and $b$ is $H = \frac{2ab}{a + b}$. (HP is not in the NCERT chapter or the JEE Main syllabus, but the JEE Advanced syllabus lists harmonic progressions and means.)
+
+For two positive numbers $A = \frac{a+b}{2}$, $G = \sqrt{ab}$ and $H = \frac{2ab}{a+b}$ satisfy $AH = ab = G^2$, so $G$ is the GM of $A$ and $H$.`,
+          },
+          {
+            type: "formula",
+            tex: t`A \ge G \ge H, \qquad G^2 = AH \qquad (a, b > 0;\ \text{equality iff } a = b)`,
+            caption: "For n positive numbers: (x₁ + … + xₙ)/n ≥ (x₁x₂…xₙ)^(1/n), equality iff all are equal.",
+          },
+          {
+            type: "example",
+            title: "KCET level: symmetric terms",
+            problem: "Three numbers in AP have sum 24 and product 440. Find them.",
+            steps: [
+              t`Take $a - d, a, a + d$. Sum $3a = 24$, so $a = 8$.`,
+              t`Product $(8 - d)\cdot 8 \cdot (8 + d) = 8(64 - d^2) = 440$, so $64 - d^2 = 55$ and $d = \pm 3$.`,
+            ],
+            answer: "5, 8, 11 (or the same numbers in reverse order).",
+          },
+          {
+            type: "example",
+            title: "JEE Main level: ratio of nth terms",
+            problem: t`The sums of $n$ terms of two APs are in the ratio $(7n + 1) : (4n + 27)$. Find the ratio of their 11th terms.`,
+            steps: [
+              t`$\frac{a_{11}}{b_{11}} = \frac{S_{21}}{S'_{21}}$, since $a_{11} = \frac{S_{21}}{21}$ for each AP.`,
+              t`Put $n = 2(11) - 1 = 21$: $\frac{7(21) + 1}{4(21) + 27} = \frac{148}{111}$.`,
+              t`Simplify: $148 = 4 \times 37$, $111 = 3 \times 37$.`,
+            ],
+            answer: "4 : 3",
+          },
+          {
+            type: "checkpoint",
+            questions: [
+              {
+                kind: "mcq",
+                q: t`The sums of $n$ terms of two APs are in the ratio $(3n + 8) : (7n + 15)$. The ratio of their 7th terms is`,
+                options: ["47 : 106", "29 : 64", "3 : 7", "7 : 16"],
+                answer: 0,
+                explain: t`Use $n = 2(7) - 1 = 13$: $\frac{39 + 8}{91 + 15} = \frac{47}{106}$. Putting $n = 7$ gives the trap 29 : 64.`,
+              },
+            ],
+          },
+          {
+            type: "example",
+            title: "JEE Main level: a minimum by AM–GM",
+            problem: t`Find the least value of $4^x + 4^{1-x}$ for real $x$.`,
+            steps: [
+              t`Both terms are positive, so AM ≥ GM applies: $\frac{4^x + 4^{1-x}}{2} \ge \sqrt{4^x \cdot 4^{1-x}} = \sqrt{4} = 2$.`,
+              t`So $4^x + 4^{1-x} \ge 4$.`,
+              t`Equality needs $4^x = 4^{1-x}$, i.e. $x = \frac{1}{2}$, which is allowed, so 4 is reached.`,
+            ],
+            answer: t`4, at $x = \frac{1}{2}$`,
+          },
+          {
+            type: "example",
+            title: "JEE Advanced level: weighted AM–GM",
+            problem: t`$x, y, z$ are positive and $x + y + z = 12$. Find the greatest value of $x^2yz$.`,
+            steps: [
+              t`Make the pieces of the sum match the powers in the product: split $x$ into $\frac{x}{2} + \frac{x}{2}$, so $\frac{x}{2} + \frac{x}{2} + y + z = 12$.`,
+              t`AM–GM on these four positive numbers: $\frac{12}{4} \ge \left(\frac{x}{2}\cdot\frac{x}{2}\cdot y \cdot z\right)^{1/4}$, so $\frac{x^2yz}{4} \le 3^4 = 81$.`,
+              t`Hence $x^2yz \le 324$. Equality when $\frac{x}{2} = y = z = 3$, i.e. $x = 6$, $y = z = 3$: $36 \times 9 = 324$. ✓`,
+            ],
+            answer: t`The greatest value is 324, at $x = 6$, $y = z = 3$.`,
+          },
+          {
+            type: "mistake",
+            wrong: t`By AM–GM, $x + \frac{1}{x} \ge 2$ for every non-zero $x$, so its least value is 2.`,
+            right: t`AM–GM needs **positive** numbers. For $x > 0$ the least value is 2; for $x < 0$, $x + \frac{1}{x} \le -2$, and over all non-zero $x$ there is no least value.`,
+            why: "The inequality is quoted so often that its condition gets forgotten. A negative x makes both terms negative, and the square-root step in the proof breaks.",
+          },
+          {
+            type: "mistake",
+            wrong: t`For the ratio of 7th terms, put $n = 7$ in the ratio of sums.`,
+            right: t`Put $n = 2m - 1 = 13$. The ratio of sums at $n = 7$ compares $S_7$ values, i.e. the 4th terms.`,
+            why: "Both questions mention the same number, so substituting it directly feels natural. The link a(m) = S(2m − 1)/(2m − 1) is what makes the trick work.",
+          },
+          {
+            type: "activity",
+            activity: {
+              kind: "reveal",
+              prompt: t`What is the least value of $x + \frac{1}{x}$ over all real $x \ne 0$?`,
+              emoji: "⚖️",
+              options: ["2", "−2", "There is no least value", "0"],
+              answer: 2,
+              trap: 0,
+              explain: t`For negative $x$ the expression is at most $-2$ and falls without limit as $x \to 0^-$ (try $x = -0.01$: about $-100$). AM–GM gives 2 only when $x > 0$.`,
+            },
+          },
+          {
+            type: "callout",
+            tone: "tip",
+            title: "Shortcuts and when they are safe",
+            md: t`$d = 2A$ from $S_n = An^2 + Bn$ works only when $S_n$ has **no constant term**; with a constant, the first term breaks the pattern. AM–GM gives a true minimum only if the equality case can actually happen inside the allowed values. For a sum with fixed total, the product is largest when the parts are equal (after weighting to match the powers).`,
+          },
+          {
+            type: "keypoints",
+            items: [
+              t`Choose $a - d, a, a + d$ or $\frac{a}{r}, a, ar$ so the given sum or product fixes $a$ at once.`,
+              t`Ratio of $m$th terms of two APs = ratio of sums at $n = 2m - 1$.`,
+              t`HM $= \frac{2ab}{a+b}$; for positive numbers $A \ge G \ge H$ and $G^2 = AH$.`,
+              "AM–GM: positive terms only; check that equality can be reached; split terms to match powers for weighted problems.",
+            ],
+          },
+        ],
+        flashcards: [
+          { front: "Three numbers in AP (smart choice)", back: t`$a - d, a, a + d$` },
+          { front: "Four numbers in AP (smart choice)", back: t`$a - 3d, a - d, a + d, a + 3d$` },
+          { front: t`$S_n = An^2 + Bn$: common difference?`, back: t`$d = 2A$` },
+          { front: t`Ratio of $m$th terms from ratio of sums`, back: t`Put $n = 2m - 1$ in the ratio of sums.` },
+          { front: "Harmonic mean of a and b", back: t`$\frac{2ab}{a + b}$` },
+          { front: "A, G, H relation (a, b > 0)", back: t`$A \ge G \ge H$ and $G^2 = AH$.` },
+          { front: "AM–GM for n positive numbers", back: t`$\frac{x_1 + \cdots + x_n}{n} \ge (x_1 \cdots x_n)^{1/n}$, equality iff all equal.` },
+        ],
+        quiz: [
+          {
+            kind: "numeric",
+            q: t`For a sequence, $S_n = 3n^2 + 5n$. Which term equals 164?`,
+            answer: 27,
+            explain: t`$a_n = S_n - S_{n-1} = 6n + 2$; $6n + 2 = 164$ gives $n = 27$.`,
+          },
+          {
+            kind: "numeric",
+            q: "Find the harmonic mean of 4 and 12.",
+            answer: 6,
+            explain: t`$H = \frac{2 \cdot 4 \cdot 12}{4 + 12} = \frac{96}{16} = 6$. (Check: $A = 8$, $G^2 = 48 = AH$.)`,
+          },
+          {
+            kind: "numeric",
+            q: "The AM and GM of two positive numbers are 5 and 4. Find their HM.",
+            answer: 3.2,
+            tolerance: 0.001,
+            explain: t`$H = \frac{G^2}{A} = \frac{16}{5} = 3.2$.`,
+          },
+          {
+            kind: "multi",
+            q: t`For two unequal positive numbers $a, b$ with AM $A$, GM $G$ and HM $H$, which are true?`,
+            options: [t`$A > G > H$`, t`$G^2 = AH$`, t`$A + H = 2G$`, t`$AH = ab$`],
+            answers: [0, 1, 3],
+            explain: t`$AH = \frac{a+b}{2}\cdot\frac{2ab}{a+b} = ab = G^2$. Strict inequalities hold as $a \ne b$. $A + H = 2G$ is false (for 4, 12: $8 + 6 \ne 2\sqrt{48}$).`,
+          },
+          {
+            kind: "numeric",
+            q: t`$x, y > 0$ with $x + y = 6$. Find the greatest value of $xy^2$.`,
+            answer: 32,
+            difficulty: 3,
+            hint: t`Split $y$ into $\frac{y}{2} + \frac{y}{2}$.`,
+            explain: t`$\frac{x + y/2 + y/2}{3} = 2 \ge \left(\frac{xy^2}{4}\right)^{1/3}$, so $xy^2 \le 32$, reached at $x = 2$, $y = 4$.`,
+          },
+          {
+            kind: "numeric",
+            q: "The 5th term of a GP is 3. Find the product of its first 9 terms.",
+            answer: 19683,
+            difficulty: 2,
+            hint: "Pair the terms from the two ends.",
+            explain: t`$a_1a_9 = a_2a_8 = a_3a_7 = a_4a_6 = a_5^2$, so the product is $a_5^9 = 3^9 = 19\,683$.`,
+          },
+          {
+            kind: "numeric",
+            q: "Three numbers in GP have product 216 and sum 21. Find the largest of them.",
+            answer: 12,
+            difficulty: 2,
+            explain: t`$\frac{a}{r}\cdot a \cdot ar = a^3 = 216$, so $a = 6$. $\frac{6}{r} + 6 + 6r = 21$ gives $2r^2 - 5r + 2 = 0$, $r = 2$ or $\frac{1}{2}$: the numbers are 3, 6, 12.`,
+          },
+          {
+            kind: "mcq",
+            q: t`For $a, b, c > 0$, the least value of $(a + b + c)\left(\frac{1}{a} + \frac{1}{b} + \frac{1}{c}\right)$ is`,
+            options: ["9", "3", "6", "1"],
+            answer: 0,
+            difficulty: 3,
+            explain: t`AM–GM on each bracket: $a + b + c \ge 3(abc)^{1/3}$ and $\frac1a + \frac1b + \frac1c \ge 3(abc)^{-1/3}$. Multiply: the product is at least 9, with equality when $a = b = c$.`,
+          },
+        ],
+      },
+      {
+        slug: "c11-sequences-exam-sums",
+        title: "Exam edge: AGP, telescoping and the method of differences",
+        summary: "Summing arithmetico-geometric series by S − rS, telescoping with partial fractions, and finding the nth term from successive differences, with JEE Main to JEE Advanced examples.",
+        minutes: 25,
+        xp: 60,
+        track: "exam",
+        blocks: [
+          {
+            type: "callout",
+            tone: "exam",
+            title: "What the exams ask",
+            md: "These three methods sum almost every non-standard series in **JEE Main** and **JEE Advanced**: an AGP (one factor in AP, one in GP), a fraction that splits into a difference of two terms, or a series whose differences settle into an AP or GP. **KCET** and **COMEDK** ask the simpler forms, usually an infinite AGP or a sum like Σ 1/(k(k + 1)).",
+          },
+          {
+            type: "text",
+            md: t`**Arithmetico-geometric progression (AGP).** Multiply an AP term by term with a GP: $a, (a + d)r, (a + 2d)r^2, \ldots$, with $k$th term $[a + (k-1)d]\,r^{k-1}$.
+
+**Method.** Write $S$, then $rS$ shifted one place right, and subtract. The AP parts leave a constant difference $d$, so $S - rS$ is a plain GP plus a first and a last term. Solve for $S$.`,
+          },
+          {
+            type: "formula",
+            tex: t`S_\infty = \frac{a}{1 - r} + \frac{d\,r}{(1 - r)^2}, \qquad |r| < 1`,
+            caption: "Sum to infinity of a + (a + d)r + (a + 2d)r² + …",
+          },
+          {
+            type: "example",
+            title: "KCET level: an infinite AGP",
+            problem: t`Find $1 + \frac{2}{3} + \frac{3}{9} + \frac{4}{27} + \cdots$ to infinity.`,
+            steps: [
+              t`$S = 1 + \frac{2}{3} + \frac{3}{9} + \cdots$ and $\frac{1}{3}S = \frac{1}{3} + \frac{2}{9} + \cdots$.`,
+              t`Subtract: $\frac{2}{3}S = 1 + \frac{1}{3} + \frac{1}{9} + \cdots = \frac{1}{1 - \frac{1}{3}} = \frac{3}{2}$.`,
+              t`$S = \frac{3}{2}\cdot\frac{3}{2} = \frac{9}{4}$. The formula agrees: $\frac{1}{2/3} + \frac{1/3}{4/9} = \frac{3}{2} + \frac{3}{4} = \frac{9}{4}$.`,
+            ],
+            answer: t`$\frac{9}{4}$`,
+          },
+          {
+            type: "example",
+            title: "JEE Main level: a finite AGP",
+            problem: t`Find $S_n = 1\cdot2 + 2\cdot2^2 + 3\cdot2^3 + \cdots + n\cdot2^n$.`,
+            steps: [
+              t`$2S_n = 1\cdot2^2 + 2\cdot2^3 + \cdots + (n-1)2^n + n\cdot2^{n+1}$.`,
+              t`$S_n - 2S_n = 2 + 2^2 + 2^3 + \cdots + 2^n - n\cdot2^{n+1}$. Do not drop the last term.`,
+              t`The GP part is $2^{n+1} - 2$, so $-S_n = 2^{n+1} - 2 - n\cdot2^{n+1} = (1 - n)2^{n+1} - 2$.`,
+              t`Check $n = 3$: $2 + 8 + 24 = 34$ and $2 \cdot 16 + 2 = 34$. ✓`,
+            ],
+            answer: t`$S_n = (n - 1)2^{n+1} + 2$`,
+          },
+          {
+            type: "text",
+            md: t`**Telescoping.** If each term can be written as $a_k = f(k) - f(k+1)$, then in $\sum_{k=1}^{n}a_k$ every inner value cancels and only $f(1) - f(n+1)$ is left. Partial fractions usually produce this form: $\frac{1}{k(k+1)} = \frac{1}{k} - \frac{1}{k+1}$, and $\frac{1}{(2k-1)(2k+1)} = \frac{1}{2}\left(\frac{1}{2k-1} - \frac{1}{2k+1}\right)$.`,
+          },
+          {
+            type: "example",
+            title: "JEE Main level: telescoping",
+            problem: t`Find $\sum_{k=1}^{n}\frac{1}{(2k-1)(2k+1)}$ and its value as $n \to \infty$.`,
+            steps: [
+              t`Split: $\frac{1}{(2k-1)(2k+1)} = \frac{1}{2}\left(\frac{1}{2k-1} - \frac{1}{2k+1}\right)$.`,
+              t`Sum: $\frac{1}{2}\left[\left(1 - \frac{1}{3}\right) + \left(\frac{1}{3} - \frac{1}{5}\right) + \cdots + \left(\frac{1}{2n-1} - \frac{1}{2n+1}\right)\right]$.`,
+              t`Everything inside cancels except $1 - \frac{1}{2n+1}$, so the sum is $\frac{1}{2}\cdot\frac{2n}{2n+1}$.`,
+            ],
+            answer: t`$\frac{n}{2n+1}$, which tends to $\frac{1}{2}$.`,
+          },
+          {
+            type: "checkpoint",
+            questions: [
+              {
+                kind: "numeric",
+                q: t`Find $\sum_{k=1}^{99}\frac{1}{k(k+1)}$.`,
+                answer: 0.99,
+                tolerance: 0.0001,
+                explain: t`It telescopes to $1 - \frac{1}{100} = 0.99$.`,
+              },
+            ],
+          },
+          {
+            type: "text",
+            md: t`**Method of differences.** When a series is not an AP or GP, list the differences of consecutive terms. If the first differences form an AP, then $a_n$ is a **quadratic** $pn^2 + qn + s$; if the second differences form an AP, $a_n$ is a cubic. If the differences form a GP with ratio $r$, then $a_n = A\,r^{n} + B$. Fix the constants from the first few terms, then sum with $\sum k$, $\sum k^2$, $\sum k^3$ or the GP formula.`,
+          },
+          {
+            type: "example",
+            title: "JEE Main level: nth term from differences",
+            problem: t`Find the sum to $n$ terms of $5 + 11 + 19 + 29 + 41 + \cdots$.`,
+            steps: [
+              t`Differences: 6, 8, 10, 12, an AP. So $a_n = pn^2 + qn + s$.`,
+              t`$n = 1, 2, 3$: $p + q + s = 5$, $4p + 2q + s = 11$, $9p + 3q + s = 19$. Subtracting: $3p + q = 6$, $5p + q = 8$, so $p = 1$, $q = 3$, $s = 1$. Thus $a_n = n^2 + 3n + 1$ (check $a_4 = 29$ ✓).`,
+              t`$S_n = \frac{n(n+1)(2n+1)}{6} + \frac{3n(n+1)}{2} + n = \frac{n}{6}\left[(n+1)(2n+1) + 9(n+1) + 6\right] = \frac{n(2n^2 + 12n + 16)}{6}$.`,
+              t`$= \frac{n(n+2)(n+4)}{3}$. Check $n = 3$: $5 + 11 + 19 = 35 = \frac{3 \cdot 5 \cdot 7}{3}$. ✓`,
+            ],
+            answer: t`$a_n = n^2 + 3n + 1$ and $S_n = \frac{n(n+2)(n+4)}{3}$`,
+          },
+          {
+            type: "example",
+            title: "JEE Advanced level: a hidden telescope",
+            problem: t`Find $\sum_{k=1}^{n}\frac{k}{k^4 + k^2 + 1}$.`,
+            steps: [
+              t`Factor: $k^4 + k^2 + 1 = (k^2 + 1)^2 - k^2 = (k^2 - k + 1)(k^2 + k + 1)$.`,
+              t`The two factors differ by $2k$, so $\frac{k}{k^4 + k^2 + 1} = \frac{1}{2}\left[\frac{1}{k^2 - k + 1} - \frac{1}{k^2 + k + 1}\right]$.`,
+              t`Key observation: $(k+1)^2 - (k+1) + 1 = k^2 + k + 1$. So the second fraction for $k$ is the first fraction for $k + 1$, and the sum telescopes.`,
+              t`What survives: $\frac{1}{2}\left[\frac{1}{1} - \frac{1}{n^2 + n + 1}\right] = \frac{1}{2}\cdot\frac{n^2 + n}{n^2 + n + 1}$. Check $n = 1$: $\frac{1}{3}$ both ways. ✓`,
+            ],
+            answer: t`$\frac{n(n+1)}{2(n^2 + n + 1)}$`,
+          },
+          {
+            type: "mistake",
+            wrong: t`In $S - rS$ for $\sum k\cdot2^k$, the right side is just the GP $2 + 2^2 + \cdots + 2^n$.`,
+            right: t`The shifted series has one extra term at the end: $S - 2S = (2 + 2^2 + \cdots + 2^n) - n\cdot2^{n+1}$.`,
+            why: t`Lining up the two rows, the last term of $rS$ has no partner above it. Dropping it gives an answer that fails the check at $n = 1$.`,
+          },
+          {
+            type: "mistake",
+            wrong: t`In a telescoping sum only the very first term survives.`,
+            right: t`The first piece of the first term **and** the last piece of the last term survive: $f(1) - f(n+1)$. If the gap is two places, as in $\frac{1}{k} - \frac{1}{k+2}$, two pieces survive at each end.`,
+            why: t`For an infinite sum the tail tends to 0, so it disappears; students carry that habit to finite sums, where it does not vanish.`,
+          },
+          {
+            type: "activity",
+            activity: {
+              kind: "order",
+              prompt: "Order the steps for summing a finite AGP.",
+              items: [
+                "Write S with the kth term [a + (k − 1)d] r^(k − 1)",
+                "Write rS shifted one place to the right",
+                "Subtract: S − rS",
+                "Sum the GP in the middle and keep the first and last terms",
+                "Divide by 1 − r and check with n = 1",
+              ],
+              explain: "Subtracting kills the AP part because consecutive AP terms differ by the constant d. The leftover is a GP you already know how to add.",
+            },
+          },
+          {
+            type: "keypoints",
+            items: [
+              t`AGP: subtract $rS$ from $S$; for $|r| < 1$, $S_\infty = \frac{a}{1-r} + \frac{dr}{(1-r)^2}$.`,
+              t`Telescoping: write $a_k = f(k) - f(k+1)$ (partial fractions) so the sum is $f(1) - f(n+1)$.`,
+              "Method of differences: AP differences give a quadratic nth term; GP differences give an exponential nth term.",
+              "Always check a summed formula at n = 1 and n = 2.",
+            ],
+          },
+        ],
+        flashcards: [
+          { front: "Arithmetico-geometric progression", back: t`Terms $[a + (k-1)d]r^{k-1}$: an AP times a GP, term by term.` },
+          { front: "Sum to infinity of an AGP", back: t`$\frac{a}{1-r} + \frac{dr}{(1-r)^2}$, $|r| < 1$` },
+          { front: t`$1 + 2x + 3x^2 + \cdots$ ($|x| < 1$)`, back: t`$\frac{1}{(1-x)^2}$` },
+          { front: t`$\frac{1}{k(k+1)}$ split`, back: t`$\frac{1}{k} - \frac{1}{k+1}$` },
+          { front: "Telescoping sum result", back: t`$\sum_{k=1}^{n}[f(k) - f(k+1)] = f(1) - f(n+1)$` },
+          { front: "Differences of a series form an AP", back: t`The nth term is a quadratic $pn^2 + qn + s$.` },
+          { front: t`$k^4 + k^2 + 1$ factorised`, back: t`$(k^2 - k + 1)(k^2 + k + 1)$` },
+        ],
+        quiz: [
+          {
+            kind: "numeric",
+            q: t`Find $1 + 2x + 3x^2 + 4x^3 + \cdots$ to infinity at $x = \frac{1}{2}$.`,
+            answer: 4,
+            explain: t`$\frac{1}{(1 - x)^2} = \frac{1}{(1/2)^2} = 4$ (AGP with $a = d = 1$, $r = x$).`,
+          },
+          {
+            kind: "mcq",
+            q: "The nth term of 2, 5, 10, 17, 26, … is",
+            options: [t`$n^2 + 1$`, t`$3n - 1$`, t`$2n^2$`, t`$n^2 + n$`],
+            answer: 0,
+            explain: t`Differences 3, 5, 7, 9 form an AP, so $a_n$ is quadratic; $n^2 + 1$ fits every term.`,
+          },
+          {
+            kind: "numeric",
+            q: t`Find $1 + \frac{4}{5} + \frac{7}{25} + \frac{10}{125} + \cdots$ to infinity.`,
+            answer: 2.1875,
+            tolerance: 0.001,
+            difficulty: 3,
+            hint: t`AGP with $a = 1$, $d = 3$, $r = \frac{1}{5}$.`,
+            explain: t`$S - \frac{1}{5}S = 1 + \frac{3}{5} + \frac{3}{25} + \cdots = 1 + \frac{3/5}{4/5} = \frac{7}{4}$, so $S = \frac{7}{4}\cdot\frac{5}{4} = \frac{35}{16} = 2.1875$.`,
+          },
+          {
+            kind: "multi",
+            q: "Which statements are true?",
+            options: [
+              t`$\frac{1}{k(k+2)} = \frac{1}{2}\left(\frac{1}{k} - \frac{1}{k+2}\right)$`,
+              t`$\sum_{k=1}^{n}(\sqrt{k+1} - \sqrt{k}) = \sqrt{n+1} - 1$`,
+              t`$\frac{1}{k(k+1)} = \frac{1}{k} + \frac{1}{k+1}$`,
+              t`$\sum_{k=1}^{\infty}\frac{1}{k(k+1)} = 1$`,
+            ],
+            answers: [0, 1, 3],
+            explain: t`The third has the wrong sign: it should be $\frac{1}{k} - \frac{1}{k+1}$. The fourth is the limit of $1 - \frac{1}{n+1}$.`,
+          },
+          {
+            kind: "numeric",
+            q: "Find the sum of the first 10 terms of 3 + 7 + 13 + 21 + 31 + …",
+            answer: 450,
+            difficulty: 2,
+            hint: "The differences 4, 6, 8, 10 form an AP.",
+            explain: t`$a_n = n^2 + n + 1$. $S_{10} = 385 + 55 + 10 = 450$.`,
+          },
+          {
+            kind: "mcq",
+            q: t`$\sum_{k=1}^{10}\frac{k}{k^4 + k^2 + 1}$ equals`,
+            options: [t`$\frac{55}{111}$`, t`$\frac{110}{111}$`, t`$\frac{1}{2}$`, t`$\frac{50}{111}$`],
+            answer: 0,
+            difficulty: 3,
+            explain: t`$\frac{n(n+1)}{2(n^2+n+1)}$ at $n = 10$: $\frac{110}{2 \times 111} = \frac{55}{111}$. $\frac{1}{2}$ is only the limit as $n \to \infty$.`,
+          },
+          {
+            kind: "numeric",
+            q: t`Find $1\cdot2 + 2\cdot4 + 3\cdot8 + \cdots + 6\cdot64$.`,
+            answer: 642,
+            difficulty: 2,
+            explain: t`$(n - 1)2^{n+1} + 2$ at $n = 6$: $5 \times 128 + 2 = 642$. Directly: $2 + 8 + 24 + 64 + 160 + 384 = 642$.`,
+          },
+          {
+            kind: "numeric",
+            q: t`Find $\sum_{k=1}^{n}\frac{1}{(2k-1)(2k+1)}$ for $n = 10$, as a decimal to 4 places.`,
+            answer: 0.4762,
+            tolerance: 0.0005,
+            explain: t`$\frac{n}{2n+1} = \frac{10}{21} \approx 0.4762$.`,
+          },
+        ],
+      },
+    ],
+  },
+];
+
+export const links: Record<string, string | string[]> = {
+  "11:Binomial Theorem": "c11-binomial-theorem",
+  "11:Sequences and Series": "c11-sequences-series",
+};

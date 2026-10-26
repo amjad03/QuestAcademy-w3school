@@ -3412,7 +3412,853 @@ const primitives: Topic = {
   ],
 };
 
-export const topics: Topic[] = [numbers, propLogic, hardware, objectsClasses, primitives];
+/* ------------------------------------------------------------------ */
+/* 6. Expressions and Statements                                       */
+/* ------------------------------------------------------------------ */
+const exprStatements: Topic = {
+  slug: "c11-isc-expressions-statements",
+  title: "Expressions and Statements",
+  icon: "🔁",
+  description: "Variables and named constants, operators with their precedence and associativity, evaluating expressions, assignment, conditional statements (if, if-else-if, switch, ternary), loops (for, while, do-while) with break and continue, blocks and the scope of variables.",
+  lessons: [
+    {
+      slug: "c11-isc-variables-operators-expressions",
+      title: "Variables, Operators and Expressions",
+      summary: "Variables and final constants; the left and right sides of an assignment; arithmetic, increment, relational, logical, compound assignment and ternary operators; precedence, associativity and short-circuit evaluation.",
+      minutes: 24,
+      xp: 55,
+      blocks: [
+        {
+          type: "text",
+          md: "A **variable** is a name given to a memory location that holds a value of a fixed type; the value can change while the program runs. It must be **declared** (`int marks;`) before use, and a local variable must be **initialised** before it is read.\n\nA **named constant** is declared with **final**: `final double GST = 0.18;`. Its value cannot be changed after it is set; trying to assign to it is a compile-time error. Constants are usually written in capitals.\n\nAn **expression** is a combination of variables, literals, operators and method calls that produces a single value, such as `a + b * 2`.",
+        },
+        {
+          type: "text",
+          md: "**Assignment.** In `x = x + 5;` the two sides mean different things. The **right-hand side** is an expression that is *evaluated* to a value (it may be any expression). The **left-hand side** must be a *variable*: a storage location that receives the value. So `x + 1 = 5;` and `5 = x;` are errors. The `=` sign means \"store\", not \"is equal to\"; equality is tested with `==`.\n\nAssignment is itself an expression and associates **right to left**, so `m = n = 4;` first stores 4 in n and then stores that value in m.",
+        },
+        {
+          type: "table",
+          headers: ["Level (high to low)", "Operators", "Associativity"],
+          rows: [
+            ["1", "postfix `x++` `x--`", "left to right"],
+            ["2", "unary `++x` `--x` `+` `-` `!` `~`, cast `(type)`", "right to left"],
+            ["3", "`*` `/` `%`", "left to right"],
+            ["4", "`+` `-`", "left to right"],
+            ["5", "shift `<<` `>>` `>>>`", "left to right"],
+            ["6", "relational `<` `<=` `>` `>=` `instanceof`", "left to right"],
+            ["7", "equality `==` `!=`", "left to right"],
+            ["8", "bitwise `&`, then `^`, then `|`", "left to right"],
+            ["9", "logical AND `&&`", "left to right"],
+            ["10", "logical OR `||`", "left to right"],
+            ["11", "ternary `? :`", "right to left"],
+            ["12", "assignment `=` `+=` `-=` `*=` `/=` `%=`", "right to left"],
+          ],
+        },
+        {
+          type: "text",
+          md: "**Precedence** decides which operator is applied first; **associativity** decides the order between operators of the same level. Brackets override both.\n\nInteger division `/` drops the fraction (17 / 5 = 3), and `%` gives the remainder with the **sign of the left operand** (−17 % 5 = −2).\n\n**Increment and decrement.** Prefix `++x` changes x first and then uses the new value; postfix `x++` uses the current value and then changes x.\n\n**Short-circuit evaluation.** In `A && B`, if A is false, B is not evaluated at all; in `A || B`, if A is true, B is skipped.",
+        },
+        {
+          type: "code",
+          lang: "java",
+          caption: "Expr.java",
+          code: `public class Expr
+{
+    public static void main(String[] args)
+    {
+        final double GST = 0.18;            // a named constant
+        int a = 17, b = 5;
+        System.out.println(a / b + " " + a % b + " " + -a % b);
+        System.out.println(a + b * 2 - 8 / 4);
+        System.out.println((a + b) * 2 % 7);
+
+        int x = 6;
+        int y = x++ + ++x;                  // 6 + 8
+        System.out.println(x + " " + y);
+
+        int p = 10;
+        p += p++ - --p;                     // p = 10 + (10 - 10)
+        System.out.println(p);
+
+        boolean ok = (a > b) && (b++ > 10);
+        System.out.println(ok + " " + b);
+        boolean quick = (a < b) && (b++ > 10);   // short-circuit: b++ never runs
+        System.out.println(quick + " " + b);
+
+        int big = (a > b) ? a : b;
+        System.out.println("Bigger = " + big);
+        System.out.println("Price with GST = " + 500 * (1 + GST));
+        int m, n;
+        m = n = 4;                          // assignment is right to left
+        System.out.println(m + n);
+    }
+}`,
+        },
+        {
+          type: "example",
+          title: "Trace Expr.java",
+          problem: "Give the exact output of Expr.java, showing the working for the tricky lines.",
+          steps: [
+            "17 / 5 = 3, 17 % 5 = 2, −17 % 5 = −2. Next: 17 + (5 × 2) − (8 / 4) = 17 + 10 − 2 = 25. Next: (22 × 2) % 7 = 44 % 7 = 2 (* and % are equal, left to right).",
+            "`x++ + ++x` with x = 6: x++ gives 6 and makes x 7; ++x makes x 8 and gives 8. y = 14, x = 8.",
+            "`p += p++ - --p` means p = 10 + (p++ − --p). The old p (10) is kept for the addition; p++ gives 10 (p becomes 11), --p makes p 10 and gives 10. So p = 10 + 0 = 10.",
+            "`(a > b) && (b++ > 10)`: 17 > 5 is true, so the right side runs: 5 > 10 is false and b becomes 6. Output false 6.",
+            "`(a < b) && ...`: 17 < 6 is false, so b++ is skipped; b stays 6. Then 17 > 6 gives 17; 500 × 1.18 = 590.0; m + n = 8.",
+          ],
+          answer: "3 2 -2\n25\n2\n8 14\n10\nfalse 6\nfalse 6\nBigger = 17\nPrice with GST = 590.0\n8",
+        },
+        {
+          type: "mistake",
+          wrong: "In `(a < b) && (b++ > 10)`, Java evaluates both sides, so b always increases by 1.",
+          right: "`&&` **short-circuits**: if the left side is false the result must be false, so the right side (including `b++`) is never evaluated. Likewise `||` skips its right side when the left is true.",
+          why: "In maths both sides of \"and\" are always there to be checked. Java saves work by stopping as soon as the answer is known, so side effects like `b++` on the right may not happen. (The non-short-circuit `&` and `|` do evaluate both sides.)",
+        },
+        {
+          type: "checkpoint",
+          questions: [
+            {
+              kind: "numeric",
+              q: "int k = 5; k = k++ * 2 + --k; What is k?",
+              answer: 15,
+              explain: "k++ gives 5 (k becomes 6); 5 × 2 = 10; --k makes k 5 and gives 5; 10 + 5 = 15 is stored in k.",
+              difficulty: 3,
+            },
+          ],
+        },
+        {
+          type: "activity",
+          activity: {
+            kind: "order",
+            prompt: "Order the steps Java uses for 20 - 4 * 3 / 2 + 1.",
+            items: [
+              "4 * 3 = 12",
+              "12 / 2 = 6",
+              "20 - 6 = 14",
+              "14 + 1 = 15",
+            ],
+            explain: "* and / come before + and −. Within the same level, Java goes left to right.",
+          },
+        },
+        {
+          type: "callout",
+          tone: "exam",
+          title: "ISC tip",
+          md: "For increment questions, write the value of the variable after **each** operand, left to right, as in the trace above; examiners give marks for the working. Remember that the left operand's old value is saved first in compound assignments like `p += ...`.",
+        },
+        {
+          type: "keypoints",
+          items: [
+            "final makes a named constant; its value cannot change.",
+            "LHS of = must be a variable; RHS is any expression.",
+            "Precedence: unary > * / % > + − > relational > equality > && > || > ?: > assignment.",
+            "/ on ints truncates; % takes the sign of the left operand.",
+            "&& and || short-circuit; prefix changes then uses, postfix uses then changes.",
+          ],
+        },
+      ],
+      flashcards: [
+        { front: "Variable", back: "A named memory location that stores a value of a fixed type; the value may change during execution." },
+        { front: "Named constant", back: "A variable declared with final; its value cannot be changed once assigned, e.g. final double PI = 3.14159;" },
+        { front: "LHS and RHS of assignment", back: "The RHS is evaluated to a value; the LHS must be a variable that receives it." },
+        { front: "Precedence vs associativity", back: "Precedence: which operator acts first. Associativity: the order among operators of equal precedence." },
+        { front: "x++ vs ++x", back: "Postfix uses the value then increments; prefix increments then uses the new value." },
+        { front: "Short-circuit evaluation", back: "&& skips the right operand if the left is false; || skips it if the left is true." },
+        { front: "−17 % 5 in Java", back: "−2: the remainder takes the sign of the dividend." },
+        { front: "Ternary operator", back: "condition ? value1 : value2 — gives value1 if the condition is true, else value2." },
+      ],
+      quiz: [
+        {
+          kind: "numeric",
+          q: "Evaluate `10 + 20 % 6 * 3` in Java.",
+          answer: 16,
+          explain: "% and * are equal and go left to right: 20 % 6 = 2, 2 × 3 = 6; then 10 + 6 = 16.",
+        },
+        {
+          kind: "mcq",
+          q: "Which statement is invalid?",
+          options: ["a + b = c;", "c = a + b;", "c += a;", "a = b = c;"],
+          answer: 0,
+          explain: "The left side of = must be a variable, not an expression.",
+        },
+        {
+          kind: "truefalse",
+          q: "A variable declared as `final int MAX = 50;` can later be assigned `MAX = 60;`.",
+          answer: false,
+          explain: "A final variable cannot be reassigned; the compiler reports an error.",
+        },
+        {
+          kind: "numeric",
+          q: "int a = 4; int b = a++ + a++ + a; What is b?",
+          answer: 15,
+          explain: "4 (a becomes 5) + 5 (a becomes 6) + 6 = 15.",
+          difficulty: 2,
+        },
+        {
+          kind: "mcq",
+          q: "int i = 3; boolean r = (i > 5) || (++i > 3); After this, i and r are:",
+          options: ["4 and true", "3 and true", "3 and false", "4 and false"],
+          answer: 0,
+          explain: "The left side is false, so || must evaluate the right: ++i makes i 4 and 4 > 3 is true.",
+          difficulty: 2,
+        },
+        {
+          kind: "fill",
+          q: "The operator `? :` is called the ___ operator because it has three operands.",
+          answer: ["ternary", "conditional"],
+          explain: "condition ? expression1 : expression2.",
+        },
+        {
+          kind: "mcq",
+          q: "What is the associativity of the assignment operator?",
+          options: ["Right to left", "Left to right", "None", "Depends on the type"],
+          answer: 0,
+          explain: "That is why `a = b = 5` stores 5 in b first, then in a.",
+        },
+        {
+          kind: "numeric",
+          q: "What does `System.out.println(29 / 4 * 4 + 29 % 4);` print?",
+          answer: 29,
+          explain: "29 / 4 = 7, 7 × 4 = 28, 29 % 4 = 1; 28 + 1 = 29. In general (a / b) × b + a % b = a.",
+        },
+      ],
+    },
+    {
+      slug: "c11-isc-conditional-statements",
+      title: "Conditional Statements: if, switch and the Ternary Operator",
+      summary: "Statements and blocks; if, if-else, the if-else-if ladder and nested if; the dangling else; switch-case with break, fall-through and default; when to choose switch, if or the ternary operator.",
+      minutes: 23,
+      xp: 55,
+      blocks: [
+        {
+          type: "text",
+          md: "A **statement** is one complete instruction, ending with a semicolon: a declaration, an assignment, a method call, and so on. A **block** (compound statement) is a group of statements inside `{ }` that acts as one statement wherever one is allowed.\n\nNormally statements run one after another. **Control statements** change this order: **conditional (selection) statements** choose what to run, and **loops (iteration statements)** repeat code.",
+        },
+        {
+          type: "table",
+          headers: ["Form", "Use it when"],
+          rows: [
+            ["`if (cond) stmt;`", "something should happen only if a condition is true"],
+            ["`if (cond) A; else B;`", "there are exactly two choices"],
+            ["`if ... else if ... else if ... else`", "many ranges or conditions, checked from the top; the first true one runs and the rest are skipped"],
+            ["nested `if`", "a second decision is needed only after the first one is true"],
+            ["`switch (expr) { case ... }`", "one variable or expression is compared with several fixed values"],
+            ["`cond ? a : b`", "choosing between two **values** in one expression"],
+          ],
+        },
+        {
+          type: "code",
+          lang: "java",
+          caption: "Bill.java: an if-else-if ladder, a switch with grouped cases, fall-through and a nested ternary",
+          code: `public class Bill
+{
+    static double bill(int units)
+    {
+        double amt;
+        if (units <= 100)
+            amt = units * 4.0;
+        else if (units <= 300)
+            amt = 100 * 4.0 + (units - 100) * 6.0;
+        else
+            amt = 100 * 4.0 + 200 * 6.0 + (units - 300) * 8.0;
+        return amt;
+    }
+
+    static String day(int d)
+    {
+        String name;
+        switch (d)
+        {
+            case 1:  name = "Monday";   break;
+            case 2:  name = "Tuesday";  break;
+            case 6:
+            case 7:  name = "Weekend";  break;
+            default: name = "Midweek";
+        }
+        return name;
+    }
+
+    public static void main(String[] args)
+    {
+        System.out.println(bill(80) + " " + bill(250) + " " + bill(420));
+        System.out.println(day(2) + " " + day(7) + " " + day(4));
+
+        int k = 2;
+        switch (k)              // no break: falls through
+        {
+            case 1: System.out.print("one ");
+            case 2: System.out.print("two ");
+            case 3: System.out.print("three ");
+            default: System.out.println("end");
+        }
+
+        int marks = 72;
+        String g = marks >= 90 ? "A" : marks >= 60 ? "B" : "C";
+        System.out.println(g);
+    }
+}`,
+        },
+        {
+          type: "example",
+          title: "Trace Bill.java",
+          problem: "Slab rates: first 100 units at ₹4, next 200 units at ₹6, the rest at ₹8. Give the output of Bill.java.",
+          steps: [
+            "80 units: first branch, 80 × 4 = 320.0.",
+            "250 units: second branch, 400 + 150 × 6 = 400 + 900 = 1300.0.",
+            "420 units: else branch, 400 + 1200 + 120 × 8 = 400 + 1200 + 960 = 2560.0.",
+            "day(2) is Tuesday; day(7) jumps to `case 7` (6 and 7 share one block), Weekend; day(4) matches no case, so default gives Midweek.",
+            "The second switch enters at `case 2` and, with no break, **falls through** every case below: two three end.",
+            "72 ≥ 90 is false, so the second ternary is checked: 72 ≥ 60 gives \"B\".",
+          ],
+          answer: "320.0 1300.0 2560.0\nTuesday Weekend Midweek\ntwo three end\nB",
+        },
+        {
+          type: "mistake",
+          wrong: "In a switch, only the matching case runs, even if I leave out break.",
+          right: "Execution **starts** at the matching case and continues through all the cases below it until a `break` (or the end of the switch). This is **fall-through**. It is useful for grouping cases (6 and 7 above) but usually a bug.",
+          why: "A switch looks like a list of separate choices, like an if-else-if ladder. Really the case labels are only entry points into one block of code; break is what leaves the block.",
+        },
+        {
+          type: "text",
+          md: "**Rules for switch.** The expression must be of type `byte`, `short`, `char`, `int` (or their wrappers), `String`, or an enum; it cannot be `long`, `float`, `double` or `boolean`. Case labels must be **constants** and must all be **different**. `default` is optional and runs when no case matches.\n\n**Dangling else.** In `if (a) if (b) X; else Y;` the `else` belongs to the **nearest** unmatched `if` (the inner one), whatever the indentation suggests. Use braces to make the meaning clear.",
+        },
+        {
+          type: "checkpoint",
+          questions: [
+            {
+              kind: "mcq",
+              q: "Which type can NOT be used as a switch expression?",
+              options: ["double", "char", "String", "int"],
+              answer: 0,
+              explain: "Floating-point values (and long and boolean) are not allowed in a switch.",
+            },
+          ],
+        },
+        {
+          type: "example",
+          title: "Dangling else",
+          problem: "int a = 5, b = 2; `if (a > 3) if (b > 3) System.out.println(\"P\"); else System.out.println(\"Q\");` What is printed? What is printed if a = 1?",
+          steps: [
+            "The else pairs with the nearest if, which is `if (b > 3)`.",
+            "a = 5: the outer condition is true; the inner b > 3 is false, so its else runs: Q.",
+            "a = 1: the outer condition is false. The outer if has no else of its own, so nothing is printed.",
+          ],
+          answer: "Q for a = 5; nothing for a = 1.",
+        },
+        {
+          type: "activity",
+          activity: {
+            kind: "reveal",
+            prompt: "int n = 3; switch (n) { case 3: n++; case 4: n++; break; case 5: n++; } What is n?",
+            emoji: "🔀",
+            options: ["5", "4", "6", "3"],
+            answer: 0,
+            trap: 1,
+            explain: "Execution enters at case 3 (n = 4), falls through to case 4 (n = 5) and stops at break. Case 5 never runs.",
+          },
+        },
+        {
+          type: "callout",
+          tone: "exam",
+          title: "ISC tip",
+          md: "When asked to convert a switch into if-else (or the reverse), keep the fall-through behaviour exactly: cases without break must become combined conditions. When converting an if-else into a ternary, both branches must give **values**; `cond ? System.out.println(a) : ...` is not allowed.",
+        },
+        {
+          type: "keypoints",
+          items: [
+            "A block `{ }` groups statements into one.",
+            "if-else-if: the first true condition runs and the rest are skipped.",
+            "switch: entry at the matching case; without break, execution falls through.",
+            "switch works on int, char, byte, short, String, enums; not on long, float, double or boolean.",
+            "An else pairs with the nearest unmatched if.",
+          ],
+        },
+      ],
+      flashcards: [
+        { front: "Statement", back: "A complete instruction to the computer; in Java it ends with a semicolon." },
+        { front: "Block (compound statement)", back: "A group of statements enclosed in braces { } that behaves as a single statement." },
+        { front: "if-else-if ladder", back: "A chain of conditions checked from the top; only the first true branch runs." },
+        { front: "Fall-through", back: "In a switch, execution continues into the following cases until a break is reached." },
+        { front: "default in switch", back: "The optional label that runs when no case matches." },
+        { front: "Allowed switch types", back: "byte, short, char, int (and wrappers), String and enums." },
+        { front: "Dangling else", back: "An else always pairs with the nearest unmatched if; braces remove the doubt." },
+        { front: "switch vs if-else", back: "switch tests one expression for equality with constants; if-else can test any condition, including ranges." },
+      ],
+      quiz: [
+        {
+          kind: "mcq",
+          q: "Using the slab rates in Bill.java, what is bill(300)?",
+          options: ["1600.0", "1800.0", "1200.0", "2400.0"],
+          answer: 0,
+          explain: "300 ≤ 300, so the second branch: 400 + 200 × 6 = 1600.0.",
+          difficulty: 2,
+        },
+        {
+          kind: "truefalse",
+          q: "In an if-else-if ladder, more than one branch can run if more than one condition is true.",
+          answer: false,
+          explain: "Only the first true branch runs; the rest are skipped.",
+        },
+        {
+          kind: "mcq",
+          q: "What is printed? `char c = 'b'; switch (c) { case 'a': System.out.print(1); case 'b': System.out.print(2); case 'c': System.out.print(3); break; default: System.out.print(4); }`",
+          options: ["23", "2", "234", "1234"],
+          answer: 0,
+          explain: "Entry at case 'b' prints 2, falls through to case 'c' printing 3, then break.",
+          difficulty: 2,
+        },
+        {
+          kind: "fill",
+          q: "The keyword used to leave a switch block is ___.",
+          answer: ["break"],
+          explain: "Without break, execution falls through to the next case.",
+        },
+        {
+          kind: "mcq",
+          q: "int x = 15; String s = x % 2 == 0 ? \"even\" : x % 5 == 0 ? \"five\" : \"odd\"; What is s?",
+          options: ["five", "odd", "even", "Compile error"],
+          answer: 0,
+          explain: "15 is not even, so the second ternary runs: 15 % 5 == 0 is true, giving \"five\".",
+        },
+        {
+          kind: "multi",
+          q: "Which are NOT allowed? (Choose all that apply)",
+          options: ["switch on a double variable", "two case labels with the same value", "a switch with no default", "case labels that are variables (not constants)"],
+          answers: [0, 1, 3],
+          explain: "default is optional. Floating-point switch expressions, duplicate labels and non-constant labels are errors.",
+          difficulty: 2,
+        },
+        {
+          kind: "mcq",
+          q: "`if (a > b) if (a > c) m = a; else m = c;` The else belongs to:",
+          options: ["if (a > c)", "if (a > b)", "both", "neither; it is an error"],
+          answer: 0,
+          explain: "An else pairs with the nearest unmatched if.",
+        },
+      ],
+    },
+    {
+      slug: "c11-isc-loops-scope",
+      title: "Loops, break and continue, and Scope",
+      summary: "for, while and do-while loops; entry-controlled and exit-controlled loops; break and continue; nested loops; blocks, scope and visibility of local and instance variables.",
+      minutes: 24,
+      xp: 55,
+      blocks: [
+        {
+          type: "text",
+          md: "A **loop** repeats a statement (or block) while a condition is true. Every loop has four parts: **initialisation**, **test condition**, **body**, and **update** (which must eventually make the condition false, or the loop runs for ever).\n\n- **for**: `for (init; test; update) body` — best when the number of repetitions is known.\n- **while**: `while (test) body` — best when you repeat until something happens, such as \"until the number becomes 0\".\n- **do-while**: `do body while (test);` — the body runs first and the test comes after, so it runs **at least once**.\n\nfor and while are **entry-controlled** (test before the body); do-while is **exit-controlled** (test after the body).",
+        },
+        {
+          type: "code",
+          lang: "java",
+          caption: "Loops.java",
+          code: `public class Loops
+{
+    public static void main(String[] args)
+    {
+        // for: sum of the series 1 + 1/2 + 1/3 + 1/4
+        double s = 0;
+        for (int i = 1; i <= 4; i++)
+            s = s + 1.0 / i;
+        System.out.println("Sum = " + s);
+
+        // while: reverse the digits
+        int n = 1204, rev = 0;
+        while (n > 0)
+        {
+            rev = rev * 10 + n % 10;
+            n = n / 10;
+        }
+        System.out.println("Reverse = " + rev);
+
+        // do-while runs at least once
+        int c = 10;
+        do
+        {
+            System.out.println("c = " + c);
+            c++;
+        } while (c < 5);
+
+        // break and continue
+        for (int i = 1; i <= 10; i++)
+        {
+            if (i % 3 == 0)
+                continue;       // skip multiples of 3
+            if (i > 7)
+                break;          // leave the loop
+            System.out.print(i + " ");
+        }
+        System.out.println();
+
+        // nested loops
+        for (int r = 1; r <= 3; r++)
+        {
+            for (int k = 1; k <= r; k++)
+                System.out.print(k);
+            System.out.println();
+        }
+    }
+}`,
+        },
+        {
+          type: "example",
+          title: "Trace Loops.java",
+          problem: "Give the output of Loops.java.",
+          steps: [
+            "Series: 1 + 0.5 + 0.333... + 0.25 = 2.0833..., printed as a double: 2.083333333333333.",
+            "Reverse: n = 1204 → rev 4, n 120 → rev 40, n 12 → rev 402, n 1 → rev 4021, n 0. (The 0 in the middle is kept; a final 0 would be lost.)",
+            "do-while: c = 10 is printed once, even though 10 < 5 is false.",
+            "break/continue: 3 and 6 are skipped by continue; at i = 8, i > 7 so break ends the loop. Printed: 1 2 4 5 7.",
+            "Nested loops: row r prints 1 to r: 1, 12, 123.",
+          ],
+          answer: "Sum = 2.083333333333333\nReverse = 4021\nc = 10\n1 2 4 5 7\n1\n12\n123",
+        },
+        {
+          type: "text",
+          md: "**break** ends the nearest enclosing loop (or switch) immediately; control goes to the statement after the loop. **continue** skips the rest of the current pass and goes to the next pass: in a for loop to the update, in while and do-while to the test. In nested loops, both affect only the **inner** loop they are in.",
+        },
+        {
+          type: "mistake",
+          wrong: "`continue` in a while loop jumps back to the top of the body, so a loop like `while (i < 5) { if (i == 2) continue; i++; }` is fine.",
+          right: "continue in a while loop jumps to the **test**, skipping everything after it, including the update `i++`. When i reaches 2 it never changes again, so this loop runs for ever. Put the update before the continue, or use a for loop, whose update always runs.",
+          why: "In a for loop, continue still runs the update part, so the habit seems safe. In a while loop the update is just an ordinary statement in the body, and continue skips it.",
+        },
+        {
+          type: "checkpoint",
+          questions: [
+            {
+              kind: "numeric",
+              q: "How many times is \"Hi\" printed? `int i = 1; while (i < 20) { System.out.println(\"Hi\"); i = i * 3; }`",
+              answer: 3,
+              explain: "i takes the values 1, 3, 9 (printed each time), then 27, which fails the test.",
+            },
+          ],
+        },
+        {
+          type: "text",
+          md: "**Scope and visibility.** The **scope** of a variable is the part of the program where its name can be used.\n\n- A **local variable** is declared inside a method or a block. It exists from its declaration to the closing `}` of that block. A loop variable declared in a `for` header exists only in that loop.\n- An **instance variable** (declared in the class, outside methods) can be used in all the non-static methods of the class.\n- A local variable with the same name as an instance variable **hides** (shadows) it inside that method; `this.name` still reaches the instance variable.\n- Java does **not** allow a local variable in an inner block to have the same name as a local variable of an enclosing block in the same method.",
+        },
+        {
+          type: "code",
+          lang: "java",
+          caption: "Scope.java",
+          code: `public class Scope
+{
+    int total = 100;                // instance variable
+
+    void show()
+    {
+        int total = 5;              // local variable hides the instance variable
+        System.out.println(total + " " + this.total);
+        for (int i = 0; i < 2; i++)
+        {
+            int sq = i * i;         // sq exists only inside this block
+            total = total + sq;
+        }
+        System.out.println(total);
+    }
+
+    public static void main(String[] args)
+    {
+        new Scope().show();
+    }
+}`,
+        },
+        {
+          type: "text",
+          md: "Output: `5 100` then `6`. Inside show(), `total` means the local variable (5) and `this.total` the instance variable (100). The loop adds 0 × 0 and 1 × 1 to the local total: 5 + 0 + 1 = 6. Using `sq` or `i` after the loop would be a compile-time error, because they are out of scope.",
+        },
+        {
+          type: "activity",
+          activity: {
+            kind: "sort",
+            prompt: "Entry-controlled or exit-controlled?",
+            groups: ["Entry-controlled", "Exit-controlled"],
+            items: [
+              { text: "for loop", group: 0, hint: "The test is in the header and is checked before each pass." },
+              { text: "while loop", group: 0, hint: "The condition is checked before the body." },
+              { text: "do-while loop", group: 1, hint: "The condition comes after the body." },
+              { text: "A loop whose body may run zero times", group: 0, hint: "Only a test-first loop can skip its body completely." },
+              { text: "A loop whose body always runs at least once", group: 1, hint: "The body runs before the first test." },
+            ],
+            explain: "for and while test first, so their bodies can run zero times. do-while tests last, so its body runs at least once.",
+          },
+        },
+        {
+          type: "callout",
+          tone: "exam",
+          title: "ISC tip",
+          md: "\"How many times will the loop run, and what is the output?\" is a standard question. Make a dry-run table with one column per variable and one row per pass, and write the test result in each row. Converting a for loop to a while loop (or do-while) is also common: keep the same initialisation, test and update.",
+        },
+        {
+          type: "keypoints",
+          items: [
+            "for and while are entry-controlled; do-while is exit-controlled and runs at least once.",
+            "break leaves the nearest loop or switch; continue starts its next pass.",
+            "In while loops, continue skips the update written after it.",
+            "A local variable lives only inside its block; a for-loop variable only inside the loop.",
+            "A local variable can hide an instance variable; use this to reach the instance variable.",
+          ],
+        },
+      ],
+      flashcards: [
+        { front: "Entry-controlled loop", back: "A loop that tests its condition before the body (for, while); the body may run zero times." },
+        { front: "Exit-controlled loop", back: "A loop that tests its condition after the body (do-while); the body runs at least once." },
+        { front: "break", back: "Ends the nearest enclosing loop or switch at once." },
+        { front: "continue", back: "Skips the rest of the current pass and goes to the next pass (the update in for, the test in while/do-while)." },
+        { front: "Scope of a variable", back: "The region of the program in which the variable's name can be used." },
+        { front: "Local variable", back: "A variable declared inside a method or block; it exists only within that block and has no default value." },
+        { front: "Infinite loop", back: "A loop whose condition never becomes false, e.g. for(;;) or a while loop with no update." },
+        { front: "Shadowing", back: "A local variable with the same name as an instance variable hides it; this.name reaches the instance variable." },
+      ],
+      quiz: [
+        {
+          kind: "numeric",
+          q: "How many times does the body of `for (int i = 10; i > 0; i -= 3)` run?",
+          answer: 4,
+          explain: "i = 10, 7, 4, 1 run the body; then i = −2 fails the test.",
+        },
+        {
+          kind: "mcq",
+          q: "Which loop always runs its body at least once?",
+          options: ["do-while", "while", "for", "none of them"],
+          answer: 0,
+          explain: "do-while tests its condition only after the body.",
+        },
+        {
+          kind: "mcq",
+          q: "Output of `for (int i = 1; i <= 5; i++) { if (i == 3) break; System.out.print(i); }`?",
+          options: ["12", "1245", "123", "345"],
+          answer: 0,
+          explain: "break ends the loop when i = 3, so only 1 and 2 are printed. 1245 is what continue would give.",
+        },
+        {
+          kind: "fill",
+          q: "Variables declared inside a method are called ___ variables.",
+          answer: ["local"],
+          explain: "They exist only inside that method (or block) and must be initialised before use.",
+        },
+        {
+          kind: "numeric",
+          q: "int n = 5040, c = 0; while (n % 10 == 0) { c++; n /= 10; } What is c?",
+          answer: 1,
+          explain: "5040 % 10 == 0, so c = 1 and n = 504. 504 % 10 = 4, so the loop stops.",
+          difficulty: 2,
+        },
+        {
+          kind: "truefalse",
+          q: "A variable declared in the header of a for loop can be used after the loop ends.",
+          answer: false,
+          explain: "Its scope is the loop only. Declare it before the loop if you need it afterwards.",
+        },
+        {
+          kind: "mcq",
+          q: "Output of `int s = 0; for (int i = 1; i <= 6; i++) { if (i % 2 == 0) continue; s += i; } System.out.println(s);`?",
+          options: ["9", "12", "21", "6"],
+          answer: 0,
+          explain: "Even values are skipped; s = 1 + 3 + 5 = 9.",
+          difficulty: 2,
+        },
+        {
+          kind: "numeric",
+          q: "How many stars are printed by `for (int r = 1; r <= 4; r++) for (int k = r; k <= 4; k++) System.out.print(\"*\");`?",
+          answer: 10,
+          explain: "Row 1 prints 4, row 2 prints 3, row 3 prints 2, row 4 prints 1: 4 + 3 + 2 + 1 = 10.",
+          difficulty: 2,
+        },
+      ],
+    },
+    {
+      slug: "c11-isc-expressions-statements-board-practice",
+      title: "Board Practice: Expressions and Statements",
+      summary: "Mixed ISC-style questions: expression evaluation, switch and if conversions, loop dry runs, finding errors, and a program to list primes in a range.",
+      minutes: 23,
+      xp: 60,
+      blocks: [
+        {
+          type: "text",
+          md: "Board papers test this chapter mostly through short output and dry-run questions, plus one or two programs that use loops and conditions. Work each question below on paper before reading the solution.",
+        },
+        {
+          type: "example",
+          title: "Evaluate the expression",
+          problem: "int a = 7, b = 3; Find the value of `a-- * 2 + ++b % 3 - a / b`, and the final values of a and b.",
+          steps: [
+            "a-- gives 7 (a becomes 6). 7 × 2 = 14.",
+            "++b makes b 4 and gives 4. 4 % 3 = 1.",
+            "a / b uses the current values: 6 / 4 = 1 (integer division).",
+            "14 + 1 − 1 = 14.",
+          ],
+          answer: "The value is 14; afterwards a = 6 and b = 4.",
+        },
+        {
+          type: "example",
+          title: "Convert a switch into if-else",
+          problem: "Rewrite with if-else: `switch (ch) { case 'a': case 'e': case 'i': case 'o': case 'u': System.out.println(\"Vowel\"); break; default: System.out.println(\"Other\"); }`",
+          steps: [
+            "The five cases fall through to the same statement, so they become one condition joined by ||.",
+            "default becomes the else part.",
+          ],
+          answer: "if (ch == 'a' || ch == 'e' || ch == 'i' || ch == 'o' || ch == 'u') System.out.println(\"Vowel\"); else System.out.println(\"Other\");",
+        },
+        {
+          type: "mistake",
+          wrong: "To test whether a number is prime, I check divisors from 2 to n − 1 and print \"Prime\" or \"Not prime\" inside the loop.",
+          right: "Decide only **after** the loop: use a flag (`boolean prime = true;`), set it to false and break when a divisor is found, then print once. Checking divisors up to √n (`d * d <= n`) is enough.",
+          why: "Printing inside the loop gives an answer for every divisor tried (for 9: \"Prime\" at d = 2, \"Not prime\" at d = 3). Being prime is a fact about all the divisors together, so it can only be known at the end.",
+        },
+        {
+          type: "code",
+          lang: "java",
+          caption: "Primes.java: write a program to print the primes from 20 to 50 and count them",
+          code: `public class Primes
+{
+    public static void main(String[] args)
+    {
+        int count = 0;
+        for (int n = 20; n <= 50; n++)
+        {
+            boolean prime = true;
+            for (int d = 2; d * d <= n; d++)
+            {
+                if (n % d == 0)
+                {
+                    prime = false;
+                    break;
+                }
+            }
+            if (prime)
+            {
+                System.out.print(n + " ");
+                count++;
+            }
+        }
+        System.out.println();
+        System.out.println("Count = " + count);
+    }
+}`,
+        },
+        {
+          type: "example",
+          title: "Output of Primes.java",
+          problem: "Give the output, and explain why `d * d <= n` is enough.",
+          steps: [
+            "If n has a factor bigger than √n, the matching factor is smaller than √n, so it would already have been found.",
+            "For n = 49, d runs up to 7 and finds 7. For n = 47, d runs 2 to 6 and finds nothing, so 47 is prime.",
+            "The primes from 20 to 50 are 23, 29, 31, 37, 41, 43 and 47.",
+          ],
+          answer: "23 29 31 37 41 43 47\nCount = 7",
+        },
+        {
+          type: "checkpoint",
+          questions: [
+            {
+              kind: "mcq",
+              q: "In Primes.java, what does `break` end?",
+              options: ["the inner for loop (over d)", "the outer for loop (over n)", "the whole program", "the if statement"],
+              answer: 0,
+              explain: "break leaves only the nearest enclosing loop, here the divisor loop. The outer loop continues with the next n.",
+            },
+          ],
+        },
+        {
+          type: "activity",
+          activity: {
+            kind: "match",
+            prompt: "Match each code fragment to its output.",
+            pairs: [
+              ["int i = 0; do { i++; } while (i < 0); print i", "1"],
+              ["int i = 0; while (i < 0) i++; print i", "0"],
+              ["int s = 0; for (int i = 1; i <= 4; i++) s += i; print s", "10"],
+              ["print 17 % 5 + 17 / 5", "5"],
+            ],
+            explain: "do-while runs once even when the test fails; while may not run at all. 1 + 2 + 3 + 4 = 10; 2 + 3 = 5.",
+          },
+        },
+        {
+          type: "callout",
+          tone: "tip",
+          title: "Practical-exam tip",
+          md: "Before typing a loop, dry-run it on paper for the first two passes and the last pass; most errors are at the boundaries (`<` versus `<=`). Use a boolean flag for \"is it ...?\" checks, and print the result after the loop.",
+        },
+        {
+          type: "callout",
+          tone: "exam",
+          title: "ISC tip",
+          md: "\"Find the errors\" questions often hide: `=` in place of `==` in a condition, a semicolon right after `if (...)` or `for (...)` (which makes the body empty), a missing break in a switch, and a variable used outside its scope. Scan for these four first.",
+        },
+        {
+          type: "keypoints",
+          items: [
+            "Evaluate step by step, noting each variable's value after every ++ or --.",
+            "Cases that fall through to one statement become an || condition in if-else.",
+            "Use a flag and decide after the loop; divisors up to √n are enough for primes.",
+            "Check loop boundaries and stray semicolons first when debugging.",
+          ],
+        },
+      ],
+      flashcards: [
+        { front: "Flag variable", back: "A boolean that records whether something happened inside a loop, checked after the loop ends." },
+        { front: "Why test divisors only up to √n", back: "Any factor larger than √n pairs with one smaller than √n, which would already have been found." },
+        { front: "Semicolon after if (cond)", back: "`if (x > 0);` has an empty body, so the next statement runs whatever the condition is." },
+        { front: "Primes between 20 and 50", back: "23, 29, 31, 37, 41, 43, 47 (seven primes)." },
+        { front: "Switch with grouped cases → if", back: "Join the grouped case values with || in a single condition." },
+        { front: "17 % 5 + 17 / 5", back: "2 + 3 = 5." },
+      ],
+      quiz: [
+        {
+          kind: "numeric",
+          q: "int x = 5; x += x++ * 2; What is x?",
+          answer: 15,
+          explain: "x = 5 + (x++ × 2): the old x (5) is saved; x++ gives 5, so 5 + 10 = 15 is stored, overwriting the increment.",
+          difficulty: 3,
+        },
+        {
+          kind: "mcq",
+          q: "What is printed? `int i; for (i = 1; i <= 3; i++); System.out.println(i);`",
+          options: ["4", "1 2 3", "3", "1"],
+          answer: 0,
+          explain: "The semicolon after the for header makes the body empty. The loop just counts i up to 4, and then the println runs once.",
+          difficulty: 2,
+        },
+        {
+          kind: "truefalse",
+          q: "`if (a = 5)` is a valid condition in Java when a is an int.",
+          answer: false,
+          explain: "a = 5 is an int expression, not a boolean, so it does not compile. Use a == 5.",
+        },
+        {
+          kind: "numeric",
+          q: "How many primes are there between 1 and 20?",
+          answer: 8,
+          explain: "2, 3, 5, 7, 11, 13, 17, 19.",
+        },
+        {
+          kind: "mcq",
+          q: "Which loop is equivalent to `for (int i = 0; i < 3; i++) print(i);`?",
+          options: ["int i = 0; while (i < 3) { print(i); i++; }", "int i = 0; while (i < 3) { i++; print(i); }", "int i = 0; do { i++; print(i); } while (i < 3);", "int i = 1; while (i <= 3) { print(i); i++; }"],
+          answer: 0,
+          explain: "Same start, same test, and the update after the body: it prints 0, 1, 2. The others print 1, 2, 3.",
+          difficulty: 2,
+        },
+        {
+          kind: "mcq",
+          q: "int n = 4; String r = (n % 2 == 0) ? (n > 3 ? \"big even\" : \"small even\") : \"odd\"; r is:",
+          options: ["big even", "small even", "odd", "Compile error"],
+          answer: 0,
+          explain: "4 is even and 4 > 3, so \"big even\".",
+        },
+        {
+          kind: "fill",
+          q: "In Primes.java the inner loop test `d * d <= n` could also be written `d <= Math.___(n)`.",
+          answer: ["sqrt"],
+          explain: "Math.sqrt(n) returns the square root as a double.",
+        },
+      ],
+    },
+  ],
+};
+
+export const topics: Topic[] = [numbers, propLogic, hardware, objectsClasses, primitives, exprStatements];
 
 /** Chapter title ("11:" / "12:" + exact title) → topic slug(s) that teach it. */
 export const links: Record<string, string | string[]> = {
@@ -3421,4 +4267,5 @@ export const links: Record<string, string | string[]> = {
   "11:Computer Hardware": "c11-isc-computer-hardware",
   "11:Objects and Classes": "c11-isc-objects-classes",
   "11:Primitive Values, Wrapper Classes and Types": "c11-isc-primitive-wrapper-types",
+  "11:Expressions and Statements": "c11-isc-expressions-statements",
 };
