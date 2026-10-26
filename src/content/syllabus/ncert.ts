@@ -169,7 +169,7 @@ export const CHEMISTRY_12: Row[] = [
   ["Alcohols, Phenols and Ethers", "che.organic-func"],
   ["Aldehydes, Ketones and Carboxylic Acids", "che.organic-func"],
   ["Amines", "che.organic-func"],
-  ["Biomolecules", "bio.biomolecules"],
+  ["Biomolecules", "che.biomolecules"],
 ];
 
 export const BIOLOGY_12: Row[] = [

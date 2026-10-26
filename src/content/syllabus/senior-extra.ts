@@ -71,7 +71,7 @@ export const CS_ISC_11 = cs([
   "Expressions and Statements",
   "Methods",
   "Arrays",
-  "Strings",
+  "Strings in Java",
   "Recursion",
   "Basic Input/Output and Packages",
   "Trends in Computing and Ethics",

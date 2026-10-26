@@ -169,7 +169,7 @@ const CHEMISTRY_12: Row[] = [
   ["Alcohols, Phenols and Ethers", "che.organic-func"],
   ["Aldehydes, Ketones and Carboxylic Acids", "che.organic-func"],
   ["Organic Compounds containing Nitrogen", "che.organic-func"],
-  ["Biomolecules", "bio.biomolecules"],
+  ["Biomolecules", "che.biomolecules"],
 ];
 const BIOLOGY_11: Row[] = [
   ["Diversity of Living Organisms", "bio.diversity"],

@@ -137,6 +137,7 @@ export const TOPICS = {
   "bio.cell-division": { lessons: ["exam-biology/cell-biology/cell-biology-problem-patterns"], exam: B("Cell Biology") },
   "bio.tissues": { lessons: ["biology-school/human-body-systems/tissues-and-digestion"] },
   "bio.biomolecules": { lessons: [], exam: B("Biomolecules") },
+  "che.biomolecules": { lessons: [], exam: B("Biomolecules") },
   "bio.diversity": { lessons: [] },
   "bio.plant-structure": { lessons: [] },
   "bio.photosynthesis": { lessons: ["biology-school/plants-and-photosynthesis/photosynthesis"], exam: B("Plant Physiology") },
