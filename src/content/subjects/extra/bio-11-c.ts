@@ -1652,8 +1652,621 @@ const biomolecules: Topic = {
   ],
 };
 
-export const topics: Topic[] = [cellUnit, biomolecules];
+/* ------------------------------------------------------------------ */
+/* Cell Cycle and Cell Division                                        */
+/* ------------------------------------------------------------------ */
+const cellCycle: Topic = {
+  slug: "c11-bio-cell-cycle",
+  title: "Cell Cycle and Cell Division",
+  icon: "🧫",
+  description:
+    "Phases of the cell cycle and G0, the four stages of mitosis, cytokinesis in plant and animal cells, significance of mitosis, meiosis I with the five substages of prophase I, meiosis II, and the significance of meiosis.",
+  lessons: [
+    /* ---------------- Lesson 1: cell cycle and mitosis ---------------- */
+    {
+      slug: "c11-bio-cell-cycle-mitosis",
+      title: "The Cell Cycle and Mitosis",
+      summary:
+        "Interphase (G1, S, G2) and M phase, the quiescent G0 stage, how DNA content and chromosome number change, the stages of mitosis, cytokinesis, and why mitosis matters.",
+      minutes: 24,
+      xp: 60,
+      blocks: [
+        {
+          type: "text",
+          md: "A cut on your knee heals in a week. Skin cells next to the wound copy their DNA, grow and divide again and again until the gap is filled. Each new cell has exactly the same chromosomes as the old one. The sequence of events by which a cell **duplicates its genome, synthesises other cell parts and divides into two daughter cells** is the **cell cycle**.\n\nDNA synthesis happens in only one stage of the cycle, but cell growth (increase in cytoplasm) goes on continuously. The duplicated chromosomes are then shared out to the daughter nuclei through a series of events under genetic control.",
+        },
+        {
+          type: "table",
+          headers: ["Phase", "What happens"],
+          rows: [
+            ["**G1** (Gap 1)", "Interval between mitosis and the start of DNA replication. The cell is metabolically active and grows, but does not replicate its DNA."],
+            ["**S** (Synthesis)", "DNA is replicated. DNA per cell **doubles (2C → 4C)**, but the **chromosome number stays the same (2n)**. In animal cells the **centriole duplicates** in the cytoplasm."],
+            ["**G2** (Gap 2)", "Proteins are made in preparation for mitosis while cell growth continues."],
+            ["**M phase**", "Karyokinesis (division of the nucleus) followed by cytokinesis (division of the cytoplasm)."],
+            ["**G0** (quiescent)", "Cells that leave G1 and stop dividing. They stay metabolically active but do not proliferate unless needed. Heart cells in adult animals hardly divide at all."],
+          ],
+        },
+        {
+          type: "text",
+          md: "**Interphase** = G1 + S + G2. It is the resting phase only in name: the cell is busy preparing for division. A typical human cell in culture divides about **once in 24 hours**; the M phase lasts only **about an hour**, so interphase takes **more than 95%** of the cycle. Yeast completes a cycle in about **90 minutes**.\n\nIn animals, mitosis is seen only in **diploid somatic cells**. Plants can show mitosis in both **haploid and diploid** cells. In some lower plants and some social insects (such as male honeybees), haploid cells also divide by mitosis.",
+        },
+        {
+          type: "heading",
+          text: "The four stages of mitosis",
+        },
+        {
+          type: "table",
+          headers: ["Stage", "Key events"],
+          rows: [
+            ["**Prophase**", "Chromatin condenses into compact chromosomes, each with two chromatids joined at the centromere. The centrosome (duplicated in S) moves to opposite poles; each radiates microtubules called **asters**; asters and spindle fibres form the **mitotic apparatus**. By the end, **Golgi, ER, nucleolus and nuclear envelope are no longer seen**."],
+            ["**Metaphase**", "Starts with **complete disintegration of the nuclear envelope**. Condensation is complete; chromosome morphology is **easiest to study** now. Spindle fibres attach to **kinetochores** (discs on the centromere). Chromosomes line up at the equator on the **metaphase plate**; sister chromatids face opposite poles."],
+            ["**Anaphase**", "Centromeres **split**; sister chromatids (now daughter chromosomes) separate and move to opposite poles, **centromere leading and arms trailing**."],
+            ["**Telophase**", "Chromosomes reach the poles, decondense and lose their individuality. The **nuclear envelope** re-forms around each cluster; **nucleolus, Golgi and ER reappear**."],
+          ],
+        },
+        {
+          type: "text",
+          md: "**Cytokinesis.** In **animal cells** a **furrow** appears in the plasma membrane and deepens until the cell is pinched into two. In **plant cells**, the rigid wall prevents furrowing; a **cell plate** forms in the **centre** and grows **outwards** to meet the side walls. The cell plate is the precursor of the **middle lamella**. Organelles such as mitochondria and plastids are shared between the daughter cells.\n\nSometimes karyokinesis is **not followed by cytokinesis**, giving a multinucleate cell called a **syncytium**, for example the **liquid endosperm of coconut**.",
+        },
+        {
+          type: "list",
+          items: [
+            "**Significance of mitosis:** produces daughter cells with an **identical genetic complement**.",
+            "**Growth** of multicellular organisms.",
+            "Restores the **nucleo-cytoplasmic ratio**, which is disturbed as a cell grows.",
+            "**Repair and replacement**: cells of the upper epidermis, the gut lining and blood cells are constantly replaced.",
+            "In plants, mitosis in **apical and lateral (cambium) meristems** gives continuous growth throughout life.",
+          ],
+        },
+        {
+          type: "example",
+          title: "Tracking chromosomes and DNA",
+          problem: "Onion root-tip cells have 2n = 16. Let the DNA content of a G1 nucleus be 2C. Give the chromosome number and DNA content of one cell at G1, G2, anaphase of mitosis, and each daughter cell after cytokinesis.",
+          steps: [
+            "G1: 16 chromosomes, 2C.",
+            "S doubles DNA but not chromosome number, so G2: 16 chromosomes (each with 2 chromatids, 32 chromatids), 4C.",
+            "Anaphase: centromeres split, so each chromatid counts as a chromosome. The cell has 32 chromosomes, still 4C.",
+            "After cytokinesis each daughter gets 16 chromosomes and 2C, the same as the parent in G1.",
+          ],
+          answer: "G1: 16, 2C. G2: 16, 4C. Anaphase: 32, 4C. Daughter: 16, 2C.",
+        },
+        {
+          type: "mistake",
+          wrong: "The S phase doubles the chromosome number from 2n to 4n.",
+          right: "S phase doubles the **DNA content** (2C → 4C). The **chromosome number stays 2n**, because each chromosome now has two chromatids joined at one centromere.",
+          why: "Students count DNA and chromosomes as the same thing. Chromosomes are counted by centromeres, and no new centromeres separate until anaphase.",
+        },
+        {
+          type: "activity",
+          activity: {
+            kind: "order",
+            prompt: "Arrange these mitotic events in the order they happen.",
+            items: [
+              "Chromatin condenses and centrosomes move to opposite poles",
+              "Nuclear envelope fully disintegrates and chromosomes align on the metaphase plate",
+              "Centromeres split and chromatids move to opposite poles",
+              "Nuclear envelope and nucleolus re-form around each cluster",
+              "A furrow or cell plate divides the cytoplasm",
+            ],
+            explain: "Prophase, metaphase, anaphase, telophase, then cytokinesis. The nuclear envelope's breakdown marks the start of metaphase and its reformation marks telophase.",
+          },
+        },
+        {
+          type: "checkpoint",
+          questions: [
+            {
+              kind: "mcq",
+              q: "The best stage to count and study the shape of chromosomes is:",
+              options: ["Prophase", "Metaphase", "Anaphase", "Telophase"],
+              answer: 1,
+              explain: "Condensation is complete in metaphase and the chromosomes lie in one plane, so their morphology is easiest to study.",
+            },
+            {
+              kind: "mcq",
+              q: "In which phase does the centriole duplicate in animal cells?",
+              options: ["G1", "S", "G2", "Prophase"],
+              answer: 1,
+              explain: "While DNA replicates in the nucleus during S phase, the centriole duplicates in the cytoplasm.",
+            },
+          ],
+        },
+        {
+          type: "callout",
+          tone: "exam",
+          title: "Board tip",
+          md: "A 5-mark mitosis answer needs labelled diagrams of all four stages plus one line each on what marks the start and end of each stage. For 'cytokinesis in plants and animals', the key contrast is furrow (outside in) versus cell plate (centre outwards).",
+        },
+        {
+          type: "keypoints",
+          items: [
+            "Cell cycle = interphase (G1, S, G2) + M phase; human cell ~24 h with M ~1 h; yeast ~90 min.",
+            "S phase: DNA 2C → 4C, chromosome number unchanged; centriole duplicates.",
+            "G0: quiescent, metabolically active, not dividing.",
+            "Prophase (condense, asters), metaphase (plate, kinetochores), anaphase (centromeres split), telophase (envelope re-forms).",
+            "Animal cytokinesis by furrow; plant by cell plate from centre outwards; syncytium in coconut endosperm.",
+          ],
+        },
+      ],
+      flashcards: [
+        { front: "Duration of a human cell cycle in culture", back: "About 24 hours, with M phase about 1 hour." },
+        { front: "Duration of the yeast cell cycle", back: "About 90 minutes." },
+        { front: "DNA content change in S phase", back: "2C → 4C; chromosome number stays 2n." },
+        { front: "G0 stage", back: "Quiescent: cells are metabolically active but no longer divide unless needed." },
+        { front: "Marks the start of metaphase", back: "Complete disintegration of the nuclear envelope." },
+        { front: "Kinetochore", back: "Disc-shaped structure on the centromere where spindle fibres attach." },
+        { front: "Cell plate", back: "Forms in the centre of a dividing plant cell, grows outwards; precursor of the middle lamella." },
+        { front: "Syncytium example", back: "Liquid endosperm of coconut (karyokinesis without cytokinesis)." },
+      ],
+      quiz: [
+        {
+          kind: "mcq",
+          q: "Golgi complex, ER, nucleolus and nuclear envelope are no longer seen at the end of:",
+          options: ["Prophase", "Metaphase", "Anaphase", "Telophase"],
+          answer: 0,
+          explain: "By the end of prophase these structures are no longer visible; they reappear in telophase.",
+        },
+        {
+          kind: "truefalse",
+          q: "Interphase is called the resting phase because the cell is metabolically inactive.",
+          answer: false,
+          explain: "During interphase the cell grows, replicates DNA and makes proteins in an orderly way; it is preparing for division, not resting.",
+        },
+        {
+          kind: "fill",
+          q: "During anaphase, chromosomes move with the ___ towards the pole and the arms trailing behind.",
+          answer: ["centromere", "centromeres", "kinetochore"],
+          explain: "Spindle fibres pull on the kinetochores at the centromere, so it leads and the arms trail.",
+        },
+        {
+          kind: "multi",
+          q: "Which are roles of mitosis?",
+          options: [
+            "Restoring the nucleo-cytoplasmic ratio",
+            "Replacing cells of the gut lining",
+            "Growth of plants from meristems",
+            "Halving the chromosome number for gametes",
+          ],
+          answers: [0, 1, 2],
+          explain: "Mitosis keeps chromosome number constant; halving the number is the role of meiosis.",
+        },
+        {
+          kind: "numeric",
+          q: "A cell cycle lasts 24 hours and M phase lasts 1 hour. What percentage of the cycle is interphase? (one decimal place)",
+          answer: 95.8,
+          tolerance: 0.1,
+          explain: "Interphase = 23 h; 23 ÷ 24 × 100 = 95.8%. This is why NCERT says interphase lasts more than 95% of the cycle.",
+          difficulty: 2,
+        },
+        {
+          kind: "mcq",
+          q: "If the DNA content of a cell in G2 is 8 pg, the DNA content of the same cell in G1 is:",
+          options: ["16 pg", "8 pg", "4 pg", "2 pg"],
+          answer: 2,
+          explain: "G2 comes after DNA doubling in S. So G1 has half of the G2 content: 4 pg.",
+          difficulty: 2,
+          hint: "Which phase lies between G1 and G2?",
+        },
+        {
+          kind: "mcq",
+          q: "Cell plate formation in plants starts:",
+          options: ["At the periphery and moves inward", "In the centre and grows outward", "At one pole and moves to the other", "Only after nuclear envelope breakdown"],
+          answer: 1,
+          explain: "The cell plate begins in the centre of the cell and grows outward to join the existing side walls.",
+        },
+        {
+          kind: "mcq",
+          q: "Which cells are most likely to be in G0?",
+          options: ["Cells of root apical meristem", "Cardiac muscle cells of an adult", "Cells of a growing embryo", "Cells of the basal epidermis"],
+          answer: 1,
+          explain: "Adult heart cells rarely divide and remain in a quiescent G0 state. Meristem, embryo and basal epidermal cells divide actively.",
+          difficulty: 2,
+        },
+      ],
+    },
+    /* ---------------- Lesson 2: meiosis ---------------- */
+    {
+      slug: "c11-bio-meiosis",
+      title: "Meiosis",
+      summary:
+        "Why gametes need meiosis, the five substages of prophase I with synapsis and crossing over, metaphase to telophase I, interkinesis, meiosis II, comparison with mitosis, and the significance of meiosis.",
+      minutes: 24,
+      xp: 60,
+      blocks: [
+        {
+          type: "text",
+          md: "Human body cells have 46 chromosomes. If sperm and egg also had 46, the zygote would have 92, and the number would double every generation. Sexual reproduction works because gametes are made by **meiosis**, the division that **halves the chromosome number** and gives **haploid** daughter cells.\n\nMeiosis has **two sequential cycles of nuclear and cell division** (meiosis I and II) but **only one cycle of DNA replication**. It starts after the chromosomes have replicated in S phase. Homologous chromosomes pair and recombine, and **four haploid cells** form at the end of meiosis II.",
+        },
+        {
+          type: "heading",
+          text: "Prophase I: five substages",
+        },
+        {
+          type: "table",
+          headers: ["Substage", "Key events"],
+          rows: [
+            ["**Leptotene**", "Chromosomes become gradually visible under the light microscope; compaction continues."],
+            ["**Zygotene**", "Homologous chromosomes start pairing: **synapsis**. A **synaptonemal complex** forms. The pair of synapsed homologues is a **bivalent** or **tetrad**."],
+            ["**Pachytene**", "The four chromatids of each bivalent become distinct (tetrads). **Recombination nodules** appear, the sites of **crossing over** between **non-sister chromatids** of homologues. Crossing over is enzyme-mediated (**recombinase**). Pachytene lasts longer than leptotene and zygotene."],
+            ["**Diplotene**", "The synaptonemal complex **dissolves**; homologues of each bivalent try to separate except at crossover points, which look like X-shaped **chiasmata**. In oocytes of some vertebrates, diplotene can last **months or years**."],
+            ["**Diakinesis**", "**Terminalisation of chiasmata**; chromosomes fully condensed; the meiotic spindle assembles. By the end, the nucleolus disappears and the nuclear envelope breaks down."],
+          ],
+        },
+        {
+          type: "text",
+          md: "**Metaphase I.** Bivalents line up on the equatorial plate. Microtubules from opposite poles attach to the **kinetochores of homologous chromosomes**.\n\n**Anaphase I.** **Homologous chromosomes separate**, while **sister chromatids stay joined** at their centromeres.\n\n**Telophase I.** The nuclear membrane and nucleolus reappear and cytokinesis follows, giving a **dyad of cells**. Chromosomes often do not reach the fully extended state of interphase.\n\n**Interkinesis** is the short stage between the two divisions. There is **no DNA replication** in it.",
+        },
+        {
+          type: "text",
+          md: "**Meiosis II** resembles a normal mitosis.\n\n- **Prophase II** begins right after cytokinesis, usually before chromosomes have fully elongated. The nuclear membrane disappears by its end and chromosomes compact again.\n- **Metaphase II**: chromosomes align at the equator; microtubules attach to the kinetochores of **sister chromatids**.\n- **Anaphase II**: the **centromere of each chromosome splits**, and sister chromatids move to opposite poles.\n- **Telophase II**: nuclear envelopes form around the four groups of chromosomes; cytokinesis gives a **tetrad of four haploid cells**.",
+        },
+        {
+          type: "formula",
+          tex: t`\underset{\text{after S}}{2n,\ 4C} \;\xrightarrow{\text{Meiosis I}}\; 2 \times (n,\ 2C) \;\xrightarrow{\text{Meiosis II}}\; 4 \times (n,\ 1C)`,
+          caption: "Chromosome number halves in meiosis I (reductional); DNA halves again in meiosis II (equational).",
+        },
+        {
+          type: "table",
+          headers: ["Feature", "Mitosis", "Meiosis"],
+          rows: [
+            ["Divisions", "One", "Two (I and II), with one DNA replication"],
+            ["Daughter cells", "Two, diploid, identical", "Four, haploid, genetically different"],
+            ["Pairing of homologues", "Absent", "Synapsis in zygotene"],
+            ["Crossing over", "Absent", "In pachytene"],
+            ["What separates in anaphase", "Sister chromatids", "Homologues in anaphase I; sister chromatids in anaphase II"],
+            ["Where", "Somatic cells", "Meiocytes (germ cells) forming gametes or spores"],
+          ],
+        },
+        {
+          type: "list",
+          items: [
+            "**Significance of meiosis:** it **conserves the chromosome number** of a species across generations in sexually reproducing organisms, even though it halves the number in each gamete.",
+            "It **increases genetic variability** from one generation to the next (crossing over and independent assortment of homologues). Variation is important for evolution.",
+          ],
+        },
+        {
+          type: "example",
+          title: "Counting in meiosis",
+          problem: "A plant has 2n = 20. For one meiocyte, give: the number of bivalents in pachytene, chromatids in pachytene, chromosomes in each cell after telophase I, and chromosomes in each cell after telophase II.",
+          steps: [
+            "Bivalents = number of homologous pairs = n = 10.",
+            "Each bivalent has 4 chromatids, so 10 × 4 = 40 chromatids.",
+            "Anaphase I separates homologues, so each cell after telophase I has n = 10 chromosomes (each still with 2 chromatids).",
+            "Anaphase II separates sister chromatids, so each of the four cells has 10 chromosomes (each with 1 chromatid).",
+          ],
+          answer: "10 bivalents; 40 chromatids; 10 chromosomes; 10 chromosomes.",
+        },
+        {
+          type: "mistake",
+          wrong: "Crossing over happens in diplotene because that is where chiasmata are seen.",
+          right: "Crossing over happens in **pachytene** (at recombination nodules). Chiasmata seen in diplotene are the **visible result** of crossing over that has already happened.",
+          why: "We see the X-shapes only in diplotene, so students place the event there. NEET repeatedly asks 'crossing over occurs in' with diplotene as the trap option.",
+        },
+        {
+          type: "activity",
+          activity: {
+            kind: "order",
+            prompt: "Put the substages of prophase I in order.",
+            items: ["Leptotene", "Zygotene", "Pachytene", "Diplotene", "Diakinesis"],
+            explain: "A memory line: 'Lazy Zebras Prefer Dry Dates' for leptotene, zygotene, pachytene, diplotene, diakinesis.",
+          },
+        },
+        {
+          type: "checkpoint",
+          questions: [
+            {
+              kind: "mcq",
+              q: "The synaptonemal complex is formed during:",
+              options: ["Leptotene", "Zygotene", "Diplotene", "Diakinesis"],
+              answer: 1,
+              explain: "It forms in zygotene, along with synapsis of homologues, and dissolves in diplotene.",
+            },
+          ],
+        },
+        {
+          type: "callout",
+          tone: "exam",
+          title: "Board tip",
+          md: "For 'describe prophase I', write the five substages in order with one defining event each (visible, synapsis, crossing over, chiasmata, terminalisation). For differences between mitosis and meiosis, give at least four points in a table; ISC and PUC papers often ask for 'any three'.",
+        },
+        {
+          type: "keypoints",
+          items: [
+            "Meiosis: two divisions, one DNA replication, four haploid cells.",
+            "Leptotene (visible), zygotene (synapsis, synaptonemal complex), pachytene (crossing over, recombinase), diplotene (chiasmata), diakinesis (terminalisation).",
+            "Anaphase I separates homologues; anaphase II splits centromeres and separates sister chromatids.",
+            "Interkinesis has no DNA replication.",
+            "Meiosis conserves chromosome number across generations and increases genetic variability.",
+          ],
+        },
+      ],
+      flashcards: [
+        { front: "Synapsis", back: "Pairing of homologous chromosomes in zygotene." },
+        { front: "Bivalent (tetrad)", back: "A pair of synapsed homologous chromosomes, with four chromatids." },
+        { front: "Enzyme of crossing over", back: "Recombinase." },
+        { front: "Recombination nodules appear in", back: "Pachytene." },
+        { front: "Chiasmata", back: "X-shaped sites where homologues stay joined after crossing over; seen in diplotene." },
+        { front: "Diakinesis", back: "Terminalisation of chiasmata; spindle assembles; nucleolus and nuclear envelope disappear." },
+        { front: "Interkinesis", back: "Short stage between meiosis I and II; no DNA replication." },
+        { front: "Long diplotene", back: "In oocytes of some vertebrates, it can last months or years." },
+      ],
+      quiz: [
+        {
+          kind: "mcq",
+          q: "Homologous chromosomes separate during:",
+          options: ["Anaphase of mitosis", "Anaphase I", "Anaphase II", "Telophase II"],
+          answer: 1,
+          explain: "Anaphase I separates homologues; sister chromatids remain joined until anaphase II.",
+        },
+        {
+          kind: "mcq",
+          q: "Terminalisation of chiasmata is a feature of:",
+          options: ["Zygotene", "Pachytene", "Diplotene", "Diakinesis"],
+          answer: 3,
+          explain: "In diakinesis the chiasmata move towards the ends of chromosomes (terminalise).",
+        },
+        {
+          kind: "truefalse",
+          q: "DNA replicates during interkinesis to prepare for meiosis II.",
+          answer: false,
+          explain: "Interkinesis is short and has no DNA replication; that is why meiosis II reduces DNA from 2C to 1C.",
+        },
+        {
+          kind: "fill",
+          q: "At the end of meiosis I, the two cells formed are called a ___ of cells.",
+          answer: ["dyad"],
+          explain: "Telophase I gives a dyad; telophase II gives a tetrad of cells.",
+        },
+        {
+          kind: "numeric",
+          q: "A species has 2n = 46. How many bivalents form in zygotene of one meiocyte?",
+          answer: 23,
+          explain: "Bivalents = homologous pairs = n = 46 ÷ 2 = 23.",
+        },
+        {
+          kind: "multi",
+          q: "Which events happen in meiosis but not in mitosis?",
+          options: ["Synapsis", "Crossing over", "Splitting of centromeres", "Formation of chiasmata", "Formation of spindle"],
+          answers: [0, 1, 3],
+          explain: "Synapsis, crossing over and chiasmata are unique to meiosis. Centromeres split and spindles form in both.",
+          difficulty: 2,
+        },
+        {
+          kind: "mcq",
+          q: "If a meiocyte at G1 has 2C DNA, a cell at the end of telophase I has:",
+          options: ["4C", "2C", "1C", "C/2"],
+          answer: 1,
+          explain: "After S: 4C. Meiosis I halves it to 2C per cell (n chromosomes, each with two chromatids). Meiosis II then gives 1C.",
+          difficulty: 2,
+          hint: "Start from the DNA content after S phase.",
+        },
+      ],
+    },
+    /* ---------------- Exam edge ---------------- */
+    {
+      slug: "c11-bio-cell-cycle-exam-edge",
+      title: "Exam edge: Cell Cycle and Cell Division",
+      summary:
+        "What NEET and KCET ask: phase-wise DNA and chromosome counts, the event-to-stage questions on mitosis and prophase I, number of divisions to make a given number of cells, and assertion–reason items.",
+      minutes: 22,
+      xp: 55,
+      track: "exam",
+      blocks: [
+        {
+          type: "text",
+          md: "**NEET** takes 1–3 questions from this chapter every year. The favourites are 'which event in which stage', DNA content (C) versus chromosome number (n) through the cycle, and the substages of prophase I. **KCET** asks the same one-liners and simple counting. The chapter is also the base for gametogenesis and genetics in Class 12.",
+        },
+        {
+          type: "list",
+          items: [
+            "NCERT line: in the 24-hour human cell cycle, cell division proper lasts **only about an hour**.",
+            "NCERT line: interphase lasts **more than 95%** of the cycle.",
+            "NCERT line: complete disintegration of the nuclear envelope marks the **start of metaphase**.",
+            "NCERT line: crossing over is an enzyme-mediated process; the enzyme is **recombinase**.",
+            "NCERT line: in oocytes of some vertebrates, **diplotene** can last for months or years.",
+            "NCERT line: cells in G0 remain metabolically active but no longer proliferate unless called on to do so.",
+          ],
+        },
+        {
+          type: "formula",
+          tex: t`\text{cells after } k \text{ generations} = 2^{k} \qquad \text{divisions needed for } N \text{ cells} = N - 1`,
+          caption: "Safe for mitosis from a single cell when every cell divides each generation.",
+        },
+        {
+          type: "example",
+          title: "NEET level: event to stage",
+          problem: "Match: (p) chromosomes align on the plate (q) centromeres split in meiosis (r) chiasmata first visible (s) synaptonemal complex forms — with (1) zygotene (2) diplotene (3) anaphase II (4) metaphase.",
+          steps: [
+            "Alignment on the equatorial plate is metaphase: p–4.",
+            "In meiosis, centromeres split only in anaphase II: q–3.",
+            "Chiasmata become visible in diplotene: r–2.",
+            "The synaptonemal complex forms in zygotene: s–1.",
+          ],
+          answer: "p–4, q–3, r–2, s–1.",
+        },
+        {
+          type: "example",
+          title: "Counting divisions",
+          problem: "How many mitotic divisions are needed to produce 128 cells from one cell, and in how many generations?",
+          steps: [
+            "Generations: 2^k = 128, so k = 7.",
+            "Total divisions: each division adds one cell, so 128 − 1 = 127 divisions (1 + 2 + 4 + 8 + 16 + 32 + 64 = 127).",
+          ],
+          answer: "7 generations; 127 divisions.",
+        },
+        {
+          type: "example",
+          title: "Assertion–reason",
+          problem: "A: Meiosis II is called an equational division. R: In meiosis II the chromosome number of each cell stays the same, as the sister chromatids separate.",
+          steps: [
+            "A is true: meiosis II resembles mitosis and does not change chromosome number.",
+            "R is true: each cell enters with n chromosomes (of two chromatids) and its daughters also have n.",
+            "R explains A, since 'equational' means the number is kept equal.",
+          ],
+          answer: "Both A and R are true, and R is the correct explanation of A.",
+        },
+        {
+          type: "example",
+          title: "Harder: C and n through meiosis",
+          problem: "A meiocyte has 2n = 12 and 6 pg DNA in G1. Give chromosome number and DNA per cell in (a) G2, (b) metaphase I, (c) after telophase I, (d) metaphase II, (e) after telophase II.",
+          steps: [
+            "S doubles DNA, not chromosomes: (a) G2 = 12 chromosomes, 12 pg.",
+            "(b) Metaphase I: still one cell before any separation = 12 chromosomes (6 bivalents), 12 pg.",
+            "(c) Homologues separate: each cell 6 chromosomes, 6 pg.",
+            "(d) Metaphase II: same as (c), 6 chromosomes, 6 pg.",
+            "(e) Sister chromatids separate: each cell 6 chromosomes, 3 pg.",
+          ],
+          answer: "(a) 12, 12 pg (b) 12, 12 pg (c) 6, 6 pg (d) 6, 6 pg (e) 6, 3 pg.",
+        },
+        {
+          type: "mistake",
+          wrong: "To make 64 cells from one cell you need 64 divisions, or 32.",
+          right: "64 cells need 6 generations but 63 divisions in total.",
+          why: "Students confuse rounds (generations) with individual divisions. Each division turns one cell into two, adding exactly one cell.",
+        },
+        {
+          type: "mistake",
+          wrong: "Chromosome number doubles in anaphase of meiosis I.",
+          right: "In anaphase I, whole homologues move apart and centromeres do not split, so no 'doubling' happens. Chromosome number in the cell doubles transiently only in mitotic anaphase and anaphase II, when centromeres split.",
+          why: "Students carry over the mitotic anaphase count. The test is always: did centromeres split?",
+        },
+        {
+          type: "mistake",
+          wrong: "Meiosis happens only in animals to make gametes.",
+          right: "Meiosis occurs in meiocytes of all sexually reproducing organisms. In flowering plants it forms spores (microspores and megaspores), and gametes come later by mitosis.",
+          why: "Human biology dominates the examples. In plants, meiosis forms spores, and haploid gametophytes then divide by mitosis.",
+        },
+        {
+          type: "activity",
+          activity: {
+            kind: "sort",
+            prompt: "Does the event happen in mitosis, meiosis, or both?",
+            groups: ["Mitosis only", "Meiosis only", "Both"],
+            items: [
+              { text: "Synaptonemal complex forms", group: 1, hint: "It holds homologues together in zygotene." },
+              { text: "Homologues separate", group: 1, hint: "Anaphase I." },
+              { text: "Daughter cells genetically identical to parent", group: 0, hint: "No crossing over or assortment." },
+              { text: "Centromeres split", group: 2, hint: "Mitotic anaphase and anaphase II." },
+              { text: "Nuclear envelope breaks down", group: 2, hint: "Needed for spindle attachment in every division." },
+              { text: "Terminalisation of chiasmata", group: 1, hint: "Diakinesis." },
+            ],
+            explain: "Pairing, crossing over and separation of homologues belong only to meiosis I; splitting of centromeres is shared by mitosis and meiosis II.",
+          },
+        },
+        {
+          type: "checkpoint",
+          questions: [
+            {
+              kind: "mcq",
+              q: "A: The DNA content doubles in S phase but the chromosome number stays the same. R: The two chromatids made in S phase remain attached at one centromere.",
+              options: AR,
+              answer: 0,
+              explain: "Chromosomes are counted by centromeres; replicated chromatids share one centromere until anaphase, which explains A.",
+            },
+          ],
+        },
+        {
+          type: "keypoints",
+          items: [
+            "DNA content changes in S (doubles), meiosis I and II (halves each); chromosome number changes only in meiosis I (halves).",
+            "Count chromosomes by centromeres; chromatids double the count only after S.",
+            "Bivalents = n; chromatids in a bivalent = 4.",
+            "N cells from one: N − 1 divisions; 2^k after k generations.",
+            "Crossing over in pachytene, chiasmata seen in diplotene, terminalisation in diakinesis.",
+          ],
+        },
+      ],
+      flashcards: [
+        { front: "Divisions needed for 256 cells from one", back: "255 (in 8 generations)." },
+        { front: "Stage where crossing over occurs", back: "Pachytene." },
+        { front: "Stage where chromosome number is halved", back: "Anaphase I / meiosis I (reductional division)." },
+        { front: "Stage where centromeres split in meiosis", back: "Anaphase II." },
+        { front: "Number of chromatids in a bivalent", back: "Four." },
+        { front: "Phase where cells exit the cycle", back: "G0, entered from G1." },
+        { front: "DNA content of a gamete if G1 meiocyte is 2C", back: "1C." },
+      ],
+      quiz: [
+        {
+          kind: "mcq",
+          q: "In a cell with 2n = 8, how many chromatids are present at metaphase of mitosis?",
+          options: ["4", "8", "16", "32"],
+          answer: 2,
+          explain: "Each of the 8 chromosomes has two chromatids after S phase: 8 × 2 = 16.",
+        },
+        {
+          kind: "numeric",
+          q: "How many mitotic divisions are needed to produce 1024 cells from a single cell?",
+          answer: 1023,
+          explain: "Each division adds one cell, so N − 1 = 1023 divisions (over 10 generations).",
+          difficulty: 2,
+          hint: "Generations and divisions are not the same.",
+        },
+        {
+          kind: "multi",
+          q: "Select the events of prophase of mitosis.",
+          options: [
+            "Condensation of chromatin",
+            "Movement of centrosomes to opposite poles",
+            "Complete breakdown of nuclear envelope",
+            "Formation of asters",
+            "Splitting of centromeres",
+          ],
+          answers: [0, 1, 3],
+          explain: "Complete breakdown of the nuclear envelope marks the start of metaphase; centromeres split in anaphase.",
+          difficulty: 2,
+        },
+        {
+          kind: "mcq",
+          q: "A: Diplotene can last for years in oocytes of some vertebrates. R: The synaptonemal complex forms in diplotene.",
+          options: AR,
+          answer: 2,
+          explain: "A is an NCERT line. R is false: the synaptonemal complex forms in zygotene and dissolves in diplotene.",
+          difficulty: 2,
+        },
+        {
+          kind: "numeric",
+          q: "A meiocyte has 2n = 24 and 10 pg DNA in G1. What is the DNA content (pg) of one cell at metaphase II?",
+          answer: 10,
+          explain: "G1 10 pg → after S 20 pg → after meiosis I each cell 10 pg. Metaphase II is before chromatids separate, so 10 pg.",
+          difficulty: 3,
+          hint: "Meiosis I halves the doubled amount; meiosis II has not yet happened.",
+        },
+        {
+          kind: "mcq",
+          q: "Which statement is correct?",
+          options: [
+            "In animals, mitosis occurs in haploid and diploid somatic cells alike",
+            "Plants can show mitosis in both haploid and diploid cells",
+            "Interkinesis includes an S phase",
+            "Cytokinesis always follows karyokinesis",
+          ],
+          answer: 1,
+          explain: "In animals mitosis is seen only in diploid somatic cells, while plants divide by mitosis in both haploid and diploid cells. Interkinesis has no S phase, and coconut endosperm shows karyokinesis without cytokinesis.",
+          difficulty: 2,
+        },
+        {
+          kind: "mcq",
+          q: "Which pair is correctly matched?",
+          options: ["Leptotene – synapsis", "Zygotene – chiasmata", "Pachytene – recombination nodules", "Diakinesis – synaptonemal complex forms"],
+          answer: 2,
+          explain: "Recombination nodules are seen in pachytene. Synapsis is in zygotene; chiasmata in diplotene; the synaptonemal complex forms in zygotene.",
+        },
+        {
+          kind: "numeric",
+          q: "An onion root tip (2n = 16) has a cell in anaphase. How many chromosomes are in that cell?",
+          answer: 32,
+          explain: "Centromeres split in anaphase, so each of the 16 chromosomes gives two daughter chromosomes: 32 in the cell, 16 moving to each pole.",
+          difficulty: 2,
+        },
+      ],
+    },
+  ],
+};
+
+export const topics: Topic[] = [cellUnit, biomolecules, cellCycle];
 
 export const links: Record<string, string | string[]> = {
   "11:Cell: The Unit of Life": "c11-bio-cell-unit-of-life",
+  "11:Biomolecules": "c11-bio-biomolecules",
+  "11:Cell Cycle and Cell Division": "c11-bio-cell-cycle",
+  "11:Cell: Structure and Function": ["c11-bio-cell-unit-of-life", "c11-bio-biomolecules", "c11-bio-cell-cycle"],
 };

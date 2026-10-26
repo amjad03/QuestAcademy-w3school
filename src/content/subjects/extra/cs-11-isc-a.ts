@@ -1,8 +1,5 @@
 import type { Topic } from "@/content/types";
 
-/** String.raw keeps TeX backslashes intact. */
-const t = String.raw;
-
 /** Course these chapters belong to. */
 export const course = "computer-science";
 /** Syllabus family: chapter titles below are matched against `cmp` rows in src/content/syllabus/. */
@@ -505,7 +502,7 @@ const numbers: Topic = {
         {
           type: "code",
           lang: "java",
-          caption: "EvilNumber.java: an ISC practical-style program",
+          caption: "EvilNumber.java: write a program to check whether a number is an evil number",
           code: `public class EvilNumber
 {
     public static void main(String[] args)

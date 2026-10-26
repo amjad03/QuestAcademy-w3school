@@ -342,6 +342,7 @@ If $K_c > 10^{3}$, products dominate and the reaction goes almost to completion.
                 { text: "Add an iron catalyst", group: 2, hint: "A catalyst speeds both directions equally." },
                 { text: "Add argon at constant volume", group: 2, hint: "Partial pressures of N₂, H₂ and NH₃ do not change." },
               ],
+              explain: "Each shift partly undoes the change. Only the temperature change also alters K; the others change Q and the system moves until Q = K again.",
             },
           },
           {
@@ -752,6 +753,7 @@ The **ionic product** $Q_{sp}$ uses the actual ion concentrations. If $Q_{sp} > 
                 { text: "NaCl", group: 2, hint: "Both ions come from a strong acid and a strong base." },
                 { text: "KNO₃", group: 2, hint: "K⁺ and NO₃⁻ do not hydrolyse." },
               ],
+              explain: "Ask which parent acid and base the salt came from: the stronger parent wins. Ions from strong acids and strong bases do not hydrolyse.",
             },
           },
           {
@@ -1303,7 +1305,6 @@ The **ionic product** $Q_{sp}$ uses the actual ion concentrations. If $Q_{sp} > 
           },
         ],
       },
-      /* END-EQ */
     ],
   },
   /* ------------------------------------------------------------------ */
@@ -1510,7 +1511,667 @@ So **oxidation is loss of electrons** and **reduction is gain of electrons**. An
           },
         ],
       },
-      /* END-REDOX */
+      /* ---------------- Lesson 2 ---------------- */
+      {
+        slug: "c11-che-redox-types-balancing",
+        title: "Types of Redox Reactions and Balancing Equations",
+        summary: "Combination, decomposition, displacement (metal, hydrogen, oxygen and halogen) and disproportionation reactions, and balancing redox equations in acidic and basic media by the oxidation-number method and the half-reaction (ion-electron) method.",
+        minutes: 25,
+        xp: 55,
+        blocks: [
+          {
+            type: "illustration",
+            emoji: "🧴",
+            caption: "Household bleach is made by passing chlorine into cold sodium hydroxide. In that one reaction, chlorine is both oxidised and reduced.",
+          },
+          {
+            type: "text",
+            md: t`**Combination reactions** join two substances into one; they are redox when an element takes part: $\text{C} + \text{O}_2 \rightarrow \text{CO}_2$, $3\text{Mg} + \text{N}_2 \rightarrow \text{Mg}_3\text{N}_2$.
+
+**Decomposition reactions** break a compound into two or more parts; they are redox when an element is formed: $2\text{H}_2\text{O} \rightarrow 2\text{H}_2 + \text{O}_2$, $2\text{NaH} \rightarrow 2\text{Na} + \text{H}_2$, $2\text{KClO}_3 \rightarrow 2\text{KCl} + 3\text{O}_2$. Not every decomposition is redox: in $\text{CaCO}_3 \rightarrow \text{CaO} + \text{CO}_2$ no oxidation number changes.`,
+          },
+          {
+            type: "text",
+            md: t`**Displacement reactions** replace an atom or ion in a compound by another element: $\text{X} + \text{YZ} \rightarrow \text{XZ} + \text{Y}$.
+
+**Metal displacement:** $\text{Zn} + \text{CuSO}_4 \rightarrow \text{ZnSO}_4 + \text{Cu}$; $\text{Cr}_2\text{O}_3 + 2\text{Al} \rightarrow \text{Al}_2\text{O}_3 + 2\text{Cr}$ (aluminothermy). **Non-metal displacement:** very reactive metals displace hydrogen from cold water ($2\text{Na} + 2\text{H}_2\text{O} \rightarrow 2\text{NaOH} + \text{H}_2$), magnesium does so from hot water ($\text{Mg} + 2\text{H}_2\text{O} \rightarrow \text{Mg(OH)}_2 + \text{H}_2$), and many metals from acids ($\text{Fe} + 2\text{HCl} \rightarrow \text{FeCl}_2 + \text{H}_2$). Fluorine displaces oxygen from water: $2\text{F}_2 + 2\text{H}_2\text{O} \rightarrow 4\text{HF} + \text{O}_2$. A halogen displaces a less reactive halogen from its salt: $\text{Cl}_2 + 2\text{KI} \rightarrow 2\text{KCl} + \text{I}_2$. Oxidising power: F$_2$ > Cl$_2$ > Br$_2$ > I$_2$.`,
+          },
+          {
+            type: "text",
+            md: t`**Disproportionation:** one element in one oxidation state is simultaneously oxidised and reduced. The element must be able to exist in at least three oxidation states, and the reactant must be in an intermediate one.
+
+$2\text{H}_2\text{O}_2 \rightarrow 2\text{H}_2\text{O} + \text{O}_2$ (O: −1 → −2 and 0); $\text{P}_4 + 3\text{OH}^- + 3\text{H}_2\text{O} \rightarrow \text{PH}_3 + 3\text{H}_2\text{PO}_2^-$ (P: 0 → −3 and +1); $\text{S}_8 + 12\text{OH}^- \rightarrow 4\text{S}^{2-} + 2\text{S}_2\text{O}_3^{2-} + 6\text{H}_2\text{O}$; $\text{Cl}_2 + 2\text{OH}^- \rightarrow \text{ClO}^- + \text{Cl}^- + \text{H}_2\text{O}$ (Cl: 0 → +1 and −1).
+
+Fluorine cannot disproportionate: it is the most electronegative element and has no positive oxidation state, so with alkali it gives $2\text{F}_2 + 2\text{OH}^- \rightarrow 2\text{F}^- + \text{OF}_2 + \text{H}_2\text{O}$ (O is oxidised, not F). Among the chlorine oxoanions, ClO$^-$, ClO$_2^-$ and ClO$_3^-$ can disproportionate, but ClO$_4^-$ (Cl at its highest state, +7) cannot.`,
+          },
+          {
+            type: "activity",
+            activity: {
+              kind: "sort",
+              prompt: "Sort each redox reaction by its type.",
+              groups: ["Combination", "Displacement", "Disproportionation"],
+              items: [
+                { text: "C + O₂ → CO₂", group: 0, hint: "Two substances join into one." },
+                { text: "3Mg + N₂ → Mg₃N₂", group: 0, hint: "Two elements combine." },
+                { text: "Cl₂ + 2KBr → 2KCl + Br₂", group: 1, hint: "Chlorine pushes bromine out of its salt." },
+                { text: "2Na + 2H₂O → 2NaOH + H₂", group: 1, hint: "Sodium displaces hydrogen from water." },
+                { text: "P₄ + 3OH⁻ + 3H₂O → PH₃ + 3H₂PO₂⁻", group: 2, hint: "P goes from 0 to both −3 and +1." },
+                { text: "Cl₂ + 2OH⁻ → Cl⁻ + ClO⁻ + H₂O", group: 2, hint: "Cl goes from 0 to both −1 and +1." },
+              ],
+              explain: "In disproportionation the same element in the same reactant is both oxidised and reduced; in displacement one element takes the place of another.",
+            },
+          },
+          {
+            type: "heading",
+            text: "Balancing redox equations",
+          },
+          {
+            type: "list",
+            ordered: true,
+            items: [
+              "**Oxidation-number method.** Write the skeleton equation and the oxidation numbers of the atoms that change.",
+              "Find the increase and the decrease in oxidation number (per formula unit) and multiply so that total increase = total decrease.",
+              t`Balance the **charge**: add H$^+$ in acidic solution or OH$^-$ in basic solution to the side that needs it.`,
+              "Balance hydrogen (and so oxygen) by adding H₂O. Check atoms and charges.",
+            ],
+          },
+          {
+            type: "example",
+            title: "Oxidation-number method in basic medium",
+            problem: t`Balance: $\text{MnO}_4^-(\text{aq}) + \text{I}^-(\text{aq}) \rightarrow \text{MnO}_2(\text{s}) + \text{IO}_3^-(\text{aq})$ in basic solution.`,
+            steps: [
+              "Mn: +7 → +4 (decrease 3). I: −1 → +5 (increase 6).",
+              t`Equalise: 2 Mn × 3 = 6 = 1 I × 6, so $2\text{MnO}_4^- + \text{I}^- \rightarrow 2\text{MnO}_2 + \text{IO}_3^-$.`,
+              t`Charge: left $-2 - 1 = -3$, right $-1$. Basic medium: add 2OH$^-$ on the right.`,
+              t`Hydrogen: add one H$_2$O on the left: $2\text{MnO}_4^- + \text{I}^- + \text{H}_2\text{O} \rightarrow 2\text{MnO}_2 + \text{IO}_3^- + 2\text{OH}^-$.`,
+              "Check O: 8 + 1 = 9 on the left; 4 + 3 + 2 = 9 on the right. Charge −3 = −3.",
+            ],
+            answer: "2MnO₄⁻ + I⁻ + H₂O → 2MnO₂ + IO₃⁻ + 2OH⁻",
+          },
+          {
+            type: "list",
+            ordered: true,
+            items: [
+              "**Half-reaction (ion-electron) method.** Split the reaction into an oxidation half and a reduction half.",
+              "In each half, balance atoms other than O and H; then O with H₂O and H with H⁺ (in acid).",
+              "Add electrons to balance the charge in each half.",
+              "Multiply the halves so that electrons lost = electrons gained, add them and cancel common species. In basic solution, add as many OH⁻ to both sides as there are H⁺, then combine H⁺ + OH⁻ to H₂O.",
+            ],
+          },
+          {
+            type: "example",
+            title: "Half-reaction method in acidic medium",
+            problem: t`Balance: $\text{Fe}^{2+} + \text{Cr}_2\text{O}_7^{2-} \rightarrow \text{Fe}^{3+} + \text{Cr}^{3+}$ in acidic solution.`,
+            steps: [
+              t`Oxidation half: $\text{Fe}^{2+} \rightarrow \text{Fe}^{3+} + e^-$.`,
+              t`Reduction half: $\text{Cr}_2\text{O}_7^{2-} \rightarrow 2\text{Cr}^{3+}$; add 7H$_2$O on the right and 14H$^+$ on the left.`,
+              t`Charge: left $-2 + 14 = +12$, right $+6$: add 6e$^-$ on the left. $\text{Cr}_2\text{O}_7^{2-} + 14\text{H}^+ + 6e^- \rightarrow 2\text{Cr}^{3+} + 7\text{H}_2\text{O}$.`,
+              "Multiply the Fe half by 6 and add; the 6e⁻ cancel.",
+            ],
+            answer: "Cr₂O₇²⁻ + 6Fe²⁺ + 14H⁺ → 2Cr³⁺ + 6Fe³⁺ + 7H₂O (charge +24 on both sides)",
+          },
+          {
+            type: "checkpoint",
+            questions: [
+              {
+                kind: "numeric",
+                q: t`In the balanced equation $\text{MnO}_4^- + 5\text{Fe}^{2+} + x\text{H}^+ \rightarrow \text{Mn}^{2+} + 5\text{Fe}^{3+} + y\text{H}_2\text{O}$, what is x?`,
+                answer: 8,
+                explain: "MnO₄⁻ has 4 O, so y = 4 H₂O, needing 8 H⁺. Charge check: −1 + 10 + 8 = +17 = +2 + 15.",
+              },
+            ],
+          },
+          {
+            type: "mistake",
+            wrong: "In basic solution, balance with H⁺ and H₂O exactly as in acid and leave the H⁺ in the final equation.",
+            right: "H⁺ cannot be a reactant or product in a basic solution. Either balance charge with OH⁻ from the start, or add equal OH⁻ to both sides to turn every H⁺ into H₂O, then cancel extra water.",
+            why: "The acidic recipe is learned first and is easy to reuse. But a final answer with H⁺ in alkaline solution describes a reaction that cannot happen in that medium, and examiners deduct for it.",
+          },
+          {
+            type: "callout",
+            tone: "exam",
+            title: "Board tips",
+            md: "Show every step of the method the question names; balancing by inspection earns little if the question says 'by ion-electron method'. Always finish with a check line: atoms on both sides and total charge on both sides. Write states (aq), (s), (l), (g) if the question gives them.",
+          },
+          {
+            type: "keypoints",
+            items: [
+              "Redox types: combination, decomposition, displacement (metal, H₂, O₂, halogen) and disproportionation.",
+              "Disproportionation needs an element in an intermediate oxidation state; F₂ and ClO₄⁻ cannot disproportionate.",
+              "Halogen oxidising power: F₂ > Cl₂ > Br₂ > I₂.",
+              "Oxidation-number method: equalise increase and decrease, then balance charge (H⁺ or OH⁻) and H with H₂O.",
+              "Ion-electron method: balance each half for atoms and charge, equalise electrons, add.",
+            ],
+          },
+        ],
+        flashcards: [
+          { front: "Disproportionation", back: "A redox reaction in which the same element in one oxidation state is both oxidised and reduced." },
+          { front: "Why can't F₂ disproportionate?", back: "Fluorine has no positive oxidation state; it can only be reduced (to −1)." },
+          { front: "Why can't ClO₄⁻ disproportionate?", back: "Cl is already at its highest state (+7) and cannot be oxidised further." },
+          { front: "Order of oxidising power of halogens", back: "F₂ > Cl₂ > Br₂ > I₂" },
+          { front: "Balanced dichromate–Fe²⁺ equation", back: "Cr₂O₇²⁻ + 6Fe²⁺ + 14H⁺ → 2Cr³⁺ + 6Fe³⁺ + 7H₂O" },
+          { front: "Balanced permanganate–Fe²⁺ equation", back: "MnO₄⁻ + 5Fe²⁺ + 8H⁺ → Mn²⁺ + 5Fe³⁺ + 4H₂O" },
+          { front: "Aluminothermy example", back: "Cr₂O₃ + 2Al → Al₂O₃ + 2Cr (a metal displacement reaction)" },
+        ],
+        quiz: [
+          {
+            kind: "mcq",
+            q: "Which species cannot undergo disproportionation?",
+            options: ["ClO₄⁻", "ClO⁻", "ClO₃⁻", "Cl₂"],
+            answer: 0,
+            explain: "In ClO₄⁻, Cl is +7, its highest state, so it can only be reduced.",
+          },
+          {
+            kind: "mcq",
+            q: "In P₄ + 3OH⁻ + 3H₂O → PH₃ + 3H₂PO₂⁻, phosphorus is",
+            options: ["both oxidised and reduced", "only oxidised", "only reduced", "neither oxidised nor reduced"],
+            answer: 0,
+            explain: "P goes from 0 to −3 (in PH₃, reduced) and to +1 (in H₂PO₂⁻, oxidised): a disproportionation.",
+          },
+          {
+            kind: "numeric",
+            q: t`Balance $\text{Cr}_2\text{O}_7^{2-} + \text{I}^- + \text{H}^+ \rightarrow \text{Cr}^{3+} + \text{I}_2 + \text{H}_2\text{O}$ with smallest whole numbers. What is the coefficient of I⁻?`,
+            answer: 6,
+            explain: "Cr₂O₇²⁻ gains 6e⁻; each I⁻ loses 1e⁻, so 6I⁻ → 3I₂. Cr₂O₇²⁻ + 6I⁻ + 14H⁺ → 2Cr³⁺ + 3I₂ + 7H₂O.",
+            difficulty: 2,
+            hint: "How many electrons does one Cr₂O₇²⁻ accept?",
+          },
+          {
+            kind: "truefalse",
+            q: "Bromine water can oxidise chloride ions to chlorine.",
+            answer: false,
+            explain: "Cl₂ is a stronger oxidant than Br₂, so Br₂ cannot take electrons from Cl⁻. The reverse, Cl₂ + 2Br⁻ → 2Cl⁻ + Br₂, does occur.",
+          },
+          {
+            kind: "mcq",
+            q: "Which decomposition is NOT a redox reaction?",
+            options: ["CaCO₃ → CaO + CO₂", "2KClO₃ → 2KCl + 3O₂", "2H₂O → 2H₂ + O₂", "2NaH → 2Na + H₂"],
+            answer: 0,
+            explain: "In CaCO₃ → CaO + CO₂, Ca stays +2, C stays +4 and O stays −2.",
+          },
+          {
+            kind: "order",
+            q: "Order the steps of the ion-electron method in acidic solution.",
+            items: [
+              "Split into oxidation and reduction halves",
+              "Balance atoms other than O and H",
+              "Balance O with H₂O and H with H⁺",
+              "Add electrons to balance charge",
+              "Equalise electrons and add the halves",
+            ],
+            explain: "Atoms first, then O and H, then charge with electrons, and only then combine.",
+          },
+          {
+            kind: "multi",
+            q: "Which halogen displacement reactions take place in aqueous solution?",
+            options: ["Cl₂ + 2KI → 2KCl + I₂", "Br₂ + 2KI → 2KBr + I₂", "I₂ + 2KCl → 2KI + Cl₂", "Br₂ + 2KCl → 2KBr + Cl₂"],
+            answers: [0, 1],
+            explain: "A halogen displaces only those below it (weaker oxidants): Cl₂ and Br₂ both displace I₂. I₂ and Br₂ cannot displace Cl₂.",
+            difficulty: 2,
+          },
+          {
+            kind: "mcq",
+            q: t`In $\text{S}_8 + 12\text{OH}^- \rightarrow 4\text{S}^{2-} + 2\text{S}_2\text{O}_3^{2-} + 6\text{H}_2\text{O}$, how many S atoms are oxidised?`,
+            options: ["4", "8", "2", "6"],
+            answer: 0,
+            explain: "4 S atoms go to S²⁻ (0 → −2, reduced) and 4 S atoms go into 2S₂O₃²⁻ (average 0 → +2, oxidised).",
+            difficulty: 2,
+          },
+        ],
+      },
+      /* ---------------- Lesson 3 ---------------- */
+      {
+        slug: "c11-che-redox-titration-electrode",
+        title: "Redox Titrations and Electrode Processes",
+        summary: "How permanganate, dichromate and iodine titrations work and how their end points are seen, titration calculations from balanced equations, the limits of the oxidation-number idea, and redox reactions at electrodes: the Daniell cell, electrode potentials, the standard hydrogen electrode and the electrochemical series.",
+        minutes: 24,
+        xp: 55,
+        blocks: [
+          {
+            type: "illustration",
+            emoji: "🧫",
+            caption: "In a school lab, a purple drop from the burette loses its colour in the flask, again and again, until one drop stays faint pink. That pink is the end point, and no indicator was added.",
+          },
+          {
+            type: "text",
+            md: t`In a **redox titration** a solution of an oxidant is added from a burette to a reductant (or the reverse) until the reaction is just complete. The end point must be made visible:
+
+**Self-indicator:** MnO$_4^-$ is deep purple but Mn$^{2+}$ is almost colourless, so in acid the first excess drop of KMnO$_4$ (about $10^{-6}$ M) gives a lasting pink colour. **Redox indicator:** Cr$_2$O$_7^{2-}$ (orange) to Cr$^{3+}$ (green) is not sharp enough, so an indicator such as diphenylamine is added; it is oxidised by the first excess dichromate to an intense blue. **Iodine–starch:** iodine gives a deep blue colour with starch. In **iodometry**, an oxidant such as Cu$^{2+}$ first liberates iodine from iodide, and that iodine is titrated with sodium thiosulphate until the blue colour vanishes.`,
+          },
+          {
+            type: "table",
+            headers: ["Titrant", "Medium", "Key half-reaction", "End point"],
+            rows: [
+              ["KMnO₄", "dilute H₂SO₄", "MnO₄⁻ + 8H⁺ + 5e⁻ → Mn²⁺ + 4H₂O", "first permanent pink (self-indicator)"],
+              ["K₂Cr₂O₇", "dilute H₂SO₄", "Cr₂O₇²⁻ + 14H⁺ + 6e⁻ → 2Cr³⁺ + 7H₂O", "diphenylamine turns blue"],
+              ["Na₂S₂O₃ (for I₂)", "near neutral", "I₂ + 2S₂O₃²⁻ → 2I⁻ + S₄O₆²⁻", "blue starch–iodine colour disappears"],
+              ["(Cu²⁺ + excess I⁻)", "—", "2Cu²⁺ + 4I⁻ → Cu₂I₂(s) + I₂", "iodine set free, then titrated"],
+            ],
+          },
+          {
+            type: "formula",
+            tex: t`a\,\text{Ox} + b\,\text{Red} \rightarrow \text{products} \qquad \frac{M_{\text{ox}}V_{\text{ox}}}{a} = \frac{M_{\text{red}}V_{\text{red}}}{b}`,
+            caption: "Molarity × volume gives moles (or millimoles if V is in mL); divide each by its coefficient in the balanced equation.",
+          },
+          {
+            type: "example",
+            title: "Permanganate titration of iron(II)",
+            problem: "25.0 mL of an acidified Fe²⁺ solution needs 20.0 mL of 0.020 M KMnO₄ to reach a permanent pink colour. Find the molarity of Fe²⁺.",
+            steps: [
+              t`Balanced equation: $\text{MnO}_4^- + 5\text{Fe}^{2+} + 8\text{H}^+ \rightarrow \text{Mn}^{2+} + 5\text{Fe}^{3+} + 4\text{H}_2\text{O}$, so a = 1, b = 5.`,
+              "Millimoles of MnO₄⁻ = 20.0 × 0.020 = 0.40 mmol.",
+              "Millimoles of Fe²⁺ = 5 × 0.40 = 2.0 mmol.",
+              "Molarity of Fe²⁺ = 2.0/25.0 = 0.080 M.",
+            ],
+            answer: "[Fe²⁺] = 0.080 mol L⁻¹",
+          },
+          {
+            type: "example",
+            title: "Iodometric estimation of copper(II)",
+            problem: "Excess KI is added to 25.0 mL of a CuSO₄ solution. The iodine set free needs 20.0 mL of 0.050 M Na₂S₂O₃ (starch indicator). Find the molarity of Cu²⁺.",
+            steps: [
+              "Millimoles of S₂O₃²⁻ = 20.0 × 0.050 = 1.0 mmol.",
+              "I₂ + 2S₂O₃²⁻ → 2I⁻ + S₄O₆²⁻, so I₂ = 1.0/2 = 0.50 mmol.",
+              "2Cu²⁺ + 4I⁻ → Cu₂I₂ + I₂, so Cu²⁺ = 2 × 0.50 = 1.0 mmol.",
+              "Molarity of Cu²⁺ = 1.0/25.0 = 0.040 M.",
+            ],
+            answer: "[Cu²⁺] = 0.040 mol L⁻¹ (overall, 1 Cu²⁺ ≡ 1 S₂O₃²⁻)",
+          },
+          {
+            type: "checkpoint",
+            questions: [
+              {
+                kind: "mcq",
+                q: "Why is no separate indicator needed in KMnO₄ titrations?",
+                options: [
+                  "MnO₄⁻ is intensely coloured while Mn²⁺ is nearly colourless",
+                  "Mn²⁺ is deep pink",
+                  "KMnO₄ reacts with the acid to give a colour",
+                  "The solution boils at the end point",
+                ],
+                answer: 0,
+                explain: "Until the end point the purple MnO₄⁻ is reduced to colourless Mn²⁺; the first excess drop gives a permanent pink.",
+              },
+            ],
+          },
+          {
+            type: "text",
+            md: t`**Limits of the oxidation-number idea.** Oxidation numbers are a book-keeping device. In covalent molecules electrons are only shifted, not fully transferred, and an average oxidation number can be a fraction (Fe$_3$O$_4$, S$_4$O$_6^{2-}$). To know the oxidation state of each individual atom, we need the structure of the molecule.`,
+          },
+          {
+            type: "heading",
+            text: "Redox reactions at electrodes",
+          },
+          {
+            type: "text",
+            md: t`When a zinc rod sits in CuSO$_4$ solution, electrons pass directly from Zn to Cu$^{2+}$ and the energy appears as heat. If instead a Zn rod in ZnSO$_4$ and a Cu rod in CuSO$_4$ are kept in separate beakers, joined by a wire and a **salt bridge** (KCl or KNO$_3$ in agar or gelatin), electrons flow through the wire from Zn to Cu. This is the **Daniell cell**. The salt bridge completes the circuit and keeps both solutions electrically neutral.
+
+Each metal in contact with its ions is a **redox couple** (Zn$^{2+}$/Zn, Cu$^{2+}$/Cu) and develops an **electrode potential**. Potentials are measured against the **standard hydrogen electrode** (SHE), given 0.00 V by convention. Standard potentials (1 M ions, 1 bar gas, 298 K) arranged in order form the **electrochemical series**: the more positive the standard reduction potential, the stronger the oxidant; the more negative, the stronger the reductant.`,
+          },
+          {
+            type: "table",
+            headers: ["Couple", "E° (V, reduction)", "Meaning"],
+            rows: [
+              ["F₂/F⁻", "+2.87", "F₂ is the strongest common oxidant"],
+              ["Ag⁺/Ag", "+0.80", "Ag⁺ is easily reduced"],
+              ["Cu²⁺/Cu", "+0.34", "Cu cannot displace H₂ from dilute acids"],
+              ["2H⁺/H₂ (SHE)", "0.00", "reference electrode"],
+              ["Zn²⁺/Zn", "−0.76", "Zn displaces H₂ from dilute acids"],
+              ["Li⁺/Li", "−3.05", "Li is the strongest reductant in water"],
+            ],
+          },
+          {
+            type: "formula",
+            tex: t`E^\circ_{\text{cell}} = E^\circ_{\text{cathode}} - E^\circ_{\text{anode}} = 0.34 - (-0.76) = 1.10\ \text{V (Daniell cell)}`,
+            caption: "Oxidation happens at the anode (Zn, negative terminal); reduction at the cathode (Cu, positive terminal). Electrons flow from anode to cathode in the outer circuit.",
+          },
+          {
+            type: "mistake",
+            wrong: "In a cell, the electrode with the more positive standard potential is the anode, because it is 'more powerful'.",
+            right: "The electrode with the more positive reduction potential is the cathode, where reduction takes place. The more negative one (Zn in the Daniell cell) is the anode, where oxidation happens.",
+            why: "A high E° means a strong tendency to be reduced, i.e. to take electrons. That happens at the cathode. Anode and cathode are defined by oxidation and reduction, not by 'strength'.",
+          },
+          {
+            type: "activity",
+            activity: {
+              kind: "reveal",
+              prompt: "Will a copper wire react with silver nitrate solution?",
+              emoji: "🥄",
+              options: [
+                "Yes: Cu is oxidised to Cu²⁺ and silver deposits",
+                "No: copper is a noble metal and never reacts",
+                "Yes: silver is oxidised and copper deposits",
+              ],
+              answer: 0,
+              trap: 1,
+              explain: "E°(Ag⁺/Ag) = +0.80 V is above E°(Cu²⁺/Cu) = +0.34 V, so Ag⁺ can take electrons from Cu. Copper is unreactive towards dilute acids, not towards Ag⁺.",
+            },
+          },
+          {
+            type: "callout",
+            tone: "exam",
+            title: "Board tips",
+            md: "In titration answers, write the balanced ionic equation first and use its coefficients; most errors come from a wrong mole ratio. For the Daniell cell, label anode (−) and cathode (+), the direction of electron flow and the role of the salt bridge. Electrode potentials are developed fully in Class 12 Electrochemistry; in Class 11 the board expects the qualitative idea and the series.",
+          },
+          {
+            type: "keypoints",
+            items: [
+              "KMnO₄ is a self-indicator; K₂Cr₂O₇ needs diphenylamine; iodine titrations use starch.",
+              "Iodometry: an oxidant frees I₂ from I⁻, then I₂ is titrated with thiosulphate.",
+              "Use the balanced equation: M_ox V_ox / a = M_red V_red / b.",
+              "Daniell cell: Zn anode (oxidation), Cu cathode (reduction), E° = 1.10 V; salt bridge keeps neutrality.",
+              "More positive E°: stronger oxidant; more negative E°: stronger reductant. SHE = 0.00 V.",
+            ],
+          },
+        ],
+        flashcards: [
+          { front: "Indicator in KMnO₄ titrations", back: "None needed: KMnO₄ is a self-indicator (first permanent pink)." },
+          { front: "Indicator for K₂Cr₂O₇ titrations", back: "Diphenylamine (turns intense blue at the end point)." },
+          { front: "Iodine–thiosulphate equation", back: "I₂ + 2S₂O₃²⁻ → 2I⁻ + S₄O₆²⁻" },
+          { front: "Role of a salt bridge", back: "Completes the circuit and keeps both half-cell solutions electrically neutral." },
+          { front: "Standard hydrogen electrode potential", back: "0.00 V by convention." },
+          { front: "E° of the Daniell cell", back: "1.10 V (0.34 − (−0.76))." },
+          { front: "Anode in a galvanic cell", back: "The electrode where oxidation occurs (negative terminal)." },
+        ],
+        quiz: [
+          {
+            kind: "mcq",
+            q: "In the titration of oxalic acid with KMnO₄ in acid, the indicator used is",
+            options: ["none; KMnO₄ acts as its own indicator", "phenolphthalein", "starch", "diphenylamine"],
+            answer: 0,
+            explain: "The purple-to-colourless change of MnO₄⁻ → Mn²⁺ makes KMnO₄ a self-indicator.",
+          },
+          {
+            kind: "numeric",
+            q: "2MnO₄⁻ + 5C₂O₄²⁻ + 16H⁺ → 2Mn²⁺ + 10CO₂ + 8H₂O. What volume (mL) of 0.10 M oxalate is oxidised by 20.0 mL of 0.020 M KMnO₄?",
+            answer: 10,
+            tolerance: 0.1,
+            explain: "MnO₄⁻ = 0.40 mmol, so oxalate = 0.40 × 5/2 = 1.0 mmol. Volume = 1.0/0.10 = 10.0 mL.",
+            difficulty: 2,
+            hint: "Use the 2 : 5 mole ratio from the equation.",
+          },
+          {
+            kind: "mcq",
+            q: "Using E°(Ag⁺/Ag) = +0.80 V and E°(Zn²⁺/Zn) = −0.76 V, E° of the cell Zn | Zn²⁺ || Ag⁺ | Ag is",
+            options: ["1.56 V", "0.04 V", "−1.56 V", "0.84 V"],
+            answer: 0,
+            explain: "E°cell = E°cathode − E°anode = 0.80 − (−0.76) = 1.56 V. 0.04 V comes from wrongly adding the two values.",
+          },
+          {
+            kind: "mcq",
+            q: "Which is the strongest reducing agent in aqueous solution?",
+            options: ["Li", "Zn", "Cu", "Ag"],
+            answer: 0,
+            explain: "Li has the most negative standard reduction potential (−3.05 V), so it gives up electrons most readily.",
+          },
+          {
+            kind: "truefalse",
+            q: "The potential of the standard hydrogen electrode is taken as zero by convention.",
+            answer: true,
+            explain: "Single electrode potentials cannot be measured alone, so the SHE is assigned 0.00 V at all temperatures as the reference.",
+          },
+          {
+            kind: "mcq",
+            q: "In the iodometric estimation of Cu²⁺, the solution in the burette is",
+            options: ["sodium thiosulphate", "potassium iodide", "copper sulphate", "starch solution"],
+            answer: 0,
+            explain: "KI is added in excess to the Cu²⁺ in the flask; the liberated I₂ is titrated with Na₂S₂O₃ from the burette, with starch near the end.",
+          },
+          {
+            kind: "multi",
+            q: "Which statements about the salt bridge in a Daniell cell are correct?",
+            options: [
+              "It completes the electrical circuit.",
+              "It keeps the two solutions electrically neutral.",
+              "Electrons flow through it from Zn to Cu.",
+              "It usually contains KCl or KNO₃ set in agar or gelatin.",
+            ],
+            answers: [0, 1, 3],
+            explain: "Ions, not electrons, move through the salt bridge. Electrons travel only through the external wire.",
+            difficulty: 2,
+          },
+          {
+            kind: "numeric",
+            q: "In an iodometric titration, 10.0 mL of 0.10 M Na₂S₂O₃ is used. How many millimoles of Cu²⁺ were present?",
+            answer: 1,
+            tolerance: 0.01,
+            explain: "S₂O₃²⁻ = 1.0 mmol; I₂ = 0.50 mmol; Cu²⁺ = 2 × 0.50 = 1.0 mmol (1 Cu²⁺ ≡ 1 S₂O₃²⁻).",
+            difficulty: 2,
+          },
+        ],
+      },
+      /* ---------------- Exam edge ---------------- */
+      {
+        slug: "c11-che-redox-exam-nfactor",
+        title: "Exam edge: n-Factor, Equivalents and Redox Titrations",
+        summary: "What JEE Main, JEE Advanced, NEET, KCET and COMEDK ask from redox: oxidation states from structure, n-factor and equivalent mass, the law of equivalence, medium-dependent permanganate, mixture and double titrations, disproportionation n-factors and volume strength of H₂O₂.",
+        minutes: 25,
+        xp: 60,
+        track: "exam",
+        blocks: [
+          {
+            type: "text",
+            md: t`**What the exams ask.** Redox is short but feeds every other chapter (electrochemistry, p-block, titrations in practicals). NEET and KCET ask oxidation numbers, identifying oxidant/reductant, disproportionation and equivalent mass of KMnO$_4$ or K$_2$Cr$_2$O$_7$. JEE Main adds balancing coefficients, oxidation states that need the structure (CrO$_5$, H$_2$SO$_5$, S$_4$O$_6^{2-}$) and one-step titrations using n-factor. JEE Advanced sets multi-step titrations of mixtures, back titrations and disproportionation.
+
+The quickest tool is the **n-factor** (valence factor): the number of electrons lost or gained **per formula unit** of a reactant in that reaction. It is not fixed for a substance; it depends on the product formed.`,
+          },
+          {
+            type: "table",
+            headers: ["Species → product", "n-factor", "Equivalent mass"],
+            rows: [
+              ["KMnO₄ → Mn²⁺ (acidic)", "5", "158/5 = 31.6"],
+              ["KMnO₄ → MnO₂ (neutral or weakly alkaline)", "3", "158/3 ≈ 52.7"],
+              ["KMnO₄ → MnO₄²⁻ (strongly alkaline)", "1", "158"],
+              ["K₂Cr₂O₇ → 2Cr³⁺ (acidic)", "6", "294/6 = 49"],
+              ["FeSO₄: Fe²⁺ → Fe³⁺", "1", "M/1"],
+              ["H₂C₂O₄ (or C₂O₄²⁻) → 2CO₂", "2", "M/2"],
+              ["FeC₂O₄ → Fe³⁺ + 2CO₂", "1 + 2 = 3", "M/3"],
+              ["Na₂S₂O₃ → ½Na₂S₄O₆", "1", "M/1"],
+            ],
+          },
+          {
+            type: "formula",
+            tex: t`E = \frac{M}{n} \qquad N = n \times \text{Molarity} \qquad \text{meq} = N \times V(\text{mL}) \qquad \text{meq(oxidant)} = \text{meq(reductant)}`,
+            caption: "Law of equivalence: in any reaction, the milliequivalents of every reactant that reacts are equal. No balanced equation is needed once the n-factors are known.",
+          },
+          {
+            type: "formula",
+            tex: t`n_{\text{disproportionation}} = \frac{n_1 n_2}{n_1 + n_2}`,
+            caption: "For an element that disproportionates, n₁ and n₂ are the electron changes per formula unit on the reduction and oxidation sides. Use it only for pure disproportionation.",
+          },
+          {
+            type: "text",
+            md: t`**Oxidation states from structure.** Average values can hide the real states. In CrO$_5$ (one oxide O and two peroxide O$_2^{2-}$ groups), Cr is **+6**, not +10. In H$_2$SO$_5$ (peroxomonosulphuric acid, one O–O bond), S is **+6**, not +8. In S$_4$O$_6^{2-}$ the average is +2.5, but the two central S atoms are **0** and the two end S atoms are **+5**. In NH$_4$NO$_3$ the two N atoms are −3 and +5. A real oxidation state above the group number (like +8 for S) is a signal that a peroxide link is present.`,
+          },
+          {
+            type: "example",
+            title: "KCET / NEET level: the medium changes the equivalent mass",
+            problem: "Find the equivalent mass of KMnO₄ (M = 158) in acidic, neutral and strongly alkaline media.",
+            steps: [
+              "Acidic: Mn +7 → +2 (Mn²⁺), n = 5, E = 158/5 = 31.6.",
+              "Neutral/weakly alkaline: Mn +7 → +4 (MnO₂), n = 3, E = 158/3 ≈ 52.7.",
+              "Strongly alkaline: Mn +7 → +6 (MnO₄²⁻), n = 1, E = 158.",
+            ],
+            answer: "31.6 (acid), 52.7 (neutral), 158 (strongly alkaline)",
+          },
+          {
+            type: "example",
+            title: "JEE Main level: one reductant, two oxidisable parts",
+            problem: "What volume of 0.10 M KMnO₄ (acidic) oxidises 1.0 mmol of iron(II) oxalate, FeC₂O₄, completely?",
+            steps: [
+              "Both parts are oxidised: Fe²⁺ → Fe³⁺ (1 e⁻) and C₂O₄²⁻ → 2CO₂ (2 e⁻), so n(FeC₂O₄) = 3.",
+              "meq of FeC₂O₄ = 1.0 × 3 = 3.0.",
+              "Normality of KMnO₄ = 5 × 0.10 = 0.50 N.",
+              "V = meq/N = 3.0/0.50 = 6.0 mL.",
+            ],
+            answer: "6.0 mL",
+          },
+          {
+            type: "example",
+            title: "JEE Main level: oxidation number from structure",
+            problem: t`Find (a) the oxidation state of Cr in CrO$_5$ and (b) of each S in the tetrathionate ion, S$_4$O$_6^{2-}$.`,
+            steps: [
+              t`(a) CrO$_5$ has one Cr=O oxygen (−2) and two peroxide groups (four O at −1). $x - 2 - 4 = 0$, so $x = +6$.`,
+              t`(b) Average: $4x + 6(-2) = -2 \Rightarrow x = +2.5$.`,
+              t`Structure: $^-\text{O}_3\text{S–S–S–SO}_3^-$. Each end S is bonded to three O and is +5; the two middle S atoms are bonded only to S and are 0. Check: $2(+5) + 2(0) = +10 = 4 \times 2.5$.`,
+            ],
+            answer: "(a) +6; (b) two S at +5 and two S at 0 (average +2.5)",
+          },
+          {
+            type: "example",
+            title: "JEE Advanced level: double titration of a mixture",
+            problem: "25 mL of a solution containing oxalic acid (H₂C₂O₄) and sodium oxalate (Na₂C₂O₄) needs 20 mL of 0.10 M NaOH for neutralisation. Another 25 mL portion needs 40 mL of 0.020 M KMnO₄ in acid. Find the millimoles of each in 25 mL.",
+            steps: [
+              "Let a = mmol H₂C₂O₄, b = mmol Na₂C₂O₄. Only oxalic acid reacts with NaOH (n = 2 as a diprotic acid).",
+              "meq NaOH = 20 × 0.10 = 2.0 = 2a, so a = 1.0 mmol.",
+              "Both contain C₂O₄²⁻ that KMnO₄ oxidises (n = 2 each). meq KMnO₄ = 40 × 0.020 × 5 = 4.0 = 2(a + b).",
+              "a + b = 2.0, so b = 1.0 mmol.",
+            ],
+            answer: "1.0 mmol oxalic acid and 1.0 mmol sodium oxalate in 25 mL",
+          },
+          {
+            type: "example",
+            title: "JEE Advanced level: n-factor in disproportionation",
+            problem: "In hot alkali, 3Cl₂ + 6NaOH → 5NaCl + NaClO₃ + 3H₂O. Find the equivalent mass of Cl₂ (M = 71).",
+            steps: [
+              "Of 6 Cl atoms, 5 go 0 → −1 (5 e⁻ gained) and 1 goes 0 → +5 (5 e⁻ lost): 5 electrons transferred per 3 Cl₂.",
+              "n-factor per Cl₂ = 5/3.",
+              t`Check with the formula: per Cl$_2$, the reduction change is $n_1 = 2$ (if all went to Cl$^-$) and the oxidation change is $n_2 = 10$ (if all went to ClO$_3^-$): $n = \dfrac{2 \times 10}{2 + 10} = \dfrac{5}{3}$.`,
+              "E = 71 ÷ (5/3) = 42.6.",
+            ],
+            answer: "Equivalent mass of Cl₂ = 42.6",
+          },
+          {
+            type: "mistake",
+            wrong: "The n-factor of KMnO₄ is always 5, so its equivalent mass is always 31.6.",
+            right: "n = 5 only in acidic medium (→ Mn²⁺). It is 3 in neutral or weakly alkaline medium (→ MnO₂) and 1 in strongly alkaline medium (→ MnO₄²⁻).",
+            why: "Most titrations students see are in dilute H₂SO₄, so 5 gets memorised as a property of KMnO₄. The n-factor belongs to the reaction, not to the compound.",
+          },
+          {
+            type: "mistake",
+            wrong: "S₄O₆²⁻ contains sulphur in the +2.5 oxidation state.",
+            right: "+2.5 is only an average. The actual states are +5 (two end S) and 0 (two middle S).",
+            why: "The sum rule gives an average over all atoms of an element. When the atoms are in different bonding environments, only the structure gives each one's state.",
+          },
+          {
+            type: "activity",
+            activity: {
+              kind: "match",
+              prompt: "Match each change to its n-factor.",
+              pairs: [
+                ["KMnO₄ → Mn²⁺ (acid)", "5"],
+                ["K₂Cr₂O₇ → Cr³⁺ (acid)", "6"],
+                ["FeC₂O₄ → Fe³⁺ + CO₂", "3"],
+                ["H₂C₂O₄ → CO₂", "2"],
+                ["Na₂S₂O₃ → Na₂S₄O₆", "1"],
+              ],
+              explain: "Count electrons per formula unit: two Cr each gain 3; Fe²⁺ loses 1 and oxalate loses 2; two thiosulphate ions together lose 2 electrons, so 1 each.",
+            },
+          },
+          {
+            type: "checkpoint",
+            questions: [
+              {
+                kind: "numeric",
+                q: "What volume (mL) of 0.020 M K₂Cr₂O₇ is needed to oxidise 30 mL of 0.10 M FeSO₄ in acid?",
+                answer: 25,
+                tolerance: 0.1,
+                explain: "meq Fe²⁺ = 30 × 0.10 × 1 = 3.0. N(K₂Cr₂O₇) = 6 × 0.020 = 0.12. V = 3.0/0.12 = 25 mL.",
+                difficulty: 2,
+                hint: "n = 6 for dichromate, 1 for Fe²⁺.",
+              },
+            ],
+          },
+          {
+            type: "keypoints",
+            items: [
+              "n-factor = electrons gained or lost per formula unit in that reaction; E = M/n; N = n × M.",
+              "Law of equivalence: meq oxidant = meq reductant; no balanced equation needed.",
+              "KMnO₄: n = 5 (acid), 3 (neutral), 1 (strongly alkaline); K₂Cr₂O₇: 6; FeC₂O₄: 3.",
+              "Use structure for real oxidation states: Cr +6 in CrO₅, S +6 in H₂SO₅, S 0 and +5 in S₄O₆²⁻.",
+              "Disproportionation: n = n₁n₂/(n₁ + n₂); for Cl₂ → Cl⁻ + ClO₃⁻, n = 5/3.",
+            ],
+          },
+        ],
+        flashcards: [
+          { front: "n-factor (redox)", back: "Electrons lost or gained per formula unit of a reactant in a given reaction." },
+          { front: "Law of equivalence", back: "Milliequivalents of oxidant = milliequivalents of reductant." },
+          { front: "Equivalent mass of K₂Cr₂O₇ (acidic)", back: "294/6 = 49" },
+          { front: "n-factor of KMnO₄ in neutral medium", back: "3 (MnO₄⁻ → MnO₂)" },
+          { front: "Oxidation state of Cr in CrO₅", back: "+6 (two peroxide groups)" },
+          { front: "Oxidation states of S in S₄O₆²⁻", back: "+5, 0, 0, +5 (average +2.5)" },
+          { front: "Volume strength of H₂O₂", back: "Volume strength = 11.2 × molarity (litres of O₂ at STP per litre of solution)." },
+          { front: "Normality from molarity", back: "N = n-factor × M" },
+        ],
+        quiz: [
+          {
+            kind: "numeric",
+            q: "Find the equivalent mass of K₂Cr₂O₇ (M = 294) when it is reduced to Cr³⁺ in acid.",
+            answer: 49,
+            tolerance: 0.1,
+            explain: "Two Cr atoms each go +6 → +3: n = 6. E = 294/6 = 49.",
+          },
+          {
+            kind: "mcq",
+            q: "The oxidation state of S in H₂SO₅ (peroxomonosulphuric acid) is",
+            options: ["+6", "+8", "+4", "+7"],
+            answer: 0,
+            explain: "H₂SO₅ has one O–O (peroxide) link: 2(+1) + x + 3(−2) + 2(−1) = 0 gives x = +6. +8 comes from wrongly taking all five O as −2.",
+            difficulty: 2,
+          },
+          {
+            kind: "mcq",
+            q: "The n-factor of KMnO₄ in strongly alkaline medium is",
+            options: ["1", "3", "5", "7"],
+            answer: 0,
+            explain: "MnO₄⁻ → MnO₄²⁻ (manganate): Mn +7 → +6, one electron.",
+          },
+          {
+            kind: "numeric",
+            q: "What is the molarity of '11.2 volume' H₂O₂?",
+            answer: 1,
+            tolerance: 0.01,
+            explain: "2H₂O₂ → 2H₂O + O₂: 1 mol H₂O₂ gives 11.2 L O₂ at STP. So 11.2 volume means 1 mol per litre: 1.0 M (2 N).",
+            difficulty: 2,
+            hint: "Volume strength = 11.2 × molarity.",
+          },
+          {
+            kind: "multi",
+            q: "Which species can act both as an oxidising agent and as a reducing agent?",
+            options: ["H₂O₂", "SO₂", "HNO₂", "KMnO₄", "H₂S"],
+            answers: [0, 1, 2],
+            explain: "O (−1), S (+4) and N (+3) are in intermediate states. Mn in KMnO₄ (+7) can only be reduced; S in H₂S (−2) can only be oxidised.",
+            difficulty: 2,
+          },
+          {
+            kind: "numeric",
+            q: "A solution contains 1.0 mmol FeSO₄ and 1.0 mmol FeC₂O₄. What volume (mL) of 0.10 M KMnO₄ (acidic) oxidises it completely?",
+            answer: 8,
+            tolerance: 0.1,
+            explain: "meq = 1.0 × 1 + 1.0 × 3 = 4.0. N(KMnO₄) = 0.50. V = 4.0/0.50 = 8.0 mL.",
+            difficulty: 3,
+            hint: "Oxalate in FeC₂O₄ is oxidised too.",
+          },
+          {
+            kind: "mcq",
+            q: "In 3Cl₂ + 6NaOH → 5NaCl + NaClO₃ + 3H₂O, the equivalent mass of Cl₂ (M = 71) is",
+            options: ["42.6", "35.5", "71", "14.2"],
+            answer: 0,
+            explain: "5 electrons transfer per 3 Cl₂, so n = 5/3 and E = 71 × 3/5 = 42.6.",
+            difficulty: 3,
+            hint: "Count electrons per Cl₂, not per Cl atom that is reduced.",
+          },
+          {
+            kind: "numeric",
+            q: "How many mL of 0.050 M KMnO₄ (acidic) are needed to oxidise 0.63 g of oxalic acid dihydrate, H₂C₂O₄·2H₂O (M = 126)?",
+            answer: 40,
+            tolerance: 0.2,
+            explain: "Moles = 0.63/126 = 5.0 × 10⁻³ = 5.0 mmol; meq = 5.0 × 2 = 10. N(KMnO₄) = 0.25. V = 10/0.25 = 40 mL.",
+            difficulty: 2,
+            hint: "Find mmol of oxalic acid first.",
+          },
+        ],
+      },
     ],
   },
 ];
