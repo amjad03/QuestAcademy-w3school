@@ -1474,6 +1474,406 @@ These Z-scalings hold only for **one-electron** systems. Do not use them for neu
       },
     ],
   },
+
+  /* ------------------------------------------------------------------ */
+  /* Nuclei (NCERT, Karnataka PUC); second half of ISC "Atoms and Nuclei" */
+  /* ------------------------------------------------------------------ */
+  {
+    slug: "c12-nuclei",
+    title: "Nuclei",
+    icon: "☢️",
+    description: "Composition and size of the nucleus, mass–energy equivalence, binding energy and nuclear force, fission and fusion, and radioactive decay.",
+    lessons: [
+      {
+        slug: "c12-nucleus-composition-size",
+        title: "Composition, Size and Mass of the Nucleus",
+        summary: "Atomic mass unit, protons and neutrons, isotopes, isobars and isotones, the R = R₀A^(1/3) rule, the constant density of nuclear matter, and E = mc².",
+        minutes: 18,
+        xp: 50,
+        blocks: [
+          {
+            type: "illustration",
+            emoji: "🏟️",
+            caption: "If an atom were the size of a cricket stadium, its nucleus would be a marble at the centre, yet the marble would hold more than 99.9% of the mass.",
+          },
+          {
+            type: "text",
+            md: t`Atomic masses are very small in kilograms, so we use the **atomic mass unit** (u): one-twelfth of the mass of one carbon-12 atom.
+
+$1\ \text{u} = 1.660539 \times 10^{-27}$ kg. On this scale hydrogen is 1.007825 u and helium-4 is 4.002603 u. Atomic masses are measured accurately with a **mass spectrometer**, which also showed that most elements are mixtures of **isotopes**.`,
+          },
+          {
+            type: "text",
+            md: t`**What a nucleus is made of.** A nucleus contains $Z$ **protons** and $N$ **neutrons**, together called **nucleons**. The **mass number** is $A = Z + N$, and a nuclide is written $^{A}_{Z}\text{X}$. The neutron was discovered by James Chadwick in 1932: when beryllium was bombarded with α-particles, it gave out a neutral radiation that knocked protons out of paraffin wax, and this could only be explained by neutral particles of about the proton's mass.
+
+Masses: $m_p = 1.00727$ u, $m_n = 1.00866$ u. A free neutron is unstable (mean life about 1000 s), but neutrons inside stable nuclei are stable.`,
+          },
+          {
+            type: "table",
+            headers: ["Name", "What is the same", "Example"],
+            rows: [
+              ["Isotopes", "Z (same element, different N)", t`$^{1}_{1}$H, $^{2}_{1}$H (deuterium), $^{3}_{1}$H (tritium)`],
+              ["Isobars", "A (different elements)", t`$^{3}_{1}$H and $^{3}_{2}$He`],
+              ["Isotones", "N = A − Z", t`$^{198}_{80}$Hg and $^{197}_{79}$Au (N = 118 each)`],
+            ],
+          },
+          {
+            type: "heading",
+            text: "Size and density of the nucleus",
+          },
+          {
+            type: "formula",
+            tex: t`R = R_0 A^{1/3}, \qquad R_0 = 1.2 \times 10^{-15}\ \text{m} = 1.2\ \text{fm}`,
+            caption: "Found from scattering of fast electrons and α-particles by nuclei.",
+          },
+          {
+            type: "list",
+            ordered: true,
+            items: [
+              t`Volume $V = \tfrac{4}{3}\pi R^3 = \tfrac{4}{3}\pi R_0^3 A$, so volume is proportional to $A$.`,
+              t`Mass $\approx A \times m_u$, where $m_u \approx 1.66 \times 10^{-27}$ kg.`,
+              t`Density $\rho = \dfrac{A\,m_u}{\tfrac{4}{3}\pi R_0^3 A} = \dfrac{3 m_u}{4\pi R_0^3}$: the $A$ cancels.`,
+              t`$\rho = \dfrac{3 \times 1.66 \times 10^{-27}}{4\pi (1.2 \times 10^{-15})^3} \approx 2.3 \times 10^{17}$ kg/m³ for every nucleus.`,
+            ],
+          },
+          {
+            type: "example",
+            title: "Comparing nuclear radii",
+            problem: t`Find the radii of $^{27}_{13}$Al and $^{216}_{84}$Po nuclei, and the ratio of their densities. ($R_0 = 1.2$ fm)`,
+            steps: [
+              t`Al: $A^{1/3} = 27^{1/3} = 3$, so $R = 1.2 \times 3 = 3.6$ fm.`,
+              t`Po: $A^{1/3} = 216^{1/3} = 6$, so $R = 1.2 \times 6 = 7.2$ fm.`,
+              "Eight times the nucleons give only twice the radius.",
+              "Nuclear density does not depend on A, so the ratio of densities is 1 : 1.",
+            ],
+            answer: "3.6 fm and 7.2 fm; equal densities.",
+          },
+          {
+            type: "checkpoint",
+            questions: [
+              {
+                kind: "numeric",
+                q: "Find the radius of a nucleus of mass number 125 in fm. (R₀ = 1.2 fm)",
+                answer: 6,
+                tolerance: 0.05,
+                unit: "fm",
+                explain: "$125^{1/3} = 5$, so $R = 1.2 \\times 5 = 6.0$ fm.",
+              },
+            ],
+          },
+          {
+            type: "heading",
+            text: "Mass and energy",
+          },
+          {
+            type: "formula",
+            tex: t`E = mc^2, \qquad 1\ \text{u} \times c^2 = 1.4924 \times 10^{-10}\ \text{J} = 931.5\ \text{MeV}`,
+            caption: "Einstein (1905): mass is a form of energy. In nuclear reactions the total of rest-mass energy and other energy is conserved.",
+          },
+          {
+            type: "example",
+            title: "Energy locked in mass",
+            problem: t`(a) How much energy is equivalent to 1 g of matter? (b) Show that 1 u is equivalent to about 931.5 MeV. ($c = 3.0 \times 10^8$ m/s; for (b) use $c = 2.998 \times 10^8$ m/s, $1\ \text{MeV} = 1.602 \times 10^{-13}$ J)`,
+            steps: [
+              t`(a) $E = mc^2 = 10^{-3} \times (3.0 \times 10^8)^2 = 9.0 \times 10^{13}$ J, roughly the energy used by a large city in a day.`,
+              t`(b) $E = 1.6605 \times 10^{-27} \times (2.998 \times 10^8)^2 = 1.4924 \times 10^{-10}$ J.`,
+              t`In MeV: $1.4924 \times 10^{-10} / 1.602 \times 10^{-13} \approx 931.5$ MeV.`,
+            ],
+            answer: t`(a) $9.0 \times 10^{13}$ J; (b) 1 u ≈ 931.5 MeV.`,
+          },
+          {
+            type: "activity",
+            activity: {
+              kind: "sort",
+              prompt: "Is each pair isotopes, isobars or isotones?",
+              groups: ["Isotopes", "Isobars", "Isotones"],
+              items: [
+                { text: "carbon-12 and carbon-14", group: 0, hint: "Both have Z = 6." },
+                { text: "argon-40 and calcium-40", group: 1, hint: "Same A = 40, different Z." },
+                { text: "carbon-14 (Z = 6) and oxygen-16 (Z = 8)", group: 2, hint: "N = 8 in both." },
+                { text: "uranium-235 and uranium-238", group: 0, hint: "Both are uranium, Z = 92." },
+                { text: "tritium and helium-3", group: 1, hint: "A = 3 in both." },
+                { text: "sodium-23 (Z = 11) and magnesium-24 (Z = 12)", group: 2, hint: "N = 12 in both." },
+              ],
+              explain: "Isoto**p**es share **p**rotons (Z), isoba**r**s share mass number A, isoto**n**es share **n**eutrons (N).",
+            },
+          },
+          {
+            type: "mistake",
+            wrong: "A uranium nucleus is much denser than a helium nucleus because it has many more nucleons.",
+            right: "All nuclei have nearly the same density, about 2.3 × 10¹⁷ kg/m³. A bigger nucleus is bigger in volume, not denser.",
+            why: "More particles in one place sounds denser. But volume grows in proportion to A (R³ ∝ A), so mass per volume stays the same, like adding more drops to a liquid.",
+          },
+          {
+            type: "callout",
+            tone: "exam",
+            title: "Board tip",
+            md: "Show that nuclear density is independent of $A$: this is a common 3-mark question. Write $R = R_0A^{1/3}$, then mass and volume, cancel $A$, and give the numerical value. In numericals, keep $A^{1/3}$ values handy: 8 → 2, 27 → 3, 64 → 4, 125 → 5, 216 → 6.",
+          },
+          {
+            type: "keypoints",
+            items: [
+              t`1 u $= 1.66 \times 10^{-27}$ kg $\equiv 931.5$ MeV.`,
+              t`Nucleus: $Z$ protons + $N$ neutrons; $A = Z + N$. Neutron discovered by Chadwick, 1932.`,
+              "Isotopes: same Z; isobars: same A; isotones: same N.",
+              t`$R = R_0A^{1/3}$ with $R_0 = 1.2$ fm; density $\approx 2.3 \times 10^{17}$ kg/m³ for all nuclei.`,
+            ],
+          },
+        ],
+        flashcards: [
+          { front: "Atomic mass unit", back: "1/12 of the mass of a carbon-12 atom = 1.660539 × 10⁻²⁷ kg." },
+          { front: "Energy equivalent of 1 u", back: "931.5 MeV." },
+          { front: "Nuclear radius formula", back: "R = R₀A^(1/3), with R₀ = 1.2 fm." },
+          { front: "Nuclear density", back: "About 2.3 × 10¹⁷ kg/m³, independent of mass number." },
+          { front: "Isotones", back: "Nuclides with the same number of neutrons, e.g. ¹⁹⁸Hg and ¹⁹⁷Au (N = 118)." },
+          { front: "Who discovered the neutron?", back: "James Chadwick, in 1932." },
+          { front: "Mass number A", back: "Total number of nucleons: A = Z + N." },
+        ],
+        quiz: [
+          {
+            kind: "numeric",
+            q: "The radius of a nucleus of mass number 8 is r. What is the radius, in units of r, of a nucleus of mass number 64?",
+            answer: 2,
+            explain: "$R \\propto A^{1/3}$: $(64/8)^{1/3} = 8^{1/3} = 2$.",
+          },
+          {
+            kind: "mcq",
+            q: "The ratio of the nuclear densities of ¹⁶O and ²⁰⁸Pb is about:",
+            options: ["1 : 13", "13 : 1", "1 : 1", "1 : 2.35"],
+            answer: 2,
+            explain: "Nuclear density does not depend on mass number.",
+          },
+          {
+            kind: "mcq",
+            q: "³H and ³He are:",
+            options: ["isotopes", "isobars", "isotones", "isomers"],
+            answer: 1,
+            explain: "Both have A = 3 but different Z (1 and 2).",
+          },
+          {
+            kind: "fill",
+            q: "Nuclides with the same number of neutrons are called ___.",
+            answer: ["isotones"],
+            explain: "Isoto**n**es: same **n**eutron number.",
+          },
+          {
+            kind: "numeric",
+            q: "How many neutrons are there in a ²³⁵₉₂U nucleus?",
+            answer: 143,
+            explain: "$N = A - Z = 235 - 92 = 143$.",
+          },
+          {
+            kind: "truefalse",
+            q: "A free neutron outside a nucleus is stable for ever.",
+            answer: false,
+            explain: "A free neutron decays into a proton, an electron and an antineutrino, with a mean life of about 1000 s.",
+          },
+          {
+            kind: "numeric",
+            q: "What energy (in MeV) is equivalent to a mass of 0.02 u? (1 u = 931.5 MeV)",
+            answer: 18.63,
+            tolerance: 0.05,
+            unit: "MeV",
+            explain: "$0.02 \\times 931.5 = 18.63$ MeV.",
+            difficulty: 2,
+          },
+        ],
+      },
+      {
+        slug: "c12-binding-energy-nuclear-force",
+        title: "Mass Defect, Binding Energy and Nuclear Force",
+        summary: "Why a nucleus weighs less than its parts, binding energy and binding energy per nucleon, the shape of the binding-energy curve, and the properties of the nuclear force.",
+        minutes: 22,
+        xp: 55,
+        blocks: [
+          {
+            type: "text",
+            md: t`Add up the masses of 2 protons and 2 neutrons and you get more than the mass of a helium-4 nucleus. The difference is the **mass defect** $\Delta M$. When nucleons come together to form a nucleus, energy is released; to pull the nucleus apart into free nucleons, the same energy must be supplied. This energy is the **binding energy** $E_b$.`,
+          },
+          {
+            type: "formula",
+            tex: t`\Delta M = \left[Z m_p + (A - Z)\,m_n\right] - M, \qquad E_b = \Delta M\,c^2 = \Delta M\,(\text{in u}) \times 931.5\ \text{MeV}`,
+            caption: "M is the mass of the nucleus. Using atomic masses with m(¹H) in place of mₚ gives the same answer, because electron masses cancel.",
+          },
+          {
+            type: "example",
+            title: "Binding energy of helium-4",
+            problem: t`Atomic masses: $^{4}_{2}$He $= 4.002603$ u, $^{1}_{1}$H $= 1.007825$ u, neutron $= 1.008665$ u. Find the binding energy and binding energy per nucleon of $^{4}_{2}$He.`,
+            steps: [
+              t`Mass of parts $= 2 \times 1.007825 + 2 \times 1.008665 = 2.015650 + 2.017330 = 4.032980$ u.`,
+              t`$\Delta M = 4.032980 - 4.002603 = 0.030377$ u.`,
+              t`$E_b = 0.030377 \times 931.5 \approx 28.3$ MeV.`,
+              t`Per nucleon: $28.3 / 4 \approx 7.07$ MeV.`,
+            ],
+            answer: "About 28.3 MeV in total; about 7.07 MeV per nucleon.",
+          },
+          {
+            type: "checkpoint",
+            questions: [
+              {
+                kind: "numeric",
+                q: "The mass defect of a nucleus is 0.1 u. What is its binding energy in MeV? (1 u = 931.5 MeV)",
+                answer: 93.15,
+                tolerance: 0.1,
+                unit: "MeV",
+                explain: "$E_b = 0.1 \\times 931.5 = 93.15$ MeV.",
+              },
+            ],
+          },
+          {
+            type: "heading",
+            text: "Binding energy per nucleon",
+          },
+          {
+            type: "text",
+            md: t`The **binding energy per nucleon** $E_{bn} = E_b/A$ tells us how tightly, on average, each nucleon is held. A graph of $E_{bn}$ against $A$ shows these features:`,
+          },
+          {
+            type: "list",
+            items: [
+              t`It is nearly constant, about 8 MeV, for the middle range $30 < A < 170$.`,
+              t`It has a maximum of about 8.75 MeV near $A = 56$ (iron); these nuclei are the most stable.`,
+              "It is lower for light nuclei (A < 30) and falls slowly for heavy nuclei (A > 170), to about 7.6 MeV for uranium.",
+              t`**Saturation:** the flat part shows that a nucleon feels the attraction of only its nearest neighbours. The nuclear force is short-ranged, so adding more nucleons does not increase $E_{bn}$.`,
+              t`**Energy release:** splitting a heavy nucleus into two middle ones (**fission**), or joining light nuclei into a heavier one (**fusion**), increases $E_{bn}$ and releases energy.`,
+            ],
+          },
+          {
+            type: "table",
+            headers: ["Nucleus", "Total binding energy (MeV)", "Per nucleon (MeV)"],
+            rows: [
+              [t`$^{2}_{1}$H`, "2.22", "1.11"],
+              [t`$^{4}_{2}$He`, "28.3", "7.07"],
+              [t`$^{16}_{8}$O`, "127.6", "7.98"],
+              [t`$^{56}_{26}$Fe`, "492", "8.79"],
+              [t`$^{238}_{92}$U`, "1802", "7.57"],
+            ],
+          },
+          {
+            type: "activity",
+            activity: {
+              kind: "reveal",
+              prompt: "Which nucleus is the most tightly bound?",
+              emoji: "🧲",
+              options: ["Uranium-238", "Iron-56", "Helium-4"],
+              answer: 1,
+              trap: 0,
+              explain: "Uranium has the largest **total** binding energy only because it has the most nucleons. Stability is judged by binding energy **per nucleon**, which peaks near iron-56.",
+            },
+          },
+          {
+            type: "heading",
+            text: "The nuclear force",
+          },
+          {
+            type: "list",
+            items: [
+              "It is the **strongest** force in nature, much stronger than the Coulomb repulsion between protons at nuclear distances.",
+              "It is **short-ranged**: strong attraction up to a few femtometres, falling quickly to zero beyond that.",
+              "It is attractive for separations above about 0.8 fm and strongly **repulsive** for smaller separations, which keeps nucleons from collapsing together.",
+              "It is nearly **charge-independent**: proton–proton, neutron–neutron and proton–neutron forces are about the same.",
+              "It does not follow an inverse-square law and has no simple formula.",
+            ],
+          },
+          {
+            type: "mistake",
+            wrong: "A nucleus with a larger total binding energy is always more stable.",
+            right: "Stability is measured by binding energy per nucleon. Uranium-238 has about 1802 MeV in total but only 7.57 MeV per nucleon, so it is less stable than iron-56 (8.79 MeV per nucleon).",
+            why: "Total binding energy grows mostly because there are more nucleons. Comparing totals is like comparing the total salary of two companies to judge how well each worker is paid.",
+          },
+          {
+            type: "callout",
+            tone: "exam",
+            title: "Board tip",
+            md: "Sketch the binding-energy curve with axes labelled ($E_{bn}$ in MeV, $A$), mark the peak near $A = 56$ and the flat region, and point out the fission and fusion regions. In numericals, use atomic masses consistently (all atomic or all nuclear) and write the mass defect to six decimal places before multiplying by 931.5.",
+          },
+          {
+            type: "keypoints",
+            items: [
+              t`Mass defect $\Delta M = [Zm_p + (A-Z)m_n] - M$; binding energy $E_b = \Delta M c^2$.`,
+              "Binding energy per nucleon is about 8 MeV for 30 < A < 170, peaking at about 8.75 MeV near A = 56.",
+              "Fission of heavy nuclei and fusion of light nuclei both release energy.",
+              "Nuclear force: strongest, short-ranged, charge-independent, repulsive below about 0.8 fm; it saturates.",
+            ],
+          },
+        ],
+        flashcards: [
+          { front: "Mass defect", back: "The amount by which the mass of a nucleus is less than the total mass of its separate nucleons." },
+          { front: "Binding energy", back: "Energy needed to separate a nucleus into its free nucleons; Eb = ΔMc²." },
+          { front: "Most stable nuclei", back: "Those near A = 56 (iron), with binding energy per nucleon about 8.75 MeV." },
+          { front: "Binding energy per nucleon in the middle range", back: "Roughly constant, about 8 MeV, for 30 < A < 170." },
+          { front: "Why is the BE per nucleon curve flat in the middle?", back: "Saturation: each nucleon is bound only to its nearest neighbours because the nuclear force is short-ranged." },
+          { front: "Range of the nuclear force", back: "A few femtometres; repulsive below about 0.8 fm." },
+          { front: "Is the nuclear force charge-dependent?", back: "No. p–p, n–n and n–p forces are nearly equal." },
+        ],
+        quiz: [
+          {
+            kind: "numeric",
+            q: "Atomic masses: ¹⁶₈O = 15.994915 u, ¹H = 1.007825 u, neutron = 1.008665 u. Find the binding energy per nucleon of ¹⁶O in MeV. (1 u = 931.5 MeV)",
+            answer: 7.98,
+            tolerance: 0.03,
+            unit: "MeV",
+            explain: "Parts: $8(1.007825) + 8(1.008665) = 16.131920$ u. $\\Delta M = 0.137005$ u. $E_b = 127.6$ MeV; per nucleon $127.6/16 \\approx 7.98$ MeV.",
+            difficulty: 2,
+          },
+          {
+            kind: "mcq",
+            q: "The binding energy per nucleon is maximum for nuclei of mass number near:",
+            options: ["4", "56", "120", "238"],
+            answer: 1,
+            explain: "The peak is around $A = 56$ (iron), about 8.75 MeV.",
+          },
+          {
+            kind: "multi",
+            q: "Which are properties of the nuclear force?",
+            options: [
+              "It is short-ranged",
+              "It is nearly the same between p–p, n–n and n–p",
+              "It obeys an inverse-square law",
+              "It becomes repulsive at very small separations",
+            ],
+            answers: [0, 1, 3],
+            explain: "The nuclear force has no inverse-square form; it falls off much faster than Coulomb's force.",
+            difficulty: 2,
+          },
+          {
+            kind: "truefalse",
+            q: "The mass of a nucleus is greater than the sum of the masses of its free protons and neutrons.",
+            answer: false,
+            explain: "It is less; the difference is the mass defect.",
+          },
+          {
+            kind: "mcq",
+            q: "Two nuclei X and Y have total binding energies 160 MeV (A = 20) and 1600 MeV (A = 200). Which is more stable?",
+            options: ["X", "Y", "Both are equally stable", "Cannot be compared"],
+            answer: 2,
+            explain: "Per nucleon: X has $160/20 = 8.0$ MeV, Y has $1600/200 = 8.0$ MeV. They are equally tightly bound.",
+            difficulty: 2,
+            hint: "Divide by the number of nucleons.",
+          },
+          {
+            kind: "fill",
+            q: "The nuclear force acts only between nearby nucleons. This property is called ___.",
+            answer: ["saturation"],
+            explain: "Saturation explains why binding energy per nucleon is roughly constant in the middle range.",
+          },
+          {
+            kind: "mcq",
+            q: "Energy is released when:",
+            options: [
+              "an iron-56 nucleus splits into two lighter nuclei",
+              "a uranium nucleus splits into two middle-mass nuclei",
+              "two iron nuclei fuse",
+              "a helium nucleus is broken into nucleons",
+            ],
+            answer: 1,
+            explain: "Energy is released when binding energy per nucleon increases. Splitting uranium into middle-mass fragments does this; changes away from iron lower it.",
+            difficulty: 2,
+          },
+        ],
+      },
+    ],
+  },
 ];
 
 /** Class 12 chapter title ("12:<exact title>") → topic slug(s), or full lesson ids, that teach it. */

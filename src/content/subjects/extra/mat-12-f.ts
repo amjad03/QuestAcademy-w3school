@@ -1496,10 +1496,569 @@ A **discrete** random variable takes finitely many (or countably many) values $x
       },
     ],
   },
+  /* ------------------------------------------------------------------ */
+  /* ISC Section C: Application of Calculus (Commerce and Economics)     */
+  /* ------------------------------------------------------------------ */
+  {
+    slug: "c12-calculus-commerce",
+    title: "Application of Calculus in Commerce and Economics",
+    icon: "💹",
+    description:
+      "ISC Section C: cost, average and marginal cost, demand and revenue, marginal revenue, profit and break-even point, maximum profit, and elasticity of demand.",
+    lessons: [
+      {
+        slug: "c12-cost-functions",
+        title: "Cost Functions: Average Cost and Marginal Cost",
+        summary:
+          "Total, fixed and variable cost; average cost and marginal cost; why marginal cost cuts average cost at its minimum.",
+        minutes: 20,
+        xp: 50,
+        blocks: [
+          {
+            type: "illustration",
+            emoji: "🏭",
+            caption: "A small factory in Ludhiana pays rent whether it makes 0 or 500 sweaters. Wool and wages grow with every sweater.",
+          },
+          {
+            type: "callout",
+            tone: "note",
+            title: "Board note",
+            md: "This chapter is in **ISC Section C** only (students choose Section B or Section C). CBSE and Karnataka PUC meet marginal cost and revenue only briefly, as rate-of-change examples in *Application of Derivatives*. It is not in the JEE or NEET syllabus.",
+          },
+          {
+            type: "text",
+            md: t`Let $x$ be the number of units produced. The **total cost** $C(x)$ has two parts. The **fixed cost** $F$ (rent, salaries, machines) does not depend on $x$: it equals $C(0)$. The **variable cost** $V(x)$ (raw material, wages per unit) grows with $x$. So $C(x) = F + V(x)$.`,
+          },
+          {
+            type: "formula",
+            tex: t`AC = \frac{C(x)}{x}, \qquad AVC = \frac{V(x)}{x}, \qquad AFC = \frac{F}{x}, \qquad MC = \frac{dC}{dx}`,
+            caption: t`$AC = AVC + AFC$. Fixed cost is a constant, so it disappears in $MC$: $\frac{dC}{dx} = \frac{dV}{dx}$.`,
+          },
+          {
+            type: "text",
+            md: t`**Marginal cost** is the rate at which total cost changes with output. For a small change, $MC(x)$ is approximately the extra cost of producing **one more** unit, the $(x+1)$-th unit: $C(x + 1) - C(x) \approx C'(x)$.`,
+          },
+          {
+            type: "example",
+            title: "Marginal cost and the cost of one more unit",
+            problem: t`$C(x) = x^3 - 12x^2 + 60x + 50$ (in ₹ hundred). Find the fixed cost, $AVC$, and $MC$ at $x = 5$. Compare $MC(5)$ with the actual cost of the 6th unit.`,
+            steps: [
+              t`Fixed cost $= C(0) = 50$. Variable cost $V(x) = x^3 - 12x^2 + 60x$, so $AVC = x^2 - 12x + 60$.`,
+              t`$MC = C'(x) = 3x^2 - 24x + 60$, so $MC(5) = 75 - 120 + 60 = 15$.`,
+              t`$C(6) = 216 - 432 + 360 + 50 = 194$ and $C(5) = 125 - 300 + 300 + 50 = 175$.`,
+              t`Actual cost of the 6th unit $= 194 - 175 = 19$.`,
+            ],
+            answer: t`$F = 50$, $AVC = x^2 - 12x + 60$, $MC(5) = 15$. The 6th unit actually costs 19: $MC$ is an approximation, not the exact extra cost.`,
+          },
+          {
+            type: "heading",
+            text: "Why MC = AC at the lowest average cost",
+          },
+          {
+            type: "formula",
+            tex: t`\frac{d}{dx}(AC) = \frac{d}{dx}\left(\frac{C}{x}\right) = \frac{x\,C'(x) - C(x)}{x^2} = \frac{1}{x}\left(MC - AC\right)`,
+            caption: t`At a minimum of $AC$ the derivative is 0, so $MC = AC$. When $MC < AC$, $AC$ is falling; when $MC > AC$, $AC$ is rising. The same argument with $V$ shows $MC = AVC$ at the minimum of $AVC$.`,
+          },
+          {
+            type: "example",
+            title: "Minimum average cost",
+            problem: t`$C(x) = 2x^2 + 5x + 200$. Find the output at which average cost is least, the least average cost, and verify that $MC = AC$ there.`,
+            steps: [
+              t`$AC = 2x + 5 + \frac{200}{x}$.`,
+              t`$\frac{d(AC)}{dx} = 2 - \frac{200}{x^2} = 0$ gives $x^2 = 100$, so $x = 10$ (output is positive).`,
+              t`$\frac{d^2(AC)}{dx^2} = \frac{400}{x^3} > 0$, so it is a minimum. $AC(10) = 20 + 5 + 20 = 45$.`,
+              t`$MC = 4x + 5$, so $MC(10) = 45 = AC(10)$. ✓`,
+            ],
+            answer: t`Least average cost ₹45 per unit at $x = 10$ units.`,
+          },
+          {
+            type: "checkpoint",
+            questions: [
+              {
+                kind: "numeric",
+                q: t`$C(x) = 0.5x^2 + 4x + 100$. Find the marginal cost when $x = 10$.`,
+                answer: 14,
+                explain: t`$MC = x + 4$, so $MC(10) = 14$.`,
+              },
+            ],
+          },
+          {
+            type: "mistake",
+            wrong: "Average cost is least where marginal cost is least.",
+            right: t`$AC$ is least where $\frac{d(AC)}{dx} = 0$, that is where $MC = AC$. $MC$ reaches its own minimum **earlier**. In the cubic example, $MC$ is least at $x = 4$ but $AVC$ is least at $x = 6$ (where $MC = AVC = 24$).`,
+            why: "Both curves are U-shaped, so students assume their lowest points line up. The MC curve falls first and then rises through the bottom of the AC (and AVC) curve.",
+          },
+          {
+            type: "activity",
+            activity: {
+              kind: "match",
+              prompt: "Match each cost idea to its formula.",
+              pairs: [
+                ["Fixed cost", "C(0)"],
+                ["Average cost", "C(x) ÷ x"],
+                ["Marginal cost", "dC/dx"],
+                ["Average fixed cost", "F ÷ x"],
+                ["Average variable cost", "(C(x) − F) ÷ x"],
+              ],
+              explain: "Fixed cost is the cost at zero output. Every 'average' divides by x; 'marginal' always means the derivative.",
+            },
+          },
+          {
+            type: "callout",
+            tone: "exam",
+            title: "ISC tip",
+            md: "If marginal cost is given and total cost is asked, integrate and use the fixed cost to find the constant: for $MC = 3x^2 - 10x + 15$ and fixed cost ₹400, $C(x) = x^3 - 5x^2 + 15x + 400$. Always state the second-derivative test when you claim a minimum.",
+          },
+          {
+            type: "keypoints",
+            items: [
+              t`$C(x) = F + V(x)$; $F = C(0)$.`,
+              t`$AC = \frac{C}{x}$, $AVC = \frac{V}{x}$, $AFC = \frac{F}{x}$, $MC = C'(x)$.`,
+              t`$MC(x) \approx$ cost of the $(x + 1)$-th unit.`,
+              t`$\frac{d(AC)}{dx} = \frac{MC - AC}{x}$: $MC = AC$ at minimum $AC$; $MC = AVC$ at minimum $AVC$.`,
+            ],
+          },
+        ],
+        flashcards: [
+          { front: "Fixed cost from C(x)", back: t`$F = C(0)$` },
+          { front: "Marginal cost", back: t`$MC = \frac{dC}{dx}$, approximately the cost of one more unit.` },
+          { front: "Average cost", back: t`$AC = \frac{C(x)}{x}$` },
+          { front: "Relation of MC and AC at minimum AC", back: t`$MC = AC$` },
+          { front: t`$\frac{d}{dx}(AC)$ in terms of MC and AC`, back: t`$\frac{MC - AC}{x}$` },
+          { front: "Shape of the AFC curve", back: t`A rectangular hyperbola, $AFC \cdot x = F$; it falls as output rises.` },
+          { front: "Does fixed cost affect MC?", back: "No. It is a constant, so its derivative is 0." },
+        ],
+        quiz: [
+          {
+            kind: "numeric",
+            q: t`$C(x) = 3x^2 + 12x + 75$. At what output is average cost least?`,
+            answer: 5,
+            explain: t`$AC = 3x + 12 + \frac{75}{x}$; $3 - \frac{75}{x^2} = 0$ gives $x = 5$.`,
+          },
+          {
+            kind: "numeric",
+            q: t`For $C(x) = 3x^2 + 12x + 75$, find the least average cost.`,
+            answer: 42,
+            explain: t`$AC(5) = 15 + 12 + 15 = 42$. Check: $MC(5) = 6(5) + 12 = 42$.`,
+          },
+          {
+            kind: "mcq",
+            q: t`$C(x) = x^3 - 6x^2 + 20x + 100$. The average variable cost is:`,
+            options: [t`$x^2 - 6x + 20$`, t`$x^2 - 6x + 20 + \frac{100}{x}$`, t`$3x^2 - 12x + 20$`, t`$\frac{100}{x}$`],
+            answer: 0,
+            explain: t`$V(x) = x^3 - 6x^2 + 20x$; divide by $x$. The second option is $AC$, the third is $MC$.`,
+          },
+          {
+            kind: "truefalse",
+            q: "When marginal cost is less than average cost, average cost is falling.",
+            answer: true,
+            explain: t`$\frac{d(AC)}{dx} = \frac{MC - AC}{x} < 0$ when $MC < AC$.`,
+          },
+          {
+            kind: "mcq",
+            q: t`$MC = 6x + 4$ and the fixed cost is ₹500. Total cost is:`,
+            options: [t`$3x^2 + 4x + 500$`, t`$6x^2 + 4x + 500$`, t`$3x^2 + 4x$`, t`$6x + 504$`],
+            answer: 0,
+            explain: t`$C = \int (6x + 4)\,dx = 3x^2 + 4x + k$; $C(0) = 500$ gives $k = 500$.`,
+            difficulty: 2,
+          },
+          {
+            kind: "numeric",
+            q: t`For $C(x) = x^3 - 12x^2 + 60x + 50$, at what output is marginal cost least?`,
+            answer: 4,
+            explain: t`$MC = 3x^2 - 24x + 60$; $\frac{d(MC)}{dx} = 6x - 24 = 0$ at $x = 4$, and the second derivative 6 is positive.`,
+            difficulty: 2,
+            hint: "Differentiate MC itself.",
+          },
+          {
+            kind: "mcq",
+            q: "The average fixed cost curve is:",
+            options: ["a straight line through the origin", "a rectangular hyperbola", "U-shaped", "a horizontal line"],
+            answer: 1,
+            explain: t`$AFC = \frac{F}{x}$, so $x \cdot AFC = F$, a constant: a rectangular hyperbola.`,
+          },
+        ],
+      },
+      {
+        slug: "c12-revenue-profit-elasticity",
+        title: "Revenue, Profit, Break-even Point and Elasticity of Demand",
+        summary:
+          "Demand and revenue functions, marginal revenue, maximum profit where MR = MC, the break-even point, and elasticity of demand with its link to marginal revenue.",
+        minutes: 24,
+        xp: 55,
+        blocks: [
+          {
+            type: "text",
+            md: t`A **demand function** links the price $p$ per unit with the quantity $x$ that buyers take, for example $p = 100 - 2x$. Usually a higher price means lower demand.
+
+**Total revenue** $R(x) = p \cdot x$. **Average revenue** $AR = \frac{R}{x} = p$, so the AR curve is the demand curve. **Marginal revenue** $MR = \frac{dR}{dx}$ is roughly the extra revenue from selling one more unit.`,
+          },
+          {
+            type: "example",
+            title: "Revenue from a linear demand",
+            problem: t`The demand function is $p = 100 - 2x$. Find $R$, $MR$, and the output at which revenue is greatest.`,
+            steps: [
+              t`$R = px = 100x - 2x^2$.`,
+              t`$MR = \frac{dR}{dx} = 100 - 4x$.`,
+              t`$MR = 0$ at $x = 25$, and $\frac{d^2R}{dx^2} = -4 < 0$. $R(25) = 2500 - 1250 = 1250$.`,
+            ],
+            answer: t`Revenue is greatest (₹1,250) at $x = 25$, price $p = ₹50$. Note: for linear demand $p = a - bx$, $MR = a - 2bx$ falls twice as fast as $AR$.`,
+          },
+          {
+            type: "formula",
+            tex: t`P(x) = R(x) - C(x); \qquad \frac{dP}{dx} = 0 \iff MR = MC; \qquad \frac{d^2P}{dx^2} < 0 \text{ for a maximum}`,
+            caption: "Maximum profit: MR = MC, and the MC curve cuts the MR curve from below.",
+          },
+          {
+            type: "example",
+            title: "Maximum profit",
+            problem: t`Demand $p = 100 - 2x$ and cost $C(x) = x^2 + 10x + 200$. Find the output and price for maximum profit, and the maximum profit.`,
+            steps: [
+              t`$P(x) = (100x - 2x^2) - (x^2 + 10x + 200) = -3x^2 + 90x - 200$.`,
+              t`$P'(x) = -6x + 90 = 0$ gives $x = 15$. $P''(x) = -6 < 0$: a maximum.`,
+              t`Check: $MR = 100 - 4(15) = 40$ and $MC = 2(15) + 10 = 40$. ✓`,
+              t`$P(15) = -675 + 1350 - 200 = 475$; price $p = 100 - 30 = 70$.`,
+            ],
+            answer: t`Produce 15 units, sell at ₹70 each; maximum profit ₹475.`,
+          },
+          {
+            type: "text",
+            md: t`The **break-even point** is the output at which there is neither profit nor loss: $R(x) = C(x)$, that is $P(x) = 0$. Below it the firm makes a loss; above it (until any second break-even point) a profit.`,
+          },
+          {
+            type: "example",
+            title: "Two break-even points",
+            problem: t`$R(x) = 50x - x^2$ and $C(x) = 10x + 300$. Find the break-even points and the output range that gives a profit.`,
+            steps: [
+              t`$P(x) = 50x - x^2 - 10x - 300 = -x^2 + 40x - 300$.`,
+              t`$P = 0$: $x^2 - 40x + 300 = 0$, so $(x - 10)(x - 30) = 0$.`,
+              t`$P > 0$ between the roots; the vertex is at $x = 20$ with $P(20) = 100$.`,
+            ],
+            answer: t`Break-even at $x = 10$ and $x = 30$; profit for $10 < x < 30$, greatest (₹100) at $x = 20$.`,
+          },
+          {
+            type: "checkpoint",
+            questions: [
+              {
+                kind: "numeric",
+                q: "Fixed cost is ₹6,000, variable cost ₹25 per unit, and each unit sells for ₹55. Find the break-even output.",
+                answer: 200,
+                explain: t`$55x = 25x + 6000$ gives $30x = 6000$, so $x = 200$.`,
+              },
+            ],
+          },
+          {
+            type: "heading",
+            text: "Elasticity of demand",
+          },
+          {
+            type: "formula",
+            tex: t`\eta = -\frac{p}{x}\,\frac{dx}{dp}, \qquad MR = p\left(1 - \frac{1}{\eta}\right)`,
+            caption: t`$\eta$ measures how strongly demand reacts to price. The minus sign makes $\eta$ positive for normal goods. Elastic: $\eta > 1$; unit elastic: $\eta = 1$ (then $MR = 0$); inelastic: $\eta < 1$.`,
+          },
+          {
+            type: "example",
+            title: "Elasticity at different prices",
+            problem: t`The demand law is $x = 100 - 4p$. Find $\eta$ at $p = 10$, $p = 12.5$ and $p = 15$.`,
+            steps: [
+              t`$\frac{dx}{dp} = -4$, so $\eta = -\frac{p}{x}(-4) = \frac{4p}{100 - 4p}$.`,
+              t`$p = 10$: $\eta = \frac{40}{60} = \frac{2}{3}$ (inelastic).`,
+              t`$p = 12.5$: $\eta = \frac{50}{50} = 1$ (unit elastic). $p = 15$: $\eta = \frac{60}{40} = 1.5$ (elastic).`,
+            ],
+            answer: t`$\frac{2}{3}$, 1 and $1.5$: on a straight-line demand curve, elasticity rises with price.`,
+          },
+          {
+            type: "mistake",
+            wrong: t`The break-even point is where profit is greatest, so I set $\frac{dP}{dx} = 0$ to find it.`,
+            right: t`Break-even means $P(x) = 0$ (revenue just covers cost). Maximum profit comes from $\frac{dP}{dx} = 0$ with $\frac{d^2P}{dx^2} < 0$. In the example, break-even is at 10 and 30 units, but the maximum is at 20.`,
+            why: "Both are 'special points' of the profit function and both appear in the same ISC question. One is a root of P, the other a turning point of P.",
+          },
+          {
+            type: "activity",
+            activity: {
+              kind: "order",
+              prompt: "Order the steps to find maximum profit.",
+              items: [
+                "Write R = p·x from the demand function",
+                "Form P(x) = R(x) − C(x)",
+                "Solve dP/dx = 0 (MR = MC)",
+                "Check d²P/dx² < 0",
+                "Find the price and the profit at that output",
+              ],
+              explain: "The second-derivative check is not optional: MR = MC also holds at a profit minimum.",
+            },
+          },
+          {
+            type: "callout",
+            tone: "note",
+            title: "Board note",
+            md: "ISC also asks for rough sketches of the R, AR, MR, C, AC and MC curves and their interpretation using increasing / decreasing functions and maxima / minima. Elasticity of demand appears in many ISC Commerce-maths textbooks; check your school's current ISC syllabus for how much is examined.",
+          },
+          {
+            type: "keypoints",
+            items: [
+              t`$R = px$, $AR = p$ (the demand curve), $MR = \frac{dR}{dx}$.`,
+              t`Maximum profit: $MR = MC$ and $P'' < 0$.`,
+              t`Break-even: $R = C$, i.e. $P = 0$.`,
+              t`$\eta = -\frac{p}{x}\frac{dx}{dp}$; $MR = p\left(1 - \frac{1}{\eta}\right)$; $\eta = 1 \Rightarrow MR = 0$.`,
+            ],
+          },
+        ],
+        flashcards: [
+          { front: "Average revenue equals…", back: "The price p; the AR curve is the demand curve." },
+          { front: "Marginal revenue", back: t`$MR = \frac{dR}{dx}$` },
+          { front: "Condition for maximum profit", back: t`$MR = MC$ and $\frac{d^2P}{dx^2} < 0$.` },
+          { front: "Break-even point", back: t`$R(x) = C(x)$: zero profit.` },
+          { front: "Elasticity of demand", back: t`$\eta = -\frac{p}{x}\frac{dx}{dp}$` },
+          { front: "MR in terms of price and elasticity", back: t`$MR = p\left(1 - \frac{1}{\eta}\right)$` },
+          { front: t`Linear demand $p = a - bx$: MR?`, back: t`$MR = a - 2bx$ (twice the slope of AR).` },
+        ],
+        quiz: [
+          {
+            kind: "numeric",
+            q: t`Demand $p = 60 - 2x$. Find the maximum total revenue.`,
+            answer: 450,
+            explain: t`$R = 60x - 2x^2$, $MR = 60 - 4x = 0$ at $x = 15$. $R(15) = 900 - 450 = 450$.`,
+          },
+          {
+            kind: "mcq",
+            q: t`For the demand law $x = \frac{k}{p}$ ($k > 0$), the elasticity of demand is:`,
+            options: ["0", "1 at every price", "greater than 1", "k"],
+            answer: 1,
+            explain: t`$\frac{dx}{dp} = -\frac{k}{p^2}$, so $\eta = \frac{p}{x}\cdot\frac{k}{p^2} = \frac{k}{px} = 1$ (because $px = k$).`,
+            difficulty: 2,
+          },
+          {
+            kind: "truefalse",
+            q: "When demand is unit elastic, marginal revenue is zero.",
+            answer: true,
+            explain: t`$MR = p\left(1 - \frac{1}{1}\right) = 0$; revenue is at its maximum there.`,
+          },
+          {
+            kind: "numeric",
+            q: t`Demand $x = 50 - p$. Find the elasticity of demand at $p = 20$ (to 3 decimal places).`,
+            answer: 0.667,
+            tolerance: 0.002,
+            explain: t`$x = 30$, $\frac{dx}{dp} = -1$, so $\eta = \frac{20}{30} = \frac{2}{3}$.`,
+          },
+          {
+            kind: "mcq",
+            q: t`$R(x) = 40x - x^2$ and $C(x) = 4x + 260$. The break-even outputs are:`,
+            options: ["10 and 26", "13 and 20", "18", "26 only"],
+            answer: 0,
+            explain: t`$P = -x^2 + 36x - 260 = 0$, i.e. $x^2 - 36x + 260 = 0$, $(x - 10)(x - 26) = 0$.`,
+            difficulty: 2,
+          },
+          {
+            kind: "numeric",
+            q: t`For $R(x) = 40x - x^2$ and $C(x) = 4x + 260$, find the maximum profit.`,
+            answer: 64,
+            explain: t`$P' = -2x + 36 = 0$ at $x = 18$; $P(18) = -324 + 648 - 260 = 64$.`,
+            difficulty: 2,
+          },
+          {
+            kind: "mcq",
+            q: "At the profit-maximising output, which must hold?",
+            options: ["MR = MC and the MC curve cuts MR from below", "MR = 0", "AR = AC", "MC is least"],
+            answer: 0,
+            explain: "dP/dx = MR − MC = 0, and P'' < 0 means MC is rising faster than MR there. MR = 0 maximises revenue, not profit; AR = AC is break-even.",
+          },
+        ],
+      },
+      {
+        slug: "c12-calculus-commerce-exam-edge",
+        title: "Exam edge: ISC board questions on Calculus in Commerce",
+        summary:
+          "The question types ISC sets most often from this Section C chapter, how marks are given, and the traps that cost marks. Not part of JEE or NEET.",
+        minutes: 20,
+        xp: 50,
+        track: "exam",
+        blocks: [
+          {
+            type: "callout",
+            tone: "note",
+            title: "Which exams?",
+            md: "This chapter is examined only in the **ISC board paper (Section C)**. It is **not** in the JEE Main, JEE Advanced, NEET, KCET or COMEDK syllabus. The Exam edge here is about scoring full marks in ISC.",
+          },
+          {
+            type: "table",
+            headers: ["Frequent ISC question", "What earns the marks"],
+            rows: [
+              ["Find AC, AVC, MC; least AC or AVC", "Correct functions, derivative = 0, second-derivative test, verify MC = AC"],
+              ["Maximum profit from demand and cost", "R = px, P = R − C, P′ = 0, P″ < 0, price and profit stated"],
+              ["Break-even point(s)", "Setting R = C (not P′ = 0) and solving"],
+              ["Effect of a tax per unit on output, price, profit", "Add tax × x to cost, redo the maximisation"],
+              ["Elasticity, MR = p(1 − 1/η)", "Correct sign convention; classify elastic / inelastic"],
+              ["Prove MC = AC at minimum AC", "Quotient rule and the line (MC − AC)/x = 0"],
+            ],
+          },
+          {
+            type: "example",
+            title: "From average cost to marginal cost",
+            problem: t`The average cost is $AC = \frac{x}{3} + 5 + \frac{18}{x}$. Find the total cost, the fixed cost, and $MC$ at $x = 6$.`,
+            steps: [
+              t`$C = x \cdot AC = \frac{x^2}{3} + 5x + 18$.`,
+              t`Fixed cost $= C(0) = 18$.`,
+              t`$MC = \frac{2x}{3} + 5$, so $MC(6) = 4 + 5 = 9$.`,
+            ],
+            answer: t`$C = \frac{x^2}{3} + 5x + 18$, fixed cost 18, $MC(6) = 9$.`,
+          },
+          {
+            type: "example",
+            title: "Effect of a tax on maximum profit",
+            problem: t`A monopolist's demand is $p = 80 - 3x$ and cost $C(x) = x^2 + 8x + 50$. Find the profit-maximising output, price and profit. Then a tax of ₹8 per unit is imposed: find the new output, price and profit.`,
+            steps: [
+              t`Before tax: $P = 80x - 3x^2 - x^2 - 8x - 50 = -4x^2 + 72x - 50$. $P' = -8x + 72 = 0$ gives $x = 9$; $P'' = -8 < 0$.`,
+              t`$P(9) = -324 + 648 - 50 = 274$; price $p = 80 - 27 = 53$.`,
+              t`With tax, cost becomes $C + 8x$: $P_t = -4x^2 + 64x - 50$. $P_t' = 0$ gives $x = 8$.`,
+              t`$P_t(8) = -256 + 512 - 50 = 206$; price $p = 80 - 24 = 56$.`,
+            ],
+            answer: t`Before tax: 9 units, ₹53, profit ₹274. After tax: 8 units, ₹56, profit ₹206. The tax cuts output and raises price.`,
+          },
+          {
+            type: "example",
+            title: "Elasticity and marginal revenue",
+            problem: t`The demand law is $x = 30 - 2p$. Find $\eta$ at $p = 10$ and verify $MR = p\left(1 - \frac{1}{\eta}\right)$.`,
+            steps: [
+              t`At $p = 10$: $x = 10$, $\frac{dx}{dp} = -2$, so $\eta = -\frac{10}{10}(-2) = 2$ (elastic).`,
+              t`Formula: $MR = 10\left(1 - \frac{1}{2}\right) = 5$.`,
+              t`Directly: $p = \frac{30 - x}{2}$, $R = \frac{30x - x^2}{2}$, $MR = 15 - x = 5$ at $x = 10$. ✓`,
+            ],
+            answer: t`$\eta = 2$ and $MR = 5$ by both methods.`,
+          },
+          {
+            type: "example",
+            title: "Proof asked as a 3-mark question",
+            problem: "Show that the marginal cost curve passes through the lowest point of the average cost curve.",
+            steps: [
+              t`$AC = \frac{C}{x}$. By the quotient rule, $\frac{d(AC)}{dx} = \frac{xC' - C}{x^2} = \frac{1}{x}\left(MC - AC\right)$.`,
+              t`At the lowest point of $AC$, $\frac{d(AC)}{dx} = 0$. Since $x > 0$, $MC - AC = 0$.`,
+            ],
+            answer: t`So $MC = AC$ at minimum average cost: the MC curve passes through the lowest point of the AC curve.`,
+          },
+          {
+            type: "mistake",
+            wrong: t`A tax of ₹$t$ per unit is subtracted from the price in the demand function.`,
+            right: t`Add the tax to the **cost**: $C_{\text{new}}(x) = C(x) + tx$ (the firm pays it per unit sold). Then maximise $R - C_{\text{new}}$.`,
+            why: "Students feel the tax 'reduces what the firm gets', so they change p. The demand law (what buyers pay) has not changed; the firm's cost has.",
+          },
+          {
+            type: "mistake",
+            wrong: t`$\eta = \frac{p}{x}\,\frac{dx}{dp}$, so a negative elasticity like $-2$ is fine.`,
+            right: t`ISC uses $\eta = -\frac{p}{x}\frac{dx}{dp}$, which is positive for a falling demand curve. Report $\eta = 2$ and classify it as elastic.`,
+            why: t`Without the minus sign the classification $\eta > 1$ makes no sense, and $MR = p(1 - \frac{1}{\eta})$ gives a wrong value.`,
+          },
+          {
+            type: "checkpoint",
+            questions: [
+              {
+                kind: "mcq",
+                q: t`$C(x) = x^2 + 8x + 50$ and demand $p = 80 - 3x$. After a tax of ₹16 per unit, the profit-maximising output is:`,
+                options: ["7", "8", "9", "6"],
+                answer: 0,
+                explain: t`$P_t = -4x^2 + (72 - 16)x - 50 = -4x^2 + 56x - 50$; $-8x + 56 = 0$ gives $x = 7$.`,
+              },
+            ],
+          },
+          {
+            type: "activity",
+            activity: {
+              kind: "sort",
+              prompt: "Which condition does each question need?",
+              groups: ["Set a derivative to 0", "Set a function to 0 or equal"],
+              items: [
+                { text: "Least average cost", group: 0, hint: "d(AC)/dx = 0." },
+                { text: "Break-even output", group: 1, hint: "R = C, i.e. P = 0." },
+                { text: "Maximum profit", group: 0, hint: "dP/dx = 0." },
+                { text: "Maximum revenue", group: 0, hint: "dR/dx = MR = 0." },
+                { text: "Output where revenue equals ₹1,000", group: 1, hint: "Solve R(x) = 1000." },
+              ],
+              explain: "Best (least or greatest) values come from derivatives; 'equal' or 'no profit' conditions come from equating the functions themselves.",
+            },
+          },
+          {
+            type: "callout",
+            tone: "exam",
+            title: "How ISC marks it",
+            md: "A 4–6 mark question usually splits as: forming the right function (1), differentiating correctly (1), solving (1), second-derivative test (1), and final values with units and price (1–2). Writing the answer in a sentence (\"The firm should produce 9 units at ₹53 per unit\") secures the last mark.",
+          },
+          {
+            type: "keypoints",
+            items: [
+              "Only the ISC board paper (Section C) tests this chapter; it is not in JEE, NEET, KCET or COMEDK.",
+              "Tax per unit: add tx to cost, then maximise again.",
+              t`Use $\eta = -\frac{p}{x}\frac{dx}{dp}$ (positive) and $MR = p(1 - \frac{1}{\eta})$.`,
+              "Break-even uses P = 0; best values use P′ = 0 with the second-derivative test.",
+            ],
+          },
+        ],
+        flashcards: [
+          { front: "Is Calculus in Commerce in JEE or NEET?", back: "No. It is in the ISC board paper, Section C only." },
+          { front: "Tax of ₹t per unit: new cost?", back: t`$C(x) + tx$` },
+          { front: "Effect of a per-unit tax on a monopolist", back: "Output falls, price rises, profit falls." },
+          { front: "Total cost from average cost", back: t`$C = x \cdot AC$` },
+          { front: "Elasticity sign convention in ISC", back: t`$\eta = -\frac{p}{x}\frac{dx}{dp}$, positive for normal demand.` },
+          { front: "Revenue is maximum when…", back: t`$MR = 0$, i.e. $\eta = 1$.` },
+        ],
+        quiz: [
+          {
+            kind: "numeric",
+            q: t`$AC = 2x + 7 + \frac{32}{x}$. Find the output for least average cost.`,
+            answer: 4,
+            explain: t`$2 - \frac{32}{x^2} = 0$ gives $x = 4$; the second derivative $\frac{64}{x^3} > 0$.`,
+          },
+          {
+            kind: "numeric",
+            q: t`$AC = 2x + 7 + \frac{32}{x}$. Find MC at $x = 4$ and check that it equals the least AC.`,
+            answer: 23,
+            explain: t`$C = 2x^2 + 7x + 32$, $MC = 4x + 7 = 23$. $AC(4) = 8 + 7 + 8 = 23$. ✓`,
+            difficulty: 2,
+          },
+          {
+            kind: "mcq",
+            q: t`Demand $p = 80 - 3x$, cost $C = x^2 + 8x + 50$. Without tax, the maximum profit is:`,
+            options: ["₹274", "₹206", "₹324", "₹53"],
+            answer: 0,
+            explain: t`$P(9) = -324 + 648 - 50 = 274$. ₹53 is the price, ₹206 the profit after an ₹8 tax.`,
+          },
+          {
+            kind: "numeric",
+            q: t`Demand $x = 40 - 2p$. Find the marginal revenue when $p = 15$.`,
+            answer: 10,
+            explain: t`$x = 10$, $\eta = \frac{2 \cdot 15}{10} = 3$, $MR = 15\left(1 - \frac{1}{3}\right) = 10$. Directly: $R = 20x - \frac{x^2}{2}$, $MR = 20 - x = 10$.`,
+            difficulty: 2,
+            hint: t`Find $\eta$ first, then use $MR = p(1 - \frac{1}{\eta})$.`,
+          },
+          {
+            kind: "mcq",
+            q: "Elasticity of demand at a point is 0.4. Demand there is:",
+            options: ["elastic", "inelastic", "unit elastic", "perfectly elastic"],
+            answer: 1,
+            explain: t`$\eta < 1$ means inelastic: a price change causes a smaller proportional change in demand.`,
+          },
+          {
+            kind: "multi",
+            q: t`$C(x) = 2x^2 + 5x + 200$. Which are correct?`,
+            options: ["Fixed cost is 200", "MC = 4x + 5", "Least AC is 45 at x = 10", "AVC = 2x + 5 + 200/x"],
+            answers: [0, 1, 2],
+            explain: t`$AVC = 2x + 5$; adding $\frac{200}{x}$ gives $AC$, not $AVC$.`,
+          },
+          {
+            kind: "mcq",
+            q: "Revenue R(x) = 120x − 3x². At what output is revenue greatest?",
+            options: ["20", "40", "60", "10"],
+            answer: 0,
+            explain: t`$MR = 120 - 6x = 0$ at $x = 20$; $R'' = -6 < 0$.`,
+          },
+        ],
+      },
+    ],
+  },
 ];
 
 /** Class 12 chapter title ("12:<exact title>") → topic slug(s), or full lesson ids, that teach it. */
 export const links: Record<string, string | string[]> = {
   "12:Probability": "c12-probability",
   "12:Linear Programming": "c12-linear-programming",
+  "12:Application of Calculus (Commerce and Economics)": "c12-calculus-commerce",
 };

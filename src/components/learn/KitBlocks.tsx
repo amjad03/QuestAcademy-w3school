@@ -109,7 +109,7 @@ export function ActivityView({ activity, kids }: { activity: Activity; kids: boo
       <p className="flex items-center gap-2 text-xs font-bold uppercase tracking-wider text-accent">
         <Puzzle className="h-4 w-4" /> {t("learn.activity.title", "Try it")}
       </p>
-      <p className={clsx("mt-2 font-black leading-snug", kids ? "text-xl" : "text-lg")}>{activity.prompt}</p>
+      <p className={clsx("mt-2 font-black leading-snug", kids ? "text-xl" : "text-lg")}><MdInline text={activity.prompt} /></p>
       <div className="mt-4" key={run}>
         {activity.kind === "sort" && <SortActivity a={activity} kids={kids} onFinish={finish} />}
         {activity.kind === "order" && <OrderActivity a={activity} kids={kids} onFinish={finish} />}
@@ -136,7 +136,9 @@ function Feedback({ ok, text }: { ok: boolean; text: string }) {
   return (
     <p className={clsx("mt-3 flex items-start gap-2 rounded-xl px-3 py-2 text-sm font-semibold", ok ? "bg-good-soft text-good-shade" : "bg-bad-soft text-bad-shade")} aria-live="polite">
       {ok ? <Check className="mt-0.5 h-4 w-4 shrink-0" strokeWidth={3} /> : <X className="mt-0.5 h-4 w-4 shrink-0" strokeWidth={3} />}
-      {text}
+      <span>
+        <MdInline text={text} />
+      </span>
     </p>
   );
 }
@@ -170,7 +172,7 @@ function SortActivity({ a, kids, onFinish }: { a: Extract<Activity, { kind: "sor
           <div className={clsx("mt-3 grid gap-2", a.groups.length === 2 ? "grid-cols-2" : "grid-cols-1 sm:grid-cols-3")}>
             {a.groups.map((g, k) => (
               <button key={k} type="button" onClick={() => pick(k)} className={clsx(choiceCls(kids), "text-center")}>
-                {g}
+                <MdInline text={g} />
               </button>
             ))}
           </div>
@@ -181,7 +183,9 @@ function SortActivity({ a, kids, onFinish }: { a: Extract<Activity, { kind: "sor
       <div className={clsx("mt-4 grid gap-3", a.groups.length === 2 ? "sm:grid-cols-2" : "sm:grid-cols-3")}>
         {a.groups.map((g, k) => (
           <div key={k} className="rounded-xl border border-line bg-surface-2/50 p-3">
-            <p className="text-xs font-black uppercase tracking-wide text-muted">{g}</p>
+            <p className="text-xs font-black uppercase tracking-wide text-muted">
+              <MdInline text={g} />
+            </p>
             <ul className="mt-1.5 space-y-1 text-sm font-semibold">
               {placed[k].map((idx) => (
                 <li key={idx}>

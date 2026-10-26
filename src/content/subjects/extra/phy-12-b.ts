@@ -878,9 +878,855 @@ The electrolyte inside the cell has an **internal resistance** $r$. With an exte
       },
     ],
   },
+  /* ------------------------------------------------------------------ */
+  /* Moving Charges and Magnetism (NCERT Ch 4; ISC: Magnetic Effects…)   */
+  /* ------------------------------------------------------------------ */
+  {
+    slug: "c12-moving-charges-magnetism",
+    title: "Moving Charges and Magnetism",
+    icon: "🧲",
+    description: "Lorentz force, motion of charges in a magnetic field, Biot–Savart law, Ampère's circuital law, solenoids, forces between parallel currents, torque on a current loop and the moving coil galvanometer.",
+    lessons: [
+      {
+        slug: "c12-mcm-lorentz-motion",
+        title: "Magnetic Force and the Motion of Charges",
+        summary: "The magnetic field and the Lorentz force, the force on a current-carrying conductor, and circular and helical motion of a charge in a uniform magnetic field.",
+        minutes: 22,
+        xp: 50,
+        blocks: [
+          {
+            type: "illustration",
+            emoji: "🌌",
+            caption: "Charged particles from the Sun, the solar wind that ISRO's Aditya-L1 studies, spiral along Earth's magnetic field lines towards the poles and light up the sky as auroras.",
+          },
+          {
+            type: "text",
+            md: t`In 1820 Oersted saw a compass needle swing when a nearby wire carried current: **moving charges produce a magnetic field**. A static charge produces only an electric field; a moving charge produces both.
+
+The magnetic field $\vec{B}$ is a vector field. A charge $q$ moving with velocity $\vec{v}$ in fields $\vec{E}$ and $\vec{B}$ feels the **Lorentz force** below. Its magnetic part, $q(\vec{v} \times \vec{B})$, depends on $q$, $\vec{v}$ and $\vec{B}$ and reverses for a negative charge. It is zero for a charge at rest or one moving parallel or antiparallel to $\vec{B}$. It is always **perpendicular to both** $\vec{v}$ and $\vec{B}$, with size $qvB\sin\theta$.
+
+The SI unit of $B$ is the **tesla** (T): a charge of 1 C moving at 1 m s⁻¹ perpendicular to a 1 T field feels 1 N. A smaller unit is the gauss: 1 G = $10^{-4}$ T.`,
+          },
+          {
+            type: "formula",
+            tex: t`\vec{F} = q\left[\vec{E} + \vec{v} \times \vec{B}\right], \qquad |\vec{F}_{mag}| = qvB\sin\theta`,
+            caption: "The Lorentz force. θ is the angle between v and B.",
+          },
+          {
+            type: "table",
+            headers: ["Situation", "Typical magnetic field"],
+            rows: [
+              ["Earth's surface", t`about $10^{-5}$ T (a fraction of a gauss)`],
+              ["Small bar magnet near its pole", t`about $10^{-2}$ T`],
+              ["Large laboratory electromagnet", "about 1 T"],
+              ["Superconducting magnet (for example in an MRI scanner or research lab)", "a few tesla to about 10 T"],
+            ],
+          },
+          {
+            type: "text",
+            md: t`**Force on a current-carrying conductor.** Take a straight rod of length $l$ and area $A$ with $n$ free electrons per unit volume, each drifting with $\vec{v}_d$. The total force on them is $(nAl)(-e)(\vec{v}_d \times \vec{B})$. Since the current is $I = neAv_d$ and points opposite to $\vec{v}_d$, this becomes $\vec{F} = I\vec{l} \times \vec{B}$, where $\vec{l}$ has length $l$ and points along the current. For a curved wire, add $I\,d\vec{l} \times \vec{B}$ over its length.`,
+          },
+          {
+            type: "formula",
+            tex: t`\vec{F} = I\,\vec{l} \times \vec{B}, \qquad F = IlB\sin\theta`,
+            caption: "Direction: Fleming's left-hand rule, or the cross product (fingers from l to B, thumb gives F).",
+          },
+          {
+            type: "example",
+            title: "Floating a rod with a magnetic force",
+            problem: t`A horizontal rod 0.50 m long with mass 60 g lies in a uniform horizontal magnetic field of 0.30 T at right angles to it. What current must flow so that the magnetic force balances its weight? Take $g = 9.8$ m s⁻².`,
+            steps: [
+              t`For balance, $IlB = mg$ with the force pointing up.`,
+              t`$I = \frac{mg}{lB} = \frac{0.060 \times 9.8}{0.50 \times 0.30} = \frac{0.588}{0.15}$.`,
+              t`$I \approx 3.9$ A. The direction is chosen so that $\vec{l} \times \vec{B}$ points upward.`,
+            ],
+            answer: "About 3.9 A.",
+          },
+          {
+            type: "checkpoint",
+            questions: [
+              {
+                kind: "mcq",
+                q: "A proton and an electron move with the same velocity at right angles to the same magnetic field. The forces on them are",
+                options: ["equal in size and direction", "equal in size, opposite in direction", "different in size, same direction", "zero for the electron"],
+                answer: 1,
+                explain: t`$F = qvB$ has the same size because $|q| = e$ for both; the sign of $q$ reverses the direction.`,
+              },
+            ],
+          },
+          {
+            type: "text",
+            md: t`**Motion in a uniform magnetic field.** The magnetic force is perpendicular to $\vec{v}$, so it does **no work**: speed and kinetic energy stay constant. Only the direction of motion changes.
+
+If $\vec{v} \perp \vec{B}$, the force $qvB$ supplies the centripetal force: $qvB = mv^2/r$. The charge moves in a **circle** of radius $r = mv/(qB)$, with angular frequency $\omega = qB/m$. The period does not depend on speed: faster particles move in bigger circles and take the same time.
+
+If $\vec{v}$ makes an angle $\theta$ with $\vec{B}$, split it into $v_\perp = v\sin\theta$ (gives circular motion) and $v_\parallel = v\cos\theta$ (unaffected). The path is a **helix**. The distance moved along $\vec{B}$ in one turn is the **pitch**.`,
+          },
+          {
+            type: "formula",
+            tex: t`r = \frac{mv_\perp}{qB}, \qquad \omega = \frac{qB}{m}, \qquad T = \frac{2\pi m}{qB}, \qquad \nu = \frac{qB}{2\pi m}, \qquad \text{pitch } p = v_\parallel T = \frac{2\pi m v\cos\theta}{qB}`,
+            caption: t`$\nu$ is called the cyclotron frequency.`,
+          },
+          {
+            type: "example",
+            title: "An electron circling in a field",
+            problem: t`An electron moving at $3.0 \times 10^6$ m s⁻¹ enters a uniform field of $2.0 \times 10^{-3}$ T at right angles. Find the radius of its path and its frequency of revolution. Take $m_e = 9.1 \times 10^{-31}$ kg, $e = 1.6 \times 10^{-19}$ C.`,
+            steps: [
+              t`$r = \frac{mv}{eB} = \frac{9.1 \times 10^{-31} \times 3.0 \times 10^6}{1.6 \times 10^{-19} \times 2.0 \times 10^{-3}} = \frac{2.73 \times 10^{-24}}{3.2 \times 10^{-22}} = 8.5 \times 10^{-3}$ m.`,
+              t`$\nu = \frac{eB}{2\pi m} = \frac{3.2 \times 10^{-22}}{2\pi \times 9.1 \times 10^{-31}} = \frac{3.2 \times 10^{-22}}{5.72 \times 10^{-30}} = 5.6 \times 10^{7}$ Hz.`,
+            ],
+            answer: "r ≈ 8.5 mm and ν ≈ 56 MHz.",
+          },
+          {
+            type: "mistake",
+            wrong: "A magnetic field speeds up a charged particle, just as an electric field does.",
+            right: t`The magnetic force $q\vec{v} \times \vec{B}$ is always perpendicular to $\vec{v}$, so it does zero work. Speed and kinetic energy stay the same; only the direction changes.`,
+            why: "A force usually means acceleration, and the particle does accelerate, but only centripetally. Speeding up needs a force component along the velocity, which only an electric field can give.",
+          },
+          {
+            type: "activity",
+            activity: {
+              kind: "reveal",
+              prompt: "A proton moves exactly along a uniform magnetic field. Its path is…",
+              emoji: "➡️",
+              options: ["a circle", "a straight line at constant speed", "a helix", "a parabola"],
+              answer: 1,
+              trap: 0,
+              explain: t`With $\theta = 0$, $\sin\theta = 0$, so the magnetic force is zero and the proton carries on in a straight line.`,
+            },
+          },
+          {
+            type: "callout",
+            tone: "note",
+            title: "ISC note: crossed fields and the cyclotron",
+            md: t`The rationalised NCERT book (CBSE, Karnataka PUC) has dropped motion in combined fields. **ISC** and JEE still use it.
+
+**Velocity selector**: with $\vec{E} \perp \vec{B}$ and both perpendicular to $\vec{v}$, the electric and magnetic forces cancel when $qE = qvB$, so only particles with $v = E/B$ go straight through.
+
+**Cyclotron**: ions circle inside two hollow "dees" in a field $B$; an alternating voltage at the cyclotron frequency $\nu = qB/(2\pi m)$ accelerates them at each gap crossing. The final kinetic energy for dee radius $R$ is $K = \frac{q^2B^2R^2}{2m}$.`,
+          },
+          {
+            type: "callout",
+            tone: "exam",
+            title: "Board exam tips",
+            md: t`State the direction rule you use (cross product or Fleming's left-hand rule) when asked for the direction of force. In "show that the period is independent of speed", start from $qvB = mv^2/r$, find $r$, then $T = 2\pi r/v$; the $v$ cancels. Do not forget that only the component $v_\perp$ enters the radius.`,
+          },
+          {
+            type: "keypoints",
+            items: [
+              t`Lorentz force $\vec{F} = q(\vec{E} + \vec{v} \times \vec{B})$; the magnetic part is $\perp$ to $\vec{v}$ and $\vec{B}$ and does no work.`,
+              t`Force on a wire: $\vec{F} = I\vec{l} \times \vec{B}$.`,
+              t`$\vec{v} \perp \vec{B}$: circle with $r = mv/(qB)$, $T = 2\pi m/(qB)$ independent of speed.`,
+              t`General angle: helix with pitch $p = v\cos\theta \cdot 2\pi m/(qB)$.`,
+              "1 T = 10⁴ G; Earth's field is about 10⁻⁵ T.",
+            ],
+          },
+        ],
+        flashcards: [
+          { front: "Lorentz force", back: t`$\vec{F} = q[\vec{E} + \vec{v} \times \vec{B}]$` },
+          { front: "When is the magnetic force on a moving charge zero?", back: t`When $\vec{v}$ is parallel or antiparallel to $\vec{B}$ (or the charge is at rest).` },
+          { front: "Work done by a magnetic force", back: "Zero, because the force is always perpendicular to the velocity." },
+          { front: "Radius of circular path", back: t`$r = \dfrac{mv}{qB}$` },
+          { front: "Period of circular motion in B", back: t`$T = \dfrac{2\pi m}{qB}$, independent of speed and radius` },
+          { front: "Pitch of a helix", back: t`$p = v\cos\theta \cdot \dfrac{2\pi m}{qB}$` },
+          { front: "Force on a current-carrying conductor", back: t`$\vec{F} = I\vec{l} \times \vec{B}$` },
+          { front: "1 tesla in gauss", back: t`1 T = $10^4$ G` },
+        ],
+        quiz: [
+          {
+            kind: "numeric",
+            q: t`A proton moves at $2.0 \times 10^6$ m s⁻¹ at right angles to a 0.50 T field. Find the force on it in units of $10^{-13}$ N. ($e = 1.6 \times 10^{-19}$ C)`,
+            answer: 1.6,
+            tolerance: 0.02,
+            unit: t`× $10^{-13}$ N`,
+            explain: t`$F = evB = 1.6 \times 10^{-19} \times 2.0 \times 10^6 \times 0.50 = 1.6 \times 10^{-13}$ N.`,
+          },
+          {
+            kind: "numeric",
+            q: "A 0.50 m wire carrying 4.0 A lies in a 0.30 T field at 30° to the field. Find the force on it.",
+            answer: 0.3,
+            tolerance: 0.01,
+            unit: "N",
+            explain: t`$F = IlB\sin 30° = 4.0 \times 0.50 \times 0.30 \times 0.5 = 0.30$ N.`,
+          },
+          {
+            kind: "mcq",
+            q: "If the speed of a charged particle moving perpendicular to a uniform magnetic field is doubled, its period of revolution",
+            options: ["doubles", "halves", "stays the same", "becomes four times"],
+            answer: 2,
+            explain: t`$T = 2\pi m/(qB)$ has no $v$; the radius doubles instead.`,
+          },
+          {
+            kind: "truefalse",
+            q: "The kinetic energy of a charged particle stays constant while it moves in a purely magnetic field.",
+            answer: true,
+            explain: "The magnetic force is perpendicular to the velocity, so it does no work.",
+          },
+          {
+            kind: "numeric",
+            q: t`A proton ($m = 1.67 \times 10^{-27}$ kg) moves at $2.0 \times 10^6$ m s⁻¹ at 60° to a 0.10 T field. Find the pitch of its helix.`,
+            answer: 0.66,
+            tolerance: 0.01,
+            unit: "m",
+            explain: t`$T = \frac{2\pi m}{eB} = \frac{2\pi \times 1.67 \times 10^{-27}}{1.6 \times 10^{-20}} = 6.56 \times 10^{-7}$ s. $v_\parallel = v\cos 60° = 1.0 \times 10^6$ m s⁻¹, so $p = 0.66$ m.`,
+            difficulty: 2,
+            hint: "Use only the component of velocity along B for the pitch.",
+          },
+          {
+            kind: "mcq",
+            q: "An electron moves east in a magnetic field that points vertically upward. The force on it points",
+            options: ["north", "south", "up", "west"],
+            answer: 0,
+            explain: t`For a positive charge $\hat{v} \times \hat{B} = \text{east} \times \text{up} = \text{south}$. The electron is negative, so the force points north.`,
+            difficulty: 2,
+            hint: "Find the direction for a positive charge first, then reverse it.",
+          },
+          {
+            kind: "multi",
+            q: "A charged particle enters a uniform magnetic field. Which can happen?",
+            options: ["It moves in a circle", "It moves in a helix", "It moves in a straight line", "Its speed increases steadily"],
+            answers: [0, 1, 2],
+            explain: "Circle (v ⊥ B), helix (any other angle) and straight line (v ∥ B) are all possible. The speed never changes in a purely magnetic field.",
+          },
+        ],
+      },
+      {
+        slug: "c12-mcm-biot-ampere",
+        title: "Biot–Savart Law and Ampère's Circuital Law",
+        summary: "The field of a current element, the field on the axis of a circular loop, Ampère's circuital law, and the fields of a long straight wire and a long solenoid.",
+        minutes: 24,
+        xp: 55,
+        blocks: [
+          {
+            type: "text",
+            md: "An MRI scanner in a hospital and the electromagnet that lifts scrap iron at a steel plant both get their fields from coils of current-carrying wire. To design them we need to calculate the field a current produces.",
+          },
+          {
+            type: "text",
+            md: t`**Biot–Savart law.** A small element $d\vec{l}$ of a wire carrying current $I$ produces at a point P (position $\vec{r}$ from the element) a field $d\vec{B}$. Its size is proportional to $I$, to $dl$, and to $\sin\theta$ (θ is the angle between $d\vec{l}$ and $\vec{r}$), and inversely proportional to $r^2$. Its direction is that of $d\vec{l} \times \vec{r}$: perpendicular to the plane containing them (right-hand screw rule). The constant $\mu_0 = 4\pi \times 10^{-7}$ T m A⁻¹ is the **permeability of free space**.`,
+          },
+          {
+            type: "formula",
+            tex: t`d\vec{B} = \frac{\mu_0}{4\pi}\,\frac{I\,d\vec{l} \times \vec{r}}{r^3}, \qquad |d\vec{B}| = \frac{\mu_0}{4\pi}\,\frac{I\,dl\sin\theta}{r^2}`,
+            caption: t`Along the line of the element itself ($\theta = 0$) the field is zero.`,
+          },
+          {
+            type: "table",
+            headers: ["", "Coulomb's law (electric)", "Biot–Savart law (magnetic)"],
+            rows: [
+              ["Source", "a scalar charge q", t`a vector current element $I\,d\vec{l}$`],
+              ["Distance dependence", t`$1/r^2$, long range`, t`$1/r^2$, long range`],
+              ["Direction of field", "along the line joining source and point", t`perpendicular to both $d\vec{l}$ and $\vec{r}$`],
+              ["Angle dependence", "none", t`$\sin\theta$; zero along the element's own line`],
+            ],
+          },
+          {
+            type: "list",
+            ordered: true,
+            items: [
+              t`**Field on the axis of a circular loop** (radius $R$, current $I$, point P at distance $x$ from the centre). Every element $d\vec{l}$ is perpendicular to the line to P, whose length is $r = \sqrt{x^2 + R^2}$, so $dB = \frac{\mu_0}{4\pi}\frac{I\,dl}{x^2 + R^2}$.`,
+              t`Split $d\vec{B}$ into a part along the axis and a part perpendicular to it. Elements at opposite ends of a diameter cancel the perpendicular parts.`,
+              t`The axial part is $dB\cos\alpha$ with $\cos\alpha = \frac{R}{\sqrt{x^2 + R^2}}$.`,
+              t`Summing $dl$ round the loop gives $2\pi R$: $B = \frac{\mu_0 I}{4\pi}\frac{2\pi R}{x^2 + R^2}\cdot\frac{R}{\sqrt{x^2 + R^2}} = \frac{\mu_0 I R^2}{2(x^2 + R^2)^{3/2}}$, along the axis.`,
+            ],
+          },
+          {
+            type: "formula",
+            tex: t`B_{axis} = \frac{\mu_0 N I R^2}{2(x^2 + R^2)^{3/2}}, \qquad B_{centre} = \frac{\mu_0 N I}{2R}`,
+            caption: "For a coil of N turns. Direction by the right-hand thumb rule: curl the fingers along the current, the thumb points along B.",
+          },
+          {
+            type: "example",
+            title: "Field of a circular coil",
+            problem: t`A coil of 100 turns and radius 10 cm carries 2.0 A. Find the field at its centre and at a point on the axis 10 cm from the centre. Take $\mu_0 = 4\pi \times 10^{-7}$ T m A⁻¹.`,
+            steps: [
+              t`Centre: $B = \frac{\mu_0 NI}{2R} = \frac{4\pi \times 10^{-7} \times 100 \times 2.0}{2 \times 0.10} = 4\pi \times 10^{-4} \approx 1.26 \times 10^{-3}$ T.`,
+              t`On the axis at $x = R$: $(x^2 + R^2)^{3/2} = (2R^2)^{3/2} = 2\sqrt{2}R^3$, so $B = \frac{\mu_0 NI}{2R}\cdot\frac{1}{2\sqrt{2}}$.`,
+              t`$B = \frac{1.26 \times 10^{-3}}{2.83} \approx 4.4 \times 10^{-4}$ T.`,
+            ],
+            answer: t`About $1.26 \times 10^{-3}$ T at the centre and $4.4 \times 10^{-4}$ T at 10 cm along the axis.`,
+          },
+          {
+            type: "checkpoint",
+            questions: [
+              {
+                kind: "mcq",
+                q: "The radius of a circular loop is doubled while the current stays the same. The field at its centre becomes",
+                options: ["double", "half", "four times", "one quarter"],
+                answer: 1,
+                explain: t`$B = \mu_0 I/(2R)$, so doubling $R$ halves $B$.`,
+              },
+            ],
+          },
+          {
+            type: "text",
+            md: t`**Ampère's circuital law.** For any closed loop (an **Amperian loop**), the line integral of $\vec{B}$ round the loop equals $\mu_0$ times the net current passing through the surface it bounds: $\oint \vec{B}\cdot d\vec{l} = \mu_0 I_{enc}$. Signs follow the right-hand rule: curl the fingers along the direction you go round; currents along the thumb count positive.
+
+**Long straight wire.** By symmetry, $\vec{B}$ has the same size everywhere on a circle of radius $r$ centred on the wire, and is tangent to it. Then $\oint \vec{B}\cdot d\vec{l} = B(2\pi r) = \mu_0 I$, so $B = \frac{\mu_0 I}{2\pi r}$. The field lines are concentric circles.`,
+          },
+          {
+            type: "formula",
+            tex: t`\oint \vec{B}\cdot d\vec{l} = \mu_0 I_{enc}, \qquad B_{wire} = \frac{\mu_0 I}{2\pi r}, \qquad B_{solenoid} = \mu_0 n I`,
+            caption: "n is the number of turns per unit length of a long solenoid. Inside, the field is uniform and along the axis; outside it is nearly zero.",
+          },
+          {
+            type: "example",
+            title: "A wire and a solenoid",
+            problem: t`(a) Find the field 5.0 cm from a long straight wire carrying 10 A. (b) A solenoid 0.50 m long has 500 turns and carries 3.0 A. Find the field inside it.`,
+            steps: [
+              t`(a) $B = \frac{\mu_0 I}{2\pi r} = \frac{2 \times 10^{-7} \times 10}{0.050} = 4.0 \times 10^{-5}$ T.`,
+              t`(b) $n = 500/0.50 = 1000$ turns m⁻¹.`,
+              t`$B = \mu_0 nI = 4\pi \times 10^{-7} \times 1000 \times 3.0 \approx 3.8 \times 10^{-3}$ T.`,
+            ],
+            answer: t`(a) $4.0 \times 10^{-5}$ T; (b) about $3.8 \times 10^{-3}$ T.`,
+          },
+          {
+            type: "mistake",
+            wrong: t`Ampère's law says the field at a point on the Amperian loop is produced only by the current enclosed by the loop.`,
+            right: t`All currents, inside and outside, produce $\vec{B}$ at every point. Only the **line integral** $\oint \vec{B}\cdot d\vec{l}$ depends on the enclosed current; outside currents add zero to the integral.`,
+            why: t`In the symmetric examples we use, $B$ comes out of the enclosed current, so it feels as if outside currents do nothing. The law is useful only when symmetry lets us take $B$ out of the integral.`,
+          },
+          {
+            type: "activity",
+            activity: {
+              kind: "order",
+              prompt: "Order the steps to find B inside a long solenoid.",
+              items: [
+                "Choose a rectangular Amperian loop with one long side inside, along the axis",
+                t`Note that $\vec{B}$ is zero outside and perpendicular to the short sides`,
+                t`So $\oint \vec{B}\cdot d\vec{l} = Bh$ for an inside side of length $h$`,
+                t`The loop encloses $nh$ turns, so $I_{enc} = nhI$`,
+                t`Equate: $Bh = \mu_0 nhI$, so $B = \mu_0 nI$`,
+              ],
+              explain: "Only the inside side contributes. The answer does not depend on where inside the solenoid the loop is placed, so the field inside is uniform.",
+            },
+          },
+          {
+            type: "callout",
+            tone: "note",
+            title: "Board note: the toroid",
+            md: t`The rationalised NCERT text treats only the solenoid. **ISC**, JEE and NEET also use the **toroid** (a solenoid bent into a ring of $N$ turns): by Ampère's law, the field inside its core at radius $r$ is $B = \frac{\mu_0 NI}{2\pi r}$, and the field is zero in the open space inside the ring and outside it.`,
+          },
+          {
+            type: "callout",
+            tone: "exam",
+            title: "Board exam tips",
+            md: t`The axis-of-loop derivation is a common 5-mark question: draw the loop, mark $d\vec{l}$, $\vec{r}$ and the two components of $d\vec{B}$, and say clearly why the perpendicular parts cancel. For Ampère's law questions, state the symmetry argument (B constant and tangential on the loop) before writing $B \cdot 2\pi r$.`,
+          },
+          {
+            type: "keypoints",
+            items: [
+              t`Biot–Savart: $dB = \frac{\mu_0}{4\pi}\frac{I\,dl\sin\theta}{r^2}$, direction $d\vec{l} \times \vec{r}$; $\mu_0 = 4\pi \times 10^{-7}$ T m A⁻¹.`,
+              t`Circular loop: $B_{centre} = \mu_0 NI/2R$; on the axis $B = \mu_0 NIR^2/[2(x^2 + R^2)^{3/2}]$.`,
+              t`Ampère: $\oint \vec{B}\cdot d\vec{l} = \mu_0 I_{enc}$; useful when symmetry makes B constant on the loop.`,
+              t`Long wire $B = \mu_0 I/2\pi r$; long solenoid $B = \mu_0 nI$ inside, nearly zero outside.`,
+            ],
+          },
+        ],
+        flashcards: [
+          { front: "Biot–Savart law", back: t`$d\vec{B} = \dfrac{\mu_0}{4\pi}\dfrac{I\,d\vec{l} \times \vec{r}}{r^3}$` },
+          { front: "Value of μ₀", back: t`$4\pi \times 10^{-7}$ T m A⁻¹` },
+          { front: "Field at the centre of a circular coil", back: t`$B = \dfrac{\mu_0 NI}{2R}$` },
+          { front: "Field on the axis of a circular loop", back: t`$B = \dfrac{\mu_0 IR^2}{2(x^2 + R^2)^{3/2}}$` },
+          { front: "Ampère's circuital law", back: t`$\oint \vec{B}\cdot d\vec{l} = \mu_0 I_{enc}$` },
+          { front: "Field of a long straight wire", back: t`$B = \dfrac{\mu_0 I}{2\pi r}$, field lines are concentric circles` },
+          { front: "Field inside a long solenoid", back: t`$B = \mu_0 nI$, uniform, along the axis` },
+          { front: "Field of a toroid", back: t`$\dfrac{\mu_0 NI}{2\pi r}$ inside the core; zero elsewhere` },
+        ],
+        quiz: [
+          {
+            kind: "mcq",
+            q: "The magnetic field due to a current element is zero at points",
+            options: ["perpendicular to the element", "along the line of the element", "very close to the element", "nowhere"],
+            answer: 1,
+            explain: t`$dB \propto \sin\theta$, and $\theta = 0$ or $180°$ along the element's own line.`,
+          },
+          {
+            kind: "numeric",
+            q: "A long straight wire carries 5.0 A. Find the magnetic field at 2.0 cm from it, in microtesla.",
+            answer: 50,
+            tolerance: 0.5,
+            unit: "μT",
+            explain: t`$B = \frac{2 \times 10^{-7} \times 5.0}{0.020} = 5.0 \times 10^{-5}$ T $= 50$ μT.`,
+          },
+          {
+            kind: "numeric",
+            q: "A solenoid has 2000 turns per metre and carries 0.50 A. Find the field inside it in millitesla (use π = 3.14).",
+            answer: 1.26,
+            tolerance: 0.02,
+            unit: "mT",
+            explain: t`$B = \mu_0 nI = 4 \times 3.14 \times 10^{-7} \times 2000 \times 0.50 = 1.26 \times 10^{-3}$ T.`,
+          },
+          {
+            kind: "truefalse",
+            q: "The field inside a long solenoid depends on its radius.",
+            answer: false,
+            explain: t`$B = \mu_0 nI$ depends only on turns per unit length and current.`,
+          },
+          {
+            kind: "mcq",
+            q: "An Amperian loop encloses currents of 3 A (upward) and 1 A (downward); a 5 A current lies outside the loop. Going round so that upward counts as positive, ∮B·dl equals",
+            options: [t`$9\mu_0$`, t`$4\mu_0$`, t`$2\mu_0$`, t`$7\mu_0$`],
+            answer: 2,
+            explain: t`Only enclosed currents count, with signs: $3 - 1 = 2$ A, so $\oint \vec{B}\cdot d\vec{l} = 2\mu_0$.`,
+            difficulty: 2,
+          },
+          {
+            kind: "mcq",
+            q: t`The field on the axis of a circular loop at a distance $x \gg R$ from its centre varies as`,
+            options: [t`$1/x$`, t`$1/x^2$`, t`$1/x^3$`, t`$1/x^4$`],
+            answer: 2,
+            explain: t`For $x \gg R$, $B \approx \mu_0 IR^2/(2x^3)$: the loop behaves like a magnetic dipole.`,
+            difficulty: 2,
+            hint: t`Drop $R^2$ compared with $x^2$ in the denominator.`,
+          },
+          {
+            kind: "multi",
+            q: "Which statements about the field of a long straight current-carrying wire are true?",
+            options: [
+              "Field lines are circles centred on the wire",
+              "The field doubles when the distance halves",
+              "The field points along the wire",
+              "Its direction is given by the right-hand thumb rule",
+            ],
+            answers: [0, 1, 3],
+            explain: t`$B = \mu_0 I/(2\pi r)$ goes as $1/r$, round the wire in circles, never along it.`,
+          },
+        ],
+      },
+      {
+        slug: "c12-mcm-torque-galvanometer",
+        title: "Parallel Currents, Torque on a Loop and the Galvanometer",
+        summary: "The force between parallel currents and the ampere, the torque on a current loop and its magnetic moment, the revolving electron as a dipole, and the moving coil galvanometer with its conversion to an ammeter and voltmeter.",
+        minutes: 24,
+        xp: 55,
+        blocks: [
+          {
+            type: "text",
+            md: t`**Force between parallel currents.** Two long parallel wires a distance $d$ apart carry currents $I_a$ and $I_b$. Wire $a$ produces a field $B_a = \frac{\mu_0 I_a}{2\pi d}$ at wire $b$, perpendicular to it. A length $L$ of wire $b$ feels $F = I_b L B_a$. So the force per unit length is $f = \frac{\mu_0 I_a I_b}{2\pi d}$, and by Newton's third law wire $a$ feels an equal and opposite force.
+
+**Currents in the same direction attract; currents in opposite directions repel.** This is the reverse of the rule for charges.`,
+          },
+          {
+            type: "formula",
+            tex: t`f = \frac{F}{L} = \frac{\mu_0 I_a I_b}{2\pi d}`,
+            caption: "Force per unit length between two long parallel wires.",
+          },
+          {
+            type: "text",
+            md: t`**The ampere.** This force was used to define the ampere: 1 A is the current which, in each of two very long, thin, straight parallel wires 1 m apart in vacuum, produces a force of $2 \times 10^{-7}$ N per metre of length. Since 2019 the SI defines the ampere by fixing the elementary charge at exactly $e = 1.602176634 \times 10^{-19}$ C, but the old definition is still asked in board exams.`,
+          },
+          {
+            type: "example",
+            title: "Force between two wires",
+            problem: "Two long parallel wires 10 cm apart each carry 5.0 A in the same direction. Find the force per metre between them and say whether it is attractive or repulsive.",
+            steps: [
+              t`$f = \frac{\mu_0 I_a I_b}{2\pi d} = \frac{2 \times 10^{-7} \times 5.0 \times 5.0}{0.10}$.`,
+              t`$f = 5.0 \times 10^{-5}$ N m⁻¹.`,
+              "The currents are in the same direction, so the wires attract.",
+            ],
+            answer: t`$5.0 \times 10^{-5}$ N per metre, attractive.`,
+          },
+          {
+            type: "text",
+            md: t`**Torque on a current loop.** A rectangular loop of area $A$ carrying current $I$ sits in a uniform field $\vec{B}$. The forces on opposite sides are equal and opposite, so the **net force is zero**. But the forces on two sides act along different lines and form a couple. If the normal to the loop makes angle $\theta$ with $\vec{B}$, the torque is $IAB\sin\theta$. The result holds for a plane loop of any shape.
+
+Define the **magnetic moment** $\vec{m} = NI\vec{A}$, with $\vec{A}$ along the normal given by the right-hand rule (fingers along the current). The torque is $\vec{\tau} = \vec{m} \times \vec{B}$: it turns the loop until $\vec{m}$ lines up with $\vec{B}$ (stable equilibrium). With $\vec{m}$ opposite to $\vec{B}$ the torque is also zero, but the equilibrium is unstable.`,
+          },
+          {
+            type: "formula",
+            tex: t`\vec{m} = NI\vec{A}, \qquad \vec{\tau} = \vec{m} \times \vec{B}, \qquad \tau = NIAB\sin\theta, \qquad U = -\vec{m}\cdot\vec{B}`,
+            caption: "Unit of m: A m². θ is the angle between the normal (m) and B, not between the plane and B.",
+          },
+          {
+            type: "example",
+            title: "Torque on a coil",
+            problem: t`A coil of 50 turns, area $4.0 \times 10^{-3}$ m², carries 2.0 A in a uniform 0.20 T field. The normal to the coil makes 30° with the field. Find its magnetic moment and the torque on it.`,
+            steps: [
+              t`$m = NIA = 50 \times 2.0 \times 4.0 \times 10^{-3} = 0.40$ A m².`,
+              t`$\tau = mB\sin\theta = 0.40 \times 0.20 \times \sin 30° = 0.40 \times 0.20 \times 0.5 = 0.040$ N m.`,
+            ],
+            answer: "m = 0.40 A m² and τ = 0.040 N m.",
+          },
+          {
+            type: "checkpoint",
+            questions: [
+              {
+                kind: "mcq",
+                q: "The torque on a current loop in a uniform field is greatest when",
+                options: ["the plane of the loop is perpendicular to B", "the plane of the loop is parallel to B", "the magnetic moment is along B", "the loop has no current"],
+                answer: 1,
+                explain: t`When the plane is parallel to $\vec{B}$, the normal is perpendicular to $\vec{B}$, so $\theta = 90°$ and $\sin\theta = 1$.`,
+              },
+            ],
+          },
+          {
+            type: "text",
+            md: t`**A current loop is a magnetic dipole.** Far from a loop ($x \gg R$) its axial field is $B \approx \frac{\mu_0}{4\pi}\frac{2m}{x^3}$, exactly like an electric dipole's axial field with $p \to m$ and $\frac{1}{\varepsilon_0} \to \mu_0$.
+
+**Revolving electron.** In the Bohr model an electron circling a nucleus is a tiny current loop, $I = \frac{e}{T} = \frac{ev}{2\pi r}$. Its magnetic moment is $\mu_l = I\pi r^2 = \frac{evr}{2}$. Using angular momentum $l = m_e vr$, $\mu_l = \frac{e}{2m_e}l$; it points opposite to $\vec{l}$ because the electron is negative. With $l = \frac{h}{2\pi}$, the smallest value is the **Bohr magneton**, $\frac{eh}{4\pi m_e} \approx 9.27 \times 10^{-24}$ A m².`,
+          },
+          {
+            type: "text",
+            md: t`**Moving coil galvanometer (MCG).** A coil of $N$ turns, area $A$, can turn about a fixed axis between concave pole pieces with a soft iron cylinder at the centre. These make the field **radial**, so the plane of the coil is always parallel to $\vec{B}$ and the torque is $NIAB$ at every position. A spring gives a restoring torque $k\phi$. At equilibrium $NIAB = k\phi$, so the deflection $\phi = \left(\frac{NAB}{k}\right)I$ is proportional to the current.
+
+**Current sensitivity** $\frac{\phi}{I} = \frac{NAB}{k}$. **Voltage sensitivity** $\frac{\phi}{V} = \frac{NAB}{kR_G}$. Doubling $N$ doubles current sensitivity, but it also roughly doubles the coil resistance $R_G$, so the voltage sensitivity may not change.
+
+To make an **ammeter**, join a small **shunt** $S$ in parallel; to make a **voltmeter**, join a large resistance $R$ in series.`,
+          },
+          {
+            type: "formula",
+            tex: t`\text{Ammeter: } S = \frac{I_g G}{I - I_g}, \qquad \text{Voltmeter: } R = \frac{V}{I_g} - G`,
+            caption: t`$G$ is the galvanometer resistance and $I_g$ its full-scale current. An ideal ammeter has zero resistance; an ideal voltmeter has infinite resistance.`,
+          },
+          {
+            type: "example",
+            title: "Converting a galvanometer",
+            problem: "A galvanometer of resistance 50 Ω gives full-scale deflection for 2.0 mA. How would you convert it into (a) an ammeter of range 0–2.0 A and (b) a voltmeter of range 0–10 V?",
+            steps: [
+              t`(a) Shunt $S = \frac{I_g G}{I - I_g} = \frac{0.0020 \times 50}{2.0 - 0.0020} = \frac{0.10}{1.998} \approx 0.050$ Ω, joined in parallel.`,
+              t`(b) Series resistance $R = \frac{V}{I_g} - G = \frac{10}{0.0020} - 50 = 5000 - 50 = 4950$ Ω.`,
+            ],
+            answer: "(a) About 0.050 Ω in parallel; (b) 4950 Ω in series.",
+          },
+          {
+            type: "mistake",
+            wrong: "Two parallel wires carrying current in the same direction repel each other, just as like charges repel.",
+            right: t`Parallel currents in the **same** direction **attract**; antiparallel currents repel. Check with $\vec{F} = I\vec{l} \times \vec{B}$ using the field of the other wire.`,
+            why: "The rule for charges (like repel) is so familiar that learners carry it over. Magnetic forces between currents follow the cross product, which gives the opposite pattern.",
+          },
+          {
+            type: "activity",
+            activity: {
+              kind: "match",
+              prompt: "Match each galvanometer feature to its purpose.",
+              pairs: [
+                ["Concave pole pieces with soft iron core", "Radial field, so torque is NIAB at every angle"],
+                ["Phosphor-bronze spring", "Restoring torque proportional to deflection"],
+                ["Low resistance in parallel", "Converts it into an ammeter"],
+                ["High resistance in series", "Converts it into a voltmeter"],
+              ],
+              explain: "The radial field makes the scale linear (φ ∝ I); shunts and series resistors only change the range.",
+            },
+          },
+          {
+            type: "callout",
+            tone: "exam",
+            title: "Board exam tips",
+            md: t`For "torque on a rectangular loop", show the forces on all four sides, say that two cancel along the same line, and then find the couple from the other two. For the galvanometer, examiners look for: radial field, $NIAB = k\phi$, and the definition of current sensitivity. Always write "in parallel" or "in series" when you give a shunt or a multiplier.`,
+          },
+          {
+            type: "keypoints",
+            items: [
+              t`Parallel currents: $f = \mu_0 I_aI_b/2\pi d$; like currents attract, unlike repel.`,
+              t`Loop in uniform B: net force zero, torque $\vec{\tau} = \vec{m} \times \vec{B}$ with $\vec{m} = NI\vec{A}$.`,
+              t`Revolving electron: $\mu_l = (e/2m_e)l$; Bohr magneton $\approx 9.27 \times 10^{-24}$ A m².`,
+              t`MCG: radial field, $\phi = (NAB/k)I$.`,
+              t`Ammeter: shunt $S = I_gG/(I - I_g)$ in parallel; voltmeter: $R = V/I_g - G$ in series.`,
+            ],
+          },
+        ],
+        flashcards: [
+          { front: "Force per unit length between parallel wires", back: t`$f = \dfrac{\mu_0 I_a I_b}{2\pi d}$` },
+          { front: "Like currents in parallel wires", back: "Attract" },
+          { front: "Old definition of 1 ampere", back: t`The current in two long parallel wires 1 m apart in vacuum that gives a force of $2 \times 10^{-7}$ N per metre.` },
+          { front: "Magnetic moment of a coil", back: t`$\vec{m} = NI\vec{A}$, unit A m²` },
+          { front: "Torque on a current loop", back: t`$\vec{\tau} = \vec{m} \times \vec{B}$` },
+          { front: "Bohr magneton", back: t`$\dfrac{eh}{4\pi m_e} \approx 9.27 \times 10^{-24}$ A m²` },
+          { front: "Why a radial field in a galvanometer?", back: "The plane of the coil is always along B, so the torque is NIAB at every position and φ ∝ I." },
+          { front: "Shunt for an ammeter", back: t`$S = \dfrac{I_g G}{I - I_g}$, in parallel` },
+        ],
+        quiz: [
+          {
+            kind: "numeric",
+            q: "Two long parallel wires 5.0 cm apart carry 10 A and 4.0 A. Find the force per metre on each, in units of 10⁻⁴ N m⁻¹.",
+            answer: 1.6,
+            tolerance: 0.02,
+            unit: "× 10⁻⁴ N m⁻¹",
+            explain: t`$f = \frac{2 \times 10^{-7} \times 10 \times 4.0}{0.050} = 1.6 \times 10^{-4}$ N m⁻¹. Both wires feel the same size of force.`,
+          },
+          {
+            kind: "mcq",
+            q: "A current loop in a uniform magnetic field experiences",
+            options: ["a net force and a torque", "a net force but no torque", "a torque but no net force (in general)", "neither force nor torque"],
+            answer: 2,
+            explain: "The forces on opposite sides cancel in a uniform field, but they can form a couple.",
+          },
+          {
+            kind: "numeric",
+            q: "A galvanometer of resistance 20 Ω shows full-scale deflection for 5.0 mA. What series resistance makes it a 0–5.0 V voltmeter?",
+            answer: 980,
+            tolerance: 0.5,
+            unit: "Ω",
+            explain: t`$R = V/I_g - G = 5.0/0.0050 - 20 = 1000 - 20 = 980$ Ω.`,
+          },
+          {
+            kind: "truefalse",
+            q: "Doubling the number of turns of a galvanometer coil always doubles its voltage sensitivity.",
+            answer: false,
+            explain: t`Current sensitivity doubles, but the coil resistance also roughly doubles, so $NAB/(kR_G)$ may stay about the same.`,
+            difficulty: 2,
+          },
+          {
+            kind: "mcq",
+            q: "A circular coil of radius 7.0 cm and 20 turns carries 0.50 A in a field of 0.10 T. The maximum torque on it is about (π = 22/7)",
+            options: ["0.0154 N m", "0.0077 N m", "0.154 N m", "0.0031 N m"],
+            answer: 0,
+            explain: t`$A = \frac{22}{7} \times 0.07^2 = 0.0154$ m². $\tau_{\max} = NIAB = 20 \times 0.50 \times 0.0154 \times 0.10 = 0.0154$ N m.`,
+            difficulty: 2,
+          },
+          {
+            kind: "mcq",
+            q: "The magnetic moment of an electron in a circular orbit and its orbital angular momentum are",
+            options: ["parallel", "antiparallel", "perpendicular", "unrelated in direction"],
+            answer: 1,
+            explain: t`$\vec{\mu}_l = -\frac{e}{2m_e}\vec{l}$; the minus sign comes from the electron's negative charge.`,
+          },
+          {
+            kind: "multi",
+            q: "Which of these increase the current sensitivity of a moving coil galvanometer?",
+            options: ["More turns on the coil", "A stronger magnetic field", "A stiffer spring (larger k)", "A larger coil area"],
+            answers: [0, 1, 3],
+            explain: t`Current sensitivity is $NAB/k$: it rises with $N$, $A$ and $B$, and falls with $k$.`,
+          },
+        ],
+      },
+      {
+        slug: "c12-mcm-exam-edge",
+        title: "Exam edge: Moving Charges and Magnetism",
+        summary: "What JEE, NEET, KCET and COMEDK ask from this chapter: radius comparisons, fields of wire-and-arc shapes, galvanometer conversions, particles crossing a field region, and the usual traps.",
+        minutes: 25,
+        xp: 60,
+        track: "exam",
+        blocks: [
+          {
+            type: "table",
+            headers: ["Exam", "What it asks from this chapter"],
+            rows: [
+              ["NEET", "radius and period of charged particles, field at the centre of loops and arcs, force between wires, galvanometer conversion; usually 2–3 questions"],
+              ["JEE Main", "fields of combinations (straight segments + arcs), helix pitch, velocity selector, torque on loops, Ampère's law for thick wires and toroids"],
+              ["JEE Advanced", "particles crossing a field strip, combined E and B, non-uniform current distributions, forces on curved wires, multi-correct reasoning"],
+              ["KCET / COMEDK", "direct formula use: r = mv/qB, B at the centre of a coil, solenoid, shunt and multiplier values"],
+            ],
+          },
+          {
+            type: "heading",
+            text: "Results worth remembering",
+          },
+          {
+            type: "formula",
+            tex: t`B_{\text{finite wire}} = \frac{\mu_0 I}{4\pi d}(\sin\alpha + \sin\beta), \qquad B_{\text{arc}} = \frac{\mu_0 I}{4\pi R}\,\theta \;\; (\theta \text{ in radians})`,
+            caption: "α and β are the angles subtended at the point by the two ends, measured from the perpendicular. A semi-infinite wire, at a point opposite its end: μ₀I/(4πd). A full circle (θ = 2π) gives μ₀I/(2R).",
+          },
+          {
+            type: "list",
+            items: [
+              t`**Radius in three forms**: $r = \frac{mv}{qB} = \frac{p}{qB} = \frac{\sqrt{2mK}}{qB} = \frac{1}{B}\sqrt{\frac{2mV}{q}}$ (accelerated from rest through $V$). Pick the form that matches what is equal.`,
+              t`**Square loop** of side $a$: field at the centre $= \frac{2\sqrt{2}\,\mu_0 I}{\pi a}$ (four finite wires, each with $\alpha = \beta = 45°$).`,
+              t`**Field strip**: a particle entering a field region of width $d$ at right angles turns through $\theta$ with $\sin\theta = d/r$ if $d < r$; if $d \ge r$ it comes back out after a semicircle.`,
+              t`**Time in the field** $= \theta/\omega = \theta m/(qB)$, independent of speed for a given angle.`,
+              t`**Uniform field, any closed loop**: net force zero. **Any shaped wire** from P to Q in a uniform field feels the same force as a straight wire from P to Q.`,
+            ],
+          },
+          {
+            type: "example",
+            title: "KCET level: comparing radii",
+            problem: "A proton and an alpha particle are accelerated from rest through the same potential difference and then enter the same uniform field at right angles. Find the ratio of their radii.",
+            steps: [
+              t`$r = \frac{1}{B}\sqrt{\frac{2mV}{q}}$, so $r \propto \sqrt{m/q}$.`,
+              t`Proton: $m/q = m_p/e$. Alpha: $m/q = 4m_p/2e = 2m_p/e$.`,
+              t`$\frac{r_\alpha}{r_p} = \sqrt{2}$.`,
+            ],
+            answer: t`$r_\alpha : r_p = \sqrt{2} : 1$.`,
+          },
+          {
+            type: "example",
+            title: "NEET level: one galvanometer, two meters",
+            problem: "A galvanometer of resistance 100 Ω gives full-scale deflection at 1.0 mA. Find the resistance needed to make (a) a 0–5.0 V voltmeter and (b) a 0–1.0 A ammeter. What is the resistance of the ammeter?",
+            steps: [
+              t`(a) $R = V/I_g - G = 5.0/0.0010 - 100 = 4900$ Ω in series.`,
+              t`(b) $S = \frac{I_g G}{I - I_g} = \frac{0.0010 \times 100}{0.999} \approx 0.10$ Ω in parallel.`,
+              t`Ammeter resistance $= \frac{GS}{G + S} \approx S \approx 0.10$ Ω.`,
+            ],
+            answer: "(a) 4900 Ω in series; (b) about 0.10 Ω in parallel, giving an ammeter of about 0.10 Ω.",
+          },
+          {
+            type: "checkpoint",
+            questions: [
+              {
+                kind: "mcq",
+                q: "A proton and an alpha particle enter the same field at right angles with the same kinetic energy. The ratio r_α : r_p is",
+                options: ["1 : 1", "2 : 1", "1 : 2", t`$\sqrt{2} : 1$`],
+                answer: 0,
+                explain: t`$r = \sqrt{2mK}/(qB) \propto \sqrt{m}/q$: alpha gives $\sqrt{4}/2 = 1$, the same as the proton.`,
+              },
+            ],
+          },
+          {
+            type: "example",
+            title: "JEE Main level: a hairpin wire",
+            problem: t`A long wire is bent into a hairpin: two long parallel straight parts joined by a semicircle of radius 5.0 cm. It carries 10 A. Find the field at the centre of the semicircle.`,
+            steps: [
+              t`Semicircle ($\theta = \pi$): $B_1 = \frac{\mu_0 I}{4R} = \frac{4\pi \times 10^{-7} \times 10}{4 \times 0.050} = 6.28 \times 10^{-5}$ T.`,
+              t`Each straight part is a semi-infinite wire ending opposite the centre: $B = \frac{\mu_0 I}{4\pi R} = \frac{10^{-7} \times 10}{0.050} = 2.0 \times 10^{-5}$ T. Two of them give $4.0 \times 10^{-5}$ T.`,
+              t`By the right-hand rule all three contributions point the same way (out of the plane for one sense of current), so they add.`,
+              t`$B = 6.28 \times 10^{-5} + 4.0 \times 10^{-5} \approx 1.03 \times 10^{-4}$ T, which is $\frac{\mu_0 I}{4R}\left(1 + \frac{2}{\pi}\right)$.`,
+            ],
+            answer: t`About $1.0 \times 10^{-4}$ T, perpendicular to the plane of the hairpin.`,
+          },
+          {
+            type: "example",
+            title: "JEE Advanced level: crossing a field strip",
+            problem: t`A proton moving at $1.0 \times 10^6$ m s⁻¹ enters, at right angles to its edge, a region 5.2 cm wide that has a uniform 0.10 T field perpendicular to its velocity. Find the angle through which it is deflected and the time it spends in the field. ($m_p = 1.67 \times 10^{-27}$ kg, $e = 1.6 \times 10^{-19}$ C)`,
+            steps: [
+              t`$r = \frac{mv}{eB} = \frac{1.67 \times 10^{-27} \times 10^6}{1.6 \times 10^{-19} \times 0.10} = 0.104$ m $= 10.4$ cm.`,
+              t`$d = 5.2$ cm $< r$, so it crosses the strip. $\sin\theta = d/r = 5.2/10.4 = 0.50$, so $\theta = 30° = \pi/6$.`,
+              t`$\omega = eB/m = 1.6 \times 10^{-20}/1.67 \times 10^{-27} = 9.58 \times 10^6$ rad s⁻¹.`,
+              t`$t = \theta/\omega = 0.524/(9.58 \times 10^6) \approx 5.5 \times 10^{-8}$ s. It leaves at the same speed, $1.0 \times 10^6$ m s⁻¹.`,
+            ],
+            answer: t`Deflected by 30°, after about 55 ns in the field.`,
+          },
+          {
+            type: "mistake",
+            wrong: "An alpha particle has twice the charge of a proton, so in the same field it always moves in a smaller circle.",
+            right: t`It depends on what is equal. Same speed: $r_\alpha = 2r_p$. Same momentum: $r_\alpha = r_p/2$. Same kinetic energy: $r_\alpha = r_p$. Same accelerating voltage: $r_\alpha = \sqrt{2}\,r_p$.`,
+            why: "Learners look only at q and forget that the alpha particle is also four times heavier. Write r in the form that contains the quantity held equal.",
+          },
+          {
+            type: "mistake",
+            wrong: t`For $\theta$ in $\tau = NIAB\sin\theta$, I use the angle between the plane of the coil and the field.`,
+            right: t`$\theta$ is the angle between the **normal** (the magnetic moment) and $\vec{B}$. If the plane makes angle $\phi$ with $\vec{B}$, then $\tau = NIAB\cos\phi$.`,
+            why: "Questions often give the angle with the plane. Using it directly swaps sine and cosine and gives a wrong answer that is still a believable number.",
+          },
+          {
+            type: "activity",
+            activity: {
+              kind: "sort",
+              prompt: "Can a magnetic field alone do this?",
+              groups: ["Yes", "No"],
+              items: [
+                { text: "Change the direction of an electron's velocity", group: 0, hint: "The force is perpendicular to v, so it turns the path." },
+                { text: "Increase a proton's kinetic energy", group: 1, hint: "The magnetic force does no work." },
+                { text: "Push on a charge at rest", group: 1, hint: "F = qvB sin θ is zero when v = 0." },
+                { text: "Make an ion move in a helix", group: 0, hint: "A velocity at an angle to B gives a helix." },
+                { text: "Turn a current loop", group: 0, hint: "Torque = m × B." },
+                { text: "Give a net force on a closed loop in a uniform field", group: 1, hint: "The forces on a closed loop in a uniform field cancel." },
+              ],
+              explain: "A magnetic field can only turn moving charges and twist current loops; in a uniform field it gives no net force on a closed loop and never changes kinetic energy.",
+            },
+          },
+          {
+            type: "callout",
+            tone: "exam",
+            title: "Speed tips",
+            md: "For shapes made of straight parts and arcs, add the contributions with signs (into or out of the page) one by one. A straight part whose line passes through the point contributes nothing. In multi-correct questions, test each option against the fact that magnetic forces do no work.",
+          },
+          {
+            type: "keypoints",
+            items: [
+              t`$r = mv/qB = \sqrt{2mK}/qB = \sqrt{2mV/q}/B$; choose the form by what is equal.`,
+              t`Arc: $B = \mu_0 I\theta/(4\pi R)$; finite wire: $\frac{\mu_0 I}{4\pi d}(\sin\alpha + \sin\beta)$.`,
+              t`Strip of width $d$: $\sin\theta = d/r$ when $d < r$.`,
+              t`$\theta$ in $\tau = NIAB\sin\theta$ is measured from the normal.`,
+              "Closed loop in uniform B: no net force, only torque.",
+            ],
+          },
+        ],
+        flashcards: [
+          { front: "Field at the centre of an arc of angle θ", back: t`$B = \dfrac{\mu_0 I \theta}{4\pi R}$` },
+          { front: "Field of a finite straight wire", back: t`$B = \dfrac{\mu_0 I}{4\pi d}(\sin\alpha + \sin\beta)$` },
+          { front: "Field at the centre of a square loop of side a", back: t`$B = \dfrac{2\sqrt{2}\,\mu_0 I}{\pi a}$` },
+          { front: "Radius in terms of kinetic energy", back: t`$r = \dfrac{\sqrt{2mK}}{qB}$` },
+          { front: "Radius after acceleration through V", back: t`$r = \dfrac{1}{B}\sqrt{\dfrac{2mV}{q}}$` },
+          { front: "Deflection in a field strip of width d < r", back: t`$\sin\theta = d/r$` },
+          { front: "Force on a curved wire PQ in uniform B", back: t`Same as on a straight wire from P to Q: $I\,\vec{PQ} \times \vec{B}$` },
+        ],
+        quiz: [
+          {
+            kind: "mcq",
+            q: "A proton, a deuteron and an alpha particle are accelerated through the same potential difference and enter the same uniform field at right angles. Their radii are in the ratio",
+            options: [t`$1 : \sqrt{2} : \sqrt{2}$`, "1 : 2 : 2", t`$1 : \sqrt{2} : 2$`, "1 : 1 : 1"],
+            answer: 0,
+            explain: t`$r \propto \sqrt{m/q}$: proton $\sqrt{1}$, deuteron $\sqrt{2/1}$, alpha $\sqrt{4/2}$.`,
+            difficulty: 2,
+            hint: t`Use $r = \frac{1}{B}\sqrt{2mV/q}$.`,
+          },
+          {
+            kind: "numeric",
+            q: "A square loop of side 10 cm carries 2.0 A. Find the magnetic field at its centre in microtesla.",
+            answer: 22.6,
+            tolerance: 0.3,
+            unit: "μT",
+            explain: t`$B = \frac{2\sqrt{2}\mu_0 I}{\pi a} = 2\sqrt{2} \times 4 \times 10^{-7} \times \frac{2.0}{0.10} = 2.26 \times 10^{-5}$ T.`,
+            difficulty: 2,
+          },
+          {
+            kind: "numeric",
+            q: "A wire bent into a semicircle of radius 3.14 cm carries 5.0 A (the straight leads point radially, away from the centre). Find the field at the centre in microtesla.",
+            answer: 50,
+            tolerance: 0.5,
+            unit: "μT",
+            explain: t`Radial leads point at the centre and contribute nothing. $B = \frac{\mu_0 I}{4R} = \frac{4\pi \times 10^{-7} \times 5.0}{4 \times 0.0314} = \frac{\pi \times 5 \times 10^{-7}}{0.0314} = 5.0 \times 10^{-5}$ T.`,
+            difficulty: 2,
+            hint: "A wire whose line passes through the point gives zero field there.",
+          },
+          {
+            kind: "multi",
+            q: t`A particle of charge $q$ and mass $m$ moves in a uniform field $\vec{B}$ with velocity at angle $\theta$ (0 < θ < 90°) to $\vec{B}$. Which are correct?`,
+            options: [
+              "Its speed stays constant",
+              t`Its period of revolution is $2\pi m/(qB)$`,
+              "The pitch of its path increases with θ",
+              "The radius of its path increases with θ",
+            ],
+            answers: [0, 1, 3],
+            explain: t`Speed is constant; $T$ does not depend on angle; $r \propto v\sin\theta$ grows with $\theta$, while the pitch $\propto v\cos\theta$ shrinks.`,
+            difficulty: 2,
+          },
+          {
+            kind: "mcq",
+            q: "A coil carrying current is placed with its plane at 30° to a uniform magnetic field. If the maximum possible torque on it is τ₀, the torque now is",
+            options: [t`$\tau_0/2$`, t`$\frac{\sqrt{3}}{2}\tau_0$`, t`$\tau_0$`, "zero"],
+            answer: 1,
+            explain: t`The normal makes $60°$ with $\vec{B}$, so $\tau = \tau_0\sin 60° = \frac{\sqrt{3}}{2}\tau_0$.`,
+            difficulty: 2,
+            hint: "Convert the angle with the plane into the angle with the normal.",
+          },
+          {
+            kind: "numeric",
+            q: "A proton enters a 0.20 T field region of width 10 cm at right angles to its edge with speed 1.0 × 10⁶ m s⁻¹. Through what angle (in degrees) is it deflected? (m = 1.67 × 10⁻²⁷ kg, e = 1.6 × 10⁻¹⁹ C)",
+            answer: 180,
+            tolerance: 0.5,
+            unit: "degrees",
+            explain: t`$r = \frac{mv}{eB} = \frac{1.67 \times 10^{-21}}{3.2 \times 10^{-20}} = 0.052$ m. The strip is wider than $r$, so the proton turns back after a semicircle: deflection 180°.`,
+            difficulty: 3,
+            hint: "Compare the radius with the width before using sin θ = d/r.",
+          },
+          {
+            kind: "mcq",
+            q: "Two long parallel wires carry equal currents in opposite directions, 2d apart. The magnetic field midway between them is",
+            options: ["zero", t`$\frac{\mu_0 I}{2\pi d}$`, t`$\frac{\mu_0 I}{\pi d}$`, t`$\frac{\mu_0 I}{4\pi d}$`],
+            answer: 2,
+            explain: t`Each gives $\frac{\mu_0 I}{2\pi d}$; for opposite currents the fields midway point the same way and add to $\frac{\mu_0 I}{\pi d}$.`,
+            difficulty: 2,
+          },
+          {
+            kind: "numeric",
+            q: "A charged particle moves in a circle of radius 4.0 cm in a uniform field. If its kinetic energy is made four times larger, what is the new radius in cm?",
+            answer: 8,
+            tolerance: 0.01,
+            unit: "cm",
+            explain: t`$r \propto \sqrt{K}$, so $r' = 4.0 \times \sqrt{4} = 8.0$ cm.`,
+            difficulty: 1,
+          },
+        ],
+      },
+    ],
+  },
 ];
 
 /** Class 12 chapter title ("12:<exact title>") → topic slug(s), or full lesson ids, that teach it. */
 export const links: Record<string, string | string[]> = {
   "12:Current Electricity": "c12-current-electricity",
+  "12:Moving Charges and Magnetism": "c12-moving-charges-magnetism",
 };
