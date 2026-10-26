@@ -477,7 +477,7 @@ Putting both corrections into the ideal equation gives the **van der Waals equat
             type: "text",
             md: t`**Andrews' isotherms (1869) and the critical state.** Thomas Andrews compressed CO₂ at different temperatures. Above 30.98 °C the gas never liquefied; the isotherm was a smooth curve. Below it, compression first raised the pressure, then liquid appeared and the pressure stayed constant (a flat portion where gas and liquid coexist) until all the gas had liquefied, after which the pressure shot up steeply because liquids are hard to compress.
 
-The **critical temperature** $T_c$ is the highest temperature at which a gas can be liquefied by pressure alone. The pressure needed at $T_c$ is the **critical pressure** $P_c$, and the molar volume there is the **critical volume** $V_c$. For CO₂, $T_c$ = 30.98 °C and $P_c$ ≈ 73.9 bar. Above $T_c$ the substance is a gas (strictly a supercritical fluid); below $T_c$ the gas phase is called a **vapour**.`,
+The **critical temperature** $T_c$ is the highest temperature at which a gas can be liquefied by pressure alone. The pressure needed at $T_c$ is the **critical pressure** $P_c$, and the molar volume there is the **critical volume** $V_c$. For CO₂, $T_c$ = 30.98 °C and $P_c$ ≈ 73.8 bar. Above $T_c$ the substance is a gas (strictly a supercritical fluid); below $T_c$ the gas phase is called a **vapour**.`,
           },
           {
             type: "formula",

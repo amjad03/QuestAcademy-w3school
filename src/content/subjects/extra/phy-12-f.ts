@@ -17,7 +17,7 @@ export const topics: Topic[] = [
     title: "Semiconductor Electronics: Materials, Devices and Simple Circuits",
     icon: "💡",
     description:
-      "Energy bands, intrinsic and extrinsic semiconductors, the p-n junction diode and its V-I characteristics, rectifiers, special-purpose diodes, and (for ISC and entrance exams) transistors and logic gates.",
+      "Energy bands, intrinsic and extrinsic semiconductors, the p-n junction diode and its V-I characteristics, rectifiers, special-purpose diodes, and (for ISC and some entrance exams) transistors and logic gates.",
     lessons: [
       /* ---------------- Board lesson 1 ---------------- */
       {
@@ -457,7 +457,7 @@ The symbol of a diode is an arrowhead with a bar; the arrow points from p to n, 
           },
           {
             type: "text",
-            md: "The secondary winding has a **centre tap**, and two diodes D₁ and D₂ connect its two ends to the load, whose other end returns to the centre tap. In one half-cycle end A is positive with respect to the centre tap: D₁ conducts and D₂ is reverse biased. In the next half-cycle end B is positive: D₂ conducts and D₁ is off. In both halves the current through R_L is in the **same direction**, so the output has a hump in every half-cycle. Each diode gets only half the secondary voltage (from one end to the centre tap).",
+            md: "The secondary winding has a **centre tap**, and two diodes D₁ and D₂ connect its two ends to the load, whose other end returns to the centre tap. In one half-cycle end A is positive with respect to the centre tap: D₁ conducts and D₂ is reverse biased. In the next half-cycle end B is positive: D₂ conducts and D₁ is off. In both halves the current through R_L is in the **same direction**, so the output has a hump in every half-cycle. In each half-cycle the load is driven by only one half of the secondary (from one end to the centre tap).",
           },
           {
             type: "table",
@@ -487,7 +487,7 @@ The symbol of a diode is an arrowhead with a bar; the arrow points from p to n, 
             steps: [
               t`Peak of 11 V rms: $V_m = 11\sqrt{2} \approx 15.6$ V.`,
               "(a) Half-wave with an ideal diode: the output peak is 15.6 V and humps repeat once per cycle, so f_out = 50 Hz.",
-              "(b) Full-wave: each half of the secondary drives the load in turn, so there are two humps per cycle, f_out = 2 × 50 = 100 Hz. The peak across the load is still 15.6 V, since each diode sees one half of the winding.",
+              "(b) Full-wave: each half of the secondary drives the load in turn, so there are two humps per cycle, f_out = 2 × 50 = 100 Hz. The peak across the load is still 15.6 V, since each conducting path uses only one half of the winding.",
               t`(c) With a silicon diode in the conducting path the peak falls by about 0.7 V: $15.6 - 0.7 \approx 14.9$ V.`,
             ],
             answer: "(a) 15.6 V peak, 50 Hz; (b) 100 Hz with the same 15.6 V peak; (c) about 14.9 V peak with real silicon diodes.",
@@ -684,7 +684,7 @@ The symbol of a diode is an arrowhead with a bar; the arrow points from p to n, 
 
 **LED.** The colour depends on the band gap. For visible light the gap must be at least about 1.8 eV (GaAs, with 1.4 eV, gives infrared). Red LEDs use GaAsP; blue ones use materials such as GaN. LEDs need low voltage, use little power, switch quickly, last long and give nearly single-colour light. Their reverse breakdown voltage is low (about 5 V).
 
-**Solar cell.** It works in three steps: generation of electron-hole pairs by light, separation by the junction field, and collection at the front and back contacts. Its I-V graph is drawn in the fourth quadrant, showing the open-circuit voltage $V_{oc}$ and short-circuit current $I_{sc}$. Materials with $E_g$ close to 1.5 eV (Si, GaAs, CdTe, CuInSe₂) suit sunlight best.`,
+**Solar cell.** It works in three steps: generation of electron-hole pairs by light, separation by the junction field, and collection at the front and back contacts. Its I-V graph is drawn in the fourth quadrant, showing the open-circuit voltage $V_{oc}$ and short-circuit current $I_{sc}$. Materials with $E_g$ close to 1.5 eV suit sunlight best; common solar-cell materials are Si (1.1 eV), GaAs (1.43 eV), CdTe (1.45 eV) and CuInSe₂ (1.04 eV).`,
           },
           {
             type: "checkpoint",
@@ -801,7 +801,7 @@ The symbol of a diode is an arrowhead with a bar; the arrow points from p to n, 
               "the depletion region becoming very wide",
             ],
             answer: 0,
-            explain: "Heavy doping gives a very thin depletion region, so a few volts produce a field of about 10⁶ V/m that tears electrons out of bonds (internal field emission).",
+            explain: "Heavy doping gives a very thin depletion region, so a few volts produce a field of about 5 × 10⁶ V/m that tears electrons out of bonds (internal field emission).",
           },
           {
             kind: "fill",
@@ -1020,7 +1020,7 @@ input resistance $r_i = \left(\dfrac{\Delta V_{BE}}{\Delta I_B}\right)_{V_{CE}}$
             type: "callout",
             tone: "note",
             title: "Board note",
-            md: "Logic gates were removed from the rationalised NCERT chapter (CBSE and Karnataka PUC from 2023), but they are in the **ISC** syllabus and are still asked in **JEE Main**, **NEET** and **KCET**. They are quick, high-scoring questions.",
+            md: "Logic gates were removed from the rationalised NCERT chapter (CBSE and Karnataka PUC from 2023), but they are in the **ISC** syllabus (check your current one) and in the current **JEE Main** and **NEET** syllabi. KCET and COMEDK follow the PUC/NCERT syllabus, so check whether your exam still lists them. They are quick, high-scoring questions.",
           },
           {
             type: "text",
@@ -1205,7 +1205,7 @@ input resistance $r_i = \left(\dfrac{\Delta V_{BE}}{\Delta I_B}\right)_{V_{CE}}$
             type: "table",
             headers: ["Exam", "What it usually asks from this chapter"],
             rows: [
-              ["KCET / COMEDK", "band gaps, n-type vs p-type, n_e n_h = n_i², biasing, rectifier output frequency, logic gates"],
+              ["KCET / COMEDK", "band gaps, n-type vs p-type, n_e n_h = n_i², biasing, rectifier output frequency (logic gates only if your year's syllabus lists them)"],
               ["NEET", "V-I characteristics, depletion region, Zener regulator currents, LED / photodiode statements, logic gate truth tables"],
               ["JEE Main", "diode circuits with ideal or 0.7 V diodes, Zener circuits, rectifier average and rms values, photodiode cut-off wavelength, logic gate combinations"],
               ["JEE Advanced", "rarely a full question; when it appears, a multi-diode or Zener circuit with a range of loads, or carrier conductivity with mobilities"],
@@ -1426,14 +1426,14 @@ input resistance $r_i = \left(\dfrac{\Delta V_{BE}}{\Delta I_B}\right)_{V_{CE}}$
         slug: "c12-exam-edge-logic-transistors",
         title: "Exam edge: Logic Gate Circuits and Transistor Numericals",
         summary:
-          "Fast ways to solve gate combinations and waveform questions for JEE Main, NEET and KCET, building gates from NAND, and the transistor current and gain numericals still met in ISC and older-pattern papers.",
+          "Fast ways to solve gate combinations and waveform questions for JEE Main and NEET, building gates from NAND, and the transistor current and gain numericals still met in ISC and older-pattern papers.",
         minutes: 22,
         xp: 55,
         track: "exam",
         blocks: [
           {
             type: "text",
-            md: "Logic gate questions are among the quickest marks in JEE Main, NEET and KCET: a circuit of two to four gates, a truth table to complete, or input waveforms to turn into an output waveform. JEE Advanced seldom asks them. Transistor questions (α, β, gain) have left the JEE Main and NEET syllabi but remain in ISC and in some state tests, so a short revision follows.",
+            md: "Logic gate questions are among the quickest marks in JEE Main and NEET (and in KCET or COMEDK if their current syllabus lists them): a circuit of two to four gates, a truth table to complete, or input waveforms to turn into an output waveform. JEE Advanced seldom asks them. Transistor questions (α, β, gain) have left the JEE Main and NEET syllabi but remain in ISC and in some state tests, so a short revision follows.",
           },
           {
             type: "table",
