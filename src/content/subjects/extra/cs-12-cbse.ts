@@ -1684,6 +1684,1168 @@ print("total =", total)`,
       },
     ],
   },
+  /* ------------------------------------------------------------------ */
+  /* Class 12 · File Handling                                            */
+  /* ------------------------------------------------------------------ */
+  {
+    slug: "c12-cs-file-handling",
+    title: "File Handling",
+    icon: "📁",
+    description: "Text files (open modes, read and write methods, with, seek and tell), binary files with pickle (dump, load, search, update) and CSV files with the csv module.",
+    lessons: [
+      {
+        slug: "c12-cs-text-files",
+        title: "Text Files: Opening, Reading and Writing",
+        summary: "Why files are needed, text versus binary versus CSV files, paths, file modes, write and writelines, read, readline and readlines, the with statement, seek and tell, and the classic counting programs.",
+        minutes: 24,
+        xp: 60,
+        blocks: [
+          {
+            type: "text",
+            md: "Variables live in RAM and disappear when a program ends. To keep data (marks, bills, logs) for later, a program saves it in a **file** on secondary storage. A file is a named collection of bytes.\n\nA **text file** stores characters (letters, digits, symbols) in an encoding such as ASCII or UTF-8, and is split into lines by the **end-of-line (EOL) character** `\\n`. You can open it in Notepad. A **binary file** stores data as raw bytes, exactly as in memory (images, audio, pickled Python objects); it is not readable as text. A **CSV file** is a text file whose lines hold values separated by commas.",
+          },
+          {
+            type: "text",
+            md: "A **path** tells Python where the file is. An **absolute path** starts from the root of the drive, such as `C:\\School\\CS\\marks.txt` on Windows. Inside a Python string, write it as a raw string `r\"C:\\School\\CS\\marks.txt\"` or double every backslash, because `\\` starts an escape sequence. A **relative path** starts from the current working folder, such as `marks.txt` or `data/marks.txt`.",
+          },
+          {
+            type: "table",
+            headers: ["Mode", "Meaning", "If the file is missing", "File pointer starts at"],
+            rows: [
+              ["`r` (default)", "read only", "FileNotFoundError", "beginning"],
+              ["`r+`", "read and write", "FileNotFoundError", "beginning"],
+              ["`w`", "write only; **erases** old contents", "creates it", "beginning"],
+              ["`w+`", "write and read; erases old contents", "creates it", "beginning"],
+              ["`a`", "append: write at the end, old data kept", "creates it", "end"],
+              ["`a+`", "append and read", "creates it", "end"],
+            ],
+          },
+          {
+            type: "text",
+            md: "Add `b` for binary files: `rb`, `wb`, `ab`, `rb+`, `wb+`, `ab+`.\n\n`f = open(\"poem.txt\", \"w\")` returns a **file object** (file handle) through which all reading and writing happens. Always `f.close()` when done: it flushes data still waiting in the buffer onto the disk. The **`with`** statement closes the file automatically when its block ends, even if an exception occurs, so it is the preferred style.",
+          },
+          {
+            type: "code",
+            lang: "python",
+            runnable: true,
+            caption: "Writing, then reading in three different ways.",
+            code: r`f = open("poem.txt", "w")
+f.write("Rain on the hills\n")
+f.writelines(["Mist in the valley\n", "Coffee in Coorg\n"])
+f.close()
+
+with open("poem.txt", "r") as f:
+    print(f.read(4))
+    print(f.readline(), end="")
+    rest = f.readlines()
+print(rest)
+print(f.closed)`,
+          },
+          {
+            type: "table",
+            headers: ["Method", "Does", "Returns"],
+            rows: [
+              ["`write(s)`", "writes string s (no automatic newline)", "number of characters written"],
+              ["`writelines(L)`", "writes every string in the list L (no newlines added)", "`None`"],
+              ["`read()` / `read(n)`", "the whole rest of the file / at most n characters", "a string"],
+              ["`readline()`", "one line including its `\\n`; `\"\"` at end of file", "a string"],
+              ["`readlines()`", "all remaining lines", "a list of strings"],
+              ["`tell()`", "current position of the file pointer", "an int (bytes from the start)"],
+              ["`seek(offset, from)`", "moves the pointer; from = 0 start (default), 1 current, 2 end", "new position"],
+            ],
+          },
+          {
+            type: "example",
+            title: "Tracing the file pointer",
+            problem: "poem.txt holds the 3 lines `Rain on the hills`, `Mist in the valley`, `Coffee in Coorg` (18 + 19 + 16 = 53 characters with newlines). Find the output of: `print(f.tell())`, `f.seek(5)`, `print(f.read(6))`, `print(f.tell())`, `data = f.read()`, `print(len(data))`.",
+            steps: [
+              "A newly opened file in r mode has its pointer at 0, so 0 is printed.",
+              "seek(5) moves past \"Rain \" (R-a-i-n-space).",
+              "read(6) reads \"on the\" and the pointer moves to 11.",
+              "read() takes everything left: 53 − 11 = 42 characters.",
+            ],
+            answer: "`0`, `on the`, `11`, `42`.",
+          },
+          {
+            type: "mistake",
+            wrong: "To add a new line to the end of my diary file I open it with `\"w\"`, since I want to write.",
+            right: "Mode `\"w\"` **erases** the file the moment it is opened. Use `\"a\"` (append) to keep the old contents and write at the end.",
+            why: "\"w for write\" sounds right. But write mode always starts with an empty file; only append mode keeps what was there.",
+          },
+          {
+            type: "checkpoint",
+            questions: [
+              {
+                kind: "mcq",
+                q: "Which method returns a **list** of lines?",
+                options: ["`readlines()`", "`readline()`", "`read()`", "`writelines()`"],
+                answer: 0,
+                explain: "readlines() returns all remaining lines as a list; readline() returns one string.",
+              },
+              {
+                kind: "truefalse",
+                q: "Opening a file that does not exist in mode `\"a\"` raises FileNotFoundError.",
+                answer: false,
+                explain: "a, a+, w and w+ create the file if it is missing. Only r and r+ need it to exist.",
+              },
+            ],
+          },
+          {
+            type: "code",
+            lang: "python",
+            runnable: true,
+            caption: "Two board favourites: count a word, show lines that start with T.",
+            code: r`with open("notes.txt", "w") as f:
+    f.write("The Ganga flows east.\nthe Kaveri flows to the Bay.\nA dam stands on the river.\n")
+
+def count_the(fname):
+    n = 0
+    with open(fname) as f:
+        for word in f.read().split():
+            if word.lower() == "the":
+                n += 1
+    return n
+
+def lines_starting_T(fname):
+    with open(fname) as f:
+        for line in f:
+            if line[0] in "Tt":
+                print(line, end="")
+
+print(count_the("notes.txt"))
+lines_starting_T("notes.txt")`,
+          },
+          {
+            type: "activity",
+            activity: {
+              kind: "sort",
+              prompt: "Does the old content survive opening in this mode?",
+              groups: ["Old content kept", "Old content erased"],
+              items: [
+                { text: "\"r\"", group: 0, hint: "Read mode never changes the file." },
+                { text: "\"a\"", group: 0, hint: "Append writes after the old data." },
+                { text: "\"r+\"", group: 0, hint: "r+ opens an existing file without truncating it." },
+                { text: "\"a+\"", group: 0, hint: "Append-and-read keeps old data." },
+                { text: "\"w\"", group: 1, hint: "Write mode truncates the file to zero length." },
+                { text: "\"w+\"", group: 1, hint: "w+ also truncates first." },
+                { text: "\"wb\"", group: 1, hint: "Binary write mode truncates too." },
+              ],
+              explain: "Every mode with w empties the file on opening. r+ can overwrite characters where the pointer is, but it does not erase the file first.",
+            },
+          },
+          {
+            type: "callout",
+            tone: "exam",
+            title: "Board tip",
+            md: "Text-file programs (count words, count lines starting with a letter, count vowels, copy lines to another file) appear in almost every paper for 3 marks. Write a function with the file name as given, use `with open(...)`, and use `split()` for words and a `for line in f` loop for lines.",
+          },
+          {
+            type: "keypoints",
+            items: [
+              "Text files store characters split by `\\n`; binary files store raw bytes.",
+              "`w` erases, `a` appends, `r` needs an existing file; add `b` for binary.",
+              "`read()` → string, `readline()` → one line, `readlines()` → list of lines.",
+              "`write()` and `writelines()` add no newline on their own.",
+              "`with open(...) as f:` closes the file automatically; `tell()` and `seek()` work with the file pointer.",
+            ],
+          },
+        ],
+        flashcards: [
+          { front: "Text file vs binary file?", back: "A text file stores characters in lines ending with EOL; a binary file stores raw bytes not meant to be read as text." },
+          { front: "What does mode \"w\" do to an existing file?", back: "Erases its contents (truncates it) before writing." },
+          { front: "Mode to add data at the end of a file?", back: "\"a\" (or \"ab\" for binary)." },
+          { front: "What does `readline()` return at end of file?", back: "An empty string \"\"." },
+          { front: "Why close a file?", back: "To flush buffered data to the disk and free the file; `with` does it automatically." },
+          { front: "What does `tell()` return?", back: "The current position of the file pointer, in bytes from the start." },
+          { front: "`seek(0)` does what?", back: "Moves the file pointer back to the beginning of the file." },
+          { front: "Absolute vs relative path?", back: "Absolute starts from the root of the drive; relative starts from the current working folder." },
+        ],
+        quiz: [
+          {
+            kind: "mcq",
+            q: "Which mode opens a file for both reading and writing **without** erasing it, and fails if the file is missing?",
+            options: ["`r+`", "`w+`", "`a+`", "`w`"],
+            answer: 0,
+            explain: "r+ needs an existing file and does not truncate it.",
+          },
+          {
+            kind: "mcq",
+            q: "`f.write(\"abc\\n\")` returns…",
+            options: ["`4`", "`3`", "`None`", "`True`"],
+            answer: 0,
+            explain: "write returns the number of characters written; the newline counts as one.",
+          },
+          {
+            kind: "fill",
+            q: "To move the file pointer to the 10th byte from the start, write `f.___(10)`.",
+            answer: ["seek"],
+            explain: "seek(offset) with the default reference point 0 measures from the start.",
+          },
+          {
+            kind: "truefalse",
+            q: "`writelines([\"a\", \"b\"])` writes `a` and `b` on separate lines.",
+            answer: false,
+            explain: "writelines adds no newlines; it writes \"ab\". Include \\n in each string to get separate lines.",
+          },
+          {
+            kind: "numeric",
+            q: "A file holds `Hello\\nWorld\\n` (12 characters). After `f.read(3)` then `f.readline()`, what does `f.tell()` return?",
+            answer: 6,
+            explain: "read(3) reaches position 3; readline() reads the rest of the line \"lo\\n\" up to position 6.",
+            difficulty: 2,
+          },
+          {
+            kind: "mcq",
+            q: "Which statement correctly counts the lines in notes.txt?",
+            options: ["`len(open(\"notes.txt\").readlines())`", "`len(open(\"notes.txt\").read())`", "`open(\"notes.txt\").count()`", "`len(open(\"notes.txt\").readline())`"],
+            answer: 0,
+            explain: "readlines() gives one list item per line. read() would count characters.",
+          },
+          {
+            kind: "multi",
+            q: "Which modes create the file if it does not exist?",
+            options: ["`w`", "`a`", "`r`", "`a+`", "`r+`"],
+            answers: [0, 1, 3],
+            explain: "w, w+, a and a+ create a missing file; r and r+ raise FileNotFoundError.",
+          },
+          {
+            kind: "mcq",
+            q: "Which exception occurs on `open(\"missing.txt\")` when the file does not exist?",
+            options: ["FileNotFoundError", "EOFError", "KeyError", "ValueError"],
+            answer: 0,
+            explain: "FileNotFoundError is a subclass of OSError (IOError).",
+          },
+        ],
+      },
+      {
+        slug: "c12-cs-binary-files-pickle",
+        title: "Binary Files with pickle",
+        summary: "Storing whole Python objects in a binary file: pickling and unpickling with dump and load, reading to the end with EOFError, and the search, append and update programs the board asks for.",
+        minutes: 22,
+        xp: 55,
+        blocks: [
+          {
+            type: "text",
+            md: "A text file can only hold strings, so a list like `[1, \"Ananya\", 91]` would have to be converted to text and parsed back. The **pickle** module saves a Python object (list, dict, tuple, number) directly to a binary file and rebuilds it later.\n\n**Pickling** (serialisation) converts an object into a stream of bytes. **Unpickling** (de-serialisation) turns the bytes back into the same object. The file must be opened in a binary mode: `wb`, `ab` or `rb`.",
+          },
+          {
+            type: "table",
+            headers: ["Function", "Use", "Note"],
+            rows: [
+              ["`pickle.dump(obj, f)`", "writes one object to the binary file f", "f opened with `wb` or `ab`"],
+              ["`pickle.load(f)`", "reads and returns the next object", "raises **EOFError** when no objects are left"],
+            ],
+          },
+          {
+            type: "code",
+            lang: "python",
+            runnable: true,
+            caption: "Write three records, then show students with more than 80 marks.",
+            code: r`import pickle
+
+students = [
+    {"roll": 1, "name": "Ananya", "marks": 91},
+    {"roll": 2, "name": "Farhan", "marks": 78},
+    {"roll": 3, "name": "Lakshmi", "marks": 85},
+]
+with open("students.dat", "wb") as f:
+    for rec in students:
+        pickle.dump(rec, f)
+
+def show_above(limit):
+    with open("students.dat", "rb") as f:
+        try:
+            while True:
+                rec = pickle.load(f)
+                if rec["marks"] > limit:
+                    print(rec["roll"], rec["name"], rec["marks"])
+        except EOFError:
+            pass
+
+show_above(80)`,
+          },
+          {
+            type: "text",
+            md: "Output: `1 Ananya 91` and `3 Lakshmi 85`.\n\nA binary file does not tell you how many objects it holds, so the reading pattern is a `while True` loop that calls `pickle.load()` until it raises **EOFError**, caught by `except EOFError`. This try-loop is the skeleton of every binary-file program.",
+          },
+          {
+            type: "mistake",
+            wrong: "I can open the pickle file with `open(\"students.dat\", \"w\")` and dump into it, like a text file.",
+            right: "pickle writes **bytes**, so the file must be opened in binary mode: `\"wb\"`, `\"ab\"` or `\"rb\"`. With `\"w\"`, `pickle.dump()` raises a TypeError.",
+            why: "Both are \"files\", so text mode seems fine. A text-mode file object accepts only str, while dump produces bytes.",
+          },
+          {
+            type: "heading",
+            text: "Updating a record",
+          },
+          {
+            type: "text",
+            md: "To change a record, the simplest safe method is: read every record into a list, change the matching one, then write the whole list back with `wb`. (A second method uses `rb+` with `tell()` and `seek()` to overwrite the record in place, but it works only if the new pickled record is exactly the same size.)",
+          },
+          {
+            type: "code",
+            lang: "python",
+            runnable: true,
+            code: r`import pickle
+
+with open("students.dat", "wb") as f:
+    pickle.dump([1, "Ananya", 91], f)
+    pickle.dump([2, "Farhan", 78], f)
+    pickle.dump([3, "Lakshmi", 85], f)
+
+def update_marks(roll, new_marks):
+    records = []
+    found = False
+    with open("students.dat", "rb") as f:
+        try:
+            while True:
+                rec = pickle.load(f)
+                if rec[0] == roll:
+                    rec[2] = new_marks
+                    found = True
+                records.append(rec)
+        except EOFError:
+            pass
+    with open("students.dat", "wb") as f:
+        for rec in records:
+            pickle.dump(rec, f)
+    return found
+
+print(update_marks(2, 82))
+print(update_marks(9, 50))
+with open("students.dat", "rb") as f:
+    try:
+        while True:
+            print(pickle.load(f))
+    except EOFError:
+        print("end of file")`,
+          },
+          {
+            type: "example",
+            title: "Reading the update output",
+            problem: "Explain the output: `True`, `False`, `[1, 'Ananya', 91]`, `[2, 'Farhan', 82]`, `[3, 'Lakshmi', 85]`, `end of file`.",
+            steps: [
+              "Roll 2 is found, its marks changed to 82, and found becomes True.",
+              "Roll 9 is not in the file, so nothing changes and False is returned (the file is rewritten unchanged).",
+              "The display loop loads each list until EOFError, then prints \"end of file\".",
+            ],
+            answer: "Only Farhan's record changed; the function's return value tells the caller whether the roll number existed.",
+          },
+          {
+            type: "checkpoint",
+            questions: [
+              {
+                kind: "mcq",
+                q: "Which exception marks the end of a pickled binary file while reading?",
+                options: ["EOFError", "IndexError", "StopIteration", "FileNotFoundError"],
+                answer: 0,
+                explain: "`pickle.load()` raises EOFError when there is nothing left to read.",
+              },
+              {
+                kind: "fill",
+                q: "Converting a Python object into a byte stream is called ___ (or serialisation).",
+                answer: ["pickling"],
+                explain: "Unpickling is the reverse.",
+              },
+            ],
+          },
+          {
+            type: "activity",
+            activity: {
+              kind: "order",
+              prompt: "Order the steps to search a binary file for a record.",
+              items: [
+                "import pickle",
+                "Open the file in rb mode",
+                "Start a try block with a while True loop",
+                "Load one record and compare its key",
+                "Catch EOFError to stop at the end",
+              ],
+              explain: "Every binary search, count or display program follows this skeleton; only the test inside the loop changes.",
+            },
+          },
+          {
+            type: "callout",
+            tone: "exam",
+            title: "Board tip",
+            md: "The 5-mark file question often has two parts: (a) write a function to **add** records (open with `ab`, `pickle.dump`) and (b) write a function to **search or count** (open with `rb`, load in a try–while loop until EOFError). State the record format you assume, such as `[roll, name, marks]`.",
+          },
+          {
+            type: "keypoints",
+            items: [
+              "pickle stores Python objects in binary files: `dump(obj, f)` writes, `load(f)` reads.",
+              "Use binary modes only: wb, ab, rb (and rb+, wb+, ab+).",
+              "Read to the end with `while True` inside `try`, stopped by `except EOFError`.",
+              "Update = read all records, change the match, write all back with wb.",
+              "Append new records with ab so old records are kept.",
+            ],
+          },
+        ],
+        flashcards: [
+          { front: "What is pickling?", back: "Converting a Python object into a byte stream to store in a binary file (serialisation)." },
+          { front: "What is unpickling?", back: "Rebuilding the Python object from the byte stream (de-serialisation)." },
+          { front: "Syntax of dump?", back: "`pickle.dump(object, file_object)`" },
+          { front: "Syntax of load?", back: "`obj = pickle.load(file_object)`" },
+          { front: "How do you know you have reached the end of a pickle file?", back: "`pickle.load()` raises EOFError." },
+          { front: "Mode to add records to an existing binary file?", back: "\"ab\"." },
+          { front: "Simplest way to update a record?", back: "Read all into a list, change it, rewrite the file with wb." },
+        ],
+        quiz: [
+          {
+            kind: "mcq",
+            q: "Which module is used to write a Python list to a binary file?",
+            options: ["`pickle`", "`csv`", "`math`", "`random`"],
+            answer: 0,
+            explain: "pickle serialises Python objects to bytes.",
+          },
+          {
+            kind: "mcq",
+            q: "Correct way to read one object from a binary file f?",
+            options: ["`pickle.load(f)`", "`f.load()`", "`pickle.read(f)`", "`pickle.dump(f)`"],
+            answer: 0,
+            explain: "load is a function of the pickle module that takes the file object.",
+          },
+          {
+            kind: "truefalse",
+            q: "Each call to `pickle.load(f)` returns the next object in the order they were dumped.",
+            answer: true,
+            explain: "Objects are read back in the same order they were written.",
+          },
+          {
+            kind: "mcq",
+            q: "A dictionary `{\"pen\": 40}` is dumped and then loaded. What is the type of the loaded object?",
+            options: ["`dict`", "`str`", "`bytes`", "`list`"],
+            answer: 0,
+            explain: "Unpickling rebuilds an object of the same type.",
+          },
+          {
+            kind: "numeric",
+            q: "A file is created with `wb` holding one pickled dict; then reopened with `ab` and one tuple is dumped. How many objects can be loaded from it?",
+            answer: 2,
+            explain: "Append mode keeps the dict and adds the tuple.",
+          },
+          {
+            kind: "fill",
+            q: "To read a binary file, open it in mode \"___\".",
+            answer: ["rb"],
+            explain: "r for read, b for binary.",
+          },
+          {
+            kind: "multi",
+            q: "Which belong in a function that counts records with marks above 90 in a pickle file?",
+            options: ["`open(fname, \"rb\")`", "`pickle.load(f)` inside a loop", "`except EOFError`", "`pickle.dump(rec, f)`", "`open(fname, \"w\")`"],
+            answers: [0, 1, 2],
+            explain: "Counting only reads, so no dump and no write mode.",
+          },
+        ],
+      },
+      {
+        slug: "c12-cs-csv-files",
+        title: "CSV Files and File Handling Practice",
+        summary: "CSV files and the csv module: writer, writerow, writerows, reader, newline and delimiter, followed by mixed board questions across text, binary and CSV files.",
+        minutes: 22,
+        xp: 55,
+        blocks: [
+          {
+            type: "text",
+            md: "**CSV (Comma Separated Values)** is a plain text format for tables: each line is one row and the values in it are separated by a **delimiter**, usually a comma. Spreadsheets such as Excel or LibreOffice Calc open and save CSV, so it is a common way to move data between programs.\n\nPython's **csv** module does the splitting and joining for you. Open CSV files in text mode with `newline=\"\"`; this stops an extra blank line appearing between rows on Windows, because the writer already ends each row with its own line terminator.",
+          },
+          {
+            type: "table",
+            headers: ["Function / method", "Does"],
+            rows: [
+              ["`w = csv.writer(f)`", "makes a writer object for the open file f"],
+              ["`w.writerow(list)`", "writes one row; items are joined with the delimiter"],
+              ["`w.writerows(list_of_lists)`", "writes many rows at once"],
+              ["`r = csv.reader(f)`", "makes a reader; looping over it gives each row as a **list of strings**"],
+              ["`csv.writer(f, delimiter=\";\")`", "uses a different separator"],
+            ],
+          },
+          {
+            type: "code",
+            lang: "python",
+            runnable: true,
+            code: r`import csv
+
+rows = [["Roll", "Name", "Marks"], [1, "Ananya", 91], [2, "Farhan", 78], [3, "Lakshmi", 85]]
+with open("result.csv", "w", newline="") as f:
+    w = csv.writer(f)
+    w.writerow(rows[0])
+    w.writerows(rows[1:])
+
+with open("result.csv") as f:
+    print(f.read(), end="")
+
+with open("result.csv", "r", newline="") as f:
+    r = csv.reader(f)
+    next(r)
+    total = 0
+    for row in r:
+        print(row)
+        total += int(row[2])
+print("Total:", total)`,
+          },
+          {
+            type: "example",
+            title: "Reading the output",
+            problem: "Why does the program print `['1', 'Ananya', '91']` with quotes around 1 and 91, and why is `int()` needed for the total?",
+            steps: [
+              "The file itself holds plain text lines: `Roll,Name,Marks`, `1,Ananya,91` and so on.",
+              "`next(r)` reads and skips the header row.",
+              "csv.reader splits each line at commas and gives every value back as a **string**.",
+              "So `row[2]` is \"91\"; `int(row[2])` converts it before adding. 91 + 78 + 85 = 254.",
+            ],
+            answer: "Rows come back as lists of strings; the total printed is `Total: 254`.",
+          },
+          {
+            type: "mistake",
+            wrong: "csv.reader gives me back the numbers I wrote, so `row[2] + 5` works.",
+            right: "A CSV file is text, so every value read back is a **str**. Convert with `int()` or `float()` before doing arithmetic; `row[2] + 5` raises TypeError.",
+            why: "The writer accepted ints, so learners expect ints back. The file only stores characters; the type information is lost.",
+          },
+          {
+            type: "checkpoint",
+            questions: [
+              {
+                kind: "mcq",
+                q: "Which method writes several rows to a CSV file in one call?",
+                options: ["`writerows()`", "`writerow()`", "`writelines()`", "`dump()`"],
+                answer: 0,
+                explain: "writerows takes a list of rows (a list of lists).",
+              },
+              {
+                kind: "truefalse",
+                q: "The `newline=\"\"` argument is used when opening CSV files to prevent blank lines between rows.",
+                answer: true,
+                explain: "Without it, on Windows each row ends with an extra blank line.",
+              },
+            ],
+          },
+          {
+            type: "code",
+            lang: "python",
+            runnable: true,
+            caption: "A board-style pair of functions: add a user, look up a password.",
+            code: r`import csv
+
+def add_user(uid, pwd):
+    with open("users.csv", "a", newline="") as f:
+        csv.writer(f).writerow([uid, pwd])
+
+def find_password(uid):
+    with open("users.csv", newline="") as f:
+        for row in csv.reader(f):
+            if row[0] == uid:
+                return row[1]
+    return "not found"
+
+open("users.csv", "w").close()
+add_user("asha12", "Mango@7")
+add_user("ravi_k", "Kite#21")
+print(find_password("ravi_k"))
+print(find_password("john"))`,
+          },
+          {
+            type: "activity",
+            activity: {
+              kind: "match",
+              prompt: "Match each task to the right tool.",
+              pairs: [
+                ["Store a list of dicts and get dicts back", "pickle with a .dat file"],
+                ["Save a table to open in a spreadsheet", "csv.writer"],
+                ["Save a poem line by line", "text file with write()"],
+                ["Read rows of a CSV file", "csv.reader"],
+              ],
+              explain: "Pickle keeps Python types, CSV keeps tables readable by other programs, and plain text files hold free-form text.",
+            },
+          },
+          {
+            type: "heading",
+            text: "Mixed board questions",
+          },
+          {
+            type: "list",
+            ordered: true,
+            items: [
+              "Write `COUNT_VOWEL_LINES()` to print how many lines of `story.txt` start with a vowel. (Loop over lines; test `line[0].lower() in \"aeiou\"`.)",
+              "Write `ADD_BOOK()` to append `[book_id, title, price]` to `books.dat` using pickle, and `COSTLY()` to display books priced above 500. (Use `ab` and `rb` with the EOFError loop.)",
+              "Write `SAVE_CITY(L)` to write the rows of list L to `city.csv` and `READ_BIG()` to show cities whose population (column 2) exceeds 10 lakh. (Convert column 2 with `int()`.)",
+              "Differentiate between `w` and `a` modes, and between `readline()` and `readlines()`. (Two points each.)",
+            ],
+          },
+          {
+            type: "callout",
+            tone: "exam",
+            title: "Board tip",
+            md: "Know which import goes with which file: no import for text files, `import pickle` for binary files of Python objects, `import csv` for CSV files. Writing `csv.writer(f).writerow(...)` on a file opened without `newline=\"\"` is accepted but the examiner may expect it.",
+          },
+          {
+            type: "keypoints",
+            items: [
+              "CSV is a text format: one row per line, values separated by a delimiter (comma by default).",
+              "Open with `newline=\"\"`; write with `csv.writer(f).writerow()` / `writerows()`.",
+              "`csv.reader(f)` gives each row as a list of strings; use `next()` to skip a header.",
+              "Convert numbers read from CSV with `int()` / `float()`.",
+              "Text file: no module; binary objects: pickle; tables: csv.",
+            ],
+          },
+        ],
+        flashcards: [
+          { front: "What is a CSV file?", back: "A text file where each line is a row and values are separated by a delimiter, usually a comma." },
+          { front: "How to write one row with csv?", back: "`w = csv.writer(f)` then `w.writerow([...])`." },
+          { front: "What does csv.reader return for each row?", back: "A list of strings." },
+          { front: "Why `newline=\"\"` when opening a CSV file?", back: "To stop extra blank lines between rows, as the writer adds its own line ending." },
+          { front: "How to use a semicolon as the separator?", back: "`csv.writer(f, delimiter=\";\")` and `csv.reader(f, delimiter=\";\")`." },
+          { front: "How to skip the header row while reading?", back: "Call `next(reader)` once before the loop." },
+          { front: "writerow vs writerows?", back: "writerow writes one row; writerows writes a list of rows." },
+        ],
+        quiz: [
+          {
+            kind: "mcq",
+            q: "Which line correctly creates a CSV writer for file f?",
+            options: ["`csv.writer(f)`", "`f.writer()`", "`csv.write(f)`", "`pickle.writer(f)`"],
+            answer: 0,
+            explain: "writer is a function of the csv module that takes the file object.",
+          },
+          {
+            kind: "mcq",
+            q: "`w.writerow([\"Ravi\", 98450])` with delimiter \";\" writes which line?",
+            options: ["`Ravi;98450`", "`Ravi,98450`", "`[\"Ravi\", 98450]`", "`Ravi 98450`"],
+            answer: 0,
+            explain: "Values are joined by the chosen delimiter.",
+          },
+          {
+            kind: "truefalse",
+            q: "A CSV file can be opened and read in a text editor.",
+            answer: true,
+            explain: "CSV is plain text.",
+          },
+          {
+            kind: "fill",
+            q: "To skip the first row of a csv reader r, call ___(r).",
+            answer: ["next"],
+            explain: "next() returns the next row and moves past it.",
+          },
+          {
+            kind: "mcq",
+            q: "A CSV row read back is `['3', 'Lakshmi', '85']`. What does `row[2] * 2` give?",
+            options: ["`'8585'`", "`170`", "TypeError", "`'85 85'`"],
+            answer: 0,
+            explain: "row[2] is the string '85', and a string times 2 repeats it.",
+            difficulty: 2,
+          },
+          {
+            kind: "numeric",
+            q: "result.csv has a header and 3 data rows. How many lists does `list(csv.reader(f))` contain?",
+            answer: 4,
+            explain: "The header row is also a row.",
+          },
+          {
+            kind: "multi",
+            q: "Which statements are true?",
+            options: ["pickle files are binary", "CSV files store type information", "csv.reader values are strings", "writerows takes a list of lists"],
+            answers: [0, 2, 3],
+            explain: "CSV stores only text; the types are lost.",
+          },
+        ],
+      },
+    ],
+  },
+  /* ------------------------------------------------------------------ */
+  /* Class 12 · Stack                                                    */
+  /* ------------------------------------------------------------------ */
+  {
+    slug: "c12-cs-stack",
+    title: "Stack",
+    icon: "🥞",
+    description: "The stack as a LIFO data structure: push, pop, peek, overflow and underflow, a list-based implementation in Python, applications, and infix to postfix conversion and postfix evaluation.",
+    lessons: [
+      {
+        slug: "c12-cs-stack-operations",
+        title: "Stack Operations and Implementation in Python",
+        summary: "What a stack is, LIFO order, push, pop, peek, isEmpty, overflow and underflow, writing a stack with a Python list, and where stacks are used.",
+        minutes: 22,
+        xp: 55,
+        blocks: [
+          {
+            type: "illustration",
+            emoji: "🍽️",
+            caption: "At a wedding buffet, the plate you take is always the one on top, which is the last plate the staff put down.",
+          },
+          {
+            type: "text",
+            md: "A **data structure** is a way of storing and organising data so that it can be used efficiently. A **stack** is a linear data structure in which items are added and removed at **one end only**, called the **top**.\n\nSo the item added last is the first one removed: **LIFO (Last In, First Out)**. A pile of plates, a stack of books, and bangles on a wrist all behave this way.",
+          },
+          {
+            type: "table",
+            headers: ["Operation", "Meaning"],
+            rows: [
+              ["**PUSH**", "add an item on the top"],
+              ["**POP**", "remove and return the top item"],
+              ["**PEEK** (TOP)", "look at the top item without removing it"],
+              ["**isEmpty**", "check whether the stack has no items"],
+              ["**size**", "number of items in the stack"],
+            ],
+          },
+          {
+            type: "text",
+            md: "Two error situations have names. **Underflow** is trying to POP (or PEEK) from an **empty** stack. **Overflow** is trying to PUSH onto a **full** stack, one that has reached its fixed maximum size. A Python list grows as needed, so in Python overflow happens only if memory runs out; underflow must always be checked.",
+          },
+          {
+            type: "code",
+            lang: "python",
+            runnable: true,
+            caption: "A stack built on a list: the end of the list is the top.",
+            code: r`stack = []
+
+def is_empty(stk):
+    return len(stk) == 0
+
+def push(stk, item):
+    stk.append(item)
+
+def pop(stk):
+    if is_empty(stk):
+        print("Underflow")
+        return None
+    return stk.pop()
+
+def peek(stk):
+    if is_empty(stk):
+        return None
+    return stk[-1]
+
+def display(stk):
+    for i in range(len(stk) - 1, -1, -1):
+        print(stk[i])
+
+push(stack, "Plate 1")
+push(stack, "Plate 2")
+push(stack, "Plate 3")
+print("Top:", peek(stack))
+print("Popped:", pop(stack))
+display(stack)
+pop(stack); pop(stack)
+print(pop(stack))`,
+          },
+          {
+            type: "example",
+            title: "Following the stack",
+            problem: "Explain the output: `Top: Plate 3`, `Popped: Plate 3`, `Plate 2`, `Plate 1`, `Underflow`, `None`.",
+            steps: [
+              "After three pushes the list is [\"Plate 1\", \"Plate 2\", \"Plate 3\"]; its last item is the top.",
+              "peek returns `stk[-1]`, Plate 3, without removing it. pop then removes Plate 3.",
+              "display prints from the top down: Plate 2, then Plate 1.",
+              "Two more pops empty the stack. The next pop finds it empty, prints Underflow and returns None, which is printed.",
+            ],
+            answer: "`append()` is PUSH, `pop()` is POP, `stk[-1]` is PEEK, and an empty-check prevents underflow errors.",
+          },
+          {
+            type: "mistake",
+            wrong: "To pop from a stack built on a list I can use `stk.pop(0)`, since the first item went in first.",
+            right: "The top is the **end** of the list, so POP is `stk.pop()` with no index. `pop(0)` removes the **oldest** item, which is queue (FIFO) behaviour, not stack behaviour.",
+            why: "\"First item\" sounds like \"the one to take\". In a stack, the first item in is the last item out.",
+          },
+          {
+            type: "checkpoint",
+            questions: [
+              {
+                kind: "mcq",
+                q: "Items 10, 20, 30 are pushed in that order, then one pop is done. What is on top now?",
+                options: ["20", "30", "10", "The stack is empty"],
+                answer: 0,
+                explain: "The pop removes 30, the last item pushed; 20 becomes the top.",
+              },
+              {
+                kind: "fill",
+                q: "Trying to pop from an empty stack is called ___.",
+                answer: ["underflow", "stack underflow"],
+                explain: "Pushing onto a full stack is overflow.",
+              },
+            ],
+          },
+          {
+            type: "heading",
+            text: "Where stacks are used",
+          },
+          {
+            type: "list",
+            items: [
+              "**Undo / redo** in editors: each action is pushed; undo pops the latest.",
+              "**Back button** in a browser: visited pages are pushed; Back pops.",
+              "**Reversing** a string or list: push every item, then pop them all.",
+              "**Matching brackets** in an expression and converting or evaluating expressions.",
+              "**Function calls**: Python keeps a call stack; the last function called is the first to return.",
+            ],
+          },
+          {
+            type: "code",
+            lang: "python",
+            runnable: true,
+            caption: "Two classic applications: reversing and bracket matching.",
+            code: r`def reverse(text):
+    stk = []
+    for ch in text:
+        stk.append(ch)
+    out = ""
+    while stk:
+        out += stk.pop()
+    return out
+print(reverse("STACK"))
+
+def balanced(expr):
+    stk = []
+    pairs = {")": "(", "]": "[", "}": "{"}
+    for ch in expr:
+        if ch in "([{":
+            stk.append(ch)
+        elif ch in ")]}":
+            if not stk or stk.pop() != pairs[ch]:
+                return False
+    return len(stk) == 0
+print(balanced("(a+b)*[c-d]"), balanced("(a+b]"), balanced("((a)"))`,
+          },
+          {
+            type: "activity",
+            activity: {
+              kind: "sort",
+              prompt: "Is this LIFO (stack-like) or not?",
+              groups: ["LIFO (stack)", "Not LIFO"],
+              items: [
+                { text: "Undo in a text editor", group: 0, hint: "The most recent change is undone first." },
+                { text: "Browser Back button", group: 0, hint: "Back goes to the page visited most recently." },
+                { text: "Bangles worn on a wrist", group: 0, hint: "The last bangle put on comes off first." },
+                { text: "Queue at a railway ticket counter", group: 1, hint: "The first person in line is served first: FIFO." },
+                { text: "Print jobs sent to a shared printer", group: 1, hint: "Jobs print in the order they arrive." },
+                { text: "Function calls in a running program", group: 0, hint: "The latest call returns first." },
+              ],
+              explain: "Anything where the newest item is handled first is a stack. Waiting lines are queues (FIFO).",
+            },
+          },
+          {
+            type: "callout",
+            tone: "exam",
+            title: "Board tip",
+            md: "In the stack program question, write separate functions for push and pop, and **check for an empty stack** in pop (print \"Stack Empty\" or \"Underflow\"). That check is a marking point.",
+          },
+          {
+            type: "keypoints",
+            items: [
+              "A stack is a linear structure with insertion and deletion at one end, the top: LIFO.",
+              "PUSH adds, POP removes and returns, PEEK reads the top item.",
+              "Underflow: pop from an empty stack. Overflow: push onto a full stack.",
+              "With a list: `append()` = push, `pop()` = pop, `L[-1]` = peek, `len(L) == 0` = empty.",
+              "Uses: undo, back button, reversing, bracket matching, expression evaluation, function calls.",
+            ],
+          },
+        ],
+        flashcards: [
+          { front: "What does LIFO mean?", back: "Last In, First Out: the item added last is removed first." },
+          { front: "What is PUSH?", back: "Adding an item on the top of the stack." },
+          { front: "What is POP?", back: "Removing and returning the top item." },
+          { front: "What is PEEK?", back: "Reading the top item without removing it." },
+          { front: "Define underflow.", back: "Trying to pop or peek from an empty stack." },
+          { front: "Define overflow.", back: "Trying to push onto a stack that is already full." },
+          { front: "List method for PUSH?", back: "`append()`." },
+          { front: "Name two uses of a stack.", back: "Undo in editors, browser Back button (also reversing, bracket matching, function calls)." },
+        ],
+        quiz: [
+          {
+            kind: "mcq",
+            q: "A stack follows which principle?",
+            options: ["LIFO", "FIFO", "Random access", "Sorted order"],
+            answer: 0,
+            explain: "Last In, First Out. FIFO is the queue principle.",
+          },
+          {
+            kind: "order",
+            q: "Pushes A, B, C then pops all. Order of popped items?",
+            items: ["C", "B", "A"],
+            explain: "The last item pushed comes out first.",
+          },
+          {
+            kind: "mcq",
+            q: "Which Python expression gives the top of a list-based stack S without removing it?",
+            options: ["`S[-1]`", "`S[0]`", "`S.pop()`", "`S.pop(0)`"],
+            answer: 0,
+            explain: "The end of the list is the top. pop() would remove it.",
+          },
+          {
+            kind: "truefalse",
+            q: "In a stack, an item can be inserted in the middle.",
+            answer: false,
+            explain: "Insertion and deletion happen only at the top.",
+          },
+          {
+            kind: "numeric",
+            q: "Starting empty: push 5, push 8, pop, push 3, push 9, pop, pop, push 7. How many items are in the stack?",
+            answer: 2,
+            explain: "[5] → [5, 8] → [5] → [5, 3] → [5, 3, 9] → [5, 3] → [5] → [5, 7]. Two items.",
+            difficulty: 2,
+          },
+          {
+            kind: "mcq",
+            q: "What does `reverse(\"STACK\")` return when every character is pushed and then all are popped?",
+            options: ["`KCATS`", "`STACK`", "`SKCAT`", "`KSTAC`"],
+            answer: 0,
+            explain: "Popping returns characters in reverse order.",
+          },
+          {
+            kind: "multi",
+            q: "Which are applications of a stack?",
+            options: ["Undo in a word processor", "Checking balanced brackets", "Serving customers at a bank counter", "Converting infix to postfix"],
+            answers: [0, 1, 3],
+            explain: "A bank counter serves the first person first, which is a queue.",
+          },
+        ],
+      },
+      {
+        slug: "c12-cs-stack-expressions",
+        title: "Infix, Postfix and Stack Programs (Board Practice)",
+        summary: "Infix, prefix and postfix notation, converting infix to postfix with a stack, evaluating a postfix expression, and the push and pop program the board asks every year.",
+        minutes: 24,
+        xp: 60,
+        blocks: [
+          {
+            type: "text",
+            md: "In the expression `A + B`, the operator sits **between** its operands: this is **infix** notation, the one we write by hand. In **prefix** (Polish) notation the operator comes **before** its operands: `+AB`. In **postfix** (reverse Polish) notation it comes **after**: `AB+`.\n\nInfix needs brackets and precedence rules to say which operation happens first. Postfix needs **no brackets**: the order of the symbols alone fixes the order of evaluation, and a computer can evaluate it in one left-to-right pass with a stack.",
+          },
+          {
+            type: "table",
+            headers: ["Infix", "Postfix", "Prefix"],
+            rows: [
+              ["`A + B * C`", "`ABC*+`", "`+A*BC`"],
+              ["`(A + B) * C`", "`AB+C*`", "`*+ABC`"],
+              ["`A * (B + C) / D`", "`ABC+*D/`", "`/*A+BCD`"],
+            ],
+          },
+          {
+            type: "list",
+            ordered: true,
+            items: [
+              "Read the infix expression from left to right, one symbol at a time.",
+              "**Operand**: write it straight to the output.",
+              "**(**: push it on the stack.",
+              "**)**: pop operators to the output until **(** is on top; pop and discard the **(**.",
+              "**Operator**: while the top of the stack is an operator of **higher or equal** precedence, pop it to the output; then push the new operator.",
+              "At the end, pop all remaining operators to the output.",
+            ],
+          },
+          {
+            type: "example",
+            title: "Convert (A + B) * (C − D) / E to postfix",
+            problem: "Use the stack method and show the stack after each important step.",
+            steps: [
+              "`(` push. `A` output: A. `+` push (top is `(`). `B` output: AB. `)` pop `+`: AB+, discard `(`.",
+              "`*` push (stack empty). `(` push. `C` output: AB+C. `-` push (top is `(`). `D` output: AB+CD.",
+              "`)` pop `-`: AB+CD−, discard `(`. Stack now holds `*`.",
+              "`/` has the same precedence as `*` on top, so pop `*`: AB+CD−*. Push `/`.",
+              "`E` output: AB+CD−*E. End: pop `/`.",
+            ],
+            answer: "`AB+CD-*E/`",
+          },
+          {
+            type: "mistake",
+            wrong: "When `/` arrives and `*` is on top of the stack, I push `/` on top because neither is higher.",
+            right: "Pop operators of **higher or equal** precedence first. `*` and `/` are equal and work left to right, so `*` is popped to the output before `/` is pushed.",
+            why: "Learners remember \"pop if higher\" and forget \"or equal\". Leaving `*` on the stack would make `/` act first, changing the meaning of the expression.",
+          },
+          {
+            type: "heading",
+            text: "Evaluating a postfix expression",
+          },
+          {
+            type: "text",
+            md: "Scan left to right. **Operand**: push it. **Operator**: pop the top two items; the first popped is the **right** operand (B) and the second popped is the **left** operand (A); compute A op B and push the result. At the end the single item on the stack is the answer.",
+          },
+          {
+            type: "example",
+            title: "Evaluate 7 8 2 * 4 / +",
+            problem: "Show the stack after each symbol.",
+            steps: [
+              "7 → [7]; 8 → [7, 8]; 2 → [7, 8, 2].",
+              "`*`: pop 2 and 8, push 8 × 2 = 16 → [7, 16].",
+              "4 → [7, 16, 4]. `/`: pop 4 and 16, push 16 / 4 = 4 → [7, 4].",
+              "`+`: pop 4 and 7, push 7 + 4 = 11 → [11].",
+            ],
+            answer: "11 (Python's `/` gives 11.0).",
+          },
+          {
+            type: "checkpoint",
+            questions: [
+              {
+                kind: "numeric",
+                q: "Evaluate the postfix expression `5 3 + 2 4 * -`.",
+                answer: 0,
+                explain: "5 + 3 = 8; 2 × 4 = 8; then 8 − 8 = 0 (left operand is the second item popped).",
+              },
+              {
+                kind: "mcq",
+                q: "Postfix form of `A * B + C`?",
+                options: ["`AB*C+`", "`ABC+*`", "`A*BC+`", "`ABC*+`"],
+                answer: 0,
+                explain: "`*` is done first, so AB* is formed; then + with C.",
+              },
+            ],
+          },
+          {
+            type: "code",
+            lang: "python",
+            runnable: true,
+            caption: "Both algorithms in Python. Try your own expressions.",
+            code: r`def to_postfix(infix):
+    prec = {"+": 1, "-": 1, "*": 2, "/": 2}
+    stk = []
+    out = ""
+    for ch in infix:
+        if ch.isalnum():
+            out += ch
+        elif ch == "(":
+            stk.append(ch)
+        elif ch == ")":
+            while stk[-1] != "(":
+                out += stk.pop()
+            stk.pop()
+        else:
+            while stk and stk[-1] != "(" and prec[stk[-1]] >= prec[ch]:
+                out += stk.pop()
+            stk.append(ch)
+    while stk:
+        out += stk.pop()
+    return out
+
+def eval_postfix(tokens):
+    stk = []
+    for t in tokens.split():
+        if t.isdigit():
+            stk.append(int(t))
+        else:
+            b = stk.pop()
+            a = stk.pop()
+            if t == "+": stk.append(a + b)
+            elif t == "-": stk.append(a - b)
+            elif t == "*": stk.append(a * b)
+            elif t == "/": stk.append(a / b)
+    return stk.pop()
+
+print(to_postfix("(A+B)*(C-D)/E"))
+print(eval_postfix("7 8 2 * 4 / +"))`,
+          },
+          {
+            type: "heading",
+            text: "The board's stack program",
+          },
+          {
+            type: "code",
+            lang: "python",
+            runnable: true,
+            caption: "Push names of students scoring above 85, then pop and display them.",
+            code: r`R = {"Ankit": 92, "Bhavna": 78, "Chetan": 88, "Divya": 95}
+ST = []
+
+def PUSH(R, ST):
+    for name in R:
+        if R[name] > 85:
+            ST.append(name)
+
+def POP_ALL(ST):
+    while ST:
+        print(ST.pop(), end=" ")
+    print()
+    print("Stack Empty")
+
+PUSH(R, ST)
+print(ST)
+POP_ALL(ST)`,
+          },
+          {
+            type: "activity",
+            activity: {
+              kind: "order",
+              prompt: "Order the stack contents while evaluating 6 2 / 3 +.",
+              items: ["[6]", "[6, 2]", "[3.0]", "[3.0, 3]", "[6.0]"],
+              explain: "The `/` pops 2 and 6 and pushes 6 / 2 = 3.0; the `+` pops 3 and 3.0 and pushes 6.0.",
+            },
+          },
+          {
+            type: "callout",
+            tone: "exam",
+            title: "Board tip",
+            md: "For conversions and evaluations, draw a three-column table: **Symbol | Stack | Output (or Result)**. Marks are given for the table, not just the final answer. In the program question, the output for the dictionary above is `['Ankit', 'Chetan', 'Divya']`, then `Divya Chetan Ankit` and `Stack Empty`.",
+          },
+          {
+            type: "keypoints",
+            items: [
+              "Infix: A+B; prefix: +AB; postfix: AB+. Postfix needs no brackets.",
+              "Conversion: operands to output, operators to the stack; pop higher-or-equal precedence first; `)` pops to `(`.",
+              "Evaluation: push operands; on an operator pop B then A and push A op B.",
+              "The final single value on the stack is the result.",
+              "Board program: push items that meet a condition, then pop all and print \"Stack Empty\".",
+            ],
+          },
+        ],
+        flashcards: [
+          { front: "Infix, prefix, postfix of A plus B?", back: "Infix A+B, prefix +AB, postfix AB+." },
+          { front: "Why is postfix useful for computers?", back: "It needs no brackets or precedence rules and can be evaluated in one left-to-right pass with a stack." },
+          { front: "In conversion, what happens on `)`?", back: "Pop operators to the output until `(` is on top, then discard the `(`." },
+          { front: "In conversion, when do you pop operators on reading a new operator?", back: "While the top has higher or equal precedence (and is not `(`)." },
+          { front: "In evaluation, which popped item is the left operand?", back: "The second item popped." },
+          { front: "Postfix of (A+B)*C?", back: "AB+C*" },
+          { front: "Value of postfix 7 8 2 * 4 / +?", back: "11" },
+        ],
+        quiz: [
+          {
+            kind: "mcq",
+            q: "Postfix form of `A + B * C - D`?",
+            options: ["`ABC*+D-`", "`AB+C*D-`", "`ABC*D-+`", "`ABCD*+-`"],
+            answer: 0,
+            explain: "B*C first → ABC*; then A + that → ABC*+; then − D → ABC*+D−.",
+            difficulty: 2,
+          },
+          {
+            kind: "numeric",
+            q: "Evaluate the postfix expression `4 6 + 2 * 5 -`.",
+            answer: 15,
+            explain: "4 + 6 = 10; 10 × 2 = 20; 20 − 5 = 15.",
+          },
+          {
+            kind: "mcq",
+            q: "Evaluating `9 3 -`, the stack holds [9, 3]. What is pushed?",
+            options: ["`6`", "`-6`", "`3`", "`12`"],
+            answer: 0,
+            explain: "B = 3 is popped first, A = 9 second; A − B = 6.",
+          },
+          {
+            kind: "truefalse",
+            q: "Postfix expressions need brackets to show the order of operations.",
+            answer: false,
+            explain: "The position of operators fixes the order; that is the point of postfix.",
+          },
+          {
+            kind: "mcq",
+            q: "Prefix form of `(A + B) * C`?",
+            options: ["`*+ABC`", "`+*ABC`", "`AB+C*`", "`*A+BC`"],
+            answer: 0,
+            explain: "The bracket gives +AB, then * applies to +AB and C: *+ABC.",
+          },
+          {
+            kind: "fill",
+            q: "Converting `A / B * C` gives the postfix expression ___.",
+            answer: ["AB/C*"],
+            explain: "/ and * are equal and work left to right, so / is popped before * is pushed.",
+            difficulty: 2,
+          },
+          {
+            kind: "mcq",
+            q: "For `R = {\"P\": 40, \"Q\": 90, \"S\": 99}`, a PUSH function pushes names with marks above 85, then all are popped and printed. Output?",
+            options: ["`S Q`", "`Q S`", "`P`", "`P Q S`"],
+            answer: 0,
+            explain: "Q then S are pushed; popping gives S first, then Q.",
+          },
+        ],
+      },
+    ],
+  },
 ];
 
 /** Chapter title ("11:" / "12:" + exact title) → topic slug(s) that teach it. */
@@ -1691,4 +2853,6 @@ export const links: Record<string, string | string[]> = {
   "12:Python Revision Tour": "c12-cs-python-revision",
   "12:Functions": "c12-cs-functions",
   "12:Exception Handling": "c12-cs-exception-handling",
+  "12:File Handling": "c12-cs-file-handling",
+  "12:Stack": "c12-cs-stack",
 };

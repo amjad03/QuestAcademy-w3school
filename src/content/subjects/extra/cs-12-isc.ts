@@ -1570,10 +1570,757 @@ S1S0=11 -> Y=1
       },
     ],
   },
+  /* ------------------------------------------------------------------ */
+  /* ISC Class 12 · Objects and Classes                                   */
+  /* ------------------------------------------------------------------ */
+  {
+    slug: "c12-cs-java-classes",
+    title: "Objects and Classes",
+    icon: "🧱",
+    description: "Classes as blueprints, objects, instance and static members, access specifiers, constructors and this, objects as parameters and return values, and the ISC \"design a class\" question.",
+    lessons: [
+      {
+        slug: "c12-cs-classes-constructors",
+        title: "Classes, Objects and Constructors",
+        summary: "Instance and class (static) variables, member methods, access specifiers, default and parameterised constructors, constructor overloading and the this keyword.",
+        minutes: 22,
+        xp: 50,
+        blocks: [
+          {
+            type: "illustration",
+            emoji: "🚇",
+            caption: "Every Namma Metro card has its own holder and balance, but all cards follow the same rules for recharging and travelling. In Java, the rules are the class; each card is an object.",
+          },
+          {
+            type: "text",
+            md: "A **class** is a user-defined blueprint that describes the **data members** (state) and **member methods** (behaviour) shared by a group of objects. An **object** is an **instance** of a class, created at run time with the `new` operator. Each object gets its own copy of the **instance variables**.\n\nA variable declared `static` is a **class variable**: there is only **one** copy, shared by all objects of the class. A `static` method belongs to the class and can be called without an object, but it cannot use instance variables directly.",
+          },
+          {
+            type: "table",
+            headers: ["Access specifier", "Visible in the same class", "Same package", "Subclass (other package)", "Everywhere"],
+            rows: [
+              ["`private`", "yes", "no", "no", "no"],
+              ["default (none written)", "yes", "yes", "no", "no"],
+              ["`protected`", "yes", "yes", "yes", "no"],
+              ["`public`", "yes", "yes", "yes", "yes"],
+            ],
+          },
+          {
+            type: "text",
+            md: "Making data members `private` and giving `public` methods to use them is **encapsulation** (data hiding). Other classes cannot change the balance of a metro card directly; they must call `recharge()` or `travel()`, which apply the rules.\n\nA **constructor** is a special member method with the **same name as the class** and **no return type**, not even `void`. It runs automatically when an object is created and is used to initialise the data members.",
+          },
+          {
+            type: "list",
+            items: [
+              "**Default (non-parameterised) constructor**: takes no arguments and sets fixed starting values. If a class has no constructor at all, Java supplies an empty default one.",
+              "**Parameterised constructor**: takes arguments and copies them into the data members.",
+              "**Constructor overloading**: a class may have several constructors with different parameter lists.",
+              "**this**: a reference to the current object. `this.balance = balance;` copies the parameter into the data member when both have the same name.",
+            ],
+          },
+          {
+            type: "code",
+            lang: "java",
+            caption: "MetroCard.java",
+            code: `public class MetroCard
+{
+    private String holder;
+    private double balance;
+    private static int cardsIssued = 0;
+
+    public MetroCard()
+    {
+        holder = "Guest";
+        balance = 0.0;
+        cardsIssued++;
+    }
+
+    public MetroCard(String holder, double balance)
+    {
+        this.holder = holder;
+        this.balance = balance;
+        cardsIssued++;
+    }
+
+    public void recharge(double amt)
+    {
+        balance += amt;
+    }
+
+    public boolean travel(double fare)
+    {
+        if (fare > balance)
+            return false;
+        balance -= fare;
+        return true;
+    }
+
+    public void display()
+    {
+        System.out.println(holder + " : Rs " + balance);
+    }
+
+    public static void main(String[] args)
+    {
+        MetroCard c1 = new MetroCard("Ananya", 100.0);
+        MetroCard c2 = new MetroCard();
+        c1.travel(35.0);
+        c2.recharge(50.0);
+        boolean ok = c2.travel(60.0);
+        c1.display();
+        c2.display();
+        System.out.println("Trip allowed: " + ok);
+        System.out.println("Cards issued: " + MetroCard.cardsIssued);
+    }
+}
+
+/* Output:
+Ananya : Rs 65.0
+Guest : Rs 50.0
+Trip allowed: false
+Cards issued: 2
+*/`,
+          },
+          {
+            type: "example",
+            title: "Tracing MetroCard",
+            problem: "Explain each line of the output of MetroCard.java.",
+            steps: [
+              "c1 is made by the parameterised constructor (Ananya, 100.0); c2 by the default one (Guest, 0.0). Each constructor adds 1 to the shared cardsIssued, so it becomes 2.",
+              "c1.travel(35.0): 35 ≤ 100, so the balance becomes 65.0 and true is returned (the result is not used).",
+              "c2.recharge(50.0) makes c2's balance 50.0. c2.travel(60.0): 60 > 50, so false is returned and the balance stays 50.0.",
+              "A double is printed with at least one decimal place, so 65.0 and 50.0 appear.",
+            ],
+            answer: "Ananya : Rs 65.0 / Guest : Rs 50.0 / Trip allowed: false / Cards issued: 2",
+          },
+          {
+            type: "mistake",
+            wrong: "A constructor should be declared void because it does not return anything: public void MetroCard() { ... }",
+            right: "A constructor has **no return type at all**: public MetroCard() { ... }. Writing void makes it an ordinary method named MetroCard that is never called automatically.",
+            why: "Java allows a method with the same name as the class, so the void version compiles without error. The object is then made by the hidden default constructor, and the data members silently keep their default values (null, 0.0).",
+          },
+          {
+            type: "checkpoint",
+            questions: [
+              {
+                kind: "mcq",
+                q: "Three MetroCard objects are created. How many copies of cardsIssued exist in memory?",
+                options: ["1", "3", "0", "4"],
+                answer: 0,
+                explain: "cardsIssued is static, so a single copy is shared by all objects of the class.",
+              },
+              {
+                kind: "truefalse",
+                q: "A static method can directly use the instance variable balance of MetroCard.",
+                answer: false,
+                explain: "A static method runs without any particular object, so there is no balance to refer to. It must use an object reference, such as c1.balance.",
+              },
+            ],
+          },
+          {
+            type: "activity",
+            activity: {
+              kind: "sort",
+              prompt: "Instance member or class (static) member?",
+              groups: ["Instance member", "Class (static) member"],
+              items: [
+                { text: "holder of a MetroCard", group: 0, hint: "Each card has its own holder." },
+                { text: "cardsIssued", group: 1, hint: "One count for the whole class." },
+                { text: "balance", group: 0, hint: "Different for each card." },
+                { text: "main(String[] args)", group: 1, hint: "It is declared static so Java can call it without an object." },
+                { text: "recharge(double amt)", group: 0, hint: "It changes one card's balance, so it needs an object." },
+                { text: "Math.sqrt()", group: 1, hint: "Called with the class name, no object." },
+              ],
+              explain: "Instance members belong to each object; static members belong to the class and are shared.",
+            },
+          },
+          {
+            type: "callout",
+            tone: "exam",
+            title: "ISC board tip",
+            md: "Short questions often ask: \"State two differences between a constructor and a method\" (same name as class, no return type, called automatically on new) or \"What is the use of the keyword this?\" (refers to the current object; separates a data member from a parameter of the same name). Learn crisp one-line answers.",
+          },
+          {
+            type: "keypoints",
+            items: [
+              "A class is a blueprint of data members and member methods; an object is an instance made with new.",
+              "Instance variables: one copy per object. Static (class) variables: one copy shared by all objects.",
+              "private hides data inside the class: encapsulation.",
+              "A constructor has the class's name, no return type, and runs automatically when an object is created.",
+              "this refers to the current object.",
+            ],
+          },
+        ],
+        flashcards: [
+          { front: "Class", back: "A user-defined blueprint that describes the data members and member methods of a group of objects." },
+          { front: "Object", back: "An instance of a class, created at run time with new, with its own copy of the instance variables." },
+          { front: "Class (static) variable", back: "A data member declared static; only one copy exists and it is shared by all objects." },
+          { front: "Constructor", back: "A member method with the class's name and no return type, called automatically when an object is created, used to initialise data members." },
+          { front: "Default constructor", back: "A constructor with no parameters. Java supplies an empty one only if the class defines no constructor." },
+          { front: "this keyword", back: "A reference to the current object, e.g. this.balance = balance." },
+          { front: "Encapsulation", back: "Wrapping data and methods into one unit (a class) and hiding the data with private." },
+          { front: "Constructor overloading", back: "Several constructors in one class with different parameter lists." },
+        ],
+        quiz: [
+          {
+            kind: "mcq",
+            q: "Which of these is a valid constructor header for class Student?",
+            options: ["public Student(String n)", "public void Student(String n)", "public int Student()", "static Student()"],
+            answer: 0,
+            explain: "A constructor has the class name and no return type. A static constructor is not allowed in Java.",
+          },
+          {
+            kind: "mcq",
+            q: "A data member declared private can be accessed:",
+            options: ["only inside its own class", "anywhere in the same package", "in subclasses only", "everywhere"],
+            answer: 0,
+            explain: "private is the most restrictive access specifier.",
+          },
+          {
+            kind: "truefalse",
+            q: "If a class defines a parameterised constructor only, the statement new ClassName() still compiles.",
+            answer: false,
+            explain: "Java gives the free default constructor only when the class has no constructor at all. Here it must be written by the programmer.",
+            difficulty: 2,
+          },
+          {
+            kind: "fill",
+            q: "Objects are created at run time using the ___ operator.",
+            answer: ["new"],
+            explain: "new allocates memory for the object and calls a constructor.",
+          },
+          {
+            kind: "mcq",
+            q: "In MetroCard, if main called c2.travel(50.0) instead of c2.travel(60.0), what would display() print for c2?",
+            options: ["Guest : Rs 0.0", "Guest : Rs 50.0", "Guest : Rs -10.0", "Guest : Rs 100.0"],
+            answer: 0,
+            explain: "50 is not greater than 50, so the trip is allowed and the balance becomes 50.0 − 50.0 = 0.0.",
+          },
+          {
+            kind: "multi",
+            q: "Which statements about constructors are true?",
+            options: ["They can be overloaded", "They are called automatically when an object is created", "They must return the object", "They have the same name as the class"],
+            answers: [0, 1, 3],
+            explain: "A constructor never has a return statement with a value; new gives back the reference.",
+          },
+          {
+            kind: "mcq",
+            q: "What is printed? class K { static int n = 0; K() { n += 2; } } ... new K(); new K(); new K(); System.out.println(K.n);",
+            options: ["6", "2", "0", "3"],
+            answer: 0,
+            explain: "Each of the three constructor calls adds 2 to the one shared n: 0 + 2 + 2 + 2 = 6.",
+          },
+        ],
+      },
+      {
+        slug: "c12-cs-design-class",
+        title: "Designing a Class the ISC Way",
+        summary: "Reading an ISC class specification, writing data members, constructor and methods, writing main(), and passing and returning objects.",
+        minutes: 24,
+        xp: 55,
+        blocks: [
+          {
+            type: "text",
+            md: "Most programming questions in the ISC theory paper look the same: a **class name**, a list of **data members** with their purpose, and a list of **member methods** with what each must do. You must write the class exactly to this specification, and often a `main()` method that creates an object and calls the methods.\n\nUse the names given in the question, the same return types and the same parameters. Examiners check each method against the specification.",
+          },
+          {
+            type: "table",
+            headers: ["Specification (as given)", "Purpose"],
+            rows: [
+              ["Class name: **Harshad**", "-"],
+              ["Data member: int **num**", "to store a positive number"],
+              ["**Harshad(int n)**", "parameterised constructor to store n in num"],
+              ["int **sumOfDigits()**", "returns the sum of the digits of num"],
+              ["boolean **isHarshad()**", "returns true if num is divisible by the sum of its digits, else false"],
+              ["void **display()**", "prints whether num is a Harshad number, using isHarshad()"],
+            ],
+          },
+          {
+            type: "code",
+            lang: "java",
+            caption: "Harshad.java (sample input 156; also run with 157)",
+            code: `import java.util.Scanner;
+
+public class Harshad
+{
+    int num;
+
+    Harshad(int n)
+    {
+        num = n;
+    }
+
+    int sumOfDigits()
+    {
+        int s = 0, t = num;
+        while (t > 0)
+        {
+            s = s + t % 10;
+            t = t / 10;
+        }
+        return s;
+    }
+
+    boolean isHarshad()
+    {
+        int s = sumOfDigits();
+        return s != 0 && num % s == 0;
+    }
+
+    void display()
+    {
+        if (isHarshad())
+            System.out.println(num + " IS A HARSHAD NUMBER");
+        else
+            System.out.println(num + " IS NOT A HARSHAD NUMBER");
+    }
+
+    public static void main(String[] args)
+    {
+        Scanner sc = new Scanner(System.in);
+        System.out.print("Enter a number: ");
+        int n = sc.nextInt();
+        Harshad obj = new Harshad(n);
+        obj.display();
+    }
+}
+
+/* Sample run 1:
+Enter a number: 156
+156 IS A HARSHAD NUMBER
+
+Sample run 2:
+Enter a number: 157
+157 IS NOT A HARSHAD NUMBER
+*/`,
+          },
+          {
+            type: "example",
+            title: "Why 156 is Harshad and 157 is not",
+            problem: "Trace sumOfDigits() and isHarshad() for num = 156 and num = 157.",
+            steps: [
+              "156: t = 156 → s = 6, t = 15 → s = 11, t = 1 → s = 12, t = 0. Sum = 12.",
+              "156 % 12 = 0 (156 = 12 × 13), so isHarshad() returns true.",
+              "157: the digit sum is 1 + 5 + 7 = 13, and 157 % 13 = 1, so it returns false.",
+              "Note that sumOfDigits() works on a copy t, so num itself is not destroyed for later use.",
+            ],
+            answer: "156 IS A HARSHAD NUMBER; 157 IS NOT A HARSHAD NUMBER",
+          },
+          {
+            type: "mistake",
+            wrong: "In sumOfDigits(), loop directly on num: while (num > 0) { s += num % 10; num /= 10; }",
+            right: "Copy num into a local variable (t) and destroy the copy. num must keep its value because isHarshad() and display() use it afterwards.",
+            why: "The loop gives the right sum, so the method looks correct when tested alone. But afterwards num is 0, so num % s is 0 for every input and display() prints \"0 IS A HARSHAD NUMBER\".",
+          },
+          {
+            type: "heading",
+            text: "Objects as parameters and return values",
+          },
+          {
+            type: "text",
+            md: "A method can take an object as a parameter and can return a new object. ISC questions use this for adding times, distances, complex numbers or fractions: `Time add(Time t)` adds the time in `t` to the current object (`this`) and returns the result as a new `Time` object.\n\nPrimitive values (int, double, char, boolean) are **passed by value**: the method gets a copy. When an object is passed, the **reference** is copied, so the method can change the original object's data members through it.",
+          },
+          {
+            type: "code",
+            lang: "java",
+            caption: "Time.java",
+            code: `public class Time
+{
+    int hh, mm;
+
+    Time(int h, int m)
+    {
+        hh = h;
+        mm = m;
+    }
+
+    // returns a NEW object holding the sum of this time and t
+    Time add(Time t)
+    {
+        int total = (this.hh + t.hh) * 60 + this.mm + t.mm;
+        return new Time(total / 60, total % 60);
+    }
+
+    void show()
+    {
+        System.out.println(hh + " h " + mm + " min");
+    }
+
+    public static void main(String[] args)
+    {
+        Time t1 = new Time(2, 45);
+        Time t2 = new Time(1, 30);
+        Time t3 = t1.add(t2);
+        t1.show();
+        t3.show();
+    }
+}
+
+/* Output:
+2 h 45 min
+4 h 15 min
+*/`,
+          },
+          {
+            type: "checkpoint",
+            questions: [
+              {
+                kind: "numeric",
+                q: "In Time.add(), what is the value of total when 2 h 45 min is added to 1 h 30 min?",
+                answer: 255,
+                unit: "min",
+                explain: "(2 + 1) × 60 + 45 + 30 = 180 + 75 = 255 minutes, which is 4 h 15 min.",
+              },
+              {
+                kind: "truefalse",
+                q: "After t1.add(t2), the object t1 holds 4 h 15 min.",
+                answer: false,
+                explain: "add() builds and returns a new object; t1 is unchanged, as the output line 2 h 45 min shows.",
+              },
+            ],
+          },
+          {
+            type: "activity",
+            activity: {
+              kind: "order",
+              prompt: "Order the parts of an ISC class answer.",
+              items: [
+                "Import any package needed (java.util.Scanner)",
+                "Class header with the given name",
+                "Data members as specified",
+                "Constructor(s)",
+                "Member methods in the order given",
+                "main() creating an object and calling the methods",
+              ],
+              explain: "Following the specification's order makes it easy for the examiner to tick each part.",
+            },
+          },
+          {
+            type: "callout",
+            tone: "exam",
+            title: "ISC board tip",
+            md: "If the question says \"Define the class and write main()\", main() carries marks: create the object and call the methods in a sensible order. If it says \"main() need not be written\", don't waste time on it. In the practical exam, also write the algorithm, comments in the code and the variable description, then test with the sample inputs given.",
+          },
+          {
+            type: "keypoints",
+            items: [
+              "Follow the specification exactly: names, return types and parameters.",
+              "Work on a copy of a data member if the method would otherwise destroy it.",
+              "Reuse methods: display() calls isHarshad(), which calls sumOfDigits().",
+              "A method can return a new object (Time add(Time t)).",
+              "Primitives are passed by value; for objects, the reference is copied, so the object can be changed.",
+            ],
+          },
+        ],
+        flashcards: [
+          { front: "Harshad (Niven) number", back: "A number divisible by the sum of its digits, e.g. 156 (sum 12, 156 = 12 × 13)." },
+          { front: "Why copy num before extracting digits?", back: "So that num keeps its value for the other methods that use it later." },
+          { front: "Pass by value", back: "The method receives a copy of a primitive argument; changes do not affect the caller's variable." },
+          { front: "Passing an object", back: "The reference is copied; the method can change the object's data members through it." },
+          { front: "Signature of a method that adds two Time objects", back: "Time add(Time t): uses this and t, returns a new Time object." },
+          { front: "Parts of an ISC practical answer", back: "Algorithm, program with comments, variable description and output for the sample inputs." },
+        ],
+        quiz: [
+          {
+            kind: "mcq",
+            q: "Which of these numbers is a Harshad number?",
+            options: ["111", "113", "115", "119"],
+            answer: 0,
+            explain: "111: digit sum 3, 111 = 3 × 37. 113 (sum 5), 115 (sum 7, 115 = 7 × 16 + 3) and 119 (sum 11, 119 = 11 × 10 + 9) are not.",
+          },
+          {
+            kind: "mcq",
+            q: "A specification says: \"Fraction sum(Fraction f): returns the sum of the current object and f\". The current object is referred to by:",
+            options: ["this", "f", "super", "new Fraction()"],
+            answer: 0,
+            explain: "this is the object on which sum() is called; f is the parameter.",
+          },
+          {
+            kind: "truefalse",
+            q: "A method whose return type is Time must end by returning a Time object (or null).",
+            answer: true,
+            explain: "Every path through the method must return a value of the declared type.",
+          },
+          {
+            kind: "numeric",
+            q: "What does sumOfDigits() return when num = 4096?",
+            answer: 19,
+            explain: "4 + 0 + 9 + 6 = 19.",
+          },
+          {
+            kind: "mcq",
+            q: "void twice(int x) { x = x * 2; } is called as twice(a) with a = 7. After the call, a is:",
+            options: ["7", "14", "0", "it depends on the class"],
+            answer: 0,
+            explain: "int is passed by value, so only the copy x is doubled.",
+          },
+          {
+            kind: "fill",
+            q: "To read an int from the keyboard in BlueJ, the program imports java.util.___ .",
+            answer: ["Scanner"],
+            explain: "Scanner sc = new Scanner(System.in); then sc.nextInt().",
+          },
+          {
+            kind: "mcq",
+            q: "In Time.add(), what object does the statement new Time(total / 60, total % 60) create for total = 125?",
+            options: ["2 h 5 min", "2 h 25 min", "1 h 65 min", "125 h 0 min"],
+            answer: 0,
+            explain: "125 / 60 = 2 (integer division) and 125 % 60 = 5.",
+          },
+        ],
+      },
+      {
+        slug: "c12-cs-classes-practice",
+        title: "Objects and Classes: Board Practice",
+        summary: "Output tracing with static and instance variables, overloaded methods and object parameters, short-answer questions, and a full class to write.",
+        minutes: 22,
+        xp: 55,
+        blocks: [
+          {
+            type: "text",
+            md: "Output questions on classes test three ideas: which variables are shared (static), what a method receives (a copy or a reference), and which overloaded method is chosen. Trace the program below on paper, one statement at a time, keeping a table of every variable.",
+          },
+          {
+            type: "code",
+            lang: "java",
+            caption: "Trace.java: predict the output before reading the trace",
+            code: `public class Trace
+{
+    int x;
+    static int y;
+
+    Trace(int a)
+    {
+        x = a;
+        y = y + a;
+    }
+
+    void change(int x)
+    {
+        x = x * 2;
+        y++;
+    }
+
+    void change(Trace t)
+    {
+        t.x = t.x * 2;
+    }
+
+    public static void main(String[] args)
+    {
+        Trace p = new Trace(3);
+        Trace q = new Trace(5);
+        p.change(p.x);
+        q.change(q);
+        System.out.println(p.x + " " + q.x + " " + Trace.y);
+    }
+}
+
+/* Output:
+3 10 9
+*/`,
+          },
+          {
+            type: "example",
+            title: "Tracing Trace.java",
+            problem: "Explain the output 3 10 9.",
+            steps: [
+              "new Trace(3): p.x = 3, y = 0 + 3 = 3. new Trace(5): q.x = 5, y = 3 + 5 = 8 (one shared y).",
+              "p.change(p.x) calls change(int): the parameter x (a copy, 3) **hides** the data member x. The copy becomes 6 and is thrown away; y becomes 9. p.x stays 3.",
+              "q.change(q) calls change(Trace): t refers to the same object as q, so q.x becomes 10.",
+              "The print statement gives p.x, q.x, y.",
+            ],
+            answer: "3 10 9",
+          },
+          {
+            type: "mistake",
+            wrong: "In change(int x), the statement x = x * 2 doubles the object's data member x.",
+            right: "Inside change(int x) the name x means the **parameter**, which hides the data member. To change the data member you would write this.x = x * 2.",
+            why: "The two variables have the same name, so they look like one. Java always picks the nearest (local) declaration first; this.x is needed to reach the instance variable.",
+          },
+          {
+            type: "checkpoint",
+            questions: [
+              {
+                kind: "mcq",
+                q: "If main also called p.change(p) before printing, the output would be:",
+                options: ["6 10 9", "3 10 9", "6 10 10", "6 20 9"],
+                answer: 0,
+                explain: "change(Trace) doubles p.x to 6 and does not touch y.",
+              },
+            ],
+          },
+          {
+            type: "heading",
+            text: "Write a class",
+          },
+          {
+            type: "text",
+            md: "**Question.** A class **Rational** stores a fraction in lowest terms. Data members: int **num**, int **den**. Methods: **Rational(int n, int d)**: stores n and d and reduces the fraction; int **gcd(int a, int b)**: returns the HCF of a and b; void **reduce()**: divides num and den by their HCF; Rational **multiply(Rational r)**: returns the product of the current fraction and r, in lowest terms; void **display()**: prints the fraction as num/den. Write main() to multiply 2/6 by 9/4.",
+          },
+          {
+            type: "code",
+            lang: "java",
+            caption: "Rational.java: a model answer",
+            code: `public class Rational
+{
+    int num, den;
+
+    Rational(int n, int d)
+    {
+        num = n;
+        den = d;
+        reduce();
+    }
+
+    int gcd(int a, int b)
+    {
+        while (b != 0)
+        {
+            int r = a % b;
+            a = b;
+            b = r;
+        }
+        return a;
+    }
+
+    void reduce()
+    {
+        int g = gcd(num, den);
+        num = num / g;
+        den = den / g;
+    }
+
+    Rational multiply(Rational r)
+    {
+        return new Rational(num * r.num, den * r.den);
+    }
+
+    void display()
+    {
+        System.out.println(num + "/" + den);
+    }
+
+    public static void main(String[] args)
+    {
+        Rational a = new Rational(2, 6);
+        Rational b = new Rational(9, 4);
+        a.display();
+        a.multiply(b).display();
+    }
+}
+
+/* Output:
+1/3
+3/4
+*/`,
+          },
+          {
+            type: "example",
+            title: "Checking the model answer",
+            problem: "Trace the creation of a and the call a.multiply(b).",
+            steps: [
+              "new Rational(2, 6): gcd(2, 6) → (6, 2) → (2, 0) → 2. num = 1, den = 3.",
+              "b = 9/4 is already in lowest terms (gcd = 1).",
+              "multiply: new Rational(1 × 9, 3 × 4) = new Rational(9, 12). gcd(9, 12) = 3, so 3/4.",
+              "a.multiply(b).display() calls display() on the returned object directly.",
+            ],
+            answer: "1/3, then 3/4",
+          },
+          {
+            type: "activity",
+            activity: {
+              kind: "reveal",
+              prompt: "What does gcd(48, 18) return in Rational?",
+              emoji: "➗",
+              options: ["6", "2", "18", "3"],
+              answer: 0,
+              trap: 1,
+              explain: "(48, 18) → (18, 12) → (12, 6) → (6, 0), so 6. The trap 2 comes from stopping at the first common factor found instead of finishing Euclid's steps.",
+            },
+          },
+          {
+            type: "callout",
+            tone: "exam",
+            title: "ISC board tip",
+            md: "In an output question, write a small table of variables as you go and show the final output in a box. When a print statement mixes numbers and strings, remember that + works left to right: 2 + 3 + \" \" gives \"5 \", but \" \" + 2 + 3 gives \" 23\".",
+          },
+          {
+            type: "keypoints",
+            items: [
+              "Static variables accumulate across all objects; trace one shared copy.",
+              "A parameter with the same name as a data member hides it; use this to reach the member.",
+              "Overloading is resolved by the argument types: change(int) vs change(Trace).",
+              "Passing an object lets the method change that object.",
+              "Calling a method on a returned object (a.multiply(b).display()) is allowed.",
+            ],
+          },
+        ],
+        flashcards: [
+          { front: "What does a parameter named like a data member do?", back: "It hides (shadows) the data member inside that method; this.name reaches the member." },
+          { front: "How does Java choose between overloaded methods?", back: "By the number and types of the arguments in the call (compile-time polymorphism)." },
+          { front: "Euclid's HCF step", back: "Replace (a, b) by (b, a % b) until b is 0; then a is the HCF." },
+          { front: "2 + 3 + \"A\" in Java", back: "\"5A\": the addition happens first, then joining with the string." },
+          { front: "\"A\" + 2 + 3 in Java", back: "\"A23\": once a String appears, + joins as text from left to right." },
+          { front: "Static variable after creating 3 objects whose constructor does y++", back: "3, because all objects share one y." },
+        ],
+        quiz: [
+          {
+            kind: "mcq",
+            q: "class N { int a = 2; static int b = 2; N() { a++; b++; } } After new N(); new N(); what are the last object's a and N.b?",
+            options: ["3 and 4", "4 and 4", "3 and 3", "4 and 3"],
+            answer: 0,
+            explain: "Each object starts with its own a = 2 and makes it 3; the shared b goes 2 → 3 → 4.",
+          },
+          {
+            kind: "mcq",
+            q: "What is printed by System.out.println(\"Sum=\" + 4 + 5);?",
+            options: ["Sum=45", "Sum=9", "Sum= 9", "Error"],
+            answer: 0,
+            explain: "\"Sum=\" + 4 gives \"Sum=4\", then + 5 gives \"Sum=45\".",
+          },
+          {
+            kind: "numeric",
+            q: "Rational r = new Rational(15, 35); what is r.den after the constructor runs?",
+            answer: 7,
+            explain: "gcd(15, 35) = 5, so 15/35 becomes 3/7.",
+          },
+          {
+            kind: "truefalse",
+            q: "The statement a.multiply(b).display(); creates a third Rational object.",
+            answer: true,
+            explain: "multiply() returns a new Rational object, which is displayed and then has no reference left.",
+          },
+          {
+            kind: "fill",
+            q: "Inside an instance method, the keyword ___ refers to the object that called the method.",
+            answer: ["this"],
+            explain: "this is the current object.",
+          },
+          {
+            kind: "mcq",
+            q: "void swap(Trace a, Trace b) { int t = a.x; a.x = b.x; b.x = t; } With p.x = 3 and q.x = 5, swap(p, q) makes:",
+            options: ["p.x = 5, q.x = 3", "no change", "p.x = 3, q.x = 3", "a compile error"],
+            answer: 0,
+            explain: "a and b refer to the original objects, so their data members really are swapped.",
+            difficulty: 2,
+          },
+          {
+            kind: "mcq",
+            q: "Which statement about Trace.y is correct?",
+            options: ["It can be read as Trace.y without any object", "Each object has its own y", "It cannot be changed by instance methods", "It must be private"],
+            answer: 0,
+            explain: "A static variable belongs to the class, so the class name is enough. Instance methods may change it, as change(int) does.",
+          },
+        ],
+      },
+    ],
+  },
 ];
 
 /** Chapter title ("11:" / "12:" + exact title) → topic slug(s) that teach it. */
 export const links: Record<string, string | string[]> = {
   "12:Boolean Algebra": "c12-cs-boolean-algebra",
   "12:Logic Circuits": "c12-cs-logic-circuits",
+  "12:Objects and Classes": "c12-cs-java-classes",
 };

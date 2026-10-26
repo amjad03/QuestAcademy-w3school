@@ -632,9 +632,628 @@ print()`,
   ],
 };
 
-export const topics: Topic[] = [flowOfControl];
+/* ------------------------------------------------------------------ */
+/* Strings                                                              */
+/* ------------------------------------------------------------------ */
+const strings: Topic = {
+  slug: "c11-cs-strings",
+  title: "Strings",
+  icon: "🔤",
+  description: "Strings as sequences of characters: indexing, slicing, immutability, operators, traversal, built-in string methods and the standard string programs.",
+  lessons: [
+    {
+      slug: "indexing-slicing",
+      title: "Strings: Indexing, Slicing and Operations",
+      summary: "What a string is, positive and negative indices, slicing with start, stop and step, immutability, concatenation, repetition, membership and traversal.",
+      minutes: 20,
+      xp: 50,
+      blocks: [
+        {
+          type: "illustration",
+          emoji: "🚃",
+          caption: "A train of coaches, each with a number painted on it. A string is a train of characters, and each character has a position number.",
+        },
+        {
+          type: "text",
+          md: "A **string** is a **sequence of characters** (letters, digits, spaces, symbols) written inside single quotes `'…'`, double quotes `\"…\"` or triple quotes `'''…'''` / `\"\"\"…\"\"\"`. Triple quotes allow a string to run over several lines. A string with no characters, `\"\"`, is the **empty string**.\n\nEach character has an **index** (position number). Counting from the left starts at **0**; counting from the right starts at **−1**. For a string of length n, valid indices run from 0 to n − 1 and from −1 to −n. Any other index gives an `IndexError`.",
+        },
+        {
+          type: "table",
+          headers: ["Character", "B", "e", "n", "g", "a", "l", "u", "r", "u"],
+          rows: [
+            ["Positive index", "0", "1", "2", "3", "4", "5", "6", "7", "8"],
+            ["Negative index", "−9", "−8", "−7", "−6", "−5", "−4", "−3", "−2", "−1"],
+          ],
+        },
+        {
+          type: "text",
+          md: "A **slice** `s[start:stop:step]` gives a new string from index `start` up to **but not including** `stop`. Leave out `start` to begin at the start, leave out `stop` to go to the end. A `step` of 2 takes every second character; a step of −1 walks backwards, so `s[::-1]` is the reversed string. A slice never gives an IndexError: an out-of-range stop is simply cut to the end, and a slice that selects nothing gives `\"\"`.",
+        },
+        {
+          type: "code",
+          lang: "python",
+          runnable: true,
+          caption: "Indexing and slicing. Compare each line of output with the table above.",
+          code: r`s = "Bengaluru"
+print(s[0], s[4], s[-1], s[-3], len(s))   # B a u u 9
+print(s[2:6])     # ngal
+print(s[:4])      # Beng
+print(s[5:])      # luru
+print(s[::2])     # Bnauu
+print(s[::-1])    # urulagneB
+print(s[-4:-1])   # lur
+print(s[6:2])     # empty string: start is past stop
+print(s[1:100])   # engaluru (stop is cut to the end)`,
+        },
+        {
+          type: "example",
+          title: "Slicing by hand",
+          problem: "For `city = \"Bengaluru\"`, find `city[1:8:3]` and `city[-2:-7:-2]`.",
+          steps: [
+            "`city[1:8:3]`: indices 1, 4, 7 (stop 8 excluded) → e, a, r.",
+            "`city[-2:-7:-2]`: start at −2 and step back by 2: indices −2, −4, −6 (stop −7 excluded).",
+            "Index −2 is r, −4 is l, −6 is g.",
+          ],
+          answer: "`city[1:8:3]` is `\"ear\"` and `city[-2:-7:-2]` is `\"rlg\"`.",
+        },
+        {
+          type: "heading",
+          text: "Strings are immutable",
+        },
+        {
+          type: "text",
+          md: "Strings are **immutable**: once made, their characters cannot be changed. `s[0] = \"b\"` raises `TypeError: 'str' object does not support item assignment`. To \"change\" a string you build a **new** one, for example `s = \"b\" + s[1:]`, and point the name at it.",
+        },
+        {
+          type: "mistake",
+          wrong: "`name = \"ravi\"` then `name[0] = \"R\"` changes the name to Ravi.",
+          right: "It raises TypeError. Make a new string instead: `name = \"R\" + name[1:]` or `name = name.capitalize()`.",
+          why: "Lists allow item assignment, so learners expect the same of strings. Strings are immutable; every string method returns a new string and leaves the original as it was.",
+        },
+        {
+          type: "table",
+          headers: ["Operator", "Meaning", "Example → result"],
+          rows: [
+            ["`+`", "**Concatenation** (join two strings)", "`\"Py\" + \"thon\"` → `\"Python\"`"],
+            ["`*`", "**Repetition** (string × integer)", "`\"ha\" * 3` → `\"hahaha\"`"],
+            ["`in`", "**Membership**: is it a substring?", "`\"ga\" in \"Bengaluru\"` → True"],
+            ["`not in`", "The opposite of in", "`\"G\" not in \"Bengaluru\"` → True (case matters)"],
+            ["`==`, `<`, `>`", "Comparison, character by character by Unicode value", "`\"apple\" < \"banana\"` → True"],
+          ],
+        },
+        {
+          type: "checkpoint",
+          questions: [
+            {
+              kind: "mcq",
+              q: "What is `\"5\" + \"3\"`?",
+              options: ["8", "\"53\"", "\"8\"", "Error"],
+              answer: 1,
+              explain: "Both are strings, so + joins them. `\"5\" + 3` (string + int) would be a TypeError.",
+            },
+          ],
+        },
+        {
+          type: "text",
+          md: "**Traversing** a string means visiting every character one by one. Either loop over the characters directly (`for ch in s:`), or loop over the indices (`for i in range(len(s)):`) when you also need the position.",
+        },
+        {
+          type: "code",
+          lang: "python",
+          runnable: true,
+          caption: "Two ways to traverse. First line: N-A-M-A-S-T-E-",
+          code: r`t = "NAMASTE"
+for ch in t:
+    print(ch, end="-")
+print()
+for i in range(len(t)):
+    if t[i] == "A":
+        print("A found at index", i)`,
+        },
+        {
+          type: "activity",
+          activity: {
+            kind: "match",
+            prompt: "s = \"PYTHON\". Match each expression to its value.",
+            pairs: [
+              ["s[1]", "Y"],
+              ["s[-2]", "O"],
+              ["s[1:4]", "YTH"],
+              ["s[::-2]", "NHY"],
+              ["s[4:]", "ON"],
+            ],
+            explain: "Positive indices start at 0 from the left, negative at −1 from the right; the stop index is always left out. s[::-2] takes N, H, Y from the right.",
+          },
+        },
+        {
+          type: "callout",
+          tone: "exam",
+          title: "Board tip",
+          md: "For slicing questions, write the indices under the string first (both rows if negatives appear). State `\"\"` (empty string) clearly when a slice selects nothing; examiners expect it. Remember `len()` counts spaces too.",
+        },
+        {
+          type: "keypoints",
+          items: [
+            "A string is an immutable sequence of characters.",
+            "Indices go 0 to n − 1 from the left and −1 to −n from the right.",
+            "`s[start:stop:step]` excludes stop; `s[::-1]` reverses.",
+            "Out-of-range index → IndexError; out-of-range slice → no error.",
+            "`+` joins, `*` repeats, `in` tests for a substring.",
+          ],
+        },
+      ],
+      flashcards: [
+        { front: "String", back: "An immutable sequence of characters enclosed in single, double or triple quotes." },
+        { front: "Index of the last character", back: "`len(s) - 1`, or simply `-1`." },
+        { front: "`s[::-1]`", back: "The string reversed." },
+        { front: "Immutable", back: "Cannot be changed in place. `s[0] = 'x'` gives TypeError for a string." },
+        { front: "`\"ab\" * 3`", back: "`\"ababab\"` (repetition)" },
+        { front: "`s[10]` on a 5-character string", back: "IndexError: string index out of range." },
+        { front: "`s[2:100]` on a 5-character string", back: "No error: characters from index 2 to the end." },
+        { front: "Two ways to traverse", back: "`for ch in s:` (characters) or `for i in range(len(s)):` (indices)." },
+      ],
+      quiz: [
+        {
+          kind: "mcq",
+          q: "`s = \"Computer\"`. What is `s[-3:]`?",
+          options: ["\"ter\"", "\"Com\"", "\"te\"", "\"ret\""],
+          answer: 0,
+          explain: "From index −3 (t) to the end: \"ter\".",
+        },
+        {
+          kind: "mcq",
+          q: "`s = \"Computer\"`. What is `s[1:6:2]`?",
+          options: ["\"opt\"", "\"oput\"", "\"mue\"", "\"out\""],
+          answer: 0,
+          explain: "Indices 1, 3, 5 → o, p, t.",
+          difficulty: 2,
+        },
+        {
+          kind: "truefalse",
+          q: "`len(\"Hi there\")` is 7.",
+          answer: false,
+          explain: "The space is a character too: H, i, space, t, h, e, r, e = 8.",
+        },
+        {
+          kind: "mcq",
+          q: "What happens on `s = \"abc\"; s[1] = \"x\"`?",
+          options: ["s becomes \"axc\"", "TypeError", "IndexError", "s becomes \"x\""],
+          answer: 1,
+          explain: "Strings are immutable, so item assignment is a TypeError.",
+        },
+        {
+          kind: "fill",
+          q: "`\"In\" ___ \"India\"` gives True. (Fill the operator.)",
+          answer: ["in"],
+          explain: "The membership operator `in` checks for a substring.",
+        },
+        {
+          kind: "mcq",
+          q: "Which expression gives `\"-----\"`?",
+          options: ["`\"-\" + 5`", "`\"-\" * 5`", "`5 + \"-\"`", "`\"-\" ** 5`"],
+          answer: 1,
+          explain: "String × integer repeats the string. Adding a string and an integer is a TypeError.",
+        },
+        {
+          kind: "mcq",
+          q: "Which is True?",
+          options: ["`\"Zebra\" < \"apple\"`", "`\"apple\" > \"banana\"`", "`\"cat\" == \"Cat\"`", "`\"10\" > \"9\"`"],
+          answer: 0,
+          explain: "Strings compare by character codes: \"Z\" is 90 and \"a\" is 97, so \"Zebra\" < \"apple\". \"10\" > \"9\" is False because \"1\" < \"9\".",
+          difficulty: 3,
+          hint: "All uppercase letters have smaller codes than lowercase ones.",
+        },
+      ],
+    },
+    {
+      slug: "string-methods",
+      title: "String Methods and String Programs",
+      summary: "Built-in functions and methods: len, upper, lower, title, capitalize, count, find, index, startswith, endswith, the is… tests, strip, replace, split, join and partition, with standard programs.",
+      minutes: 25,
+      xp: 55,
+      blocks: [
+        {
+          type: "illustration",
+          emoji: "🧰",
+          caption: "A toolbox where every tool does one job on a string: change case, search, test, trim, split and join.",
+        },
+        {
+          type: "text",
+          md: "A **method** is a function attached to a value and called with a dot: `s.upper()`. `len(s)` is a **built-in function**, not a method. Because strings are immutable, every method that \"changes\" a string **returns a new string**; the original is untouched. To keep the result, assign it: `s = s.upper()`.",
+        },
+        {
+          type: "table",
+          headers: ["Method", "What it returns", "Example with w = \"data science is fun\""],
+          rows: [
+            ["`upper()` / `lower()`", "All capitals / all small letters", "`w.upper()` → DATA SCIENCE IS FUN"],
+            ["`title()`", "First letter of each word capital", "Data Science Is Fun"],
+            ["`capitalize()`", "First letter of the string capital, rest small", "Data science is fun"],
+            ["`count(sub)`", "Number of non-overlapping occurrences", "`w.count(\"a\")` → 2"],
+            ["`find(sub)`", "Lowest index of sub, or −1 if absent", "`w.find(\"sci\")` → 5; `w.find(\"z\")` → −1"],
+            ["`index(sub)`", "Like find, but ValueError if absent", "`w.index(\"is\")` → 13"],
+            ["`startswith(x)` / `endswith(x)`", "True / False", "`\"lab.py\".endswith(\".py\")` → True"],
+            ["`replace(old, new)`", "Every old replaced by new", "`w.replace(\"fun\", \"great\")`"],
+          ],
+        },
+        {
+          type: "table",
+          headers: ["Method", "Gives True when…", "Example"],
+          rows: [
+            ["`isalnum()`", "all characters are letters or digits (and the string is not empty)", "`\"abc123\".isalnum()` → True"],
+            ["`isalpha()` / `isdigit()`", "all letters / all digits", "`\"123\".isdigit()` → True"],
+            ["`islower()` / `isupper()`", "all cased letters are small / capital", "`\"HELLO\".isupper()` → True"],
+            ["`isspace()`", "only whitespace", "`\"   \".isspace()` → True"],
+            ["`istitle()`", "the string is in title case", "`\"Hello World\".istitle()` → True"],
+          ],
+        },
+        {
+          type: "code",
+          lang: "python",
+          runnable: true,
+          caption: "Trimming, splitting and joining. The | marks show where each string ends.",
+          code: r`st = "  Quest Academy, Mysuru  "
+print(st.strip() + "|")      # spaces removed from both ends
+print(st.lstrip() + "|")     # left end only
+print(st.rstrip() + "|")     # right end only
+
+w = "data science is fun"
+print(w.split())                    # ['data', 'science', 'is', 'fun']
+print("a,b,,c".split(","))          # ['a', 'b', '', 'c']
+print("-".join(["2024", "08", "15"]))   # 2024-08-15
+print(w.partition(" is "))          # ('data science', ' is ', 'fun')`,
+        },
+        {
+          type: "text",
+          md: "`split(sep)` breaks a string into a **list** of parts at each `sep`; with no argument it splits on any run of whitespace. `sep.join(list)` does the reverse: it glues the strings of a list with `sep` between them. `partition(sep)` splits at the **first** `sep` only and always returns a **tuple of three**: the part before, the separator, and the part after.",
+        },
+        {
+          type: "mistake",
+          wrong: "After `s = \"hello\"` and `s.upper()`, printing s shows HELLO.",
+          right: "s is still \"hello\". Write `s = s.upper()` (or `print(s.upper())`) to use the new string.",
+          why: "`upper()` returns a new string because the original cannot be changed. If the result is not stored, it is lost at once.",
+        },
+        {
+          type: "example",
+          title: "Count vowels",
+          problem: "Write a program to count the vowels in `line = \"Karnataka is in India\"`.",
+          steps: [
+            "Start a counter `v = 0`.",
+            "Traverse: `for ch in line:`.",
+            "`if ch.lower() in \"aeiou\":` add 1. Using `lower()` makes capital I count too.",
+            "Count: Karnataka has 4 a's, is 1, in 1, India 3 (I, i, a).",
+          ],
+          answer: "`v = 0` / `for ch in line:` / `    if ch.lower() in \"aeiou\": v += 1` / `print(v)` prints **9**.",
+        },
+        {
+          type: "checkpoint",
+          questions: [
+            {
+              kind: "mcq",
+              q: "What is `\"banana\".find(\"a\", 2)`?",
+              options: ["1", "3", "2", "−1"],
+              answer: 1,
+              explain: "The search starts at index 2 (the n). The next \"a\" is at index 3.",
+              difficulty: 2,
+            },
+          ],
+        },
+        {
+          type: "code",
+          lang: "python",
+          runnable: true,
+          caption: "Palindrome string and word statistics. Prints True, then 5 words, 4 capitals.",
+          code: r`word = "Malayalam"
+w = word.lower()
+print(w == w[::-1])          # palindrome check, ignoring case
+
+text = "Python Is Easy To learn"
+print(len(text.split()), "words")
+caps = 0
+for ch in text:
+    if ch.isupper():
+        caps += 1
+print(caps, "capitals")`,
+        },
+        {
+          type: "activity",
+          activity: {
+            kind: "sort",
+            prompt: "Does the method return a string, a number or True/False?",
+            groups: ["String", "Number", "True / False"],
+            items: [
+              { text: "s.title()", group: 0, hint: "It returns the text in a new case." },
+              { text: "s.find(\"x\")", group: 1, hint: "It returns a position, or −1." },
+              { text: "s.isdigit()", group: 2, hint: "All is… methods answer yes or no." },
+              { text: "s.count(\"a\")", group: 1, hint: "It counts occurrences." },
+              { text: "s.replace(\"a\", \"b\")", group: 0, hint: "A new string with replacements." },
+              { text: "s.endswith(\".py\")", group: 2, hint: "It tests the end of the string." },
+              { text: "len(s)", group: 1, hint: "The number of characters." },
+            ],
+            explain: "Case and editing methods return new strings; find, index, count and len return integers; is…, startswith and endswith return Booleans.",
+          },
+        },
+        {
+          type: "callout",
+          tone: "exam",
+          title: "Board tip",
+          md: "\"Differentiate find() and index()\" is a favourite: both give the first position, but for a missing substring find() returns −1 and index() raises ValueError. Also know split() (returns a list) versus partition() (returns a 3-tuple), and that `title()` and `capitalize()` differ for strings of several words.",
+        },
+        {
+          type: "keypoints",
+          items: [
+            "String methods return new values; the original string never changes.",
+            "find() gives −1 when absent; index() raises ValueError.",
+            "split() gives a list; join() makes one string from a list of strings.",
+            "partition() always returns 3 parts in a tuple.",
+            "is… methods return True/False and are false for the empty string.",
+          ],
+        },
+      ],
+      flashcards: [
+        { front: "`title()` vs `capitalize()`", back: "title: first letter of every word capital. capitalize: only the first letter of the whole string capital, the rest small." },
+        { front: "`find()` vs `index()` when not found", back: "find returns −1; index raises ValueError." },
+        { front: "`\"a b  c\".split()`", back: "`['a', 'b', 'c']` (any run of spaces is one separator)." },
+        { front: "`\"-\".join([\"x\", \"y\", \"z\"])`", back: "`\"x-y-z\"`" },
+        { front: "`partition(sep)`", back: "Splits at the first sep and returns a 3-tuple (before, sep, after)." },
+        { front: "`strip()`, `lstrip()`, `rstrip()`", back: "Remove whitespace from both ends, the left end, the right end." },
+        { front: "`isalnum()`", back: "True if every character is a letter or a digit and the string is not empty. A space makes it False." },
+        { front: "`swapcase()`", back: "Capitals become small and small become capitals: \"Hello\" → \"hELLO\"." },
+      ],
+      quiz: [
+        {
+          kind: "mcq",
+          q: "What is `\"hello world\".title()`?",
+          options: ["\"Hello world\"", "\"Hello World\"", "\"HELLO WORLD\"", "\"hello World\""],
+          answer: 1,
+          explain: "title() capitalises the first letter of every word. \"Hello world\" is what capitalize() gives.",
+        },
+        {
+          kind: "numeric",
+          q: "What is `\"mississippi\".count(\"ss\")`?",
+          answer: 2,
+          explain: "\"ss\" occurs at indices 2 and 5.",
+        },
+        {
+          kind: "mcq",
+          q: "What does `\"2024-08-15\".split(\"-\")` return?",
+          options: ["`['2024', '08', '15']`", "`('2024', '-', '08-15')`", "`[2024, 8, 15]`", "`'2024 08 15'`"],
+          answer: 0,
+          explain: "split returns a list of strings. The tuple is what partition(\"-\") would give.",
+        },
+        {
+          kind: "truefalse",
+          q: "`\"Class 11\".isalnum()` is True.",
+          answer: false,
+          explain: "The space is neither a letter nor a digit, so isalnum() is False.",
+          difficulty: 2,
+        },
+        {
+          kind: "mcq",
+          q: "`s = \"Mysuru\"`. What does `s.index(\"z\")` do?",
+          options: ["Returns −1", "Returns 0", "Raises ValueError", "Returns None"],
+          answer: 2,
+          explain: "index() raises ValueError when the substring is missing; find() would return −1.",
+        },
+        {
+          kind: "fill",
+          q: "`\"   hi   \".___()` returns `\"hi   \"` (spaces removed on the left only).",
+          answer: ["lstrip"],
+          explain: "lstrip() removes leading (left-side) whitespace.",
+        },
+        {
+          kind: "mcq",
+          q: "What is printed? `s = \"good\"` / `s.upper()` / `print(s + \"!\")`",
+          options: ["GOOD!", "good!", "Good!", "Error"],
+          answer: 1,
+          explain: "The result of upper() was not stored, so s is still \"good\".",
+          difficulty: 2,
+        },
+        {
+          kind: "mcq",
+          q: "What is `\"a\" + \"-\".join(\"bcd\")`?",
+          options: ["\"ab-c-d\"", "\"a-b-c-d\"", "\"abcd-\"", "Error"],
+          answer: 0,
+          explain: "A string is a sequence, so join puts \"-\" between b, c and d: \"b-c-d\". Adding \"a\" in front gives \"ab-c-d\".",
+          difficulty: 3,
+        },
+      ],
+    },
+    {
+      slug: "board-practice",
+      title: "Board practice: Strings",
+      summary: "Mixed board-style questions on strings: slicing outputs, method outputs, error spotting and short string-processing programs.",
+      minutes: 20,
+      xp: 50,
+      blocks: [
+        {
+          type: "text",
+          md: "Board papers love string output questions because one small detail (an excluded stop index, a missed space, an unstored result) changes the answer. Work slowly and write indices.",
+        },
+        {
+          type: "example",
+          title: "Output question (3 marks)",
+          problem: "Find the output:\n\n`s = \"ExAm@2025\"` · `new = \"\"` · `for ch in s:` · `if ch.isupper(): new += ch.lower()` · `elif ch.islower(): new += ch.upper()` · `elif ch.isdigit(): new += \"#\"` · `else: new += \"*\"` · `print(new)`",
+          steps: [
+            "E (upper) → e; x (lower) → X; A → a; m → M.",
+            "@ is neither letter nor digit → *.",
+            "2, 0, 2, 5 are digits → # # # #.",
+          ],
+          answer: "Output: `eXaM*####`",
+        },
+        {
+          type: "code",
+          lang: "python",
+          runnable: true,
+          caption: "Check the worked example. Prints: eXaM*####",
+          code: r`s = "ExAm@2025"
+new = ""
+for ch in s:
+    if ch.isupper():
+        new += ch.lower()
+    elif ch.islower():
+        new += ch.upper()
+    elif ch.isdigit():
+        new += "#"
+    else:
+        new += "*"
+print(new)`,
+        },
+        {
+          type: "example",
+          title: "Program: longest word (3 marks)",
+          problem: "Write a program that prints the longest word in a sentence (the first one if there is a tie).",
+          steps: [
+            "Break the sentence into words with `split()`.",
+            "Keep `longest = \"\"`; for each word, if `len(word) > len(longest)`, store it.",
+            "Using `>` (not `>=`) keeps the first of equal-length words.",
+          ],
+          answer: "See the program below. For \"India won the cricket world cup\" it prints: cricket",
+        },
+        {
+          type: "code",
+          lang: "python",
+          runnable: true,
+          caption: "Prints: cricket",
+          code: r`sentence = "India won the cricket world cup"
+longest = ""
+for word in sentence.split():
+    if len(word) > len(longest):
+        longest = word
+print(longest)`,
+        },
+        {
+          type: "mistake",
+          wrong: "To count words, I count the spaces: `sentence.count(\" \")`.",
+          right: "Use `len(sentence.split())`. Counting spaces gives one less than the number of words, and goes wrong with double spaces or leading spaces.",
+          why: "Spaces sit between words, so n words have n − 1 single spaces. split() with no argument ignores extra spaces and gives the words themselves.",
+        },
+        {
+          type: "checkpoint",
+          questions: [
+            {
+              kind: "mcq",
+              q: "What is printed? `s = \"PYTHON\"` / `print(s[1:5:2] + s[-1])`",
+              options: ["\"YHN\"", "\"YTN\"", "\"YHO\"", "\"PTN\""],
+              answer: 0,
+              explain: "s[1:5:2] takes indices 1 and 3 → Y, H. s[-1] is N. Joined: YHN.",
+            },
+            {
+              kind: "mcq",
+              q: "What is `\"Hello\"[-1:-6:-1]`?",
+              options: ["\"olleH\"", "\"olle\"", "\"\"", "\"H\""],
+              answer: 0,
+              explain: "Start at −1 (o) and step back to −5 (H); −6 is the excluded stop. The whole string reversed.",
+              difficulty: 2,
+            },
+          ],
+        },
+        {
+          type: "activity",
+          activity: {
+            kind: "reveal",
+            prompt: "x = \"ab\" * 2 + \"c\". What is len(x)?",
+            emoji: "📏",
+            options: ["5", "6", "3"],
+            answer: 0,
+            trap: 1,
+            explain: "* is done before +, as in arithmetic: \"ab\" * 2 is \"abab\" (4 characters), and adding \"c\" makes 5. The answer 6 comes from counting \"ab\" three times.",
+          },
+        },
+        {
+          type: "table",
+          headers: ["Common program", "Key idea"],
+          rows: [
+            ["Count vowels / digits / capitals", "Traverse and test each character with `in \"aeiou\"`, `isdigit()`, `isupper()`."],
+            ["Palindrome string", "`s == s[::-1]` (lower() first to ignore case)."],
+            ["Replace vowels with *", "Build a new string; strings are immutable."],
+            ["Count words / longest word", "`split()` then loop over the list."],
+            ["Frequency of one character", "`s.count(ch)` or a counter in a loop."],
+          ],
+        },
+        {
+          type: "callout",
+          tone: "exam",
+          title: "Board tip",
+          md: "When a string is built inside a loop (`new += …`), the output is printed once at the end unless the print is indented inside the loop. Check the indentation of the print statement before you write the output.",
+        },
+        {
+          type: "keypoints",
+          items: [
+            "Write index numbers under the string before slicing.",
+            "Build a new string with `+=` to \"change\" a string.",
+            "`len(s.split())` counts words correctly.",
+            "Check whether print is inside or outside the loop.",
+          ],
+        },
+      ],
+      flashcards: [
+        { front: "Swap case of every letter (method)", back: "`s.swapcase()`, or test isupper()/islower() in a loop and build a new string." },
+        { front: "Count words in a sentence", back: "`len(sentence.split())`" },
+        { front: "Palindrome string test (ignore case)", back: "`s.lower() == s.lower()[::-1]`" },
+        { front: "Is `\"\"` (empty) alnum?", back: "No: `\"\".isalnum()` is False." },
+        { front: "Precedence of * and + on strings", back: "Same as numbers: repetition (*) before concatenation (+)." },
+        { front: "Replace all spaces with underscores", back: "`s.replace(\" \", \"_\")`" },
+      ],
+      quiz: [
+        {
+          kind: "mcq",
+          q: "What is the output? `s = \"KARNATAKA\"` / `print(s.count(\"A\"), s.find(\"A\"), s.rfind(\"A\"))`",
+          options: ["4 1 8", "4 1 7", "3 1 8", "4 0 8"],
+          answer: 0,
+          explain: "A appears at indices 1, 5, 7 and 8: count 4, first at 1, last (rfind) at 8.",
+          difficulty: 2,
+        },
+        {
+          kind: "mcq",
+          q: "What is printed? `t = \"cbse\"` / `for i in range(len(t)): print(t[i].upper() * i, end=\"\")`",
+          options: ["BSSEEE", "CBBSSSEEEE", "BBSSSEEE", "CBSE"],
+          answer: 0,
+          explain: "i = 0: \"C\" × 0 = \"\"; i = 1: \"B\"; i = 2: \"SS\"; i = 3: \"EEE\". Joined: BSSEEE.",
+          difficulty: 3,
+          hint: "Anything × 0 is the empty string.",
+        },
+        {
+          kind: "truefalse",
+          q: "`\"Python\"[6]` raises IndexError but `\"Python\"[6:]` gives an empty string.",
+          answer: true,
+          explain: "Indexing past the end is an error; slicing past the end just selects nothing.",
+        },
+        {
+          kind: "fill",
+          q: "To check whether every character of `pin` is a digit, use `pin.___()`.",
+          answer: ["isdigit", "isnumeric", "isdecimal"],
+          explain: "isdigit() returns True only if the string is non-empty and all characters are digits.",
+        },
+        {
+          kind: "mcq",
+          q: "Which line removes the error in `msg = \"Marks: \" + 95`?",
+          options: ["`msg = \"Marks: \" + str(95)`", "`msg = \"Marks: \" + int(95)`", "`msg = \"Marks: \" * 95`", "`msg = str(\"Marks: \" + 95)`"],
+          answer: 0,
+          explain: "A string can only be joined to a string, so convert the number with str() first.",
+        },
+        {
+          kind: "numeric",
+          q: "How many characters are in `\"Go\" * 3 + \"!\" * 2`?",
+          answer: 8,
+          explain: "\"GoGoGo\" has 6 characters and \"!!\" has 2: 8 in all.",
+        },
+        {
+          kind: "multi",
+          q: "Which expressions give `\"abc\"` when `s = \"xabcx\"`?",
+          options: ["`s[1:4]`", "`s.strip(\"x\")`", "`s[-4:-1]`", "`s[1:-1]`"],
+          answers: [0, 1, 2, 3],
+          explain: "All four work: slices 1–3 (as 1:4, −4:−1 or 1:−1), and strip(\"x\") removes x from both ends.",
+          difficulty: 2,
+        },
+      ],
+    },
+  ],
+};
+
+export const topics: Topic[] = [flowOfControl, strings];
 
 /** Chapter title ("11:" / "12:" + exact title) → topic slug(s) that teach it. */
 export const links: Record<string, string | string[]> = {
   "11:Flow of Control": "c11-cs-flow-of-control",
+  "11:Strings": "c11-cs-strings",
 };

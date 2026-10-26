@@ -1347,10 +1347,553 @@ export const topics: Topic[] = [
       },
     ],
   },
+  /* ------------------------------------------------------------------ */
+  /* Transistor Biasing                                                  */
+  /* ------------------------------------------------------------------ */
+  {
+    slug: "c11-ele-biasing",
+    title: "Transistor Biasing",
+    icon: "🎚️",
+    description: "Why a transistor needs biasing, the DC load line and operating point, thermal runaway and the stability factor, and the fixed, collector-to-base and voltage divider bias circuits.",
+    lessons: [
+      {
+        slug: "c11-ele-load-line-q-point",
+        title: "DC Load Line, Q-Point and Fixed Bias",
+        summary: "What biasing means, faithful amplification, drawing the DC load line, choosing the operating point, thermal runaway, the stability factor and the fixed bias circuit.",
+        minutes: 22,
+        xp: 55,
+        blocks: [
+          {
+            type: "illustration",
+            emoji: "🎯",
+            caption: "Before a transistor can amplify, it must be parked at the right spot on its characteristics, ready to swing both ways.",
+          },
+          {
+            type: "text",
+            md: "**Biasing** means applying steady DC voltages to a transistor so that, with no signal, it rests at a chosen collector current and collector-emitter voltage. This resting point is the **operating point** or **quiescent point (Q-point)**, written $(V_{CE}, I_C)$.\n\nFor **faithful amplification** (output an enlarged copy of the input) the transistor must stay in the **active region** for the whole signal cycle. So we need: a proper zero-signal collector current, the emitter-base junction forward biased at every instant, and $V_{CE}$ never falling too low (about 1 V for Si, 0.5 V for Ge), so that the collector-base junction stays reverse biased.",
+          },
+          {
+            type: "heading",
+            text: "The DC load line",
+          },
+          {
+            type: "text",
+            md: t`In a CE circuit with collector resistor $R_C$ and supply $V_{CC}$, Kirchhoff's voltage law around the output loop gives $V_{CE} = V_{CC} - I_C R_C$. This is a straight line on the output characteristics, called the **DC load line**. Every possible operating point lies on it. Its two end points are easy to find.\n\nPutting $I_C = 0$ gives $V_{CE} = V_{CC}$ (the **cut-off** point on the $V_{CE}$ axis).\n\nPutting $V_{CE} = 0$ gives $I_{C(sat)} = V_{CC}/R_C$ (the **saturation** point on the $I_C$ axis).\n\nThe slope is $-1/R_C$. The Q-point is where the load line meets the output curve for the chosen base current.`,
+          },
+          {
+            type: "formula",
+            tex: t`V_{CE} = V_{CC} - I_C R_C, \qquad I_{C(sat)} = \frac{V_{CC}}{R_C}, \qquad V_{CE(cut\text{-}off)} = V_{CC}`,
+          },
+          {
+            type: "text",
+            md: "**Where to put the Q-point.** For the largest undistorted output, place it near the **middle** of the load line. If it is too close to saturation, the output is clipped in the half cycle that drives the transistor further on; if it is too close to cut-off, the other half cycle is clipped.",
+          },
+          {
+            type: "heading",
+            text: "Fixed bias (base resistor bias)",
+          },
+          {
+            type: "text",
+            md: t`A single resistor $R_B$ from $V_{CC}$ to the base sets the base current. Around the base loop: $V_{CC} = I_B R_B + V_{BE}$, so $I_B = \dfrac{V_{CC} - V_{BE}}{R_B}$. Then $I_C = \beta I_B$ and $V_{CE} = V_{CC} - I_C R_C$. The circuit is simple, but $I_C$ depends directly on $\beta$, which varies from one transistor to another and with temperature.`,
+          },
+          {
+            type: "example",
+            title: "Fixed bias and its load line",
+            problem: "A silicon transistor with β = 100 is used in fixed bias with V_CC = 12 V, R_B = 565 kΩ and R_C = 3 kΩ. Find the Q-point and the end points of the DC load line. What happens to the Q-point if the transistor is replaced by one with β = 150?",
+            steps: [
+              t`$I_B = \dfrac{12 - 0.7}{565 \times 10^3} = \dfrac{11.3}{565\,000} = 20\ \mu$A.`,
+              t`$I_C = \beta I_B = 100 \times 20\ \mu\text{A} = 2$ mA; $V_{CE} = 12 - 2 \times 10^{-3} \times 3000 = 6$ V.`,
+              t`Load line end points: $V_{CE} = 12$ V (with $I_C = 0$) and $I_{C(sat)} = 12/3000 = 4$ mA (with $V_{CE} = 0$). The Q-point (6 V, 2 mA) is exactly at the middle.`,
+              t`With $\beta = 150$: $I_C = 3$ mA and $V_{CE} = 12 - 9 = 3$ V. The Q-point slides towards saturation.`,
+            ],
+            answer: "Q-point (6 V, 2 mA); load line from (12 V, 0) to (0, 4 mA). With β = 150 it moves to (3 V, 3 mA): fixed bias is not stable.",
+          },
+          {
+            type: "checkpoint",
+            questions: [
+              {
+                kind: "numeric",
+                q: "A CE circuit has V_CC = 9 V and R_C = 1.5 kΩ. Find I_C(sat) for the DC load line, in mA.",
+                answer: 6,
+                unit: "mA",
+                explain: t`$I_{C(sat)} = V_{CC}/R_C = 9/1500 = 6$ mA.`,
+              },
+            ],
+          },
+          {
+            type: "heading",
+            text: "Thermal runaway and the stability factor",
+          },
+          {
+            type: "text",
+            md: t`The Q-point drifts mainly because of temperature. A rise in temperature increases $I_{CBO}$ (it roughly doubles every 10 °C), and $\beta$ and $V_{BE}$ change too. More $I_{CBO}$ means more $I_C$, more power $V_{CE} I_C$ dissipated at the collector junction, a higher temperature, and so even more $I_{CBO}$. If nothing stops this cycle the transistor burns out. This is **thermal runaway**.\n\nThe **stability factor** measures how much $I_C$ changes with leakage: $S = \dfrac{\Delta I_C}{\Delta I_{CBO}}$ (with $\beta$ and $V_{BE}$ held constant). The ideal value is $S = 1$; the lower $S$, the more stable the circuit. For fixed bias, $S = 1 + \beta$, which is very poor.`,
+          },
+          {
+            type: "mistake",
+            wrong: "Thermal runaway can be stopped simply by choosing a transistor with a higher β.",
+            right: "A higher β makes fixed bias worse, because S = 1 + β grows. Runaway is prevented by a stabilised bias circuit (negative feedback), a low S, and a heat sink.",
+            why: "In fixed bias, any rise in leakage is multiplied by (1 + β) in the collector current. Stabilised circuits feed back a change in I_C to reduce I_B automatically.",
+          },
+          {
+            type: "activity",
+            activity: {
+              kind: "order",
+              prompt: "Put the steps of thermal runaway in order.",
+              items: ["Temperature of the junction rises", "Leakage current I_CBO increases", "Collector current I_C increases", "Power dissipated at the collector rises", "Temperature rises further"],
+              explain: "Each step feeds the next, so the cycle can run away until the transistor is destroyed. A stable bias circuit breaks the link between I_CBO and I_C.",
+            },
+          },
+          {
+            type: "callout",
+            tone: "exam",
+            title: "Board tip",
+            md: "When you draw the DC load line, mark both intercepts with their values (V_CC on the V_CE axis, V_CC/R_C on the I_C axis), mark the Q-point with its coordinates, and label the saturation and cut-off regions. Without the values the graph gets half marks.",
+          },
+          {
+            type: "keypoints",
+            items: [
+              "Biasing sets a stable Q-point (V_CE, I_C) in the active region for faithful amplification.",
+              "DC load line: V_CE = V_CC − I_C R_C, from (V_CC, 0) to (0, V_CC/R_C).",
+              "A mid-point Q-point gives the largest undistorted swing.",
+              "Fixed bias: I_B = (V_CC − V_BE)/R_B; simple but S = 1 + β, so it is unstable.",
+              "Thermal runaway: rising temperature → more leakage → more I_C → more heat.",
+            ],
+          },
+        ],
+        flashcards: [
+          { front: "Biasing", back: "Applying DC voltages to a transistor to set a fixed operating point with no signal." },
+          { front: "Q-point", back: "The zero-signal values of V_CE and I_C; the point where the DC load line meets the output curve for the bias current." },
+          { front: "Equation of the DC load line", back: "V_CE = V_CC − I_C R_C." },
+          { front: "End points of the DC load line", back: "(V_CE = V_CC, I_C = 0) and (V_CE = 0, I_C = V_CC/R_C)." },
+          { front: "Thermal runaway", back: "A self-feeding rise in temperature and collector current that can destroy the transistor." },
+          { front: "Stability factor S", back: "S = ΔI_C/ΔI_CBO; ideal value 1." },
+          { front: "S for fixed bias", back: "1 + β (poor stability)." },
+          { front: "Faithful amplification", back: "The output is an enlarged, undistorted copy of the input; the transistor stays in the active region all through the signal." },
+        ],
+        quiz: [
+          {
+            kind: "numeric",
+            q: "Fixed bias: V_CC = 10 V, R_B = 465 kΩ, V_BE = 0.7 V. Find I_B in µA.",
+            answer: 20,
+            tolerance: 0.1,
+            unit: "µA",
+            explain: t`$I_B = 9.3/465\,000 = 20\ \mu$A.`,
+          },
+          {
+            kind: "numeric",
+            q: "In the same circuit, β = 120 and R_C = 2 kΩ. Find V_CE in volts.",
+            answer: 5.2,
+            tolerance: 0.05,
+            unit: "V",
+            explain: t`$I_C = 120 \times 20\ \mu\text{A} = 2.4$ mA; $V_{CE} = 10 - 2.4 \times 2 = 5.2$ V.`,
+            difficulty: 2,
+          },
+          {
+            kind: "mcq",
+            q: "If the Q-point is placed very close to cut-off, a large input signal will:",
+            options: ["be clipped in the half cycle that drives the transistor towards cut-off", "be amplified without any distortion", "make the transistor saturate in both half cycles", "not change the output at all"],
+            answer: 0,
+            explain: "There is little room between the Q-point and cut-off, so the collector current reaches zero in that half cycle and the output flattens.",
+          },
+          {
+            kind: "truefalse",
+            q: "The slope of the DC load line is −1/R_C.",
+            answer: true,
+            explain: t`From $I_C = (V_{CC} - V_{CE})/R_C$, the slope of $I_C$ against $V_{CE}$ is $-1/R_C$.`,
+          },
+          {
+            kind: "numeric",
+            q: "A fixed-bias stage has β = 99. The leakage I_CBO rises by 5 µA. By how much does I_C rise (in µA)?",
+            answer: 500,
+            unit: "µA",
+            explain: t`$S = 1 + \beta = 100$; $\Delta I_C = S \Delta I_{CBO} = 100 \times 5 = 500\ \mu$A.`,
+            difficulty: 2,
+          },
+          {
+            kind: "fill",
+            q: "The ideal value of the stability factor S is ___.",
+            answer: ["1", "one"],
+            explain: "S = 1 means I_C rises only by the leakage itself and is not multiplied.",
+          },
+          {
+            kind: "multi",
+            q: "Which of these help prevent thermal runaway?",
+            options: ["A heat sink", "A bias circuit with low stability factor", "A larger β in fixed bias", "Keeping the Q-point within the power rating"],
+            answers: [0, 1, 3],
+            explain: "A larger β in fixed bias raises S = 1 + β and makes things worse.",
+          },
+        ],
+      },
+      {
+        slug: "c11-ele-bias-circuits",
+        title: "Collector-to-Base and Voltage Divider Bias",
+        summary: "How negative feedback stabilises the Q-point, the collector-to-base bias circuit, the voltage divider (self) bias circuit with its approximate and Thevenin analysis, and a comparison of stability factors.",
+        minutes: 24,
+        xp: 60,
+        blocks: [
+          {
+            type: "text",
+            md: "Fixed bias fails because nothing pushes back when $I_C$ rises. A **stabilised** bias circuit uses **negative feedback**: a rise in $I_C$ automatically lowers $I_B$, which pulls $I_C$ back down. Two common circuits do this: **collector-to-base bias** and **voltage divider bias**.",
+          },
+          {
+            type: "heading",
+            text: "Collector-to-base (collector feedback) bias",
+          },
+          {
+            type: "text",
+            md: t`Here $R_B$ is connected from the **collector** (not from $V_{CC}$) to the base. The current in $R_C$ is $I_C + I_B = (1 + \beta)I_B$. Around the loop $V_{CC} \to R_C \to R_B \to$ base-emitter:\n\n$V_{CC} = (1 + \beta)I_B R_C + I_B R_B + V_{BE}$, so $I_B = \dfrac{V_{CC} - V_{BE}}{R_B + (1 + \beta)R_C}$ (often approximated as $R_B + \beta R_C$).\n\n**Why it is stable:** if $I_C$ rises, the drop across $R_C$ rises, $V_{CE}$ falls, so there is less voltage across $R_B$ and $I_B$ falls. Its stability factor is $S = \dfrac{1 + \beta}{1 + \beta R_C/(R_C + R_B)}$, smaller than $1 + \beta$.`,
+          },
+          {
+            type: "example",
+            title: "Collector-to-base bias",
+            problem: "V_CC = 10 V, R_C = 2 kΩ, R_B = 200 kΩ, β = 100, V_BE = 0.7 V. Find I_B, I_C and V_CE. Then repeat for β = 150.",
+            steps: [
+              t`$I_B = \dfrac{10 - 0.7}{200\text{k} + 101 \times 2\text{k}} = \dfrac{9.3}{402\text{k}} = 23.1\ \mu$A.`,
+              t`$I_C = 100 \times 23.1\ \mu\text{A} = 2.31$ mA.`,
+              t`$V_{CE} = V_{CC} - (I_C + I_B)R_C = 10 - 2.336 \times 2 = 5.33$ V.`,
+              t`With $\beta = 150$: $I_B = 9.3/(200\text{k} + 151 \times 2\text{k}) = 18.5\ \mu$A, so $I_C = 2.78$ mA.`,
+            ],
+            answer: "I_B ≈ 23.1 µA, I_C ≈ 2.31 mA, V_CE ≈ 5.33 V. A 50% rise in β raises I_C by only about 20% (to 2.78 mA), against 50% in fixed bias.",
+          },
+          {
+            type: "heading",
+            text: "Voltage divider bias (self bias)",
+          },
+          {
+            type: "text",
+            md: t`Resistors $R_1$ (from $V_{CC}$ to base) and $R_2$ (from base to ground) form a potential divider that fixes the base voltage. An **emitter resistor** $R_E$ provides the feedback: if $I_C$ rises, $V_E = I_E R_E$ rises, so $V_{BE} = V_B - V_E$ falls and $I_B$ falls. This is the most widely used bias circuit.\n\n**Approximate method** (when the divider current is much larger than $I_B$, i.e. $\beta R_E \geq 10 R_2$):\n\n$V_B = \dfrac{V_{CC} R_2}{R_1 + R_2}$, $\quad V_E = V_B - V_{BE}$, $\quad I_C \approx I_E = \dfrac{V_E}{R_E}$, $\quad V_{CE} = V_{CC} - I_C(R_C + R_E)$.\n\nNotice that $\beta$ does not appear: the Q-point is almost independent of the transistor.`,
+          },
+          {
+            type: "example",
+            title: "Voltage divider bias",
+            problem: "V_CC = 12 V, R_1 = 40 kΩ, R_2 = 10 kΩ, R_C = 2 kΩ, R_E = 1 kΩ, β = 100, Si transistor. Find the Q-point by the approximate method, then check with the Thevenin method.",
+            steps: [
+              t`$V_B = 12 \times \dfrac{10}{40 + 10} = 2.4$ V; $V_E = 2.4 - 0.7 = 1.7$ V.`,
+              t`$I_C \approx I_E = 1.7/1000 = 1.7$ mA; $V_{CE} = 12 - 1.7 \times (2 + 1) = 6.9$ V.`,
+              t`Thevenin: $V_{Th} = 2.4$ V, $R_{Th} = R_1 \parallel R_2 = \dfrac{40 \times 10}{50} = 8$ kΩ. $I_B = \dfrac{V_{Th} - V_{BE}}{R_{Th} + (1 + \beta)R_E} = \dfrac{1.7}{8\text{k} + 101\text{k}} = 15.6\ \mu$A.`,
+              t`So $I_C = 100 \times 15.6\ \mu\text{A} = 1.56$ mA, close to the approximate 1.7 mA. With $\beta = 150$ the Thevenin result is 1.60 mA, a change of only about 3%.`,
+            ],
+            answer: "Q-point ≈ (6.9 V, 1.7 mA) by the approximate method; the exact I_C is 1.56 mA and hardly changes with β.",
+          },
+          {
+            type: "checkpoint",
+            questions: [
+              {
+                kind: "numeric",
+                q: "A voltage divider bias circuit has V_CC = 15 V, R_1 = 22 kΩ, R_2 = 8 kΩ and R_E = 1 kΩ. Using the approximate method, find I_C in mA (Si transistor).",
+                answer: 3.3,
+                tolerance: 0.01,
+                unit: "mA",
+                explain: t`$V_B = 15 \times 8/30 = 4$ V; $V_E = 3.3$ V; $I_C \approx 3.3/1000 = 3.3$ mA.`,
+              },
+            ],
+          },
+          {
+            type: "formula",
+            tex: t`S_{\text{divider}} = \frac{(1 + \beta)\left(1 + R_{Th}/R_E\right)}{1 + \beta + R_{Th}/R_E} \approx 1 + \frac{R_{Th}}{R_E} \quad (\beta \gg R_{Th}/R_E)`,
+            caption: t`For the example above, $S = \dfrac{101 \times 9}{101 + 8} \approx 8.3$, compared with $S = 101$ for fixed bias. A small $R_{Th}/R_E$ gives better stability.`,
+          },
+          {
+            type: "table",
+            headers: ["Circuit", "Stability factor S", "Stability", "Remarks"],
+            rows: [
+              ["Fixed bias", "1 + β", "poor", "simplest; Q-point depends directly on β"],
+              ["Collector-to-base", t`$\dfrac{1 + \beta}{1 + \beta R_C/(R_C + R_B)}$`, "better", "feedback through R_B also reduces AC gain"],
+              ["Voltage divider", t`$\approx 1 + R_{Th}/R_E$`, "best", "most widely used; Q-point nearly independent of β"],
+            ],
+          },
+          {
+            type: "mistake",
+            wrong: "In voltage divider bias, V_CE = V_CC − I_C R_C, the same as in fixed bias.",
+            right: "With an emitter resistor, V_CE = V_CC − I_C(R_C + R_E), taking I_C ≈ I_E.",
+            why: "The collector current flows through both R_C and R_E, so both drops must be subtracted. The DC load line then ends at V_CC/(R_C + R_E) on the current axis.",
+          },
+          {
+            type: "activity",
+            activity: {
+              kind: "order",
+              prompt: "Order the steps to find the Q-point of voltage divider bias.",
+              items: ["Find V_B from the divider R_1, R_2", "Subtract V_BE to get V_E", "Find I_E = V_E/R_E and take I_C ≈ I_E", "Find V_CE = V_CC − I_C(R_C + R_E)"],
+              explain: "Work from the base outwards: base voltage, emitter voltage, emitter current, then the collector loop. β is not needed for the approximate method.",
+            },
+          },
+          {
+            type: "callout",
+            tone: "exam",
+            title: "Board tip",
+            md: "In 'explain how voltage divider bias stabilises the operating point', write the feedback chain in one line with arrows: I_C ↑ → V_E ↑ → V_BE ↓ → I_B ↓ → I_C ↓. Then mention that a bypass capacitor across R_E is used so that this feedback does not reduce the AC gain.",
+          },
+          {
+            type: "keypoints",
+            items: [
+              "Stabilised bias uses negative feedback: a rise in I_C reduces I_B.",
+              "Collector-to-base: I_B = (V_CC − V_BE)/(R_B + (1 + β)R_C).",
+              "Voltage divider: V_B = V_CC R_2/(R_1 + R_2), I_C ≈ (V_B − V_BE)/R_E, V_CE = V_CC − I_C(R_C + R_E).",
+              "S: fixed bias 1 + β; voltage divider ≈ 1 + R_Th/R_E (best).",
+              "Voltage divider bias is the most widely used because its Q-point hardly depends on β.",
+            ],
+          },
+        ],
+        flashcards: [
+          { front: "Principle of bias stabilisation", back: "Negative feedback: a rise in I_C automatically reduces I_B." },
+          { front: "Base current in collector-to-base bias", back: "I_B = (V_CC − V_BE)/(R_B + (1 + β)R_C)." },
+          { front: "Base voltage in voltage divider bias", back: "V_B = V_CC R_2/(R_1 + R_2)." },
+          { front: "Collector current in voltage divider bias (approx.)", back: "I_C ≈ I_E = (V_B − V_BE)/R_E." },
+          { front: "V_CE in voltage divider bias", back: "V_CE = V_CC − I_C(R_C + R_E)." },
+          { front: "Stability factor of voltage divider bias", back: "About 1 + R_Th/R_E when β is large; R_Th = R_1 ∥ R_2." },
+          { front: "Most widely used bias circuit", back: "Voltage divider (self) bias." },
+          { front: "Job of the emitter bypass capacitor", back: "Removes AC feedback across R_E so the AC gain is not reduced, while keeping DC stabilisation." },
+        ],
+        quiz: [
+          {
+            kind: "mcq",
+            q: "Which bias circuit gives the best stability?",
+            options: ["Voltage divider bias", "Fixed bias", "Collector-to-base bias", "All are equally stable"],
+            answer: 0,
+            explain: "Its stability factor is about 1 + R_Th/R_E, much smaller than 1 + β.",
+          },
+          {
+            kind: "numeric",
+            q: "Voltage divider bias: V_CC = 9 V, R_1 = 33 kΩ, R_2 = 11 kΩ, R_E = 1.5 kΩ (Si). Find V_E in volts (approximate method).",
+            answer: 1.55,
+            tolerance: 0.01,
+            unit: "V",
+            explain: t`$V_B = 9 \times 11/44 = 2.25$ V; $V_E = 2.25 - 0.7 = 1.55$ V.`,
+          },
+          {
+            kind: "numeric",
+            q: "For the same circuit with R_C = 2.2 kΩ, find V_CE in volts (two decimal places).",
+            answer: 5.18,
+            tolerance: 0.02,
+            unit: "V",
+            explain: t`$I_C \approx 1.55/1500 = 1.033$ mA; $V_{CE} = 9 - 1.033 \times (2.2 + 1.5) = 9 - 3.82 = 5.18$ V.`,
+            difficulty: 2,
+          },
+          {
+            kind: "truefalse",
+            q: "In voltage divider bias, the approximate Q-point does not depend on β.",
+            answer: true,
+            explain: "β does not appear in V_B, V_E, I_E or V_CE in the approximate method.",
+          },
+          {
+            kind: "numeric",
+            q: t`A voltage divider circuit has $R_{Th} = 5$ kΩ, $R_E = 1$ kΩ and $\beta = 100$. Find the exact stability factor (two decimal places).`,
+            answer: 5.72,
+            tolerance: 0.02,
+            explain: t`$S = \dfrac{101 \times (1 + 5)}{101 + 5} = \dfrac{606}{106} = 5.72$.`,
+            difficulty: 3,
+          },
+          {
+            kind: "order",
+            q: "Put the feedback chain of voltage divider bias in order, starting with a rise in temperature.",
+            items: ["I_C rises", "V_E rises", "V_BE falls", "I_B falls", "I_C is pulled back down"],
+            explain: "The fixed V_B and the rising V_E squeeze V_BE, cutting the base drive.",
+          },
+          {
+            kind: "fill",
+            q: "In collector-to-base bias, the base resistor is connected between the base and the ___.",
+            answer: ["collector"],
+            explain: "Connecting R_B to the collector (not V_CC) is what provides the feedback.",
+          },
+        ],
+      },
+      {
+        slug: "c11-ele-biasing-practice",
+        title: "Board Practice: Transistor Biasing",
+        summary: "Mixed board-style questions on load lines, Q-points, design of bias resistors, stability factors and thermal runaway.",
+        minutes: 20,
+        xp: 50,
+        blocks: [
+          {
+            type: "text",
+            md: "This lesson mixes the question types you meet in the board paper for this chapter: definitions, explain-with-circuit questions, and three-mark numericals on bias circuits. Try each one before reading the steps.",
+          },
+          {
+            type: "example",
+            title: "Designing a fixed-bias stage",
+            problem: "A Si transistor with β = 150 is to work at V_CE = 4.5 V with V_CC = 9 V and R_C = 1.5 kΩ. Find the base resistor needed.",
+            steps: [
+              t`$I_C = \dfrac{V_{CC} - V_{CE}}{R_C} = \dfrac{9 - 4.5}{1500} = 3$ mA.`,
+              t`$I_B = I_C/\beta = 3/150 = 0.02$ mA $= 20\ \mu$A.`,
+              t`$R_B = \dfrac{V_{CC} - V_{BE}}{I_B} = \dfrac{8.3}{20 \times 10^{-6}} = 415$ kΩ.`,
+            ],
+            answer: "R_B = 415 kΩ (use the nearest standard value, such as 390 kΩ or 470 kΩ, and recheck V_CE).",
+          },
+          {
+            type: "example",
+            title: "Designing a voltage divider",
+            problem: "In a voltage divider bias circuit with V_CC = 10 V and R_E = 1 kΩ, the collector current must be 2 mA. If R_2 = 10 kΩ, find R_1 (Si transistor, approximate method).",
+            steps: [
+              t`$V_E = I_E R_E \approx 2\ \text{mA} \times 1\ \text{k}\Omega = 2$ V, so $V_B = 2 + 0.7 = 2.7$ V.`,
+              t`From $V_B = V_{CC}\dfrac{R_2}{R_1 + R_2}$: $R_1 = R_2\dfrac{V_{CC} - V_B}{V_B} = 10\text{k} \times \dfrac{7.3}{2.7}$.`,
+              "R_1 ≈ 27.0 kΩ.",
+            ],
+            answer: "R_1 ≈ 27 kΩ (a standard 27 kΩ resistor fits).",
+          },
+          {
+            type: "checkpoint",
+            questions: [
+              {
+                kind: "numeric",
+                q: "A voltage divider stage has V_CC = 12 V, R_C = 2.7 kΩ and R_E = 1.3 kΩ. Find I_C(sat) on its DC load line, in mA.",
+                answer: 3,
+                unit: "mA",
+                explain: t`$I_{C(sat)} = V_{CC}/(R_C + R_E) = 12/4000 = 3$ mA.`,
+              },
+            ],
+          },
+          {
+            type: "example",
+            title: "Comparing stability",
+            problem: "The leakage current of a transistor (β = 100) rises by 10 µA when it warms up. Find the rise in I_C (a) in fixed bias and (b) in a voltage divider circuit with S = 5.72.",
+            steps: [
+              t`(a) $S = 1 + \beta = 101$: $\Delta I_C = 101 \times 10\ \mu\text{A} = 1.01$ mA.`,
+              t`(b) $\Delta I_C = 5.72 \times 10\ \mu\text{A} = 57.2\ \mu$A.`,
+            ],
+            answer: "About 1 mA in fixed bias against only 57 µA in voltage divider bias.",
+          },
+          {
+            type: "example",
+            title: "Why a mid-point Q-point?",
+            problem: "A CE stage has V_CC = 12 V and R_C = 3 kΩ. Compare the largest undistorted peak swing of V_CE for a Q-point at V_CE = 6 V and at V_CE = 9 V (ignore V_CE(sat)).",
+            steps: [
+              "The output can swing down to about 0 V (saturation) and up to 12 V (cut-off).",
+              "Q at 6 V: room of 6 V below and 6 V above, so the peak swing can be 6 V both ways.",
+              "Q at 9 V: room of 9 V below but only 3 V above, so the swing is limited to 3 V peak; anything larger is clipped at cut-off.",
+            ],
+            answer: "6 V peak with the mid-point Q-point, but only 3 V peak with the Q-point at 9 V.",
+          },
+          {
+            type: "mistake",
+            wrong: "The DC load line depends on the transistor's β.",
+            right: "The DC load line depends only on V_CC and the collector-circuit resistors (R_C, plus R_E if present). β only decides where on the line the Q-point sits.",
+            why: "The line comes from KVL in the output loop, which contains no transistor parameter. Changing β moves the Q-point along a fixed line.",
+          },
+          {
+            type: "activity",
+            activity: {
+              kind: "sort",
+              prompt: "Does this change the DC load line or only the Q-point?",
+              groups: ["Changes the load line", "Moves only the Q-point"],
+              items: [
+                { text: "Changing V_CC", group: 0, hint: "The V_CE intercept is V_CC." },
+                { text: "Changing R_C", group: 0, hint: "The I_C intercept is V_CC/R_C." },
+                { text: "Changing R_B in fixed bias", group: 1, hint: "This changes I_B, not the output loop." },
+                { text: "Replacing the transistor with one of higher β", group: 1, hint: "β is not in the output-loop equation." },
+                { text: "Adding an emitter resistor R_E", group: 0, hint: "It enters the output loop: V_CE = V_CC − I_C(R_C + R_E)." },
+                { text: "A rise in temperature", group: 1, hint: "It changes leakage and β, not the resistors." },
+              ],
+              explain: "The load line is fixed by the output loop (V_CC, R_C, R_E). Anything that changes only the base current or the transistor's parameters slides the Q-point along the line.",
+            },
+          },
+          {
+            type: "table",
+            headers: ["Question type", "What earns the marks"],
+            rows: [
+              ["Define (1 mark)", "Biasing, Q-point, stability factor, thermal runaway"],
+              ["Explain with circuit (4–5 marks)", "Labelled circuit, KVL equations, feedback chain, S value"],
+              ["Load line (3 marks)", "Equation, both intercepts with values, Q-point marked"],
+              ["Numerical (3 marks)", "Base loop first, then output loop; units on every line"],
+            ],
+          },
+          {
+            type: "callout",
+            tone: "exam",
+            title: "Board tip",
+            md: "In a bias numerical, solve the base (input) loop first to get I_B or I_E, then the collector (output) loop to get V_CE. Always check your answer: V_CE must be between 0 and V_CC, and if it comes out near 0.2 V or below, the transistor is saturated and I_C = βI_B no longer holds.",
+          },
+          {
+            type: "checkpoint",
+            questions: [
+              {
+                kind: "mcq",
+                q: "A fixed-bias calculation gives V_CE = −2 V. What does this mean?",
+                options: ["The transistor is saturated; I_C is limited to about V_CC/R_C", "The transistor is in cut-off", "The supply is reversed", "β is too small"],
+                answer: 0,
+                explain: "A negative V_CE is impossible; βI_B asks for more current than the collector circuit can supply, so the transistor saturates.",
+              },
+            ],
+          },
+          {
+            type: "keypoints",
+            items: [
+              "Design: pick I_C from the output loop, I_B = I_C/β, then R_B from the base loop.",
+              "Divider design: V_E = I_C R_E, V_B = V_E + 0.7, then solve the divider for R_1.",
+              "The load line depends only on V_CC, R_C and R_E; β moves the Q-point along it.",
+              "Lower S means less change in I_C for the same change in leakage.",
+            ],
+          },
+        ],
+        flashcards: [
+          { front: "Base resistor for fixed bias", back: "R_B = (V_CC − V_BE)/I_B." },
+          { front: "R_1 for voltage divider bias", back: "R_1 = R_2(V_CC − V_B)/V_B." },
+          { front: "I_C(sat) with an emitter resistor", back: "V_CC/(R_C + R_E)." },
+          { front: "What β changes on the output characteristic", back: "Only the Q-point position along the fixed DC load line." },
+          { front: "Check for saturation", back: "If the computed V_CE is about 0.2 V or less, the transistor is saturated." },
+          { front: "Change in I_C from leakage", back: "ΔI_C = S × ΔI_CBO." },
+        ],
+        quiz: [
+          {
+            kind: "numeric",
+            q: "Fixed bias: V_CC = 6 V, R_C = 1 kΩ, β = 50, R_B = 106 kΩ (Si). Find I_C in mA.",
+            answer: 2.5,
+            tolerance: 0.01,
+            unit: "mA",
+            explain: t`$I_B = 5.3/106\,000 = 50\ \mu$A; $I_C = 50 \times 50\ \mu\text{A} = 2.5$ mA.`,
+          },
+          {
+            kind: "numeric",
+            q: "For the circuit in the previous question, find V_CE in volts.",
+            answer: 3.5,
+            tolerance: 0.01,
+            unit: "V",
+            explain: t`$V_{CE} = 6 - 2.5 \times 1 = 3.5$ V.`,
+          },
+          {
+            kind: "mcq",
+            q: "The stability factor of fixed bias with β = 80 is:",
+            options: ["81", "80", "1", "0.99"],
+            answer: 0,
+            explain: "S = 1 + β = 81.",
+          },
+          {
+            kind: "truefalse",
+            q: "A heat sink helps prevent thermal runaway by carrying heat away from the collector junction.",
+            answer: true,
+            explain: "Keeping the junction cooler limits the rise in leakage current.",
+          },
+          {
+            kind: "numeric",
+            q: "Fixed bias: V_CC = 12 V, R_C = 2 kΩ, R_B = 113 kΩ, β = 100 (Si). Find I_C in mA, remembering that the transistor cannot carry more than V_CC/R_C.",
+            answer: 6,
+            tolerance: 0.01,
+            unit: "mA",
+            explain: t`$I_B = 11.3/113\,000 = 100\ \mu$A, so $\beta I_B = 10$ mA. But $I_{C(sat)} = 12/2000 = 6$ mA, so the transistor saturates and $I_C \approx 6$ mA.`,
+            difficulty: 3,
+            hint: "Compare βI_B with V_CC/R_C.",
+          },
+          {
+            kind: "multi",
+            q: "Which statements about voltage divider bias are true?",
+            options: ["It uses an emitter resistor for feedback", "Its stability factor can be close to 1", "Its Q-point depends strongly on β", "It is the most widely used bias circuit"],
+            answers: [0, 1, 3],
+            explain: "Its Q-point is almost independent of β; that is its main advantage.",
+          },
+          {
+            kind: "fill",
+            q: "The zero-signal operating point of a transistor is also called the ___ point.",
+            answer: ["quiescent", "Q", "Q-point"],
+            explain: "Quiescent means 'at rest': the values with no signal applied.",
+          },
+        ],
+      },
+    ],
+  },
 ];
 
 /** Chapter title ("11:" / "12:" + exact title) → topic slug(s) that teach it. */
 export const links: Record<string, string | string[]> = {
   "11:Semiconductor Diodes and Applications": "c11-ele-diodes",
   "11:Bipolar Junction Transistor": "c11-ele-bjt",
+  "11:Transistor Biasing": "c11-ele-biasing",
 };

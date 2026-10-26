@@ -2314,7 +2314,569 @@ const opamp: Topic = {
   ],
 };
 
-export const topics: Topic[] = [amplifiers, feedback, fet, opamp];
+/* ------------------------------------------------------------------ */
+/* 12: Wave Shaping and Multivibrators                                 */
+/* ------------------------------------------------------------------ */
+const waveshaping: Topic = {
+  slug: "c12-ele-wave-shaping-multivibrators",
+  title: "Wave Shaping and Multivibrators",
+  icon: "〰️",
+  description: "RC differentiator and integrator, diode clippers and clampers, transistor astable, monostable and bistable multivibrators, the 555 timer, and the Schmitt trigger.",
+  lessons: [
+    {
+      slug: "c12-ele-rc-clippers-clampers",
+      title: "Wave Shaping: RC Circuits, Clippers and Clampers",
+      summary: "Linear wave shaping with RC high-pass (differentiator) and low-pass (integrator) circuits, and non-linear wave shaping with diode clippers and clampers.",
+      minutes: 22,
+      xp: 50,
+      blocks: [
+        {
+          type: "text",
+          md: "**Wave shaping** means changing the shape of a waveform on purpose. A TV receiver, for example, picks out short sync pulses from a mixed signal and needs a square wave turned into spikes. **Linear wave shaping** uses only R, C (and L), which act the same for every voltage. **Non-linear wave shaping** uses diodes, which behave differently for different voltages, to cut off or shift parts of a wave.",
+        },
+        {
+          type: "formula",
+          tex: t`\tau = RC;\qquad v_C = V\left(1 - e^{-t/RC}\right)\ \text{(charging)},\qquad v_C(\tau) = 0.632\,V`,
+          caption: "The time constant τ = RC decides how fast a capacitor follows a change. After 5τ it is practically fully charged (99.3%).",
+        },
+        {
+          type: "table",
+          headers: ["Circuit", "Arrangement", "Condition", "Square-wave input gives"],
+          rows: [
+            ["RC differentiator (high-pass)", "C in series, output taken across R", "τ ≪ T (RC much smaller than the period)", "sharp positive and negative spikes at each edge"],
+            ["RC integrator (low-pass)", "R in series, output taken across C", "τ ≫ T (RC much larger than the period)", "a small triangular wave"],
+          ],
+        },
+        {
+          type: "example",
+          title: "Will it differentiate?",
+          problem: "A 1 kHz square wave is applied to a series C with output across R. R = 1 kΩ and C = 0.01 μF. Is this a good differentiator? What happens if R = 100 kΩ and C = 1 μF are used with output across C?",
+          steps: [
+            t`Period $T = 1/1000 = 1$ ms; each half lasts 0.5 ms.`,
+            t`$\tau = 10^3 \times 10^{-8} = 10\ \mu\text{s}$, which is only 1/50 of a half period. The capacitor charges fully almost at once, so output across R is a narrow spike at each edge: a good differentiator.`,
+            t`With R = 100 kΩ, C = 1 μF: $\tau = 0.1$ s, which is 100 times the period. The capacitor charges only slightly in each half cycle, so the voltage across C rises and falls in nearly straight lines: a good integrator (small triangular output).`,
+          ],
+          answer: "τ = 10 μs ≪ T: differentiator (spikes). τ = 0.1 s ≫ T: integrator (triangular wave).",
+        },
+        {
+          type: "heading",
+          text: "Clippers",
+        },
+        {
+          type: "text",
+          md: "A **clipper (limiter)** removes the part of a waveform above or below a chosen level without disturbing the rest. A **positive clipper** removes the positive part, a **negative clipper** removes the negative part. In a **series clipper** the diode is in series with the load; in a **shunt clipper** a resistor is in series and the diode is across the output. Adding a battery V_B in series with the diode gives a **biased clipper**, which clips at V_B + V_γ (V_γ ≈ 0.7 V for silicon). Two biased diodes facing opposite ways make a **two-level (double) clipper**, which clips both peaks.",
+        },
+        {
+          type: "example",
+          title: "Biased shunt clipper",
+          problem: "A sine wave of 10 V peak is applied to a shunt clipper: R in series, then a silicon diode (anode at the output line) in series with a 3 V battery (positive terminal towards the diode's cathode) across the output. Describe the output.",
+          steps: [
+            t`The diode conducts when the output tries to exceed $V_B + V_\gamma = 3 + 0.7 = 3.7$ V.`,
+            t`While conducting, it holds the output at 3.7 V; the extra voltage drops across R.`,
+            t`Below 3.7 V, including the whole negative half, the diode is off and the output follows the input.`,
+          ],
+          answer: "Output follows the input but its positive peaks are flattened at +3.7 V; the negative half reaches −10 V.",
+        },
+        {
+          type: "checkpoint",
+          questions: [
+            {
+              kind: "numeric",
+              q: "A biased silicon-diode clipper uses a 4.3 V battery. At what output voltage does it clip?",
+              answer: 5,
+              unit: "V",
+              explain: "Clipping level = V_B + 0.7 = 4.3 + 0.7 = 5 V.",
+            },
+          ],
+        },
+        {
+          type: "text",
+          md: "**Clamper (DC restorer).** A clamper shifts the whole waveform up or down by adding a DC level, without changing its shape or peak-to-peak value. It has a capacitor in series and a diode across the output, with a load R such that RC ≫ T. In a **positive clamper** (diode's anode to ground, cathode to the output line), the diode conducts on the negative peak and charges C to V_m. After that, the output is v_in + V_m, so it swings from 0 to +2V_m. Reversing the diode gives a **negative clamper** (0 to −2V_m). TV receivers use clampers to restore the DC level of the picture signal.",
+        },
+        {
+          type: "example",
+          title: "Positive clamper output",
+          problem: "A 5 V peak sine wave is applied to a positive clamper. Find the output range (a) with an ideal diode and (b) with a silicon diode (0.7 V).",
+          steps: [
+            t`(a) C charges to $V_m = 5$ V, so $v_o = v_{in} + 5$: from $-5 + 5 = 0$ V to $5 + 5 = 10$ V.`,
+            t`(b) C charges to $5 - 0.7 = 4.3$ V, so $v_o$ goes from $-5 + 4.3 = -0.7$ V to $5 + 4.3 = 9.3$ V.`,
+            "In both cases the peak-to-peak value stays 10 V.",
+          ],
+          answer: "(a) 0 V to +10 V; (b) −0.7 V to +9.3 V. Peak-to-peak 10 V in both.",
+        },
+        {
+          type: "mistake",
+          wrong: "A clipper and a clamper do the same job, since both use a diode to change the waveform.",
+          right: "A clipper cuts off part of the waveform (peak-to-peak value changes). A clamper keeps the full shape and only shifts it up or down (peak-to-peak value unchanged). A clamper needs a capacitor; a basic clipper does not.",
+          why: "The circuits look alike on paper. Ask: is anything removed? If yes it is a clipper. If the wave just moves bodily, it is a clamper.",
+        },
+        {
+          type: "activity",
+          activity: {
+            kind: "sort",
+            prompt: "Clipper or clamper?",
+            groups: ["Clipper", "Clamper"],
+            items: [
+              { text: "Removes the part of a wave above 3.7 V", group: 0, hint: "Something is cut off." },
+              { text: "Shifts a sine wave so it lies between 0 and +10 V", group: 1, hint: "Same shape, moved up." },
+              { text: "Also called a DC restorer", group: 1, hint: "It adds a DC level." },
+              { text: "Also called a limiter", group: 0, hint: "It limits the amplitude." },
+              { text: "Needs a capacitor with RC much larger than T", group: 1, hint: "The capacitor stores the shift." },
+              { text: "Changes the peak-to-peak value", group: 0, hint: "Part of the wave is lost." },
+            ],
+            explain: "Clippers remove; clampers shift. The capacitor in a clamper holds the DC level that is added to the signal.",
+          },
+        },
+        {
+          type: "callout",
+          tone: "exam",
+          title: "Board tip",
+          md: "Draw input and output waveforms one above the other, with the clipping or clamping level marked by a dotted line and its value (e.g. 3.7 V). In the lab, set the CRO to DC coupling when viewing a clamper; AC coupling hides the shift you are trying to see.",
+        },
+        {
+          type: "keypoints",
+          items: [
+            "τ = RC. Differentiator: output across R, τ ≪ T, spikes. Integrator: output across C, τ ≫ T, triangle.",
+            "Clipper removes part of a wave; biased clipper level = V_B + 0.7 V (Si).",
+            "Series and shunt clippers; two-level clipper clips both peaks.",
+            "Clamper (DC restorer) shifts the wave; positive clamper output 0 to 2V_m (ideal diode).",
+          ],
+        },
+      ],
+      flashcards: [
+        { front: "Time constant", back: "τ = RC; the time for a charging capacitor to reach 63.2% of the final voltage." },
+        { front: "Condition for an RC differentiator", back: "τ = RC ≪ T, output taken across R." },
+        { front: "Condition for an RC integrator", back: "τ = RC ≫ T, output taken across C." },
+        { front: "Clipper", back: "A diode circuit that removes the part of a waveform above or below a set level; also called a limiter." },
+        { front: "Clipping level of a biased Si-diode clipper", back: "V_B + 0.7 V." },
+        { front: "Clamper", back: "A capacitor–diode circuit that adds a DC level to a waveform without changing its shape; a DC restorer." },
+        { front: "Output of a positive clamper (ideal diode, peak V_m)", back: "From 0 to +2V_m." },
+      ],
+      quiz: [
+        {
+          kind: "mcq",
+          q: "In an RC differentiator, the output is taken across:",
+          options: ["the capacitor", "the resistor", "the source", "the diode"],
+          answer: 1,
+          explain: "Differentiator: C in series, output across R, with RC ≪ T.",
+        },
+        {
+          kind: "mcq",
+          q: "A square wave is applied to an RC circuit with RC ≫ T, output across C. The output is:",
+          options: ["spikes", "a triangular wave", "a square wave of larger amplitude", "a sine wave of double frequency"],
+          answer: 1,
+          explain: "With RC ≫ T the capacitor voltage rises and falls almost linearly: an integrator.",
+        },
+        {
+          kind: "numeric",
+          q: "A negative clamper (ideal diode) receives a sine wave of 6 V peak. What is the most negative output voltage?",
+          answer: -12,
+          unit: "V",
+          explain: "A negative clamper shifts the wave down by V_m: it swings from 0 to −2V_m = −12 V.",
+          difficulty: 2,
+        },
+        {
+          kind: "truefalse",
+          q: "A clamper changes the peak-to-peak value of the waveform.",
+          answer: false,
+          explain: "It only adds a DC shift; peak-to-peak stays the same.",
+        },
+        {
+          kind: "fill",
+          q: "A clamper is also called a DC ___.",
+          answer: ["restorer"],
+          explain: "It restores (adds) a DC level, e.g. in TV receivers.",
+        },
+        {
+          kind: "numeric",
+          q: "An RC circuit has R = 10 kΩ and C = 0.1 μF. Find its time constant in ms.",
+          answer: 1,
+          unit: "ms",
+          explain: "τ = 10⁴ × 10⁻⁷ = 10⁻³ s = 1 ms.",
+        },
+        {
+          kind: "multi",
+          q: "Which are non-linear wave-shaping circuits?",
+          options: ["Diode clipper", "Diode clamper", "RC integrator", "RC differentiator"],
+          answers: [0, 1],
+          explain: "Clippers and clampers use diodes (non-linear). RC circuits are linear wave shapers.",
+        },
+      ],
+    },
+    {
+      slug: "c12-ele-multivibrators-555",
+      title: "Multivibrators and the 555 Timer",
+      summary: "Astable, monostable and bistable transistor multivibrators, the 555 timer's inside and pins, its astable and monostable modes with formulas, and the Schmitt trigger.",
+      minutes: 24,
+      xp: 55,
+      blocks: [
+        {
+          type: "illustration",
+          emoji: "🚦",
+          caption: "Blinking LEDs on a Diwali light string, a staircase light that stays on for a minute, a push-on push-off switch: three multivibrators.",
+        },
+        {
+          type: "text",
+          md: "A **multivibrator** is a two-stage switching circuit in which the output of each stage drives the input of the other (100% positive feedback), so that when one transistor is ON (saturated) the other is OFF (cut off). Its output is a square or rectangular wave. The type depends on how many **stable states** it has, which in turn depends on how the two stages are coupled.",
+        },
+        {
+          type: "table",
+          headers: ["Type", "Stable states", "Coupling between stages", "Trigger needed", "Use"],
+          rows: [
+            ["Astable (free-running)", "none (two quasi-stable states)", "both capacitive", "no", "square-wave generator, clock pulses, flashers"],
+            ["Monostable (one-shot)", "one", "one capacitive, one resistive", "one trigger gives one pulse", "timers, pulse stretching, delay"],
+            ["Bistable (flip-flop)", "two", "both resistive", "a trigger to change each state", "memory cell, counters, frequency divider"],
+          ],
+        },
+        {
+          type: "text",
+          md: "**Transistor astable (in words).** Two identical CE stages: the collector of Q₁ is joined to the base of Q₂ through C₁, and the collector of Q₂ to the base of Q₁ through C₂. Each base is returned to +V_CC through a resistor (R₁, R₂). When Q₁ turns ON, its collector drops, and through C₁ this pulls Q₂'s base negative, cutting Q₂ off. C₁ then charges through R and when Q₂'s base reaches about 0.7 V, Q₂ turns ON and switches Q₁ OFF. The circuit flips back and forth on its own.",
+        },
+        {
+          type: "formula",
+          tex: t`T = 0.693\,(R_1C_1 + R_2C_2)\ \ \Rightarrow\ \ T = 1.386\,RC \ \ (\text{symmetrical});\qquad \text{monostable pulse width } T \approx 0.693\,RC`,
+          caption: "Transistor multivibrator timing (ln 2 = 0.693).",
+        },
+        {
+          type: "example",
+          title: "Transistor astable frequency",
+          problem: "A symmetrical transistor astable multivibrator has R₁ = R₂ = 10 kΩ and C₁ = C₂ = 0.1 μF. Find the period and frequency.",
+          steps: [
+            t`$T = 1.386RC = 1.386 \times 10^4 \times 10^{-7} = 1.386\times10^{-3}$ s.`,
+            t`$f = 1/T \approx 722$ Hz. Each transistor is ON for half of the period (50% duty cycle).`,
+          ],
+          answer: "T ≈ 1.39 ms, f ≈ 722 Hz.",
+        },
+        {
+          type: "text",
+          md: "**The 555 timer IC.** Inside: three equal 5 kΩ resistors from V_CC to ground set reference levels of ⅔V_CC and ⅓V_CC; an **upper comparator** watches the threshold pin against ⅔V_CC; a **lower comparator** watches the trigger pin against ⅓V_CC; they set and reset an **SR flip-flop**, which drives the output stage and a **discharge transistor**. Pins: 1 ground, 2 trigger, 3 output, 4 reset, 5 control voltage, 6 threshold, 7 discharge, 8 +V_CC (4.5 V to 15 V).",
+        },
+        {
+          type: "formula",
+          tex: t`\text{Astable: } t_H = 0.693(R_A + R_B)C,\ \ t_L = 0.693R_BC,\ \ f = \frac{1.44}{(R_A + 2R_B)C},\ \ D = \frac{R_A + R_B}{R_A + 2R_B};\qquad \text{Monostable: } T = 1.1RC`,
+          caption: "In astable mode C charges through R_A + R_B between ⅓V_CC and ⅔V_CC and discharges through R_B into pin 7. Duty cycle D is always above 50% in this basic circuit.",
+        },
+        {
+          type: "example",
+          title: "555 astable and monostable",
+          problem: "(a) A 555 astable uses R_A = R_B = 10 kΩ and C = 0.1 μF. Find t_H, t_L, f and the duty cycle. (b) A 555 monostable uses R = 100 kΩ and C = 10 μF. Find the pulse width.",
+          steps: [
+            t`(a) $t_H = 0.693 \times 20\times10^3 \times 10^{-7} = 1.386$ ms; $t_L = 0.693 \times 10^4 \times 10^{-7} = 0.693$ ms.`,
+            t`(a) $T = 2.079$ ms, so $f = 1/T \approx 481$ Hz (the 1.44 formula gives 480 Hz).`,
+            t`(a) Duty cycle $= \frac{t_H}{T} = \frac{20}{30} = 66.7\%$.`,
+            t`(b) $T = 1.1RC = 1.1 \times 10^5 \times 10^{-5} = 1.1$ s.`,
+          ],
+          answer: "(a) t_H ≈ 1.39 ms, t_L ≈ 0.69 ms, f ≈ 481 Hz, D ≈ 66.7%; (b) 1.1 s.",
+        },
+        {
+          type: "checkpoint",
+          questions: [
+            {
+              kind: "mcq",
+              q: "Which multivibrator needs no trigger and produces a continuous square wave?",
+              options: ["Monostable", "Bistable", "Astable", "Schmitt trigger"],
+              answer: 2,
+              explain: "The astable has no stable state, so it keeps switching by itself.",
+            },
+          ],
+        },
+        {
+          type: "text",
+          md: "**Schmitt trigger.** An emitter-coupled two-transistor circuit (or a comparator with positive feedback) that switches ON when the input rises above an **upper trip point (UTP)** and OFF only when it falls below a smaller **lower trip point (LTP)**. The gap UTP − LTP is called **hysteresis**. It turns a slow or noisy wave, such as a sine wave, into a clean square wave and is not upset by small noise near the switching level.",
+        },
+        {
+          type: "mistake",
+          wrong: "A bistable multivibrator produces a continuous square wave, just slower than an astable.",
+          right: "A bistable stays in whichever state it is in until a trigger pulse arrives. It changes state once per trigger; it never oscillates by itself.",
+          why: "All three multivibrators give rectangular outputs, so students mix them up. Count stable states: astable 0 (keeps switching), monostable 1 (returns after a fixed time), bistable 2 (waits for a trigger).",
+        },
+        {
+          type: "activity",
+          activity: {
+            kind: "match",
+            prompt: "Match each 555 pin with its job.",
+            pairs: [
+              ["Pin 2", "trigger (compared with ⅓V_CC)"],
+              ["Pin 3", "output"],
+              ["Pin 4", "reset (active low)"],
+              ["Pin 6", "threshold (compared with ⅔V_CC)"],
+              ["Pin 7", "discharge (empties the timing capacitor)"],
+            ],
+            explain: "Pin 1 is ground, pin 5 control voltage (usually 0.01 μF to ground), pin 8 +V_CC. Pins 2 and 6 are tied together in astable mode.",
+          },
+        },
+        {
+          type: "callout",
+          tone: "exam",
+          title: "Board tip",
+          md: "Learn the internal block diagram of the 555 (divider, two comparators, flip-flop, discharge transistor, output stage) — it is often asked for 3 marks. In the lab, measure t_H and t_L on the CRO and compare with the formulas; electrolytic capacitor tolerance (±20%) explains most differences.",
+        },
+        {
+          type: "keypoints",
+          items: [
+            "Astable: 0 stable states, free-running. Monostable: 1 stable state, one pulse per trigger. Bistable: 2 stable states, a flip-flop.",
+            "Transistor astable: T = 0.693(R₁C₁ + R₂C₂) = 1.386RC if symmetrical.",
+            "555 astable: t_H = 0.693(R_A + R_B)C, t_L = 0.693R_BC, f = 1.44/((R_A + 2R_B)C).",
+            "555 monostable: T = 1.1RC.",
+            "Schmitt trigger: two trip points (hysteresis); squares up slow or noisy signals.",
+          ],
+        },
+      ],
+      flashcards: [
+        { front: "Astable multivibrator", back: "No stable state; switches continuously between two quasi-stable states; a square-wave generator." },
+        { front: "Monostable multivibrator", back: "One stable state; a trigger gives one output pulse of fixed width, then it returns." },
+        { front: "Bistable multivibrator", back: "Two stable states; changes state only when triggered; a flip-flop (memory)." },
+        { front: "Symmetrical transistor astable period", back: "T = 1.386 RC." },
+        { front: "555 astable frequency", back: "f = 1.44 / ((R_A + 2R_B) C)." },
+        { front: "555 monostable pulse width", back: "T = 1.1 RC." },
+        { front: "555 comparator reference levels", back: "⅔ V_CC (upper, threshold) and ⅓ V_CC (lower, trigger)." },
+        { front: "Hysteresis in a Schmitt trigger", back: "The difference between the upper and lower trip points: UTP − LTP." },
+      ],
+      quiz: [
+        {
+          kind: "numeric",
+          q: "A 555 monostable must give a 5 s pulse with C = 47 μF. Find R in kΩ (nearest whole number).",
+          answer: 97,
+          tolerance: 1,
+          unit: "kΩ",
+          explain: "R = T/(1.1C) = 5/(1.1 × 47×10⁻⁶) ≈ 96.7 kΩ ≈ 97 kΩ (use 100 kΩ in practice).",
+          difficulty: 2,
+        },
+        {
+          kind: "mcq",
+          q: "In a bistable multivibrator, the two stages are coupled by:",
+          options: ["two capacitors", "two resistors", "one resistor and one capacitor", "a transformer"],
+          answer: 1,
+          explain: "Resistive coupling on both sides gives two stable states.",
+        },
+        {
+          kind: "numeric",
+          q: "A 555 astable has R_A = 4.7 kΩ, R_B = 4.7 kΩ and C = 1 μF. Find f in Hz (nearest whole number) using f = 1.44/((R_A + 2R_B)C).",
+          answer: 102,
+          tolerance: 1,
+          unit: "Hz",
+          explain: "f = 1.44 / (14.1×10³ × 10⁻⁶) ≈ 102 Hz.",
+        },
+        {
+          kind: "truefalse",
+          q: "In the basic 555 astable circuit, the duty cycle is always more than 50%.",
+          answer: true,
+          explain: "t_H uses R_A + R_B and t_L uses only R_B, so t_H > t_L.",
+        },
+        {
+          kind: "fill",
+          q: "The 555 output is reset (forced low) by taking pin ___ to ground.",
+          answer: ["4", "four"],
+          explain: "Pin 4 is the active-low reset; it is normally tied to V_CC.",
+        },
+        {
+          kind: "mcq",
+          q: "Which circuit is used to convert a noisy sine wave into a clean square wave?",
+          options: ["RC integrator", "Clamper", "Schmitt trigger", "Monostable multivibrator"],
+          answer: 2,
+          explain: "Its hysteresis stops noise from causing repeated switching.",
+        },
+        {
+          kind: "order",
+          q: "Arrange multivibrators in increasing number of stable states.",
+          items: ["Astable", "Monostable", "Bistable"],
+          explain: "0, 1 and 2 stable states respectively.",
+        },
+      ],
+    },
+    {
+      slug: "c12-ele-wave-shaping-board-practice",
+      title: "Board practice: Wave Shaping and Multivibrators",
+      summary: "Mixed board-style questions on RC circuits, clippers, clampers, transistor multivibrators and the 555 timer.",
+      minutes: 20,
+      xp: 45,
+      blocks: [
+        {
+          type: "text",
+          md: "Questions from this chapter are mostly 'draw and explain' with waveforms, plus short numericals on time constants, clipping levels and 555 timing. Practise drawing input and output waveforms quickly and neatly.",
+        },
+        {
+          type: "list",
+          ordered: true,
+          items: [
+            "What is wave shaping? Distinguish linear and non-linear wave shaping. (2 marks)",
+            "Explain a biased shunt clipper with waveforms. (3 marks)",
+            "Explain the working of a positive clamper. (3 marks)",
+            "Explain a transistor astable multivibrator with a circuit and waveforms. (5 marks)",
+            "Draw the internal block diagram of the 555 timer and explain its astable operation. (5 marks)",
+          ],
+        },
+        {
+          type: "example",
+          title: "Numerical 1: nearly square 555 output",
+          problem: "A 555 astable uses R_A = 1 kΩ, R_B = 10 kΩ and C = 0.01 μF. Find t_H, t_L, f and the duty cycle.",
+          steps: [
+            t`$t_H = 0.693 \times 11\times10^3 \times 10^{-8} \approx 76.2\ \mu\text{s}$.`,
+            t`$t_L = 0.693 \times 10\times10^3 \times 10^{-8} = 69.3\ \mu\text{s}$.`,
+            t`$f = \frac{1.44}{(1 + 20)\times10^3 \times 10^{-8}} \approx 6.86$ kHz.`,
+            t`$D = \frac{11}{21} \approx 52.4\%$, close to a square wave because $R_B \gg R_A$.`,
+          ],
+          answer: "t_H ≈ 76 μs, t_L ≈ 69 μs, f ≈ 6.86 kHz, D ≈ 52%.",
+        },
+        {
+          type: "example",
+          title: "Numerical 2: two-level clipper",
+          problem: "A two-level shunt clipper uses two silicon diodes with bias batteries of 4.3 V and 2.3 V, arranged to clip the positive and negative peaks respectively. A 10 V peak sine wave is applied. Find the output limits.",
+          steps: [
+            t`Positive clipping level $= 4.3 + 0.7 = 5$ V.`,
+            t`Negative clipping level $= -(2.3 + 0.7) = -3$ V.`,
+            "Between −3 V and +5 V both diodes are off and the output follows the input.",
+          ],
+          answer: "The output swings between −3 V and +5 V with flat tops and bottoms.",
+        },
+        {
+          type: "example",
+          title: "Numerical 3: monostable from a transistor circuit",
+          problem: "A transistor monostable has a timing resistor of 47 kΩ and timing capacitor of 10 μF. Find the pulse width.",
+          steps: [
+            t`$T \approx 0.693RC = 0.693 \times 47\times10^3 \times 10\times10^{-6}$.`,
+            t`$T \approx 0.326$ s.`,
+          ],
+          answer: "Pulse width ≈ 0.33 s.",
+        },
+        {
+          type: "example",
+          title: "Numerical 4: negative clamper with a silicon diode",
+          problem: "An 8 V peak sine wave is applied to a negative clamper using a silicon diode (0.7 V). Find the output range and its peak-to-peak value.",
+          steps: [
+            t`On the positive peak the diode conducts and C charges to $8 - 0.7 = 7.3$ V.`,
+            t`Afterwards $v_o = v_{in} - 7.3$: from $8 - 7.3 = +0.7$ V down to $-8 - 7.3 = -15.3$ V.`,
+            t`Peak-to-peak $= 0.7 - (-15.3) = 16$ V, the same as the input.`,
+          ],
+          answer: "Output swings from +0.7 V to −15.3 V; peak-to-peak stays 16 V.",
+        },
+        {
+          type: "checkpoint",
+          questions: [
+            {
+              kind: "numeric",
+              q: "A symmetrical transistor astable must run at 1 kHz with C = 0.1 μF. Find R in kΩ (to 1 decimal place).",
+              answer: 7.2,
+              tolerance: 0.1,
+              unit: "kΩ",
+              explain: "T = 1 ms = 1.386 R C → R = 10⁻³ / (1.386 × 10⁻⁷) ≈ 7.2 kΩ.",
+              difficulty: 2,
+            },
+          ],
+        },
+        {
+          type: "mistake",
+          wrong: "The 555 astable frequency formula is f = 1.44 / ((R_A + R_B) C).",
+          right: "f = 1.44 / ((R_A + 2R_B) C), because C charges through R_A + R_B and discharges through R_B, so R_B is counted twice.",
+          why: "Students remember the charging path only. Add t_H = 0.693(R_A + R_B)C and t_L = 0.693R_BC to see where the 2R_B comes from.",
+        },
+        {
+          type: "activity",
+          activity: {
+            kind: "order",
+            prompt: "Order one cycle of a 555 astable, starting with C empty.",
+            items: [
+              "Trigger pin below ⅓V_CC sets the flip-flop; output goes high",
+              "C charges through R_A + R_B",
+              "Threshold reaches ⅔V_CC; flip-flop resets, output goes low",
+              "Discharge transistor turns on; C discharges through R_B",
+              "Voltage falls to ⅓V_CC and the cycle repeats",
+            ],
+            explain: "After the first cycle C swings only between ⅓V_CC and ⅔V_CC, which is why the timing uses 0.693 = ln 2.",
+          },
+        },
+        {
+          type: "table",
+          headers: ["Circuit", "Key formula or level"],
+          rows: [
+            ["Time constant", "τ = RC"],
+            ["Biased clipper (Si)", "clips at V_B + 0.7 V"],
+            ["Positive clamper (ideal)", "0 to +2V_m"],
+            ["Transistor astable", "T = 0.693(R₁C₁ + R₂C₂)"],
+            ["555 astable", "f = 1.44/((R_A + 2R_B)C)"],
+            ["555 monostable", "T = 1.1RC"],
+          ],
+        },
+        {
+          type: "callout",
+          tone: "exam",
+          title: "Board tip",
+          md: "For multivibrator 5-markers, show V_C1, V_C2 (collector) and V_B1, V_B2 (base) waveforms one under another, with time marked as 0.693R₂C₂ and 0.693R₁C₁. The base waveform dips sharply negative and recovers exponentially; draw that curve, not a square.",
+        },
+        {
+          type: "keypoints",
+          items: [
+            "Clipping levels: ±(V_B + 0.7 V) for biased silicon-diode clippers.",
+            "Clampers keep peak-to-peak value; only the DC level moves.",
+            "555: 2R_B in the frequency formula; D = (R_A + R_B)/(R_A + 2R_B).",
+            "Choose R and C from the timing formula, then pick the nearest standard value.",
+          ],
+        },
+      ],
+      flashcards: [
+        { front: "Two-level clipper output limits", back: "+(V_B1 + 0.7) and −(V_B2 + 0.7) for silicon diodes." },
+        { front: "555 duty cycle formula", back: "D = (R_A + R_B) / (R_A + 2R_B)." },
+        { front: "Why is 0.693 in timing formulas?", back: "It is ln 2: the time for an RC charge or discharge to cover the needed fraction between the switching levels." },
+        { front: "To get a near-square wave from a 555 astable", back: "Make R_B much larger than R_A." },
+        { front: "Pins tied together in a 555 astable", back: "Pins 2 (trigger) and 6 (threshold)." },
+        { front: "Which multivibrator divides frequency by two?", back: "Bistable (flip-flop): it changes state once per trigger pulse." },
+      ],
+      quiz: [
+        {
+          kind: "numeric",
+          q: "A 555 astable has R_A = 2 kΩ, R_B = 4 kΩ. Find the duty cycle in % (to 1 decimal place).",
+          answer: 60,
+          tolerance: 0.1,
+          unit: "%",
+          explain: "D = (2 + 4)/(2 + 8) = 6/10 = 60%.",
+        },
+        {
+          kind: "numeric",
+          q: "A 555 monostable uses R = 10 kΩ and C = 100 μF. Find its pulse width in s.",
+          answer: 1.1,
+          tolerance: 0.01,
+          unit: "s",
+          explain: "T = 1.1 × 10⁴ × 10⁻⁴ = 1.1 s.",
+        },
+        {
+          kind: "mcq",
+          q: "A biased shunt clipper uses a silicon diode and a 2 V battery. The output is clipped at:",
+          options: ["2 V", "2.7 V", "1.3 V", "0.7 V"],
+          answer: 1,
+          explain: "V_B + V_γ = 2 + 0.7 = 2.7 V.",
+        },
+        {
+          kind: "truefalse",
+          q: "An RC integrator needs a time constant much smaller than the period of the input.",
+          answer: false,
+          explain: "An integrator needs RC ≫ T; a differentiator needs RC ≪ T.",
+        },
+        {
+          kind: "fill",
+          q: "A monostable multivibrator is also called a ___-shot multivibrator.",
+          answer: ["one"],
+          explain: "One trigger gives one pulse.",
+        },
+        {
+          kind: "multi",
+          q: "Which statements about a transistor astable multivibrator are true?",
+          options: ["Both coupling elements are capacitors", "It needs an external trigger to switch", "Its output is a square or rectangular wave", "When one transistor is ON the other is OFF"],
+          answers: [0, 2, 3],
+          explain: "It is free-running; no trigger is needed.",
+        },
+        {
+          kind: "mcq",
+          q: "Inside the 555, the lower comparator compares the trigger input with:",
+          options: ["⅔ V_CC", "½ V_CC", "⅓ V_CC", "V_CC"],
+          answer: 2,
+          explain: "Trigger is compared with ⅓V_CC; threshold with ⅔V_CC.",
+        },
+      ],
+    },
+  ],
+};
+
+export const topics: Topic[] = [amplifiers, feedback, fet, opamp, waveshaping];
 
 /** Chapter title ("11:" / "12:" + exact title) → topic slug(s) that teach it. */
 export const links: Record<string, string | string[]> = {
@@ -2322,4 +2884,5 @@ export const links: Record<string, string | string[]> = {
   "12:Feedback Amplifiers and Oscillators": "c12-ele-feedback-oscillators",
   "12:Field Effect Transistors": "c12-ele-field-effect-transistors",
   "12:Operational Amplifiers": "c12-ele-operational-amplifiers",
+  "12:Wave Shaping and Multivibrators": "c12-ele-wave-shaping-multivibrators",
 };

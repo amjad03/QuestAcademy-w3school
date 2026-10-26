@@ -1156,10 +1156,598 @@ print("Check with bin():", bin(n))`,
   ],
 };
 
-export const topics: Topic[] = [computerSystems, numberSystems];
+/* ------------------------------------------------------------------ */
+const booleanLogic: Topic = {
+  slug: "c11-cs-boolean-logic",
+  title: "Boolean Logic",
+  icon: "🔌",
+  description: "Boolean values and operators, the logic gates NOT, AND, OR, NAND, NOR and XOR, truth tables, Boolean expressions, logic circuits and De Morgan's laws.",
+  lessons: [
+    {
+      slug: "c11-cs-logic-gates",
+      title: "Boolean Operators, Logic Gates and Truth Tables",
+      summary: "Boolean variables, the NOT, AND and OR operators, the derived gates NAND, NOR and XOR, their symbols and truth tables, and checking them with Python.",
+      minutes: 20,
+      xp: 50,
+      blocks: [
+        {
+          type: "illustration",
+          emoji: "🚨",
+          caption: "A bank locker room in Pune has an alarm that rings only when the door is open AND it is after closing time. The alarm's decision uses just two values: yes or no. Such yes/no logic is what every digital circuit is built on.",
+        },
+        {
+          type: "text",
+          md: "**Boolean logic**, named after the mathematician George Boole, works with only two values: **True** and **False**, written **1** and **0**. A variable that can hold only these two values is a **Boolean variable**. Inside a computer, 1 and 0 are two voltage levels (high and low).\n\nA **logic gate** is an electronic circuit that takes one or more Boolean inputs and gives one Boolean output. A **truth table** lists the output for **every** possible combination of inputs; with $n$ inputs there are $2^n$ rows.",
+        },
+        {
+          type: "text",
+          md: "The three basic operators are:\n\n**NOT** (one input): the output is the opposite of the input. Written $\\overline{A}$ (A bar) or A′. Gate symbol: a triangle with a small circle (**bubble**) at its tip.\n\n**AND** (two or more inputs): the output is 1 only when **all** inputs are 1. Written $A \\cdot B$. Gate symbol: a D shape.\n\n**OR** (two or more inputs): the output is 1 when **at least one** input is 1. Written $A + B$. Gate symbol: a curved, shield-like shape with a pointed tip.",
+        },
+        {
+          type: "table",
+          headers: ["A", "B", "NOT A", "A · B (AND)", "A + B (OR)"],
+          rows: [
+            ["0", "0", "1", "0", "0"],
+            ["0", "1", "1", "0", "1"],
+            ["1", "0", "0", "0", "1"],
+            ["1", "1", "0", "1", "1"],
+          ],
+        },
+        {
+          type: "example",
+          title: "From a rule to a gate",
+          problem: "A school bus door motor should run (Y = 1) only when the driver presses the button (A = 1) and the bus is not moving. Let M = 1 mean the bus is moving. Write Y as a Boolean expression and find Y for A = 1, M = 1.",
+          steps: [
+            "\"Not moving\" is NOT M, that is $\\overline{M}$.",
+            "Both conditions must be true, so use AND: $Y = A \\cdot \\overline{M}$.",
+            "For A = 1, M = 1: $\\overline{M} = 0$, so $Y = 1 \\cdot 0 = 0$.",
+          ],
+          answer: "$Y = A \\cdot \\overline{M}$; with the bus moving, Y = 0, so the door stays shut.",
+        },
+        {
+          type: "checkpoint",
+          questions: [
+            {
+              kind: "numeric",
+              q: "How many rows does the truth table of a 4-input AND gate have?",
+              answer: 16,
+              explain: "$2^4 = 16$ input combinations. Only one of them (1111) gives output 1.",
+            },
+          ],
+        },
+        {
+          type: "heading",
+          text: "Derived gates: NAND, NOR, XOR",
+        },
+        {
+          type: "text",
+          md: "**NAND** = NOT of AND, $\\overline{A \\cdot B}$: output 0 only when all inputs are 1. Symbol: AND gate with a bubble.\n\n**NOR** = NOT of OR, $\\overline{A + B}$: output 1 only when all inputs are 0. Symbol: OR gate with a bubble.\n\n**XOR** (exclusive OR), $A \\oplus B$: output 1 when the inputs are **different** (for two inputs, when exactly one is 1). Symbol: OR gate with an extra curved line at its inputs.\n\nNAND and NOR are called **universal gates**, because NOT, AND and OR (and so any circuit) can be built using only NAND gates, or only NOR gates.",
+        },
+        {
+          type: "code",
+          lang: "python",
+          runnable: true,
+          caption: "& is AND, | is OR and ^ is XOR on the integers 0 and 1; 1 − x flips a bit.",
+          code: t`print("A B | AND OR NAND NOR XOR")
+for A in (0, 1):
+    for B in (0, 1):
+        AND = A & B
+        OR = A | B
+        NAND = 1 - AND
+        NOR = 1 - OR
+        XOR = A ^ B
+        print(A, B, "|", AND, " ", OR, " ", NAND, "   ", NOR, " ", XOR)`,
+        },
+        {
+          type: "table",
+          headers: ["A", "B", "AND", "OR", "NAND", "NOR", "XOR"],
+          rows: [
+            ["0", "0", "0", "0", "1", "1", "0"],
+            ["0", "1", "0", "1", "1", "0", "1"],
+            ["1", "0", "0", "1", "1", "0", "1"],
+            ["1", "1", "1", "1", "0", "0", "0"],
+          ],
+        },
+        {
+          type: "mistake",
+          wrong: "OR and XOR are the same, so 1 OR 1 = 0.",
+          right: "OR gives 1 when **at least one** input is 1, so 1 + 1 = 1. Only **XOR** gives 0 when both inputs are 1, because it needs the inputs to be different.",
+          why: "In everyday speech \"tea or coffee\" means one, not both, which is the XOR idea. In Boolean logic, plain OR includes the case where both are true.",
+        },
+        {
+          type: "activity",
+          activity: {
+            kind: "match",
+            prompt: "Match each gate with when its output is 1.",
+            pairs: [
+              ["AND", "All inputs are 1"],
+              ["OR", "At least one input is 1"],
+              ["NAND", "At least one input is 0"],
+              ["NOR", "All inputs are 0"],
+              ["XOR", "The two inputs differ"],
+            ],
+            explain: "NAND and NOR are just AND and OR with the output flipped: NAND is 1 except when all inputs are 1; NOR is 1 only when all inputs are 0.",
+          },
+        },
+        {
+          type: "callout",
+          tone: "exam",
+          title: "Board tip",
+          md: "When you draw a gate, label the inputs and the output with the expression (for example, write $\\overline{A + B}$ at the output of a NOR gate). Make the bubble clearly visible: it is the only difference between AND and NAND, and between OR and NOR.",
+        },
+        {
+          type: "checkpoint",
+          questions: [
+            {
+              kind: "mcq",
+              q: "A gate gives output 0 only when both inputs are 1. Which gate is it?",
+              options: ["NAND", "NOR", "AND", "XOR"],
+              answer: 0,
+              explain: "Output 0 only for 1,1 is the NAND truth table (1, 1, 1, 0). XOR is also 0 for 0,0.",
+            },
+          ],
+        },
+        {
+          type: "keypoints",
+          items: [
+            "Boolean values are 1 (True) and 0 (False); a truth table with n inputs has $2^n$ rows.",
+            "NOT flips; AND is 1 only if all inputs are 1; OR is 1 if any input is 1.",
+            "NAND = NOT AND, NOR = NOT OR (shown by a bubble at the output).",
+            "XOR is 1 when the two inputs are different.",
+            "NAND and NOR are universal gates.",
+          ],
+        },
+      ],
+      flashcards: [
+        { front: "Truth table", back: "A table showing the output of a logic circuit for every possible combination of inputs ($2^n$ rows for n inputs)." },
+        { front: "AND gate output", back: "1 only when all inputs are 1." },
+        { front: "OR gate output", back: "1 when at least one input is 1." },
+        { front: "NAND gate", back: "NOT of AND: output is 0 only when all inputs are 1." },
+        { front: "NOR gate", back: "NOT of OR: output is 1 only when all inputs are 0." },
+        { front: "XOR gate", back: "Exclusive OR: output is 1 when the two inputs are different." },
+        { front: "Universal gates", back: "NAND and NOR: any logic circuit can be built using only one of them." },
+        { front: "The bubble in a gate symbol", back: "A small circle meaning NOT (inversion) of the output." },
+      ],
+      quiz: [
+        {
+          kind: "mcq",
+          q: "What is the output of an OR gate with inputs A = 1, B = 1?",
+          options: ["1", "0", "2", "Undefined"],
+          answer: 0,
+          explain: "OR is 1 when at least one input is 1. In Boolean algebra 1 + 1 = 1 (there is no 2).",
+        },
+        {
+          kind: "mcq",
+          q: "For which inputs is a NOR gate's output 1?",
+          options: ["A = 0, B = 0", "A = 1, B = 1", "A = 0, B = 1", "A = 1, B = 0"],
+          answer: 0,
+          explain: "NOR is NOT of OR. OR is 0 only for 0, 0, so NOR is 1 only then.",
+        },
+        {
+          kind: "truefalse",
+          q: "NOT, AND and OR can all be made using only NAND gates.",
+          answer: true,
+          explain: "That is why NAND is called a universal gate (and NOR too).",
+        },
+        {
+          kind: "fill",
+          q: "The output of $1 \\oplus 1$ (XOR) is ___.",
+          answer: ["0"],
+          explain: "XOR needs the inputs to differ. 1 and 1 are the same, so the output is 0.",
+        },
+        {
+          kind: "numeric",
+          q: "In the truth table of a 3-input NOR gate, in how many rows is the output 1?",
+          answer: 1,
+          explain: "There are $2^3 = 8$ rows. NOR is 1 only when all inputs are 0, which is just one row (000).",
+          difficulty: 2,
+        },
+        {
+          kind: "multi",
+          q: "Which gates give output 1 for inputs A = 0, B = 1?",
+          options: ["OR", "XOR", "NAND", "AND", "NOR"],
+          answers: [0, 1, 2],
+          explain: "OR (one input is 1), XOR (inputs differ) and NAND (not both 1) give 1. AND and NOR give 0.",
+        },
+        {
+          kind: "mcq",
+          q: "What does `print(1 & 0, 1 | 0, 1 ^ 1)` show in Python?",
+          options: ["0 1 0", "1 1 0", "0 1 1", "0 0 0"],
+          answer: 0,
+          explain: "1 AND 0 = 0, 1 OR 0 = 1, 1 XOR 1 = 0.",
+        },
+      ],
+    },
+    {
+      slug: "c11-cs-de-morgan-circuits",
+      title: "Boolean Expressions, Logic Circuits and De Morgan's Laws",
+      summary: "Evaluating Boolean expressions with truth tables, drawing a logic circuit from an expression, basic Boolean laws, and De Morgan's laws with a truth-table proof.",
+      minutes: 22,
+      xp: 55,
+      blocks: [
+        {
+          type: "text",
+          md: "A **Boolean expression** joins Boolean variables with NOT, AND and OR, for example $Y = A \\cdot B + \\overline{C}$. Like BODMAS in arithmetic, there is an order: **brackets first, then NOT, then AND, then OR**. So $A \\cdot B + \\overline{C}$ means $(A \\cdot B) + (\\overline{C})$.\n\nA **logic circuit** is the gate diagram of an expression. Every expression can be drawn as a circuit, and every circuit can be written as an expression.",
+        },
+        {
+          type: "example",
+          title: "Truth table of an expression",
+          problem: t`Make the truth table of $Y = A \cdot B + \overline{C}$.`,
+          steps: [
+            "Three variables, so $2^3 = 8$ rows. List A, B, C counting in binary from 000 to 111.",
+            t`Add helper columns: $A \cdot B$ (1 only when A = B = 1) and $\overline{C}$ (the opposite of C).`,
+            "Y is the OR of the two helper columns: Y = 1 if either helper is 1.",
+            "Reading the table: Y = 0 only when C = 1 and A · B = 0, that is in rows 001, 011 and 101.",
+          ],
+          answer: "Y is 1 in five rows (000, 010, 100, 110, 111) and 0 in three rows (001, 011, 101).",
+        },
+        {
+          type: "table",
+          headers: ["A", "B", "C", "A · B", "C̄", "Y = A · B + C̄"],
+          rows: [
+            ["0", "0", "0", "0", "1", "1"],
+            ["0", "0", "1", "0", "0", "0"],
+            ["0", "1", "0", "0", "1", "1"],
+            ["0", "1", "1", "0", "0", "0"],
+            ["1", "0", "0", "0", "1", "1"],
+            ["1", "0", "1", "0", "0", "0"],
+            ["1", "1", "0", "1", "1", "1"],
+            ["1", "1", "1", "1", "0", "1"],
+          ],
+        },
+        {
+          type: "text",
+          md: "To **draw the circuit** of $Y = A \\cdot B + \\overline{C}$: feed C into a NOT gate to get $\\overline{C}$; feed A and B into an AND gate to get $A \\cdot B$; feed both of these into an OR gate, whose output is Y. Work from the innermost part of the expression outwards, and label the output of every gate.",
+        },
+        {
+          type: "activity",
+          activity: {
+            kind: "order",
+            prompt: "Order the steps to draw the circuit for Y = (A + B) · C̄.",
+            items: ["Write the input lines A, B and C", "Make A + B with an OR gate and C̄ with a NOT gate", "Feed A + B and C̄ into an AND gate", "Label the AND gate's output Y"],
+            explain: "Build the bracket and the NOT first, then the operator that joins them, and label the final output.",
+          },
+        },
+        {
+          type: "heading",
+          text: "De Morgan's laws",
+        },
+        {
+          type: "formula",
+          tex: t`\overline{A + B} = \overline{A}\cdot\overline{B} \qquad\qquad \overline{A \cdot B} = \overline{A} + \overline{B}`,
+          caption: "De Morgan's laws: to complement an expression, complement each variable and change OR to AND (or AND to OR).",
+        },
+        {
+          type: "text",
+          md: "In words: **the complement of a sum is the product of the complements**, and **the complement of a product is the sum of the complements**. They also tell us that a NOR gate behaves like an AND gate with both inputs inverted, and a NAND gate like an OR gate with both inputs inverted.\n\nA Boolean law is proved by a truth table: if two expressions give the same output in **every** row, they are equal.",
+        },
+        {
+          type: "table",
+          headers: ["A", "B", "A + B", "(A + B)′", "A′", "B′", "A′ · B′"],
+          rows: [
+            ["0", "0", "0", "1", "1", "1", "1"],
+            ["0", "1", "1", "0", "1", "0", "0"],
+            ["1", "0", "1", "0", "0", "1", "0"],
+            ["1", "1", "1", "0", "0", "0", "0"],
+          ],
+        },
+        {
+          type: "code",
+          lang: "python",
+          runnable: true,
+          caption: "Python checks the first law for every row. Both columns come out as 1, 0, 0, 0.",
+          code: t`print("A B | not(A or B)  (not A) and (not B)")
+for A in (False, True):
+    for B in (False, True):
+        left = not (A or B)
+        right = (not A) and (not B)
+        print(int(A), int(B), "|", int(left), "           ", int(right))`,
+        },
+        {
+          type: "mistake",
+          wrong: "The complement of (A + B) is A′ + B′: just put a bar on each letter.",
+          right: "When you break the bar, you must also **change the operator**: $(A + B)′ = A′ \\cdot B′$ and $(A \\cdot B)′ = A′ + B′$.",
+          why: "It looks like taking a minus sign inside brackets in algebra. Check row A = 0, B = 1: (A + B)′ = 0, but A′ + B′ = 1 + 0 = 1, so the shortcut fails.",
+        },
+        {
+          type: "table",
+          headers: ["Law", "OR form", "AND form"],
+          rows: [
+            ["Identity", "A + 0 = A", "A · 1 = A"],
+            ["Null (domination)", "A + 1 = 1", "A · 0 = 0"],
+            ["Idempotent", "A + A = A", "A · A = A"],
+            ["Complement", "A + A′ = 1", "A · A′ = 0"],
+            ["Involution", "(A′)′ = A", ""],
+          ],
+        },
+        {
+          type: "callout",
+          tone: "exam",
+          title: "Board tip",
+          md: "\"Prove De Morgan's law using a truth table\" is a common 3-mark question. Draw separate columns for each step, and finish with a sentence: *since the two columns are identical for all input combinations, the law is proved.*",
+        },
+        {
+          type: "checkpoint",
+          questions: [
+            {
+              kind: "mcq",
+              q: t`By De Morgan's law, $\overline{P \cdot Q}$ equals:`,
+              options: [t`$\overline{P} + \overline{Q}$`, t`$\overline{P} \cdot \overline{Q}$`, "$P + Q$", t`$\overline{P + Q}$`],
+              answer: 0,
+              explain: "Complement each variable and change AND to OR.",
+            },
+            {
+              kind: "truefalse",
+              q: t`For A = 1, B = 0, C = 1, the value of $Y = A \cdot B + \overline{C}$ is 0.`,
+              answer: true,
+              explain: "$A \\cdot B = 0$ and $\\overline{C} = 0$, so Y = 0 + 0 = 0.",
+            },
+          ],
+        },
+        {
+          type: "keypoints",
+          items: [
+            "Order of evaluation: brackets, NOT, AND, OR.",
+            "Build a truth table with $2^n$ rows and a helper column for each part of the expression.",
+            "Draw circuits from the inside of the expression outwards; label each gate's output.",
+            "De Morgan: (A + B)′ = A′ · B′ and (A · B)′ = A′ + B′.",
+            "Two expressions are equal if their truth-table columns match in every row.",
+          ],
+        },
+      ],
+      flashcards: [
+        { front: "Order of Boolean operations", back: "Brackets, then NOT, then AND, then OR." },
+        { front: "De Morgan's first law", back: "(A + B)′ = A′ · B′: the complement of a sum is the product of the complements." },
+        { front: "De Morgan's second law", back: "(A · B)′ = A′ + B′: the complement of a product is the sum of the complements." },
+        { front: "Complement law", back: "A + A′ = 1 and A · A′ = 0." },
+        { front: "Null law", back: "A + 1 = 1 and A · 0 = 0." },
+        { front: "How to prove a Boolean law", back: "Make a truth table for both sides; if the columns are identical for all inputs, the law holds." },
+        { front: "NOR gate as an AND gate", back: "By De Morgan, a NOR gate equals an AND gate with both inputs inverted: (A + B)′ = A′ · B′." },
+      ],
+      quiz: [
+        {
+          kind: "mcq",
+          q: t`Which is equal to $\overline{A + B}$?`,
+          options: [t`$\overline{A}\cdot\overline{B}$`, t`$\overline{A} + \overline{B}$`, t`$A \cdot B$`, t`$\overline{A \cdot B}$`],
+          answer: 0,
+          explain: "De Morgan's first law: break the bar and change + to ·.",
+        },
+        {
+          kind: "numeric",
+          q: t`In the truth table of $Y = A \cdot B + \overline{C}$, in how many rows is Y = 1?`,
+          answer: 5,
+          explain: "Y = 1 whenever C = 0 (4 rows) plus the row A = B = C = 1, so 5 rows.",
+          difficulty: 2,
+        },
+        {
+          kind: "truefalse",
+          q: "A · A′ = 1 for every value of A.",
+          answer: false,
+          explain: "A variable AND its complement is always **0** (one of them is always 0). It is A + A′ that is always 1.",
+        },
+        {
+          kind: "fill",
+          q: "In the expression A + B · C, the operation done first is ___.",
+          answer: ["AND", "B · C", "B.C", "and"],
+          explain: "AND comes before OR, so B · C is found first, then OR-ed with A.",
+        },
+        {
+          kind: "mcq",
+          q: t`Simplify $\overline{\overline{A} + \overline{B}}$ using De Morgan's law.`,
+          options: ["$A \\cdot B$", "$A + B$", t`$\overline{A} \cdot \overline{B}$`, "1"],
+          answer: 0,
+          explain: "By De Morgan, it equals $\\overline{\\overline{A}} \\cdot \\overline{\\overline{B}}$, and by involution that is $A \\cdot B$.",
+          difficulty: 2,
+          hint: "Break the long bar, change + to ·, then use (A′)′ = A.",
+        },
+        {
+          kind: "order",
+          q: "Order the gates you meet from input to output in the circuit for Y = (A · B)′ + C.",
+          items: ["AND gate on A and B", "NOT gate on A · B", "OR gate with C"],
+          explain: "Innermost first: A · B, then its complement, then OR with C. (The AND and NOT together could also be one NAND gate.)",
+        },
+        {
+          kind: "multi",
+          q: "Select all identities that are **true**.",
+          options: ["A + 1 = 1", "A · 0 = 0", "A + A = 2A", "(A′)′ = A"],
+          answers: [0, 1, 3],
+          explain: "In Boolean algebra A + A = A (idempotent law); there is no 2A.",
+        },
+      ],
+    },
+    {
+      slug: "c11-cs-boolean-logic-practice",
+      title: "Board practice: Boolean Logic",
+      summary: "Mixed board-style questions: truth tables of expressions, applying De Morgan's laws, identifying gates, and a Python program that prints a truth table.",
+      minutes: 20,
+      xp: 55,
+      blocks: [
+        {
+          type: "text",
+          md: "Boolean logic questions in the Class 11 paper are short but exact: draw a gate, complete a truth table, write the expression for a circuit, or prove a law. Practise these until every row is right; one wrong row usually costs the mark.",
+        },
+        {
+          type: "example",
+          title: "Spot the gate from its truth table",
+          problem: t`Make the truth table of $Y = \overline{A} \cdot B + A \cdot \overline{B}$ and name the single gate it equals.`,
+          steps: [
+            t`Row 00: $\overline{A} \cdot B = 1 \cdot 0 = 0$ and $A \cdot \overline{B} = 0$, so Y = 0.`,
+            t`Row 01: $\overline{A} \cdot B = 1 \cdot 1 = 1$, so Y = 1.`,
+            t`Row 10: $A \cdot \overline{B} = 1 \cdot 1 = 1$, so Y = 1.`,
+            "Row 11: both terms are 0, so Y = 0. The output column is 0, 1, 1, 0.",
+          ],
+          answer: t`Y is 1 only when the inputs differ: it is the XOR gate, $Y = A \oplus B$.`,
+        },
+        {
+          type: "example",
+          title: "Complement an expression",
+          problem: "Find the complement of $A \\cdot B + C$ using De Morgan's laws.",
+          steps: [
+            "Treat $A \\cdot B$ as one block: $\\overline{(A \\cdot B) + C} = \\overline{A \\cdot B} \\cdot \\overline{C}$ (first law).",
+            "Apply the second law to the block: $\\overline{A \\cdot B} = \\overline{A} + \\overline{B}$.",
+            "Keep brackets so that OR is done before AND.",
+          ],
+          answer: t`$\overline{A \cdot B + C} = (\overline{A} + \overline{B}) \cdot \overline{C}$`,
+        },
+        {
+          type: "mistake",
+          wrong: "A truth table with 3 inputs needs 6 rows (2 × 3).",
+          right: "It needs $2^3 = 8$ rows. Each input can be 0 or 1, so the count doubles with every new input.",
+          why: "Students multiply 2 by the number of inputs instead of raising 2 to that power. Listing rows as binary numbers 000 to 111 avoids missing any.",
+        },
+        {
+          type: "activity",
+          activity: {
+            kind: "reveal",
+            prompt: "Both inputs of a NAND gate are joined to A. What is the output?",
+            emoji: "🔁",
+            options: ["A′ (NOT A)", "A", "Always 0", "Always 1"],
+            answer: 0,
+            trap: 1,
+            explain: "With both inputs equal to A, the output is $\\overline{A \\cdot A} = \\overline{A}$, since A · A = A. So a NAND gate with its inputs tied works as a NOT gate; this is the first step in showing NAND is universal.",
+          },
+        },
+        {
+          type: "checkpoint",
+          questions: [
+            {
+              kind: "mcq",
+              q: "A circuit feeds A and B into an OR gate, and that output into a NOT gate. Which single gate is this?",
+              options: ["NOR", "NAND", "XOR", "AND"],
+              answer: 0,
+              explain: "NOT after OR gives $\\overline{A + B}$, which is NOR.",
+            },
+          ],
+        },
+        {
+          type: "heading",
+          text: "Write a small program",
+        },
+        {
+          type: "text",
+          md: "**Question (3 marks):** Write a Python program that prints the truth table of $Y = (A + B) \\cdot \\overline{C}$ using nested loops and the operators `or`, `and`, `not`.",
+        },
+        {
+          type: "code",
+          lang: "python",
+          runnable: true,
+          caption: "Three nested loops give all 8 combinations in binary order.",
+          code: t`print("A B C Y")
+for A in (0, 1):
+    for B in (0, 1):
+        for C in (0, 1):
+            Y = (A or B) and not C
+            print(A, B, C, int(Y))`,
+        },
+        {
+          type: "table",
+          headers: ["A", "B", "C", "Y"],
+          rows: [
+            ["0", "0", "0", "0"],
+            ["0", "0", "1", "0"],
+            ["0", "1", "0", "1"],
+            ["0", "1", "1", "0"],
+            ["1", "0", "0", "1"],
+            ["1", "0", "1", "0"],
+            ["1", "1", "0", "1"],
+            ["1", "1", "1", "0"],
+          ],
+        },
+        {
+          type: "callout",
+          tone: "exam",
+          title: "Board tip",
+          md: "When you are asked to write the expression of a given circuit, write the output of each gate on the diagram first, then combine them. For proofs, one column per sub-expression is safer than doing two steps in your head.",
+        },
+        {
+          type: "checkpoint",
+          questions: [
+            {
+              kind: "numeric",
+              q: t`For A = 0, B = 1, C = 0, what is $Y = (A + B) \cdot \overline{C}$?`,
+              answer: 1,
+              explain: "A + B = 1 and $\\overline{C} = 1$, so Y = 1 · 1 = 1.",
+            },
+          ],
+        },
+        {
+          type: "keypoints",
+          items: [
+            "List inputs in binary order (000 to 111) so that no row is missed.",
+            "A′B + AB′ is XOR; NOT after OR is NOR; NOT after AND is NAND.",
+            "De Morgan: break the bar, change the operator, keep brackets.",
+            "A NAND (or NOR) with both inputs tied together acts as a NOT gate.",
+          ],
+        },
+      ],
+      flashcards: [
+        { front: "A′B + AB′", back: "The XOR of A and B: 1 when A and B differ." },
+        { front: "Complement of A · B + C", back: "(A′ + B′) · C′" },
+        { front: "Rows in a truth table with n inputs", back: "$2^n$" },
+        { front: "NAND gate with inputs tied together", back: "Acts as a NOT gate: (A · A)′ = A′." },
+        { front: "Python Boolean operators", back: "`not`, `and`, `or` (and `&`, `|`, `^` for bits)." },
+        { front: "Output of OR followed by NOT", back: "NOR: (A + B)′" },
+      ],
+      quiz: [
+        {
+          kind: "mcq",
+          q: "Which output column (rows 00, 01, 10, 11) belongs to the NAND gate?",
+          options: ["1, 1, 1, 0", "0, 0, 0, 1", "1, 0, 0, 0", "0, 1, 1, 0"],
+          answer: 0,
+          explain: "NAND is the opposite of AND (0, 0, 0, 1). 1, 0, 0, 0 is NOR and 0, 1, 1, 0 is XOR.",
+        },
+        {
+          kind: "truefalse",
+          q: "(A + B + C)′ = A′ · B′ · C′",
+          answer: true,
+          explain: "De Morgan's law extends to any number of variables.",
+        },
+        {
+          kind: "numeric",
+          q: t`In the truth table of $Y = (A + B) \cdot \overline{C}$, how many rows have Y = 1?`,
+          answer: 3,
+          explain: "C must be 0 (4 rows) and A + B must be 1, which removes the row A = B = 0. So 3 rows: 010, 100, 110.",
+          difficulty: 2,
+        },
+        {
+          kind: "mcq",
+          q: "What does `print(not (1 and 0), (0 or 1) and 0)` show?",
+          options: ["True 0", "False 1", "True 1", "0 0"],
+          answer: 0,
+          explain: "1 and 0 gives 0, and not 0 is True. (0 or 1) gives 1, and 1 and 0 gives 0. Python prints True 0.",
+          difficulty: 2,
+          hint: "`not` always gives True or False; `and` / `or` give one of their operands.",
+        },
+        {
+          kind: "fill",
+          q: "A gate whose output is 1 only when both inputs are 0 is the ___ gate.",
+          answer: ["NOR"],
+          explain: "NOR = NOT of OR; OR is 0 only for 0, 0.",
+        },
+        {
+          kind: "mcq",
+          q: "Which expression describes: the light is on when switch A is on and switch B is off?",
+          options: [t`$A \cdot \overline{B}$`, t`$\overline{A} \cdot B$`, "$A + B$", t`$\overline{A \cdot B}$`],
+          answer: 0,
+          explain: "\"A on\" is A, \"B off\" is B′, and \"and\" is AND.",
+        },
+        {
+          kind: "multi",
+          q: "Select all gates that are universal gates.",
+          options: ["NAND", "NOR", "XOR", "AND"],
+          answers: [0, 1],
+          explain: "Only NAND and NOR can build every other gate on their own.",
+        },
+      ],
+    },
+  ],
+};
+
+export const topics: Topic[] = [computerSystems, numberSystems, booleanLogic];
 
 /** Chapter title ("11:" / "12:" + exact title) → topic slug(s) that teach it. */
 export const links: Record<string, string | string[]> = {
   "11:Computer Systems and Organisation": "c11-cs-computer-systems",
   "11:Number Systems and Encoding": "c11-cs-number-systems",
+  "11:Boolean Logic": "c11-cs-boolean-logic",
 };
