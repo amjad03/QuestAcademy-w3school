@@ -2843,7 +2843,7 @@ const recursion: Topic = {
         },
         {
           type: "text",
-          md: "Output:\n\n`RACECAR : true`\n`ROTOR : true`\n`ROBOT : false`\n`NOON : true`\n`Q : true`\n\nFor ROBOT, R = T fails at once (index 0 and 4), so only one call is made.",
+          md: "Output:\n\n`RACECAR : true`\n`ROTOR : true`\n`ROBOT : false`\n`NOON : true`\n`Q : true`\n\nFor ROBOT, R ≠ T at once (index 0 and 4), so only one call is made.",
         },
         {
           type: "activity",
