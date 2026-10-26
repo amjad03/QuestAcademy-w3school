@@ -204,7 +204,7 @@ const ch8: Q[] = [
     e: "The middle lamella is a layer mainly of calcium pectate that glues or holds the different neighbouring cells together. Cellulose, hemicellulose, pectins and proteins form the primary wall; lignin is deposited in secondary walls of some cells.",
   },
   {
-    d: 2, t: 75,
+    d: 3, t: 120,
     q: "Which statement about the plant cell wall is correct?",
     o: [
       "The secondary wall is formed outside the primary wall, away from the membrane",
@@ -232,7 +232,7 @@ const ch8: Q[] = [
     e: "Smooth ER (without ribosomes) is the major site for lipid synthesis; in animal cells lipid-like steroidal hormones are synthesised in SER. Rough ER, bearing ribosomes, is extensive in cells actively involved in protein synthesis and secretion. rRNA is made in the nucleolus.",
   },
   {
-    d: 2, t: 75,
+    d: 3, t: 120,
     q: "The Golgi apparatus was first observed by Camillo Golgi in 1898 as densely stained reticular structures near the nucleus. Which statement about its faces is correct?",
     o: [
       "The cis face is concave and is the maturing face",
@@ -283,7 +283,7 @@ const ch8: Q[] = [
     e: "Mitochondria are sausage-shaped or cylindrical with a diameter of 0.2–1.0 µm (average 0.5 µm) and length 1.0–4.1 µm. 5–10 µm is the length of a chloroplast; 10 µm is closer to the size of a whole small cell.",
   },
   {
-    d: 2, t: 75,
+    d: 3, t: 120,
     q: "The matrix of a mitochondrion contains:",
     o: [
       "A single circular DNA molecule, a few RNA molecules and 70S ribosomes",

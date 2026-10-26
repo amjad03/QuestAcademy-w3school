@@ -587,7 +587,7 @@ A **discrete** random variable takes finitely many (or countably many) values $x
             type: "callout",
             tone: "note",
             title: "Board note",
-            md: "The rationalised NCERT book (CBSE 2023 onwards) **dropped** Bernoulli trials and the binomial distribution. **ISC** still teaches and examines it, and JEE, KCET and COMEDK use it often. Karnataka II PUC students should check the current PU blueprint. Learn it either way: it is one of the most useful ideas in the chapter.",
+            md: "The rationalised NCERT book (CBSE 2023 onwards) **dropped** Bernoulli trials and the binomial distribution. **ISC** still teaches and examines it. The revised JEE Main syllabus (2024 onwards) no longer names the binomial distribution, and KCET and COMEDK follow the rationalised book, but older papers and many practice books use it. Karnataka II PUC students and entrance aspirants should check the current blueprint or syllabus. Learn it either way: it is one of the most useful ideas in the chapter.",
           },
           {
             type: "text",
@@ -762,7 +762,7 @@ A **discrete** random variable takes finitely many (or countably many) values $x
         blocks: [
           {
             type: "text",
-            md: t`**What is asked.** KCET and COMEDK ask 2–4 direct questions: conditional probability from a table or formula, independence checks, Bayes with two or three bags, mean of a distribution, and binomial mean/variance. JEE Main asks about 1–2 questions per paper, usually Bayes, "at least one" counting, binomial sums, or a distribution with an unknown $k$. JEE Advanced mixes conditional probability with permutations and combinations, games played in turns, and multi-stage Bayes.`,
+            md: t`**What is asked.** KCET and COMEDK ask 2–4 direct questions: conditional probability from a table or formula, independence checks, Bayes with two or three bags, mean of a distribution, and (in older papers) binomial mean/variance. JEE Main asks about 1–2 questions per paper, usually Bayes, "at least one" counting, or a distribution with an unknown $k$ (binomial sums appear in papers before 2024; check the current syllabus). JEE Advanced mixes conditional probability with permutations and combinations, games played in turns, and multi-stage Bayes.`,
           },
           {
             type: "table",
@@ -1335,7 +1335,7 @@ A **discrete** random variable takes finitely many (or countably many) values $x
             type: "list",
             items: [
               t`**Corner table first.** For an MCQ, list corner values; do not redraw the graph if the corners are given.`,
-              t`**Slope test.** On a convex region, $Z = ax + by$ (with $b > 0$) is maximised at the corner where the objective line's slope $-\frac{a}{b}$ lies between the slopes of the two edges meeting there.`,
+              t`**Slope test.** On a convex region, $Z = ax + by$ (with $b > 0$) is maximised at a corner on the **upper** boundary (the region lies below both edges there) when the objective line's slope $-\frac{a}{b}$ lies between the slopes of the two edges meeting there.`,
               t`**Two corners equal** → optimum along the whole edge; this happens when $Z$ is parallel to that edge.`,
               t`**Unbounded and "maximise" with positive coefficients** in a region stretching away from the origin: there is no maximum.`,
             ],
@@ -1343,7 +1343,7 @@ A **discrete** random variable takes finitely many (or countably many) values $x
           {
             type: "formula",
             tex: t`Z = ax + by \text{ is optimal at vertex } B \iff -\frac{a}{b} \text{ lies between the slopes of the two edges at } B`,
-            caption: t`Valid for a convex feasible region with $b > 0$, maximising. If $-\frac{a}{b}$ equals one edge slope, the whole edge is optimal.`,
+            caption: t`Valid for a convex feasible region with $b > 0$, maximising, and $B$ on the upper boundary (the region lies below both edges at $B$, as in the examples below). At other corners a line with an in-between slope can cut through the region. If $-\frac{a}{b}$ equals one edge slope, the whole edge is optimal.`,
           },
           {
             type: "example",
@@ -1435,14 +1435,14 @@ A **discrete** random variable takes finitely many (or countably many) values $x
               "LP is examined in KCET, COMEDK and boards; it is not in the JEE Main or JEE Advanced syllabus.",
               "Make a corner table; check every corner.",
               "Tie at two corners ↔ objective parallel to the edge joining them.",
-              "Unique optimum at a vertex ↔ objective slope strictly between the two edge slopes.",
+              "Unique maximum at an upper-boundary vertex ↔ objective slope strictly between the two edge slopes.",
             ],
           },
         ],
         flashcards: [
           { front: "Is Linear Programming in JEE Main?", back: "No. It is in boards, KCET and COMEDK." },
           { front: "When is the optimum at every point of an edge?", back: "When the objective line is parallel to that edge and the edge is optimal." },
-          { front: "Unique max of Z = kx + y at vertex B", back: "−k lies strictly between the slopes of the two edges meeting at B." },
+          { front: "Unique max of Z = kx + y at vertex B", back: "−k lies strictly between the slopes of the two edges meeting at B (B on the upper boundary of the region)." },
           { front: "Quick first step for 'corner points given' MCQs", back: "Evaluate Z at each corner in a small table." },
           { front: "Maximise x + y on a region unbounded away from origin", back: "No maximum; Z can be made as large as you like." },
           { front: "Feasible region empty", back: "The LPP is infeasible: no optimal solution." },
@@ -1837,7 +1837,7 @@ A **discrete** random variable takes finitely many (or countably many) values $x
             kind: "truefalse",
             q: "When demand is unit elastic, marginal revenue is zero.",
             answer: true,
-            explain: t`$MR = p\left(1 - \frac{1}{1}\right) = 0$; revenue is at its maximum there.`,
+            explain: t`$MR = p\left(1 - \frac{1}{1}\right) = 0$; revenue is stationary there (its maximum for a linear demand law).`,
           },
           {
             kind: "numeric",
@@ -1893,7 +1893,7 @@ A **discrete** random variable takes finitely many (or countably many) values $x
               ["Maximum profit from demand and cost", "R = px, P = R − C, P′ = 0, P″ < 0, price and profit stated"],
               ["Break-even point(s)", "Setting R = C (not P′ = 0) and solving"],
               ["Effect of a tax per unit on output, price, profit", "Add tax × x to cost, redo the maximisation"],
-              ["Elasticity, MR = p(1 − 1/η)", "Correct sign convention; classify elastic / inelastic"],
+              ["Elasticity, MR = p(1 − 1/η) (if in your syllabus)", "Correct sign convention; classify elastic / inelastic"],
               ["Prove MC = AC at minimum AC", "Quotient rule and the line (MC − AC)/x = 0"],
             ],
           },
