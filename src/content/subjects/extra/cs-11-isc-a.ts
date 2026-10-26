@@ -140,12 +140,12 @@ const numbers: Topic = {
             kind: "match",
             prompt: "Match each number to its equal value.",
             pairs: [
-              ["$(1100100)_2$", "$(100)_{10}$"],
+              ["$(1100101)_2$", "$(101)_{10}$"],
               ["$(144)_8$", "$(64)_{16}$"],
               ["$(3F)_{16}$", "$(63)_{10}$"],
               ["$(0.11)_2$", "$(0.75)_{10}$"],
             ],
-            explain: "64 + 32 + 4 = 100; $(144)_8$ = 64 + 32 + 4 = 100 = 6×16 + 4; 3×16 + 15 = 63; 0.5 + 0.25 = 0.75. Converting through binary or decimal always lets you check.",
+            explain: "64 + 32 + 4 + 1 = 101; $(144)_8$ = 64 + 32 + 4 = 100 = 6×16 + 4; 3×16 + 15 = 63; 0.5 + 0.25 = 0.75. Converting through binary or decimal always lets you check.",
           },
         },
         {
@@ -1428,7 +1428,7 @@ const hardware: Topic = {
         },
         {
           type: "text",
-          md: "The program prints the same four rows as the truth table above (in the order 00, 01, 10, 11), then the line `~1 = -2, 1 ^ 1 = 0`.\n\nThat last line matters. `~` inverts **all 32 bits** of an `int`, so `~1` is −2, not 0. To invert a single bit that is 0 or 1, use `x ^ 1` (XOR with 1 flips the bit).",
+          md: "The program prints the same four rows as the truth table above (in the order 00, 01, 10, 11, with the columns in the order of its heading: AND, OR, XOR, NAND, NOR, XNOR), then the line `~1 = -2, 1 ^ 1 = 0`.\n\nThat last line matters. `~` inverts **all 32 bits** of an `int`, so `~1` is −2, not 0. To invert a single bit that is 0 or 1, use `x ^ 1` (XOR with 1 flips the bit).",
         },
         {
           type: "activity",
@@ -2860,7 +2860,7 @@ const primitives: Topic = {
             ["`float`", "32 bits", "about ±3.4 × 10³⁸, 6 to 7 significant digits", "0.0f"],
             ["`double`", "64 bits", "about ±1.7 × 10³⁰⁸, about 15 significant digits", "0.0"],
             ["`char`", "16 bits", "Unicode characters, codes 0 to 65535", "the null character (code 0)"],
-            ["`boolean`", "not fixed by Java", "only `true` or `false`", "false"],
+            ["`boolean`", "not fixed by Java (many books say 1 bit or 1 byte)", "only `true` or `false`", "false"],
           ],
         },
         {
@@ -3102,7 +3102,7 @@ const primitives: Topic = {
         },
         {
           type: "text",
-          md: "**Type conversion.** When a value of one type is used where another is expected:\n\n- **Implicit (widening) conversion**: Java converts automatically to a type that can hold every value of the old one. The order is byte → short → int → long → float → double, and char → int. No data is lost (except that a very large long may lose precision as a float).\n- **Explicit conversion (type casting / narrowing)**: the programmer writes the target type in brackets, `(int) 9.99`. Java **truncates** the fractional part (9, not 10), and out-of-range values wrap around.\n- **Promotion in expressions**: in arithmetic, byte, short and char are first promoted to **int**; then the whole expression takes the widest type present. So `byte + byte` is an int, and `int / double` is a double.",
+          md: "**Type conversion.** When a value of one type is used where another is expected:\n\n- **Implicit (widening) conversion**: Java converts automatically to a type that can hold every value of the old one. The order is byte → short → int → long → float → double, and char → int. No data is lost (except that a very large int or long may lose precision when it becomes a float, or a very large long when it becomes a double).\n- **Explicit conversion (type casting / narrowing)**: the programmer writes the target type in brackets, `(int) 9.99`. Java **truncates** the fractional part (9, not 10), and out-of-range values wrap around.\n- **Promotion in expressions**: in arithmetic, byte, short and char are first promoted to **int**; then the whole expression takes the widest type present. So `byte + byte` is an int, and `int / double` is a double.",
         },
         {
           type: "code",
@@ -3270,7 +3270,7 @@ const primitives: Topic = {
     {
       slug: "c11-isc-primitive-types-board-practice",
       title: "Board Practice: Primitive Values, Wrapper Classes and Types",
-      summary: "Mixed ISC-style questions on types, literals, wrapper methods and casting, with an output question and a program that sorts the characters of a vehicle number.",
+      summary: "Mixed ISC-style questions on types, literals, wrapper methods and casting, with an output question and a program that counts the letters and digits of a vehicle number.",
       minutes: 20,
       xp: 55,
       blocks: [
