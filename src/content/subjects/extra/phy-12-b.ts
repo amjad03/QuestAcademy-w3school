@@ -1723,10 +1723,651 @@ To make an **ammeter**, join a small **shunt** $S$ in parallel; to make a **volt
       },
     ],
   },
+  /* ------------------------------------------------------------------ */
+  /* Magnetism and Matter (NCERT Ch 5; ISC: Magnetic Effects…)           */
+  /* ------------------------------------------------------------------ */
+  {
+    slug: "c12-magnetism-and-matter",
+    title: "Magnetism and Matter",
+    icon: "🧭",
+    description: "The bar magnet and its field, the magnetic dipole in a uniform field, Gauss's law for magnetism, magnetisation, magnetic intensity, susceptibility, and diamagnetic, paramagnetic and ferromagnetic materials.",
+    lessons: [
+      {
+        slug: "c12-mm-bar-magnet-gauss",
+        title: "The Bar Magnet, Dipoles and Gauss's Law",
+        summary: "Field lines of a bar magnet, the bar magnet as an equivalent solenoid, axial and equatorial fields, torque and potential energy of a dipole in a uniform field, and Gauss's law for magnetism.",
+        minutes: 22,
+        xp: 50,
+        blocks: [
+          {
+            type: "text",
+            md: t`Sprinkle iron filings on a sheet of card over a bar magnet and tap it: the filings line up along curves running from one end of the magnet round to the other. These curves trace the **magnetic field lines**.
+
+Every magnet has a **north pole** and a **south pole**. Like poles repel and unlike poles attract. Break a magnet in two and you get two smaller magnets, each with its own N and S: **isolated magnetic poles (monopoles) have never been found**. A freely suspended magnet settles roughly along the geographic north–south line.`,
+          },
+          {
+            type: "list",
+            items: [
+              "Magnetic field lines form **continuous closed loops**: outside the magnet they run from N to S, and inside it from S to N.",
+              "The tangent to a field line at a point gives the direction of the net field there.",
+              "The more closely packed the lines, the stronger the field.",
+              "Field lines never cross, because the field cannot have two directions at one point.",
+            ],
+          },
+          {
+            type: "text",
+            md: t`**A bar magnet behaves like a solenoid.** Each turn of a current-carrying solenoid is a small dipole of moment $IA$, and $N$ turns give $m = NIA$. Far from the ends, the field of a finite solenoid has exactly the same form as that of a bar magnet: the field lines look the same, and both give the dipole results below. So a bar magnet can be pictured as a collection of tiny current loops (the circulating electrons in its atoms).
+
+The **magnetic moment** $\vec{m}$ of a bar magnet points from its S pole to its N pole, inside the magnet. Unit: A m² (equivalently J T⁻¹).`,
+          },
+          {
+            type: "formula",
+            tex: t`B_{axial} = \frac{\mu_0}{4\pi}\frac{2m}{r^3}, \qquad B_{equatorial} = -\frac{\mu_0}{4\pi}\frac{m}{r^3}`,
+            caption: "Valid for r much larger than the size of the magnet. The axial field is along m; the equatorial field is opposite to m.",
+          },
+          {
+            type: "table",
+            headers: ["Electric dipole", "Magnetic dipole"],
+            rows: [
+              [t`$1/\varepsilon_0$`, t`$\mu_0$`],
+              [t`dipole moment $\vec{p}$`, t`dipole moment $\vec{m}$`],
+              [t`axial field $\frac{2p}{4\pi\varepsilon_0 r^3}$`, t`axial field $\frac{\mu_0}{4\pi}\frac{2m}{r^3}$`],
+              [t`torque $\vec{p} \times \vec{E}$`, t`torque $\vec{m} \times \vec{B}$`],
+              [t`energy $-\vec{p}\cdot\vec{E}$`, t`energy $-\vec{m}\cdot\vec{B}$`],
+            ],
+          },
+          {
+            type: "example",
+            title: "Field of a bar magnet",
+            problem: t`A short bar magnet has magnetic moment 0.50 A m². Find the field it produces at 10 cm from its centre (a) on its axis and (b) on its equatorial line. Take $\frac{\mu_0}{4\pi} = 10^{-7}$ T m A⁻¹.`,
+            steps: [
+              t`(a) $B = 10^{-7} \times \frac{2 \times 0.50}{(0.10)^3} = 10^{-7} \times \frac{1.0}{10^{-3}} = 1.0 \times 10^{-4}$ T, along $\vec{m}$.`,
+              t`(b) $B = 10^{-7} \times \frac{0.50}{10^{-3}} = 0.50 \times 10^{-4}$ T, opposite to $\vec{m}$.`,
+            ],
+            answer: t`(a) $1.0 \times 10^{-4}$ T along the axis; (b) $5.0 \times 10^{-5}$ T, pointing from N towards S (parallel to the magnet's length).`,
+          },
+          {
+            type: "checkpoint",
+            questions: [
+              {
+                kind: "mcq",
+                q: "At equal large distances from a short bar magnet, the ratio of the axial field to the equatorial field is",
+                options: ["1 : 1", "2 : 1", "1 : 2", "4 : 1"],
+                answer: 1,
+                explain: t`$B_{axial} = \frac{\mu_0}{4\pi}\frac{2m}{r^3}$ and $|B_{eq}| = \frac{\mu_0}{4\pi}\frac{m}{r^3}$.`,
+              },
+            ],
+          },
+          {
+            type: "text",
+            md: t`**A dipole in a uniform field.** A magnet of moment $\vec{m}$ in a uniform field $\vec{B}$ feels no net force (the forces on its two poles cancel) but a torque $\vec{\tau} = \vec{m} \times \vec{B}$ that tries to line it up with the field. Its potential energy is $U = -mB\cos\theta$: lowest ($-mB$) when aligned (stable), highest ($+mB$) when opposite (unstable). The work needed to turn it from $\theta_1$ to $\theta_2$ is $W = mB(\cos\theta_1 - \cos\theta_2)$.
+
+Slightly disturbed from alignment, a magnet of moment of inertia $I$ oscillates: $\tau \approx -mB\theta$ gives simple harmonic motion with the period below. This is how a compass needle swings before it settles.`,
+          },
+          {
+            type: "formula",
+            tex: t`\tau = mB\sin\theta, \qquad U = -mB\cos\theta, \qquad T = 2\pi\sqrt{\frac{I}{mB}}`,
+            caption: "Measuring T for a known I and B gives m (or, with a known m, gives B).",
+          },
+          {
+            type: "example",
+            title: "Torque and work on a magnet",
+            problem: "A magnet of moment 0.50 A m² is placed in a uniform field of 0.40 T. Find (a) the torque when its axis is at 30° to the field and (b) the work needed to turn it from the stable position to the unstable position.",
+            steps: [
+              t`(a) $\tau = mB\sin 30° = 0.50 \times 0.40 \times 0.5 = 0.10$ N m.`,
+              t`(b) Stable: $\theta_1 = 0°$; unstable: $\theta_2 = 180°$.`,
+              t`$W = mB(\cos 0° - \cos 180°) = 0.50 \times 0.40 \times (1 - (-1)) = 0.40$ J.`,
+            ],
+            answer: "(a) 0.10 N m; (b) 0.40 J.",
+          },
+          {
+            type: "text",
+            md: t`**Gauss's law for magnetism.** The net magnetic flux through **any closed surface is zero**: $\oint \vec{B}\cdot d\vec{S} = 0$. Every field line that enters a closed surface also leaves it, because field lines are closed loops. Compare Gauss's law in electrostatics, where the flux equals $q_{enc}/\varepsilon_0$. The magnetic law says there is no magnetic "charge": no monopoles.`,
+          },
+          {
+            type: "mistake",
+            wrong: "Magnetic field lines start at the north pole and end at the south pole.",
+            right: "Field lines have no start or end. They leave the N pole, curve round outside to the S pole, and continue **inside** the magnet from S back to N, forming closed loops.",
+            why: "Drawings show only the lines outside the magnet, and electric field lines really do start and end on charges. Gauss's law for magnetism shows the lines must close.",
+          },
+          {
+            type: "activity",
+            activity: {
+              kind: "sort",
+              prompt: "Which field lines does each statement describe?",
+              groups: ["Electrostatic only", "Magnetic only", "Both"],
+              items: [
+                { text: "Begin and end on charges", group: 0, hint: "Electric lines start on + and end on − charges." },
+                { text: "Always form closed loops", group: 1, hint: "No magnetic monopoles exist to start or end on." },
+                { text: "Net flux through a closed surface can be non-zero", group: 0, hint: "It equals the enclosed charge divided by ε₀." },
+                { text: "Net flux through every closed surface is zero", group: 1, hint: "Gauss's law for magnetism." },
+                { text: "Never cross one another", group: 2, hint: "A field has one direction at each point." },
+                { text: "Closer spacing means a stronger field", group: 2, hint: "True for any field-line picture." },
+              ],
+              explain: "Both kinds of line show direction and strength in the same way. The difference is at the ends: electric lines end on charges, magnetic lines never end.",
+            },
+          },
+          {
+            type: "callout",
+            tone: "note",
+            title: "ISC and older-syllabus note: Earth's magnetism",
+            md: t`The rationalised NCERT text (CBSE, Karnataka PUC) has dropped the section on Earth's magnetism; check whether your ISC year includes it. The three **magnetic elements** are: **declination** $D$, the angle between the geographic and magnetic meridians; **dip** (inclination) $I$, the angle that Earth's total field $B_E$ makes with the horizontal; and the **horizontal component** $B_H = B_E\cos I$. The vertical component is $B_V = B_E\sin I$, so $\tan I = B_V/B_H$. Dip is 0° at the magnetic equator and 90° at the magnetic poles; Earth's field at the surface is of the order of $10^{-5}$ T.`,
+          },
+          {
+            type: "callout",
+            tone: "exam",
+            title: "Board exam tips",
+            md: "Drawing field lines of a bar magnet is a frequent 2-mark question: show the lines continuing inside the magnet from S to N, with arrows. Writing the electric-dipole analogue (p → m, 1/ε₀ → μ₀) is a quick way to recall the magnetic dipole formulas in the exam.",
+          },
+          {
+            type: "keypoints",
+            items: [
+              "Magnetic poles always come in pairs; field lines are closed loops (S to N inside the magnet).",
+              t`A bar magnet acts like a solenoid with $m = NIA$; $\vec{m}$ points from S to N.`,
+              t`$B_{axial} = \frac{\mu_0}{4\pi}\frac{2m}{r^3}$, $B_{eq} = \frac{\mu_0}{4\pi}\frac{m}{r^3}$ (opposite to $\vec{m}$).`,
+              t`Uniform field: no net force, $\tau = mB\sin\theta$, $U = -mB\cos\theta$, $T = 2\pi\sqrt{I/mB}$.`,
+              t`Gauss's law for magnetism: $\oint \vec{B}\cdot d\vec{S} = 0$ (no monopoles).`,
+            ],
+          },
+        ],
+        flashcards: [
+          { front: "Direction of the magnetic moment of a bar magnet", back: "From its S pole to its N pole (inside the magnet)." },
+          { front: "Axial field of a short magnet", back: t`$\dfrac{\mu_0}{4\pi}\dfrac{2m}{r^3}$, along $\vec{m}$` },
+          { front: "Equatorial field of a short magnet", back: t`$\dfrac{\mu_0}{4\pi}\dfrac{m}{r^3}$, opposite to $\vec{m}$` },
+          { front: "Potential energy of a magnetic dipole", back: t`$U = -\vec{m}\cdot\vec{B} = -mB\cos\theta$` },
+          { front: "Period of a magnet oscillating in B", back: t`$T = 2\pi\sqrt{\dfrac{I}{mB}}$` },
+          { front: "Gauss's law for magnetism", back: t`$\oint \vec{B}\cdot d\vec{S} = 0$: no magnetic monopoles` },
+          { front: "Net force on a magnet in a uniform field", back: "Zero; there is only a torque." },
+          { front: "Angle of dip (ISC)", back: t`Angle between Earth's total field and the horizontal; $\tan I = B_V/B_H$` },
+        ],
+        quiz: [
+          {
+            kind: "mcq",
+            q: "A bar magnet is cut into two equal pieces perpendicular to its length. Each piece",
+            options: ["has only one pole", "is a complete magnet with N and S poles", "loses all its magnetism", "has twice the original magnetic moment"],
+            answer: 1,
+            explain: "Magnetic poles always come in pairs; each piece is a magnet, with half the original moment.",
+          },
+          {
+            kind: "numeric",
+            q: "A magnet of moment 2.0 A m² is placed in a 0.30 T field at 90° to it. Find the torque.",
+            answer: 0.6,
+            tolerance: 0.01,
+            unit: "N m",
+            explain: t`$\tau = mB\sin 90° = 2.0 \times 0.30 = 0.60$ N m.`,
+          },
+          {
+            kind: "numeric",
+            q: "A magnet of moment 0.40 A m² is in a 0.50 T field. How much work is needed to turn it from alignment with the field to 90°?",
+            answer: 0.2,
+            tolerance: 0.01,
+            unit: "J",
+            explain: t`$W = mB(\cos 0° - \cos 90°) = 0.40 \times 0.50 \times 1 = 0.20$ J.`,
+          },
+          {
+            kind: "truefalse",
+            q: "Inside a bar magnet, the magnetic field lines run from the N pole to the S pole.",
+            answer: false,
+            explain: "Inside, they run from S to N, so that each line forms a closed loop.",
+          },
+          {
+            kind: "mcq",
+            q: "A compass needle oscillates with period 2.0 s in a field B. In a field 4B its period would be",
+            options: ["0.5 s", "1.0 s", "4.0 s", "8.0 s"],
+            answer: 1,
+            explain: t`$T \propto 1/\sqrt{B}$, so $T' = 2.0/\sqrt{4} = 1.0$ s.`,
+            difficulty: 2,
+          },
+          {
+            kind: "mcq",
+            q: "The net magnetic flux through a closed surface that encloses the N pole of a bar magnet is",
+            options: ["positive", "negative", "zero", "equal to μ₀ times the pole strength"],
+            answer: 2,
+            explain: t`Gauss's law for magnetism: $\oint \vec{B}\cdot d\vec{S} = 0$ for every closed surface. Lines leaving the N pole outside return through the magnet inside.`,
+            difficulty: 2,
+            hint: "Follow the field lines inside the magnet too.",
+          },
+          {
+            kind: "multi",
+            q: "A small bar magnet is placed in a uniform field. Which are true?",
+            options: [
+              "It feels no net force",
+              "It feels a torque unless m is parallel or antiparallel to B",
+              "Its potential energy is least when m is opposite to B",
+              "The antiparallel position is an unstable equilibrium",
+            ],
+            answers: [0, 1, 3],
+            explain: t`$U = -mB\cos\theta$ is least at $\theta = 0$ (aligned), not when opposite. The antiparallel position has zero torque but is unstable.`,
+          },
+        ],
+      },
+      {
+        slug: "c12-mm-magnetic-materials",
+        title: "Magnetisation and Magnetic Materials",
+        summary: "Magnetisation, magnetic intensity H, susceptibility and permeability, and the properties of diamagnetic, paramagnetic and ferromagnetic materials, with Curie's law and hysteresis.",
+        minutes: 22,
+        xp: 50,
+        blocks: [
+          {
+            type: "text",
+            md: "Put a soft iron rod inside a current-carrying coil and the field becomes hundreds of times stronger; put a bismuth rod there and the field becomes very slightly weaker. Different materials respond to a magnetic field in very different ways. This lesson measures and explains that response.",
+          },
+          {
+            type: "text",
+            md: t`**Magnetisation** $\vec{M}$ is the net magnetic moment per unit volume of a material: $\vec{M} = \frac{\vec{m}_{net}}{V}$. Unit: A m⁻¹.
+
+Fill a long solenoid ($n$ turns per metre, current $I$) with a material. The coil alone gives $B_0 = \mu_0 nI$. The magnetised material adds $\mu_0 M$. We define the **magnetic intensity** $H = nI$, which depends only on the free current in the coil. Then the total field is $B = \mu_0(H + M)$. $H$ and $M$ have the same unit, A m⁻¹.`,
+          },
+          {
+            type: "formula",
+            tex: t`\vec{H} = \frac{\vec{B}}{\mu_0} - \vec{M}, \qquad \vec{B} = \mu_0(\vec{H} + \vec{M})`,
+            caption: "H is set by external (free) currents; M is the material's response.",
+          },
+          {
+            type: "text",
+            md: t`For most materials $\vec{M}$ is proportional to $\vec{H}$: $\vec{M} = \chi\vec{H}$. The dimensionless number $\chi$ is the **magnetic susceptibility**. Then $\vec{B} = \mu_0(1 + \chi)\vec{H} = \mu_0\mu_r\vec{H} = \mu\vec{H}$, where $\mu_r = 1 + \chi$ is the **relative permeability** and $\mu = \mu_0\mu_r$ is the **permeability** of the material.`,
+          },
+          {
+            type: "formula",
+            tex: t`M = \chi H, \qquad \mu_r = 1 + \chi, \qquad \mu = \mu_0\mu_r, \qquad B = \mu H`,
+          },
+          {
+            type: "example",
+            title: "A solenoid with an iron core",
+            problem: t`A solenoid has 1000 turns per metre and carries 2.0 A. Its core has relative permeability 500. Find $H$, $B$ and $M$ in the core.`,
+            steps: [
+              t`$H = nI = 1000 \times 2.0 = 2.0 \times 10^3$ A m⁻¹.`,
+              t`$B = \mu_0\mu_r H = 4\pi \times 10^{-7} \times 500 \times 2.0 \times 10^3 \approx 1.26$ T.`,
+              t`$\chi = \mu_r - 1 = 499$, so $M = \chi H = 499 \times 2.0 \times 10^3 \approx 1.0 \times 10^6$ A m⁻¹.`,
+            ],
+            answer: t`$H = 2.0 \times 10^3$ A m⁻¹, $B \approx 1.26$ T, $M \approx 1.0 \times 10^6$ A m⁻¹. Almost all of $B$ comes from the core's magnetisation.`,
+          },
+          {
+            type: "checkpoint",
+            questions: [
+              {
+                kind: "mcq",
+                q: "A material has relative permeability 0.99998. It is",
+                options: ["diamagnetic", "paramagnetic", "ferromagnetic", "a superconductor"],
+                answer: 0,
+                explain: t`$\chi = \mu_r - 1 = -2 \times 10^{-5}$: small and negative, so diamagnetic. A superconductor has $\chi = -1$.`,
+              },
+            ],
+          },
+          {
+            type: "table",
+            headers: ["Property", "Diamagnetic", "Paramagnetic", "Ferromagnetic"],
+            rows: [
+              ["Susceptibility χ", t`small, negative (about $-10^{-5}$)`, t`small, positive (about $10^{-5}$ to $10^{-3}$)`, t`very large, positive ($10^3$ or more)`],
+              [t`$\mu_r$`, "slightly less than 1", "slightly more than 1", "much greater than 1"],
+              ["In a non-uniform field", "moves towards the weaker field (weakly repelled)", "moves towards the stronger field (weakly attracted)", "strongly attracted"],
+              ["Field lines inside", "slightly expelled", "slightly concentrated", "strongly concentrated"],
+              ["Effect of temperature", "almost none", t`$\chi \propto 1/T$ (Curie's law)`, "becomes paramagnetic above the Curie temperature"],
+              ["Examples", "bismuth, copper, lead, water, nitrogen", "aluminium, sodium, calcium, oxygen", "iron, cobalt, nickel, gadolinium"],
+            ],
+          },
+          {
+            type: "text",
+            md: t`**Why the three kinds differ.** In a **diamagnetic** atom the electron moments cancel, so the atom has no net moment. An applied field changes the orbital motion slightly and induces a small moment **opposite** to the field (as Lenz's law would suggest). Every material has this effect, but it is hidden when stronger effects exist. A **superconductor** is a perfect diamagnet: $\chi = -1$, and it expels the field completely (the **Meissner effect**), which is used in magnetic levitation.
+
+In a **paramagnetic** material each atom has a permanent moment, but thermal motion keeps the moments random. A field lines up only a small fraction of them, and more at lower temperatures. In a **ferromagnetic** material, neighbouring atomic moments line up spontaneously over regions called **domains** (about 1 mm across). An applied field grows the domains aligned with it and turns others, giving a huge magnetisation.`,
+          },
+          {
+            type: "formula",
+            tex: t`\text{Curie's law (paramagnetic): } \chi = \frac{C\mu_0}{T}, \qquad \text{ferromagnetic above } T_c\text{: } \chi = \frac{C}{T - T_c}`,
+            caption: "C is the Curie constant of the material and T the absolute temperature. Iron's Curie temperature is about 1043 K.",
+          },
+          {
+            type: "example",
+            title: "Curie's law",
+            problem: "A paramagnetic salt has susceptibility 3.0 × 10⁻⁴ at 27 °C. Find its susceptibility at −73 °C.",
+            steps: [
+              t`Use kelvin: $T_1 = 300$ K, $T_2 = 200$ K.`,
+              t`$\chi \propto 1/T$, so $\chi_2 = \chi_1\frac{T_1}{T_2} = 3.0 \times 10^{-4} \times \frac{300}{200}$.`,
+              t`$\chi_2 = 4.5 \times 10^{-4}$.`,
+            ],
+            answer: t`$\chi = 4.5 \times 10^{-4}$: cooling makes it more strongly paramagnetic.`,
+          },
+          {
+            type: "text",
+            md: t`**Hysteresis.** Take an unmagnetised ferromagnet, raise $H$ and $B$ rises to saturation. Lower $H$ to zero and $B$ does **not** return to zero: the leftover field is the **retentivity** (remanence). A reverse field, the **coercivity**, is needed to bring $B$ to zero. Taking $H$ round a full cycle traces a closed $B$–$H$ loop; its area is the energy lost as heat per unit volume per cycle.
+
+**Soft iron** has a thin loop (low coercivity, small loss): used for electromagnets and transformer cores. **Steel and alloys such as alnico** have high retentivity and high coercivity: used for permanent magnets.`,
+          },
+          {
+            type: "mistake",
+            wrong: "Copper, water and wood are non-magnetic: a magnetic field has no effect on them at all.",
+            right: "They are **diamagnetic**: weakly repelled, moving from stronger to weaker field. A very strong magnet can even levitate a drop of water or a frog.",
+            why: "The effect is about a million times weaker than the pull on iron, so it cannot be felt with a fridge magnet. Weak is not the same as zero.",
+          },
+          {
+            type: "activity",
+            activity: {
+              kind: "sort",
+              prompt: "Sort each substance by its magnetic behaviour.",
+              groups: ["Diamagnetic", "Paramagnetic", "Ferromagnetic"],
+              items: [
+                { text: "Bismuth", group: 0, hint: "It is the classic strongly diamagnetic metal." },
+                { text: "Copper", group: 0, hint: "Its atoms have no net moment." },
+                { text: "Water", group: 0, hint: "Weakly repelled by a strong magnet." },
+                { text: "Aluminium", group: 1, hint: "Weakly attracted, small positive χ." },
+                { text: "Oxygen gas", group: 1, hint: "O₂ molecules have permanent moments." },
+                { text: "Sodium", group: 1, hint: "Small positive χ." },
+                { text: "Nickel", group: 2, hint: "One of iron, cobalt, nickel, gadolinium." },
+                { text: "Gadolinium", group: 2, hint: "A ferromagnet near room temperature." },
+              ],
+              explain: "Diamagnetic: no permanent atomic moments. Paramagnetic: permanent moments, kept random by heat. Ferromagnetic: moments aligned in domains.",
+            },
+          },
+          {
+            type: "callout",
+            tone: "exam",
+            title: "Board exam tips",
+            md: t`The comparison table of dia-, para- and ferromagnetic materials is asked almost every year: give χ (sign and size), $\mu_r$, behaviour in a non-uniform field and one example each. Diagram questions ask how field lines behave near each type. **ISC** also asks for the hysteresis loop with retentivity and coercivity marked, and the choice of material for permanent magnets versus electromagnets.`,
+          },
+          {
+            type: "keypoints",
+            items: [
+              t`$M = m_{net}/V$; $H = nI$; $B = \mu_0(H + M)$.`,
+              t`$M = \chi H$, $\mu_r = 1 + \chi$, $B = \mu_0\mu_r H$.`,
+              t`Diamagnetic: $\chi < 0$, small; superconductor $\chi = -1$. Paramagnetic: $\chi > 0$, small, $\chi \propto 1/T$. Ferromagnetic: $\chi \gg 1$, domains.`,
+              "Above the Curie temperature a ferromagnet becomes paramagnetic.",
+              "Soft iron (low coercivity) for electromagnets; steel and alnico (high coercivity, retentivity) for permanent magnets.",
+            ],
+          },
+        ],
+        flashcards: [
+          { front: "Magnetisation M", back: "Net magnetic moment per unit volume; unit A m⁻¹." },
+          { front: "Magnetic intensity H inside a solenoid", back: t`$H = nI$, unit A m⁻¹` },
+          { front: "Relation between B, H and M", back: t`$B = \mu_0(H + M)$` },
+          { front: "Relative permeability and susceptibility", back: t`$\mu_r = 1 + \chi$` },
+          { front: "Curie's law", back: t`For paramagnets, $\chi = C\mu_0/T$: susceptibility is inversely proportional to absolute temperature.` },
+          { front: "Curie temperature", back: "The temperature above which a ferromagnet becomes paramagnetic." },
+          { front: "Meissner effect", back: t`A superconductor expels magnetic field completely: a perfect diamagnet with $\chi = -1$.` },
+          { front: "Retentivity and coercivity", back: "Retentivity: B left when H is reduced to zero. Coercivity: reverse H needed to make B zero." },
+        ],
+        quiz: [
+          {
+            kind: "mcq",
+            q: "A diamagnetic rod is hung between the poles of a strong electromagnet. It",
+            options: ["lines up along the field", "sets itself across the field, moving towards weaker field", "is not affected", "becomes a permanent magnet"],
+            answer: 1,
+            explain: "Diamagnetic materials move from stronger to weaker field, so the rod turns to lie across the field.",
+          },
+          {
+            kind: "numeric",
+            q: "A material has χ = 599 in a field H = 1.0 × 10³ A m⁻¹. Find B in tesla (use π = 3.14).",
+            answer: 0.754,
+            tolerance: 0.005,
+            unit: "T",
+            explain: t`$\mu_r = 600$; $B = \mu_0\mu_r H = 4 \times 3.14 \times 10^{-7} \times 600 \times 1000 = 0.754$ T.`,
+            difficulty: 2,
+          },
+          {
+            kind: "numeric",
+            q: "A paramagnetic sample has susceptibility 2.0 × 10⁻⁵ at 300 K. At what temperature (in K) will it be 6.0 × 10⁻⁵?",
+            answer: 100,
+            tolerance: 0.5,
+            unit: "K",
+            explain: t`$\chi \propto 1/T$: tripling $\chi$ needs $T/3 = 100$ K.`,
+          },
+          {
+            kind: "truefalse",
+            q: "The susceptibility of a diamagnetic material depends strongly on temperature.",
+            answer: false,
+            explain: "Diamagnetism comes from induced orbital moments and is almost independent of temperature.",
+          },
+          {
+            kind: "mcq",
+            q: "Which is the best material for the core of a transformer?",
+            options: ["Steel (high coercivity)", "Soft iron (low coercivity, thin hysteresis loop)", "Copper", "Alnico"],
+            answer: 1,
+            explain: "The core is magnetised and demagnetised every cycle; soft iron's thin loop means little energy is lost as heat.",
+          },
+          {
+            kind: "multi",
+            q: "Select the correct statements.",
+            options: [
+              "A superconductor has χ = −1",
+              "Paramagnetic materials have permanent atomic magnetic moments",
+              "Ferromagnets stay ferromagnetic at all temperatures",
+              "Diamagnetism is present in all materials",
+            ],
+            answers: [0, 1, 3],
+            explain: "Above the Curie temperature a ferromagnet becomes paramagnetic. Diamagnetism exists in every material but is masked when para- or ferromagnetism is present.",
+            difficulty: 2,
+          },
+          {
+            kind: "mcq",
+            q: "A liquid is placed in a U-tube with one arm between the poles of a strong magnet. The liquid level in that arm rises. The liquid is",
+            options: ["diamagnetic", "paramagnetic", "non-magnetic", "a superconductor"],
+            answer: 1,
+            explain: "Paramagnetic liquids are pulled into the stronger field, so the level rises; a diamagnetic liquid would be pushed out and its level would fall.",
+            difficulty: 2,
+          },
+        ],
+      },
+      {
+        slug: "c12-mm-exam-edge",
+        title: "Exam edge: Magnetism and Matter",
+        summary: "What JEE, NEET, KCET and COMEDK ask: cut and bent magnets, work and oscillations of dipoles, comparing magnetic moments, Curie's law and material properties, with the classic traps.",
+        minutes: 22,
+        xp: 55,
+        track: "exam",
+        blocks: [
+          {
+            type: "table",
+            headers: ["Exam", "What it asks from this chapter"],
+            rows: [
+              ["NEET", "properties of dia-, para- and ferromagnetic materials, Curie's law, χ and μᵣ, work done on a dipole; usually 1–2 questions"],
+              ["JEE Main", "cut or bent magnets, period of oscillation, axial and equatorial fields, B–H–M relations"],
+              ["JEE Advanced", "dipole ideas combined with current loops and rotating charges, energy methods, multi-correct statements on materials"],
+              ["KCET / COMEDK", "direct use of τ = mB sin θ, U = −mB cos θ, field formulas, classification of materials"],
+            ],
+          },
+          {
+            type: "heading",
+            text: "Results worth remembering",
+          },
+          {
+            type: "formula",
+            tex: t`W_{\theta_1 \to \theta_2} = mB(\cos\theta_1 - \cos\theta_2), \qquad T = 2\pi\sqrt{\frac{I}{mB}}, \qquad m_{\text{semicircle}} = \frac{2m}{\pi}`,
+            caption: "Bending a thin magnet changes the distance between its poles (and so m) but not the pole strength.",
+          },
+          {
+            type: "list",
+            items: [
+              t`**Cut perpendicular to the axis into $n$ equal pieces**: each has $m/n$, $I/n^3$, period $T/n$.`,
+              t`**Cut along the axis into $n$ strips**: each has $m/n$, $I/n$, period unchanged.`,
+              t`**Bent into an arc** of angle $\theta$: $m' = m\cdot\frac{2\sin(\theta/2)}{\theta}$; semicircle $\frac{2m}{\pi}$, right angle (L-shape) $\frac{m}{\sqrt{2}}$.`,
+              t`**Two magnets on one stand** (like poles together, then unlike): $\frac{m_1}{m_2} = \frac{T_2^2 + T_1^2}{T_2^2 - T_1^2}$, where $T_1$ is for like poles together.`,
+              t`**Materials**: $\chi_{para} \propto 1/T$; $\chi_{dia}$ nearly independent of $T$; superconductor $\chi = -1$, $\mu_r = 0$.`,
+            ],
+          },
+          {
+            type: "example",
+            title: "KCET level: work on a dipole",
+            problem: "A magnet of moment 2.0 A m² lies along a uniform field of 0.25 T. How much work is needed to turn it through 60°?",
+            steps: [
+              t`$W = mB(\cos 0° - \cos 60°) = 2.0 \times 0.25 \times (1 - 0.5)$.`,
+              t`$W = 0.25$ J.`,
+            ],
+            answer: "0.25 J.",
+          },
+          {
+            type: "example",
+            title: "NEET level: cutting a magnet",
+            problem: "A thin bar magnet oscillates in a uniform field with period 4.0 s. It is cut into two equal halves perpendicular to its length. What is the period of one half in the same field?",
+            steps: [
+              t`Pole strength is unchanged and the length halves, so $m' = m/2$.`,
+              t`Mass halves and length halves: $I' = \frac{(M/2)(L/2)^2}{12} = \frac{I}{8}$.`,
+              t`$T' = 2\pi\sqrt{\frac{I/8}{(m/2)B}} = 2\pi\sqrt{\frac{I}{mB}}\cdot\sqrt{\frac{1}{4}} = \frac{T}{2}$.`,
+            ],
+            answer: "T' = 2.0 s.",
+          },
+          {
+            type: "checkpoint",
+            questions: [
+              {
+                kind: "mcq",
+                q: "A thin magnet is cut lengthwise (along its axis) into two equal strips. The period of each strip in the same field is",
+                options: ["T/2", "T", "2T", t`$T/\sqrt{2}$`],
+                answer: 1,
+                explain: t`Each strip has $m/2$ and $I/2$ (same length, half mass), so $I/m$ and hence $T$ are unchanged.`,
+              },
+            ],
+          },
+          {
+            type: "example",
+            title: "JEE Main level: a bent magnet",
+            problem: "A thin straight bar magnet of moment 3.14 A m² is bent into a semicircle. Find its new magnetic moment.",
+            steps: [
+              t`Pole strength $q_m$ is unchanged. Originally $m = q_m L$.`,
+              t`The length $L$ becomes a semicircle: $\pi R = L$, so the poles are now a diameter $2R = 2L/\pi$ apart.`,
+              t`$m' = q_m \cdot \frac{2L}{\pi} = \frac{2m}{\pi} = \frac{2 \times 3.14}{3.14} = 2.0$ A m².`,
+            ],
+            answer: "2.0 A m².",
+          },
+          {
+            type: "example",
+            title: "JEE Advanced level: comparing two magnets",
+            problem: t`Two magnets of the same size and mass are placed one on top of the other and suspended in a uniform field. With like poles together the system oscillates with period 3.0 s; with unlike poles together, 5.0 s. Find the ratio of their magnetic moments $m_1/m_2$.`,
+            steps: [
+              t`The moment of inertia $I$ of the pair is the same in both cases.`,
+              t`Like poles together: net moment $m_1 + m_2$, so $T_1^2 = \frac{4\pi^2 I}{(m_1 + m_2)B}$. Unlike poles: $T_2^2 = \frac{4\pi^2 I}{(m_1 - m_2)B}$.`,
+              t`Divide: $\frac{m_1 + m_2}{m_1 - m_2} = \frac{T_2^2}{T_1^2} = \frac{25}{9}$.`,
+              t`Componendo–dividendo: $\frac{m_1}{m_2} = \frac{25 + 9}{25 - 9} = \frac{34}{16} = 2.125$.`,
+            ],
+            answer: t`$m_1/m_2 \approx 2.1$.`,
+          },
+          {
+            type: "mistake",
+            wrong: "Cutting a magnet in half perpendicular to its length halves its moment, so the period becomes √2 times larger.",
+            right: t`The moment of inertia changes too: it becomes $I/8$, while $m$ becomes $m/2$. The period becomes $T/2$, smaller, not larger.`,
+            why: "Learners change only m in T = 2π√(I/mB) and forget that I depends on mass and length, both of which change.",
+          },
+          {
+            type: "mistake",
+            wrong: "Heating a paramagnetic substance makes its magnetisation stronger, as heating speeds everything up.",
+            right: t`Thermal motion **randomises** the atomic moments, so $\chi \propto 1/T$ (Curie's law): heating weakens paramagnetism. Diamagnetism hardly changes with temperature.`,
+            why: "It is easy to think of temperature as \"more activity, more effect\". Here the activity works against alignment.",
+          },
+          {
+            type: "activity",
+            activity: {
+              kind: "reveal",
+              prompt: "A long magnet of moment m is bent into an L (90°) at its middle. New moment?",
+              emoji: "📐",
+              options: [t`$m$`, t`$m/\sqrt{2}$`, t`$m/2$`, t`$2m/\pi$`],
+              answer: 1,
+              trap: 0,
+              explain: t`Each arm has length $L/2$; the poles end up $\frac{L}{2}\sqrt{2} = \frac{L}{\sqrt{2}}$ apart, so $m' = m/\sqrt{2}$. Pole strength stays the same, but the pole separation shrinks.`,
+            },
+          },
+          {
+            type: "callout",
+            tone: "exam",
+            title: "Speed tips",
+            md: "For any change to a magnet, ask two questions: what happens to pole strength, and what happens to the straight-line distance between the poles? m = pole strength × that distance. For periods, also track the moment of inertia.",
+          },
+          {
+            type: "keypoints",
+            items: [
+              t`$W = mB(\cos\theta_1 - \cos\theta_2)$; $T = 2\pi\sqrt{I/mB}$.`,
+              "Cut across into n pieces: period T/n. Cut lengthwise: period unchanged.",
+              t`Bent magnet: pole strength fixed; semicircle $2m/\pi$, L-shape $m/\sqrt{2}$.`,
+              t`Like/unlike poles method: $m_1/m_2 = (T_2^2 + T_1^2)/(T_2^2 - T_1^2)$.`,
+              t`Paramagnetism weakens with heating ($\chi \propto 1/T$); diamagnetism does not depend on T.`,
+            ],
+          },
+        ],
+        flashcards: [
+          { front: "Work to turn a dipole from θ₁ to θ₂", back: t`$W = mB(\cos\theta_1 - \cos\theta_2)$` },
+          { front: "Magnet cut across into n pieces: period of each", back: "T/n" },
+          { front: "Magnet cut lengthwise into n strips: period of each", back: "T (unchanged)" },
+          { front: "Thin magnet bent into a semicircle", back: t`$m' = 2m/\pi$` },
+          { front: "Thin magnet bent into an L at its middle", back: t`$m' = m/\sqrt{2}$` },
+          { front: "Comparing moments by the sum–difference method", back: t`$\dfrac{m_1}{m_2} = \dfrac{T_2^2 + T_1^2}{T_2^2 - T_1^2}$` },
+          { front: "Relative permeability of a superconductor", back: t`$\mu_r = 0$ ($\chi = -1$)` },
+        ],
+        quiz: [
+          {
+            kind: "numeric",
+            q: "A magnet of moment 1.5 A m² lies along a 0.20 T field. Find the work needed to turn it through 180°.",
+            answer: 0.6,
+            tolerance: 0.01,
+            unit: "J",
+            explain: t`$W = mB(1 - (-1)) = 2mB = 2 \times 1.5 \times 0.20 = 0.60$ J.`,
+            difficulty: 1,
+          },
+          {
+            kind: "mcq",
+            q: "A bar magnet with period 6.0 s in a field is cut across into three equal pieces. The period of one piece in the same field is",
+            options: ["6.0 s", "3.0 s", "2.0 s", t`$6/\sqrt{3}$ s`],
+            answer: 2,
+            explain: t`Each piece has $m/3$ and $I/27$, so $T' = T\sqrt{\frac{1/27}{1/3}} = T/3 = 2.0$ s.`,
+            difficulty: 2,
+            hint: t`$I \propto ML^2$; both mass and length become one third.`,
+          },
+          {
+            kind: "numeric",
+            q: "A thin magnet of moment 6.0 A m² is bent into an arc that is one third of a circle (θ = 120°). Find its new moment (two decimal places).",
+            answer: 4.96,
+            tolerance: 0.03,
+            unit: "A m²",
+            explain: t`$m' = m\frac{2\sin(\theta/2)}{\theta} = 6.0 \times \frac{2\sin 60°}{2\pi/3} = 6.0 \times \frac{1.732}{2.094} \approx 4.96$ A m².`,
+            difficulty: 3,
+            hint: "The new pole separation is the chord of the arc: 2R sin(θ/2), with Rθ = L.",
+          },
+          {
+            kind: "mcq",
+            q: "The susceptibility of a paramagnetic material is χ at 27 °C. At 327 °C it is",
+            options: ["2χ", "χ/2", "χ/12", "12χ"],
+            answer: 1,
+            explain: t`Use kelvin: 300 K to 600 K, so $\chi$ halves. Using °C (27 to 327) would wrongly give $\chi/12$.`,
+            difficulty: 2,
+            hint: "Curie's law uses absolute temperature.",
+          },
+          {
+            kind: "multi",
+            q: "Which statements about magnetic materials are correct?",
+            options: [
+              "A ferromagnet heated above its Curie temperature becomes paramagnetic",
+              "Diamagnetic substances have permanent atomic moments aligned opposite to the field",
+              "For a diamagnet, μᵣ is slightly less than 1",
+              "Paramagnetic susceptibility is positive and small",
+            ],
+            answers: [0, 2, 3],
+            explain: "Diamagnetic atoms have no permanent net moment; the opposing moment is induced by the field.",
+            difficulty: 2,
+          },
+          {
+            kind: "numeric",
+            q: "Two magnets on one stand oscillate with period 2.0 s with like poles together and 6.0 s with unlike poles together. Find m₁/m₂.",
+            answer: 1.25,
+            tolerance: 0.01,
+            explain: t`$\frac{m_1}{m_2} = \frac{T_2^2 + T_1^2}{T_2^2 - T_1^2} = \frac{36 + 4}{36 - 4} = \frac{40}{32} = 1.25$.`,
+            difficulty: 3,
+            hint: t`Like poles: $m_1 + m_2 \propto 1/T_1^2$; unlike: $m_1 - m_2 \propto 1/T_2^2$.`,
+          },
+          {
+            kind: "mcq",
+            q: "In a solenoid with a core, H = 500 A m⁻¹ and M = 2.0 × 10⁵ A m⁻¹. The susceptibility of the core is",
+            options: ["400", "4 × 10⁻³", "2.5 × 10⁻³", "401"],
+            answer: 0,
+            explain: t`$\chi = M/H = 2.0 \times 10^5 / 500 = 400$. ($\mu_r$ would be 401.)`,
+            difficulty: 1,
+          },
+        ],
+      },
+    ],
+  },
 ];
 
 /** Class 12 chapter title ("12:<exact title>") → topic slug(s), or full lesson ids, that teach it. */
 export const links: Record<string, string | string[]> = {
   "12:Current Electricity": "c12-current-electricity",
   "12:Moving Charges and Magnetism": "c12-moving-charges-magnetism",
+  "12:Magnetism and Matter": "c12-magnetism-and-matter",
+  "12:Magnetic Effects of Current and Magnetism": ["c12-moving-charges-magnetism", "c12-magnetism-and-matter"],
 };
