@@ -388,7 +388,7 @@ export const topics: Topic[] = [
           },
           {
             type: "text",
-            md: "A **habitat** is the place where an organism lives, defined by its physical and chemical conditions. The **niche** is the organism's functional role there: the range of conditions it tolerates, the resources it uses, and its place in the food chain. Each species has a distinct niche.\n\nThe key abiotic factors are **temperature, water, light and soil**. Temperature limits distribution: mango trees do not grow in temperate countries like Canada and Germany, and snow leopards are not found in Kerala. Light drives photosynthesis and, through day length, flowering in many plants. Salinity matters in water: about 5 parts per thousand in inland waters, 30–35 in the sea and above 100 in some hypersaline lagoons.",
+            md: "A **habitat** is the place where an organism lives, defined by its physical and chemical conditions. The **niche** is the organism's functional role there: the range of conditions it tolerates, the resources it uses, and its place in the food chain. Each species has a distinct niche.\n\nThe key abiotic factors are **temperature, water, light and soil**. Temperature limits distribution: mango trees do not grow in temperate countries like Canada and Germany, and snow leopards are not found in Kerala. Light drives photosynthesis and, through day length, flowering in many plants. Salinity matters in water: less than 5 parts per thousand in inland waters, 30–35 in the sea and above 100 in some hypersaline lagoons.",
           },
           {
             type: "table",
@@ -405,7 +405,7 @@ export const topics: Topic[] = [
             ordered: true,
             items: [
               "**Regulate**: keep the internal environment constant (homeostasis) by physiological means, as birds and mammals do for body temperature. Very few animals can do this; nearly all plants cannot.",
-              "**Conform**: let body temperature or osmotic concentration follow the surroundings, as most animals and all plants do.",
+              "**Conform**: let body temperature or osmotic concentration follow the surroundings, as most animals (about 99%) and nearly all plants do.",
               "**Migrate**: move away temporarily to a better place; birds from Siberia winter at Keoladeo National Park, Bharatpur.",
               "**Suspend**: reduce activity until conditions improve: spores and seeds, hibernation of bears in winter, aestivation of some snails and fish in summer, and diapause in zooplankton.",
             ],
@@ -450,7 +450,7 @@ export const topics: Topic[] = [
           {
             type: "mistake",
             wrong: "Regulating body temperature is the best strategy, so most animals are regulators.",
-            right: "Only a small fraction of animals (mainly birds and mammals) regulate; most animals and all plants are **conformers**.",
+            right: "Only a small fraction of animals (mainly birds and mammals) regulate; most animals and nearly all plants are **conformers**.",
             why: "We are regulators, so it feels normal. But regulation costs a lot of energy; for small or slow animals, conforming, migrating or suspending is cheaper.",
           },
           {
