@@ -41,6 +41,10 @@ function chapter(ch: number) {
 const BASIC: ExamId[] = ["JEE", "KCET", "COMEDK"];
 const MAIN: ExamId[] = ["JEE", "KCET", "COMEDK"];
 const ADV: ExamId[] = ["JEE_ADV", "JEE"];
+/** Numeric-answer items: KCET and COMEDK set only single-answer MCQs. */
+const NUM: ExamId[] = ["JEE"];
+/** Two-variable inequalities (graphs, half-planes, feasible regions): dropped from rationalised NCERT Class 11 and not in the JEE Main 2024 syllabus; KCET / COMEDK still meet them through Class 12 linear programming. */
+const REGION: ExamId[] = ["KCET", "COMEDK"];
 
 const AR = [
   "Both A and R are true and R is the correct explanation of A",
@@ -88,7 +92,7 @@ const ch5: ExamQuestion[] = [
     answer: 1,
     explain: t`Multiply by the LCM 60 (positive, so the sign stays): $20(2x-1) \ge 15(3x-2) - 12(2-x)$, i.e. $40x - 20 \ge 45x - 30 - 24 + 12x = 57x - 54$. So $-17x \ge -34$, and dividing by $-17$ gives $x \le 2$. The strict option drops the equality; $x \ge 2$ forgets to reverse the sign.`,
   }),
-  q5(1, BASIC, 60, {
+  q5(1, NUM, 60, {
     kind: "numeric",
     q: t`How many integers $x$ satisfy both $3x - 2 > 4$ and $2x + 5 \le 21$?`,
     answer: 6,
@@ -108,7 +112,7 @@ const ch5: ExamQuestion[] = [
     answer: 0,
     explain: t`$15 < C < 40 \Rightarrow 27 < \tfrac95 C < 72 \Rightarrow 59 < F < 104$. Stopping at $27$–$72$ forgets to add 32; the mixed options add 32 to only one end.`,
   }),
-  q5(1, BASIC, 45, {
+  q5(1, REGION, 45, {
     kind: "mcq",
     q: t`The solution region of $2x + 3y \ge 6$ in the $xy$-plane is:`,
     options: [
@@ -143,7 +147,7 @@ const ch5: ExamQuestion[] = [
     hint: t`$|u| \ge a$ (with $a > 0$) means $u \ge a$ or $u \le -a$.`,
     explain: t`$2x - 5 \ge 3 \Rightarrow x \ge 4$, or $2x - 5 \le -3 \Rightarrow x \le 1$. So $x \in (-\infty, 1]\cup[4,\infty)$. $[1,4]$ solves $|2x-5| \le 3$ instead; keeping only $[4,\infty)$ drops the negative case.`,
   }),
-  q5(2, MAIN, 75, {
+  q5(2, NUM, 75, {
     kind: "numeric",
     q: t`Find the number of integers $x$ satisfying $1 \le |x - 2| \le 4$.`,
     answer: 8,
@@ -182,14 +186,15 @@ const ch5: ExamQuestion[] = [
     hint: "Acid in the mixture = 0.12(600) + 0.30x; total volume = 600 + x.",
     explain: t`Acid $= 72 + 0.3x$, volume $= 600 + x$ (positive, so we may multiply). $72 + 0.3x > 0.15(600 + x) = 90 + 0.15x \Rightarrow 0.15x > 18 \Rightarrow x > 120$. $72 + 0.3x < 0.18(600 + x) = 108 + 0.18x \Rightarrow 0.12x < 36 \Rightarrow x < 300$. So $120 < x < 300$.`,
   }),
-  q5(2, MAIN, 90, {
-    kind: "numeric",
-    q: t`Find the area (in square units) of the region given by $x \ge 0$, $y \ge 0$, $x + y \le 6$ and $y \le 4$.`,
-    answer: 16,
+  q5(2, REGION, 90, {
+    kind: "mcq",
+    q: t`The area (in square units) of the region given by $x \ge 0$, $y \ge 0$, $x + y \le 6$ and $y \le 4$ is:`,
+    options: [t`$18$`, t`$12$`, t`$16$`, t`$14$`],
+    answer: 2,
     hint: "Start from the triangle cut off by x + y ≤ 6 and remove the part above y = 4.",
-    explain: t`$x \ge 0, y \ge 0, x + y \le 6$ is the triangle with vertices $(0,0),(6,0),(0,6)$, area 18. The condition $y \le 4$ cuts off the small triangle $(0,4),(2,4),(0,6)$ of area $\tfrac12\cdot2\cdot2 = 2$. Area $= 18 - 2 = 16$. (The region is the quadrilateral $(0,0),(6,0),(2,4),(0,4)$.)`,
+    explain: t`$x \ge 0, y \ge 0, x + y \le 6$ is the triangle with vertices $(0,0),(6,0),(0,6)$, area 18. The condition $y \le 4$ cuts off the small triangle $(0,4),(2,4),(0,6)$ of area $\tfrac12\cdot2\cdot2 = 2$. Area $= 18 - 2 = 16$. (The region is the quadrilateral $(0,0),(6,0),(2,4),(0,4)$.) 18 ignores the condition $y \le 4$.`,
   }),
-  q5(2, MAIN, 60, {
+  q5(2, REGION, 60, {
     kind: "mcq",
     q: t`Which of the following points lies in the solution region of the system $3x + 2y < 12$, $x - y > -2$?`,
     options: [t`$(4, 0)$`, t`$(0, 3)$`, t`$(1, 1)$`, t`$(3, 2)$`],
@@ -246,18 +251,18 @@ const ch5: ExamQuestion[] = [
     hint: t`Put $t = |x| \ge 0$ and solve in $t$ first.`,
     explain: t`With $t = |x|$: $\dfrac{t-1}{t-2} \ge 0 \Rightarrow t \le 1$ or $t > 2$ ($t = 2$ makes the denominator zero). So $|x| \le 1$ or $|x| > 2$, i.e. $x \in (-\infty,-2)\cup[-1,1]\cup(2,\infty)$. Closing the brackets at $\pm 2$ includes points where the expression is undefined; $(-2,-1]\cup[1,2)$ is the set where it is $\le 0$; dropping the negative ray forgets that $|x| > 2$ includes $x < -2$.`,
   }),
-  q5(3, ADV, 150, {
-    kind: "multi",
-    q: t`Let $R$ be the region of the plane given by $x \ge 0$, $y \ge 0$, $x + y \le 5$ and $x - y \ge -1$. Which of the following are true?`,
+  q5(2, REGION, 150, {
+    kind: "mcq",
+    q: t`Let $R$ be the region of the plane given by $x \ge 0$, $y \ge 0$, $x + y \le 5$ and $x - y \ge -1$. Which of the following is NOT true?`,
     options: [
       t`$R$ is bounded`,
       t`$(2, 3) \in R$`,
       t`$(0, 2) \in R$`,
       t`The area of $R$ is $8.5$ square units`,
     ],
-    answers: [0, 1, 3],
+    answer: 2,
     hint: "Find the corner points: x + y = 5 meets y = x + 1 at (2, 3).",
-    explain: t`The corners are $(0,0)$, $(5,0)$, $(2,3)$ (where $x+y=5$ meets $y = x+1$) and $(0,1)$, so $R$ is a bounded quadrilateral. $(2,3)$: $5 \le 5$ and $-1 \ge -1$ — on the boundary, included. $(0,2)$: $0 - 2 = -2 \ge -1$ fails. Area by the shoelace formula: $\tfrac12|0 + 15 + 2 + 0| = 8.5$. Correct: A, B, D.`,
+    explain: t`The corners are $(0,0)$, $(5,0)$, $(2,3)$ (where $x+y=5$ meets $y = x+1$) and $(0,1)$, so $R$ is a bounded quadrilateral. $(2,3)$: $5 \le 5$ and $-1 \ge -1$ — on the boundary, included. $(0,2)$: $0 - 2 = -2 \ge -1$ fails. Area by the shoelace formula: $\tfrac12|0 + 15 + 2 + 0| = 8.5$. So A, B and D are true; the statement that is not true is $(0, 2) \in R$.`,
   }),
   q5(3, ADV, 120, {
     kind: "numeric",
@@ -337,7 +342,7 @@ const ch6: ExamQuestion[] = [
     answer: 0,
     explain: t`Any 2 vertices give a side or a diagonal: $^{12}C_2 = 66$; removing the 12 sides leaves $54$. Equivalently $\dfrac{n(n-3)}{2} = \dfrac{12\cdot 9}{2} = 54$.`,
   }),
-  q6(1, BASIC, 45, {
+  q6(1, NUM, 45, {
     kind: "numeric",
     q: t`Eight points are marked on a circle. How many triangles have their vertices among these points?`,
     answer: 56,
@@ -386,7 +391,7 @@ const ch6: ExamQuestion[] = [
     hint: "Vowels: E, A, A, I, I, O. Treat them as one block, then arrange inside the block.",
     explain: t`Vowels E, A, A, I, I, O (6, with A and I repeated); consonants X, M, N, N, T (N repeated). The vowel block plus 5 consonants is 6 units with N twice: $\dfrac{6!}{2!} = 360$. Inside the block: $\dfrac{6!}{2!\,2!} = 180$. Total $360\cdot180 = 64800$. Forgetting the repeated N gives 129600; $4989600 = \dfrac{11!}{2!2!2!}$ is the unrestricted count.`,
   }),
-  q6(2, MAIN, 120, {
+  q6(2, NUM, 120, {
     kind: "numeric",
     q: t`All arrangements of the letters of MOTHER are listed in dictionary order. Find the rank of the word MOTHER.`,
     answer: 309,
@@ -425,7 +430,7 @@ const ch6: ExamQuestion[] = [
     hint: "Positive integer solutions of a + b + c = 8.",
     explain: t`We need positive solutions of $a + b + c = 8$. By stars and bars this is $^{8-1}C_{3-1} = {}^7C_2 = 21$. $^{10}C_2 = 45$ counts non-negative solutions (empty boxes allowed); $3^8$-style answers treat the balls as distinct.`,
   }),
-  q6(2, MAIN, 60, {
+  q6(2, NUM, 60, {
     kind: "numeric",
     q: t`Find the number of positive divisors of 1080.`,
     answer: 32,
@@ -456,7 +461,7 @@ const ch6: ExamQuestion[] = [
     hint: "A rectangle is fixed by choosing 2 of the 9 horizontal lines and 2 of the 9 vertical lines.",
     explain: t`The board is drawn with 9 horizontal and 9 vertical lines. Choosing 2 of each fixes a rectangle: $^9C_2\cdot{}^9C_2 = 36\cdot36 = 1296$. $204 = 1^2 + 2^2 + \dots + 8^2$ counts only squares; $784 = 28^2$ uses 8 lines instead of 9.`,
   }),
-  q6(2, MAIN, 90, {
+  q6(2, NUM, 90, {
     kind: "numeric",
     q: t`In how many ways can three distinct numbers be chosen from $\{1, 2, \dots, 20\}$ so that their sum is even?`,
     answer: 570,
@@ -508,7 +513,7 @@ const ch6: ExamQuestion[] = [
     hint: "Stars and bars: 10 stars, 2 bars.",
     explain: t`Arrange 10 stars and 2 bars in a row: $^{12}C_2 = 66$. $36 = {}^9C_2$ is the count of positive solutions; $55 = {}^{11}C_2$ uses one bar too few.`,
   }),
-  q6(2, MAIN, 120, {
+  q6(2, NUM, 120, {
     kind: "numeric",
     q: t`If $^nC_{r-1} = 120$, $^nC_r = 210$ and $^nC_{r+1} = 252$, find $n + r$.`,
     answer: 14,
@@ -679,7 +684,7 @@ const ch7: ExamQuestion[] = [
     answer: 3,
     explain: t`With $n = 10$ there are 11 terms; the middle one is $T_6$ ($r = 5$): $^{10}C_5\,x^5\left(-\tfrac1x\right)^5 = -252$. Dropping the sign of $(-1)^5$ gives $252$; $210 = {}^{10}C_4$ is $T_5$'s coefficient.`,
   }),
-  q7(1, BASIC, 45, {
+  q7(1, NUM, 45, {
     kind: "numeric",
     q: t`Find the term independent of $x$ in the expansion of $\left(x + \dfrac1x\right)^8$.`,
     answer: 70,
@@ -748,7 +753,7 @@ const ch7: ExamQuestion[] = [
     answer: 2,
     explain: t`The even powers of $y$ cancel and the odd ones double: $2(\,^4C_1x^3y + {}^4C_3xy^3) = 2(4x^3y + 4xy^3) = 8x^3y + 8xy^3$. $2x^4 + 12x^2y^2 + 2y^4$ is the sum, not the difference.`,
   }),
-  q7(2, MAIN, 75, {
+  q7(2, NUM, 75, {
     kind: "numeric",
     q: t`Find the term independent of $x$ in the expansion of $\left(2x^2 - \dfrac1x\right)^9$.`,
     answer: 672,
@@ -776,7 +781,7 @@ const ch7: ExamQuestion[] = [
     hint: "n = 9 is odd, so there are two middle terms: T5 and T6.",
     explain: t`$T_5 = {}^9C_4(2x)^5\left(-\tfrac{x^2}{4}\right)^4 = 126\cdot32x^5\cdot\dfrac{x^8}{256} = \dfrac{63}{4}x^{13}$. $T_6 = {}^9C_5(2x)^4\left(-\tfrac{x^2}{4}\right)^5 = 126\cdot16x^4\cdot\left(-\dfrac{x^{10}}{1024}\right) = -\dfrac{63}{32}x^{14}$. The sign of $T_6$ is negative because of the odd power of $-\tfrac{x^2}{4}$.`,
   }),
-  q7(2, MAIN, 120, {
+  q7(2, NUM, 120, {
     kind: "numeric",
     q: t`If the coefficients of the 2nd, 3rd and 4th terms in the expansion of $(1 + x)^n$ are in A.P., find $n$.`,
     answer: 7,
@@ -847,7 +852,7 @@ const ch7: ExamQuestion[] = [
     hint: t`$P + Q = (x + a)^n$ and $P - Q = (x - a)^n$.`,
     explain: t`The even-numbered terms carry odd powers of $a$, so they change sign when $a \to -a$: $P + Q = (x+a)^n$ and $P - Q = (x-a)^n$. Hence $P^2 - Q^2 = (x+a)^n(x-a)^n = (x^2 - a^2)^n$. The option $(x+a)^{2n} - (x-a)^{2n}$ equals $4PQ$.`,
   }),
-  q7(2, MAIN, 90, {
+  q7(2, NUM, 90, {
     kind: "numeric",
     q: t`Using the binomial theorem, find $(1.002)^{10}$ correct to four decimal places.`,
     answer: 1.0202,
@@ -900,7 +905,7 @@ const ch7: ExamQuestion[] = [
     hint: t`Compare coefficients of $x^8$ in $(1+x)^8(1+x)^8 = (1+x)^{16}$.`,
     explain: t`$\sum({}^8C_r)^2 = \sum{}^8C_r\,{}^8C_{8-r}$ is the coefficient of $x^8$ in $(1+x)^{16}$, i.e. $^{16}C_8 = 12870$. $256 = 2^8$ is the sum of the coefficients without squaring; $6435 = {}^{15}C_7$.`,
   }),
-  q7(2, MAIN, 90, {
+  q7(2, NUM, 90, {
     kind: "numeric",
     q: t`Find the number of rational terms in the expansion of $\left(\sqrt3 + 5^{1/4}\right)^{12}$.`,
     answer: 4,
@@ -1043,7 +1048,7 @@ const ch8: ExamQuestion[] = [
     answer: 0,
     explain: t`$a_n = ar^{n-1} = 3\cdot2^6 = 192$. Using $2^7$ gives 384 (the 8th term); $2^5$ gives 96 (the 6th term).`,
   }),
-  q8(1, BASIC, 45, {
+  q8(1, NUM, 45, {
     kind: "numeric",
     q: t`Find the sum of the first 8 terms of the G.P. $1, 3, 9, 27, \dots$`,
     answer: 3280,
@@ -1185,7 +1190,7 @@ const ch8: ExamQuestion[] = [
     hint: t`The $k$th term is $2^k - 1$.`,
     explain: t`$a_k = 2^k - 1$, so $S_n = (2 + 4 + \dots + 2^n) - n = (2^{n+1} - 2) - n$. Check $n = 3$: $1 + 3 + 7 = 11 = 16 - 3 - 2$ ✓. $2^{n+1} - 2$ forgets to subtract the $n$ ones.`,
   }),
-  q8(2, MAIN, 120, {
+  q8(2, NUM, 120, {
     kind: "numeric",
     q: t`An infinite G.P. has sum 20, and the sum of the squares of its terms is 100. Find its first term.`,
     answer: 8,
@@ -1200,7 +1205,7 @@ const ch8: ExamQuestion[] = [
     hint: "The numbers are roots of t² − (2A)t + G² = 0.",
     explain: t`Sum $= 20$, product $= 64$: $t^2 - 20t + 64 = 0 \Rightarrow t = 16, 4$. $12, 8$ have the right sum but GM $\sqrt{96}$; $18, 2$ have GM 6.`,
   }),
-  q8(2, MAIN, 90, {
+  q8(2, NUM, 90, {
     kind: "numeric",
     q: t`Three numbers in G.P. have product 216 and sum 19. Find the largest of them.`,
     answer: 9,
@@ -1228,7 +1233,7 @@ const ch8: ExamQuestion[] = [
     hint: "Multiply S by x and subtract.",
     explain: t`$S - xS = 1 + x + x^2 + \dots = \dfrac{1}{1 - x}$, so $S = \dfrac{1}{(1 - x)^2}$. $\dfrac{x}{(1-x)^2}$ is the sum of $x + 2x^2 + 3x^3 + \dots$.`,
   }),
-  q8(2, MAIN, 90, {
+  q8(2, NUM, 90, {
     kind: "numeric",
     q: t`Find the value of $\displaystyle\sum_{k=1}^{\infty}\frac{k}{3^k}$.`,
     answer: 0.75,
@@ -1273,7 +1278,7 @@ const ch8: ExamQuestion[] = [
     hint: "Both roots of the quadratic in n can be valid when the A.P. becomes negative.",
     explain: t`$\dfrac n2[60 - 3(n - 1)] = 156 \Rightarrow n(63 - 3n) = 312 \Rightarrow n^2 - 21n + 104 = 0 \Rightarrow n = 8$ or $13$. Both work: terms 9 to 13 are $6, 3, 0, -3, -6$, which add to 0.`,
   }),
-  q8(2, MAIN, 90, {
+  q8(2, NUM, 90, {
     kind: "numeric",
     q: t`Find the sum of all three-digit natural numbers that are divisible by 7.`,
     answer: 70336,
@@ -1513,7 +1518,7 @@ export const formulas: FormulaSheet[] = [
       { name: "Sum of cubes", tex: t`\sum k^3 = \left[\frac{n(n+1)}{2}\right]^2` },
       { name: "Odd numbers", tex: t`\sum (2k - 1) = n^2,\quad \sum (2k-1)^2 = \frac{n(2n-1)(2n+1)}{3}` },
       { name: "Arithmetico-geometric (infinite)", tex: t`\sum_{k\ge0}(a + kd)r^k = \frac{a}{1 - r} + \frac{dr}{(1 - r)^2},\ |r| < 1` },
-      { name: "Useful series", tex: t`\sum_{k\ge1} kx^{k-1} = \frac{1}{(1-x)^2},\quad \sum_{k=1}^n k\,2^k = (n-1)2^{n+1} + 2` },
+      { name: "Useful series", tex: t`\sum_{k\ge1} kx^{k-1} = \frac{1}{(1-x)^2}\ (|x| < 1),\quad \sum_{k=1}^n k\,2^k = (n-1)2^{n+1} + 2` },
       { name: "Telescoping", tex: t`\frac{1}{k(k+1)} = \frac1k - \frac1{k+1};\quad \frac{1}{k(k+1)(k+2)} = \frac12\left[\frac1{k(k+1)} - \frac1{(k+1)(k+2)}\right]` },
       { name: "Recurring decimals", tex: t`0.\overline{ab} = \frac{ab}{99}` },
       { name: "Common terms of two A.P.s", tex: t`\text{an A.P. with difference } \operatorname{lcm}(d_1, d_2)` },

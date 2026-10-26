@@ -491,7 +491,7 @@ const ch10: ExamQuestion[] = [
     q: t`The length of the latus rectum of the ellipse $4x^2+9y^2 = 36$ is:`,
     options: [t`$\frac83$`, t`$\frac92$`, t`$\frac43$`, t`$3$`],
     answer: 0,
-    explain: t`Divide by 36: $\frac{x^2}9+\frac{y^2}4 = 1$, so $a = 3$, $b = 2$. Latus rectum $= \frac{2b^2}{a} = \frac{8}{3}$. $\frac92 = \frac{2a^2}{b}$ swaps the axes; $\frac43 = \frac{b^2}a$ is only the semi-latus rectum.`,
+    explain: t`Divide by 36: $\frac{x^2}9+\frac{y^2}4 = 1$, so $a = 3$, $b = 2$. Latus rectum $= \frac{2b^2}{a} = \frac{8}{3}$. $\frac92 = \frac{a^2}{b}$ swaps the axes (and halves); $\frac43 = \frac{b^2}a$ is only the semi-latus rectum.`,
   }),
   q10(1, BASIC, 35, {
     kind: "mcq",
@@ -962,7 +962,7 @@ const ch11: ExamQuestion[] = [
       t`$x^2+y^2+z^2+8x+12 = 0$`,
       t`$x^2+y^2+z^2-8x+12 = 0$`,
       t`$x^2+y^2+z^2-8x-12 = 0$`,
-      t`$3x^2+3y^2+3z^2-24x+12 = 0$`,
+      t`$3x^2+3y^2+3z^2-24x+9 = 0$`,
     ],
     answer: 1,
     explain: t`$x^2+y^2+z^2 = 4\left[(x-3)^2+y^2+z^2\right]\Rightarrow 3x^2+3y^2+3z^2-24x+36 = 0\Rightarrow x^2+y^2+z^2-8x+12 = 0$. Check: $(2,0,0)$ is at distance 2 from $O$ and 1 from $(3,0,0)$, and $4-16+12 = 0$ ✓. The last option forgets to multiply $9$ by 4.`,

@@ -29,8 +29,6 @@ const chapter = (no: string, title: string, list: Raw[]): ExamQuestion[] =>
 
 /** Board / KCET / COMEDK level and most JEE Main / NEET MCQs. */
 const ALL: ExamId[] = ["NEET", "JEE", "KCET", "COMEDK"];
-/** JEE Main / NEET level MCQs. */
-const MAIN: ExamId[] = ["NEET", "JEE", "COMEDK"];
 /** JEE Main numerical-value questions. */
 const NUM: ExamId[] = ["JEE"];
 /** JEE Main + Advanced. */
@@ -146,7 +144,7 @@ const redox: Raw[] = [
   {
     kind: "mcq",
     difficulty: 2,
-    exams: MAIN,
+    exams: ALL,
     idealTime: 50,
     q: t`In neutral or faintly alkaline solution, permanganate ion oxidises iodide ion to:`,
     options: [t`$\text{I}_2$`, t`$\text{IO}_3^-$`, t`$\text{IO}_4^-$`, t`$\text{I}_3^-$`],
@@ -168,7 +166,7 @@ const redox: Raw[] = [
   {
     kind: "mcq",
     difficulty: 2,
-    exams: MAIN,
+    exams: ALL,
     idealTime: 50,
     q: t`**Assertion (A):** Sulphuric acid cannot act as a reducing agent.<br>**Reason (R):** Sulphur in $\text{H}_2\text{SO}_4$ is in its highest possible oxidation state, +6.`,
     options: AR_OPTS,
@@ -179,7 +177,7 @@ const redox: Raw[] = [
   {
     kind: "mcq",
     difficulty: 2,
-    exams: MAIN,
+    exams: ALL,
     idealTime: 50,
     q: t`**Statement I:** In $\text{O}_2\text{F}_2$, oxygen has an oxidation number of +1.<br>**Statement II:** Fluorine, the most electronegative element, has an oxidation number of $-1$ in all its compounds.`,
     options: S_OPTS,
@@ -381,12 +379,12 @@ const redox: Raw[] = [
     ],
     answer: 0,
     hint: "Superoxide is O₂⁻, peroxide is O₂²⁻.",
-    explain: t`Elements in the free state are 0 ($\text{S}_8$). $\text{KO}_2$ is a superoxide ($\text{O}_2^-$): O = $-1/2$. $\text{BaO}_2$ is a peroxide ($\text{O}_2^{2-}$): O = $-1$. In $\text{OsO}_4$, $x = +8$, the highest oxidation state known. Swapping the peroxide and superoxide values is the usual slip.`,
+    explain: t`Elements in the free state are 0 ($\text{S}_8$). $\text{KO}_2$ is a superoxide ($\text{O}_2^-$): O = $-1/2$. $\text{BaO}_2$ is a peroxide ($\text{O}_2^{2-}$): O = $-1$. In $\text{OsO}_4$, $x = +8$, one of the highest oxidation states known. Swapping the peroxide and superoxide values is the usual slip.`,
   },
   {
     kind: "mcq",
     difficulty: 2,
-    exams: MAIN,
+    exams: ALL,
     idealTime: 60,
     q: t`**Assertion (A):** Hydrochloric acid is not used to acidify the solution when $\text{Fe}^{2+}$ is titrated against $\text{KMnO}_4$.<br>**Reason (R):** $\text{KMnO}_4$ oxidises $\text{Cl}^-$ ions to $\text{Cl}_2$, so extra permanganate is consumed.`,
     options: AR_OPTS,
@@ -616,7 +614,7 @@ const goc: Raw[] = [
   {
     kind: "mcq",
     difficulty: 2,
-    exams: MAIN,
+    exams: ALL,
     idealTime: 50,
     q: "**Assertion (A):** The electromeric effect is a temporary effect.<br>**Reason (R):** It operates in compounds with a multiple bond only in the presence of an attacking reagent and vanishes when the reagent is removed.",
     options: AR_OPTS,
@@ -637,7 +635,7 @@ const goc: Raw[] = [
   {
     kind: "mcq",
     difficulty: 2,
-    exams: MAIN,
+    exams: ALL,
     idealTime: 55,
     q: t`**Statement I:** The $-\text{NH}_2$ group shows a −I effect but a +R effect.<br>**Statement II:** In aniline, the +R effect of $-\text{NH}_2$ outweighs its −I effect, so the ortho and para positions of the ring become electron-rich.`,
     options: S_OPTS,
@@ -714,7 +712,7 @@ const goc: Raw[] = [
   {
     kind: "mcq",
     difficulty: 2,
-    exams: MAIN,
+    exams: ALL,
     idealTime: 55,
     q: "**Assertion (A):** In steam distillation, an organic liquid distils at a temperature below its normal boiling point.<br>**Reason (R):** The mixture boils when the sum of the vapour pressures of the organic liquid and of water becomes equal to the atmospheric pressure.",
     options: AR_OPTS,
@@ -987,7 +985,7 @@ const goc: Raw[] = [
     options: [t`$sp^2, sp^3, sp^2$`, t`$sp^3, sp^2, sp^2$`, t`$sp^2, sp^2, sp^3$`, t`$sp^3, sp^3, sp^3$`],
     answer: 0,
     hint: "Count σ bonds plus lone pairs on carbon.",
-    explain: t`$\text{CH}_3^+$: 3 σ bonds, empty p orbital → $sp^2$, trigonal planar. $\text{CH}_3^-$: 3 σ bonds + 1 lone pair → $sp^3$, pyramidal. $\dot{\text{C}}\text{H}_3$: 3 σ bonds + a singly occupied p orbital → $sp^2$ (planar, as stated in NCERT).`,
+    explain: t`$\text{CH}_3^+$: 3 σ bonds, empty p orbital → $sp^2$, trigonal planar. $\text{CH}_3^-$: 3 σ bonds + 1 lone pair → $sp^3$, pyramidal. $\dot{\text{C}}\text{H}_3$: 3 σ bonds + a singly occupied p orbital → $sp^2$ (planar).`,
   },
 ];
 
@@ -1113,7 +1111,7 @@ const hydrocarbons: Raw[] = [
   {
     kind: "mcq",
     difficulty: 2,
-    exams: MAIN,
+    exams: ALL,
     idealTime: 50,
     q: "**Statement I:** The staggered and eclipsed conformations of ethane cannot be isolated at room temperature.<br>**Statement II:** The energy barrier to rotation about the C–C bond is small enough to be crossed by thermal collisions at room temperature.",
     options: S_OPTS,
@@ -1185,7 +1183,7 @@ const hydrocarbons: Raw[] = [
   {
     kind: "mcq",
     difficulty: 2,
-    exams: MAIN,
+    exams: ALL,
     idealTime: 50,
     q: "**Assertion (A):** The peroxide (Kharasch) effect is observed in the addition of HBr to propene but not with HCl.<br>**Reason (R):** The H–Cl bond is too strong to be cleaved homolytically by the free radicals formed from the peroxide.",
     options: AR_OPTS,
@@ -1248,7 +1246,7 @@ const hydrocarbons: Raw[] = [
   {
     kind: "mcq",
     difficulty: 2,
-    exams: MAIN,
+    exams: ALL,
     idealTime: 50,
     q: "**Assertion (A):** Ethyne is more acidic than ethene and ethane.<br>**Reason (R):** The sp-hybridised carbon of ethyne has 50% s-character, so it holds the bonding electron pair of the C–H bond more tightly.",
     options: AR_OPTS,
@@ -1346,7 +1344,7 @@ const hydrocarbons: Raw[] = [
   {
     kind: "mcq",
     difficulty: 2,
-    exams: MAIN,
+    exams: ALL,
     idealTime: 55,
     q: "**Statement I:** Chlorobenzene undergoes electrophilic substitution more slowly than benzene.<br>**Statement II:** Chlorine is ortho/para directing because of its +R effect, although its −I effect deactivates the ring.",
     options: S_OPTS,
@@ -1584,7 +1582,7 @@ export const formulas: FormulaSheet[] = [
       { name: "Geometry of intermediates", tex: t`\text{CH}_3^+: sp^2\ (\text{planar});\quad \text{CH}_3^-: sp^3\ (\text{pyramidal});\quad \dot{\text{C}}\text{H}_3: sp^2` },
       { name: "Carbocation / free radical stability", tex: t`\text{benzyl} \approx \text{allyl} > 3^\circ > 2^\circ > 1^\circ > \text{CH}_3`, note: "Stabilised by resonance, hyperconjugation and +I groups. (C₆H₅)₃C⁺ is very stable." },
       { name: "Carbanion stability", tex: t`\text{CH}_3^- > 1^\circ > 2^\circ > 3^\circ`, note: "Stabilised by −I/−R groups (e.g. ⁻CH₂NO₂) and by higher s-character (HC≡C⁻)." },
-      { name: "Inductive effect order (−I)", tex: t`-\text{NO}_2 > -\text{CN} > -\text{COOH} > -\text{F} > -\text{Cl} > -\text{Br} > -\text{I} > -\text{OCH}_3 > -\text{OH} > -\text{C}_6\text{H}_5`, note: "+I: (CH₃)₃C– > (CH₃)₂CH– > CH₃CH₂– > CH₃–. Permanent, decreases rapidly along the chain." },
+      { name: "Inductive effect order (−I)", tex: t`-\text{NO}_2 > -\text{CN} > -\text{COOH} > -\text{F} > -\text{Cl} > -\text{Br} > -\text{I} > -\text{OCH}_3 > -\text{OH} > -\text{C}_6\text{H}_5`, note: "Sources differ on where –COOH sits relative to –F; F > Cl > Br > I is certain. +I: (CH₃)₃C– > (CH₃)₂CH– > CH₃CH₂– > CH₃–. Permanent, decreases rapidly along the chain." },
       { name: "Acid strength from −I", tex: t`\text{FCH}_2\text{COOH} > \text{ClCH}_2\text{COOH} > \text{BrCH}_2\text{COOH} > \text{CH}_3\text{COOH} > \text{CH}_3\text{CH}_2\text{COOH}` },
       { name: "Resonance (mesomeric) effect", tex: t`+R: -\text{OH}, -\text{OR}, -\text{NH}_2, -\text{X};\quad -R: -\text{NO}_2, -\text{CN}, -\text{CHO}, -\text{COOH}`, note: "Canonical structures are imaginary; the hybrid is more stable than any of them." },
       { name: "Bond order from resonance", tex: t`\text{bond order} = \dfrac{\text{total bonds between the atoms}}{\text{number of equivalent positions}}`, note: "CO₃²⁻: 4/3; carboxylate C–O: 1.5; benzene C–C: 1.5 (139 pm)." },
@@ -1631,7 +1629,7 @@ export const formulas: FormulaSheet[] = [
       { name: "Electrophiles in EAS", tex: t`\text{NO}_2^+ (\text{HNO}_3/\text{H}_2\text{SO}_4);\ \text{Cl}^+ (\text{Cl}_2/\text{FeCl}_3);\ \text{SO}_3;\ \text{R}^+, \text{RCO}^+ (\text{AlCl}_3)`, note: "Mechanism: electrophile → arenium ion (σ-complex) → loss of H⁺." },
       { name: "Directive influence", tex: t`o/p: -\text{OH}, -\text{NH}_2, -\text{OR}, -\text{R}, -\text{X};\quad m: -\text{NO}_2, -\text{CN}, -\text{CHO}, -\text{COOH}, -\text{SO}_3\text{H}`, note: "Halogens deactivate but are o/p directing." },
       { name: "Addition to benzene", tex: t`\text{C}_6\text{H}_6 + 3\text{Cl}_2 \xrightarrow{h\nu} \text{C}_6\text{H}_6\text{Cl}_6\ (\text{BHC});\quad \text{C}_6\text{H}_6 + 3\text{H}_2 \xrightarrow{\text{Ni}} \text{C}_6\text{H}_{12}` },
-      { name: "Resonance energy of benzene", tex: t`E_{\text{res}} = 3\,\Delta H_{\text{hyd}}(\text{cyclohexene}) - \Delta H_{\text{hyd}}(\text{benzene}) \approx 150\ \text{kJ mol}^{-1}`, note: "All C–C = 139 pm. Polynuclear hydrocarbons such as 3,4-benzpyrene are carcinogenic." },
+      { name: "Resonance energy of benzene", tex: t`E_{\text{res}} = \Delta H_{\text{hyd}}(\text{benzene}) - 3\,\Delta H_{\text{hyd}}(\text{cyclohexene}) \approx 150\ \text{kJ mol}^{-1}`, note: "All C–C = 139 pm. Polynuclear hydrocarbons such as 3,4-benzpyrene are carcinogenic." },
     ],
   },
 ];

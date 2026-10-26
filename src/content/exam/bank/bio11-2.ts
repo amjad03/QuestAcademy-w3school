@@ -835,7 +835,7 @@ const ch10: Q[] = [
     d: 2, t: 75,
     q: "Which statement about where mitosis occurs is correct?",
     o: [
-      "In animals, mitotic division is seen in both haploid and diploid cells",
+      "In animals, mitotic division is seen only in haploid cells",
       "In animals, mitotic division is seen only in diploid somatic cells, while plants can show mitosis in both haploid and diploid cells",
       "Plants show mitosis only in diploid cells",
       "Mitosis never occurs in haploid cells of any organism",
@@ -2348,7 +2348,7 @@ export const formulas: FormulaSheet[] = [
       { name: "Aerobic respiration", tex: t`\text{C}_6\text{H}_{12}\text{O}_6 + 6\text{O}_2 \to 6\text{CO}_2 + 6\text{H}_2\text{O} + \text{energy}` },
       { name: "Glycolysis (EMP)", tex: t`\text{glucose} \to 2\ \text{pyruvate};\ \text{cytoplasm}`, note: "Embden, Meyerhof, Parnas. ATP used: glucose→G6P (hexokinase), F6P→F1,6BP. ATP made: BPGA→PGA, PEP→pyruvate. NADH: PGAL→BPGA." },
       { name: "Glycolysis yield", tex: t`4\ \text{ATP} - 2\ \text{ATP} = 2\ \text{ATP (net)} + 2\ \text{NADH}` },
-      { name: "Alcoholic fermentation", tex: t`\text{pyruvate} \xrightarrow{\text{decarboxylase}} \text{acetaldehyde} \xrightarrow{\text{ADH}} \text{ethanol} + \text{CO}_2`, note: "Yeast dies at ≈ 13% alcohol. < 7% of glucose energy released." },
+      { name: "Alcoholic fermentation", tex: t`\text{pyruvate} \xrightarrow{\text{decarboxylase}} \text{acetaldehyde} + \text{CO}_2 \xrightarrow{\text{ADH}} \text{ethanol}`, note: "Yeast dies at ≈ 13% alcohol. < 7% of glucose energy released." },
       { name: "Lactic fermentation", tex: t`\text{pyruvate} + \text{NADH} \xrightarrow{\text{LDH}} \text{lactate} + \text{NAD}^+` },
       { name: "Link reaction", tex: t`\text{pyruvate} + \text{CoA} + \text{NAD}^+ \xrightarrow{\text{PDH, Mg}^{2+}} \text{acetyl CoA} + \text{CO}_2 + \text{NADH}` },
       { name: "TCA cycle (per turn)", tex: t`3\ \text{NADH} + 1\ \text{FADH}_2 + 1\ \text{GTP} + 2\ \text{CO}_2`, note: "Citrate synthase: acetyl CoA + OAA → citrate. GTP at succinyl CoA → succinate. OAA must be replenished." },

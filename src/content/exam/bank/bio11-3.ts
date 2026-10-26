@@ -77,9 +77,9 @@ const ch14: Q[] = [
   {
     d: 1, t: 45,
     q: "In which of the following animals does exchange of gases take place by simple diffusion over the entire body surface?",
-    o: ["Earthworm", "Cockroach", "Planaria (flatworm)", "Prawn"],
+    o: ["Rohu (bony fish)", "Cockroach", "Planaria (flatworm)", "Prawn"],
     a: 2,
-    e: "Lower invertebrates such as sponges, coelenterates and flatworms exchange O₂ and CO₂ by simple diffusion over the whole body surface. Earthworms use their moist cuticle, insects (cockroach) use a network of tracheal tubes, and aquatic arthropods like prawn use gills.",
+    e: "Lower invertebrates such as sponges, coelenterates and flatworms exchange O₂ and CO₂ by simple diffusion over the whole body surface. Fishes (rohu) and aquatic arthropods like prawn use gills, and insects (cockroach) use a network of tracheal tubes. (Earthworms, which breathe through their moist cuticle, are kept out of the options because that is also a body-surface route.)",
   },
   {
     d: 1, t: 45,

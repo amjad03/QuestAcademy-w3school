@@ -168,7 +168,7 @@ const ch12: ExamQuestion[] = [
     options: [t`$\frac35$`, t`$\frac53$`, t`$0$`, t`$-2$`],
     answer: 0,
     hint: t`Divide numerator and denominator by $x^2$.`,
-    explain: t`$\dfrac{3+2/x}{5-1/x^2}\to\dfrac{3}{5}$. When the degrees are equal the limit is the ratio of leading coefficients. $-2$ is what you get by (wrongly) substituting $x = 0$.`,
+    explain: t`$\dfrac{3+2/x}{5-1/x^2}\to\dfrac{3}{5}$. When the degrees are equal the limit is the ratio of leading coefficients. $\frac53$ inverts that ratio; $0$ is what you get by (wrongly) substituting $x = 0$.`,
   }),
   q12(2, MAIN, 75, {
     kind: "mcq",
@@ -184,7 +184,7 @@ const ch12: ExamQuestion[] = [
     options: [t`$\frac ab$`, t`$\frac ba$`, t`$1$`, t`$0$`],
     answer: 2,
     hint: t`Divide numerator and denominator by $x$.`,
-    explain: t`Dividing by $x$: $\dfrac{\frac{\sin ax}{x}+b}{a+\frac{\sin bx}{x}}\to\dfrac{a+b}{a+b} = 1$. $\frac ab$ comes from keeping only the sine in the numerator and only $ax$ in the denominator.`,
+    explain: t`Dividing by $x$: $\dfrac{\frac{\sin ax}{x}+b}{a+\frac{\sin bx}{x}}\to\dfrac{a+b}{a+b} = 1$. $\frac ab$ comes from keeping only the sine terms, $\frac{\sin ax}{\sin bx}$, and dropping $bx$ and $ax$.`,
   }),
   q12(2, MAIN, 60, {
     kind: "mcq",
@@ -515,7 +515,7 @@ const ch13: ExamQuestion[] = [
     answer: 1,
     explain: t`$\bar y = \bar x+5$, but $y_i-\bar y = x_i-\bar x$, so all measures of dispersion (range, MD, SD, variance) are unchanged by a change of origin.`,
   }),
-  q13(1, BASIC, 50, {
+  q13(1, ["JEE", "COMEDK"], 50, {
     kind: "mcq",
     q: "Series A has mean 50 and standard deviation 10; series B has mean 40 and standard deviation 6. Which statement is correct?",
     options: [
@@ -532,7 +532,7 @@ const ch13: ExamQuestion[] = [
     q: "The mean deviation about the median of 3, 5, 9, 11, 2 is:",
     options: ["3", "3.2", "2.4", "6"],
     answer: 0,
-    explain: t`Sorted: $2, 3, 5, 9, 11$; median $= 5$. $|x-5|$: $3, 2, 0, 4, 6$, sum $15$, MD $= 3$. $3.2$ is the MD about the mean ($6$); $6$ forgets to sort before picking the middle value (it would take 9).`,
+    explain: t`Sorted: $2, 3, 5, 9, 11$; median $= 5$. $|x-5|$: $3, 2, 0, 4, 6$, sum $15$, MD $= 3$. $3.2$ is the MD about the mean ($6$); $6$ is the mean itself, not a deviation.`,
   }),
   q13(1, BASIC, 50, {
     kind: "mcq",
@@ -602,7 +602,7 @@ is:`,
     hint: t`Expand $\sum(x_i-a)^2$ as a quadratic in $a$.`,
     explain: t`II: $\sum(x_i-a)^2 = \sum(x_i-\bar x)^2+n(\bar x-a)^2$, least at $a = \bar x$ ✓. I: moving $a$ towards the middle observation reduces the number of points on the "far" side, so $\sum|x_i-a|$ is least at the median ✓ — this is why mean deviation about the median is the smallest MD.`,
   }),
-  q13(2, MAIN, 60, {
+  q13(2, ["JEE", "COMEDK"], 60, {
     kind: "mcq",
     q: t`**Assertion (A):** The data sets $\{2, 4, 6\}$ and $\{4, 8, 12\}$ have the same coefficient of variation.  
 **Reason (R):** Multiplying every observation by a positive constant $k$ multiplies both the mean and the standard deviation by $k$.`,
@@ -647,14 +647,14 @@ is:`,
     answer: 1,
     explain: t`Mean $= 5.5$. Deviations $4.5, 3.5, 2.5, 1.5, 0.5$ each occur twice: sum $= 2(12.5) = 25$. MD $= \frac{25}{10} = 2.5$.`,
   }),
-  q13(2, MAIN, 45, {
+  q13(2, ["JEE", "COMEDK"], 45, {
     kind: "mcq",
     q: "A distribution has mean 30 and coefficient of variation 20%. Its variance is:",
     options: ["6", "36", "600", "1.5"],
     answer: 1,
     explain: t`CV $= \frac{\sigma}{\bar x}\times100\Rightarrow\sigma = 0.2\times30 = 6$, so variance $= 36$. $6$ is the SD; $1.5 = \frac{30}{20}$ inverts the formula.`,
   }),
-  q13(2, MAIN, 100, {
+  q13(2, ["JEE", "COMEDK"], 100, {
     kind: "mcq",
     q: t`For the data 1, 2, 3, 4, 5, match List I with List II.
 
@@ -817,7 +817,7 @@ const ch14: ExamQuestion[] = [
     q: "A letter is chosen at random from the word EXAMINATION. The probability that it is a vowel is:",
     options: [t`$\frac5{11}$`, t`$\frac6{11}$`, t`$\frac4{11}$`, t`$\frac5{8}$`],
     answer: 1,
-    explain: t`EXAMINATION has 11 letters; vowels E, A, I, A, I, O — 6 of them. $\frac6{11}$. Counting distinct vowels only (E, A, I, O) gives $\frac4{11}$; $\frac58$ uses distinct letters.`,
+    explain: t`EXAMINATION has 11 letters; vowels E, A, I, A, I, O — 6 of them. $\frac6{11}$. $\frac5{11}$ is the probability of a consonant (X, M, N, T, N); counting distinct vowels only (E, A, I, O) gives $\frac4{11}$.`,
   }),
   q14(1, BASIC, 30, {
     kind: "mcq",
@@ -1199,7 +1199,7 @@ export const formulas: FormulaSheet[] = [
       { name: "Standard deviation", tex: t`\sigma = \sqrt{\sigma^2}` },
       { name: "Shortcut (step-deviation) method", tex: t`y_i = \frac{x_i-A}{h}\ \Rightarrow\ \bar x = A+h\bar y,\quad \sigma_x^2 = h^2\left[\frac{\sum f_iy_i^2}{N}-\left(\frac{\sum f_iy_i}{N}\right)^2\right]` },
       { name: "Change of origin and scale", tex: t`y = ax+b\ \Rightarrow\ \bar y = a\bar x+b,\quad \sigma_y = |a|\sigma_x,\quad \sigma_y^2 = a^2\sigma_x^2`, note: "adding a constant changes the mean only; range, MD, SD unchanged" },
-      { name: "Coefficient of variation", tex: t`\text{CV} = \frac{\sigma}{\bar x}\times100`, note: "smaller CV = more consistent / less variable" },
+      { name: "Coefficient of variation", tex: t`\text{CV} = \frac{\sigma}{\bar x}\times100`, note: "smaller CV = more consistent / less variable; this section was dropped from the rationalised NCERT book, so check your syllabus" },
       { name: "Sum of squares from mean and variance", tex: t`\sum x_i^2 = n(\sigma^2+\bar x^2)` },
       { name: "First n natural numbers", tex: t`\bar x = \frac{n+1}2,\qquad \sigma^2 = \frac{n^2-1}{12}` },
       { name: "Arithmetic progression", tex: t`\sigma(a, a+d, \dots, a+(n-1)d) = |d|\sqrt{\frac{n^2-1}{12}}` },

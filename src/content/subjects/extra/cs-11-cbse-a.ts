@@ -729,7 +729,7 @@ const numberSystems: Topic = {
           q: "$(45)_{10}$ in binary is:",
           options: ["101101", "110101", "101011", "100101"],
           answer: 0,
-          explain: "45 = 32 + 8 + 4 + 1 → 101101. (110101 is 53: it comes from not reversing the order.)",
+          explain: "45 = 32 + 8 + 4 + 1 → 101101. (110101 is 53. Note that the remainders of 45 read the same either way, so always check by adding place values.)",
         },
         {
           kind: "fill",

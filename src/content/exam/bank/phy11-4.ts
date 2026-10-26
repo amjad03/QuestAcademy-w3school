@@ -166,7 +166,7 @@ const ch12: Q[] = [
   {
     kind: "mcq",
     difficulty: 2,
-    exams: MAIN,
+    exams: ALL,
     idealTime: 90,
     q: t`A mixture contains 2 mol of helium and 1 mol of oxygen (treat O$_2$ as rigid). The ratio $\gamma = C_p/C_v$ of the mixture is:`,
     options: [t`$\tfrac{71}{45}$`, t`$\tfrac{17}{11}$`, t`$\tfrac{11}{6}$`, t`$\tfrac32$`],
@@ -204,7 +204,7 @@ const ch12: Q[] = [
   {
     kind: "mcq",
     difficulty: 2,
-    exams: MAIN,
+    exams: ALL,
     idealTime: 60,
     q: t`The internal energy of 2 mol of oxygen (rigid diatomic) at 300 K is about:`,
     options: [t`7.5 kJ`, t`6.2 kJ`, t`17.5 kJ`, t`12.5 kJ`],
@@ -215,7 +215,7 @@ const ch12: Q[] = [
   {
     kind: "mcq",
     difficulty: 2,
-    exams: MAIN,
+    exams: ALL,
     idealTime: 50,
     q: t`The absolute temperature of a gas is doubled and its pressure is halved. The mean free path of its molecules becomes:`,
     options: [t`unchanged`, t`twice`, t`four times`, t`half`],
@@ -226,7 +226,7 @@ const ch12: Q[] = [
   {
     kind: "mcq",
     difficulty: 2,
-    exams: MAIN,
+    exams: ALL,
     idealTime: 45,
     q: t`**Assertion (A):** For an ideal gas, $C_p$ is greater than $C_v$.<br>**Reason (R):** When a gas is heated at constant pressure, part of the heat supplied is used to do work in expanding against the surroundings.`,
     options: AR,
@@ -237,7 +237,7 @@ const ch12: Q[] = [
   {
     kind: "mcq",
     difficulty: 2,
-    exams: MAIN,
+    exams: ALL,
     idealTime: 60,
     q: t`Five molecules have speeds 1, 2, 3, 4 and 5 km s$^{-1}$. The ratio of their rms speed to their average speed is:`,
     options: [t`$\dfrac{\sqrt{11}}{3}$`, t`$\dfrac{3}{\sqrt{11}}$`, t`$\dfrac{11}{9}$`, t`1`],
@@ -248,7 +248,7 @@ const ch12: Q[] = [
   {
     kind: "mcq",
     difficulty: 2,
-    exams: MAIN,
+    exams: ALL,
     idealTime: 60,
     q: t`Vessel A (volume $V$) contains a gas at 3 atm and vessel B (volume $2V$) contains the same gas at 6 atm, both at the same temperature. If they are connected by a thin tube and the temperature stays constant, the final pressure is:`,
     options: [t`4.5 atm`, t`9 atm`, t`5 atm`, t`4 atm`],
@@ -259,7 +259,7 @@ const ch12: Q[] = [
   {
     kind: "mcq",
     difficulty: 2,
-    exams: MAIN,
+    exams: ALL,
     idealTime: 45,
     q: t`For a rigid non-linear polyatomic gas molecule (such as NH$_3$, ignoring vibration), the ratio $\gamma = C_p/C_v$ is:`,
     options: [t`$\tfrac75$`, t`$\tfrac43$`, t`$\tfrac53$`, t`$\tfrac97$`],
@@ -281,7 +281,7 @@ const ch12: Q[] = [
   {
     kind: "mcq",
     difficulty: 2,
-    exams: MAIN,
+    exams: ALL,
     idealTime: 45,
     q: t`Treating CO$_2$ as a rigid linear molecule, the average total kinetic energy of one molecule at temperature $T$ is:`,
     options: [t`$\tfrac32k_BT$`, t`$3k_BT$`, t`$\tfrac52k_BT$`, t`$\tfrac72k_BT$`],
@@ -292,7 +292,7 @@ const ch12: Q[] = [
   {
     kind: "mcq",
     difficulty: 2,
-    exams: MAIN,
+    exams: ALL,
     idealTime: 50,
     q: t`The rms speed of hydrogen molecules at $-73^\circ$C equals the rms speed of oxygen molecules at temperature:`,
     options: [t`3200 K`, t`800 K`, t`12.5 K`, t`$3200^\circ$C`],
@@ -303,7 +303,7 @@ const ch12: Q[] = [
   {
     kind: "mcq",
     difficulty: 2,
-    exams: MAIN,
+    exams: ALL,
     idealTime: 60,
     q: t`Match List I with List II.<br>List I: (P) $C_v$ of a monatomic gas; (Q) $C_v$ of a rigid diatomic gas; (R) $C_v$ of a diatomic gas with vibration excited; (S) molar heat capacity of a solid (Dulong–Petit).<br>List II: (1) $3R$; (2) $\tfrac32R$; (3) $\tfrac72R$; (4) $\tfrac52R$.`,
     options: [t`P-2, Q-3, R-4, S-1`, t`P-1, Q-4, R-3, S-2`, t`P-2, Q-4, R-1, S-3`, t`P-2, Q-4, R-3, S-1`],
@@ -314,7 +314,7 @@ const ch12: Q[] = [
   {
     kind: "mcq",
     difficulty: 2,
-    exams: MAIN,
+    exams: ALL,
     idealTime: 75,
     q: t`Molecules of a gas have diameter $2 \times 10^{-10}$ m. At 300 K and $1.013 \times 10^5$ Pa, the mean free path is about:`,
     options: [t`$1.2 \times 10^{-7}$ m`, t`$2.3 \times 10^{-7}$ m`, t`$3.3 \times 10^{-7}$ m`, t`$2.3 \times 10^{-9}$ m`],
@@ -325,7 +325,7 @@ const ch12: Q[] = [
   {
     kind: "mcq",
     difficulty: 2,
-    exams: MAIN,
+    exams: ALL,
     idealTime: 50,
     q: t`**Statement I:** For an ideal gas whose molecules have $f$ degrees of freedom, $\gamma = 1 + \dfrac2f$.<br>**Statement II:** The relation $C_p - C_v = R$ holds for every ideal gas, whatever its atomicity.`,
     options: S12,
@@ -336,7 +336,7 @@ const ch12: Q[] = [
   {
     kind: "mcq",
     difficulty: 2,
-    exams: MAIN,
+    exams: ALL,
     idealTime: 70,
     q: t`The escape speed from the Earth is 11.2 km s$^{-1}$. The temperature at which the rms speed of hydrogen molecules ($M = 2$ g mol$^{-1}$) equals this is about:`,
     options: [t`$5.0 \times 10^3$ K`, t`$2.0 \times 10^4$ K`, t`$1.0 \times 10^4$ K`, t`$1.6 \times 10^5$ K`],
@@ -616,7 +616,7 @@ const ch13: Q[] = [
   {
     kind: "mcq",
     difficulty: 2,
-    exams: MAIN,
+    exams: ALL,
     idealTime: 60,
     q: t`Which of the following functions of time represents a motion that is periodic but **not** simple harmonic?`,
     options: [t`$\sin\omega t + \cos\omega t$`, t`$\sin^2\omega t$`, t`$\sin\omega t + \sin2\omega t$`, t`$e^{-\omega t}$`],
@@ -627,7 +627,7 @@ const ch13: Q[] = [
   {
     kind: "mcq",
     difficulty: 2,
-    exams: MAIN,
+    exams: ALL,
     idealTime: 50,
     q: t`For a particle in SHM with frequency $f$, the frequency with which its kinetic energy oscillates is:`,
     options: [t`$f/2$`, t`$f$`, t`$4f$`, t`$2f$`],
@@ -638,7 +638,7 @@ const ch13: Q[] = [
   {
     kind: "mcq",
     difficulty: 2,
-    exams: MAIN,
+    exams: ALL,
     idealTime: 50,
     q: t`The displacement of a particle is $x = 3\sin\omega t + 4\cos\omega t$ (in cm). Its amplitude and its displacement at $t = 0$ are:`,
     options: [t`7 cm and 4 cm`, t`5 cm and 3 cm`, t`5 cm and 4 cm`, t`7 cm and 3 cm`],
@@ -649,7 +649,7 @@ const ch13: Q[] = [
   {
     kind: "mcq",
     difficulty: 2,
-    exams: MAIN,
+    exams: ALL,
     idealTime: 80,
     q: t`A particle in SHM has speed 8 cm s$^{-1}$ at displacement 3 cm and 6 cm s$^{-1}$ at displacement 4 cm. Its amplitude and period are:`,
     options: [t`5 cm, $2\pi$ s`, t`7 cm, $\pi$ s`, t`25 cm, $\pi/2$ s`, t`5 cm, $\pi$ s`],
@@ -660,7 +660,7 @@ const ch13: Q[] = [
   {
     kind: "mcq",
     difficulty: 2,
-    exams: MAIN,
+    exams: ALL,
     idealTime: 60,
     q: t`A particle executes SHM of period $T$ and amplitude $A$. The minimum time it takes to go from $x = A/2$ to $x = A$ is:`,
     options: [t`$T/12$`, t`$T/4$`, t`$T/6$`, t`$T/3$`],
@@ -671,7 +671,7 @@ const ch13: Q[] = [
   {
     kind: "mcq",
     difficulty: 2,
-    exams: MAIN,
+    exams: ALL,
     idealTime: 90,
     q: t`A spring of force constant $k$ is cut into two pieces whose lengths are in the ratio 1 : 2. The pieces are connected in parallel and a block that had period $T_0$ on the original spring is attached. The new period is:`,
     options: [t`$T_0/3$`, t`$\dfrac{\sqrt2}{3}T_0$`, t`$\dfrac{3}{\sqrt2}T_0$`, t`$\sqrt{4.5}\,T_0$`],
@@ -682,7 +682,7 @@ const ch13: Q[] = [
   {
     kind: "mcq",
     difficulty: 2,
-    exams: MAIN,
+    exams: ALL,
     idealTime: 60,
     q: t`A simple pendulum has period $T$ in a stationary lift. If the lift accelerates **downward** at $g/4$, the period becomes:`,
     options: [t`$\dfrac{2}{\sqrt3}T$`, t`$\dfrac{\sqrt3}{2}T$`, t`$\dfrac{2}{\sqrt5}T$`, t`$\dfrac43T$`],
@@ -737,7 +737,7 @@ const ch13: Q[] = [
   {
     kind: "mcq",
     difficulty: 2,
-    exams: MAIN,
+    exams: ALL,
     idealTime: 50,
     q: t`**Assertion (A):** The motion of a simple pendulum is simple harmonic for all amplitudes.<br>**Reason (R):** The restoring force on the bob is $mg\sin\theta$.`,
     options: AR,
@@ -759,7 +759,7 @@ const ch13: Q[] = [
   {
     kind: "mcq",
     difficulty: 2,
-    exams: MAIN,
+    exams: ALL,
     idealTime: 80,
     q: t`Two particles execute SHM of the same amplitude $A$ and frequency along the same line. At $t = 0$, particle 1 is at the mean position moving in the $+x$ direction, and particle 2 is at $x = +A/2$ moving in the $-x$ direction. The phase difference between them is:`,
     options: [t`$\pi/6$`, t`$\pi/3$`, t`$5\pi/6$`, t`$2\pi/3$`],
@@ -770,7 +770,7 @@ const ch13: Q[] = [
   {
     kind: "mcq",
     difficulty: 2,
-    exams: MAIN,
+    exams: ALL,
     idealTime: 50,
     q: t`A particle moves uniformly on a circle of radius 0.2 m at 120 revolutions per minute. The foot of the perpendicular from it onto a diameter performs SHM with maximum speed of about:`,
     options: [t`0.40 m s$^{-1}$`, t`2.51 m s$^{-1}$`, t`24 m s$^{-1}$`, t`1.26 m s$^{-1}$`],
@@ -781,7 +781,7 @@ const ch13: Q[] = [
   {
     kind: "mcq",
     difficulty: 2,
-    exams: MAIN,
+    exams: ALL,
     idealTime: 50,
     q: t`A block hung from a vertical spring stretches it by 2.5 cm at equilibrium. If the block is pulled down a little and released, its period is ($g = 10$ m s$^{-2}$):`,
     options: [t`$\pi/10$ s`, t`$\pi/20$ s`, t`$\pi/5$ s`, t`$2\pi$ s`],
@@ -814,7 +814,7 @@ const ch13: Q[] = [
   {
     kind: "mcq",
     difficulty: 2,
-    exams: MAIN,
+    exams: ALL,
     idealTime: 50,
     q: t`Two SHMs along the same line, $x_1 = 4\sin\omega t$ and $x_2 = 4\sin\left(\omega t + \dfrac{2\pi}3\right)$ (in cm), are superposed. The amplitude of the resultant motion is:`,
     options: [t`8 cm`, t`$4\sqrt3$ cm`, t`zero`, t`4 cm`],
@@ -1027,7 +1027,7 @@ const ch14: Q[] = [
     q: t`The speed of sound in air at $27^\circ$C is 340 m s$^{-1}$. At $127^\circ$C it is about:`,
     options: [t`393 m s$^{-1}$`, t`453 m s$^{-1}$`, t`1600 m s$^{-1}$`, t`255 m s$^{-1}$`],
     answer: 0,
-    explain: t`$v \propto \sqrt T$ (kelvin): $v = 340\sqrt{400/300} = 340 \times 1.155 \approx 393$ m s$^{-1}$. 453 m s$^{-1}$ uses $v \propto T$; 1600 m s$^{-1}$ uses Celsius temperatures.`,
+    explain: t`$v \propto \sqrt T$ (kelvin): $v = 340\sqrt{400/300} = 340 \times 1.155 \approx 393$ m s$^{-1}$. 453 m s$^{-1}$ uses $v \propto T$; 1600 m s$^{-1}$ uses $v \propto T$ with Celsius temperatures.`,
   },
   {
     kind: "mcq",
@@ -1102,7 +1102,7 @@ const ch14: Q[] = [
   {
     kind: "mcq",
     difficulty: 2,
-    exams: MAIN,
+    exams: ALL,
     idealTime: 50,
     q: t`A sound wave of frequency 500 Hz travels at 360 m s$^{-1}$. The shortest distance between two points whose phases differ by $\pi/3$ is:`,
     options: [t`24 cm`, t`6 cm`, t`12 cm`, t`36 cm`],
@@ -1113,7 +1113,7 @@ const ch14: Q[] = [
   {
     kind: "mcq",
     difficulty: 2,
-    exams: MAIN,
+    exams: ALL,
     idealTime: 50,
     q: t`For the wave $y = 0.02\sin(30t - 5x)$ (SI units), the ratio of the maximum particle speed to the wave speed is:`,
     options: [t`10`, t`0.1`, t`0.6`, t`0.02`],
@@ -1124,7 +1124,7 @@ const ch14: Q[] = [
   {
     kind: "mcq",
     difficulty: 2,
-    exams: MAIN,
+    exams: ALL,
     idealTime: 60,
     q: t`A wire of length 2 m and mass 20 g is fixed at both ends under a tension of 400 N. Its fundamental frequency is:`,
     options: [t`100 Hz`, t`25 Hz`, t`200 Hz`, t`50 Hz`],
@@ -1135,7 +1135,7 @@ const ch14: Q[] = [
   {
     kind: "mcq",
     difficulty: 2,
-    exams: MAIN,
+    exams: ALL,
     idealTime: 50,
     q: t`A sonometer wire vibrates at 300 Hz. If its tension is increased by 44% (length and wire unchanged), the new frequency is:`,
     options: [t`432 Hz`, t`366 Hz`, t`360 Hz`, t`250 Hz`],
@@ -1146,7 +1146,7 @@ const ch14: Q[] = [
   {
     kind: "mcq",
     difficulty: 2,
-    exams: MAIN,
+    exams: ALL,
     idealTime: 60,
     q: t`The fundamental frequency of a pipe closed at one end equals the frequency of the first overtone of a 60 cm pipe open at both ends. The length of the closed pipe is:`,
     options: [t`15 cm`, t`30 cm`, t`7.5 cm`, t`60 cm`],
@@ -1168,7 +1168,7 @@ const ch14: Q[] = [
   {
     kind: "mcq",
     difficulty: 2,
-    exams: MAIN,
+    exams: ALL,
     idealTime: 70,
     q: t`Tuning fork A (256 Hz) produces 4 beats per second with fork B. When B is loaded with a little wax, the beats increase to 6 per second. The original frequency of B was:`,
     options: [t`260 Hz`, t`252 Hz`, t`250 Hz`, t`262 Hz`],
@@ -1179,7 +1179,7 @@ const ch14: Q[] = [
   {
     kind: "mcq",
     difficulty: 2,
-    exams: MAIN,
+    exams: ALL,
     idealTime: 70,
     q: t`At the same temperature, the ratio of the speed of sound in helium ($\gamma = 5/3$, $M = 4$ g mol$^{-1}$) to that in hydrogen ($\gamma = 7/5$, $M = 2$ g mol$^{-1}$) is:`,
     options: [t`$\dfrac{5}{\sqrt{42}}$`, t`$\dfrac1{\sqrt2}$`, t`$\sqrt2$`, t`$\dfrac{\sqrt{42}}{5}$`],
@@ -1190,7 +1190,7 @@ const ch14: Q[] = [
   {
     kind: "mcq",
     difficulty: 2,
-    exams: MAIN,
+    exams: ALL,
     idealTime: 60,
     q: t`A stationary wave on a string is $y = 4\sin\left(\dfrac{\pi x}{15}\right)\cos(96\pi t)$, with $x, y$ in cm and $t$ in s. The amplitude of oscillation of the particle at $x = 5$ cm is:`,
     options: [t`4 cm`, t`2 cm`, t`zero`, t`$2\sqrt3$ cm`],
@@ -1201,7 +1201,7 @@ const ch14: Q[] = [
   {
     kind: "mcq",
     difficulty: 2,
-    exams: MAIN,
+    exams: ALL,
     idealTime: 50,
     q: t`Two waves $y_1 = A\sin(kx - \omega t)$ and $y_2 = A\sin(kx - \omega t + 2\pi/3)$ travel together on a string. The amplitude of the resultant wave is:`,
     options: [t`$2A$`, t`$\sqrt3\,A$`, t`$A$`, t`zero`],
@@ -1212,7 +1212,7 @@ const ch14: Q[] = [
   {
     kind: "mcq",
     difficulty: 2,
-    exams: MAIN,
+    exams: ALL,
     idealTime: 50,
     q: t`Two coherent waves with intensities in the ratio 9 : 1 are superposed. The ratio of the maximum to minimum intensity in the resultant pattern is:`,
     options: [t`9`, t`4`, t`81`, t`2`],
@@ -1223,7 +1223,7 @@ const ch14: Q[] = [
   {
     kind: "mcq",
     difficulty: 2,
-    exams: MAIN,
+    exams: ALL,
     idealTime: 60,
     q: t`A pulse on a string is described by $y = \dfrac{4}{1 + (2x + 3t)^2}$ (SI units). It travels:`,
     options: [t`at 1.5 m s$^{-1}$ along $+x$`, t`at 6 m s$^{-1}$ along $-x$`, t`at 1.5 m s$^{-1}$ along $-x$`, t`at 0.67 m s$^{-1}$ along $-x$`],
@@ -1244,7 +1244,7 @@ const ch14: Q[] = [
   {
     kind: "mcq",
     difficulty: 2,
-    exams: MAIN,
+    exams: ALL,
     idealTime: 50,
     q: t`A diatomic gas ($\gamma = 1.4$) has density 1.4 kg m$^{-3}$ at a pressure of $1.0 \times 10^5$ Pa. The speed of sound in it is about:`,
     options: [t`267 m s$^{-1}$`, t`224 m s$^{-1}$`, t`374 m s$^{-1}$`, t`316 m s$^{-1}$`],
@@ -1255,7 +1255,7 @@ const ch14: Q[] = [
   {
     kind: "mcq",
     difficulty: 2,
-    exams: MAIN,
+    exams: ALL,
     idealTime: 50,
     q: t`**Statement I:** In a stationary wave, all particles between two adjacent nodes oscillate in the same phase.<br>**Statement II:** A stationary wave transports energy along the medium from one end to the other.`,
     options: S12,
@@ -1293,7 +1293,7 @@ const ch14: Q[] = [
   {
     kind: "mcq",
     difficulty: 2,
-    exams: MAIN,
+    exams: ALL,
     idealTime: 50,
     q: t`**Assertion (A):** A pulse travelling on a light string is inverted when it is reflected at a junction with a much heavier string.<br>**Reason (R):** For the incoming pulse, a junction with a much heavier string behaves almost like a rigid end.`,
     options: AR,
