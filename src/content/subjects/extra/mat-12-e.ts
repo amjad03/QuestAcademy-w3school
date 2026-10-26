@@ -780,7 +780,7 @@ Unlike the dot product, the result is a **vector**. If $\vec{a}$ and $\vec{b}$ a
             headers: ["Exam", "What usually appears"],
             rows: [
               ["KCET / COMEDK", "direct one-step questions: unit vector, projection, angle, λ for perpendicular or collinear vectors, area of a triangle or parallelogram, direction cosines"],
-              ["JEE Main", t`magnitude tricks with $|\vec{a} \pm \vec{b}|^2$, unit vectors adding to zero, cross product and area, angle conditions; vector equations such as $\vec{r} \times \vec{b} = \vec{c} \times \vec{b}$ (check the current syllabus for triple products)`],
+              ["JEE Main", t`magnitude tricks with $|\vec{a} \pm \vec{b}|^2$, unit vectors adding to zero, cross product and area, angle conditions; vector equations such as $\vec{r} \times \vec{b} = \vec{c} \times \vec{b}$ (the 2024 JEE Main syllabus lists only scalar and vector products, dropping triple products; check the current year's syllabus)`],
               ["JEE Advanced", "scalar and vector triple products, linear independence, solving vector equations, multi-correct statements, geometry proved with vectors"],
             ],
           },
@@ -1556,7 +1556,7 @@ The **shortest distance** between two lines is the length of the segment that jo
       },
       {
         slug: "c12-3d-planes",
-        title: "Planes: Equations, Angles and Distances (ISC, JEE, KCET)",
+        title: "Planes: Equations, Angles and Distances (ISC, JEE Advanced)",
         summary: "Equations of a plane in normal, point-normal, general, intercept and three-point forms; planes through an intersection; coplanar lines; angles between planes and between a line and a plane; and distances from a plane.",
         minutes: 24,
         xp: 55,
@@ -1752,7 +1752,7 @@ If $\vec{r}$ and $\vec{a}$ are any two points of the plane, $\vec{r} - \vec{a}$ 
             headers: ["Exam", "What usually appears"],
             rows: [
               ["KCET / COMEDK", "direction cosines and angle identities, equation of a line, angle between lines, shortest distance; planes (distance, angle, intercepts) in older papers"],
-              ["JEE Main", "foot of the perpendicular and image of a point in a line, shortest distance between skew lines, condition for lines to intersect, angle between lines (check the current syllabus for planes)"],
+              ["JEE Main", "foot of the perpendicular and image of a point in a line, shortest distance between skew lines, condition for lines to intersect, angle between lines (planes were dropped from the 2024 JEE Main syllabus; check the current year's syllabus)"],
               ["JEE Advanced", "lines and planes together: image in a plane, plane through a line, family of planes, line lying in a plane, angle between a line and a plane, coplanarity, multi-correct statements"],
             ],
           },
@@ -1923,9 +1923,9 @@ If $\vec{r}$ and $\vec{a}$ are any two points of the plane, $\vec{r} - \vec{a}$ 
           {
             kind: "multi",
             q: t`For the line $L: \frac{x - 1}{2} = \frac{y + 1}{-1} = \frac{z}{1}$ and the plane $\Pi: x + y - z = 0$, which statements are true?`,
-            options: ["L is parallel to Π", "L lies in Π", "L is perpendicular to Π", "L meets Π in exactly one point", "Every point of L is at distance 0 from Π"],
+            options: ["The direction of L is perpendicular to the normal of Π", "L lies in Π", "L is perpendicular to Π", "L meets Π in exactly one point", "Every point of L is at distance 0 from Π"],
             answers: [0, 1, 4],
-            explain: t`$\vec{b}\cdot\vec{n} = 2 - 1 - 1 = 0$, so L is parallel to Π; its point (1, −1, 0) satisfies $1 - 1 - 0 = 0$, so L lies in Π. A line lying in a plane is (by convention) parallel to it and has infinitely many common points.`,
+            explain: t`$\vec{b}\cdot\vec{n} = 2 - 1 - 1 = 0$, so the direction of L is perpendicular to the normal; its point (1, −1, 0) satisfies $1 - 1 - 0 = 0$, so L lies in Π. Then every point of L is on Π: infinitely many common points, not exactly one.`,
             difficulty: 3,
             hint: "Check the direction and one point separately.",
           },

@@ -462,3 +462,293 @@ const ch12: ExamQuestion[] = [
     explain: t`$(x^2)' = 2x = 0$ at 0 ✓. $(\cos x)' = -\sin x = 0$ at 0 ✓. $(\sin x)' = \cos x = 1$ at 0 ✗. For $x|x|$: $\displaystyle\lim_{h\to0}\frac{h|h|}{h} = \lim|h| = 0$ ✓.`,
   }),
 ];
+
+/* ================================================================== */
+/* Chapter 13 — Statistics                                             */
+/* ================================================================== */
+const q13 = chapter(13);
+const ch13: ExamQuestion[] = [
+  q13(1, BASIC, 40, {
+    kind: "mcq",
+    q: "The range of the data 12, 7, 19, 3, 15 is:",
+    options: ["12", "16", "19", "22"],
+    answer: 1,
+    explain: "Range = largest − smallest = 19 − 3 = 16. 12 is the range of the first and last listed values, not the extreme values.",
+  }),
+  q13(1, BASIC, 50, {
+    kind: "mcq",
+    q: "The mean deviation about the mean of 2, 4, 6, 8, 10 is:",
+    options: ["2", "2.4", "2.8", "0"],
+    answer: 1,
+    explain: t`Mean $= 6$. Absolute deviations: $4, 2, 0, 2, 4$, sum $12$. MD $= \frac{12}5 = 2.4$. $0$ is the mean of the signed deviations, which always sum to zero.`,
+  }),
+  q13(1, BASIC, 45, {
+    kind: "mcq",
+    q: t`The variance of the first $n$ natural numbers is:`,
+    options: [t`$\dfrac{n^2+1}{12}$`, t`$\dfrac{n(n+1)}{2}$`, t`$\dfrac{n^2-1}{12}$`, t`$\dfrac{(n+1)(2n+1)}{6}$`],
+    answer: 2,
+    explain: t`$\sigma^2 = \frac{\sum x^2}{n}-\bar x^2 = \frac{(n+1)(2n+1)}6-\frac{(n+1)^2}4 = \frac{(n+1)(n-1)}{12} = \frac{n^2-1}{12}$. $\frac{(n+1)(2n+1)}6$ is only $\frac{\sum x^2}n$, without subtracting $\bar x^2$.`,
+  }),
+  q13(1, BASIC, 30, {
+    kind: "mcq",
+    q: "The standard deviation of five observations, each equal to 7, is:",
+    options: ["7", "35", "1", "0"],
+    answer: 3,
+    explain: "All observations equal the mean 7, so every deviation is 0 and the standard deviation is 0.",
+  }),
+  q13(1, BASIC, 40, {
+    kind: "mcq",
+    q: "If every observation of a data set is multiplied by 3, the variance becomes:",
+    options: ["unchanged", "3 times", "9 times", t`$\frac13$ of the original`],
+    answer: 2,
+    explain: t`If $y_i = 3x_i$, then $y_i-\bar y = 3(x_i-\bar x)$, so $\sigma_y^2 = 9\sigma_x^2$. The standard deviation is 3 times; the variance is 9 times.`,
+  }),
+  q13(1, BASIC, 40, {
+    kind: "mcq",
+    q: "If 5 is added to every observation of a data set, then:",
+    options: [
+      "the mean and the standard deviation both increase by 5",
+      "the mean increases by 5 and the standard deviation is unchanged",
+      "the mean is unchanged and the standard deviation increases by 5",
+      "both are unchanged",
+    ],
+    answer: 1,
+    explain: t`$\bar y = \bar x+5$, but $y_i-\bar y = x_i-\bar x$, so all measures of dispersion (range, MD, SD, variance) are unchanged by a change of origin.`,
+  }),
+  q13(1, BASIC, 50, {
+    kind: "mcq",
+    q: "Series A has mean 50 and standard deviation 10; series B has mean 40 and standard deviation 6. Which statement is correct?",
+    options: [
+      "A is more consistent, since its mean is larger",
+      "B is more consistent, since its coefficient of variation is smaller",
+      "A is more consistent, since its coefficient of variation is smaller",
+      "Both are equally consistent",
+    ],
+    answer: 1,
+    explain: t`CV $= \frac\sigma{\bar x}\times100$. A: $\frac{10}{50}\times100 = 20\%$; B: $\frac6{40}\times100 = 15\%$. The smaller CV (B) means less relative variability, i.e. more consistency. The mean alone says nothing about consistency.`,
+  }),
+  q13(1, BASIC, 50, {
+    kind: "mcq",
+    q: "The mean deviation about the median of 3, 5, 9, 11, 2 is:",
+    options: ["3", "3.2", "2.4", "6"],
+    answer: 0,
+    explain: t`Sorted: $2, 3, 5, 9, 11$; median $= 5$. $|x-5|$: $3, 2, 0, 4, 6$, sum $15$, MD $= 3$. $3.2$ is the MD about the mean ($6$); $6$ forgets to sort before picking the middle value (it would take 9).`,
+  }),
+  q13(1, BASIC, 50, {
+    kind: "mcq",
+    q: "The variance of 1, 3, 5, 7, 9 is:",
+    options: ["10", "8", t`$2\sqrt2$`, "40"],
+    answer: 1,
+    explain: t`Mean $= 5$. Squared deviations: $16, 4, 0, 4, 16$, sum $40$, so $\sigma^2 = \frac{40}5 = 8$. $40$ forgets to divide by $n$; $10 = \frac{40}4$ divides by $n-1$ (the class 11 definition divides by $n$); $2\sqrt2$ is the standard deviation.`,
+  }),
+  q13(2, MAIN, 60, {
+    kind: "mcq",
+    q: t`20 observations have mean 10 and variance 4. Then $\sum x_i^2$ equals:`,
+    options: ["2000", "2080", "80", "2160"],
+    answer: 1,
+    hint: t`$\sigma^2 = \frac{\sum x^2}n-\bar x^2$.`,
+    explain: t`$\sum x^2 = n(\sigma^2+\bar x^2) = 20(4+100) = 2080$. $2000 = n\bar x^2$ ignores the variance; $80 = n\sigma^2$ ignores the mean.`,
+  }),
+  q13(2, NUM, 100, {
+    kind: "numeric",
+    q: "The mean and standard deviation of 10 observations were found to be 20 and 3. Later it was found that an observation 25 had been wrongly copied as 15. Find the correct variance.",
+    answer: 8,
+    hint: t`Correct $\sum x$ and $\sum x^2$ separately, then recompute.`,
+    explain: t`Wrong totals: $\sum x = 200$, $\sum x^2 = 10(9+400) = 4090$. Correct: $\sum x = 200-15+25 = 210$ (mean 21), $\sum x^2 = 4090-225+625 = 4490$. Variance $= \frac{4490}{10}-21^2 = 449-441 = 8$.`,
+  }),
+  q13(2, NUM, 100, {
+    kind: "numeric",
+    q: "Group 1 has 10 observations with mean 20 and variance 9; group 2 has 10 observations with mean 30 and variance 16. Find the variance of the combined 20 observations.",
+    answer: 37.5,
+    tolerance: 0.01,
+    hint: t`Combined $\sigma^2 = \frac{n_1(\sigma_1^2+d_1^2)+n_2(\sigma_2^2+d_2^2)}{n_1+n_2}$, where $d_i = \bar x_i-\bar x$.`,
+    explain: t`Combined mean $= 25$, so $d_1 = -5$, $d_2 = 5$. $\sigma^2 = \frac{10(9+25)+10(16+25)}{20} = \frac{340+410}{20} = 37.5$. Simply averaging the variances ($12.5$) ignores the gap between the group means.`,
+  }),
+  q13(2, MAIN, 60, {
+    kind: "mcq",
+    q: t`The mean deviation about the mean for the distribution
+
+| $x$ | 2 | 4 | 6 | 8 |
+|---|---|---|---|---|
+| $f$ | 1 | 3 | 3 | 1 |
+
+is:`,
+    options: ["1", "1.5", "2", "3"],
+    answer: 1,
+    hint: t`MD $= \frac{\sum f|x-\bar x|}{\sum f}$.`,
+    explain: t`$\bar x = \frac{2+12+18+8}{8} = 5$. $|x-5| = 3, 1, 1, 3$; $\sum f|x-\bar x| = 3+3+3+3 = 12$; MD $= \frac{12}8 = 1.5$. $3$ divides by the number of distinct values (4) instead of $\sum f$.`,
+  }),
+  q13(3, ADV, 100, {
+    kind: "mcq",
+    q: t`The standard deviation of the $2n+1$ terms $a, a+d, a+2d, \dots, a+2nd$ is:`,
+    options: [t`$|d|\sqrt{\dfrac{n(n+1)}{3}}$`, t`$|d|\sqrt{\dfrac{n(n+1)}{2}}$`, t`$|d|\sqrt{\dfrac{(2n+1)^2-1}{6}}$`, t`$|d|\dfrac{n(n+1)}{3}$`],
+    answer: 0,
+    hint: t`Shift and scale: $x_k = a+kd$, $k = 0, 1, \dots, 2n$.`,
+    explain: t`Change of origin does not affect SD, and scaling by $d$ multiplies it by $|d|$. The variance of $0, 1, \dots, 2n$ (i.e. $2n+1$ consecutive integers) is $\frac{(2n+1)^2-1}{12} = \frac{n(n+1)}3$. Hence SD $= |d|\sqrt{\frac{n(n+1)}3}$. The last option forgets the square root.`,
+  }),
+  q13(2, MAIN, 50, {
+    kind: "mcq",
+    q: t`If the variance of $x$ is 5, the variance of $y = 2x-3$ is:`,
+    options: ["7", "10", "17", "20"],
+    answer: 3,
+    explain: t`$\operatorname{Var}(ax+b) = a^2\operatorname{Var}(x) = 4\cdot5 = 20$. $10$ multiplies by $a$ instead of $a^2$; $7$ and $17$ wrongly let the constant $-3$ affect the spread.`,
+  }),
+  q13(2, MAIN, 60, {
+    kind: "mcq",
+    q: t`**Statement I:** For any data, the sum of absolute deviations $\sum|x_i-a|$ is least when $a$ is the median.  
+**Statement II:** For any data, the sum of squared deviations $\sum(x_i-a)^2$ is least when $a$ is the mean.`,
+    options: S12,
+    answer: 0,
+    hint: t`Expand $\sum(x_i-a)^2$ as a quadratic in $a$.`,
+    explain: t`II: $\sum(x_i-a)^2 = \sum(x_i-\bar x)^2+n(\bar x-a)^2$, least at $a = \bar x$ ✓. I: moving $a$ towards the middle observation reduces the number of points on the "far" side, so $\sum|x_i-a|$ is least at the median ✓ — this is why mean deviation about the median is the smallest MD.`,
+  }),
+  q13(2, MAIN, 60, {
+    kind: "mcq",
+    q: t`**Assertion (A):** The data sets $\{2, 4, 6\}$ and $\{4, 8, 12\}$ have the same coefficient of variation.  
+**Reason (R):** Multiplying every observation by a positive constant $k$ multiplies both the mean and the standard deviation by $k$.`,
+    options: AR,
+    answer: 0,
+    explain: t`R is true: $\bar y = k\bar x$, $\sigma_y = k\sigma_x$. Then CV $= \frac{\sigma_y}{\bar y} = \frac{\sigma_x}{\bar x}$ is unchanged, and $\{4, 8, 12\} = 2\times\{2, 4, 6\}$, so A is true and follows from R.`,
+  }),
+  q13(2, MAIN, 100, {
+    kind: "mcq",
+    q: "The mean of five observations is 6 and their variance is 8. If three of the observations are 2, 6 and 8, the other two are:",
+    options: ["4 and 10", "5 and 9", "3 and 11", "6 and 8"],
+    answer: 0,
+    hint: t`Find $a+b$ from the mean and $a^2+b^2$ from the variance.`,
+    explain: t`$a+b = 30-16 = 14$. $\sum x^2 = 5(8+36) = 220$, so $a^2+b^2 = 220-(4+36+64) = 116$. Then $ab = \frac{196-116}2 = 40$, so $a, b = 4, 10$. Check the others: $5^2+9^2 = 106$, $3^2+11^2 = 130$, $6^2+8^2 = 100$ — all have the right sum but the wrong variance.`,
+  }),
+  q13(3, ADV, 120, {
+    kind: "mcq",
+    q: t`The variance of the grouped data
+
+| Class | 0–10 | 10–20 | 20–30 | 30–40 |
+|---|---|---|---|---|
+| $f$ | 2 | 3 | 3 | 2 |
+
+is:`,
+    options: ["105", "116.7", "10.25", "95"],
+    answer: 0,
+    hint: "Use class marks 5, 15, 25, 35.",
+    explain: t`$\bar x = \frac{10+45+75+70}{10} = 20$. Deviations $-15, -5, 5, 15$; $\sum fd^2 = 2(225)+3(25)+3(25)+2(225) = 1050$. $\sigma^2 = \frac{1050}{10} = 105$. $116.7 = \frac{1050}9$ divides by $n-1$; $10.25\approx\sqrt{105}$ is the SD.`,
+  }),
+  q13(2, MAIN, 60, {
+    kind: "mcq",
+    q: t`For 10 observations, $\sum(x_i-5) = 20$ and $\sum(x_i-5)^2 = 100$. The variance is:`,
+    options: ["10", "4", "6", "8"],
+    answer: 2,
+    hint: "Variance is unaffected by shifting the origin to 5.",
+    explain: t`With $d_i = x_i-5$: $\sigma^2 = \frac{\sum d^2}n-\left(\frac{\sum d}n\right)^2 = 10-2^2 = 6$. $10$ forgets to subtract the square of the mean deviation; $8$ subtracts $2$ instead of $2^2$.`,
+  }),
+  q13(2, MAIN, 60, {
+    kind: "mcq",
+    q: "The mean deviation about the mean of the numbers 1, 2, 3, …, 10 is:",
+    options: ["2.25", "2.5", "2.75", "3"],
+    answer: 1,
+    explain: t`Mean $= 5.5$. Deviations $4.5, 3.5, 2.5, 1.5, 0.5$ each occur twice: sum $= 2(12.5) = 25$. MD $= \frac{25}{10} = 2.5$.`,
+  }),
+  q13(2, MAIN, 45, {
+    kind: "mcq",
+    q: "A distribution has mean 30 and coefficient of variation 20%. Its variance is:",
+    options: ["6", "36", "600", "1.5"],
+    answer: 1,
+    explain: t`CV $= \frac{\sigma}{\bar x}\times100\Rightarrow\sigma = 0.2\times30 = 6$, so variance $= 36$. $6$ is the SD; $1.5 = \frac{30}{20}$ inverts the formula.`,
+  }),
+  q13(2, MAIN, 100, {
+    kind: "mcq",
+    q: t`For the data 1, 2, 3, 4, 5, match List I with List II.
+
+| List I | List II |
+|---|---|
+| (P) Range | (1) 2 |
+| (Q) Mean deviation about the mean | (2) 4 |
+| (R) Variance | (3) 1.2 |
+| (S) Coefficient of variation | (4) 47.1% (approx.) |`,
+    options: ["P-2, Q-3, R-1, S-4", "P-2, Q-1, R-3, S-4", "P-1, Q-3, R-2, S-4", "P-2, Q-3, R-4, S-1"],
+    answer: 0,
+    hint: "Mean = 3.",
+    explain: t`Range $= 5-1 = 4$. MD $= \frac{2+1+0+1+2}5 = 1.2$. Variance $= \frac{4+1+0+1+4}5 = 2$. CV $= \frac{\sqrt2}3\times100\approx47.1\%$. So P-2, Q-3, R-1, S-4.`,
+  }),
+  q13(3, ADV_ONLY, 100, {
+    kind: "multi",
+    q: t`Observations $x_1, \dots, x_n$ have mean $\bar x$ and variance $\sigma^2$. Let $y_i = \dfrac{x_i-a}{h}$ with $h>0$. Which of the following are true?`,
+    options: [
+      t`Mean of the $y_i$ is $\dfrac{\bar x-a}{h}$`,
+      t`Variance of the $y_i$ is $\dfrac{\sigma^2}{h^2}$`,
+      t`Standard deviation of the $y_i$ is $\dfrac{\sigma}{h}$`,
+      t`Variance of the $y_i$ does not depend on $h$`,
+    ],
+    answers: [0, 1, 2],
+    explain: t`Mean is linear: $\bar y = \frac{\bar x-a}h$ ✓. Deviations become $\frac{x_i-\bar x}h$, so variance $= \frac{\sigma^2}{h^2}$ ✓ and SD $= \frac\sigma h$ (as $h>0$) ✓. The shift $a$ does not matter but the scale $h$ does ✗.`,
+  }),
+  q13(3, NUM_ADV, 90, {
+    kind: "numeric",
+    q: "Find the variance of the first 20 odd natural numbers 1, 3, 5, …, 39.",
+    answer: 133,
+    hint: t`$x_k = 2k-1$: use the effect of scale and origin on variance.`,
+    explain: t`Variance of $1, \dots, 20$ is $\frac{20^2-1}{12} = \frac{399}{12}$. Since $x_k = 2k-1$, the variance is $4\cdot\frac{399}{12} = 133$. (Check: $\sum x^2 = \frac{20(39)(41)}3 = 10660$, mean $20$, $\frac{10660}{20}-400 = 133$.)`,
+  }),
+  q13(3, ADV, 120, {
+    kind: "mcq",
+    q: "The mean and variance of 10 observations are 5 and 4. If two observations, 3 and 7, are removed, the variance of the remaining 8 observations is:",
+    options: ["3.2", "4", "5", "4.5"],
+    answer: 1,
+    hint: t`Find the new $\sum x$ and $\sum x^2$.`,
+    explain: t`$\sum x = 50\to50-10 = 40$, so the mean stays $5$. $\sum x^2 = 10(4+25) = 290\to290-9-49 = 232$. New variance $= \frac{232}8-25 = 29-25 = 4$. The removed values were at distance 2 from the mean, exactly $\sigma$, so the variance does not change. $3.2 = \frac{8}{10}\times4$ comes from scaling by the count.`,
+  }),
+  q13(2, NUM, 70, {
+    kind: "numeric",
+    q: t`The variance of the first $n$ natural numbers is 14. Find $n$.`,
+    answer: 13,
+    hint: t`$\sigma^2 = \frac{n^2-1}{12}$.`,
+    explain: t`$\frac{n^2-1}{12} = 14\Rightarrow n^2 = 169\Rightarrow n = 13$.`,
+  }),
+  q13(3, NUM_ADV, 150, {
+    kind: "numeric",
+    q: "Seven observations have mean 7 and variance 16. Five of them are 1, 3, 7, 11 and 13. Find the product of the remaining two.",
+    answer: 45,
+    hint: t`Get $a+b$ and $a^2+b^2$; then $2ab = (a+b)^2-(a^2+b^2)$.`,
+    explain: t`$a+b = 49-35 = 14$. $\sum x^2 = 7(16+49) = 455$; known squares $1+9+49+121+169 = 349$, so $a^2+b^2 = 106$. $ab = \frac{196-106}2 = 45$ (the numbers are 5 and 9).`,
+  }),
+  q13(3, ADV_ONLY, 100, {
+    kind: "multi",
+    q: "Which of the following statements are correct?",
+    options: [
+      "For any data, the standard deviation is at least the mean deviation about the mean",
+      "The variance of a data set can be negative",
+      "If all observations are equal, the standard deviation is 0",
+      "For two observations, the standard deviation is half the range",
+    ],
+    answers: [0, 2, 3],
+    explain: t`(a) SD is the root-mean-square of $|x_i-\bar x|$ and MD is their arithmetic mean; RMS $\ge$ AM ✓. (b) Variance is an average of squares, so $\ge0$ ✗. (c) all deviations are 0 ✓. (d) For $a, b$: deviations are $\pm\frac{a-b}2$, so SD $= \frac{|a-b|}2$ ✓.`,
+  }),
+  q13(2, MAIN, 70, {
+    kind: "mcq",
+    q: "The marks of 50 students have mean 40 and standard deviation 8. Every mark is increased by 10% and then 2 grace marks are added. The new mean and standard deviation are:",
+    options: ["46 and 8.8", "46 and 10.8", "44 and 8.8", "46 and 8"],
+    answer: 0,
+    explain: t`New mark $y = 1.1x+2$: $\bar y = 1.1(40)+2 = 46$; $\sigma_y = 1.1(8) = 8.8$ (the added 2 does not change spread). $10.8$ wrongly adds 2 to the SD; $46$ and $8$ ignores the scaling.`,
+  }),
+  q13(3, NUM_ADV, 90, {
+    kind: "numeric",
+    q: t`The mean deviation about the mean of the numbers $1, 2, 3, \dots, 2n$ is 6. Find $n$.`,
+    answer: 12,
+    hint: t`Pair the deviations: they are $\frac12, \frac32, \dots, \frac{2n-1}2$, each twice.`,
+    explain: t`Mean $= \frac{2n+1}2$. The absolute deviations are $\frac{2k-1}2$, $k = 1, \dots, n$, each twice, totalling $2\cdot\frac{n^2}2 = n^2$. MD $= \frac{n^2}{2n} = \frac n2 = 6\Rightarrow n = 12$.`,
+  }),
+  q13(2, MAIN, 70, {
+    kind: "mcq",
+    q: t`The mean of 2, 7, 4, 6, 8 and $p$ is 7. The mean deviation about the median of these six numbers is:`,
+    options: ["2.5", "3", "3.5", "4"],
+    answer: 1,
+    hint: "Find p first, then sort to get the median.",
+    explain: t`$27+p = 42\Rightarrow p = 15$. Sorted: $2, 4, 6, 7, 8, 15$; median $= 6.5$. $|x-6.5|$: $4.5, 2.5, 0.5, 0.5, 1.5, 8.5$, sum $18$. MD $= 3$.`,
+  }),
+  q13(2, ADV_ONLY, 70, {
+    kind: "multi",
+    q: "Every observation of a data set (with positive mean) is increased by 5. Which of the following remain unchanged?",
+    options: ["Range", "Mean", "Mean deviation about the mean", "Coefficient of variation"],
+    answers: [0, 2],
+    explain: t`A change of origin leaves every deviation $x_i-\bar x$ unchanged, so range and MD (and SD, variance) are unchanged ✓. The mean increases by 5 ✗, so CV $= \frac\sigma{\bar x}$ changes ✗.`,
+  }),
+];

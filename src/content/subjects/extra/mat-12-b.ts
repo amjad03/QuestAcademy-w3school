@@ -1041,7 +1041,7 @@ The three points are **collinear** exactly when this determinant is 0. Replacing
             type: "callout",
             tone: "note",
             title: "Board note",
-            md: "The rationalised NCERT book (CBSE) no longer has a separate section on properties of determinants, so CBSE board papers do not ask proofs using them. ISC teaches them and asks simplification and factorisation questions, and JEE Main, JEE Advanced, KCET and COMEDK use them constantly. Every student should be able to use them.",
+            md: "The rationalised NCERT book (CBSE, and Karnataka II PUC which follows it) no longer has a separate section on properties of determinants, so these board papers do not ask proofs using them. ISC teaches them and asks simplification and factorisation questions. JEE Main, JEE Advanced, KCET and COMEDK determinant questions are usually fastest with them, even where the syllabus no longer lists them as a separate topic, so every student should be able to use them.",
           },
           {
             type: "list",
