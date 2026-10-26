@@ -1414,10 +1414,767 @@ plan(60, {"4G phone": 24, "Home Wi-Fi": 40, "Lab LAN": 96})`,
       },
     ],
   },
+  /* ------------------------------------------------------------------ */
+  /* Class 12 · Security Aspects                                         */
+  /* ------------------------------------------------------------------ */
+  {
+    slug: "c12-cs-security-aspects",
+    title: "Security Aspects",
+    icon: "🛡️",
+    description: "Malware (virus, worm, ransomware, trojan, spyware, adware, keylogger) and how it spreads, antivirus methods, spam, HTTP versus HTTPS, firewalls, cookies, hackers and crackers, and network threats such as DoS, intrusion, snooping and eavesdropping.",
+    lessons: [
+      {
+        slug: "c12-cs-malware",
+        title: "Malware: Types and How It Spreads",
+        summary: "What malware is, the seven kinds in the chapter (virus, worm, ransomware, trojan, spyware, adware, keylogger), the ways malware reaches a computer, and the habits that keep it out.",
+        minutes: 22,
+        xp: 55,
+        blocks: [
+          {
+            type: "illustration",
+            emoji: "🦠",
+            caption: "A free \"game hack\" from an unknown site can quietly copy every password you type.",
+          },
+          {
+            type: "text",
+            md: "**Malware** (malicious software) is any program written to harm a computer, its data or its user: to damage files, steal information, spy, show unwanted ads or take control of the device. Malware is the most common **threat** to computer security, and protecting against it is the first part of this chapter.",
+          },
+          {
+            type: "table",
+            headers: ["Malware", "What it does", "Key feature"],
+            rows: [
+              ["Virus", "Attaches itself to a host program or file and spreads when that file is run or shared; can corrupt or delete data", "Needs a **host** and some user action to spread"],
+              ["Worm", "Copies itself from computer to computer across a network, using up bandwidth and memory", "**Standalone**; spreads by itself without a host or user action"],
+              ["Ransomware", "Encrypts or locks the user's files or system and demands payment (ransom) to unlock them, as WannaCry did in 2017", "Holds data **hostage**"],
+              ["Trojan", "Looks like useful software but secretly does harm, such as opening a **backdoor** for the attacker", "Disguised; does **not** copy itself"],
+              ["Spyware", "Secretly records what the user does (sites visited, passwords, card details) and sends it to someone else", "Works **without the user knowing**"],
+              ["Adware", "Shows unwanted advertisements and pop-ups, may track browsing to target ads", "Annoying; slows the system"],
+              ["Keylogger", "Records every key pressed and sends it to the attacker; can be **software** or a small **hardware** device plugged between keyboard and computer", "Steals passwords and PINs"],
+            ],
+          },
+          {
+            type: "text",
+            md: "Against keyloggers, banking sites offer an **online virtual keyboard**: an on-screen keyboard clicked with the mouse, often with keys placed in a different position each time, so the physical key presses that a keylogger records do not reveal the password.",
+          },
+          {
+            type: "mistake",
+            wrong: "A virus and a worm are the same thing; both are just \"viruses\".",
+            right: "A **virus** needs a host file and spreads when an infected file is run or shared. A **worm** is a standalone program that spreads by itself across a network, with no host and no user action.",
+            why: "In daily speech every malware is called a virus. The board expects the difference: host and user action for a virus, self-replication over the network for a worm.",
+          },
+          {
+            type: "heading",
+            text: "How malware spreads",
+          },
+          {
+            type: "list",
+            items: [
+              "**Downloads from the internet**: pirated software, cracked games, free tools and fake updates from untrusted sites.",
+              "**Spam email**: attachments that install malware, or links to infected websites.",
+              "**Removable storage**: pen drives and memory cards carrying infected files from one computer to another.",
+              "**Network propagation**: worms that move by themselves through security weaknesses in connected computers.",
+            ],
+          },
+          {
+            type: "example",
+            title: "Identify the malware",
+            problem: "Name the malware in each case. (a) After installing a free \"PDF converter\", Ravi's bank password is used by a stranger, though the converter works normally. (b) A college's files suddenly show a message: \"Pay to get your files back\". (c) A program spreads to 300 computers on a network overnight without anyone opening a file. (d) A browser keeps opening pop-up ads for shopping sites.",
+            steps: [
+              "(a) Useful-looking program that secretly harms: **trojan** (it may install spyware or a keylogger).",
+              "(b) Files locked and payment demanded: **ransomware**.",
+              "(c) Spreads by itself over the network: **worm**.",
+              "(d) Unwanted advertisements: **adware**.",
+            ],
+            answer: "Trojan, ransomware, worm, adware.",
+          },
+          {
+            type: "text",
+            md: "**Combating malware.** Use antivirus software and keep it updated; install operating system and app updates (they fix security holes); download only from trusted sources; do not open attachments or links in unexpected emails; scan pen drives before opening them; use strong, different passwords; keep a regular **backup** of important data, which is the best defence against ransomware.",
+          },
+          {
+            type: "activity",
+            activity: {
+              kind: "match",
+              prompt: "Match each malware to its trademark behaviour.",
+              pairs: [
+                ["Virus", "Infects a host file"],
+                ["Worm", "Spreads itself across a network"],
+                ["Ransomware", "Locks files and asks for payment"],
+                ["Trojan", "Disguised as useful software"],
+                ["Spyware", "Secretly sends user activity to others"],
+                ["Keylogger", "Records every key pressed"],
+              ],
+              explain: "Each kind is defined by how it spreads or what it does. Exam answers should name that one defining feature.",
+            },
+          },
+          {
+            type: "checkpoint",
+            questions: [
+              {
+                kind: "mcq",
+                q: "Which malware does **not** make copies of itself?",
+                options: ["Trojan", "Worm", "Virus", "All of them copy themselves"],
+                answer: 0,
+                explain: "A trojan relies on the user installing it; it does not replicate. Viruses and worms do.",
+              },
+              {
+                kind: "truefalse",
+                q: "An online virtual keyboard helps protect a password from a keylogger.",
+                answer: true,
+                explain: "The password is entered by mouse clicks on changing key positions, so recorded key presses reveal nothing.",
+              },
+            ],
+          },
+          {
+            type: "callout",
+            tone: "exam",
+            title: "Board tip",
+            md: "Questions such as \"Differentiate between a virus and a worm\" or \"What is ransomware? Give an example\" are common. Write the definition, the defining feature and one example or effect.",
+          },
+          {
+            type: "keypoints",
+            items: [
+              "Malware is software written to harm a computer, its data or its user.",
+              "Virus: needs a host; worm: self-spreading over networks; trojan: disguised, no self-copying.",
+              "Ransomware locks data for payment; spyware spies; adware shows ads; keyloggers record keys.",
+              "Malware spreads by downloads, spam email, removable storage and network propagation.",
+              "Defences: updated antivirus and OS, trusted downloads, care with email, scanning pen drives, backups.",
+            ],
+          },
+        ],
+        flashcards: [
+          { front: "What is malware?", back: "Malicious software written to damage a computer, steal data, spy on or disturb the user." },
+          { front: "Virus vs worm?", back: "A virus needs a host file and user action; a worm is standalone and spreads itself over networks." },
+          { front: "What is ransomware?", back: "Malware that encrypts or locks data and demands a ransom to restore it (e.g. WannaCry, 2017)." },
+          { front: "What is a trojan?", back: "Malware disguised as useful software that secretly harms, often by opening a backdoor; it does not replicate." },
+          { front: "What is spyware?", back: "Malware that secretly records the user's activity and information and sends it to someone else." },
+          { front: "Two kinds of keylogger?", back: "Software keyloggers and hardware keyloggers (a device between keyboard and computer)." },
+          { front: "Four ways malware spreads?", back: "Internet downloads, spam email, removable storage and network propagation." },
+          { front: "Best defence against ransomware?", back: "Regular backups, along with updated antivirus and careful email habits." },
+        ],
+        quiz: [
+          {
+            kind: "mcq",
+            q: "A pop-up keeps showing shopping ads every time a browser opens. This is most likely:",
+            options: ["Adware", "Ransomware", "A worm", "A keylogger"],
+            answer: 0,
+            explain: "Adware's purpose is to show unwanted advertisements.",
+          },
+          {
+            kind: "mcq",
+            q: "Which malware is most likely to spread through a pen drive inside an infected document?",
+            options: ["Virus", "Adware", "Hardware keylogger", "Spam"],
+            answer: 0,
+            explain: "A virus lives inside a host file and spreads when that file is copied and opened.",
+          },
+          {
+            kind: "truefalse",
+            q: "A worm needs the user to open an infected file before it can spread.",
+            answer: false,
+            explain: "Worms spread on their own across networks, exploiting weaknesses; that is what makes them different from viruses.",
+          },
+          {
+            kind: "multi",
+            q: "Which are good habits for combating malware?",
+            options: ["Keep the antivirus updated", "Install OS updates", "Download cracked software to save money", "Scan pen drives before use", "Open all email attachments to check them"],
+            answers: [0, 1, 3],
+            explain: "Cracked software and unknown attachments are two of the main ways malware gets in.",
+          },
+          {
+            kind: "fill",
+            q: "Malware that locks files and demands payment is called ___.",
+            answer: ["ransomware"],
+            explain: "Ransomware holds data hostage until a ransom is paid, and paying does not guarantee recovery.",
+          },
+          {
+            kind: "mcq",
+            q: "A small device is found plugged between a cyber café keyboard and the CPU. It is most probably:",
+            options: ["A hardware keylogger", "A firewall", "A worm", "An antivirus"],
+            answer: 0,
+            explain: "Hardware keyloggers sit in the keyboard cable and record every key pressed.",
+            difficulty: 2,
+          },
+          {
+            kind: "mcq",
+            q: "Which statement about a trojan is correct?",
+            options: ["It pretends to be useful software", "It always shows ads", "It spreads by itself across networks", "It cannot harm data"],
+            answer: 0,
+            explain: "Like the wooden horse of the story, a trojan hides harm inside something that looks useful.",
+          },
+        ],
+      },
+      {
+        slug: "c12-cs-antivirus-spam-https-firewall",
+        title: "Antivirus, Spam, HTTPS and Firewalls",
+        summary: "How antivirus software detects malware (signatures, sandbox, data mining, heuristics, real-time protection), what spam is, how HTTPS differs from HTTP, and network and host-based firewalls.",
+        minutes: 22,
+        xp: 55,
+        blocks: [
+          {
+            type: "text",
+            md: "**Antivirus** is software that detects, blocks and removes malware. Although the name says \"virus\", modern antivirus (anti-malware) tools also deal with worms, trojans, spyware and ransomware. They use several methods together:",
+          },
+          {
+            type: "table",
+            headers: ["Method", "How it works"],
+            rows: [
+              ["Signature-based detection", "Compares files with a database of **signatures** (unique patterns) of known malware; the database must be updated often; cannot catch brand-new malware"],
+              ["Sandbox detection", "Runs a suspicious program in an isolated virtual area (**sandbox**) and watches its behaviour before allowing it on the real system"],
+              ["Data mining techniques", "Uses machine learning on many features of a file to classify it as harmful or safe"],
+              ["Heuristics", "Examines a program's code for suspicious instructions similar to known malware families, so new variants can be caught"],
+              ["Real-time protection", "Runs in the background and scans files the moment they are downloaded, opened or copied"],
+            ],
+          },
+          {
+            type: "code",
+            lang: "python",
+            runnable: true,
+            caption: "A toy signature scanner: look for known malware patterns inside each file's content.",
+            code: r`signatures = {"PAYLOAD#77": "Trojan.Fake", "LOCKALL": "Ransom.Demo"}
+files = {
+    "notes.txt": "Chapter 13 summary",
+    "game.exe": "start PAYLOAD#77 end",
+    "photo.jpg": "pixels pixels",
+    "invoice.doc": "macro LOCKALL run",
+}
+for name, content in files.items():
+    found = [v for s, v in signatures.items() if s in content]
+    print(name, "->", found[0] if found else "clean")`,
+          },
+          {
+            type: "text",
+            md: "Output: `notes.txt -> clean`, `game.exe -> Trojan.Fake`, `photo.jpg -> clean`, `invoice.doc -> Ransom.Demo`. A real scanner works on bytes and millions of signatures, but the weakness is the same: a pattern that is not yet in the database goes unnoticed. That is why updates, heuristics and sandboxing are also needed.",
+          },
+          {
+            type: "heading",
+            text: "Spam and HTTPS",
+          },
+          {
+            type: "text",
+            md: "**Spam** is unwanted bulk messages, mostly email, sent to many people at once: advertisements, fake prizes, \"urgent\" bank alerts. Besides wasting time and storage, spam often carries malware attachments or links to fake sites that steal passwords. Email services use **spam filters** that move such mail to a separate folder; never reply to spam or open its links.\n\n**HTTP** sends web data as plain text, so anyone who intercepts it can read it. **HTTPS** (HTTP **Secure**) encrypts the data between browser and server using **SSL/TLS**. A site using HTTPS has a digital certificate, and the browser shows a **padlock** in the address bar. Always check for HTTPS before typing passwords or card details.",
+          },
+          {
+            type: "table",
+            headers: ["HTTP", "HTTPS"],
+            rows: [
+              ["Data sent as plain text", "Data encrypted with SSL/TLS"],
+              ["Can be read if intercepted", "Intercepted data is unreadable"],
+              ["URL begins `http://`", "URL begins `https://`, padlock shown"],
+              ["Uses port 80 by default", "Uses port 443 by default"],
+            ],
+          },
+          {
+            type: "mistake",
+            wrong: "If a website shows the HTTPS padlock, the website itself must be safe and genuine.",
+            right: "HTTPS only means the **connection is encrypted**. A fake (phishing) site can also use HTTPS, so check the exact web address as well.",
+            why: "The padlock looks like a seal of approval. It protects data from being read on the way, but it says nothing about whether the site owner is honest.",
+          },
+          {
+            type: "heading",
+            text: "Firewalls",
+          },
+          {
+            type: "text",
+            md: "A **firewall** is a network security system, in hardware or software, that **monitors and controls incoming and outgoing traffic** according to a set of security rules. It stands between a trusted network (a college LAN) and an untrusted one (the internet) and blocks traffic that breaks the rules.\n\nA **network firewall** sits between two or more networks, often in a router or a dedicated device, and protects every computer in the network. A **host-based firewall** is software on a single computer (such as the one built into the operating system) and protects only that computer, even when it joins an unsafe network like public Wi-Fi.",
+          },
+          {
+            type: "example",
+            title: "Which defence fits?",
+            problem: "Suggest the defence for each: (a) the college wants to stop all lab computers from reaching gaming sites; (b) a student's laptop must be protected on railway station Wi-Fi; (c) a brand-new malware has no signature yet; (d) a bank wants its login page encrypted.",
+            steps: [
+              "(a) One set of rules for the whole lab network: a **network firewall**.",
+              "(b) Protection that travels with one computer: a **host-based firewall**.",
+              "(c) No signature exists, so watch behaviour or code: **sandbox detection or heuristics**.",
+              "(d) Encrypt data between browser and server: **HTTPS**.",
+            ],
+            answer: "Network firewall, host-based firewall, sandbox or heuristics, HTTPS.",
+          },
+          {
+            type: "activity",
+            activity: {
+              kind: "reveal",
+              prompt: "Can signature-based antivirus catch a brand-new virus?",
+              emoji: "🔍",
+              options: ["Yes, if the antivirus is installed", "No, not until its signature is added to the database", "Yes, every virus has the same signature"],
+              answer: 1,
+              trap: 0,
+              explain: "Signature detection only recognises patterns already in its database. New malware needs heuristics, sandboxing or data mining, and frequent updates add new signatures.",
+            },
+          },
+          {
+            type: "checkpoint",
+            questions: [
+              {
+                kind: "mcq",
+                q: "What does the \"S\" in HTTPS stand for?",
+                options: ["Secure", "Server", "Signature", "Spam"],
+                answer: 0,
+                explain: "HTTPS is HyperText Transfer Protocol Secure; the data is encrypted using SSL/TLS.",
+              },
+            ],
+          },
+          {
+            type: "keypoints",
+            items: [
+              "Antivirus methods: signature-based, sandbox, data mining, heuristics and real-time protection.",
+              "Signature detection needs regular updates and cannot catch unknown malware on its own.",
+              "Spam is unwanted bulk messages that may carry malware or phishing links.",
+              "HTTPS encrypts data with SSL/TLS (padlock, port 443); HTTP sends plain text (port 80).",
+              "A firewall filters traffic by rules: network firewall for a whole network, host-based for one computer.",
+            ],
+          },
+        ],
+        flashcards: [
+          { front: "What is a malware signature?", back: "A unique pattern of bytes or behaviour that identifies a known malware." },
+          { front: "What is sandbox detection?", back: "Running a suspicious program in an isolated virtual environment to watch what it does." },
+          { front: "What is heuristic detection?", back: "Checking a program's code for suspicious instructions similar to known malware, to catch new variants." },
+          { front: "What is real-time protection?", back: "Continuous background scanning of files as they are downloaded, opened or copied." },
+          { front: "Define spam.", back: "Unwanted bulk messages, usually email, sent to many people at once." },
+          { front: "HTTP vs HTTPS?", back: "HTTP sends plain text; HTTPS encrypts data with SSL/TLS and shows a padlock." },
+          { front: "Define firewall.", back: "Hardware or software that monitors and controls incoming and outgoing network traffic using security rules." },
+          { front: "Network vs host-based firewall?", back: "A network firewall protects a whole network; a host-based firewall is software protecting one computer." },
+        ],
+        quiz: [
+          {
+            kind: "mcq",
+            q: "Which antivirus method runs a suspicious file in an isolated environment to observe it?",
+            options: ["Sandbox detection", "Signature-based detection", "Real-time protection", "Spam filtering"],
+            answer: 0,
+            explain: "A sandbox keeps the program away from the real system while its behaviour is watched.",
+          },
+          {
+            kind: "truefalse",
+            q: "Signature-based detection works only if the antivirus database is kept up to date.",
+            answer: true,
+            explain: "New malware signatures are added through updates; an old database misses recent threats.",
+          },
+          {
+            kind: "mcq",
+            q: "Which protocol should a site use for its online payment page?",
+            options: ["HTTPS", "HTTP", "FTP", "SMTP"],
+            answer: 0,
+            explain: "HTTPS encrypts card details between the browser and the server.",
+          },
+          {
+            kind: "mcq",
+            q: "A firewall built into the operating system of one laptop is a:",
+            options: ["Host-based firewall", "Network firewall", "Proxy server", "Router"],
+            answer: 0,
+            explain: "It protects only the host (computer) it runs on.",
+          },
+          {
+            kind: "multi",
+            q: "Which are signs that an email is likely spam?",
+            options: ["Claims you won a lottery you never entered", "Urges you to act within one hour", "Comes from your college's known address about the exam timetable", "Asks for your bank PIN", "Sent to hundreds of people at once"],
+            answers: [0, 1, 3, 4],
+            explain: "A known sender with expected content is normal mail. Fake prizes, false urgency, requests for secrets and bulk sending are spam signs.",
+          },
+          {
+            kind: "fill",
+            q: "HTTPS encrypts web data using ___ (name the security protocol).",
+            answer: ["SSL/TLS", "TLS", "SSL", "SSL or TLS", "TLS/SSL"],
+            explain: "SSL and its successor TLS encrypt the connection between browser and server.",
+          },
+          {
+            kind: "truefalse",
+            q: "A padlock icon proves that a website is genuine and not a phishing site.",
+            answer: false,
+            explain: "The padlock only shows that the connection is encrypted; fake sites can also use HTTPS.",
+            difficulty: 2,
+          },
+          {
+            kind: "mcq",
+            q: "What is printed by `print(\"https://kseab.example\".startswith(\"https\"))`?",
+            options: ["`True`", "`False`", "`https`", "Error"],
+            answer: 0,
+            explain: "The string begins with \"https\", so `startswith()` returns True.",
+          },
+        ],
+      },
+      {
+        slug: "c12-cs-cookies-hackers-network-threats",
+        title: "Cookies, Hackers and Network Threats",
+        summary: "What cookies store and when they are a risk, white, black and grey hat hackers, and the network threats in the chapter: denial of service, intruders, snooping and eavesdropping.",
+        minutes: 22,
+        xp: 55,
+        blocks: [
+          {
+            type: "text",
+            md: "A **cookie** is a small text file that a website asks the browser to store on your computer. It holds information such as your login session, language choice, theme or the items in your shopping cart, so the site can recognise you when you return and save you from entering details again.\n\nCookies are plain text, not programs, so they cannot run or spread malware by themselves. The risks are **privacy** risks: **third-party cookies** placed by advertisers track you across many sites to build a profile, and if someone steals a login cookie they may be able to act as you on that site. Browsers let you block third-party cookies and clear cookies.",
+          },
+          {
+            type: "code",
+            lang: "python",
+            runnable: true,
+            caption: "A cookie is just text of name=value pairs, which a site reads back on your next visit.",
+            code: r`cookie = "lang=kn; theme=dark; cart=3"
+settings = {}
+for part in cookie.split("; "):
+    key, value = part.split("=")
+    settings[key] = value
+print(settings)
+print("Items in cart:", int(settings["cart"]))`,
+          },
+          {
+            type: "text",
+            md: "Output: `{'lang': 'kn', 'theme': 'dark', 'cart': '3'}` and `Items in cart: 3`. Everything in a cookie is a string, which is why `int()` is needed before treating the cart count as a number.",
+          },
+          {
+            type: "heading",
+            text: "Hackers and crackers",
+          },
+          {
+            type: "table",
+            headers: ["Type", "Who they are", "Legal?"],
+            rows: [
+              ["White hat (ethical hacker)", "Experts hired by an organisation to find weaknesses in its systems **with permission**, so they can be fixed", "Yes"],
+              ["Black hat (cracker)", "Break into systems **without permission** to steal, damage or demand money", "No"],
+              ["Grey hat", "Break in without permission but usually without harmful intent, for curiosity or to point out a flaw", "No: access without permission is still unauthorised"],
+            ],
+          },
+          {
+            type: "mistake",
+            wrong: "All hackers are criminals.",
+            right: "**Black hat** hackers (crackers) are criminals. **White hat** (ethical) hackers test systems with permission and are a respected profession; companies even pay \"bug bounties\" for flaws reported to them.",
+            why: "News reports use \"hacker\" only for attacks. The chapter separates hacking for protection (with permission) from cracking for harm.",
+          },
+          {
+            type: "heading",
+            text: "Network security threats",
+          },
+          {
+            type: "text",
+            md: "**Denial of Service (DoS):** the attacker floods a server or network with so many requests that it cannot answer genuine users, so a website slows down or goes offline. In a **Distributed DoS (DDoS)**, the flood comes from thousands of computers infected with malware and controlled by the attacker; such computers are called **zombies** and together form a **botnet**. A DDoS is harder to stop because the traffic comes from many places.\n\n**Intruder problems:** an intruder is an unauthorised person who tries to get into a network or system to steal data, misuse resources or plant malware. Strong passwords, firewalls and monitoring keep intruders out.",
+          },
+          {
+            type: "code",
+            lang: "python",
+            runnable: true,
+            caption: "Why a flood of requests denies service: the server can answer only so many per second.",
+            code: r`capacity = 100   # requests the server can answer per second
+traffic = [("10:00:01", 40), ("10:00:02", 85), ("10:00:03", 900), ("10:00:04", 1500)]
+for sec, req in traffic:
+    served = min(req, capacity)
+    dropped = req - served
+    status = "OK" if dropped == 0 else "OVERLOADED"
+    print(sec, "served", served, "dropped", dropped, status)`,
+          },
+          {
+            type: "text",
+            md: "Output:\n\n`10:00:01 served 40 dropped 0 OK`\n\n`10:00:02 served 85 dropped 0 OK`\n\n`10:00:03 served 100 dropped 800 OVERLOADED`\n\n`10:00:04 served 100 dropped 1400 OVERLOADED`\n\nOnce the flood arrives, most requests are dropped, and genuine students checking results are among them.\n\n**Snooping** is secretly capturing and analysing network traffic with special software (a packet sniffer); the captured data may be stored and studied later. Network administrators sometimes snoop legitimately to fix problems. **Eavesdropping** is listening to or reading a private conversation **in real time** without permission: phone calls, video calls, chats or emails as they travel.",
+          },
+          {
+            type: "example",
+            title: "Name the threat",
+            problem: "Identify the threat: (a) a results website crashes after 50,000 infected computers send requests together; (b) someone captures Wi-Fi packets in a café and analyses them at home the next day; (c) a person secretly listens to a video call between two managers as it happens; (d) a stranger guesses the admin password of a college server and logs in.",
+            steps: [
+              "(a) Flood from many infected computers (a botnet): **DDoS**.",
+              "(b) Traffic captured and analysed later: **snooping**.",
+              "(c) Real-time interception of a private conversation: **eavesdropping**.",
+              "(d) Unauthorised entry into a system: **intruder** problem.",
+            ],
+            answer: "DDoS, snooping, eavesdropping, intrusion.",
+          },
+          {
+            type: "activity",
+            activity: {
+              kind: "sort",
+              prompt: "Snooping or eavesdropping?",
+              groups: ["Snooping", "Eavesdropping"],
+              items: [
+                { text: "Packet sniffer saves café Wi-Fi traffic to study later", group: 0, hint: "Captured and analysed afterwards." },
+                { text: "Admin captures network packets to find a fault", group: 0, hint: "Traffic is captured and analysed; it can even be legitimate." },
+                { text: "Listening live to someone's VoIP call", group: 1, hint: "Real time, private conversation." },
+                { text: "Watching a private video meeting as it happens", group: 1, hint: "Intercepted live." },
+              ],
+              explain: "Snooping captures traffic for analysis, often later; eavesdropping intercepts a private conversation in real time.",
+            },
+          },
+          {
+            type: "checkpoint",
+            questions: [
+              {
+                kind: "mcq",
+                q: "Infected computers secretly controlled by an attacker to launch a DDoS attack are called:",
+                options: ["Zombies (forming a botnet)", "White hats", "Cookies", "Firewalls"],
+                answer: 0,
+                explain: "Each infected computer is a zombie; together they form a botnet.",
+              },
+            ],
+          },
+          {
+            type: "keypoints",
+            items: [
+              "Cookies are small text files storing preferences and sessions; third-party cookies and stolen cookies are privacy risks.",
+              "White hat: permitted testing; black hat (cracker): illegal harm; grey hat: no permission but no harmful intent.",
+              "DoS floods a server so genuine users are denied service; DDoS uses a botnet of zombies.",
+              "Intruders try to get unauthorised access to a system or network.",
+              "Snooping captures and analyses traffic (often later); eavesdropping intercepts private talk in real time.",
+            ],
+          },
+        ],
+        flashcards: [
+          { front: "What is a cookie?", back: "A small text file a website stores through the browser, holding data such as login session and preferences." },
+          { front: "Why are third-party cookies a concern?", back: "Advertisers use them to track a user across many websites and build a profile." },
+          { front: "White hat hacker?", back: "An ethical hacker who tests systems with permission so that weaknesses can be fixed." },
+          { front: "Black hat hacker?", back: "A cracker who breaks into systems without permission to steal, damage or extort." },
+          { front: "Grey hat hacker?", back: "Someone who enters systems without permission but usually without harmful intent." },
+          { front: "DoS vs DDoS?", back: "DoS floods a target from one source; DDoS floods it from many infected computers (a botnet)." },
+          { front: "Snooping?", back: "Secretly capturing and analysing network traffic, which can be studied later." },
+          { front: "Eavesdropping?", back: "Unauthorised real-time interception of a private conversation such as a call or chat." },
+        ],
+        quiz: [
+          {
+            kind: "truefalse",
+            q: "A cookie is a program that can spread viruses on its own.",
+            answer: false,
+            explain: "Cookies are plain text data, not programs; the risks are tracking and stolen sessions.",
+          },
+          {
+            kind: "mcq",
+            q: "A company pays an expert to break into its own website and report the weaknesses. The expert is a:",
+            options: ["White hat hacker", "Black hat hacker", "Grey hat hacker", "Cracker"],
+            answer: 0,
+            explain: "Testing with permission to fix problems is ethical (white hat) hacking.",
+          },
+          {
+            kind: "mcq",
+            q: "During admissions, a college portal stops responding because it receives millions of fake requests from thousands of computers. This is:",
+            options: ["DDoS attack", "Snooping", "Eavesdropping", "Spam"],
+            answer: 0,
+            explain: "A flood of requests from many sources that denies service to genuine users is a Distributed Denial of Service attack.",
+          },
+          {
+            kind: "fill",
+            q: "A network of infected computers controlled by an attacker is called a ___.",
+            answer: ["botnet", "bot net"],
+            explain: "Each member is a zombie; the attacker uses the botnet for DDoS attacks or spam.",
+          },
+          {
+            kind: "multi",
+            q: "What can a cookie typically store?",
+            options: ["Preferred language of the site", "Items in a shopping cart", "Login session identifier", "A running copy of a virus", "Theme choice (dark/light)"],
+            answers: [0, 1, 2, 4],
+            explain: "Cookies hold small pieces of text data; they cannot hold a running program.",
+          },
+          {
+            kind: "mcq",
+            q: "Which threat is in **real time**?",
+            options: ["Eavesdropping", "Snooping data stored for later", "A cookie", "A backup"],
+            answer: 0,
+            explain: "Eavesdropping intercepts a conversation as it happens; snooped traffic can be analysed later.",
+            difficulty: 2,
+          },
+          {
+            kind: "mcq",
+            q: "What is printed by `print(\"cart=3\".split(\"=\"))`?",
+            options: ["`['cart', '3']`", "`['cart=3']`", "`('cart', '3')`", "`cart 3`"],
+            answer: 0,
+            explain: "`split(\"=\")` cuts the string at the = sign and returns a list of the two parts.",
+          },
+        ],
+      },
+      {
+        slug: "c12-cs-security-board-practice",
+        title: "Security Aspects: Board Practice",
+        summary: "Mixed board-style questions on malware, antivirus, HTTPS, firewalls, cookies and network threats, with case studies and two short Python programs (a spam scorer and a password checker).",
+        minutes: 20,
+        xp: 50,
+        blocks: [
+          {
+            type: "text",
+            md: "This chapter is all theory in the PUC paper, so marks depend on **precise definitions, clear differences and a correct example**. Case-study questions describe a situation and ask you to name the threat and suggest a defence.",
+          },
+          {
+            type: "example",
+            title: "Case study",
+            problem: "Meena receives an email saying her bank account will be closed in 2 hours unless she clicks a link. The link opens an `http://` page that looks like her bank. Later her laptop becomes slow and shows many ads. (a) What kind of email is this? (b) Why should she not enter her password on that page? (c) What is slowing the laptop? (d) Give two steps she should take now.",
+            steps: [
+              "(a) Unwanted bulk email with false urgency and a fake link: **spam** (a phishing attempt).",
+              "(b) The page uses **HTTP**, so data is unencrypted, and the site is fake; her password would go to the attacker.",
+              "(c) Unwanted ads and slowness point to **adware** (possibly with spyware) installed from the link.",
+              "(d) Run an updated **antivirus** scan and change her bank password from a trusted device; also enable the host-based firewall and report the email as spam.",
+            ],
+            answer: "Spam/phishing email; HTTP fake page; adware; scan with updated antivirus and change the password.",
+          },
+          {
+            type: "mistake",
+            wrong: "A firewall and an antivirus do the same job, so one of them is enough.",
+            right: "A **firewall** controls which network traffic may enter or leave; **antivirus** finds and removes malware already on the computer or in files. Each covers gaps the other leaves, so both are used.",
+            why: "Both are \"security software\", so they sound interchangeable. A firewall cannot clean an infected pen drive, and an antivirus does not block unwanted network connections.",
+          },
+          {
+            type: "heading",
+            text: "Program 1: a simple spam scorer",
+          },
+          {
+            type: "code",
+            lang: "python",
+            runnable: true,
+            caption: "Count spam words in each mail; 3 or more marks it as spam.",
+            code: r`spam_words = ["lottery", "winner", "free", "urgent", "prize"]
+mails = [
+    "URGENT winner! Claim your free prize now",
+    "PUC practical exam timetable attached",
+    "Free webinar on Python for Class 12",
+]
+for m in mails:
+    score = sum(w in m.lower() for w in spam_words)
+    print(score, "Spam" if score >= 3 else "Inbox")`,
+          },
+          {
+            type: "text",
+            md: "Output: `4 Spam`, `0 Inbox`, `1 Inbox`. `m.lower()` makes the check case-insensitive, and `sum()` over True/False values counts the matches (True counts as 1). The third mail contains \"free\" but is not spam, which shows why real filters use many signals, not one word.",
+          },
+          {
+            type: "checkpoint",
+            questions: [
+              {
+                kind: "numeric",
+                q: "Using the same spam scorer, what score does the mail \"You are a WINNER of a FREE lottery\" get?",
+                answer: 3,
+                explain: "After `lower()`, \"winner\", \"free\" and \"lottery\" are found: 3 words, so it is marked Spam.",
+              },
+            ],
+          },
+          {
+            type: "heading",
+            text: "Program 2: password strength",
+          },
+          {
+            type: "code",
+            lang: "python",
+            runnable: true,
+            caption: "One point each for length 8+, upper case, lower case, digit and special character.",
+            code: r`def strength(pw):
+    score = 0
+    if len(pw) >= 8:
+        score += 1
+    if any(c.isupper() for c in pw):
+        score += 1
+    if any(c.islower() for c in pw):
+        score += 1
+    if any(c.isdigit() for c in pw):
+        score += 1
+    if any(not c.isalnum() for c in pw):
+        score += 1
+    return score
+
+for pw in ["kavya2007", "Kavya@2007", "12345678", "abc"]:
+    print(pw, strength(pw))`,
+          },
+          {
+            type: "text",
+            md: "Output: `kavya2007 3`, `Kavya@2007 5`, `12345678 2`, `abc 1`. Strong, different passwords protect against intruders and against cracked accounts being reused.",
+          },
+          {
+            type: "activity",
+            activity: {
+              kind: "match",
+              prompt: "Match each threat to a suitable defence.",
+              pairs: [
+                ["Keylogger on a shared PC", "Online virtual keyboard"],
+                ["Ransomware", "Regular offline backups"],
+                ["Unencrypted login page", "Use only HTTPS sites"],
+                ["Unwanted connections from the internet", "Firewall"],
+                ["Unknown new malware", "Heuristic and sandbox scanning"],
+              ],
+              explain: "Each defence answers a specific weakness: no key presses to record, data that can be restored, encryption on the way, filtered traffic, and detection by behaviour.",
+            },
+          },
+          {
+            type: "list",
+            ordered: true,
+            items: [
+              "Differentiate between a virus and a worm. (2 marks)",
+              "What is a firewall? Name its two types. (2 marks)",
+              "Explain any three methods used by antivirus software. (3 marks)",
+              "Distinguish between HTTP and HTTPS. (2 marks)",
+              "What is a DDoS attack? What are zombies? (2 marks)",
+              "Distinguish between snooping and eavesdropping. (2 marks)",
+            ],
+          },
+          {
+            type: "callout",
+            tone: "exam",
+            title: "Board tip",
+            md: "For every \"distinguish\" question, write at least two points in a table and add an example on each side. For case studies, first name the threat, then give the defence with a one-line reason.",
+          },
+          {
+            type: "keypoints",
+            items: [
+              "Name the threat first, then the defence, with a reason.",
+              "Firewall filters traffic; antivirus removes malware; both are needed.",
+              "HTTPS and a careful look at the address protect logins; spam links are the usual trap.",
+              "Strong, different passwords and backups are the simplest strong defences.",
+            ],
+          },
+        ],
+        flashcards: [
+          { front: "Firewall vs antivirus?", back: "A firewall controls network traffic in and out; antivirus detects and removes malware in files and memory." },
+          { front: "Defence against keyloggers?", back: "Online virtual keyboard (and antivirus to remove software keyloggers)." },
+          { front: "Defence against ransomware?", back: "Regular backups kept offline, plus updated antivirus and OS." },
+          { front: "Signs of phishing spam?", back: "False urgency, unknown sender, requests for passwords or PINs, links to look-alike sites." },
+          { front: "Why does `sum(w in m for w in words)` count words?", back: "Each `in` test gives True or False, and True counts as 1 when summed." },
+          { front: "Five checks of a strong password?", back: "At least 8 characters, an upper-case letter, a lower-case letter, a digit and a special character." },
+        ],
+        quiz: [
+          {
+            kind: "mcq",
+            q: "A school wants to block students from opening certain websites on lab computers. What should it use?",
+            options: ["Firewall rules", "Antivirus signatures", "Cookies", "Spam filter"],
+            answer: 0,
+            explain: "A firewall applies rules to network traffic, so it can block chosen sites.",
+          },
+          {
+            kind: "numeric",
+            q: "Using the password checker in this lesson, what is `strength(\"Bengaluru\")`?",
+            answer: 3,
+            explain: "Length 9 (1), upper-case B (1), lower-case letters (1), no digit (0), no special character (0): total 3.",
+            difficulty: 2,
+          },
+          {
+            kind: "mcq",
+            q: "What is printed by `print(sum(w in \"free prize inside\" for w in [\"free\", \"prize\", \"urgent\"]))`?",
+            options: ["`2`", "`3`", "`True`", "`[True, True, False]`"],
+            answer: 0,
+            explain: "\"free\" and \"prize\" are found (True, True), \"urgent\" is not (False); 1 + 1 + 0 = 2.",
+          },
+          {
+            kind: "truefalse",
+            q: "A grey hat hacker who breaks into a system without permission is acting legally because there was no harmful intent.",
+            answer: false,
+            explain: "Access without permission is unauthorised whatever the intent; only white hat testing with permission is legal.",
+          },
+          {
+            kind: "multi",
+            q: "Which of these are malware?",
+            options: ["Spyware", "Firewall", "Trojan", "Cookie", "Worm"],
+            answers: [0, 2, 4],
+            explain: "A firewall is a defence and a cookie is a text file, not malicious software.",
+          },
+          {
+            kind: "mcq",
+            q: "Which pair is matched correctly?",
+            options: ["Real-time protection: scans files as they are opened", "Sandbox: database of known signatures", "Heuristics: blocks network ports", "Signature-based: runs code in isolation"],
+            answer: 0,
+            explain: "The other options mix up the methods: signatures are a database, a sandbox isolates code, heuristics study code for suspicious patterns.",
+          },
+          {
+            kind: "fill",
+            q: "Unwanted bulk email is called ___.",
+            answer: ["spam"],
+            explain: "Spam may advertise, deceive or carry malware.",
+          },
+        ],
+      },
+    ],
+  },
 ];
 
 /** Chapter title ("11:" / "12:" + exact title) → topic slug(s) that teach it. */
 export const links: Record<string, string | string[]> = {
   "12:Understanding Data": "c12-cs-understanding-data",
   "12:Data Communication": "c12-cs-data-communication",
+  "12:Security Aspects": "c12-cs-security-aspects",
 };

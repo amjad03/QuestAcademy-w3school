@@ -842,7 +842,7 @@ const atom: Raw[] = [
     q: "The ratio of the longest wavelength of the Lyman series to the shortest wavelength of the Balmer series of hydrogen is:",
     options: ["1 : 3", "3 : 1", "4 : 9", "27 : 5"],
     answer: 0,
-    explain: t`Longest Lyman ($2 \to 1$): $\dfrac1\lambda = R\left(1 - \tfrac14\right) = \tfrac{3R}{4} \Rightarrow \lambda = \tfrac{4}{3R}$. Shortest Balmer ($\infty \to 2$): $\dfrac1\lambda = \tfrac R4 \Rightarrow \lambda = \tfrac4R$. Ratio $= \tfrac{4}{3R} : \tfrac4R = 1 : 3$. 27 : 5 is the ratio of the longest Balmer to the longest Lyman wavelength... inverted; 3 : 1 is this answer inverted.`,
+    explain: t`Longest Lyman ($2 \to 1$): $\dfrac1\lambda = R\left(1 - \tfrac14\right) = \tfrac{3R}{4} \Rightarrow \lambda = \tfrac{4}{3R}$. Shortest Balmer ($\infty \to 2$): $\dfrac1\lambda = \tfrac R4 \Rightarrow \lambda = \tfrac4R$. Ratio $= \tfrac{4}{3R} : \tfrac4R = 1 : 3$. 3 : 1 is this ratio inverted; 27 : 5 is the ratio of the LONGEST Balmer wavelength to the longest Lyman wavelength.`,
   },
   {
     kind: "mcq",
