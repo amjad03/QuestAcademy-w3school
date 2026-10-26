@@ -185,7 +185,7 @@ const bonding: Raw[] = [
   {
     kind: "mcq",
     difficulty: 2,
-    exams: MAIN,
+    exams: ALL,
     idealTime: 50,
     q: "According to Fajans' rules, which of the following sodium halides has the greatest covalent character?",
     options: ["NaF", "NaCl", "NaBr", "NaI"],
@@ -196,7 +196,7 @@ const bonding: Raw[] = [
   {
     kind: "mcq",
     difficulty: 2,
-    exams: MAIN,
+    exams: ALL,
     idealTime: 50,
     q: "The H–E–H bond angle decreases in the order NH₃ > PH₃ > AsH₃ > SbH₃. The best explanation is that, down the group:",
     options: [
@@ -212,7 +212,7 @@ const bonding: Raw[] = [
   {
     kind: "mcq",
     difficulty: 2,
-    exams: MAIN,
+    exams: ALL,
     idealTime: 60,
     q: "The hybridisation of iodine and the shape of the ICl₄⁻ ion respectively are:",
     options: [
@@ -228,7 +228,7 @@ const bonding: Raw[] = [
   {
     kind: "mcq",
     difficulty: 2,
-    exams: MAIN,
+    exams: ALL,
     idealTime: 55,
     q: "The shape of the ClF₃ molecule is:",
     options: ["Trigonal planar", "Trigonal pyramidal", "T-shaped", "See-saw"],
@@ -239,7 +239,7 @@ const bonding: Raw[] = [
   {
     kind: "mcq",
     difficulty: 2,
-    exams: MAIN,
+    exams: ALL,
     idealTime: 60,
     q: "The shape of the XeOF₄ molecule is:",
     options: ["Octahedral", "Square pyramidal", "Trigonal bipyramidal", "See-saw"],
@@ -250,7 +250,7 @@ const bonding: Raw[] = [
   {
     kind: "mcq",
     difficulty: 2,
-    exams: MAIN,
+    exams: ALL,
     idealTime: 60,
     q: "Assertion (A): The dipole moment of NF₃ (0.23 D) is much smaller than that of NH₃ (1.47 D), although F is more electronegative than N.\nReason (R): In NH₃ the orbital dipole of the lone pair is in the same direction as the resultant of the N–H bond dipoles, whereas in NF₃ it is opposite to the resultant of the N–F bond dipoles.",
     options: [
@@ -266,7 +266,7 @@ const bonding: Raw[] = [
   {
     kind: "mcq",
     difficulty: 2,
-    exams: MAIN,
+    exams: ALL,
     idealTime: 60,
     q: "The correct order of O–O bond length among O₂, O₂⁺, O₂⁻ and O₂²⁻ is:",
     options: [
@@ -282,7 +282,7 @@ const bonding: Raw[] = [
   {
     kind: "mcq",
     difficulty: 2,
-    exams: MAIN,
+    exams: ALL,
     idealTime: 60,
     q: "Which of the following pairs consists of isostructural species (same shape)?",
     options: ["SF₄ and XeF₄", "XeF₂ and I₃⁻", "BF₃ and NF₃", "CO₂ and SO₂"],
@@ -293,7 +293,7 @@ const bonding: Raw[] = [
   {
     kind: "mcq",
     difficulty: 2,
-    exams: MAIN,
+    exams: ALL,
     idealTime: 70,
     q: "Match the species in Column I with the hybridisation of the central atom in Column II.\nColumn I: (P) NH₄⁺ (Q) BF₃ (R) SF₆ (S) PCl₅\nColumn II: (i) sp³d (ii) sp³ (iii) sp³d² (iv) sp²",
     options: [
@@ -309,7 +309,7 @@ const bonding: Raw[] = [
   {
     kind: "mcq",
     difficulty: 2,
-    exams: MAIN,
+    exams: ALL,
     idealTime: 60,
     q: "Which of the following species is diamagnetic?",
     options: ["B₂", "O₂", "C₂", "NO"],
@@ -336,7 +336,7 @@ const bonding: Raw[] = [
   {
     kind: "mcq",
     difficulty: 2,
-    exams: MAIN,
+    exams: ALL,
     idealTime: 50,
     q: "The average C–O bond order in the carbonate ion (CO₃²⁻) is:",
     options: ["1", "1.33", "1.5", "2"],
@@ -358,7 +358,7 @@ const bonding: Raw[] = [
   {
     kind: "mcq",
     difficulty: 2,
-    exams: MAIN,
+    exams: ALL,
     idealTime: 50,
     q: "The correct order of dipole moments of the chloromethanes is:",
     options: [
@@ -374,7 +374,7 @@ const bonding: Raw[] = [
   {
     kind: "mcq",
     difficulty: 2,
-    exams: MAIN,
+    exams: ALL,
     idealTime: 60,
     q: "Which of the following has the maximum number of lone pairs on the central atom?",
     options: ["ClF₃", "XeF₄", "IF₅", "XeF₂"],
@@ -385,7 +385,7 @@ const bonding: Raw[] = [
   {
     kind: "mcq",
     difficulty: 2,
-    exams: MAIN,
+    exams: ALL,
     idealTime: 50,
     q: "The correct order of bond dissociation enthalpy of the halogens is:",
     options: [
@@ -421,7 +421,7 @@ const bonding: Raw[] = [
   {
     kind: "mcq",
     difficulty: 2,
-    exams: MAIN,
+    exams: ALL,
     idealTime: 50,
     q: "HF forms stronger hydrogen bonds than H₂O, yet water boils at a higher temperature (373 K) than HF (293 K). This is because:",
     options: [
@@ -437,7 +437,7 @@ const bonding: Raw[] = [
   {
     kind: "mcq",
     difficulty: 2,
-    exams: MAIN,
+    exams: ALL,
     idealTime: 50,
     q: "Taking the z-axis as the internuclear axis, which combination of atomic orbitals gives zero (net) overlap and hence no bond?",
     options: ["s and p_z", "p_z and p_z", "p_x and p_x", "s and p_y"],
@@ -769,7 +769,7 @@ const thermo: Raw[] = [
   {
     kind: "mcq",
     difficulty: 2,
-    exams: MAIN,
+    exams: ALL,
     idealTime: 60,
     q: "A gas expands from 2 L to 12 L against a constant external pressure of 1 atm. The work done on the gas is (1 L atm = 101.3 J):",
     options: ["−1013 J", "+1013 J", "−10.13 J", "−1216 J"],
@@ -780,7 +780,7 @@ const thermo: Raw[] = [
   {
     kind: "mcq",
     difficulty: 2,
-    exams: MAIN,
+    exams: ALL,
     idealTime: 90,
     q: t`In a bomb calorimeter, the combustion of benzene, C$_6$H$_6$(l) + $\tfrac{15}{2}$O$_2$(g) → 6CO$_2$(g) + 3H$_2$O(l), gives $\Delta U = -3263.9$ kJ mol$^{-1}$ at 298 K. The value of $\Delta H$ is ($R = 8.314$ J K$^{-1}$ mol$^{-1}$):`,
     options: ["−3260.2 kJ mol⁻¹", "−3267.6 kJ mol⁻¹", "−3263.9 kJ mol⁻¹", "−6980 kJ mol⁻¹"],
@@ -803,7 +803,7 @@ const thermo: Raw[] = [
   {
     kind: "mcq",
     difficulty: 2,
-    exams: MAIN,
+    exams: ALL,
     idealTime: 80,
     q: "The standard enthalpy of combustion of methane is −890.3 kJ mol⁻¹. ΔfH° of CO₂(g) and H₂O(l) are −393.5 and −285.8 kJ mol⁻¹. The standard enthalpy of formation of CH₄(g) is:",
     options: ["−74.8 kJ mol⁻¹", "+74.8 kJ mol⁻¹", "+211.0 kJ mol⁻¹", "−1855.4 kJ mol⁻¹"],
@@ -826,7 +826,7 @@ const thermo: Raw[] = [
   {
     kind: "mcq",
     difficulty: 2,
-    exams: MAIN,
+    exams: ALL,
     idealTime: 50,
     q: "For a reaction, ΔH = +30 kJ mol⁻¹ and ΔS = +100 J K⁻¹ mol⁻¹ (both independent of temperature). The reaction is spontaneous:",
     options: ["At all temperatures", "Only below 300 K", "Only above 300 K", "Only above 0.3 K"],
@@ -837,7 +837,7 @@ const thermo: Raw[] = [
   {
     kind: "mcq",
     difficulty: 2,
-    exams: MAIN,
+    exams: ALL,
     idealTime: 60,
     q: "The equilibrium constant of a reaction at 300 K is 10. The standard Gibbs energy change ΔG° is (R = 8.314 J K⁻¹ mol⁻¹):",
     options: ["−5.74 kJ mol⁻¹", "+5.74 kJ mol⁻¹", "−2.49 kJ mol⁻¹", "−57.4 kJ mol⁻¹"],
@@ -864,7 +864,7 @@ const thermo: Raw[] = [
   {
     kind: "mcq",
     difficulty: 2,
-    exams: MAIN,
+    exams: ALL,
     idealTime: 70,
     q: "Match the process in Column I with the condition in Column II.\nColumn I: (P) Adiabatic (Q) Isothermal (R) Isochoric (S) Isobaric\nColumn II: (i) ΔV = 0, so w = 0 (ii) q = 0 (iii) Δp = 0 (iv) ΔT = 0, so ΔU = 0 for an ideal gas",
     options: [
@@ -880,7 +880,7 @@ const thermo: Raw[] = [
   {
     kind: "mcq",
     difficulty: 2,
-    exams: MAIN,
+    exams: ALL,
     idealTime: 60,
     q: "For N₂(g) + 3H₂(g) → 2NH₃(g), ΔrH° = −92.4 kJ mol⁻¹ at 298 K. The entropy change of the surroundings is:",
     options: ["+310 J K⁻¹ mol⁻¹", "−310 J K⁻¹ mol⁻¹", "+0.31 J K⁻¹ mol⁻¹", "+92.4 J K⁻¹ mol⁻¹"],
@@ -891,7 +891,7 @@ const thermo: Raw[] = [
   {
     kind: "mcq",
     difficulty: 2,
-    exams: MAIN,
+    exams: ALL,
     idealTime: 45,
     q: "The enthalpy of atomisation of CH₄(g), CH₄(g) → C(g) + 4H(g), is 1665 kJ mol⁻¹. The average C–H bond enthalpy is:",
     options: ["1665 kJ mol⁻¹", "832.5 kJ mol⁻¹", "555 kJ mol⁻¹", "416 kJ mol⁻¹"],
@@ -901,7 +901,7 @@ const thermo: Raw[] = [
   {
     kind: "mcq",
     difficulty: 2,
-    exams: MAIN,
+    exams: ALL,
     idealTime: 60,
     q: "For a reaction, ΔH = −100 kJ mol⁻¹ and ΔS = −200 J K⁻¹ mol⁻¹. Assuming both are temperature independent, the reaction is spontaneous:",
     options: ["Above 500 K", "Below 500 K", "At all temperatures", "At no temperature"],
@@ -912,7 +912,7 @@ const thermo: Raw[] = [
   {
     kind: "mcq",
     difficulty: 2,
-    exams: MAIN,
+    exams: ALL,
     idealTime: 80,
     q: "Given ΔfH°: Fe₂O₃(s) = −824.2, CO(g) = −110.5, CO₂(g) = −393.5 kJ mol⁻¹. The enthalpy change for Fe₂O₃(s) + 3CO(g) → 2Fe(s) + 3CO₂(g) is:",
     options: ["−24.8 kJ", "+24.8 kJ", "−245.8 kJ", "−1180.5 kJ"],
@@ -923,7 +923,7 @@ const thermo: Raw[] = [
   {
     kind: "mcq",
     difficulty: 2,
-    exams: MAIN,
+    exams: ALL,
     idealTime: 75,
     q: "Using average bond enthalpies (kJ mol⁻¹) C=C 614, C–C 348, H–H 436, C–H 414, the enthalpy of hydrogenation of ethene, C₂H₄ + H₂ → C₂H₆, is:",
     options: ["−126 kJ mol⁻¹", "+126 kJ mol⁻¹", "+288 kJ mol⁻¹", "−1176 kJ mol⁻¹"],
@@ -958,7 +958,7 @@ const thermo: Raw[] = [
   {
     kind: "mcq",
     difficulty: 2,
-    exams: MAIN,
+    exams: ALL,
     idealTime: 70,
     q: "For a reaction at 298 K, ΔG° = −11.4 kJ mol⁻¹. The equilibrium constant is approximately (R = 8.314 J K⁻¹ mol⁻¹):",
     options: ["100", "10", "1.0 × 10⁻²", "4.6"],
@@ -969,7 +969,7 @@ const thermo: Raw[] = [
   {
     kind: "mcq",
     difficulty: 2,
-    exams: MAIN,
+    exams: ALL,
     idealTime: 60,
     q: "Statement I: For C(graphite) + O₂(g) → CO₂(g), ΔH = ΔU.\nStatement II: For reactions involving only solids and liquids, ΔH and ΔU are nearly equal because volume changes are negligible.\nChoose the correct option.",
     options: [
@@ -1313,7 +1313,7 @@ const equilibrium: Raw[] = [
   {
     kind: "mcq",
     difficulty: 2,
-    exams: MAIN,
+    exams: ALL,
     idealTime: 60,
     q: "For 2A(g) ⇌ B(g), K_c = 16 at a certain temperature. The value of K_c for ½B(g) ⇌ A(g) at the same temperature is:",
     options: ["4", "0.25", "0.0625", "8"],
@@ -1324,7 +1324,7 @@ const equilibrium: Raw[] = [
   {
     kind: "mcq",
     difficulty: 2,
-    exams: MAIN,
+    exams: ALL,
     idealTime: 50,
     q: "For A(g) + B(g) ⇌ C(g) + D(g), K_c = 4.0. At some instant [A] = [B] = [C] = 1.0 M and [D] = 2.0 M. The reaction at this instant:",
     options: [
@@ -1351,7 +1351,7 @@ const equilibrium: Raw[] = [
   {
     kind: "mcq",
     difficulty: 2,
-    exams: MAIN,
+    exams: ALL,
     idealTime: 60,
     q: "A buffer contains 0.20 M CH₃COONa and 0.10 M CH₃COOH (pK_a = 4.74). Its pH is (log 2 = 0.30):",
     options: ["4.44", "4.74", "5.04", "9.26"],
@@ -1362,7 +1362,7 @@ const equilibrium: Raw[] = [
   {
     kind: "mcq",
     difficulty: 2,
-    exams: MAIN,
+    exams: ALL,
     idealTime: 50,
     q: "The solubility product of AgCl at 298 K is 1.8 × 10⁻¹⁰. Its molar solubility in pure water is:",
     options: ["1.8 × 10⁻¹⁰ M", "1.34 × 10⁻⁵ M", "9.0 × 10⁻¹¹ M", "3.6 × 10⁻¹⁰ M"],
@@ -1373,7 +1373,7 @@ const equilibrium: Raw[] = [
   {
     kind: "mcq",
     difficulty: 2,
-    exams: MAIN,
+    exams: ALL,
     idealTime: 60,
     q: "The molar solubility of AgCl (K_sp = 1.8 × 10⁻¹⁰) in 0.010 M NaCl solution is:",
     options: ["1.34 × 10⁻⁵ M", "1.8 × 10⁻⁸ M", "1.8 × 10⁻¹² M", "1.34 × 10⁻⁷ M"],
@@ -1384,7 +1384,7 @@ const equilibrium: Raw[] = [
   {
     kind: "mcq",
     difficulty: 2,
-    exams: MAIN,
+    exams: ALL,
     idealTime: 70,
     q: "The pH of a 1.0 × 10⁻⁸ M HCl solution at 298 K is approximately:",
     options: ["8.00", "6.98", "7.00", "7.02"],
@@ -1406,7 +1406,7 @@ const equilibrium: Raw[] = [
   {
     kind: "mcq",
     difficulty: 2,
-    exams: MAIN,
+    exams: ALL,
     idealTime: 70,
     q: "The pH of 0.10 M sodium acetate solution at 298 K is (pK_a of acetic acid = 4.74):",
     options: ["5.13", "8.87", "9.26", "7.00"],
@@ -1417,7 +1417,7 @@ const equilibrium: Raw[] = [
   {
     kind: "mcq",
     difficulty: 2,
-    exams: MAIN,
+    exams: ALL,
     idealTime: 80,
     q: "PCl₅(g) ⇌ PCl₃(g) + Cl₂(g). At equilibrium at a total pressure of 1.0 atm, PCl₅ is 50% dissociated. The value of Kₚ is:",
     options: ["0.25 atm", "0.33 atm", "0.50 atm", "1.0 atm"],
@@ -1471,7 +1471,7 @@ const equilibrium: Raw[] = [
   {
     kind: "mcq",
     difficulty: 2,
-    exams: MAIN,
+    exams: ALL,
     idealTime: 50,
     q: "A weak monobasic acid solution is diluted to four times its original volume. Its degree of ionisation (α ≪ 1):",
     options: ["Becomes four times", "Becomes half", "Doubles", "Remains unchanged"],
@@ -1482,7 +1482,7 @@ const equilibrium: Raw[] = [
   {
     kind: "mcq",
     difficulty: 2,
-    exams: MAIN,
+    exams: ALL,
     idealTime: 50,
     q: "The correct order of acid strength of the oxoacids of chlorine is:",
     options: [
@@ -1498,7 +1498,7 @@ const equilibrium: Raw[] = [
   {
     kind: "mcq",
     difficulty: 2,
-    exams: MAIN,
+    exams: ALL,
     idealTime: 70,
     q: "Match each Brønsted acid in Column I with its conjugate base in Column II.\nColumn I: (P) H₂O (Q) HCO₃⁻ (R) NH₃ (S) HSO₄⁻\nColumn II: (i) NH₂⁻ (ii) OH⁻ (iii) SO₄²⁻ (iv) CO₃²⁻",
     options: [
@@ -1514,7 +1514,7 @@ const equilibrium: Raw[] = [
   {
     kind: "mcq",
     difficulty: 2,
-    exams: MAIN,
+    exams: ALL,
     idealTime: 60,
     q: "The solubility of CaF₂ in water at 298 K is 2.0 × 10⁻⁴ mol L⁻¹. Its solubility product is:",
     options: ["4.0 × 10⁻⁸", "8.0 × 10⁻¹²", "3.2 × 10⁻¹¹", "1.6 × 10⁻¹¹"],
@@ -1525,7 +1525,7 @@ const equilibrium: Raw[] = [
   {
     kind: "mcq",
     difficulty: 2,
-    exams: MAIN,
+    exams: ALL,
     idealTime: 60,
     q: "Equal volumes of 2.0 × 10⁻⁴ M AgNO₃ and 2.0 × 10⁻⁴ M NaCl are mixed. Given K_sp(AgCl) = 1.8 × 10⁻¹⁰:",
     options: [
@@ -1557,7 +1557,7 @@ const equilibrium: Raw[] = [
   {
     kind: "mcq",
     difficulty: 2,
-    exams: MAIN,
+    exams: ALL,
     idealTime: 50,
     q: "K_b for NH₃ is 1.8 × 10⁻⁵ at 298 K. K_a for its conjugate acid NH₄⁺ is:",
     options: ["1.8 × 10⁻⁵", "5.6 × 10⁻¹⁰", "5.6 × 10⁻⁵", "1.8 × 10⁻⁹"],
@@ -1580,7 +1580,7 @@ const equilibrium: Raw[] = [
   {
     kind: "mcq",
     difficulty: 2,
-    exams: MAIN,
+    exams: ALL,
     idealTime: 60,
     q: "The degree of ionisation of 0.010 M aqueous ammonia (K_b = 1.8 × 10⁻⁵) at 298 K is about:",
     options: ["0.18%", "1.8%", "4.2%", "0.042%"],

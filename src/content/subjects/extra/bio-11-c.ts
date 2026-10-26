@@ -113,7 +113,7 @@ const cellUnit: Topic = {
           type: "mistake",
           wrong: "Prokaryotes have no ribosomes because they have no organelles.",
           right: "Prokaryotes lack **membrane-bound** organelles, but they do have ribosomes (70S). Ribosomes are non-membrane-bound and occur in every cell.",
-          why: "Students read 'no organelles' and drop ribosomes too. A cell without ribosomes could not make proteins and could not live. The only membrane-like infolding in bacteria is the mesosome, which is part of the plasma membrane.",
+          why: "Students read 'no organelles' and drop ribosomes too. A cell without ribosomes could not make proteins and could not live. The mesosome is not a separate organelle but an infolding of the plasma membrane.",
         },
         {
           type: "activity",
@@ -268,7 +268,7 @@ const cellUnit: Topic = {
           rows: [
             ["Algae", "Cellulose, galactans, mannans and minerals such as calcium carbonate"],
             ["Higher plants", "Cellulose, hemicellulose, pectins and proteins"],
-            ["Primary wall", "Thin, laid down in a young cell, able to grow; gradually decreases as the cell matures"],
+            ["Primary wall", "Thin, laid down in a young cell, able to grow; this capacity to grow gradually diminishes as the cell matures"],
             ["Secondary wall", "Formed on the **inner** side of the primary wall (towards the membrane)"],
             ["Middle lamella", "Mainly **calcium pectate**; holds neighbouring cells together"],
             ["Plasmodesmata", "Cytoplasmic strands that pass through the wall and middle lamella, connecting neighbouring cells"],
@@ -707,7 +707,7 @@ const cellUnit: Topic = {
           type: "mistake",
           wrong: "Acrocentric and telocentric chromosomes are the same thing.",
           right: "Acrocentric: centromere close to one end, with a tiny second arm. Telocentric: centromere at the very tip.",
-          why: "Both look like a 'V' or a rod in anaphase. The words help: *acro* = near the top, *telo* = at the end.",
+          why: "Both have the centromere at or near one end, so both look rod- or J-shaped in anaphase. The words help: *acro* = near the top, *telo* = at the end.",
         },
         {
           type: "activity",
@@ -1120,7 +1120,7 @@ const biomolecules: Topic = {
           type: "callout",
           tone: "note",
           title: "Who needs the bonds section",
-          md: "The rationalised NCERT book dropped the separate section on bonds linking monomers and on metabolism. ISC still teaches peptide, glycosidic and phosphodiester bonds, and NEET and KCET questions on them remain common, so learn the table. The B-DNA details (about 10 base pairs per turn, rise 0.34 nm per base pair, pitch 3.4 nm; A=T two hydrogen bonds, G≡C three) are taught again in Class 12, Molecular Basis of Inheritance.",
+          md: "The rationalised NCERT book dropped the separate section on bonds linking monomers and on metabolism. ISC still teaches peptide, glycosidic and phosphodiester bonds, and NEET and KCET questions can still touch on them, so learn the table. The B-DNA details (about 10 base pairs per turn, rise 0.34 nm per base pair, pitch 3.4 nm; A=T two hydrogen bonds, G≡C three) are taught again in Class 12, Molecular Basis of Inheritance.",
         },
         {
           type: "example",
@@ -1264,7 +1264,7 @@ const biomolecules: Topic = {
         },
         {
           type: "text",
-          md: "**How enzymes speed up reactions.** The substrate S must bind the enzyme E at the active site to form a short-lived **enzyme–substrate complex (ES)**. During binding, a new structure of the substrate, the **transition state**, forms. Energy must be supplied to reach this high-energy state; this barrier is the **activation energy**. An enzyme **lowers the activation energy**, so more molecules cross the barrier in a given time. It does not change the energy difference between S and P, and the reaction can go even when P is at lower energy than S (exothermic).",
+          md: "**How enzymes speed up reactions.** The substrate S must bind the enzyme E at the active site to form a short-lived **enzyme–substrate complex (ES)**. During binding, a new structure of the substrate, the **transition state**, forms. Energy must be supplied to reach this high-energy state; this barrier is the **activation energy**. An enzyme **lowers the activation energy**, so more molecules cross the barrier in a given time. It does not change the energy difference between S and P. Even when P is at a lower energy than S (an exothermic reaction), the substrate must still pass through this high-energy transition state.",
         },
         {
           type: "formula",
@@ -1450,7 +1450,7 @@ const biomolecules: Topic = {
       blocks: [
         {
           type: "text",
-          md: "**NEET** asks 2–3 questions from Biomolecules nearly every year, mostly from the NCERT tables (secondary metabolites, protein functions, cell composition) and the enzymes section. **KCET** asks the same facts plus enzyme classes and co-factors as one-liners. Questions on the bonds and on B-DNA still appear, so learn them even though the rationalised book cut that section.",
+          md: "**NEET** asks 2–3 questions from Biomolecules nearly every year, mostly from the NCERT tables (secondary metabolites, protein functions, cell composition) and the enzymes section. **KCET** asks the same facts plus enzyme classes and co-factors as one-liners. Questions touching the bonds and B-DNA can still appear (B-DNA returns in Class 12), so learn them even though the rationalised book cut that section here.",
         },
         {
           type: "list",
@@ -2240,7 +2240,7 @@ const cellCycle: Topic = {
             "Cytokinesis always follows karyokinesis",
           ],
           answer: 1,
-          explain: "In animals mitosis is seen only in diploid somatic cells, while plants divide by mitosis in both haploid and diploid cells. Interkinesis has no S phase, and coconut endosperm shows karyokinesis without cytokinesis.",
+          explain: "NCERT: in animals mitosis is seen only in diploid somatic cells (haploid male honeybees are a special exception), while plants divide by mitosis in both haploid and diploid cells. Interkinesis has no S phase, and coconut endosperm shows karyokinesis without cytokinesis.",
           difficulty: 2,
         },
         {

@@ -196,6 +196,7 @@ const MATHS_11: Row[] = [
   ["Straight Lines", "mat.coord"],
   ["Circles", "mat.coord"],
   ["Conic Sections", "mat.conics"],
+  ["Introduction to Three Dimensional Geometry", "mat.vectors"],
   ["Limits and Derivatives", "mat.limits"],
   ["Statistics", "mat.statistics"],
   ["Probability", "mat.probability"],

@@ -29,8 +29,6 @@ const chapter = (no: string, title: string, list: Raw[]): ExamQuestion[] =>
 
 /** Board / KCET / COMEDK level and most JEE Main / NEET MCQs. */
 const ALL: ExamId[] = ["NEET", "JEE", "KCET", "COMEDK"];
-/** JEE Main / NEET level MCQs. */
-const MAIN: ExamId[] = ["NEET", "JEE", "COMEDK"];
 /** JEE Main numerical-value questions. */
 const NUM: ExamId[] = ["JEE"];
 /** JEE Main + Advanced. */
@@ -176,7 +174,7 @@ const basics: Raw[] = [
     q: "20 mL of a mixture of CH₄ and CO is exploded with excess oxygen. On cooling to room temperature, the total volume of gases decreases by 31 mL. The volume of CH₄ in the mixture is (all volumes at the same T and P):",
     options: ["14 mL", "6 mL", "10 mL", "12 mL"],
     answer: 0,
-    explain: t`CH$_4$ + 2O$_2$ → CO$_2$ + 2H$_2$O(l): 3 mL of gas → 1 mL, contraction 2 mL per mL of CH$_4$. CO + ½O$_2$ → CO$_2$: 1.5 mL → 1 mL, contraction 0.5 mL per mL of CO. With $x$ mL CH$_4$: $2x + 0.5(20 - x) = 31 \Rightarrow 1.5x = 21 \Rightarrow x = 14$ mL. 6 mL is the volume of CO; 10 mL comes from treating water as a gas.`,
+    explain: t`CH$_4$ + 2O$_2$ → CO$_2$ + 2H$_2$O(l): 3 mL of gas → 1 mL, contraction 2 mL per mL of CH$_4$. CO + ½O$_2$ → CO$_2$: 1.5 mL → 1 mL, contraction 0.5 mL per mL of CO. With $x$ mL CH$_4$: $2x + 0.5(20 - x) = 31 \Rightarrow 1.5x = 21 \Rightarrow x = 14$ mL. 6 mL is the volume of CO, not CH$_4$.`,
   },
   /* ---- atomic mass, mole concept ---- */
   {
@@ -263,7 +261,7 @@ const basics: Raw[] = [
   {
     kind: "mcq",
     difficulty: 2,
-    exams: MAIN,
+    exams: ALL,
     idealTime: 70,
     q: "Match the quantity in Column I with the total number of moles of ATOMS it contains in Column II.\n\nColumn I: (P) 9 g of H₂O (Q) 11 g of CO₂ (R) 1.6 g of CH₄ (S) 8.5 g of NH₃\n\nColumn II: (1) 0.5 (2) 0.75 (3) 1.5 (4) 2.0",
     options: ["P-2, Q-3, R-1, S-4", "P-3, Q-1, R-2, S-4", "P-3, Q-2, R-1, S-4", "P-4, Q-2, R-1, S-3"],
@@ -377,7 +375,7 @@ const basics: Raw[] = [
   {
     kind: "mcq",
     difficulty: 2,
-    exams: MAIN,
+    exams: ALL,
     idealTime: 60,
     q: "1.0 mol of NH₃ and 1.0 mol of O₂ are mixed and react completely: 4NH₃ + 5O₂ → 4NO + 6H₂O. Which statement is correct?",
     options: ["All the oxygen is consumed", "1.0 mol of NO is formed", "All the ammonia is consumed", "1.5 mol of H₂O is formed"],
@@ -463,7 +461,7 @@ const basics: Raw[] = [
   {
     kind: "mcq",
     difficulty: 2,
-    exams: MAIN,
+    exams: ALL,
     idealTime: 50,
     q: "Statement I: 1 mol of H₂SO₄ contains 64 g of oxygen.\n\nStatement II: The mass percentage of oxygen in H₂SO₄ is 65.3%.",
     options: STATEMENTS,
@@ -473,7 +471,7 @@ const basics: Raw[] = [
   {
     kind: "mcq",
     difficulty: 2,
-    exams: MAIN,
+    exams: ALL,
     idealTime: 50,
     q: "For the reaction A + 2B → C, 2 mol of A is mixed with 3 mol of B.\n\nStatement I: B is the limiting reagent.\n\nStatement II: The limiting reagent is always the reactant present in the smaller number of moles.",
     options: STATEMENTS,
@@ -1167,7 +1165,7 @@ const periodic: Raw[] = [
   {
     kind: "mcq",
     difficulty: 2,
-    exams: MAIN,
+    exams: ALL,
     idealTime: 50,
     q: "Match the element predicted by Mendeleev (Column I) with the element discovered later (Column II).\n\nColumn I: (P) eka-aluminium (Q) eka-silicon (R) eka-boron\n\nColumn II: (1) Scandium (2) Gallium (3) Germanium",
     options: ["P-2, Q-3, R-1", "P-3, Q-2, R-1", "P-1, Q-3, R-2", "P-2, Q-1, R-3"],
@@ -1402,7 +1400,7 @@ const periodic: Raw[] = [
   {
     kind: "mcq",
     difficulty: 2,
-    exams: MAIN,
+    exams: ALL,
     idealTime: 50,
     q: "Which of the following comparisons of first ionisation enthalpy is INCORRECT?",
     options: ["Ga > Al", "O < N", "Mg > Al", "B > Be"],
@@ -1583,7 +1581,7 @@ const periodic: Raw[] = [
   {
     kind: "mcq",
     difficulty: 2,
-    exams: MAIN,
+    exams: ALL,
     idealTime: 60,
     q: "Match each property (Column I) with the element in Column II that shows it to the greatest extent in the whole periodic table.\n\nColumn I: (P) most negative electron gain enthalpy (Q) highest first ionisation enthalpy (R) highest electronegativity (S) lowest first ionisation enthalpy\n\nColumn II: (1) F (2) Cl (3) He (4) Cs",
     options: ["P-2, Q-3, R-1, S-4", "P-1, Q-3, R-2, S-4", "P-2, Q-1, R-3, S-4", "P-1, Q-2, R-1, S-3"],
