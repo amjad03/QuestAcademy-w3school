@@ -687,7 +687,7 @@ The carboxyl carbon is less electrophilic than a carbonyl carbon in an aldehyde 
             type: "table",
             headers: ["Test", "Positive for", "Common trap"],
             rows: [
-              ["Tollens' (silver mirror)", "All aldehydes, HCOOH, α-hydroxy ketones (glucose, fructose)", "Formic acid gives it because it contains an H–C=O unit"],
+              ["Tollens' (silver mirror)", "All aldehydes (including glucose), HCOOH, α-hydroxy ketones (e.g. fructose)", "Formic acid gives it because it contains an H–C=O unit"],
               ["Fehling's (red Cu₂O)", "Aliphatic aldehydes, α-hydroxy ketones", "Benzaldehyde does not respond"],
               ["Iodoform (NaOH + I₂)", "CH₃CO– and CH₃CH(OH)– compounds, including ethanol and ethanal", "Methanol, propanal, pentan-3-one and CH₃COOH do not"],
               ["2,4-DNP", "All aldehydes and ketones", "Carboxylic acids and esters do not"],
@@ -1486,7 +1486,7 @@ Aliphatic diazonium salts are very unstable and decompose at once (that is why 1
             type: "callout",
             tone: "tip",
             title: "Shortcuts and when they are safe",
-            md: "1. **Carbon count**: Hoffmann −1 C, nitrile route +1 C, everything else 0. Safe for every \"how many carbons\" question.\n\n2. **Basicity in water**: memorise the two NCERT series rather than \"working it out\"; reasoning from +I alone gives the gas-phase order, which is a common wrong option.\n\n3. **Substituted anilines**: an EDG at para raises basicity, an EWG lowers it. Any ortho substituent (even CH₃) lowers basicity below aniline (ortho effect: steric hindrance to protonation and solvation).\n\n4. **Benzylamine is aliphatic**: it is a stronger base than aniline and gives an alcohol, not a stable diazonium salt, with HNO₂.",
+            md: "1. **Carbon count**: Hoffmann −1 C, nitrile route +1 C, everything else 0. Safe for every \"how many carbons\" question.\n\n2. **Basicity in water**: memorise the two NCERT series rather than \"working it out\"; reasoning from +I alone gives the gas-phase order, which is a common wrong option.\n\n3. **Substituted anilines**: an EDG at para raises basicity, an EWG lowers it. An ortho substituent (even CH₃) generally lowers basicity below aniline (ortho effect: steric hindrance to protonation and solvation).\n\n4. **Benzylamine is aliphatic**: it is a stronger base than aniline and gives an alcohol, not a stable diazonium salt, with HNO₂.",
           },
           {
             type: "table",
@@ -1584,7 +1584,7 @@ Aliphatic diazonium salts are very unstable and decompose at once (that is why 1
             type: "keypoints",
             items: [
               "Water: 2° is the strongest aliphatic base in both series; gas phase: 3° > 2° > 1°.",
-              "Ortho-substituted anilines are weaker than aniline (ortho effect); para EDG stronger, para EWG weaker.",
+              "Ortho-substituted anilines are generally weaker than aniline (ortho effect); para EDG stronger, para EWG weaker.",
               "Benzylamine behaves as an aliphatic amine: strong base, alcohol with HNO₂.",
               "Carbylamine → 1°; Hinsberg distinguishes 1°, 2°, 3°; coupling needs a 1° arylamine first diazotised.",
               "Use –NH₂ as a temporary director (brominate, diazotise, H₃PO₂) to reach meta patterns.",
@@ -1592,7 +1592,7 @@ Aliphatic diazonium salts are very unstable and decompose at once (that is why 1
           },
         ],
         flashcards: [
-          { front: "Ortho effect in anilines", back: "Any ortho substituent makes the aniline a weaker base than aniline itself (steric hindrance to protonation/solvation)." },
+          { front: "Ortho effect in anilines", back: "An ortho substituent (even CH₃) generally makes the aniline a weaker base than aniline itself (steric hindrance to protonation/solvation)." },
           { front: "C₄H₁₁N amine isomers", back: "8 in all: 4 primary, 3 secondary, 1 tertiary." },
           { front: "C₇H₉N aromatic amines", back: "Benzylamine, o-, m-, p-toluidine (1°) and N-methylaniline (2°)." },
           { front: "Benzylamine + HNO₂", back: "Benzyl alcohol + N₂: it is an aliphatic 1° amine, no stable diazonium salt." },

@@ -3549,10 +3549,789 @@ const transport: Topic = {
   ],
 };
 
-export const topics: Topic[] = [transport, photosynthesis, respiration, plantGrowth];
+/* ------------------------------------------------------------------ */
+/* Mineral Nutrition (ISC; removed from rationalised NCERT)            */
+/* ------------------------------------------------------------------ */
+const mineralNutrition: Topic = {
+  slug: "c11-bio-mineral-nutrition",
+  title: "Mineral Nutrition",
+  icon: "🧂",
+  description:
+    "For ISC (and older NEET and KCET papers): hydroponics, criteria of essentiality, macro- and micronutrients and their roles, deficiency symptoms and toxicity, mineral absorption, the nitrogen cycle, biological nitrogen fixation, root nodules and the fate of ammonia.",
+  lessons: [
+    /* ---------------- Lesson 1: essential elements ---------------- */
+    {
+      slug: "c11-bio-mn-essential-elements",
+      title: "Hydroponics and Essential Elements",
+      summary:
+        "How hydroponics identified the essential elements, the three criteria of essentiality, macronutrients, micronutrients and beneficial elements, and the four functional groups of essential elements.",
+      minutes: 18,
+      xp: 45,
+      blocks: [
+        {
+          type: "callout",
+          tone: "note",
+          title: "Board note",
+          md: "This chapter was **removed from the rationalised NCERT book**, so CBSE and Karnataka I PUC do not examine it. **ISC Class 11** includes it under Plant Physiology. Older NEET and KCET papers asked it often, and its facts (Mg in chlorophyll, Mn and Cl in water splitting, Mo in nitrogenase) appear in other chapters.",
+        },
+        {
+          type: "text",
+          md: "Lettuce grown in rooftop farms in Bengaluru and Delhi often never touches soil. Its roots hang in a tank of nutrient solution. Growing plants in a nutrient solution without soil is **hydroponics**. **Julius von Sachs** showed in **1860** that plants could be grown to maturity this way.\n\nHydroponics was the key method for finding which elements plants need. Plants are grown in purified water with known mineral salts; one element is left out or replaced, and the plant is watched for abnormal growth. Today hydroponics is used commercially for **tomato, seedless cucumber and lettuce**. The solution must be **aerated** for best growth.",
+        },
+        {
+          type: "text",
+          md: "More than 60 of the 105 or so known elements have been found in plants, some only because they are present near the roots. Only some are **essential**. An element is essential if it meets all three criteria:",
+        },
+        {
+          type: "list",
+          ordered: true,
+          items: [
+            "It is **absolutely necessary** for normal growth and reproduction; without it the plant cannot complete its life cycle or set seed.",
+            "Its requirement is **specific**: no other element can replace it, and its deficiency is corrected only by supplying that element.",
+            "It is **directly involved in metabolism** of the plant.",
+          ],
+        },
+        {
+          type: "table",
+          headers: ["Group", "Amount in plant tissue", "Elements"],
+          rows: [
+            ["Macronutrients (9)", "More than 10 mmol per kg of dry matter", "C, H, O, N, P, K, S, Ca, Mg"],
+            ["Micronutrients (8)", "Less than 10 mmol per kg of dry matter", "Fe, Mn, Cu, Mo, Zn, B, Cl, Ni"],
+            ["Beneficial elements", "Needed by some higher plants", "Na, Si, Co, Se"],
+          ],
+        },
+        {
+          type: "text",
+          md: "C, H and O come mainly from CO₂ and water; the others are absorbed from the soil as mineral ions. So 17 elements are essential in all.",
+        },
+        {
+          type: "table",
+          headers: ["Functional group", "Examples"],
+          rows: [
+            ["Components of biomolecules, hence structural elements of cells", "C, H, O, N"],
+            ["Components of energy-related compounds", "Mg in chlorophyll; P in ATP"],
+            ["Activate or inhibit enzymes", "Mg²⁺ activates RuBisCO and PEP carboxylase; Zn²⁺ activates alcohol dehydrogenase; Mo is needed for nitrogenase"],
+            ["Alter the osmotic potential of a cell", "K⁺ in the opening and closing of stomata"],
+          ],
+        },
+        {
+          type: "example",
+          title: "Is it essential?",
+          problem: "Pea plants grown hydroponically without element X grow poorly and form no seeds. Adding X restores normal growth; adding a chemically similar element Y does not. X is part of an enzyme. Is X essential?",
+          steps: [
+            "Without X the plant cannot complete its life cycle (no seeds): criterion 1 met.",
+            "Only X, not Y, corrects the deficiency: criterion 2 (specific, irreplaceable) met.",
+            "X is part of an enzyme, so it acts directly in metabolism: criterion 3 met.",
+          ],
+          answer: "Yes. X meets all three criteria of essentiality.",
+        },
+        {
+          type: "checkpoint",
+          questions: [
+            {
+              kind: "mcq",
+              q: "Which of these is a micronutrient?",
+              options: ["Magnesium", "Sulphur", "Boron", "Calcium"],
+              answer: 2,
+              explain: "Boron is a micronutrient; Mg, S and Ca are macronutrients.",
+            },
+          ],
+        },
+        {
+          type: "mistake",
+          wrong: "Micronutrients are less essential than macronutrients because plants need so little of them.",
+          right: "Micronutrients are just as essential; 'micro' refers only to the amount needed.",
+          why: "Lack of a micronutrient such as Mo or Zn can stop growth or cause large crop losses even though the amount needed is tiny.",
+        },
+        {
+          type: "activity",
+          activity: {
+            kind: "sort",
+            prompt: "Macronutrient or micronutrient?",
+            groups: ["Macronutrient", "Micronutrient"],
+            items: [
+              { text: "Potassium", group: 0, hint: "K⁺ is needed in large amounts for stomata and turgor." },
+              { text: "Magnesium", group: 0, hint: "It sits in every chlorophyll molecule." },
+              { text: "Sulphur", group: 0, hint: "Part of cysteine and methionine." },
+              { text: "Molybdenum", group: 1, hint: "Needed only in traces, for nitrogenase." },
+              { text: "Chlorine", group: 1, hint: "A trace element used in water splitting." },
+              { text: "Nickel", group: 1, hint: "The eighth micronutrient." },
+              { text: "Iron", group: 1, hint: "Needed more than other micronutrients, but still a micronutrient." },
+            ],
+            explain: "Macronutrients: C, H, O, N, P, K, S, Ca, Mg. Micronutrients: Fe, Mn, Cu, Mo, Zn, B, Cl, Ni.",
+          },
+        },
+        {
+          type: "callout",
+          tone: "exam",
+          title: "Board tip",
+          md: "A handy memory aid for micronutrients: the eight are Fe, Mn, Cu, Mo, Zn, B, Cl, Ni. Write the three criteria of essentiality in full sentences; 'necessary, specific, direct' alone may not earn full marks.",
+        },
+        {
+          type: "keypoints",
+          items: [
+            "Hydroponics (von Sachs, 1860) identified essential elements; used for tomato, seedless cucumber, lettuce; needs aeration.",
+            "Essential = absolutely necessary, specific (irreplaceable), directly involved in metabolism.",
+            "9 macronutrients (> 10 mmol kg⁻¹ dry matter) and 8 micronutrients; beneficial: Na, Si, Co, Se.",
+            "Functions: structural, energy compounds, enzyme activation, osmotic potential.",
+          ],
+        },
+      ],
+      flashcards: [
+        { front: "Who first grew plants by hydroponics, and when?", back: "Julius von Sachs, in 1860." },
+        { front: "Three crops grown commercially by hydroponics", back: "Tomato, seedless cucumber, lettuce." },
+        { front: "Criteria of essentiality", back: "Absolutely necessary for growth and reproduction; requirement specific and irreplaceable; directly involved in metabolism." },
+        { front: "The nine macronutrients", back: "C, H, O, N, P, K, S, Ca, Mg." },
+        { front: "The eight micronutrients", back: "Fe, Mn, Cu, Mo, Zn, B, Cl, Ni." },
+        { front: "Four beneficial elements", back: "Sodium, silicon, cobalt, selenium." },
+        { front: "Enzymes activated by Mg²⁺", back: "RuBisCO and PEP carboxylase." },
+      ],
+      quiz: [
+        {
+          kind: "mcq",
+          q: "Macronutrients are generally present in plant tissues at:",
+          options: ["Less than 10 mmol kg⁻¹ dry matter", "More than 10 mmol kg⁻¹ dry matter", "Exactly 1% of fresh weight", "Trace amounts only"],
+          answer: 1,
+          explain: "The cut-off is 10 mmol per kg of dry matter.",
+        },
+        {
+          kind: "truefalse",
+          q: "Sodium is an essential macronutrient for all plants.",
+          answer: false,
+          explain: "Sodium is a beneficial element, needed only by some plants.",
+        },
+        {
+          kind: "mcq",
+          q: "Which element alters osmotic potential and helps open and close stomata?",
+          options: ["Zinc", "Potassium", "Molybdenum", "Iron"],
+          answer: 1,
+          explain: "K⁺ movement into and out of guard cells changes their turgor.",
+        },
+        {
+          kind: "numeric",
+          q: "How many elements are considered essential for plants?",
+          answer: 17,
+          explain: "9 macronutrients + 8 micronutrients = 17.",
+        },
+        {
+          kind: "multi",
+          q: "Which are beneficial elements?",
+          options: ["Silicon", "Selenium", "Cobalt", "Copper"],
+          answers: [0, 1, 2],
+          explain: "Copper is an essential micronutrient.",
+          difficulty: 2,
+        },
+        {
+          kind: "mcq",
+          q: "Zn²⁺ is listed as an activator of:",
+          options: ["Nitrogenase", "Alcohol dehydrogenase", "RuBisCO", "Catalase"],
+          answer: 1,
+          explain: "Zn²⁺ activates alcohol dehydrogenase; Mo is needed for nitrogenase, Mg²⁺ for RuBisCO, Fe for catalase.",
+          difficulty: 2,
+        },
+        {
+          kind: "fill",
+          q: "Growing plants in a nutrient solution without soil is called ___.",
+          answer: ["hydroponics"],
+          explain: "From the Greek for 'water work'.",
+        },
+      ],
+    },
+    /* ---------------- Lesson 2: roles, deficiency, toxicity ---------------- */
+    {
+      slug: "c11-bio-mn-roles-deficiency",
+      title: "Roles of Elements, Deficiency Symptoms and Toxicity",
+      summary:
+        "The forms in which each element is absorbed and its main roles, critical concentration, why mobile and immobile elements show symptoms in old or young leaves, the common deficiency symptoms, and manganese toxicity.",
+      minutes: 22,
+      xp: 55,
+      blocks: [
+        {
+          type: "text",
+          md: "Farmers in Punjab who see yellowing on the older leaves of their wheat often suspect nitrogen shortage; growers of citrus in Maharashtra watch for zinc deficiency in young leaves. Reading such symptoms needs knowing what each element does and how mobile it is.",
+        },
+        {
+          type: "table",
+          headers: ["Macronutrient", "Absorbed as", "Main roles"],
+          rows: [
+            ["Nitrogen", "Mainly NO₃⁻; some NO₂⁻ or NH₄⁺", "Needed most by meristems and active cells; part of proteins, nucleic acids, vitamins and hormones"],
+            ["Phosphorus", "H₂PO₄⁻ or HPO₄²⁻", "Part of membranes, some proteins, nucleic acids and nucleotides; needed for all phosphorylation reactions"],
+            ["Potassium", "K⁺", "Abundant in meristems, buds, leaves, root tips; anion–cation balance, protein synthesis, stomatal opening and closing, enzyme activation, turgidity"],
+            ["Calcium", "Ca²⁺", "Cell wall synthesis, especially **calcium pectate in the middle lamella**; mitotic spindle; accumulates in older leaves; membrane function; activates some enzymes"],
+            ["Magnesium", "Mg²⁺", "Activates enzymes of respiration and photosynthesis and DNA and RNA synthesis; part of the **ring of chlorophyll**; maintains ribosome structure"],
+            ["Sulphur", "SO₄²⁻", "In cysteine and methionine; in coenzymes and vitamins (thiamine, biotin, coenzyme A) and ferredoxin"],
+          ],
+        },
+        {
+          type: "table",
+          headers: ["Micronutrient", "Absorbed as", "Main roles"],
+          rows: [
+            ["Iron", "Fe³⁺", "Needed in larger amounts than other micronutrients; in ferredoxin and cytochromes (Fe²⁺ ⇌ Fe³⁺ in electron transfer); activates catalase; needed for chlorophyll formation"],
+            ["Manganese", "Mn²⁺", "Activates enzymes of photosynthesis, respiration and nitrogen metabolism; best known for **splitting of water** to release O₂"],
+            ["Zinc", "Zn²⁺", "Activates enzymes, especially carboxylases; needed for **auxin synthesis**"],
+            ["Copper", "Cu²⁺", "Overall metabolism; in redox enzymes (Cu⁺ ⇌ Cu²⁺)"],
+            ["Boron", "BO₃³⁻ or B₄O₇²⁻", "Uptake and use of Ca²⁺, membrane function, **pollen germination**, cell elongation and differentiation, carbohydrate translocation"],
+            ["Molybdenum", "Molybdate ions (MoO₂²⁺)", "Part of **nitrogenase** and **nitrate reductase**"],
+            ["Chlorine", "Cl⁻", "With Na⁺ and K⁺ sets solute concentration and anion–cation balance; needed for **water splitting** in photosynthesis"],
+          ],
+        },
+        {
+          type: "heading",
+          text: "Deficiency symptoms",
+        },
+        {
+          type: "text",
+          md: "The concentration of an essential element below which growth is retarded is its **critical concentration**; below it, the element is said to be deficient. The visible changes are **deficiency symptoms**, and they vary from element to element.\n\nWhere symptoms appear first depends on **mobility**. Elements that are actively mobilised and moved to young tissues, such as **N, K and Mg**, show symptoms first in **older** leaves. Elements that are structural and not easily released, such as **S and Ca**, show symptoms first in **young** tissues.",
+        },
+        {
+          type: "table",
+          headers: ["Symptom", "Caused by deficiency of"],
+          rows: [
+            ["**Chlorosis** (loss of chlorophyll, yellowing)", "N, K, Mg, S, Fe, Mn, Zn, Mo"],
+            ["**Necrosis** (death of tissue, especially leaf tissue)", "Ca, Mg, Cu, K"],
+            ["Inhibition of cell division", "Lack or low level of N, K, S, Mo"],
+            ["Delayed flowering", "Low levels of N, S, Mo"],
+          ],
+        },
+        {
+          type: "text",
+          md: "The same deficiency can look different in different plants, and several deficiencies may occur together, so diagnosis needs care. Many crop losses come from micronutrient deficiency, which is why fertilisers carry both macro- and micronutrients.\n\n**Toxicity.** The range of a micronutrient between deficiency and toxicity is narrow. An ion concentration in tissue that reduces dry weight by about **10%** is considered toxic. **Manganese toxicity** shows as **brown spots surrounded by chlorotic veins**. Mn competes with Fe and Mg for uptake and with Mg for binding to enzymes, and it inhibits Ca translocation to the shoot apex. So excess Mn can cause deficiencies of **Fe, Mg and Ca**; what look like Mn toxicity symptoms may really be their deficiency symptoms.",
+        },
+        {
+          type: "example",
+          title: "Diagnosing from where symptoms appear",
+          problem: "Plant P shows yellowing in its oldest leaves while young leaves stay green. Plant Q shows deformed, dying young leaves and shoot tips while older leaves look normal. Which elements are likely deficient in each?",
+          steps: [
+            "Old leaves first means the element is mobile: the plant moved it from old to young leaves. Candidates: N, K, Mg.",
+            "Yellowing (chlorosis) fits all three; N is the commonest in field crops.",
+            "Young tissues first means the element is immobile and structural. Candidates: Ca or S.",
+            "Death of young tissue (necrosis) at tips points to Ca, which is needed for the middle lamella and the mitotic spindle.",
+          ],
+          answer: "P: a mobile element such as N, K or Mg. Q: an immobile element, most likely Ca (or S).",
+        },
+        {
+          type: "checkpoint",
+          questions: [
+            {
+              kind: "mcq",
+              q: "Which element's deficiency first shows in young leaves?",
+              options: ["Nitrogen", "Potassium", "Magnesium", "Calcium"],
+              answer: 3,
+              explain: "Calcium is immobile; N, K and Mg are mobile and show symptoms in older leaves.",
+            },
+          ],
+        },
+        {
+          type: "mistake",
+          wrong: "Deficiency symptoms always appear first on the youngest leaves, since they are growing fastest.",
+          right: "It depends on mobility: mobile elements (N, K, Mg) show first in older leaves; immobile ones (S, Ca) in younger tissues.",
+          why: "Young leaves do need the most, but when an element is mobile the plant strips it from old leaves to feed them, so the old leaves suffer first.",
+        },
+        {
+          type: "activity",
+          activity: {
+            kind: "match",
+            prompt: "Match the element to its best-known role.",
+            pairs: [
+              ["Magnesium", "Central atom of chlorophyll"],
+              ["Calcium", "Calcium pectate of the middle lamella"],
+              ["Manganese", "Splitting of water in photosynthesis"],
+              ["Zinc", "Needed for auxin synthesis"],
+              ["Boron", "Pollen germination"],
+              ["Molybdenum", "Part of nitrogenase and nitrate reductase"],
+            ],
+            explain: "Each element has one 'signature' role that exams ask about. Learn these first, then the others.",
+          },
+        },
+        {
+          type: "keypoints",
+          items: [
+            "N as NO₃⁻; P as H₂PO₄⁻/HPO₄²⁻; S as SO₄²⁻; Fe as Fe³⁺; B as BO₃³⁻ or B₄O₇²⁻.",
+            "Signature roles: Mg chlorophyll, Ca middle lamella, Mn and Cl water splitting, Zn auxin, B pollen germination, Mo nitrogenase.",
+            "Mobile N, K, Mg: symptoms in old leaves first; immobile S, Ca: young tissues first.",
+            "Toxic level reduces dry weight by about 10%; excess Mn induces Fe, Mg and Ca deficiency.",
+          ],
+        },
+      ],
+      flashcards: [
+        { front: "Main form in which nitrogen is absorbed", back: "Nitrate, NO₃⁻ (some NO₂⁻ or NH₄⁺)." },
+        { front: "Element in the middle lamella", back: "Calcium, as calcium pectate." },
+        { front: "Two elements needed for water splitting in photosynthesis", back: "Manganese and chlorine." },
+        { front: "Which micronutrient is needed in the largest amount?", back: "Iron." },
+        { front: "Define critical concentration.", back: "The concentration of an essential element below which plant growth is retarded." },
+        { front: "Symptoms of manganese toxicity", back: "Brown spots surrounded by chlorotic veins." },
+        { front: "Elements whose deficiency causes necrosis", back: "Ca, Mg, Cu, K." },
+        { front: "Elements whose low level delays flowering", back: "N, S, Mo." },
+      ],
+      quiz: [
+        {
+          kind: "mcq",
+          q: "Which element is needed for the synthesis of auxin?",
+          options: ["Boron", "Zinc", "Copper", "Molybdenum"],
+          answer: 1,
+          explain: "Zinc is needed for auxin synthesis and activates carboxylases.",
+        },
+        {
+          kind: "mcq",
+          q: "Excess manganese in tissue can induce deficiency of:",
+          options: ["N, P and K", "Fe, Mg and Ca", "Zn, Cu and B", "S, Cl and Mo"],
+          answer: 1,
+          explain: "Mn competes with Fe and Mg for uptake and Mg for enzyme binding, and inhibits Ca translocation to the shoot apex.",
+          difficulty: 2,
+        },
+        {
+          kind: "truefalse",
+          q: "Sulphur is a component of thiamine, biotin and coenzyme A.",
+          answer: true,
+          explain: "Sulphur is in these vitamins and coenzymes and in ferredoxin.",
+        },
+        {
+          kind: "multi",
+          q: "Deficiency of which elements causes chlorosis?",
+          options: ["N", "Mg", "Fe", "Ca"],
+          answers: [0, 1, 2],
+          explain: "Chlorosis: N, K, Mg, S, Fe, Mn, Zn, Mo. Calcium deficiency causes necrosis.",
+          difficulty: 2,
+        },
+        {
+          kind: "mcq",
+          q: "Boron is absorbed as:",
+          options: ["B³⁺", "BO₃³⁻ or B₄O₇²⁻", "BH₄⁻", "B₂O₃"],
+          answer: 1,
+          explain: "Boron is taken up as borate ions.",
+        },
+        {
+          kind: "fill",
+          q: "Death of tissue, especially leaf tissue, is called ___.",
+          answer: ["necrosis"],
+          explain: "Chlorosis is yellowing; necrosis is tissue death.",
+        },
+        {
+          kind: "mcq",
+          q: "Older leaves of a crop turn yellow first. The likely deficient element is:",
+          options: ["Calcium", "Sulphur", "Nitrogen", "Boron"],
+          answer: 2,
+          explain: "Nitrogen is mobile, so it is withdrawn from old leaves to young ones.",
+        },
+      ],
+    },
+    /* ---------------- Lesson 3: absorption and nitrogen metabolism ---------------- */
+    {
+      slug: "c11-bio-mn-nitrogen-metabolism",
+      title: "Mineral Absorption and Nitrogen Metabolism",
+      summary:
+        "The passive and active phases of ion absorption, the nitrogen cycle with nitrification and denitrification, free-living and symbiotic nitrogen fixers, root nodule formation, nitrogenase and leghaemoglobin, and how ammonia becomes amino acids and amides.",
+      minutes: 25,
+      xp: 60,
+      blocks: [
+        {
+          type: "text",
+          md: "**Absorption of ions** happens in two phases. First, a **rapid, passive** uptake into the 'free space' or 'outer space' of cells, the **apoplast**. Then a **slow** uptake into the 'inner space', the **symplast**, which needs metabolic energy (active). Movement of ions is called **flux**: inward movement is **influx** and outward movement is **efflux**. Ions then travel in the xylem with the transpiration stream. Soil is the main reservoir of minerals, topped up with fertilisers.",
+        },
+        {
+          type: "heading",
+          text: "The nitrogen cycle",
+        },
+        {
+          type: "text",
+          md: "Plants need nitrogen in large amounts for proteins, nucleic acids and chlorophyll. Air is about 78% N₂, but the two atoms are joined by a very strong **triple bond (N≡N)**, so most organisms cannot use it. Converting N₂ to ammonia is **nitrogen fixation**.\n\n- **Natural and industrial fixation**: lightning and UV radiation convert N₂ to nitrogen oxides (NO, NO₂, N₂O); industrial combustion, forest fires, vehicle exhausts and power stations also release them.\n- **Ammonification**: decomposition of organic nitrogen of dead plants and animals into ammonia.\n- **Nitrification**: ammonia is oxidised to nitrite by *Nitrosomonas* and/or *Nitrococcus*, and nitrite to nitrate by *Nitrobacter*. These bacteria are **chemoautotrophs**. Plants absorb the nitrate and reduce it to ammonia in leaves.\n- **Denitrification**: nitrate in soil is reduced to N₂ by *Pseudomonas* and *Thiobacillus*.",
+        },
+        {
+          type: "formula",
+          tex: t`2\,\text{NH}_3 + 3\,\text{O}_2 \longrightarrow 2\,\text{NO}_2^- + 2\,\text{H}^+ + 2\,\text{H}_2\text{O} \qquad 2\,\text{NO}_2^- + \text{O}_2 \longrightarrow 2\,\text{NO}_3^-`,
+          caption: "The two steps of nitrification: by Nitrosomonas/Nitrococcus (left) and Nitrobacter (right).",
+        },
+        {
+          type: "table",
+          headers: ["Biological nitrogen fixers", "Examples"],
+          rows: [
+            ["Free-living, aerobic", "*Azotobacter*, *Beijerinckia*"],
+            ["Free-living, anaerobic", "*Rhodospirillum*"],
+            ["Free-living cyanobacteria", "*Anabaena*, *Nostoc*"],
+            ["Symbiotic with legume roots", "*Rhizobium* (rod-shaped) in alfalfa, sweet clover, sweet pea, lentil, garden pea, broad bean, clover"],
+            ["Symbiotic with non-legume roots", "*Frankia* in *Alnus*"],
+          ],
+        },
+        {
+          type: "text",
+          md: "The enzyme that reduces N₂, **nitrogenase**, occurs **only in prokaryotes**. Both *Rhizobium* and *Frankia* are free-living in soil but fix nitrogen only as symbionts in root nodules.",
+        },
+        {
+          type: "list",
+          ordered: true,
+          items: [
+            "Rhizobia multiply around the root and attach to epidermal and root hair cells.",
+            "The root hairs curl and the bacteria invade them.",
+            "An **infection thread** carries the bacteria into the root cortex, where nodule formation begins.",
+            "Bacteria are released from the thread into cells, which differentiate into specialised nitrogen-fixing cells.",
+            "The nodule forms a **direct vascular connection** with the host for exchange of nutrients.",
+          ],
+        },
+        {
+          type: "formula",
+          tex: t`\text{N}_2 + 8\,e^- + 8\,\text{H}^+ + 16\,\text{ATP} \xrightarrow{\text{nitrogenase}} 2\,\text{NH}_3 + \text{H}_2 + 16\,\text{ADP} + 16\,\text{P}_i`,
+          caption: "Ammonia is the first stable product of nitrogen fixation. The cost is 8 ATP per NH₃, supplied by respiration of the host cells.",
+        },
+        {
+          type: "text",
+          md: "**Nitrogenase** is a **Mo–Fe protein** and is highly sensitive to O₂; it needs anaerobic conditions. The nodule contains a pink oxygen scavenger, **leghaemoglobin**, which protects the enzyme. The bacteria live as aerobes when free in soil (where nitrogenase does not work) but are kept effectively anaerobic in the nodule during fixation.\n\n**Fate of ammonia.** At physiological pH ammonia becomes **NH₄⁺**, which is toxic and cannot accumulate. It is used at once:\n\n- **Reductive amination**: α-ketoglutaric acid + NH₄⁺ + NADPH → glutamate + H₂O + NADP, catalysed by glutamate dehydrogenase.\n- **Transamination**: the amino group of one amino acid (mainly glutamic acid) is transferred to the keto group of a keto acid, catalysed by **transaminase**, forming other amino acids.\n- **Amides**: **asparagine** and **glutamine** are formed from aspartic acid and glutamic acid by adding another amino group (the hydroxyl part of the acid is replaced by NH₂). Being richer in nitrogen, amides are transported in xylem. Nodules of some plants such as soybean export fixed nitrogen as **ureides**, which have a high N:C ratio.",
+        },
+        {
+          type: "example",
+          title: "Energy cost of fixation",
+          problem: "A nodule fixes enough nitrogen to make 10 molecules of NH₃. How many molecules of N₂ are reduced and how much ATP is spent?",
+          steps: [
+            "Each N₂ gives 2 NH₃, so 10 NH₃ need 5 N₂.",
+            "Each N₂ reduction uses 16 ATP: 5 × 16 = 80 ATP.",
+            "Check: 8 ATP per NH₃ × 10 = 80 ATP.",
+          ],
+          answer: "5 N₂ reduced, using 80 ATP from the host's respiration.",
+        },
+        {
+          type: "checkpoint",
+          questions: [
+            {
+              kind: "mcq",
+              q: "Nitrite is oxidised to nitrate by:",
+              options: ["Nitrosomonas", "Nitrobacter", "Pseudomonas", "Rhizobium"],
+              answer: 1,
+              explain: "Nitrosomonas/Nitrococcus make nitrite; Nitrobacter makes nitrate.",
+            },
+          ],
+        },
+        {
+          type: "mistake",
+          wrong: "Leghaemoglobin supplies oxygen to nitrogenase, just as haemoglobin supplies oxygen to our cells.",
+          right: "Leghaemoglobin is an oxygen scavenger: it binds O₂ to keep it away from nitrogenase, which O₂ inactivates.",
+          why: "The 'haemoglobin' in the name suggests O₂ delivery. In the nodule its job is to keep free O₂ low around the enzyme.",
+        },
+        {
+          type: "activity",
+          activity: {
+            kind: "order",
+            prompt: "Put root nodule formation in order.",
+            items: [
+              "Rhizobia attach to root hairs",
+              "Root hairs curl and are invaded",
+              "Infection thread carries bacteria to the cortex",
+              "Bacteria released into cortical cells",
+              "Nodule links to the host's vascular tissue",
+            ],
+            explain: "Attachment, curling, infection thread, release and differentiation, then a vascular connection for nutrient exchange.",
+          },
+        },
+        {
+          type: "keypoints",
+          items: [
+            "Ion absorption: fast passive phase into the apoplast, slow active phase into the symplast; influx and efflux.",
+            "Nitrification: Nitrosomonas/Nitrococcus (NH₃ → NO₂⁻), Nitrobacter (NO₂⁻ → NO₃⁻); denitrification: Pseudomonas, Thiobacillus.",
+            "Nitrogenase (Mo–Fe protein, prokaryotes only): N₂ + 8e⁻ + 8H⁺ + 16 ATP → 2NH₃ + H₂; leghaemoglobin scavenges O₂.",
+            "NH₄⁺ is assimilated by reductive amination and transamination; asparagine and glutamine (and ureides in soybean) carry nitrogen in xylem.",
+          ],
+        },
+      ],
+      flashcards: [
+        { front: "Two phases of ion absorption", back: "Fast passive uptake into the apoplast, then slow active uptake into the symplast." },
+        { front: "Organisms that oxidise ammonia to nitrite", back: "*Nitrosomonas* and/or *Nitrococcus*." },
+        { front: "Denitrifying bacteria", back: "*Pseudomonas* and *Thiobacillus*." },
+        { front: "Free-living aerobic nitrogen fixers", back: "*Azotobacter* and *Beijerinckia*." },
+        { front: "Nitrogen-fixing symbiont of *Alnus*", back: "*Frankia*." },
+        { front: "Metals in nitrogenase", back: "Molybdenum and iron (Mo–Fe protein)." },
+        { front: "ATP needed per NH₃ fixed", back: "8 ATP." },
+        { front: "Two amides that transport nitrogen", back: "Asparagine and glutamine." },
+      ],
+      quiz: [
+        {
+          kind: "mcq",
+          q: "The first stable product of biological nitrogen fixation is:",
+          options: ["Nitrate", "Nitrite", "Ammonia", "Glutamate"],
+          answer: 2,
+          explain: "Nitrogenase reduces N₂ to NH₃.",
+        },
+        {
+          kind: "mcq",
+          q: "Which is an anaerobic free-living nitrogen fixer?",
+          options: ["Azotobacter", "Beijerinckia", "Rhodospirillum", "Frankia"],
+          answer: 2,
+          explain: "Rhodospirillum is free-living and anaerobic; Frankia is symbiotic.",
+        },
+        {
+          kind: "numeric",
+          q: "How many ATP molecules are used to fix 3 molecules of N₂?",
+          answer: 48,
+          explain: "16 ATP per N₂ × 3 = 48 ATP.",
+          difficulty: 2,
+        },
+        {
+          kind: "truefalse",
+          q: "Nitrogenase is found in both prokaryotes and eukaryotes.",
+          answer: false,
+          explain: "Nitrogenase is present only in prokaryotes.",
+        },
+        {
+          kind: "mcq",
+          q: "In reductive amination, ammonium combines with:",
+          options: ["Oxaloacetic acid", "α-ketoglutaric acid", "Pyruvic acid", "Aspartic acid"],
+          answer: 1,
+          explain: "α-ketoglutaric acid + NH₄⁺ + NADPH → glutamate (glutamate dehydrogenase).",
+        },
+        {
+          kind: "multi",
+          q: "Which are true of nitrification?",
+          options: [
+            "It is carried out by chemoautotrophic bacteria",
+            "Nitrobacter converts nitrite to nitrate",
+            "It converts nitrate to N₂",
+            "Nitrosomonas converts ammonia to nitrite",
+          ],
+          answers: [0, 1, 3],
+          explain: "Converting nitrate to N₂ is denitrification.",
+          difficulty: 2,
+        },
+        {
+          kind: "fill",
+          q: "The pink oxygen scavenger in legume root nodules is ___.",
+          answer: ["leghaemoglobin", "leghemoglobin", "leg-haemoglobin"],
+          explain: "It protects nitrogenase from O₂.",
+        },
+        {
+          kind: "mcq",
+          q: "Why are amides rather than amino acids transported in xylem?",
+          options: ["They contain more nitrogen", "They are insoluble", "They contain sulphur", "They are made only in leaves"],
+          answer: 0,
+          explain: "Amides such as asparagine and glutamine carry more nitrogen per molecule.",
+        },
+      ],
+    },
+    /* ---------------- Exam edge ---------------- */
+    {
+      slug: "c11-bio-mn-exam-edge",
+      title: "Exam edge: Mineral Nutrition",
+      summary:
+        "For ISC and for anyone using older NEET and KCET papers: essential element lists, signature roles, mobility and symptom location, manganese toxicity, nitrogen-cycle organisms, nitrogenase stoichiometry and the fate of ammonia, with statement, assertion–reason and counting practice.",
+      minutes: 22,
+      xp: 55,
+      track: "exam",
+      blocks: [
+        {
+          type: "text",
+          md: "**Which exams?** ISC examines this chapter in full. Current NEET and KCET syllabi follow the rationalised NCERT book, which dropped it, but older NEET papers (up to 2023) and KCET papers gave it 1–2 questions a year. Check your exam's latest syllabus. Its facts also surface elsewhere: Mg in chlorophyll and RuBisCO activation, Mn and Cl in water splitting, nitrogen fixers in Microbes and Biofertilisers.",
+        },
+        {
+          type: "list",
+          items: [
+            "Old NCERT line: hydroponics by **Julius von Sachs, 1860**.",
+            "Old NCERT line: macronutrients are present at **more than 10 mmol kg⁻¹** of dry matter.",
+            "Old NCERT line: Mg²⁺ activates **RuBisCO and PEPcase**; Zn²⁺ activates **alcohol dehydrogenase**.",
+            "Old NCERT line: Fe is required in **larger amounts than other micronutrients**.",
+            "Old NCERT line: a mineral level that reduces dry weight by **about 10%** is toxic.",
+            "Old NCERT line: nitrogenase needs **8 ATP per NH₃**; it is a **Mo–Fe** protein.",
+            "Old NCERT line: soybean nodules export nitrogen as **ureides**.",
+          ],
+        },
+        {
+          type: "table",
+          headers: ["Shortcut", "Use it for"],
+          rows: [
+            ["Symptoms in old leaves first: N, K, Mg. Young tissues first: S, Ca", "Location of symptoms. (The transport chapter lists S among remobilised elements; for symptom questions follow the Mineral Nutrition chapter.)"],
+            ["Water splitting needs Mn and Cl", "Any 'which element is needed for O₂ evolution' question"],
+            ["Nitrogenase: 16 ATP per N₂ = 8 ATP per NH₃", "ATP counts; check whether the question asks per N₂ or per NH₃"],
+            ["Nitrosomonas/Nitrococcus → nitrite; Nitrobacter → nitrate", "Order of nitrification (Nitro*so* before Nitro*bacter*)"],
+          ],
+        },
+        {
+          type: "formula",
+          tex: t`\text{ATP}_{\text{fixation}} = 16 \times n(\text{N}_2) = 8 \times n(\text{NH}_3)`,
+          caption: "Plus 2 H⁺ and 2 e⁻ go into H₂ for every N₂ reduced.",
+        },
+        {
+          type: "example",
+          title: "NEET style: statement counting",
+          problem: "How many are correct? (i) Ca is a component of the middle lamella. (ii) Mo is a part of nitrate reductase. (iii) Deficiency of Mg first appears in young leaves. (iv) Cl is needed for water splitting. (v) Leghaemoglobin is found in free-living Azotobacter.",
+          steps: [
+            "(i) Correct: calcium pectate.",
+            "(ii) Correct: Mo is in nitrogenase and nitrate reductase.",
+            "(iii) Wrong: Mg is mobile, so older leaves show symptoms first.",
+            "(iv) Correct.",
+            "(v) Wrong: leghaemoglobin is a feature of legume root nodules.",
+          ],
+          answer: "Three: (i), (ii) and (iv).",
+        },
+        {
+          type: "example",
+          title: "Assertion–reason",
+          problem: "A: Root nodules of legumes contain leghaemoglobin. R: Nitrogenase is inactivated by oxygen.",
+          steps: [
+            "A is true: leghaemoglobin gives nodules their pink colour.",
+            "R is true: nitrogenase needs anaerobic conditions.",
+            "R explains why the nodule needs an oxygen scavenger.",
+          ],
+          answer: "Both A and R are true, and R is the correct explanation of A.",
+        },
+        {
+          type: "example",
+          title: "KCET style: counting electrons and ATP",
+          problem: "For 12 molecules of NH₃ produced by nitrogenase, find the N₂ reduced, electrons used, ATP used and H₂ released.",
+          steps: [
+            "N₂ = 12 ÷ 2 = 6.",
+            "Electrons = 8 per N₂ × 6 = 48.",
+            "ATP = 16 × 6 = 96 (= 8 × 12).",
+            "H₂ = 1 per N₂ = 6.",
+          ],
+          answer: "6 N₂, 48 electrons, 96 ATP and 6 H₂.",
+        },
+        {
+          type: "example",
+          title: "Harder: separating toxicity from deficiency",
+          problem: "A crop on acidic soil shows brown spots surrounded by chlorotic veins, plus poor shoot-tip growth. Leaf analysis shows high Mn and low Fe, Mg and Ca. Explain the symptoms and suggest what is really going wrong.",
+          steps: [
+            "Brown spots with chlorotic veins are the signature of Mn toxicity.",
+            "High Mn competes with Fe and Mg for uptake and with Mg for enzyme binding, so Fe and Mg fall: chlorosis.",
+            "Mn also inhibits Ca translocation to the shoot apex: Ca is immobile, so the young tip suffers.",
+            "So the visible damage is partly deficiency of Fe, Mg and Ca induced by excess Mn.",
+          ],
+          answer: "Excess Mn is toxic and induces Fe, Mg and Ca deficiency; correcting Mn levels (rather than simply adding Fe) addresses the cause.",
+        },
+        {
+          type: "mistake",
+          wrong: "Nitrosomonas makes nitrate and Nitrobacter makes nitrite.",
+          right: "Nitrosomonas (and Nitrococcus) oxidise ammonia to nitrite; Nitrobacter oxidises nitrite to nitrate.",
+          why: "Both names start with 'Nitro', so they are swapped. Remember 'so' comes before 'bacter', just as nitrite comes before nitrate.",
+        },
+        {
+          type: "mistake",
+          wrong: "Iron is a macronutrient because plants need more of it than any other micronutrient.",
+          right: "Iron is still a micronutrient; it is simply the one needed in the largest amount among micronutrients.",
+          why: "The phrase 'larger amounts' in NCERT tempts students to call Fe a macronutrient.",
+        },
+        {
+          type: "mistake",
+          wrong: "Frankia forms nodules on legume roots.",
+          right: "Frankia forms nodules on non-legumes such as Alnus; Rhizobium nodulates legumes.",
+          why: "Both are nodule-forming symbionts, and NEET options often swap them.",
+        },
+        {
+          type: "activity",
+          activity: {
+            kind: "sort",
+            prompt: "Which role does each organism play in the nitrogen cycle?",
+            groups: ["Fixes N₂", "Nitrification", "Denitrification"],
+            items: [
+              { text: "Rhizobium", group: 0, hint: "Lives in legume root nodules." },
+              { text: "Anabaena", group: 0, hint: "A free-living cyanobacterium." },
+              { text: "Nitrosomonas", group: 1, hint: "Ammonia to nitrite." },
+              { text: "Nitrobacter", group: 1, hint: "Nitrite to nitrate." },
+              { text: "Pseudomonas", group: 2, hint: "Returns nitrogen to the air." },
+              { text: "Thiobacillus", group: 2, hint: "Reduces nitrate to N₂." },
+            ],
+            explain: "Fixers put N₂ into ammonia; nitrifiers turn ammonia into nitrate; denitrifiers return nitrate to N₂.",
+          },
+        },
+        {
+          type: "checkpoint",
+          questions: [
+            {
+              kind: "mcq",
+              q: "Which pair of elements is needed for the splitting of water in photosynthesis?",
+              options: ["Fe and Cu", "Mn and Cl", "Mg and Zn", "Mo and B"],
+              answer: 1,
+              explain: "Manganese and chlorine are both linked to O₂ evolution from water.",
+            },
+          ],
+        },
+        {
+          type: "keypoints",
+          items: [
+            "17 essential elements; 9 macro (C H O N P K S Ca Mg), 8 micro (Fe Mn Cu Mo Zn B Cl Ni).",
+            "Signature roles and absorbed forms are the most asked facts.",
+            "Mobile N, K, Mg → old leaves; immobile Ca, S → young tissues; Mn excess induces Fe, Mg, Ca deficiency.",
+            "Nitrogenase: Mo–Fe, O₂-sensitive, 16 ATP per N₂; leghaemoglobin scavenges O₂.",
+          ],
+        },
+      ],
+      flashcards: [
+        { front: "ATP to make 6 NH₃ by nitrogenase", back: "48 ATP (8 per NH₃)." },
+        { front: "Two activators named for Mg²⁺", back: "RuBisCO and PEP carboxylase." },
+        { front: "Two enzymes containing Mo", back: "Nitrogenase and nitrate reductase." },
+        { front: "Organism forming nodules on *Alnus*", back: "*Frankia*." },
+        { front: "Form in which soybean nodules export nitrogen", back: "Ureides." },
+        { front: "Toxicity threshold of a mineral", back: "A tissue level that reduces dry weight by about 10%." },
+        { front: "Why does nitrogenase need an O₂ scavenger?", back: "It is inactivated by oxygen and needs anaerobic conditions." },
+      ],
+      quiz: [
+        {
+          kind: "mcq",
+          q: "Assertion (A): Deficiency symptoms of nitrogen appear first in older leaves. Reason (R): Nitrogen is an immobile element.",
+          options: AR,
+          answer: 2,
+          explain: "A is true, but R is false: nitrogen is mobile and is moved from old leaves to young ones.",
+          difficulty: 2,
+        },
+        {
+          kind: "numeric",
+          q: "How many electrons are needed to reduce 4 molecules of N₂ by nitrogenase (including H₂ formation)?",
+          answer: 32,
+          explain: "8 electrons per N₂ × 4 = 32.",
+          difficulty: 2,
+        },
+        {
+          kind: "mcq",
+          q: "Which element is NOT a micronutrient?",
+          options: ["Nickel", "Chlorine", "Magnesium", "Boron"],
+          answer: 2,
+          explain: "Magnesium is a macronutrient.",
+        },
+        {
+          kind: "multi",
+          q: "Which statements are correct?",
+          options: [
+            "Phosphorus is absorbed as H₂PO₄⁻ or HPO₄²⁻",
+            "Zinc is needed for auxin synthesis",
+            "Calcium is readily remobilised from old leaves",
+            "Copper is involved in redox enzymes",
+          ],
+          answers: [0, 1, 3],
+          explain: "Calcium is structural and immobile; it is not remobilised.",
+          difficulty: 2,
+        },
+        {
+          kind: "numeric",
+          q: "A nodule uses 160 ATP for nitrogen fixation. How many NH₃ molecules are formed?",
+          answer: 20,
+          explain: "8 ATP per NH₃: 160 ÷ 8 = 20.",
+          difficulty: 3,
+          hint: "Use the per-NH₃ cost, not the per-N₂ cost.",
+        },
+        {
+          kind: "mcq",
+          q: "Transamination in plants mainly uses which amino acid as the amino group donor?",
+          options: ["Glycine", "Glutamic acid", "Alanine", "Asparagine"],
+          answer: 1,
+          explain: "Glutamic acid is the main donor; transaminase catalyses the transfer.",
+        },
+        {
+          kind: "mcq",
+          q: "Brown spots surrounded by chlorotic veins indicate:",
+          options: ["Nitrogen deficiency", "Manganese toxicity", "Calcium deficiency", "Boron toxicity"],
+          answer: 1,
+          explain: "This is the NCERT description of manganese toxicity.",
+        },
+      ],
+    },
+  ],
+};
+
+export const topics: Topic[] = [transport, mineralNutrition, photosynthesis, respiration, plantGrowth];
 
 export const links: Record<string, string | string[]> = {
   "11:Photosynthesis in Higher Plants": "c11-bio-photosynthesis",
   "11:Respiration in Plants": "c11-bio-respiration-in-plants",
   "11:Plant Growth and Development": "c11-bio-plant-growth-development",
+  "11:Plant Physiology": [
+    "c11-bio-transport-in-plants",
+    "c11-bio-mineral-nutrition",
+    "c11-bio-photosynthesis",
+    "c11-bio-respiration-in-plants",
+    "c11-bio-plant-growth-development",
+  ],
 };

@@ -1699,7 +1699,7 @@ export const topics: Topic[] = [
         blocks: [
           {
             type: "text",
-            md: "If genes are made of DNA, then knowing the full DNA sequence of a human should help explain variation and disease. The **Human Genome Project (HGP)** was launched in **1990** and completed in **2003** (13 years). It was called a **mega project**: about 3 × 10⁹ bp at an estimated cost of 3 US dollars per bp, about 9 billion US dollars in all; printing the sequence would fill some 3300 books of 1000 pages each. Such data needs high-speed computers, which gave rise to **bioinformatics**.\n\nIt was coordinated by the **U.S. Department of Energy** and the **National Institutes of Health**, with the **Wellcome Trust (U.K.)** as a major partner, and contributions from Japan, France, Germany, China and others.",
+            md: "If genes are made of DNA, then knowing the full DNA sequence of a human should help explain variation and disease. The **Human Genome Project (HGP)** was launched in **1990** and completed in **2003** (13 years). It was called a **mega project**: about 3 × 10⁹ bp at an estimated cost of 3 US dollars per bp, about 9 billion US dollars in all; printing the sequence would fill some 3300 books of 1000 pages each, with 1000 letters on each page. Such data needs high-speed computers, which gave rise to **bioinformatics**.\n\nIt was coordinated by the **U.S. Department of Energy** and the **National Institutes of Health**, with the **Wellcome Trust (U.K.)** as a major partner, and contributions from Japan, France, Germany, China and others.",
           },
           {
             type: "list",
@@ -2116,7 +2116,7 @@ export const topics: Topic[] = [
             q: "In a lac operon with a deleted z gene, lactose is added. Which product will be missing?",
             options: ["Repressor", "β-galactosidase", "Permease only", "Transacetylase only"],
             answer: 1,
-            explain: "z codes β-galactosidase. The i gene still makes repressor, and y and a can still be transcribed after induction.",
+            explain: "z codes β-galactosidase, so it cannot be made. The i gene still makes the repressor. (In NCERT's model, lactose still induces y and a. In real cells the true inducer, allolactose, is made from lactose by β-galactosidase, so a z-deleted cell is barely induced; this goes beyond NCERT.)",
             difficulty: 3,
             hint: "Recall what each structural gene codes.",
           },

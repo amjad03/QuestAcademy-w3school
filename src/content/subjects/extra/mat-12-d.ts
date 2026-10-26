@@ -1702,7 +1702,7 @@ If the curve lies **below** the $x$-axis, $\int_a^b f(x)\,dx$ is negative; area 
             type: "callout",
             tone: "note",
             title: "Board note",
-            md: "The rationalised NCERT chapter (CBSE, Karnataka PUC) keeps only areas under simple curves; areas between two curves were removed from its exercises. ISC still asks for the area between two curves, and JEE, KCET and COMEDK need it, so learn this lesson whichever board you write.",
+            md: "The rationalised NCERT chapter (CBSE, Karnataka PUC) keeps only areas under simple curves; areas between two curves were removed from its exercises. ISC still asks for the area between two curves and JEE Main sets it almost every year, so learn this lesson whichever board you write (KCET follows the PUC syllabus, so check its current list).",
           },
           {
             type: "mistake",
