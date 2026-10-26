@@ -521,7 +521,7 @@ const ch2: ExamQuestion[] = [
   q2(1, BASIC, 40, {
     kind: "mcq",
     q: t`If $\operatorname{sgn}$ denotes the signum function, then $\operatorname{sgn}(-3)+\operatorname{sgn}(0)+\operatorname{sgn}(2)$ equals:`,
-    options: [t`$-1$`, t`$0$`, t`$1$`, t`$-1$ (sgn(0) is undefined)`],
+    options: [t`$-1$`, t`$0$`, t`$1$`, "not defined, since sgn(0) is undefined"],
     answer: 1,
     explain: t`$\operatorname{sgn}x = 1, 0, -1$ for $x>0$, $x=0$, $x<0$. So the sum is $-1+0+1 = 0$. The signum function is defined at 0 with value 0.`,
   }),

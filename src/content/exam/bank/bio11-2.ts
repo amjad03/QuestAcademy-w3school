@@ -1,5 +1,420 @@
-import type { ExamQuestion, FormulaSheet } from "@/content/types";
+import type { ExamId, ExamQuestion, FormulaSheet } from "@/content/types";
 
-export const questions: ExamQuestion[] = [];
+/**
+ * Class 11 Biology bank, part 2 (NEET / KCET): Cell: The Unit of Life, Biomolecules,
+ * Cell Cycle and Cell Division, Photosynthesis in Higher Plants, Respiration in Plants,
+ * Plant Growth and Development.
+ * All questions are original MCQs written close to NCERT lines. `a` is the 0-based answer index.
+ */
 
-export const formulas: FormulaSheet[] = [];
+const t = String.raw;
+
+type Q = {
+  d: 1 | 2 | 3;
+  t: number;
+  q: string;
+  o: string[];
+  a: number;
+  e: string;
+  h?: string;
+  x?: ExamId[];
+};
+
+/** Standard NEET statement-I / statement-II options. */
+const ST = [
+  "Both Statement I and Statement II are correct",
+  "Both Statement I and Statement II are incorrect",
+  "Statement I is correct but Statement II is incorrect",
+  "Statement I is incorrect but Statement II is correct",
+];
+
+/** Standard assertion–reason options. */
+const AR = [
+  "Both A and R are true and R is the correct explanation of A",
+  "Both A and R are true but R is not the correct explanation of A",
+  "A is true but R is false",
+  "A is false but R is true",
+];
+
+function build(chapter: string, no: number, list: Q[]): ExamQuestion[] {
+  return list.map(
+    (it, i): ExamQuestion => ({
+      id: `bio11-2-${String(no).padStart(2, "0")}-${String(i + 1).padStart(3, "0")}`,
+      subject: "biology",
+      chapter,
+      grade: "11",
+      exams: it.x ?? ["NEET", "KCET"],
+      kind: "mcq",
+      difficulty: it.d,
+      idealTime: it.t,
+      q: it.q,
+      options: it.o,
+      answer: it.a,
+      explain: it.e,
+      ...(it.h ? { hint: it.h } : {}),
+    }),
+  );
+}
+
+/* ================================================================== */
+/* Chapter 8: Cell: The Unit of Life                                   */
+/* ================================================================== */
+
+const CH8 = "Cell: The Unit of Life";
+
+const ch8: Q[] = [
+  {
+    d: 1, t: 45,
+    q: "Who proposed that new cells arise only from pre-existing cells (*Omnis cellula-e cellula*)?",
+    o: ["Matthias Schleiden", "Theodore Schwann", "Rudolf Virchow", "Robert Brown"],
+    a: 2,
+    e: "Rudolf Virchow (1855) explained that cells divide and new cells are formed from pre-existing cells, modifying the cell theory of Schleiden (1838, plants) and Schwann (1839, animals). Schleiden and Schwann's theory did not explain how new cells were formed. Robert Brown discovered the nucleus.",
+  },
+  {
+    d: 1, t: 45,
+    q: "Which scientist, studying animal cells, reported that the thin outer layer of the cell is the plasma membrane and that the cell wall is unique to plant cells?",
+    o: ["Theodore Schwann", "Anton von Leeuwenhoek", "Matthias Schleiden", "Camillo Golgi"],
+    a: 0,
+    e: "Theodore Schwann (1839) studied different animal cells and reported a thin outer layer now called the plasma membrane. He also concluded, from plant tissue studies, that the presence of a cell wall is a unique character of plant cells. Schleiden worked on plants; Leeuwenhoek first saw and described a live cell; Golgi described the Golgi apparatus.",
+  },
+  {
+    d: 1, t: 45,
+    q: "The smallest cells known, about 0.3 µm in length, are those of:",
+    o: ["Bacteria", "Mycoplasmas", "Viruses", "Human red blood cells"],
+    a: 1,
+    e: "Mycoplasmas, the smallest cells, are only about 0.3 µm long. Bacteria are typically 3–5 µm and human RBCs about 7 µm in diameter. Viruses are not cells at all, so they cannot be the smallest cell.",
+  },
+  {
+    d: 1, t: 45,
+    q: "The largest isolated single cell is:",
+    o: ["A nerve cell", "The egg of an ostrich", "A human ovum", "A cell of *Acetabularia*"],
+    a: 1,
+    e: "NCERT states that the largest isolated single cell is the egg of an ostrich. Nerve cells are among the longest cells (because of their long axons) but not the largest isolated cell; the human ovum is only about 0.1 mm.",
+  },
+  {
+    d: 2, t: 60,
+    q: "In a bacterial cell envelope, a loose sheath of glycocalyx is called the ___, while a thick and tough glycocalyx is called the ___.",
+    o: ["capsule; slime layer", "slime layer; capsule", "cell wall; capsule", "mesosome; slime layer"],
+    a: 1,
+    h: "One is loose and easily removed; the other is thick and tough.",
+    e: "The bacterial cell envelope has three layers: outermost glycocalyx, then cell wall, then plasma membrane. The glycocalyx differs in composition and thickness: it may be a loose sheath (slime layer) or thick and tough (capsule). Swapping these is the commonest error.",
+  },
+  {
+    d: 2, t: 60,
+    q: "Which of the following is NOT a function attributed to mesosomes in bacteria?",
+    o: [
+      "Help in cell wall formation",
+      "Help in DNA replication and distribution to daughter cells",
+      "Increase the surface area of the plasma membrane and enzymatic content",
+      "Synthesis of proteins on attached 80S ribosomes",
+    ],
+    a: 3,
+    h: "Bacterial ribosomes are a different size.",
+    e: "Mesosomes are infoldings of the plasma membrane (vesicles, tubules, lamellae). They help in cell wall formation, DNA replication and distribution, respiration and secretion, and increase surface area and enzymatic content. Bacteria have 70S ribosomes, not 80S, and protein synthesis is not a mesosome function.",
+  },
+  {
+    d: 1, t: 45,
+    q: "The bacterial flagellum is made of three parts. Which option names them correctly?",
+    o: ["Axoneme, basal body, hook", "Filament, hook, basal body", "Filament, centriole, axoneme", "Shaft, radial spoke, hook"],
+    a: 1,
+    e: "A bacterial flagellum is composed of filament, hook and basal body; the filament is the longest portion and extends from the cell surface outward. Axoneme, radial spokes and centriole-like basal bodies belong to eukaryotic flagella, which have a 9+2 structure.",
+  },
+  {
+    d: 2, t: 60,
+    q: "Small bristle-like fibres sprouting out of a bacterial cell, known to help some bacteria attach to rocks in streams and to host tissues, are:",
+    o: ["Pili", "Fimbriae", "Flagella", "Mesosomes"],
+    a: 1,
+    h: "Pili are elongated tubes; these are small bristles.",
+    e: "Fimbriae are small bristle-like fibres that help bacteria attach to rocks in streams and also to host tissues. Pili are elongated tubular structures made of a special protein. Flagella are for motility, and mesosomes are membrane infoldings, not surface appendages.",
+  },
+  {
+    d: 2, t: 60,
+    q: "Gas vacuoles are found in:",
+    o: [
+      "Yeast and *Amoeba*",
+      "Blue-green, purple and green photosynthetic bacteria",
+      "All gram-positive bacteria",
+      "Plant mesophyll cells",
+    ],
+    a: 1,
+    h: "Think of organisms that need to float in water to get light.",
+    e: "Among prokaryotic inclusion bodies, gas vacuoles are found in blue-green algae (cyanobacteria) and purple and green photosynthetic bacteria. Other inclusions include phosphate granules, cyanophycean granules and glycogen granules. Inclusion bodies lie free in the cytoplasm and are not bounded by a membrane.",
+  },
+  {
+    d: 1, t: 45,
+    q: "Prokaryotic ribosomes are of the ___ type and are made of ___ subunits.",
+    o: ["80S; 60S and 40S", "70S; 50S and 30S", "70S; 40S and 30S", "80S; 50S and 30S"],
+    a: 1,
+    e: "Prokaryotic ribosomes are 70S, made of a 50S and a 30S subunit; eukaryotic cytoplasmic ribosomes are 80S (60S + 40S). S (Svedberg unit) is a sedimentation coefficient, so subunit values do not add up arithmetically (50 + 30 ≠ 70).",
+  },
+  {
+    d: 2, t: 75,
+    q: "Several ribosomes attached to a single mRNA, forming a chain that translates it into proteins, constitute a:",
+    o: ["Nucleosome", "Polysome", "Mesosome", "Microsome"],
+    a: 1,
+    h: "Poly = many; -some = body.",
+    e: "Several ribosomes may attach to a single mRNA to form a polyribosome or polysome; the ribosomes of a polysome translate the mRNA into proteins. A nucleosome is a DNA–histone unit, a mesosome is a bacterial membrane infolding and microsomes are ER fragments formed on homogenisation.",
+  },
+  {
+    d: 1, t: 45,
+    q: "The fluid mosaic model of the plasma membrane was proposed by:",
+    o: ["Singer and Nicolson", "Watson and Crick", "Robertson", "Schleiden and Schwann"],
+    a: 0,
+    e: "Singer and Nicolson (1972) proposed the fluid mosaic model: the quasi-fluid nature of the lipid bilayer enables lateral movement of proteins within it. Watson and Crick proposed the DNA double helix; Schleiden and Schwann the cell theory.",
+  },
+  {
+    d: 2, t: 60,
+    q: "According to NCERT, the membrane of the human erythrocyte has approximately:",
+    o: ["40% protein and 52% lipid", "52% protein and 40% lipid", "70% protein and 30% lipid", "Equal amounts of protein and lipid"],
+    a: 1,
+    h: "In the RBC membrane, protein slightly exceeds lipid.",
+    e: "Biochemical studies of the human RBC membrane show approximately 52% protein and 40% lipids. The ratio of protein to lipid varies considerably in different cell types. Reversing the two figures is the usual mistake.",
+  },
+  {
+    d: 2, t: 75,
+    q: "In the lipid bilayer of the plasma membrane, the lipids are arranged with:",
+    o: [
+      "Polar heads facing inwards and hydrophobic tails facing the outer sides",
+      "Polar heads towards the outer sides and hydrophobic tails towards the inner part",
+      "All heads facing the cytoplasm",
+      "Lipids randomly oriented between two protein layers",
+    ],
+    a: 1,
+    h: "The tails must be shielded from water on both sides.",
+    e: "Membrane lipids (mainly phosphoglycerides) are arranged in a bilayer with polar heads towards the outer sides and hydrophobic tails towards the inner part, so the non-polar tails are protected from the aqueous environment. The protein-lipid-protein sandwich is an older idea, not the fluid mosaic model.",
+  },
+  {
+    d: 2, t: 75,
+    q: "Movement of water by diffusion across the plasma membrane is called ___, and the Na⁺/K⁺ pump is an example of ___.",
+    o: [
+      "osmosis; active transport",
+      "active transport; passive transport",
+      "osmosis; facilitated passive transport",
+      "plasmolysis; osmosis",
+    ],
+    a: 0,
+    h: "One uses ATP, the other does not.",
+    e: "Water moves across the membrane from higher to lower concentration by diffusion; this is osmosis. Neutral solutes may cross by simple diffusion. The Na⁺/K⁺ pump moves ions against their concentration gradient using ATP, so it is active transport.",
+  },
+  {
+    d: 1, t: 45,
+    q: "The middle lamella that holds neighbouring plant cells together is mainly composed of:",
+    o: ["Cellulose", "Calcium pectate", "Lignin", "Hemicellulose"],
+    a: 1,
+    e: "The middle lamella is a layer mainly of calcium pectate that glues or holds the different neighbouring cells together. Cellulose, hemicellulose, pectins and proteins form the primary wall; lignin is deposited in secondary walls of some cells.",
+  },
+  {
+    d: 2, t: 75,
+    q: "Which statement about the plant cell wall is correct?",
+    o: [
+      "The secondary wall is formed outside the primary wall, away from the membrane",
+      "The primary wall is capable of growth and gradually diminishes as the cell matures",
+      "Algal cell walls lack cellulose and contain only chitin",
+      "Plasmodesmata are gaps in the middle lamella only, not in the wall",
+    ],
+    a: 1,
+    h: "The secondary wall is laid down on the inner side.",
+    e: "The primary wall of a young plant cell is capable of growth; it gradually diminishes as the cell matures, and the secondary wall is formed on the inner side (towards the membrane). Algal walls are made of cellulose, galactans, mannans and minerals like calcium carbonate. Plasmodesmata traverse the cell wall and middle lamella to connect cytoplasm of neighbouring cells.",
+  },
+  {
+    d: 2, t: 75,
+    q: "Which of the following organelles is NOT part of the endomembrane system?",
+    o: ["Golgi complex", "Lysosome", "Mitochondrion", "Vacuole"],
+    a: 2,
+    h: "Members of this system have coordinated functions.",
+    e: "The endomembrane system includes the endoplasmic reticulum, Golgi complex, lysosomes and vacuoles, whose functions are coordinated. Mitochondria, chloroplasts and peroxisomes are not considered part of it because their functions are not coordinated with these components.",
+  },
+  {
+    d: 1, t: 45,
+    q: "Smooth endoplasmic reticulum is the major site for the synthesis of:",
+    o: ["Proteins for secretion", "Lipids, and steroidal hormones in animal cells", "Ribosomal RNA", "Cellulose microfibrils"],
+    a: 1,
+    e: "Smooth ER (without ribosomes) is the major site for lipid synthesis; in animal cells lipid-like steroidal hormones are synthesised in SER. Rough ER, bearing ribosomes, is extensive in cells actively involved in protein synthesis and secretion. rRNA is made in the nucleolus.",
+  },
+  {
+    d: 2, t: 75,
+    q: "The Golgi apparatus was first observed by Camillo Golgi in 1898 as densely stained reticular structures near the nucleus. Which statement about its faces is correct?",
+    o: [
+      "The cis face is concave and is the maturing face",
+      "The trans face is convex and is the forming face",
+      "The cis (forming) face is convex and the trans (maturing) face is concave",
+      "Both faces are flat and functionally identical",
+    ],
+    a: 2,
+    h: "Material from the ER enters at the forming face.",
+    e: "Golgi cisternae are arranged concentrically near the nucleus with distinct convex cis (forming) face and concave trans (maturing) face; the faces are entirely different but interconnected. Vesicles from the ER fuse with the cis face and move towards the trans face.",
+  },
+  {
+    d: 2, t: 60,
+    q: "The Golgi apparatus is the important site of formation of:",
+    o: ["Glycoproteins and glycolipids", "Ribosomal subunits", "ATP by oxidative phosphorylation", "Microtubules"],
+    a: 0,
+    h: "Proteins and lipids from the ER are modified here.",
+    e: "A number of proteins synthesised on ribosomes of the ER are modified in Golgi cisternae before release from the trans face. The Golgi apparatus is the important site of formation of glycoproteins and glycolipids, and it packages materials for intracellular targets or secretion.",
+  },
+  {
+    d: 1, t: 45,
+    q: "Lysosomal enzymes such as lipases, proteases and carbohydrases are optimally active at:",
+    o: ["Acidic pH", "Neutral pH", "Alkaline pH", "Any pH"],
+    a: 0,
+    e: "Lysosomes are membrane-bound vesicles formed by packaging in the Golgi apparatus. They are rich in hydrolytic enzymes (lipases, proteases, carbohydrases), which are optimally active at acidic pH and can digest carbohydrates, proteins, lipids and nucleic acids.",
+  },
+  {
+    d: 2, t: 75,
+    q: "In plant cells, the vacuole can occupy up to ___ of the cell volume and is bounded by a membrane called the ___.",
+    o: ["50%; plasmalemma", "90%; tonoplast", "90%; plasmalemma", "30%; tonoplast"],
+    a: 1,
+    h: "The vacuolar membrane has its own name.",
+    e: "The vacuole is a membrane-bound space containing water, sap, excretory products and materials not useful to the cell. It is bound by a single membrane, the tonoplast, and in plant cells can occupy up to 90% of the cell volume. The tonoplast facilitates transport of ions against concentration gradients, so their concentration is significantly higher in the vacuole than in the cytoplasm.",
+  },
+  {
+    d: 1, t: 45,
+    q: "In *Amoeba*, the contractile vacuole is important for:",
+    o: ["Digestion of food", "Osmoregulation and excretion", "Locomotion", "Storage of starch"],
+    a: 1,
+    e: "In Amoeba, the contractile vacuole is important for osmoregulation and excretion. Food vacuoles formed by engulfing food particles are found in many protists and are involved in digestion. Locomotion is by pseudopodia.",
+  },
+  {
+    d: 2, t: 75,
+    q: "Mitochondria are typically sausage-shaped or cylindrical with an average diameter of about:",
+    o: ["0.05 µm", "0.5 µm", "5 µm", "10 µm"],
+    a: 1,
+    h: "NCERT range: diameter 0.2–1.0 µm, length 1.0–4.1 µm.",
+    e: "Mitochondria are sausage-shaped or cylindrical with a diameter of 0.2–1.0 µm (average 0.5 µm) and length 1.0–4.1 µm. 5–10 µm is the length of a chloroplast; 10 µm is closer to the size of a whole small cell.",
+  },
+  {
+    d: 2, t: 75,
+    q: "The matrix of a mitochondrion contains:",
+    o: [
+      "A single circular DNA molecule, a few RNA molecules and 70S ribosomes",
+      "Linear DNA bound to histones and 80S ribosomes",
+      "Thylakoids and chlorophyll",
+      "No DNA, only enzymes of the Krebs cycle",
+    ],
+    a: 0,
+    h: "Mitochondria resemble bacteria in their genetic system.",
+    e: "The mitochondrial matrix possesses a single circular DNA molecule, a few RNA molecules, ribosomes (70S) and components required for protein synthesis. Mitochondria divide by fission. Linear histone-bound DNA is nuclear; thylakoids belong to chloroplasts.",
+  },
+  {
+    d: 2, t: 60,
+    q: "Match the plastid with the material it stores:\n\nP. Amyloplast  Q. Elaioplast  R. Aleuroplast\n\n1. Proteins  2. Oils and fats  3. Starch",
+    o: ["P-3, Q-2, R-1", "P-2, Q-3, R-1", "P-1, Q-2, R-3", "P-3, Q-1, R-2"],
+    a: 0,
+    h: "Amylum = starch; elaion = oil; aleurone = protein.",
+    e: "Leucoplasts are colourless plastids of varied shapes storing nutrients: amyloplasts store carbohydrates (starch, e.g. potato), elaioplasts store oils and fats, and aleuroplasts store proteins. Hence P-3, Q-2, R-1.",
+  },
+  {
+    d: 2, t: 75,
+    q: "Chloroplasts in mesophyll cells are lens-shaped, oval or ribbon-like and typically measure:",
+    o: [
+      "5–10 µm in length and 2–4 µm in width",
+      "0.2–1.0 µm in length",
+      "1–4 µm in length and 0.5 µm in width",
+      "20–40 µm in length",
+    ],
+    a: 0,
+    h: "20–40 is a number of chloroplasts per cell, not a size.",
+    e: "Chloroplasts are 5–10 µm long and 2–4 µm wide. Their number varies from 1 per cell in *Chlamydomonas* to 20–40 per cell in the mesophyll. 0.2–1.0 µm is the diameter of a mitochondrion; using '20–40' as a size confuses the number with the dimension.",
+  },
+  {
+    d: 2, t: 75,
+    q: "Flat membranous sacs in the chloroplast stroma, stacked like piles of coins to form grana, are called ___, and the flat tubules connecting thylakoids of different grana are ___.",
+    o: ["cristae; stroma lamellae", "thylakoids; stroma lamellae", "cisternae; tubules", "thylakoids; cristae"],
+    a: 1,
+    h: "Cristae are in mitochondria.",
+    e: "Inside the chloroplast stroma lie organised flattened sacs, the thylakoids, stacked like piles of coins called grana; flat membranous tubules called stroma lamellae connect thylakoids of different grana. Chlorophyll pigments are in the thylakoids. Cristae are infoldings of the inner mitochondrial membrane.",
+  },
+  {
+    d: 1, t: 45,
+    q: "Ribosomes were first observed under the electron microscope as dense particles by:",
+    o: ["George Palade (1953)", "Camillo Golgi (1898)", "Robert Brown (1831)", "Flemming"],
+    a: 0,
+    e: "Ribosomes are granular structures first observed by George Palade (1953) under the electron microscope. They are composed of RNA and proteins and are not surrounded by any membrane. Golgi described the Golgi apparatus, Brown the nucleus and Flemming named chromatin.",
+  },
+  {
+    d: 1, t: 45,
+    q: "The core of a eukaryotic cilium or flagellum, called the axoneme, has microtubules arranged in a:",
+    o: ["9+0 array", "9+2 array", "9+3 array", "Cartwheel of triplets only"],
+    a: 1,
+    e: "The axoneme has nine doublets of radially arranged peripheral microtubules and a pair of centrally located microtubules (9+2). The central tubules are connected by bridges and enclosed by a central sheath, which is joined to the peripheral doublets by radial spokes. Triplets in a cartwheel describe the centriole/basal body.",
+  },
+  {
+    d: 3, t: 120,
+    q: "Which of the following statements about the centrosome is INCORRECT?",
+    o: [
+      "It usually contains two cylindrical centrioles lying perpendicular to each other",
+      "Each centriole has nine evenly spaced peripheral fibrils, each a doublet of tubulin",
+      "The central part of the centriole is a proteinaceous hub connected to peripheral fibrils by radial spokes",
+      "Centrioles form the basal body of cilia or flagella and the spindle fibres in animal cells",
+    ],
+    a: 1,
+    h: "Compare the peripheral fibril structure of a centriole with that of an axoneme.",
+    e: "Each centriole has a cartwheel organisation with nine evenly spaced peripheral fibrils of tubulin, each of which is a **triplet**, not a doublet; doublets occur in the axoneme of cilia and flagella. The other statements are NCERT lines: two perpendicular centrioles surrounded by pericentriolar material, a proteinaceous hub with radial spokes, and roles as basal body and in spindle formation.",
+  },
+  {
+    d: 2, t: 75,
+    q: "The nucleolus is:",
+    o: [
+      "A membrane-bound organelle that synthesises proteins",
+      "A non-membrane-bound site of active ribosomal RNA synthesis",
+      "Absent in cells actively carrying out protein synthesis",
+      "The site of DNA replication only",
+    ],
+    a: 1,
+    h: "It is continuous with the nucleoplasm.",
+    e: "Nucleoli are spherical structures in the nucleoplasm; their content is continuous with the rest of the nucleoplasm because they are not membrane-bound. The nucleolus is a site for active ribosomal RNA synthesis. Larger and more numerous nucleoli are present in cells actively carrying out protein synthesis.",
+  },
+  {
+    d: 3, t: 120,
+    q: "Statement I: Mammalian erythrocytes and sieve tube cells of vascular plants are examples of cells that lack a nucleus.\nStatement II: The nuclear envelope consists of two parallel membranes separated by a perinuclear space of 10–50 nm, and is interrupted by nuclear pores.",
+    o: ST,
+    a: 0,
+    h: "Both are NCERT descriptions of the nucleus.",
+    e: "Both statements are correct. Normally there is one nucleus per cell, but some mature cells lack a nucleus, e.g. erythrocytes of many mammals and sieve tube cells of vascular plants. The nuclear envelope has two membranes with a 10–50 nm perinuclear space; at places it is interrupted by nuclear pores that allow movement of RNA and proteins between nucleus and cytoplasm.",
+  },
+  {
+    d: 3, t: 120,
+    q: "A chromosome whose centromere lies close to one end, giving one extremely short arm and one very long arm, is:",
+    o: ["Metacentric", "Sub-metacentric", "Acrocentric", "Telocentric"],
+    a: 2,
+    h: "Telocentric is truly terminal; sub-metacentric is only slightly off-centre.",
+    e: "Based on centromere position: metacentric has the centromere in the middle (two equal arms); sub-metacentric slightly away from the middle (one shorter and one longer arm); acrocentric close to its end (one extremely short and one very long arm); telocentric has a terminal centromere.",
+  },
+  {
+    d: 3, t: 120,
+    q: "Assertion (A): Mitochondria and chloroplasts are considered semi-autonomous organelles.\nReason (R): Both contain their own circular DNA and 70S ribosomes and can multiply by fission.",
+    o: AR,
+    a: 0,
+    h: "What gives an organelle partial independence from the nucleus?",
+    e: "Both are true and R explains A. The mitochondrial matrix and chloroplast stroma contain small circular double-stranded DNA and 70S ribosomes, letting them synthesise some of their own proteins; mitochondria divide by fission. Because most of their proteins are still nuclear-encoded, they are only semi-autonomous.",
+  },
+  {
+    d: 3, t: 120,
+    q: "Which combination correctly lists structures present in BOTH a typical prokaryotic cell and a typical eukaryotic plant cell?",
+    o: [
+      "Ribosomes, plasma membrane, cell wall",
+      "Ribosomes, nuclear envelope, mitochondria",
+      "Golgi apparatus, cell wall, mesosomes",
+      "Plasma membrane, endoplasmic reticulum, plastids",
+    ],
+    a: 0,
+    h: "Prokaryotes lack all membrane-bound organelles.",
+    e: "Prokaryotes (bacteria) have a plasma membrane, ribosomes (70S) and usually a cell wall, all of which a plant cell also has. Prokaryotes lack a nuclear envelope and membrane-bound organelles such as mitochondria, ER, Golgi and plastids; mesosomes are prokaryote-specific.",
+  },
+  {
+    d: 2, t: 60,
+    q: "Membrane-bound minute vesicles containing various enzymes, present in both plant and animal cells, are called:",
+    o: ["Microbodies", "Microtubules", "Microfilaments", "Polysomes"],
+    a: 0,
+    h: "They are bodies (vesicles), not fibres.",
+    e: "Many membrane-bound minute vesicles called microbodies, which contain various enzymes, are present in both plant and animal cells (e.g. peroxisomes, glyoxysomes). Microtubules and microfilaments are cytoskeletal fibres without membranes; polysomes are ribosome chains on mRNA.",
+  },
+  {
+    d: 3, t: 120,
+    q: "Match the cell component with its feature:\n\nP. Cytoskeleton  Q. Satellite  R. Kinetochore  S. Tonoplast\n\n1. Disc-shaped structure at the centromere\n2. Network of filaments giving mechanical support and motility\n3. Membrane facilitating transport of ions against a gradient into the vacuole\n4. Small fragment formed due to a non-staining secondary constriction",
+    o: ["P-2, Q-4, R-1, S-3", "P-2, Q-1, R-4, S-3", "P-3, Q-4, R-1, S-2", "P-4, Q-2, R-3, S-1"],
+    a: 0,
+    h: "Kinetochores sit on the sides of the centromere.",
+    e: "The cytoskeleton (microtubules, microfilaments, intermediate filaments) gives mechanical support, motility and shape (P-2). Some chromosomes have a non-staining secondary constriction at a constant location, giving a small fragment called the satellite (Q-4). The centromere holds two chromatids and bears disc-shaped kinetochores on its sides (R-1). The tonoplast transports ions into the vacuole against the gradient (S-3).",
+  },
+];
