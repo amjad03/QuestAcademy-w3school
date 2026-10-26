@@ -1071,9 +1071,1025 @@ The extra pressure that must be applied on the solution side to just stop osmosi
       },
     ],
   },
+  /* ------------------------------------------------------------------ */
+  /* Electrochemistry (NCERT Class 12 Unit 2; same title in ISC)         */
+  /* ------------------------------------------------------------------ */
+  {
+    slug: "c12-electrochemistry",
+    title: "Electrochemistry",
+    icon: "🔋",
+    description: "Galvanic cells and electrode potentials, the Nernst equation, cell EMF and Gibbs energy, conductance of electrolytes, Kohlrausch's law, electrolysis and Faraday's laws, batteries, fuel cells and corrosion.",
+    lessons: [
+      /* ---------------- Lesson 1 ---------------- */
+      {
+        slug: "c12-ec-galvanic-cells",
+        title: "Galvanic Cells and Electrode Potentials",
+        summary: "How a redox reaction makes electricity in a Daniell cell, the salt bridge, cell notation, the standard hydrogen electrode and the electrochemical series.",
+        minutes: 20,
+        xp: 50,
+        blocks: [
+          {
+            type: "illustration",
+            emoji: "🔦",
+            caption: "A torch cell, a phone battery and a rusting iron gate all run on the same idea: electrons moving from one substance to another.",
+          },
+          {
+            type: "text",
+            md: t`**Electrochemistry** studies how chemical energy and electrical energy turn into each other. An **electrochemical cell** that changes the energy of a spontaneous redox reaction into electrical energy is a **galvanic** (or **voltaic**) cell. A cell that uses electrical energy to drive a non-spontaneous reaction is an **electrolytic** cell.
+
+In the **Daniell cell**, a zinc rod dips in zinc sulphate solution and a copper rod dips in copper sulphate solution. Each metal with its solution is a **half-cell** (or **electrode**). The reaction is $\text{Zn(s)} + \text{Cu}^{2+}\text{(aq)} \rightarrow \text{Zn}^{2+}\text{(aq)} + \text{Cu(s)}$, and the cell gives 1.10 V when both ion concentrations are 1 M.`,
+          },
+          {
+            type: "table",
+            headers: ["", "Anode (zinc half-cell)", "Cathode (copper half-cell)"],
+            rows: [
+              ["Half-reaction", t`$\text{Zn} \rightarrow \text{Zn}^{2+} + 2e^-$ (oxidation)`, t`$\text{Cu}^{2+} + 2e^- \rightarrow \text{Cu}$ (reduction)`],
+              ["Sign in a galvanic cell", "negative", "positive"],
+              ["What you see", "zinc rod slowly gets thinner", "copper is deposited; blue colour fades"],
+              ["Electron flow in the wire", "electrons leave from here", "electrons arrive here"],
+            ],
+          },
+          {
+            type: "text",
+            md: t`The two solutions are joined by a **salt bridge**: an inverted U-tube of KCl or $\text{KNO}_3$ set in agar–agar gel. It completes the circuit by letting ions move, and keeps each solution electrically neutral. Without it, positive charge would pile up around the zinc and the current would stop at once.
+
+**Cell notation:** anode on the left, cathode on the right, a single line for a phase boundary and a double line for the salt bridge: $\text{Zn(s)} \,|\, \text{Zn}^{2+}\text{(aq)} \,||\, \text{Cu}^{2+}\text{(aq)} \,|\, \text{Cu(s)}$.
+
+If an opposing external voltage is applied: below 1.10 V the cell still works (with less current); at exactly 1.10 V no current flows; above 1.10 V the reaction reverses, zinc is deposited and copper dissolves, and the cell now acts as an **electrolytic cell**.`,
+          },
+          {
+            type: "text",
+            md: t`**Electrode potential** is the potential difference between a metal and its ion solution. By IUPAC convention we always write it as a **reduction potential**. When all species are at unit concentration (1 M; gases at 1 bar) and 298 K, it is the **standard electrode potential** $E^\circ$.
+
+One half-cell's potential cannot be measured alone, so we pair it with a reference: the **standard hydrogen electrode (SHE)**, $\text{Pt(s)} \,|\, \text{H}_2(\text{g, 1 bar}) \,|\, \text{H}^+(\text{aq, 1 M})$, a platinised platinum foil in acid with pure hydrogen bubbling over it. Its $E^\circ$ is taken as **0.00 V** at all temperatures.`,
+          },
+          {
+            type: "formula",
+            tex: t`E^\circ_{\text{cell}} = E^\circ_{\text{cathode}} - E^\circ_{\text{anode}} = E^\circ_{\text{right}} - E^\circ_{\text{left}}`,
+            caption: t`Both values are reduction potentials. A positive $E^\circ_{\text{cell}}$ means the reaction as written is spontaneous.`,
+          },
+          {
+            type: "table",
+            headers: ["Half-reaction (reduction)", t`$E^\circ$ / V`],
+            rows: [
+              [t`$\text{F}_2 + 2e^- \rightarrow 2\text{F}^-$`, "+2.87"],
+              [t`$\text{Cl}_2 + 2e^- \rightarrow 2\text{Cl}^-$`, "+1.36"],
+              [t`$\text{O}_2 + 4\text{H}^+ + 4e^- \rightarrow 2\text{H}_2\text{O}$`, "+1.23"],
+              [t`$\text{Br}_2 + 2e^- \rightarrow 2\text{Br}^-$`, "+1.09"],
+              [t`$\text{Ag}^+ + e^- \rightarrow \text{Ag}$`, "+0.80"],
+              [t`$\text{Fe}^{3+} + e^- \rightarrow \text{Fe}^{2+}$`, "+0.77"],
+              [t`$\text{I}_2 + 2e^- \rightarrow 2\text{I}^-$`, "+0.54"],
+              [t`$\text{Cu}^{2+} + 2e^- \rightarrow \text{Cu}$`, "+0.34"],
+              [t`$2\text{H}^+ + 2e^- \rightarrow \text{H}_2$`, "0.00"],
+              [t`$\text{Ni}^{2+} + 2e^- \rightarrow \text{Ni}$`, "−0.25"],
+              [t`$\text{Fe}^{2+} + 2e^- \rightarrow \text{Fe}$`, "−0.44"],
+              [t`$\text{Zn}^{2+} + 2e^- \rightarrow \text{Zn}$`, "−0.76"],
+              [t`$\text{Mg}^{2+} + 2e^- \rightarrow \text{Mg}$`, "−2.37"],
+              [t`$\text{Li}^+ + e^- \rightarrow \text{Li}$`, "−3.05"],
+            ],
+          },
+          {
+            type: "text",
+            md: t`Reading the **electrochemical series**: the higher (more positive) the $E^\circ$, the more easily the species on the left is reduced, so it is a stronger **oxidising agent** ($\text{F}_2$ is the strongest). The lower the $E^\circ$, the more easily the metal on the right is oxidised, so it is a stronger **reducing agent** (Li is the strongest). Metals with negative $E^\circ$ (like Zn, Fe, Mg) can displace hydrogen from dilute acids; copper and silver cannot.`,
+          },
+          {
+            type: "example",
+            title: "EMF and reaction of a cell",
+            problem: t`Write the cell reaction and find $E^\circ_{\text{cell}}$ for $\text{Mg(s)} \,|\, \text{Mg}^{2+}\text{(aq)} \,||\, \text{Ag}^+\text{(aq)} \,|\, \text{Ag(s)}$.`,
+            steps: [
+              t`Anode (left): $\text{Mg} \rightarrow \text{Mg}^{2+} + 2e^-$. Cathode (right): $\text{Ag}^+ + e^- \rightarrow \text{Ag}$, multiplied by 2 to balance electrons.`,
+              t`Cell reaction: $\text{Mg(s)} + 2\text{Ag}^+\text{(aq)} \rightarrow \text{Mg}^{2+}\text{(aq)} + 2\text{Ag(s)}$.`,
+              t`$E^\circ_{\text{cell}} = E^\circ_{\text{Ag}^+/\text{Ag}} - E^\circ_{\text{Mg}^{2+}/\text{Mg}} = 0.80 - (-2.37) = 3.17$ V. The silver value is **not** doubled.`,
+            ],
+            answer: t`$E^\circ_{\text{cell}} = 3.17$ V; the positive sign shows the reaction is spontaneous.`,
+          },
+          {
+            type: "checkpoint",
+            questions: [
+              {
+                kind: "mcq",
+                q: t`Using the table, can $\text{Fe}^{3+}$ oxidise $\text{I}^-$ to $\text{I}_2$ under standard conditions?`,
+                options: [
+                  t`Yes: $E^\circ_{\text{cell}} = 0.77 - 0.54 = +0.23$ V`,
+                  t`No: $E^\circ_{\text{cell}} = 0.54 - 0.77 = -0.23$ V`,
+                  t`Yes: $E^\circ_{\text{cell}} = 0.77 + 0.54 = 1.31$ V`,
+                  "It cannot be decided without concentrations",
+                ],
+                answer: 0,
+                explain: t`$\text{Fe}^{3+}$ is reduced (cathode, 0.77 V) and $\text{I}^-$ is oxidised (anode, 0.54 V). $E^\circ_{\text{cell}} = +0.23$ V, so yes. The same check shows $\text{Fe}^{3+}$ cannot oxidise $\text{Br}^-$ ($0.77 - 1.09 < 0$).`,
+              },
+            ],
+          },
+          {
+            type: "mistake",
+            wrong: t`For $2\text{Ag}^+ + 2e^- \rightarrow 2\text{Ag}$, I must double $E^\circ$ to $1.60$ V.`,
+            right: t`$E^\circ$ stays 0.80 V whatever coefficients you use. Electrode potential is an **intensive** property.`,
+            why: "Learners treat E° like ΔH, which does scale with the amount. Potential is energy per unit charge, so doubling both the energy and the charge leaves it unchanged.",
+          },
+          {
+            type: "activity",
+            activity: {
+              kind: "match",
+              prompt: "Match each part of a galvanic cell with its job.",
+              pairs: [
+                ["Anode", "site of oxidation, negative terminal"],
+                ["Cathode", "site of reduction, positive terminal"],
+                ["Salt bridge", "lets ions move and keeps solutions neutral"],
+                ["Standard hydrogen electrode", "reference electrode taken as 0.00 V"],
+                ["External wire", "carries electrons from anode to cathode"],
+              ],
+              explain: "Electrons travel through the wire; ions travel through the solutions and the salt bridge. Both flows are needed to complete the circuit.",
+            },
+          },
+          {
+            type: "callout",
+            tone: "exam",
+            title: "Board tip",
+            md: t`Questions on the Daniell cell often ask for the effect of an external voltage less than, equal to, and greater than 1.10 V: give all three cases. In $E^\circ_{\text{cell}}$ answers, write the formula with "cathode − anode" in words, then the numbers with signs in brackets, then the unit V.`,
+          },
+          {
+            type: "keypoints",
+            items: [
+              "A galvanic cell turns the energy of a spontaneous redox reaction into electricity; oxidation at the anode, reduction at the cathode.",
+              "The salt bridge completes the circuit and keeps both solutions neutral.",
+              t`SHE is the reference ($E^\circ = 0$). $E^\circ_{\text{cell}} = E^\circ_{\text{cathode}} - E^\circ_{\text{anode}}$, using reduction potentials.`,
+              t`Higher $E^\circ$: stronger oxidising agent. Lower $E^\circ$: stronger reducing agent. $E^\circ$ does not scale with coefficients.`,
+            ],
+          },
+        ],
+        flashcards: [
+          { front: "Galvanic vs electrolytic cell", back: "Galvanic: spontaneous reaction makes electricity. Electrolytic: electricity drives a non-spontaneous reaction." },
+          { front: "Functions of a salt bridge", back: "Completes the inner circuit by allowing ion flow, and keeps the two solutions electrically neutral." },
+          { front: "Cell notation of the Daniell cell", back: t`$\text{Zn(s)} | \text{Zn}^{2+}\text{(aq)} || \text{Cu}^{2+}\text{(aq)} | \text{Cu(s)}$` },
+          { front: "Standard hydrogen electrode", back: t`$\text{Pt(s)} | \text{H}_2$(g, 1 bar) $| \text{H}^+$(aq, 1 M); its $E^\circ$ is taken as 0.00 V.` },
+          { front: t`$E^\circ_{\text{cell}}$ formula`, back: t`$E^\circ_{\text{cathode}} - E^\circ_{\text{anode}}$ (both reduction potentials).` },
+          { front: "Strongest oxidising agent in the series", back: t`Fluorine, $E^\circ = +2.87$ V.` },
+          { front: "Strongest reducing agent in the series", back: t`Lithium, $E^\circ = -3.05$ V.` },
+          { front: "Daniell cell with external voltage above 1.10 V", back: "Current reverses: zinc is deposited, copper dissolves; it works as an electrolytic cell." },
+        ],
+        quiz: [
+          {
+            kind: "numeric",
+            q: t`Find $E^\circ_{\text{cell}}$ for $\text{Zn} | \text{Zn}^{2+} || \text{Ag}^+ | \text{Ag}$. ($E^\circ$: $\text{Zn}^{2+}/\text{Zn} = -0.76$ V, $\text{Ag}^+/\text{Ag} = +0.80$ V)`,
+            answer: 1.56,
+            tolerance: 0.005,
+            unit: "V",
+            explain: t`$E^\circ_{\text{cell}} = 0.80 - (-0.76) = 1.56$ V.`,
+          },
+          {
+            kind: "mcq",
+            q: "Which is the strongest reducing agent?",
+            options: ["Cu", "Zn", "Mg", "Li"],
+            answer: 3,
+            explain: t`Lithium has the most negative reduction potential ($-3.05$ V), so it loses electrons most readily.`,
+          },
+          {
+            kind: "mcq",
+            q: "Can silver nitrate solution be stored in a copper vessel?",
+            options: [
+              "Yes, copper does not react with silver ions",
+              "No, copper reduces Ag⁺ to silver and goes into solution as Cu²⁺",
+              "No, silver ions oxidise water",
+              "Yes, because copper is above silver in reactivity",
+            ],
+            answer: 1,
+            explain: t`$E^\circ_{\text{cell}}$ for $\text{Cu} + 2\text{Ag}^+ \rightarrow \text{Cu}^{2+} + 2\text{Ag}$ is $0.80 - 0.34 = +0.46$ V, so the vessel would corrode.`,
+            difficulty: 2,
+          },
+          {
+            kind: "truefalse",
+            q: t`If the half-reaction $\text{Ag}^+ + e^- \rightarrow \text{Ag}$ is multiplied by 2, its $E^\circ$ becomes $+1.60$ V.`,
+            answer: false,
+            explain: "E° is intensive; it stays +0.80 V.",
+          },
+          {
+            kind: "numeric",
+            q: t`Find $E^\circ_{\text{cell}}$ for $\text{Fe} | \text{Fe}^{2+} || \text{Ni}^{2+} | \text{Ni}$. ($E^\circ$: $\text{Fe}^{2+}/\text{Fe} = -0.44$ V, $\text{Ni}^{2+}/\text{Ni} = -0.25$ V)`,
+            answer: 0.19,
+            tolerance: 0.005,
+            unit: "V",
+            explain: t`$E^\circ_{\text{cell}} = -0.25 - (-0.44) = 0.19$ V.`,
+          },
+          {
+            kind: "mcq",
+            q: "In a galvanic cell, electrons in the external wire flow:",
+            options: ["from cathode to anode", "from anode to cathode", "through the salt bridge", "in both directions equally"],
+            answer: 1,
+            explain: "Oxidation at the anode releases electrons, which travel through the wire to the cathode. Ions, not electrons, move through the salt bridge.",
+          },
+          {
+            kind: "multi",
+            q: "Which metals can displace hydrogen from dilute hydrochloric acid?",
+            options: ["Zinc", "Copper", "Magnesium", "Silver"],
+            answers: [0, 2],
+            explain: "Only metals with negative E° (below hydrogen in the series) are oxidised by H⁺. Cu and Ag have positive E°.",
+          },
+        ],
+      },
+
+      /* ---------------- Lesson 2 ---------------- */
+      {
+        slug: "c12-ec-nernst-gibbs",
+        title: "The Nernst Equation, Gibbs Energy and Equilibrium",
+        summary: "How electrode and cell potentials change with concentration, the hydrogen electrode and pH, concentration cells, and the links between E°, ΔG° and K.",
+        minutes: 20,
+        xp: 50,
+        blocks: [
+          {
+            type: "text",
+            md: t`A torch cell gets weaker as it is used. Its reactants are used up and its products build up, so its voltage falls. $E^\circ$ is the potential only at 1 M concentrations; the **Nernst equation** gives the potential at any concentration.`,
+          },
+          {
+            type: "formula",
+            tex: t`\text{For } \text{M}^{n+}(\text{aq}) + ne^- \rightarrow \text{M(s)}: \quad E = E^\circ - \frac{RT}{nF}\ln\frac{1}{[\text{M}^{n+}]} = E^\circ - \frac{0.059}{n}\log\frac{1}{[\text{M}^{n+}]} \text{ at 298 K}`,
+            caption: t`$R = 8.314$ J K$^{-1}$ mol$^{-1}$, $F = 96500$ C mol$^{-1}$ (NCERT uses 96487), $T = 298$ K, so $2.303RT/F = 0.059$ V. The concentration of a pure solid is taken as 1.`,
+          },
+          {
+            type: "formula",
+            tex: t`a\text{A} + b\text{B} \rightarrow c\text{C} + d\text{D}: \quad E_{\text{cell}} = E^\circ_{\text{cell}} - \frac{0.059}{n}\log\frac{[\text{C}]^c[\text{D}]^d}{[\text{A}]^a[\text{B}]^b}`,
+            caption: t`$n$ = number of electrons transferred in the balanced cell reaction. Solids and pure liquids are left out of the quotient; gases enter as partial pressures in bar.`,
+          },
+          {
+            type: "example",
+            title: "Daniell cell away from standard conditions",
+            problem: t`Find $E_{\text{cell}}$ at 298 K for $\text{Zn} | \text{Zn}^{2+}(0.10\text{ M}) || \text{Cu}^{2+}(0.0010\text{ M}) | \text{Cu}$. $E^\circ_{\text{cell}} = 1.10$ V.`,
+            steps: [
+              t`Reaction: $\text{Zn} + \text{Cu}^{2+} \rightarrow \text{Zn}^{2+} + \text{Cu}$, so $n = 2$ and $Q = [\text{Zn}^{2+}]/[\text{Cu}^{2+}]$.`,
+              t`$Q = 0.10/0.0010 = 100$, so $\log Q = 2$.`,
+              t`$E = 1.10 - \dfrac{0.059}{2} \times 2 = 1.10 - 0.059 = 1.041$ V.`,
+            ],
+            answer: t`$E_{\text{cell}} \approx 1.04$ V, a little less than $E^\circ$ because the product ion is more concentrated than the reactant ion.`,
+          },
+          {
+            type: "text",
+            md: t`**Hydrogen electrode and pH.** For $2\text{H}^+ + 2e^- \rightarrow \text{H}_2$ with $p_{\text{H}_2} = 1$ bar: $E = 0 - \dfrac{0.059}{2}\log\dfrac{1}{[\text{H}^+]^2} = -0.059\,\text{pH}$. At pH 3 the electrode potential is $-0.177$ V.
+
+**Concentration cell.** Two identical electrodes in solutions of different concentration still give a voltage, because $E^\circ_{\text{cell}} = 0$ and only the log term remains: $\text{Ag} | \text{Ag}^+(0.010\text{ M}) || \text{Ag}^+(0.10\text{ M}) | \text{Ag}$ gives $E = 0.059 \log(0.10/0.010) = 0.059$ V. The more dilute side is the anode.`,
+          },
+          {
+            type: "heading",
+            text: "Cell potential, Gibbs energy and equilibrium",
+          },
+          {
+            type: "formula",
+            tex: t`\Delta_r G = -nFE_{\text{cell}}, \qquad \Delta_r G^\circ = -nFE^\circ_{\text{cell}} = -2.303\,RT\log K_c, \qquad \log K_c = \frac{nE^\circ_{\text{cell}}}{0.059} \text{ at 298 K}`,
+            caption: t`The electrical work a cell can do, $nFE$, equals the decrease in Gibbs energy. A positive $E^\circ$ gives a negative $\Delta_rG^\circ$ and $K > 1$. At equilibrium $E_{\text{cell}} = 0$ and $Q = K$.`,
+          },
+          {
+            type: "example",
+            title: "Equilibrium constant and Gibbs energy",
+            problem: t`For $\text{Zn(s)} + \text{Fe}^{2+}\text{(aq)} \rightarrow \text{Zn}^{2+}\text{(aq)} + \text{Fe(s)}$, find $E^\circ_{\text{cell}}$, $\Delta_rG^\circ$ and $K_c$ at 298 K. ($E^\circ$: $\text{Fe}^{2+}/\text{Fe} = -0.44$ V, $\text{Zn}^{2+}/\text{Zn} = -0.76$ V; $F = 96500$ C mol$^{-1}$)`,
+            steps: [
+              t`$E^\circ_{\text{cell}} = -0.44 - (-0.76) = 0.32$ V; $n = 2$.`,
+              t`$\Delta_rG^\circ = -2 \times 96500 \times 0.32 = -61\,760$ J mol$^{-1} \approx -61.8$ kJ mol$^{-1}$.`,
+              t`$\log K_c = (2 \times 0.32)/0.059 = 10.85$.`,
+              t`$K_c = 10^{10.85} \approx 7.0 \times 10^{10}$.`,
+            ],
+            answer: t`$E^\circ = 0.32$ V, $\Delta_rG^\circ \approx -61.8$ kJ mol$^{-1}$, $K_c \approx 7 \times 10^{10}$: the reaction goes almost to completion.`,
+          },
+          {
+            type: "checkpoint",
+            questions: [
+              {
+                kind: "numeric",
+                q: t`Find $\Delta_rG^\circ$ (in kJ mol$^{-1}$) for the Daniell cell, $E^\circ = 1.10$ V, $n = 2$, $F = 96500$ C mol$^{-1}$.`,
+                answer: -212.3,
+                tolerance: 0.3,
+                unit: "kJ/mol",
+                explain: t`$\Delta_rG^\circ = -nFE^\circ = -2 \times 96500 \times 1.10 = -212\,300$ J mol$^{-1} = -212.3$ kJ mol$^{-1}$.`,
+              },
+            ],
+          },
+          {
+            type: "mistake",
+            wrong: t`In the Nernst equation I put [reactants]/[products] in the log, and I include the solid metals too.`,
+            right: t`$Q$ is [products]/[reactants], each raised to its coefficient, and solids such as Zn and Cu are left out (taken as 1).`,
+            why: "The electrode form 'log 1/[Mⁿ⁺]' looks like reactants on top and products below, which confuses learners. Write the balanced cell reaction first and build Q from it every time.",
+          },
+          {
+            type: "activity",
+            activity: {
+              kind: "reveal",
+              prompt: "In a Daniell cell, Cu²⁺ concentration is raised tenfold. What happens to E?",
+              emoji: "⚡",
+              options: ["E rises by about 0.03 V", "E falls by about 0.03 V", "E stays 1.10 V because E° is fixed"],
+              answer: 0,
+              trap: 2,
+              explain: "Cu²⁺ is a reactant, so Q falls tenfold and E = E° − (0.059/2) log Q rises by 0.0295 V. E° is fixed, but E is not.",
+            },
+          },
+          {
+            type: "callout",
+            tone: "exam",
+            title: "Board tip",
+            md: t`Nernst numericals carry marks for: (1) the balanced cell reaction, (2) $n$, (3) the correct quotient, (4) the final value with unit. Many students lose the mark for $n$ by using 1 for a two-electron reaction. State "at 298 K" when you use 0.059.`,
+          },
+          {
+            type: "keypoints",
+            items: [
+              t`Nernst: $E = E^\circ - \dfrac{0.059}{n}\log Q$ at 298 K; solids are left out of $Q$.`,
+              t`Hydrogen electrode: $E = -0.059\,\text{pH}$ (1 bar $\text{H}_2$).`,
+              "A concentration cell works only because of the concentration difference; its E° is zero.",
+              t`$\Delta_rG^\circ = -nFE^\circ = -2.303RT\log K$; positive $E^\circ$ means spontaneous and $K > 1$.`,
+            ],
+          },
+        ],
+        flashcards: [
+          { front: "Nernst equation for an electrode (298 K)", back: t`$E = E^\circ - \dfrac{0.059}{n}\log\dfrac{1}{[\text{M}^{n+}]}$.` },
+          { front: t`Value of $2.303RT/F$ at 298 K`, back: "About 0.059 V." },
+          { front: "Potential of a hydrogen electrode at pH x (1 bar H₂)", back: t`$E = -0.059x$ V.` },
+          { front: "What is a concentration cell?", back: "A cell with the same electrode on both sides but different ion concentrations; E° = 0." },
+          { front: "Gibbs energy and cell potential", back: t`$\Delta_rG = -nFE_{\text{cell}}$.` },
+          { front: t`$\log K$ from $E^\circ$ at 298 K`, back: t`$\log K = nE^\circ/0.059$.` },
+          { front: t`$E_{\text{cell}}$ at equilibrium`, back: t`Zero; then $Q = K$.` },
+        ],
+        quiz: [
+          {
+            kind: "numeric",
+            q: t`Find the electrode potential (in V) of $\text{Cu}^{2+}(0.010\text{ M})/\text{Cu}$ at 298 K. $E^\circ = +0.34$ V.`,
+            answer: 0.281,
+            tolerance: 0.002,
+            unit: "V",
+            explain: t`$E = 0.34 - (0.059/2)\log(1/0.010) = 0.34 - 0.0295 \times 2 = 0.281$ V.`,
+          },
+          {
+            kind: "numeric",
+            q: "What is the potential (in V) of a hydrogen electrode (1 bar H₂) dipped in a solution of pH 5 at 298 K?",
+            answer: -0.295,
+            tolerance: 0.002,
+            unit: "V",
+            explain: t`$E = -0.059 \times 5 = -0.295$ V.`,
+          },
+          {
+            kind: "numeric",
+            q: t`Find $E_{\text{cell}}$ (in V) at 298 K for $\text{Ni} | \text{Ni}^{2+}(0.10\text{ M}) || \text{Ag}^+(0.010\text{ M}) | \text{Ag}$. ($E^\circ$: $\text{Ni}^{2+}/\text{Ni} = -0.25$ V, $\text{Ag}^+/\text{Ag} = 0.80$ V)`,
+            answer: 0.961,
+            tolerance: 0.005,
+            unit: "V",
+            explain: t`$\text{Ni} + 2\text{Ag}^+ \rightarrow \text{Ni}^{2+} + 2\text{Ag}$, $n = 2$, $E^\circ = 1.05$ V. $Q = 0.10/(0.010)^2 = 1000$. $E = 1.05 - 0.0295 \times 3 = 0.961$ V.`,
+            difficulty: 2,
+            hint: "Square [Ag⁺] in Q because its coefficient is 2.",
+          },
+          {
+            kind: "numeric",
+            q: t`Find the EMF (in V) at 298 K of $\text{Ag} | \text{Ag}^+(0.0010\text{ M}) || \text{Ag}^+(0.10\text{ M}) | \text{Ag}$.`,
+            answer: 0.118,
+            tolerance: 0.002,
+            unit: "V",
+            explain: t`$E = 0.059\log(0.10/0.0010) = 0.059 \times 2 = 0.118$ V.`,
+          },
+          {
+            kind: "mcq",
+            q: t`A cell reaction has $E^\circ_{\text{cell}} > 0$. Which is true?`,
+            options: [
+              t`$\Delta_rG^\circ > 0$ and $K < 1$`,
+              t`$\Delta_rG^\circ < 0$ and $K > 1$`,
+              t`$\Delta_rG^\circ = 0$ and $K = 1$`,
+              t`$\Delta_rG^\circ < 0$ and $K < 1$`,
+            ],
+            answer: 1,
+            explain: t`$\Delta_rG^\circ = -nFE^\circ$ is negative, and $\log K = nE^\circ/0.059$ is positive, so $K > 1$.`,
+          },
+          {
+            kind: "truefalse",
+            q: t`Writing a cell reaction with all coefficients doubled doubles $\Delta_rG^\circ$ but leaves $E^\circ_{\text{cell}}$ unchanged.`,
+            answer: true,
+            explain: t`$n$ doubles, so $\Delta_rG^\circ = -nFE^\circ$ doubles, while $E^\circ$ (intensive) stays the same.`,
+            difficulty: 2,
+          },
+          {
+            kind: "mcq",
+            q: "A cell has run until its voltage is zero. This means:",
+            options: ["The cell reaction has reached equilibrium", "E° has become zero", "All reactants are used up", "The salt bridge has dried"],
+            answer: 0,
+            explain: "E = 0 when Q = K. E° is a fixed constant and does not change.",
+          },
+        ],
+      },
+
+      /* ---------------- Lesson 3 ---------------- */
+      {
+        slug: "c12-ec-conductance",
+        title: "Conductance of Electrolytic Solutions and Kohlrausch's Law",
+        summary: "Resistivity, conductivity and cell constant, measuring conductivity, molar conductivity and its change with concentration, and Kohlrausch's law with its uses.",
+        minutes: 22,
+        xp: 50,
+        blocks: [
+          {
+            type: "illustration",
+            emoji: "💡",
+            caption: "Pure water barely lets a bulb glow. Add a pinch of salt and it lights up: ions carry the current.",
+          },
+          {
+            type: "text",
+            md: t`In a metal, current is carried by electrons (**electronic conductance**). In a solution, it is carried by moving ions (**electrolytic** or **ionic conductance**). Ionic conductance depends on the nature of the electrolyte, the size of the ions and how strongly they are **solvated**, the nature and viscosity of the solvent, the concentration, and the temperature (it rises as temperature rises).`,
+          },
+          {
+            type: "table",
+            headers: ["Quantity", "Meaning", "SI unit"],
+            rows: [
+              [t`Resistance $R$`, t`$R = \rho \, l/A$`, t`ohm ($\Omega$)`],
+              [t`Resistivity $\rho$`, "resistance of a 1 m cube (1 m length, 1 m² area)", t`$\Omega$ m`],
+              [t`Conductance $G$`, t`$G = 1/R$`, "siemens (S)"],
+              [t`Conductivity $\kappa$`, t`$\kappa = 1/\rho$: conductance of a 1 m cube of solution`, t`S m$^{-1}$`],
+              [t`Cell constant $G^*$`, t`$G^* = l/A = R\kappa$`, t`m$^{-1}$`],
+              [t`Molar conductivity $\Lambda_m$`, t`$\Lambda_m = \kappa/c$: conductivity per mole of electrolyte`, t`S m$^2$ mol$^{-1}$`],
+            ],
+          },
+          {
+            type: "text",
+            md: t`**Measuring conductivity.** Direct current would electrolyse the solution and change its concentration, so an **alternating current** source is used, with a **Wheatstone bridge** and a detector (headphones or an electronic detector). The solution sits in a **conductivity cell**: two platinised platinum electrodes of area $A$, a distance $l$ apart. Since $l$ and $A$ are hard to measure, the cell constant is found from a solution of known conductivity, usually KCl. At 298 K, 0.100 M KCl has $\kappa = 1.29$ S m$^{-1}$ and 0.0100 M KCl has $\kappa = 0.141$ S m$^{-1}$.`,
+          },
+          {
+            type: "formula",
+            tex: t`\kappa = \frac{G^*}{R}, \qquad \Lambda_m\,(\text{S cm}^2\text{ mol}^{-1}) = \frac{1000 \times \kappa\,(\text{S cm}^{-1})}{\text{molarity (mol L}^{-1})}`,
+            caption: t`In SI: $\Lambda_m$ (S m$^2$ mol$^{-1}$) $= \kappa$ (S m$^{-1}$) $/ c$ (mol m$^{-3}$). 1 S m$^2$ mol$^{-1}$ $= 10^4$ S cm$^2$ mol$^{-1}$.`,
+          },
+          {
+            type: "example",
+            title: "Cell constant, then molar conductivity",
+            problem: t`A conductivity cell filled with 0.100 M KCl ($\kappa = 0.0129$ S cm$^{-1}$) has a resistance of 200 Ω at 298 K. Filled with 0.050 M NaCl, its resistance is 465 Ω. Find the cell constant and $\Lambda_m$ of the NaCl solution.`,
+            steps: [
+              t`$G^* = R\kappa = 200 \times 0.0129 = 2.58$ cm$^{-1}$.`,
+              t`For NaCl: $\kappa = G^*/R = 2.58/465 = 5.55 \times 10^{-3}$ S cm$^{-1}$.`,
+              t`$\Lambda_m = 1000 \times 5.55 \times 10^{-3}/0.050 = 111$ S cm$^2$ mol$^{-1}$.`,
+            ],
+            answer: t`$G^* = 2.58$ cm$^{-1}$; $\Lambda_m \approx 111$ S cm$^2$ mol$^{-1}$.`,
+          },
+          {
+            type: "checkpoint",
+            questions: [
+              {
+                kind: "mcq",
+                q: "Why is alternating current used to measure the conductivity of a solution?",
+                options: [
+                  "To avoid electrolysis and polarisation at the electrodes",
+                  "Because DC cannot pass through solutions",
+                  "To heat the solution to 298 K",
+                  "Because AC gives a larger conductivity",
+                ],
+                answer: 0,
+                explain: "DC would cause electrolysis, changing the solution and coating the electrodes. AC reverses quickly, so no net chemical change takes place.",
+              },
+            ],
+          },
+          {
+            type: "text",
+            md: t`**Change with concentration.** On dilution, **conductivity falls** (fewer ions in each cm³), but **molar conductivity rises**, because each mole of electrolyte now contributes more. The limiting value as $c \rightarrow 0$ is $\Lambda_m^\circ$.
+
+For a **strong electrolyte** (KCl), $\Lambda_m$ rises gently and fits a straight line against $\sqrt{c}$; ions are fully present but drag on each other less when far apart. Extrapolating the line to zero gives $\Lambda_m^\circ$. For a **weak electrolyte** (ethanoic acid), $\Lambda_m$ stays low and then shoots up at high dilution because the **degree of dissociation** rises sharply. The curve cannot be extrapolated, so $\Lambda_m^\circ$ comes from Kohlrausch's law instead.`,
+          },
+          {
+            type: "formula",
+            tex: t`\Lambda_m = \Lambda_m^\circ - A\sqrt{c} \;\; (\text{strong}), \qquad \Lambda_m^\circ = \nu_+\lambda_+^\circ + \nu_-\lambda_-^\circ \;\; (\text{Kohlrausch}), \qquad \alpha = \frac{\Lambda_m}{\Lambda_m^\circ}, \quad K_a = \frac{c\alpha^2}{1-\alpha}`,
+            caption: t`$A$ depends on the type of electrolyte (1-1 such as NaCl, 2-1 such as $\text{CaCl}_2$, 2-2 such as $\text{MgSO}_4$), the solvent and temperature. **Kohlrausch's law of independent migration of ions:** the limiting molar conductivity is the sum of the limiting contributions of the cation and the anion.`,
+          },
+          {
+            type: "example",
+            title: "Dissociation constant of ethanoic acid",
+            problem: t`At 298 K, $\lambda^\circ(\text{H}^+) = 349.6$ and $\lambda^\circ(\text{CH}_3\text{COO}^-) = 40.9$ S cm$^2$ mol$^{-1}$. A 0.010 M ethanoic acid solution has $\Lambda_m = 16.3$ S cm$^2$ mol$^{-1}$. Find $\alpha$ and $K_a$.`,
+            steps: [
+              t`Kohlrausch: $\Lambda_m^\circ = 349.6 + 40.9 = 390.5$ S cm$^2$ mol$^{-1}$.`,
+              t`$\alpha = 16.3/390.5 = 0.0417$.`,
+              t`$K_a = \dfrac{c\alpha^2}{1 - \alpha} = \dfrac{0.010 \times (0.0417)^2}{1 - 0.0417} = \dfrac{1.74 \times 10^{-5}}{0.958}$.`,
+            ],
+            answer: t`$\alpha \approx 0.042$ (4.2% dissociated); $K_a \approx 1.8 \times 10^{-5}$.`,
+          },
+          {
+            type: "mistake",
+            wrong: "Diluting a solution increases its conductivity, because molar conductivity goes up.",
+            right: t`On dilution **conductivity** ($\kappa$) **decreases** while **molar conductivity** ($\Lambda_m$) **increases**.`,
+            why: "The two names sound alike. κ counts the ions in a fixed volume, which fall on dilution; Λm is per mole, and each mole conducts better when the ions are far apart (and, for weak electrolytes, more dissociated).",
+          },
+          {
+            type: "activity",
+            activity: {
+              kind: "sort",
+              prompt: "On dilution, does it go up or down?",
+              groups: ["Increases", "Decreases"],
+              items: [
+                { text: "Conductivity κ of KCl solution", group: 1, hint: "Fewer ions in each unit volume." },
+                { text: "Molar conductivity of KCl", group: 0, hint: "Ions drag on each other less." },
+                { text: "Molar conductivity of ethanoic acid", group: 0, hint: "Dissociation increases a lot." },
+                { text: "Degree of dissociation of ethanoic acid", group: 0, hint: "Le Chatelier: dilution favours more ions." },
+                { text: "Resistance of the solution in the same cell", group: 0, hint: "R = G*/κ and κ falls." },
+                { text: "Number of ions per cm³", group: 1, hint: "The same ions spread over more volume." },
+              ],
+              explain: "Per-volume quantities fall on dilution; per-mole quantities and the degree of dissociation rise.",
+            },
+          },
+          {
+            type: "callout",
+            tone: "exam",
+            title: "Board tip",
+            md: t`Unit errors cost the most marks here. Keep κ in S cm$^{-1}$ and use $\Lambda_m = 1000\kappa/M$, or keep everything in SI with $c$ in mol m$^{-3}$ (1 M = 1000 mol m$^{-3}$). Never mix the two. Draw (or describe) the two $\Lambda_m$ vs $\sqrt{c}$ curves: a straight line for KCl, a steep curve for ethanoic acid.`,
+          },
+          {
+            type: "keypoints",
+            items: [
+              t`$\kappa = G^*/R$ with cell constant $G^* = l/A$; $\Lambda_m = \kappa/c$.`,
+              "AC and a Wheatstone bridge are used to measure conductivity; the cell is calibrated with KCl.",
+              "On dilution κ falls but Λm rises; for strong electrolytes Λm = Λm° − A√c.",
+              "Kohlrausch: Λm° = ν₊λ₊° + ν₋λ₋°; it gives Λm° of weak electrolytes, then α = Λm/Λm° and Ka.",
+            ],
+          },
+        ],
+        flashcards: [
+          { front: "Define conductivity κ.", back: t`The conductance of a solution in a cube of 1 m edge (or 1 cm edge); the inverse of resistivity. Unit S m$^{-1}$.` },
+          { front: "Cell constant", back: t`$G^* = l/A = R\kappa$; unit m$^{-1}$ or cm$^{-1}$.` },
+          { front: "Molar conductivity", back: t`$\Lambda_m = \kappa/c$; unit S m$^2$ mol$^{-1}$ (or S cm$^2$ mol$^{-1}$).` },
+          { front: "State Kohlrausch's law.", back: "The limiting molar conductivity of an electrolyte is the sum of the limiting molar conductivities of its cation and anion, each multiplied by its number in the formula." },
+          { front: "Debye–Hückel–Onsager form for strong electrolytes", back: t`$\Lambda_m = \Lambda_m^\circ - A\sqrt{c}$.` },
+          { front: "Why can't Λm° of ethanoic acid be found by extrapolation?", back: "Its Λm vs √c curve rises steeply near zero concentration and is not linear, so it cannot be extended reliably." },
+          { front: "Degree of dissociation from conductance", back: t`$\alpha = \Lambda_m/\Lambda_m^\circ$.` },
+        ],
+        quiz: [
+          {
+            kind: "numeric",
+            q: t`A cell filled with 0.0100 M KCl ($\kappa = 1.41 \times 10^{-3}$ S cm$^{-1}$) shows a resistance of 600 Ω. Find the cell constant in cm$^{-1}$.`,
+            answer: 0.846,
+            tolerance: 0.005,
+            unit: "cm⁻¹",
+            explain: t`$G^* = R\kappa = 600 \times 1.41 \times 10^{-3} = 0.846$ cm$^{-1}$.`,
+          },
+          {
+            kind: "numeric",
+            q: t`A 0.20 M solution has $\kappa = 0.0248$ S cm$^{-1}$. Find $\Lambda_m$ in S cm$^2$ mol$^{-1}$.`,
+            answer: 124,
+            tolerance: 0.5,
+            unit: "S cm² mol⁻¹",
+            explain: t`$\Lambda_m = 1000 \times 0.0248/0.20 = 124$ S cm$^2$ mol$^{-1}$.`,
+          },
+          {
+            kind: "numeric",
+            q: t`Using $\lambda^\circ(\text{Ca}^{2+}) = 119.0$ and $\lambda^\circ(\text{Cl}^-) = 76.3$ S cm$^2$ mol$^{-1}$, find $\Lambda_m^\circ(\text{CaCl}_2)$.`,
+            answer: 271.6,
+            tolerance: 0.2,
+            unit: "S cm² mol⁻¹",
+            explain: t`$\Lambda_m^\circ = 119.0 + 2 \times 76.3 = 271.6$ S cm$^2$ mol$^{-1}$.`,
+            difficulty: 2,
+            hint: "There are two chloride ions per formula unit.",
+          },
+          {
+            kind: "numeric",
+            q: t`A weak acid has $\Lambda_m = 39.05$ S cm$^2$ mol$^{-1}$ at some concentration and $\Lambda_m^\circ = 390.5$ S cm$^2$ mol$^{-1}$. Find its degree of dissociation.`,
+            answer: 0.1,
+            tolerance: 0.002,
+            explain: t`$\alpha = 39.05/390.5 = 0.10$.`,
+          },
+          {
+            kind: "mcq",
+            q: t`In $\Lambda_m = \Lambda_m^\circ - A\sqrt{c}$, which pair of electrolytes has the same value of $A$ in water at 298 K?`,
+            options: [t`NaCl and KCl`, t`NaCl and $\text{MgSO}_4$`, t`KCl and $\text{CaCl}_2$`, t`$\text{CaCl}_2$ and $\text{MgSO}_4$`],
+            answer: 0,
+            explain: "A depends on the charge type of the electrolyte. NaCl and KCl are both 1-1 electrolytes.",
+            difficulty: 2,
+          },
+          {
+            kind: "truefalse",
+            q: "Λm° of ethanoic acid is found by extending its Λm vs √c graph to zero concentration.",
+            answer: false,
+            explain: "That works only for strong electrolytes. For a weak electrolyte, Λm° is found from Kohlrausch's law.",
+          },
+          {
+            kind: "mcq",
+            q: "Which change increases the conductance of an electrolyte solution?",
+            options: ["Raising the temperature", "Using a more viscous solvent", "Using ions that are more strongly solvated", "Diluting it in the same cell"],
+            answer: 0,
+            explain: "Higher temperature lowers viscosity and helps ions move. A viscous solvent, heavy solvation and dilution (fewer ions per volume) all lower conductance.",
+          },
+        ],
+      },
+
+      /* ---------------- Lesson 4 ---------------- */
+      {
+        slug: "c12-ec-electrolysis-batteries-corrosion",
+        title: "Electrolysis, Batteries, Fuel Cells and Corrosion",
+        summary: "Faraday's laws, predicting products of electrolysis, primary and secondary batteries, the hydrogen–oxygen fuel cell, and corrosion of iron as an electrochemical cell.",
+        minutes: 25,
+        xp: 55,
+        blocks: [
+          {
+            type: "illustration",
+            emoji: "🏭",
+            caption: "Aluminium for Indian aircraft and power lines, chlorine for water treatment and caustic soda for soap are all made by electrolysis.",
+          },
+          {
+            type: "text",
+            md: t`In an **electrolytic cell**, an external source pushes a non-spontaneous reaction. The **anode** (connected to the + terminal) is still where **oxidation** happens, and the **cathode** (– terminal) is where **reduction** happens.
+
+**Faraday's first law:** the mass of substance deposited or liberated at an electrode is proportional to the charge passed: $m = ZIt$, where $Z$ is the electrochemical equivalent. **Faraday's second law:** when the same charge passes through different electrolytes, the masses liberated are proportional to their chemical equivalent weights (atomic mass ÷ number of electrons needed per ion). One mole of electrons carries **1 F = 96 487 C ≈ 96 500 C**.`,
+          },
+          {
+            type: "formula",
+            tex: t`m = \frac{M}{nF} \times I t \qquad \frac{m_1}{m_2} = \frac{M_1/n_1}{M_2/n_2}`,
+            caption: t`$M$: molar mass; $n$: electrons per ion discharged; $I$ in A; $t$ in s; $Q = It$ in C.`,
+          },
+          {
+            type: "example",
+            title: "Copper plating",
+            problem: t`A current of 2.0 A passes through copper sulphate solution for 30 min. What mass of copper is deposited at the cathode? ($M(\text{Cu}) = 63.5$ g mol$^{-1}$, $F = 96500$ C mol$^{-1}$)`,
+            steps: [
+              t`$Q = It = 2.0 \times 30 \times 60 = 3600$ C.`,
+              t`Moles of electrons $= 3600/96500 = 0.0373$ mol.`,
+              t`$\text{Cu}^{2+} + 2e^- \rightarrow \text{Cu}$, so moles of Cu $= 0.0373/2 = 0.01865$ mol.`,
+              t`Mass $= 0.01865 \times 63.5 = 1.18$ g.`,
+            ],
+            answer: "About 1.18 g of copper.",
+          },
+          {
+            type: "table",
+            headers: ["Electrolyte (electrodes)", "Cathode product", "Anode product"],
+            rows: [
+              ["Molten NaCl", "Na", t`$\text{Cl}_2$`],
+              ["Aqueous NaCl (inert)", t`$\text{H}_2$ (water reduced; $\text{OH}^-$ left in solution)`, t`$\text{Cl}_2$ (because of overpotential for $\text{O}_2$)`],
+              [t`Aqueous $\text{CuSO}_4$ (Pt electrodes)`, "Cu", t`$\text{O}_2$`],
+              [t`Aqueous $\text{CuSO}_4$ (Cu electrodes)`, "Cu", t`Cu dissolves as $\text{Cu}^{2+}$ (used to refine copper)`],
+              [t`Dilute $\text{H}_2\text{SO}_4$ (Pt)`, t`$\text{H}_2$`, t`$\text{O}_2$`],
+              [t`Concentrated $\text{H}_2\text{SO}_4$ (Pt)`, t`$\text{H}_2$`, t`$\text{S}_2\text{O}_8^{2-}$ (peroxodisulphate)`],
+            ],
+          },
+          {
+            type: "text",
+            md: t`**Why these products?** When more than one reaction is possible, the one with the higher reduction potential happens at the cathode and the one that is easier to oxidise happens at the anode, unless **overpotential** (an extra voltage some reactions need because they are slow) changes the order. For aqueous NaCl, water ($E^\circ = -0.83$ V for $2\text{H}_2\text{O} + 2e^- \rightarrow \text{H}_2 + 2\text{OH}^-$) is reduced instead of $\text{Na}^+$ ($-2.71$ V). At the anode, $\text{O}_2$ should form on $E^\circ$ grounds (1.23 V vs 1.36 V), but its overpotential is large, so $\text{Cl}_2$ forms. Overall: $\text{NaCl(aq)} + \text{H}_2\text{O(l)} \rightarrow \text{Na}^+\text{(aq)} + \text{OH}^-\text{(aq)} + \tfrac{1}{2}\text{H}_2\text{(g)} + \tfrac{1}{2}\text{Cl}_2\text{(g)}$.`,
+          },
+          {
+            type: "checkpoint",
+            questions: [
+              {
+                kind: "numeric",
+                q: t`A current of 0.50 A is passed through silver nitrate solution for 1930 s. What mass of silver (in g) is deposited? ($M = 108$ g mol$^{-1}$, $F = 96500$ C mol$^{-1}$)`,
+                answer: 1.08,
+                tolerance: 0.01,
+                unit: "g",
+                explain: t`$Q = 0.50 \times 1930 = 965$ C $= 0.010$ mol $e^-$. $\text{Ag}^+ + e^- \rightarrow \text{Ag}$, so 0.010 mol Ag $= 1.08$ g.`,
+              },
+            ],
+          },
+          {
+            type: "heading",
+            text: "Batteries and fuel cells",
+          },
+          {
+            type: "table",
+            headers: ["Cell", "Type", "Anode", "Cathode", "Electrolyte", "Notes"],
+            rows: [
+              ["Dry (Leclanché) cell", "primary", "zinc container", t`carbon (graphite) rod in $\text{MnO}_2$ + carbon`, t`moist paste of $\text{NH}_4\text{Cl}$ and $\text{ZnCl}_2$`, t`about 1.5 V. Cathode: $\text{MnO}_2 + \text{NH}_4^+ + e^- \rightarrow \text{MnO(OH)} + \text{NH}_3$`],
+              ["Mercury cell", "primary", "zinc–mercury amalgam", t`paste of HgO and carbon`, "paste of KOH and ZnO", t`about 1.35 V, constant over life; overall $\text{Zn(Hg)} + \text{HgO(s)} \rightarrow \text{ZnO(s)} + \text{Hg(l)}$. Hearing aids, watches.`],
+              ["Lead storage battery", "secondary", "lead", t`lead grid packed with $\text{PbO}_2$`, t`about 38% $\text{H}_2\text{SO}_4$`, "about 2 V per cell; vehicles and inverters"],
+              ["Nickel–cadmium cell", "secondary", "cadmium", t`$\text{Ni(OH)}_3$ / nickel oxide`, "KOH", t`longer life than lead storage but costlier; discharge: $\text{Cd} + 2\text{Ni(OH)}_3 \rightarrow \text{CdO} + 2\text{Ni(OH)}_2 + \text{H}_2\text{O}$`],
+            ],
+          },
+          {
+            type: "list",
+            items: [
+              t`**Lead storage, discharge, anode:** $\text{Pb(s)} + \text{SO}_4^{2-}\text{(aq)} \rightarrow \text{PbSO}_4\text{(s)} + 2e^-$`,
+              t`**Cathode:** $\text{PbO}_2\text{(s)} + \text{SO}_4^{2-}\text{(aq)} + 4\text{H}^+\text{(aq)} + 2e^- \rightarrow \text{PbSO}_4\text{(s)} + 2\text{H}_2\text{O(l)}$`,
+              t`**Overall:** $\text{Pb} + \text{PbO}_2 + 2\text{H}_2\text{SO}_4 \rightarrow 2\text{PbSO}_4 + 2\text{H}_2\text{O}$. Acid is used up, so the density of the electrolyte falls. On **charging**, the reaction runs in reverse.`,
+              t`**$\text{H}_2$–$\text{O}_2$ fuel cell:** gases bubble through porous carbon electrodes (with finely divided Pt or Pd catalyst) into concentrated aqueous NaOH or KOH. Cathode: $\text{O}_2 + 2\text{H}_2\text{O} + 4e^- \rightarrow 4\text{OH}^-$. Anode: $2\text{H}_2 + 4\text{OH}^- \rightarrow 4\text{H}_2\text{O} + 4e^-$. Overall: $2\text{H}_2 + \text{O}_2 \rightarrow 2\text{H}_2\text{O}$. It runs as long as fuel is supplied, is about 70% efficient (thermal power plants manage about 40%), gives only water, and powered the Apollo space missions.`,
+            ],
+          },
+          {
+            type: "text",
+            md: t`**Corrosion** is the slow eating away of a metal by its surroundings; rusting of iron is the best-known case. A drop of water on iron acts as a tiny galvanic cell. At an **anodic** spot: $2\text{Fe(s)} \rightarrow 2\text{Fe}^{2+} + 4e^-$ ($E^\circ_{\text{Fe}^{2+}/\text{Fe}} = -0.44$ V). At a **cathodic** spot, with $\text{H}^+$ from carbonic acid (dissolved $\text{CO}_2$): $\text{O}_2 + 4\text{H}^+ + 4e^- \rightarrow 2\text{H}_2\text{O}$ ($E^\circ = 1.23$ V). Overall: $2\text{Fe} + \text{O}_2 + 4\text{H}^+ \rightarrow 2\text{Fe}^{2+} + 2\text{H}_2\text{O}$, $E^\circ_{\text{cell}} = 1.67$ V. $\text{Fe}^{2+}$ is then oxidised by air to rust, $\text{Fe}_2\text{O}_3 \cdot x\text{H}_2\text{O}$. That is why iron rusts fastest in coastal Mumbai or Chennai: salty, moist air is a better electrolyte.
+
+**Prevention:** a barrier (paint, grease, chemical coatings), coating with a more active metal such as zinc (**galvanising**), or attaching a block of Mg or Zn that corrodes first (**sacrificial protection**, used for ship hulls and buried pipelines).`,
+          },
+          {
+            type: "mistake",
+            wrong: "The anode is always the negative electrode.",
+            right: "The anode is always where **oxidation** happens. It is **negative** in a galvanic cell but **positive** in an electrolytic cell.",
+            why: "Learners memorise the sign from the Daniell cell. The definition is by the reaction, not the sign: in electrolysis the external source pulls electrons out of the anode, making it positive.",
+          },
+          {
+            type: "activity",
+            activity: {
+              kind: "sort",
+              prompt: "Sort each device by its cell type.",
+              groups: ["Primary cell", "Secondary cell", "Fuel cell"],
+              items: [
+                { text: "Torch dry cell", group: 0, hint: "Once used up, it is thrown away." },
+                { text: "Mercury cell in a hearing aid", group: 0, hint: "Cannot be recharged." },
+                { text: "Car lead storage battery", group: 1, hint: "The alternator recharges it." },
+                { text: "Nickel–cadmium cell", group: 1, hint: "Rechargeable, long life." },
+                { text: "Lithium-ion phone battery", group: 1, hint: "You charge it every night." },
+                { text: "H₂–O₂ cell of the Apollo missions", group: 2, hint: "Reactants are fed in continuously." },
+              ],
+              explain: "Primary cells cannot be recharged; secondary cells can, by reversing the cell reaction. Fuel cells are never 'charged': they run as long as fuel and oxygen flow in.",
+            },
+          },
+          {
+            type: "callout",
+            tone: "exam",
+            title: "Board tip",
+            md: t`For battery questions, the scheme gives marks for the anode, cathode and overall reactions separately. Write state symbols, and for the lead storage battery say what happens to the acid density. For corrosion, write all three equations and name one prevention method with its reason.`,
+          },
+          {
+            type: "keypoints",
+            items: [
+              t`Faraday: $m = \dfrac{M}{nF}It$; 1 F ≈ 96 500 C is the charge on 1 mol of electrons.`,
+              t`Products depend on the electrolyte, the electrodes and overpotential: aqueous NaCl gives $\text{H}_2$ and $\text{Cl}_2$.`,
+              "Primary: dry cell, mercury cell. Secondary: lead storage, Ni–Cd. The H₂–O₂ fuel cell is about 70% efficient.",
+              t`Rusting is electrochemical (iron is the anode); prevent it with barriers, galvanising or sacrificial metals.`,
+            ],
+          },
+        ],
+        flashcards: [
+          { front: "Faraday's first law", back: t`The mass liberated is proportional to the charge passed: $m = ZIt$.` },
+          { front: "Faraday's second law", back: "For the same charge, masses liberated are proportional to equivalent weights (atomic mass ÷ electrons per ion)." },
+          { front: "1 faraday", back: "The charge on 1 mole of electrons, 96 487 C ≈ 96 500 C." },
+          { front: "Products of electrolysis of aqueous NaCl", back: t`$\text{H}_2$ at the cathode, $\text{Cl}_2$ at the anode, NaOH left in solution.` },
+          { front: "Electrolyte in a dry cell", back: t`A moist paste of $\text{NH}_4\text{Cl}$ and $\text{ZnCl}_2$.` },
+          { front: "Why does a mercury cell give a constant voltage?", back: "Its overall reaction involves no ions in solution whose concentration changes during use." },
+          { front: "Overall reaction in the H₂–O₂ fuel cell", back: t`$2\text{H}_2 + \text{O}_2 \rightarrow 2\text{H}_2\text{O}$.` },
+          { front: "Sacrificial protection", back: "Attaching a more reactive metal (Mg or Zn) that corrodes instead of iron." },
+        ],
+        quiz: [
+          {
+            kind: "numeric",
+            q: t`A silver cell and a copper cell are connected in series. 2.16 g of silver is deposited. What mass of copper (in g) is deposited? ($M$: Ag 108, Cu 63.5)`,
+            answer: 0.635,
+            tolerance: 0.005,
+            unit: "g",
+            explain: t`Moles of $e^-$ = moles of Ag $= 2.16/108 = 0.020$. Cu needs 2 $e^-$, so Cu $= 0.010$ mol $= 0.635$ g.`,
+            difficulty: 2,
+            hint: "The same charge passes through both cells.",
+          },
+          {
+            kind: "mcq",
+            q: "In the electrolysis of aqueous NaCl with inert electrodes, the cathode product is:",
+            options: ["Sodium metal", "Hydrogen gas", "Chlorine gas", "Oxygen gas"],
+            answer: 1,
+            explain: t`Water ($E^\circ = -0.83$ V) is reduced far more easily than $\text{Na}^+$ ($-2.71$ V), so $\text{H}_2$ forms and $\text{OH}^-$ stays in solution.`,
+          },
+          {
+            kind: "multi",
+            q: "Which happen in a lead storage battery during discharge?",
+            options: [
+              t`$\text{PbSO}_4$ forms at both electrodes`,
+              "The density of the acid decreases",
+              t`$\text{PbO}_2$ is oxidised at the anode`,
+              "The battery stores electrical energy",
+            ],
+            answers: [0, 1],
+            explain: t`Both Pb and $\text{PbO}_2$ turn into $\text{PbSO}_4$, using up $\text{H}_2\text{SO}_4$, so the density falls. $\text{PbO}_2$ is reduced at the cathode. Energy is stored during charging, not discharge.`,
+            difficulty: 2,
+          },
+          {
+            kind: "mcq",
+            q: "In a dry cell, MnO₂ at the cathode is reduced to:",
+            options: ["Mn", "MnO(OH)", t`$\text{MnO}_4^-$`, t`$\text{Mn}^{2+}$ only`],
+            answer: 1,
+            explain: t`$\text{MnO}_2 + \text{NH}_4^+ + e^- \rightarrow \text{MnO(OH)} + \text{NH}_3$: Mn goes from +4 to +3.`,
+          },
+          {
+            kind: "truefalse",
+            q: "In rusting, the iron surface acts as the cathode where oxygen is reduced.",
+            answer: false,
+            explain: "Iron is oxidised, so the spot where iron dissolves is the anode. Oxygen is reduced at another spot (the cathode) on the same metal.",
+          },
+          {
+            kind: "mcq",
+            q: "Galvanised iron resists rusting even after its zinc coating is scratched, because:",
+            options: [
+              "Zinc is less reactive than iron",
+              "Zinc is more easily oxidised than iron, so it corrodes first",
+              "Zinc reacts with rust to make iron again",
+              "Zinc makes the iron non-metallic",
+            ],
+            answer: 1,
+            explain: t`$E^\circ$ of $\text{Zn}^{2+}/\text{Zn}$ ($-0.76$ V) is below that of $\text{Fe}^{2+}/\text{Fe}$ ($-0.44$ V), so zinc acts as the anode and protects the iron.`,
+          },
+          {
+            kind: "numeric",
+            q: "How many coulombs are needed to reduce 1 mol of Al³⁺ to Al? (F = 96 500 C mol⁻¹)",
+            answer: 289500,
+            tolerance: 100,
+            unit: "C",
+            explain: t`$\text{Al}^{3+} + 3e^- \rightarrow \text{Al}$: $3 \times 96500 = 289\,500$ C.`,
+          },
+          {
+            kind: "mcq",
+            q: "Which is an advantage of a fuel cell over a thermal power plant?",
+            options: ["It needs no catalyst", "It converts fuel energy to electricity more efficiently and without pollution", "It can be recharged from mains", "It works without oxygen"],
+            answer: 1,
+            explain: "Fuel cells are about 70% efficient (thermal plants about 40%) and the hydrogen–oxygen cell gives only water.",
+          },
+        ],
+      },
+
+      /* ---------------- Lesson 5: Exam edge ---------------- */
+      {
+        slug: "c12-ec-exam-edge",
+        title: "Exam edge: Electrochemistry for JEE, NEET, KCET and COMEDK",
+        summary: "Faraday problems, combining electrode potentials, pH from the hydrogen electrode, Ksp and Ka from cells, and the conductance traps exams love.",
+        minutes: 25,
+        xp: 60,
+        track: "exam",
+        blocks: [
+          {
+            type: "text",
+            md: t`**What gets asked.** KCET and COMEDK: $E^\circ_{\text{cell}}$, Faraday's laws, products of electrolysis, batteries. NEET: the electrochemical series (oxidising and reducing strength), Nernst with pH, $\Delta G^\circ$ and $K$, Kohlrausch, battery reactions. JEE Main: Nernst with unequal coefficients, combining half-cell potentials, conductance units. JEE Advanced: cells used to find $K_{sp}$, $K_a$ or pH, concentration cells, and graphs of $\Lambda_m$ against $\sqrt{c}$.`,
+          },
+          {
+            type: "table",
+            headers: ["Shortcut", "Safe when"],
+            rows: [
+              [t`$E^\circ_3 = \dfrac{n_1E^\circ_1 + n_2E^\circ_2}{n_3}$`, "Adding two half-reactions to get a third half-reaction. Combine ΔG° (−nFE°), never E° directly."],
+              [t`$E^\circ_3 = E^\circ_1 + E^\circ_2$`, "Only when two half-reactions are combined into a full cell reaction (electrons cancel)."],
+              [t`$\log K = nE^\circ/0.059$`, "298 K only."],
+              [t`$E_{\text{H}^+/\text{H}_2} = -0.059\,\text{pH}$`, t`$p_{\text{H}_2} = 1$ bar, 298 K.`],
+              [t`Concentration cell: $E = \dfrac{0.059}{n}\log\dfrac{c_{\text{cathode}}}{c_{\text{anode}}}$`, "Same electrode both sides; the cathode is the more concentrated side for a cation."],
+              [t`Moles of product $= \dfrac{It}{nF}$`, "n = electrons per formula unit of the product (e.g. 4 for O₂, 2 for H₂)."],
+            ],
+          },
+          {
+            type: "example",
+            title: "KCET / COMEDK level: time for electrolysis",
+            problem: t`How long (in minutes) must a current of 5.0 A flow to deposit 2.7 g of aluminium from molten alumina? ($M(\text{Al}) = 27$ g mol$^{-1}$, $F = 96500$ C mol$^{-1}$)`,
+            steps: [
+              t`Moles of Al $= 2.7/27 = 0.10$ mol.`,
+              t`$\text{Al}^{3+} + 3e^- \rightarrow \text{Al}$: charge $= 0.10 \times 3 \times 96500 = 28\,950$ C.`,
+              t`$t = Q/I = 28\,950/5.0 = 5790$ s $= 96.5$ min.`,
+            ],
+            answer: "96.5 minutes.",
+          },
+          {
+            type: "example",
+            title: "JEE Main level: combining half-cell potentials",
+            problem: t`Given $E^\circ(\text{Fe}^{3+}/\text{Fe}^{2+}) = +0.77$ V and $E^\circ(\text{Fe}^{2+}/\text{Fe}) = -0.44$ V, find $E^\circ(\text{Fe}^{3+}/\text{Fe})$.`,
+            steps: [
+              t`$\text{Fe}^{3+} + e^- \rightarrow \text{Fe}^{2+}$: $\Delta G_1^\circ = -1 \cdot F(0.77)$.`,
+              t`$\text{Fe}^{2+} + 2e^- \rightarrow \text{Fe}$: $\Delta G_2^\circ = -2 \cdot F(-0.44) = +0.88F$.`,
+              t`Add: $\text{Fe}^{3+} + 3e^- \rightarrow \text{Fe}$, $\Delta G_3^\circ = -0.77F + 0.88F = +0.11F = -3FE_3^\circ$.`,
+              t`$E_3^\circ = -0.11/3 = -0.037$ V.`,
+            ],
+            answer: t`$E^\circ(\text{Fe}^{3+}/\text{Fe}) \approx -0.037$ V (not $0.77 + (-0.44) = 0.33$ V).`,
+          },
+          {
+            type: "example",
+            title: "NEET level: pH from a hydrogen electrode",
+            problem: t`A hydrogen electrode ($p_{\text{H}_2} = 1$ bar) dipped in a solution shows a reduction potential of $-0.236$ V at 298 K. Find the pH.`,
+            steps: [
+              t`$E = -0.059\,\text{pH}$.`,
+              t`$\text{pH} = 0.236/0.059 = 4.0$.`,
+            ],
+            answer: "pH = 4.",
+          },
+          {
+            type: "example",
+            title: "JEE Main / Advanced level: Ksp from electrode potentials",
+            problem: t`Given $E^\circ(\text{Ag}^+/\text{Ag}) = 0.80$ V and $E^\circ(\text{AgCl}/\text{Ag}, \text{Cl}^-) = 0.22$ V, find $K_{sp}$ of AgCl at 298 K.`,
+            steps: [
+              t`Target: $\text{AgCl(s)} \rightleftharpoons \text{Ag}^+ + \text{Cl}^-$. Write it as cathode $\text{AgCl} + e^- \rightarrow \text{Ag} + \text{Cl}^-$ (0.22 V) and anode $\text{Ag} \rightarrow \text{Ag}^+ + e^-$ (0.80 V).`,
+              t`$E^\circ_{\text{cell}} = 0.22 - 0.80 = -0.58$ V, $n = 1$. Negative, as expected for a sparingly soluble salt.`,
+              t`$\log K_{sp} = (1 \times -0.58)/0.059 = -9.83$.`,
+              t`$K_{sp} = 10^{-9.83} \approx 1.5 \times 10^{-10}$.`,
+            ],
+            answer: t`$K_{sp} \approx 1.5 \times 10^{-10}$.`,
+          },
+          {
+            type: "example",
+            title: "JEE Advanced level: Ka from a concentration cell",
+            problem: t`For the cell $\text{Pt} | \text{H}_2(1\text{ bar}) | \text{HA}(0.10\text{ M}) || \text{H}^+(1.0\text{ M}) | \text{H}_2(1\text{ bar}) | \text{Pt}$, the EMF at 298 K is 0.177 V. Find $K_a$ of the weak acid HA.`,
+            steps: [
+              t`Concentration cell: $E = 0.059\log\dfrac{[\text{H}^+]_{\text{cathode}}}{[\text{H}^+]_{\text{anode}}} = 0.059\log\dfrac{1.0}{x}$.`,
+              t`$0.177 = 0.059\log(1/x) \Rightarrow \log(1/x) = 3 \Rightarrow x = [\text{H}^+] = 1.0 \times 10^{-3}$ M (pH 3 on the anode side).`,
+              t`$K_a = \dfrac{x^2}{0.10 - x} = \dfrac{1.0 \times 10^{-6}}{0.099} = 1.0 \times 10^{-5}$.`,
+            ],
+            answer: t`$K_a \approx 1.0 \times 10^{-5}$.`,
+          },
+          {
+            type: "mistake",
+            wrong: t`To get $E^\circ(\text{Fe}^{3+}/\text{Fe})$, just add $E^\circ(\text{Fe}^{3+}/\text{Fe}^{2+})$ and $E^\circ(\text{Fe}^{2+}/\text{Fe})$.`,
+            right: t`When half-reactions add to give another **half**-reaction, add $\Delta G^\circ = -nFE^\circ$, then divide by the new $n$.`,
+            why: "Adding E° works for a full cell because the electrons cancel. In a new half-reaction the electrons don't cancel, so the potentials must be weighted by n.",
+          },
+          {
+            type: "mistake",
+            wrong: t`$\Lambda_m = \kappa/c$, so with $\kappa$ in S cm$^{-1}$ and $c$ in mol L$^{-1}$ I divide directly.`,
+            right: t`Multiply by 1000: $\Lambda_m = 1000\kappa/M$ gives S cm$^2$ mol$^{-1}$. In SI, convert $c$ to mol m$^{-3}$.`,
+            why: "A litre is 1000 cm³, so mixing cm and L silently loses a factor of 1000. Exam options are built around exactly this slip.",
+          },
+          {
+            type: "checkpoint",
+            questions: [
+              {
+                kind: "numeric",
+                q: t`Given $E^\circ(\text{Cu}^{2+}/\text{Cu}) = 0.34$ V and $E^\circ(\text{Cu}^{2+}/\text{Cu}^+) = 0.15$ V, find $E^\circ(\text{Cu}^+/\text{Cu})$ in V.`,
+                answer: 0.53,
+                tolerance: 0.005,
+                unit: "V",
+                explain: t`$\text{Cu}^{2+} + 2e^- \rightarrow \text{Cu}$ minus $\text{Cu}^{2+} + e^- \rightarrow \text{Cu}^+$ gives $\text{Cu}^+ + e^- \rightarrow \text{Cu}$. $1 \cdot E^\circ = 2(0.34) - 1(0.15) = 0.53$ V.`,
+                difficulty: 3,
+                hint: "Subtract the nE° values, then divide by the new n = 1.",
+              },
+            ],
+          },
+          {
+            type: "activity",
+            activity: {
+              kind: "order",
+              prompt: "Order from weakest to strongest oxidising agent.",
+              items: [t`$\text{Mg}^{2+}$ (−2.37 V)`, t`$\text{Zn}^{2+}$ (−0.76 V)`, t`$\text{Cu}^{2+}$ (+0.34 V)`, t`$\text{Ag}^+$ (+0.80 V)`, t`$\text{F}_2$ (+2.87 V)`],
+              explain: "The more positive the reduction potential, the more strongly the species pulls electrons, so the stronger an oxidising agent it is.",
+            },
+          },
+          {
+            type: "keypoints",
+            items: [
+              t`Combine half-reactions through $\Delta G^\circ = -nFE^\circ$; add E° directly only for a full cell.`,
+              t`Cells measure equilibrium: $\log K = nE^\circ/0.059$ gives $K_{sp}$, $K_a$ and pH.`,
+              t`Faraday: moles of product $= It/(nF)$, with $n$ per product molecule.`,
+              t`Conductance: on dilution κ falls, Λm and α rise; watch the factor of 1000.`,
+            ],
+          },
+        ],
+        flashcards: [
+          { front: "Combining two half-reactions into a third", back: t`$n_3E_3^\circ = n_1E_1^\circ + n_2E_2^\circ$ (from adding ΔG°).` },
+          { front: t`$E^\circ(\text{Fe}^{3+}/\text{Fe})$ from 0.77 V and −0.44 V`, back: "About −0.037 V." },
+          { front: "Ksp from a cell", back: t`Write $\text{MX(s)} \rightarrow \text{M}^+ + \text{X}^-$ as a cell, find $E^\circ$ (negative), then $\log K_{sp} = nE^\circ/0.059$.` },
+          { front: "Charge to liberate 1 mol of O₂ from water", back: t`4 F, since $2\text{H}_2\text{O} \rightarrow \text{O}_2 + 4\text{H}^+ + 4e^-$.` },
+          { front: "Charge to liberate 1 mol of H₂", back: "2 F." },
+          { front: "Which side is the anode in a concentration cell (cation electrodes)?", back: "The more dilute side." },
+          { front: t`$\Lambda_m$ in S cm$^2$ mol$^{-1}$ from κ in S cm$^{-1}$`, back: t`$\Lambda_m = 1000\kappa/M$.` },
+        ],
+        quiz: [
+          {
+            kind: "numeric",
+            q: t`How many moles of $\text{O}_2$ are released at the anode when 19 300 C pass through acidified water? ($F = 96500$ C mol$^{-1}$)`,
+            answer: 0.05,
+            tolerance: 0.001,
+            unit: "mol",
+            explain: t`$19\,300/96\,500 = 0.20$ mol $e^-$. Each $\text{O}_2$ needs 4 $e^-$, so $0.20/4 = 0.050$ mol.`,
+          },
+          {
+            kind: "numeric",
+            q: t`Find $E_{\text{cell}}$ (in V) at 298 K for $\text{Zn} | \text{Zn}^{2+}(0.010\text{ M}) || \text{Ag}^+(0.10\text{ M}) | \text{Ag}$. ($E^\circ$: Zn −0.76 V, Ag +0.80 V)`,
+            answer: 1.56,
+            tolerance: 0.005,
+            unit: "V",
+            explain: t`$\text{Zn} + 2\text{Ag}^+ \rightarrow \text{Zn}^{2+} + 2\text{Ag}$; $E^\circ = 1.56$ V. $Q = 0.010/(0.10)^2 = 1$, so $\log Q = 0$ and $E = 1.56$ V. Forgetting to square $[\text{Ag}^+]$ gives a wrong 1.59 V.`,
+            difficulty: 2,
+            hint: "Build Q from the balanced equation, with coefficients as powers.",
+          },
+          {
+            kind: "numeric",
+            q: t`Using $\Lambda_m^\circ$ values (S cm$^2$ mol$^{-1}$) HCl 426, NaCl 126 and $\text{CH}_3\text{COONa}$ 91, find $\Lambda_m^\circ$ of $\text{CH}_3\text{COOH}$.`,
+            answer: 391,
+            tolerance: 0.5,
+            unit: "S cm² mol⁻¹",
+            explain: t`$\Lambda^\circ(\text{CH}_3\text{COOH}) = \Lambda^\circ(\text{HCl}) + \Lambda^\circ(\text{CH}_3\text{COONa}) - \Lambda^\circ(\text{NaCl}) = 426 + 91 - 126 = 391$.`,
+            difficulty: 2,
+          },
+          {
+            kind: "numeric",
+            q: t`A cell reaction with $n = 2$ has $E^\circ_{\text{cell}} = 0.295$ V at 298 K. Find $\log K$.`,
+            answer: 10,
+            tolerance: 0.05,
+            explain: t`$\log K = nE^\circ/0.059 = 2 \times 0.295/0.059 = 10$, so $K = 10^{10}$.`,
+          },
+          {
+            kind: "multi",
+            q: "On diluting an aqueous ethanoic acid solution at constant temperature, which quantities increase?",
+            options: ["Molar conductivity", "Degree of dissociation", "Conductivity κ", t`Concentration of $\text{H}^+$`],
+            answers: [0, 1],
+            explain: t`Λm and α both rise. κ and $[\text{H}^+]$ fall, because the ions are spread through more volume even though a larger fraction of the acid is ionised.`,
+            difficulty: 2,
+          },
+          {
+            kind: "numeric",
+            q: t`Find $\Delta_rG^\circ$ (in kJ mol$^{-1}$) for $\text{Cu} + 2\text{Ag}^+ \rightarrow \text{Cu}^{2+} + 2\text{Ag}$, $E^\circ_{\text{cell}} = 0.46$ V. ($F = 96500$ C mol$^{-1}$)`,
+            answer: -88.8,
+            tolerance: 0.3,
+            unit: "kJ/mol",
+            explain: t`$\Delta_rG^\circ = -2 \times 96500 \times 0.46 = -88\,780$ J mol$^{-1} \approx -88.8$ kJ mol$^{-1}$.`,
+          },
+          {
+            kind: "mcq",
+            q: t`$E^\circ$ values: $\text{Cl}_2/\text{Cl}^- = 1.36$, $\text{Br}_2/\text{Br}^- = 1.09$, $\text{I}_2/\text{I}^- = 0.54$, $\text{Fe}^{3+}/\text{Fe}^{2+} = 0.77$ V. Which pair will NOT react under standard conditions?`,
+            options: [t`$\text{Cl}_2$ + $\text{Br}^-$`, t`$\text{Br}_2$ + $\text{I}^-$`, t`$\text{Fe}^{3+}$ + $\text{I}^-$`, t`$\text{Fe}^{3+}$ + $\text{Br}^-$`],
+            answer: 3,
+            explain: t`$\text{Fe}^{3+}$ + $\text{Br}^-$: $E^\circ_{\text{cell}} = 0.77 - 1.09 = -0.32$ V < 0. All the others give a positive $E^\circ_{\text{cell}}$.`,
+            difficulty: 2,
+          },
+          {
+            kind: "numeric",
+            q: t`A hydrogen electrode (1 bar) dipped in 0.010 M solution of a weak acid HA shows a potential of $-0.236$ V vs SHE at 298 K. Find $\text{p}K_a$ of HA.`,
+            answer: 6,
+            tolerance: 0.02,
+            explain: t`pH $= 0.236/0.059 = 4$, so $[\text{H}^+] = 1.0 \times 10^{-4}$ M. $K_a = (10^{-4})^2/(0.010 - 0.0001) = 1.0 \times 10^{-6}$, so $\text{p}K_a = 6.0$.`,
+            difficulty: 3,
+            hint: "Get pH from E = −0.059 pH first.",
+          },
+        ],
+      },
+    ],
+  },
 ];
 
 /** Class 12 chapter title ("12:<exact title>") → topic slug(s), or full lesson ids, that teach it. */
 export const links: Record<string, string | string[]> = {
   "12:Solutions": "c12-solutions",
+  "12:Electrochemistry": "c12-electrochemistry",
 };

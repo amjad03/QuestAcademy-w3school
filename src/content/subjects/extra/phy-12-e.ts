@@ -1575,7 +1575,7 @@ Masses: $m_p = 1.00727$ u, $m_n = 1.00866$ u. A free neutron is unstable (mean l
             title: "Energy locked in mass",
             problem: t`(a) How much energy is equivalent to 1 g of matter? (b) Show that 1 u is equivalent to about 931.5 MeV. ($c = 3.0 \times 10^8$ m/s; for (b) use $c = 2.998 \times 10^8$ m/s, $1\ \text{MeV} = 1.602 \times 10^{-13}$ J)`,
             steps: [
-              t`(a) $E = mc^2 = 10^{-3} \times (3.0 \times 10^8)^2 = 9.0 \times 10^{13}$ J, roughly the energy used by a large city in a day.`,
+              t`(a) $E = mc^2 = 10^{-3} \times (3.0 \times 10^8)^2 = 9.0 \times 10^{13}$ J, about as much as the explosion of 20 kilotonnes of TNT.`,
               t`(b) $E = 1.6605 \times 10^{-27} \times (2.998 \times 10^8)^2 = 1.4924 \times 10^{-10}$ J.`,
               t`In MeV: $1.4924 \times 10^{-10} / 1.602 \times 10^{-13} \approx 931.5$ MeV.`,
             ],

@@ -1243,10 +1243,776 @@ As $i$ increases, $\delta$ first decreases, reaches a **minimum deviation** $D_m
       },
     ],
   },
-  /* WAVE-OPTICS */
+  /* ------------------------------------------------------------------ */
+  /* Wave Optics (NCERT Class 12, Chapter 10)                             */
+  /* ------------------------------------------------------------------ */
+  {
+    slug: "c12-wave-optics",
+    title: "Wave Optics",
+    icon: "🌊",
+    description: "Wavefronts and Huygens' principle, interference and Young's double-slit experiment, single-slit diffraction, and polarisation with Malus' law.",
+    lessons: [
+      /* ---------------- Lesson 1: Huygens' principle ---------------- */
+      {
+        slug: "c12-wo-huygens",
+        title: "Wavefronts and Huygens' Principle",
+        summary: "What a wavefront is, Huygens' construction, proving the laws of reflection and refraction with waves, what happens to speed, wavelength and frequency, and the Doppler shift of light.",
+        minutes: 20,
+        xp: 50,
+        blocks: [
+          {
+            type: "illustration",
+            emoji: "🪨",
+            caption: "Drop a pebble into a still pond and circular ripples spread out. Each ripple is a line of water moving up and down together: a wavefront.",
+          },
+          {
+            type: "text",
+            md: "Ray optics cannot explain why light bends round tiny obstacles or makes bright and dark bands. For that we need the **wave model**, proposed by Christiaan Huygens in 1678.\n\nA **wavefront** is the surface on which every point of the wave is oscillating **in the same phase**. Energy travels perpendicular to the wavefront, so a **ray** is simply the normal to the wavefront. The wavefront moves outward with the speed of the wave.",
+          },
+          {
+            type: "table",
+            headers: ["Source", "Shape of wavefront", "Rays"],
+            rows: [
+              ["Point source", "Spherical (diverging)", "Radial, spreading out"],
+              ["Line source (a long slit)", "Cylindrical", "Spreading out in a plane"],
+              ["Very distant source (the Sun, a star)", "Plane (a small part of a huge sphere)", "Parallel"],
+            ],
+          },
+          {
+            type: "text",
+            md: "**Huygens' principle** gives a way to find the next position of a wavefront: (1) every point on a wavefront acts as a source of **secondary wavelets**, which spread out in the forward direction with the speed of the wave in that medium; (2) the **forward envelope** (common tangent surface) of these wavelets after a time τ is the new wavefront. Huygens assumed the backward wavelets have zero amplitude, so there is no backward wave.",
+          },
+          {
+            type: "list",
+            ordered: true,
+            items: [
+              t`**Refraction by Huygens' construction.** A plane wavefront AB meets the plane surface PP' between medium 1 (speed $v_1$) and medium 2 (speed $v_2$), at angle of incidence $i$. A touches the surface first.`,
+              t`In the time τ that the disturbance at B takes to reach C on the surface, $BC = v_1\tau$.`,
+              t`Meanwhile the wavelet from A spreads into medium 2 as a sphere of radius $AE = v_2\tau$. The tangent plane CE from C to this sphere is the refracted wavefront, at angle of refraction $r$.`,
+              t`From triangles ABC and AEC: $\sin i = \dfrac{BC}{AC} = \dfrac{v_1\tau}{AC}$ and $\sin r = \dfrac{AE}{AC} = \dfrac{v_2\tau}{AC}$.`,
+              t`Dividing: $\dfrac{\sin i}{\sin r} = \dfrac{v_1}{v_2}$. With $n_1 = c/v_1$ and $n_2 = c/v_2$ this is Snell's law, $n_1 \sin i = n_2 \sin r$.`,
+            ],
+          },
+          {
+            type: "formula",
+            tex: t`\frac{\sin i}{\sin r} = \frac{v_1}{v_2} = \frac{n_2}{n_1}, \qquad \frac{\lambda_1}{\lambda_2} = \frac{v_1}{v_2}, \qquad \nu \text{ unchanged}`,
+            caption: "Light slows down in a denser medium, so the wave model predicts v(glass) < v(air). This was confirmed by experiment, while Newton's corpuscle model wrongly predicted the opposite.",
+          },
+          {
+            type: "example",
+            title: "Speed and wavelength in water",
+            problem: t`Yellow sodium light ($\lambda = 589$ nm in air, frequency $5.09 \times 10^{14}$ Hz) enters water ($n = 1.33$). Find its speed, wavelength and frequency in water. Take $c = 3.0 \times 10^8$ m/s.`,
+            steps: [
+              t`$v = \dfrac{c}{n} = \dfrac{3.0 \times 10^8}{1.33} \approx 2.26 \times 10^8$ m/s.`,
+              t`$\lambda_w = \dfrac{\lambda}{n} = \dfrac{589}{1.33} \approx 443$ nm.`,
+              t`Frequency is fixed by the source: $5.09 \times 10^{14}$ Hz (check: $v/\lambda_w = 2.26 \times 10^8 / 443 \times 10^{-9} \approx 5.1 \times 10^{14}$ Hz).`,
+            ],
+            answer: "v ≈ 2.26 × 10⁸ m/s, λ ≈ 443 nm, ν = 5.09 × 10¹⁴ Hz (unchanged). It still looks yellow, because colour depends on frequency.",
+          },
+          {
+            type: "checkpoint",
+            questions: [
+              {
+                kind: "numeric",
+                q: "Light of wavelength 600 nm in air enters glass of refractive index 1.5. What is its wavelength in the glass, in nm?",
+                answer: 400,
+                unit: "nm",
+                explain: t`$\lambda_g = \frac{600}{1.5} = 400$ nm. The frequency stays the same.`,
+              },
+            ],
+          },
+          {
+            type: "text",
+            md: t`**Reflection** by the same method: the wavelet from A grows to radius $v\tau$ in the same medium while B's disturbance reaches C, so the triangles are congruent and $i = r$.
+
+**Shapes after optical elements.** A plane wavefront passing through a **thin prism** stays plane but tilts, because the thicker base slows the lower part more. Through a **convex lens** the thick middle delays the centre, so the wavefront becomes a **converging** sphere centred at the focus. A **concave mirror** reflects a plane wavefront into a converging spherical one. The **time** taken from any point on a wavefront to the corresponding point on the next is the same for all rays; this is why a lens forms a sharp image.
+
+**Doppler effect for light.** If a source moves away from us, the observed frequency falls (wavelength increases): a **red shift**. If it approaches, a **blue shift**. For speeds much less than $c$, the fractional change is $v_{\text{radial}}/c$. Astronomers use red shifts to measure how fast galaxies are moving away.`,
+          },
+          {
+            type: "formula",
+            tex: t`\frac{\Delta\nu}{\nu} = -\frac{v_{\text{radial}}}{c}, \qquad \frac{\Delta\lambda}{\lambda} = \frac{v_{\text{radial}}}{c} \quad (v_{\text{radial}} > 0 \text{ for a receding source}, \ v \ll c)`,
+          },
+          {
+            type: "activity",
+            activity: {
+              kind: "match",
+              prompt: "Match each case to the wavefront that comes out.",
+              pairs: [
+                ["Light from a nearby point source", "Diverging spherical wavefront"],
+                ["Sunlight reaching the Earth", "Plane wavefront"],
+                ["Plane wave after a convex lens", "Spherical wavefront converging to the focus"],
+                ["Plane wave after a thin prism", "Plane wavefront, tilted towards the base"],
+              ],
+              explain: "Whatever slows part of a wavefront more (thicker glass) bends the wavefront there. Rays are always perpendicular to the wavefront.",
+            },
+          },
+          {
+            type: "mistake",
+            wrong: "When light goes from air into water its frequency changes, so its colour changes too.",
+            right: "The frequency is set by the source and stays the same; only speed and wavelength drop by the factor n.",
+            why: "At the boundary, the two sides must oscillate together, so the number of waves arriving per second equals the number leaving. Colour depends on frequency, so a red ball under water still looks red.",
+          },
+          {
+            type: "callout",
+            tone: "exam",
+            title: "Board exam tips",
+            md: "'Using Huygens' principle, verify the laws of refraction (or reflection)' is a frequent 3-mark question. Draw the incident wavefront AB, the wavelet of radius v₂τ from A, and the tangent CE; write sin i = BC/AC and sin r = AE/AC clearly. Also be ready to define a wavefront and draw it for a point source, a lens and a prism.",
+          },
+          {
+            type: "keypoints",
+            items: [
+              "A wavefront is a surface of constant phase; rays are normal to it.",
+              "Huygens: each point is a source of secondary wavelets; the forward envelope is the new wavefront.",
+              t`Huygens' construction gives $i = r$ and $\sin i/\sin r = v_1/v_2 = n_2/n_1$.`,
+              "On refraction, frequency is unchanged; speed and wavelength both divide by n.",
+              t`Doppler shift: $\Delta\lambda/\lambda = v_{\text{radial}}/c$; receding source → red shift.`,
+            ],
+          },
+        ],
+        flashcards: [
+          { front: "Wavefront", back: "The locus of all points oscillating in the same phase. Rays are perpendicular to it." },
+          { front: "Wavefront from a distant star", back: "Plane wavefront (with parallel rays)." },
+          { front: "Huygens' principle", back: "Every point of a wavefront is a source of secondary wavelets moving forward at the wave speed; their forward envelope is the new wavefront." },
+          { front: "Snell's law from wave theory", back: "sin i / sin r = v1/v2 = n2/n1." },
+          { front: "What happens to λ when light enters a medium of index n?", back: "It becomes λ/n. Frequency is unchanged." },
+          { front: "Red shift", back: "The increase in observed wavelength from a source moving away: Δλ/λ = v(radial)/c." },
+          { front: "Plane wavefront after a convex lens", back: "A spherical wavefront converging to the focus, because the thick middle delays the central part." },
+        ],
+        quiz: [
+          {
+            kind: "mcq",
+            q: "Light from a point source very close to us has wavefronts that are:",
+            options: ["Plane", "Spherical", "Cylindrical", "Elliptical"],
+            answer: 1,
+            explain: "A point source sends the disturbance out equally in all directions, so the wavefronts are spheres. Only far away do they look plane.",
+          },
+          {
+            kind: "numeric",
+            q: "The refractive index of a medium is 1.25. What is the speed of light in it, in units of 10⁸ m/s? (c = 3.0 × 10⁸ m/s)",
+            answer: 2.4,
+            explain: t`$v = \frac{3.0 \times 10^8}{1.25} = 2.4 \times 10^8$ m/s.`,
+          },
+          {
+            kind: "truefalse",
+            q: "In Huygens' construction, secondary wavelets in a medium travel with the speed of light in that medium.",
+            answer: true,
+            explain: "That is why the wavelet radius is v₂τ in medium 2, which leads to Snell's law.",
+          },
+          {
+            kind: "numeric",
+            q: "A star is moving away from the Earth at 3.0 × 10⁵ m/s. By how many nm is a 500 nm spectral line shifted? (c = 3.0 × 10⁸ m/s)",
+            answer: 0.5,
+            unit: "nm",
+            explain: t`$\Delta\lambda = \lambda \frac{v}{c} = 500 \times 10^{-3} = 0.5$ nm, towards the red.`,
+            difficulty: 2,
+          },
+          {
+            kind: "fill",
+            q: "The locus of all points that oscillate in the same phase is called a ___.",
+            answer: ["wavefront", "wave front"],
+            explain: "This is the definition of a wavefront.",
+          },
+          {
+            kind: "mcq",
+            q: "According to the wave theory, when light passes from air into glass its speed:",
+            options: ["Increases", "Decreases", "Stays the same", "Becomes zero"],
+            answer: 1,
+            explain: "v = c/n and n > 1 for glass, so light slows down. Newton's corpuscular theory had predicted an increase, which experiments showed to be wrong.",
+          },
+          {
+            kind: "mcq",
+            q: "A plane wavefront falls on a thin prism. The emerging wavefront is:",
+            options: ["Spherical and converging", "Spherical and diverging", "Plane, but tilted", "Cylindrical"],
+            answer: 2,
+            explain: "The prism's thickness changes uniformly from apex to base, so the delay changes uniformly and the wavefront stays plane while tilting towards the base.",
+          },
+        ],
+      },
+
+      /* ---------------- Lesson 2: Interference and YDSE ---------------- */
+      {
+        slug: "c12-wo-interference",
+        title: "Interference and Young's Double-Slit Experiment",
+        summary: "Superposition of waves, coherent and incoherent sources, the intensity formula, Young's double-slit experiment and fringe width.",
+        minutes: 24,
+        xp: 55,
+        blocks: [
+          {
+            type: "text",
+            md: t`When two waves overlap, the resultant displacement at any point is the sum of the individual displacements: the **principle of superposition**. Suppose two waves of equal amplitude $a$ reach a point with **phase difference** $\phi$. The resultant amplitude is $2a\cos(\phi/2)$, and since intensity is proportional to amplitude squared, $I = 4I_0\cos^2(\phi/2)$.
+
+Two sources are **coherent** if the phase difference between them stays **constant** in time. Only then does the pattern of bright and dark regions stay fixed. If the phase difference changes rapidly and randomly (two separate bulbs or sodium lamps), the $\cos\phi$ term averages to zero and we just get $I = 2I_0$ everywhere: **incoherent** addition, no fringes.`,
+          },
+          {
+            type: "formula",
+            tex: t`I = I_1 + I_2 + 2\sqrt{I_1 I_2}\cos\phi, \qquad I_1 = I_2 = I_0 \Rightarrow I = 4I_0\cos^2\frac{\phi}{2}, \qquad \phi = \frac{2\pi}{\lambda}\,\Delta x`,
+            caption: "Δx is the path difference. The intensity swings between 0 and 4I₀ for equal sources; the average stays 2I₀, so energy is only redistributed.",
+          },
+          {
+            type: "table",
+            headers: ["Path difference Δx", "Phase difference φ", "Result (equal sources)"],
+            rows: [
+              [t`$n\lambda$ ($n = 0, 1, 2, \ldots$)`, t`$2n\pi$`, t`Constructive: $I = 4I_0$ (bright)`],
+              [t`$\left(n + \tfrac{1}{2}\right)\lambda$`, t`$(2n + 1)\pi$`, "Destructive: I = 0 (dark)"],
+              [t`$\lambda/4$`, t`$\pi/2$`, t`$I = 2I_0$`],
+            ],
+          },
+          {
+            type: "list",
+            ordered: true,
+            items: [
+              t`**Young's experiment (1801).** Light from a narrow slit S falls on two close slits S₁ and S₂ (separation $d$). Both come from the same wavefront, so S₁ and S₂ are coherent. A screen is at distance $D \gg d$.`,
+              t`For a point P on the screen at height $x$ from the centre O: $(S_2P)^2 - (S_1P)^2 = \left[D^2 + \left(x + \tfrac{d}{2}\right)^2\right] - \left[D^2 + \left(x - \tfrac{d}{2}\right)^2\right] = 2xd$.`,
+              t`So $S_2P - S_1P = \dfrac{2xd}{S_2P + S_1P}$. For $x, d \ll D$, $S_2P + S_1P \approx 2D$, giving path difference $\Delta x = \dfrac{xd}{D}$.`,
+              t`Bright fringe: $\dfrac{xd}{D} = n\lambda$, so $x_n = \dfrac{n\lambda D}{d}$. Dark fringe: $x_n = \left(n + \tfrac{1}{2}\right)\dfrac{\lambda D}{d}$.`,
+              t`The spacing between consecutive bright (or dark) fringes is the **fringe width** $\beta = \dfrac{\lambda D}{d}$. The point O (Δx = 0) is always bright: the **central maximum**.`,
+            ],
+          },
+          {
+            type: "formula",
+            tex: t`\beta = \frac{\lambda D}{d}, \qquad \text{angular fringe width } \theta = \frac{\lambda}{d}`,
+            caption: "Fringes are equally spaced. In a medium of index n, λ becomes λ/n, so β becomes β/n.",
+          },
+          {
+            type: "example",
+            title: "Fringe positions",
+            problem: "In a Young's double-slit experiment with light of wavelength 600 nm, the slits are 0.50 mm apart and the screen is 1.0 m away. Find (a) the fringe width, (b) the distance of the third bright fringe from the centre, (c) the distance of the second dark fringe, and (d) the fringe width if the whole set-up is put in water (n = 4/3).",
+            steps: [
+              t`(a) $\beta = \dfrac{600 \times 10^{-9} \times 1.0}{0.50 \times 10^{-3}} = 1.2 \times 10^{-3}$ m $= 1.2$ mm.`,
+              t`(b) $x_3 = 3\beta = 3.6$ mm.`,
+              t`(c) Dark fringes are at $\tfrac{1}{2}\beta, \tfrac{3}{2}\beta, \ldots$; the second is at $\tfrac{3}{2} \times 1.2 = 1.8$ mm.`,
+              t`(d) $\beta_w = \dfrac{\beta}{n} = 1.2 \times \dfrac{3}{4} = 0.90$ mm.`,
+            ],
+            answer: "β = 1.2 mm; third bright fringe at 3.6 mm; second dark fringe at 1.8 mm; in water β = 0.90 mm.",
+          },
+          {
+            type: "checkpoint",
+            questions: [
+              {
+                kind: "numeric",
+                q: "Two coherent sources of equal intensity I₀ meet at a point with a path difference of λ/3. What is the intensity there, as a multiple of I₀?",
+                answer: 1,
+                difficulty: 2,
+                explain: t`$\phi = \frac{2\pi}{\lambda} \cdot \frac{\lambda}{3} = \frac{2\pi}{3}$. $I = 4I_0\cos^2\left(\frac{\pi}{3}\right) = 4I_0 \times \frac{1}{4} = I_0$.`,
+              },
+            ],
+          },
+          {
+            type: "text",
+            md: t`**What the experiment shows.** Fringes are equally spaced; $\beta$ grows with $\lambda$ and $D$ and falls as $d$ increases. With **white light**, the central fringe is white (every colour has zero path difference there), and the next few fringes are coloured, with red fringes wider than blue ones; further out the colours overlap and the screen looks uniformly white.
+
+The source slit S must be narrow: if its width $s$ is too large, different parts of S produce shifted patterns that wash each other out. Fringes are seen when $s/S \lesssim \lambda/d$, where $S$ is the distance of the source slit from the double slit.`,
+          },
+          {
+            type: "activity",
+            activity: {
+              kind: "reveal",
+              prompt: "The whole double-slit set-up is lowered into a tank of water. The fringes:",
+              emoji: "💧",
+              options: ["Become wider", "Become narrower", "Stay exactly the same"],
+              answer: 1,
+              trap: 0,
+              explain: "In water the wavelength becomes λ/n, so β = λD/(nd) is smaller: the fringes crowd closer together.",
+            },
+          },
+          {
+            type: "mistake",
+            wrong: "At a dark fringe, light energy is destroyed.",
+            right: "Energy is only redistributed: dark fringes get less, bright fringes get more, and the average intensity is still 2I₀.",
+            why: "The cos φ term is positive at some points and negative at others, and it averages to zero across the screen. The total energy reaching the screen equals the sum from the two slits.",
+          },
+          {
+            type: "callout",
+            tone: "exam",
+            title: "Board exam tips",
+            md: "The derivation of fringe width (5 marks with the intensity part) needs a neat diagram with S₁, S₂, d, D, x and P, the step (S₂P)² − (S₁P)² = 2xd, the approximation S₂P + S₁P ≈ 2D, and the conditions for bright and dark fringes. Questions often ask what happens to β when d, D, λ or the medium change; answer from β = λD/d.",
+          },
+          {
+            type: "keypoints",
+            items: [
+              "Superposition: displacements add. Coherent sources keep a constant phase difference.",
+              t`$I = I_1 + I_2 + 2\sqrt{I_1 I_2}\cos\phi$; equal sources: $I = 4I_0\cos^2(\phi/2)$.`,
+              t`YDSE: path difference $xd/D$; bright at $n\lambda D/d$, dark at $(n + \tfrac{1}{2})\lambda D/d$.`,
+              t`Fringe width $\beta = \lambda D/d$, angular width $\lambda/d$; in a medium, $\beta/n$.`,
+              "White light: white central fringe with coloured fringes beside it.",
+            ],
+          },
+        ],
+        flashcards: [
+          { front: "Coherent sources", back: "Sources whose phase difference stays constant in time, usually two parts of the same wavefront." },
+          { front: "Why don't two bulbs show interference?", back: "Their phase difference changes randomly and rapidly, so the interference term averages to zero (incoherent addition)." },
+          { front: "Resultant intensity of two coherent waves", back: "I = I1 + I2 + 2√(I1 I2) cos φ." },
+          { front: "Path difference in YDSE at height x", back: "Δx = xd/D (for x, d ≪ D)." },
+          { front: "Fringe width", back: "β = λD/d." },
+          { front: "Condition for a dark fringe", back: "Path difference = (n + ½)λ, phase difference = (2n + 1)π." },
+          { front: "YDSE with white light", back: "The central fringe is white; fringes on either side are coloured (violet closest to the centre, red farthest)." },
+        ],
+        quiz: [
+          {
+            kind: "numeric",
+            q: "In a YDSE, λ = 500 nm, d = 1.0 mm and D = 2.0 m. What is the fringe width in mm?",
+            answer: 1,
+            unit: "mm",
+            explain: t`$\beta = \frac{500 \times 10^{-9} \times 2.0}{1.0 \times 10^{-3}} = 1.0 \times 10^{-3}$ m $= 1.0$ mm.`,
+          },
+          {
+            kind: "mcq",
+            q: "Two separate sodium lamps placed side by side do not produce interference fringes because:",
+            options: ["Their wavelengths are different", "Their intensities are unequal", "They are not coherent", "Sodium light cannot interfere"],
+            answer: 2,
+            explain: "Each lamp emits in short random bursts, so the phase difference between them keeps changing. They are not coherent.",
+          },
+          {
+            kind: "numeric",
+            q: "Two coherent waves of equal intensity I₀ meet with a phase difference of π/2. What is the resultant intensity in units of I₀?",
+            answer: 2,
+            explain: t`$I = 4I_0\cos^2(\pi/4) = 4I_0 \times \frac{1}{2} = 2I_0$.`,
+          },
+          {
+            kind: "numeric",
+            q: "The amplitudes of two coherent waves are in the ratio 2 : 1. What is the ratio of maximum to minimum intensity in their interference pattern?",
+            answer: 9,
+            difficulty: 2,
+            explain: t`$\frac{I_{\max}}{I_{\min}} = \frac{(a_1 + a_2)^2}{(a_1 - a_2)^2} = \frac{3^2}{1^2} = 9$.`,
+            hint: "Add and subtract amplitudes, then square.",
+          },
+          {
+            kind: "truefalse",
+            q: "In a YDSE with white light, the central fringe is white.",
+            answer: true,
+            explain: "At the centre the path difference is zero for every wavelength, so every colour is bright there.",
+          },
+          {
+            kind: "mcq",
+            q: "If the separation between the two slits is doubled (all else unchanged), the fringe width:",
+            options: ["Doubles", "Halves", "Stays the same", "Becomes four times"],
+            answer: 1,
+            explain: "β = λD/d, so doubling d halves β.",
+          },
+          {
+            kind: "numeric",
+            q: "In a YDSE the fringe width is 0.80 mm. How far from the central maximum is the fifth bright fringe, in mm?",
+            answer: 4,
+            unit: "mm",
+            explain: t`$x_5 = 5\beta = 5 \times 0.80 = 4.0$ mm.`,
+          },
+        ],
+      },
+
+      /* ---------------- Lesson 3: Diffraction and polarisation ---------------- */
+      {
+        slug: "c12-wo-diffraction-polarisation",
+        title: "Diffraction and Polarisation",
+        summary: "Single-slit diffraction and the width of the central maximum, how diffraction differs from interference, polarisation by polaroids and Malus' law.",
+        minutes: 22,
+        xp: 55,
+        blocks: [
+          {
+            type: "text",
+            md: "Look at a distant street light through a narrow gap between two fingers and you see faint dark and bright bands. Light spreads into the geometric shadow when it passes a small opening or edge: **diffraction**. It is noticeable only when the opening is comparable to the wavelength. Sound (λ about 1 m) bends easily round doors; light (λ about 500 nm) needs a slit a fraction of a millimetre wide.",
+          },
+          {
+            type: "text",
+            md: t`**Single slit.** A plane wave falls on a slit of width $a$; we look at angle $\theta$ on a distant screen (or in the focal plane of a lens). At $\theta = 0$ all parts of the slit are in phase: a bright **central maximum**.
+
+Divide the slit into two halves. If the path difference between the two edges is $a\sin\theta = \lambda$, each point in the upper half has a partner in the lower half exactly $\lambda/2$ behind, so their contributions cancel in pairs: **first minimum**. In general, minima occur at $a\sin\theta = n\lambda$ ($n = \pm 1, \pm 2, \ldots$). Between them are **secondary maxima** near $a\sin\theta \approx \left(n + \tfrac{1}{2}\right)\lambda$, which get much weaker as $n$ increases, because only one-third, one-fifth, … of the slit is left uncancelled.`,
+          },
+          {
+            type: "formula",
+            tex: t`\text{minima: } a\sin\theta = n\lambda\ (n \neq 0), \qquad \text{angular width of central maximum} = \frac{2\lambda}{a}, \qquad \text{linear width} = \frac{2\lambda D}{a}`,
+            caption: "Small-angle results. The central maximum is twice as wide as each secondary maximum.",
+          },
+          {
+            type: "example",
+            title: "Width of the central maximum",
+            problem: "Light of wavelength 500 nm falls on a slit 0.25 mm wide. The screen is 1.0 m away. Find the distance of the first minimum from the centre and the width of the central maximum.",
+            steps: [
+              t`$\theta_1 \approx \dfrac{\lambda}{a} = \dfrac{500 \times 10^{-9}}{0.25 \times 10^{-3}} = 2.0 \times 10^{-3}$ rad.`,
+              t`$y_1 = D\theta_1 = 1.0 \times 2.0 \times 10^{-3}$ m $= 2.0$ mm.`,
+              t`Width of central maximum $= 2y_1 = 4.0$ mm.`,
+            ],
+            answer: "First minimum 2.0 mm from the centre; central maximum 4.0 mm wide.",
+          },
+          {
+            type: "table",
+            headers: ["Interference (double slit)", "Diffraction (single slit)"],
+            rows: [
+              ["Superposition of waves from two separate coherent sources", "Superposition of wavelets from different parts of one wavefront"],
+              ["Fringes of equal width", "Central maximum twice as wide as the others"],
+              ["Bright fringes of (nearly) equal intensity", "Intensity falls rapidly away from the centre"],
+              [t`Bright at path difference $n\lambda$ (θ ≈ nλ/d)`, t`Dark at $a\sin\theta = n\lambda$; centre bright`],
+            ],
+          },
+          {
+            type: "checkpoint",
+            questions: [
+              {
+                kind: "mcq",
+                q: "The width of the slit in a single-slit experiment is halved. The central maximum becomes:",
+                options: ["Half as wide", "Twice as wide", "Four times as wide", "Unchanged"],
+                answer: 1,
+                explain: "Angular width = 2λ/a, so halving a doubles the width. A narrower slit spreads light more.",
+              },
+            ],
+          },
+          {
+            type: "text",
+            md: t`**Polarisation.** In light, the electric field vibrates perpendicular to the direction of travel: light is a **transverse** wave. In ordinary (**unpolarised**) light from the Sun or a bulb, the direction of vibration changes randomly in all directions perpendicular to the ray.
+
+A **polaroid** is a sheet with long-chain molecules lined up in one direction. It absorbs the electric field component along the chains and lets through the component along its **pass axis**. Light coming out is **plane polarised** (vibrations in one plane only). An ideal polaroid passes **half** the intensity of unpolarised light, whatever its orientation.
+
+If plane-polarised light of intensity $I_0$ falls on a second polaroid (the **analyser**) whose pass axis makes angle $\theta$ with the polarisation direction, only the component $E_0\cos\theta$ gets through. This is **Malus' law**. Crossed polaroids ($\theta = 90^\circ$) let no light through. Sound waves in air are longitudinal, so they cannot be polarised.`,
+          },
+          {
+            type: "formula",
+            tex: t`I = I_0\cos^2\theta \quad \text{(Malus' law)}, \qquad \text{unpolarised} \xrightarrow{\text{polaroid}} \frac{I_0}{2}`,
+          },
+          {
+            type: "example",
+            title: "Two polaroids",
+            problem: t`Unpolarised light of intensity 80 W/m² passes through two polaroids whose pass axes are at 60° to each other. Find the intensity of the light that emerges.`,
+            steps: [
+              t`After the first polaroid: $\dfrac{80}{2} = 40$ W/m², plane polarised.`,
+              t`After the second: $I = 40\cos^2 60^\circ = 40 \times \dfrac{1}{4} = 10$ W/m².`,
+            ],
+            answer: "10 W/m².",
+          },
+          {
+            type: "callout",
+            tone: "note",
+            title: "Board note: polarisation by reflection",
+            md: "Rationalised NCERT keeps polaroids and Malus' law. ISC (and JEE) also ask **Brewster's law**: when unpolarised light is reflected at the angle θB with tan θB = n, the reflected light is completely plane polarised and the reflected and refracted rays are at 90° to each other. For glass with n = 1.5, θB ≈ 56.3°. Polaroids are used in sunglasses that cut glare, LCD screens and 3D-film glasses.",
+          },
+          {
+            type: "activity",
+            activity: {
+              kind: "sort",
+              prompt: "Does this show light is a wave, or that it is transverse?",
+              groups: ["Shows wave nature (any wave)", "Shows light is transverse"],
+              items: [
+                { text: "Bright and dark fringes from two slits", group: 0, hint: "Sound waves also interfere; this works for longitudinal waves too." },
+                { text: "Light spreading into the shadow of a thin slit", group: 0, hint: "Diffraction happens for all waves, including sound." },
+                { text: "Light through two crossed polaroids is blocked", group: 1, hint: "Only a wave with a vibration direction across the ray can be blocked by turning a filter." },
+                { text: "Sunlight through one polaroid dims as the second is rotated", group: 1, hint: "Malus' law depends on the direction of vibration." },
+                { text: "Red shift of a galaxy's spectrum", group: 0, hint: "The Doppler effect happens for all waves." },
+              ],
+              explain: "Interference, diffraction and the Doppler effect show that light is a wave. Only polarisation proves that it is a transverse wave.",
+            },
+          },
+          {
+            type: "mistake",
+            wrong: "A wider slit gives a wider central maximum, because more light passes through.",
+            right: "A wider slit gives a narrower central maximum (angular width 2λ/a). It is brighter, but less spread out.",
+            why: "Diffraction is the spreading of light by a narrow opening. As a grows much larger than λ the spreading vanishes and ray optics takes over; that is why we can treat light as rays for windows and lenses.",
+          },
+          {
+            type: "callout",
+            tone: "exam",
+            title: "Board exam tips",
+            md: "For single-slit diffraction, draw the intensity graph with the central maximum twice as wide and much higher than the secondary maxima, and mark minima at ±λ/a, ±2λ/a. 'Distinguish between interference and diffraction' wants two or three clear points from the table. In Malus' law questions, remember the first polaroid halves unpolarised light.",
+          },
+          {
+            type: "keypoints",
+            items: [
+              "Diffraction is noticeable when the opening is comparable to λ.",
+              t`Single slit: minima at $a\sin\theta = n\lambda$; central maximum of angular width $2\lambda/a$.`,
+              "Polarisation shows that light is transverse; unpolarised light through a polaroid keeps half its intensity.",
+              t`Malus' law: $I = I_0\cos^2\theta$; crossed polaroids block all light.`,
+            ],
+          },
+        ],
+        flashcards: [
+          { front: "Diffraction", back: "The bending and spreading of a wave round an obstacle or opening of size comparable to its wavelength." },
+          { front: "Condition for minima in single-slit diffraction", back: "a sin θ = nλ, n = ±1, ±2, …" },
+          { front: "Angular width of the central maximum", back: "2λ/a." },
+          { front: "Plane-polarised light", back: "Light whose electric field vibrates in one plane only." },
+          { front: "Intensity after one polaroid (unpolarised light)", back: "Half the incident intensity, I0/2." },
+          { front: "Malus' law", back: "I = I0 cos² θ, where θ is the angle between the polarisation direction and the analyser's pass axis." },
+          { front: "Why can't sound in air be polarised?", back: "It is a longitudinal wave; its vibrations are along the direction of travel." },
+        ],
+        quiz: [
+          {
+            kind: "numeric",
+            q: "Light of wavelength 600 nm passes through a slit 0.30 mm wide. What is the angular width of the central maximum, in milliradians?",
+            answer: 4,
+            unit: "mrad",
+            explain: t`$\frac{2\lambda}{a} = \frac{2 \times 600 \times 10^{-9}}{0.30 \times 10^{-3}} = 4.0 \times 10^{-3}$ rad $= 4.0$ mrad.`,
+          },
+          {
+            kind: "numeric",
+            q: "Unpolarised light of intensity 40 W/m² falls on an ideal polaroid. What intensity comes out, in W/m²?",
+            answer: 20,
+            unit: "W/m²",
+            explain: "An ideal polaroid passes half the intensity of unpolarised light.",
+          },
+          {
+            kind: "numeric",
+            q: "Plane-polarised light of intensity 12 W/m² falls on an analyser whose pass axis is at 30° to the plane of polarisation. What intensity emerges, in W/m²?",
+            answer: 9,
+            unit: "W/m²",
+            difficulty: 2,
+            explain: t`$I = 12\cos^2 30^\circ = 12 \times \frac{3}{4} = 9$ W/m².`,
+          },
+          {
+            kind: "mcq",
+            q: "Which phenomenon shows that light waves are transverse?",
+            options: ["Interference", "Diffraction", "Polarisation", "Refraction"],
+            answer: 2,
+            explain: "Interference and diffraction happen with longitudinal waves too. Only transverse waves can be polarised.",
+          },
+          {
+            kind: "truefalse",
+            q: "Sound waves travelling in air cannot be polarised.",
+            answer: true,
+            explain: "Sound in air is longitudinal: the vibration is along the direction of travel, so there is no transverse direction to select.",
+          },
+          {
+            kind: "multi",
+            q: "Polaroids are used in:",
+            options: ["Sunglasses that cut glare", "LCD screens", "Glasses for 3D films", "Optical fibres for the internet"],
+            answers: [0, 1, 2],
+            explain: "Optical fibres guide light by total internal reflection and do not need polaroids.",
+          },
+          {
+            kind: "mcq",
+            q: "Compared with a double-slit interference pattern, a single-slit diffraction pattern has:",
+            options: ["All fringes of equal width and brightness", "A central maximum twice as wide as the other maxima, with intensity falling off quickly", "No central maximum", "A dark centre"],
+            answer: 1,
+            explain: "In diffraction the central maximum spans −λ/a to +λ/a and is much brighter; the secondary maxima are narrower and weaker.",
+          },
+        ],
+      },
+
+      /* ---------------- Exam edge: wave optics ---------------- */
+      {
+        slug: "c12-wo-exam",
+        title: "Exam edge: Interference, Diffraction and Polarisation",
+        summary: "Entrance-exam patterns in wave optics: intensity ratios, thin films in one slit, overlapping fringes, polaroid chains, Brewster's angle and unequal-intensity YDSE.",
+        minutes: 24,
+        xp: 60,
+        track: "exam",
+        blocks: [
+          {
+            type: "text",
+            md: "Wave optics gives one or two questions in most papers. **KCET, COMEDK and NEET** ask fringe width, intensity ratios, single-slit width and Malus' law, often in one step. **JEE Main** adds a thin film over one slit, coincidence of fringes of two wavelengths and Brewster's angle. **JEE Advanced** mixes them: unequal-intensity sources with a phase shift, polaroid chains, and multiple-correct questions on how the pattern changes.",
+          },
+          {
+            type: "table",
+            headers: ["Exam", "Typical question"],
+            rows: [
+              ["KCET / COMEDK", "β for given λ, D, d; Imax/Imin from amplitude or intensity ratio"],
+              ["NEET", "Effect of medium on β; central maximum width; Malus' law with two polaroids"],
+              ["JEE Main", "Film on one slit (shift); first coincidence of two wavelengths; Brewster's angle"],
+              ["JEE Advanced", "Intensity at a point with unequal sources; three-polaroid systems; multiple-correct on pattern changes"],
+            ],
+          },
+          {
+            type: "list",
+            items: [
+              t`**Max/min ratio**: $\dfrac{I_{\max}}{I_{\min}} = \left(\dfrac{\sqrt{I_1} + \sqrt{I_2}}{\sqrt{I_1} - \sqrt{I_2}}\right)^2$. Work with $\sqrt{I}$ (amplitudes), never with $I$ directly.`,
+              t`**Thin film on one slit**: extra optical path $(n - 1)t$. The whole pattern shifts **towards the covered slit** by $\Delta y = \dfrac{(n - 1)tD}{d}$, i.e. by $N = \dfrac{(n - 1)t}{\lambda}$ fringes. β does not change.`,
+              t`**Coincidence of two wavelengths**: bright fringes overlap where $n_1\lambda_1 = n_2\lambda_2$; take the smallest integers.`,
+              t`**Angular fringe width** $\lambda/d$ does not depend on D; linear width $\lambda D/d$ does.`,
+              t`**Polaroid chain**: unpolarised $I_0$ through P₁, then P₂ at θ, then P₃ crossed with P₁: $I = \dfrac{I_0}{8}\sin^2 2\theta$, maximum $I_0/8$ at θ = 45°.`,
+              t`**Brewster**: $\tan\theta_B = n$; at θB the reflected and refracted rays are perpendicular ($\theta_B + r = 90^\circ$).`,
+            ],
+          },
+          {
+            type: "formula",
+            tex: t`\frac{I_{\max}}{I_{\min}} = \left(\frac{\sqrt{I_1} + \sqrt{I_2}}{\sqrt{I_1} - \sqrt{I_2}}\right)^2, \qquad \Delta y = \frac{(n - 1)tD}{d}, \qquad \tan\theta_B = n`,
+          },
+          {
+            type: "example",
+            title: "KCET level: intensity ratio",
+            problem: "Two coherent sources have intensities in the ratio 9 : 1. Find the ratio of maximum to minimum intensity in the interference pattern.",
+            steps: [
+              t`Amplitude ratio $= \sqrt{9} : \sqrt{1} = 3 : 1$.`,
+              t`$\dfrac{I_{\max}}{I_{\min}} = \dfrac{(3 + 1)^2}{(3 - 1)^2} = \dfrac{16}{4} = 4$.`,
+            ],
+            answer: "4 : 1.",
+          },
+          {
+            type: "example",
+            title: "JEE Main level: film over one slit",
+            problem: "In a YDSE with light of wavelength 600 nm, a thin transparent sheet (n = 1.5) covers one slit. The central bright fringe moves to where the fifth bright fringe used to be. Find the thickness of the sheet.",
+            steps: [
+              t`Shift of 5 fringes means the extra path equals $5\lambda$: $(n - 1)t = 5\lambda$.`,
+              t`$t = \dfrac{5 \times 600 \times 10^{-9}}{1.5 - 1} = \dfrac{3.0 \times 10^{-6}}{0.5} = 6.0 \times 10^{-6}$ m.`,
+            ],
+            answer: "6.0 μm. The pattern moves towards the covered slit; the fringe width is unchanged.",
+          },
+          {
+            type: "example",
+            title: "NEET level: two wavelengths",
+            problem: "A double slit (d = 1.0 mm, D = 1.0 m) is lit with light containing 600 nm and 480 nm. How far from the centre do bright fringes of the two colours first coincide?",
+            steps: [
+              t`Need $n_1 \times 600 = n_2 \times 480$, so $\dfrac{n_1}{n_2} = \dfrac{480}{600} = \dfrac{4}{5}$: $n_1 = 4$, $n_2 = 5$.`,
+              t`$y = \dfrac{n_1\lambda_1 D}{d} = \dfrac{4 \times 600 \times 10^{-9} \times 1.0}{1.0 \times 10^{-3}} = 2.4 \times 10^{-3}$ m.`,
+            ],
+            answer: "2.4 mm from the centre (4th bright of 600 nm on the 5th bright of 480 nm).",
+          },
+          {
+            type: "checkpoint",
+            questions: [
+              {
+                kind: "numeric",
+                q: "Light is incident on glass of refractive index √3. At what angle of incidence (in degrees) is the reflected light completely plane polarised?",
+                answer: 60,
+                unit: "°",
+                explain: t`$\tan\theta_B = \sqrt{3}$, so $\theta_B = 60^\circ$. The refracted ray is then at $30^\circ$, perpendicular to the reflected ray.`,
+              },
+            ],
+          },
+          {
+            type: "example",
+            title: "JEE Advanced level: three polaroids",
+            problem: t`Unpolarised light of intensity $I_0$ passes through polaroids P₁, P₂ and P₃ in turn. P₁ and P₃ are crossed. P₂ makes angle θ with P₁. Find the transmitted intensity as a function of θ, its maximum value, and its value at θ = 30°.`,
+            steps: [
+              t`After P₁: $\dfrac{I_0}{2}$. After P₂: $\dfrac{I_0}{2}\cos^2\theta$.`,
+              t`P₃ is at $90^\circ - \theta$ to P₂: $I = \dfrac{I_0}{2}\cos^2\theta\,\sin^2\theta = \dfrac{I_0}{8}\sin^2 2\theta$.`,
+              t`Maximum when $\sin 2\theta = 1$, θ = 45°: $I_{\max} = \dfrac{I_0}{8}$.`,
+              t`At θ = 30°: $I = \dfrac{I_0}{8}\sin^2 60^\circ = \dfrac{I_0}{8} \times \dfrac{3}{4} = \dfrac{3I_0}{32}$.`,
+            ],
+            answer: t`$I = \frac{I_0}{8}\sin^2 2\theta$; maximum $I_0/8$ at 45°; $3I_0/32$ at 30°. With P₂ removed, no light gets through.`,
+          },
+          {
+            type: "example",
+            title: "JEE Advanced level: unequal sources",
+            problem: t`In a YDSE, one slit is wider so that the intensities from the slits are $I_0$ and $4I_0$. Find the intensity at a point where the path difference is $\lambda/4$, as a fraction of the maximum intensity.`,
+            steps: [
+              t`$\phi = \dfrac{2\pi}{\lambda} \cdot \dfrac{\lambda}{4} = \dfrac{\pi}{2}$, so $\cos\phi = 0$.`,
+              t`$I = I_0 + 4I_0 + 2\sqrt{4I_0^2}\cos\dfrac{\pi}{2} = 5I_0$.`,
+              t`$I_{\max} = (\sqrt{I_0} + \sqrt{4I_0})^2 = 9I_0$; $I_{\min} = (2 - 1)^2 I_0 = I_0$ (dark fringes are not fully dark).`,
+            ],
+            answer: t`$I = 5I_0 = \frac{5}{9}I_{\max}$.`,
+          },
+          {
+            type: "mistake",
+            wrong: "A glass film over the upper slit pushes the fringe pattern downwards, away from that slit.",
+            right: "The pattern shifts towards the covered slit, by (n − 1)tD/d.",
+            why: "The film adds optical path to the waves from that slit. To get zero path difference again (the central maximum), the point on the screen must be closer to the covered slit, so its geometric path is shorter.",
+          },
+          {
+            type: "mistake",
+            wrong: "Placing a thin film over one slit changes the fringe width.",
+            right: "The fringe width stays λD/d; the whole pattern just shifts.",
+            why: "The film adds a constant extra path at every point, so the spacing between successive fringes, which depends only on λ, D and d, is unchanged. Only immersing the whole set-up in a medium (λ → λ/n) changes β.",
+          },
+          {
+            type: "activity",
+            activity: {
+              kind: "match",
+              prompt: "Match each change in a YDSE with its effect.",
+              pairs: [
+                ["Screen distance D doubled", "β doubles"],
+                ["Slit separation d doubled", "β halves"],
+                ["Set-up immersed in water (n = 4/3)", "β becomes three-quarters"],
+                ["Thin film over one slit", "β unchanged, pattern shifts"],
+                ["Red light replaced by blue", "β decreases"],
+              ],
+              explain: "Everything follows from β = λD/d, with λ replaced by λ/n in a medium. A film only adds a constant path, so it shifts the pattern without changing spacing.",
+            },
+          },
+          {
+            type: "callout",
+            tone: "exam",
+            title: "Safe use of the shortcuts",
+            md: "β = λD/d and Δx = xd/D need small angles (x, d ≪ D). If a question gives a large angle, use path difference d sin θ. Single-slit 'minima at nλ/a' is the condition for dark bands, the opposite of the YDSE bright-band condition; exams love to swap them. Resolving power and the Fresnel distance have been removed from the rationalised NCERT book, so KCET and NEET rarely ask them now, but they can still appear in JEE and ISC.",
+          },
+          {
+            type: "keypoints",
+            items: [
+              "Ratios: work with amplitudes (√I), then square.",
+              "Film on one slit: shift (n − 1)tD/d towards that slit, β unchanged.",
+              "Coincidence of fringes: n1 λ1 = n2 λ2 with the smallest integers.",
+              "Three polaroids with crossed ends: I = (I0/8) sin² 2θ.",
+              "Brewster: tan θB = n; reflected and refracted rays at 90°.",
+            ],
+          },
+        ],
+        flashcards: [
+          { front: "Imax/Imin for intensities I1 and I2", back: "((√I1 + √I2)/(√I1 − √I2))²." },
+          { front: "Shift of fringes due to a film on one slit", back: "Δy = (n − 1)tD/d, towards the covered slit; N = (n − 1)t/λ fringes." },
+          { front: "Coincidence of bright fringes of λ1 and λ2", back: "n1 λ1 = n2 λ2, smallest integers." },
+          { front: "Angular fringe width", back: "λ/d, independent of the screen distance." },
+          { front: "Three polaroids, first and last crossed", back: "I = (I0/8) sin² 2θ; maximum I0/8 at 45°." },
+          { front: "Brewster's law", back: "tan θB = n; reflected light is fully plane polarised and perpendicular to the refracted ray." },
+        ],
+        quiz: [
+          {
+            kind: "mcq",
+            q: "Two coherent sources have intensities in the ratio 16 : 1. The ratio Imax/Imin is:",
+            options: ["16", "25/9", "17/15", "5/3"],
+            answer: 1,
+            explain: t`Amplitudes 4 : 1, so $\frac{(4 + 1)^2}{(4 - 1)^2} = \frac{25}{9}$.`,
+            difficulty: 2,
+          },
+          {
+            kind: "numeric",
+            q: "In a YDSE, λ = 500 nm, d = 0.25 mm and D = 1.5 m. What is the fringe width in mm?",
+            answer: 3,
+            unit: "mm",
+            explain: t`$\beta = \frac{500 \times 10^{-9} \times 1.5}{0.25 \times 10^{-3}} = 3.0 \times 10^{-3}$ m $= 3.0$ mm.`,
+          },
+          {
+            kind: "numeric",
+            q: "A film of thickness 3.0 μm and n = 1.6 covers one slit of a YDSE using 600 nm light. By how many fringes does the pattern shift?",
+            answer: 3,
+            explain: t`$N = \frac{(n - 1)t}{\lambda} = \frac{0.6 \times 3.0 \times 10^{-6}}{600 \times 10^{-9}} = 3$.`,
+            difficulty: 2,
+          },
+          {
+            kind: "multi",
+            q: "Which of these change the fringe width in a YDSE?",
+            options: ["Changing the wavelength", "Moving the screen further away", "Making one source brighter", "Immersing the apparatus in oil", "Covering one slit with a thin glass film"],
+            answers: [0, 1, 3],
+            explain: "β = λD/d with λ → λ/n in a medium. Brightness changes contrast, not spacing; a film shifts the pattern without changing β.",
+            difficulty: 2,
+          },
+          {
+            kind: "mcq",
+            q: "In single-slit diffraction, the slit width equals the wavelength (a = λ). Then:",
+            options: ["The central maximum is very narrow", "The first minima are at ±90°, so the central maximum spreads over the whole forward region", "There is no diffraction", "Many secondary maxima are seen"],
+            answer: 1,
+            explain: t`$\sin\theta = \lambda/a = 1$, so $\theta = 90^\circ$: the central maximum fills the entire half-space in front of the slit.`,
+            difficulty: 3,
+            hint: "Put a = λ in a sin θ = λ.",
+          },
+          {
+            kind: "numeric",
+            q: "Unpolarised light of intensity 64 W/m² passes through three polaroids; the first and third are crossed and the middle one is at 30° to the first. What intensity emerges, in W/m²?",
+            answer: 6,
+            unit: "W/m²",
+            explain: t`$I = \frac{64}{8}\sin^2 60^\circ = 8 \times \frac{3}{4} = 6$ W/m².`,
+            difficulty: 3,
+            hint: "Use I = (I0/8) sin² 2θ.",
+          },
+          {
+            kind: "numeric",
+            q: "A YDSE (d = 0.50 mm, D = 1.0 m) uses light of 650 nm and 520 nm together. How far from the centre (in mm) do their bright fringes first coincide?",
+            answer: 5.2,
+            unit: "mm",
+            explain: t`$n_1 \times 650 = n_2 \times 520$ gives $n_1 = 4$, $n_2 = 5$ (2600 nm). $y = \frac{2600 \times 10^{-9} \times 1.0}{0.50 \times 10^{-3}} = 5.2$ mm.`,
+            difficulty: 2,
+          },
+          {
+            kind: "numeric",
+            q: "For glass of refractive index 1.5, the Brewster angle is about 56.3°. What is the angle of refraction at this incidence, in degrees?",
+            answer: 33.7,
+            tolerance: 0.2,
+            unit: "°",
+            explain: "At the Brewster angle the reflected and refracted rays are perpendicular, so r = 90° − 56.3° = 33.7°.",
+          },
+        ],
+      },
+    ],
+  },
 ];
 
 /** Class 12 chapter title ("12:<exact title>") → topic slug(s), or full lesson ids, that teach it. */
 export const links: Record<string, string | string[]> = {
   "12:Ray Optics and Optical Instruments": "c12-ray-optics",
+  "12:Wave Optics": "c12-wave-optics",
+  "12:Optics": ["c12-ray-optics", "c12-wave-optics"],
 };

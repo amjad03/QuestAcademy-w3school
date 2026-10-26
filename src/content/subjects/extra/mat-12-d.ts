@@ -1417,6 +1417,588 @@ The safest shortcut of all: **differentiate the options**. In an MCQ, the right 
       },
     ],
   },
+
+  /* ------------------------------------------------------------------ */
+  /* Application of Integrals (NCERT Ch 8) = Applications of Integrals (ISC) */
+  /* ------------------------------------------------------------------ */
+  {
+    slug: "c12-application-of-integrals",
+    title: "Application of Integrals",
+    icon: "📐",
+    description: "Areas under simple curves (lines, circles, parabolas, ellipses) and areas between two curves using definite integrals.",
+    lessons: [
+      {
+        slug: "c12-aoi-area-under-curves",
+        title: "Area under Simple Curves",
+        summary: "Areas bounded by a curve and an axis using vertical or horizontal strips, with the circle, parabola and ellipse in standard form.",
+        minutes: 20,
+        xp: 50,
+        blocks: [
+          {
+            type: "illustration",
+            emoji: "🏟️",
+            caption: "An athletics ground is often shaped like an ellipse. Its area comes from one definite integral.",
+          },
+          {
+            type: "text",
+            md: t`Take the region bounded by $y = f(x) \ge 0$, the $x$-axis and the lines $x = a$, $x = b$. Cut it into thin **vertical strips**. A typical strip has height $y$ and width $dx$, so its area is $dA = y\,dx$. Adding all the strips gives
+
+$A = \int_a^b y\,dx = \int_a^b f(x)\,dx.$`,
+          },
+          {
+            type: "text",
+            md: t`Sometimes it is easier to use **horizontal strips**. For the region bounded by $x = g(y) \ge 0$, the $y$-axis and the lines $y = c$, $y = d$, a strip has length $x$ and width $dy$:
+
+$A = \int_c^d x\,dy = \int_c^d g(y)\,dy.$
+
+If the curve lies **below** the $x$-axis, $\int_a^b f(x)\,dx$ is negative; area is its absolute value. If the curve is partly above and partly below, split at the crossing points and add the absolute values.`,
+          },
+          {
+            type: "formula",
+            tex: t`\text{Area} = \int_a^b |f(x)|\,dx`,
+            caption: "Area is always positive; split the interval where f changes sign.",
+          },
+          {
+            type: "example",
+            title: "Area of an ellipse",
+            problem: t`Find the area enclosed by the ellipse $\frac{x^2}{a^2} + \frac{y^2}{b^2} = 1$.`,
+            steps: [
+              t`By symmetry, area $= 4 \times$ (area in the first quadrant). There $y = \frac{b}{a}\sqrt{a^2 - x^2}$, for $0 \le x \le a$.`,
+              t`Area $= 4\cdot\frac{b}{a}\int_0^a \sqrt{a^2 - x^2}\,dx$.`,
+              t`$\int_0^a\sqrt{a^2 - x^2}\,dx = \left[\frac{x}{2}\sqrt{a^2 - x^2} + \frac{a^2}{2}\sin^{-1}\frac{x}{a}\right]_0^a = \frac{a^2}{2}\cdot\frac{\pi}{2} = \frac{\pi a^2}{4}$.`,
+              t`Area $= \frac{4b}{a}\cdot\frac{\pi a^2}{4}$.`,
+            ],
+            answer: t`$\pi ab$. With $a = b = r$ this gives the circle's area $\pi r^2$.`,
+          },
+          {
+            type: "example",
+            title: "Parabola cut off by its latus rectum",
+            problem: t`Find the area of the region bounded by the parabola $y^2 = 12x$ and its latus rectum.`,
+            steps: [
+              t`$y^2 = 4ax$ with $4a = 12$, so $a = 3$; the latus rectum is the line $x = 3$.`,
+              t`The region is symmetric about the $x$-axis: area $= 2\int_0^3 \sqrt{12x}\,dx = 2\cdot 2\sqrt{3}\int_0^3 x^{1/2}\,dx$.`,
+              t`$\int_0^3 x^{1/2}\,dx = \frac{2}{3}\cdot 3^{3/2} = \frac{2}{3}\cdot 3\sqrt{3} = 2\sqrt{3}$.`,
+              t`Area $= 4\sqrt{3}\cdot 2\sqrt{3} = 24$.`,
+            ],
+            answer: t`24 square units (in general $\frac{8}{3}a^2$).`,
+          },
+          {
+            type: "checkpoint",
+            questions: [
+              {
+                kind: "mcq",
+                q: t`The area enclosed by $\frac{x^2}{16} + \frac{y^2}{9} = 1$ is`,
+                options: [t`$12\pi$`, t`$7\pi$`, t`$144\pi$`, t`$25\pi$`],
+                answer: 0,
+                explain: t`$a = 4$, $b = 3$, so the area is $\pi ab = 12\pi$.`,
+              },
+            ],
+          },
+          {
+            type: "example",
+            title: "Horizontal strips",
+            problem: t`Find the area of the region bounded by $x^2 = 4y$ and the line $y = 4$.`,
+            steps: [
+              t`The parabola opens upward and meets $y = 4$ at $x = \pm 4$. It is symmetric about the $y$-axis.`,
+              t`Use horizontal strips in the first quadrant: $x = 2\sqrt{y}$, $0 \le y \le 4$.`,
+              t`Area $= 2\int_0^4 2\sqrt{y}\,dy = 4\cdot\frac{2}{3}\left[y^{3/2}\right]_0^4 = \frac{8}{3}\cdot 8$.`,
+              t`Check with vertical strips: $\int_{-4}^{4}\left(4 - \frac{x^2}{4}\right)dx = 32 - \frac{32}{3} = \frac{64}{3}$.`,
+            ],
+            answer: t`$\frac{64}{3}$ square units.`,
+          },
+          {
+            type: "example",
+            title: "A curve that crosses the axis",
+            problem: t`Find the area between $y = \sin x$ and the $x$-axis for $0 \le x \le 2\pi$.`,
+            steps: [
+              t`$\sin x \ge 0$ on $[0, \pi]$ and $\le 0$ on $[\pi, 2\pi]$. Split at $\pi$.`,
+              t`$\int_0^{\pi}\sin x\,dx = [-\cos x]_0^{\pi} = 2$.`,
+              t`$\int_{\pi}^{2\pi}\sin x\,dx = -2$; its absolute value is 2.`,
+            ],
+            answer: "4 square units (the plain integral over [0, 2π] would wrongly give 0).",
+          },
+          {
+            type: "mistake",
+            wrong: t`The area bounded by $y = x^3$, the $x$-axis and $x = -1$, $x = 1$ is $\int_{-1}^{1}x^3\,dx = 0$.`,
+            right: t`Split at $x = 0$: area $= \left|\int_{-1}^0 x^3\,dx\right| + \int_0^1 x^3\,dx = \frac{1}{4} + \frac{1}{4} = \frac{1}{2}$.`,
+            why: t`A definite integral is **signed** area, so the part below the axis cancels the part above. A region drawn on paper always has positive area, so sketch it and split where the curve crosses the axis.`,
+          },
+          {
+            type: "activity",
+            activity: {
+              kind: "order",
+              prompt: "Put the steps for finding an area in order.",
+              items: [
+                "Sketch the curves and shade the region",
+                "Find the limits (intersection points)",
+                "Choose vertical or horizontal strips",
+                "Write and evaluate the definite integral",
+                "Take absolute values for parts below the axis and add",
+              ],
+              explain: "The sketch decides everything else: the limits, the type of strip and whether the region must be split.",
+            },
+          },
+          {
+            type: "callout",
+            tone: "exam",
+            title: "Board tip",
+            md: "Area questions usually carry a mark for a neat sketch with the region shaded and the intersection points labelled. Use symmetry and say so (\"area = 2 × area in the first quadrant\"). Write the final answer with \"square units\".",
+          },
+          {
+            type: "keypoints",
+            items: [
+              t`Vertical strips: $A = \int_a^b y\,dx$. Horizontal strips: $A = \int_c^d x\,dy$.`,
+              t`Area is $\int |f(x)|\,dx$; split where the curve crosses the axis.`,
+              t`Ellipse: $\pi ab$; circle: $\pi r^2$.`,
+              t`Parabola $y^2 = 4ax$ and its latus rectum enclose $\frac{8}{3}a^2$.`,
+              "Use symmetry to integrate over one part only.",
+            ],
+          },
+        ],
+        flashcards: [
+          { front: "Area by vertical strips", back: t`$\int_a^b y\,dx$` },
+          { front: "Area by horizontal strips", back: t`$\int_c^d x\,dy$` },
+          { front: "Area of ellipse", back: t`$\pi ab$` },
+          { front: t`Area between $y^2 = 4ax$ and its latus rectum`, back: t`$\frac{8}{3}a^2$` },
+          { front: "Curve below the x-axis", back: "The integral is negative; area is its absolute value." },
+          { front: t`$\int_0^a\sqrt{a^2 - x^2}\,dx$`, back: t`$\frac{\pi a^2}{4}$ (a quarter circle)` },
+        ],
+        quiz: [
+          {
+            kind: "numeric",
+            q: t`Find the area bounded by $y = x^2$, the $x$-axis and the lines $x = 0$, $x = 3$.`,
+            answer: 9,
+            unit: "sq units",
+            explain: t`$\int_0^3 x^2\,dx = \left[\frac{x^3}{3}\right]_0^3 = 9$.`,
+          },
+          {
+            kind: "numeric",
+            q: t`Find the area bounded by $y = x^3$, the $x$-axis and $x = -1$, $x = 1$.`,
+            answer: 0.5,
+            unit: "sq units",
+            explain: t`$\frac{1}{4} + \frac{1}{4} = \frac{1}{2}$; the signed integral 0 is not the area.`,
+          },
+          {
+            kind: "mcq",
+            q: t`The area bounded by $y^2 = 4x$ and the line $x = 1$ is`,
+            options: [t`$\frac{8}{3}$`, t`$\frac{4}{3}$`, t`$\frac{16}{3}$`, "2"],
+            answer: 0,
+            explain: t`$a = 1$: $2\int_0^1 2\sqrt{x}\,dx = 4\cdot\frac{2}{3} = \frac{8}{3}$.`,
+          },
+          {
+            kind: "mcq",
+            q: t`The area of the circle $x^2 + y^2 = 9$ lying in the first quadrant is`,
+            options: [t`$\frac{9\pi}{4}$`, t`$9\pi$`, t`$\frac{3\pi}{4}$`, t`$\frac{9\pi}{2}$`],
+            answer: 0,
+            explain: t`Quarter of $\pi\cdot 3^2$: $\frac{9\pi}{4}$.`,
+          },
+          {
+            kind: "truefalse",
+            q: t`$\int_{0}^{2\pi}\cos x\,dx$ equals the area between $y = \cos x$ and the $x$-axis on $[0, 2\pi]$.`,
+            answer: false,
+            explain: t`The integral is 0, but the area is 4: the curve is below the axis on $(\frac{\pi}{2}, \frac{3\pi}{2})$.`,
+          },
+          {
+            kind: "numeric",
+            q: t`Find the area bounded by $y = \sqrt{x}$, the $y$-axis and the line $y = 2$ (to 2 decimal places).`,
+            answer: 2.67,
+            tolerance: 0.01,
+            explain: t`Use horizontal strips: $x = y^2$, so area $= \int_0^2 y^2\,dy = \frac{8}{3} \approx 2.67$.`,
+            difficulty: 2,
+            hint: "The region lies between the curve and the y-axis, so use strips parallel to the x-axis.",
+          },
+          {
+            kind: "mcq",
+            q: t`The area enclosed by the ellipse $4x^2 + 25y^2 = 100$ is`,
+            options: [t`$10\pi$`, t`$100\pi$`, t`$20\pi$`, t`$7\pi$`],
+            answer: 0,
+            explain: t`Divide by 100: $\frac{x^2}{25} + \frac{y^2}{4} = 1$, so $a = 5$, $b = 2$ and the area is $10\pi$.`,
+            difficulty: 2,
+          },
+        ],
+      },
+      {
+        slug: "c12-aoi-between-curves",
+        title: "Area between Two Curves",
+        summary: "Area of a region bounded by two curves: finding intersection points, top minus bottom, and splitting where the curves cross.",
+        minutes: 20,
+        xp: 50,
+        blocks: [
+          {
+            type: "text",
+            md: t`If $f(x) \ge g(x)$ on $[a, b]$, a vertical strip between the curves has height $f(x) - g(x)$. So the area between $y = f(x)$ and $y = g(x)$ from $x = a$ to $x = b$ is the integral of **top minus bottom**. With horizontal strips it is the integral of **right minus left**.`,
+          },
+          {
+            type: "formula",
+            tex: t`A = \int_a^b \left[f(x) - g(x)\right]dx \quad (f \ge g),\qquad A = \int_c^d \left[x_{\text{right}} - x_{\text{left}}\right]dy`,
+          },
+          {
+            type: "list",
+            ordered: true,
+            items: [
+              "Sketch both curves.",
+              t`Solve the two equations together to find the intersection points; their $x$- (or $y$-) values are the limits.`,
+              "Decide which curve is on top (or on the right) in each part.",
+              "If the curves cross inside the interval, split there and add the pieces.",
+            ],
+          },
+          {
+            type: "example",
+            title: "Parabola and line",
+            problem: t`Find the area enclosed by $y = x^2$ and $y = x$.`,
+            steps: [
+              t`Intersections: $x^2 = x \Rightarrow x = 0, 1$.`,
+              t`On $[0, 1]$, $x \ge x^2$ (try $x = \frac{1}{2}$), so the line is on top.`,
+              t`$A = \int_0^1 (x - x^2)\,dx = \frac{1}{2} - \frac{1}{3}$.`,
+            ],
+            answer: t`$\frac{1}{6}$ square units.`,
+          },
+          {
+            type: "example",
+            title: "Two ways: vertical and horizontal strips",
+            problem: t`Find the area enclosed by $y^2 = 4x$ and $y = 2x$.`,
+            steps: [
+              t`Intersections: $(2x)^2 = 4x \Rightarrow 4x(x - 1) = 0$, so $(0, 0)$ and $(1, 2)$.`,
+              t`Vertical strips: top $y = 2\sqrt{x}$, bottom $y = 2x$. $A = \int_0^1 (2\sqrt{x} - 2x)\,dx = \frac{4}{3} - 1 = \frac{1}{3}$.`,
+              t`Horizontal strips: right $x = \frac{y}{2}$, left $x = \frac{y^2}{4}$. $A = \int_0^2 \left(\frac{y}{2} - \frac{y^2}{4}\right)dy = 1 - \frac{2}{3} = \frac{1}{3}$.`,
+            ],
+            answer: t`$\frac{1}{3}$ square units, either way.`,
+          },
+          {
+            type: "checkpoint",
+            questions: [
+              {
+                kind: "mcq",
+                q: t`The area enclosed by $y = x^2$ and $y = 2x$ is`,
+                options: [t`$\frac{4}{3}$`, t`$\frac{8}{3}$`, "4", t`$\frac{2}{3}$`],
+                answer: 0,
+                explain: t`Intersections $x = 0, 2$: $\int_0^2 (2x - x^2)\,dx = 4 - \frac{8}{3} = \frac{4}{3}$.`,
+              },
+            ],
+          },
+          {
+            type: "example",
+            title: "Two parabolas",
+            problem: t`Find the area enclosed by $y^2 = 4x$ and $x^2 = 4y$.`,
+            steps: [
+              t`From $x^2 = 4y$, $y = \frac{x^2}{4}$; then $\frac{x^4}{16} = 4x \Rightarrow x(x^3 - 64) = 0$, so $x = 0, 4$. The points are $(0,0)$ and $(4,4)$.`,
+              t`On $[0, 4]$, $2\sqrt{x}$ is on top of $\frac{x^2}{4}$.`,
+              t`$A = \int_0^4 \left(2\sqrt{x} - \frac{x^2}{4}\right)dx = \frac{4}{3}\cdot 8 - \frac{64}{12} = \frac{32}{3} - \frac{16}{3}$.`,
+            ],
+            answer: t`$\frac{16}{3}$ square units.`,
+          },
+          {
+            type: "example",
+            title: "Circle and line",
+            problem: t`Find the area of the smaller region cut off from the circle $x^2 + y^2 = 4$ by the line $x + y = 2$.`,
+            steps: [
+              t`The line meets the circle at $(2, 0)$ and $(0, 2)$. The smaller region lies in the first quadrant, between the line (below) and the circle (above).`,
+              t`$A = \int_0^2\left(\sqrt{4 - x^2} - (2 - x)\right)dx$.`,
+              t`$\int_0^2\sqrt{4 - x^2}\,dx = \pi$ (a quarter circle of radius 2) and $\int_0^2 (2 - x)\,dx = 2$ (a triangle).`,
+            ],
+            answer: t`$\pi - 2$ square units.`,
+          },
+          {
+            type: "callout",
+            tone: "note",
+            title: "Board note",
+            md: "The rationalised NCERT chapter (CBSE, Karnataka PUC) keeps only areas under simple curves; areas between two curves were removed from its exercises. ISC still asks for the area between two curves, and JEE, KCET and COMEDK need it, so learn this lesson whichever board you write.",
+          },
+          {
+            type: "mistake",
+            wrong: t`The area between $y = \sin x$ and $y = \cos x$ on $[0, \frac{\pi}{2}]$ is $\left|\int_0^{\pi/2}(\cos x - \sin x)\,dx\right| = 0$.`,
+            right: t`The curves cross at $x = \frac{\pi}{4}$. Split: $\int_0^{\pi/4}(\cos x - \sin x)\,dx + \int_{\pi/4}^{\pi/2}(\sin x - \cos x)\,dx = (\sqrt{2} - 1) + (\sqrt{2} - 1) = 2\sqrt{2} - 2$.`,
+            why: t`"Top minus bottom" only works while the same curve stays on top. When they swap, the two pieces cancel inside one integral. Find every crossing point before you integrate.`,
+          },
+          {
+            type: "activity",
+            activity: {
+              kind: "reveal",
+              prompt: t`Area between $y = x^2$ and $y = x^3$ on $[0, 1]$?`,
+              options: [t`$x^2$ is on top; area $\frac{1}{12}$`, t`$x^3$ is on top; area $\frac{1}{12}$`, t`$x^2$ is on top; area $\frac{7}{12}$`],
+              answer: 0,
+              trap: 1,
+              explain: t`For $0 < x < 1$, a higher power is **smaller** ($0.5^3 < 0.5^2$), so $x^2$ is on top. Area $= \frac{1}{3} - \frac{1}{4} = \frac{1}{12}$.`,
+            },
+          },
+          {
+            type: "callout",
+            tone: "exam",
+            title: "Board tip",
+            md: "Show the working for the intersection points; they carry a mark. Name the upper and lower curves in words before writing the integral. If you use horizontal strips, write the curves as x in terms of y first.",
+          },
+          {
+            type: "keypoints",
+            items: [
+              "Area between curves = integral of (top − bottom) or (right − left).",
+              "Intersection points give the limits.",
+              "Split wherever the curves cross inside the interval.",
+              "Vertical and horizontal strips give the same area; choose the simpler one.",
+            ],
+          },
+        ],
+        flashcards: [
+          { front: "Area between y = f(x) and y = g(x), f ≥ g", back: t`$\int_a^b (f - g)\,dx$` },
+          { front: "How to find the limits", back: "Solve the two equations together (intersection points)." },
+          { front: t`Area between $y = x^2$ and $y = x$`, back: t`$\frac{1}{6}$` },
+          { front: t`Area between $y^2 = 4x$ and $x^2 = 4y$`, back: t`$\frac{16}{3}$` },
+          { front: "If the curves cross inside the interval", back: "Split at the crossing and add the absolute areas." },
+          { front: "On (0, 1), which is bigger: x² or x³?", back: "x² (higher powers are smaller there)." },
+        ],
+        quiz: [
+          {
+            kind: "numeric",
+            q: t`Find the area enclosed by $y = x^2$ and $y = 2 - x^2$ (to 2 decimal places).`,
+            answer: 2.67,
+            tolerance: 0.01,
+            explain: t`Intersections $x = \pm 1$: $\int_{-1}^{1}(2 - 2x^2)\,dx = 4 - \frac{4}{3} = \frac{8}{3} \approx 2.67$.`,
+          },
+          {
+            kind: "mcq",
+            q: t`The area between $y = \sin x$ and $y = \cos x$ for $0 \le x \le \frac{\pi}{2}$ is`,
+            options: [t`$2\sqrt{2} - 2$`, "0", t`$\sqrt{2} - 1$`, t`$2\sqrt{2}$`],
+            answer: 0,
+            explain: t`Split at $\frac{\pi}{4}$; each part is $\sqrt{2} - 1$.`,
+            difficulty: 2,
+          },
+          {
+            kind: "mcq",
+            q: t`The area enclosed by $y^2 = 8x$ and $x^2 = 8y$ is`,
+            options: [t`$\frac{64}{3}$`, t`$\frac{16}{3}$`, t`$\frac{32}{3}$`, "64"],
+            answer: 0,
+            explain: t`They meet at $(0,0)$ and $(8,8)$: $\int_0^8\left(\sqrt{8x} - \frac{x^2}{8}\right)dx = \frac{128}{3} - \frac{64}{3} = \frac{64}{3}$.`,
+            difficulty: 2,
+          },
+          {
+            kind: "truefalse",
+            q: "Using horizontal strips instead of vertical strips can change the area of a region.",
+            answer: false,
+            explain: "Area is a property of the region; both methods add up the same region, so they agree.",
+          },
+          {
+            kind: "numeric",
+            q: t`Find the total area enclosed by $y = x$ and $y = x^3$.`,
+            answer: 0.5,
+            explain: t`They meet at $x = -1, 0, 1$. Each loop has area $\int_0^1 (x - x^3)\,dx = \frac{1}{4}$, so the total is $\frac{1}{2}$.`,
+            difficulty: 2,
+            hint: "There are two loops; do not let them cancel.",
+          },
+          {
+            kind: "mcq",
+            q: t`The area of the region bounded by $y = |x|$ and $y = 2$ is`,
+            options: ["4", "2", "8", "1"],
+            answer: 0,
+            explain: t`A triangle with vertices $(-2, 2)$, $(0, 0)$, $(2, 2)$: $\frac{1}{2}\cdot 4\cdot 2 = 4$.`,
+          },
+          {
+            kind: "mcq",
+            q: t`Which integral gives the area between $x = y^2$ and $x = 4$?`,
+            options: [t`$\int_{-2}^{2}(4 - y^2)\,dy$`, t`$\int_0^4 (4 - y^2)\,dy$`, t`$\int_{-2}^{2}(y^2 - 4)\,dy$`, t`$\int_0^4 \sqrt{x}\,dx$`],
+            answer: 0,
+            explain: t`Right curve $x = 4$, left curve $x = y^2$, and they meet at $y = \pm 2$. (The last option is only the upper half.)`,
+          },
+        ],
+      },
+      {
+        slug: "c12-aoi-exam",
+        title: "Exam edge: Areas by Integration",
+        summary: "What JEE, KCET and COMEDK ask about areas: regions given by inequalities and modulus curves, quick formulas for parabolas, and parameter problems.",
+        minutes: 22,
+        xp: 60,
+        track: "exam",
+        blocks: [
+          {
+            type: "text",
+            md: t`Area questions appear in almost every JEE Main paper and regularly in KCET and COMEDK. CETs ask standard areas (ellipse, parabola with a line). JEE gives the region as a set of **inequalities**, such as $\{(x, y): x^2 \le y \le |x|\}$, or with modulus curves, and JEE Advanced asks for a parameter that makes the area take a given value.
+
+The key skill is the **sketch**: once the region is drawn, the integral is routine.`,
+          },
+          {
+            type: "table",
+            headers: ["Region", "Area"],
+            rows: [
+              [t`Ellipse $\frac{x^2}{a^2} + \frac{y^2}{b^2} = 1$`, t`$\pi ab$`],
+              [t`$y^2 = 4ax$ and $x^2 = 4by$`, t`$\frac{16ab}{3}$`],
+              [t`$y^2 = 4ax$ and its latus rectum`, t`$\frac{8a^2}{3}$`],
+              [t`Parabola $y = px^2 + qx + r$ and a line meeting it at $x = \alpha, \beta$`, t`$\frac{|p|(\beta - \alpha)^3}{6}$`],
+              [t`$|x| + |y| = a$`, t`$2a^2$`],
+            ],
+          },
+          {
+            type: "formula",
+            tex: t`\int_\alpha^\beta \left|p(x - \alpha)(x - \beta)\right|dx = \frac{|p|\,(\beta - \alpha)^3}{6}`,
+            caption: "Safe only for a parabola (with vertical axis) and a straight line, or two such parabolas with different p (use the difference of the p's).",
+          },
+          {
+            type: "example",
+            title: "KCET level: the shortcut",
+            problem: t`Find the area enclosed by $y = x^2 - 4x + 3$ and $y = x - 1$.`,
+            steps: [
+              t`Intersections: $x^2 - 4x + 3 = x - 1 \Rightarrow x^2 - 5x + 4 = 0 \Rightarrow x = 1, 4$.`,
+              t`The difference is $(x - 1) - (x^2 - 4x + 3) = -(x - 1)(x - 4)$, so $|p| = 1$.`,
+              t`Shortcut: $\frac{(4 - 1)^3}{6} = \frac{27}{6}$. (Direct: $\int_1^4 (-x^2 + 5x - 4)\,dx = -21 + \frac{75}{2} - 12 = \frac{9}{2}$.)`,
+            ],
+            answer: t`$\frac{9}{2}$ square units.`,
+          },
+          {
+            type: "example",
+            title: "JEE Main level: modulus curves",
+            problem: t`Find the area enclosed by $y = |x - 1|$ and $y = 3 - |x|$.`,
+            steps: [
+              t`Intersections: for $x \ge 1$, $x - 1 = 3 - x \Rightarrow (2, 1)$; for $x \le 0$, $1 - x = 3 + x \Rightarrow (-1, 2)$. For $0 \le x \le 1$ the graphs ($1 - x$ and $3 - x$) are parallel.`,
+              t`Top is $3 - |x|$, bottom is $|x - 1|$, for $-1 \le x \le 2$. Split at 0 and 1.`,
+              t`$\int_{-1}^{0}(2 + 2x)\,dx = 1$, $\int_0^1 2\,dx = 2$, $\int_1^2 (4 - 2x)\,dx = 1$.`,
+              t`Check: the region is a rectangle with vertices $(-1, 2), (0, 3), (2, 1), (1, 0)$ and sides $\sqrt{2}$ and $2\sqrt{2}$.`,
+            ],
+            answer: "4 square units.",
+          },
+          {
+            type: "checkpoint",
+            questions: [
+              {
+                kind: "mcq",
+                q: t`The area of $\{(x, y): x^2 + y^2 \le 4,\ y \ge |x|\}$ is`,
+                options: [t`$\pi$`, t`$2\pi$`, t`$\frac{\pi}{2}$`, t`$4\pi$`],
+                answer: 0,
+                explain: t`$y \ge |x|$ is the wedge between the lines $y = \pm x$ above the origin: a $90°$ sector, a quarter of the circle: $\frac{4\pi}{4} = \pi$.`,
+                difficulty: 2,
+              },
+            ],
+          },
+          {
+            type: "example",
+            title: "JEE Main level: a circular segment",
+            problem: t`Find the area of the part of the circle $x^2 + y^2 = 4$ to the right of the line $x = 1$.`,
+            steps: [
+              t`Area $= 2\int_1^2\sqrt{4 - x^2}\,dx = 2\left[\frac{x}{2}\sqrt{4 - x^2} + 2\sin^{-1}\frac{x}{2}\right]_1^2$.`,
+              t`At 2: $0 + 2\cdot\frac{\pi}{2} = \pi$. At 1: $\frac{\sqrt{3}}{2} + 2\cdot\frac{\pi}{6} = \frac{\sqrt{3}}{2} + \frac{\pi}{3}$.`,
+              t`Area $= 2\left(\frac{2\pi}{3} - \frac{\sqrt{3}}{2}\right)$.`,
+              t`Check with the segment formula $\frac{r^2}{2}(\theta - \sin\theta)$, $\theta = \frac{2\pi}{3}$: $2\left(\frac{2\pi}{3} - \frac{\sqrt{3}}{2}\right)$.`,
+            ],
+            answer: t`$\frac{4\pi}{3} - \sqrt{3}$ square units.`,
+          },
+          {
+            type: "example",
+            title: "JEE Advanced level: find the parameter",
+            problem: t`The line $y = mx$ ($0 < m < 2$) divides the region between $y = 2x - x^2$ and the $x$-axis into two parts of equal area. Find $m$.`,
+            steps: [
+              t`Whole region: $\int_0^2 (2x - x^2)\,dx = 4 - \frac{8}{3} = \frac{4}{3}$. Each part must be $\frac{2}{3}$.`,
+              t`The line meets the parabola where $2x - x^2 = mx$, i.e. $x = 0$ and $x = 2 - m$.`,
+              t`Area between them: the difference $(2 - m)x - x^2$ has $|p| = 1$, so it is $\frac{(2 - m)^3}{6}$.`,
+              t`$\frac{(2 - m)^3}{6} = \frac{2}{3} \Rightarrow (2 - m)^3 = 4 \Rightarrow m = 2 - 4^{1/3}$.`,
+            ],
+            answer: t`$m = 2 - \sqrt[3]{4} \approx 0.413$.`,
+          },
+          {
+            type: "mistake",
+            wrong: t`For $\{(x, y): y \ge x^2,\ y \le 1\}$, shade the region under the parabola.`,
+            right: t`$y \ge x^2$ means points **above** the parabola. The region is between $y = x^2$ (below) and $y = 1$ (above), with area $\int_{-1}^{1}(1 - x^2)\,dx = \frac{4}{3}$.`,
+            why: t`Test a point: $(0, \frac{1}{2})$ satisfies $y \ge x^2$ and lies inside the parabola's "cup". Checking one point for each inequality avoids shading the wrong side.`,
+          },
+          {
+            type: "mistake",
+            wrong: t`The area between $y = x^3$ and $y = x$ on $[0, 1]$ is $\frac{(1 - 0)^3}{6}$ by the parabola formula.`,
+            right: t`The $\frac{(\beta - \alpha)^3}{6}$ rule needs a quadratic difference. Here $\int_0^1 (x - x^3)\,dx = \frac{1}{4}$.`,
+            why: t`The formula is derived from $\int_\alpha^\beta (x - \alpha)(\beta - x)\,dx$, which only holds when the difference of the two curves is a quadratic.`,
+          },
+          {
+            type: "activity",
+            activity: {
+              kind: "match",
+              prompt: "Match each region with its area.",
+              pairs: [
+                [t`$|x| + |y| \le 3$`, "18"],
+                [t`$y^2 = 4x$ and $x^2 = 4y$`, t`$\frac{16}{3}$`],
+                [t`$\frac{x^2}{9} + \frac{y^2}{4} \le 1$`, t`$6\pi$`],
+                [t`$y = x^2$ and $y = 3x$`, t`$\frac{9}{2}$`],
+              ],
+              explain: t`$|x| + |y| = a$ is a square of area $2a^2$; two parabolas give $\frac{16ab}{3}$; the ellipse is $\pi ab$; parabola and line give $\frac{(\beta-\alpha)^3}{6} = \frac{27}{6}$.`,
+            },
+          },
+          {
+            type: "keypoints",
+            items: [
+              "Sketch first; test one point for each inequality.",
+              "With modulus, split at the corners of each graph.",
+              t`Parabola and line: $\frac{|p|(\beta - \alpha)^3}{6}$, only for a quadratic difference.`,
+              t`$y^2 = 4ax$, $x^2 = 4by$: $\frac{16ab}{3}$; ellipse: $\pi ab$.`,
+              "Parameter questions: write the area as a function of the parameter and solve.",
+            ],
+          },
+        ],
+        flashcards: [
+          { front: "Parabola–line area shortcut", back: t`$\frac{|p|(\beta - \alpha)^3}{6}$` },
+          { front: t`Area between $y^2 = 4ax$ and $x^2 = 4by$`, back: t`$\frac{16ab}{3}$` },
+          { front: t`Area enclosed by $|x| + |y| = a$`, back: t`$2a^2$` },
+          { front: t`Area of segment of a circle (central angle $\theta$)`, back: t`$\frac{r^2}{2}(\theta - \sin\theta)$` },
+          { front: "Region y ≥ f(x)", back: "Points above the graph of f." },
+          { front: t`Area between $y = x^2$ and $y = mx$, $m > 0$`, back: t`$\frac{m^3}{6}$` },
+        ],
+        quiz: [
+          {
+            kind: "numeric",
+            q: t`Find the area enclosed by $y = x^2 - 4x + 3$ and $y = x - 1$.`,
+            answer: 4.5,
+            explain: t`They meet at $x = 1, 4$ and the difference is quadratic with $|p| = 1$: $\frac{3^3}{6} = 4.5$.`,
+          },
+          {
+            kind: "numeric",
+            q: t`Find the area enclosed by $|x| + |y| = 2$.`,
+            answer: 8,
+            explain: t`A square with diagonals 4 and 4: area $\frac{1}{2}\cdot 4\cdot 4 = 8 = 2a^2$.`,
+          },
+          {
+            kind: "mcq",
+            q: t`The area enclosed by $y^2 = 4x$ and $x^2 = 32y$ is`,
+            options: [t`$\frac{128}{3}$`, t`$\frac{64}{3}$`, t`$\frac{512}{3}$`, t`$\frac{32}{3}$`],
+            answer: 0,
+            explain: t`$a = 1$, $4b = 32 \Rightarrow b = 8$: $\frac{16\cdot 1\cdot 8}{3} = \frac{128}{3}$. They meet at $(16, 8)$.`,
+            difficulty: 2,
+          },
+          {
+            kind: "multi",
+            q: t`Which regions have area $\frac{1}{6}$? (Select all.)`,
+            options: [t`Between $y = x^2$ and $y = x$`, t`Between $y = x^2$ and $y = -x$`, t`Between $y = 2x^2$ and $y = 2x$`, t`Between $y = x - x^2$ and the $x$-axis`],
+            answers: [0, 1, 3],
+            explain: t`Each of the first, second and fourth has $|p| = 1$ and roots 1 apart: $\frac{1}{6}$. For $2x^2$ and $2x$, $|p| = 2$, giving $\frac{2}{6} = \frac{1}{3}$.`,
+            difficulty: 2,
+          },
+          {
+            kind: "numeric",
+            q: t`Find the area enclosed by $4x^2 + 9y^2 = 36$ (to 2 decimal places).`,
+            answer: 18.85,
+            tolerance: 0.05,
+            explain: t`$\frac{x^2}{9} + \frac{y^2}{4} = 1$: $\pi\cdot 3\cdot 2 = 6\pi \approx 18.85$.`,
+          },
+          {
+            kind: "mcq",
+            q: t`The area of $\{(x, y): 0 \le y \le x^2,\ y \le 2 - x,\ x \ge 0\}$ is`,
+            options: [t`$\frac{5}{6}$`, t`$\frac{7}{6}$`, t`$\frac{1}{3}$`, t`$\frac{4}{3}$`],
+            answer: 0,
+            explain: t`$x^2 = 2 - x$ at $x = 1$. Below the parabola on $[0, 1]$: $\frac{1}{3}$; below the line on $[1, 2]$: $\frac{1}{2}$. Total $\frac{5}{6}$.`,
+            difficulty: 3,
+            hint: "The upper boundary is whichever of x² and 2 − x is smaller.",
+          },
+          {
+            kind: "numeric",
+            q: t`The line $x = k$ divides the area under $y = x^2$ from $x = 0$ to $x = 2$ into two equal parts. Find $k$ (to 2 decimal places).`,
+            answer: 1.59,
+            tolerance: 0.01,
+            explain: t`$\frac{k^3}{3} = \frac{1}{2}\cdot\frac{8}{3} \Rightarrow k^3 = 4 \Rightarrow k = \sqrt[3]{4} \approx 1.587$.`,
+            difficulty: 2,
+          },
+          {
+            kind: "mcq",
+            q: t`For $m > 0$, the area between $y = x^2$ and $y = mx$ is $\frac{9}{2}$. Then $m$ is`,
+            options: ["3", "27", t`$\frac{3}{2}$`, "9"],
+            answer: 0,
+            explain: t`Area $= \frac{m^3}{6} = \frac{9}{2} \Rightarrow m^3 = 27 \Rightarrow m = 3$.`,
+            difficulty: 2,
+          },
+        ],
+      },
+    ],
+  },
 ];
 
 /** Class 12 chapter title ("12:<exact title>") → topic slug(s), or full lesson ids, that teach it. */
