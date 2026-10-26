@@ -362,7 +362,7 @@ area of triangle OAC $<$ area of sector OAC $<$ area of triangle OAB.`,
             type: "callout",
             tone: "note",
             title: "Board note",
-            md: t`CBSE and Karnataka PUC (rationalised NCERT) stop at trigonometric limits. **ISC** Class 11, JEE and KCET also use $\lim_{x \to 0} \frac{e^x - 1}{x} = 1$, $\lim_{x \to 0} \frac{\log_e(1 + x)}{x} = 1$ and $\lim_{x \to 0} \frac{a^x - 1}{x} = \log_e a$; they appear in the Exam edge lesson.`,
+            md: t`CBSE and Karnataka PUC (rationalised NCERT) stop at trigonometric limits. **ISC** Class 11, JEE (and some KCET/COMEDK questions) also use $\lim_{x \to 0} \frac{e^x - 1}{x} = 1$, $\lim_{x \to 0} \frac{\log_e(1 + x)}{x} = 1$ and $\lim_{x \to 0} \frac{a^x - 1}{x} = \log_e a$; they appear in the Exam edge lesson.`,
           },
           {
             type: "keypoints",
@@ -667,7 +667,7 @@ In general, the **derivative of $f$ at $a$** is the limit below, if it exists. I
         blocks: [
           {
             type: "text",
-            md: t`**What the exams ask.** Limits are the doorway to Class 12 calculus, and almost every JEE Main paper has a limits question. **KCET** and **COMEDK** ask direct ones: standard limits, $\frac{0}{0}$ by factorising, $\frac{\infty}{\infty}$ by dividing by the highest power, and first-principles derivatives. **JEE Main** adds the $1^\infty$ form, $\infty - \infty$ forms and limits disguised as derivatives. **JEE Advanced** mixes limits with the greatest integer function and series expansions. There is no NEET Maths. Everything below works without L'Hôpital's rule, which is Class 12 material.`,
+            md: t`**What the exams ask.** Limits are the doorway to Class 12 calculus, and almost every JEE Main paper has a limits question. **KCET** and **COMEDK** ask direct ones: standard limits, $\frac{0}{0}$ by factorising, $\frac{\infty}{\infty}$ by dividing by the highest power, and first-principles derivatives. **JEE Main** adds the $1^\infty$ form, $\infty - \infty$ forms and limits disguised as derivatives. **JEE Advanced** mixes limits with the greatest integer function and series expansions. There is no NEET Maths. Everything below works without L'Hôpital's rule, which is not part of the NCERT (CBSE/PUC) syllabus in either class.`,
           },
           {
             type: "text",
@@ -1192,7 +1192,7 @@ The **variance** $\sigma^2$ is the mean of the squared deviations from the mean.
             type: "callout",
             tone: "exam",
             title: "Board exam tips",
-            md: t`State the method you use. In the step-deviation table, use columns x, f, y, fy, fy², and do not forget the factor $h^2$ at the end. Give the SD to two decimal places, and check: the SD cannot exceed half the range, and it cannot be negative. Rationalised NCERT focuses on the direct formulas; the shortcut method is still the fastest way to handle mid-points like 125, 135, … and is accepted in every board.`,
+            md: t`State the method you use. In the step-deviation table, use columns x, f, y, fy, fy², and do not forget the factor $h^2$ at the end. Give the SD to two decimal places, and check: the SD cannot exceed half the range, and it cannot be negative. Rationalised NCERT has dropped the shortcut method from the textbook and uses the direct formulas; the shortcut is still the fastest way to handle mid-points like 125, 135, …, and any correct method earns the marks (check your board's current syllabus).`,
           },
           {
             type: "keypoints",
@@ -1393,7 +1393,7 @@ The distribution with the **greater C.V.** is **more variable** (less consistent
             type: "callout",
             tone: "exam",
             title: "Board exam tips",
-            md: t`In "which is more consistent" questions, show both C.V. values and finish with a sentence naming the series and the reason ("smaller C.V., hence more consistent"). In correction problems, recompute **both** $\sum x$ and $\sum x^2$ before finding the new mean and SD; marks are given for each of these steps.`,
+            md: t`In "which is more consistent" questions, show both C.V. values and finish with a sentence naming the series and the reason ("smaller C.V., hence more consistent"). In correction problems, recompute **both** $\sum x$ and $\sum x^2$ before finding the new mean and SD; marks are given for each of these steps. **Board note:** the coefficient of variation section (*Analysis of frequency distributions*) was dropped from the rationalised NCERT textbook, so CBSE and Karnataka PUC may not examine it; ISC and some entrance papers still use it. Check your current syllabus.`,
           },
           {
             type: "keypoints",
@@ -1483,7 +1483,7 @@ The distribution with the **greater C.V.** is **more variable** (less consistent
         blocks: [
           {
             type: "text",
-            md: t`**What the exams ask.** **KCET** and **COMEDK** ask direct calculations: mean deviation, variance from sums, C.V. comparisons and the effect of $ax + b$. **JEE Main** almost always has a question on mean and variance: missing or wrongly copied observations, combined groups, coded sums like $\sum (x_i - 5)$, and patterned data such as $a, 2a, \ldots, na$. JEE Advanced asks statistics rarely, mostly as bounds or as a part of probability. Speed comes from a few standard results.`,
+            md: t`**What the exams ask.** **KCET** and **COMEDK** ask direct calculations: mean deviation, variance from sums, the effect of $ax + b$ and (less often, since it is outside the rationalised NCERT text) C.V. comparisons. **JEE Main** almost always has a question on mean and variance: missing or wrongly copied observations, combined groups, coded sums like $\sum (x_i - 5)$, and patterned data such as $a, 2a, \ldots, na$. JEE Advanced asks statistics rarely, mostly as bounds or as a part of probability. Speed comes from a few standard results.`,
           },
           {
             type: "text",
