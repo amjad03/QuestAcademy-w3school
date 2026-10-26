@@ -295,7 +295,7 @@ const ch6: ExamQuestion[] = [
     q: t`If $^nP_2 = 56$, then $n$ equals:`,
     options: [t`$7$`, t`$14$`, t`$8$`, t`$28$`],
     answer: 2,
-    explain: t`$^nP_2 = n(n-1) = 56 = 8\cdot 7$, so $n = 8$ (the root $n = -7$ is rejected). $28$ comes from confusing $^nP_2$ with $^nC_2$ in the wrong direction.`,
+    explain: t`$^nP_2 = n(n-1) = 56 = 8\cdot 7$, so $n = 8$ (the root $n = -7$ is rejected). Choosing 7 picks the wrong factor of 56.`,
   }),
   q6(1, BASIC, 45, {
     kind: "mcq",
@@ -559,7 +559,7 @@ const ch6: ExamQuestion[] = [
     q: t`In how many ways can 5 distinct balls be placed in 3 distinct boxes so that no box is empty?`,
     answer: 150,
     hint: "Inclusion–exclusion on the boxes left empty.",
-    explain: t`All placements: $3^5 = 243$. Subtract those missing a given box: $3\cdot2^5 = 96$; add back those missing two boxes: $3\cdot1^5 = 3$. Total $243 - 96 + 3 = 150$. (Check by patterns: (3,1,1) gives $3\cdot{}^5C_3\cdot2 = 60$ and (2,2,1) gives $3\cdot\frac{5!}{2!2!1!}\cdot\frac{1}{2}\cdot2 = 90$; sum 150.)`,
+    explain: t`All placements: $3^5 = 243$. Subtract those missing a given box: $3\cdot2^5 = 96$; add back those missing two boxes: $3\cdot1^5 = 3$. Total $243 - 96 + 3 = 150$. (Check by patterns: (3,1,1) gives $3\cdot{}^5C_3\cdot2 = 60$ and (2,2,1) gives $3\cdot5\cdot{}^4C_2 = 90$; sum 150.)`,
   }),
   q6(3, ADV, 120, {
     kind: "mcq",
