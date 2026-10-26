@@ -319,7 +319,14 @@ function EntranceExams({ grade }: { grade: SyllabusGrade }) {
           <dt className="text-xs text-muted">JEE Main</dt>
           <dd className="text-lg font-bold tabular-nums">{t("khan.daysShort", "{n} days", { n: f.n(daysUntil(nextExamDate("JEE"))) })}</dd>
         </div>
+        {grade.id.startsWith("PUC") && (
+          <div>
+            <dt className="text-xs text-muted">KCET</dt>
+            <dd className="text-lg font-bold tabular-nums">{t("khan.daysShort", "{n} days", { n: f.n(daysUntil(nextExamDate("KCET"))) })}</dd>
+          </div>
+        )}
       </dl>
+      <p className="w-full text-xs text-muted sm:w-auto">{t("khan.focus.entranceApprox", "Dates are approximate — check the official schedule.")}</p>
       <Link href="/exam" className="btn-ghost">
         {t("khan.focus.examPrep", "Exam prep")}
       </Link>

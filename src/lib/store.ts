@@ -86,9 +86,19 @@ export interface MockResult {
   wrong: number;
   skipped: number;
   seconds: number;
-  bySubject: Record<string, { correct: number; wrong: number; skipped: number; score: number; max: number }>;
-  /** question id → chosen answer (index / number) or null */
-  answers: Record<string, number | null>;
+  bySubject: Record<string, { correct: number; wrong: number; skipped: number; score: number; max: number; partial?: number }>;
+  /** question id → chosen answer: option index (mcq), option indexes (multi), value (numeric) or null */
+  answers: Record<string, number | number[] | null>;
+  /** One-or-more-correct answers that earned partial marks. */
+  partial?: number;
+  /** Marks lost to negative marking (a positive number). */
+  negative?: number;
+  /** question id → seconds spent on it. */
+  times?: Record<string, number>;
+  /** question id → section id of the pattern (for per-section marking). */
+  sections?: Record<string, string>;
+  /** Question scope the attempt used ("all", "11", "12", "chapters"). */
+  scope?: string;
 }
 
 export interface LearnerState {

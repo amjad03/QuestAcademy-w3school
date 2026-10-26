@@ -85,7 +85,7 @@ export const CLASS_GROUPS: ClassGroup[] = [
   {
     id: "classes-11-12",
     label: "Classes 11–12",
-    hint: "Senior secondary · PUC · NEET / JEE",
+    hint: "Senior secondary · PUC · NEET / JEE / KCET / COMEDK",
     description: "Senior school maths and English alongside full NEET and JEE preparation: concept lessons, chapter drills and mock tests.",
     icon: "target",
     color: "#7C4DFF",
@@ -95,7 +95,7 @@ export const CLASS_GROUPS: ClassGroup[] = [
       { board: "cbse", grades: ["11", "12"] },
       { board: "pue", grades: ["PUC-1", "PUC-2"] },
       { board: "icse", grades: ["11", "12"] },
-      { board: "exam", grades: ["NEET", "JEE"] },
+      { board: "exam", grades: ["NEET", "JEE", "JEE_ADV", "KCET", "COMEDK"] },
     ],
     comingSoon: ["Accountancy", "Business studies", "Computer science", "Political science"],
   },

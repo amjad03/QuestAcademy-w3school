@@ -33,6 +33,8 @@ import {
   WandSparkles,
   Zap,
   type LucideIcon,
+  CircuitBoard,
+  Cpu,
 } from "lucide-react";
 import clsx from "clsx";
 
@@ -76,6 +78,8 @@ const COURSES: Record<string, { icon: LucideIcon; hue: Hue }> = {
   hindi: { icon: Languages, hue: "orange" },
   kannada: { icon: Languages, hue: "gold" },
   "computer-applications": { icon: Monitor, hue: "navy" },
+  electronics: { icon: CircuitBoard, hue: "teal" },
+  "computer-science": { icon: Cpu, hue: "purple" },
   "general-knowledge": { icon: Compass, hue: "teal" },
   "exam-physics": { icon: Orbit, hue: "blue" },
   "exam-chemistry": { icon: TestTubes, hue: "teal" },

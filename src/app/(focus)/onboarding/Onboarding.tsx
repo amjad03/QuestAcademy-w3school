@@ -16,6 +16,7 @@ import { sfx } from "@/lib/sound";
 import { MODES, modeForAge, modeForStage, type ModeId } from "@/lib/modes";
 import { ModePicker } from "@/components/modes/ModePicker";
 import { useT } from "@/i18n";
+import { SYLLABI } from "@/content/syllabus";
 import { ClassPicker, boardsFor, choiceForLevel, levelForAge, stageForLevel, type ClassChoice } from "@/components/class/ClassPicker";
 
 const STEPS = ["age", "mode", "category", "course", "goal", "name", "done"] as const;
@@ -229,7 +230,7 @@ export function Onboarding() {
               <div className="grid gap-3 sm:grid-cols-3">
                 {[
                   school
-                    ? [t("onboard.summary.class", "Your class"), classChoice.level === "pre" ? t("class.pre", "Pre-primary") : classChoice.level === "exam" ? (classChoice.grade ?? "—") : t("class.gradeN", "Class {n}", { n: classChoice.level ?? "—" })]
+                    ? [t("onboard.summary.class", "Your class"), classChoice.level === "pre" ? t("class.pre", "Pre-primary") : classChoice.level === "exam" ? (SYLLABI.exam.grades.find((g) => g.id === classChoice.grade)?.name ?? "—") : t("class.gradeN", "Class {n}", { n: classChoice.level ?? "—" })]
                     : [t("onboard.summary.course", "Your course"), catalog.find((c) => c.slug === course)?.title ?? "—"],
                   [t("onboard.summary.experience", "Experience"), mode ? t("onboard.summary.modeName", "{name} mode", { name: modeName[mode] ?? MODES[mode].name }) : "—"],
                   [t("onboard.summary.goal", "Daily goal"), goalText[goal] ? `${goalText[goal].label} · ${goalText[goal].hint}` : t("onboard.summary.goalXp", "{n} XP", { n: goal })],

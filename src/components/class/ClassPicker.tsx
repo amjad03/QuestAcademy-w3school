@@ -14,7 +14,7 @@ import { useSubjectName } from "./data";
 
 /** What the learner picked: their class, board (when the class has board syllabi) and subjects. */
 export interface ClassChoice {
-  /** "pre", "1"…"12", or "exam" for NEET / JEE. */
+  /** "pre", "1"…"12", or "exam" for the entrance exams (NEET, JEE Main / Advanced, KCET, COMEDK). */
   level: string | null;
   board: Board | null;
   /** Board grade id ("10", "PUC-1", "NEET" …) or the plain grade for younger classes. */
@@ -23,6 +23,10 @@ export interface ClassChoice {
 }
 
 const LEVELS = ["pre", "1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "exam"];
+
+/** Entrance-exam grade ids of the "exam" board (NEET, JEE, JEE_ADV, KCET, COMEDK). */
+const EXAM_GRADES = SYLLABI.exam.grades.map((g) => g.id);
+const examGrade = (g: string | null | undefined) => (g && EXAM_GRADES.includes(g) ? g : "NEET");
 
 /** Board grade id for a class number on a board (Karnataka PUC calls 11 / 12 "PUC-1" / "PUC-2"). */
 function boardGrade(board: Board, level: string): string | null {
@@ -49,7 +53,7 @@ export function stageForLevel(level: string): Stage {
 
 /** The class a profile is in, for preselecting the picker. */
 export function choiceFromProfile(p: { stage?: Stage | null; board?: Board | null; grade?: string | null; subjects?: string[] | null; age?: number | null }): ClassChoice {
-  if (p.board === "exam") return { level: "exam", board: "exam", grade: p.grade ?? "NEET", subjects: p.subjects ?? null };
+  if (p.board === "exam") return { level: "exam", board: "exam", grade: examGrade(p.grade), subjects: p.subjects ?? null };
   if (p.board && p.grade) {
     const level = p.grade === "PUC-1" ? "11" : p.grade === "PUC-2" ? "12" : p.grade;
     return { level, board: p.board, grade: p.grade, subjects: p.subjects ?? null };
@@ -87,17 +91,17 @@ export function ClassPicker({ value, onChange, compact }: { value: ClassChoice; 
 
   const pickLevel = (level: string) => {
     const bs = boardsFor(level);
-    if (level === "exam") return onChange({ level, board: "exam", grade: value.grade === "JEE" ? "JEE" : "NEET", subjects: null });
+    if (level === "exam") return onChange({ level, board: "exam", grade: examGrade(value.grade), subjects: null });
     if (!bs.length) return onChange({ level, board: null, grade: level, subjects: null });
     const board = value.board && bs.includes(value.board) ? value.board : bs[0];
     onChange({ level, board, grade: boardGrade(board, level), subjects: null });
   };
-  const pickBoard = (board: Board) => onChange({ ...value, board, grade: board === "exam" ? (value.grade ?? "NEET") : boardGrade(board, value.level!), subjects: null });
+  const pickBoard = (board: Board) => onChange({ ...value, board, grade: board === "exam" ? examGrade(value.grade) : boardGrade(board, value.level!), subjects: null });
   const toggle = (id: string) => {
     const next = picked.includes(id) ? picked.filter((x) => x !== id) : [...picked, id];
     if (next.length) onChange({ ...value, subjects: next });
   };
-  const levelLabel = (l: string) => (l === "pre" ? t("class.pre", "Pre-primary") : l === "exam" ? t("class.picker.exam", "NEET / JEE") : t("class.gradeN", "Class {n}", { n: l }));
+  const levelLabel = (l: string) => (l === "pre" ? t("class.pre", "Pre-primary") : l === "exam" ? t("class.picker.entrance", "Entrance exam") : t("class.gradeN", "Class {n}", { n: l }));
 
   return (
     <div className="space-y-6">
@@ -129,9 +133,9 @@ export function ClassPicker({ value, onChange, compact }: { value: ClassChoice; 
         <fieldset>
           <legend className="mb-2 text-sm font-bold">{t("class.picker.examWhich", "Which exam?")}</legend>
           <div className="flex flex-wrap gap-2">
-            {["NEET", "JEE"].map((g) => (
-              <button key={g} type="button" aria-pressed={value.grade === g} onClick={() => onChange({ ...value, board: "exam", grade: g, subjects: null })} className={clsx("tile !rounded-xl px-4 py-2.5 text-sm font-bold", value.grade === g && "!border-accent bg-accent-soft text-accent")}>
-                {g}
+            {SYLLABI.exam.grades.map((g) => (
+              <button key={g.id} type="button" aria-pressed={value.grade === g.id} onClick={() => onChange({ ...value, board: "exam", grade: g.id, subjects: null })} className={clsx("tile !rounded-xl px-4 py-2.5 text-sm font-bold", value.grade === g.id && "!border-accent bg-accent-soft text-accent")} data-exam={g.id}>
+                {tx(g.name)}
               </button>
             ))}
           </div>

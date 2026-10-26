@@ -40,7 +40,7 @@ export function PracticeHub() {
   const classLessons = useClassLessonIds();
   const profile = useLearner((s) => s.profile);
   // NEET / JEE drills only for Class 11–12 and entrance-exam learners (or learners without a class).
-  const showDrills = !myClass || /^(11|12|PUC-1|PUC-2|NEET|JEE)$/.test(myClass.myClass.grade) || profile.stage === "aspirant";
+  const showDrills = !myClass || /^(11|12|PUC-1|PUC-2|NEET|JEE|JEE_ADV|KCET|COMEDK)$/.test(myClass.myClass.grade) || profile.stage === "aspirant";
   const t = useT();
   const hydrated = useHydrated();
   const cards = useLearner((s) => s.cards);

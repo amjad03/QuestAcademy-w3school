@@ -178,7 +178,7 @@ function ExamCountdown({ grade }: { grade: SyllabusGrade }) {
           </p>
           <p className="text-sm font-bold">
             {grade.exam.name} · {date.toLocaleDateString(undefined, { month: "short", year: "numeric" })}
-            {"examId" in grade.exam ? "" : " (approx.)"}
+            {" (approx.)"}
           </p>
         </>
       ) : (
@@ -187,7 +187,7 @@ function ExamCountdown({ grade }: { grade: SyllabusGrade }) {
       {entrance && (
         <p className="mt-3 border-t-2 border-line pt-3 text-xs font-bold text-muted">
           NEET in {daysUntil(nextExamDate("NEET"))} days · JEE Main in {daysUntil(nextExamDate("JEE"))} days
-          {grade.id.startsWith("PUC") ? " · KCET uses this syllabus" : ""}
+          {grade.id.startsWith("PUC") ? ` · KCET in ${daysUntil(nextExamDate("KCET"))} days (all approx.)` : " (approx.)"}
         </p>
       )}
     </section>

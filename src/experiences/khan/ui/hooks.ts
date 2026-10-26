@@ -65,7 +65,7 @@ export function useExamCountdown() {
     const date = g ? examDateFor(g) : null;
     if (!g?.exam || !date) return null;
     const days = Math.max(0, Math.ceil((date.getTime() - Date.now()) / 86_400_000));
-    return { days, name: g.exam.name, date, approx: !("examId" in g.exam) };
+    return { days, name: g.exam.name, date, approx: true };
   }, [hydrated, profile.board, profile.grade, profile.stage]);
 }
 
