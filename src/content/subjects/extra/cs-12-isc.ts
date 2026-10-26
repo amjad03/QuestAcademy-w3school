@@ -2642,7 +2642,7 @@ A 2D array A[$L_r$..$U_r$, $L_c$..$U_c$] has $R = U_r - L_r + 1$ rows and $C = U
           {
             kind: "multi",
             q: "Which of these must be true before binSearch(key) is called in SearchSort?",
-            options: ["sort() has been called", "key is inside the array", "n > 0 is not required", "arr has been created by the constructor"],
+            options: ["sort() has been called", "key is inside the array", "n > 0", "arr has been created by the constructor"],
             answers: [0, 3],
             explain: "The array must exist and be sorted. The key may be absent (the method then returns -1), and n = 0 simply returns -1.",
           },
