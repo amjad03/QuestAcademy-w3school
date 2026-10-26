@@ -1584,7 +1584,7 @@ const ch4: ExamQuestion[] = [
     q: t`Let $\alpha, \beta$ be the roots of $x^2+px+q = 0$, where $p, q$ are real, and $\alpha = 2+i$. Which of the following are true?`,
     options: [t`$\beta = 2-i$`, t`$p = -4$`, t`$q = 5$`, t`$\alpha^2+\beta^2 = 8$`],
     answers: [0, 1, 2],
-    explain: t`Real coefficients force $\beta = \bar\alpha = 2-i$ ✓. Then $\alpha+\beta = 4 = -p$, so $p = -4$ ✓, and $\alpha\beta = 4+1 = 5 = q$ ✓. $\alpha^2+\beta^2 = 16-10 = 6$, not 8 ✗ (8 would come from $2\,\mathrm{Re}(\alpha)^2\cdot2$-type slips; directly, $(2+i)^2+(2-i)^2 = (3+4i)+(3-4i) = 6$).`,
+    explain: t`Real coefficients force $\beta = \bar\alpha = 2-i$ ✓. Then $\alpha+\beta = 4 = -p$, so $p = -4$ ✓, and $\alpha\beta = 4+1 = 5 = q$ ✓. $\alpha^2+\beta^2 = 16-10 = 6$, not 8 ✗ (8 keeps only $2^2+2^2$ and drops the $i^2$ terms; directly, $(2+i)^2+(2-i)^2 = (3+4i)+(3-4i) = 6$).`,
   }),
   q4(3, ADV_ONLY, 100, {
     kind: "multi",

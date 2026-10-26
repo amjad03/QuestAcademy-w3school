@@ -455,8 +455,8 @@ area of triangle OAC $<$ area of sector OAC $<$ area of triangle OAB.`,
         blocks: [
           {
             type: "illustration",
-            emoji: "🏏",
-            caption: t`A ball dropped from a tall building falls $s = 4.9t^2$ metres in $t$ seconds (taking $g = 9.8$ m/s²). How fast is it moving at exactly $t = 2$ s?`,
+            emoji: "🪨",
+            caption: t`A stone dropped from a tall building falls $s = 4.9t^2$ metres in $t$ seconds (taking $g = 9.8$ m/s²). How fast is it moving at exactly $t = 2$ s?`,
           },
           {
             type: "text",

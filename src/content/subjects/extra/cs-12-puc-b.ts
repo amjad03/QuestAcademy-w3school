@@ -2170,6 +2170,745 @@ for pw in ["kavya2007", "Kavya@2007", "12345678", "abc"]:
       },
     ],
   },
+  /* ------------------------------------------------------------------ */
+  /* Class 11 · Emerging Trends                                          */
+  /* ------------------------------------------------------------------ */
+  {
+    slug: "c11-cs-emerging-trends",
+    title: "Emerging Trends",
+    icon: "🚀",
+    description: "Artificial intelligence, machine learning, natural language processing, virtual and augmented reality, robotics, big data and its five Vs, data analytics, the Internet of Things, sensors, smart cities, cloud computing (IaaS, PaaS, SaaS), grid computing and blockchain.",
+    lessons: [
+      {
+        slug: "c11-cs-ai-ml-nlp-immersive-robotics",
+        title: "AI, Machine Learning, NLP, VR/AR and Robotics",
+        summary: "What artificial intelligence is, how machine learning learns from training data, everyday natural language processing, virtual versus augmented reality, and robots and drones.",
+        minutes: 22,
+        xp: 55,
+        blocks: [
+          {
+            type: "illustration",
+            emoji: "🤖",
+            caption: "Your phone suggests the next word, a map app predicts traffic on Outer Ring Road, and a voice assistant sets an alarm: all of these are AI.",
+          },
+          {
+            type: "text",
+            md: "**Artificial Intelligence (AI)** is the branch of computer science that aims to make machines **imitate human intelligence**: learning from experience, reasoning, solving problems, understanding language and taking decisions. A navigation app that reroutes you around a traffic jam and a voice assistant that understands \"set an alarm for 6\" are AI systems.",
+          },
+          {
+            type: "text",
+            md: "**Machine Learning (ML)** is a part of AI in which a computer **learns from data** instead of being given step-by-step rules. A program is shown many examples (**training data**), finds patterns in them and builds a **model**. The model is then checked on new examples it has not seen (**testing data**), and if it is accurate it is used to make predictions. Email spam filters, product recommendations and face unlock all use ML.",
+          },
+          {
+            type: "code",
+            lang: "python",
+            runnable: true,
+            caption: "A tiny learner: predict a fruit from the most similar training example (nearest neighbour).",
+            code: r`# (weight in grams, redness 0-10, label) - the training data
+examples = [(150, 7, "apple"), (170, 8, "apple"),
+            (120, 3, "lemon"), (100, 2, "lemon")]
+
+def predict(weight, red):
+    best = None
+    for w, r, label in examples:
+        d = ((w - weight) ** 2 + ((r - red) * 10) ** 2) ** 0.5
+        if best is None or d < best[0]:
+            best = (d, label)
+    return best[1]
+
+print(predict(160, 6))
+print(predict(110, 4))
+print(predict(118, 5))
+examples.append((115, 6, "apple"))
+print(predict(118, 5))`,
+          },
+          {
+            type: "text",
+            md: "Output: `apple`, `lemon`, `lemon`, `apple`. No rule like \"heavy and red means apple\" was written; the answer comes from the examples. When a new example (a small red apple) is added, the prediction for the same fruit changes. That is the heart of machine learning: **more and better data gives better predictions**.",
+          },
+          {
+            type: "text",
+            md: "**Natural Language Processing (NLP)** lets computers understand and produce **human languages**, spoken or written. Examples: predictive typing and auto-correct, voice search, speech-to-text and text-to-speech, machine translation between Kannada, Hindi and English, chatbots that answer customer questions, and **sentiment analysis** that decides whether a review is positive or negative.",
+          },
+          {
+            type: "table",
+            headers: ["", "Virtual Reality (VR)", "Augmented Reality (AR)"],
+            rows: [
+              ["Idea", "A fully **computer-generated 3D world** that replaces what you see", "Computer-generated information **added on top of** the real world"],
+              ["Needs", "A VR headset, often with hand controllers; haptic devices add touch", "Usually just a phone camera or smart glasses"],
+              ["Examples", "Flight and driving simulators, VR games, virtual tours of Hampi", "Location-based AR games, AR navigation arrows on the road, trying furniture in your room on screen"],
+            ],
+          },
+          {
+            type: "text",
+            md: "VR and AR together are called **immersive experiences**, because they engage our senses (sight, hearing, even touch) and make us feel part of the scene.\n\nA **robot** is a machine that can carry out one or more tasks **automatically**, with accuracy and precision, using sensors to sense its surroundings and a program to decide what to do. Industrial robots weld and paint cars; rovers explore Mars; humanoid robots look and move like people; surgical robots assist doctors. A **drone** is an unmanned aircraft flown by remote control or on its own, used for spraying crops, surveying, delivery, disaster relief and filming.",
+          },
+          {
+            type: "example",
+            title: "Name the technology",
+            problem: "Which emerging technology is used? (a) A pilot trainee \"flies\" a plane inside a closed room wearing a headset. (b) A shopping app shows how a sofa would look in your living room through the camera. (c) A bank chatbot answers \"What is my balance?\" typed in Hindi. (d) An app learns from your past watching to suggest new videos.",
+            steps: [
+              "(a) The whole view is computer-made: **virtual reality**.",
+              "(b) A virtual sofa is placed on the real room: **augmented reality**.",
+              "(c) Understanding a human language: **NLP**.",
+              "(d) Learning patterns from past data: **machine learning**.",
+            ],
+            answer: "VR, AR, NLP, ML.",
+          },
+          {
+            type: "mistake",
+            wrong: "AR and VR are the same thing; both just mean wearing a headset to see 3D images.",
+            right: "**VR replaces** your surroundings with a computer-generated world. **AR adds** digital objects or information to the real world you still see, often through only a phone camera.",
+            why: "Both are called immersive experiences and both show 3D graphics, so they are easily mixed up. The test is simple: can you still see the real world? Yes means AR, no means VR.",
+          },
+          {
+            type: "activity",
+            activity: {
+              kind: "sort",
+              prompt: "Is it VR or AR?",
+              groups: ["Virtual reality", "Augmented reality"],
+              items: [
+                { text: "Headset game set entirely in outer space", group: 0, hint: "The real room is completely hidden." },
+                { text: "Flight simulator for pilot training", group: 0, hint: "A fully computer-made cockpit and sky." },
+                { text: "Virtual 3D tour of a museum from home", group: 0, hint: "You are placed in a simulated place." },
+                { text: "Phone game where creatures appear on your street", group: 1, hint: "Digital creatures over the real street." },
+                { text: "Navigation arrows drawn on the live camera view", group: 1, hint: "Information added to the real scene." },
+                { text: "Filter that puts virtual glasses on your face", group: 1, hint: "Your real face plus a digital object." },
+              ],
+              explain: "If the real world disappears it is VR; if digital content is laid over the real world it is AR.",
+            },
+          },
+          {
+            type: "checkpoint",
+            questions: [
+              {
+                kind: "mcq",
+                q: "In machine learning, the data used to check how accurate a model is on unseen examples is called:",
+                options: ["Testing data", "Training data", "Metadata", "Big data"],
+                answer: 0,
+                explain: "The model learns from training data and is evaluated on testing data it has not seen.",
+              },
+              {
+                kind: "mcq",
+                q: "Which is an application of NLP?",
+                options: ["Speech-to-text typing", "A drone spraying crops", "A VR flight simulator", "A temperature sensor"],
+                answer: 0,
+                explain: "Converting speech to text means understanding human language, which is NLP.",
+              },
+            ],
+          },
+          {
+            type: "keypoints",
+            items: [
+              "AI makes machines imitate human intelligence: learning, reasoning and decision making.",
+              "ML is a part of AI: a model learns patterns from training data and is checked on testing data.",
+              "NLP: computers understanding human language (auto-correct, translation, chatbots, sentiment analysis).",
+              "VR replaces the real world with a simulated one; AR adds digital content to the real world.",
+              "Robots perform tasks automatically using sensors and programs; drones are unmanned aircraft.",
+            ],
+          },
+        ],
+        flashcards: [
+          { front: "Define artificial intelligence.", back: "The branch of computer science that makes machines imitate human intelligence: learning, reasoning, understanding language and decision making." },
+          { front: "What is machine learning?", back: "A part of AI where computers learn patterns from data (training data) to build a model, instead of being programmed with fixed rules." },
+          { front: "Training data vs testing data?", back: "Training data is used to build the model; testing data (unseen) checks its accuracy." },
+          { front: "What is NLP?", back: "Natural Language Processing: making computers understand and produce human languages." },
+          { front: "VR in one line?", back: "A computer-generated 3D environment that replaces the real one, usually seen through a headset." },
+          { front: "AR in one line?", back: "Computer-generated information laid over the real world, for example through a phone camera." },
+          { front: "What is a robot?", back: "A machine that carries out tasks automatically with accuracy and precision, using sensors and programs." },
+          { front: "What is a drone?", back: "An unmanned aircraft flown by remote control or autonomously; used in farming, surveys, delivery and relief." },
+        ],
+        quiz: [
+          {
+            kind: "mcq",
+            q: "An email service learns to move unwanted mail to the spam folder from millions of examples marked by users. This is:",
+            options: ["Machine learning", "Virtual reality", "Grid computing", "Robotics"],
+            answer: 0,
+            explain: "The filter learns patterns from labelled examples, which is machine learning.",
+          },
+          {
+            kind: "truefalse",
+            q: "Augmented reality hides the real world completely and shows only a simulated one.",
+            answer: false,
+            explain: "That is VR. AR keeps the real world and adds digital information to it.",
+          },
+          {
+            kind: "multi",
+            q: "Which are applications of NLP?",
+            options: ["Machine translation", "Auto-correct while typing", "Voice assistants understanding commands", "A robotic arm welding a car", "Sentiment analysis of reviews"],
+            answers: [0, 1, 2, 4],
+            explain: "A welding robot does not process human language.",
+          },
+          {
+            kind: "fill",
+            q: "An unmanned aircraft used to spray pesticide on crops is called a ___.",
+            answer: ["drone", "UAV"],
+            explain: "Drones (unmanned aerial vehicles) are a part of robotics.",
+          },
+          {
+            kind: "mcq",
+            q: "In the fruit program, what does `predict(160, 6)` return?",
+            options: ["`apple`", "`lemon`", "`None`", "An error"],
+            answer: 0,
+            explain: "The nearest training example is (150, 7, apple): distance √(100 + 100) ≈ 14.1, smaller than all others.",
+            difficulty: 2,
+          },
+          {
+            kind: "mcq",
+            q: "Machine learning is best described as:",
+            options: ["A part of AI", "A type of sensor", "A kind of VR headset", "A cloud service model"],
+            answer: 0,
+            explain: "ML is a subset of AI focused on learning from data.",
+          },
+          {
+            kind: "order",
+            q: "Arrange the steps of building an ML model.",
+            items: ["Collect labelled examples", "Train the model on training data", "Test it on unseen testing data", "Use it to make predictions"],
+            explain: "Data first, then training, then testing, and only then real use.",
+          },
+        ],
+      },
+      {
+        slug: "c11-cs-big-data-iot-smart-cities",
+        title: "Big Data, IoT, Sensors and Smart Cities",
+        summary: "What makes data \"big\" (volume, velocity, variety, veracity, value), data analytics, the Internet of Things and the Web of Things, sensors and smart sensors, and how they come together in a smart city.",
+        minutes: 22,
+        xp: 55,
+        blocks: [
+          {
+            type: "text",
+            md: "Every minute, people send millions of messages, upload hours of video and make thousands of UPI payments. Data sets that are so **large and complex** that ordinary software cannot store or process them are called **big data**. Big data is described by five characteristics, the **five Vs**.",
+          },
+          {
+            type: "table",
+            headers: ["Characteristic", "Meaning", "Example"],
+            rows: [
+              ["Volume", "The **huge size** of the data", "Petabytes of videos on a streaming site"],
+              ["Velocity", "The **speed** at which data is generated and must be processed", "Live stock prices, sensor readings every second"],
+              ["Variety", "Many **types and formats**: structured, semi-structured, unstructured", "Text, images, audio, video, logs"],
+              ["Veracity", "How **trustworthy and accurate** the data is; it may contain errors, noise or bias", "Fake reviews, faulty sensor readings"],
+              ["Value", "The **useful insight** the data gives after analysis", "Predicting which items will sell in a festival season"],
+            ],
+          },
+          {
+            type: "text",
+            md: "**Data analytics** is the process of examining data sets, often with specialised software, to find patterns, draw conclusions and support decisions. A retailer analysing sales data to decide prices, or a hospital studying patient records to predict which patients need more care, is doing data analytics. Python libraries such as Pandas are widely used for it.",
+          },
+          {
+            type: "mistake",
+            wrong: "Big data just means a lot of data; size is the only thing that matters.",
+            right: "Volume is only one of the five Vs. Data is \"big\" also because of its **velocity**, **variety** and **veracity** problems, and it is worth collecting only if it gives **value**.",
+            why: "The word \"big\" points to size. But a small but very fast stream of mixed sensor, video and text data is just as hard for ordinary tools as a huge archive.",
+          },
+          {
+            type: "heading",
+            text: "Internet of Things and sensors",
+          },
+          {
+            type: "text",
+            md: "The **Internet of Things (IoT)** is a network of physical devices (\"things\") such as smart bulbs, ACs, watches, cars and medical monitors, each with hardware and software that let it **collect data and communicate** with other devices and people over the internet, often without human help. Switching on the AC from your phone before reaching home, or a fitness band sending your heart rate to an app, are IoT.\n\nThe **Web of Things (WoT)** uses ordinary **web technologies** (web pages, browsers and web protocols) to connect and control IoT devices, so devices from different makers can work together and be used from any browser.",
+          },
+          {
+            type: "text",
+            md: "A **sensor** is a device that detects a change in a physical quantity (light, heat, motion, pressure, sound, moisture) and converts it into a signal that can be measured. A smartphone alone has many: accelerometer (motion and tilt), gyroscope (rotation), proximity sensor (turns the screen off near your ear), ambient light sensor (screen brightness), GPS (location) and fingerprint sensor. A **smart sensor** has its own small processor to filter and process readings before sending them, which makes it a building block of IoT.",
+          },
+          {
+            type: "code",
+            lang: "python",
+            runnable: true,
+            caption: "An IoT street light: a light sensor reading (lux) decides whether the lamp turns on.",
+            code: r`readings = [("18:10", 420), ("18:40", 180), ("19:05", 60), ("05:50", 90), ("06:20", 350)]
+for time, lux in readings:
+    lamp = "ON" if lux < 100 else "OFF"
+    print(time, lux, "lux ->", lamp)`,
+          },
+          {
+            type: "text",
+            md: "Output:\n\n`18:10 420 lux -> OFF`\n\n`18:40 180 lux -> OFF`\n\n`19:05 60 lux -> ON`\n\n`05:50 90 lux -> ON`\n\n`06:20 350 lux -> OFF`\n\nThe lamp follows the actual light, not a fixed clock, so it saves electricity on bright evenings and stays on during a dark, cloudy dawn.",
+          },
+          {
+            type: "text",
+            md: "A **smart city** uses IoT, sensors, networks and data analytics to manage its resources and services efficiently and improve life for citizens: traffic signals that adjust to traffic, smart meters for water and electricity, bins that report when they are full, CCTV and emergency response, and street lights that switch with daylight. India's **Smart Cities Mission** (launched in 2015) includes cities such as Bengaluru, Mangaluru, Belagavi and Hubballi-Dharwad.",
+          },
+          {
+            type: "example",
+            title: "Identify the V",
+            problem: "Which characteristic of big data does each statement describe? (a) A city's traffic cameras send new frames every second that must be checked at once. (b) The data includes tweets, photos, GPS logs and spreadsheets. (c) Some sensors give wrong readings in heavy rain. (d) The analysis showed the best times to run extra buses.",
+            steps: [
+              "(a) Speed of generation and processing: **velocity**.",
+              "(b) Many formats: **variety**.",
+              "(c) Doubtful accuracy: **veracity**.",
+              "(d) Useful insight gained: **value**.",
+            ],
+            answer: "Velocity, variety, veracity, value.",
+          },
+          {
+            type: "activity",
+            activity: {
+              kind: "match",
+              prompt: "Match each phone sensor to its job.",
+              pairs: [
+                ["Accelerometer", "Detects motion and tilt"],
+                ["Proximity sensor", "Turns the screen off near your ear"],
+                ["Ambient light sensor", "Adjusts screen brightness"],
+                ["GPS", "Finds your location"],
+                ["Gyroscope", "Detects rotation"],
+              ],
+              explain: "Each sensor converts one physical change into a signal that apps can use.",
+            },
+          },
+          {
+            type: "checkpoint",
+            questions: [
+              {
+                kind: "mcq",
+                q: "Which V of big data refers to the trustworthiness of the data?",
+                options: ["Veracity", "Velocity", "Volume", "Variety"],
+                answer: 0,
+                explain: "Veracity is about accuracy and reliability; data may have errors or bias.",
+              },
+            ],
+          },
+          {
+            type: "callout",
+            tone: "exam",
+            title: "Board tip",
+            md: "\"Explain the characteristics of big data\" is a favourite 5-mark question. Write all five Vs, each with a one-line meaning and an example. Learn them as Volume, Velocity, Variety, Veracity, Value.",
+          },
+          {
+            type: "keypoints",
+            items: [
+              "Big data: data too large or complex for ordinary tools; five Vs: volume, velocity, variety, veracity, value.",
+              "Data analytics examines data to find patterns and support decisions.",
+              "IoT connects everyday devices so they collect and share data over the internet; WoT uses web technologies to connect them.",
+              "Sensors convert physical changes into signals; smart sensors process data themselves.",
+              "Smart cities use IoT, sensors and analytics for traffic, water, power, waste and safety.",
+            ],
+          },
+        ],
+        flashcards: [
+          { front: "Five Vs of big data?", back: "Volume, velocity, variety, veracity and value." },
+          { front: "Velocity in big data?", back: "The speed at which data is generated and must be processed." },
+          { front: "Veracity in big data?", back: "How accurate and trustworthy the data is." },
+          { front: "Define data analytics.", back: "Examining data sets to find patterns and draw conclusions that support decisions." },
+          { front: "Define IoT.", back: "A network of physical devices with hardware and software that collect data and communicate over the internet." },
+          { front: "What is the Web of Things?", back: "Using web technologies and protocols to connect and control IoT devices so they work together." },
+          { front: "What is a sensor?", back: "A device that detects changes in a physical quantity and converts them into a measurable signal." },
+          { front: "What is a smart city?", back: "A city that uses IoT, sensors and data analytics to manage resources and services efficiently." },
+        ],
+        quiz: [
+          {
+            kind: "mcq",
+            q: "A fitness band sends your step count and heart rate to an app on your phone. This is an example of:",
+            options: ["Internet of Things", "Virtual reality", "Grid computing", "Blockchain"],
+            answer: 0,
+            explain: "A physical device collects data and shares it over a network: IoT.",
+          },
+          {
+            kind: "mcq",
+            q: "Data from a hospital includes X-ray images, typed notes, lab values in tables and voice recordings. Which V does this show most?",
+            options: ["Variety", "Velocity", "Value", "Veracity"],
+            answer: 0,
+            explain: "Many different types and formats of data is variety.",
+          },
+          {
+            kind: "truefalse",
+            q: "A smart sensor can process its readings itself before sending them.",
+            answer: true,
+            explain: "A smart sensor has a built-in processor, unlike a simple sensor that only produces a signal.",
+          },
+          {
+            kind: "multi",
+            q: "Which are features of a smart city?",
+            options: ["Traffic signals that adapt to traffic", "Bins that report when full", "Smart water and electricity meters", "Paper registers for all records", "Street lights controlled by light sensors"],
+            answers: [0, 1, 2, 4],
+            explain: "Smart cities rely on sensors, networks and data, not paper records.",
+          },
+          {
+            kind: "fill",
+            q: "The phone sensor that switches off the screen when you hold the phone to your ear is the ___ sensor.",
+            answer: ["proximity"],
+            explain: "It detects how near an object (your face) is.",
+          },
+          {
+            kind: "mcq",
+            q: "In the street-light program, what does the lamp show for a reading of 100 lux?",
+            options: ["`OFF`", "`ON`", "Error", "Nothing is printed"],
+            answer: 0,
+            explain: "The condition is `lux < 100`; 100 is not less than 100, so the lamp is OFF.",
+            difficulty: 2,
+          },
+          {
+            kind: "truefalse",
+            q: "Big data is worth collecting only if analysing it gives useful insight.",
+            answer: true,
+            explain: "That is the fifth V, value.",
+          },
+        ],
+      },
+      {
+        slug: "c11-cs-cloud-grid-blockchain",
+        title: "Cloud Computing, Grid Computing and Blockchain",
+        summary: "Cloud computing and its service models IaaS, PaaS and SaaS, grid computing and its types, and how a blockchain's linked hashes make a shared ledger tamper-evident, with a Python model.",
+        minutes: 24,
+        xp: 55,
+        blocks: [
+          {
+            type: "text",
+            md: "**Cloud computing** means using computing resources such as servers, storage, databases, networks and software **over the internet**, on demand, instead of owning and maintaining them yourself. Users usually **pay only for what they use**, can scale up or down quickly and can reach their data from anywhere. Storing photos online, editing a document in a browser and running a website on rented servers all use the cloud.",
+          },
+          {
+            type: "table",
+            headers: ["Service model", "What the provider gives", "Who uses it", "Example"],
+            rows: [
+              ["IaaS (Infrastructure as a Service)", "Virtual computers, storage and networking; the user installs and manages the OS and software", "System administrators, companies replacing their own servers", "Renting virtual servers and storage space to run an exam portal"],
+              ["PaaS (Platform as a Service)", "A ready platform: OS, programming language tools, database and web server to build and deploy apps", "Developers, who need not manage hardware or the OS", "Uploading a Python web app to an online platform that runs and scales it"],
+              ["SaaS (Software as a Service)", "Complete, ready-to-use applications accessed through a browser or app", "End users", "Web email, online word processors and spreadsheets, video meeting apps"],
+            ],
+          },
+          {
+            type: "mistake",
+            wrong: "\"The cloud\" means data is stored in the sky or nowhere in particular.",
+            right: "Cloud data and programs run on real **servers in data centres** owned by a provider; you reach them over the internet.",
+            why: "The cloud picture in network diagrams hides details, and we never see the machines. But every file \"in the cloud\" sits on physical disks in some building.",
+          },
+          {
+            type: "text",
+            md: "**Grid computing** links **many geographically spread and different (heterogeneous) computers**, often belonging to different organisations, so they work together on one very large task, like a **virtual supercomputer**. Special software called **middleware** divides the task and collects results. A grid can be a **data grid** (storing and managing huge data spread over many places) or a **CPU (processor) grid** (sharing processing power to run big computations, such as weather modelling or analysing particle physics data).\n\nCloud and grid differ: a cloud is a **service** a provider sells on demand to many users; a grid **pools resources** from many owners to solve a shared problem.",
+          },
+          {
+            type: "heading",
+            text: "Blockchain",
+          },
+          {
+            type: "text",
+            md: "A **blockchain** is a **decentralised, distributed and shared ledger** (record book). Records are grouped into **blocks**. Each block stores its data, its own **hash** (a fixed-length code computed from its contents) and the **hash of the previous block**, so the blocks form a chain. Every participant (node) keeps a copy of the whole chain, and new blocks are added only when the network agrees.\n\nIf anyone changes the data in an old block, its hash changes and no longer matches the \"previous hash\" stored in the next block, so the tampering is caught. Because there is no single owner and every copy can be compared, blockchain gives **transparency and security**. It is used in cryptocurrencies such as Bitcoin, and is being tried for land records, supply chains, health records and voting.",
+          },
+          {
+            type: "code",
+            lang: "python",
+            runnable: true,
+            caption: "A three-block chain using SHA-256 hashes (first 10 hex digits shown), then a tampering check.",
+            code: r`import hashlib
+
+def h(text):
+    return hashlib.sha256(text.encode()).hexdigest()[:10]
+
+chain = []
+prev = "0" * 10
+for data in ["Asha pays Ravi 500", "Ravi pays Meena 200", "Meena pays Asha 50"]:
+    block_hash = h(prev + data)
+    chain.append([data, prev, block_hash])
+    prev = block_hash
+for block in chain:
+    print(block)
+
+chain[0][0] = "Asha pays Ravi 5000"
+ok = h(chain[0][1] + chain[0][0]) == chain[1][1]
+print("Chain valid:", ok)`,
+          },
+          {
+            type: "text",
+            md: "Output:\n\n`['Asha pays Ravi 500', '0000000000', '185aa2d959']`\n\n`['Ravi pays Meena 200', '185aa2d959', 'aae7d6755f']`\n\n`['Meena pays Asha 50', 'aae7d6755f', '41d2d87442']`\n\n`Chain valid: False`\n\nEach block's middle value equals the hash of the block before it. Changing 500 to 5000 in the first block gives a different hash, which no longer matches the previous-hash stored in block 2, so the chain reports itself invalid.",
+          },
+          {
+            type: "example",
+            title: "Pick the cloud service model",
+            problem: "Name the service model: (a) a college uses an online mail and document suite through the browser; (b) a start-up rents virtual servers and installs its own operating system and database; (c) students upload their Python web project to a platform that runs it without them setting up any server.",
+            steps: [
+              "(a) Ready-made software used directly: **SaaS**.",
+              "(b) Only raw infrastructure is rented; the user manages the OS: **IaaS**.",
+              "(c) A ready platform to deploy code on: **PaaS**.",
+            ],
+            answer: "SaaS, IaaS, PaaS.",
+          },
+          {
+            type: "activity",
+            activity: {
+              kind: "sort",
+              prompt: "IaaS, PaaS or SaaS?",
+              groups: ["IaaS", "PaaS", "SaaS"],
+              items: [
+                { text: "Renting a virtual machine with 16 GB RAM", group: 0, hint: "Raw computing infrastructure." },
+                { text: "Buying extra online storage space for backups", group: 0, hint: "Storage is infrastructure." },
+                { text: "A platform that runs your uploaded app code", group: 1, hint: "You bring the code; the platform does the rest." },
+                { text: "Online database and tools for building apps", group: 1, hint: "Development platform." },
+                { text: "Editing a spreadsheet in a web browser", group: 2, hint: "Finished software for end users." },
+                { text: "A video meeting app", group: 2, hint: "Ready-to-use application." },
+              ],
+              explain: "IaaS gives the infrastructure, PaaS gives a platform for developers, SaaS gives finished software to end users.",
+            },
+          },
+          {
+            type: "checkpoint",
+            questions: [
+              {
+                kind: "mcq",
+                q: "What does each block in a blockchain store along with its data and its own hash?",
+                options: ["The hash of the previous block", "The password of the owner", "A copy of the next block", "The IP address of every node"],
+                answer: 0,
+                explain: "Storing the previous block's hash links the blocks into a chain and reveals tampering.",
+              },
+              {
+                kind: "mcq",
+                q: "Which type of grid shares processing power to run large computations?",
+                options: ["CPU (processor) grid", "Data grid", "SaaS grid", "Power grid"],
+                answer: 0,
+                explain: "A data grid manages distributed data; a CPU grid pools processing power.",
+              },
+            ],
+          },
+          {
+            type: "callout",
+            tone: "exam",
+            title: "Board tip",
+            md: "For the three cloud models, write the full form, who manages what, and one example each. For blockchain, always mention the words **decentralised**, **shared ledger** and **hash of the previous block**.",
+          },
+          {
+            type: "keypoints",
+            items: [
+              "Cloud computing: on-demand computing resources over the internet, pay per use, reachable anywhere.",
+              "IaaS: infrastructure; PaaS: development platform; SaaS: ready software for end users.",
+              "Grid computing joins many distributed, heterogeneous computers into a virtual supercomputer; types: data grid and CPU grid.",
+              "Blockchain: a decentralised shared ledger of blocks, each holding the previous block's hash, so tampering is detected.",
+            ],
+          },
+        ],
+        flashcards: [
+          { front: "Define cloud computing.", back: "Using computing resources (servers, storage, software) over the internet on demand, usually paying per use." },
+          { front: "Full forms: IaaS, PaaS, SaaS?", back: "Infrastructure as a Service, Platform as a Service, Software as a Service." },
+          { front: "Example of SaaS?", back: "Web email or an online word processor used in a browser." },
+          { front: "Who mainly uses PaaS?", back: "Developers, who build and deploy apps without managing servers or the OS." },
+          { front: "Define grid computing.", back: "Connecting many geographically spread, heterogeneous computers to work together on one large task." },
+          { front: "Two types of grid?", back: "Data grid and CPU (processor) grid." },
+          { front: "What is a blockchain?", back: "A decentralised, distributed shared ledger made of blocks, each linked by the previous block's hash." },
+          { front: "How does a blockchain show tampering?", back: "Changing a block changes its hash, which no longer matches the previous-hash stored in the next block." },
+        ],
+        quiz: [
+          {
+            kind: "mcq",
+            q: "A company rents virtual servers and installs its own operating system on them. This is:",
+            options: ["IaaS", "PaaS", "SaaS", "Grid computing"],
+            answer: 0,
+            explain: "Only infrastructure is provided; the user manages the OS and software.",
+          },
+          {
+            kind: "mcq",
+            q: "Which is an example of SaaS?",
+            options: ["Using an online spreadsheet in a browser", "Renting storage disks", "Renting a virtual machine", "Building a data centre"],
+            answer: 0,
+            explain: "SaaS is finished software for end users; the others are infrastructure.",
+          },
+          {
+            kind: "truefalse",
+            q: "In a blockchain, a single central authority keeps the only copy of the ledger.",
+            answer: false,
+            explain: "A blockchain is decentralised: every node keeps a copy, so there is no single owner.",
+          },
+          {
+            kind: "multi",
+            q: "Which are features of cloud computing?",
+            options: ["On-demand access over the internet", "Pay for what you use", "Resources can be scaled up or down", "Data is stored without any physical servers", "Access from anywhere with internet"],
+            answers: [0, 1, 2, 4],
+            explain: "Cloud data lives on real servers in data centres.",
+          },
+          {
+            kind: "fill",
+            q: "Grid computing works like a virtual ___ by combining many computers for one big task.",
+            answer: ["supercomputer", "super computer"],
+            explain: "Pooling many machines gives the power of a supercomputer.",
+          },
+          {
+            kind: "mcq",
+            q: "In the Python blockchain model, why does `Chain valid:` print `False`?",
+            options: ["The first block's data was changed, so its new hash differs from the previous-hash in block 2", "SHA-256 always gives a random value", "The chain has only three blocks", "The second block was deleted"],
+            answer: 0,
+            explain: "Hashing is deterministic: the same input always gives the same hash, so only a change in data changes the hash.",
+            difficulty: 2,
+          },
+          {
+            kind: "order",
+            q: "Arrange the cloud models from the one where the user manages the most to the least.",
+            items: ["IaaS", "PaaS", "SaaS"],
+            explain: "With IaaS you manage the OS and apps; with PaaS only your code; with SaaS just your data and settings.",
+            difficulty: 2,
+          },
+        ],
+      },
+      {
+        slug: "c11-cs-emerging-trends-board-practice",
+        title: "Emerging Trends: Board Practice",
+        summary: "Mixed board-style questions across AI, ML, NLP, VR/AR, robotics, big data, IoT, sensors, smart cities, cloud, grid and blockchain, with a case study and a smart-city Python program.",
+        minutes: 18,
+        xp: 45,
+        blocks: [
+          {
+            type: "text",
+            md: "This chapter carries short definitions, \"give two examples\" questions, differences (VR vs AR, cloud vs grid, IaaS vs PaaS vs SaaS) and a longer question on big data or blockchain. Every definition should come with one Indian, everyday example.",
+          },
+          {
+            type: "example",
+            title: "Case study: a smart campus",
+            problem: "A PU college wants to: (a) switch off fans and lights in empty classrooms automatically; (b) host its timetable app without buying servers; (c) issue certificates that cannot be secretly altered; (d) let students practise a chemistry experiment safely in a fully simulated lab. Name the technology for each.",
+            steps: [
+              "(a) Motion sensors connected to switches over the network: **IoT with sensors**.",
+              "(b) Rent computing over the internet: **cloud computing** (PaaS or SaaS).",
+              "(c) Tamper-evident shared records: **blockchain**.",
+              "(d) Fully computer-generated environment: **virtual reality**.",
+            ],
+            answer: "IoT and sensors, cloud computing, blockchain, VR.",
+          },
+          {
+            type: "table",
+            headers: ["Cloud computing", "Grid computing"],
+            rows: [
+              ["A provider offers computing as a **service** on demand", "Many owners **pool** their computers for a common task"],
+              ["Resources usually in the provider's data centres", "Resources spread across places and organisations"],
+              ["Pay per use; many independent users", "Shared to solve large problems, e.g. scientific research"],
+            ],
+          },
+          {
+            type: "mistake",
+            wrong: "Any machine that works automatically, like a washing machine with a timer, is AI.",
+            right: "**Automation** follows fixed instructions. **AI** imitates human intelligence: it learns, reasons or understands language, and its behaviour improves with data.",
+            why: "Both seem \"smart\" because no human is pressing buttons. The test is whether the system learns or decides from data rather than repeating a fixed program.",
+          },
+          {
+            type: "heading",
+            text: "Program to write",
+          },
+          {
+            type: "text",
+            md: "Smart bins in five wards send their fill level (%). Write a program that stores the levels in a dictionary, lists the wards whose bins are at least 80% full, and prints the average fill level.",
+          },
+          {
+            type: "code",
+            lang: "python",
+            runnable: true,
+            code: r`bins = {"Ward 1": 45, "Ward 2": 85, "Ward 3": 92, "Ward 4": 30, "Ward 5": 80}
+full = [ward for ward, level in bins.items() if level >= 80]
+print("Send truck to:", full)
+print("Average fill:", sum(bins.values()) / len(bins), "%")`,
+          },
+          {
+            type: "text",
+            md: "Output: `Send truck to: ['Ward 2', 'Ward 3', 'Ward 5']` and `Average fill: 66.4 %`. Ward 5 is included because the condition is `>= 80`. The average is 332 / 5 = 66.4. Sensor data feeding a decision like this is the basic pattern of every smart-city service.",
+          },
+          {
+            type: "checkpoint",
+            questions: [
+              {
+                kind: "mcq",
+                q: "If the condition in the bin program were `level > 80`, which wards would be listed?",
+                options: ["Ward 2 and Ward 3", "Ward 2, Ward 3 and Ward 5", "Only Ward 3", "All five wards"],
+                answer: 0,
+                explain: "80 is not greater than 80, so Ward 5 drops out; only 85 and 92 remain.",
+              },
+            ],
+          },
+          {
+            type: "activity",
+            activity: {
+              kind: "match",
+              prompt: "Match each use to its emerging technology.",
+              pairs: [
+                ["Kannada-to-English translation app", "Natural language processing"],
+                ["Bitcoin transactions", "Blockchain"],
+                ["Mars rover exploring the surface", "Robotics"],
+                ["Online word processor in a browser", "SaaS"],
+                ["Phone game showing creatures on your street", "Augmented reality"],
+                ["Thousands of computers sharing a climate model run", "Grid computing"],
+              ],
+              explain: "Ask what the system does: understand language, keep a shared ledger, act physically, provide software online, add to reality or pool computers.",
+            },
+          },
+          {
+            type: "list",
+            ordered: true,
+            items: [
+              "Define machine learning. How is it related to AI? (2 marks)",
+              "Differentiate between virtual reality and augmented reality with an example each. (2 marks)",
+              "Explain the five characteristics of big data. (5 marks)",
+              "What is IoT? Give two examples from daily life. (2 marks)",
+              "Explain IaaS, PaaS and SaaS with one example each. (3 marks)",
+              "How does a blockchain make records tamper-evident? (3 marks)",
+            ],
+          },
+          {
+            type: "callout",
+            tone: "exam",
+            title: "Board tip",
+            md: "Definitions in this chapter are short, so marks go to **examples**. Keep a ready list: Google Maps-style traffic prediction (AI), spam filter (ML), auto-correct (NLP), flight simulator (VR), AR navigation (AR), drone spraying (robotics), smart AC (IoT), web email (SaaS), Bitcoin (blockchain).",
+          },
+          {
+            type: "keypoints",
+            items: [
+              "Name the technology from what it does: learn, understand language, simulate, overlay, act, connect, store online, pool or chain.",
+              "Cloud is an on-demand service; grid pools resources for a shared task.",
+              "AI learns or reasons from data; plain automation only repeats fixed steps.",
+              "Every definition earns full marks only with a clear example.",
+            ],
+          },
+        ],
+        flashcards: [
+          { front: "Cloud vs grid in one line?", back: "Cloud sells computing as an on-demand service; grid pools many owners' computers for one large task." },
+          { front: "Automation vs AI?", back: "Automation repeats fixed steps; AI learns, reasons or understands language from data." },
+          { front: "Technology for tamper-evident certificates?", back: "Blockchain." },
+          { front: "Technology for switching off lights in empty rooms?", back: "IoT with motion (occupancy) sensors." },
+          { front: "Example of NLP?", back: "Auto-correct, voice assistants, machine translation, chatbots." },
+          { front: "Example of a CPU grid use?", back: "Running a large scientific computation such as a climate model across many computers." },
+        ],
+        quiz: [
+          {
+            kind: "mcq",
+            q: "Which technology lets a farmer's soil-moisture sensor turn on a pump and send an alert to her phone?",
+            options: ["IoT", "Blockchain", "VR", "Grid computing"],
+            answer: 0,
+            explain: "A sensor-equipped device acting and communicating over the internet is IoT.",
+          },
+          {
+            kind: "mcq",
+            q: "\"Some online reviews in the data set are fake.\" Which V of big data is this about?",
+            options: ["Veracity", "Volume", "Velocity", "Value"],
+            answer: 0,
+            explain: "Doubtful accuracy of data is a veracity issue.",
+          },
+          {
+            kind: "truefalse",
+            q: "SaaS users must install and maintain the operating system on the provider's servers.",
+            answer: false,
+            explain: "In SaaS the provider manages everything; users just use the software. Managing the OS is the user's job in IaaS.",
+          },
+          {
+            kind: "multi",
+            q: "Which are examples of AI or its sub-fields?",
+            options: ["A spam filter that learns from users", "A chatbot answering questions", "A ceiling fan with a speed regulator", "Face unlock on a phone", "A plain calculator"],
+            answers: [0, 1, 3],
+            explain: "A fan regulator and a calculator follow fixed rules and do not learn or reason.",
+          },
+          {
+            kind: "numeric",
+            q: "Smart bins report 60, 90, 75 and 95 percent full. What is the average fill level (in %)?",
+            answer: 80,
+            explain: "(60 + 90 + 75 + 95) / 4 = 320 / 4 = 80.",
+          },
+          {
+            kind: "mcq",
+            q: "A headset shows a full 3D simulation of the Hampi ruins while you sit at home. This is:",
+            options: ["Virtual reality", "Augmented reality", "Big data", "Cloud computing"],
+            answer: 0,
+            explain: "The real surroundings are replaced by a simulated world.",
+          },
+          {
+            kind: "fill",
+            q: "In a blockchain, every block stores the ___ of the previous block.",
+            answer: ["hash"],
+            explain: "This link makes any change in an older block detectable.",
+          },
+        ],
+      },
+    ],
+  },
 ];
 
 /** Chapter title ("11:" / "12:" + exact title) → topic slug(s) that teach it. */
@@ -2177,4 +2916,5 @@ export const links: Record<string, string | string[]> = {
   "12:Understanding Data": "c12-cs-understanding-data",
   "12:Data Communication": "c12-cs-data-communication",
   "12:Security Aspects": "c12-cs-security-aspects",
+  "11:Emerging Trends": "c11-cs-emerging-trends",
 };
