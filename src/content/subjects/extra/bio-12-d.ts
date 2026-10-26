@@ -1,11 +1,1565 @@
 import type { Topic } from "@/content/types";
 
+/** String.raw keeps TeX backslashes intact. */
+const t = String.raw;
+
 /** Course these chapters belong to. */
 export const course = "biology-senior";
 /** Syllabus family: chapter titles below are matched against `bio` rows in src/content/syllabus/. */
 export const family = "bio";
 
-export const topics: Topic[] = [];
+export const topics: Topic[] = [
+  /* ------------------------------------------------------------------ */
+  /* Biotechnology: Principles and Processes (NCERT Class 12)           */
+  /* ------------------------------------------------------------------ */
+  {
+    slug: "c12-biotech-principles",
+    title: "Biotechnology: Principles and Processes",
+    icon: "🧬",
+    description: "Genetic engineering and bioprocess engineering: restriction enzymes, gel electrophoresis, cloning vectors, competent hosts, PCR, bioreactors and downstream processing.",
+    lessons: [
+      /* ---------------- Board lesson 1 ---------------- */
+      {
+        slug: "c12-btp-restriction-enzymes",
+        title: "Principles of Biotechnology and Restriction Enzymes",
+        summary: "What biotechnology is, its two core techniques, the first recombinant DNA, how restriction enzymes are named and cut, and how DNA fragments are separated by gel electrophoresis.",
+        minutes: 20,
+        xp: 50,
+        blocks: [
+          {
+            type: "illustration",
+            emoji: "✂️",
+            caption: "Diabetic patients today inject human insulin made by bacteria. To get there, scientists needed molecular scissors, molecular glue and a vehicle to carry a gene.",
+          },
+          {
+            type: "text",
+            md: "**Biotechnology** is the use of living organisms, or enzymes from them, to make products and processes useful to humans. The European Federation of Biotechnology (EFB) gives a broad definition: the integration of natural science and organisms, cells, parts of them and molecular analogues for products and services.\n\nModern biotechnology rests on two core techniques. **Genetic engineering** alters the chemistry of the genetic material (DNA and RNA), puts it into a host organism and so changes the host's phenotype. **Bioprocess engineering** keeps a sterile, contamination-free environment so that only the desired microbe or eukaryotic cell grows in large numbers to make the product (antibiotics, vaccines, enzymes and so on).",
+          },
+          {
+            type: "list",
+            ordered: true,
+            items: [
+              "Identify the DNA that carries the desirable gene.",
+              "Introduce that DNA into a suitable host.",
+              "Keep the introduced DNA in the host and make sure it passes to the host's progeny.",
+            ],
+          },
+          {
+            type: "text",
+            md: "A piece of foreign DNA put alone into a cell usually cannot multiply. It must become part of a chromosome or plasmid that has an **origin of replication (ori)**, the sequence where replication starts. In **1972 Stanley Cohen and Herbert Boyer** made the first recombinant DNA: they cut out a gene for antibiotic resistance and linked it to a native plasmid of *Salmonella typhimurium*. The cutting was done by a restriction enzyme, the joining by **DNA ligase**, and the plasmid acted as a **vector** to carry the gene into *Escherichia coli*.",
+          },
+          { type: "heading", text: "Restriction enzymes: the molecular scissors" },
+          {
+            type: "text",
+            md: "In 1963 two enzymes were found in *E. coli* that restrict the growth of bacteriophages: one adds methyl groups to DNA, the other cuts DNA. The cutter was called a **restriction endonuclease**. Five years later the first restriction endonuclease that depends on a specific base sequence, **Hind II**, was isolated. Hind II always cuts DNA at a particular point by recognising a specific sequence of **six base pairs**, its **recognition sequence**. Today more than 900 restriction enzymes are known, from over 230 strains of bacteria.\n\nRestriction enzymes belong to the **nucleases**. **Exonucleases** remove nucleotides from the ends of DNA; **endonucleases** cut at specific positions inside the DNA.",
+          },
+          {
+            type: "table",
+            headers: ["Letter(s) in EcoRI", "Stands for", "Rule"],
+            rows: [
+              ["E", "*Escherichia*", "first letter: genus (capital)"],
+              ["co", "*coli*", "next two letters: species"],
+              ["R", "strain RY 13", "fourth letter: strain"],
+              ["I", "first enzyme isolated from this strain", "Roman numeral: order of isolation"],
+            ],
+          },
+          {
+            type: "text",
+            md: "Each restriction endonuclease scans the DNA, finds its recognition sequence and binds there. Most recognition sequences are **palindromes**: the sequence reads the same on both strands when each is read in the same direction, 5′ → 3′. For EcoRI the site is 5′-GAATTC-3′ on one strand and 5′-GAATTC-3′ on the other.\n\nEcoRI cuts each strand between G and A, a little away from the centre. This leaves short single-stranded overhangs, called **sticky ends**, which form hydrogen bonds with complementary sticky ends. DNA ligase then seals the sugar-phosphate backbone. If the vector and the source DNA are cut with the **same** enzyme, their sticky ends match.",
+          },
+          {
+            type: "example",
+            title: "Reading an EcoRI cut",
+            problem: "A short stretch of double-stranded DNA reads 5′-GTAGAATTCCAT-3′ on the top strand. EcoRI cuts it. What are the two fragments, and what kind of ends do they have?",
+            steps: [
+              "Write the bottom strand, antiparallel and complementary: 3′-CATCTTAAGGTA-5′.",
+              "Find GAATTC on the top strand: GTA **GAATTC** CAT. Read the bottom strand 5′ → 3′ (ATGGAATTCTAC): it also contains GAATTC, so the site is palindromic.",
+              "Cut each strand between G and A: top gives 5′-GTAG-3′ and 5′-AATTCCAT-3′; bottom (read 5′ → 3′) gives 5′-ATGG-3′ and 5′-AATTCTAC-3′.",
+              "Pair them up: the left fragment is GTAG over CATCTTAA, the right fragment is AATTCCAT over GGTA. Each has four unpaired bases, 5′-AATT, sticking out.",
+            ],
+            answer: "Two fragments, each with a single-stranded 5′-AATT overhang. These sticky ends can pair with any other EcoRI-cut end.",
+          },
+          {
+            type: "checkpoint",
+            questions: [
+              {
+                kind: "mcq",
+                q: "In the name EcoRI, what does the letter R stand for?",
+                options: ["Restriction", "The strain of the bacterium", "Recognition sequence", "The order in which the enzyme was isolated"],
+                answer: 1,
+                explain: "E = genus *Escherichia*, co = species *coli*, R = strain RY 13, I = the first enzyme isolated from that strain.",
+              },
+            ],
+          },
+          {
+            type: "mistake",
+            wrong: "A DNA palindrome is like the word 'level': one strand reads the same forwards and backwards, so GAATTC is a palindrome because GAA is the reverse of TTC.",
+            right: "A DNA palindrome reads the same on the **two strands** when both are read 5′ → 3′. In GAATTC, the right half TTC is the **reverse complement** of GAA, not its plain reverse.",
+            why: "The word analogy feels natural, but a sequence like GATTAG reads backwards the same and is not a restriction palindrome: its complementary strand read 5′ → 3′ is CTAATC.",
+          },
+          { type: "heading", text: "Separating the fragments: agarose gel electrophoresis" },
+          {
+            type: "text",
+            md: "DNA is negatively charged (phosphate groups), so in an electric field it moves towards the **anode** (positive electrode). In **gel electrophoresis** the fragments are pushed through a matrix of **agarose**, a natural polymer extracted from seaweed. The gel acts as a sieve: **smaller fragments move farther**, larger ones stay near the wells.\n\nPure DNA cannot be seen in visible light. The gel is stained with **ethidium bromide** and exposed to **UV light**, which shows the DNA as bright orange bands. A band can be cut out and the DNA extracted from the gel piece; this is called **elution**. Purified fragments are then joined to cloning vectors.",
+          },
+          {
+            type: "activity",
+            activity: {
+              kind: "order",
+              prompt: "Put the gel electrophoresis steps in order.",
+              items: [
+                "Digest the DNA with a restriction enzyme",
+                "Load the fragments into wells of an agarose gel",
+                "Pass current; fragments move towards the anode",
+                "Stain with ethidium bromide and view under UV light",
+                "Cut out the band and elute the DNA",
+              ],
+              explain: "You must cut the DNA before you can sort the pieces by size, and you can only cut out a band after you have made it visible.",
+            },
+          },
+          {
+            type: "callout",
+            tone: "exam",
+            title: "Board tip",
+            md: "A 2–3 mark question on restriction enzymes expects: the naming rule with EcoRI as the example, the meaning of a palindrome with a written sequence (both strands, 5′ and 3′ marked), and the idea of sticky ends. Always label the strand polarity; unlabelled sequences lose marks.",
+          },
+          {
+            type: "keypoints",
+            items: [
+              "Two core techniques: genetic engineering and bioprocess engineering (sterile, large-scale culture).",
+              "Cohen and Boyer (1972) made the first recombinant DNA using a plasmid of *Salmonella typhimurium*.",
+              "Restriction endonucleases cut at palindromic recognition sequences; EcoRI cuts between G and A of GAATTC, leaving sticky ends.",
+              "DNA ligase joins fragments; using the same enzyme on vector and insert gives matching sticky ends.",
+              "In agarose gel electrophoresis DNA moves to the anode; smaller fragments travel farther; ethidium bromide + UV shows orange bands.",
+            ],
+          },
+        ],
+        flashcards: [
+          { front: "Two core techniques of modern biotechnology", back: "Genetic engineering and bioprocess engineering." },
+          { front: "Who made the first recombinant DNA, and when?", back: "Stanley Cohen and Herbert Boyer, 1972, using a plasmid of *Salmonella typhimurium*." },
+          { front: "First sequence-specific restriction endonuclease", back: "Hind II, which recognises a specific six-base-pair sequence." },
+          { front: "Exonuclease vs endonuclease", back: "Exonucleases remove nucleotides from the ends of DNA; endonucleases cut at specific positions within it." },
+          { front: "EcoRI recognition site and cut", back: "5′-GAATTC-3′; cuts between G and A on both strands, leaving 5′-AATT sticky ends." },
+          { front: "Sticky ends", back: "Short single-stranded overhangs left by staggered cuts; they pair with complementary ends and are then sealed by DNA ligase." },
+          { front: "Agarose", back: "A natural polymer from seaweed, used as the sieving gel in DNA electrophoresis." },
+          { front: "Elution", back: "Cutting a DNA band out of the agarose gel and extracting the DNA from it." },
+        ],
+        quiz: [
+          {
+            kind: "mcq",
+            q: "During agarose gel electrophoresis, DNA fragments move towards the:",
+            options: ["Cathode, because DNA is positively charged", "Anode, because DNA is negatively charged", "Cathode, because smaller fragments are lighter", "Anode only if stained with ethidium bromide"],
+            answer: 1,
+            explain: "The phosphate groups give DNA a negative charge, so it moves to the positive electrode, the anode. Staining has nothing to do with movement.",
+          },
+          {
+            kind: "mcq",
+            q: "Which of these sequences is a restriction palindrome? (top strand shown 5′ → 3′)",
+            options: ["GAATCC", "GGATCC", "GATTAG", "AAGCAA"],
+            answer: 1,
+            explain: "For GGATCC the reverse complement of GGA is TCC, so the other strand read 5′ → 3′ is also GGATCC. This is the BamHI site.",
+            difficulty: 2,
+            hint: "Check whether the right half is the reverse complement of the left half.",
+          },
+          {
+            kind: "truefalse",
+            q: "Under UV light, ethidium bromide-stained DNA bands appear bright orange.",
+            answer: true,
+            explain: "Ethidium bromide binds DNA and fluoresces orange under UV light; pure DNA is invisible in visible light.",
+          },
+          {
+            kind: "fill",
+            q: "The enzyme that seals the sugar-phosphate backbone between two DNA fragments with matching sticky ends is DNA ___.",
+            answer: ["ligase"],
+            explain: "Sticky ends hold together by hydrogen bonds; DNA ligase forms the phosphodiester bonds.",
+          },
+          {
+            kind: "mcq",
+            q: "On a gel, fragment X has moved farther from the well than fragment Y. This means:",
+            options: ["X is larger than Y", "X is smaller than Y", "X carries more negative charge per base than Y", "X was loaded later than Y"],
+            answer: 1,
+            explain: "The agarose acts as a sieve; smaller fragments slip through faster and travel farther. Charge per base is about the same for all DNA.",
+          },
+          {
+            kind: "order",
+            q: "Arrange the parts of the name of a restriction enzyme in the order they are written.",
+            items: ["Genus (first letter)", "Species (next two letters)", "Strain", "Roman numeral for order of isolation"],
+            explain: "EcoRI: E (genus) co (species) R (strain) I (first isolated).",
+          },
+          {
+            kind: "multi",
+            q: "Select all correct statements about restriction endonucleases.",
+            options: [
+              "They recognise specific base sequences",
+              "Most of their recognition sites are palindromic",
+              "They remove nucleotides only from the ends of DNA",
+              "They belong to the nucleases",
+            ],
+            answers: [0, 1, 3],
+            explain: "Removing nucleotides from the ends describes exonucleases. Restriction endonucleases cut inside the DNA at specific sites.",
+          },
+        ],
+      },
+      /* ---------------- Board lesson 2 ---------------- */
+      {
+        slug: "c12-btp-vectors-hosts",
+        title: "Cloning Vectors and Competent Hosts",
+        summary: "Features every cloning vector needs (ori, selectable marker, cloning sites), pBR322, insertional inactivation, blue-white selection, Ti plasmid and retroviruses, and ways to get DNA into host cells.",
+        minutes: 20,
+        xp: 50,
+        blocks: [
+          {
+            type: "illustration",
+            emoji: "🚚",
+            caption: "A vector is a delivery van for a gene: it carries the gene into the host cell and makes many copies of it there.",
+          },
+          {
+            type: "text",
+            md: "Plasmids and bacteriophages can replicate inside bacterial cells independently of the chromosome. Bacteriophages are present in very high numbers per cell, so their genome copy number is high; some plasmids have only one or two copies per cell, others 15–100. Any DNA linked to such a vector is copied along with it. This is why we use **cloning vectors**.\n\nA cloning vector needs three features.",
+          },
+          {
+            type: "table",
+            headers: ["Feature", "What it does"],
+            rows: [
+              ["Origin of replication (*ori*)", "Starts replication; any DNA linked to it is copied. It also controls the copy number of the linked DNA."],
+              ["Selectable marker", "Helps pick out transformants and kill non-transformants. Usually genes for resistance to antibiotics such as ampicillin, chloramphenicol, tetracycline or kanamycin."],
+              ["Cloning sites", "Recognition sites for restriction enzymes where the foreign DNA is ligated. There should be very few, preferably single, sites for each commonly used enzyme, so the vector is not cut into many pieces."],
+            ],
+          },
+          {
+            type: "text",
+            md: "**Transformation** is the procedure by which a piece of DNA is put into a host bacterium. Normal *E. coli* cells are not resistant to ampicillin. If the vector carries an ampicillin-resistance gene, only the **transformants** grow on a medium containing ampicillin.\n\nThe classic *E. coli* vector **pBR322** carries an ori, a *rop* gene (codes for proteins involved in plasmid replication), and two resistance genes: **ampᴿ** and **tetᴿ**. Sites for BamHI and SalI lie inside tetᴿ; sites for PvuI and PstI lie inside ampᴿ.",
+          },
+          {
+            type: "text",
+            md: "**Insertional inactivation.** Suppose foreign DNA is ligated at the BamHI site, inside tetᴿ. The tetracycline-resistance gene is now broken. Recombinant cells still grow on ampicillin but **not** on tetracycline; non-recombinant transformants grow on both; untransformed cells grow on neither. Picking recombinants this way needs two plates (ampicillin, then tetracycline), which is slow.\n\nA quicker method uses the gene for the enzyme **β-galactosidase**. The foreign DNA is inserted into its coding sequence. On a medium with a **chromogenic substrate**, colonies whose plasmid has **no insert** make the enzyme and turn **blue**. Colonies with an insert cannot make the enzyme and stay **colourless (white)**: these are the recombinants.",
+          },
+          {
+            type: "example",
+            title: "Choosing the cloning site in pBR322",
+            problem: "A student wants to clone a gene into pBR322 and then select recombinants by replica plating. She can cut the vector with either BamHI or PstI. For each choice, which antibiotic plate should she use first, and how will she recognise the recombinant colonies?",
+            steps: [
+              "BamHI lies inside tetᴿ. An insert there breaks tetᴿ but leaves ampᴿ working.",
+              "So with BamHI: plate on ampicillin first (all transformants grow), then replica-plate on tetracycline. Colonies that fail on tetracycline are recombinant.",
+              "PstI lies inside ampᴿ. An insert there breaks ampᴿ but leaves tetᴿ working.",
+              "So with PstI: plate on tetracycline first, then replica-plate on ampicillin. Colonies that fail on ampicillin are recombinant.",
+            ],
+            answer: "Always select first with the antibiotic whose gene stays intact, then look for colonies that have lost resistance to the antibiotic whose gene holds the insert.",
+          },
+          {
+            type: "activity",
+            activity: {
+              kind: "sort",
+              prompt: "A gene was inserted at the BamHI site of pBR322. Sort each colony.",
+              groups: ["Recombinant", "Non-recombinant transformant", "Not transformed"],
+              items: [
+                { text: "Grows on ampicillin, dies on tetracycline", group: 0, hint: "The insert broke tetR, but ampR still works." },
+                { text: "Grows on ampicillin and on tetracycline", group: 1, hint: "Both resistance genes are intact, so there is no insert." },
+                { text: "Dies on ampicillin and on tetracycline", group: 2, hint: "No plasmid at all, so no resistance." },
+                { text: "White colony on a chromogenic plate (β-galactosidase vector)", group: 0, hint: "The insert inactivated the enzyme gene, so no colour." },
+                { text: "Blue colony on a chromogenic plate (β-galactosidase vector)", group: 1, hint: "The enzyme gene works, so the plasmid has no insert." },
+              ],
+              explain: "An insert switches a gene **off**. So recombinants lose the trait coded by the gene that holds the cloning site: tetracycline resistance in pBR322, blue colour in the β-galactosidase system.",
+            },
+          },
+          {
+            type: "checkpoint",
+            questions: [
+              {
+                kind: "mcq",
+                q: "A foreign gene is ligated at the PstI site of pBR322 (inside ampᴿ). On which medium will the recombinants fail to grow?",
+                options: ["Tetracycline", "Ampicillin", "Both", "Neither"],
+                answer: 1,
+                explain: "Inserting DNA at PstI inactivates ampᴿ, so recombinants are ampicillin-sensitive but still tetracycline-resistant.",
+              },
+            ],
+          },
+          {
+            type: "mistake",
+            wrong: "In blue-white selection, the blue colonies are the ones with the recombinant plasmid because they 'show' the new gene.",
+            right: "Blue colonies have **no insert**: their β-galactosidase gene works and acts on the chromogenic substrate. **White (colourless)** colonies carry the insert.",
+            why: "Learners expect a new gene to add a visible trait. Here the insert sits inside the enzyme's gene and destroys it, so the recombinants are recognised by what they have lost.",
+          },
+          { type: "heading", text: "Vectors for plants and animals" },
+          {
+            type: "text",
+            md: "Scientists also learnt from pathogens. *Agrobacterium tumefaciens*, a pathogen of several dicot plants, delivers a piece of DNA called **T-DNA** that turns normal plant cells into a tumour and makes them produce chemicals the bacterium needs. Its **Ti plasmid** (tumour-inducing) has been modified so it is no longer pathogenic but can still deliver genes into plants. Similarly, **retroviruses** in animals can turn normal cells into cancerous ones; **disarmed retroviruses** are used to carry desirable genes into animal cells.",
+          },
+          { type: "heading", text: "Competent host: getting DNA into the cell" },
+          {
+            type: "text",
+            md: "DNA is hydrophilic and cannot pass through the cell membrane on its own. To make bacteria **competent**, they are treated with a specific concentration of a **divalent cation such as calcium**, which helps DNA enter through pores in the cell wall. The cells are incubated with recombinant DNA on ice, given a brief **heat shock at 42 °C**, and put back on ice.\n\nOther methods: **microinjection**, where recombinant DNA is injected directly into the nucleus of an animal cell; **biolistics (gene gun)**, where cells are bombarded with high-velocity micro-particles of **gold or tungsten** coated with DNA, used mainly for plants; and **disarmed pathogen vectors**, which infect the cell and transfer the recombinant DNA.",
+          },
+          {
+            type: "callout",
+            tone: "exam",
+            title: "Board tip",
+            md: "When asked 'how would you select recombinants?', name the vector, the gene with the cloning site, and the result on each plate. Writing just 'by using antibiotics' earns no marks.",
+          },
+          {
+            type: "keypoints",
+            items: [
+              "A vector needs an ori (also controls copy number), a selectable marker and few, preferably single, cloning sites.",
+              "pBR322: ori, rop, ampᴿ, tetᴿ; BamHI and SalI in tetᴿ, PvuI and PstI in ampᴿ.",
+              "Insertional inactivation: the insert switches off the gene holding the cloning site; in the β-galactosidase system recombinants are white, non-recombinants blue.",
+              "Ti plasmid of *Agrobacterium tumefaciens* (plants) and disarmed retroviruses (animals) are natural gene carriers turned into vectors.",
+              "Competence: Ca²⁺ treatment, ice, heat shock at 42 °C; also microinjection (animal nucleus), biolistics with gold or tungsten (plants), disarmed pathogens.",
+            ],
+          },
+        ],
+        flashcards: [
+          { front: "Three essential features of a cloning vector", back: "Origin of replication, selectable marker, cloning sites (preferably single for each enzyme)." },
+          { front: "What does ori control besides starting replication?", back: "The copy number of the linked DNA." },
+          { front: "rop gene of pBR322", back: "Codes for proteins involved in replication of the plasmid." },
+          { front: "Insertional inactivation", back: "Inserting foreign DNA into a gene inactivates it; used to tell recombinants from non-recombinants." },
+          { front: "Blue vs white colonies", back: "Blue = no insert (β-galactosidase active); white/colourless = recombinant (gene inactivated)." },
+          { front: "Ti plasmid", back: "Tumour-inducing plasmid of *Agrobacterium tumefaciens*; modified into a non-pathogenic plant vector." },
+          { front: "How are bacteria made competent?", back: "Treat with Ca²⁺ (divalent cation), incubate with DNA on ice, heat shock at 42 °C, back on ice." },
+          { front: "Biolistics", back: "Gene gun: cells bombarded with gold or tungsten micro-particles coated with DNA; used mainly for plants." },
+        ],
+        quiz: [
+          {
+            kind: "mcq",
+            q: "Which feature of a vector decides how many copies of the linked foreign DNA a cell will carry?",
+            options: ["Selectable marker", "Cloning site", "Origin of replication", "rop gene alone"],
+            answer: 2,
+            explain: "The ori starts replication and controls the copy number of the linked DNA.",
+          },
+          {
+            kind: "mcq",
+            q: "Why should a vector have only one recognition site for the restriction enzyme used?",
+            options: [
+              "So that the enzyme works faster",
+              "So that the vector is cut at one place and is not broken into several pieces",
+              "So that the vector cannot replicate",
+              "So that both antibiotic genes are inactivated",
+            ],
+            answer: 1,
+            explain: "Several sites would cut the vector into fragments and complicate cloning.",
+          },
+          {
+            kind: "truefalse",
+            q: "In the β-galactosidase selection system, recombinant colonies turn blue on a chromogenic substrate.",
+            answer: false,
+            explain: "Recombinants have an inactivated β-galactosidase gene and stay colourless; non-recombinants turn blue.",
+          },
+          {
+            kind: "fill",
+            q: "In the gene gun method, DNA is coated on micro-particles of gold or ___.",
+            answer: ["tungsten"],
+            explain: "Biolistics uses gold or tungsten particles fired at high velocity, mainly into plant cells.",
+          },
+          {
+            kind: "mcq",
+            q: "Recombinant DNA is injected directly into the nucleus of an animal cell. This method is:",
+            options: ["Biolistics", "Microinjection", "Heat shock", "Elution"],
+            answer: 1,
+            explain: "Microinjection delivers DNA straight into the nucleus, commonly used for animal cells.",
+          },
+          {
+            kind: "order",
+            q: "Arrange the steps for making E. coli cells take up a plasmid.",
+            items: ["Treat cells with calcium ions", "Incubate cells with recombinant DNA on ice", "Heat shock at 42 °C", "Place back on ice"],
+            explain: "Calcium makes the cells competent; the cold–heat–cold sequence helps the DNA enter.",
+          },
+          {
+            kind: "multi",
+            q: "Which genes of pBR322 can act as selectable markers?",
+            options: ["ampᴿ", "tetᴿ", "rop", "ori"],
+            answers: [0, 1],
+            explain: "The two antibiotic-resistance genes are the markers. rop and ori concern replication.",
+          },
+          {
+            kind: "mcq",
+            q: "Why is DNA unable to enter a bacterial cell by itself?",
+            options: ["It is too small", "It is a hydrophilic molecule that cannot cross the membrane", "It is positively charged", "Bacteria lack ribosomes"],
+            answer: 1,
+            explain: "DNA is hydrophilic and charged, so it cannot cross the lipid membrane without help such as Ca²⁺ treatment.",
+          },
+        ],
+      },
+      /* ---------------- Board lesson 3 ---------------- */
+      {
+        slug: "c12-btp-rdna-processes",
+        title: "Processes of Recombinant DNA Technology",
+        summary: "Isolating DNA, cutting it, amplifying a gene by PCR, inserting recombinant DNA into a host, and making the product on a large scale in bioreactors, followed by downstream processing.",
+        minutes: 22,
+        xp: 55,
+        blocks: [
+          {
+            type: "illustration",
+            emoji: "🏭",
+            caption: "From one gene in a test tube to thousands of litres of product: the steps of recombinant DNA technology end in a factory-sized bioreactor.",
+          },
+          {
+            type: "list",
+            ordered: true,
+            items: [
+              "Isolation of the genetic material (DNA)",
+              "Cutting of DNA at specific locations",
+              "Amplification of the gene of interest using PCR",
+              "Insertion of the recombinant DNA into the host cell or organism",
+              "Obtaining the foreign gene product",
+              "Downstream processing",
+            ],
+          },
+          {
+            type: "text",
+            md: "**1. Isolating DNA.** DNA sits inside membranes, mixed with RNA, proteins, polysaccharides and lipids. The cell is first broken open with enzymes: **lysozyme** for bacteria, **cellulase** for plant cells, **chitinase** for fungi. RNA is removed with **ribonuclease** and proteins with **protease**. Adding **chilled ethanol** makes the purified DNA precipitate as fine threads, which can be lifted out (spooled).\n\n**2. Cutting DNA.** Purified DNA is incubated with a restriction enzyme at the right conditions. Agarose gel electrophoresis checks the digestion. The vector is cut with the same enzyme, and the gene of interest is joined to it with DNA ligase, giving **recombinant DNA**.",
+          },
+          { type: "heading", text: "3. PCR: making many copies of a gene" },
+          {
+            type: "text",
+            md: "**PCR** stands for **polymerase chain reaction**. Multiple copies of the gene (DNA) of interest are made in vitro using two sets of **primers** (small, chemically synthesised oligonucleotides complementary to the ends of the target region) and a DNA polymerase. Each cycle has three steps. Because the high temperature of denaturation would destroy most enzymes, PCR uses a thermostable polymerase, **Taq polymerase**, isolated from the bacterium *Thermus aquaticus*.",
+          },
+          {
+            type: "table",
+            headers: ["Step", "Approximate temperature", "What happens"],
+            rows: [
+              ["Denaturation", "about 94 °C", "The two DNA strands separate."],
+              ["Annealing", "about 50–65 °C", "Primers bind to their complementary sequences on each single strand."],
+              ["Extension", "about 72 °C", "Taq polymerase extends the primers using dNTPs, making new strands."],
+            ],
+          },
+          {
+            type: "formula",
+            tex: t`N = N_0 \times 2^{n} \qquad 2^{30} \approx 1.07 \times 10^{9}`,
+            caption: "Ideally each cycle doubles the DNA. Starting from one molecule, 30 cycles give about a billion copies, matching NCERT's statement.",
+          },
+          {
+            type: "example",
+            title: "Counting PCR copies",
+            problem: "A forensic sample has 4 copies of a target DNA segment. Assuming perfect doubling, how many copies are there after 10 cycles? How many cycles are needed to pass 1 million copies from a single molecule?",
+            steps: [
+              t`Use $N = N_0 \times 2^n$ with $N_0 = 4$, $n = 10$.`,
+              t`$2^{10} = 1024$, so $N = 4 \times 1024 = 4096$ copies.`,
+              t`For one molecule we need $2^n > 10^6$. $2^{19} = 524\,288$ and $2^{20} = 1\,048\,576$.`,
+              "So 20 cycles are needed.",
+            ],
+            answer: "4096 copies after 10 cycles; 20 cycles to cross 1 million from one molecule.",
+          },
+          {
+            type: "checkpoint",
+            questions: [
+              {
+                kind: "mcq",
+                q: "Why does PCR use Taq polymerase rather than ordinary E. coli DNA polymerase?",
+                options: [
+                  "It works without primers",
+                  "It stays active at the high temperature used to separate DNA strands",
+                  "It copies RNA into DNA",
+                  "It cuts DNA at palindromic sites",
+                ],
+                answer: 1,
+                explain: "*Thermus aquaticus* lives in hot springs; its polymerase survives the denaturation step in every cycle. It still needs primers.",
+              },
+            ],
+          },
+          {
+            type: "text",
+            md: "**4. Inserting recombinant DNA.** Competent host cells take up the recombinant DNA. If it carries an antibiotic-resistance gene (for example ampicillin), the cells are grown on agar plates with ampicillin: only transformants survive.\n\n**5. Obtaining the product.** The aim is usually a protein. A protein-coding gene expressed in a heterologous host is a **recombinant protein**. Small-volume cultures cannot give enough product, so large volumes (**100–1000 litres**) are processed in **bioreactors**, which give optimal temperature, pH, substrate, salts, vitamins and oxygen. The commonest type is the **stirred-tank bioreactor**: usually cylindrical or with a curved base to help mixing, with a stirrer that mixes the contents and spreads oxygen. In a **sparged stirred-tank** reactor, sterile air bubbles are sparged through the medium. A bioreactor has an agitator system, an oxygen delivery system, a foam control system, a temperature control system, a pH control system and sampling ports.\n\nIn **continuous culture**, used medium is drained from one side while fresh medium is added from the other. This keeps cells in their physiologically most active **log (exponential) phase**, so more biomass and product are obtained.",
+          },
+          {
+            type: "text",
+            md: "**6. Downstream processing.** After biosynthesis the product goes through separation and purification, then formulation with suitable preservatives. Drugs must pass clinical trials, and every product needs strict quality control. The steps differ from product to product.",
+          },
+          {
+            type: "activity",
+            activity: {
+              kind: "match",
+              prompt: "Match each enzyme to its job in DNA isolation or cloning.",
+              pairs: [
+                ["Lysozyme", "Breaks bacterial cell walls"],
+                ["Cellulase", "Breaks plant cell walls"],
+                ["Chitinase", "Breaks fungal cell walls"],
+                ["Ribonuclease", "Removes RNA"],
+                ["Protease", "Removes proteins"],
+                ["DNA ligase", "Joins DNA fragments"],
+              ],
+              explain: "Each wall-breaking enzyme matches the wall material: peptidoglycan (bacteria), cellulose (plants), chitin (fungi). Ribonuclease and protease clean up the extract before ethanol precipitates the DNA.",
+            },
+          },
+          {
+            type: "mistake",
+            wrong: "Chilled ethanol is added at the start to break open the cells and release the DNA.",
+            right: "Cells are broken open by enzymes (lysozyme, cellulase, chitinase). Chilled ethanol is added **last** to precipitate the purified DNA as fine threads.",
+            why: "Ethanol is familiar as a disinfectant that damages cells, so learners place it first. In DNA isolation its job is to make DNA come out of solution after RNA and proteins have been removed.",
+          },
+          {
+            type: "callout",
+            tone: "exam",
+            title: "Board tip",
+            md: "For a 5-mark answer on PCR, draw or describe the three steps with what happens in each, name Taq polymerase and its source, and state why it is used. For bioreactors, list the components and say why stirred-tank reactors are preferred over shake flasks.",
+          },
+          {
+            type: "keypoints",
+            items: [
+              "Isolation: lysozyme / cellulase / chitinase, then ribonuclease and protease, then chilled ethanol to precipitate DNA.",
+              "PCR: denaturation, annealing of primers, extension by Taq polymerase (from *Thermus aquaticus*); ideally the DNA doubles each cycle.",
+              "Transformants are selected on antibiotic plates; a protein-coding gene expressed in a heterologous host gives a recombinant protein.",
+              "Stirred-tank bioreactors (100–1000 L) keep conditions optimal; continuous culture holds cells in the log phase.",
+              "Downstream processing: separation, purification, formulation with preservatives, clinical trials for drugs, quality control.",
+            ],
+          },
+        ],
+        flashcards: [
+          { front: "Enzyme used to break fungal cell walls in DNA isolation", back: "Chitinase." },
+          { front: "Role of chilled ethanol", back: "Precipitates purified DNA as fine threads that can be spooled out." },
+          { front: "Three steps of a PCR cycle", back: "Denaturation, annealing (primers bind), extension (Taq polymerase builds new strands)." },
+          { front: "Source of Taq polymerase", back: "The thermophilic bacterium *Thermus aquaticus*." },
+          { front: "Primers", back: "Small chemically synthesised oligonucleotides complementary to the ends of the target DNA." },
+          { front: "Recombinant protein", back: "A protein made when a protein-coding gene is expressed in a heterologous host." },
+          { front: "Why continuous culture?", back: "Cells stay in the log (exponential) phase, giving more biomass and product." },
+          { front: "Downstream processing", back: "Separation, purification and formulation of the product, with quality control and clinical trials for drugs." },
+        ],
+        quiz: [
+          {
+            kind: "order",
+            q: "Arrange the processes of recombinant DNA technology in order.",
+            items: [
+              "Isolation of DNA",
+              "Cutting with restriction enzymes",
+              "Amplification by PCR",
+              "Insertion of recombinant DNA into host",
+              "Obtaining the gene product",
+              "Downstream processing",
+            ],
+            explain: "This is the sequence NCERT follows: get the DNA, cut it, amplify the gene, put it in a host, make the product, then purify and formulate it.",
+          },
+          {
+            kind: "numeric",
+            q: "Starting from 2 copies of a DNA segment, how many copies are present after 6 cycles of ideal PCR?",
+            answer: 128,
+            explain: t`$N = 2 \times 2^6 = 2 \times 64 = 128$.`,
+          },
+          {
+            kind: "mcq",
+            q: "In PCR, the step in which primers bind to the single-stranded template is:",
+            options: ["Denaturation", "Annealing", "Extension", "Ligation"],
+            answer: 1,
+            explain: "Annealing happens at a lower temperature after denaturation; extension follows.",
+          },
+          {
+            kind: "mcq",
+            q: "A sparged stirred-tank bioreactor differs from a simple stirred-tank bioreactor in that:",
+            options: [
+              "It has no stirrer",
+              "Sterile air bubbles are passed through the medium",
+              "It works only in batch mode",
+              "It is used only for plant cells",
+            ],
+            answer: 1,
+            explain: "Sparging bubbles sterile air through the culture, increasing oxygen transfer.",
+          },
+          {
+            kind: "truefalse",
+            q: "Continuous culture keeps cells in the log phase by draining used medium and adding fresh medium.",
+            answer: true,
+            explain: "Fresh nutrients keep arriving and wastes leave, so the cells stay in their most active phase.",
+          },
+          {
+            kind: "multi",
+            q: "Which are components of a stirred-tank bioreactor?",
+            options: ["Agitator system", "Foam control system", "pH control system", "Gel electrophoresis chamber"],
+            answers: [0, 1, 2],
+            explain: "Bioreactors have agitator, oxygen delivery, foam control, temperature control and pH control systems and sampling ports. Electrophoresis is a separate lab technique.",
+          },
+          {
+            kind: "fill",
+            q: "Treating a DNA extract with ___ removes RNA from it.",
+            answer: ["ribonuclease", "RNase"],
+            explain: "Ribonuclease digests RNA; protease removes proteins.",
+          },
+        ],
+      },
+      /* ---------------- Exam edge ---------------- */
+      {
+        slug: "c12-btp-exam-edge",
+        title: "Exam edge: Tools and Processes for NEET and KCET",
+        summary: "What NEET and KCET ask from this chapter: palindromes, fragment counting, site frequency, PCR arithmetic, selection logic and the NCERT lines that turn into statement questions.",
+        minutes: 22,
+        xp: 60,
+        track: "exam",
+        blocks: [
+          {
+            type: "callout",
+            tone: "exam",
+            title: "What gets asked",
+            md: "NEET usually sets 2–3 questions here; KCET 1–3. The favourites: EcoRI naming, palindromes and sticky ends, the features of pBR322 and insertional inactivation, blue-white selection, competent cells, the gene gun, the source of Taq polymerase, PCR steps, the enzymes used in DNA isolation, stirred-tank bioreactors and downstream processing. Assertion–reason and 'how many statements are correct' formats are common.",
+          },
+          {
+            type: "table",
+            headers: ["Shortcut", "Result", "Safe when"],
+            rows: [
+              ["Palindrome test", "Right half = reverse complement of left half", "Even-length recognition site"],
+              ["Fragments from a linear DNA cut at n sites", "n + 1", "All sites are cut"],
+              ["Fragments from a circular DNA cut at n sites", "n", "All sites are cut (n ≥ 1)"],
+              ["Expected spacing of a k-base site", t`$4^k$ bp (4096 for a 6-cutter)`, "Random sequence with equal A, T, G, C"],
+              ["PCR yield", t`$N_0 \times 2^n$`, "Ideal doubling; real yields are lower"],
+            ],
+          },
+          {
+            type: "example",
+            title: "NEET level: fragment counting",
+            problem: "A circular plasmid has three EcoRI sites. A linear DNA molecule of the same size also has three EcoRI sites. How many fragments does each give after complete digestion?",
+            steps: [
+              "Each cut in a linear molecule adds one piece: 1 cut gives 2 pieces, so 3 cuts give 4.",
+              "A circle has no free ends. The first cut only opens it into a line; each further cut adds one piece.",
+              "So the circular plasmid gives 3 fragments.",
+            ],
+            answer: "Circular: 3 fragments; linear: 4 fragments.",
+          },
+          {
+            type: "example",
+            title: "KCET level: how often does a site occur?",
+            problem: "In a long DNA with equal amounts of all four bases arranged at random, about how often will an EcoRI site occur? How many sites are expected in a 40 960 bp stretch?",
+            steps: [
+              t`The chance of a particular base at one position is $\frac{1}{4}$.`,
+              t`GAATTC has 6 positions, so the chance of the whole site starting at a given position is $\left(\frac{1}{4}\right)^6 = \frac{1}{4096}$.`,
+              "So a site is expected roughly once every 4096 bp.",
+              t`In 40 960 bp: $\frac{40\,960}{4096} = 10$ sites (expected, not exact).`,
+            ],
+            answer: "About once every 4096 bp; about 10 sites in 40 960 bp.",
+          },
+          {
+            type: "example",
+            title: "NEET level: selection logic",
+            problem: "A gene is ligated into the SalI site of pBR322 and the mixture is used to transform E. coli. Colonies are grown on ampicillin and then replica-plated on tetracycline. Colony P grows on both plates; colony Q grows only on ampicillin. Which colony carries the recombinant plasmid?",
+            steps: [
+              "SalI lies inside tetᴿ. A plasmid with an insert there has a broken tetᴿ but an intact ampᴿ.",
+              "Q is ampicillin-resistant (has a plasmid) but tetracycline-sensitive (tetᴿ broken): recombinant.",
+              "P resists both antibiotics: it has a plasmid without an insert.",
+            ],
+            answer: "Colony Q is recombinant; P has a non-recombinant plasmid.",
+          },
+          {
+            type: "example",
+            title: "Assertion–reason",
+            problem: "Assertion (A): In PCR, the DNA polymerase is not added fresh after every cycle. Reason (R): Taq polymerase, from *Thermus aquaticus*, remains active at the high temperature used to denature DNA. Choose: (a) both true, R explains A; (b) both true, R does not explain A; (c) A true, R false; (d) A false, R true.",
+            steps: [
+              "Is A true? Yes: one dose of thermostable enzyme serves all cycles.",
+              "Is R true? Yes: this is the NCERT reason for using Taq.",
+              "Does R explain A? Yes: the enzyme survives denaturation, so it need not be replaced.",
+            ],
+            answer: "(a) Both true and R is the correct explanation of A.",
+          },
+          {
+            type: "list",
+            items: [
+              "**NCERT line:** the first restriction endonuclease, Hind II, was isolated five years after 1963 and recognises a specific six-base-pair sequence.",
+              "**NCERT line:** more than 900 restriction enzymes from over 230 bacterial strains.",
+              "**NCERT line:** ori also controls the copy number of the linked DNA.",
+              "**NCERT line:** about one billion copies after 30 PCR cycles.",
+              "**NCERT line:** bioreactors process 100–1000 litres; stirred-tank reactors are usually cylindrical or have a curved base.",
+            ],
+          },
+          {
+            type: "mistake",
+            wrong: "A circular plasmid cut at n sites gives n + 1 fragments, just like a linear molecule.",
+            right: "A circle gives n fragments; only a linear molecule gives n + 1.",
+            why: "The first cut of a circle only linearises it without producing a second piece. NEET often places n + 1 as the trap option.",
+          },
+          {
+            type: "mistake",
+            wrong: "Biolistics is the method of choice for animal cells, and microinjection is used for plant cells.",
+            right: "Microinjection puts DNA into the nucleus of animal cells; biolistics (gold or tungsten particles) is suited to plants.",
+            why: "Both are physical methods, so they get swapped. Plant cells have tough walls that are easier to breach by bombardment than by a needle.",
+          },
+          {
+            type: "activity",
+            activity: {
+              kind: "reveal",
+              prompt: "Which name goes with which organism?",
+              emoji: "🌡️",
+              options: [
+                "Taq polymerase comes from Thermus aquaticus",
+                "Taq polymerase comes from Agrobacterium tumefaciens",
+                "Taq polymerase comes from Salmonella typhimurium",
+              ],
+              answer: 0,
+              trap: 2,
+              explain: "Taq = *Thermus aquaticus*. *Salmonella typhimurium* is linked to Cohen and Boyer's first recombinant plasmid; *Agrobacterium tumefaciens* gives the Ti plasmid.",
+            },
+          },
+          {
+            type: "checkpoint",
+            questions: [
+              {
+                kind: "numeric",
+                q: "A linear DNA molecule has 5 sites for BamHI. How many fragments form on complete digestion?",
+                answer: 6,
+                explain: "Linear DNA: n + 1 = 5 + 1 = 6 fragments.",
+              },
+            ],
+          },
+          {
+            type: "keypoints",
+            items: [
+              "Palindrome: right half is the reverse complement of the left half.",
+              "Linear DNA: n + 1 fragments; circular DNA: n fragments.",
+              t`A k-base site appears about once every $4^k$ bp in random DNA (4096 bp for 6 bases).`,
+              "Insert in tetᴿ → amp-resistant, tet-sensitive recombinants; insert in β-galactosidase gene → white recombinants.",
+              "Taq from *Thermus aquaticus*; Ti plasmid from *Agrobacterium tumefaciens*; first rDNA plasmid from *Salmonella typhimurium*.",
+            ],
+          },
+        ],
+        flashcards: [
+          { front: "Fragments from circular DNA cut at n sites", back: "n fragments." },
+          { front: "Fragments from linear DNA cut at n sites", back: "n + 1 fragments." },
+          { front: "Expected spacing of a 6-bp recognition site", back: t`About $4^6 = 4096$ bp in random DNA.` },
+          { front: "Number of restriction enzymes known (NCERT)", back: "More than 900, from over 230 strains of bacteria." },
+          { front: "PCR copies after 30 cycles from one molecule", back: t`About $2^{30} \approx 10^9$, roughly one billion.` },
+          { front: "Insert in SalI or BamHI site of pBR322", back: "Breaks tetᴿ: recombinants grow on ampicillin, not on tetracycline." },
+          { front: "Volume handled by large bioreactors (NCERT)", back: "100–1000 litres." },
+        ],
+        quiz: [
+          {
+            kind: "numeric",
+            q: "A circular plasmid of 5000 bp has 4 sites for a restriction enzyme. How many fragments form on complete digestion?",
+            answer: 4,
+            explain: "A circle cut at n sites gives n fragments: 4.",
+            difficulty: 2,
+            hint: "The first cut only opens the circle.",
+          },
+          {
+            kind: "numeric",
+            q: "In random DNA with equal base frequencies, about how many base pairs apart (on average) will a 4-bp recognition site occur?",
+            answer: 256,
+            unit: "bp",
+            explain: t`$4^4 = 256$, so a 4-bp site is expected about once every 256 bp.`,
+            difficulty: 2,
+            hint: "Each position has a 1 in 4 chance.",
+          },
+          {
+            kind: "numeric",
+            q: "Starting with 3 DNA molecules, how many copies are present after 8 ideal PCR cycles?",
+            answer: 768,
+            explain: t`$3 \times 2^8 = 3 \times 256 = 768$.`,
+          },
+          {
+            kind: "mcq",
+            q: "Foreign DNA is inserted into the PvuI site of pBR322. The recombinants will be:",
+            options: [
+              "Resistant to ampicillin and sensitive to tetracycline",
+              "Sensitive to ampicillin and resistant to tetracycline",
+              "Resistant to both",
+              "Sensitive to both",
+            ],
+            answer: 1,
+            explain: "PvuI lies within ampᴿ. Inserting there breaks ampicillin resistance; tetᴿ is untouched.",
+            difficulty: 2,
+          },
+          {
+            kind: "multi",
+            q: "Select all correct statements.",
+            options: [
+              "Hind II recognises a specific six-base-pair sequence",
+              "Ethidium bromide-stained DNA appears orange under UV light",
+              "DNA fragments move towards the cathode in electrophoresis",
+              "Chitinase is used to break fungal cells for DNA isolation",
+            ],
+            answers: [0, 1, 3],
+            explain: "DNA is negatively charged and moves to the anode, so the third statement is wrong.",
+            difficulty: 2,
+          },
+          {
+            kind: "mcq",
+            q: "Assertion (A): Recombinant colonies are colourless in blue-white selection. Reason (R): The insert inactivates the β-galactosidase gene, so the chromogenic substrate is not acted upon.",
+            options: [
+              "Both true and R explains A",
+              "Both true but R does not explain A",
+              "A true, R false",
+              "A false, R true",
+            ],
+            answer: 0,
+            explain: "Insertional inactivation of β-galactosidase is exactly why recombinants produce no colour.",
+          },
+          {
+            kind: "mcq",
+            q: "Which pair is correctly matched?",
+            options: [
+              "Taq polymerase – Agrobacterium tumefaciens",
+              "Ti plasmid – Thermus aquaticus",
+              "First recombinant plasmid – Salmonella typhimurium",
+              "EcoRI – Haemophilus influenzae",
+            ],
+            answer: 2,
+            explain: "Cohen and Boyer used a native plasmid of *Salmonella typhimurium*. Taq is from *Thermus aquaticus*, Ti plasmid from *Agrobacterium*, EcoRI from *E. coli*.",
+            difficulty: 2,
+          },
+          {
+            kind: "mcq",
+            q: "Which statement about the origin of replication (ori) in a vector is correct?",
+            options: [
+              "It provides antibiotic resistance",
+              "It controls the copy number of the linked DNA",
+              "It is the site where foreign DNA is always inserted",
+              "It codes for Rop protein",
+            ],
+            answer: 1,
+            explain: "ori starts replication and controls copy number. The rop gene codes for Rop protein; inserts go into cloning sites.",
+          },
+          {
+            kind: "numeric",
+            q: "What is the minimum number of ideal PCR cycles needed to get at least 1000 copies from one DNA molecule?",
+            answer: 10,
+            explain: t`$2^9 = 512 < 1000$ and $2^{10} = 1024 \ge 1000$, so 10 cycles.`,
+            difficulty: 3,
+            hint: "Find the smallest n with 2^n ≥ 1000.",
+          },
+        ],
+      },
+    ],
+  },
+  /* ------------------------------------------------------------------ */
+  /* Biotechnology and its Applications (NCERT Class 12; ISC unit)      */
+  /* ------------------------------------------------------------------ */
+  {
+    slug: "c12-biotech-applications",
+    title: "Biotechnology and its Applications",
+    icon: "🌾",
+    description: "GM crops and Bt cotton, RNA interference, recombinant insulin, gene therapy for ADA deficiency, molecular diagnosis, transgenic animals, and the ethics of GEAC, patents and biopiracy.",
+    lessons: [
+      /* ---------------- Board lesson 1 ---------------- */
+      {
+        slug: "c12-bta-agriculture",
+        title: "Biotechnology in Agriculture",
+        summary: "Why GM crops, their advantages, how Bt toxin kills insect pests, which cry genes protect cotton and corn, and how RNA interference protects tobacco from a root nematode.",
+        minutes: 20,
+        xp: 50,
+        blocks: [
+          {
+            type: "illustration",
+            emoji: "🐛",
+            caption: "Cotton bollworm caterpillars can ruin a farmer's crop. Bt cotton makes its own insecticidal protein, so the farmer needs to spray much less.",
+          },
+          {
+            type: "text",
+            md: "Biotechnology is used in therapeutics, diagnostics, genetically modified crops, processed food, bioremediation, waste treatment and energy production. Three research areas drive it: finding the **best catalyst** (an improved organism, usually a microbe, or a pure enzyme), creating **optimal conditions** for the catalyst to work, and **downstream processing** to purify the product.\n\nTo grow more food there are three options: agrochemical-based agriculture, organic agriculture, and **genetically engineered crop-based agriculture**. Plants, bacteria, fungi and animals whose genes have been altered by manipulation are called **genetically modified organisms (GMOs)**.",
+          },
+          {
+            type: "list",
+            items: [
+              "Crops more tolerant to abiotic stresses: cold, drought, salt and heat.",
+              "Less reliance on chemical pesticides (pest-resistant crops).",
+              "Reduced post-harvest losses.",
+              "More efficient use of minerals by plants, which prevents early exhaustion of soil fertility.",
+              "Enhanced nutritional value, for example **golden rice**, which is rich in vitamin A.",
+              "Tailor-made plants to supply alternative resources such as starch, fuels and pharmaceuticals to industry.",
+            ],
+          },
+          { type: "heading", text: "Bt cotton: a plant that makes its own insecticide" },
+          {
+            type: "text",
+            md: "Some strains of the soil bacterium ***Bacillus thuringiensis*** (Bt) make proteins that kill certain insects: lepidopterans (tobacco budworm, armyworm), coleopterans (beetles) and dipterans (flies, mosquitoes). During a phase of its growth the bacterium forms protein crystals containing a toxic insecticidal protein.\n\nThe bacterium is not killed because the toxin exists as an **inactive protoxin**. When an insect eats it, the **alkaline pH of the insect gut** solubilises the crystals and converts the protoxin to the **active toxin**. The active toxin binds to the surface of the **midgut epithelial cells** and creates pores, causing the cells to swell and burst (lyse), and the insect dies.\n\nThe toxin is coded by a gene called ***cry***. Bt toxin genes were isolated and put into crops such as cotton. Most Bt toxins are specific to an insect group, so the gene chosen depends on the crop and the target pest.",
+          },
+          {
+            type: "table",
+            headers: ["Gene", "Protein controls"],
+            rows: [
+              ["*cryIAc*", "cotton bollworms"],
+              ["*cryIIAb*", "cotton bollworms"],
+              ["*cryIAb*", "corn borer"],
+            ],
+          },
+          {
+            type: "example",
+            title: "Following the toxin step by step",
+            problem: "A Bt cotton plant and a bollworm caterpillar: explain why the plant cells and the bacterium that supplied the gene are unharmed, while the caterpillar dies after feeding on the leaves.",
+            steps: [
+              "The *cry* gene makes the toxin as an inactive protoxin; inside the bacterium or plant cell it does no damage.",
+              "The caterpillar eats leaf tissue containing the protoxin.",
+              "The alkaline pH of the insect's gut solubilises the protein and converts the protoxin into the active toxin.",
+              "The active toxin binds to midgut epithelial cells and makes pores; the cells swell and lyse.",
+              "Gut damage kills the caterpillar.",
+            ],
+            answer: "The toxin becomes active only in the alkaline insect gut, so it harms the insect but not the cell that made it.",
+          },
+          {
+            type: "checkpoint",
+            questions: [
+              {
+                kind: "mcq",
+                q: "Which cry gene protects corn against the corn borer?",
+                options: ["cryIAc", "cryIIAb", "cryIAb", "cryIIAc"],
+                answer: 2,
+                explain: "*cryIAb* controls the corn borer; *cryIAc* and *cryIIAb* control cotton bollworms.",
+              },
+            ],
+          },
+          {
+            type: "mistake",
+            wrong: "Bt toxin is active inside the bacterium, but the bacterium has a special immunity to it.",
+            right: "The bacterium makes the toxin as an **inactive protoxin**. It becomes active only after the alkaline pH of the insect gut solubilises it.",
+            why: "Learners imagine a ready poison stored safely. The real protection is that the poison is not yet a poison until it reaches the right gut conditions.",
+          },
+          { type: "heading", text: "Pest-resistant plants by RNA interference" },
+          {
+            type: "text",
+            md: "The nematode ***Meloidogyne incognita*** infects the roots of tobacco plants and greatly reduces yield. A strategy based on **RNA interference (RNAi)** prevents this.\n\nRNAi takes place in all eukaryotic organisms as a method of cellular defence. It silences a specific mRNA because a complementary dsRNA molecule binds to it and prevents its translation. The complementary RNA can come from infection by viruses with RNA genomes, or from mobile genetic elements (transposons) that replicate through an RNA intermediate.\n\nUsing *Agrobacterium* vectors, **nematode-specific genes** were introduced into the tobacco plant. The DNA was introduced so that the host cells produce **both sense and antisense RNA**. Being complementary, the two RNAs form **double-stranded RNA (dsRNA)**, which starts RNAi and silences the specific mRNA of the nematode. The parasite cannot survive in a transgenic host expressing this interfering RNA.",
+          },
+          {
+            type: "activity",
+            activity: {
+              kind: "order",
+              prompt: "Order the steps that protect tobacco from the nematode.",
+              items: [
+                "Nematode-specific genes are put into tobacco using Agrobacterium vectors",
+                "Host cells make both sense and antisense RNA",
+                "The two RNAs pair to form dsRNA",
+                "dsRNA starts RNAi and silences the nematode's specific mRNA",
+                "The nematode cannot survive in the transgenic plant",
+              ],
+              explain: "The plant is given the instructions to make a matching sense–antisense pair; the dsRNA they form switches off a vital nematode message.",
+            },
+          },
+          {
+            type: "callout",
+            tone: "exam",
+            title: "Board tip",
+            md: "For 'How is Bt toxin activated?' the four marking points are: inactive protoxin, alkaline gut pH, binding to midgut epithelial cells and pore formation, lysis and death. For RNAi, mention *Meloidogyne incognita*, *Agrobacterium* vector, sense + antisense RNA, dsRNA and silencing of nematode mRNA.",
+          },
+          {
+            type: "keypoints",
+            items: [
+              "GMOs have genes altered by manipulation; GM crops give stress tolerance, fewer pesticides, lower post-harvest loss, better mineral use and more nutrition (golden rice).",
+              "Bt toxin from *Bacillus thuringiensis* is an inactive protoxin, activated by alkaline insect gut pH; it lyses midgut epithelial cells.",
+              "*cryIAc* and *cryIIAb* control cotton bollworms; *cryIAb* controls corn borer.",
+              "RNAi protects tobacco from *Meloidogyne incognita*: sense + antisense RNA form dsRNA, which silences the nematode's mRNA.",
+            ],
+          },
+        ],
+        flashcards: [
+          { front: "GMO", back: "A plant, bacterium, fungus or animal whose genes have been altered by manipulation." },
+          { front: "Golden rice", back: "Genetically modified rice enriched in vitamin A." },
+          { front: "Source of Bt toxin", back: "The bacterium *Bacillus thuringiensis*." },
+          { front: "Why is the Bt bacterium not killed by its toxin?", back: "The toxin is stored as an inactive protoxin and becomes active only in the alkaline insect gut." },
+          { front: "Action of active Bt toxin", back: "Binds to midgut epithelial cells, forms pores, causes swelling and lysis, and the insect dies." },
+          { front: "cry genes for cotton bollworm", back: "*cryIAc* and *cryIIAb*." },
+          { front: "Nematode controlled by RNAi in tobacco", back: "*Meloidogyne incognita*, which infects tobacco roots." },
+          { front: "What starts RNAi in the transgenic tobacco?", back: "dsRNA formed when sense and antisense RNA of nematode genes pair up." },
+        ],
+        quiz: [
+          {
+            kind: "mcq",
+            q: "Bt toxin is converted from protoxin to active toxin by:",
+            options: ["Acidic pH of the insect stomach", "Alkaline pH of the insect gut", "Enzymes of the cotton plant", "Sunlight on the leaf surface"],
+            answer: 1,
+            explain: "The alkaline gut pH solubilises the crystals and activates the toxin.",
+          },
+          {
+            kind: "multi",
+            q: "Which insect groups are killed by Bt toxins?",
+            options: ["Lepidopterans", "Coleopterans", "Dipterans", "Nematodes"],
+            answers: [0, 1, 2],
+            explain: "NCERT lists lepidopterans (budworm, armyworm), coleopterans (beetles) and dipterans (flies, mosquitoes). Nematodes are worms, controlled in tobacco by RNAi.",
+          },
+          {
+            kind: "truefalse",
+            q: "RNA interference is a cellular defence mechanism found in all eukaryotic organisms.",
+            answer: true,
+            explain: "RNAi silences specific mRNAs using complementary dsRNA and occurs in all eukaryotes.",
+          },
+          {
+            kind: "fill",
+            q: "Nematode-specific genes were introduced into tobacco using ___ vectors.",
+            answer: ["Agrobacterium", "Agrobacterium tumefaciens"],
+            explain: "*Agrobacterium* vectors carried the genes so that the host cells made sense and antisense RNA.",
+          },
+          {
+            kind: "mcq",
+            q: "Which is NOT listed as an advantage of GM plants?",
+            options: [
+              "Tolerance to abiotic stresses",
+              "Reduced post-harvest losses",
+              "Guaranteed higher market price for the farmer",
+              "Enhanced nutritional value",
+            ],
+            answer: 2,
+            explain: "The listed advantages are biological; market price is not one of them.",
+          },
+          {
+            kind: "order",
+            q: "Arrange the events after a bollworm eats Bt cotton leaves.",
+            items: ["Protoxin is ingested", "Alkaline gut pH activates the toxin", "Toxin binds midgut epithelial cells", "Pores form; cells swell and lyse", "Insect dies"],
+            explain: "Activation must come before binding; cell lysis then kills the insect.",
+          },
+          {
+            kind: "mcq",
+            q: "In RNAi-based protection of tobacco, the specific mRNA silenced belongs to:",
+            options: ["The tobacco plant", "Agrobacterium", "The nematode", "Bacillus thuringiensis"],
+            answer: 2,
+            explain: "The dsRNA matches nematode genes, so it silences the nematode's mRNA and the parasite cannot survive.",
+            difficulty: 2,
+          },
+        ],
+      },
+      /* ---------------- Board lesson 2 ---------------- */
+      {
+        slug: "c12-bta-medicine",
+        title: "Biotechnology in Medicine: Insulin, Gene Therapy and Diagnosis",
+        summary: "How human insulin is made in E. coli, the first gene therapy for ADA deficiency, and molecular diagnosis by PCR, labelled probes and ELISA.",
+        minutes: 22,
+        xp: 55,
+        blocks: [
+          {
+            type: "illustration",
+            emoji: "💉",
+            caption: "India has crores of people with diabetes. Most of the insulin they use today is human insulin made by genetically engineered microbes.",
+          },
+          {
+            type: "text",
+            md: "Recombinant DNA technology lets us mass-produce **safe and more effective therapeutic drugs**. Recombinant therapeutics do not cause unwanted immune reactions, which are common with similar products taken from non-human sources. According to NCERT, about 30 recombinant therapeutics have been approved for human use worldwide, and 12 of these are marketed in India.",
+          },
+          { type: "heading", text: "Genetically engineered insulin" },
+          {
+            type: "text",
+            md: "Insulin used to be extracted from the pancreas of slaughtered **cattle and pigs**. In some patients it caused allergy or other reactions to the foreign protein. The challenge was to get insulin assembled into its mature form.\n\nInsulin is made of **two short polypeptide chains, A and B**, linked by **disulphide bridges**. In humans the pancreas first makes a pro-hormone, **proinsulin**, which has an extra stretch called the **C peptide**. The C peptide is absent in mature insulin and is removed during maturation.",
+          },
+          {
+            type: "list",
+            ordered: true,
+            items: [
+              "In 1983 the American company **Eli Lilly** prepared two DNA sequences corresponding to the A and B chains of human insulin.",
+              "Each sequence was introduced into a plasmid of *E. coli*.",
+              "The bacteria produced the A and B chains separately.",
+              "The chains were extracted and combined by creating disulphide bonds, giving human insulin.",
+            ],
+          },
+          {
+            type: "example",
+            title: "Why not just put the whole human gene into E. coli?",
+            problem: "A student suggests copying the human insulin gene from pancreatic cells and putting it straight into E. coli to make mature insulin. Give two reasons why Eli Lilly's method of making the A and B chains separately was used instead.",
+            steps: [
+              "The human gene codes for proinsulin, not mature insulin. Converting proinsulin to insulin needs the C peptide to be removed, a processing step that bacteria do not carry out.",
+              "So the product would be the wrong, immature form. Making A and B chains from two separate DNA sequences skips the C peptide completely.",
+              "Human genes also contain introns, and bacteria cannot remove introns from RNA. Using DNA sequences that code only for the chains avoids this.",
+              "The two chains are then joined chemically by disulphide bonds outside the cell.",
+            ],
+            answer: "Bacteria cannot process proinsulin (remove the C peptide) or splice out introns, so separate A- and B-chain sequences were expressed and the chains joined by disulphide bonds.",
+          },
+          { type: "heading", text: "Gene therapy" },
+          {
+            type: "text",
+            md: "**Gene therapy** is a set of methods to correct a gene defect diagnosed in a child or embryo: genes are inserted into a person's cells and tissues to treat a hereditary disease. A normal gene is delivered into the person or embryo to take over the function of the faulty gene.\n\nThe first clinical gene therapy was given in **1990** to a **4-year-old girl with adenosine deaminase (ADA) deficiency**. ADA is crucial for the immune system to function; the disorder is caused by deletion of the gene for ADA. Some patients can be treated by bone marrow transplantation, others by enzyme replacement therapy (functional ADA given by injection), but neither is completely curative.\n\nIn gene therapy, **lymphocytes** from the patient's blood are grown in culture outside the body. A functional **ADA cDNA** is introduced into them using a **retroviral vector**, and the cells are returned to the patient. These lymphocytes are not immortal, so the patient needs **periodic infusions**. If the gene isolated from marrow cells producing ADA is introduced into cells at **early embryonic stages**, it could be a permanent cure.",
+          },
+          {
+            type: "checkpoint",
+            questions: [
+              {
+                kind: "mcq",
+                q: "In the 1990 gene therapy for ADA deficiency, the functional ADA cDNA was introduced into the patient's lymphocytes using:",
+                options: ["Ti plasmid", "Retroviral vector", "Gene gun", "pBR322"],
+                answer: 1,
+                explain: "A (disarmed) retroviral vector carried ADA cDNA into lymphocytes grown in culture.",
+              },
+            ],
+          },
+          { type: "heading", text: "Molecular diagnosis" },
+          {
+            type: "text",
+            md: "Conventional methods (serum and urine analysis and so on) cannot detect a disease early. **Recombinant DNA technology, PCR and ELISA** allow early diagnosis.\n\n**PCR** amplifies the nucleic acid of a pathogen, so a very low concentration of a bacterium or virus can be detected before symptoms appear. It is used to detect **HIV** in suspected AIDS patients and to find **mutations** in genes of suspected cancer patients.\n\nA **probe** is a single-stranded DNA or RNA tagged with a radioactive molecule. It hybridises to its complementary DNA in a clone of cells, and the clone is found by **autoradiography**. A clone with a mutated gene will not appear on the photographic film, because the probe is not complementary to the mutated gene.\n\n**ELISA** (enzyme-linked immunosorbent assay) works on the principle of **antigen–antibody interaction**. Infection can be detected by the presence of antigens (proteins, glycoproteins and so on) or by antibodies made against the pathogen.",
+          },
+          {
+            type: "activity",
+            activity: {
+              kind: "match",
+              prompt: "Match each technique to what it relies on.",
+              pairs: [
+                ["PCR", "Amplifying very small amounts of nucleic acid"],
+                ["ELISA", "Antigen–antibody interaction"],
+                ["Radioactive probe", "Hybridisation to a complementary sequence"],
+                ["Autoradiography", "Showing labelled clones on photographic film"],
+              ],
+              explain: "PCR and probes look for nucleic acids; ELISA looks for proteins (antigens) or the antibodies against them.",
+            },
+          },
+          {
+            type: "mistake",
+            wrong: "The 1990 gene therapy permanently cured ADA deficiency, because the corrected gene was put back into the patient.",
+            right: "The corrected lymphocytes are **not immortal**, so the patient needs periodic infusions. A permanent cure would need the gene put into cells at early embryonic stages (or into ADA-producing marrow cells).",
+            why: "'Gene therapy' sounds like a one-time fix. Here the gene went into mature, short-lived cells, not into stem cells that keep dividing.",
+          },
+          {
+            type: "callout",
+            tone: "note",
+            title: "ISC note",
+            md: "The ISC syllabus also asks about **vaccine production** by biotechnology. A recombinant vaccine uses a single antigenic protein of the pathogen, made by a host carrying the pathogen's gene. For example, the hepatitis B vaccine is made by expressing the gene for the virus's surface antigen in yeast. Such vaccines cannot cause the disease, because no whole pathogen is present.",
+          },
+          {
+            type: "keypoints",
+            items: [
+              "Animal insulin (cattle, pig) could cause allergy; proinsulin has an extra C peptide removed in maturation.",
+              "Eli Lilly (1983): separate DNA sequences for chains A and B in *E. coli* plasmids; chains joined by disulphide bonds.",
+              "First gene therapy (1990): 4-year-old girl with ADA deficiency; ADA cDNA into cultured lymphocytes by a retroviral vector; periodic infusions needed.",
+              "Molecular diagnosis: PCR (HIV, cancer mutations), radioactive probes with autoradiography, ELISA (antigen–antibody).",
+            ],
+          },
+        ],
+        flashcards: [
+          { front: "Structure of insulin", back: "Two polypeptide chains, A and B, linked by disulphide bridges." },
+          { front: "C peptide", back: "An extra stretch in proinsulin, removed when insulin matures." },
+          { front: "Who first made human insulin by rDNA technology?", back: "Eli Lilly, an American company, in 1983." },
+          { front: "First clinical gene therapy", back: "1990, a 4-year-old girl with ADA deficiency." },
+          { front: "Role of ADA", back: "The enzyme adenosine deaminase is crucial for the immune system to work." },
+          { front: "Why does ADA gene therapy need repeating?", back: "The engineered lymphocytes are not immortal." },
+          { front: "Principle of ELISA", back: "Antigen–antibody interaction." },
+          { front: "Uses of PCR in diagnosis", back: "Detecting HIV in suspected AIDS patients and mutations in suspected cancer patients, at very low pathogen levels." },
+        ],
+        quiz: [
+          {
+            kind: "mcq",
+            q: "Insulin taken from cattle and pigs caused problems in some patients mainly because:",
+            options: ["It was too expensive to inject", "It caused allergy or reactions to the foreign protein", "It lacked disulphide bonds", "It contained the C peptide"],
+            answer: 1,
+            explain: "Some patients reacted to the non-human protein. Animal insulin is mature insulin with disulphide bonds and no C peptide.",
+          },
+          {
+            kind: "mcq",
+            q: "Which part of proinsulin is absent from mature insulin?",
+            options: ["A chain", "B chain", "C peptide", "Disulphide bridges"],
+            answer: 2,
+            explain: "The C peptide is removed during maturation; A and B chains stay, linked by disulphide bridges.",
+          },
+          {
+            kind: "truefalse",
+            q: "Enzyme replacement therapy is a complete cure for ADA deficiency.",
+            answer: false,
+            explain: "NCERT notes that bone marrow transplantation and enzyme replacement therapy are not completely curative.",
+          },
+          {
+            kind: "fill",
+            q: "In gene therapy for ADA deficiency, a functional ADA ___ was introduced into lymphocytes.",
+            answer: ["cDNA", "complementary DNA"],
+            explain: "ADA cDNA, made from mRNA, has no introns and was carried in by a retroviral vector.",
+          },
+          {
+            kind: "mcq",
+            q: "A labelled probe is added to cell clones and the result is checked by autoradiography. A clone does NOT appear on the film. This suggests that the clone:",
+            options: ["Has the normal gene", "Has a mutated gene that the probe cannot pair with", "Is dead", "Has extra copies of the gene"],
+            answer: 1,
+            explain: "The probe hybridises only to its complementary (normal) sequence; a mutated gene does not bind it, so no signal appears.",
+            difficulty: 2,
+          },
+          {
+            kind: "multi",
+            q: "Which techniques can detect a disease before symptoms appear, according to NCERT?",
+            options: ["PCR", "ELISA", "Recombinant DNA technology", "Routine urine analysis"],
+            answers: [0, 1, 2],
+            explain: "Conventional serum and urine analysis cannot give early detection; rDNA technology, PCR and ELISA can.",
+          },
+          {
+            kind: "order",
+            q: "Arrange the steps of ADA gene therapy.",
+            items: [
+              "Lymphocytes are taken from the patient's blood",
+              "They are grown in culture outside the body",
+              "Functional ADA cDNA is introduced by a retroviral vector",
+              "The cells are returned to the patient",
+              "Infusions are repeated periodically",
+            ],
+            explain: "The cells are treated outside the body and returned; because they do not live for ever, the process is repeated.",
+          },
+        ],
+      },
+      /* ---------------- Board lesson 3 ---------------- */
+      {
+        slug: "c12-bta-transgenic-ethics",
+        title: "Transgenic Animals and Ethical Issues",
+        summary: "What transgenic animals are, the five reasons they are made, the first transgenic cow Rosie, and the ethics of GEAC, biopatents and biopiracy (the Basmati case).",
+        minutes: 18,
+        xp: 45,
+        blocks: [
+          {
+            type: "illustration",
+            emoji: "🐄",
+            caption: "In 1997 a cow named Rosie gave milk with a human protein in it. Should we change animals like this, and who owns the result?",
+          },
+          {
+            type: "text",
+            md: "Animals whose DNA has been manipulated to carry and express an extra (foreign) gene are called **transgenic animals**. Transgenic rats, rabbits, pigs, sheep, cows and fish have been made, but **over 95%** of all existing transgenic animals are **mice**.",
+          },
+          {
+            type: "table",
+            headers: ["Why they are made", "Example from NCERT"],
+            rows: [
+              ["Normal physiology and development", "Studying how genes are regulated and affect body functions, such as complex growth factors like insulin-like growth factor."],
+              ["Study of disease", "Models for human diseases such as cancer, cystic fibrosis, rheumatoid arthritis and Alzheimer's, to test new treatments."],
+              ["Biological products", "Human protein α-1-antitrypsin, used to treat emphysema; attempts for phenylketonuria (PKU) and cystic fibrosis."],
+              ["Vaccine safety", "Transgenic mice used to test the safety of the polio vaccine before human use."],
+              ["Chemical safety testing", "Toxicity testing: animals carrying genes that make them more sensitive to toxic substances give results faster."],
+            ],
+          },
+          {
+            type: "text",
+            md: "In **1997** the first transgenic cow, **Rosie**, produced human protein-enriched milk containing **2.4 grams per litre**. The milk contained the human **alpha-lactalbumin** and was nutritionally a more balanced product for human babies than natural cow milk.",
+          },
+          {
+            type: "example",
+            title: "Rosie's milk in numbers",
+            problem: "Rosie's milk contained 2.4 g of human protein per litre. How much of this protein is in a 250 mL feed? How many such feeds contain 3 g?",
+            steps: [
+              "250 mL = 0.25 L.",
+              t`Protein in one feed $= 2.4 \times 0.25 = 0.6$ g.`,
+              t`Feeds for 3 g $= \frac{3}{0.6} = 5$.`,
+            ],
+            answer: "0.6 g per 250 mL feed; 5 feeds contain 3 g.",
+          },
+          {
+            type: "checkpoint",
+            questions: [
+              {
+                kind: "mcq",
+                q: "α-1-antitrypsin produced by transgenic animals is used to treat:",
+                options: ["Emphysema", "Diabetes", "ADA deficiency", "Phenylketonuria"],
+                answer: 0,
+                explain: "α-1-antitrypsin is used for emphysema. Similar attempts are being made for PKU and cystic fibrosis.",
+              },
+            ],
+          },
+          {
+            type: "activity",
+            activity: {
+              kind: "sort",
+              prompt: "Sort each use of transgenic animals.",
+              groups: ["Biological products", "Studying physiology or disease", "Safety testing"],
+              items: [
+                { text: "Milk with α-1-antitrypsin", group: 0, hint: "A human protein harvested for treatment." },
+                { text: "Rosie's milk with human alpha-lactalbumin", group: 0, hint: "A product made for human babies." },
+                { text: "Mouse model of cystic fibrosis", group: 1, hint: "Used to understand a disease and test cures." },
+                { text: "Studying insulin-like growth factor", group: 1, hint: "This is about normal growth and development." },
+                { text: "Mice used to check polio vaccine", group: 2, hint: "Checking a vaccine is safe before people get it." },
+                { text: "Animals sensitive to toxins used to test chemicals", group: 2, hint: "This is toxicity testing." },
+              ],
+              explain: "Transgenic animals are factories (products), laboratories (physiology and disease models) or test subjects (vaccine and chemical safety).",
+            },
+          },
+          { type: "heading", text: "Ethical issues" },
+          {
+            type: "text",
+            md: "Manipulating living organisms can have unpredictable results when such organisms are introduced into the ecosystem. The Indian Government has set up the **Genetic Engineering Approval Committee (GEAC)**, which decides on the **validity of GM research** and the **safety of introducing GM organisms** for public services.\n\nCompanies are also getting **patents** for products and technologies that use genetic material, plants and other biological resources that farmers and indigenous people of a country have long identified and used.",
+          },
+          {
+            type: "text",
+            md: "**The Basmati case.** India has an estimated **200,000 varieties of rice**, and **27 documented varieties of Basmati** are grown in India. Basmati is known for its unique aroma and flavour. In **1997** an American company got patent rights on Basmati rice through the US Patent and Trademark Office. The company's 'new' variety had actually been derived from Indian farmers' varieties, crossed with semi-dwarf varieties. Attempts have also been made to patent uses, products and processes based on Indian traditional herbal medicines such as **turmeric** and **neem**.\n\n**Biopiracy** is the use of bio-resources by multinational companies and other organisations without proper authorisation from the countries and people concerned, and **without compensatory payment**. Industrialised nations are rich financially but poor in biodiversity and traditional knowledge; developing and underdeveloped nations are rich in both. The Indian Parliament has cleared the **second amendment of the Indian Patents Bill**, which takes such issues into account, including patent terms, emergency provisions, and research and development initiatives.",
+          },
+          {
+            type: "mistake",
+            wrong: "GEAC is the body that grants patents on genetically modified products in India.",
+            right: "GEAC decides whether GM research is valid and whether releasing a GM organism for public use is safe. Patents are a separate legal matter, handled under patent law.",
+            why: "Both topics sit in the same NCERT section on ethics, so learners merge them. NEET and KCET often test exactly this role of GEAC.",
+          },
+          {
+            type: "callout",
+            tone: "exam",
+            title: "Board tip",
+            md: "For 'Give any four reasons for making transgenic animals', write the heading and one example for each; examples carry the marks. For biopiracy, define it and quote the Basmati case with its year (1997).",
+          },
+          {
+            type: "keypoints",
+            items: [
+              "Transgenic animals carry and express a foreign gene; over 95% are mice.",
+              "Uses: physiology and development, disease models, biological products (α-1-antitrypsin for emphysema), vaccine safety (polio), chemical safety testing.",
+              "Rosie (1997): milk with 2.4 g/L of human protein (alpha-lactalbumin).",
+              "GEAC judges validity of GM research and safety of releasing GMOs.",
+              "Biopiracy: use of bio-resources without authorisation or compensation; Basmati patent in 1997; turmeric and neem cases.",
+            ],
+          },
+        ],
+        flashcards: [
+          { front: "Transgenic animal", back: "An animal whose DNA has been manipulated to carry and express a foreign gene." },
+          { front: "Most common transgenic animal", back: "Mouse: over 95% of all existing transgenic animals." },
+          { front: "Rosie", back: "First transgenic cow (1997); milk had 2.4 g/L of human protein, alpha-lactalbumin." },
+          { front: "α-1-antitrypsin", back: "Human protein made in transgenic animals; used to treat emphysema." },
+          { front: "Vaccine tested on transgenic mice", back: "Polio vaccine." },
+          { front: "GEAC", back: "Genetic Engineering Approval Committee: decides validity of GM research and safety of GM organisms for public use." },
+          { front: "Biopiracy", back: "Use of bio-resources by companies or organisations without authorisation from the countries and people concerned, and without compensation." },
+          { front: "Basmati varieties documented in India", back: "27 (out of about 200,000 rice varieties)." },
+        ],
+        quiz: [
+          {
+            kind: "mcq",
+            q: "Over 95% of all existing transgenic animals are:",
+            options: ["Cows", "Pigs", "Mice", "Fish"],
+            answer: 2,
+            explain: "Mice are easy to breed and handle, and make up over 95% of transgenic animals.",
+          },
+          {
+            kind: "mcq",
+            q: "The human protein in Rosie's milk was:",
+            options: ["α-1-antitrypsin", "Alpha-lactalbumin", "Insulin", "Casein"],
+            answer: 1,
+            explain: "Rosie's milk contained human alpha-lactalbumin. α-1-antitrypsin is a different product, for emphysema.",
+          },
+          {
+            kind: "numeric",
+            q: "Rosie's milk had 2.4 g of human protein per litre. How many grams are present in 1.5 L?",
+            answer: 3.6,
+            tolerance: 0.01,
+            unit: "g",
+            explain: t`$2.4 \times 1.5 = 3.6$ g.`,
+          },
+          {
+            kind: "truefalse",
+            q: "Biopiracy involves using bio-resources without proper authorisation and without compensatory payment.",
+            answer: true,
+            explain: "Both conditions are part of the NCERT definition.",
+          },
+          {
+            kind: "fill",
+            q: "In 1997 an American company got patent rights on ___ rice through the US Patent and Trademark Office.",
+            answer: ["Basmati"],
+            explain: "The variety was derived from Indian farmers' varieties crossed with semi-dwarf varieties.",
+          },
+          {
+            kind: "multi",
+            q: "Which Indian traditional resources have faced patent attempts according to NCERT?",
+            options: ["Basmati rice", "Turmeric", "Neem", "Golden rice"],
+            answers: [0, 1, 2],
+            explain: "Golden rice is a GM rice rich in vitamin A, not a traditional Indian resource.",
+          },
+          {
+            kind: "mcq",
+            q: "Which function belongs to GEAC?",
+            options: [
+              "Granting patents on GM crops",
+              "Deciding the validity of GM research and safety of releasing GMOs",
+              "Producing recombinant insulin",
+              "Marketing Bt cotton seed",
+            ],
+            answer: 1,
+            explain: "GEAC is a regulatory committee on GM research and release.",
+          },
+        ],
+      },
+      /* ---------------- Exam edge ---------------- */
+      {
+        slug: "c12-bta-exam-edge",
+        title: "Exam edge: Applications for NEET and KCET",
+        summary: "The NCERT numbers and names NEET and KCET pick from this chapter, statement and assertion–reason practice on Bt, RNAi, insulin, gene therapy and diagnosis, and the classic traps.",
+        minutes: 22,
+        xp: 60,
+        track: "exam",
+        blocks: [
+          {
+            type: "callout",
+            tone: "exam",
+            title: "What gets asked",
+            md: "NEET usually sets 2–3 questions from this chapter; KCET 1–3. Questions are almost always built on NCERT lines: which cry gene controls which pest, how Bt toxin is activated, the nematode in RNAi, the C peptide, Eli Lilly 1983, ADA therapy in 1990, PCR and ELISA uses, Rosie, α-1-antitrypsin, GEAC and the Basmati case. Matching lists and 'how many statements are correct' are the common formats.",
+          },
+          {
+            type: "table",
+            headers: ["Number or name", "What it belongs to"],
+            rows: [
+              ["1983", "Eli Lilly makes human insulin chains A and B in *E. coli*"],
+              ["1990", "First gene therapy, 4-year-old girl with ADA deficiency"],
+              ["1997", "Rosie, the first transgenic cow; also the Basmati patent"],
+              ["2.4 g per litre", "Human protein in Rosie's milk (alpha-lactalbumin)"],
+              ["over 95%", "Share of transgenic animals that are mice"],
+              ["27 / 200,000", "Documented Basmati varieties / estimated rice varieties in India"],
+              ["about 30 / 12", "Recombinant therapeutics approved worldwide / marketed in India"],
+            ],
+          },
+          {
+            type: "example",
+            title: "NEET level: how many statements are correct?",
+            problem: "Count the correct statements. (i) Bt toxin crystals are solubilised in the acidic pH of the insect gut. (ii) The active toxin binds to midgut epithelial cells and creates pores. (iii) cryIAb controls corn borer. (iv) Bt toxins kill lepidopterans, coleopterans and dipterans.",
+            steps: [
+              "(i) is wrong: the insect gut pH is alkaline.",
+              "(ii) is right: pore formation leads to swelling and lysis.",
+              "(iii) is right: cryIAb controls corn borer.",
+              "(iv) is right: NCERT names all three insect groups.",
+            ],
+            answer: "Three statements, (ii), (iii) and (iv), are correct.",
+          },
+          {
+            type: "example",
+            title: "Assertion–reason: RNAi",
+            problem: "Assertion (A): Transgenic tobacco expressing nematode-specific genes is protected from Meloidogyne incognita. Reason (R): The plant makes both sense and antisense RNA of these genes, which form dsRNA that silences the nematode's specific mRNA. Options: (a) both true, R explains A; (b) both true, R does not explain A; (c) A true, R false; (d) A false, R true.",
+            steps: [
+              "A is true: this is NCERT's example of a pest-resistant plant.",
+              "R is true: the DNA was designed so the host makes both sense and antisense RNA.",
+              "R is the mechanism of A: dsRNA triggers RNAi and the parasite cannot survive.",
+            ],
+            answer: "(a) Both true and R correctly explains A.",
+          },
+          {
+            type: "example",
+            title: "NEET level: reasoning about gene therapy",
+            problem: "Why does ADA gene therapy using lymphocytes need to be repeated, while introducing the ADA gene into early embryonic cells could be a permanent cure?",
+            steps: [
+              "Mature lymphocytes have a limited lifespan; they are not immortal.",
+              "When the corrected lymphocytes die, the ADA they made disappears, so fresh corrected cells must be infused.",
+              "Cells at early embryonic stages give rise to all later cells, including marrow cells that keep producing new lymphocytes.",
+              "A gene placed there is passed to every descendant cell, so the correction lasts.",
+            ],
+            answer: "Corrected lymphocytes die out; a gene in early embryonic cells is inherited by all their descendant cells, so the effect is permanent.",
+          },
+          {
+            type: "example",
+            title: "KCET level: matching",
+            problem: "Match: (P) cryIAc, (Q) Meloidogyne incognita, (R) α-1-antitrypsin, (S) ELISA with (1) emphysema, (2) antigen–antibody interaction, (3) cotton bollworm, (4) tobacco roots.",
+            steps: [
+              "cryIAc protein controls cotton bollworms: P–3.",
+              "Meloidogyne incognita infects tobacco roots: Q–4.",
+              "α-1-antitrypsin treats emphysema: R–1.",
+              "ELISA rests on antigen–antibody interaction: S–2.",
+            ],
+            answer: "P–3, Q–4, R–1, S–2.",
+          },
+          {
+            type: "list",
+            items: [
+              "**NCERT line:** the toxin is coded by a gene named *cry*; most Bt toxins are insect-group specific.",
+              "**NCERT line:** RNAi takes place in all eukaryotes as a method of cellular defence.",
+              "**NCERT line:** the main challenge in making insulin by rDNA was getting it assembled into a mature form.",
+              "**NCERT line:** PCR detects very low concentrations of a pathogen before symptoms appear.",
+              "**NCERT line:** a clone with a mutated gene will not appear on the photographic film after autoradiography.",
+            ],
+          },
+          {
+            type: "mistake",
+            wrong: "cryIAb protects cotton from bollworms, and cryIAc protects corn.",
+            right: "*cryIAc* and *cryIIAb* control cotton bollworms; *cryIAb* controls corn borer.",
+            why: "The names differ by one letter, and examiners put them side by side. Remember: 'c' for cotton in cryIA**c**.",
+          },
+          {
+            type: "mistake",
+            wrong: "In the probe method, a clone with a mutated gene shows up as a dark spot on the film.",
+            right: "The mutated clone does **not** show up, because the probe cannot hybridise to the mutated sequence.",
+            why: "Learners link 'positive signal' with 'disease found'. Here the probe matches the normal gene, so the absence of a signal points to the mutation.",
+          },
+          {
+            type: "activity",
+            activity: {
+              kind: "reveal",
+              prompt: "Which method protects tobacco roots from Meloidogyne incognita?",
+              emoji: "🪱",
+              options: ["A cry gene from Bacillus thuringiensis", "RNA interference using nematode-specific genes", "Spraying ELISA reagents"],
+              answer: 1,
+              trap: 0,
+              explain: "Bt toxins work against insects; the nematode is controlled by RNAi, with sense and antisense RNA forming dsRNA that silences its mRNA.",
+            },
+          },
+          {
+            type: "checkpoint",
+            questions: [
+              {
+                kind: "mcq",
+                q: "Which form of insulin did Eli Lilly's E. coli strains produce directly?",
+                options: ["Proinsulin with C peptide", "Separate A and B chains", "Mature insulin with disulphide bonds", "Insulin cDNA"],
+                answer: 1,
+                explain: "The bacteria made A and B chains separately; they were joined by disulphide bonds after extraction.",
+              },
+            ],
+          },
+          {
+            type: "keypoints",
+            items: [
+              "Bt: inactive protoxin → alkaline gut pH → binds midgut epithelium → pores, lysis; *cryIAc*, *cryIIAb* (cotton), *cryIAb* (corn).",
+              "RNAi: *Meloidogyne incognita* on tobacco roots; *Agrobacterium* vector; sense + antisense → dsRNA.",
+              "Insulin: Eli Lilly 1983, chains A and B made separately; C peptide removed in natural maturation.",
+              "ADA therapy 1990: lymphocytes + retroviral vector; not permanent. Diagnosis: PCR, probes (mutant clone gives no signal), ELISA.",
+              "Rosie 1997 (2.4 g/L alpha-lactalbumin); mice over 95%; GEAC; Basmati 1997, 27 varieties.",
+            ],
+          },
+        ],
+        flashcards: [
+          { front: "cryIAc / cryIIAb / cryIAb", back: "Cotton bollworm / cotton bollworm / corn borer." },
+          { front: "Year Eli Lilly produced human insulin by rDNA", back: "1983." },
+          { front: "Vector used in ADA gene therapy", back: "Retroviral vector." },
+          { front: "Probe result for a mutated gene", back: "No signal on autoradiograph: the probe does not hybridise." },
+          { front: "Recombinant therapeutics approved (NCERT)", back: "About 30 worldwide; 12 marketed in India." },
+          { front: "Why can PCR diagnose before symptoms?", back: "It amplifies the pathogen's nucleic acid, so even very low concentrations are detected." },
+          { front: "Number of Basmati varieties documented in India", back: "27." },
+        ],
+        quiz: [
+          {
+            kind: "mcq",
+            q: "Match the gene to the pest: cryIIAb controls",
+            options: ["Corn borer", "Cotton bollworm", "Root nematode of tobacco", "Mosquito larvae only"],
+            answer: 1,
+            explain: "*cryIIAb* and *cryIAc* control cotton bollworms; *cryIAb* controls corn borer.",
+            difficulty: 2,
+            hint: "Two genes are for cotton, one for corn.",
+          },
+          {
+            kind: "multi",
+            q: "Select all correct statements about RNAi-based protection of tobacco.",
+            options: [
+              "The nematode involved is Meloidogyne incognita",
+              "Only antisense RNA is produced in host cells",
+              "dsRNA silences a specific mRNA of the nematode",
+              "Agrobacterium vectors were used to introduce the genes",
+            ],
+            answers: [0, 2, 3],
+            explain: "Both sense and antisense RNA are produced; they pair to form dsRNA.",
+            difficulty: 2,
+          },
+          {
+            kind: "numeric",
+            q: "How many years passed between Eli Lilly's production of human insulin by rDNA technology and the first clinical gene therapy?",
+            answer: 7,
+            unit: "years",
+            explain: "1990 − 1983 = 7 years.",
+          },
+          {
+            kind: "mcq",
+            q: "Assertion (A): Recombinant human insulin causes fewer allergic reactions than insulin from pigs. Reason (R): Recombinant therapeutics do not induce unwanted immunological responses common with products from non-human sources.",
+            options: [
+              "Both true and R explains A",
+              "Both true but R does not explain A",
+              "A true, R false",
+              "A false, R true",
+            ],
+            answer: 0,
+            explain: "Human insulin made by microbes is identical to the patient's own, so the immune reactions caused by animal proteins are avoided.",
+          },
+          {
+            kind: "mcq",
+            q: "A doctor wants to know whether a patient exposed to HIV a few days ago is infected, before any symptoms or antibodies appear. The best tool is:",
+            options: ["Urine analysis", "PCR to amplify viral nucleic acid", "Bone marrow transplant", "Gel electrophoresis of blood proteins"],
+            answer: 1,
+            explain: "PCR can detect very low concentrations of the virus's nucleic acid early. ELISA for antibodies needs time for antibodies to form.",
+            difficulty: 3,
+            hint: "Which method amplifies a tiny amount of the pathogen itself?",
+          },
+          {
+            kind: "numeric",
+            q: "In how many of these is the protein made inside a transgenic animal? Rosie's alpha-lactalbumin; Eli Lilly's insulin; α-1-antitrypsin for emphysema; Bt toxin in cotton.",
+            answer: 2,
+            explain: "Alpha-lactalbumin (Rosie) and α-1-antitrypsin come from transgenic animals. Insulin is made in *E. coli* and Bt toxin in a plant.",
+            difficulty: 2,
+          },
+          {
+            kind: "mcq",
+            q: "Which pair is mismatched?",
+            options: [
+              "GEAC – safety of introducing GMOs",
+              "Rosie – human alpha-lactalbumin",
+              "ADA therapy – Ti plasmid vector",
+              "ELISA – antigen–antibody interaction",
+            ],
+            answer: 2,
+            explain: "ADA therapy used a retroviral vector; the Ti plasmid is a plant vector from *Agrobacterium*.",
+            difficulty: 2,
+          },
+          {
+            kind: "multi",
+            q: "Which are reasons NCERT gives for making transgenic animals?",
+            options: ["Study of disease", "Vaccine safety testing", "Chemical safety testing", "Producing Bt toxin"],
+            answers: [0, 1, 2],
+            explain: "Bt toxin is expressed in transgenic plants. The five NCERT reasons are physiology and development, disease study, biological products, vaccine safety and chemical safety.",
+          },
+        ],
+      },
+    ],
+  },
+];
 
 /** Class 12 chapter title ("12:<exact title>") → topic slug(s), or full lesson ids, that teach it. */
-export const links: Record<string, string | string[]> = {};
+export const links: Record<string, string | string[]> = {
+  "12:Biotechnology: Principles and Processes": "c12-biotech-principles",
+  // Same title in NCERT and ISC: ISC's single unit covers both NCERT chapters, so link both (principles first).
+  "12:Biotechnology and its Applications": ["c12-biotech-principles", "c12-biotech-applications"],
+};
