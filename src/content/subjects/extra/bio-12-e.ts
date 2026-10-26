@@ -1451,9 +1451,587 @@ export const topics: Topic[] = [
       },
     ],
   },
+  /* ------------------------------------------------------------------ */
+  /* Biodiversity and Conservation (NCERT Class 12, rationalised)       */
+  /* ------------------------------------------------------------------ */
+  {
+    slug: "c12-biodiversity-conservation",
+    title: "Biodiversity and Conservation",
+    icon: "🦋",
+    description: "Levels of biodiversity, how many species there are, latitudinal and species–area patterns, why diversity matters, the causes of biodiversity loss, and in situ and ex situ conservation in India and the world.",
+    lessons: [
+      /* ---------------- Board lesson 1 ---------------- */
+      {
+        slug: "c12-bd-patterns",
+        title: "Biodiversity: Levels, Numbers and Patterns",
+        summary: "Genetic, species and ecological diversity, global and Indian species numbers, the latitudinal gradient and its explanations, the species–area relationship, and the importance of species diversity to ecosystems.",
+        minutes: 22,
+        xp: 50,
+        blocks: [
+          {
+            type: "illustration",
+            emoji: "🥭",
+            caption: "Alphonso, Banganapalli, Dasheri, Langra, Totapuri: a fruit market in summer shows India's diversity within a single species, the mango.",
+          },
+          {
+            type: "text",
+            md: "**Biodiversity** is the variety of life at every level of biological organisation, from macromolecules in cells to biomes. The term was popularised by the sociobiologist **Edward Wilson**. Three levels are emphasised.\n\n**Genetic diversity**: a single species can show high diversity at the genetic level over its range. **Species diversity**: diversity at the species level. **Ecological diversity**: diversity at the ecosystem level.",
+          },
+          {
+            type: "table",
+            headers: ["Level", "NCERT example"],
+            rows: [
+              ["Genetic", "*Rauwolfia vomitoria* in different Himalayan ranges varies in the potency and concentration of **reserpine**; India has more than 50 000 genetically different strains of rice and about 1000 varieties of mango"],
+              ["Species", "The Western Ghats have a greater **amphibian** species diversity than the Eastern Ghats"],
+              ["Ecological", "India, with deserts, rain forests, mangroves, coral reefs, wetlands, estuaries and alpine meadows, has greater ecosystem diversity than a Scandinavian country like Norway"],
+            ],
+          },
+          {
+            type: "text",
+            md: "**How many species are there?** According to the IUCN (2004), slightly more than **1.5 million** plant and animal species have been described. **Robert May** places the global total at about **7 million**. More than **70%** of recorded species are **animals**; plants (including algae, fungi, bryophytes, gymnosperms and angiosperms) are no more than **22%**. Among animals, **insects** are the most species-rich group, more than 70% of the total: of every 10 animals, 7 are insects. Fungi have more species than fishes, amphibians, reptiles and mammals combined. Prokaryotes are left out of these counts because conventional taxonomic methods do not suit them.\n\n**India** has only **2.4%** of the world's land area but **8.1%** of its species diversity, making it one of the **12 mega diversity countries**. About **45 000** plant species and twice as many animal species have been recorded here.",
+          },
+          {
+            type: "example",
+            title: "How many species is India still to discover?",
+            problem: "Using May's estimate, only about 22% of all species have been recorded. India has recorded about 45 000 plant species and about 90 000 animal species. Estimate how many plant and animal species are still to be discovered in India.",
+            steps: [
+              "If 45 000 is 22% of all plant species, the total is 45 000 ÷ 0.22 ≈ 2 04 500.",
+              "Undiscovered plants ≈ 2 04 500 − 45 000 ≈ 1 59 500, i.e. more than 1 lakh.",
+              "For animals: 90 000 ÷ 0.22 ≈ 4 09 100; undiscovered ≈ 4 09 100 − 90 000 ≈ 3 19 100, i.e. more than 3 lakh.",
+            ],
+            answer: "More than 1,00,000 plant species and more than 3,00,000 animal species remain to be discovered, as NCERT states.",
+          },
+          {
+            type: "checkpoint",
+            questions: [
+              {
+                kind: "mcq",
+                q: "India's share of the world's land area and of its species diversity are, respectively:",
+                options: ["8.1% and 2.4%", "2.4% and 8.1%", "2.4% and 22%", "12% and 8.1%"],
+                answer: 1,
+                explain: "India has 2.4% of the land area but 8.1% of global species diversity.",
+              },
+            ],
+          },
+          {
+            type: "text",
+            md: "**Latitudinal gradient.** Diversity generally **decreases from the equator towards the poles**. Colombia, near the equator, has nearly 1400 bird species; New York (41° N) has 105; Greenland (71° N) only 56. India, mostly in the tropics, has more than 1200. A tropical forest such as Ecuador's has up to 10 times as many vascular plant species as a temperate forest of the US Midwest. The **Amazonian rain forest** has the greatest biodiversity on earth: more than 40 000 plant species, 3000 fishes, 1300 birds, 427 mammals, 427 amphibians, 378 reptiles and more than 1 25 000 invertebrates.\n\nWhy are the tropics richer? (a) Speciation is a function of time: temperate regions went through frequent **glaciations**, while the tropics stayed relatively undisturbed for millions of years and had a long evolutionary time. (b) Tropical environments are **less seasonal**, more constant and predictable, which promotes niche specialisation. (c) More **solar energy** is available, giving higher productivity, which may indirectly support more species.",
+          },
+          {
+            type: "formula",
+            tex: t`S = C A^{Z} \qquad \log S = \log C + Z \log A`,
+            caption: "Species–area relationship: S = species richness, A = area, C = Y-intercept, Z = slope (regression coefficient).",
+          },
+          {
+            type: "text",
+            md: "**Alexander von Humboldt** observed that within a region species richness rises with explored area, **but only up to a limit**. On a normal scale the curve is a rectangular hyperbola; on a log–log scale it is a straight line. Ecologists find Z mostly between **0.1 and 0.2**, whatever the taxonomic group or region. For very large areas such as entire continents the line is much steeper, with Z from **0.6 to 1.2**; for frugivorous birds and mammals in tropical forests of different continents Z is about **1.15**.",
+          },
+          {
+            type: "example",
+            title: "Using the species–area equation",
+            problem: "In a region where Z = 0.2, a survey area is increased 32 times. By what factor does the number of species increase?",
+            steps: [
+              t`$S = CA^Z$, so $\dfrac{S_2}{S_1} = \left(\dfrac{A_2}{A_1}\right)^Z$; C cancels.`,
+              t`$\left(32\right)^{0.2} = \left(2^5\right)^{1/5} = 2$.`,
+            ],
+            answer: "The number of species doubles.",
+          },
+          {
+            type: "mistake",
+            wrong: "Species richness keeps rising in proportion to area, so doubling the area doubles the species.",
+            right: "Richness rises with area only up to a limit, and as a power with Z usually 0.1–0.2: doubling the area raises species by only about 7–15%.",
+            why: "'More area, more species' is correct in direction, but the relationship is a power law with a small exponent, not a straight proportion.",
+          },
+          {
+            type: "text",
+            md: "**Does diversity matter to the ecosystem?** **David Tilman**'s long-term experiments on outdoor plots found that plots with more species showed **less year-to-year variation in total biomass**, and that higher diversity contributed to higher productivity. **Paul Ehrlich**'s **rivet popper hypothesis** compares an ecosystem to an aeroplane held together by thousands of rivets (species). Passengers popping a rivet each to take home may not affect safety at first, but as more are removed the plane becomes dangerous. Losing rivets on the **wings** (key species that drive major ecosystem functions) is a far more serious threat than losing a few on the seats or windows.",
+          },
+          {
+            type: "activity",
+            activity: {
+              kind: "match",
+              prompt: "Match the scientist with the idea.",
+              pairs: [
+                ["Edward Wilson", "Popularised the term biodiversity"],
+                ["Robert May", "About 7 million species worldwide"],
+                ["Alexander von Humboldt", "Species–area relationship"],
+                ["David Tilman", "Diverse plots vary less in biomass"],
+                ["Paul Ehrlich", "Rivet popper hypothesis"],
+              ],
+              explain: "These five names appear again and again in NEET matching questions; pair each with one idea.",
+            },
+          },
+          {
+            type: "callout",
+            tone: "exam",
+            title: "Board tip",
+            md: "For 'explain the species–area relationship' (3 marks): name Humboldt, write both forms of the equation, define S, A, C and Z, give the usual Z range (0.1–0.2) and the steeper range for continents (0.6–1.2), and sketch the hyperbola and the log–log straight line.",
+          },
+          {
+            type: "keypoints",
+            items: [
+              "Three levels: genetic (*Rauwolfia*, rice, mango), species (Western vs Eastern Ghats amphibians), ecological (India vs Norway).",
+              "About 1.5 million species described (IUCN 2004); about 7 million estimated (May). Insects > 70% of animals.",
+              "India: 2.4% of land, 8.1% of species, one of 12 mega diversity countries.",
+              "Diversity falls from equator to poles; Amazon is the richest; three hypotheses: time, constancy, energy.",
+              "log S = log C + Z log A; Z = 0.1–0.2 usually, 0.6–1.2 for continents. Tilman and Ehrlich explain why diversity matters.",
+            ],
+          },
+        ],
+        flashcards: [
+          { front: "Who popularised the term 'biodiversity'?", back: "The sociobiologist Edward Wilson." },
+          { front: "Genetic diversity example (NCERT)", back: "*Rauwolfia vomitoria* differs in reserpine across Himalayan ranges; India has more than 50 000 strains of rice and 1000 varieties of mango." },
+          { front: "Robert May's estimate", back: "About 7 million species on earth." },
+          { front: "Share of animals and plants among recorded species", back: "Animals more than 70%; plants (incl. algae, fungi, bryophytes, gymnosperms, angiosperms) no more than 22%." },
+          { front: "India's biodiversity figures", back: "2.4% of world land, 8.1% of species; 12 mega diversity countries; about 45 000 plants and twice as many animals recorded." },
+          { front: "Bird species: Colombia, New York, Greenland, India", back: "Nearly 1400; 105; 56; more than 1200." },
+          { front: "Usual range of Z", back: "0.1 to 0.2; for whole continents 0.6 to 1.2; frugivorous birds and mammals in tropical forests 1.15." },
+          { front: "Rivet popper hypothesis", back: "Paul Ehrlich: species are rivets of an aeroplane; losing key 'wing' rivets threatens the whole ecosystem." },
+        ],
+        quiz: [
+          {
+            kind: "mcq",
+            q: "The greater amphibian diversity of the Western Ghats compared with the Eastern Ghats is an example of:",
+            options: ["Genetic diversity", "Species diversity", "Ecological diversity", "Endemism only"],
+            answer: 1,
+            explain: "NCERT uses this comparison to illustrate species diversity.",
+          },
+          {
+            kind: "numeric",
+            q: "In a region with Z = 0.2, how many times more species would you expect if the area surveyed is 243 times larger?",
+            answer: 3,
+            explain: "S₂/S₁ = 243^0.2 = (3⁵)^(1/5) = 3.",
+            difficulty: 2,
+            hint: "Write 243 as a power of 3.",
+          },
+          {
+            kind: "truefalse",
+            q: "Prokaryotes are included in the global species estimates of IUCN and Robert May.",
+            answer: false,
+            explain: "Prokaryotes are left out because conventional taxonomic methods are not suitable for identifying them.",
+          },
+          {
+            kind: "multi",
+            q: "Which hypotheses explain the high diversity of tropical regions?",
+            options: [
+              "Tropics have had long, relatively undisturbed evolutionary time",
+              "Tropical environments are less seasonal and more predictable",
+              "More solar energy leads to higher productivity",
+              "Frequent glaciations in the tropics created new species",
+            ],
+            answers: [0, 1, 2],
+            explain: "Glaciations affected temperate regions, not the tropics; that disturbance is why temperate regions are poorer.",
+          },
+          {
+            kind: "mcq",
+            q: "On a log–log plot of species richness against area, Z is:",
+            options: ["The Y-intercept", "The slope of the line", "The maximum area", "The number of species at A = 1"],
+            answer: 1,
+            explain: "log S = log C + Z log A: Z is the slope (regression coefficient); log C is the intercept.",
+          },
+          {
+            kind: "fill",
+            q: "Among animals, the most species-rich taxonomic group is the ___.",
+            answer: ["insects", "insect", "insecta"],
+            explain: "Insects make up more than 70% of all animal species.",
+          },
+          {
+            kind: "mcq",
+            q: "Tilman's long-term plot experiments showed that plots with more species:",
+            options: [
+              "Had more year-to-year variation in biomass",
+              "Had less year-to-year variation in biomass",
+              "Always had lower productivity",
+              "Lost species faster",
+            ],
+            answer: 1,
+            explain: "More diverse plots were more stable (less variation in total biomass) and tended to be more productive.",
+          },
+        ],
+      },
+      /* ---------------- Board lesson 2 ---------------- */
+      {
+        slug: "c12-bd-loss-conservation",
+        title: "Loss of Biodiversity and Its Conservation",
+        summary: "Recent extinctions and IUCN figures, effects of biodiversity loss, the 'evil quartet' of causes, reasons to conserve, and in situ and ex situ conservation, with hotspots, protected areas, sacred groves and international agreements.",
+        minutes: 22,
+        xp: 50,
+        blocks: [
+          {
+            type: "illustration",
+            emoji: "🦤",
+            caption: "The dodo of Mauritius could not fly and had no fear of people. Within about a century of sailors arriving, it was gone. Its name is now a word for extinction.",
+          },
+          {
+            type: "text",
+            md: "The **IUCN Red List (2004)** documents the extinction of **784 species** in the last 500 years: **338 vertebrates, 359 invertebrates and 87 plants**. Recent examples: the **dodo** (Mauritius), **quagga** (Africa), **thylacine** (Australia), **Steller's sea cow** (Russia), and three subspecies of tiger (**Bali, Javan, Caspian**). In the last twenty years alone, 27 species have disappeared.\n\nMore than **15 500 species** worldwide face the threat of extinction, including **12% of bird, 23% of mammal, 32% of amphibian and 31% of gymnosperm** species. Earth has had five mass extinctions; the present 'sixth extinction' differs because current rates are **100 to 1000 times faster** than in pre-human times, and humans are the cause.",
+          },
+          {
+            type: "text",
+            md: "Loss of biodiversity in a region can lead to (a) a **decline in plant production**, (b) **lowered resistance** to environmental perturbations such as drought, and (c) **increased variability** in ecosystem processes such as plant productivity, water use, and pest and disease cycles.",
+          },
+          {
+            type: "table",
+            headers: ["Cause ('evil quartet')", "NCERT examples"],
+            rows: [
+              ["Habitat loss and fragmentation (most important)", "Tropical rain forests once covered more than 14% of earth's land; now no more than 6%. The Amazon, the 'lungs of the planet', is cleared for soya beans or for grassland for beef cattle. Fragmentation hurts animals that need large territories and migratory animals."],
+              ["Over-exploitation", "Steller's sea cow and the passenger pigeon were driven extinct by over-hunting; many marine fish are over-harvested."],
+              ["Alien species invasions", "Nile perch in Lake Victoria (east Africa) caused the extinction of more than 200 cichlid fish species; *Parthenium* (carrot grass), *Lantana* and water hyacinth (*Eichhornia*); illegal African catfish *Clarias gariepinus* threatens native catfishes."],
+              ["Co-extinctions", "When a host fish species dies out, its unique parasites go too; a plant and its obligate pollinator die out together."],
+            ],
+          },
+          {
+            type: "example",
+            title: "Naming the cause",
+            problem: "Classify each threat: (i) a wetland is drained and broken into small plots for housing; (ii) a fish farm releases a fast-growing foreign catfish into a river; (iii) a parasite that lives only on one fish species vanishes when the fish is wiped out; (iv) pangolins are hunted for their scales.",
+            steps: [
+              "(i) The habitat is destroyed and broken up: **habitat loss and fragmentation**.",
+              "(ii) A non-native species spreads and harms native ones: **alien species invasion** (like *Clarias gariepinus*).",
+              "(iii) Loss of an obligately associated species: **co-extinction**.",
+              "(iv) Taking more than the population can replace: **over-exploitation**.",
+            ],
+            answer: "(i) Habitat loss and fragmentation; (ii) alien invasion; (iii) co-extinction; (iv) over-exploitation.",
+          },
+          {
+            type: "checkpoint",
+            questions: [
+              {
+                kind: "mcq",
+                q: "The introduction of the Nile perch into Lake Victoria led to the extinction of:",
+                options: ["About 20 catfish species", "More than 200 species of cichlid fish", "The Steller's sea cow", "Water hyacinth"],
+                answer: 1,
+                explain: "The Nile perch, an alien predator, eliminated more than 200 cichlid species.",
+              },
+            ],
+          },
+          {
+            type: "mistake",
+            wrong: "Over-hunting is the main cause of biodiversity loss today.",
+            right: "**Habitat loss and fragmentation** is the most important cause of plant and animal extinction, according to NCERT.",
+            why: "Dramatic cases like Steller's sea cow make over-exploitation memorable, but far more species are lost quietly as forests and wetlands are cleared and broken up.",
+          },
+          {
+            type: "text",
+            md: "**Why conserve?** The **narrowly utilitarian** argument: nature supplies food, firewood, fibre, construction material and industrial products (tannins, lubricants, dyes, resins, perfumes) and medicines. More than **25%** of drugs sold worldwide come from plants, and about **25 000** plant species are used in traditional medicines; searching nature for such products is **bioprospecting**. The **broadly utilitarian** argument: ecosystem services such as oxygen (the Amazon forest is estimated to produce about **20%** of the oxygen in the earth's atmosphere), pollination, and aesthetic pleasure. The **ethical** argument: every species has an intrinsic value, and we have a moral duty to pass on our biological legacy in good order.",
+          },
+          {
+            type: "text",
+            md: "**In situ conservation** protects species in their natural habitat. **Biodiversity hotspots** are regions with very high species richness and a high degree of **endemism** (species found nowhere else). The idea came from **Norman Myers**. First 25 hotspots were identified; 9 more were added later, making **34**. Three of them cover India's richest regions: **Western Ghats and Sri Lanka, Indo-Burma, and the Himalaya**. Hotspots cover **less than 2%** of earth's land area, yet strict protection of them could reduce the ongoing mass extinction by almost **30%**.\n\nIndia has **14 biosphere reserves, 90 national parks and 448 wildlife sanctuaries**. **Sacred groves**, forest patches protected for religious reasons, survive in the Khasi and Jaintia Hills (Meghalaya), the Aravalli Hills (Rajasthan), the Western Ghats of Karnataka and Maharashtra, and the Sarguja, Chanda and Bastar areas (listed in NCERT under Madhya Pradesh). In Meghalaya they are the last refuges of many rare and threatened plants.",
+          },
+          {
+            type: "table",
+            headers: ["Ex situ method", "What it does"],
+            rows: [
+              ["Zoological parks, botanical gardens, wildlife safari parks", "Keep threatened animals and plants alive outside their habitat; some are bred and released"],
+              ["Cryopreservation", "Stores gametes of threatened species alive and fertile for long periods"],
+              ["In vitro fertilisation and tissue culture", "Fertilise eggs and propagate plants in the laboratory"],
+              ["Seed banks", "Store seeds of commercially important plants for long periods"],
+            ],
+          },
+          {
+            type: "activity",
+            activity: {
+              kind: "sort",
+              prompt: "In situ or ex situ conservation?",
+              groups: ["In situ", "Ex situ"],
+              items: [
+                { text: "Kaziranga National Park", group: 0, hint: "Animals are protected where they naturally live." },
+                { text: "Sacred grove in the Khasi Hills", group: 0, hint: "A natural forest patch protected by the community." },
+                { text: "Biosphere reserve", group: 0, hint: "A large protected natural area." },
+                { text: "Seed bank", group: 1, hint: "Seeds are stored away from their habitat." },
+                { text: "Cryopreserved gametes", group: 1, hint: "Kept frozen in a laboratory." },
+                { text: "Zoological park", group: 1, hint: "Animals are kept outside their natural habitat." },
+              ],
+              explain: "In situ means 'on site': the whole ecosystem is protected. Ex situ means 'off site': selected organisms or their gametes and seeds are kept elsewhere.",
+            },
+          },
+          {
+            type: "callout",
+            tone: "exam",
+            title: "Board tip",
+            md: "International efforts score easy marks: the **Earth Summit** (Rio de Janeiro, 1992) adopted the **Convention on Biological Diversity**; the **World Summit on Sustainable Development** (Johannesburg, South Africa, 2002) saw 190 countries pledge to significantly reduce the rate of biodiversity loss by 2010. Write place, year and outcome.",
+          },
+          {
+            type: "keypoints",
+            items: [
+              "IUCN 2004: 784 extinctions in 500 years (338 vertebrates, 359 invertebrates, 87 plants); more than 15 500 species threatened.",
+              "Present extinction rates are 100–1000 times pre-human rates.",
+              "Evil quartet: habitat loss and fragmentation (most important), over-exploitation, alien invasions, co-extinctions.",
+              "Reasons to conserve: narrowly utilitarian, broadly utilitarian, ethical.",
+              "In situ: 34 hotspots (3 in India), 14 biosphere reserves, 90 national parks, 448 sanctuaries, sacred groves. Ex situ: zoos, botanical gardens, cryopreservation, seed banks.",
+            ],
+          },
+        ],
+        flashcards: [
+          { front: "IUCN Red List (2004) extinctions in 500 years", back: "784 species: 338 vertebrates, 359 invertebrates, 87 plants." },
+          { front: "Recent extinctions named in NCERT", back: "Dodo (Mauritius), quagga (Africa), thylacine (Australia), Steller's sea cow (Russia), Bali, Javan and Caspian tigers." },
+          { front: "The evil quartet", back: "Habitat loss and fragmentation, over-exploitation, alien species invasions, co-extinctions." },
+          { front: "Alien species examples in India", back: "*Parthenium* (carrot grass), *Lantana*, water hyacinth (*Eichhornia*), African catfish *Clarias gariepinus*." },
+          { front: "Biodiversity hotspot", back: "A region with very high species richness and high endemism; 34 worldwide; concept by Norman Myers." },
+          { front: "India's three hotspots", back: "Western Ghats and Sri Lanka, Indo-Burma, Himalaya." },
+          { front: "India's protected areas (NCERT)", back: "14 biosphere reserves, 90 national parks, 448 wildlife sanctuaries." },
+          { front: "Earth Summit and its outcome", back: "Rio de Janeiro, 1992: Convention on Biological Diversity." },
+        ],
+        quiz: [
+          {
+            kind: "mcq",
+            q: "Which is the most important cause of animal and plant extinction?",
+            options: ["Over-exploitation", "Alien species invasion", "Habitat loss and fragmentation", "Co-extinction"],
+            answer: 2,
+            explain: "NCERT names habitat loss and fragmentation as the most important cause.",
+          },
+          {
+            kind: "mcq",
+            q: "Sacred groves in which state are described as the last refuges for many rare and threatened plants?",
+            options: ["Rajasthan", "Meghalaya", "Karnataka", "Maharashtra"],
+            answer: 1,
+            explain: "NCERT singles out the sacred groves of Meghalaya (Khasi and Jaintia Hills).",
+          },
+          {
+            kind: "truefalse",
+            q: "Biodiversity hotspots together cover less than 2% of the earth's land area.",
+            answer: true,
+            explain: "Despite their small area they hold an extremely high number of species; protecting them could cut ongoing extinctions by almost 30%.",
+          },
+          {
+            kind: "multi",
+            q: "Which are ex situ conservation methods?",
+            options: ["Cryopreservation of gametes", "Seed banks", "National parks", "Botanical gardens"],
+            answers: [0, 1, 3],
+            explain: "National parks protect species in their natural habitat, so they are in situ.",
+          },
+          {
+            kind: "fill",
+            q: "The Amazon rain forest is estimated to produce about ___ per cent of the oxygen in the earth's atmosphere.",
+            answer: ["20", "twenty"],
+            explain: "This is the NCERT example of a broadly utilitarian reason for conserving biodiversity.",
+          },
+          {
+            kind: "mcq",
+            q: "Exploring molecular, genetic and species-level diversity for products of economic importance is called:",
+            options: ["Biopiracy", "Bioprospecting", "Bioremediation", "Biomagnification"],
+            answer: 1,
+            explain: "Bioprospecting is the search for useful products (drugs, genes) in nature.",
+          },
+          {
+            kind: "mcq",
+            q: "Which group has the highest percentage of species facing extinction, according to NCERT?",
+            options: ["Birds (12%)", "Mammals (23%)", "Amphibians (32%)", "Gymnosperms (31%)"],
+            answer: 2,
+            explain: "32% of amphibian species are threatened, slightly more than gymnosperms (31%).",
+            difficulty: 2,
+          },
+        ],
+      },
+      /* ---------------- Exam edge ---------------- */
+      {
+        slug: "c12-bd-exam-edge",
+        title: "Exam edge: Biodiversity and Conservation for NEET and KCET",
+        summary: "What NEET and KCET ask: the exact NCERT numbers, species–area calculations with Z, latitudinal gradient reasoning, the evil quartet examples, hotspots and protected areas, and assertion–reason questions.",
+        minutes: 22,
+        xp: 60,
+        track: "exam",
+        blocks: [
+          {
+            type: "callout",
+            tone: "exam",
+            title: "What gets asked",
+            md: "NEET usually sets 2–3 questions here; KCET 1–3. This chapter is number-heavy, and NEET tests the numbers exactly as printed: 1.5 million and 7 million; 70% animals, 22% plants; 2.4% and 8.1%; 12 mega diversity countries; Z = 0.1–0.2 and 0.6–1.2; 784 = 338 + 359 + 87; 34 hotspots, 3 in India; 14, 90 and 448. Matching scientists (Wilson, May, Humboldt, Tilman, Ehrlich, Myers) and placing alien species are also common.",
+          },
+          {
+            type: "list",
+            items: [
+              "**NCERT line**: species richness increases with explored area, but only up to a limit.",
+              "**NCERT line**: the Amazonian rain forest has the greatest biodiversity on earth.",
+              "**NCERT line**: the number of fungi species is more than the combined total of fishes, amphibians, reptiles and mammals.",
+              "**NCERT line**: current extinction rates are 100 to 1000 times faster than in pre-human times.",
+              "**NCERT line**: hotspots are regions with very high species richness and a high degree of endemism.",
+            ],
+          },
+          {
+            type: "formula",
+            tex: t`\frac{S_2}{S_1} = \left(\frac{A_2}{A_1}\right)^{Z}`,
+            caption: "Ratio form of the species–area relationship; C cancels, so only Z and the area ratio matter. Safe within a region where one Z applies.",
+          },
+          {
+            type: "example",
+            title: "NEET level: reading Z",
+            problem: "On a log–log graph, the species–area line for frugivorous birds and mammals in tropical forests across continents has a slope of 1.15, while within a single region the slope for most groups is 0.1–0.2. What does the steeper slope mean?",
+            steps: [
+              "Z is the slope: it tells how fast species number rises as area increases.",
+              "Z = 1.15 means species rise faster than area itself; Z = 0.1–0.2 means only a small rise.",
+              "Across continents each new area adds many new species found nowhere else, so the line is steep.",
+            ],
+            answer: "Species richness rises much faster with area across very large areas such as continents (Z about 0.6–1.2) than within a region (Z about 0.1–0.2).",
+          },
+          {
+            type: "example",
+            title: "NEET level: shrinking a habitat",
+            problem: "A forest has 1000 species and Z = 0.2 for the region. If clearing reduces the forest to 1/32 of its area, how many species would the remnant be expected to hold?",
+            steps: [
+              t`$S_2 = S_1 \left(\dfrac{A_2}{A_1}\right)^{Z} = 1000 \times \left(\dfrac{1}{32}\right)^{0.2}$.`,
+              t`$\left(\dfrac{1}{32}\right)^{0.2} = \dfrac{1}{2}$.`,
+              "So the remnant holds about 500 species: losing about 97% of the area loses about half the species.",
+            ],
+            answer: "About 500 species.",
+          },
+          {
+            type: "example",
+            title: "Assertion–reason",
+            problem: "Assertion (A): Tropical latitudes have greater species diversity than temperate ones. Reason (R): Temperate regions were subjected to frequent glaciations in the past, while tropical regions remained relatively undisturbed for millions of years.",
+            steps: [
+              "A is true: diversity decreases from the equator to the poles.",
+              "R is true: it is one of the hypotheses NCERT gives.",
+              "R explains A: the tropics had a long, undisturbed evolutionary time for speciation.",
+            ],
+            answer: "Both A and R are true, and R is the correct explanation of A.",
+          },
+          {
+            type: "example",
+            title: "NEET level: match the alien species",
+            problem: "Which of these is NOT an example of an alien species invasion given in NCERT: Nile perch, *Lantana*, *Eichhornia*, *Clarias gariepinus*, Steller's sea cow?",
+            steps: [
+              "Nile perch (Lake Victoria), *Lantana*, *Eichhornia* (water hyacinth) and *Clarias gariepinus* (African catfish) are all introduced species that harm natives.",
+              "Steller's sea cow was a native species driven extinct by over-hunting.",
+            ],
+            answer: "Steller's sea cow: it illustrates over-exploitation, not invasion.",
+          },
+          {
+            type: "mistake",
+            wrong: "Plants make up about 70% of all recorded species, because plants are everywhere.",
+            right: "**Animals** make up more than 70%; plants (including algae, fungi, bryophytes, gymnosperms and angiosperms) no more than 22%. Insects alone are over 70% of animals.",
+            why: "Plants dominate biomass, not species counts. Insects are small and easy to overlook, but they are by far the most species-rich group.",
+          },
+          {
+            type: "mistake",
+            wrong: "India has 34 biodiversity hotspots.",
+            right: "The **world** has 34 hotspots; **three** of them cover India's rich regions (Western Ghats and Sri Lanka, Indo-Burma, Himalaya).",
+            why: "The number 34 and 'India' appear in the same paragraph, and 'Western Ghats and Sri Lanka' is a single hotspot, not two.",
+          },
+          {
+            type: "checkpoint",
+            questions: [
+              {
+                kind: "mcq",
+                q: "Which pair is correctly matched?",
+                options: ["Quagga: Australia", "Thylacine: Africa", "Dodo: Mauritius", "Steller's sea cow: India"],
+                answer: 2,
+                explain: "Dodo: Mauritius; quagga: Africa; thylacine: Australia; Steller's sea cow: Russia.",
+              },
+            ],
+          },
+          {
+            type: "activity",
+            activity: {
+              kind: "match",
+              prompt: "Match each number with what NCERT says it counts.",
+              pairs: [
+                ["784", "Extinctions recorded in the last 500 years (IUCN 2004)"],
+                ["34", "Biodiversity hotspots in the world"],
+                ["448", "Wildlife sanctuaries in India"],
+                ["90", "National parks in India"],
+                ["14", "Biosphere reserves in India"],
+                ["12", "Mega diversity countries"],
+              ],
+              explain: "Numbers are where NEET options differ; learn each with its noun, not alone.",
+            },
+          },
+          {
+            type: "keypoints",
+            items: [
+              "S₂/S₁ = (A₂/A₁)^Z; with Z = 0.2, 32 times the area doubles the species.",
+              "Z = 0.1–0.2 within regions; 0.6–1.2 across continents; 1.15 for tropical frugivores.",
+              "Tropics are richer: long undisturbed time, less seasonality, more solar energy.",
+              "34 hotspots in the world, 3 covering India; 14 biosphere reserves, 90 national parks, 448 sanctuaries.",
+            ],
+          },
+        ],
+        flashcards: [
+          { front: "Ratio form of species–area relation", back: "S₂/S₁ = (A₂/A₁)^Z." },
+          { front: "Number that makes 784", back: "338 vertebrates + 359 invertebrates + 87 plants." },
+          { front: "Who proposed the hotspot concept?", back: "Norman Myers." },
+          { front: "First set of hotspots, later additions", back: "25 first identified, 9 added later: 34 in all." },
+          { front: "Possible reduction in extinctions by protecting hotspots", back: "Almost 30%." },
+          { front: "Rain forest cover then and now", back: "More than 14% of earth's land once; no more than 6% now." },
+          { front: "World Summit on Sustainable Development", back: "Johannesburg, South Africa, 2002: 190 countries pledged to reduce the rate of biodiversity loss significantly by 2010." },
+        ],
+        quiz: [
+          {
+            kind: "numeric",
+            q: "A region has Z = 0.1. By what factor must the area increase to double the number of species?",
+            answer: 1024,
+            explain: "2 = (A₂/A₁)^0.1, so A₂/A₁ = 2¹⁰ = 1024.",
+            difficulty: 3,
+            hint: "Raise both sides to the power 1/Z = 10.",
+          },
+          {
+            kind: "mcq",
+            q: "Assertion (A): Loss of a key species can cause the collapse of an ecosystem. Reason (R): According to the rivet popper hypothesis, losing rivets on the wings is more serious than losing rivets on the seats.",
+            options: AR,
+            answer: 0,
+            explain: "Ehrlich's analogy explains A: key species (wing rivets) drive major ecosystem functions, so losing them threatens the whole system.",
+            difficulty: 2,
+          },
+          {
+            kind: "mcq",
+            q: "Assertion (A): Prokaryotes are not included in the global estimates of species diversity. Reason (R): Prokaryotes are fewer in number than eukaryotes.",
+            options: AR,
+            answer: 2,
+            explain: "A is true, but the reason is that conventional taxonomic methods are not suitable for identifying microbial species. R is false: prokaryotic diversity may be enormous.",
+            difficulty: 2,
+          },
+          {
+            kind: "multi",
+            q: "Which statements are correct according to NCERT?",
+            options: [
+              "India has 2.4% of the world's land area and 8.1% of its species diversity",
+              "Fungi species outnumber fishes, amphibians, reptiles and mammals combined",
+              "Plants make up more than 70% of recorded species",
+              "Current extinction rates are 100–1000 times faster than pre-human rates",
+            ],
+            answers: [0, 1, 3],
+            explain: "Animals, not plants, make up more than 70% of recorded species; plants are at most 22%.",
+          },
+          {
+            kind: "mcq",
+            q: "How many of the following are in situ methods? National park, sacred grove, seed bank, biosphere reserve, zoological park.",
+            options: ["Two", "Three", "Four", "Five"],
+            answer: 1,
+            explain: "National park, sacred grove and biosphere reserve are in situ (three). Seed bank and zoo are ex situ.",
+          },
+          {
+            kind: "mcq",
+            q: "The extinction of more than 200 cichlid fish species is linked with:",
+            options: ["Over-exploitation in the Amazon", "Introduction of the Nile perch into Lake Victoria", "Co-extinction with water hyacinth", "Habitat fragmentation in the Western Ghats"],
+            answer: 1,
+            explain: "This NCERT example is an alien species invasion in Lake Victoria, east Africa.",
+          },
+          {
+            kind: "numeric",
+            q: "A forest with 1600 species (Z = 0.25) is cut down to 1/16 of its original area. About how many species would the remaining forest support?",
+            answer: 800,
+            explain: "(1/16)^0.25 = 1/2, so 1600 × 1/2 = 800 species.",
+            difficulty: 3,
+            hint: "16 = 2⁴, and Z = 1/4.",
+          },
+          {
+            kind: "mcq",
+            q: "Which number of bird species is correctly matched with the place?",
+            options: ["Greenland: 105", "New York: 56", "Colombia: nearly 1400", "India: about 500"],
+            answer: 2,
+            explain: "Colombia nearly 1400, New York 105, Greenland 56, India more than 1200.",
+          },
+        ],
+      },
+    ],
+  },
 ];
 
 /** Class 12 chapter title ("12:<exact title>") → topic slug(s), or full lesson ids, that teach it. */
 export const links: Record<string, string | string[]> = {
   "12:Organisms and Populations": "c12-organisms-populations",
+  "12:Ecosystem": "c12-ecosystem",
+  "12:Biodiversity and Conservation": "c12-biodiversity-conservation",
+  // ISC teaches all three NCERT ecology chapters under one unit.
+  "12:Ecology and Environment": ["c12-organisms-populations", "c12-ecosystem", "c12-biodiversity-conservation"],
 };
