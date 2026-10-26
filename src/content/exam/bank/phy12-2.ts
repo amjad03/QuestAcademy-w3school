@@ -55,7 +55,6 @@ const MAIN: ExamId[] = ["NEET", "JEE", "COMEDK"];
 const JEEM: ExamId[] = ["JEE", "COMEDK"];
 const ADV: ExamId[] = ["JEE", "JEE_ADV"];
 const MULTI: ExamId[] = ["JEE_ADV"];
-const CET: ExamId[] = ["KCET", "COMEDK"];
 
 /* ================================================================== */
 /* Chapter 4 — Moving Charges and Magnetism                            */
@@ -89,7 +88,7 @@ const ch4: Raw[] = [
     e: t`The magnetic force $q\vec v\times\vec B$ is always perpendicular to $\vec v$, so it does no work ($\vec F\cdot\vec v = 0$). Speed and kinetic energy are therefore constant, but the direction of $\vec v$ (and hence velocity and momentum as vectors) can change.`,
   },
   {
-    d: 2, ex: MAIN, time: 60,
+    d: 2, ex: ALL, time: 60,
     q: t`An electron and a proton having equal kinetic energies enter the same uniform magnetic field perpendicular to it. If $r_e$ and $r_p$ are the radii of their circular paths, then:`,
     o: [t`$r_p/r_e = \sqrt{m_p/m_e}$`, t`$r_p/r_e = m_p/m_e$`, t`$r_p = r_e$`, t`$r_p/r_e = \sqrt{m_e/m_p}$`],
     a: 0,
@@ -117,7 +116,7 @@ const ch4: Raw[] = [
     e: t`$K = qV$, so $r = \dfrac{\sqrt{2m qV}}{qB} = \dfrac1B\sqrt{\dfrac{2mV}{q}}$, i.e. $r \propto \sqrt{m/q}$. For the $\alpha$-particle $m/q = 4m_p/2e = 2(m_p/e)$; for the proton it is $m_p/e$. So $r_\alpha/r_p = \sqrt2$ and $x = 2$.`,
   },
   {
-    d: 2, ex: MAIN, time: 80,
+    d: 2, ex: ALL, time: 80,
     q: t`A charged particle enters a uniform magnetic field with its velocity making $60^\circ$ with the field. The ratio of the pitch of its helical path to the radius of the helix is:`,
     o: [t`$2\pi/\sqrt3$`, t`$2\pi\sqrt3$`, t`$\pi/\sqrt3$`, t`$\sqrt3\,\pi$`],
     a: 0,
@@ -132,7 +131,7 @@ const ch4: Raw[] = [
     e: t`Undeflected when $qE = qvB$, i.e. $v = E/B = 3\times10^{4}/0.02 = 1.5\times10^{6}$ m/s, independent of the charge and mass of the particle. $6\times10^2$ is $E\times B$.`,
   },
   {
-    d: 2, ex: ALL, time: 60,
+    d: 2, ex: MAIN, time: 60,
     q: t`The frequency of the alternating voltage needed to operate a cyclotron for protons in a magnetic field of 1.0 T is about ($m_p = 1.67\times10^{-27}$ kg):`,
     o: [t`15.2 MHz`, t`95.8 MHz`, t`7.6 MHz`, t`30.4 MHz`],
     a: 0,
@@ -147,7 +146,7 @@ const ch4: Raw[] = [
     e: t`$K_{max} = \dfrac{q^2B^2R^2}{2m} = \dfrac{(1.6\times10^{-19})^2(1)^2(0.5)^2}{2\times1.67\times10^{-27}} = \dfrac{6.4\times10^{-39}}{3.34\times10^{-27}} \approx 1.92\times10^{-12}$ J. Dividing by $1.6\times10^{-13}$ J/MeV gives $\approx 12$ MeV.`,
   },
   {
-    d: 2, ex: ALL, time: 60,
+    d: 2, ex: MAIN, time: 60,
     q: t`**Assertion (A):** A cyclotron is not suitable for accelerating electrons.<br>**Reason (R):** Because of their very small mass, electrons quickly reach speeds at which relativistic mass increase makes their revolution frequency fall out of step with the fixed oscillator frequency.`,
     o: [
       t`Both A and R are true, and R is the correct explanation of A`,
@@ -174,7 +173,7 @@ const ch4: Raw[] = [
     e: t`$B = \dfrac{\mu_0 I}{2\pi r} = \dfrac{2\times10^{-7}\times10}{0.05} = 4\times10^{-5}$ T.`,
   },
   {
-    d: 2, ex: MAIN, time: 60,
+    d: 2, ex: ALL, time: 60,
     q: t`For a circular coil of radius $R$, the ratio of the magnetic field at an axial point at distance $\sqrt3R$ from the centre to the field at the centre is:`,
     o: [t`$1/8$`, t`$1/4$`, t`$1/2$`, t`$1/(3\sqrt3)$`],
     a: 0,
@@ -182,7 +181,7 @@ const ch4: Raw[] = [
     e: t`$\dfrac{B_x}{B_0} = \dfrac{R^3}{(R^2+x^2)^{3/2}} = \dfrac{R^3}{(4R^2)^{3/2}} = \dfrac{R^3}{8R^3} = \dfrac18$.`,
   },
   {
-    d: 2, ex: MAIN, time: 60,
+    d: 2, ex: ALL, time: 60,
     q: t`A wire carrying current $I$ comes in radially along one diameter line, goes round a semicircle of radius $R$, and leaves radially along the same line on the other side. The magnetic field at the centre of the semicircle is:`,
     o: [t`$\mu_0I/(4R)$`, t`$\mu_0I/(2R)$`, t`$\mu_0I/(4R) + \mu_0I/(2\pi R)$`, t`zero`],
     a: 0,
@@ -225,7 +224,7 @@ const ch4: Raw[] = [
     e: t`Ampere's law: $\oint\vec B\cdot d\vec l = \mu_0 I_{enc}$ with $I_{enc} = 5 - 2 = 3$ A, so the integral is $3\mu_0$ (SI units). Adding magnitudes gives $7\mu_0$.`,
   },
   {
-    d: 2, ex: MAIN, time: 70,
+    d: 2, ex: ALL, time: 70,
     q: t`A long solid cylindrical wire of radius $R$ carries a steady current uniformly distributed over its cross-section. The ratio of the magnetic field at distance $R/2$ from the axis to that at distance $2R$ is:`,
     o: [t`1 : 1`, t`1 : 4`, t`4 : 1`, t`1 : 2`],
     a: 0,
@@ -260,7 +259,7 @@ const ch4: Raw[] = [
     e: t`At an end only the turns on one side contribute, so the field is $\tfrac12\mu_0 nI$ — half the value at the middle.`,
   },
   {
-    d: 1, ex: ALL, time: 45,
+    d: 1, ex: MAIN, time: 45,
     q: t`A toroid with 500 turns has mean radius 10 cm and carries 3 A. The magnetic field inside its core (along the mean circle) is:`,
     o: [t`$3\times10^{-3}$ T`, t`$3\times10^{-5}$ T`, t`$1.5\times10^{-3}$ T`, t`$6\times10^{-3}$ T`],
     a: 0,
@@ -287,13 +286,13 @@ const ch4: Raw[] = [
     e: t`The field of one wire at the other, crossed with its current, gives a force towards the first wire: like (parallel) currents attract, unlike currents repel — the opposite of the rule for charges.`,
   },
   {
-    d: 1, ex: ALL, time: 50,
+    d: 1, ex: MAIN, time: 50,
     q: t`Two long parallel wires 5 cm apart carry 10 A and 15 A. The force per unit length between them is $x\times10^{-4}$ N/m. Find $x$.`,
     a: 6,
     e: t`$\dfrac Fl = \dfrac{\mu_0 I_1I_2}{2\pi d} = \dfrac{2\times10^{-7}\times10\times15}{0.05} = 6\times10^{-4}$ N/m, so $x = 6$.`,
   },
   {
-    d: 2, ex: MAIN, time: 75,
+    d: 2, ex: ALL, time: 75,
     q: t`Three long parallel wires A, B, C lie in a plane, equally spaced a distance $d$ apart (B in the middle), each carrying current $I$ in the same direction. The net force per unit length on wire A is:`,
     o: [
       t`$\dfrac{3\mu_0I^2}{4\pi d}$ towards B`,
@@ -313,7 +312,7 @@ const ch4: Raw[] = [
     e: t`$F = BIL\sin\theta = 0.2\times4\times0.5\times\sin30^\circ = 0.2$ N. Using $\cos30^\circ$ gives 0.35 N.`,
   },
   {
-    d: 2, ex: MAIN, time: 60,
+    d: 2, ex: ALL, time: 60,
     q: t`A semicircular wire of radius $R$ carrying current $I$ lies in a plane perpendicular to a uniform magnetic field $B$. The net magnetic force on the wire is:`,
     o: [t`$2BIR$`, t`$\pi BIR$`, t`$BIR$`, t`zero`],
     a: 0,
@@ -385,7 +384,7 @@ const ch4: Raw[] = [
     e: t`A radial field keeps the plane of the coil parallel to $\vec B$ at every deflection, so $\tau = NIAB$ for all $\phi$. Balancing with $k\phi$ gives $\phi = (NAB/k)I$ — a linear scale. The soft iron also strengthens the field.`,
   },
   {
-    d: 2, ex: MAIN, time: 60,
+    d: 2, ex: ALL, time: 60,
     q: t`The number of turns of a galvanometer coil is doubled (keeping the same wire gauge, so its resistance also doubles), all else unchanged. Then:`,
     o: [
       t`current sensitivity doubles, voltage sensitivity is unchanged`,
@@ -398,7 +397,7 @@ const ch4: Raw[] = [
     e: t`$I_s = NAB/k \propto N$ doubles. $V_s = I_s/R = NAB/(kR)$: $N$ and $R$ both double, so $V_s$ is unchanged. This is why more turns does not automatically make a better voltmeter.`,
   },
   {
-    d: 1, ex: ALL, time: 60,
+    d: 1, ex: MAIN, time: 60,
     q: t`A galvanometer of resistance 50 Ω gives full-scale deflection for 5 mA. The shunt resistance (in Ω, to two decimal places) needed to convert it into an ammeter of range 0–5 A is:`,
     a: 0.05, tol: 0.002, unit: "Ω",
     e: t`The shunt carries $I - I_g$ at the same p.d.: $I_gG = (I - I_g)S$, so $S = \dfrac{I_gG}{I - I_g} = \dfrac{0.005\times50}{4.995} \approx 0.050$ Ω. A small resistance in parallel.`,
@@ -411,7 +410,7 @@ const ch4: Raw[] = [
     e: t`$I_g(G + R) = V$ gives $R = V/I_g - G = 10/0.002 - 20 = 5000 - 20 = 4980$ Ω, in series. 5000 Ω forgets to subtract $G$.`,
   },
   {
-    d: 2, ex: ALL, time: 60,
+    d: 2, ex: MAIN, time: 60,
     q: t`Match List-I with List-II.<br>**List-I:** (P) Field at centre of a circular loop (Q) Field inside a long solenoid (R) Field near a long straight wire (S) Field inside a toroid<br>**List-II:** (1) $\mu_0 nI$ (2) $\mu_0I/(2\pi r)$ (3) $\mu_0NI/(2\pi r)$ (4) $\mu_0I/(2R)$`,
     o: [t`P-4, Q-1, R-2, S-3`, t`P-4, Q-3, R-2, S-1`, t`P-2, Q-1, R-4, S-3`, t`P-1, Q-4, R-3, S-2`],
     a: 0,
@@ -535,7 +534,7 @@ const ch5: Raw[] = [
     e: t`$\tau = mB\sin\theta = 5\times0.4\times\sin30^\circ = 1$ N m. Using $\cos30^\circ$ gives 1.73 N m.`,
   },
   {
-    d: 2, ex: ALL, time: 60,
+    d: 2, ex: MAIN, time: 60,
     q: t`A bar magnet of moment 4 A m² is initially aligned with a uniform field of 0.5 T. Find the work (in J) needed to rotate it through $60^\circ$.`,
     a: 1, tol: 0.01, unit: "J",
     h: t`$W = mB(\cos\theta_1 - \cos\theta_2)$.`,
@@ -550,7 +549,7 @@ const ch5: Raw[] = [
     e: t`$T\propto B^{-1/2}$, so $B\to4B$ gives $T\to T/\sqrt4 = T/2$. Treating $T\propto 1/B$ gives $T/4$.`,
   },
   {
-    d: 2, ex: ALL, time: 70,
+    d: 2, ex: MAIN, time: 70,
     q: t`A magnet of moment of inertia $1.2\times10^{-4}$ kg m² and magnetic moment 3 A m² performs small oscillations in a uniform field of 0.04 T. Its period (in s, to one decimal place) is:`,
     a: 0.2, tol: 0.01, unit: "s",
     h: t`$T = 2\pi\sqrt{I/(mB)}$.`,
@@ -586,12 +585,12 @@ const ch5: Raw[] = [
   {
     d: 1, ex: ALL, time: 35,
     q: t`The magnetic susceptibility of bismuth is most likely to be:`,
-    o: [t`$-1.7\times10^{-4}$`, t`$+2.3\times10^{-5}$`, t`$+5000$`, t`$-1$`],
+    o: [t`$-1.7\times10^{-5}$`, t`$+2.3\times10^{-5}$`, t`$+5000$`, t`$-1$`],
     a: 0,
     e: t`Bismuth is diamagnetic: $\chi$ is small and negative. Small positive $\chi$ is paramagnetic, very large positive is ferromagnetic, and $\chi = -1$ is the perfect diamagnetism of a superconductor.`,
   },
   {
-    d: 2, ex: MAIN, time: 50,
+    d: 2, ex: ALL, time: 50,
     q: t`For a superconductor in the Meissner state, the magnetic susceptibility $\chi$ and relative permeability $\mu_r$ are:`,
     o: [t`$\chi = -1$, $\mu_r = 0$`, t`$\chi = 0$, $\mu_r = 1$`, t`$\chi = -1$, $\mu_r = 1$`, t`$\chi = 1$, $\mu_r = 2$`],
     a: 0,
@@ -684,7 +683,7 @@ const ch5: Raw[] = [
     e: t`Diamagnetic materials acquire a moment opposite to $\vec B$, so they are pushed from stronger to weaker field and settle perpendicular to the field. A paramagnetic rod would align parallel and move into the stronger region.`,
   },
   {
-    d: 2, ex: MAIN, time: 55,
+    d: 2, ex: ALL, time: 55,
     q: t`One limb of a U-tube containing a liquid is placed between the poles of a strong magnet so that the liquid surface lies in the field. The liquid level in that limb rises. The liquid is:`,
     o: [t`paramagnetic`, t`diamagnetic`, t`non-magnetic`, t`a superconductor`],
     a: 0,
@@ -692,14 +691,14 @@ const ch5: Raw[] = [
     e: t`A paramagnetic liquid is pulled into the strong field region, so the level rises in the limb between the poles. A diamagnetic liquid would be pushed out and its level would fall.`,
   },
   {
-    d: 1, ex: CET, time: 45,
+    d: 1, ex: ["COMEDK"], time: 45,
     q: t`At a place the horizontal component of the Earth's magnetic field is 0.3 G and the angle of dip is $60^\circ$. The total magnetic field there is:`,
     o: [t`0.6 G`, t`0.35 G`, t`0.52 G`, t`0.15 G`],
     a: 0,
     e: t`$B_H = B\cos\delta$, so $B = B_H/\cos60^\circ = 0.3/0.5 = 0.6$ G. Multiplying by $\cos\delta$ gives 0.15 G and using $\sin\delta$ gives the other options.`,
   },
   {
-    d: 2, ex: CET, time: 60,
+    d: 2, ex: ["COMEDK"], time: 60,
     q: t`The true angle of dip at a place is $45^\circ$. A dip circle is set with its plane at $60^\circ$ to the magnetic meridian. The apparent dip read is:`,
     o: [t`$\tan^{-1}2$`, t`$\tan^{-1}(1/2)$`, t`$45^\circ$`, t`$60^\circ$`],
     a: 0,
@@ -707,14 +706,14 @@ const ch5: Raw[] = [
     e: t`In the dip circle's plane the horizontal field is $B_H\cos\alpha$ while $B_V$ is fully present. $\tan\delta' = \dfrac{B_V}{B_H\cos\alpha} = \dfrac{\tan\delta}{\cos\alpha} = \dfrac{1}{1/2} = 2$, so $\delta' = \tan^{-1}2$. The apparent dip is always at least the true dip.`,
   },
   {
-    d: 1, ex: CET, time: 35,
+    d: 1, ex: ["COMEDK"], time: 35,
     q: t`At the Earth's magnetic poles, the angle of dip and the horizontal component of the Earth's field are respectively:`,
     o: [t`$90^\circ$ and zero`, t`$0^\circ$ and maximum`, t`$90^\circ$ and maximum`, t`$45^\circ$ and $B/\sqrt2$`],
     a: 0,
     e: t`At a magnetic pole the field is vertical, so $\delta = 90^\circ$ and $B_H = B\cos90^\circ = 0$. A compass needle there has no preferred horizontal direction.`,
   },
   {
-    d: 2, ex: ["JEE", "KCET", "COMEDK"], time: 80,
+    d: 2, ex: ["COMEDK"], time: 80,
     q: t`A short bar magnet of moment 0.36 A m² is placed with its axis along the magnetic meridian and its N-pole pointing geographic north. The horizontal component of the Earth's field is $3.6\times10^{-5}$ T. Neutral points lie on its equatorial line at a distance (in cm) of:`,
     a: 10, tol: 0.2, unit: "cm",
     h: t`With N pointing north, the equatorial field points south and can cancel $B_H$.`,
@@ -756,7 +755,7 @@ const ch5: Raw[] = [
     e: t`$M\propto B/T$. Initially $B/T = 0.2/4 = 0.05$; finally $0.8/16 = 0.05$. Same ratio, so $M = 8$ A/m.`,
   },
   {
-    d: 2, ex: MAIN, time: 70,
+    d: 2, ex: ALL, time: 70,
     q: t`An iron core of relative permeability 800 fills a long solenoid producing $H = 1000$ A/m. Approximately what percentage of the field $B$ inside is due to the magnetisation of the core?`,
     o: [t`99.9%`, t`0.125%`, t`50%`, t`80%`],
     a: 0,
@@ -813,7 +812,7 @@ const ch6: Raw[] = [
     e: t`$|\varepsilon| = d\Phi/dt = (6t + 2)$ mV $= 14$ mV at $t = 2$ s. 16 mV is the flux value at $t = 2$ s, not its rate of change.`,
   },
   {
-    d: 1, ex: ALL, time: 45,
+    d: 1, ex: MAIN, time: 45,
     q: t`A coil of 200 turns and area 0.01 m² is held perpendicular to a field of 0.5 T. The field falls uniformly to zero in 0.1 s. The average induced emf (in V) is:`,
     a: 10, unit: "V",
     e: t`$\varepsilon = N\dfrac{\Delta\Phi}{\Delta t} = \dfrac{200\times0.5\times0.01}{0.1} = 10$ V.`,
@@ -884,7 +883,7 @@ const ch6: Raw[] = [
     e: t`Retarding force $B^2l^2v/R$. Using $a = v\,dv/dx$: $m\,dv/dx = -B^2l^2/R$, so $v$ falls linearly with distance: $v = v_0 - \dfrac{B^2l^2}{mR}x$. It stops at $x = \dfrac{mv_0R}{B^2l^2}$. The speed does decay exponentially in time, but the distance converges — so "infinite" is wrong.`,
   },
   {
-    d: 2, ex: MULTI, time: 90,
+    d: 3, ex: MULTI, time: 90,
     q: t`A conducting rod is released from rest on long vertical frictionless rails connected through a resistor, with a uniform horizontal field perpendicular to the rails' plane. Which of the following are correct?`,
     o: [
       t`Its speed increases and approaches a terminal value asymptotically`,
@@ -941,7 +940,7 @@ const ch6: Raw[] = [
     e: t`$U = \tfrac12LI^2 = \tfrac12\times2\times9 = 9$ J. Forgetting the $\tfrac12$ gives 18 J.`,
   },
   {
-    d: 1, ex: ALL, time: 40,
+    d: 1, ex: MAIN, time: 40,
     q: t`The current in a 0.5 H inductor falls uniformly from 10 A to 2 A in 0.04 s. The magnitude of the self-induced emf (in V) is:`,
     a: 100, unit: "V",
     e: t`$|\varepsilon| = L\dfrac{\Delta I}{\Delta t} = 0.5\times\dfrac{8}{0.04} = 100$ V.`,
@@ -1056,7 +1055,7 @@ const ch6: Raw[] = [
     e: t`$\varepsilon = NBA\omega\sin\omega t$ is largest when $\cos\omega t = 0$, i.e. when the flux is zero and the coil plane is parallel to $\vec B$; there the sides cut field lines fastest. When the flux is maximum, emf is zero.`,
   },
   {
-    d: 2, ex: ALL, time: 60,
+    d: 2, ex: MAIN, time: 60,
     q: t`A 50 Hz generator has a 50-turn coil of area 0.1 m². To produce a peak emf of 314 V, the field (in T, to one decimal place) must be:`,
     a: 0.2, tol: 0.01, unit: "T",
     h: t`$\varepsilon_0 = NBA\omega$, $\omega = 2\pi f$.`,
@@ -1084,7 +1083,7 @@ const ch6: Raw[] = [
     e: t`$d\varepsilon = Bv\,dr$ with $B = \mu_0I/(2\pi r)$: $\varepsilon = \dfrac{\mu_0Iv}{2\pi}\int_a^{a+l}\dfrac{dr}{r} = \dfrac{\mu_0Iv}{2\pi}\ln\dfrac{a+l}{a}$. The second option treats $B$ as uniform at its near-end value.`,
   },
   {
-    d: 2, ex: MAIN, time: 70,
+    d: 2, ex: ALL, time: 70,
     q: t`A square loop moves at constant speed into, through and out of a region of uniform magnetic field whose width is greater than the loop's side. The induced emf versus time is:`,
     o: [
       t`a constant value while entering, zero while fully inside, and a constant value of opposite sign while leaving`,
@@ -1143,7 +1142,7 @@ const ch6: Raw[] = [
     e: t`$\tau = L/R = 0.5$ s (A). $i_0 = 8/4 = 2$ A (B). $i(\tau) = 2(1 - e^{-1}) = 2\times0.632 \approx 1.26$ A (C). At $t = 0^+$, $i = 0$, so $V_R = 0$ and the full 8 V is across the inductor (D false).`,
   },
   {
-    d: 2, ex: MAIN, time: 70,
+    d: 2, ex: ALL, time: 70,
     q: t`Match List-I with List-II (dimensions).<br>**List-I:** (P) magnetic flux (Q) self-inductance (R) $L/R$ (S) induced emf<br>**List-II:** (1) $[ML^2T^{-2}A^{-2}]$ (2) $[ML^2T^{-2}A^{-1}]$ (3) $[ML^2T^{-3}A^{-1}]$ (4) $[T]$`,
     o: [t`P-2, Q-1, R-4, S-3`, t`P-1, Q-2, R-4, S-3`, t`P-3, Q-1, R-4, S-2`, t`P-2, Q-3, R-1, S-4`],
     a: 0,
@@ -1166,7 +1165,7 @@ const ch6: Raw[] = [
     e: t`$dB/dt = 0.4 + 0.4t = 1.2$ T/s at $t = 2$ s. $\varepsilon = \pi(0.1)^2\times1.2 = 0.0377$ V. $I = 0.0377/2 \approx 0.0188$ A $= 18.8$ mA.`,
   },
   {
-    d: 2, ex: MAIN, time: 60,
+    d: 2, ex: ALL, time: 60,
     q: t`A metal rod of length $l$ rotates with angular speed $\omega$ about an axis through its midpoint, perpendicular to the rod and parallel to a uniform field $B$. The emf between the two ends of the rod is:`,
     o: [t`zero`, t`$B\omega l^2/2$`, t`$B\omega l^2/8$`, t`$B\omega l^2/4$`],
     a: 0,
@@ -1223,7 +1222,7 @@ const ch7: Raw[] = [
     e: t`$\bar i = \dfrac{1}{T/2}\int_0^{T/2}I_0\sin\omega t\,dt = \dfrac{2I_0}{\pi}$. Over a full cycle the average is zero; $I_0/\sqrt2$ is the rms value.`,
   },
   {
-    d: 2, ex: MAIN, time: 75,
+    d: 2, ex: ALL, time: 75,
     q: t`The rms value of the current $i = 3 + 4\sin\omega t$ (in A) is:`,
     o: [t`$\sqrt{17}$ A`, t`5 A`, t`$7/\sqrt2$ A`, t`$5/\sqrt2$ A`],
     a: 0,
@@ -1279,7 +1278,7 @@ const ch7: Raw[] = [
     e: t`$Z = \sqrt{30^2 + (80-40)^2} = 50$ Ω; $I = 100/50 = 2$ A; $P = I^2R = 4\times30 = 120$ W ($= VI\cos\phi$ with $\cos\phi = 0.6$). 200 W is the apparent power $VI$; 160 W is $VI\sin\phi$.`,
   },
   {
-    d: 1, ex: ALL, time: 45,
+    d: 1, ex: MAIN, time: 45,
     q: t`A series circuit has $R = 60$ Ω, $X_L = 100$ Ω and $X_C = 20$ Ω. Its impedance (in Ω) is:`,
     a: 100, unit: "Ω",
     e: t`$Z = \sqrt{R^2 + (X_L - X_C)^2} = \sqrt{3600 + 6400} = 100$ Ω. Adding all three ($180$ Ω) ignores the phase differences.`,
@@ -1435,7 +1434,7 @@ const ch7: Raw[] = [
     e: t`$V_s/V_p = N_s/N_p = 5$, so $V_s = 1100$ V (a step-up transformer). Inverting the ratio gives 44 V.`,
   },
   {
-    d: 2, ex: ALL, time: 60,
+    d: 2, ex: MAIN, time: 60,
     q: t`A transformer of efficiency 80% works on a 250 V supply and delivers 8 A at 100 V from its secondary. The primary current (in A) is:`,
     a: 4, tol: 0.01, unit: "A",
     h: t`Output power $= \eta\times$ input power.`,
@@ -1519,7 +1518,7 @@ const ch7: Raw[] = [
     e: t`$\omega = 314$ rad/s $= 2\pi f$, so $f = 314/6.28 = 50$ Hz.`,
   },
   {
-    d: 1, ex: ALL, time: 35,
+    d: 1, ex: MAIN, time: 35,
     q: t`For 50 Hz AC, the time (in ms) for the current to rise from zero to its peak value is:`,
     a: 5, unit: "ms",
     e: t`Zero to peak is a quarter period: $T/4 = \dfrac{1}{4\times50} = 0.005$ s $= 5$ ms.`,

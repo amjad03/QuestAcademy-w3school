@@ -32,6 +32,10 @@ type Bank = { questions?: ExamQuestion[]; formulas?: FormulaSheet[] };
 const BANKS: Bank[] = [phy12_1, phy12_2, phy12_3, phy12_4, che12_1, che12_2, che12_3, mat12_1, mat12_2, mat12_3, mat12_4, bio12_1, bio12_2, bio12_3, phy11_1, phy11_2, phy11_3, phy11_4, che11_1, che11_2, che11_3, mat11_1, mat11_2, mat11_3, mat11_4, bio11_1, bio11_2, bio11_3];
 
 /** Class 11–12 chapter question banks (questions carry `grade` and the NCERT chapter title). */
-export const bankQuestions: ExamQuestion[] = BANKS.flatMap((b) => b.questions ?? []);
+// NEET, KCET and COMEDK set only single-answer MCQs, so numeric and multi-correct items never count for them.
+const MCQ_ONLY = new Set(["NEET", "KCET", "COMEDK"]);
+export const bankQuestions: ExamQuestion[] = BANKS.flatMap((b) => b.questions ?? []).map((q) =>
+  q.kind === "mcq" ? q : { ...q, exams: q.exams.filter((e) => !MCQ_ONLY.has(e)) },
+);
 /** Chapter formula / quick-revision sheets from the banks. */
 export const bankFormulas: FormulaSheet[] = BANKS.flatMap((b) => b.formulas ?? []);

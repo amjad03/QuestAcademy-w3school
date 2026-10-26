@@ -307,14 +307,14 @@ const integrals2: ExamQuestion[] = [
     hint: "By parts with u = x.",
     explain: t`$\int x\sin x\,dx = -x\cos x + \sin x$. So $[-x\cos x + \sin x]_0^\pi = (-\pi\cdot(-1) + 0) - 0 = \pi$. A common slip is $-\pi\cos\pi = -\pi$, giving a negative answer — but the integrand is non-negative on $[0, \pi]$, so the result must be positive.`,
   }),
-  mcq(INT, 2, MAIN, 90, {
+  mcq(INT, 2, ALL, 90, {
     q: t`The value of $\displaystyle\int_0^{\pi}\frac{x\sin x}{1 + \cos^2x}\,dx$ is:`,
     options: [t`$\dfrac{\pi^2}{2}$`, t`$\dfrac{\pi}{2}$`, t`$\dfrac{\pi^2}{8}$`, t`$\dfrac{\pi^2}{4}$`],
     answer: 3,
     hint: t`Use $x \to \pi - x$ to get rid of the factor $x$.`,
     explain: t`Let $I$ be the integral. Replacing $x$ by $\pi - x$ (sin unchanged, $\cos^2$ unchanged): $I = \int_0^\pi\frac{(\pi - x)\sin x}{1 + \cos^2x}dx$. Adding, $2I = \pi\int_0^\pi\frac{\sin x}{1 + \cos^2x}dx$. Put $u = \cos x$: $\int_{-1}^{1}\frac{du}{1 + u^2} = \frac\pi4 - \left(-\frac\pi4\right) = \frac\pi2$. So $2I = \frac{\pi^2}{2}$ and $I = \frac{\pi^2}{4}$. Forgetting to halve gives $\frac{\pi^2}{2}$.`,
   }),
-  mcq(INT, 2, MAIN, 90, {
+  mcq(INT, 2, ALL, 90, {
     q: t`$\displaystyle\int_0^{\pi/2}\ln(\sin x)\,dx$ equals:`,
     options: [
       t`$\dfrac{\pi}{2}\ln 2$`,
@@ -326,7 +326,7 @@ const integrals2: ExamQuestion[] = [
     hint: t`$I = \int_0^{\pi/2}\ln\cos x\,dx$ too; add and use $\sin x\cos x = \frac12\sin 2x$.`,
     explain: t`$I = \int_0^{\pi/2}\ln\cos x\,dx$ by $x \to \frac\pi2 - x$. Adding: $2I = \int_0^{\pi/2}\ln\frac{\sin 2x}{2}dx = \int_0^{\pi/2}\ln\sin 2x\,dx - \frac\pi2\ln 2$. With $u = 2x$, $\int_0^{\pi/2}\ln\sin 2x\,dx = \frac12\int_0^\pi\ln\sin u\,du = \frac12\cdot 2I = I$. So $2I = I - \frac\pi2\ln 2$, i.e. $I = -\frac\pi2\ln 2$. It must be negative since $\ln\sin x \le 0$ on the interval.`,
   }),
-  mcq(INT, 2, MAIN, 80, {
+  mcq(INT, 2, ALL, 80, {
     q: t`$\displaystyle\int\frac{\sin x}{\sin(x - a)}\,dx$ is:`,
     options: [
       t`$x\sin a + \cos a\ln|\sin(x - a)| + C$`,
@@ -356,7 +356,7 @@ const integrals2: ExamQuestion[] = [
     answer: 2,
     explain: t`$\int\sqrt{a^2 - x^2}dx = \frac x2\sqrt{a^2 - x^2} + \frac{a^2}{2}\sin^{-1}\frac xa$. From 0 to 3: $0 + \frac92\cdot\frac\pi2 = \frac{9\pi}{4}$. Geometrically it is a quarter of a circle of radius 3: $\frac14\pi(3)^2$. $\frac{9\pi}{2}$ is the half-circle.`,
   }),
-  mcq(INT, 2, ALL, 70, {
+  mcq(INT, 2, MAIN, 70, {
     q: t`$\displaystyle\lim_{n\to\infty}\sum_{r=1}^{n}\frac{n}{n^2 + r^2}$ equals:`,
     options: [t`$\dfrac\pi2$`, t`$\ln 2$`, t`$1$`, t`$\dfrac\pi4$`],
     answer: 3,
@@ -382,7 +382,7 @@ const integrals2: ExamQuestion[] = [
     hint: t`Leibniz rule: $\frac{d}{dx}\int_{u(x)}^{v(x)}f(t)dt = f(v)v' - f(u)u'$.`,
     explain: t`$f(t) = \frac1{\ln t}$. Then $\frac{d}{dx} = \frac{1}{\ln x^3}\cdot 3x^2 - \frac{1}{\ln x^2}\cdot 2x = \frac{3x^2}{3\ln x} - \frac{2x}{2\ln x} = \frac{x^2 - x}{\ln x}$. Option 1 forgets the chain-rule factors $v', u'$; option 2 forgets that $\ln x^3 = 3\ln x$.`,
   }),
-  mcq(INT, 2, MAIN, 100, {
+  mcq(INT, 2, ALL, 100, {
     q: t`$\displaystyle\int_0^2[x^2]\,dx$, where $[\cdot]$ is the greatest integer function, equals:`,
     options: [
       t`$4 - \sqrt2 - \sqrt3$`,
@@ -493,7 +493,7 @@ const integrals2: ExamQuestion[] = [
     hint: t`$x^2 - x = x(x - 1)$ is negative only on $(0, 1)$.`,
     explain: t`Split at 0 and 1. $\int_{-1}^0(x^2 - x)dx = 0 - \left(-\frac13 - \frac12\right) = \frac56$. $\int_0^1(x - x^2)dx = \frac12 - \frac13 = \frac16$. $\int_1^2(x^2 - x)dx = \left(\frac83 - 2\right) - \left(\frac13 - \frac12\right) = \frac56$. Total $= \frac{11}{6} \approx 1.83$. Ignoring the modulus gives $\int_{-1}^2(x^2 - x)dx = \frac32$, the usual wrong answer.`,
   }),
-  mcq(INT, 2, MAIN, 80, {
+  mcq(INT, 2, ALL, 80, {
     q: t`$\displaystyle\int\frac{dx}{x(x^n + 1)}$ ($x > 0$, $n \ne 0$) equals:`,
     options: [
       t`$\ln\left(\dfrac{x^n}{x^n + 1}\right) + C$`,
@@ -516,7 +516,7 @@ const integrals2: ExamQuestion[] = [
     answer: 1,
     explain: t`$\int\sqrt{x^2 + a^2}dx = \frac x2\sqrt{x^2 + a^2} + \frac{a^2}{2}\ln\left|x + \sqrt{x^2 + a^2}\right| + C$. With $a^2 = 4$, the log coefficient is $\frac42 = 2$. The minus sign belongs to $\int\sqrt{x^2 - a^2}dx$; option 3 forgets to halve $a^2$; option 4 ignores the chain rule.`,
   }),
-  mcq(INT, 2, MAIN, 60, {
+  mcq(INT, 2, ALL, 60, {
     q: t`**Assertion (A):** $\displaystyle\int_{-1}^{1}\ln\left(\frac{2 - x}{2 + x}\right)dx = 0$.<br>**Reason (R):** $g(x) = \ln\left(\dfrac{2 - x}{2 + x}\right)$ satisfies $g(-x) = -g(x)$.`,
     options: [
       "Both A and R are true and R is the correct explanation of A",
@@ -528,7 +528,7 @@ const integrals2: ExamQuestion[] = [
     hint: "Check the parity of g first.",
     explain: t`$g(-x) = \ln\frac{2 + x}{2 - x} = -\ln\frac{2 - x}{2 + x} = -g(x)$, so $g$ is odd (and continuous on $[-1, 1]$). The integral of an odd function over a symmetric interval is 0. So R is true and is exactly why A holds.`,
   }),
-  mcq(INT, 2, MAIN, 60, {
+  mcq(INT, 2, ALL, 60, {
     q: t`**Statement I:** $\displaystyle\int_0^{2\pi}\sin^3x\,dx = 0$.<br>**Statement II:** $\displaystyle\int_0^{2\pi}\sin^4x\,dx = 0$.<br>Choose the correct option.`,
     options: [
       "Both Statement I and Statement II are true",
@@ -676,7 +676,7 @@ const areas: ExamQuestion[] = [
     answer: 2,
     explain: t`$\sin x \ge 0$ on $[0, \pi]$, so area $= \int_0^\pi\sin x\,dx = [-\cos x]_0^\pi = 1 + 1 = 2$.`,
   }),
-  mcq(AOI, 1, ALL, 50, {
+  mcq(AOI, 1, MAIN, 50, {
     q: t`The area of the region enclosed by $y = x$ and $y = x^2$ is:`,
     options: [t`$\dfrac12$`, t`$\dfrac13$`, t`$\dfrac16$`, t`$\dfrac56$`],
     answer: 2,
@@ -717,28 +717,28 @@ const areas: ExamQuestion[] = [
     answer: 0,
     explain: t`$\int_1^3(2x + 1)dx = [x^2 + x]_1^3 = 12 - 2 = 10$. (A trapezium with parallel sides $y(1) = 3$, $y(3) = 7$ and width 2: $\frac{3 + 7}{2}\cdot 2 = 10$.)`,
   }),
-  mcq(AOI, 2, ALL, 70, {
+  mcq(AOI, 2, MAIN, 70, {
     q: t`The area bounded by the parabola $y^2 = 4x$ and the line $y = 2x$ is:`,
     options: [t`$\dfrac23$`, t`$\dfrac13$`, t`$\dfrac43$`, t`$1$`],
     answer: 1,
     hint: "Find the intersection points first.",
     explain: t`$(2x)^2 = 4x \Rightarrow x = 0, 1$. On $(0, 1)$ the parabola's upper branch $y = 2\sqrt x$ lies above $y = 2x$. Area $= \int_0^1(2\sqrt x - 2x)dx = \frac43 - 1 = \frac13$.`,
   }),
-  mcq(AOI, 2, ALL, 70, {
+  mcq(AOI, 2, MAIN, 70, {
     q: t`The area of the region enclosed between $y = x^2$ and $y = 2 - x^2$ is:`,
     options: [t`$\dfrac43$`, t`$\dfrac{16}{3}$`, t`$\dfrac83$`, t`$4$`],
     answer: 2,
     hint: "Upper curve minus lower curve between the intersection points.",
     explain: t`$x^2 = 2 - x^2 \Rightarrow x = \pm1$. Area $= \int_{-1}^{1}\left((2 - x^2) - x^2\right)dx = \left[2x - \frac{2x^3}{3}\right]_{-1}^{1} = 2\left(2 - \frac23\right) = \frac83$. Integrating only from 0 to 1 gives $\frac43$.`,
   }),
-  mcq(AOI, 2, ALL, 80, {
+  mcq(AOI, 2, MAIN, 80, {
     q: t`The area enclosed between the parabolas $y^2 = 4ax$ and $x^2 = 4ay$ ($a > 0$) is:`,
     options: [t`$\dfrac{8a^2}{3}$`, t`$\dfrac{16a^2}{3}$`, t`$\dfrac{32a^2}{3}$`, t`$\dfrac{16a}{3}$`],
     answer: 1,
     hint: t`They meet at $(0, 0)$ and $(4a, 4a)$.`,
     explain: t`Intersection: $\left(\frac{x^2}{4a}\right)^2 = 4ax \Rightarrow x^3 = 64a^3 \Rightarrow x = 4a$. Area $= \int_0^{4a}\left(2\sqrt{ax} - \frac{x^2}{4a}\right)dx = \frac{4\sqrt a}{3}(4a)^{3/2} - \frac{(4a)^3}{12a} = \frac{32a^2}{3} - \frac{16a^2}{3} = \frac{16a^2}{3}$. Area is in square units, so an answer in $a$ (not $a^2$) cannot be right.`,
   }),
-  mcq(AOI, 2, MAIN, 90, {
+  mcq(AOI, 2, ALL, 90, {
     q: t`The area of the smaller region cut off from the circle $x^2 + y^2 = 4$ by the line $x = 1$ is:`,
     options: [
       t`$\dfrac{4\pi}{3} - \sqrt3$`,
@@ -757,7 +757,7 @@ const areas: ExamQuestion[] = [
     hint: t`$\ln x$ crosses the $x$-axis at $x = 1$.`,
     explain: t`The region lies over $1 \le x \le e$ (where $\ln x \ge 0$). $\int_1^e\ln x\,dx = [x\ln x - x]_1^e = (e - e) - (0 - 1) = 1$.`,
   }),
-  mcq(AOI, 2, ALL, 75, {
+  mcq(AOI, 2, MAIN, 75, {
     q: t`The area enclosed between $y = \sin x$ and $y = \cos x$ and the lines $x = 0$, $x = \dfrac\pi2$ is:`,
     options: [t`$\sqrt2 - 1$`, t`$0$`, t`$2\sqrt2$`, t`$2\sqrt2 - 2$`],
     answer: 3,
@@ -770,7 +770,7 @@ const areas: ExamQuestion[] = [
     hint: "Draw it: a square with vertices on the axes.",
     explain: t`The curve is a square with vertices $(\pm2, 0)$, $(0, \pm2)$. Each quadrant contributes a triangle $\int_0^2(2 - x)dx = 2$, so the total is $4 \times 2 = 8$. (Diagonals 4 and 4: $\frac12 d_1d_2 = 8$.)`,
   }),
-  num(AOI, 2, ALL, 70, {
+  num(AOI, 2, MAIN, 70, {
     q: t`Find the area of the region $\{(x, y): x^2 \le y \le x + 2\}$.`,
     answer: 4.5,
     tolerance: 0.01,
@@ -802,7 +802,7 @@ const areas: ExamQuestion[] = [
     hint: t`Express the area in terms of $k$ first.`,
     explain: t`Area $= 2\int_0^{\sqrt k}(k - x^2)dx = 2\left(k^{3/2} - \frac{k^{3/2}}{3}\right) = \frac43k^{3/2}$. Setting $\frac43k^{3/2} = 36$: $k^{3/2} = 27$, $k = 9$.`,
   }),
-  mcq(AOI, 2, MAIN, 60, {
+  mcq(AOI, 2, ALL, 60, {
     q: t`**Assertion (A):** The area bounded by $y = \sin 2x$ and the $x$-axis for $0 \le x \le \pi$ is 2 sq. units.<br>**Reason (R):** $\displaystyle\int_0^\pi\sin 2x\,dx = 0$.`,
     options: [
       "Both A and R are true and R is the correct explanation of A",
@@ -813,7 +813,7 @@ const areas: ExamQuestion[] = [
     answer: 1,
     explain: t`$\sin 2x \ge 0$ on $[0, \pi/2]$ and $\le 0$ on $[\pi/2, \pi]$. Area $= \int_0^{\pi/2}\sin 2x\,dx + \left|\int_{\pi/2}^{\pi}\sin 2x\,dx\right| = 1 + 1 = 2$, so A is true. R is also true ($[-\frac12\cos 2x]_0^\pi = 0$), but a zero signed integral does not explain an area of 2 — it only shows why one must split at the zero.`,
   }),
-  mcq(AOI, 2, ALL, 100, {
+  mcq(AOI, 2, MAIN, 100, {
     q: t`Match the region in List I with its area in List II.<br>(P) between $y = x^2$ and $y = x$ (Q) under $y = \sqrt x$ from $x = 0$ to $4$ (R) inside $x^2 + y^2 = 9$ (S) under $y = \frac1x$ from $x = 1$ to $e^2$<br>List II: (1) $2$ (2) $\frac16$ (3) $9\pi$ (4) $\frac{16}{3}$`,
     options: [
       "P-2, Q-1, R-3, S-4",
@@ -824,7 +824,7 @@ const areas: ExamQuestion[] = [
     answer: 1,
     explain: t`(P) $\int_0^1(x - x^2)dx = \frac16$ → 2. (Q) $\int_0^4\sqrt x\,dx = \frac23\cdot 8 = \frac{16}{3}$ → 4. (R) $\pi r^2 = 9\pi$ → 3. (S) $\int_1^{e^2}\frac{dx}{x} = \ln e^2 = 2$ → 1.`,
   }),
-  mcq(AOI, 2, MAIN, 70, {
+  mcq(AOI, 2, ALL, 70, {
     q: t`**Statement I:** The area bounded by $y = \cos x$ and the $x$-axis for $0 \le x \le \pi$ is 0.<br>**Statement II:** The area bounded by $y = e^x$, the $y$-axis and the line $y = e$ is 1 sq. unit.`,
     options: [
       "Both Statement I and Statement II are true",
@@ -1006,7 +1006,7 @@ const diffEq: ExamQuestion[] = [
     answer: 2,
     explain: t`$x\,dy + y\,dx = d(xy)$, so $d(xy) = 0$ and $xy = C$. (Or separate: $\frac{dy}{y} = -\frac{dx}{x}$, $\ln|y| = -\ln|x| + c$.) $y = Cx$ solves $x\,dy - y\,dx = 0$.`,
   }),
-  mcq(DE, 1, ALL, 40, {
+  mcq(DE, 1, MAIN, 40, {
     q: t`The differential equation of the family of lines $y = mx$ ($m$ arbitrary) is:`,
     options: [
       t`$\dfrac{dy}{dx} = m$`,
@@ -1056,14 +1056,14 @@ const diffEq: ExamQuestion[] = [
     answer: 3,
     explain: t`$y' = 2e^{2x}$, $y'' = 4e^{2x} = 4y$, so $y'' - 4y = 0$. For $y' + 2y$ we get $4e^{2x} \ne 0$; $y'' + 4y = 0$ has the oscillating solutions $\cos 2x$, $\sin 2x$.`,
   }),
-  mcq(DE, 2, ALL, 60, {
+  mcq(DE, 2, MAIN, 60, {
     q: t`The differential equation of the family $y = A\cos 2x + B\sin 2x$ ($A, B$ arbitrary) is:`,
     options: [t`$y'' - 4y = 0$`, t`$y'' + 4y = 0$`, t`$y'' + 2y = 0$`, t`$y' + 2y = 0$`],
     answer: 1,
     hint: "Two constants — differentiate twice.",
     explain: t`$y' = -2A\sin 2x + 2B\cos 2x$, $y'' = -4A\cos 2x - 4B\sin 2x = -4y$. So $y'' + 4y = 0$ (order 2, matching the two constants).`,
   }),
-  mcq(DE, 2, ALL, 90, {
+  mcq(DE, 2, MAIN, 90, {
     q: t`The differential equation of the family of circles that touch the $y$-axis at the origin is:`,
     options: [
       t`$2xy\dfrac{dy}{dx} = x^2 - y^2$`,
@@ -1073,7 +1073,7 @@ const diffEq: ExamQuestion[] = [
     ],
     answer: 1,
     hint: t`Centre on the $x$-axis: $x^2 + y^2 - 2ax = 0$.`,
-    explain: t`Such a circle has centre $(a, 0)$ and radius $|a|$: $x^2 + y^2 = 2ax$. Differentiating: $2x + 2yy' = 2a = \frac{x^2 + y^2}{x}$. Multiply by $x$: $2x^2 + 2xyy' = x^2 + y^2$, i.e. $2xyy' = y^2 - x^2$. Option 1 is the family touching the $x$-axis at the origin.`,
+    explain: t`Such a circle has centre $(a, 0)$ and radius $|a|$: $x^2 + y^2 = 2ax$. Differentiating: $2x + 2yy' = 2a = \frac{x^2 + y^2}{x}$. Multiply by $x$: $2x^2 + 2xyy' = x^2 + y^2$, i.e. $2xyy' = y^2 - x^2$. Option 1 has the sign of the right side reversed. (For circles touching the $x$-axis at the origin, $x^2 + y^2 = 2by$, the equation is $(x^2 - y^2)y' = 2xy$.)`,
   }),
   mcq(DE, 2, ALL, 80, {
     q: t`The solution of $\dfrac{dy}{dx} = \dfrac{x + y}{x}$ ($x > 0$) with $y(1) = 0$ is:`,
@@ -1082,7 +1082,7 @@ const diffEq: ExamQuestion[] = [
     hint: t`Homogeneous: put $y = vx$.`,
     explain: t`$y = vx$: $v + xv' = 1 + v$, so $xv' = 1$, $v = \ln x + C$ and $y = x\ln x + Cx$. $y(1) = 0 \Rightarrow C = 0$: $y = x\ln x$. Check: $y' = \ln x + 1 = \frac{x + x\ln x}{x}$ ✓. (It is also linear: $y' - \frac yx = 1$.)`,
   }),
-  mcq(DE, 2, MAIN, 90, {
+  mcq(DE, 2, ALL, 90, {
     q: t`The general solution of $\dfrac{dy}{dx} = \dfrac yx + \tan\dfrac yx$ is:`,
     options: [
       t`$\cos\dfrac yx = Cx$`,
@@ -1092,7 +1092,7 @@ const diffEq: ExamQuestion[] = [
     ],
     answer: 1,
     hint: t`Put $y = vx$; you will need $\int\cot v\,dv$.`,
-    explain: t`$v + xv' = v + \tan v \Rightarrow \cot v\,dv = \frac{dx}{x}$. Integrating, $\ln|\sin v| = \ln|x| + c$, so $\sin\frac yx = Cx$. Option 1 integrates $\cot v$ as $-\ln\cos v$ (that is $\int\tan v$).`,
+    explain: t`$v + xv' = v + \tan v \Rightarrow \cot v\,dv = \frac{dx}{x}$. Integrating, $\ln|\sin v| = \ln|x| + c$, so $\sin\frac yx = Cx$. Option 1 comes from wrongly integrating $\cot v$ as $\ln|\cos v|$ (remember $\int\cot v\,dv = \ln|\sin v|$).`,
   }),
   num(DE, 2, ALL, 80, {
     q: t`If $y(x)$ satisfies $\dfrac{dy}{dx} + 2y = e^{-x}$ and $y(0) = 1$, find $y(\ln 2)$.`,
@@ -1108,7 +1108,7 @@ const diffEq: ExamQuestion[] = [
     hint: t`Divide by $x$ first: $P = \frac2x$.`,
     explain: t`$y' + \frac2xy = x$, IF $= x^2$: $(x^2y)' = x^3$, so $x^2y = \frac{x^4}{4} + C$. $y(1) = 1 \Rightarrow C = \frac34$. So $y = \frac{x^2}{4} + \frac{3}{4x^2}$ and $y(2) = 1 + \frac{3}{16} = \frac{19}{16}$. Using $Q = x^2$ without dividing by $x$ gives a wrong answer.`,
   }),
-  mcq(DE, 2, MAIN, 90, {
+  mcq(DE, 2, ALL, 90, {
     q: t`The general solution of $\dfrac{dy}{dx} = \dfrac{y}{x + y^2}$ ($y > 0$) is:`,
     options: [
       t`$y = x^2 + Cx$`,
@@ -1157,7 +1157,7 @@ const diffEq: ExamQuestion[] = [
     hint: "Recognise an exact differential.",
     explain: t`$d\left(\tan^{-1}\frac yx\right) = \frac{1}{1 + y^2/x^2}\cdot\frac{x\,dy - y\,dx}{x^2} = \frac{x\,dy - y\,dx}{x^2 + y^2}$. So the equation is $d\left(\tan^{-1}\frac yx\right) = dx$, giving $\tan^{-1}\frac yx = x + C$. Option 1 has the sign of the differential reversed ($d\tan^{-1}\frac xy = \frac{y\,dx - x\,dy}{x^2 + y^2}$).`,
   }),
-  mcq(DE, 2, MAIN, 90, {
+  mcq(DE, 2, ALL, 90, {
     q: t`The general solution of $x\,dy - y\,dx = x^2e^x\,dx$ ($x > 0$) is:`,
     options: [
       t`$y = e^x + Cx$`,
@@ -1169,12 +1169,12 @@ const diffEq: ExamQuestion[] = [
     hint: t`Divide by $x^2$: $\frac{x\,dy - y\,dx}{x^2} = d\left(\frac yx\right)$.`,
     explain: t`Dividing by $x^2$: $d\left(\frac yx\right) = e^xdx$, so $\frac yx = e^x + C$ and $y = xe^x + Cx$. Check: $xy' - y = x(e^x + xe^x + C) - xe^x - Cx = x^2e^x$ ✓. Option 3 forgets to multiply the constant by $x$.`,
   }),
-  num(DE, 2, ALL, 60, {
+  num(DE, 2, MAIN, 60, {
     q: t`Find the order of the differential equation of the family of all parabolas $y = ax^2 + bx + c$ (with $a, b, c$ arbitrary).`,
     answer: 3,
     explain: t`Three independent arbitrary constants ⇒ the differential equation has order 3. Indeed $y''' = 0$ eliminates all three.`,
   }),
-  mcq(DE, 2, ALL, 90, {
+  mcq(DE, 2, MAIN, 90, {
     q: t`The order and degree of the differential equation of all circles of a fixed radius $r$ (centre arbitrary) are:`,
     options: ["order 2, degree 2", "order 3, degree 1", "order 2, degree 1", "order 2, degree 3"],
     answer: 0,
@@ -1199,7 +1199,7 @@ const diffEq: ExamQuestion[] = [
     answer: 0,
     explain: t`Cubing both sides: $\left(y''\right)^2 = \left(1 + y'\right)^3$, a polynomial in derivatives with highest derivative $y''$ raised to 2. So the degree is 2 — A is true, and R is exactly the rule used. (Reading $\frac23$ directly is the common mistake.)`,
   }),
-  mcq(DE, 2, MAIN, 70, {
+  mcq(DE, 2, ALL, 70, {
     q: t`**Statement I:** $y = cx + c^2$ is a solution of $y = x\dfrac{dy}{dx} + \left(\dfrac{dy}{dx}\right)^2$ for every constant $c$.<br>**Statement II:** $\dfrac{dy}{dx} + y = x^2$ is a homogeneous differential equation.`,
     options: [
       "Both Statement I and Statement II are true",
@@ -1210,7 +1210,7 @@ const diffEq: ExamQuestion[] = [
     answer: 2,
     explain: t`I: $y' = c$, so $xy' + y'^2 = cx + c^2 = y$ ✓. II: $\frac{dy}{dx} = x^2 - y$ is not a function of $\frac yx$ alone ($F(\lambda x, \lambda y) = \lambda^2x^2 - \lambda y \ne F(x, y)$); it is linear, not homogeneous. So I is true, II is false.`,
   }),
-  mcq(DE, 2, ALL, 90, {
+  mcq(DE, 2, MAIN, 90, {
     q: t`Match each equation in List I with its type in List II.<br>(P) $\frac{dy}{dx} = \frac{x^2 + y^2}{2xy}$ (Q) $\frac{dy}{dx} + y\cos x = \sin 2x$ (R) $\frac{dy}{dx} = e^{x + y}$ (S) $\frac{dy}{dx} + \frac yx = y^2$<br>List II: (1) variables separable (2) homogeneous (3) linear (4) Bernoulli (reducible to linear)`,
     options: [
       "P-2, Q-3, R-1, S-4",

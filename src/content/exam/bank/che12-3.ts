@@ -13,8 +13,8 @@ type Item = DistOmit<ExamQuestion, "id" | "subject" | "chapter" | "grade">;
 
 /** Board / KCET / COMEDK level (also fine for NEET & JEE Main warm-up). */
 const B: ExamId[] = ["NEET", "JEE", "KCET", "COMEDK"];
-/** JEE Main / NEET level. */
-const M: ExamId[] = ["NEET", "JEE", "COMEDK"];
+/** JEE Main / NEET level (single-answer MCQs on NCERT content, so KCET too). */
+const M: ExamId[] = ["NEET", "JEE", "KCET", "COMEDK"];
 /** JEE Main numerical. */
 const N: ExamId[] = ["JEE"];
 /** JEE Main + Advanced. */

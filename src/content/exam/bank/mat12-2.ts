@@ -3,6 +3,8 @@ import type { ExamId, ExamQuestion, FormulaSheet } from "@/content/types";
 /**
  * Class 12 Maths — Continuity and Differentiability (NCERT ch. 5) and Application of
  * Derivatives (NCERT ch. 6). Original exam-style questions for JEE Main / Advanced, KCET, COMEDK.
+ * Rolle/MVT, tangents/normals and approximations are tagged JEE_ADV only (dropped from rationalised
+ * NCERT and the JEE Main 2024 syllabus).
  */
 const t = String.raw;
 
@@ -115,20 +117,20 @@ const ch5: ExamQuestion[] = [
     explain: t`Differentiate implicitly: $2x + 2y\,y' = 0 \Rightarrow y' = -x/y$.`,
   },
   {
-    ...C5, id: "mat12-2-05-013", exams: ALL, kind: "numeric", difficulty: 1, idealTime: 40,
+    ...C5, id: "mat12-2-05-013", exams: MAIN, kind: "numeric", difficulty: 1, idealTime: 40,
     q: t`If $f(x) = x^3 - 2x$, find $f'(2)$.`,
     answer: 10,
     explain: t`$f'(x) = 3x^2 - 2$, so $f'(2) = 12 - 2 = 10$.`,
   },
   {
-    ...C5, id: "mat12-2-05-014", exams: ALL, kind: "mcq", difficulty: 1, idealTime: 50,
+    ...C5, id: "mat12-2-05-014", exams: ADV_ONLY, kind: "mcq", difficulty: 1, idealTime: 50,
     q: t`The value of $c$ in Rolle's theorem for $f(x) = x^2 - 4x + 3$ on $[1, 3]$ is:`,
     options: [t`$1.5$`, t`$2$`, t`$2.5$`, t`$3$`],
     answer: 1,
     explain: t`$f(1) = 0 = f(3)$ and $f$ is a polynomial, so Rolle applies. $f'(c) = 2c - 4 = 0 \Rightarrow c = 2 \in (1, 3)$. $c = 3$ is an end point and is never allowed.`,
   },
   {
-    ...C5, id: "mat12-2-05-015", exams: ALL, kind: "mcq", difficulty: 1, idealTime: 55,
+    ...C5, id: "mat12-2-05-015", exams: ADV_ONLY, kind: "mcq", difficulty: 1, idealTime: 55,
     q: t`The value of $c$ given by the Mean Value Theorem for $f(x) = x^3$ on $[0, 3]$ is:`,
     options: [t`$\dfrac{3}{2}$`, t`$1$`, t`$\sqrt3$`, t`$\sqrt2$`],
     answer: 2,
@@ -155,7 +157,7 @@ const ch5: ExamQuestion[] = [
     explain: t`$1 - \cos 4x = 2\sin^2 2x$, so $f(x) = 2\left(\dfrac{\sin 2x}{x}\right)^2 \to 2(2)^2 = 8$. Using $1 - \cos\theta \approx \theta^2$ without the $\tfrac12$ gives 16; dropping the square on 2 gives 4.`,
   },
   {
-    ...C5, id: "mat12-2-05-018", exams: ALL, kind: "numeric", difficulty: 2, idealTime: 60,
+    ...C5, id: "mat12-2-05-018", exams: MAIN, kind: "numeric", difficulty: 2, idealTime: 60,
     q: t`$f(x) = \begin{cases} 2x + a, & x < 1 \\ 5, & x = 1 \\ bx^2 - a, & x > 1 \end{cases}$ is continuous at $x = 1$. Find $a + b$.`,
     answer: 11,
     hint: "Both one-sided limits must equal f(1).",
@@ -169,7 +171,7 @@ const ch5: ExamQuestion[] = [
     explain: t`$|x^2 - 4|$ has corners at $x = \pm2$ (where $x^2 - 4$ changes sign with non-zero slope $\pm4$); $|x - 1|$ has a corner at $x = 1$. At each of these points the other term is differentiable, so the corners cannot cancel. Total: $x = -2, 1, 2$, i.e. 3 points.`,
   },
   {
-    ...C5, id: "mat12-2-05-020", exams: MAIN, kind: "mcq", difficulty: 2, idealTime: 75,
+    ...C5, id: "mat12-2-05-020", exams: ALL, kind: "mcq", difficulty: 2, idealTime: 75,
     q: t`At $x = 2$, the function $f(x) = [x]\sin(\pi x)$ (where $[\,\cdot\,]$ is the greatest integer function) is:`,
     options: [
       "continuous and differentiable",
@@ -182,7 +184,7 @@ const ch5: ExamQuestion[] = [
     explain: t`Near $2^-$, $f = \sin\pi x$; near $2^+$, $f = 2\sin\pi x$; $f(2) = 0$. Both sides tend to $0$, so $f$ is continuous. LHD $= \pi\cos 2\pi = \pi$, RHD $= 2\pi\cos 2\pi = 2\pi$; they differ, so $f$ is not differentiable. ("Differentiable but not continuous" is impossible for any function.)`,
   },
   {
-    ...C5, id: "mat12-2-05-021", exams: ALL, kind: "numeric", difficulty: 2, idealTime: 70,
+    ...C5, id: "mat12-2-05-021", exams: MAIN, kind: "numeric", difficulty: 2, idealTime: 70,
     q: t`For the curve $x^3 + y^3 = 6xy$, find $\dfrac{dy}{dx}$ at the point $(3, 3)$.`,
     answer: -1,
     hint: "Differentiate implicitly; the product xy needs the product rule.",
@@ -218,7 +220,7 @@ const ch5: ExamQuestion[] = [
     explain: t`$\dfrac{dy}{dx} = \dfrac{a\sin\theta}{a(1 - \cos\theta)} = \cot\dfrac{\theta}{2}$. At $\theta = \pi/3$: $\cot\dfrac{\pi}{6} = \sqrt3$. Using $\tan(\theta/2)$ by mistake gives $1/\sqrt3$.`,
   },
   {
-    ...C5, id: "mat12-2-05-025", exams: MAIN, kind: "mcq", difficulty: 2, idealTime: 75,
+    ...C5, id: "mat12-2-05-025", exams: ALL, kind: "mcq", difficulty: 2, idealTime: 75,
     q: t`If $x = t^2$ and $y = t^3$, then $\dfrac{d^2y}{dx^2}$ equals:`,
     options: [t`$\dfrac{3}{2}$`, t`$\dfrac{3}{4t}$`, t`$\dfrac{3t}{4}$`, t`$\dfrac{3}{2t}$`],
     answer: 1,
@@ -226,7 +228,7 @@ const ch5: ExamQuestion[] = [
     explain: t`$\dfrac{dy}{dx} = \dfrac{3t^2}{2t} = \dfrac{3t}{2}$. Then $\dfrac{d^2y}{dx^2} = \dfrac{d}{dt}\left(\dfrac{3t}{2}\right)\cdot\dfrac{dt}{dx} = \dfrac32\cdot\dfrac{1}{2t} = \dfrac{3}{4t}$. Stopping at $\frac{d}{dt}(3t/2) = 3/2$ (forgetting to divide by $dx/dt$) is the classic error.`,
   },
   {
-    ...C5, id: "mat12-2-05-026", exams: MAIN, kind: "mcq", difficulty: 2, idealTime: 75,
+    ...C5, id: "mat12-2-05-026", exams: ALL, kind: "mcq", difficulty: 2, idealTime: 75,
     q: t`For $|x| < 1$, the derivative of $\tan^{-1}\!\left(\dfrac{2x}{1 - x^2}\right)$ with respect to $\sin^{-1}\!\left(\dfrac{2x}{1 + x^2}\right)$ is:`,
     options: [t`$-1$`, t`$2$`, t`$1$`, t`$\dfrac12$`],
     answer: 2,
@@ -247,7 +249,7 @@ const ch5: ExamQuestion[] = [
     explain: t`$y = -\log(x+1)$, so $y' = -\dfrac{1}{x+1}$ and $y'' = \dfrac{1}{(x+1)^2} = (y')^2$. Since $(y')^2 > 0$ while $y' < 0$, the options $y'' = y'$ and $y'' = -(y')^2$ fail.`,
   },
   {
-    ...C5, id: "mat12-2-05-028", exams: MAIN, kind: "mcq", difficulty: 2, idealTime: 70,
+    ...C5, id: "mat12-2-05-028", exams: ALL, kind: "mcq", difficulty: 2, idealTime: 70,
     q: t`**Assertion (A):** $f(x) = |x|^3$ is differentiable at $x = 0$.<br>**Reason (R):** $g(x) = |x|$ is not differentiable at $x = 0$.`,
     options: AR,
     answer: 1,
@@ -255,7 +257,7 @@ const ch5: ExamQuestion[] = [
     explain: t`$f'(0) = \lim_{h\to0}\dfrac{|h|^3}{h} = \lim_{h\to0} h|h| = 0$, so A is true. R is also true (LHD $-1$, RHD $1$). But R does not explain A — if anything, it would suggest the opposite; A holds because the cube flattens the corner.`,
   },
   {
-    ...C5, id: "mat12-2-05-029", exams: MAIN, kind: "mcq", difficulty: 2, idealTime: 70,
+    ...C5, id: "mat12-2-05-029", exams: ALL, kind: "mcq", difficulty: 2, idealTime: 70,
     q: t`**Statement I:** $f(x) = x^{1/3}$ is continuous at $x = 0$.<br>**Statement II:** $f(x) = x^{1/3}$ is differentiable at $x = 0$.`,
     options: S12,
     answer: 2,
@@ -283,7 +285,7 @@ const ch5: ExamQuestion[] = [
     explain: t`$y' = \dfrac{2y}{\sqrt{1-x^2}}$, i.e. $\sqrt{1-x^2}\,y' = 2y$. Differentiate: $\sqrt{1-x^2}\,y'' - \dfrac{x y'}{\sqrt{1-x^2}} = 2y'$. Multiply by $\sqrt{1-x^2}$: $(1-x^2)y'' - xy' = 2\sqrt{1-x^2}\,y' = 2(2y) = 4y$. So $k = 4$ (in general $k = a^2$ for $e^{a\sin^{-1}x}$).`,
   },
   {
-    ...C5, id: "mat12-2-05-032", exams: ALL, kind: "numeric", difficulty: 2, idealTime: 60, tolerance: 0.01,
+    ...C5, id: "mat12-2-05-032", exams: MAIN, kind: "numeric", difficulty: 2, idealTime: 60, tolerance: 0.01,
     q: t`$f(x) = \dfrac{e^{3x} - 1}{\log(1 + 2x)}$ for $x \ne 0$. Find the value of $f(0)$ that makes $f$ continuous at $x = 0$.`,
     answer: 1.5,
     hint: t`Use $\lim \dfrac{e^u - 1}{u} = 1$ and $\lim\dfrac{\log(1+u)}{u} = 1$.`,
@@ -298,7 +300,7 @@ const ch5: ExamQuestion[] = [
     explain: t`Continuity: $1 = a + b$. Equal derivatives: LHD $= 2x|_{1} = 2$, RHD $= a$, so $a = 2$ and $b = -1$. $(1,0)$ is continuous but has a corner; $(2,1)$ ignores continuity.`,
   },
   {
-    ...C5, id: "mat12-2-05-034", exams: MAIN, kind: "mcq", difficulty: 2, idealTime: 80,
+    ...C5, id: "mat12-2-05-034", exams: ALL, kind: "mcq", difficulty: 2, idealTime: 80,
     q: t`If $xy = e^{x - y}$ $(x, y > 0)$, then $\dfrac{dy}{dx}$ equals:`,
     options: [
       t`$\dfrac{y(x - 1)}{x(1 + y)}$`,
@@ -318,7 +320,7 @@ const ch5: ExamQuestion[] = [
     explain: t`$\dfrac{dy}{dx} = f'(x^2)\cdot 2x$. At $x = 1$: $f'(1)\cdot2 = \sqrt{2 - 1}\cdot 2 = 2$. Writing $f'(x)\cdot 2x$ instead of $f'(x^2)\cdot 2x$ happens to agree at $x=1$, but not elsewhere.`,
   },
   {
-    ...C5, id: "mat12-2-05-036", exams: MAIN, kind: "mcq", difficulty: 2, idealTime: 70,
+    ...C5, id: "mat12-2-05-036", exams: ALL, kind: "mcq", difficulty: 2, idealTime: 70,
     q: t`If $f(x) = \dfrac{1}{1 - x}$, the set of points where the composite $y = f(f(x))$ is discontinuous is:`,
     options: [t`$\{1\}$`, t`$\{0\}$`, t`$\{1, 2\}$`, t`$\{0, 1\}$`],
     answer: 3,
@@ -326,7 +328,7 @@ const ch5: ExamQuestion[] = [
     explain: t`$f(x)$ is undefined at $x = 1$. $f(f(x))$ is also undefined where $f(x) = 1$, i.e. $\dfrac{1}{1-x} = 1 \Rightarrow x = 0$. Indeed $f(f(x)) = \dfrac{x - 1}{x}$ for $x \ne 0, 1$. So the points are $\{0, 1\}$. Only listing $x=1$ misses the hidden point.`,
   },
   {
-    ...C5, id: "mat12-2-05-037", exams: ALL, kind: "mcq", difficulty: 2, idealTime: 60,
+    ...C5, id: "mat12-2-05-037", exams: ADV_ONLY, kind: "mcq", difficulty: 2, idealTime: 60,
     q: t`The value of $c$ in the Mean Value Theorem for $f(x) = \log x$ on $[1, e]$ is:`,
     options: [t`$\dfrac{e}{2}$`, t`$e - 1$`, t`$\sqrt e$`, t`$\dfrac{e + 1}{2}$`],
     answer: 1,
@@ -334,7 +336,7 @@ const ch5: ExamQuestion[] = [
     explain: t`$\dfrac{\log e - \log 1}{e - 1} = \dfrac{1}{e - 1} = f'(c) = \dfrac1c$, so $c = e - 1 \approx 1.718 \in (1, e)$. The midpoint $(e+1)/2$ is the answer only for a quadratic.`,
   },
   {
-    ...C5, id: "mat12-2-05-038", exams: ALL, kind: "mcq", difficulty: 2, idealTime: 60,
+    ...C5, id: "mat12-2-05-038", exams: ADV_ONLY, kind: "mcq", difficulty: 2, idealTime: 60,
     q: t`Which function satisfies all the hypotheses of Rolle's theorem on $[-1, 1]$?`,
     options: [t`$|x|$`, t`$x^3$`, t`$\dfrac{1}{x^2}$`, t`$x^2 + 1$`],
     answer: 3,
@@ -476,7 +478,7 @@ const ch6: ExamQuestion[] = [
     explain: t`$A = \pi r^2 \Rightarrow \dfrac{dA}{dt} = 2\pi r\dfrac{dr}{dt} = 2\pi(4)(0.5) = 4\pi$ cm²/s. Forgetting the factor $dr/dt = 0.5$ gives $8\pi$.`,
   },
   {
-    ...C6, id: "mat12-2-06-002", exams: ALL, kind: "numeric", difficulty: 1, idealTime: 45, unit: "cm³/s",
+    ...C6, id: "mat12-2-06-002", exams: MAIN, kind: "numeric", difficulty: 1, idealTime: 45, unit: "cm³/s",
     q: t`The edge of a cube increases at $3$ cm/s. Find the rate (in cm³/s) at which its volume increases when the edge is $10$ cm.`,
     answer: 900,
     explain: t`$V = x^3 \Rightarrow \dfrac{dV}{dt} = 3x^2\dfrac{dx}{dt} = 3(100)(3) = 900$ cm³/s.`,
@@ -501,20 +503,20 @@ const ch6: ExamQuestion[] = [
     explain: t`$f'(x) = 3x^2 + 3 \ge 3 > 0$ for every real $x$, so $f$ is strictly increasing on the whole real line.`,
   },
   {
-    ...C6, id: "mat12-2-06-005", exams: ALL, kind: "numeric", difficulty: 1, idealTime: 40,
+    ...C6, id: "mat12-2-06-005", exams: ADV_ONLY, kind: "numeric", difficulty: 1, idealTime: 40,
     q: t`Find the slope of the tangent to $y = x^3 - x$ at $x = 2$.`,
     answer: 11,
     explain: t`$\dfrac{dy}{dx} = 3x^2 - 1 = 12 - 1 = 11$ at $x = 2$.`,
   },
   {
-    ...C6, id: "mat12-2-06-006", exams: ALL, kind: "mcq", difficulty: 1, idealTime: 45,
+    ...C6, id: "mat12-2-06-006", exams: ADV_ONLY, kind: "mcq", difficulty: 1, idealTime: 45,
     q: t`The equation of the tangent to $y = x^2$ at $(1, 1)$ is:`,
     options: [t`$y = 2x - 1$`, t`$y = 2x + 1$`, t`$y = x$`, t`$x + 2y = 3$`],
     answer: 0,
     explain: t`Slope $= 2x = 2$ at $x = 1$. Tangent: $y - 1 = 2(x - 1) \Rightarrow y = 2x - 1$. $x + 2y = 3$ is the normal.`,
   },
   {
-    ...C6, id: "mat12-2-06-007", exams: ALL, kind: "mcq", difficulty: 1, idealTime: 45,
+    ...C6, id: "mat12-2-06-007", exams: ADV_ONLY, kind: "mcq", difficulty: 1, idealTime: 45,
     q: t`The slope of the normal to $y = 2x^2 + 3\sin x$ at $x = 0$ is:`,
     options: [t`$3$`, t`$\dfrac13$`, t`$-3$`, t`$-\dfrac13$`],
     answer: 3,
@@ -549,13 +551,13 @@ const ch6: ExamQuestion[] = [
     explain: t`$f'(x) = 6x^2 - 18x + 12 = 6(x - 1)(x - 2) = 0 \Rightarrow x = 1, 2$.`,
   },
   {
-    ...C6, id: "mat12-2-06-012", exams: ALL, kind: "numeric", difficulty: 1, idealTime: 45,
+    ...C6, id: "mat12-2-06-012", exams: MAIN, kind: "numeric", difficulty: 1, idealTime: 45,
     q: t`Two positive numbers have sum $16$. Find the maximum possible value of their product.`,
     answer: 64,
     explain: t`$P = x(16 - x)$, $P' = 16 - 2x = 0 \Rightarrow x = 8$, $P'' = -2 < 0$. Maximum product $= 8 \times 8 = 64$.`,
   },
   {
-    ...C6, id: "mat12-2-06-013", exams: ALL, kind: "mcq", difficulty: 1, idealTime: 45,
+    ...C6, id: "mat12-2-06-013", exams: ADV_ONLY, kind: "mcq", difficulty: 1, idealTime: 45,
     q: t`The point on the curve $y = x^2$ at which the tangent is parallel to the line $y = 4x - 1$ is:`,
     options: [t`$(4, 16)$`, t`$(1, 1)$`, t`$(2, 4)$`, t`$(-2, 4)$`],
     answer: 2,
@@ -589,7 +591,7 @@ const ch6: ExamQuestion[] = [
     explain: t`$x\dot x + y\dot y = 0$. When $x = 5$, $y = 12$. So $\dot y = -\dfrac{5 \times 1.2}{12} = -0.5$ m/s: the top slides down at $0.5$ m/s. Swapping $x$ and $y$ gives $12 \times 1.2/5 = 2.88$.`,
   },
   {
-    ...C6, id: "mat12-2-06-017", exams: ALL, kind: "numeric", difficulty: 2, idealTime: 90, tolerance: 0.01, unit: "m/min",
+    ...C6, id: "mat12-2-06-017", exams: MAIN, kind: "numeric", difficulty: 2, idealTime: 90, tolerance: 0.01, unit: "m/min",
     q: t`Water is poured at $2\pi$ m³/min into an inverted conical tank (vertex down) of radius $3$ m and height $6$ m. Find the rate (in m/min) at which the water level rises when the water is $4$ m deep.`,
     answer: 0.5,
     hint: "Use similar triangles to write r in terms of h before differentiating.",
@@ -624,7 +626,7 @@ const ch6: ExamQuestion[] = [
     explain: t`$f'(x) = 2x + a \ge 0$ for all $x \in [1, 2]$ requires $2 + a \ge 0$, i.e. $a \ge -2$. At $a = -2$, $f' = 2x - 2$ vanishes only at $x = 1$, so $f$ is still increasing. Least $a = -2$.`,
   },
   {
-    ...C6, id: "mat12-2-06-021", exams: ALL, kind: "mcq", difficulty: 2, idealTime: 60,
+    ...C6, id: "mat12-2-06-021", exams: ADV_ONLY, kind: "mcq", difficulty: 2, idealTime: 60,
     q: t`The points on $y = x^3 - 3x + 2$ at which the tangent is parallel to the $x$-axis are:`,
     options: [t`$(1, 0)$ and $(-1, 4)$`, t`$(1, 0)$ and $(-1, 0)$`, t`$(0, 2)$ only`, t`$(1, 4)$ and $(-1, 0)$`],
     answer: 0,
@@ -632,7 +634,7 @@ const ch6: ExamQuestion[] = [
     explain: t`$y' = 3x^2 - 3 = 0 \Rightarrow x = \pm1$. $y(1) = 1 - 3 + 2 = 0$, $y(-1) = -1 + 3 + 2 = 4$. So $(1, 0)$ and $(-1, 4)$.`,
   },
   {
-    ...C6, id: "mat12-2-06-022", exams: ALL, kind: "mcq", difficulty: 2, idealTime: 60,
+    ...C6, id: "mat12-2-06-022", exams: ADV_ONLY, kind: "mcq", difficulty: 2, idealTime: 60,
     q: t`The equation of the normal to the parabola $x^2 = 4y$ at $(2, 1)$ is:`,
     options: [t`$x - y = 1$`, t`$x + y = 3$`, t`$x + 2y = 4$`, t`$y = x + 1$`],
     answer: 1,
@@ -640,7 +642,7 @@ const ch6: ExamQuestion[] = [
     explain: t`$y = x^2/4$, $y' = x/2 = 1$ at $x = 2$. Normal slope $= -1$: $y - 1 = -(x - 2) \Rightarrow x + y = 3$. $x - y = 1$ is the tangent.`,
   },
   {
-    ...C6, id: "mat12-2-06-023", exams: MAIN, kind: "mcq", difficulty: 2, idealTime: 75,
+    ...C6, id: "mat12-2-06-023", exams: ADV_ONLY, kind: "mcq", difficulty: 2, idealTime: 75,
     q: t`The acute angle between the curves $y = x^2$ and $x = y^2$ at $(1, 1)$ is:`,
     options: [t`$\tan^{-1}\dfrac43$`, t`$\dfrac\pi4$`, t`$\tan^{-1}\dfrac34$`, t`$\dfrac\pi2$`],
     answer: 2,
@@ -648,14 +650,14 @@ const ch6: ExamQuestion[] = [
     explain: t`At $(1,1)$: for $y = x^2$, $m_1 = 2$; for $x = y^2$, $1 = 2yy' \Rightarrow m_2 = \tfrac12$. $\tan\theta = \dfrac{2 - \frac12}{1 + 1} = \dfrac34$, so $\theta = \tan^{-1}(3/4)$. $\tan^{-1}(4/3)$ inverts the formula.`,
   },
   {
-    ...C6, id: "mat12-2-06-024", exams: ALL, kind: "numeric", difficulty: 2, idealTime: 60, tolerance: 0.005,
+    ...C6, id: "mat12-2-06-024", exams: ADV_ONLY, kind: "numeric", difficulty: 2, idealTime: 60, tolerance: 0.005,
     q: t`Using differentials, find the approximate value of $\sqrt{25.3}$ (to two decimal places).`,
     answer: 5.03,
     hint: t`$y = \sqrt x$, $x = 25$, $\Delta x = 0.3$, $\Delta y \approx \dfrac{\Delta x}{2\sqrt x}$.`,
     explain: t`$\Delta y \approx \dfrac{0.3}{2 \times 5} = 0.03$, so $\sqrt{25.3} \approx 5 + 0.03 = 5.03$ (actual $5.0299$).`,
   },
   {
-    ...C6, id: "mat12-2-06-025", exams: ALL, kind: "numeric", difficulty: 2, idealTime: 90,
+    ...C6, id: "mat12-2-06-025", exams: MAIN, kind: "numeric", difficulty: 2, idealTime: 90,
     q: t`For $f(x) = 2x^3 - 15x^2 + 36x + 1$ on $[1, 5]$, find (absolute maximum) $-$ (absolute minimum).`,
     answer: 32,
     hint: "Check the critical points AND the end points.",
@@ -678,7 +680,7 @@ const ch6: ExamQuestion[] = [
     explain: t`$V' = (24 - 2x)^2 - 4x(24 - 2x) = (24 - 2x)(24 - 6x)$. Root $x = 12$ gives zero volume; $x = 4$ gives the maximum $V = 4 \times 16^2 = 1024$ cm³ (one-sixth of the side, as always for a square sheet).`,
   },
   {
-    ...C6, id: "mat12-2-06-028", exams: MAIN, kind: "mcq", difficulty: 2, idealTime: 60,
+    ...C6, id: "mat12-2-06-028", exams: ALL, kind: "mcq", difficulty: 2, idealTime: 60,
     q: t`**Assertion (A):** $f(x) = x^3$ has no local extremum at $x = 0$.<br>**Reason (R):** $f'(0) = 0$.`,
     options: AR,
     answer: 1,
@@ -686,7 +688,7 @@ const ch6: ExamQuestion[] = [
     explain: t`$f'(x) = 3x^2 \ge 0$ does not change sign at 0, so 0 is a point of inflection, not an extremum: A is true. R is true too. But $f'(0) = 0$ is only a necessary condition — it cannot explain the absence of an extremum. The sign change (or not) of $f'$ is what decides.`,
   },
   {
-    ...C6, id: "mat12-2-06-029", exams: MAIN, kind: "mcq", difficulty: 2, idealTime: 60,
+    ...C6, id: "mat12-2-06-029", exams: ALL, kind: "mcq", difficulty: 2, idealTime: 60,
     q: t`**Statement I:** Every function continuous on a closed interval $[a, b]$ attains an absolute maximum and an absolute minimum on it.<br>**Statement II:** If $f$ is strictly increasing on $(a, b)$, then $f'(x) > 0$ for every $x \in (a, b)$.`,
     options: S12,
     answer: 2,
@@ -715,7 +717,7 @@ const ch6: ExamQuestion[] = [
     explain: t`$f'(x) = 5x^4 + 3x^2 + 2 > 0$, so $f$ is strictly increasing and crosses zero at most once. Being an odd-degree polynomial, it crosses at least once ($f(0) = -5 < 0 < f(2)$). Exactly one real root.`,
   },
   {
-    ...C6, id: "mat12-2-06-032", exams: MAIN, kind: "mcq", difficulty: 2, idealTime: 90,
+    ...C6, id: "mat12-2-06-032", exams: ALL, kind: "mcq", difficulty: 2, idealTime: 90,
     q: t`The minimum distance from the point $(6, 0)$ to the parabola $y^2 = 8x$ is:`,
     options: [t`$6$`, t`$4\sqrt2$`, t`$2\sqrt5$`, t`$4$`],
     answer: 1,
@@ -739,14 +741,14 @@ const ch6: ExamQuestion[] = [
     explain: t`$3\sin x + 4\cos x = 5\sin(x + \alpha)$ with maximum $5$, so the maximum is $5 + 2 = 7$. Adding $3 + 4 + 2 = 9$ assumes both maxima occur together; $5$ forgets the constant.`,
   },
   {
-    ...C6, id: "mat12-2-06-035", exams: MAIN, kind: "numeric", difficulty: 2, idealTime: 75,
+    ...C6, id: "mat12-2-06-035", exams: ADV_ONLY, kind: "numeric", difficulty: 2, idealTime: 75,
     q: t`The line $y = 3x + c$ is tangent to the curve $y = x^2 + x + 3$. Find $c$.`,
     answer: 2,
     hint: "Set the slope 2x + 1 equal to 3, or demand a double root.",
     explain: t`Slope $2x + 1 = 3 \Rightarrow x = 1$, point $(1, 5)$. Then $5 = 3 + c \Rightarrow c = 2$. (Equivalently $x^2 - 2x + 3 - c = 0$ has discriminant $4 - 4(3 - c) = 0$.)`,
   },
   {
-    ...C6, id: "mat12-2-06-036", exams: MAIN, kind: "mcq", difficulty: 2, idealTime: 75,
+    ...C6, id: "mat12-2-06-036", exams: ALL, kind: "mcq", difficulty: 2, idealTime: 75,
     q: t`The minimum value of $f(x) = x^x$, $x > 0$, is:`,
     options: [t`$e^{1/e}$`, t`$\dfrac1e$`, t`$1$`, t`$e^{-1/e}$`],
     answer: 3,
@@ -754,7 +756,7 @@ const ch6: ExamQuestion[] = [
     explain: t`$f' = 0 \Rightarrow \log x = -1 \Rightarrow x = 1/e$; $f'$ goes from $-$ to $+$, so it is a minimum: $f(1/e) = (1/e)^{1/e} = e^{-1/e} \approx 0.69$. $1/e$ is the location.`,
   },
   {
-    ...C6, id: "mat12-2-06-037", exams: MAIN, kind: "mcq", difficulty: 2, idealTime: 75,
+    ...C6, id: "mat12-2-06-037", exams: ALL, kind: "mcq", difficulty: 2, idealTime: 75,
     q: t`$f(x) = \tan^{-1}(\sin x + \cos x)$ is strictly increasing on:`,
     options: [t`$\left(\dfrac\pi4, \dfrac\pi2\right)$`, t`$\left(0, \dfrac\pi4\right)$`, t`$\left(\dfrac\pi2, \pi\right)$`, t`$\left(\dfrac\pi4, \pi\right)$`],
     answer: 1,
@@ -762,7 +764,7 @@ const ch6: ExamQuestion[] = [
     explain: t`$f'(x) = \dfrac{\cos x - \sin x}{1 + (\sin x + \cos x)^2}$, positive exactly when $\cos x > \sin x$. Among the options this holds only on $(0, \pi/4)$; on $(\pi/4, \pi)$ we have $\sin x > \cos x$, so $f$ decreases.`,
   },
   {
-    ...C6, id: "mat12-2-06-038", exams: ALL, kind: "mcq", difficulty: 2, idealTime: 60,
+    ...C6, id: "mat12-2-06-038", exams: ADV_ONLY, kind: "mcq", difficulty: 2, idealTime: 60,
     q: t`The radius of a sphere is measured as $10$ cm with a possible error of $0.02$ cm. The approximate error in its computed volume is:`,
     options: [t`$0.8\pi$ cm³`, t`$80\pi$ cm³`, t`$8\pi$ cm³`, t`$4\pi$ cm³`],
     answer: 2,
@@ -885,7 +887,7 @@ const ch6: ExamQuestion[] = [
     explain: t`If $a^2 - 1 > 0$, need discriminant $\le 0$: $4(a-1)^2 - 8(a^2 - 1) \le 0 \Rightarrow (a - 1)(-a - 3) \le 0 \Rightarrow (a-1)(a+3) \ge 0 \Rightarrow a \le -3$ or $a \ge 1$; with $|a| > 1$ this gives $a \le -3$ or $a > 1$. At $a = 1$: $f' = 2 > 0$ ✓. At $a = -1$: $f' = -4x + 2$, negative for large $x$ ✗. At $a = -3$, $f' = 2(2x - 1)^2 \ge 0$, zero only at one point, so still increasing. Answer: $(-\infty, -3] \cup [1, \infty)$.`,
   },
   {
-    ...C6, id: "mat12-2-06-050", exams: ADV, kind: "mcq", difficulty: 3, idealTime: 150,
+    ...C6, id: "mat12-2-06-050", exams: ADV_ONLY, kind: "mcq", difficulty: 3, idealTime: 150,
     q: t`For the astroid $x^{2/3} + y^{2/3} = a^{2/3}$ $(a > 0)$, the length of the portion of any tangent intercepted between the coordinate axes (at points with $xy \ne 0$) is:`,
     options: [t`$a$`, t`$2a$`, t`$\dfrac a2$`, t`$\sqrt2\,a$`],
     answer: 0,
@@ -920,8 +922,8 @@ export const formulas: FormulaSheet[] = [
       { name: "Parametric second derivative", tex: t`\dfrac{d^2y}{dx^2} = \dfrac{d}{dt}\!\left(\dfrac{dy}{dx}\right)\Big/\dfrac{dx}{dt}`, note: "Not (d²y/dt²)/(d²x/dt²)." },
       { name: "Derivative of f w.r.t. g", tex: t`\dfrac{df}{dg} = \dfrac{f'(x)}{g'(x)}` },
       { name: "Useful substitutions", tex: t`\sqrt{1 - x^2}: x = \sin\theta;\ \ \dfrac{2x}{1 \pm x^2}, \dfrac{1 - x^2}{1 + x^2}: x = \tan\theta;\ \ \sqrt{1 \pm x}: x = \cos2\theta`, note: "Always check the range of θ before simplifying sin⁻¹(sin 2θ) etc." },
-      { name: "Rolle's theorem", tex: t`f \text{ cont. on } [a,b],\ \text{diff. on } (a,b),\ f(a) = f(b) \Rightarrow \exists\, c \in (a,b):\ f'(c) = 0` },
-      { name: "Lagrange's Mean Value Theorem", tex: t`\exists\, c \in (a, b):\ f'(c) = \dfrac{f(b) - f(a)}{b - a}`, note: "For a quadratic, c is the midpoint (a + b)/2." },
+      { name: "Rolle's theorem", tex: t`f \text{ cont. on } [a,b],\ \text{diff. on } (a,b),\ f(a) = f(b) \Rightarrow \exists\, c \in (a,b):\ f'(c) = 0`, note: "JEE Advanced only: dropped from rationalised NCERT and JEE Main 2024." },
+      { name: "Lagrange's Mean Value Theorem", tex: t`\exists\, c \in (a, b):\ f'(c) = \dfrac{f(b) - f(a)}{b - a}`, note: "For a quadratic, c is the midpoint (a + b)/2. JEE Advanced only: dropped from rationalised NCERT and JEE Main 2024." },
       { name: "Greatest integer function", tex: t`[x] \text{ is discontinuous at every integer};\ [g(x)] \text{ can jump where } g(x) \in \mathbb{Z}` },
     ],
   },
@@ -932,7 +934,7 @@ export const formulas: FormulaSheet[] = [
       { name: "Rate of change", tex: t`\dfrac{dy}{dt} = \dfrac{dy}{dx}\cdot\dfrac{dx}{dt}`, note: "Related rates: write the relation, then differentiate w.r.t. t." },
       { name: "Common related-rate relations", tex: t`A = \pi r^2,\ V_{\text{sphere}} = \tfrac43\pi r^3,\ S = 4\pi r^2,\ V_{\text{cone}} = \tfrac13\pi r^2h,\ V_{\text{cube}} = x^3` },
       { name: "Increasing / decreasing", tex: t`f' > 0 \text{ on } I \Rightarrow f \uparrow;\quad f' < 0 \text{ on } I \Rightarrow f \downarrow`, note: "f' may vanish at isolated points (x³ is still strictly increasing)." },
-      { name: "Slope of tangent", tex: t`m = \left.\dfrac{dy}{dx}\right|_{(x_0, y_0)}` },
+      { name: "Slope of tangent", tex: t`m = \left.\dfrac{dy}{dx}\right|_{(x_0, y_0)}`, note: "Tangents, normals and approximations: JEE Advanced only (dropped from rationalised NCERT and JEE Main 2024)." },
       { name: "Tangent line", tex: t`y - y_0 = m(x - x_0)` },
       { name: "Normal line", tex: t`y - y_0 = -\dfrac{1}{m}(x - x_0)`, note: "If m = 0 the normal is x = x₀; if the tangent is vertical the normal is y = y₀." },
       { name: "Angle between two curves", tex: t`\tan\theta = \left|\dfrac{m_1 - m_2}{1 + m_1m_2}\right|`, note: "Orthogonal if m₁m₂ = −1." },

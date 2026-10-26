@@ -37,9 +37,19 @@ const AR = [
   "A is false but R is true",
 ];
 
+/** Rotates the options so the correct one lands at a spread-out position (A–D). */
+function place(it: Q, no: number, i: number): { o: string[]; a: number } {
+  if (it.o === AR || it.o === ST) return { o: it.o, a: it.a };
+  const target = (i * 7 + no * 3 + (i >> 2)) % 4;
+  const shift = (target - it.a + 4) % 4;
+  const o = it.o.map((_, k) => it.o[(k - shift + 4) % 4]);
+  return { o, a: target };
+}
+
 function build(chapter: string, no: number, list: Q[]): ExamQuestion[] {
-  return list.map(
-    (it, i): ExamQuestion => ({
+  return list.map((it, i): ExamQuestion => {
+    const { o, a } = place(it, no, i);
+    return {
       id: `bio11-3-${no}-${String(i + 1).padStart(3, "0")}`,
       subject: "biology",
       chapter,
@@ -49,12 +59,12 @@ function build(chapter: string, no: number, list: Q[]): ExamQuestion[] {
       difficulty: it.d,
       idealTime: it.t,
       q: it.q,
-      options: it.o,
-      answer: it.a,
+      options: o,
+      answer: a,
       explain: it.e,
       ...(it.h ? { hint: it.h } : {}),
-    }),
-  );
+    };
+  });
 }
 
 /* ================================================================== */
@@ -170,7 +180,7 @@ const ch14: Q[] = [
     h: "After a normal breath out, what air is still inside?",
   },
   {
-    d: 2, t: 60,
+    d: 3, t: 60,
     q: "Which of the following lung volumes CANNOT be measured directly with a simple spirometer?",
     o: ["Tidal volume", "Inspiratory reserve volume", "Residual volume", "Expiratory reserve volume"],
     a: 2,
@@ -193,7 +203,7 @@ const ch14: Q[] = [
     h: "CO₂ must flow from blood to alveoli.",
   },
   {
-    d: 2, t: 60,
+    d: 3, t: 60,
     q: "Although the pCO₂ gradient between blood and alveoli (45 → 40 mm Hg) is much smaller than the pO₂ gradient, enough CO₂ diffuses out because:",
     o: [
       "CO₂ is actively pumped out by alveolar cells",
@@ -233,7 +243,7 @@ const ch14: Q[] = [
     e: "Haemoglobin has four haem groups (four subunits), so each haemoglobin molecule can carry a maximum of four molecules of O₂.",
   },
   {
-    d: 2, t: 75,
+    d: 3, t: 75,
     q: "Which set of conditions in the alveoli favours the formation of oxyhaemoglobin?",
     o: [
       "High pO₂, high pCO₂, high H⁺, high temperature",
@@ -287,7 +297,7 @@ const ch14: Q[] = [
       "CO₂ binds the haem iron, competing directly with O₂ in both places",
     ],
     a: 0,
-    e: "Carbamino-haemoglobin formation depends on the partial pressure of CO₂; pO₂ also affects it. In tissues, high pCO₂ and low pO₂ favour more CO₂ binding. In the alveoli, low pCO₂ and high pO₂ cause CO₂ to dissociate, so it is released. CO₂ binds the protein (amino groups), not the haem iron, so option D is wrong.",
+    e: "Carbamino-haemoglobin formation depends on the partial pressure of CO₂; pO₂ also affects it. In tissues, high pCO₂ and low pO₂ favour more CO₂ binding. In the alveoli, low pCO₂ and high pO₂ cause CO₂ to dissociate, so it is released. CO₂ binds the protein (amino groups), not the haem iron, so the option about competing for the haem iron is wrong.",
     h: "Conditions in the tissues are the opposite of those in the alveoli, for both gases.",
   },
   {
@@ -401,7 +411,7 @@ const ch14: Q[] = [
       "Inspiratory capacity = 4100 mL; expiratory capacity = 1600 mL",
     ],
     a: 0,
-    e: t`$TLC = RV + ERV + TV + IRV = 1200 + 1100 + 500 + 3000 = 5800$ mL. Minute ventilation $= TV \times \text{rate} = 500 \times 14 = 7000$ mL/min. 4600 mL is the vital capacity (TLC without RV). Inspiratory capacity is $TV + IRV = 3500$ mL (not 4100), while expiratory capacity is $TV + ERV = 1600$ mL, so option D is wrong in its first part.`,
+    e: t`$TLC = RV + ERV + TV + IRV = 1200 + 1100 + 500 + 3000 = 5800$ mL. Minute ventilation $= TV \times \text{rate} = 500 \times 14 = 7000$ mL/min. 4600 mL is the vital capacity (TLC without RV). Inspiratory capacity is $TV + IRV = 3500$ mL (not 4100), while expiratory capacity is $TV + ERV = 1600$ mL, so the option giving IC = 4100 mL is wrong in its first part.`,
     h: "TLC includes RV; IC = TV + IRV.",
   },
   {
@@ -416,11 +426,11 @@ const ch14: Q[] = [
   {
     d: 3, t: 90,
     q: t`**Assertion (A):** A healthy human breathes 12–16 times a minute even during sleep, without conscious effort.
-**Reason (R):** Human beings can moderate respiratory rhythm to suit tissue demands through the respiratory centres in the medulla and pons.`,
+**Reason (R):** The pneumotaxic centre in the pons increases the duration of inspiration to keep breathing going.`,
     o: AR,
-    a: 0,
-    e: "Both are true, and R explains A. Rhythmic breathing continues without conscious effort because the respiratory rhythm centre in the medulla, moderated by the pneumotaxic centre in the pons, automatically keeps up and adjusts breathing to match the body's needs.",
-    h: "Who sets the rhythm when you are asleep?",
+    a: 2,
+    e: "A is true: the respiratory rhythm centre in the medulla keeps breathing going automatically (12–16 breaths per minute), even in sleep. R is false: the pneumotaxic centre's neural signal REDUCES the duration of inspiration and thereby alters the respiratory rate.",
+    h: "Does the pneumotaxic centre lengthen or shorten inspiration?",
   },
 ];
 
@@ -607,7 +617,7 @@ const ch15: Q[] = [
     h: "Remember the reptile exception.",
   },
   {
-    d: 2, t: 60,
+    d: 3, t: 60,
     q: "Incomplete double circulation is seen in:",
     o: ["Fishes", "Birds", "Amphibians and most reptiles", "Mammals"],
     a: 2,
@@ -668,7 +678,7 @@ const ch15: Q[] = [
     e: "With 72 cycles per minute, one cardiac cycle lasts 60/72 ≈ 0.8 s.",
   },
   {
-    d: 2, t: 75,
+    d: 3, t: 75,
     q: "During joint diastole the ventricles fill with blood. About what fraction of ventricular filling is due to atrial systole?",
     o: ["About 70 per cent", "About 30 per cent", "About 5 per cent", "About 100 per cent"],
     a: 1,
@@ -676,7 +686,7 @@ const ch15: Q[] = [
     h: "Most filling is passive.",
   },
   {
-    d: 2, t: 75,
+    d: 3, t: 75,
     q: "If the stroke volume is 70 mL and the heart rate is 72 per minute, the cardiac output is about:",
     o: ["5040 mL per minute", "142 mL per minute", "720 mL per minute", "70 mL per minute"],
     a: 0,
@@ -993,7 +1003,7 @@ const ch16: Q[] = [
     h: "'Conditional' means it depends on hormones.",
   },
   {
-    d: 2, t: 75,
+    d: 3, t: 75,
     q: "The collecting duct helps maintain the osmolarity of the medullary interstitium by:",
     o: [
       "Secreting NaCl into the interstitium",
@@ -1019,7 +1029,7 @@ const ch16: Q[] = [
     h: "It increases going deeper.",
   },
   {
-    d: 2, t: 60,
+    d: 3, t: 60,
     q: "The gradient of osmolarity in the medullary interstitium is caused mainly by:",
     o: ["NaCl and urea", "Glucose and amino acids", "K⁺ and H⁺", "Proteins and uric acid"],
     a: 0,
@@ -1048,7 +1058,7 @@ const ch16: Q[] = [
     h: "ADH conserves water.",
   },
   {
-    d: 2, t: 75,
+    d: 3, t: 75,
     q: "Angiotensin II increases GFR because it:",
     o: [
       "Is a powerful vasodilator",
@@ -1329,7 +1339,7 @@ const ch17: Q[] = [
     h: "The same neurotransmitter is targeted in myasthenia gravis.",
   },
   {
-    d: 2, t: 75,
+    d: 3, t: 75,
     q: "During muscle contraction, which of the following remains unchanged in length?",
     o: ["I-band", "Sarcomere", "A-band", "H-zone"],
     a: 2,
@@ -1358,7 +1368,7 @@ const ch17: Q[] = [
     h: "Product of anaerobic glycolysis in muscle.",
   },
   {
-    d: 2, t: 75,
+    d: 3, t: 75,
     q: "Red muscle fibres differ from white muscle fibres in having:",
     o: [
       "Less myoglobin and few mitochondria",
@@ -1393,7 +1403,7 @@ const ch17: Q[] = [
     e: "The skull articulates with the first vertebra (atlas) through two occipital condyles, so the human skull is dicondylic.",
   },
   {
-    d: 2, t: 60,
+    d: 3, t: 60,
     q: "The vertebral formula of the human vertebral column (26 vertebrae) is:",
     o: [
       "Cervical 7, thoracic 12, lumbar 5, sacral 1 (fused), coccygeal 1 (fused)",
@@ -1402,7 +1412,7 @@ const ch17: Q[] = [
       "Cervical 7, thoracic 12, lumbar 5, sacral 5, coccygeal 4",
     ],
     a: 0,
-    e: "The adult column has 26 units: 7 cervical, 12 thoracic, 5 lumbar, 1 sacral (fused) and 1 coccygeal (fused). The last option counts the unfused embryonic pieces (5 sacral, 4 coccygeal), giving 33, not the 26 units in an adult. Seven cervical vertebrae are found in almost all mammals, including humans.",
+    e: "The adult column has 26 units: 7 cervical, 12 thoracic, 5 lumbar, 1 sacral (fused) and 1 coccygeal (fused). The option with 5 sacral and 4 coccygeal counts the unfused embryonic pieces (5 sacral, 4 coccygeal), giving 33, not the 26 units in an adult. Seven cervical vertebrae are found in almost all mammals, including humans.",
     h: "The total must be 26.",
   },
   {
@@ -1532,25 +1542,25 @@ const ch17: Q[] = [
       "A-band 1.3 µm; I-band 1.1 µm",
     ],
     a: 0,
-    e: "The A-band (length of the thick filaments) does not change, so it stays 1.6 µm. The I-band portion of a sarcomere = sarcomere length − A-band. At rest it is 3.0 − 1.6 = 1.4 µm; after contraction it is 2.4 − 1.6 = 0.8 µm. Option C keeps the resting I-band, and options B and D wrongly shorten the A-band.",
+    e: "The A-band (length of the thick filaments) does not change, so it stays 1.6 µm. The I-band portion of a sarcomere = sarcomere length − A-band. At rest it is 3.0 − 1.6 = 1.4 µm; after contraction it is 2.4 − 1.6 = 0.8 µm. The option with an I-band of 1.4 µm keeps the resting value, and the options with a shorter A-band are wrong because thick filaments do not shorten.",
     h: "The A-band length is fixed; only the I-band changes.",
   },
   {
     d: 3, t: 90,
     q: t`**Statement I:** Each limb of a human is made of 30 bones.
-**Statement II:** The hand has 8 carpals, 5 metacarpals and 14 phalanges, while the foot has 7 tarsals, 5 metatarsals and 14 phalanges.`,
+**Statement II:** The hand has 8 carpals, 5 metacarpals and 14 phalanges, while the foot has 8 tarsals, 5 metatarsals and 14 phalanges.`,
     o: ST,
-    a: 0,
-    e: "Both are correct. Forelimb: humerus 1 + radius 1 + ulna 1 + carpals 8 + metacarpals 5 + phalanges 14 = 30. Hind limb: femur 1 + tibia 1 + fibula 1 + patella 1 + tarsals 7 + metatarsals 5 + phalanges 14 = 30. The patella makes up for the one fewer tarsal.",
+    a: 2,
+    e: "Statement I is correct; Statement II is wrong, because the foot has 7 tarsals, not 8 (the hand has 8 carpals). Forelimb: humerus 1 + radius 1 + ulna 1 + carpals 8 + metacarpals 5 + phalanges 14 = 30. Hind limb: femur 1 + tibia 1 + fibula 1 + patella 1 + tarsals 7 + metatarsals 5 + phalanges 14 = 30. The patella makes up for the one fewer tarsal.",
     h: "Add up both limbs.",
   },
   {
     d: 3, t: 90,
     q: t`**Assertion (A):** The shoulder joint allows movement in many planes.
-**Reason (R):** The shoulder joint, between the humerus and the pectoral girdle, is a ball and socket joint, a type of synovial joint.`,
+**Reason (R):** The shoulder joint is formed between the clavicle and the acromion process of the scapula.`,
     o: AR,
-    a: 0,
-    e: "Both are true and R explains A. The head of the humerus (ball) fits into the glenoid cavity of the scapula (socket). As a synovial joint with a fluid-filled cavity, it allows considerable movement in many directions.",
+    a: 2,
+    e: "A is true: the shoulder is a ball and socket (synovial) joint and allows movement in many planes. R is false: the clavicle articulates with the acromion, but the shoulder joint is formed by the head of the humerus fitting into the glenoid cavity of the scapula.",
     h: "What joint type allows rotation in all directions?",
   },
 ];
@@ -1722,7 +1732,7 @@ const ch18: Q[] = [
     h: "Depolarisation is driven by an ion rushing in.",
   },
   {
-    d: 2, t: 60,
+    d: 3, t: 60,
     q: "The resting potential is restored at the site of excitation after an action potential mainly because:",
     o: [
       "The rise in Na⁺ permeability is quickly followed by a rise in K⁺ permeability, and K⁺ diffuses outside",
@@ -1735,7 +1745,7 @@ const ch18: Q[] = [
     h: "The other cation leaves.",
   },
   {
-    d: 2, t: 60,
+    d: 3, t: 60,
     q: "Compared with chemical synapses, impulse transmission across electrical synapses is:",
     o: [
       "Slower, and electrical synapses are very common in our body",
@@ -1756,7 +1766,7 @@ const ch18: Q[] = [
     h: "A 'cleft' is a gap.",
   },
   {
-    d: 2, t: 75,
+    d: 3, t: 75,
     q: "Binding of a neurotransmitter to its receptors on the post-synaptic membrane:",
     o: [
       "Always produces an excitatory potential",
@@ -2169,7 +2179,7 @@ const ch19: Q[] = [
     h: "The medulla secretes the emergency hormones; the cortex secretes the corticoids.",
   },
   {
-    d: 2, t: 75,
+    d: 3, t: 75,
     q: "Which of the following is NOT an effect of catecholamines?",
     o: [
       "Pupillary dilation and piloerection",
@@ -2182,7 +2192,7 @@ const ch19: Q[] = [
     h: "Think of the body getting ready to fight.",
   },
   {
-    d: 2, t: 60,
+    d: 3, t: 60,
     q: "The three layers of the adrenal cortex, from inside to outside, are:",
     o: [
       "Zona reticularis, zona fasciculata, zona glomerulosa",
@@ -2191,7 +2201,7 @@ const ch19: Q[] = [
       "Zona reticularis, zona glomerulosa, zona fasciculata",
     ],
     a: 0,
-    e: "The adrenal cortex has three layers: the inner zona reticularis, the middle zona fasciculata and the outer zona glomerulosa. Option B lists them from outside to inside, a common reversal.",
+    e: "The adrenal cortex has three layers: the inner zona reticularis, the middle zona fasciculata and the outer zona glomerulosa. Listing glomerulosa first gives the order from outside to inside, a common reversal.",
     h: "Note the direction asked: inside to outside.",
   },
   {
@@ -2208,7 +2218,7 @@ const ch19: Q[] = [
     h: "It conserves salt.",
   },
   {
-    d: 2, t: 75,
+    d: 3, t: 75,
     q: "Which statement about glucocorticoids is correct?",
     o: [
       "They stimulate gluconeogenesis, lipolysis and proteolysis, and cortisol has anti-inflammatory effects and suppresses the immune response",
@@ -2342,10 +2352,189 @@ const ch19: Q[] = [
   {
     d: 3, t: 90,
     q: t`**Assertion (A):** Iodine deficiency in the diet can lead to enlargement of the thyroid gland.
-**Reason (R):** Iodine is essential for the normal rate of hormone synthesis in the thyroid; its deficiency results in hypothyroidism.`,
+**Reason (R):** Thyroid hormones support the process of red blood cell formation.`,
     o: AR,
-    a: 0,
-    e: "Both are true and R explains A. Iodine is essential for the normal rate of thyroid hormone synthesis. Its deficiency causes hypothyroidism and enlargement of the thyroid gland, commonly called goitre.",
-    h: "T₃ and T₄ contain iodine.",
+    a: 1,
+    e: "Both are true, but R does not explain A. Iodine is essential for the normal rate of thyroid hormone synthesis; its deficiency causes hypothyroidism and enlargement of the thyroid (goitre). R is a true NCERT fact (thyroid hormones support RBC formation) but has nothing to do with why the gland enlarges.",
+    h: "Is R about iodine at all?",
+  },
+];
+
+/* ================================================================== */
+/* Exports                                                             */
+/* ================================================================== */
+
+export const questions: ExamQuestion[] = [
+  ...build(CH14, 14, ch14),
+  ...build(CH15, 15, ch15),
+  ...build(CH16, 16, ch16),
+  ...build(CH17, 17, ch17),
+  ...build(CH18, 18, ch18),
+  ...build(CH19, 19, ch19),
+];
+
+export const formulas: FormulaSheet[] = [
+  {
+    subject: "biology",
+    chapter: CH14,
+    items: [
+      { name: "Respiratory organs", tex: t`\text{Flatworms: diffusion; earthworm: cuticle; insects: tracheae; fishes: gills; amphibians: lungs + skin}` },
+      { name: "Thoracic chamber", tex: t`\text{Dorsal: vertebral column; ventral: sternum; lateral: ribs; floor: diaphragm}` },
+      { name: "Trachea divides", tex: t`\text{At the level of the 5th thoracic vertebra}`, note: "Airways up to initial bronchioles have incomplete cartilaginous rings." },
+      { name: "Conducting vs exchange part", tex: t`\text{Nostrils} \to \text{terminal bronchioles (conducting)};\ \text{alveoli + ducts (exchange)}` },
+      { name: "Tidal volume", tex: t`TV \approx 500\ \text{mL};\ \text{minute ventilation} \approx 6000\text{–}8000\ \text{mL min}^{-1}` },
+      { name: "Reserve and residual volumes", tex: t`IRV = 2500\text{–}3000,\ ERV = 1000\text{–}1100,\ RV = 1100\text{–}1200\ \text{mL}` },
+      { name: "Inspiratory / expiratory capacity", tex: t`IC = TV + IRV,\quad EC = TV + ERV` },
+      { name: "Functional residual capacity", tex: t`FRC = ERV + RV` },
+      { name: "Vital capacity", tex: t`VC = ERV + TV + IRV` },
+      { name: "Total lung capacity", tex: t`TLC = VC + RV = RV + ERV + TV + IRV` },
+      { name: "Partial pressures (mm Hg)", tex: t`\begin{array}{lcc} & pO_2 & pCO_2 \\ \text{Atmosphere} & 159 & 0.3 \\ \text{Alveoli} & 104 & 40 \\ \text{Deoxy blood} & 40 & 45 \\ \text{Oxy blood} & 95 & 40 \\ \text{Tissues} & 40 & 45 \end{array}` },
+      { name: "Solubility", tex: t`\text{Solubility of } CO_2 \approx 20\text{–}25 \times O_2` },
+      { name: "O₂ transport", tex: t`97\%\ \text{as oxyhaemoglobin (RBC)},\ 3\%\ \text{dissolved in plasma};\ 1\ \text{Hb} \to \max 4\,O_2` },
+      { name: "CO₂ transport", tex: t`70\%\ HCO_3^-,\ 20\text{–}25\%\ \text{carbamino-Hb},\ 7\%\ \text{dissolved}` },
+      { name: "Carbonic anhydrase reaction", tex: t`CO_2 + H_2O \rightleftharpoons H_2CO_3 \rightleftharpoons HCO_3^- + H^+`, note: "High in RBCs, minute in plasma." },
+      { name: "Gas delivered per 100 mL blood", tex: t`O_2 \to \text{tissues}: 5\ \text{mL};\quad CO_2 \to \text{alveoli}: 4\ \text{mL}` },
+      { name: "O₂ binding conditions", tex: t`\text{Alveoli: } \uparrow pO_2, \downarrow pCO_2, \downarrow H^+, \downarrow T;\ \text{tissues: the reverse}`, note: "Oxygen dissociation curve is sigmoid." },
+      { name: "Regulation", tex: t`\text{Rhythm centre: medulla; pneumotaxic centre: pons (shortens inspiration)}`, note: "Chemosensitive area responds to CO₂ and H⁺; O₂ role insignificant." },
+      { name: "Disorders", tex: t`\text{Asthma: bronchi inflamed; emphysema: alveolar walls damaged; occupational: fibrosis}` },
+      { name: "Breathing rate", tex: t`12\text{–}16\ \text{breaths min}^{-1}` },
+    ],
+  },
+  {
+    subject: "biology",
+    chapter: CH15,
+    items: [
+      { name: "Blood composition", tex: t`\text{Plasma } 55\%,\ \text{formed elements } 45\%;\ \text{plasma water } 90\text{–}92\%,\ \text{proteins } 6\text{–}8\%` },
+      { name: "Plasma proteins", tex: t`\text{Fibrinogen: clotting; globulins: defence; albumins: osmotic balance}` },
+      { name: "Serum", tex: t`\text{Serum} = \text{plasma} - \text{clotting factors}` },
+      { name: "RBC count and life", tex: t`5\text{–}5.5 \times 10^6\ \text{mm}^{-3};\ 120\ \text{days};\ \text{destroyed in spleen}` },
+      { name: "Haemoglobin", tex: t`12\text{–}16\ \text{g per } 100\ \text{mL}` },
+      { name: "WBC count", tex: t`6000\text{–}8000\ \text{mm}^{-3}` },
+      { name: "Differential WBC", tex: t`N\,60\text{–}65 > L\,20\text{–}25 > M\,6\text{–}8 > E\,2\text{–}3 > B\,0.5\text{–}1\ (\%)`, note: "Neutrophils + monocytes phagocytic; basophils release histamine, serotonin, heparin." },
+      { name: "Platelets", tex: t`1.5\text{–}3.5 \times 10^5\ \text{mm}^{-3};\ \text{from megakaryocytes}` },
+      { name: "ABO groups", tex: t`\begin{array}{lll} A & \text{antigen A} & \text{anti-B} \\ B & \text{antigen B} & \text{anti-A} \\ AB & A,B & \text{none} \\ O & \text{none} & \text{anti-A, anti-B} \end{array}`, note: "O universal donor; AB universal recipient." },
+      { name: "Rh factor", tex: t`\approx 80\%\ \text{Rh}^+;\ \text{Rh}^- \text{ mother} \times \text{Rh}^+ \text{ foetus} \Rightarrow \text{erythroblastosis foetalis}` },
+      { name: "Coagulation", tex: t`\text{Prothrombin} \xrightarrow{\text{thrombokinase}} \text{thrombin};\ \text{fibrinogen} \xrightarrow{\text{thrombin}} \text{fibrin}`, note: "Ca²⁺ essential." },
+      { name: "Heart chambers", tex: t`\text{Fish 2; amphibians, reptiles 3; crocodiles, birds, mammals 4}` },
+      { name: "Circulation types", tex: t`\text{Fish: single; amphibians/reptiles: incomplete double; birds/mammals: double}` },
+      { name: "Valves", tex: t`\text{Right AV: tricuspid; left AV: bicuspid (mitral); semilunar at aorta \& pulmonary artery}` },
+      { name: "Conducting system", tex: t`SAN \to AVN \to \text{bundle of His} \to \text{bundle branches} \to \text{Purkinje fibres}`, note: "SAN (pacemaker) fires 70–75 min⁻¹." },
+      { name: "Cardiac cycle", tex: t`T = \dfrac{60}{72} \approx 0.8\ \text{s}` },
+      { name: "Cardiac output", tex: t`CO = SV \times HR \approx 70 \times 72 \approx 5\ \text{L min}^{-1}` },
+      { name: "Ventricular filling", tex: t`\approx 70\%\ \text{passive (joint diastole)} + 30\%\ \text{atrial systole}` },
+      { name: "Heart sounds", tex: t`\text{Lub: AV valves close; dub: semilunar valves close}` },
+      { name: "ECG", tex: t`P: \text{atrial depolarisation};\ QRS: \text{ventricular depolarisation};\ T: \text{ventricular repolarisation}`, note: "End of T = end of systole; heart rate = QRS count per minute." },
+      { name: "Neural regulation", tex: t`\text{Sympathetic} \uparrow HR, CO;\ \text{parasympathetic} \downarrow;\ \text{centre in medulla}` },
+      { name: "Blood pressure", tex: t`\text{Normal } 120/80;\ \text{hypertension} \ge 140/90\ \text{mm Hg}` },
+      { name: "Lymph", tex: t`\text{Lacteals in villi absorb fats}` },
+    ],
+  },
+  {
+    subject: "biology",
+    chapter: CH16,
+    items: [
+      { name: "Nitrogenous wastes (toxicity)", tex: t`NH_3 > \text{urea} > \text{uric acid};\ \text{water needed in same order}` },
+      { name: "Ammonotelic", tex: t`\text{Bony fishes, aquatic amphibians, aquatic insects}` },
+      { name: "Ureotelic", tex: t`\text{Mammals, many terrestrial amphibians, marine fishes}` },
+      { name: "Uricotelic", tex: t`\text{Reptiles, birds, land snails, insects}` },
+      { name: "Excretory structures", tex: t`\text{Flame cells: Planaria; nephridia: annelids; Malpighian tubules: insects; antennal glands: prawn}` },
+      { name: "Kidney position and size", tex: t`T_{12} \text{ to } L_3;\ 10\text{–}12 \times 5\text{–}7 \times 2\text{–}3\ \text{cm};\ 120\text{–}170\ \text{g}` },
+      { name: "Nephrons", tex: t`\approx 10^6\ \text{per kidney}`, note: "Malpighian body = glomerulus + Bowman's capsule." },
+      { name: "Columns of Bertini", tex: t`\text{Cortex extending between medullary pyramids}` },
+      { name: "GFR", tex: t`125\ \text{mL min}^{-1} \approx 180\ \text{L day}^{-1}` },
+      { name: "Reabsorption", tex: t`\dfrac{180 - 1.5}{180} \approx 99\%` },
+      { name: "Filtration layers", tex: t`\text{Endothelium} + \text{basement membrane} + \text{Bowman's epithelium (podocytes)}` },
+      { name: "PCT", tex: t`\text{Nutrients} + 70\text{–}80\%\ \text{electrolytes \& water reabsorbed}` },
+      { name: "Loop of Henle", tex: t`\text{Descending: water out (concentrates); ascending: salt out, water-impermeable (dilutes)}` },
+      { name: "DCT / collecting duct", tex: t`\text{DCT: conditional } Na^+, H_2O;\ \text{CD: water, urea to interstitium}` },
+      { name: "Medullary gradient", tex: t`300 \to 1200\ \text{mOsmol L}^{-1}\ (\text{NaCl + urea});\ \text{urine up to} \approx 4\times\ \text{filtrate}` },
+      { name: "ADH", tex: t`\text{Osmoreceptors} \to \text{hypothalamus} \to \text{ADH (neurohypophysis)} \to \uparrow H_2O\ \text{reabsorption}` },
+      { name: "RAAS", tex: t`\text{Angiotensinogen} \xrightarrow{\text{renin}} \text{Ang I} \to \text{Ang II} \to \text{vasoconstriction} + \text{aldosterone}` },
+      { name: "ANF", tex: t`\text{Atrial stretch} \to ANF \to \text{vasodilation}, \downarrow BP` },
+      { name: "Urine", tex: t`1\text{–}1.5\ \text{L day}^{-1};\ 25\text{–}30\ \text{g urea};\ pH \approx 6.0` },
+      { name: "Micturition", tex: t`\text{Bladder smooth muscle contracts} + \text{urethral sphincter relaxes}` },
+      { name: "Other excretory organs", tex: t`\text{Liver: bilirubin, biliverdin; skin: sweat, sebum; lungs: } CO_2` },
+      { name: "Disorders", tex: t`\text{Uremia (dialysis); renal calculi: stones; glomerulonephritis: inflamed glomeruli}`, note: "Glycosuria + ketonuria indicate diabetes mellitus." },
+    ],
+  },
+  {
+    subject: "biology",
+    chapter: CH17,
+    items: [
+      { name: "Types of movement", tex: t`\text{Amoeboid (macrophages, leucocytes), ciliary (trachea, oviduct), muscular}` },
+      { name: "Muscle share", tex: t`\text{Mesodermal};\ 40\text{–}50\%\ \text{of adult body weight}` },
+      { name: "Muscle types", tex: t`\text{Skeletal: striated, voluntary; visceral: smooth, involuntary; cardiac: striated, involuntary}` },
+      { name: "Bands", tex: t`I\ (\text{isotropic, actin}),\ A\ (\text{anisotropic, myosin})` },
+      { name: "Sarcomere", tex: t`\text{Between two successive Z lines}`, note: "Z bisects I; M bisects A; H = part of A without thin filaments." },
+      { name: "Thin filament", tex: t`2\,F\text{-actin (polymers of G-actin)} + \text{tropomyosin} + \text{troponin}` },
+      { name: "Thick filament", tex: t`\text{Meromyosins: HMM (head + arm, ATPase) + LMM (tail)}` },
+      { name: "Contraction sequence", tex: t`ACh \to \text{AP} \to Ca^{2+} \text{ from SR} \to Ca^{2+}\text{–troponin} \to \text{cross bridge}` },
+      { name: "During contraction", tex: t`A\ \text{constant};\ I, H, \text{sarcomere shorten}` },
+      { name: "Fibre types", tex: t`\text{Red: myoglobin, mitochondria, aerobic; white: SR-rich, anaerobic}` },
+      { name: "Skeleton", tex: t`206 = 80\ (\text{axial}) + 126\ (\text{appendicular})` },
+      { name: "Skull", tex: t`22 = 8\ \text{cranial} + 14\ \text{facial};\ + \text{hyoid} + 3 \text{ ossicles per ear}`, note: "Dicondylic: two occipital condyles." },
+      { name: "Vertebral formula", tex: t`C_7\,T_{12}\,L_5\,S_1\,Co_1 = 26` },
+      { name: "Ribs", tex: t`12 \text{ pairs}: 1\text{–}7 \text{ true},\ 8\text{–}10 \text{ vertebrochondral},\ 11\text{–}12 \text{ floating}`, note: "Ribs are bicephalic." },
+      { name: "Each limb", tex: t`30 \text{ bones}` },
+      { name: "Forelimb", tex: t`1 + 1 + 1 + 8 + 5 + 14 = 30\ (\text{humerus, radius, ulna, carpals, metacarpals, phalanges})` },
+      { name: "Hind limb", tex: t`1 + 1 + 1 + 1 + 7 + 5 + 14 = 30\ (\text{femur, tibia, fibula, patella, tarsals, metatarsals, phalanges})` },
+      { name: "Girdles", tex: t`\text{Pectoral: clavicle + scapula (glenoid cavity); pelvic: ilium + ischium + pubis (acetabulum)}` },
+      { name: "Joints", tex: t`\text{Fibrous (sutures, none); cartilaginous (vertebrae, limited); synovial (free)}` },
+      { name: "Synovial joint examples", tex: t`\text{Ball \& socket: shoulder; hinge: knee; pivot: atlas–axis; gliding: carpals; saddle: thumb}` },
+      { name: "Disorders", tex: t`\text{Myasthenia gravis, muscular dystrophy, tetany } (\downarrow Ca^{2+}),\ \text{arthritis, osteoporosis, gout}` },
+    ],
+  },
+  {
+    subject: "biology",
+    chapter: CH18,
+    items: [
+      { name: "Divisions", tex: t`\text{CNS (brain + spinal cord)};\ \text{PNS: somatic + autonomic (sympathetic + parasympathetic)}` },
+      { name: "Fibre direction", tex: t`\text{Afferent: organ} \to \text{CNS};\ \text{efferent: CNS} \to \text{organ}` },
+      { name: "Neuron parts", tex: t`\text{Cell body + dendrites (Nissl's granules)} + \text{axon} \to \text{synaptic knobs}` },
+      { name: "Neuron types", tex: t`\text{Multipolar: cerebral cortex; bipolar: retina; unipolar: embryo}` },
+      { name: "Myelination", tex: t`\text{Myelinated: spinal \& cranial nerves; gaps = nodes of Ranvier}` },
+      { name: "Resting ion distribution", tex: t`[K^+]_{in} \gg [K^+]_{out},\quad [Na^+]_{out} \gg [Na^+]_{in}` },
+      { name: "Na⁺–K⁺ pump", tex: t`3\,Na^+ \text{ out} : 2\,K^+ \text{ in}` },
+      { name: "Resting potential", tex: t`\text{Outside } (+),\ \text{inside } (-) \Rightarrow \text{polarised}` },
+      { name: "Action potential", tex: t`Na^+ \text{ influx} \to \text{depolarisation};\ K^+ \text{ efflux} \to \text{repolarisation}` },
+      { name: "Synapses", tex: t`\text{Electrical: faster, rare};\ \text{chemical: cleft + neurotransmitter}` },
+      { name: "Meninges", tex: t`\text{Dura mater (outer)} \to \text{arachnoid} \to \text{pia mater (inner)}` },
+      { name: "Forebrain", tex: t`\text{Cerebrum (corpus callosum), thalamus, hypothalamus}` },
+      { name: "Cortex", tex: t`\text{Grey matter: cell bodies; white matter: myelinated tracts}`, note: "Association areas: intersensory associations, memory, communication." },
+      { name: "Hypothalamus", tex: t`\text{Temperature, hunger, thirst; neurosecretory cells}` },
+      { name: "Limbic system", tex: t`\text{Amygdala, hippocampus} + \text{hypothalamus: sexual behaviour, emotion, motivation}` },
+      { name: "Midbrain", tex: t`\text{Corpora quadrigemina (dorsal); cerebral aqueduct}` },
+      { name: "Hindbrain", tex: t`\text{Pons (tracts), cerebellum (convoluted), medulla (respiration, CVS, gastric)}` },
+      { name: "Brain stem", tex: t`\text{Midbrain} + \text{hindbrain}` },
+    ],
+  },
+  {
+    subject: "biology",
+    chapter: CH19,
+    items: [
+      { name: "Hormone", tex: t`\text{Non-nutrient intercellular messenger, produced in trace amounts}` },
+      { name: "Hypothalamic hormones", tex: t`\text{GnRH} \uparrow \text{gonadotrophins};\ \text{somatostatin} \downarrow GH`, note: "Reach anterior pituitary via portal circulation." },
+      { name: "Pituitary parts", tex: t`\text{Adenohypophysis: pars distalis + pars intermedia};\ \text{neurohypophysis: pars nervosa}`, note: "Located in sella turcica." },
+      { name: "Pars distalis", tex: t`GH,\ PRL,\ TSH,\ ACTH,\ LH,\ FSH` },
+      { name: "Neurohypophysis", tex: t`\text{Stores/releases oxytocin \& vasopressin (made in hypothalamus)}` },
+      { name: "GH disorders", tex: t`\uparrow \text{child: gigantism};\ \downarrow: \text{dwarfism};\ \uparrow \text{adult: acromegaly}` },
+      { name: "Gonadotrophins", tex: t`\text{LH: androgens (male), ovulation + corpus luteum (female); FSH: follicles, spermatogenesis}` },
+      { name: "ADH deficiency", tex: t`\text{Diabetes insipidus}` },
+      { name: "Pineal", tex: t`\text{Melatonin: diurnal rhythm, sleep–wake cycle}` },
+      { name: "Thyroid", tex: t`T_4,\ T_3 \to BMR;\ TCT \to \downarrow Ca^{2+}`, note: "Two lobes joined by isthmus." },
+      { name: "Thyroid disorders", tex: t`\text{Goitre (iodine}\downarrow),\ \text{cretinism, Graves' disease (exophthalmic goitre)}` },
+      { name: "Parathyroid", tex: t`4\ \text{glands};\ PTH \to \uparrow Ca^{2+}\ (\text{hypercalcaemic})` },
+      { name: "Thymus", tex: t`\text{Thymosins: T-cell differentiation; degenerates with age}` },
+      { name: "Adrenal medulla", tex: t`\text{Adrenaline, noradrenaline (catecholamines): fight or flight}` },
+      { name: "Adrenal cortex zones", tex: t`\text{Inner: reticularis; middle: fasciculata; outer: glomerulosa}` },
+      { name: "Corticoids", tex: t`\text{Cortisol: gluconeogenesis, anti-inflammatory; aldosterone: } \uparrow Na^+, H_2O,\ \downarrow K^+` },
+      { name: "Addison's disease", tex: t`\downarrow \text{adrenal cortex hormones}` },
+      { name: "Pancreas", tex: t`\alpha\text{-cells: glucagon (hyperglycaemic)};\ \beta\text{-cells: insulin (hypoglycaemic)}`, note: "1–2 million islets, 1–2% of pancreatic tissue." },
+      { name: "Gonads", tex: t`\text{Leydig cells: testosterone; follicles: estrogen; corpus luteum: progesterone}` },
+      { name: "Other hormones", tex: t`ANF\ (\text{atria}, \downarrow BP);\ \text{erythropoietin (JG cells)}` },
+      { name: "GI hormones", tex: t`\text{Gastrin: HCl; secretin: } HCO_3^-;\ CCK: \text{enzymes + bile};\ GIP: \text{inhibits}` },
+      { name: "Chemical classes", tex: t`\text{Peptide (insulin), steroid (cortisol), iodothyronine } (T_4),\ \text{amino-acid derivative (adrenaline)}` },
+      { name: "Mechanism", tex: t`\text{Membrane receptor} \to \text{second messenger (cAMP, } IP_3, Ca^{2+});\ \text{intracellular receptor} \to \text{gene expression}` },
+    ],
   },
 ];

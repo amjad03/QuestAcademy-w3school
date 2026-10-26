@@ -114,7 +114,7 @@ const ch8: Draft[] = [
     q: t`The radiation used in aircraft radar and in household ovens to heat food is:`,
     options: [t`infrared`, t`radio waves of long wavelength`, t`microwaves`, t`ultraviolet`],
     answer: 2,
-    explain: t`Microwaves (short-wavelength radio waves, about mm to 30 cm) are used in radar because of their short wavelength and in microwave ovens, where the frequency is chosen to match a resonant frequency of water molecules so energy is absorbed as heat. Infrared heats by radiation but is not what ovens or radar use.`,
+    explain: t`Microwaves (short-wavelength radio waves, about 1 mm to 0.1 m) are used in radar because of their short wavelength and in microwave ovens, where the frequency is chosen to match a resonant frequency of water molecules so energy is absorbed as heat. Infrared heats by radiation but is not what ovens or radar use.`,
   },
   {
     exams: ["NEET", "KCET", "COMEDK"],
@@ -149,7 +149,7 @@ const ch8: Draft[] = [
     explain: t`$k = 500$ m$^{-1}$, so $\lambda = 2\pi/k = 2\pi/500 = 1.26\times10^{-2}$ m $= 1.26$ cm. A phase of the form $kx + \omega t$ stays constant when $x$ decreases as $t$ increases, so the wave moves along $-x$. Check: $v = \omega/k = 1.5\times10^{11}/500 = 3\times10^8$ m/s. 2.0 mm is $1/k$ without the $2\pi$.`,
   },
   {
-    exams: ["JEE", "NEET", "KCET", "COMEDK"],
+    exams: ["JEE", "NEET", "COMEDK"],
     kind: "numeric",
     difficulty: 2,
     idealTime: 90,
@@ -172,7 +172,7 @@ const ch8: Draft[] = [
     explain: t`$u_B = \dfrac{B^2}{2\mu_0} = \dfrac{E^2}{2\mu_0c^2} = \dfrac{\varepsilon_0E^2}{2} = u_E$. The energy is shared equally between the two fields. Options $c$ or $c^2$ come from comparing the field magnitudes $E/B = c$ instead of energy densities.`,
   },
   {
-    exams: ["JEE", "NEET", "KCET", "COMEDK"],
+    exams: ["JEE", "NEET", "COMEDK"],
     kind: "numeric",
     difficulty: 2,
     idealTime: 80,
@@ -195,7 +195,7 @@ const ch8: Draft[] = [
     explain: t`Energy delivered $U = Pt = 0.030\times600 = 18$ J. For complete absorption $p = U/c = 18/(3\times10^8) = 6\times10^{-8}$ kg m/s. $1.2\times10^{-7}$ is the reflecting-surface value $2U/c$; $1\times10^{-10}$ results from using $t = 1$ s.`,
   },
   {
-    exams: ["JEE", "NEET", "KCET", "COMEDK"],
+    exams: ["JEE", "NEET", "COMEDK"],
     kind: "numeric",
     difficulty: 2,
     idealTime: 75,
@@ -274,7 +274,7 @@ const ch8: Draft[] = [
     explain: t`$E_0 = cB_0 = (3\times10^8)(2\times10^{-8}) = 6$ V/m. The wave travels along $+x$ (phase $kx - \omega t$); with $\vec B$ along $\hat k$, $\vec E$ must be along $\hat j$ because $\hat j\times\hat k = \hat i$. It cannot be along $x$ (the propagation direction) or $z$ (parallel to $\vec B$). 0.067 V/m comes from dividing by $c$.`,
   },
   {
-    exams: ["NEET", "JEE", "KCET", "COMEDK"],
+    exams: ["NEET", "JEE", "COMEDK"],
     kind: "numeric",
     difficulty: 1,
     idealTime: 40,
@@ -461,7 +461,7 @@ const ch9: Draft[] = [
     explain: t`$\sin C = 1/n = 1/\sqrt2 \Rightarrow C = 45^\circ$. Total internal reflection occurs for angles of incidence greater than $45^\circ$ inside the medium.`,
   },
   {
-    exams: ["NEET", "JEE", "KCET", "COMEDK"],
+    exams: ["NEET", "JEE", "COMEDK"],
     kind: "numeric",
     difficulty: 1,
     idealTime: 50,
@@ -553,7 +553,7 @@ const ch9: Draft[] = [
     explain: t`Normal adjustment (final image at infinity): $|m| = f_o/f_e = 100/5 = 20$, and the tube length is $f_o + f_e = 105$ cm. 24 is the magnifying power when the final image is at the near point.`,
   },
   {
-    exams: ["NEET", "KCET", "COMEDK"],
+    exams: ["NEET", "COMEDK"],
     kind: "numeric",
     difficulty: 1,
     idealTime: 40,
@@ -578,7 +578,7 @@ const ch9: Draft[] = [
     explain: t`For a thin prism $\delta = (n-1)A$. In glass $n$ decreases with wavelength (normal dispersion), so violet (shortest $\lambda$) has the largest $n$, the slowest speed and the largest deviation. Red is deviated least.`,
   },
   {
-    exams: ["NEET", "KCET", "COMEDK"],
+    exams: ["COMEDK"],
     kind: "mcq",
     difficulty: 1,
     idealTime: 40,
@@ -631,7 +631,7 @@ const ch9: Draft[] = [
     explain: t`$n = \dfrac{\sin\frac{60^\circ + 30^\circ}{2}}{\sin 30^\circ} = \dfrac{\sin45^\circ}{1/2} = \sqrt2$. $\sqrt3$ would correspond to $\delta_m = 60^\circ$.`,
   },
   {
-    exams: ["NEET", "JEE", "KCET", "COMEDK"],
+    exams: ["JEE_ADV"],
     kind: "mcq",
     difficulty: 2,
     idealTime: 60,
@@ -642,7 +642,7 @@ const ch9: Draft[] = [
     explain: t`$\omega = \dfrac{n_v - n_r}{n_y - 1} = \dfrac{0.02}{0.52} = 0.038$. 0.020 is only the numerator (angular dispersion per unit angle), and 0.013 divides by $n_y$ instead of $n_y - 1$.`,
   },
   {
-    exams: ["JEE", "JEE_ADV"],
+    exams: ["JEE_ADV"],
     kind: "mcq",
     difficulty: 3,
     idealTime: 120,
@@ -697,7 +697,7 @@ const ch9: Draft[] = [
     explain: t`$\sin C = \dfrac{n_w}{n_g} = \dfrac{4/3}{3/2} = \dfrac89$, so $C \approx 62.7^\circ$ — larger than the glass–air value $\sin^{-1}(2/3) \approx 41.8^\circ$. $9/8 > 1$ is impossible as a sine; it is the inverted ratio.`,
   },
   {
-    exams: ["NEET", "JEE", "KCET", "COMEDK"],
+    exams: ["NEET", "JEE", "COMEDK"],
     kind: "numeric",
     difficulty: 2,
     idealTime: 90,
@@ -799,7 +799,7 @@ const ch9: Draft[] = [
     explain: t`Hot air is less dense and has a **smaller** refractive index, so $n$ increases with height. Light from the sky bending down enters successively rarer layers and is finally totally reflected upward, appearing to come from a pool on the road. I is true; II reverses the gradient, so it is false.`,
   },
   {
-    exams: ["NEET", "KCET", "COMEDK"],
+    exams: ["COMEDK"],
     kind: "mcq",
     difficulty: 2,
     idealTime: 60,
@@ -944,7 +944,7 @@ const ch9: Draft[] = [
     explain: t`(A) False: a microscope objective has a **short** focal length (and small aperture) to give a large linear magnification $v_o/u_o$. (B) True: brightness $\propto D^2$ and minimum resolvable angle $\propto \lambda/D$. (C) True: $m = f_o/f_e$. (D) True: the objective's image lies at the common focus.`,
   },
   {
-    exams: ["NEET", "JEE", "KCET", "COMEDK"],
+    exams: ["NEET", "JEE", "COMEDK"],
     kind: "numeric",
     difficulty: 2,
     idealTime: 90,
@@ -956,7 +956,7 @@ const ch9: Draft[] = [
     explain: t`$u = -30$, $f = -10$: $\dfrac1v = -\dfrac1{10} + \dfrac1{30} = -\dfrac1{15}$, $v = -15$ cm, $m = -v/u = -0.5$. For a short object along the axis, $dv = -\dfrac{v^2}{u^2}du$, so the image length is $m^2\times1 = 0.25$ mm. Using $|m|$ gives 0.5 mm.`,
   },
   {
-    exams: ["NEET", "JEE", "KCET", "COMEDK"],
+    exams: ["NEET", "JEE", "COMEDK"],
     kind: "numeric",
     difficulty: 2,
     idealTime: 70,
@@ -978,7 +978,7 @@ const ch9: Draft[] = [
     explain: t`Rotating the mirror by $\theta$ rotates the normal by $\theta$, so the angle of incidence changes by $\theta$ and the angle between incident and reflected rays changes by $2\theta$. This is used in galvanometer lamp-and-scale arrangements.`,
   },
   {
-    exams: ["NEET", "JEE", "KCET", "COMEDK"],
+    exams: ["NEET", "JEE", "COMEDK"],
     kind: "numeric",
     difficulty: 2,
     idealTime: 60,
@@ -1055,7 +1055,7 @@ const ch9: Draft[] = [
     explain: t`$\dfrac{360^\circ}{60^\circ} = 6$, which is even, so the number of images is $6 - 1 = 5$ for any position of the object between the mirrors.`,
   },
   {
-    exams: ["NEET", "KCET", "COMEDK"],
+    exams: ["COMEDK"],
     kind: "mcq",
     difficulty: 2,
     idealTime: 60,
@@ -1117,7 +1117,7 @@ const ch10: Draft[] = [
     explain: t`A stable interference pattern needs a phase difference that does not change with time, which requires the same frequency (and wavelength). Equal amplitudes improve contrast but are not required for coherence.`,
   },
   {
-    exams: ["NEET", "JEE", "KCET", "COMEDK"],
+    exams: ["NEET", "JEE", "COMEDK"],
     kind: "numeric",
     difficulty: 1,
     idealTime: 50,
@@ -1149,7 +1149,7 @@ const ch10: Draft[] = [
     explain: t`Amplitudes are in ratio $\sqrt9 : 1 = 3 : 1$. $\dfrac{I_{\max}}{I_{\min}} = \dfrac{(3+1)^2}{(3-1)^2} = \dfrac{16}{4} = 4$. 16 : 1 is $(a_1 + a_2)^2/a_2^2$; 9 : 1 just repeats the source ratio.`,
   },
   {
-    exams: ["NEET", "JEE", "KCET", "COMEDK"],
+    exams: ["NEET", "JEE", "COMEDK"],
     kind: "mcq",
     difficulty: 1,
     idealTime: 40,
@@ -1204,7 +1204,7 @@ const ch10: Draft[] = [
     explain: t`The angular spread is about $\lambda/a$. When $a \gg \lambda$ the spread is negligible (ray optics holds); when $a \sim \lambda$ the bending is large and clearly observed. That is why sound (large $\lambda$) bends around doors easily but light does not.`,
   },
   {
-    exams: ["NEET", "KCET", "COMEDK"],
+    exams: ["JEE_ADV"],
     kind: "mcq",
     difficulty: 1,
     idealTime: 40,
@@ -1219,7 +1219,7 @@ const ch10: Draft[] = [
     explain: t`The smallest resolvable angle is $\Delta\theta \approx 1.22\lambda/D$, so resolving power $\propto D/\lambda$. A larger objective (or shorter wavelength) improves it; the eyepiece affects magnification, not resolution.`,
   },
   {
-    exams: ["NEET", "JEE", "KCET", "COMEDK"],
+    exams: ["JEE_ADV"],
     kind: "mcq",
     difficulty: 2,
     idealTime: 60,
@@ -1256,7 +1256,7 @@ const ch10: Draft[] = [
     explain: t`3rd bright: $3\beta = 6$ mm. 5th dark: $\dfrac{(2\times5 - 1)}{2}\beta = 4.5\beta = 9$ mm. Separation $= 3$ mm $= 1.5\beta$. Treating the 5th dark fringe as being at $5\beta$ gives 4 mm.`,
   },
   {
-    exams: ["NEET", "JEE", "KCET", "COMEDK"],
+    exams: ["NEET", "JEE", "COMEDK"],
     kind: "numeric",
     difficulty: 2,
     idealTime: 75,
@@ -1278,7 +1278,7 @@ const ch10: Draft[] = [
     explain: t`$\phi = \dfrac{2\pi}{\lambda}\cdot\dfrac\lambda4 = \dfrac\pi2$. $I = I_m\cos^2\dfrac\phi2 = I_m\cos^2 45^\circ = \dfrac{I_m}{2}$. $I_m/4$ is the value for a path difference of $\lambda/3$, and zero needs a path difference of $\lambda/2$.`,
   },
   {
-    exams: ["NEET", "JEE", "KCET", "COMEDK"],
+    exams: ["NEET", "JEE", "COMEDK"],
     kind: "numeric",
     difficulty: 2,
     idealTime: 75,
@@ -1289,7 +1289,7 @@ const ch10: Draft[] = [
     explain: t`$\phi = \dfrac{2\pi}{3}$, so $\dfrac{I}{I_{\max}} = \cos^2\dfrac\pi3 = \dfrac14 = 0.25$.`,
   },
   {
-    exams: ["NEET", "JEE", "KCET", "COMEDK"],
+    exams: ["NEET", "JEE", "COMEDK"],
     kind: "numeric",
     difficulty: 2,
     idealTime: 100,
@@ -1312,7 +1312,7 @@ const ch10: Draft[] = [
     explain: t`First minimum: $a\sin\theta = \lambda_1$. First secondary maximum: $a\sin\theta \approx \tfrac32\lambda_2$. So $\lambda_1 = 1.5\times400 = 600$ nm. 267 nm inverts the ratio; 800 nm takes the secondary maximum at $2\lambda$.`,
   },
   {
-    exams: ["NEET", "JEE", "KCET", "COMEDK"],
+    exams: ["NEET", "JEE", "COMEDK"],
     kind: "mcq",
     difficulty: 2,
     idealTime: 50,
@@ -1323,7 +1323,7 @@ const ch10: Draft[] = [
     explain: t`At $\theta_B$: $\theta_B + r = 90^\circ$, so $r = 33^\circ$. (Then $n = \tan57^\circ \approx 1.54$.)`,
   },
   {
-    exams: ["NEET", "JEE", "KCET", "COMEDK"],
+    exams: ["JEE_ADV"],
     kind: "mcq",
     difficulty: 2,
     idealTime: 50,
@@ -1468,7 +1468,7 @@ const ch10: Draft[] = [
     explain: t`Before the slits, one path is longer by $d\sin\theta$. At angle $\phi$ beyond the slits the other path is longer by $d\sin\phi$ (for $\phi$ on the side the beam is heading). Net path difference $d\sin\phi - d\sin\theta = 0$ gives $\phi = \theta$: the zero-order maximum lies straight along the incident beam direction, and the whole pattern is shifted by angle $\theta$.`,
   },
   {
-    exams: ["NEET", "JEE", "KCET", "COMEDK"],
+    exams: ["NEET", "JEE", "COMEDK"],
     kind: "numeric",
     difficulty: 2,
     idealTime: 80,
@@ -1513,7 +1513,7 @@ const ch10: Draft[] = [
     explain: t`Intensity $\propto$ slit width, so $I_1 : I_2 = 1 : 4$ and amplitudes are $1 : 2$. $\dfrac{I_{\max}}{I_{\min}} = \dfrac{(1 + 2)^2}{(2 - 1)^2} = 9$. Taking amplitudes proportional to width gives 25 : 9.`,
   },
   {
-    exams: ["NEET", "JEE", "KCET", "COMEDK"],
+    exams: ["JEE_ADV"],
     kind: "mcq",
     difficulty: 2,
     idealTime: 80,
@@ -1584,7 +1584,7 @@ const ch10: Draft[] = [
     explain: t`(A) is false — that was the prediction of the corpuscular theory. Huygens' construction gives $\dfrac{\sin i}{\sin r} = \dfrac{v_1}{v_2}$, so bending towards the normal means $v_2 < v_1$. (B) The central part of the wave is delayed most in the thick middle of the lens, giving a converging spherical wavefront. (C) Rays are wavefront normals. (D) The thicker base delays the wave more, tilting the plane wavefront towards the base.`,
   },
   {
-    exams: ["NEET", "JEE", "KCET", "COMEDK"],
+    exams: ["NEET", "JEE", "COMEDK"],
     kind: "numeric",
     difficulty: 1,
     idealTime: 60,

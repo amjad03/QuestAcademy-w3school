@@ -12,6 +12,8 @@ const t = String.raw;
 type Draft<T = ExamQuestion> = T extends unknown ? Omit<T, "id" | "subject" | "chapter" | "grade"> : never;
 
 const ALL: ExamId[] = ["NEET", "JEE", "KCET", "COMEDK"];
+/** Numeric-entry items: KCET sets only single-answer MCQs. */
+const NUM: ExamId[] = ["NEET", "JEE", "COMEDK"];
 const ADV: ExamId[] = ["JEE", "JEE_ADV"];
 const MULTI: ExamId[] = ["JEE_ADV"];
 
@@ -149,7 +151,7 @@ const dBlock: Draft[] = [
   {
     kind: "numeric",
     difficulty: 1,
-    exams: ALL,
+    exams: NUM,
     idealTime: 40,
     q: "How many unpaired electrons are present in the Fe³⁺ ion (Fe, Z = 26)?",
     answer: 5,
@@ -159,7 +161,7 @@ const dBlock: Draft[] = [
   {
     kind: "numeric",
     difficulty: 1,
-    exams: ALL,
+    exams: NUM,
     idealTime: 50,
     q: "Calculate the spin-only magnetic moment of Mn²⁺ (Z = 25) in Bohr magnetons (BM). Give the answer to two decimal places.",
     answer: 5.92,
@@ -313,7 +315,7 @@ const dBlock: Draft[] = [
   {
     kind: "numeric",
     difficulty: 2,
-    exams: ALL,
+    exams: NUM,
     idealTime: 90,
     hint: "Balance Fe, Cr, Na and C first, then count oxygen.",
     q: "Sodium chromate is made by fusing chromite ore with sodium carbonate in air: $a\\,\\text{FeCr}_2\\text{O}_4 + 8\\,\\text{Na}_2\\text{CO}_3 + b\\,\\text{O}_2 \\rightarrow 8\\,\\text{Na}_2\\text{CrO}_4 + c\\,\\text{Fe}_2\\text{O}_3 + 8\\,\\text{CO}_2$. What is the value of $b$?",
@@ -370,7 +372,7 @@ const dBlock: Draft[] = [
     options: ["[Xe] 4f⁸ 6s²", "[Xe] 4f⁷ 5d¹ 6s²", "[Xe] 4f⁷ 6s² 6p¹", "[Xe] 4f⁸ 5d¹ 6s¹"],
     answer: 1,
     explain:
-      "Gd keeps a half-filled 4f⁷ sub-shell and puts the extra electron in 5d: [Xe] $4f^7 5d^1 6s^2$. [Xe] 4f⁸ 6s² is the pattern of most neighbours (e.g. Tb is 4f⁹ 6s²) but is less stable here. 6p is far higher in energy, and 4f⁸ 5d¹ 6s¹ has 65 electrons.",
+      "Gd keeps a half-filled 4f⁷ sub-shell and puts the extra electron in 5d: [Xe] $4f^7 5d^1 6s^2$. [Xe] 4f⁸ 6s² is the pattern of most neighbours (e.g. Tb is 4f⁹ 6s²) but is less stable here. 6p is far higher in energy, and 4f⁸ 5d¹ 6s¹ (also 64 electrons) breaks both the half-filled 4f⁷ and the filled 6s², so it is not the ground state.",
   },
   {
     kind: "mcq",
@@ -447,7 +449,7 @@ const dBlock: Draft[] = [
   {
     kind: "numeric",
     difficulty: 2,
-    exams: ALL,
+    exams: NUM,
     idealTime: 120,
     hint: "MnO₄⁻ gains 5 e⁻; each oxalate gives 2 e⁻.",
     q: "What mass (in g) of oxalic acid dihydrate, H₂C₂O₄·2H₂O (M = 126 g mol⁻¹), is oxidised by 20.0 mL of 0.0200 M KMnO₄ in acidic solution? Give the answer to three decimal places.",
@@ -472,7 +474,7 @@ const dBlock: Draft[] = [
   {
     kind: "numeric",
     difficulty: 2,
-    exams: ALL,
+    exams: NUM,
     idealTime: 80,
     hint: "Check for a d–d transition or a charge-transfer band.",
     q: "How many of the following species are coloured in aqueous solution? Sc³⁺, Ti⁴⁺, V³⁺, Cu⁺, Zn²⁺, Ni²⁺, Fe³⁺, MnO₄⁻",
@@ -661,7 +663,7 @@ const coordination: Draft[] = [
   {
     kind: "numeric",
     difficulty: 1,
-    exams: ALL,
+    exams: NUM,
     idealTime: 50,
     q: "One mole of CoCl₃·5NH₃ is treated with excess AgNO₃ solution at room temperature. How many moles of AgCl precipitate?",
     answer: 2,
@@ -822,7 +824,7 @@ const coordination: Draft[] = [
   {
     kind: "numeric",
     difficulty: 2,
-    exams: ALL,
+    exams: NUM,
     idealTime: 70,
     hint: "Cl⁻ is weak-field; work out the geometry first.",
     q: "Calculate the spin-only magnetic moment (in BM) of the tetrahedral complex [NiCl₄]²⁻. Give the answer to two decimal places.",
@@ -859,7 +861,7 @@ const coordination: Draft[] = [
   {
     kind: "numeric",
     difficulty: 2,
-    exams: ALL,
+    exams: NUM,
     idealTime: 80,
     hint: "High-spin d⁴ is t₂g³ e_g¹.",
     q: "The CFSE of a high-spin d⁴ octahedral complex is $-x\\,\\Delta_o$ (ignoring pairing energy). Find $x$.",
@@ -883,7 +885,7 @@ const coordination: Draft[] = [
   {
     kind: "numeric",
     difficulty: 2,
-    exams: ALL,
+    exams: NUM,
     idealTime: 90,
     hint: "Count trans and cis, then check whether either is chiral.",
     q: "What is the total number of stereoisomers (geometrical + optical) of [Co(en)₂Cl₂]⁺?",
@@ -993,7 +995,7 @@ const coordination: Draft[] = [
   {
     kind: "numeric",
     difficulty: 2,
-    exams: ALL,
+    exams: NUM,
     idealTime: 70,
     hint: "β₄ = K₁K₂K₃K₄, so logs add.",
     q: "The stepwise formation constants for [Cu(NH₃)₄]²⁺ have log K₁ = 4.0, log K₂ = 3.2, log K₃ = 2.7 and log K₄ = 2.0. What is log β₄, the overall formation constant? Give one decimal place.",
@@ -1359,7 +1361,7 @@ const haloalkanes: Draft[] = [
   {
     kind: "numeric",
     difficulty: 1,
-    exams: ALL,
+    exams: NUM,
     idealTime: 50,
     q: "How many structural isomers are possible for C₄H₉Br?",
     answer: 4,
@@ -1527,7 +1529,7 @@ const haloalkanes: Draft[] = [
   {
     kind: "numeric",
     difficulty: 2,
-    exams: ALL,
+    exams: NUM,
     idealTime: 60,
     hint: "Each H attached to O or N is acidic enough to protonate a Grignard reagent.",
     q: "How many moles of methane are produced when 1 mole of 2-aminoethanol (HO–CH₂–CH₂–NH₂) reacts with excess CH₃MgBr?",
@@ -1578,7 +1580,7 @@ const haloalkanes: Draft[] = [
   {
     kind: "numeric",
     difficulty: 2,
-    exams: ALL,
+    exams: NUM,
     idealTime: 50,
     hint: "SN2 is first order in each reactant.",
     q: "A primary alkyl bromide reacts with OH⁻ by the SN2 mechanism. If the concentrations of both the alkyl bromide and OH⁻ are doubled, by what factor does the initial rate increase?",
@@ -1589,7 +1591,7 @@ const haloalkanes: Draft[] = [
   {
     kind: "numeric",
     difficulty: 2,
-    exams: ALL,
+    exams: NUM,
     idealTime: 70,
     hint: "Count positional isomers and geometrical isomers.",
     q: "2-Bromobutane is heated with alcoholic KOH. How many different alkenes (including stereoisomers) can form?",
@@ -1600,7 +1602,7 @@ const haloalkanes: Draft[] = [
   {
     kind: "numeric",
     difficulty: 2,
-    exams: ALL,
+    exams: NUM,
     idealTime: 90,
     hint: "A chiral carbon carries four different groups.",
     q: "How many of the following compounds are chiral? 2-chlorobutane, 1-chlorobutane, 2-chloro-2-methylbutane, 3-chloropentane, 2-bromo-3-methylbutane, 1-chloro-2-methylbutane",
@@ -1863,7 +1865,7 @@ export const formulas: FormulaSheet[] = [
       { name: "VBT hybridisation", tex: t`\text{CN } 4: sp^3\ (\text{tetrahedral}),\ dsp^2\ (\text{square planar});\ \ \text{CN } 6: d^2sp^3\ (\text{inner}),\ sp^3d^2\ (\text{outer})`, note: "[Ni(CN)₄]²⁻ dsp²; [NiCl₄]²⁻ sp³; [Co(NH₃)₆]³⁺ d²sp³; [CoF₆]³⁻ sp³d²; [Ni(NH₃)₆]²⁺ sp³d²." },
       { name: "Spin-only moment", tex: t`\mu = \sqrt{n(n+2)}\ \text{BM}`, note: "[Fe(CN)₆]⁴⁻ 0; [Fe(CN)₆]³⁻ 1.73; [NiCl₄]²⁻ 2.83; [CoF₆]³⁻ 4.90; [Fe(H₂O)₆]³⁺ 5.92 BM." },
       { name: "Colour and Δ", tex: t`\Delta_o = \frac{N_A h c}{\lambda_{\max}}`, note: "Colour seen is complementary to the absorbed colour. [Ti(H₂O)₆]³⁺: λ ≈ 498 nm, Δₒ ≈ 240 kJ mol⁻¹, violet." },
-      { name: "Structural isomerism", tex: t`\text{ionisation, linkage, coordination, solvate (hydrate)}`, note: "Hydrate isomers of CrCl₃·6H₂O: violet [Cr(H₂O)₆]Cl₃, blue-green [Cr(H₂O)₅Cl]Cl₂·H₂O, green [Cr(H₂O)₄Cl₂]Cl·2H₂O." },
+      { name: "Structural isomerism", tex: t`\text{ionisation, linkage, coordination, solvate (hydrate)}`, note: "Hydrate isomers of CrCl₃·6H₂O: violet [Cr(H₂O)₆]Cl₃, grey-green [Cr(H₂O)₅Cl]Cl₂·H₂O, dark green [Cr(H₂O)₄Cl₂]Cl·2H₂O." },
       { name: "Geometrical isomer counts", tex: t`[\text{Ma}_2\text{b}_2]_{sq}: 2;\ \ [\text{Ma}_4\text{b}_2]: 2;\ \ [\text{Ma}_3\text{b}_3]: 2\ (fac/mer);\ \ [\text{Ma}_2\text{b}_2\text{c}_2]: 5`, note: "Tetrahedral MA₂B₂ shows no geometrical isomerism." },
       { name: "Stereoisomer counts (with en)", tex: t`[\text{M(AA)}_3]: 2;\ \ [\text{M(AA)}_2\text{b}_2]: 3;\ \ [\text{M(AA)a}_2\text{b}_2]: 4;\ \ [\text{Ma}_2\text{b}_2\text{c}_2]: 6`, note: "cis-[M(AA)₂b₂] is chiral; trans is not. Square planar complexes are almost never chiral." },
       { name: "Stability constants", tex: t`\beta_n = K_1 K_2 \cdots K_n,\qquad \log\beta_n = \sum \log K_i`, note: "Usually K₁ > K₂ > … ; chelates are extra stable (chelate effect, entropy)." },
