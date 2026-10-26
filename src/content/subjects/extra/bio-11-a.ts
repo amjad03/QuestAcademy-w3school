@@ -3732,9 +3732,9 @@ const animalKingdom: Topic = {
         },
         {
           kind: "numeric",
-          q: "Add the heart chambers of one each of: Trygon, Hyla, Alligator (counted as a typical reptile, 3), Psittacula, Delphinus.",
+          q: "Add the heart chambers of one each of: Trygon, Hyla, Chameleon, Psittacula, Delphinus.",
           answer: 16,
-          explain: "Trygon 2 + Hyla 3 + Alligator 3 + Psittacula 4 + Delphinus 4 = 16.",
+          explain: "Trygon 2 + Hyla 3 + Chameleon 3 + Psittacula 4 + Delphinus 4 = 16.",
           difficulty: 2,
           hint: "Use the class rule unless the animal is the crocodile.",
         },
