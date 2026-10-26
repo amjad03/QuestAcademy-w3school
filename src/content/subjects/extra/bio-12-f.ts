@@ -116,6 +116,7 @@ export const topics: Topic[] = [
                 { text: "Pomfret", group: 1, hint: "A flat sea fish." },
                 { text: "Mackerel", group: 1, hint: "A sea fish, bangda in Marathi." },
               ],
+              explain: "Indian major carps and common carp are fresh-water fishes; Hilsa, sardines, pomfrets and mackerel are the marine examples NCERT lists.",
             },
           },
           {
@@ -302,6 +303,7 @@ export const topics: Topic[] = [
                 ["Mare × male donkey giving a mule", "Interspecific hybridisation"],
                 ["FSH-like hormone, 6–8 eggs, surrogate mothers", "MOET"],
               ],
+              explain: "Same breed and related means inbreeding; same breed but unrelated means out-crossing; two breeds is cross-breeding; two species is interspecific hybridisation.",
             },
           },
           {

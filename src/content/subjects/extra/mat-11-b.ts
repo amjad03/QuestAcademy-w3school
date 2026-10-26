@@ -511,7 +511,7 @@ The two roots are **conjugates** of each other. The **fundamental theorem of alg
             type: "callout",
             tone: "note",
             title: "Board note: square root of a complex number",
-            md: t`The current rationalised NCERT book (CBSE, Karnataka PUC) does not include square roots of a complex number. **ISC** Class 11 and **JEE / KCET** still use it, so learn the method below.
+            md: t`The current rationalised NCERT book (CBSE, Karnataka PUC) does not include square roots of a complex number. **ISC** Class 11 and **JEE** still use it (and it can turn up in KCET / COMEDK), so learn the method below.
 
 To find $\sqrt{a + ib}$, put $(x + iy)^2 = a + ib$. Then $x^2 - y^2 = a$ and $2xy = b$. Also $x^2 + y^2 = |a + ib| = \sqrt{a^2 + b^2}$. Solve for $x^2$ and $y^2$, then choose signs so that $xy$ has the sign of $b$.`,
           },
@@ -641,7 +641,7 @@ To find $\sqrt{a + ib}$, put $(x + iy)^2 = a + ib$. Then $x^2 - y^2 = a$ and $2x
             type: "table",
             headers: ["Result", "Statement", "Safe to use when"],
             rows: [
-              ["Triangle inequality", t`$\big||z_1| - |z_2|\big| \le |z_1 \pm z_2| \le |z_1| + |z_2|$`, "always; equality when the points are in line with O"],
+              ["Triangle inequality", t`$\big||z_1| - |z_2|\big| \le |z_1 \pm z_2| \le |z_1| + |z_2|$`, t`always; equality needs $z_1, z_2$ on one line through O (for $|z_1 + z_2| = |z_1| + |z_2|$, the same direction from O)`],
               ["Argument of product", t`$\arg(z_1z_2) = \arg z_1 + \arg z_2 + 2k\pi$`, t`always, but add or subtract $2\pi$ to land in $(-\pi, \pi]$`],
               ["Argument of quotient", t`$\arg\frac{z_1}{z_2} = \arg z_1 - \arg z_2 + 2k\pi$`, t`$z_1, z_2 \ne 0$`],
               ["Circle", t`$|z - z_0| = r$`, t`centre $z_0$, radius $r > 0$`],
