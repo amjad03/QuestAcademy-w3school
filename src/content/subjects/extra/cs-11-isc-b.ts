@@ -871,7 +871,7 @@ const arrays: Topic = {
         },
         {
           type: "text",
-          md: t`Output: \`1\` then \`-1\`. The method returns at the **first** 7 (index 1) and never reaches the second one at index 5.
+          md: t`Output: ${"`1`"} then ${"`-1`"}. The method returns at the **first** 7 (index 1) and never reaches the second one at index 5.
 
 **Address of an element.** Elements are stored one after another, so if the first element is at base address $B$, each element takes $W$ bytes, and the lowest index is $L_B$, the address of element $A[i]$ is:`,
         },
