@@ -3024,5 +3024,11 @@ export const topics: Topic[] = [digestion, breathing, circulation, excretion];
 export const links: Record<string, string | string[]> = {
   "11:Breathing and Exchange of Gases": "c11-bio-breathing-exchange-gases",
   "11:Body Fluids and Circulation": "c11-bio-body-fluids-circulation",
-  "11:Human Physiology": ["c11-bio-digestion-absorption", "c11-bio-breathing-exchange-gases", "c11-bio-body-fluids-circulation"],
+  "11:Excretory Products and their Elimination": "c11-bio-excretory-products-elimination",
+  "11:Human Physiology": [
+    "c11-bio-digestion-absorption",
+    "c11-bio-breathing-exchange-gases",
+    "c11-bio-body-fluids-circulation",
+    "c11-bio-excretory-products-elimination",
+  ],
 };
