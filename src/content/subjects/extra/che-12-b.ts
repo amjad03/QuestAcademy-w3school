@@ -527,7 +527,7 @@ At a given temperature, molecules have a spread of kinetic energies (the **Maxwe
           },
           {
             type: "text",
-            md: t`**Collision theory** (Arrhenius and Max Trautz) treats molecules as hard spheres. A reaction happens when molecules **collide** with (i) energy at least equal to the **threshold energy** and (ii) the **proper orientation**. The number of collisions per second per unit volume is the **collision frequency** $Z$. For $\text{CH}_3\text{Br} + \text{OH}^- \rightarrow \text{CH}_3\text{OH} + \text{Br}^-$, only a collision of $\text{OH}^-$ with the carbon atom, on the side away from Br, gives product. The **probability (steric) factor** $P$ accounts for orientation. Collision theory works well for simple molecules but less well for complex ones.`,
+            md: t`**Collision theory** (Max Trautz and William Lewis, 1916–18) treats molecules as hard spheres. A reaction happens when molecules **collide** with (i) energy at least equal to the **threshold energy** and (ii) the **proper orientation**. The number of collisions per second per unit volume is the **collision frequency** $Z$. For $\text{CH}_3\text{Br} + \text{OH}^- \rightarrow \text{CH}_3\text{OH} + \text{Br}^-$, only a collision of $\text{OH}^-$ with the carbon atom, on the side away from Br, gives product. The **probability (steric) factor** $P$ accounts for orientation. Collision theory works well for simple molecules but less well for complex ones.`,
           },
           {
             type: "formula",
@@ -555,7 +555,7 @@ At a given temperature, molecules have a spread of kinetic energies (the **Maxwe
             type: "callout",
             tone: "note",
             title: "Board note",
-            md: "CBSE asks collision theory only as an elementary idea, without calculation. ISC and Karnataka PUC papers often ask the two conditions for effective collisions and the meaning of the steric factor.",
+            md: "Where CBSE includes collision theory, it is only an elementary idea, without calculation; this part has been trimmed in recent syllabi, so check the current year's list. ISC and Karnataka PUC papers often ask the two conditions for effective collisions and the meaning of the steric factor.",
           },
           {
             type: "keypoints",
@@ -2624,7 +2624,7 @@ $\text{I}^- < \text{Br}^- < \text{SCN}^- < \text{Cl}^- < \text{S}^{2-} < \text{F
             type: "callout",
             tone: "note",
             title: "Board note",
-            md: "The importance of coordination compounds (analysis, metallurgy, biology, medicine) is in the CBSE, Karnataka PUC and ISC syllabi. Metal carbonyl bonding, stability constants and the EAN rule are asked by ISC and in JEE and NEET; check your current board syllabus for whether they appear in your theory paper.",
+            md: "The importance of coordination compounds (analysis, metallurgy, biology, medicine) is in the CBSE, Karnataka PUC and ISC syllabi. Metal carbonyl bonding is in the NCERT chapter and can appear in JEE and NEET; stability constants and the EAN rule are asked mainly by ISC and in JEE; check your current board syllabus for whether they appear in your theory paper.",
           },
           {
             type: "keypoints",
