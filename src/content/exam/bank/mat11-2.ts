@@ -40,9 +40,7 @@ function chapter(ch: number) {
 
 const BASIC: ExamId[] = ["JEE", "KCET", "COMEDK"];
 const MAIN: ExamId[] = ["JEE", "KCET", "COMEDK"];
-const MAIN_ONLY: ExamId[] = ["JEE", "COMEDK"];
 const ADV: ExamId[] = ["JEE_ADV", "JEE"];
-const ADV_ONLY: ExamId[] = ["JEE_ADV"];
 
 const AR = [
   "Both A and R are true and R is the correct explanation of A",
@@ -65,8 +63,8 @@ const ch5: ExamQuestion[] = [
   q5(1, BASIC, 45, {
     kind: "mcq",
     q: t`The solution set of $3x - 7 < 5x + 3$, $x\in\mathbb R$, is:`,
-    options: [t`$x < -5$`, t`$x > -5$`, t`$x > 5$`, t`$x < 5$`],
-    answer: 1,
+    options: [t`$x < -5$`, t`$x < 5$`, t`$x > 5$`, t`$x > -5$`],
+    answer: 3,
     explain: t`$3x - 5x < 3 + 7 \Rightarrow -2x < 10$. Dividing by the negative number $-2$ reverses the sign: $x > -5$. The option $x < -5$ is what you get if you forget to reverse the inequality.`,
   }),
   q5(1, BASIC, 45, {
@@ -286,15 +284,15 @@ const ch6: ExamQuestion[] = [
   q6(1, BASIC, 40, {
     kind: "mcq",
     q: t`The value of $\dfrac{7!}{5!\,2!}$ is:`,
-    options: [t`$42$`, t`$21$`, t`$7$`, t`$35$`],
-    answer: 1,
+    options: [t`$42$`, t`$35$`, t`$7$`, t`$21$`],
+    answer: 3,
     explain: t`$\dfrac{7!}{5!\,2!} = \dfrac{7\cdot 6}{2} = 21$ (this is $^7C_2$). $42 = 7\cdot6$ forgets the $2!$; $35 = {}^7C_3$.`,
   }),
   q6(1, BASIC, 45, {
     kind: "mcq",
     q: t`If $^nP_2 = 56$, then $n$ equals:`,
-    options: [t`$7$`, t`$14$`, t`$8$`, t`$28$`],
-    answer: 2,
+    options: [t`$7$`, t`$14$`, t`$28$`, t`$8$`],
+    answer: 3,
     explain: t`$^nP_2 = n(n-1) = 56 = 8\cdot 7$, so $n = 8$ (the root $n = -7$ is rejected). Choosing 7 picks the wrong factor of 56.`,
   }),
   q6(1, BASIC, 45, {
@@ -307,15 +305,15 @@ const ch6: ExamQuestion[] = [
   q6(1, BASIC, 60, {
     kind: "mcq",
     q: t`How many even 4-digit numbers can be formed from the digits 0–9 if repetition of digits is allowed?`,
-    options: [t`$5000$`, t`$4536$`, t`$4500$`, t`$2500$`],
-    answer: 2,
+    options: [t`$4500$`, t`$4536$`, t`$5000$`, t`$2500$`],
+    answer: 0,
     explain: t`Thousands place: 9 choices (not 0); hundreds and tens: 10 each; units: 5 even digits. Total $9\cdot10\cdot10\cdot5 = 4500$. $5000$ allows a leading zero; $4536$ is the count of 4-digit numbers with distinct digits.`,
   }),
   q6(1, BASIC, 50, {
     kind: "mcq",
     q: t`The number of distinct arrangements of all the letters of the word COOKBOOK is:`,
-    options: [t`$1680$`, t`$840$`, t`$40320$`, t`$420$`],
-    answer: 1,
+    options: [t`$1680$`, t`$420$`, t`$40320$`, t`$840$`],
+    answer: 3,
     explain: t`8 letters with O repeated 4 times and K twice (C, B once each): $\dfrac{8!}{4!\,2!} = \dfrac{40320}{48} = 840$. Dividing only by $4!$ gives 1680; $8!$ ignores the repetitions altogether.`,
   }),
   q6(1, BASIC, 45, {
@@ -335,8 +333,8 @@ const ch6: ExamQuestion[] = [
   q6(1, BASIC, 45, {
     kind: "mcq",
     q: t`The number of diagonals of a 12-sided convex polygon is:`,
-    options: [t`$66$`, t`$54$`, t`$132$`, t`$42$`],
-    answer: 1,
+    options: [t`$54$`, t`$66$`, t`$132$`, t`$42$`],
+    answer: 0,
     explain: t`Any 2 vertices give a side or a diagonal: $^{12}C_2 = 66$; removing the 12 sides leaves $54$. Equivalently $\dfrac{n(n-3)}{2} = \dfrac{12\cdot 9}{2} = 54$.`,
   }),
   q6(1, BASIC, 45, {
@@ -348,15 +346,15 @@ const ch6: ExamQuestion[] = [
   q6(1, BASIC, 45, {
     kind: "mcq",
     q: t`If $(n+1)! = 12\,(n-1)!$, then $n$ equals:`,
-    options: [t`$4$`, t`$2$`, t`$3$`, t`$5$`],
-    answer: 2,
+    options: [t`$4$`, t`$2$`, t`$5$`, t`$3$`],
+    answer: 3,
     explain: t`$(n+1)! = (n+1)n\,(n-1)!$, so $n(n+1) = 12 = 3\cdot4$, giving $n = 3$ ($n = -4$ is rejected).`,
   }),
   q6(1, BASIC, 45, {
     kind: "mcq",
     q: t`In how many ways can 5 people sit in a row if two particular people must sit next to each other?`,
-    options: [t`$24$`, t`$48$`, t`$120$`, t`$72$`],
-    answer: 1,
+    options: [t`$48$`, t`$24$`, t`$120$`, t`$72$`],
+    answer: 0,
     explain: t`Tie the two together as one unit: 4 units arrange in $4! = 24$ ways and the pair can swap in $2$ ways, giving $48$. $24$ forgets the internal swap; $72 = 120 - 48$ is the count when they are not together.`,
   }),
   q6(1, BASIC, 45, {
@@ -383,8 +381,8 @@ const ch6: ExamQuestion[] = [
   q6(2, MAIN, 120, {
     kind: "mcq",
     q: t`In how many arrangements of the letters of EXAMINATION do all the vowels come together?`,
-    options: [t`$129600$`, t`$32400$`, t`$64800$`, t`$4989600$`],
-    answer: 2,
+    options: [t`$129600$`, t`$32400$`, t`$4989600$`, t`$64800$`],
+    answer: 3,
     hint: "Vowels: E, A, A, I, I, O. Treat them as one block, then arrange inside the block.",
     explain: t`Vowels E, A, A, I, I, O (6, with A and I repeated); consonants X, M, N, N, T (N repeated). The vowel block plus 5 consonants is 6 units with N twice: $\dfrac{6!}{2!} = 360$. Inside the block: $\dfrac{6!}{2!\,2!} = 180$. Total $360\cdot180 = 64800$. Forgetting the repeated N gives 129600; $4989600 = \dfrac{11!}{2!2!2!}$ is the unrestricted count.`,
   }),
@@ -656,15 +654,15 @@ const ch7: ExamQuestion[] = [
   q7(1, BASIC, 30, {
     kind: "mcq",
     q: t`The number of terms in the expansion of $(2x - 3y)^9$ is:`,
-    options: [t`$9$`, t`$10$`, t`$11$`, t`$18$`],
-    answer: 1,
+    options: [t`$9$`, t`$18$`, t`$11$`, t`$10$`],
+    answer: 3,
     explain: t`$(a + b)^n$ has $n + 1$ terms, so there are $10$. The coefficients do not change the count.`,
   }),
   q7(1, BASIC, 40, {
     kind: "mcq",
     q: t`The coefficient of $x^3$ in $(1 + x)^7$ is:`,
-    options: [t`$21$`, t`$7$`, t`$35$`, t`$210$`],
-    answer: 2,
+    options: [t`$35$`, t`$7$`, t`$21$`, t`$210$`],
+    answer: 0,
     explain: t`The term in $x^3$ is $^7C_3x^3$ and $^7C_3 = 35$. $21 = {}^7C_2$ (the coefficient of $x^2$); $210 = {}^7P_3$.`,
   }),
   q7(1, BASIC, 45, {
@@ -677,8 +675,8 @@ const ch7: ExamQuestion[] = [
   q7(1, BASIC, 45, {
     kind: "mcq",
     q: t`The middle term of $\left(x - \dfrac1x\right)^{10}$ is:`,
-    options: [t`$252$`, t`$-252$`, t`$210$`, t`$-210$`],
-    answer: 1,
+    options: [t`$252$`, t`$-210$`, t`$210$`, t`$-252$`],
+    answer: 3,
     explain: t`With $n = 10$ there are 11 terms; the middle one is $T_6$ ($r = 5$): $^{10}C_5\,x^5\left(-\tfrac1x\right)^5 = -252$. Dropping the sign of $(-1)^5$ gives $252$; $210 = {}^{10}C_4$ is $T_5$'s coefficient.`,
   }),
   q7(1, BASIC, 45, {
@@ -690,15 +688,15 @@ const ch7: ExamQuestion[] = [
   q7(1, BASIC, 30, {
     kind: "mcq",
     q: t`The sum of all the binomial coefficients in the expansion of $(1 + x)^{11}$ is:`,
-    options: [t`$1024$`, t`$2048$`, t`$4096$`, t`$11$`],
-    answer: 1,
+    options: [t`$2048$`, t`$1024$`, t`$4096$`, t`$11$`],
+    answer: 0,
     explain: t`Put $x = 1$: $^{11}C_0 + {}^{11}C_1 + \dots + {}^{11}C_{11} = 2^{11} = 2048$. $1024 = 2^{10}$ is the sum of only the odd-position (or even-position) coefficients.`,
   }),
   q7(1, BASIC, 60, {
     kind: "mcq",
     q: t`The value of $(\sqrt2 + 1)^4 + (\sqrt2 - 1)^4$ is:`,
-    options: [t`$17$`, t`$24\sqrt2$`, t`$34$`, t`$68$`],
-    answer: 2,
+    options: [t`$17$`, t`$24\sqrt2$`, t`$68$`, t`$34$`],
+    answer: 3,
     explain: t`$(a+b)^4 + (a-b)^4 = 2(a^4 + 6a^2b^2 + b^4)$; with $a = \sqrt2$, $b = 1$: $2(4 + 12 + 1) = 34$. The odd-power terms (which carry $\sqrt2$) cancel. $17$ forgets the factor 2.`,
   }),
   q7(1, BASIC, 45, {
@@ -711,15 +709,15 @@ const ch7: ExamQuestion[] = [
   q7(1, BASIC, 40, {
     kind: "mcq",
     q: t`The coefficient of $x^2$ in $(1 - 2x)^5$ is:`,
-    options: [t`$-40$`, t`$10$`, t`$40$`, t`$-80$`],
-    answer: 2,
+    options: [t`$40$`, t`$10$`, t`$-40$`, t`$-80$`],
+    answer: 0,
     explain: t`$^5C_2(-2x)^2 = 10\cdot4x^2 = 40x^2$. The sign is $+$ because the power of $-2$ is even; $10$ forgets the $2^2$.`,
   }),
   q7(1, BASIC, 45, {
     kind: "mcq",
     q: t`The number of non-zero terms in the expansion of $(1 + x)^{20} + (1 - x)^{20}$ is:`,
-    options: [t`$21$`, t`$10$`, t`$11$`, t`$42$`],
-    answer: 2,
+    options: [t`$21$`, t`$10$`, t`$42$`, t`$11$`],
+    answer: 3,
     explain: t`The odd powers of $x$ cancel and the even powers double: the terms are $x^0, x^2, \dots, x^{20}$, i.e. $11$ terms. $10$ counts only $x^2$ to $x^{20}$.`,
   }),
   q7(1, BASIC, 50, {
@@ -788,16 +786,16 @@ const ch7: ExamQuestion[] = [
   q7(2, MAIN, 90, {
     kind: "mcq",
     q: t`The coefficient of $x^4$ in $(1 + x)^5(1 - x)^4$ is:`,
-    options: [t`$-6$`, t`$6$`, t`$4$`, t`$10$`],
-    answer: 1,
+    options: [t`$6$`, t`$-6$`, t`$4$`, t`$10$`],
+    answer: 0,
     hint: t`$(1+x)^5(1-x)^4 = (1+x)(1-x^2)^4$.`,
     explain: t`$(1 + x)(1 - x^2)^4 = (1 + x)(1 - 4x^2 + 6x^4 - 4x^6 + x^8)$. The $x^4$ term comes only from $1\cdot6x^4$ (the second factor has no $x^3$), so the coefficient is $6$.`,
   }),
   q7(2, MAIN, 60, {
     kind: "mcq",
     q: t`The value of $^{10}C_1 + {}^{10}C_3 + {}^{10}C_5 + {}^{10}C_7 + {}^{10}C_9$ is:`,
-    options: [t`$1024$`, t`$512$`, t`$256$`, t`$511$`],
-    answer: 1,
+    options: [t`$1024$`, t`$511$`, t`$256$`, t`$512$`],
+    answer: 3,
     hint: "Compare (1 + 1)^10 and (1 − 1)^10.",
     explain: t`Adding and subtracting the expansions at $x = 1$ and $x = -1$ shows the odd-index and even-index coefficients each sum to $2^{n-1}$. Here $2^9 = 512$. $1024$ is the sum of all coefficients.`,
   }),
@@ -1027,8 +1025,8 @@ const ch8: ExamQuestion[] = [
   q8(1, BASIC, 30, {
     kind: "mcq",
     q: t`For the sequence $a_n = (-1)^{n-1}n^2$, the 10th term is:`,
-    options: [t`$100$`, t`$-100$`, t`$-90$`, t`$81$`],
-    answer: 1,
+    options: [t`$-100$`, t`$100$`, t`$-90$`, t`$81$`],
+    answer: 0,
     explain: t`$a_{10} = (-1)^9\cdot10^2 = -100$. The sign is negative because $n - 1 = 9$ is odd.`,
   }),
   q8(1, BASIC, 45, {
@@ -1054,22 +1052,22 @@ const ch8: ExamQuestion[] = [
   q8(1, BASIC, 45, {
     kind: "mcq",
     q: t`The sum to infinity of $6 - 2 + \dfrac23 - \dfrac29 + \dots$ is:`,
-    options: [t`$9$`, t`$3$`, t`$\dfrac92$`, t`$6$`],
-    answer: 2,
+    options: [t`$\dfrac92$`, t`$3$`, t`$9$`, t`$6$`],
+    answer: 0,
     explain: t`$a = 6$, $r = -\tfrac13$, $|r| < 1$: $S_\infty = \dfrac{a}{1 - r} = \dfrac{6}{4/3} = \dfrac92$. Using $r = +\tfrac13$ gives 9.`,
   }),
   q8(1, BASIC, 30, {
     kind: "mcq",
     q: t`The geometric mean of 4 and 16 is:`,
-    options: [t`$10$`, t`$8$`, t`$64$`, t`$12$`],
-    answer: 1,
+    options: [t`$10$`, t`$12$`, t`$64$`, t`$8$`],
+    answer: 3,
     explain: t`$G = \sqrt{ab} = \sqrt{64} = 8$. $10$ is the arithmetic mean; $64$ forgets the square root.`,
   }),
   q8(1, BASIC, 30, {
     kind: "mcq",
     q: t`The 15th term of the A.P. $7, 11, 15, \dots$ is:`,
-    options: [t`$67$`, t`$59$`, t`$63$`, t`$60$`],
-    answer: 2,
+    options: [t`$63$`, t`$59$`, t`$67$`, t`$60$`],
+    answer: 0,
     explain: t`$a_n = a + (n-1)d = 7 + 14\cdot4 = 63$. Using $n\,d$ instead of $(n-1)d$ gives 67.`,
   }),
   q8(1, BASIC, 40, {
@@ -1082,22 +1080,22 @@ const ch8: ExamQuestion[] = [
   q8(1, BASIC, 45, {
     kind: "mcq",
     q: t`Which term of the G.P. $2, 2\sqrt2, 4, \dots$ is 128?`,
-    options: [t`$12$th`, t`$7$th`, t`$13$th`, t`$14$th`],
-    answer: 2,
+    options: [t`$12$th`, t`$7$th`, t`$14$th`, t`$13$th`],
+    answer: 3,
     explain: t`$2(\sqrt2)^{n-1} = 128 \Rightarrow (\sqrt2)^{n-1} = 64 = (\sqrt2)^{12} \Rightarrow n = 13$. Answering 12 confuses the exponent $n - 1$ with $n$; 7 uses ratio 2.`,
   }),
   q8(1, BASIC, 45, {
     kind: "mcq",
     q: t`Three geometric means inserted between 1 and 256 (with positive terms) are:`,
-    options: [t`$2, 8, 32$`, t`$4, 16, 64$`, t`$64, 128, 192$`, t`$8, 32, 128$`],
-    answer: 1,
+    options: [t`$4, 16, 64$`, t`$2, 8, 32$`, t`$64, 128, 192$`, t`$8, 32, 128$`],
+    answer: 0,
     explain: t`The G.P. $1, G_1, G_2, G_3, 256$ has 5 terms, so $r^4 = 256$ and $r = 4$: the means are $4, 16, 64$. $64, 128, 192$ are arithmetic means.`,
   }),
   q8(1, BASIC, 30, {
     kind: "mcq",
     q: t`The value of $1^3 + 2^3 + \dots + 10^3$ is:`,
-    options: [t`$385$`, t`$3025$`, t`$55$`, t`$3080$`],
-    answer: 1,
+    options: [t`$385$`, t`$3080$`, t`$55$`, t`$3025$`],
+    answer: 3,
     explain: t`$\sum k^3 = \left[\dfrac{n(n+1)}{2}\right]^2 = 55^2 = 3025$. $385$ is $\sum k^2$ and $55$ is $\sum k$.`,
   }),
   q8(1, BASIC, 45, {

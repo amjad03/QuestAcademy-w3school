@@ -107,7 +107,7 @@ Apply a field $\vec{E}$ and each electron gets an acceleration $\vec{a} = -e\vec
               ["Conductors (metals)", t`about $10^{-8}$ to $10^{-6}$`, "silver, copper, aluminium: connecting wires"],
               ["Alloys", t`about $10^{-6}$`, "nichrome (heater elements), manganin and constantan (standard resistors: ρ hardly changes with temperature)"],
               ["Semiconductors", "in between metals and insulators", "silicon, germanium: ρ falls as temperature rises or with doping"],
-              ["Insulators", t`about $10^{14}$ or more`, "glass, rubber, mica: ρ is $10^{18}$ times or more that of metals"],
+              ["Insulators", t`about $10^{10}$ or more`, "glass, rubber, mica: ρ is $10^{18}$ times or more that of metals"],
             ],
           },
           {
@@ -1205,7 +1205,7 @@ If $\vec{v}$ makes an angle $\theta$ with $\vec{B}$, split it into $v_\perp = v\
             type: "callout",
             tone: "note",
             title: "Board note: the toroid",
-            md: t`The rationalised NCERT text treats only the solenoid. **ISC**, JEE and NEET also use the **toroid** (a solenoid bent into a ring of $N$ turns): by Ampère's law, the field inside its core at radius $r$ is $B = \frac{\mu_0 NI}{2\pi r}$, and the field is zero in the open space inside the ring and outside it.`,
+            md: t`The rationalised NCERT text treats only the solenoid. **ISC** still teaches the **toroid** (a solenoid bent into a ring of $N$ turns), and JEE and NEET problems often use it. By Ampère's law, the field inside its core at radius $r$ is $B = \frac{\mu_0 NI}{2\pi r}$, and the field is zero in the open space inside the ring and outside it.`,
           },
           {
             type: "callout",
@@ -2179,7 +2179,7 @@ In a **paramagnetic** material each atom has a permanent moment, but thermal mot
             items: [
               t`**Cut perpendicular to the axis into $n$ equal pieces**: each has $m/n$, $I/n^3$, period $T/n$.`,
               t`**Cut along the axis into $n$ strips**: each has $m/n$, $I/n$, period unchanged.`,
-              t`**Bent into an arc** of angle $\theta$: $m' = m\cdot\frac{2\sin(\theta/2)}{\theta}$; semicircle $\frac{2m}{\pi}$, right angle (L-shape) $\frac{m}{\sqrt{2}}$.`,
+              t`**Bent into an arc** of angle $\theta$: $m' = m\cdot\frac{2\sin(\theta/2)}{\theta}$; semicircle $\frac{2m}{\pi}$. Bent at its middle into an L (90°, not an arc): $\frac{m}{\sqrt{2}}$.`,
               t`**Two magnets on one stand** (like poles together, then unlike): $\frac{m_1}{m_2} = \frac{T_2^2 + T_1^2}{T_2^2 - T_1^2}$, where $T_1$ is for like poles together.`,
               t`**Materials**: $\chi_{para} \propto 1/T$; $\chi_{dia}$ nearly independent of $T$; superconductor $\chi = -1$, $\mu_r = 0$.`,
             ],

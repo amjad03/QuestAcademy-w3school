@@ -919,7 +919,7 @@ As $i$ increases, $\delta$ first decreases, reaches a **minimum deviation** $D_m
             type: "mistake",
             wrong: "A glass slab between the object and the lens shifts the object away from the lens by t(1 − 1/n).",
             right: "The slab makes the object appear closer to the observer (towards the lens), by t(1 − 1/n), whatever the slab's position.",
-            why: "Rays leaving the slab bend away from the normal, so they seem to come from a point nearer to the slab's far side, just like the raised coin in water. Getting the direction wrong turns 70 cm into 52.5 cm in the example above.",
+            why: "Rays leaving the slab bend away from the normal, so they seem to come from a point nearer to the slab's far side, just like the raised coin in water. Getting the direction wrong turns 70 cm into about 53.3 cm in the example above.",
           },
           {
             type: "mistake",
@@ -1526,7 +1526,7 @@ The source slit S must be narrow: if its width $s$ is too large, different parts
             type: "callout",
             tone: "exam",
             title: "Board exam tips",
-            md: "The derivation of fringe width (5 marks with the intensity part) needs a neat diagram with S₁, S₂, d, D, x and P, the step (S₂P)² − (S₁P)² = 2xd, the approximation S₂P + S₁P ≈ 2D, and the conditions for bright and dark fringes. Questions often ask what happens to β when d, D, λ or the medium change; answer from β = λD/d.",
+            md: "The derivation of fringe width (asked by ISC and PUC; the current CBSE syllabus may ask only the final expression) needs a neat diagram with S₁, S₂, d, D, x and P, the step (S₂P)² − (S₁P)² = 2xd, the approximation S₂P + S₁P ≈ 2D, and the conditions for bright and dark fringes. Questions often ask what happens to β when d, D, λ or the medium change; answer from β = λD/d.",
           },
           {
             type: "keypoints",
@@ -1546,7 +1546,7 @@ The source slit S must be narrow: if its width $s$ is too large, different parts
           { front: "Path difference in YDSE at height x", back: "Δx = xd/D (for x, d ≪ D)." },
           { front: "Fringe width", back: "β = λD/d." },
           { front: "Condition for a dark fringe", back: "Path difference = (n + ½)λ, phase difference = (2n + 1)π." },
-          { front: "YDSE with white light", back: "The central fringe is white; fringes on either side are coloured (violet closest to the centre, red farthest)." },
+          { front: "YDSE with white light", back: "The central fringe is white; fringes on either side are coloured; each coloured fringe has its violet edge nearer the centre and its red edge farther out." },
         ],
         quiz: [
           {

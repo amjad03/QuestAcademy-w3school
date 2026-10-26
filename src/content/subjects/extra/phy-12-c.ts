@@ -1245,7 +1245,7 @@ A low power factor means a large current for the same useful power, and so more 
           },
           {
             type: "text",
-            md: "Real circuits have resistance, so some energy becomes heat each cycle and the oscillations die away (damped oscillations). Energy is also lost as electromagnetic radiation. To keep them going, energy must be fed in, as an electronic oscillator does. **Board note:** if your edition of the NCERT book has removed LC oscillations, they still appear in ISC and in the JEE and NEET syllabi.",
+            md: "Real circuits have resistance, so some energy becomes heat each cycle and the oscillations die away (damped oscillations). Energy is also lost as electromagnetic radiation. To keep them going, energy must be fed in, as an electronic oscillator does. **Board note:** if your edition of the NCERT book has removed LC oscillations, they still appear in ISC and JEE Advanced; check the latest JEE Main and NEET syllabi, which may list only LCR circuits and resonance.",
           },
           {
             type: "checkpoint",
@@ -1325,7 +1325,7 @@ For an ideal transformer (no flux leakage, no losses, negligible primary resista
         flashcards: [
           { front: "Natural angular frequency of an LC circuit", back: t`$\omega_0 = 1/\sqrt{LC}$` },
           { front: "Mechanical analogue of inductance", back: "Mass (inertia)." },
-          { front: "Mechanical analogue of capacitance", back: "1/C plays the role of the spring constant k." },
+          { front: "Mechanical analogue of capacitance", back: "Capacitance C corresponds to 1/k, the reciprocal of the spring constant (so 1/C plays the role of k)." },
           { front: "Why do real LC oscillations die out?", back: "Resistance turns energy into heat, and some energy is radiated as electromagnetic waves." },
           { front: "Principle of a transformer", back: "Mutual induction between two coils on a common core." },
           { front: "Ideal transformer relations", back: t`$V_s/V_p = N_s/N_p = I_p/I_s$` },
@@ -1969,7 +1969,7 @@ For an ideal transformer (no flux leakage, no losses, negligible primary resista
           },
           {
             kind: "numeric",
-            q: "Frequency (in units of 10¹⁴ Hz) of red light of wavelength 750 nm?",
+            q: "Frequency (in units of 10¹⁴ Hz) of deep-red light of wavelength 750 nm, at the very edge of the visible range?",
             answer: 4,
             explain: t`$\nu = 3\times10^8/(7.5\times10^{-7}) = 4\times10^{14}$ Hz.`,
             difficulty: 2,
