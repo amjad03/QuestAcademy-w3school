@@ -852,7 +852,7 @@ const areas: ExamQuestion[] = [
     ],
     answer: 0,
     hint: t`The curves meet at $(1, \pm2)$. Take the upper half and split at $x = 1$.`,
-    explain: t`$x^2 + 4x = 5 \Rightarrow x = 1$, $y = \pm2$. Upper half: parabola from 0 to 1, circle from 1 to $\sqrt5$. $\int_0^12\sqrt x\,dx = \frac43$. $\int_1^{\sqrt5}\sqrt{5 - x^2}dx = \left[\frac x2\sqrt{5 - x^2} + \frac52\sin^{-1}\frac{x}{\sqrt5}\right]_1^{\sqrt5} = \frac{5\pi}{4} - 1 - \frac52\sin^{-1}\frac1{\sqrt5}$. Doubling: $2\left(\frac13 + \frac{5\pi}{4} - \frac52\sin^{-1}\frac1{\sqrt5}\right) = \frac23 + \frac{5\pi}{2} - 5\sin^{-1}\frac{1}{\sqrt5} \approx 6.20$. Option 2 is the upper half with the $-1$ from the lower limit forgotten; option 4 uses $\frac83$ (both halves of the parabola part counted twice).`,
+    explain: t`$x^2 + 4x = 5 \Rightarrow x = 1$, $y = \pm2$. Upper half: parabola from 0 to 1, circle from 1 to $\sqrt5$. $\int_0^12\sqrt x\,dx = \frac43$. $\int_1^{\sqrt5}\sqrt{5 - x^2}dx = \left[\frac x2\sqrt{5 - x^2} + \frac52\sin^{-1}\frac{x}{\sqrt5}\right]_1^{\sqrt5} = \frac{5\pi}{4} - 1 - \frac52\sin^{-1}\frac1{\sqrt5}$. Doubling: $2\left(\frac13 + \frac{5\pi}{4} - \frac52\sin^{-1}\frac1{\sqrt5}\right) = \frac23 + \frac{5\pi}{2} - 5\sin^{-1}\frac{1}{\sqrt5} \approx 6.20$. Option 4 forgets the $-1$ (the term $\frac x2\sqrt{5 - x^2}$ at $x = 1$); option 2 is that same slip in the upper half only, not doubled.`,
   }),
   mcq(AOI, 3, JA, 180, {
     q: t`The area of the region $\{(x, y): xy \le 4,\ 1 \le y \le x^2,\ x \ge 0\}$ is:`,
