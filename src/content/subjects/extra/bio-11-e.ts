@@ -1518,9 +1518,767 @@ const breathing: Topic = {
   ],
 };
 
-export const topics: Topic[] = [digestion, breathing];
+/* ------------------------------------------------------------------ */
+/* NCERT Class 11: Body Fluids and Circulation                          */
+/* ------------------------------------------------------------------ */
+const circulation: Topic = {
+  slug: "c11-bio-body-fluids-circulation",
+  title: "Body Fluids and Circulation",
+  icon: "🫀",
+  description:
+    "Blood and its formed elements, blood groups, coagulation and lymph; circulatory pathways in animals; the human heart, cardiac cycle and ECG; double circulation, regulation of the heart and circulatory disorders.",
+  lessons: [
+    {
+      slug: "c11-bio-blood-lymph",
+      title: "Blood, Blood Groups, Coagulation and Lymph",
+      summary:
+        "Plasma and its proteins, RBCs, WBCs and platelets with their numbers and roles, ABO and Rh grouping, erythroblastosis foetalis, how blood clots, and tissue fluid and lymph.",
+      minutes: 22,
+      xp: 55,
+      blocks: [
+        {
+          type: "text",
+          md: "Every cell needs nutrients and O₂ and must get rid of wastes. Simple animals like sponges and coelenterates circulate water from their surroundings through body cavities. Most higher animals use special body fluids: **blood** and **lymph**.\n\n**Blood** is a special connective tissue made of a fluid matrix, **plasma** (about 55%), and **formed elements** (about 45%).",
+        },
+        {
+          type: "table",
+          headers: ["Plasma component", "Amount / role"],
+          rows: [
+            ["Water", "90–92%"],
+            ["Proteins", "6–8%: **fibrinogen** (clotting), **globulins** (defence), **albumins** (osmotic balance)"],
+            ["Minerals", "Small amounts of Na⁺, Ca²⁺, Mg²⁺, HCO₃⁻, Cl⁻ and others"],
+            ["Others", "Glucose, amino acids, lipids (always in transit); clotting factors in inactive form"],
+          ],
+        },
+        {
+          type: "text",
+          md: "Plasma without the clotting factors is called **serum**.",
+        },
+        {
+          type: "table",
+          headers: ["Formed element", "Count", "Key facts"],
+          rows: [
+            ["Erythrocytes (RBCs)", "5–5.5 million per mm³", "Most abundant cells; made in **red bone marrow** in adults; no nucleus in most mammals; biconcave; carry **haemoglobin** (12–16 g per 100 mL of blood); live about **120 days**, then destroyed in the **spleen** (graveyard of RBCs)"],
+            ["Leucocytes (WBCs)", "6000–8000 per mm³", "Nucleated, colourless, short-lived. **Granulocytes**: neutrophils, eosinophils, basophils. **Agranulocytes**: lymphocytes, monocytes"],
+            ["Platelets (thrombocytes)", "1,50,000–3,50,000 per mm³", "Cell fragments from **megakaryocytes** in bone marrow; release factors for clotting. Fewer platelets cause clotting problems and excess blood loss"],
+          ],
+        },
+        {
+          type: "table",
+          headers: ["WBC", "% of WBCs", "Role"],
+          rows: [
+            ["Neutrophils", "60–65 (most abundant)", "Phagocytic; destroy foreign organisms"],
+            ["Eosinophils", "2–3", "Resist infections; linked with allergic reactions"],
+            ["Basophils", "0.5–1 (least)", "Secrete histamine, serotonin, heparin; involved in inflammation"],
+            ["Lymphocytes", "20–25", "B and T forms; responsible for immune responses"],
+            ["Monocytes", "6–8", "Phagocytic"],
+          ],
+        },
+        {
+          type: "checkpoint",
+          questions: [
+            {
+              kind: "mcq",
+              q: "Which WBCs secrete histamine, serotonin and heparin?",
+              options: ["Neutrophils", "Basophils", "Eosinophils", "Monocytes"],
+              answer: 1,
+              explain: "Basophils, the least numerous WBCs, release these substances during inflammation.",
+            },
+          ],
+        },
+        { type: "heading", text: "Blood groups" },
+        {
+          type: "table",
+          headers: ["Group", "Antigen on RBC", "Antibody in plasma", "Can receive from"],
+          rows: [
+            ["A", "A", "anti-B", "A, O"],
+            ["B", "B", "anti-A", "B, O"],
+            ["AB", "A and B", "none", "AB, A, B, O (universal recipient)"],
+            ["O", "none", "anti-A and anti-B", "O only (O is the universal donor)"],
+          ],
+        },
+        {
+          type: "text",
+          md: "**Rh grouping.** About **80%** of humans have the **Rh antigen** on their RBCs (Rh positive, Rh+ve); the rest are Rh−ve. An Rh−ve person exposed to Rh+ve blood forms antibodies against the Rh antigen, so Rh groups must also be matched before transfusion.\n\n**Erythroblastosis foetalis.** If an Rh−ve mother carries an Rh+ve foetus, the bloods are kept apart by the placenta, so the first pregnancy is usually safe. At delivery some foetal blood may enter the mother, and she starts making anti-Rh antibodies. In later Rh+ve pregnancies these antibodies can leak into the foetal blood and destroy foetal RBCs, causing severe anaemia and jaundice, which can be fatal. It is prevented by giving the mother **anti-Rh antibodies** immediately after the delivery of the first child.",
+        },
+        {
+          type: "text",
+          md: "**Coagulation.** A cut stops bleeding because blood forms a dark reddish-brown scum, the **clot** or **coagulum**: a network of threads called **fibrin** in which dead and damaged formed elements are trapped. Injury makes platelets and damaged tissue release factors that start a cascade forming the enzyme complex **thrombokinase**. It converts inactive **prothrombin** into **thrombin**, which converts soluble **fibrinogen** into insoluble **fibrin**. **Calcium ions** play a very important role in clotting.\n\n**Lymph.** As blood passes through capillaries, some water and small water-soluble substances move out into the spaces between cells, leaving the larger proteins and most formed elements behind. This **tissue (interstitial) fluid** has the same mineral distribution as plasma; nutrients and gases are exchanged through it. The **lymphatic system** collects it and drains it back into major veins. Lymph is a colourless fluid with specialised **lymphocytes** for immunity; it also carries nutrients and hormones, and **fats are absorbed through lacteals** in the intestinal villi.",
+        },
+        {
+          type: "example",
+          title: "Who can donate to whom?",
+          problem: "Ravi is B Rh−ve and needs blood. Donors available: Asha (O Rh−ve), Imran (B Rh+ve), Neha (AB Rh−ve) and Joseph (O Rh+ve). Who is a safe donor?",
+          steps: [
+            "Ravi's plasma has anti-A antibodies, so he can take only B or O red cells: Neha (AB) is ruled out.",
+            "Ravi is Rh−ve, so Rh+ve blood could sensitise him and cause a reaction: Imran and Joseph are ruled out.",
+            "Asha is O (no A or B antigen) and Rh−ve (no Rh antigen).",
+          ],
+          answer: "Only Asha (O Rh−ve) is a safe donor for Ravi.",
+        },
+        {
+          type: "mistake",
+          wrong: "Erythroblastosis foetalis occurs in an Rh+ve mother carrying an Rh−ve baby, and the first baby is always affected.",
+          right: "It occurs when the **mother is Rh−ve** and the **foetus is Rh+ve**. The first baby is usually safe; danger comes in **later** Rh+ve pregnancies.",
+          why: "The mother's body makes anti-Rh antibodies only after it meets Rh+ve foetal cells, which mostly happens at the first delivery. Those antibodies then attack the next Rh+ve foetus.",
+        },
+        {
+          type: "activity",
+          activity: {
+            kind: "order",
+            prompt: "Put the steps of blood clotting in order.",
+            items: [
+              "Injury: platelets and damaged tissue release factors",
+              "Thrombokinase forms",
+              "Prothrombin is converted to thrombin (Ca²⁺ needed)",
+              "Thrombin converts fibrinogen to fibrin",
+              "Fibrin threads trap formed elements to form a clot",
+            ],
+            explain: "Clotting is a cascade: thrombokinase → thrombin → fibrin. Calcium ions are needed at several steps.",
+          },
+        },
+        {
+          type: "keypoints",
+          items: [
+            "Plasma 55% (fibrinogen, globulins, albumins); serum = plasma minus clotting factors.",
+            "RBC 5–5.5 million/mm³, life 120 days; WBC 6000–8000/mm³; platelets 1.5–3.5 lakh/mm³.",
+            "Neutrophils most and basophils fewest WBCs; neutrophils and monocytes are phagocytic.",
+            "O is universal donor, AB universal recipient; Rh−ve mother + Rh+ve foetus can cause erythroblastosis foetalis.",
+            "Clotting: thrombokinase → prothrombin to thrombin → fibrinogen to fibrin, with Ca²⁺. Lymph drains tissue fluid back to veins.",
+          ],
+        },
+      ],
+      flashcards: [
+        { front: "Serum", back: "Plasma without clotting factors." },
+        { front: "Roles of plasma proteins", back: "Fibrinogen: clotting; globulins: defence; albumins: osmotic balance." },
+        { front: "Life span of RBC", back: "About 120 days; destroyed in the spleen." },
+        { front: "Most and least abundant WBCs", back: "Neutrophils (60–65%) most; basophils (0.5–1%) least." },
+        { front: "Universal donor and recipient", back: "O is the universal donor; AB is the universal recipient." },
+        { front: "Erythroblastosis foetalis", back: "Rh−ve mother's anti-Rh antibodies destroy RBCs of a later Rh+ve foetus; prevented by anti-Rh antibodies given after the first delivery." },
+        { front: "Clotting enzyme chain", back: "Thrombokinase → prothrombin to thrombin → fibrinogen to fibrin; needs Ca²⁺." },
+        { front: "Lymph", back: "Colourless tissue fluid drained by lymphatic vessels; has lymphocytes, carries fats from lacteals." },
+      ],
+      quiz: [
+        {
+          kind: "mcq",
+          q: "A person with blood group A has:",
+          options: ["Antigen A and anti-A", "Antigen A and anti-B", "Antigen B and anti-A", "No antigen and both antibodies"],
+          answer: 1,
+          explain: "Group A RBCs carry antigen A; plasma carries the opposite antibody, anti-B.",
+        },
+        {
+          kind: "mcq",
+          q: "Platelets are produced from:",
+          options: ["Megakaryocytes", "Monocytes", "Lymphocytes", "Erythroblasts in the spleen"],
+          answer: 0,
+          explain: "Platelets are cell fragments of megakaryocytes in bone marrow.",
+        },
+        {
+          kind: "truefalse",
+          q: "Albumins are the plasma proteins mainly responsible for clotting.",
+          answer: false,
+          explain: "Fibrinogen is the clotting protein; albumins maintain osmotic balance.",
+        },
+        {
+          kind: "numeric",
+          q: "About what percentage of humans are Rh positive?",
+          answer: 80,
+          unit: "%",
+          explain: "Nearly 80% of humans carry the Rh antigen.",
+        },
+        {
+          kind: "fill",
+          q: "Thrombin converts soluble fibrinogen into insoluble ___.",
+          answer: ["fibrin"],
+          explain: "Fibrin threads form the meshwork of the clot.",
+        },
+        {
+          kind: "multi",
+          q: "Which WBCs are phagocytic?",
+          options: ["Neutrophils", "Monocytes", "Basophils", "Lymphocytes"],
+          answers: [0, 1],
+          explain: "Neutrophils and monocytes engulf and destroy foreign organisms.",
+          difficulty: 2,
+        },
+        {
+          kind: "multi",
+          q: "A patient is A Rh+ve. Which donors' red cells are compatible?",
+          options: ["A Rh+ve", "A Rh−ve", "O Rh+ve", "O Rh−ve", "B Rh+ve", "AB Rh+ve"],
+          answers: [0, 1, 2, 3],
+          explain: "An A Rh+ve person can accept A or O red cells, and Rh+ve or Rh−ve.",
+          difficulty: 2,
+        },
+      ],
+    },
+    {
+      slug: "c11-bio-human-heart-cardiac-cycle",
+      title: "Circulatory Pathways, the Human Heart and the Cardiac Cycle",
+      summary:
+        "Open and closed systems, vertebrate hearts, structure of the human heart and its valves, the nodal tissue and pacemaker, and the events and sounds of the cardiac cycle.",
+      minutes: 24,
+      xp: 55,
+      blocks: [
+        {
+          type: "text",
+          md: "**Open circulatory system**: blood pumped by the heart passes through large vessels into open spaces or body cavities called **sinuses**, as in **arthropods and molluscs**. **Closed circulatory system**: blood always flows inside a closed network of vessels, as in **annelids and chordates**; this is more advantageous because the flow can be precisely regulated.",
+        },
+        {
+          type: "table",
+          headers: ["Animals", "Heart", "Circulation"],
+          rows: [
+            ["Fishes", "2 chambers (1 atrium, 1 ventricle)", "Single circulation: heart pumps deoxygenated blood to gills, then to body, then back"],
+            ["Amphibians, most reptiles", "3 chambers (2 atria, 1 ventricle)", "Incomplete double circulation: oxygenated and deoxygenated blood mix in the single ventricle"],
+            ["Crocodiles, birds, mammals", "4 chambers (2 atria, 2 ventricles)", "Double circulation: oxygenated and deoxygenated blood kept fully separate"],
+          ],
+        },
+        { type: "heading", text: "Structure of the human heart" },
+        {
+          type: "text",
+          md: "The heart is **mesodermally derived**, lies in the thoracic cavity between the two lungs, slightly tilted to the left, and is about the size of a clenched fist. It is protected by a double-walled membranous bag, the **pericardium**, holding **pericardial fluid**.\n\nIt has four chambers: two small upper **atria** and two larger lower **ventricles**. A thin muscular **inter-atrial septum** separates the atria; a thick **inter-ventricular septum** separates the ventricles; the **atrio-ventricular septum**, a thick fibrous tissue, separates each atrium from the ventricle below, with an opening between them.",
+        },
+        {
+          type: "table",
+          headers: ["Valve", "Position"],
+          rows: [
+            ["Tricuspid (three flaps)", "Between right atrium and right ventricle"],
+            ["Bicuspid or mitral (two flaps)", "Between left atrium and left ventricle"],
+            ["Semilunar valves", "Where the right ventricle opens into the pulmonary artery and the left ventricle into the aorta"],
+          ],
+        },
+        {
+          type: "text",
+          md: "The valves allow blood to flow **one way only**: atria → ventricles → pulmonary artery or aorta, and prevent backflow. The whole heart is made of **cardiac muscle**; the walls of the ventricles are much thicker than those of the atria.\n\n**Nodal tissue** is specialised cardiac musculature spread through the heart. The **sino-atrial node (SAN)** lies in the right upper corner of the right atrium. The **atrio-ventricular node (AVN)** lies in the lower left corner of the right atrium, close to the atrio-ventricular septum. From the AVN the **AV bundle (bundle of His)** passes through the top of the inter-ventricular septum and divides into right and left bundle branches, which give fine **Purkinje fibres** throughout the ventricular walls.\n\nNodal tissue can generate action potentials without any external stimulus: the heart is **autoexcitable**. The SAN generates the most action potentials, about **70–75 per minute**, so it sets the rhythm and is called the **pacemaker**. The heart normally beats about **72 times per minute**.",
+        },
+        {
+          type: "checkpoint",
+          questions: [
+            {
+              kind: "mcq",
+              q: "The pacemaker of the human heart is the:",
+              options: ["AV node", "Bundle of His", "SA node", "Purkinje fibres"],
+              answer: 2,
+              explain: "The SAN generates the most action potentials (70–75 per minute) and sets the heart's rhythm.",
+            },
+          ],
+        },
+        { type: "heading", text: "The cardiac cycle" },
+        {
+          type: "list",
+          ordered: true,
+          items: [
+            "**Joint diastole**: all four chambers relaxed. Tricuspid and bicuspid valves are open; semilunar valves closed. Blood flows from the pulmonary veins and venae cavae into the atria and on into the ventricles.",
+            "**Atrial systole**: the SAN fires; both atria contract, increasing flow into the ventricles by about **30%**.",
+            "The impulse passes via the AVN and AV bundle to the ventricles, causing **ventricular systole**; the atria now relax (atrial diastole coincides with ventricular systole).",
+            "Ventricular pressure rises and the **AV valves close** (preventing backflow into atria). As pressure rises further the **semilunar valves open**, and blood goes into the pulmonary artery (right) and aorta (left).",
+            "The ventricles relax (**ventricular diastole**); pressure falls, the **semilunar valves close**, preventing backflow.",
+            "When ventricular pressure falls below atrial pressure, the AV valves open again and a new cycle begins.",
+          ],
+        },
+        {
+          type: "text",
+          md: "One complete sequence of systole and diastole is a **cardiac cycle**. Since the heart beats about 72 times a minute, a cycle lasts about **0.8 s**. In each cycle each ventricle pumps out about **70 mL** of blood, the **stroke volume**.\n\n**Heart sounds**: the first sound, **lub**, comes from closure of the tricuspid and bicuspid valves; the second, **dub**, from closure of the semilunar valves. They are of clinical diagnostic value.",
+        },
+        {
+          type: "formula",
+          tex: t`\text{Cardiac output} = \text{stroke volume} \times \text{heart rate} \approx 70\ \text{mL} \times 72\ \text{min}^{-1} \approx 5\ \text{L min}^{-1}`,
+          caption: "The volume each ventricle pumps per minute. Athletes have a much higher cardiac output than ordinary people during exercise.",
+        },
+        {
+          type: "example",
+          title: "Cardiac output",
+          problem: "A student's resting heart rate is 75 beats per minute and her stroke volume is 68 mL. Find her cardiac output and the length of one cardiac cycle.",
+          steps: [
+            "Cardiac output = stroke volume × heart rate = 68 × 75 = 5100 mL per minute.",
+            "That is 5.1 L per minute.",
+            "Length of one cycle = 60 s ÷ 75 = 0.8 s.",
+          ],
+          answer: "5.1 L per minute; each cycle lasts 0.8 s.",
+        },
+        {
+          type: "mistake",
+          wrong: "The lub sound is made by the ventricles contracting and the dub sound by the atria contracting.",
+          right: "Heart sounds come from **valves closing**: lub = closure of the AV (tricuspid and bicuspid) valves at the start of ventricular systole; dub = closure of the semilunar valves at the start of ventricular diastole.",
+          why: "Muscle contraction is the obvious event, so students link the sounds to it. The sounds are actually the snap of valve flaps shutting against blood pressure.",
+        },
+        {
+          type: "activity",
+          activity: {
+            kind: "order",
+            prompt: "Order the path of the cardiac impulse.",
+            items: ["SA node", "Atrial walls", "AV node", "Bundle of His", "Right and left bundle branches", "Purkinje fibres"],
+            explain: "The SAN starts the beat; the AVN delays and passes it on through the AV bundle and its branches to the Purkinje fibres in the ventricles.",
+          },
+        },
+        {
+          type: "keypoints",
+          items: [
+            "Open circulation: arthropods, molluscs; closed: annelids, chordates.",
+            "Fish 2-chambered (single circulation); amphibians, reptiles 3 (incomplete double); crocodiles, birds, mammals 4 (double).",
+            "Valves: tricuspid (right), bicuspid/mitral (left), semilunar at pulmonary artery and aorta.",
+            "SAN (pacemaker, 70–75 impulses/min) → AVN → bundle of His → bundle branches → Purkinje fibres.",
+            "Cycle 0.8 s; stroke volume about 70 mL; cardiac output about 5 L/min; lub = AV valves close, dub = semilunar valves close.",
+          ],
+        },
+      ],
+      flashcards: [
+        { front: "Open vs closed circulation", back: "Open: blood flows through sinuses (arthropods, molluscs). Closed: always in vessels (annelids, chordates)." },
+        { front: "Incomplete double circulation", back: "Amphibians and most reptiles: blood mixes in a single ventricle." },
+        { front: "Tricuspid valve", back: "Between right atrium and right ventricle." },
+        { front: "Position of the AVN", back: "Lower left corner of the right atrium, close to the AV septum." },
+        { front: "Why is the heart autoexcitable?", back: "Its nodal tissue generates action potentials without external stimulus." },
+        { front: "Stroke volume", back: "Blood pumped by each ventricle per beat, about 70 mL." },
+        { front: "Lub and dub", back: "Lub: AV valves close. Dub: semilunar valves close." },
+        { front: "Atrial systole adds how much ventricular filling?", back: "About 30%." },
+      ],
+      quiz: [
+        {
+          kind: "mcq",
+          q: "Which animal has a four-chambered heart?",
+          options: ["Frog", "Lizard", "Crocodile", "Shark"],
+          answer: 2,
+          explain: "Among reptiles only crocodiles have four chambers; frogs and lizards have three, fishes two.",
+        },
+        {
+          kind: "mcq",
+          q: "During joint diastole:",
+          options: [
+            "AV valves are closed, semilunar valves open",
+            "AV valves are open, semilunar valves closed",
+            "All valves are closed",
+            "All valves are open",
+          ],
+          answer: 1,
+          explain: "Blood flows from atria into ventricles through open AV valves; semilunar valves stay shut.",
+        },
+        {
+          kind: "numeric",
+          q: "Stroke volume 70 mL, heart rate 72 per minute. What is the cardiac output in mL per minute?",
+          answer: 5040,
+          unit: "mL/min",
+          explain: "70 × 72 = 5040 mL/min, about 5 L.",
+        },
+        {
+          kind: "truefalse",
+          q: "The walls of the atria are thicker than the walls of the ventricles.",
+          answer: false,
+          explain: "Ventricles pump blood to the lungs and body, so their walls are much thicker.",
+        },
+        {
+          kind: "fill",
+          q: "The bicuspid valve is also called the ___ valve.",
+          answer: ["mitral"],
+          explain: "The bicuspid valve between left atrium and left ventricle is the mitral valve.",
+        },
+        {
+          kind: "mcq",
+          q: "Closure of the semilunar valves produces:",
+          options: ["The first heart sound (lub)", "The second heart sound (dub)", "The P wave", "Atrial systole"],
+          answer: 1,
+          explain: "Dub is the closure of the semilunar valves at the start of ventricular diastole.",
+        },
+        {
+          kind: "numeric",
+          q: "If the heart rate is 60 beats per minute, how long (in seconds) is one cardiac cycle?",
+          answer: 1,
+          unit: "s",
+          explain: "60 s ÷ 60 beats = 1 s per cycle.",
+          difficulty: 2,
+        },
+      ],
+    },
+    {
+      slug: "c11-bio-ecg-double-circulation",
+      title: "ECG, Double Circulation, Regulation and Disorders",
+      summary:
+        "Reading the P, QRS and T waves, the pulmonary and systemic pathways, hepatic portal and coronary systems, nervous and hormonal control of the heart, and hypertension, CAD, angina and heart failure.",
+      minutes: 20,
+      xp: 50,
+      blocks: [
+        {
+          type: "text",
+          md: "An **electrocardiograph** records the electrical activity of the heart during a cardiac cycle; the record is an **ECG** (electrocardiogram). For a standard ECG the patient is connected with three electrical leads, one on each wrist and one on the left ankle, which monitor the heart continuously.",
+        },
+        {
+          type: "table",
+          headers: ["Wave", "What it shows"],
+          rows: [
+            ["P wave", "Electrical excitation (depolarisation) of the **atria**, which leads to contraction of both atria"],
+            ["QRS complex", "Depolarisation of the **ventricles**, which starts ventricular contraction; contraction begins shortly after Q and marks the beginning of systole"],
+            ["T wave", "Return of the ventricles from the excited to the normal state (**repolarisation**); the end of the T wave marks the end of systole"],
+          ],
+        },
+        {
+          type: "text",
+          md: "Counting the number of QRS complexes in a given time gives the **heart rate**. Any deviation from the normal shape of the ECG points to a possible abnormality or disease, so it has great clinical value.",
+        },
+        {
+          type: "example",
+          title: "Heart rate from an ECG",
+          problem: "On an ECG strip, the R peaks of successive QRS complexes are 0.75 s apart. What is the heart rate? How many QRS complexes would appear in a 6 s strip?",
+          steps: [
+            "Each beat takes 0.75 s.",
+            "Beats per minute = 60 ÷ 0.75 = 80.",
+            "In 6 s: 6 ÷ 0.75 = 8 complexes.",
+          ],
+          answer: "80 beats per minute; 8 QRS complexes in 6 s.",
+        },
+        { type: "heading", text: "Double circulation" },
+        {
+          type: "list",
+          items: [
+            "**Pulmonary circulation**: right ventricle → pulmonary artery (deoxygenated blood) → lungs → oxygenated blood returns by **pulmonary veins** → left atrium.",
+            "**Systemic circulation**: left ventricle → aorta → arteries → arterioles → capillaries in tissues → venules → veins → **venae cavae** → right atrium. It carries nutrients, O₂ and other substances to tissues and takes CO₂ and wastes away.",
+            "**Hepatic portal system**: the hepatic portal vein carries blood from the intestine to the liver before it enters the systemic circulation.",
+            "**Coronary system**: a special system of vessels that supplies the heart muscle itself.",
+          ],
+        },
+        {
+          type: "checkpoint",
+          questions: [
+            {
+              kind: "mcq",
+              q: "Which vessel carries oxygenated blood?",
+              options: ["Pulmonary artery", "Pulmonary vein", "Vena cava", "Hepatic portal vein"],
+              answer: 1,
+              explain: "Pulmonary veins bring oxygenated blood from the lungs to the left atrium. The pulmonary artery carries deoxygenated blood.",
+            },
+          ],
+        },
+        {
+          type: "text",
+          md: "**Regulation of cardiac activity.** Normal activity is regulated intrinsically by the nodal tissue, so the heart is called **myogenic**. A special neural centre in the **medulla oblongata** can moderate cardiac function through the autonomic nervous system. **Sympathetic** nerves increase the rate of heartbeat, the strength of ventricular contraction and so the cardiac output. **Parasympathetic** nerves decrease the heart rate, the speed of conduction of the action potential and so the cardiac output. Hormones of the **adrenal medulla** (adrenaline, noradrenaline) also increase cardiac output.",
+        },
+        {
+          type: "table",
+          headers: ["Disorder", "What it is"],
+          rows: [
+            ["High blood pressure (hypertension)", "Blood pressure higher than normal (120/80 mm Hg). Repeated readings of 140/90 or higher show hypertension; it can lead to heart disease and affect vital organs like brain and kidney. 120 is systolic (pumping) pressure, 80 diastolic (resting) pressure."],
+            ["Coronary artery disease (CAD), atherosclerosis", "Vessels supplying the heart muscle are narrowed by deposits of calcium, fat, cholesterol and fibrous tissue."],
+            ["Angina (angina pectoris)", "Acute chest pain when not enough O₂ reaches the heart muscle; more common in middle-aged and elderly people."],
+            ["Heart failure", "The heart does not pump blood well enough to meet the body's needs; also called congestive heart failure, since congestion of the lungs is a main symptom. It is **not** the same as cardiac arrest (heart stops beating) or heart attack (heart muscle suddenly damaged by inadequate blood supply)."],
+          ],
+        },
+        {
+          type: "mistake",
+          wrong: "Arteries always carry oxygenated blood and veins always carry deoxygenated blood.",
+          right: "Arteries carry blood **away from** the heart and veins carry blood **to** it. So the pulmonary artery carries deoxygenated blood and the pulmonary veins carry oxygenated blood.",
+          why: "In the systemic circuit the rule happens to hold, so it gets learned as a definition. The real definition is direction relative to the heart.",
+        },
+        {
+          type: "activity",
+          activity: {
+            kind: "match",
+            prompt: "Match each ECG feature with what it shows.",
+            pairs: [
+              ["P wave", "Atrial depolarisation"],
+              ["QRS complex", "Ventricular depolarisation"],
+              ["T wave", "Ventricular repolarisation"],
+              ["Number of QRS per minute", "Heart rate"],
+            ],
+            explain: "P is atrial excitation, QRS ventricular excitation (start of systole) and T ventricular recovery (end of systole). Counting QRS gives the rate.",
+          },
+        },
+        {
+          type: "callout",
+          tone: "exam",
+          title: "Board tip",
+          md: "A common 2-mark question asks you to *distinguish* heart failure, cardiac arrest and heart attack, or to *draw and label* a standard ECG. Draw the P, QRS and T waves in order on a baseline and write one line on each.",
+        },
+        {
+          type: "keypoints",
+          items: [
+            "ECG: P = atrial depolarisation; QRS = ventricular depolarisation (systole begins); T = ventricular repolarisation (systole ends).",
+            "Pulmonary: RV → lungs → LA. Systemic: LV → body → RA.",
+            "Hepatic portal vein: intestine → liver; coronary vessels supply heart muscle.",
+            "Heart is myogenic; sympathetic and adrenal medulla hormones raise output, parasympathetic lowers it.",
+            "Disorders: hypertension (≥140/90), CAD, angina, heart failure (≠ cardiac arrest ≠ heart attack).",
+          ],
+        },
+      ],
+      flashcards: [
+        { front: "P wave", back: "Depolarisation of the atria; leads to atrial contraction." },
+        { front: "QRS complex", back: "Depolarisation of the ventricles; ventricular systole begins." },
+        { front: "T wave", back: "Repolarisation of the ventricles; end of T marks end of systole." },
+        { front: "Hepatic portal system", back: "Hepatic portal vein carries blood from the intestine to the liver before systemic circulation." },
+        { front: "Why is the heart called myogenic?", back: "Its rhythm starts in its own muscle (nodal tissue), not in nerves." },
+        { front: "Effect of sympathetic nerves on heart", back: "Raise heart rate, strength of ventricular contraction and cardiac output." },
+        { front: "Angina pectoris", back: "Acute chest pain when heart muscle gets too little O₂." },
+        { front: "Normal blood pressure", back: "120/80 mm Hg (systolic/diastolic); 140/90 or higher = hypertension." },
+      ],
+      quiz: [
+        {
+          kind: "mcq",
+          q: "The end of the T wave marks:",
+          options: ["Start of atrial systole", "End of ventricular systole", "Start of ventricular systole", "Closure of AV valves"],
+          answer: 1,
+          explain: "The T wave is ventricular repolarisation; its end marks the end of systole.",
+        },
+        {
+          kind: "numeric",
+          q: "R–R interval on an ECG is 1.0 s. What is the heart rate per minute?",
+          answer: 60,
+          unit: "beats/min",
+          explain: "60 ÷ 1.0 = 60 beats per minute.",
+        },
+        {
+          kind: "truefalse",
+          q: "Parasympathetic stimulation increases cardiac output.",
+          answer: false,
+          explain: "Parasympathetic nerves slow the heart rate and conduction, reducing cardiac output.",
+        },
+        {
+          kind: "mcq",
+          q: "Blood from the intestine reaches the liver through the:",
+          options: ["Hepatic artery", "Hepatic portal vein", "Inferior vena cava", "Renal vein"],
+          answer: 1,
+          explain: "The hepatic portal vein carries absorbed food from the intestine to the liver.",
+        },
+        {
+          kind: "fill",
+          q: "Narrowing of coronary arteries by fat, cholesterol and calcium deposits is called ___.",
+          answer: ["atherosclerosis", "coronary artery disease", "CAD"],
+          explain: "CAD is often called atherosclerosis.",
+        },
+        {
+          kind: "mcq",
+          q: "Which is correct about heart failure?",
+          options: [
+            "It means the heart has stopped beating",
+            "It means heart muscle is suddenly damaged by a blocked supply",
+            "The heart does not pump enough blood for the body's needs; the lungs get congested",
+            "It is the same as angina",
+          ],
+          answer: 2,
+          explain: "Heart stopping is cardiac arrest; sudden muscle damage is a heart attack. Heart failure is inadequate pumping with lung congestion.",
+          difficulty: 2,
+        },
+        {
+          kind: "order",
+          q: "Order the systemic circulation from the heart back to the heart.",
+          items: ["Left ventricle", "Aorta", "Arterioles", "Capillaries", "Venules", "Vena cava"],
+          explain: "LV → aorta → arteries → arterioles → capillaries → venules → veins → vena cava → right atrium.",
+          difficulty: 2,
+        },
+      ],
+    },
+    {
+      slug: "c11-bio-circulation-exam-edge",
+      title: "Exam edge: Body Fluids and Circulation",
+      summary:
+        "NEET and KCET favourites: formed-element numbers and roles, blood group and Rh reasoning, cardiac cycle valve states, ECG waves, cardiac output arithmetic and the heart-disorder distinctions.",
+      minutes: 24,
+      xp: 60,
+      track: "exam",
+      blocks: [
+        {
+          type: "callout",
+          tone: "exam",
+          title: "Why this chapter matters",
+          md: "Body Fluids and Circulation gives about 2 NEET questions and 1–2 KCET questions almost every year. Most come from **NCERT tables and lines**: WBC percentages, the valve states in the cardiac cycle, ECG waves, nodal tissue positions, Rh incompatibility and the three heart disorders.",
+        },
+        {
+          type: "table",
+          headers: ["Phase", "AV valves", "Semilunar valves"],
+          rows: [
+            ["Joint diastole", "Open", "Closed"],
+            ["Atrial systole", "Open", "Closed"],
+            ["Start of ventricular systole (pressure rising)", "Closed (lub)", "Closed"],
+            ["Ventricular ejection", "Closed", "Open"],
+            ["Start of ventricular diastole", "Closed", "Closed (dub)"],
+          ],
+        },
+        {
+          type: "text",
+          md: "**NCERT lines NEET turns into questions**: the SAN is in the right upper corner of the right atrium, the AVN in the lower left corner of the right atrium; atrial systole adds about 30% to ventricular filling; RBCs are destroyed in the spleen; the heart is mesodermally derived; neutrophils are the most abundant WBCs; contraction of ventricles starts shortly after Q; crocodiles are the only reptiles with four chambers.",
+        },
+        {
+          type: "example",
+          title: "NEET-style: valve states",
+          problem: "In which phase are both the AV valves and the semilunar valves closed at the same time?",
+          steps: [
+            "When ventricles begin to contract, their pressure rises above atrial pressure, so AV valves close.",
+            "For a short time ventricular pressure is still below aortic and pulmonary pressure, so semilunar valves stay shut.",
+            "A similar brief all-closed phase occurs at the start of ventricular relaxation.",
+          ],
+          answer: "At the start of ventricular systole (before ejection) and at the start of ventricular diastole (before filling).",
+        },
+        {
+          type: "example",
+          title: "Assertion and reason",
+          problem: "Assertion (A): The SAN is called the pacemaker. Reason (R): It can generate the maximum number of action potentials per minute (70–75). Choose: (1) both true, R explains A; (2) both true, R does not explain A; (3) A true, R false; (4) A false.",
+          steps: [
+            "All nodal tissue is autoexcitable, but the fastest one sets the pace for the rest.",
+            "The SAN fires fastest, so it takes control. R is the reason for A.",
+          ],
+          answer: "(1).",
+        },
+        {
+          type: "example",
+          title: "KCET-style: Rh incompatibility",
+          problem: "Which couple's second child is at risk of erythroblastosis foetalis (assume no anti-Rh treatment)? (a) Rh+ mother, Rh− father (b) Rh− mother, Rh+ father, first child Rh+ (c) Rh− mother, Rh− father (d) Rh+ mother, Rh+ father",
+          steps: [
+            "Risk needs an Rh− mother sensitised by an Rh+ foetus.",
+            "In (b) the first child is Rh+, so the mother may be sensitised at delivery.",
+            "With an Rh+ father, the second child may also be Rh+ and be attacked.",
+            "In (c) all children are Rh−, so there is no risk.",
+          ],
+          answer: "(b).",
+        },
+        {
+          type: "example",
+          title: "Harder: cardiac output under exercise",
+          problem: "During a race an athlete's heart rate rises from 70 to 175 per minute and stroke volume from 70 mL to 100 mL. By what factor does cardiac output increase, and how long does each cycle last during the race?",
+          steps: [
+            "Resting output = 70 × 70 = 4900 mL/min.",
+            "Race output = 175 × 100 = 17500 mL/min.",
+            "Factor = 17500 ÷ 4900 ≈ 3.6.",
+            "Cycle length = 60 ÷ 175 ≈ 0.34 s; diastole shortens most, so filling time falls.",
+          ],
+          answer: "Output rises about 3.6 times (4.9 to 17.5 L/min); each cycle lasts about 0.34 s.",
+        },
+        {
+          type: "mistake",
+          wrong: "The AVN is in the left atrium (or in the inter-ventricular septum).",
+          right: "Both SAN and AVN are in the **right atrium**: SAN in its right upper corner, AVN in its lower left corner near the AV septum. The **bundle of His** runs through the top of the inter-ventricular septum.",
+          why: "*Lower left* in NCERT refers to a corner of the right atrium, and options exploit the word *left*.",
+        },
+        {
+          type: "mistake",
+          wrong: "Group O plasma has no antibodies, so it can be given to anyone.",
+          right: "Group O **red cells** have no A or B antigens, so O is the universal donor of red cells. O **plasma** contains both anti-A and anti-B.",
+          why: "Donor and recipient rules are about antigens on the donated RBCs. Students mix up which part (cells or plasma) carries what.",
+        },
+        {
+          type: "activity",
+          activity: {
+            kind: "reveal",
+            prompt: "Which WBC is fewest in normal blood?",
+            options: ["Eosinophils", "Basophils", "Monocytes", "Lymphocytes"],
+            answer: 1,
+            trap: 0,
+            explain: "Basophils are 0.5–1% of WBCs, fewer than eosinophils (2–3%).",
+          },
+        },
+        {
+          type: "checkpoint",
+          questions: [
+            {
+              kind: "mcq",
+              q: "Which statement is correct?",
+              options: [
+                "Fishes show double circulation",
+                "Amphibians show incomplete double circulation",
+                "Birds have a three-chambered heart",
+                "Molluscs have a closed circulatory system",
+              ],
+              answer: 1,
+              explain: "Amphibians have one ventricle where blood mixes: incomplete double circulation.",
+            },
+          ],
+        },
+        {
+          type: "keypoints",
+          items: [
+            "Valve states: AV open in diastole and atrial systole; semilunar open only during ejection.",
+            "SAN and AVN both in the right atrium; SAN is pacemaker (70–75/min).",
+            "WBC order: neutrophils > lymphocytes > monocytes > eosinophils > basophils.",
+            "Rh disease: Rh− mother, Rh+ foetus, second or later pregnancy.",
+            "Cardiac output = stroke volume × rate; cycle length = 60 ÷ rate.",
+          ],
+        },
+      ],
+      flashcards: [
+        { front: "WBC order by number", back: "Neutrophils > lymphocytes > monocytes > eosinophils > basophils." },
+        { front: "When are all four valves closed?", back: "Briefly at the start of ventricular systole and at the start of ventricular diastole." },
+        { front: "When do semilunar valves open?", back: "During ventricular ejection, when ventricular pressure exceeds pressure in the aorta and pulmonary artery." },
+        { front: "Cycle length formula", back: "60 ÷ heart rate (in seconds)." },
+        { front: "Hormones that raise cardiac output", back: "Adrenal medullary hormones (adrenaline, noradrenaline)." },
+        { front: "Only reptile with four-chambered heart", back: "Crocodile." },
+        { front: "Graveyard of RBCs", back: "Spleen." },
+      ],
+      quiz: [
+        {
+          kind: "mcq",
+          q: "Which wave in a normal ECG marks the onset of ventricular contraction?",
+          options: ["P wave", "QRS complex", "T wave", "None; ECG does not show it"],
+          answer: 1,
+          explain: "Ventricular contraction starts shortly after Q, during the QRS complex.",
+          difficulty: 2,
+        },
+        {
+          kind: "numeric",
+          q: "A heart beats 80 times a minute with a cardiac output of 5.6 L per minute. What is the stroke volume in mL?",
+          answer: 70,
+          unit: "mL",
+          explain: "Stroke volume = 5600 ÷ 80 = 70 mL.",
+          difficulty: 2,
+        },
+        {
+          kind: "multi",
+          q: "Which statements are correct?",
+          options: [
+            "Eosinophils resist infections and are linked with allergic reactions",
+            "Lymphocytes form 20–25% of WBCs",
+            "Monocytes are granulocytes",
+            "RBCs are formed in red bone marrow in adults",
+          ],
+          answers: [0, 1, 3],
+          explain: "Monocytes are agranulocytes (along with lymphocytes).",
+          difficulty: 2,
+        },
+        {
+          kind: "mcq",
+          q: "Assertion: Closed circulation is more advantageous than open circulation. Reason: In closed circulation the flow of fluid can be more precisely regulated. Choose:",
+          options: ["Both true; R explains A", "Both true; R does not explain A", "A true, R false", "A false, R true"],
+          answer: 0,
+          explain: "NCERT states the closed system is advantageous because flow can be precisely regulated.",
+        },
+        {
+          kind: "mcq",
+          q: "A drug blocks the AV node completely. Which ECG change is most expected?",
+          options: [
+            "P waves disappear",
+            "P waves continue, but QRS complexes no longer follow each P wave",
+            "Only T waves disappear",
+            "The ECG becomes a straight line at once",
+          ],
+          answer: 1,
+          explain: "The SAN still excites the atria (P waves), but the impulse cannot pass to the ventricles through the AVN, so QRS complexes no longer follow each P wave (the ventricles may beat slowly on their own, out of step with the atria).",
+          difficulty: 3,
+          hint: "Which part of the conduction path is before the AVN?",
+        },
+        {
+          kind: "numeric",
+          q: "An ECG strip of 10 s shows 12 QRS complexes. What is the heart rate per minute?",
+          answer: 72,
+          unit: "beats/min",
+          explain: "12 beats in 10 s → 12 × 6 = 72 per minute.",
+        },
+        {
+          kind: "mcq",
+          q: "A person of group AB Rh−ve needs plasma (not red cells). Ideally the plasma should come from:",
+          options: ["Group O", "Group A", "Group B", "Group AB"],
+          answer: 3,
+          explain: "AB plasma has no anti-A or anti-B antibodies, so it will not attack the recipient's A and B antigens. (For plasma, the rules reverse: AB is the universal plasma donor.)",
+          difficulty: 3,
+          hint: "Think about which antibodies the donor plasma carries.",
+        },
+        {
+          kind: "mcq",
+          q: "The P wave represents:",
+          options: ["Atrial repolarisation", "Atrial depolarisation", "Ventricular depolarisation", "Ventricular repolarisation"],
+          answer: 1,
+          explain: "P is the excitation (depolarisation) of the atria.",
+        },
+      ],
+    },
+  ],
+};
+
+export const topics: Topic[] = [digestion, breathing, circulation];
 
 export const links: Record<string, string | string[]> = {
   "11:Breathing and Exchange of Gases": "c11-bio-breathing-exchange-gases",
-  "11:Human Physiology": ["c11-bio-digestion-absorption", "c11-bio-breathing-exchange-gases"],
+  "11:Body Fluids and Circulation": "c11-bio-body-fluids-circulation",
+  "11:Human Physiology": ["c11-bio-digestion-absorption", "c11-bio-breathing-exchange-gases", "c11-bio-body-fluids-circulation"],
 };

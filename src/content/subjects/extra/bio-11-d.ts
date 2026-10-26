@@ -1022,8 +1022,799 @@ const photosynthesis: Topic = {
   ],
 };
 
-export const topics: Topic[] = [photosynthesis];
+/* ------------------------------------------------------------------ */
+/* Respiration in Plants                                               */
+/* ------------------------------------------------------------------ */
+const respiration: Topic = {
+  slug: "c11-bio-respiration-in-plants",
+  title: "Respiration in Plants",
+  icon: "🍃",
+  description:
+    "Gas exchange in plants, glycolysis, alcoholic and lactic acid fermentation, the link reaction, the Krebs cycle, the electron transport system and oxidative phosphorylation, the respiratory balance sheet, the amphibolic pathway and the respiratory quotient.",
+  lessons: [
+    /* ---------------- Lesson 1: glycolysis and fermentation ---------------- */
+    {
+      slug: "c11-bio-resp-glycolysis-fermentation",
+      title: "Gas Exchange, Glycolysis and Fermentation",
+      summary:
+        "Why plants need no special breathing organs, how glucose is split to pyruvic acid in glycolysis with its ATP and NADH count, and what happens to pyruvic acid when oxygen is absent.",
+      minutes: 20,
+      xp: 50,
+      blocks: [
+        {
+          type: "text",
+          md: "A sack of potatoes stored in a warm godown slowly gets warmer and loses weight. The tubers are alive and **respiring**: breaking down food to release energy. **Cellular respiration** is the breakdown of food molecules such as glucose inside cells to release energy, much of which is trapped as **ATP**. The compounds oxidised are called **respiratory substrates**; carbohydrates are the usual ones, but fats and proteins can also be used.\n\nEnergy is not released in one burst. It comes out in a series of small, enzyme-controlled steps, so that part of it can be stored in ATP instead of being lost as heat.",
+        },
+        {
+          type: "formula",
+          tex: t`\text{C}_6\text{H}_{12}\text{O}_6 + 6\,\text{O}_2 \longrightarrow 6\,\text{CO}_2 + 6\,\text{H}_2\text{O} + \text{energy}`,
+          caption: "Overall equation for complete aerobic oxidation of glucose.",
+        },
+        {
+          type: "text",
+          md: "**Do plants breathe?** Plants have no lungs or gills. They exchange gases through **stomata** and **lenticels**, and manage without special organs because:\n\n1. Each plant part takes care of its own gas exchange; there is very little transport of gases from one part to another.\n2. Plants do not need to exchange gases fast; except during photosynthesis, roots, stems and leaves respire at much lower rates than animals.\n3. Distances are short: in large plants most living cells lie close to the surface, and in stems the living cells are thin layers just under the bark, while the inside is mostly dead and gives only mechanical support. Loose packing of parenchyma gives air spaces.\n4. In green parts, O₂ released in photosynthesis is available inside the cells.",
+        },
+        {
+          type: "heading",
+          text: "Glycolysis",
+        },
+        {
+          type: "text",
+          md: "**Glycolysis** (glycos = sugar, lysis = splitting) is the partial oxidation of glucose to **two molecules of pyruvic acid**. It is also called the **EMP pathway** after Embden, Meyerhof and Parnas. It happens in the **cytoplasm** of all living cells and is the only process of respiration in anaerobic organisms. In plants the glucose comes from sucrose, which the enzyme **invertase** splits into glucose and fructose, or from stored starch.",
+        },
+        {
+          type: "table",
+          headers: ["Step", "Change", "ATP / NADH (per glucose)"],
+          rows: [
+            ["1", "Glucose → glucose-6-phosphate (enzyme **hexokinase**)", "1 ATP used"],
+            ["2", "Glucose-6-phosphate → fructose-6-phosphate (isomerisation)", "—"],
+            ["3", "Fructose-6-phosphate → fructose-1,6-bisphosphate", "1 ATP used"],
+            ["4", "Fructose-1,6-bisphosphate splits into dihydroxyacetone phosphate (DHAP) and 3-phosphoglyceraldehyde (PGAL); both become PGAL", "—"],
+            ["5", "PGAL → 1,3-bisphosphoglyceric acid (BPGA), using inorganic phosphate", "2 NADH formed"],
+            ["6", "BPGA → 3-phosphoglyceric acid (3-PGA)", "2 ATP formed"],
+            ["7", "3-PGA → 2-PGA → phosphoenolpyruvate (PEP), water removed", "—"],
+            ["8", "PEP → pyruvic acid", "2 ATP formed"],
+          ],
+        },
+        {
+          type: "example",
+          title: "ATP accounting in glycolysis",
+          problem: "Work out the net ATP and NADH made in glycolysis of one glucose molecule.",
+          steps: [
+            "ATP used: 1 at step 1 + 1 at step 3 = 2.",
+            "After the split there are two 3-carbon molecules, so steps 5–8 happen twice.",
+            "ATP formed: 2 at step 6 + 2 at step 8 = 4. Net ATP = 4 − 2 = 2.",
+            "NADH formed: 1 per PGAL × 2 = 2.",
+          ],
+          answer: "Net gain of 2 ATP and 2 NADH per glucose; the products are 2 pyruvic acid.",
+        },
+        {
+          type: "checkpoint",
+          questions: [
+            {
+              kind: "mcq",
+              q: "In glycolysis, NADH is formed when:",
+              options: [
+                "Glucose is phosphorylated",
+                "PGAL is converted to BPGA",
+                "PEP is converted to pyruvic acid",
+                "Fructose-1,6-bisphosphate is split",
+              ],
+              answer: 1,
+              explain: "Oxidation of PGAL to BPGA reduces NAD⁺ to NADH.",
+            },
+          ],
+        },
+        {
+          type: "heading",
+          text: "What happens to pyruvic acid",
+        },
+        {
+          type: "table",
+          headers: ["Fate", "Where / who", "Change", "Enzymes"],
+          rows: [
+            ["Alcoholic fermentation", "Yeast; anaerobic conditions", "Pyruvic acid → CO₂ + ethanol", "Pyruvic acid decarboxylase, alcohol dehydrogenase"],
+            ["Lactic acid fermentation", "Some bacteria; animal muscle when O₂ is short", "Pyruvic acid → lactic acid", "Lactate dehydrogenase"],
+            ["Aerobic respiration", "Mitochondria, with O₂", "Pyruvic acid → CO₂ + H₂O (complete oxidation)", "Krebs cycle and ETS enzymes"],
+          ],
+        },
+        {
+          type: "text",
+          md: "In both fermentations the **reducing agent is NADH + H⁺**, which is reoxidised to NAD⁺. This NAD⁺ lets glycolysis continue. Fermentation is wasteful: **less than 7% of the energy in glucose is released**, and not all of it is trapped as ATP. The products are hazardous: acid or alcohol builds up, and yeasts poison themselves to death when the alcohol concentration reaches about **13%**.",
+        },
+        {
+          type: "mistake",
+          wrong: "Fermentation makes extra ATP when pyruvic acid is turned into ethanol or lactic acid.",
+          right: "The fermentation step makes no ATP. All the ATP (net 2) comes from glycolysis; the fermentation step only regenerates NAD⁺.",
+          why: "Because the whole process is called 'fermentation', students credit it with ATP. Without NAD⁺ being remade, glycolysis would stop at the PGAL step, so the last step is needed even though it yields no energy.",
+        },
+        {
+          type: "activity",
+          activity: {
+            kind: "order",
+            prompt: "Put these glycolysis intermediates in order.",
+            items: ["Glucose-6-phosphate", "Fructose-1,6-bisphosphate", "3-phosphoglyceraldehyde", "1,3-bisphosphoglyceric acid", "Phosphoenolpyruvate", "Pyruvic acid"],
+            explain: "Phosphorylate twice, split into PGAL, oxidise to BPGA (NADH), then pull out ATP twice on the way to pyruvic acid.",
+          },
+        },
+        {
+          type: "keypoints",
+          items: [
+            "Plants exchange gases through stomata and lenticels; each part handles its own gas exchange.",
+            "Glycolysis (EMP pathway) in the cytoplasm: glucose → 2 pyruvic acid; ATP used at 2 steps, made at 2 steps; net 2 ATP + 2 NADH.",
+            "Yeast: pyruvic acid → CO₂ + ethanol; muscle and some bacteria: pyruvic acid → lactic acid; NADH reoxidised in both.",
+            "Fermentation releases less than 7% of glucose's energy; yeast dies at about 13% alcohol.",
+          ],
+        },
+      ],
+      flashcards: [
+        { front: "Another name for glycolysis", back: "EMP pathway (Embden, Meyerhof, Parnas)." },
+        { front: "Where does glycolysis occur?", back: "In the cytoplasm of all living cells." },
+        { front: "Enzyme that splits sucrose into glucose and fructose", back: "Invertase." },
+        { front: "Two steps of glycolysis that use ATP", back: "Glucose → glucose-6-phosphate, and fructose-6-phosphate → fructose-1,6-bisphosphate." },
+        { front: "Net yield of glycolysis per glucose", back: "2 ATP, 2 NADH and 2 pyruvic acid." },
+        { front: "Enzymes of alcoholic fermentation", back: "Pyruvic acid decarboxylase and alcohol dehydrogenase." },
+        { front: "At what alcohol level do yeasts poison themselves?", back: "About 13%." },
+        { front: "Why do plants not need special respiratory organs?", back: "Each part exchanges its own gases, demand is low, living cells are near the surface, and green parts get O₂ from photosynthesis." },
+      ],
+      quiz: [
+        {
+          kind: "mcq",
+          q: "The enzyme that phosphorylates glucose in the first step of glycolysis is:",
+          options: ["Invertase", "Hexokinase", "Lactate dehydrogenase", "Alcohol dehydrogenase"],
+          answer: 1,
+          explain: "Hexokinase converts glucose to glucose-6-phosphate, using ATP.",
+        },
+        {
+          kind: "numeric",
+          q: "How many ATP molecules are made (gross, before subtracting those used) in glycolysis of one glucose?",
+          answer: 4,
+          explain: "2 at BPGA → 3-PGA and 2 at PEP → pyruvic acid; 4 gross, 2 net.",
+        },
+        {
+          kind: "truefalse",
+          q: "Glycolysis requires oxygen.",
+          answer: false,
+          explain: "Glycolysis runs without O₂ and is the only respiratory process in anaerobes.",
+        },
+        {
+          kind: "mcq",
+          q: "In lactic acid fermentation, the reducing agent is:",
+          options: ["FADH₂", "NADPH", "NADH + H⁺", "ATP"],
+          answer: 2,
+          explain: "NADH + H⁺ from glycolysis reduces pyruvic acid to lactic acid and becomes NAD⁺.",
+        },
+        {
+          kind: "fill",
+          q: "Fermentation releases less than ___ % of the energy in glucose.",
+          answer: ["7", "seven"],
+          explain: "Most energy stays locked in ethanol or lactic acid.",
+        },
+        {
+          kind: "multi",
+          q: "Which are products of alcoholic fermentation by yeast?",
+          options: ["Ethanol", "CO₂", "Lactic acid", "NAD⁺"],
+          answers: [0, 1, 3],
+          explain: "Yeast makes ethanol and CO₂; NAD⁺ is regenerated. Lactic acid is made by some bacteria and muscle.",
+          difficulty: 2,
+        },
+        {
+          kind: "mcq",
+          q: "The splitting of fructose-1,6-bisphosphate gives:",
+          options: ["Two pyruvic acids", "DHAP and PGAL", "Two molecules of PEP", "Glucose and fructose"],
+          answer: 1,
+          explain: "It splits into dihydroxyacetone phosphate and 3-phosphoglyceraldehyde, which are interconvertible.",
+        },
+      ],
+    },
+    /* ---------------- Lesson 2: aerobic respiration ---------------- */
+    {
+      slug: "c11-bio-resp-krebs-ets",
+      title: "Aerobic Respiration: Krebs Cycle and Electron Transport",
+      summary:
+        "Oxidative decarboxylation of pyruvic acid to acetyl CoA, the steps and yield of the tricarboxylic acid cycle, the complexes of the electron transport system and how ATP synthase makes ATP by oxidative phosphorylation.",
+      minutes: 24,
+      xp: 55,
+      blocks: [
+        {
+          type: "text",
+          md: "In the presence of O₂, pyruvic acid enters the **mitochondrion** and is oxidised completely. Two crucial events happen there:\n\n1. Complete oxidation of pyruvate by stepwise removal of hydrogen atoms, leaving three molecules of CO₂: in the **matrix**.\n2. Passing those electrons to O₂ with simultaneous synthesis of ATP: on the **inner membrane**.",
+        },
+        {
+          type: "formula",
+          tex: t`\text{Pyruvic acid} + \text{CoA} + \text{NAD}^+ \xrightarrow[\text{pyruvic dehydrogenase}]{\text{Mg}^{2+}} \text{Acetyl CoA} + \text{CO}_2 + \text{NADH} + \text{H}^+`,
+          caption: "The link reaction (oxidative decarboxylation). Two NADH form per glucose because two pyruvic acids are made.",
+        },
+        {
+          type: "heading",
+          text: "The tricarboxylic acid (Krebs) cycle",
+        },
+        {
+          type: "list",
+          ordered: true,
+          items: [
+            "The acetyl group of acetyl CoA condenses with **oxaloacetic acid (OAA, 4C)** and water to form **citric acid (6C)**; enzyme **citrate synthase**; CoA is released. The cycle was worked out by **Hans Krebs**.",
+            "Citrate is isomerised to **isocitrate**.",
+            "Two successive **decarboxylations** follow, forming **α-ketoglutaric acid (5C)** and then **succinyl CoA (4C)**; NAD⁺ is reduced at each.",
+            "Succinyl CoA → **succinic acid**, with synthesis of one **GTP** (substrate-level phosphorylation). In a coupled reaction GTP gives its phosphate to ADP, forming ATP.",
+            "Succinic acid → fumaric acid (FAD reduced to FADH₂) → malic acid → **OAA** (NAD⁺ reduced). OAA is ready for the next turn.",
+          ],
+        },
+        {
+          type: "formula",
+          tex: t`\text{Pyruvic acid} + 4\,\text{NAD}^+ + \text{FAD}^+ + 2\,\text{H}_2\text{O} + \text{ADP} + \text{P}_i \xrightarrow{\text{mitochondrial matrix}} 3\,\text{CO}_2 + 4\,\text{NADH} + 4\,\text{H}^+ + \text{FADH}_2 + \text{ATP}`,
+          caption: "Link reaction plus one turn of the Krebs cycle, per pyruvic acid. The Krebs cycle alone gives 2 CO₂, 3 NADH, 1 FADH₂ and 1 GTP (ATP) per acetyl CoA.",
+        },
+        {
+          type: "checkpoint",
+          questions: [
+            {
+              kind: "numeric",
+              q: "How many molecules of CO₂ are released from one glucose by the link reaction and Krebs cycle together?",
+              answer: 6,
+              explain: "Each pyruvic acid gives 3 CO₂ (1 in the link reaction + 2 in the cycle); two pyruvic acids give 6.",
+            },
+          ],
+        },
+        {
+          type: "heading",
+          text: "Electron transport system and oxidative phosphorylation",
+        },
+        {
+          type: "table",
+          headers: ["Component", "Name", "Job"],
+          rows: [
+            ["Complex I", "NADH dehydrogenase", "Oxidises NADH from the matrix; passes electrons to **ubiquinone**"],
+            ["Complex II", "Succinate dehydrogenase", "Passes electrons of FADH₂ to ubiquinone"],
+            ["Complex III", "Cytochrome bc₁ complex", "Oxidises reduced ubiquinone (ubiquinol); passes electrons to cytochrome c"],
+            ["Cytochrome c", "Small mobile protein", "Attached to the outer surface of the inner membrane; carries electrons from III to IV"],
+            ["Complex IV", "Cytochrome c oxidase (cytochromes a, a₃ and two copper centres)", "Passes electrons to **O₂**, the final acceptor, forming water"],
+            ["Complex V", "ATP synthase (F₀ + F₁)", "Makes ATP using the proton gradient"],
+          ],
+        },
+        {
+          type: "text",
+          md: "Oxidation of one **NADH gives 3 ATP** and one **FADH₂ gives 2 ATP**. Oxygen acts only at the very end, as the final hydrogen acceptor, but it drives the whole process by removing electrons and hydrogen from the chain.\n\nThis is **oxidative phosphorylation**: the energy of oxidation–reduction is used to build a proton gradient. (In photophosphorylation, light energy builds the gradient.) **F₁** is a peripheral head piece where ATP is made from ADP and Pi; **F₀** is an integral membrane protein forming the channel. For each ATP produced, **2 H⁺** pass through F₀ from the intermembrane space to the matrix.",
+        },
+        {
+          type: "example",
+          title: "Energy from one acetyl CoA",
+          problem: "Using NCERT values, how much ATP comes from one acetyl CoA oxidised through the Krebs cycle and ETS?",
+          steps: [
+            "One turn gives 3 NADH, 1 FADH₂ and 1 GTP (= 1 ATP).",
+            "3 NADH × 3 = 9 ATP.",
+            "1 FADH₂ × 2 = 2 ATP.",
+            "Total = 9 + 2 + 1 = 12 ATP.",
+          ],
+          answer: "12 ATP per acetyl CoA, so 24 ATP for the two acetyl CoA from one glucose.",
+        },
+        {
+          type: "mistake",
+          wrong: "Oxygen is used directly in the Krebs cycle.",
+          right: "The Krebs cycle uses no O₂ directly. O₂ is used only at complex IV as the final electron acceptor.",
+          why: "The Krebs cycle stops without O₂, so students assume it uses O₂. It stops because NAD⁺ and FAD are not regenerated when the ETS cannot pass electrons to O₂.",
+        },
+        {
+          type: "activity",
+          activity: {
+            kind: "match",
+            prompt: "Match the ETS component to its name.",
+            pairs: [
+              ["Complex I", "NADH dehydrogenase"],
+              ["Complex II", "Succinate dehydrogenase"],
+              ["Complex III", "Cytochrome bc₁ complex"],
+              ["Complex IV", "Cytochrome c oxidase"],
+              ["Complex V", "ATP synthase"],
+            ],
+            explain: "Electrons flow I (or II) → ubiquinone → III → cytochrome c → IV → O₂; complex V uses the resulting H⁺ gradient.",
+          },
+        },
+        {
+          type: "callout",
+          tone: "exam",
+          title: "Board tip",
+          md: "When drawing the Krebs cycle, mark the carbon number of each acid (citric 6C, α-ketoglutaric 5C, succinyl CoA 4C, OAA 4C) and the points where NADH, FADH₂, GTP and CO₂ form. Examiners give marks for the two decarboxylation steps and for naming citrate synthase.",
+        },
+        {
+          type: "keypoints",
+          items: [
+            "Link reaction: pyruvic acid → acetyl CoA + CO₂ + NADH (pyruvic dehydrogenase, Mg²⁺).",
+            "Krebs cycle per acetyl CoA: 2 CO₂, 3 NADH, 1 FADH₂, 1 GTP; OAA is regenerated.",
+            "ETS on the inner membrane: complexes I–IV, ubiquinone and cytochrome c; O₂ is the final acceptor.",
+            "1 NADH → 3 ATP, 1 FADH₂ → 2 ATP; 2 H⁺ through F₀ per ATP made at F₁.",
+          ],
+        },
+      ],
+      flashcards: [
+        { front: "Enzyme of the link reaction", back: "Pyruvic dehydrogenase (needs Mg²⁺)." },
+        { front: "First product of the Krebs cycle", back: "Citric acid (6C), formed from acetyl CoA + OAA + H₂O by citrate synthase." },
+        { front: "Where is substrate-level phosphorylation in the Krebs cycle?", back: "Succinyl CoA → succinic acid, making GTP (then ATP)." },
+        { front: "Step that reduces FAD in the Krebs cycle", back: "Succinic acid → fumaric acid." },
+        { front: "Final electron acceptor of aerobic respiration", back: "Oxygen, which forms water." },
+        { front: "Components of complex IV", back: "Cytochromes a and a₃ and two copper centres." },
+        { front: "ATP per NADH and per FADH₂ (NCERT)", back: "3 and 2." },
+        { front: "Which part of ATP synthase is the proton channel?", back: "F₀, an integral membrane protein." },
+      ],
+      quiz: [
+        {
+          kind: "mcq",
+          q: "Where does the Krebs cycle take place?",
+          options: ["Cytoplasm", "Mitochondrial matrix", "Inner mitochondrial membrane", "Intermembrane space"],
+          answer: 1,
+          explain: "Krebs cycle enzymes are in the matrix; the ETS is on the inner membrane.",
+        },
+        {
+          kind: "mcq",
+          q: "Which carrier moves electrons from complex III to complex IV?",
+          options: ["Ubiquinone", "Cytochrome c", "FADH₂", "NADH"],
+          answer: 1,
+          explain: "Cytochrome c, a small protein on the outer surface of the inner membrane, is the mobile carrier.",
+        },
+        {
+          kind: "numeric",
+          q: "How many NADH are produced per glucose by the link reaction and Krebs cycle together?",
+          answer: 8,
+          explain: "Per pyruvic acid 4 NADH (1 link + 3 Krebs); × 2 = 8.",
+          difficulty: 2,
+        },
+        {
+          kind: "truefalse",
+          q: "For each ATP made, 2 H⁺ pass through F₀ from the matrix to the intermembrane space.",
+          answer: false,
+          explain: "The flow is from the intermembrane space into the matrix.",
+          difficulty: 2,
+        },
+        {
+          kind: "order",
+          q: "Arrange the Krebs cycle acids in order, starting after acetyl CoA joins OAA.",
+          items: ["Citric acid", "Isocitric acid", "α-ketoglutaric acid", "Succinyl CoA", "Succinic acid", "Fumaric acid", "Malic acid"],
+          explain: "Malic acid is then oxidised to OAA, which accepts the next acetyl group.",
+          difficulty: 2,
+        },
+        {
+          kind: "mcq",
+          q: "Oxidative phosphorylation differs from photophosphorylation in that:",
+          options: [
+            "It does not use a proton gradient",
+            "The gradient is built using energy from oxidation–reduction, not light",
+            "It happens in the stroma",
+            "It makes NADPH",
+          ],
+          answer: 1,
+          explain: "Both use a proton gradient and ATP synthase; the energy source differs.",
+        },
+        {
+          kind: "multi",
+          q: "At which steps is NAD⁺ reduced in the Krebs cycle?",
+          options: [
+            "Isocitrate → α-ketoglutaric acid",
+            "α-ketoglutaric acid → succinyl CoA",
+            "Succinic acid → fumaric acid",
+            "Malic acid → OAA",
+          ],
+          answers: [0, 1, 3],
+          explain: "Succinate → fumarate reduces FAD, not NAD⁺.",
+          difficulty: 2,
+        },
+      ],
+    },
+    /* ---------------- Lesson 3: balance sheet, amphibolic, RQ ---------------- */
+    {
+      slug: "c11-bio-resp-balance-rq",
+      title: "Respiratory Balance Sheet, Amphibolic Pathway and RQ",
+      summary:
+        "The assumptions behind the 38 ATP count, how fermentation and aerobic respiration compare, why respiration is an amphibolic pathway, and how to calculate the respiratory quotient for carbohydrates, fats and proteins.",
+      minutes: 20,
+      xp: 50,
+      blocks: [
+        {
+          type: "text",
+          md: "A **respiratory balance sheet** adds up the ATP from one glucose. It is a theoretical exercise based on these assumptions:\n\n1. There is a sequential, orderly pathway: glycolysis, then the TCA cycle, then the ETS.\n2. The NADH made in glycolysis is transferred into the mitochondrion and undergoes oxidative phosphorylation.\n3. None of the intermediates is used to make any other compound.\n4. Only glucose is being respired; no other substrates enter at any stage.\n\nIn a real cell these are not all true: pathways run together, and intermediates are withdrawn as needed. The count is still useful for comparing efficiencies.",
+        },
+        {
+          type: "table",
+          headers: ["Stage (per glucose)", "Direct ATP", "Reduced carriers", "ATP from carriers"],
+          rows: [
+            ["Glycolysis", "2 (net)", "2 NADH", "6"],
+            ["Link reaction", "0", "2 NADH", "6"],
+            ["Krebs cycle (2 turns)", "2 (from GTP)", "6 NADH + 2 FADH₂", "18 + 4 = 22"],
+            ["**Total**", "**4**", "**10 NADH + 2 FADH₂**", "**34**"],
+          ],
+        },
+        {
+          type: "formula",
+          tex: t`4 + (10 \times 3) + (2 \times 2) = 38\ \text{ATP per glucose}`,
+          caption: "Net gain in aerobic respiration under NCERT's assumptions.",
+        },
+        {
+          type: "table",
+          headers: ["Fermentation", "Aerobic respiration"],
+          rows: [
+            ["Partial breakdown of glucose", "Complete breakdown to CO₂ and H₂O"],
+            ["Net 2 ATP per glucose", "Many more ATP (38 by the balance sheet)"],
+            ["NADH oxidised to NAD⁺ rather slowly", "NADH oxidised vigorously by the ETS"],
+          ],
+        },
+        {
+          type: "heading",
+          text: "The amphibolic pathway",
+        },
+        {
+          type: "text",
+          md: "Glucose is the favoured substrate, but other molecules enter the respiratory pathway too, at different points:\n\n- **Fats** are broken into **glycerol**, which becomes PGAL, and **fatty acids**, which become **acetyl CoA**.\n- **Proteins** are broken into **amino acids**, which after deamination enter as pyruvic acid, acetyl CoA or Krebs cycle intermediates.\n\nThe same intermediates are also **withdrawn** to build molecules: for example, when a cell needs fatty acids, acetyl CoA is taken out of the pathway. So respiration takes part in both breakdown (catabolism) and synthesis (anabolism). That is why it is better called an **amphibolic pathway** than a purely catabolic one.",
+        },
+        {
+          type: "heading",
+          text: "Respiratory quotient",
+        },
+        {
+          type: "formula",
+          tex: t`\text{RQ} = \frac{\text{volume of CO}_2 \text{ evolved}}{\text{volume of O}_2 \text{ consumed}}`,
+          caption: "RQ depends on the respiratory substrate.",
+        },
+        {
+          type: "table",
+          headers: ["Substrate", "RQ", "Why"],
+          rows: [
+            ["Carbohydrates", "1", "C₆H₁₂O₆ + 6O₂ → 6CO₂ + 6H₂O: equal moles of CO₂ out and O₂ in"],
+            ["Fats", "Less than 1 (about 0.7 for tripalmitin)", "Little oxygen in the molecule, so more O₂ is needed"],
+            ["Proteins", "About 0.9", "Intermediate"],
+          ],
+        },
+        {
+          type: "example",
+          title: "RQ of tripalmitin",
+          problem: "Tripalmitin is oxidised as: 2(C₅₁H₉₈O₆) + 145 O₂ → 102 CO₂ + 98 H₂O + energy. Find the RQ.",
+          steps: [
+            "At the same temperature and pressure, volumes of gases are in the ratio of their moles.",
+            "RQ = 102 CO₂ ÷ 145 O₂.",
+            "102 ÷ 145 = 0.703…",
+          ],
+          answer: "RQ ≈ 0.7, less than 1, as expected for a fat.",
+        },
+        {
+          type: "checkpoint",
+          questions: [
+            {
+              kind: "numeric",
+              q: "A seed releases 18 mL of CO₂ while taking in 20 mL of O₂. What is its RQ?",
+              answer: 0.9,
+              tolerance: 0.01,
+              explain: "RQ = 18 ÷ 20 = 0.9, typical of protein as substrate.",
+            },
+          ],
+        },
+        {
+          type: "mistake",
+          wrong: "Every cell gets exactly 38 ATP from each glucose it respires.",
+          right: "38 ATP is a theoretical figure that holds only under the balance-sheet assumptions.",
+          why: "In a living cell, intermediates are withdrawn for synthesis, other substrates enter, and moving glycolytic NADH into mitochondria costs energy. (Modern measured values are lower, but NEET and board answers use NCERT's 38.)",
+        },
+        {
+          type: "activity",
+          activity: {
+            kind: "sort",
+            prompt: "Is the RQ equal to 1 or less than 1?",
+            groups: ["RQ = 1", "RQ less than 1"],
+            items: [
+              { text: "Glucose", group: 0, hint: "6 CO₂ out for 6 O₂ in." },
+              { text: "Starch in a germinating cereal grain", group: 0, hint: "Starch is a carbohydrate." },
+              { text: "Tripalmitin", group: 1, hint: "102 CO₂ for 145 O₂." },
+              { text: "Sucrose", group: 0, hint: "A carbohydrate." },
+              { text: "Oil in a germinating groundnut seed", group: 1, hint: "Oils are fats." },
+              { text: "Protein", group: 1, hint: "About 0.9." },
+            ],
+            explain: "Carbohydrates have RQ 1. Fats and proteins contain less oxygen relative to carbon and hydrogen, so they need more O₂ and have RQ below 1.",
+          },
+        },
+        {
+          type: "keypoints",
+          items: [
+            "Balance sheet: 4 direct ATP + 10 NADH × 3 + 2 FADH₂ × 2 = 38 ATP, under four assumptions.",
+            "Fermentation: partial breakdown, net 2 ATP; aerobic: complete breakdown, 38 ATP.",
+            "Respiration is amphibolic: fats and proteins enter it, and intermediates are withdrawn for synthesis.",
+            "RQ = CO₂ evolved ÷ O₂ consumed: 1 for carbohydrates, about 0.7 for fats, about 0.9 for proteins.",
+          ],
+        },
+      ],
+      flashcards: [
+        { front: "Net ATP from one glucose in aerobic respiration (NCERT)", back: "38 ATP." },
+        { front: "Net ATP from one glucose in fermentation", back: "2 ATP." },
+        { front: "Why is respiration called amphibolic?", back: "It is used for both breakdown (catabolism) and synthesis (anabolism)." },
+        { front: "Where do fatty acids enter the respiratory pathway?", back: "As acetyl CoA." },
+        { front: "Where does glycerol enter?", back: "As PGAL (3-phosphoglyceraldehyde)." },
+        { front: "Define RQ.", back: "Ratio of the volume of CO₂ evolved to the volume of O₂ consumed in respiration." },
+        { front: "RQ of tripalmitin", back: "102/145 ≈ 0.7." },
+      ],
+      quiz: [
+        {
+          kind: "mcq",
+          q: "The RQ of carbohydrates is:",
+          options: ["0.7", "0.9", "1", "Greater than 1"],
+          answer: 2,
+          explain: "Equal moles of CO₂ are released and O₂ used.",
+        },
+        {
+          kind: "numeric",
+          q: "How many ATP are made from the NADH produced in glycolysis of one glucose (NCERT values)?",
+          answer: 6,
+          explain: "2 NADH × 3 ATP = 6.",
+        },
+        {
+          kind: "mcq",
+          q: "Which is NOT an assumption of the respiratory balance sheet?",
+          options: [
+            "Only glucose is respired",
+            "No intermediate is used for synthesis",
+            "Glycolytic NADH is oxidised in mitochondria",
+            "Fatty acids enter as acetyl CoA",
+          ],
+          answer: 3,
+          explain: "The balance sheet assumes no other substrate enters; fatty acids entering is part of the amphibolic pathway.",
+          difficulty: 2,
+        },
+        {
+          kind: "truefalse",
+          q: "Acetyl CoA can be withdrawn from the respiratory pathway to make fatty acids.",
+          answer: true,
+          explain: "This withdrawal is why respiration is called amphibolic.",
+        },
+        {
+          kind: "numeric",
+          q: "A tissue gives out 7 mL of CO₂ while using 10 mL of O₂. What is its RQ?",
+          answer: 0.7,
+          tolerance: 0.01,
+          explain: "7 ÷ 10 = 0.7, suggesting fat is being respired.",
+        },
+        {
+          kind: "numeric",
+          q: "How many ATP come from the FADH₂ produced by the complete oxidation of one glucose?",
+          answer: 4,
+          explain: "2 FADH₂ (one per Krebs turn) × 2 ATP = 4.",
+          difficulty: 2,
+        },
+        {
+          kind: "mcq",
+          q: "Amino acids enter respiration:",
+          options: [
+            "Only as glucose",
+            "After deamination, as pyruvic acid, acetyl CoA or Krebs cycle intermediates",
+            "Only as glycerol",
+            "Directly into the ETS",
+          ],
+          answer: 1,
+          explain: "Proteins are broken to amino acids, which are deaminated and enter at several points.",
+        },
+      ],
+    },
+    /* ---------------- Exam edge ---------------- */
+    {
+      slug: "c11-bio-resp-exam-edge",
+      title: "Exam edge: Respiration in Plants",
+      summary:
+        "How NEET and KCET test respiration: glycolysis steps and enzymes, Krebs cycle carbon and carrier counts, ETS complexes, the 38-ATP sheet, amphibolic entry points and RQ, with statement, assertion–reason and counting practice.",
+      minutes: 24,
+      xp: 60,
+      track: "exam",
+      blocks: [
+        {
+          type: "text",
+          md: "**NEET** usually asks 1–3 questions from this chapter; it also feeds questions in Photosynthesis (ATP synthase, chemiosmosis) and Biomolecules (enzymes). The favourites are: where each step happens, which step makes ATP, NADH or FADH₂, counts per glucose, complex names, and RQ. **KCET** asks direct one-liners and simple counts.",
+        },
+        {
+          type: "list",
+          items: [
+            "NCERT line: in glycolysis, ATP is used at **two** steps (glucose → G6P; F6P → F1,6BP).",
+            "NCERT line: BPGA → 3-PGA and PEP → pyruvic acid are the two ATP-forming steps.",
+            "NCERT line: fermentation releases **less than 7%** of glucose energy; yeast dies at about **13%** alcohol.",
+            "NCERT line: pyruvic dehydrogenase needs **Mg²⁺** and NAD⁺ and CoA.",
+            "NCERT line: cytochrome c is a small protein attached to the **outer surface of the inner membrane**.",
+            "NCERT line: complex IV has cytochromes **a, a₃ and two copper centres**.",
+            "NCERT line: tripalmitin RQ = **0.7**; proteins about **0.9**.",
+          ],
+        },
+        {
+          type: "table",
+          headers: ["Per glucose (aerobic)", "Count", "Where it comes from"],
+          rows: [
+            ["CO₂", "6", "2 in link reaction + 4 in Krebs cycle"],
+            ["NADH", "10", "2 glycolysis + 2 link + 6 Krebs"],
+            ["FADH₂", "2", "Succinate → fumarate, once per turn"],
+            ["Substrate-level ATP", "4 (net)", "2 glycolysis (net) + 2 from GTP"],
+            ["Oxidative phosphorylation ATP", "34", "30 from NADH + 4 from FADH₂"],
+          ],
+        },
+        {
+          type: "formula",
+          tex: t`\text{ATP} = 3\,(\text{NADH}) + 2\,(\text{FADH}_2) + \text{substrate-level ATP}`,
+          caption: "Apply to any stage. Per acetyl CoA: 3(3) + 2(1) + 1 = 12. Per pyruvic acid: 3(4) + 2(1) + 1 = 15.",
+        },
+        {
+          type: "example",
+          title: "NEET level: statement counting",
+          problem: "How many are correct? (i) Glycolysis occurs in the mitochondrial matrix. (ii) Citrate synthase joins acetyl CoA with OAA. (iii) FADH₂ is formed when succinic acid becomes fumaric acid. (iv) Complex II is cytochrome c oxidase. (v) Oxygen is the final hydrogen acceptor.",
+          steps: [
+            "(i) Wrong: glycolysis occurs in the cytoplasm.",
+            "(ii) Correct.",
+            "(iii) Correct.",
+            "(iv) Wrong: complex II is succinate dehydrogenase; complex IV is cytochrome c oxidase.",
+            "(v) Correct.",
+          ],
+          answer: "Three: (ii), (iii) and (v).",
+        },
+        {
+          type: "example",
+          title: "Assertion–reason",
+          problem: "A: Fermentation gives a net gain of only 2 ATP per glucose. R: In fermentation, the NADH from glycolysis is used to reduce pyruvic acid (or acetaldehyde) instead of being oxidised through the ETS.",
+          steps: [
+            "A is true: only glycolysis yields ATP.",
+            "R is true: NADH is reoxidised by the fermentation step, so its energy is not captured as ATP.",
+            "R explains A: the energy held in NADH (6 ATP worth in aerobic cells) is not harvested.",
+          ],
+          answer: "Both A and R are true, and R is the correct explanation of A.",
+        },
+        {
+          type: "example",
+          title: "KCET style: ATP from pyruvic acid",
+          problem: "How many ATP are produced (NCERT values) when 2 molecules of pyruvic acid are completely oxidised in mitochondria?",
+          steps: [
+            "Per pyruvic acid: 4 NADH, 1 FADH₂, 1 ATP (GTP).",
+            "ATP = 4 × 3 + 1 × 2 + 1 = 15.",
+            "For 2 pyruvic acids: 15 × 2 = 30.",
+          ],
+          answer: "30 ATP (add glycolysis's 2 ATP + 6 from its 2 NADH to reach 38).",
+        },
+        {
+          type: "example",
+          title: "Harder: a blocked ETS",
+          problem: "A poison blocks complex IV in a plant cell supplied with plenty of glucose and O₂. Predict what happens to (a) O₂ uptake, (b) the Krebs cycle, (c) ATP supply, and (d) ethanol production in the cell.",
+          steps: [
+            "(a) Electrons cannot reach O₂, so O₂ uptake stops even though O₂ is present.",
+            "(b) NADH and FADH₂ cannot be reoxidised, NAD⁺ and FAD run out, and the Krebs cycle and link reaction stop.",
+            "(c) Oxidative phosphorylation stops; only glycolysis gives ATP (net 2 per glucose).",
+            "(d) To keep glycolysis going, the cell must regenerate NAD⁺ by fermentation, so ethanol (and CO₂) production rises, just as under anaerobic conditions.",
+          ],
+          answer: "O₂ use stops, the Krebs cycle stops, ATP falls to the glycolytic 2 per glucose, and fermentation products rise.",
+        },
+        {
+          type: "mistake",
+          wrong: "Since the Krebs cycle gives only 2 ATP per glucose, it is a minor energy source.",
+          right: "The Krebs cycle directly makes only 2 ATP, but its 6 NADH and 2 FADH₂ yield 22 ATP in the ETS.",
+          why: "Counting only direct ATP hides where the energy is stored. Most of the 38 ATP come from carriers made in the matrix.",
+        },
+        {
+          type: "mistake",
+          wrong: "The link reaction happens in the cytoplasm because pyruvic acid is made there.",
+          right: "Pyruvic acid is transported into the mitochondrial matrix, where pyruvic dehydrogenase converts it to acetyl CoA.",
+          why: "Students place the link reaction with glycolysis since it follows directly. NEET often tests this site in a match-the-column question.",
+        },
+        {
+          type: "mistake",
+          wrong: "Fats have RQ greater than 1 because they release so much energy.",
+          right: "Fats have RQ less than 1 (about 0.7): they need more O₂ than the CO₂ they release.",
+          why: "High energy content is confused with high CO₂ output. Fats are poor in oxygen, so extra O₂ is needed to oxidise their carbon and hydrogen.",
+        },
+        {
+          type: "activity",
+          activity: {
+            kind: "sort",
+            prompt: "Where does each event happen?",
+            groups: ["Cytoplasm", "Mitochondrial matrix", "Inner mitochondrial membrane"],
+            items: [
+              { text: "Glycolysis", group: 0, hint: "Occurs in all cells, even anaerobes." },
+              { text: "Alcoholic fermentation", group: 0, hint: "No mitochondria needed." },
+              { text: "Link reaction", group: 1, hint: "Pyruvic acid enters the mitochondrion first." },
+              { text: "Citric acid formation", group: 1, hint: "First step of the TCA cycle." },
+              { text: "Cytochrome c oxidase passes electrons to O₂", group: 2, hint: "Part of the ETS." },
+              { text: "ATP synthase works", group: 2, hint: "Complex V, with F₀ in the membrane." },
+            ],
+            explain: "Glycolysis and fermentation: cytoplasm. Link reaction and Krebs cycle: matrix. ETS and ATP synthase: inner membrane.",
+          },
+        },
+        {
+          type: "checkpoint",
+          questions: [
+            {
+              kind: "numeric",
+              q: "How many ATP are formed by oxidative phosphorylation (not substrate-level) from one glucose, using NCERT values?",
+              answer: 34,
+              explain: "10 NADH × 3 = 30 and 2 FADH₂ × 2 = 4; total 34. The other 4 ATP are substrate-level.",
+              difficulty: 2,
+            },
+          ],
+        },
+        {
+          type: "keypoints",
+          items: [
+            "Per glucose: 6 CO₂, 10 NADH, 2 FADH₂, 4 substrate-level ATP, 34 by oxidative phosphorylation, 38 total.",
+            "Per acetyl CoA 12 ATP; per pyruvic acid 15 ATP.",
+            "Sites: glycolysis and fermentation in cytoplasm; link and Krebs in matrix; ETS on inner membrane.",
+            "RQ: carbohydrate 1, protein about 0.9, fat about 0.7.",
+          ],
+        },
+      ],
+      flashcards: [
+        { front: "NADH per glucose in aerobic respiration", back: "10 (2 glycolysis + 2 link + 6 Krebs)." },
+        { front: "ATP from one acetyl CoA", back: "12 (3 NADH × 3 + 1 FADH₂ × 2 + 1 GTP)." },
+        { front: "ATP from one pyruvic acid", back: "15." },
+        { front: "Substrate-level ATP per glucose", back: "4 (2 net in glycolysis + 2 from GTP in Krebs)." },
+        { front: "What happens to the Krebs cycle if the ETS is blocked?", back: "It stops, because NAD⁺ and FAD are not regenerated." },
+        { front: "Name of complex II", back: "Succinate dehydrogenase." },
+        { front: "CO₂ per glucose from the Krebs cycle alone", back: "4 (2 per turn)." },
+      ],
+      quiz: [
+        {
+          kind: "mcq",
+          q: "Assertion (A): The Krebs cycle stops in the absence of oxygen. Reason (R): Oxygen is a substrate of citrate synthase.",
+          options: AR,
+          answer: 2,
+          explain: "A is true, but R is false: the cycle stops because NAD⁺ and FAD are not regenerated when the ETS cannot pass electrons to O₂.",
+          difficulty: 2,
+        },
+        {
+          kind: "numeric",
+          q: "How many ATP are formed (NCERT values) from complete aerobic oxidation of 3 glucose molecules?",
+          answer: 114,
+          explain: "38 × 3 = 114.",
+        },
+        {
+          kind: "numeric",
+          q: "How many FADH₂ are formed from 5 acetyl CoA in the Krebs cycle?",
+          answer: 5,
+          explain: "One FADH₂ per turn; 5 acetyl CoA give 5.",
+        },
+        {
+          kind: "mcq",
+          q: "Which enzyme catalyses the conversion of glucose to glucose-6-phosphate?",
+          options: ["Phosphofructokinase", "Hexokinase", "Pyruvate kinase", "Aldolase"],
+          answer: 1,
+          explain: "NCERT names hexokinase for this first, ATP-using step.",
+        },
+        {
+          kind: "multi",
+          q: "Which are correct about the mitochondrial ETS?",
+          options: [
+            "Ubiquinone receives electrons from complexes I and II",
+            "Cytochrome c is an integral protein of the outer membrane",
+            "Complex IV contains two copper centres",
+            "One FADH₂ yields 2 ATP",
+          ],
+          answers: [0, 2, 3],
+          explain: "Cytochrome c is a small protein attached to the outer surface of the inner membrane.",
+          difficulty: 2,
+          hint: "Check the location given for cytochrome c.",
+        },
+        {
+          kind: "mcq",
+          q: "A germinating seed has an RQ of about 0.7. It is most likely:",
+          options: ["Wheat", "Rice", "Castor (an oil seed)", "Pea (protein-rich)"],
+          answer: 2,
+          explain: "RQ near 0.7 indicates fat as substrate, found in oil seeds such as castor.",
+          difficulty: 2,
+        },
+        {
+          kind: "numeric",
+          q: "Using NCERT values, how many ATP are obtained from 4 NADH and 3 FADH₂ through the ETS?",
+          answer: 18,
+          explain: "4 × 3 + 3 × 2 = 12 + 6 = 18.",
+        },
+        {
+          kind: "mcq",
+          q: "In yeast cells under anaerobic conditions, the number of CO₂ molecules released per glucose is:",
+          options: ["0", "2", "4", "6"],
+          answer: 1,
+          explain: "Each pyruvic acid loses one CO₂ to form acetaldehyde, then ethanol; 2 per glucose.",
+          difficulty: 3,
+          hint: "Count the decarboxylation of each pyruvic acid.",
+        },
+      ],
+    },
+  ],
+};
+
+export const topics: Topic[] = [photosynthesis, respiration];
 
 export const links: Record<string, string | string[]> = {
   "11:Photosynthesis in Higher Plants": "c11-bio-photosynthesis",
+  "11:Respiration in Plants": "c11-bio-respiration-in-plants",
 };

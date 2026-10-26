@@ -870,8 +870,815 @@ const locomotion: Topic = {
   ],
 };
 
-export const topics: Topic[] = [locomotion];
+/* ------------------------------------------------------------------ */
+/* Neural Control and Coordination                                     */
+/* ------------------------------------------------------------------ */
+const neural: Topic = {
+  slug: "c11-bio-neural-control",
+  title: "Neural Control and Coordination",
+  icon: "🧠",
+  description:
+    "The human neural system, the neuron, generation and conduction of the nerve impulse, synapses, the parts of the brain, and (for ISC and older syllabi) reflex action, the eye and the ear.",
+  lessons: [
+    /* ---------------- Lesson 1: neural system, neuron, impulse ---------------- */
+    {
+      slug: "c11-bio-neuron-nerve-impulse",
+      title: "The Neural System, the Neuron and the Nerve Impulse",
+      summary:
+        "Coordination, the divisions of the human neural system, the structure and types of neurons, myelinated and non-myelinated fibres, resting potential, action potential and conduction along an axon.",
+      minutes: 22,
+      xp: 55,
+      blocks: [
+        {
+          type: "text",
+          md: "A cricketer at Chepauk sees the ball leave the bowler's hand. In less than half a second her eyes, brain, leg and arm muscles, heart and lungs must all work together. **Coordination** is the process by which two or more organs interact and complement each other's functions.\n\nIn our body, the **neural system** and the **endocrine system** together coordinate and integrate all activities. The neural system gives an **organised network of point-to-point connections** for quick coordination; the endocrine system gives chemical integration through hormones.\n\nThe neural system of all animals is made of highly specialised cells called **neurons**, which can detect, receive and transmit different kinds of stimuli. In lower invertebrates such as *Hydra*, it is a simple **network of neurons**. Insects have a better organised system: a **brain**, many **ganglia** and neural tissues. Vertebrates have a much more developed neural system.",
+        },
+        {
+          type: "table",
+          headers: ["Division", "What it includes", "Job"],
+          rows: [
+            ["**Central neural system (CNS)**", "Brain and spinal cord", "Site of information processing and control"],
+            ["**Peripheral neural system (PNS)**", "All the nerves of the body associated with the CNS", "Carries impulses to and from the CNS"],
+            ["Afferent fibres (PNS)", "Sensory fibres", "Carry impulses from tissues and organs **to** the CNS"],
+            ["Efferent fibres (PNS)", "Motor fibres", "Carry regulatory impulses **from** the CNS to peripheral tissues and organs"],
+            ["Somatic neural system", "Part of PNS", "Relays impulses from the CNS to **skeletal muscles**"],
+            ["Autonomic neural system", "Part of PNS; **sympathetic** and **parasympathetic**", "Carries impulses from the CNS to **involuntary organs and smooth muscles**"],
+            ["**Visceral nervous system**", "Part of PNS: the whole complex of nerves, fibres, ganglia and plexuses serving the viscera", "Carries impulses from the CNS to the **viscera** and from the viscera to the CNS"],
+          ],
+        },
+        {
+          type: "heading",
+          text: "The neuron",
+        },
+        {
+          type: "text",
+          md: "A neuron is a microscopic structure with three parts.\n\n- **Cell body**: cytoplasm with the usual organelles and special granular bodies called **Nissl's granules**.\n- **Dendrites**: short fibres that branch repeatedly from the cell body; they also contain Nissl's granules and carry impulses **towards** the cell body.\n- **Axon**: a long fibre whose far end is branched. Each branch ends in a bulb-like **synaptic knob** filled with **synaptic vesicles** containing chemicals called **neurotransmitters**. The axon carries impulses **away** from the cell body to a synapse or a neuromuscular junction.",
+        },
+        {
+          type: "table",
+          headers: ["Neuron type", "Axon and dendrites", "Where found"],
+          rows: [
+            ["**Multipolar**", "One axon, two or more dendrites", "Cerebral cortex"],
+            ["**Bipolar**", "One axon, one dendrite", "Retina of the eye"],
+            ["**Unipolar**", "Cell body with one axon only", "Usually in the embryonic stage"],
+          ],
+        },
+        {
+          type: "text",
+          md: "Axons are **myelinated** or **non-myelinated**. Myelinated fibres are wrapped by **Schwann cells** that form a **myelin sheath** around the axon. The gaps between two adjacent myelin sheaths are the **nodes of Ranvier**. Myelinated fibres are found in **spinal and cranial nerves**. A non-myelinated fibre is also enclosed by a Schwann cell, but no myelin sheath forms; such fibres are common in the **autonomous and somatic neural systems**.",
+        },
+        {
+          type: "text",
+          md: "**Generation and conduction of the nerve impulse.** Neurons are **excitable** because their membranes are **polarised**. The membrane has **ion channels** that are selectively permeable to different ions.\n\n**Resting neuron.** The axonal membrane is comparatively **more permeable to K⁺** and nearly **impermeable to Na⁺**. It is also impermeable to the negatively charged proteins in the axoplasm. So the **axoplasm** has a high concentration of K⁺ and negative proteins and a low concentration of Na⁺, while the fluid outside has low K⁺ and high Na⁺. These gradients are kept up by the **sodium–potassium pump**, which moves **3 Na⁺ out for every 2 K⁺ in**. As a result the **outer surface is positive and the inner surface negative**: the membrane is **polarised**, and the potential difference across it is the **resting potential**.",
+        },
+        {
+          type: "formula",
+          tex: t`\text{Na}^+/\text{K}^+ \text{ pump: } 3\,\text{Na}^+ \text{ out} \;:\; 2\,\text{K}^+ \text{ in} \quad (\text{1 ATP used})`,
+          caption: "Each cycle moves one extra positive charge out, helping keep the inside negative. NCERT gives no millivolt value; many books quote about −70 mV for the resting potential.",
+        },
+        {
+          type: "list",
+          ordered: true,
+          items: [
+            "A stimulus at site A makes the membrane freely permeable to **Na⁺**; Na⁺ rushes in.",
+            "Polarity reverses at A: the outer surface becomes **negative** and the inner **positive**. The membrane is **depolarised**; this potential difference is the **action potential**, which is the **nerve impulse**.",
+            "At site B just ahead, the membrane still has positive outside and negative inside. Current flows on the **inner** surface from A to B and on the **outer** surface from B to A, completing a circuit.",
+            "This reverses polarity at B, so an action potential is generated at B. The impulse thus travels along the axon.",
+            "The rise in Na⁺ permeability lasts only a very short time. It is quickly followed by a rise in **K⁺ permeability**; K⁺ diffuses out and the **resting potential is restored** within a fraction of a second, ready for the next stimulus.",
+          ],
+        },
+        {
+          type: "example",
+          title: "Reading the ion movements",
+          problem: "At one point on an axon the inside of the membrane has just become positive. (a) Which ion caused this and in which direction did it move? (b) Which ion movement will bring the membrane back to rest? (c) Which mechanism finally restores the original ion concentrations?",
+          steps: [
+            "Inside becoming positive is depolarisation, caused by **Na⁺ moving into** the axoplasm through opened channels.",
+            "Next, K⁺ permeability rises; **K⁺ moves out**, making the inside negative again (repolarisation).",
+            "Over time the **Na⁺–K⁺ pump** (3 Na⁺ out, 2 K⁺ in, using ATP) restores the concentration gradients.",
+          ],
+          answer: "(a) Na⁺ inward; (b) K⁺ outward; (c) the sodium–potassium pump.",
+        },
+        {
+          type: "mistake",
+          wrong: "At rest, the inside of a neuron is positive because it contains so much K⁺.",
+          right: "At rest the **inside is negative** and the outside positive, even though K⁺ is high inside. The membrane leaks K⁺ outward, keeps Na⁺ out, and the pump sends out 3 Na⁺ for 2 K⁺; negative proteins also stay trapped inside.",
+          why: "High K⁺ inside sounds like 'more positive charge inside'. But K⁺ is balanced by trapped negative proteins, and the steady loss of positive ions makes the inner face negative.",
+        },
+        {
+          type: "activity",
+          activity: {
+            kind: "order",
+            prompt: "Arrange the events at one point of an axon.",
+            items: [
+              "Membrane polarised: outside positive, inside negative",
+              "Stimulus opens Na⁺ channels; Na⁺ enters",
+              "Inside becomes positive: action potential",
+              "K⁺ permeability rises; K⁺ leaves",
+              "Resting potential restored",
+            ],
+            explain: "Resting → depolarisation (Na⁺ in) → action potential → repolarisation (K⁺ out) → rest. The pump keeps the gradients in the long run.",
+          },
+        },
+        {
+          type: "checkpoint",
+          questions: [
+            {
+              kind: "mcq",
+              q: "Bipolar neurons are found in the:",
+              options: ["Cerebral cortex", "Retina of the eye", "Embryo only", "Spinal cord grey matter"],
+              answer: 1,
+              explain: "NCERT gives the retina as the site of bipolar neurons (one axon and one dendrite). Multipolar neurons occur in the cerebral cortex.",
+            },
+            {
+              kind: "mcq",
+              q: "The sodium–potassium pump transports:",
+              options: ["3 Na⁺ in and 2 K⁺ out", "2 Na⁺ out and 3 K⁺ in", "3 Na⁺ out and 2 K⁺ in", "Equal numbers of Na⁺ and K⁺"],
+              answer: 2,
+              explain: "Per cycle the pump moves 3 Na⁺ out and 2 K⁺ in.",
+            },
+          ],
+        },
+        {
+          type: "callout",
+          tone: "exam",
+          title: "Board tip",
+          md: "For 'explain the generation and conduction of a nerve impulse' (5 marks), draw two sites A and B on an axon, mark + and − on both surfaces, and show current flow on the inner (A → B) and outer (B → A) surfaces. State the 3 Na⁺ : 2 K⁺ pump and end with K⁺ outflow restoring the resting potential.",
+        },
+        {
+          type: "keypoints",
+          items: [
+            "CNS = brain + spinal cord; PNS = all nerves; afferent to CNS, efferent from CNS; somatic (skeletal muscle) and autonomic (sympathetic, parasympathetic).",
+            "Neuron = cell body (Nissl's granules) + dendrites (towards cell body) + axon (away; ends in synaptic knobs).",
+            "Multipolar (cerebral cortex), bipolar (retina), unipolar (embryo); myelin by Schwann cells, gaps = nodes of Ranvier.",
+            "Resting: more permeable to K⁺, outside positive, inside negative; pump 3 Na⁺ out : 2 K⁺ in.",
+            "Stimulus → Na⁺ in → depolarisation (action potential) → local currents spread it → K⁺ out restores rest.",
+          ],
+        },
+      ],
+      flashcards: [
+        { front: "Coordination", back: "The process by which two or more organs interact and complement each other's functions." },
+        { front: "Afferent versus efferent fibres", back: "Afferent: from tissues to the CNS. Efferent: from the CNS to tissues." },
+        { front: "Two divisions of the autonomic neural system", back: "Sympathetic and parasympathetic." },
+        { front: "Nissl's granules occur in", back: "The cell body and dendrites of a neuron (not in the axon)." },
+        { front: "Nodes of Ranvier", back: "Gaps between two adjacent myelin sheaths of a myelinated axon." },
+        { front: "Where are myelinated fibres found (NCERT)?", back: "In spinal and cranial nerves." },
+        { front: "Resting membrane is more permeable to", back: "K⁺ (nearly impermeable to Na⁺)." },
+        { front: "Action potential", back: "The potential difference at a depolarised site of the membrane (outside negative, inside positive); it is the nerve impulse." },
+      ],
+      quiz: [
+        {
+          kind: "mcq",
+          q: "Which part of the peripheral neural system relays impulses from the CNS to skeletal muscles?",
+          options: ["Sympathetic system", "Parasympathetic system", "Somatic neural system", "Visceral nervous system"],
+          answer: 2,
+          explain: "The somatic neural system supplies skeletal (voluntary) muscles. The autonomic system supplies involuntary organs and smooth muscles.",
+        },
+        {
+          kind: "mcq",
+          q: "Synaptic vesicles containing neurotransmitters are found in the:",
+          options: ["Dendrites", "Cell body", "Synaptic knobs at the axon terminals", "Nodes of Ranvier"],
+          answer: 2,
+          explain: "Each branch of the axon ends in a synaptic knob packed with synaptic vesicles holding neurotransmitters.",
+        },
+        {
+          kind: "truefalse",
+          q: "Non-myelinated nerve fibres are not associated with Schwann cells at all.",
+          answer: false,
+          explain: "A non-myelinated fibre is still enclosed by a Schwann cell; the Schwann cell simply does not form a myelin sheath around it.",
+        },
+        {
+          kind: "fill",
+          q: "In a resting neuron, the axonal membrane is nearly impermeable to ___ ions.",
+          answer: ["Na+", "Na⁺", "sodium", "Na"],
+          explain: "The resting membrane is comparatively permeable to K⁺ and nearly impermeable to Na⁺.",
+        },
+        {
+          kind: "mcq",
+          q: "When the action potential is at site A and site B lies ahead, current on the inner surface of the membrane flows:",
+          options: ["From B to A", "From A to B", "Both ways equally", "No current flows inside"],
+          answer: 1,
+          explain: "Inside, current flows from the depolarised site A (now positive inside) to B. On the outer surface it flows from B to A, completing the circuit.",
+          difficulty: 2,
+        },
+        {
+          kind: "multi",
+          q: "Which are true of a resting axon?",
+          options: ["Axoplasm has high K⁺", "Axoplasm has high Na⁺", "Outer surface is positive", "Membrane is impermeable to the negative proteins of the axoplasm", "Membrane is depolarised"],
+          answers: [0, 2, 3],
+          explain: "At rest the axoplasm is rich in K⁺ and negative proteins and poor in Na⁺; the outer surface is positive. The membrane is polarised, not depolarised.",
+          difficulty: 2,
+        },
+        {
+          kind: "mcq",
+          q: "Restoration of the resting potential immediately after an action potential is mainly due to:",
+          options: ["Influx of Na⁺", "Efflux of K⁺", "Influx of Cl⁻", "Release of neurotransmitter"],
+          answer: 1,
+          explain: "The short-lived rise in Na⁺ permeability is followed by a rise in K⁺ permeability; K⁺ diffuses out and the resting potential returns.",
+          difficulty: 2,
+          hint: "Which ion carries positive charge out of the cell?",
+        },
+        {
+          kind: "numeric",
+          q: "If a pump completes 500 cycles, how many more positive charges does it move out of the cell than into it?",
+          answer: 500,
+          explain: "Each cycle moves 3 Na⁺ out and 2 K⁺ in, a net of 1 positive charge out. 500 cycles × 1 = 500.",
+          difficulty: 2,
+        },
+      ],
+    },
+    /* ---------------- Lesson 2: synapse and CNS ---------------- */
+    {
+      slug: "c11-bio-synapse-brain",
+      title: "Synapses and the Central Neural System",
+      summary:
+        "Electrical and chemical synapses, how neurotransmitters pass an impulse on, the meninges, and the forebrain, midbrain and hindbrain with the functions of each part.",
+      minutes: 22,
+      xp: 55,
+      blocks: [
+        {
+          type: "text",
+          md: "An impulse that reaches the end of an axon has to cross to the next neuron. The meeting point is a **synapse**, formed by the membranes of a **pre-synaptic neuron** and a **post-synaptic neuron**, which may or may not be separated by a gap called the **synaptic cleft**.",
+        },
+        {
+          type: "table",
+          headers: ["Feature", "Electrical synapse", "Chemical synapse"],
+          rows: [
+            ["Gap", "Membranes in very close contact", "Separated by a fluid-filled **synaptic cleft**"],
+            ["How the signal crosses", "Electric current flows directly from one neuron to the next", "**Neurotransmitters** carry the signal across the cleft"],
+            ["Speed", "**Faster**; similar to conduction along one axon", "Slower"],
+            ["In our body", "**Rare**", "Common"],
+          ],
+        },
+        {
+          type: "list",
+          ordered: true,
+          items: [
+            "The impulse (action potential) arrives at the axon terminal.",
+            "It stimulates the **synaptic vesicles** to move towards the membrane and fuse with the plasma membrane.",
+            "The vesicles release **neurotransmitters** into the synaptic cleft.",
+            "Neurotransmitters bind to **specific receptors** on the post-synaptic membrane.",
+            "Binding opens **ion channels**; ions enter and may generate a new potential in the post-synaptic neuron. This new potential may be **excitatory** or **inhibitory**.",
+          ],
+        },
+        {
+          type: "mistake",
+          wrong: "At a chemical synapse the electrical impulse jumps across the cleft.",
+          right: "At a chemical synapse the signal is carried across the cleft by **neurotransmitter molecules**; only at the rare **electrical synapses** does current pass directly.",
+          why: "Neurons are thought of as wires, so a spark across the gap seems natural. A chemical step is what allows a synapse to excite or inhibit, and is why chemical transmission is slower.",
+        },
+        {
+          type: "heading",
+          text: "The brain",
+        },
+        {
+          type: "text",
+          md: "The brain is the central information-processing organ and acts as the 'command and control system'. It controls voluntary movements, balance, the functioning of vital involuntary organs (lungs, heart, kidneys), thermoregulation, hunger and thirst, circadian (24-hour) rhythms, the activities of several endocrine glands and human behaviour. It is also the site of vision, hearing, speech, memory, intelligence, emotions and thoughts.\n\nThe brain is protected by the **skull**. Inside the skull it is covered by the **cranial meninges**: an outer **dura mater**, a very thin middle **arachnoid** and an inner **pia mater**, which is in contact with brain tissue. The brain has three major parts: **forebrain, midbrain and hindbrain**.",
+        },
+        {
+          type: "text",
+          md: "**Forebrain** = cerebrum, thalamus and hypothalamus.\n\nThe **cerebrum** forms the major part of the human brain. A deep cleft divides it longitudinally into **left and right cerebral hemispheres**, joined by a tract of nerve fibres, the **corpus callosum**. The layer of cells covering each hemisphere is the **cerebral cortex**, thrown into prominent folds. It looks greyish because neuron cell bodies are concentrated there, so it is called **grey matter**. The cortex has **motor areas**, **sensory areas** and large regions that are neither clearly sensory nor motor, the **association areas**, which handle complex functions such as intersensory associations, memory and communication. The myelinated fibres of tracts form the inner part of the hemisphere and look opaque white: the **white matter**.",
+        },
+        {
+          type: "text",
+          md: "The cerebrum wraps around the **thalamus**, a major coordinating centre for **sensory and motor signalling**. The **hypothalamus**, at the base of the thalamus, has centres that control **body temperature** and the **urge for eating and drinking**. It also has groups of neurosecretory cells that secrete **hypothalamic hormones**.\n\nThe inner parts of the cerebral hemispheres and associated deep structures such as the **amygdala** and **hippocampus** form the **limbic lobe** or **limbic system**. With the hypothalamus it regulates **sexual behaviour**, **emotional reactions** (excitement, pleasure, rage, fear) and **motivation**.",
+        },
+        {
+          type: "table",
+          headers: ["Part", "Key structure", "Main function"],
+          rows: [
+            ["**Midbrain**", "Between the thalamus/hypothalamus and the pons; the **cerebral aqueduct** passes through it; dorsal side has four round swellings, the **corpora quadrigemina**", "Relay between forebrain and hindbrain"],
+            ["Pons (hindbrain)", "Fibre tracts", "Interconnects different regions of the brain"],
+            ["Cerebellum (hindbrain)", "Very convoluted surface giving extra space for many more neurons", "Coordination of movement and balance"],
+            ["Medulla oblongata (hindbrain)", "Connected to the spinal cord", "Centres for **respiration**, **cardiovascular reflexes** and **gastric secretions**"],
+          ],
+        },
+        {
+          type: "text",
+          md: "The **midbrain and hindbrain together form the brain stem**. The brain stem connects the brain with the spinal cord. (Strictly, the brain stem is the midbrain, pons and medulla; the cerebellum is not part of it.)",
+        },
+        {
+          type: "example",
+          title: "Locating damage from symptoms",
+          problem: "Three patients have injuries in different parts of the brain. Patient X loses control of body temperature and appetite. Patient Y's breathing becomes irregular and blood pressure unstable. Patient Z cannot coordinate a smooth walk. Name the region likely damaged in each.",
+          steps: [
+            "Temperature, hunger and thirst centres lie in the **hypothalamus** (forebrain): patient X.",
+            "Respiration and cardiovascular reflex centres lie in the **medulla oblongata** (hindbrain): patient Y.",
+            "Smooth, coordinated movement and balance depend on the **cerebellum** (hindbrain): patient Z.",
+          ],
+          answer: "X: hypothalamus; Y: medulla oblongata; Z: cerebellum.",
+        },
+        {
+          type: "activity",
+          activity: {
+            kind: "sort",
+            prompt: "Sort each structure into its part of the brain.",
+            groups: ["Forebrain", "Midbrain", "Hindbrain"],
+            items: [
+              { text: "Corpus callosum", group: 0, hint: "Joins the two cerebral hemispheres." },
+              { text: "Hypothalamus", group: 0, hint: "Lies at the base of the thalamus." },
+              { text: "Corpora quadrigemina", group: 1, hint: "Four swellings on the dorsal side of the midbrain." },
+              { text: "Cerebral aqueduct", group: 1, hint: "A canal passing through the midbrain." },
+              { text: "Pons", group: 2, hint: "Fibre tracts linking brain regions." },
+              { text: "Medulla oblongata", group: 2, hint: "Joins the spinal cord." },
+              { text: "Cerebellum", group: 2, hint: "Highly folded surface for many neurons." },
+            ],
+            explain: "Forebrain: cerebrum, thalamus, hypothalamus (and limbic system). Midbrain: corpora quadrigemina and cerebral aqueduct. Hindbrain: pons, cerebellum, medulla.",
+          },
+        },
+        {
+          type: "checkpoint",
+          questions: [
+            {
+              kind: "mcq",
+              q: "The innermost of the cranial meninges, in contact with brain tissue, is the:",
+              options: ["Dura mater", "Arachnoid", "Pia mater", "Corpus callosum"],
+              answer: 2,
+              explain: "From outside in: dura mater, arachnoid, pia mater. The pia mater touches the brain.",
+            },
+          ],
+        },
+        {
+          type: "callout",
+          tone: "exam",
+          title: "Board tip",
+          md: "A neat table of brain parts with location and function scores well. 'Draw a labelled diagram of the sagittal section of the human brain' expects cerebrum, corpus callosum, thalamus, hypothalamus, pituitary, midbrain, pons, cerebellum, medulla and spinal cord.",
+        },
+        {
+          type: "keypoints",
+          items: [
+            "Synapse: electrical (direct current, faster, rare) or chemical (cleft, neurotransmitters, slower, common).",
+            "Neurotransmitter binds receptors on the post-synaptic membrane, opens ion channels; the new potential may be excitatory or inhibitory.",
+            "Meninges: dura mater (outer), arachnoid (middle), pia mater (inner).",
+            "Forebrain: cerebrum (hemispheres, corpus callosum, cortex = grey matter), thalamus, hypothalamus, limbic system.",
+            "Midbrain: cerebral aqueduct, corpora quadrigemina. Hindbrain: pons, cerebellum, medulla (respiration, cardiovascular reflexes, gastric secretion).",
+          ],
+        },
+      ],
+      flashcards: [
+        { front: "Synaptic cleft", back: "Fluid-filled space between pre- and post-synaptic membranes at a chemical synapse." },
+        { front: "Which synapse is faster?", back: "Electrical synapse; it is rare in our body." },
+        { front: "Corpus callosum", back: "Tract of nerve fibres joining the left and right cerebral hemispheres." },
+        { front: "Why is the cerebral cortex called grey matter?", back: "Neuron cell bodies are concentrated there, giving a greyish look." },
+        { front: "Association areas", back: "Cortex regions neither clearly sensory nor motor; intersensory associations, memory, communication." },
+        { front: "Limbic system", back: "Inner parts of hemispheres with amygdala, hippocampus etc.; with hypothalamus, regulates sexual behaviour, emotions, motivation." },
+        { front: "Corpora quadrigemina", back: "Four round swellings on the dorsal side of the midbrain." },
+        { front: "Centres in the medulla", back: "Respiration, cardiovascular reflexes, gastric secretions." },
+      ],
+      quiz: [
+        {
+          kind: "mcq",
+          q: "Which statement about chemical synapses is correct?",
+          options: [
+            "Pre- and post-synaptic membranes are in direct contact",
+            "Transmission is faster than at electrical synapses",
+            "Neurotransmitters bind to specific receptors on the post-synaptic membrane",
+            "They are rare in the human body",
+          ],
+          answer: 2,
+          explain: "At a chemical synapse neurotransmitters cross the cleft and bind receptors on the post-synaptic membrane. The other options describe electrical synapses.",
+        },
+        {
+          kind: "mcq",
+          q: "The urge for eating and drinking is controlled by centres in the:",
+          options: ["Thalamus", "Hypothalamus", "Cerebellum", "Pons"],
+          answer: 1,
+          explain: "The hypothalamus has centres for body temperature, hunger and thirst.",
+        },
+        {
+          kind: "fill",
+          q: "The canal that passes through the midbrain is the cerebral ___.",
+          answer: ["aqueduct"],
+          explain: "The cerebral aqueduct passes through the midbrain.",
+        },
+        {
+          kind: "truefalse",
+          q: "The thalamus is a major coordinating centre for sensory and motor signalling.",
+          answer: true,
+          explain: "The cerebrum wraps around the thalamus, which coordinates sensory and motor signals.",
+        },
+        {
+          kind: "multi",
+          q: "Which structures are part of the hindbrain?",
+          options: ["Pons", "Cerebellum", "Thalamus", "Medulla oblongata", "Corpora quadrigemina"],
+          answers: [0, 1, 3],
+          explain: "The hindbrain has the pons, cerebellum and medulla. The thalamus is forebrain; the corpora quadrigemina are midbrain.",
+        },
+        {
+          kind: "order",
+          q: "Arrange the cranial meninges from outside to inside.",
+          items: ["Dura mater", "Arachnoid", "Pia mater"],
+          explain: "Dura (tough, outer), arachnoid (very thin, middle), pia (inner, on the brain surface).",
+        },
+        {
+          kind: "mcq",
+          q: "Excitement, pleasure, rage and fear are regulated mainly by the:",
+          options: ["Cerebellum and pons", "Limbic system together with the hypothalamus", "Medulla oblongata", "Corpora quadrigemina"],
+          answer: 1,
+          explain: "The limbic system (amygdala, hippocampus and related structures) works with the hypothalamus to regulate emotional reactions, sexual behaviour and motivation.",
+          difficulty: 2,
+        },
+        {
+          kind: "mcq",
+          q: "A post-synaptic neuron becomes less likely to fire after a neurotransmitter binds. This shows that:",
+          options: [
+            "The synapse must be electrical",
+            "The new potential generated can be inhibitory",
+            "No ion channels were opened",
+            "The impulse travelled backwards",
+          ],
+          answer: 1,
+          explain: "Opening ion channels can produce an excitatory or an inhibitory potential; here it was inhibitory. Chemical synapses allow this kind of control.",
+          difficulty: 2,
+          hint: "NCERT says the new potential may be one of two kinds.",
+        },
+      ],
+    },
+    /* ---------------- Lesson 3: reflex, eye, ear (ISC) ---------------- */
+    {
+      slug: "c11-bio-reflex-eye-ear",
+      title: "Reflex Action, the Eye and the Ear (ISC)",
+      summary:
+        "For ISC and anyone using the older NCERT: the reflex arc, the layers and chambers of the eye and how we see, and the parts of the ear, the organ of Corti and the vestibular apparatus.",
+      minutes: 24,
+      xp: 55,
+      blocks: [
+        {
+          type: "callout",
+          tone: "note",
+          title: "Who needs this lesson",
+          md: "Reflex action and the sense organs were **removed from the rationalised NCERT** chapter, so CBSE, Karnataka I PUC and NEET (which follow the current NCERT) do not examine them. **ISC Class 11** still lists reflex action and the structure and working of the eye and ear. Others can read it as background.",
+        },
+        {
+          type: "text",
+          md: "Touch a hot tava by mistake and your hand jerks back before you even feel the pain. This is a **reflex action**: an involuntary response to a peripheral stimulus, made without conscious effort or thought, that needs a part of the CNS.\n\nThe pathway has at least one **afferent (receptor) neuron** and one **efferent (effector) neuron** in series. The afferent neuron receives the signal from a sense organ and carries it through the **dorsal nerve root** into the CNS at the level of the spinal cord. The efferent neuron carries the signal from the CNS to the **effector**. The stimulus and response together form the **reflex arc**; the **knee-jerk reflex** is the textbook example.",
+        },
+        {
+          type: "activity",
+          activity: {
+            kind: "order",
+            prompt: "Put the parts of a reflex arc in order.",
+            items: ["Receptor (sense organ)", "Afferent neuron", "Spinal cord (CNS)", "Efferent neuron", "Effector (muscle)"],
+            explain: "The impulse enters by the dorsal root on the afferent neuron and leaves the CNS on the efferent neuron to the effector.",
+          },
+        },
+        {
+          type: "heading",
+          text: "The eye",
+        },
+        {
+          type: "text",
+          md: "A pair of eyes sits in sockets of the skull called **orbits**. The wall of the eyeball has three layers.\n\n- **Outer layer**: dense connective tissue, the **sclera**; its front part is the transparent **cornea**.\n- **Middle layer**: the **choroid**, with many blood vessels and a bluish look. It is thin over the posterior two-thirds and thickens in front to form the **ciliary body**, which continues forward as the pigmented, opaque **iris**, the visible coloured part. The opening surrounded by the iris is the **pupil**; muscle fibres of the iris regulate its diameter.\n- **Inner layer**: the **retina**, with three layers of neural cells, from inside to outside: **ganglion cells, bipolar cells and photoreceptor cells**.\n\nThe transparent crystalline **lens** is held by ligaments attached to the ciliary body.",
+        },
+        {
+          type: "table",
+          headers: ["Structure", "Fact"],
+          rows: [
+            ["Rods", "Twilight (**scotopic**) vision; contain the purplish-red protein **rhodopsin** (visual purple), which includes a derivative of vitamin A"],
+            ["Cones", "Daylight (**photopic**) and **colour** vision; three types respond to red, green and blue light"],
+            ["Blind spot", "Where the optic nerve leaves and retinal blood vessels enter; no photoreceptors"],
+            ["Macula lutea and fovea", "Yellowish spot lateral to the blind spot; its central pit, the **fovea**, has only densely packed cones and gives the sharpest vision"],
+            ["Aqueous chamber", "Between cornea and lens; thin watery **aqueous humour**"],
+            ["Vitreous chamber", "Between lens and retina; transparent gel, **vitreous humour**"],
+          ],
+        },
+        {
+          type: "text",
+          md: "**How we see.** Light focused by the cornea and lens on the retina generates impulses in rods and cones. The photopigments are made of **opsin** (a protein) and **retinal** (an aldehyde of vitamin A). Light separates retinal from opsin and changes opsin's structure. This changes membrane permeability, producing potential differences in the photoreceptors. The signal passes through bipolar cells and creates action potentials in ganglion cells; the **optic nerves** carry them to the **visual cortex** in the **occipital lobe**, where the image is recognised.",
+        },
+        {
+          type: "heading",
+          text: "The ear",
+        },
+        {
+          type: "text",
+          md: "The ear does two jobs: **hearing** and **balance**.\n\n- **Outer ear**: the **pinna** collects sound and the **external auditory meatus** leads inwards to the **tympanic membrane** (eardrum). Fine hairs and wax-secreting sebaceous glands line the pinna and meatus.\n- **Middle ear**: three ossicles, **malleus, incus and stapes**, in a chain. The malleus is attached to the tympanic membrane and the stapes to the **oval window** of the cochlea. The ossicles increase the efficiency of sound transmission. The **Eustachian tube** joins the middle ear to the pharynx and equalises pressure on both sides of the eardrum.\n- **Inner ear (labyrinth)**: a **bony labyrinth** containing a **membranous labyrinth**. Perilymph surrounds the membranous labyrinth; **endolymph** fills it. The coiled part is the **cochlea**.",
+        },
+        {
+          type: "text",
+          md: "In the cochlea, **Reissner's membrane** and the **basilar membrane** divide the perilymph-filled bony labyrinth into an upper **scala vestibuli** and a lower **scala tympani**; between them is the endolymph-filled **scala media**. The scala vestibuli ends at the oval window and the scala tympani at the **round window**. The **organ of Corti**, on the basilar membrane, has **hair cells** (the auditory receptors) with **stereocilia**; above them lies the elastic **tectorial membrane**.\n\nAbove the cochlea is the **vestibular apparatus**: three **semicircular canals** at right angles to each other, each with a swollen **ampulla** carrying the **crista ampullaris**, and the otolith organ (**saccule and utricle**) carrying the **macula**. The crista and macula are the receptors for **balance and posture**.",
+        },
+        {
+          type: "example",
+          title: "Tracing a sound",
+          problem: "Trace the path of a sound from a temple bell to the brain, naming each structure that vibrates or responds.",
+          steps: [
+            "The pinna collects the sound waves and the meatus directs them to the **tympanic membrane**, which vibrates.",
+            "The vibrations pass through **malleus → incus → stapes** to the **oval window**.",
+            "The oval window sets up waves in the **lymphs of the cochlea**, which make the **basilar membrane** ripple.",
+            "This bends the **hair cells** of the organ of Corti against the **tectorial membrane**, generating impulses in the afferent neurons.",
+            "The **auditory nerve** carries the impulses to the **auditory cortex**, where the sound is recognised.",
+          ],
+          answer: "Pinna → meatus → tympanic membrane → malleus → incus → stapes → oval window → cochlear fluid → basilar membrane → hair cells (organ of Corti) → auditory nerve → auditory cortex.",
+        },
+        {
+          type: "mistake",
+          wrong: "The blind spot and the fovea are the same place at the back of the eye.",
+          right: "The **blind spot** has **no** photoreceptors (the optic nerve leaves there). The **fovea**, lateral to it in the macula lutea, has the **most densely packed cones** and the sharpest vision.",
+          why: "Both are special spots near the back of the retina. Remember: the blind spot is where the 'cable' leaves, so there is no room for receptors.",
+        },
+        {
+          type: "checkpoint",
+          questions: [
+            {
+              kind: "mcq",
+              q: "The receptors for balance in the vestibular apparatus are:",
+              options: ["Organ of Corti and tectorial membrane", "Crista ampullaris and macula", "Malleus and stapes", "Rods and cones"],
+              answer: 1,
+              explain: "The crista (in the ampullae of the semicircular canals) and the macula (in the saccule and utricle) are responsible for balance and posture.",
+            },
+          ],
+        },
+        {
+          type: "keypoints",
+          items: [
+            "Reflex arc: receptor → afferent neuron (dorsal root) → spinal cord → efferent neuron → effector; knee jerk is an example.",
+            "Eye layers: sclera/cornea, choroid/ciliary body/iris, retina (ganglion, bipolar, photoreceptor cells from inside out).",
+            "Rods: scotopic, rhodopsin; cones: photopic and colour; blind spot has no receptors; fovea has only cones.",
+            "Ear: pinna, meatus, eardrum; malleus, incus, stapes; Eustachian tube equalises pressure; cochlea with organ of Corti hears.",
+            "Semicircular canals (crista) and saccule/utricle (macula) keep balance.",
+          ],
+        },
+      ],
+      flashcards: [
+        { front: "Reflex action", back: "Involuntary response to a peripheral stimulus, without conscious thought, involving part of the CNS." },
+        { front: "Order of retinal cell layers from inside to outside", back: "Ganglion cells, bipolar cells, photoreceptor cells." },
+        { front: "Rhodopsin", back: "Visual purple in rods; contains a derivative of vitamin A." },
+        { front: "Fovea", back: "Central pit of the macula lutea with only cones; sharpest vision." },
+        { front: "Function of the Eustachian tube", back: "Joins middle ear to pharynx and equalises pressure on both sides of the eardrum." },
+        { front: "Organ of Corti lies on", back: "The basilar membrane of the cochlea." },
+        { front: "Visual cortex is in the", back: "Occipital lobe of the cerebrum." },
+      ],
+      quiz: [
+        {
+          kind: "mcq",
+          q: "In a reflex arc, the afferent neuron enters the spinal cord through the:",
+          options: ["Ventral root", "Dorsal root", "Cerebral aqueduct", "Corpus callosum"],
+          answer: 1,
+          explain: "The afferent (sensory) neuron carries the impulse through the dorsal nerve root into the spinal cord.",
+        },
+        {
+          kind: "mcq",
+          q: "Colour vision depends on:",
+          options: ["Rods", "Cones", "Ganglion cells only", "The blind spot"],
+          answer: 1,
+          explain: "Three types of cones responding to red, green and blue light give colour vision.",
+        },
+        {
+          kind: "fill",
+          q: "The ear ossicle attached to the oval window is the ___.",
+          answer: ["stapes"],
+          explain: "The malleus touches the tympanic membrane; the stapes is attached to the oval window.",
+        },
+        {
+          kind: "truefalse",
+          q: "The scala media of the cochlea is filled with perilymph.",
+          answer: false,
+          explain: "The scala media is filled with endolymph; the scala vestibuli and scala tympani contain perilymph.",
+        },
+        {
+          kind: "multi",
+          q: "Which belong to the middle layer of the eyeball?",
+          options: ["Choroid", "Ciliary body", "Iris", "Cornea", "Retina"],
+          answers: [0, 1, 2],
+          explain: "The choroid thickens in front into the ciliary body, which continues as the iris. The cornea belongs to the outer layer and the retina is the inner layer.",
+        },
+        {
+          kind: "mcq",
+          q: "A person sees well in daylight but very poorly at dusk. Which is most likely deficient?",
+          options: ["Vitamin A, needed for rhodopsin in rods", "Vitamin C, needed for cones", "Calcium, needed for the lens", "Iodine, needed for the cornea"],
+          answer: 0,
+          explain: "Rods give twilight vision using rhodopsin, which contains a derivative of vitamin A. Its deficiency causes poor vision in dim light (night blindness).",
+          difficulty: 2,
+        },
+        {
+          kind: "order",
+          q: "Arrange the path of sound vibration.",
+          items: ["Tympanic membrane", "Malleus", "Incus", "Stapes", "Oval window", "Basilar membrane"],
+          explain: "Eardrum → malleus → incus → stapes → oval window → waves in cochlear fluid → basilar membrane.",
+          difficulty: 2,
+        },
+      ],
+    },
+    /* ---------------- Exam edge ---------------- */
+    {
+      slug: "c11-bio-neural-exam-edge",
+      title: "Exam edge: Neural Control and Coordination",
+      summary:
+        "How NEET and KCET test this chapter: ion movements in the nerve impulse, neuron types and sites, synapse comparison, brain parts and their centres, with statement and assertion–reason practice.",
+      minutes: 22,
+      xp: 55,
+      track: "exam",
+      blocks: [
+        {
+          type: "text",
+          md: "**NEET** usually asks 2–3 questions from this chapter. Since rationalisation, NEET's syllabus covers the neuron, the CNS, PNS and visceral nervous system and the generation and conduction of the nerve impulse; the eye, ear and reflex arc are no longer in NCERT. Expect questions on **ion movements**, **which neuron is where**, **electrical versus chemical synapses** and **which brain part has which centre**. **KCET** follows the same NCERT text and loves match-the-column sets on brain parts.",
+        },
+        {
+          type: "list",
+          items: [
+            "NCERT line: the neural system gives an organised network of **point-to-point connections** for quick coordination.",
+            "NCERT line: the resting axonal membrane is **more permeable to K⁺** and nearly impermeable to Na⁺.",
+            "NCERT line: the pump moves **3 Na⁺ outwards for 2 K⁺** into the cell.",
+            "NCERT line: electrical synapses are **rare** in our system and transmission across them is **faster**.",
+            "NCERT line: **multipolar** neurons are in the cerebral cortex, **bipolar** in the retina, **unipolar** in the embryonic stage.",
+            "NCERT line: the **midbrain and hindbrain** form the brain stem.",
+            "NCERT line: the **hypothalamus** contains neurosecretory cells that secrete hypothalamic hormones.",
+          ],
+        },
+        {
+          type: "formula",
+          tex: t`\underbrace{\text{Na}^+ \text{ in}}_{\text{depolarisation}} \;\rightarrow\; \underbrace{\text{K}^+ \text{ out}}_{\text{repolarisation}} \;\rightarrow\; \underbrace{3\,\text{Na}^+ \text{ out},\ 2\,\text{K}^+ \text{ in}}_{\text{pump restores gradients}}`,
+          caption: "The order NEET checks. Na⁺ entry makes the inside positive; K⁺ exit restores negativity.",
+        },
+        {
+          type: "example",
+          title: "NEET level: statement counting",
+          problem: "How many are correct? (i) Dendrites carry impulses away from the cell body. (ii) Nissl's granules are present in dendrites. (iii) Myelinated fibres occur in spinal and cranial nerves. (iv) Non-myelinated fibres lack Schwann cells. (v) Unipolar neurons are found usually in the embryonic stage.",
+          steps: [
+            "(i) Wrong: dendrites carry impulses towards the cell body; the axon carries them away.",
+            "(ii) Correct: NCERT says dendrites also contain Nissl's granules.",
+            "(iii) Correct.",
+            "(iv) Wrong: non-myelinated fibres are enclosed by a Schwann cell that does not form myelin.",
+            "(v) Correct.",
+          ],
+          answer: "Three statements, (ii), (iii) and (v), are correct.",
+        },
+        {
+          type: "example",
+          title: "Assertion–reason",
+          problem: "A: Impulse transmission across an electrical synapse is faster than across a chemical synapse. R: At an electrical synapse the pre- and post-synaptic membranes are very close, so current flows directly.",
+          steps: [
+            "A is true (NCERT).",
+            "R is true: very close membranes let current pass directly, like conduction along one axon.",
+            "No chemical step is needed, which is why it is faster: R explains A.",
+          ],
+          answer: "Both A and R are true, and R is the correct explanation of A.",
+        },
+        {
+          type: "example",
+          title: "KCET style: matching brain parts",
+          problem: "Match: (p) Corpus callosum (q) Medulla (r) Hypothalamus (s) Corpora quadrigemina with (1) temperature, hunger and thirst (2) four lobes of the midbrain (3) joins the cerebral hemispheres (4) respiration and cardiovascular reflexes.",
+          steps: [
+            "Corpus callosum joins the two hemispheres: p–3.",
+            "Medulla has centres for respiration, cardiovascular reflexes and gastric secretion: q–4.",
+            "Hypothalamus controls temperature, eating and drinking: r–1.",
+            "Corpora quadrigemina are four swellings on the dorsal midbrain: s–2.",
+          ],
+          answer: "p–3, q–4, r–1, s–2.",
+        },
+        {
+          type: "example",
+          title: "Harder: predicting the effect of a blocked channel",
+          problem: "A toxin from a pufferfish blocks voltage-gated Na⁺ channels of axons. A second, imaginary drug blocks only K⁺ channels. Predict what each does to the action potential.",
+          steps: [
+            "Depolarisation needs a rapid Na⁺ influx. If Na⁺ channels are blocked, the inside cannot become positive, so **no action potential** forms and conduction stops (paralysis).",
+            "If only K⁺ channels are blocked, depolarisation still happens, but K⁺ cannot flow out quickly, so **repolarisation is delayed**: the action potential is prolonged.",
+            "In both cases the Na⁺–K⁺ pump still works, but it is far too slow to generate or end an impulse by itself.",
+          ],
+          answer: "Na⁺-channel block: no impulse at all. K⁺-channel block: impulse forms but the return to resting potential is slowed.",
+        },
+        {
+          type: "mistake",
+          wrong: "Brain stem = midbrain + pons + medulla + cerebellum, so the cerebellum is in the brain stem.",
+          right: "NCERT says 'midbrain and hindbrain form the brain stem'. Anatomically the brain stem is the midbrain, pons and medulla; the cerebellum sits behind it and is not part of it.",
+          why: "NEET questions use NCERT's wording, so 'midbrain and hindbrain form the brain stem' is marked true. If a question asks which structure is not in the brain stem, the cerebellum is the safe answer.",
+        },
+        {
+          type: "mistake",
+          wrong: "At rest the membrane is impermeable to K⁺ and permeable to Na⁺.",
+          right: "It is the other way round: at rest the membrane is **more permeable to K⁺** and nearly impermeable to Na⁺. A stimulus makes it freely permeable to Na⁺.",
+          why: "Students remember that 'Na⁺ rushes in' and assume the gate is always open. It opens only when stimulated, and only briefly.",
+        },
+        {
+          type: "activity",
+          activity: {
+            kind: "reveal",
+            prompt: "At the peak of an action potential, which side of the membrane is positive?",
+            emoji: "⚡",
+            options: ["Outside, as at rest", "Inside", "Neither; it is neutral", "Both sides equally"],
+            answer: 1,
+            trap: 0,
+            explain: "Na⁺ influx reverses polarity: the inner surface becomes positive and the outer surface negative. That reversed state is the action potential.",
+          },
+        },
+        {
+          type: "checkpoint",
+          questions: [
+            {
+              kind: "mcq",
+              q: "A: The cerebral cortex is called grey matter. R: Myelinated fibre tracts are concentrated in the cerebral cortex.",
+              options: AR,
+              answer: 2,
+              explain: "A is true: the cortex is grey because neuron cell bodies are concentrated there. R is false: myelinated tracts form the inner white matter.",
+            },
+          ],
+        },
+        {
+          type: "keypoints",
+          items: [
+            "Order of events: Na⁺ in (depolarise) → K⁺ out (repolarise) → pump 3 Na⁺ out : 2 K⁺ in.",
+            "Dendrites towards, axon away; Nissl's granules in cell body and dendrites; Schwann cells around both fibre types.",
+            "Multipolar–cortex, bipolar–retina, unipolar–embryo.",
+            "Electrical synapse: direct, faster, rare. Chemical: cleft, neurotransmitter, receptor, excitatory or inhibitory.",
+            "Hypothalamus: temperature, hunger, thirst, hormones; medulla: respiration, cardiovascular reflexes, gastric secretion; cerebellum: coordination.",
+          ],
+        },
+      ],
+      flashcards: [
+        { front: "Which ion enters during depolarisation?", back: "Na⁺." },
+        { front: "Which ion leaves during repolarisation?", back: "K⁺." },
+        { front: "Neuron type in the cerebral cortex", back: "Multipolar." },
+        { front: "Structures forming the brain stem (NCERT)", back: "Midbrain and hindbrain." },
+        { front: "Inner white matter of the cerebrum is made of", back: "Myelinated fibre tracts." },
+        { front: "Hippocampus and amygdala belong to", back: "The limbic system." },
+        { front: "What opens ion channels on the post-synaptic membrane?", back: "Binding of neurotransmitters to specific receptors." },
+      ],
+      quiz: [
+        {
+          kind: "mcq",
+          q: "Which statement is correct about a resting neuron?",
+          options: [
+            "Outer surface negative, inner positive",
+            "Membrane more permeable to Na⁺ than to K⁺",
+            "Axoplasm has high K⁺ and negatively charged proteins",
+            "Fluid outside has high K⁺",
+          ],
+          answer: 2,
+          explain: "At rest the axoplasm has high K⁺ and negative proteins and low Na⁺; outside fluid has high Na⁺ and low K⁺. The outer surface is positive.",
+          difficulty: 2,
+        },
+        {
+          kind: "multi",
+          q: "Select the correct statements about the human brain.",
+          options: [
+            "The corpus callosum connects the two cerebral hemispheres",
+            "The cerebral aqueduct passes through the hindbrain",
+            "The cerebellum has a very convoluted surface",
+            "The pons consists of fibre tracts interconnecting brain regions",
+            "The thalamus lies at the base of the hypothalamus",
+          ],
+          answers: [0, 2, 3],
+          explain: "The cerebral aqueduct passes through the midbrain, and it is the hypothalamus that lies at the base of the thalamus.",
+          difficulty: 2,
+        },
+        {
+          kind: "mcq",
+          q: "A: Unipolar neurons are common in the adult cerebral cortex. R: Unipolar neurons have a cell body with only one axon.",
+          options: AR,
+          answer: 3,
+          explain: "A is false: the cortex has multipolar neurons, and unipolar neurons are usually found in the embryonic stage. R is a correct description of unipolar neurons.",
+          difficulty: 2,
+        },
+        {
+          kind: "mcq",
+          q: "Which of these is NOT a function of the medulla oblongata (NCERT)?",
+          options: ["Control of respiration", "Cardiovascular reflexes", "Gastric secretion", "Control of body temperature"],
+          answer: 3,
+          explain: "Body temperature is controlled by the hypothalamus. The medulla controls respiration, cardiovascular reflexes and gastric secretions.",
+        },
+        {
+          kind: "numeric",
+          q: "A Na⁺–K⁺ pump has moved 1200 Na⁺ ions out of a cell. How many K⁺ ions has it moved in?",
+          answer: 800,
+          explain: "The ratio is 3 Na⁺ out : 2 K⁺ in, so K⁺ in = 1200 × 2/3 = 800.",
+          difficulty: 2,
+        },
+        {
+          kind: "mcq",
+          q: "Which part of the PNS carries impulses from the CNS to the heart and smooth muscle of the gut?",
+          options: ["Somatic neural system", "Autonomic neural system", "Afferent fibres", "Corpus callosum"],
+          answer: 1,
+          explain: "The autonomic neural system (sympathetic and parasympathetic) supplies involuntary organs and smooth muscles. These are efferent, not afferent, fibres.",
+        },
+        {
+          kind: "mcq",
+          q: "If the extracellular fluid around an axon is replaced with fluid containing no Na⁺, a stimulus will:",
+          options: [
+            "Produce a larger action potential",
+            "Fail to produce a normal action potential",
+            "Make the outside more positive",
+            "Release more neurotransmitter",
+          ],
+          answer: 1,
+          explain: "Depolarisation depends on Na⁺ rushing in from the outside. With no external Na⁺, the inside cannot become positive, so a normal action potential cannot form.",
+          difficulty: 3,
+          hint: "Where does the Na⁺ that enters during depolarisation come from?",
+        },
+        {
+          kind: "mcq",
+          q: "Neurosecretory cells that make hormones are found in the:",
+          options: ["Cerebellum", "Hypothalamus", "Pons", "Corpus callosum"],
+          answer: 1,
+          explain: "The hypothalamus has groups of neurosecretory cells that secrete hypothalamic hormones, linking the neural and endocrine systems.",
+        },
+      ],
+    },
+  ],
+};
+
+export const topics: Topic[] = [locomotion, neural];
 
 export const links: Record<string, string | string[]> = {
   "11:Locomotion and Movement": "c11-bio-locomotion-movement",
+  "11:Neural Control and Coordination": "c11-bio-neural-control",
 };

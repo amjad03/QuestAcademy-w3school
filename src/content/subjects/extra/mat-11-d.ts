@@ -1458,6 +1458,1016 @@ Use the notation $S = x^2 + y^2 + 2gx + 2fy + c$, $S_1 = S(x_1, y_1)$ and $T = x
       },
     ],
   },
+  /* ------------------------------------------------------------------ */
+  /* Class 11: Conic Sections (NCERT, Karnataka I PUC, ISC)              */
+  /* ------------------------------------------------------------------ */
+  {
+    slug: "c11-mat-conic-sections",
+    title: "Conic Sections (Class 11)",
+    icon: "🔦",
+    description: "Sections of a double cone, the circle, and the parabola, ellipse and hyperbola in standard form: focus, directrix, vertices, axes, eccentricity and latus rectum, with tangents, normals and focal chords for JEE.",
+    lessons: [
+      {
+        slug: "c11-mat-conics-cone-circle",
+        title: "Sections of a Cone and the Circle",
+        summary: "How a plane cuts a double-napped cone to give a circle, ellipse, parabola, hyperbola or a degenerate conic, and the circle in standard and general form.",
+        minutes: 18,
+        xp: 45,
+        blocks: [
+          {
+            type: "illustration",
+            emoji: "🔦",
+            caption: "Shine a torch straight at a wall and the patch of light is a circle. Tilt the torch and it stretches into an ellipse, then a parabola, then one branch of a hyperbola.",
+          },
+          {
+            type: "text",
+            md: t`Take a fixed vertical line $l$ (the **axis**) and another line $m$ meeting it at a fixed point $V$ (the **vertex**) at an angle $\alpha$. Rotate $m$ about $l$, keeping the angle fixed. The surface traced is a **double-napped right circular cone**: two cones joined at the vertex, extending without end. Each position of $m$ is a **generator**, and $\alpha$ is the **semi-vertical angle**.
+
+The curves obtained by cutting this cone with a plane are called **conic sections** (or conics). Let the cutting plane make an angle $\beta$ with the axis.`,
+          },
+          {
+            type: "table",
+            headers: ["Plane (not through the vertex)", "Section"],
+            rows: [
+              [t`$\beta = 90^\circ$ (plane perpendicular to the axis)`, "circle"],
+              [t`$\alpha < \beta < 90^\circ$`, "ellipse"],
+              [t`$\beta = \alpha$ (plane parallel to a generator)`, "parabola"],
+              [t`$0^\circ \le \beta < \alpha$ (plane cuts both nappes)`, "hyperbola (two branches)"],
+            ],
+          },
+          {
+            type: "text",
+            md: t`**Degenerate conics.** If the plane passes through the vertex $V$:
+
+- $\alpha < \beta \le 90^\circ$: the section is just the **point** $V$;
+- $\beta = \alpha$: the plane touches the cone along a generator, giving a **straight line** (a degenerate parabola);
+- $0^\circ \le \beta < \alpha$: a **pair of intersecting straight lines** (a degenerate hyperbola).`,
+          },
+          {
+            type: "text",
+            md: t`**The circle** is the set of points in a plane at a fixed distance $r$ (radius) from a fixed point $(h, k)$ (centre). By the distance formula its equation is $(x - h)^2 + (y - k)^2 = r^2$. Expanding gives the general form $x^2 + y^2 + 2gx + 2fy + c = 0$ with centre $(-g, -f)$ and radius $\sqrt{g^2 + f^2 - c}$.`,
+          },
+          {
+            type: "formula",
+            tex: t`(x - h)^2 + (y - k)^2 = r^2 \qquad\qquad x^2 + y^2 = r^2 \ \text{(centre at the origin)}`,
+            caption: "Standard equation of a circle",
+          },
+          {
+            type: "example",
+            title: "Writing the equation of a circle",
+            problem: t`Find the equation of the circle with centre $(-3, 2)$ and radius 4.`,
+            steps: [
+              t`$(x + 3)^2 + (y - 2)^2 = 16$.`,
+              t`Expand: $x^2 + 6x + 9 + y^2 - 4y + 4 = 16$.`,
+              t`$x^2 + y^2 + 6x - 4y - 3 = 0$.`,
+            ],
+            answer: t`$x^2 + y^2 + 6x - 4y - 3 = 0$`,
+          },
+          {
+            type: "example",
+            title: "Centre and radius by completing squares",
+            problem: t`Find the centre and radius of $x^2 + y^2 - 8x + 10y - 12 = 0$.`,
+            steps: [
+              t`Group: $(x^2 - 8x) + (y^2 + 10y) = 12$.`,
+              t`Complete squares: $(x - 4)^2 - 16 + (y + 5)^2 - 25 = 12$.`,
+              t`$(x - 4)^2 + (y + 5)^2 = 53$.`,
+            ],
+            answer: t`Centre $(4, -5)$, radius $\sqrt{53}$`,
+          },
+          {
+            type: "checkpoint",
+            questions: [
+              {
+                kind: "mcq",
+                q: "A plane, not through the vertex, is parallel to one generator of the cone. The section is",
+                options: ["a circle", "an ellipse", "a parabola", "a hyperbola"],
+                answer: 2,
+                explain: t`Parallel to a generator means $\beta = \alpha$, which gives a parabola.`,
+              },
+              {
+                kind: "numeric",
+                q: "Find the radius of x² + y² − 2x + 4y − 20 = 0.",
+                answer: 5,
+                explain: t`$(x - 1)^2 + (y + 2)^2 = 20 + 1 + 4 = 25$, so $r = 5$.`,
+              },
+            ],
+          },
+          {
+            type: "example",
+            title: "Circle through two points with centre on a line",
+            problem: t`Find the circle through $(0, 2)$ and $(4, 0)$ whose centre lies on the line $y = x$.`,
+            steps: [
+              t`Let the centre be $(h, h)$. It is equidistant from both points: $h^2 + (h - 2)^2 = (h - 4)^2 + h^2$.`,
+              t`$h^2 - 4h + 4 = h^2 - 8h + 16 \Rightarrow 4h = 12 \Rightarrow h = 3$.`,
+              t`Centre $(3, 3)$; $r^2 = 3^2 + (3 - 2)^2 = 10$.`,
+              t`$(x - 3)^2 + (y - 3)^2 = 10$, i.e. $x^2 + y^2 - 6x - 6y + 8 = 0$. Check $(4, 0)$: $16 - 24 + 8 = 0$. ✓`,
+            ],
+            answer: t`$x^2 + y^2 - 6x - 6y + 8 = 0$`,
+          },
+          {
+            type: "mistake",
+            wrong: "Any equation with both x² and y² in it is a circle.",
+            right: "It is a circle only when x² and y² have equal coefficients and there is no xy term. x² + 4y² = 4 is an ellipse and x² − y² = 1 is a hyperbola.",
+            why: "The circle is the most familiar curve with x² and y², so learners assume it. The ratio and signs of the coefficients decide which conic it is.",
+          },
+          {
+            type: "activity",
+            activity: {
+              kind: "match",
+              prompt: "Match the cutting plane to the conic section.",
+              pairs: [
+                ["β = 90°, not through the vertex", "Circle"],
+                ["α < β < 90°, not through the vertex", "Ellipse"],
+                ["β = α, not through the vertex", "Parabola"],
+                ["β < α, not through the vertex", "Hyperbola"],
+                ["α < β ≤ 90°, through the vertex", "A single point"],
+              ],
+              explain: "The section depends on how the angle β of the plane compares with the semi-vertical angle α, and on whether the plane passes through the vertex.",
+            },
+          },
+          {
+            type: "callout",
+            tone: "exam",
+            title: "Board exam tips",
+            md: "A 1-mark question often asks which conic arises for a given β; learn the table with the words \"not through the vertex\". In circle questions, write the standard form first, then expand. If a circle touches an axis, its radius equals the distance of the centre from that axis (for example, touching the x-axis means r = |k|).",
+          },
+          {
+            type: "keypoints",
+            items: [
+              "Conics are sections of a double-napped cone by a plane; the angle β between the plane and the axis decides the curve.",
+              "β = 90°: circle; α < β < 90°: ellipse; β = α: parabola; β < α: hyperbola.",
+              "Planes through the vertex give degenerate conics: a point, a line, or a pair of lines.",
+              t`Circle: $(x - h)^2 + (y - k)^2 = r^2$; from $x^2 + y^2 + 2gx + 2fy + c = 0$, centre $(-g, -f)$, radius $\sqrt{g^2 + f^2 - c}$.`,
+            ],
+          },
+        ],
+        flashcards: [
+          { front: "Double-napped cone: semi-vertical angle", back: "The fixed angle α between the generator and the axis." },
+          { front: "Plane at β = α to the axis (not through vertex)", back: "Parabola" },
+          { front: "Plane at β < α to the axis (not through vertex)", back: "Hyperbola (the plane cuts both nappes)." },
+          { front: "Plane at α < β < 90°", back: "Ellipse" },
+          { front: "Degenerate conics", back: "A point, a straight line, or a pair of intersecting lines (plane through the vertex)." },
+          { front: "Circle with centre (h, k) and radius r", back: t`$(x - h)^2 + (y - k)^2 = r^2$` },
+        ],
+        quiz: [
+          {
+            kind: "mcq",
+            q: "The circle with centre at the origin passing through (3, 4) is",
+            options: ["x² + y² = 7", "x² + y² = 5", "x² + y² = 25", "x² + y² = 49"],
+            answer: 2,
+            explain: t`$r^2 = 9 + 16 = 25$.`,
+          },
+          {
+            kind: "truefalse",
+            q: "If the plane passes through the vertex and β = α, the section is a straight line.",
+            answer: true,
+            explain: "The plane then touches the cone along one generator. This is the degenerate case of the parabola.",
+          },
+          {
+            kind: "fill",
+            q: "The centre of (x − 1)² + (y + 2)² = 9 is (1, ___).",
+            answer: ["-2", "−2"],
+            explain: t`$(y + 2)^2 = (y - (-2))^2$, so $k = -2$.`,
+          },
+          {
+            kind: "mcq",
+            q: "The circle with centre (2, 3) that touches the x-axis is",
+            options: ["(x − 2)² + (y − 3)² = 4", "(x − 2)² + (y − 3)² = 9", "(x + 2)² + (y + 3)² = 9", "(x − 2)² + (y − 3)² = 13"],
+            answer: 1,
+            explain: "Touching the x-axis means the radius equals the distance of the centre from it, which is 3.",
+            difficulty: 2,
+          },
+          {
+            kind: "multi",
+            q: "Which equations are circles?",
+            options: ["x² + y² = 7", "2x² + 2y² − 3x = 0", "x² − y² = 4", "x² + y² + xy = 1"],
+            answers: [0, 1],
+            explain: t`$2x^2 + 2y^2 - 3x = 0$ becomes $x^2 + y^2 - \frac{3}{2}x = 0$: centre $(\frac{3}{4}, 0)$. $x^2 - y^2 = 4$ is a hyperbola; an $xy$ term rules out a circle.`,
+          },
+          {
+            kind: "mcq",
+            q: "When the plane cuts both nappes of the cone (and does not pass through the vertex), the section is",
+            options: ["an ellipse", "a parabola", "a hyperbola", "a pair of lines"],
+            answer: 2,
+            explain: t`Cutting both nappes happens when $\beta < \alpha$, giving the two branches of a hyperbola.`,
+          },
+        ],
+      },
+      {
+        slug: "c11-mat-conics-parabola",
+        title: "The Parabola",
+        summary: "Focus-directrix definition, derivation of y² = 4ax, the four standard parabolas, latus rectum and finding a parabola from given data.",
+        minutes: 20,
+        xp: 50,
+        blocks: [
+          {
+            type: "illustration",
+            emoji: "📡",
+            caption: "A dish antenna and a car headlight reflector are parabolic: rays parallel to the axis bounce off the surface and all pass through one point, the focus.",
+          },
+          {
+            type: "text",
+            md: t`A **parabola** is the set of all points in a plane that are **equidistant** from a fixed line (the **directrix**) and a fixed point (the **focus**) not on that line.
+
+- The line through the focus perpendicular to the directrix is the **axis** of the parabola.
+- The point where the parabola meets its axis is the **vertex** (midway between focus and directrix).
+- The chord through the focus perpendicular to the axis is the **latus rectum**.`,
+          },
+          {
+            type: "list",
+            ordered: true,
+            items: [
+              t`Put the focus at $S(a, 0)$, $a > 0$, and the directrix $x = -a$, so the vertex is the origin.`,
+              t`For $P(x, y)$ on the parabola, $PS = PM$, where $PM$ is the perpendicular distance to the directrix: $\sqrt{(x - a)^2 + y^2} = |x + a|$.`,
+              t`Square: $x^2 - 2ax + a^2 + y^2 = x^2 + 2ax + a^2$.`,
+              t`Simplify: $y^2 = 4ax$. Conversely, every point satisfying $y^2 = 4ax$ satisfies $PS = PM$, so this is exactly the parabola.`,
+            ],
+          },
+          {
+            type: "formula",
+            tex: t`y^2 = 4ax, \quad a > 0: \quad \text{focus } (a, 0), \ \text{directrix } x = -a, \ \text{latus rectum } 4a`,
+            caption: "Standard parabola opening to the right",
+          },
+          {
+            type: "table",
+            headers: ["Equation", "Focus", "Directrix", "Axis", "Opens"],
+            rows: [
+              [t`$y^2 = 4ax$`, t`$(a, 0)$`, t`$x = -a$`, t`$y = 0$`, "right"],
+              [t`$y^2 = -4ax$`, t`$(-a, 0)$`, t`$x = a$`, t`$y = 0$`, "left"],
+              [t`$x^2 = 4ay$`, t`$(0, a)$`, t`$y = -a$`, t`$x = 0$`, "upward"],
+              [t`$x^2 = -4ay$`, t`$(0, -a)$`, t`$y = a$`, t`$x = 0$`, "downward"],
+            ],
+          },
+          {
+            type: "text",
+            md: t`**Latus rectum.** For $y^2 = 4ax$, put $x = a$: $y^2 = 4a^2$, so $y = \pm 2a$. The ends are $(a, 2a)$ and $(a, -2a)$ and the length is $4a$. In every standard parabola the latus rectum is 4 times the distance from the vertex to the focus.
+
+**Reading a parabola.** The parabola is symmetric about the axis of the variable that is **not** squared. The sign of the non-squared side tells the direction it opens.`,
+          },
+          {
+            type: "example",
+            title: "Reading y² = 12x",
+            problem: t`Find the focus, axis, directrix and length of the latus rectum of $y^2 = 12x$.`,
+            steps: [
+              t`Compare with $y^2 = 4ax$: $4a = 12$, so $a = 3$.`,
+              t`Focus $(3, 0)$; axis is the x-axis; directrix $x = -3$.`,
+              t`Latus rectum $= 4a = 12$; its ends are $(3, \pm 6)$.`,
+            ],
+            answer: t`Focus $(3, 0)$, axis $y = 0$, directrix $x = -3$, latus rectum 12`,
+          },
+          {
+            type: "example",
+            title: "Reading x² = −16y",
+            problem: t`Find the focus, directrix and latus rectum of $x^2 = -16y$.`,
+            steps: [
+              t`Compare with $x^2 = -4ay$: $4a = 16$, $a = 4$.`,
+              t`The parabola is symmetric about the y-axis and opens downward.`,
+              t`Focus $(0, -4)$; directrix $y = 4$; latus rectum 16.`,
+            ],
+            answer: t`Focus $(0, -4)$, directrix $y = 4$, latus rectum 16`,
+          },
+          {
+            type: "checkpoint",
+            questions: [
+              {
+                kind: "mcq",
+                q: "The focus of y² = −20x is",
+                options: ["(5, 0)", "(−5, 0)", "(0, −5)", "(−20, 0)"],
+                answer: 1,
+                explain: t`$4a = 20$, $a = 5$; it opens left, so the focus is $(-5, 0)$.`,
+              },
+            ],
+          },
+          {
+            type: "example",
+            title: "Parabola from given data",
+            problem: t`Find the parabola with vertex at the origin, axis along the y-axis, passing through $(2, -3)$.`,
+            steps: [
+              t`Axis along the y-axis: the equation is $x^2 = ky$ for some $k$.`,
+              t`Substitute $(2, -3)$: $4 = -3k$, so $k = -\frac{4}{3}$.`,
+              t`$x^2 = -\frac{4}{3}y$, i.e. $3x^2 = -4y$. It opens downward, as it must to pass through a point below the x-axis.`,
+            ],
+            answer: t`$3x^2 + 4y = 0$`,
+          },
+          {
+            type: "mistake",
+            wrong: "In y² = 8x, a = 8, so the focus is (8, 0).",
+            right: "Compare with y² = 4ax: 4a = 8, so a = 2 and the focus is (2, 0). The 8 is the length of the latus rectum, 4a.",
+            why: "The coefficient on the right is 4a, not a. Skipping the comparison step is the most common slip in parabola questions.",
+          },
+          {
+            type: "activity",
+            activity: {
+              kind: "match",
+              prompt: "Match each parabola to its focus.",
+              pairs: [
+                ["y² = 8x", "(2, 0)"],
+                ["y² = −8x", "(−2, 0)"],
+                ["x² = 8y", "(0, 2)"],
+                ["x² = −8y", "(0, −2)"],
+                ["y² = 2x", "(1/2, 0)"],
+              ],
+              explain: "Find a from 4a = coefficient. The focus lies on the axis of the non-squared variable, on the side given by the sign.",
+            },
+          },
+          {
+            type: "callout",
+            tone: "exam",
+            title: "Board exam tips",
+            md: "The derivation of y² = 4ax is a standard 4-mark question: state the definition, place focus and directrix, equate PS and PM, square and simplify. When finding a parabola from data, first decide the form from the axis and the side the curve lies on, and draw a quick sketch.",
+          },
+          {
+            type: "keypoints",
+            items: [
+              "A parabola is the locus of points equidistant from a focus and a directrix.",
+              t`$y^2 = 4ax$: focus $(a, 0)$, directrix $x = -a$, axis the x-axis, vertex the origin.`,
+              "Latus rectum = 4a; the vertex is midway between focus and directrix.",
+              "The squared variable tells the axis of symmetry is the other axis; the sign tells the direction of opening.",
+            ],
+          },
+        ],
+        flashcards: [
+          { front: "Definition of a parabola", back: "Set of points equidistant from a fixed point (focus) and a fixed line (directrix)." },
+          { front: t`Focus and directrix of $y^2 = 4ax$`, back: t`Focus $(a, 0)$, directrix $x = -a$` },
+          { front: t`Focus and directrix of $x^2 = -4ay$`, back: t`Focus $(0, -a)$, directrix $y = a$` },
+          { front: "Length of latus rectum of a parabola", back: "4a" },
+          { front: t`Ends of the latus rectum of $y^2 = 4ax$`, back: t`$(a, 2a)$ and $(a, -2a)$` },
+          { front: "Vertex of a parabola", back: "The point where it meets its axis, midway between focus and directrix." },
+        ],
+        quiz: [
+          {
+            kind: "numeric",
+            q: "Find the length of the latus rectum of x² = 6y.",
+            answer: 6,
+            explain: t`$4a = 6$, and the latus rectum is $4a = 6$.`,
+          },
+          {
+            kind: "mcq",
+            q: "The directrix of x² = 10y is",
+            options: ["y = 5/2", "y = −5/2", "x = −5/2", "y = −10"],
+            answer: 1,
+            explain: t`$4a = 10$, $a = \frac{5}{2}$. It opens upward, so the directrix is $y = -\frac{5}{2}$.`,
+          },
+          {
+            kind: "mcq",
+            q: "The parabola with focus (2, 0) and directrix x = −2 is",
+            options: ["y² = 2x", "y² = 4x", "y² = 8x", "x² = 8y"],
+            answer: 2,
+            explain: t`$a = 2$, so $y^2 = 4ax = 8x$.`,
+          },
+          {
+            kind: "truefalse",
+            q: "Every point of a parabola is at the same distance from the focus as from the directrix.",
+            answer: true,
+            explain: "That is the definition of a parabola.",
+          },
+          {
+            kind: "numeric",
+            q: "A point on y² = 12x has x-coordinate 3. Find its distance from the focus.",
+            answer: 6,
+            explain: t`Distance from focus = distance from directrix $x = -3$, which is $3 + 3 = 6$. (Directly: the point is $(3, \pm 6)$ and the focus $(3, 0)$.)`,
+            difficulty: 2,
+            hint: "Use the definition: distance to the directrix.",
+          },
+          {
+            kind: "multi",
+            q: "Which are true for x² = −12y?",
+            options: ["Focus is (0, −3).", "Directrix is y = 3.", "Latus rectum is 12.", "It opens upward."],
+            answers: [0, 1, 2],
+            explain: t`$4a = 12$, $a = 3$. The minus sign on $y$ makes it open downward.`,
+          },
+          {
+            kind: "mcq",
+            q: "The parabola with vertex (0, 0), axis along the x-axis, passing through (3, −6) is",
+            options: ["y² = 12x", "y² = −12x", "x² = 12y", "y² = 6x"],
+            answer: 0,
+            explain: t`$y^2 = kx$: $36 = 3k$, so $k = 12$. The point has $x > 0$, so the parabola opens right.`,
+          },
+        ],
+      },
+      {
+        slug: "c11-mat-conics-ellipse",
+        title: "The Ellipse",
+        summary: "Sum-of-distances definition, centre, axes and vertices, the relation a² = b² + c², derivation of x²/a² + y²/b² = 1, eccentricity and latus rectum.",
+        minutes: 22,
+        xp: 50,
+        blocks: [
+          {
+            type: "illustration",
+            emoji: "🪐",
+            caption: "Fix two pins on a board, loop a thread around them and pull it tight with a pencil. As you move the pencil, the thread length stays fixed and the curve is an ellipse. Planets move on ellipses with the Sun at one focus.",
+          },
+          {
+            type: "text",
+            md: t`An **ellipse** is the set of all points in a plane the **sum** of whose distances from two fixed points (the **foci**) is a constant, greater than the distance between the foci.
+
+- The midpoint of the segment joining the foci is the **centre**.
+- The line through the foci meets the ellipse at the **vertices**; the segment between them is the **major axis**, length $2a$.
+- The segment through the centre perpendicular to it is the **minor axis**, length $2b$.
+- The distance between the foci is $2c$.
+
+The constant sum equals $2a$: at a vertex, the two distances are $a - c$ and $a + c$.`,
+          },
+          {
+            type: "text",
+            md: t`**Relation between $a$, $b$, $c$.** Take $P$ at an end of the minor axis. It is equidistant from both foci, and the two distances add to $2a$, so each is $a$. The right triangle with legs $b$ and $c$ then gives $a^2 = b^2 + c^2$, i.e. $c = \sqrt{a^2 - b^2}$.`,
+          },
+          {
+            type: "list",
+            ordered: true,
+            items: [
+              t`Foci $F_1(-c, 0)$ and $F_2(c, 0)$; for $P(x, y)$: $PF_1 + PF_2 = 2a$.`,
+              t`$\sqrt{(x + c)^2 + y^2} = 2a - \sqrt{(x - c)^2 + y^2}$; square both sides and simplify to $\sqrt{(x - c)^2 + y^2} = a - \frac{c}{a}x$.`,
+              t`Square again: $x^2 - 2cx + c^2 + y^2 = a^2 - 2cx + \frac{c^2}{a^2}x^2$.`,
+              t`Rearrange: $x^2\left(1 - \frac{c^2}{a^2}\right) + y^2 = a^2 - c^2$, so $\frac{x^2}{a^2} + \frac{y^2}{a^2 - c^2} = 1$.`,
+              t`With $b^2 = a^2 - c^2$: $\frac{x^2}{a^2} + \frac{y^2}{b^2} = 1$.`,
+            ],
+          },
+          {
+            type: "formula",
+            tex: t`\frac{x^2}{a^2} + \frac{y^2}{b^2} = 1, \quad a > b, \qquad c^2 = a^2 - b^2, \qquad e = \frac{c}{a} < 1`,
+            caption: "Standard ellipse with major axis along the x-axis",
+          },
+          {
+            type: "table",
+            headers: ["Feature", t`$\frac{x^2}{a^2} + \frac{y^2}{b^2} = 1$ ($a > b$)`, t`$\frac{x^2}{b^2} + \frac{y^2}{a^2} = 1$ ($a > b$)`],
+            rows: [
+              ["Major axis", "along x-axis, length 2a", "along y-axis, length 2a"],
+              ["Vertices", t`$(\pm a, 0)$`, t`$(0, \pm a)$`],
+              ["Foci", t`$(\pm c, 0)$`, t`$(0, \pm c)$`],
+              ["Minor axis ends", t`$(0, \pm b)$`, t`$(\pm b, 0)$`],
+              ["Latus rectum", t`$\frac{2b^2}{a}$`, t`$\frac{2b^2}{a}$`],
+            ],
+          },
+          {
+            type: "text",
+            md: t`**Eccentricity** $e = \frac{c}{a}$ measures how flat the ellipse is; $0 < e < 1$. As $c \to 0$ the foci merge, $b \to a$ and the ellipse becomes a circle ($e = 0$). As $e \to 1$ it flattens towards a segment.
+
+**Latus rectum.** Putting $x = c$ in the equation gives $y^2 = b^2\left(1 - \frac{c^2}{a^2}\right) = \frac{b^4}{a^2}$, so $y = \pm\frac{b^2}{a}$ and the length is $\frac{2b^2}{a}$.
+
+**Board note:** ISC (and JEE) also use the **directrices** $x = \pm\frac{a}{e}$ and the focus-directrix property $PS = e \cdot PM$. These are not in the rationalised NCERT text.`,
+          },
+          {
+            type: "example",
+            title: "Reading x²/25 + y²/9 = 1",
+            problem: t`Find the foci, vertices, lengths of the axes, eccentricity and latus rectum of $\frac{x^2}{25} + \frac{y^2}{9} = 1$.`,
+            steps: [
+              t`The larger denominator is under $x^2$: major axis along the x-axis, $a = 5$, $b = 3$.`,
+              t`$c = \sqrt{25 - 9} = 4$. Foci $(\pm 4, 0)$; vertices $(\pm 5, 0)$.`,
+              t`Major axis 10, minor axis 6, $e = \frac{4}{5}$.`,
+              t`Latus rectum $\frac{2b^2}{a} = \frac{18}{5}$.`,
+            ],
+            answer: t`Foci $(\pm 4, 0)$, vertices $(\pm 5, 0)$, axes 10 and 6, $e = \frac{4}{5}$, latus rectum $\frac{18}{5}$`,
+          },
+          {
+            type: "example",
+            title: "Major axis along the y-axis",
+            problem: t`Find the foci, vertices, eccentricity and latus rectum of $16x^2 + 9y^2 = 144$.`,
+            steps: [
+              t`Divide by 144: $\frac{x^2}{9} + \frac{y^2}{16} = 1$. The larger denominator is under $y^2$, so $a = 4$, $b = 3$ and the major axis is vertical.`,
+              t`$c = \sqrt{16 - 9} = \sqrt{7}$. Foci $(0, \pm\sqrt{7})$; vertices $(0, \pm 4)$.`,
+              t`$e = \frac{\sqrt{7}}{4}$; latus rectum $\frac{2 \times 9}{4} = \frac{9}{2}$.`,
+            ],
+            answer: t`Foci $(0, \pm\sqrt{7})$, vertices $(0, \pm 4)$, $e = \frac{\sqrt{7}}{4}$, latus rectum $\frac{9}{2}$`,
+          },
+          {
+            type: "checkpoint",
+            questions: [
+              {
+                kind: "mcq",
+                q: "The eccentricity of x²/16 + y²/7 = 1 is",
+                options: ["3/4", "7/16", "4/3", t`$\frac{\sqrt{7}}{4}$`],
+                answer: 0,
+                explain: t`$c^2 = 16 - 7 = 9$, $c = 3$, $e = \frac{c}{a} = \frac{3}{4}$.`,
+              },
+            ],
+          },
+          {
+            type: "example",
+            title: "Ellipse from given data",
+            problem: t`Find the ellipse with centre at the origin, foci $(0, \pm 2)$ and major axis of length 8.`,
+            steps: [
+              t`Foci on the y-axis, so the form is $\frac{x^2}{b^2} + \frac{y^2}{a^2} = 1$.`,
+              t`$2a = 8 \Rightarrow a = 4$; $c = 2$.`,
+              t`$b^2 = a^2 - c^2 = 16 - 4 = 12$.`,
+            ],
+            answer: t`$\frac{x^2}{12} + \frac{y^2}{16} = 1$`,
+          },
+          {
+            type: "mistake",
+            wrong: "For an ellipse, c² = a² + b².",
+            right: "For an ellipse c² = a² − b² (the foci are inside, so c < a). The relation c² = a² + b² belongs to the hyperbola.",
+            why: "The two formulas look alike and are learnt together. Remember the minor-axis triangle: its hypotenuse is a, so a is the biggest of a, b, c in an ellipse.",
+          },
+          {
+            type: "activity",
+            activity: {
+              kind: "reveal",
+              prompt: "What happens to an ellipse as e approaches 0?",
+              emoji: "🥚",
+              options: ["It becomes a circle", "It becomes a straight segment", "It becomes a parabola"],
+              answer: 0,
+              trap: 2,
+              explain: t`$e = \frac{c}{a} \to 0$ means the foci move together to the centre and $b \to a$, which is a circle. A parabola has $e = 1$, the opposite end; a nearly flat ellipse has $e$ close to 1.`,
+            },
+          },
+          {
+            type: "callout",
+            tone: "exam",
+            title: "Board exam tips",
+            md: "Before reading a and b, put the equation in the form x²/□ + y²/□ = 1. The larger denominator is always a², and it tells you which axis is the major axis. List all six answers (foci, vertices, major axis, minor axis, e, latus rectum) in a neat table; each is usually worth a mark.",
+          },
+          {
+            type: "keypoints",
+            items: [
+              "Ellipse: PF₁ + PF₂ = 2a (the length of the major axis).",
+              t`$\frac{x^2}{a^2} + \frac{y^2}{b^2} = 1$ with $a > b$, $c^2 = a^2 - b^2$, foci $(\pm c, 0)$.`,
+              t`Eccentricity $e = \frac{c}{a}$, $0 < e < 1$; latus rectum $\frac{2b^2}{a}$.`,
+              t`The larger denominator is $a^2$ and decides the direction of the major axis.`,
+            ],
+          },
+        ],
+        flashcards: [
+          { front: "Definition of an ellipse", back: "Set of points whose distances from two fixed points (foci) have a constant sum, greater than the distance between the foci." },
+          { front: "Relation between a, b, c for an ellipse", back: t`$c^2 = a^2 - b^2$` },
+          { front: "Eccentricity of an ellipse", back: t`$e = \frac{c}{a}$, with $0 < e < 1$` },
+          { front: "Latus rectum of an ellipse", back: t`$\frac{2b^2}{a}$` },
+          { front: t`Foci of $\frac{x^2}{b^2} + \frac{y^2}{a^2} = 1$ ($a > b$)`, back: t`$(0, \pm c)$, $c = \sqrt{a^2 - b^2}$` },
+          { front: "Sum of focal distances of a point on an ellipse", back: "2a, the length of the major axis." },
+        ],
+        quiz: [
+          {
+            kind: "numeric",
+            q: "Find the length of the latus rectum of x²/16 + y²/7 = 1.",
+            answer: 3.5,
+            explain: t`$\frac{2b^2}{a} = \frac{2 \times 7}{4} = 3.5$.`,
+          },
+          {
+            kind: "mcq",
+            q: "The foci of x²/9 + y²/25 = 1 are",
+            options: ["(±4, 0)", "(0, ±4)", "(0, ±5)", t`$(0, \pm\sqrt{34})$`],
+            answer: 1,
+            explain: t`The larger denominator 25 is under $y^2$: $a = 5$, $b = 3$, $c = 4$, foci on the y-axis.`,
+          },
+          {
+            kind: "mcq",
+            q: "The ellipse with vertices (±6, 0) and foci (±4, 0) is",
+            options: ["x²/36 + y²/16 = 1", "x²/36 + y²/20 = 1", "x²/20 + y²/36 = 1", "x²/36 + y²/52 = 1"],
+            answer: 1,
+            explain: t`$a = 6$, $c = 4$, $b^2 = 36 - 16 = 20$.`,
+          },
+          {
+            kind: "truefalse",
+            q: "For any point on an ellipse, the sum of its distances from the foci equals the length of the major axis.",
+            answer: true,
+            explain: t`This is the definition, with the constant equal to $2a$.`,
+          },
+          {
+            kind: "numeric",
+            q: "Find the length of the minor axis of 4x² + y² = 100.",
+            answer: 10,
+            explain: t`$\frac{x^2}{25} + \frac{y^2}{100} = 1$: $a^2 = 100$ (y-direction), $b^2 = 25$, so the minor axis is $2b = 10$.`,
+            difficulty: 2,
+          },
+          {
+            kind: "multi",
+            q: "Which are true for x²/49 + y²/24 = 1?",
+            options: ["Foci are (±5, 0).", "e = 5/7", "Latus rectum = 48/7", "Major axis is along the y-axis."],
+            answers: [0, 1, 2],
+            explain: t`$a = 7$, $b^2 = 24$, $c = \sqrt{25} = 5$; $e = \frac{5}{7}$; latus rectum $\frac{48}{7}$. The larger denominator is under $x^2$, so the major axis is horizontal.`,
+            difficulty: 2,
+          },
+          {
+            kind: "mcq",
+            q: "An ellipse has major axis 10 and minor axis 8. Its eccentricity is",
+            options: ["4/5", "3/5", "3/4", "5/4"],
+            answer: 1,
+            explain: t`$a = 5$, $b = 4$, $c = 3$, so $e = \frac{3}{5}$.`,
+          },
+        ],
+      },
+      {
+        slug: "c11-mat-conics-hyperbola",
+        title: "The Hyperbola",
+        summary: "Difference-of-distances definition, transverse and conjugate axes, b² = c² − a², the standard equations, eccentricity, latus rectum and a comparison of all three conics.",
+        minutes: 22,
+        xp: 50,
+        blocks: [
+          {
+            type: "illustration",
+            emoji: "🏭",
+            caption: "The waist of a cooling tower at a power station is curved like a hyperbola. Ships once found their position using the difference in arrival times of radio signals from two stations, which places them on a hyperbola.",
+          },
+          {
+            type: "text",
+            md: t`A **hyperbola** is the set of all points in a plane the **difference** of whose distances from two fixed points (the **foci**) is a constant, less than the distance between the foci.
+
+- The midpoint of the foci is the **centre**; the line through the foci is the **transverse axis**, the perpendicular line through the centre is the **conjugate axis**.
+- The hyperbola meets the transverse axis at the **vertices** $(\pm a, 0)$; the constant difference is $2a$.
+- The distance between the foci is $2c$, and we define $b$ by $b^2 = c^2 - a^2$. Here $c > a$.`,
+          },
+          {
+            type: "list",
+            ordered: true,
+            items: [
+              t`Foci $F_1(-c, 0)$, $F_2(c, 0)$; for $P(x, y)$ on the right branch, $PF_1 - PF_2 = 2a$.`,
+              t`$\sqrt{(x + c)^2 + y^2} = 2a + \sqrt{(x - c)^2 + y^2}$; squaring and simplifying gives $\sqrt{(x - c)^2 + y^2} = \frac{c}{a}x - a$.`,
+              t`Squaring again: $x^2\left(\frac{c^2}{a^2} - 1\right) - y^2 = c^2 - a^2$.`,
+              t`So $\frac{x^2}{a^2} - \frac{y^2}{c^2 - a^2} = 1$, and with $b^2 = c^2 - a^2$: $\frac{x^2}{a^2} - \frac{y^2}{b^2} = 1$. The left branch gives the same equation.`,
+            ],
+          },
+          {
+            type: "formula",
+            tex: t`\frac{x^2}{a^2} - \frac{y^2}{b^2} = 1, \qquad c^2 = a^2 + b^2, \qquad e = \frac{c}{a} > 1`,
+            caption: "Standard hyperbola with transverse axis along the x-axis",
+          },
+          {
+            type: "table",
+            headers: ["Feature", t`$\frac{x^2}{a^2} - \frac{y^2}{b^2} = 1$`, t`$\frac{y^2}{a^2} - \frac{x^2}{b^2} = 1$`],
+            rows: [
+              ["Transverse axis", "x-axis, length 2a", "y-axis, length 2a"],
+              ["Vertices", t`$(\pm a, 0)$`, t`$(0, \pm a)$`],
+              ["Foci", t`$(\pm c, 0)$`, t`$(0, \pm c)$`],
+              ["Conjugate axis length", "2b", "2b"],
+              ["Latus rectum", t`$\frac{2b^2}{a}$`, t`$\frac{2b^2}{a}$`],
+            ],
+          },
+          {
+            type: "text",
+            md: t`**Eccentricity** $e = \frac{c}{a} = \sqrt{1 + \frac{b^2}{a^2}} > 1$. A larger $e$ means wider-open branches.
+
+When $a = b$ the hyperbola $x^2 - y^2 = a^2$ is called **rectangular** (or equilateral); its eccentricity is $\sqrt{2}$.
+
+**Board note:** ISC and JEE also use the **asymptotes** $y = \pm\frac{b}{a}x$ (lines the branches approach but never meet), the directrices $x = \pm\frac{a}{e}$ and the **conjugate hyperbola** $\frac{y^2}{b^2} - \frac{x^2}{a^2} = 1$. The NCERT text does not include these.`,
+          },
+          {
+            type: "example",
+            title: "Reading x²/16 − y²/9 = 1",
+            problem: t`Find the foci, vertices, eccentricity and latus rectum of $\frac{x^2}{16} - \frac{y^2}{9} = 1$.`,
+            steps: [
+              t`The positive term has $x^2$: transverse axis along the x-axis, $a = 4$, $b = 3$.`,
+              t`$c = \sqrt{16 + 9} = 5$. Foci $(\pm 5, 0)$; vertices $(\pm 4, 0)$.`,
+              t`$e = \frac{5}{4}$; latus rectum $\frac{2 \times 9}{4} = \frac{9}{2}$.`,
+            ],
+            answer: t`Foci $(\pm 5, 0)$, vertices $(\pm 4, 0)$, $e = \frac{5}{4}$, latus rectum $\frac{9}{2}$`,
+          },
+          {
+            type: "example",
+            title: "Transverse axis along the y-axis",
+            problem: t`Find the foci, vertices, eccentricity and latus rectum of $16y^2 - 9x^2 = 144$.`,
+            steps: [
+              t`Divide by 144: $\frac{y^2}{9} - \frac{x^2}{16} = 1$. The positive term has $y^2$: $a = 3$, $b = 4$.`,
+              t`$c = \sqrt{9 + 16} = 5$. Foci $(0, \pm 5)$; vertices $(0, \pm 3)$.`,
+              t`$e = \frac{5}{3}$; latus rectum $\frac{2 \times 16}{3} = \frac{32}{3}$.`,
+            ],
+            answer: t`Foci $(0, \pm 5)$, vertices $(0, \pm 3)$, $e = \frac{5}{3}$, latus rectum $\frac{32}{3}$`,
+          },
+          {
+            type: "checkpoint",
+            questions: [
+              {
+                kind: "mcq",
+                q: "The foci of y²/25 − x²/39 = 1 are",
+                options: ["(±8, 0)", "(0, ±8)", t`$(0, \pm\sqrt{14})$`, "(0, ±5)"],
+                answer: 1,
+                explain: t`Positive $y^2$ term: foci on the y-axis. $c^2 = 25 + 39 = 64$, $c = 8$.`,
+              },
+            ],
+          },
+          {
+            type: "example",
+            title: "Hyperbola from given data",
+            problem: t`Find the hyperbola with foci $(0, \pm 6)$ and eccentricity $\frac{3}{2}$.`,
+            steps: [
+              t`Foci on the y-axis: $\frac{y^2}{a^2} - \frac{x^2}{b^2} = 1$, with $c = 6$.`,
+              t`$e = \frac{c}{a} = \frac{3}{2} \Rightarrow a = 4$.`,
+              t`$b^2 = c^2 - a^2 = 36 - 16 = 20$.`,
+            ],
+            answer: t`$\frac{y^2}{16} - \frac{x^2}{20} = 1$`,
+          },
+          {
+            type: "mistake",
+            wrong: "In a hyperbola, a is always bigger than b, just like in an ellipse.",
+            right: "In a hyperbola, a goes with the positive term, whatever its size. In x²/9 − y²/16 = 1, a = 3 and b = 4. The direction of the transverse axis comes from the sign, not from the bigger denominator.",
+            why: "In an ellipse the larger denominator is a², so learners carry that rule over. For a hyperbola, c² = a² + b² makes c the largest, and a and b can be in either order.",
+          },
+          {
+            type: "activity",
+            activity: {
+              kind: "sort",
+              prompt: "Sort each equation by the conic it represents.",
+              groups: ["Parabola", "Ellipse", "Hyperbola"],
+              items: [
+                { text: "y² = 9x", group: 0, hint: "Only one variable is squared." },
+                { text: "x² = −5y", group: 0, hint: "Only x is squared." },
+                { text: "x²/9 + y²/4 = 1", group: 1, hint: "Both squares, both positive, unequal denominators." },
+                { text: "4x² + 9y² = 36", group: 1, hint: "Divide by 36: x²/9 + y²/4 = 1." },
+                { text: "x² + 4y² = 4", group: 1, hint: "x²/4 + y²/1 = 1." },
+                { text: "x²/9 − y²/4 = 1", group: 2, hint: "The squares have opposite signs." },
+                { text: "y² − x² = 1", group: 2, hint: "A rectangular hyperbola on the y-axis." },
+                { text: "3x² − y² = 3", group: 2, hint: "x²/1 − y²/3 = 1." },
+              ],
+              explain: "One squared variable: parabola. Two squared terms with the same sign (and unequal coefficients): ellipse. Opposite signs: hyperbola.",
+            },
+          },
+          {
+            type: "table",
+            headers: ["", "Parabola y² = 4ax", "Ellipse x²/a² + y²/b² = 1", "Hyperbola x²/a² − y²/b² = 1"],
+            rows: [
+              ["Defining property", "PS = PM", "PF₁ + PF₂ = 2a", "|PF₁ − PF₂| = 2a"],
+              ["Relation", "—", t`$c^2 = a^2 - b^2$`, t`$c^2 = a^2 + b^2$`],
+              ["Eccentricity", "e = 1", "0 < e < 1", "e > 1"],
+              ["Foci", t`$(a, 0)$`, t`$(\pm c, 0)$`, t`$(\pm c, 0)$`],
+              ["Latus rectum", "4a", t`$\frac{2b^2}{a}$`, t`$\frac{2b^2}{a}$`],
+            ],
+          },
+          {
+            type: "callout",
+            tone: "exam",
+            title: "Board exam tips",
+            md: "For a hyperbola, the positive term decides the transverse axis. Write c² = a² + b² clearly; using the ellipse relation by mistake costs every later mark. In \"find the equation\" questions, state the form you are using (which axis the foci are on) before substituting.",
+          },
+          {
+            type: "keypoints",
+            items: [
+              "Hyperbola: |PF₁ − PF₂| = 2a, the length of the transverse axis.",
+              t`$\frac{x^2}{a^2} - \frac{y^2}{b^2} = 1$, $c^2 = a^2 + b^2$, foci $(\pm c, 0)$, $e = \frac{c}{a} > 1$.`,
+              t`Latus rectum $\frac{2b^2}{a}$; rectangular hyperbola ($a = b$) has $e = \sqrt{2}$.`,
+              "Parabola e = 1, ellipse e < 1, hyperbola e > 1.",
+            ],
+          },
+        ],
+        flashcards: [
+          { front: "Definition of a hyperbola", back: "Set of points whose distances from two foci have a constant difference, less than the distance between the foci." },
+          { front: "Relation between a, b, c for a hyperbola", back: t`$c^2 = a^2 + b^2$` },
+          { front: "Eccentricity of a hyperbola", back: t`$e = \frac{c}{a} = \sqrt{1 + \frac{b^2}{a^2}} > 1$` },
+          { front: "Latus rectum of a hyperbola", back: t`$\frac{2b^2}{a}$` },
+          { front: "Rectangular hyperbola", back: t`$a = b$, e.g. $x^2 - y^2 = a^2$; $e = \sqrt{2}$.` },
+          { front: "Which axis is transverse?", back: "The axis of the variable with the positive squared term." },
+        ],
+        quiz: [
+          {
+            kind: "mcq",
+            q: "The eccentricity of x²/9 − y²/16 = 1 is",
+            options: ["5/4", "5/3", "4/3", t`$\frac{\sqrt{7}}{3}$`],
+            answer: 1,
+            explain: t`$a = 3$, $b = 4$, $c = 5$, $e = \frac{5}{3}$. ($\frac{\sqrt{7}}{3}$ comes from wrongly subtracting the squares, the ellipse habit.)`,
+          },
+          {
+            kind: "numeric",
+            q: "Find the length of the latus rectum of x²/4 − y²/12 = 1.",
+            answer: 12,
+            explain: t`$\frac{2b^2}{a} = \frac{2 \times 12}{2} = 12$.`,
+          },
+          {
+            kind: "mcq",
+            q: "The hyperbola with vertices (±2, 0) and foci (±3, 0) is",
+            options: ["x²/4 − y²/5 = 1", "x²/4 − y²/9 = 1", "x²/4 + y²/5 = 1", "x²/9 − y²/4 = 1"],
+            answer: 0,
+            explain: t`$a = 2$, $c = 3$, $b^2 = 9 - 4 = 5$.`,
+          },
+          {
+            kind: "truefalse",
+            q: "The eccentricity of a hyperbola is less than 1.",
+            answer: false,
+            explain: t`$c > a$ for a hyperbola, so $e = \frac{c}{a} > 1$.`,
+          },
+          {
+            kind: "numeric",
+            q: "Find the eccentricity of x² − y² = 7, to three decimal places.",
+            answer: 1.414,
+            tolerance: 0.002,
+            explain: t`$a^2 = b^2 = 7$, so $e = \sqrt{1 + 1} = \sqrt{2} \approx 1.414$.`,
+          },
+          {
+            kind: "multi",
+            q: t`Which are true for $\frac{x^2}{a^2} - \frac{y^2}{b^2} = 1$?`,
+            options: [t`$b^2 = c^2 - a^2$`, t`Latus rectum $= \frac{2b^2}{a}$`, t`$|PF_1 - PF_2| = 2a$ for every point P on it`, "Its foci lie on the y-axis."],
+            answers: [0, 1, 2],
+            explain: "The positive x² term puts the transverse axis, and hence the foci, on the x-axis.",
+          },
+          {
+            kind: "mcq",
+            q: "A hyperbola has transverse axis 8 and eccentricity 5/4, with foci on the x-axis. Its equation is",
+            options: ["x²/16 − y²/9 = 1", "x²/64 − y²/36 = 1", "x²/16 − y²/25 = 1", "x²/9 − y²/16 = 1"],
+            answer: 0,
+            explain: t`$2a = 8 \Rightarrow a = 4$; $c = ae = 5$; $b^2 = 25 - 16 = 9$.`,
+            difficulty: 2,
+          },
+        ],
+      },
+      {
+        slug: "c11-mat-conics-exam",
+        title: "Exam edge: Conic Sections for JEE, KCET and COMEDK",
+        summary: "Parametric points, tangents and normals, tangency conditions, focal chords, asymptotes and the conjugate hyperbola: the conic results JEE and KCET test most.",
+        minutes: 25,
+        xp: 60,
+        track: "exam",
+        blocks: [
+          {
+            type: "text",
+            md: t`**What the exams ask.** Conic sections give 2–3 questions in JEE Main (parabola and ellipse most often, hyperbola about once a paper) and appear in almost every JEE Advanced paper. KCET and COMEDK ask quick reading questions (focus, e, latus rectum, directrix) and tangency conditions. Class 11 board books stop at the standard forms; the results below come from ISC, JEE and Class 12 calculus (the slope of a tangent is $\frac{dy}{dx}$).
+
+ISC Class 11 includes the condition for $y = mx + c$ to touch a conic and the tangent at a point, so ISC students should treat the tangent rows of the table as board work.`,
+          },
+          {
+            type: "table",
+            headers: ["", t`Parabola $y^2 = 4ax$`, t`Ellipse $\frac{x^2}{a^2} + \frac{y^2}{b^2} = 1$`, t`Hyperbola $\frac{x^2}{a^2} - \frac{y^2}{b^2} = 1$`],
+            rows: [
+              ["Parametric point", t`$(at^2, 2at)$`, t`$(a\cos\theta, b\sin\theta)$`, t`$(a\sec\theta, b\tan\theta)$`],
+              ["Tangent at (x₁, y₁)", t`$yy_1 = 2a(x + x_1)$`, t`$\frac{xx_1}{a^2} + \frac{yy_1}{b^2} = 1$`, t`$\frac{xx_1}{a^2} - \frac{yy_1}{b^2} = 1$`],
+              ["y = mx + c touches when", t`$c = \frac{a}{m}$`, t`$c^2 = a^2m^2 + b^2$`, t`$c^2 = a^2m^2 - b^2$`],
+              ["Tangent of slope m", t`$y = mx + \frac{a}{m}$`, t`$y = mx \pm \sqrt{a^2m^2 + b^2}$`, t`$y = mx \pm \sqrt{a^2m^2 - b^2}$`],
+              ["Focal distance of P(x, y)", t`$x + a$`, t`$a \pm ex$`, t`$|ex \pm a|$`],
+              ["Normal at parameter", t`$y = -tx + 2at + at^3$`, t`$\frac{ax}{\cos\theta} - \frac{by}{\sin\theta} = a^2 - b^2$`, t`$\frac{ax}{\sec\theta} + \frac{by}{\tan\theta} = a^2 + b^2$`],
+            ],
+          },
+          {
+            type: "formula",
+            tex: t`t_1 t_2 = -1 \ \text{(focal chord of } y^2 = 4ax\text{)}, \qquad \text{length} = a\left(t + \frac{1}{t}\right)^2`,
+            caption: "Ends (at₁², 2at₁) and (at₂², 2at₂) of a chord through the focus",
+          },
+          {
+            type: "example",
+            title: "KCET level: tangent of given slope to a parabola",
+            problem: t`Find the tangent to $y^2 = 8x$ parallel to $y = x + 5$, and its point of contact.`,
+            steps: [
+              t`$4a = 8$, so $a = 2$; required slope $m = 1$.`,
+              t`Tangent: $y = mx + \frac{a}{m} = x + 2$.`,
+              t`Point of contact $\left(\frac{a}{m^2}, \frac{2a}{m}\right) = (2, 4)$. Check: $16 = 8 \times 2$ ✓, and the tangent at $(2, 4)$ is $4y = 4(x + 2)$, i.e. $y = x + 2$ ✓.`,
+            ],
+            answer: t`$y = x + 2$, touching at $(2, 4)$`,
+          },
+          {
+            type: "example",
+            title: "JEE Main level: tangents to an ellipse",
+            problem: t`Find the tangents to $\frac{x^2}{16} + \frac{y^2}{9} = 1$ with slope 1.`,
+            steps: [
+              t`$a^2 = 16$, $b^2 = 9$, $m = 1$.`,
+              t`$c^2 = a^2m^2 + b^2 = 16 + 9 = 25$, so $c = \pm 5$.`,
+              t`Tangents: $y = x + 5$ and $y = x - 5$.`,
+              t`Check $y = x + 5$: substituting gives $9x^2 + 16(x + 5)^2 = 144$, i.e. $25x^2 + 160x + 256 = 0$, whose discriminant is $160^2 - 4 \cdot 25 \cdot 256 = 0$ ✓.`,
+            ],
+            answer: t`$y = x \pm 5$`,
+          },
+          {
+            type: "example",
+            title: "JEE Main level: normal to a parabola",
+            problem: t`Find the normal to $y^2 = 12x$ at $(3, 6)$.`,
+            steps: [
+              t`$a = 3$. The point is $(at^2, 2at)$ with $2at = 6$, so $t = 1$ (and $at^2 = 3$ ✓).`,
+              t`Normal: $y = -tx + 2at + at^3 = -x + 6 + 3 = -x + 9$.`,
+              t`Check: differentiating $y^2 = 12x$ gives $\frac{dy}{dx} = \frac{6}{y} = 1$ at $(3, 6)$, so the normal has slope $-1$ through $(3, 6)$: $y = -x + 9$ ✓.`,
+            ],
+            answer: t`$x + y = 9$`,
+          },
+          {
+            type: "example",
+            title: "JEE Main level: tangency to a hyperbola",
+            problem: t`For what $c$ is $y = 2x + c$ a tangent to $\frac{x^2}{9} - \frac{y^2}{4} = 1$?`,
+            steps: [
+              t`$a^2 = 9$, $b^2 = 4$, $m = 2$.`,
+              t`$c^2 = a^2m^2 - b^2 = 36 - 4 = 32$.`,
+              t`$c = \pm 4\sqrt{2}$. A real tangent of slope $m$ exists only when $a^2m^2 > b^2$, i.e. $|m| > \frac{b}{a} = \frac{2}{3}$, which holds.`,
+            ],
+            answer: t`$c = \pm 4\sqrt{2}$`,
+          },
+          {
+            type: "example",
+            title: "JEE Advanced level: a focal chord",
+            problem: t`One end of a focal chord of $y^2 = 4x$ is $(4, 4)$. Find the other end, the length of the chord, and check that the semi-latus rectum is the harmonic mean of the two focal segments.`,
+            steps: [
+              t`$a = 1$. $(4, 4) = (t^2, 2t)$ gives $t_1 = 2$. Focal chord: $t_2 = -\frac{1}{t_1} = -\frac{1}{2}$, so the other end is $\left(\frac{1}{4}, -1\right)$.`,
+              t`Length $= a\left(t + \frac{1}{t}\right)^2 = \left(2 + \frac{1}{2}\right)^2 = \frac{25}{4}$.`,
+              t`Focal distances: $SP = x + a = 5$ and $SQ = \frac{1}{4} + 1 = \frac{5}{4}$; their sum is $\frac{25}{4}$ ✓.`,
+              t`Harmonic mean $= \frac{2 \cdot 5 \cdot \frac{5}{4}}{5 + \frac{5}{4}} = \frac{25/2}{25/4} = 2 = 2a$, the semi-latus rectum ✓.`,
+            ],
+            answer: t`Other end $\left(\frac{1}{4}, -1\right)$; length $\frac{25}{4}$`,
+          },
+          {
+            type: "checkpoint",
+            questions: [
+              {
+                kind: "numeric",
+                q: "Find c if y = 3x + c touches y² = 12x.",
+                answer: 1,
+                explain: t`$a = 3$, $m = 3$: $c = \frac{a}{m} = 1$.`,
+              },
+            ],
+          },
+          {
+            type: "mistake",
+            wrong: "y = mx + c touches x²/a² − y²/b² = 1 when c² = a²m² + b², the same as for the ellipse.",
+            right: "For the hyperbola the condition is c² = a²m² − b². The sign follows the sign of the y² term in the equation.",
+            why: "The two conditions are learnt as a pair. Changing b² to −b² turns the ellipse equation into the hyperbola equation, and the condition changes the same way.",
+          },
+          {
+            type: "mistake",
+            wrong: "In the point (a cos θ, b sin θ) on an ellipse, θ is the angle the line from the centre to the point makes with the x-axis.",
+            right: "θ is the eccentric angle: the angle for the corresponding point on the auxiliary circle x² + y² = a². The actual angle φ of the point satisfies tan φ = (b/a) tan θ.",
+            why: "For a circle the two angles coincide, so the habit carries over. On an ellipse, squeezing the circle vertically changes the angle unless θ is 0° or 90°.",
+          },
+          {
+            type: "activity",
+            activity: {
+              kind: "match",
+              prompt: "Match each curve to its tangency condition for y = mx + c.",
+              pairs: [
+                ["x² + y² = a²", "c² = a²(1 + m²)"],
+                ["y² = 4ax", "c = a/m"],
+                ["x²/a² + y²/b² = 1", "c² = a²m² + b²"],
+                ["x²/a² − y²/b² = 1", "c² = a²m² − b²"],
+              ],
+              explain: "Each condition comes from substituting y = mx + c and setting the discriminant of the resulting quadratic to zero. Put b = a in the ellipse condition and you get the circle's.",
+            },
+          },
+          {
+            type: "callout",
+            tone: "tip",
+            title: "Shortcuts and when they are safe",
+            md: "The tangency conditions hold only for conics in standard position (centre or vertex at the origin, axes along the coordinate axes); for a shifted conic, shift the origin first. c = a/m is for y² = 4ax only; for x² = 4ay the condition is c = −am². The hyperbola has no tangent of slope m when |m| ≤ b/a. The conjugate hyperbola of x²/a² − y²/b² = 1 is y²/b² − x²/a² = 1, and the two eccentricities satisfy 1/e₁² + 1/e₂² = 1.",
+          },
+          {
+            type: "keypoints",
+            items: [
+              t`Tangent at $(x_1, y_1)$: replace $y^2$ by $yy_1$, $x^2$ by $xx_1$ and $2x$ by $x + x_1$ in the equation.`,
+              t`Tangency: parabola $c = \frac{a}{m}$; ellipse $c^2 = a^2m^2 + b^2$; hyperbola $c^2 = a^2m^2 - b^2$.`,
+              t`Parabola: normal at $t$ is $y = -tx + 2at + at^3$; a focal chord has $t_1t_2 = -1$.`,
+              t`Focal distances: parabola $x + a$; ellipse $a \pm ex$ (sum $2a$); hyperbola $|ex \pm a|$ (difference $2a$).`,
+              t`Hyperbola asymptotes: $y = \pm\frac{b}{a}x$.`,
+            ],
+          },
+        ],
+        flashcards: [
+          { front: t`Tangent to $y^2 = 4ax$ at $(x_1, y_1)$`, back: t`$yy_1 = 2a(x + x_1)$` },
+          { front: t`Tangent of slope m to $y^2 = 4ax$`, back: t`$y = mx + \frac{a}{m}$, touching at $\left(\frac{a}{m^2}, \frac{2a}{m}\right)$` },
+          { front: "Tangency condition for an ellipse", back: t`$c^2 = a^2m^2 + b^2$` },
+          { front: "Tangency condition for a hyperbola", back: t`$c^2 = a^2m^2 - b^2$` },
+          { front: t`Normal to $y^2 = 4ax$ at parameter $t$`, back: t`$y = -tx + 2at + at^3$` },
+          { front: "Focal chord of a parabola", back: t`$t_1t_2 = -1$; length $a\left(t + \frac{1}{t}\right)^2$` },
+          { front: "Asymptotes of a hyperbola", back: t`$y = \pm\frac{b}{a}x$` },
+          { front: "Eccentricities of a hyperbola and its conjugate", back: t`$\frac{1}{e_1^2} + \frac{1}{e_2^2} = 1$` },
+        ],
+        quiz: [
+          {
+            kind: "mcq",
+            q: "The tangent to y² = 4x at (1, 2) is",
+            options: ["y = x + 1", "y = 2x", "x + y = 3", "y = x − 1"],
+            answer: 0,
+            explain: t`$yy_1 = 2a(x + x_1)$ with $a = 1$: $2y = 2(x + 1)$, so $y = x + 1$.`,
+          },
+          {
+            kind: "numeric",
+            q: "y = 2x + c (c > 0) touches x²/4 + y²/9 = 1. Find c.",
+            answer: 5,
+            explain: t`Here $a^2 = 4$ (under $x^2$) and $b^2 = 9$: $c^2 = 4 \times 4 + 9 = 25$, so $c = 5$. The formula $c^2 = a^2m^2 + b^2$ uses $a^2$ as the denominator of $x^2$, even when it is the smaller one.`,
+            difficulty: 2,
+            hint: "Keep a² as the denominator of x², whatever its size.",
+          },
+          {
+            kind: "mcq",
+            q: "The eccentricity of the hyperbola conjugate to x²/16 − y²/9 = 1 is",
+            options: ["5/4", "5/3", "4/3", "3/5"],
+            answer: 1,
+            explain: t`Conjugate: $\frac{y^2}{9} - \frac{x^2}{16} = 1$, so $e^2 = 1 + \frac{16}{9} = \frac{25}{9}$ and $e = \frac{5}{3}$. Check: $\frac{16}{25} + \frac{9}{25} = 1$ ✓.`,
+            difficulty: 2,
+          },
+          {
+            kind: "mcq",
+            q: "One end of a focal chord of y² = 8x is (2, 4). The other end is",
+            options: ["(2, −4)", "(8, −8)", "(1/2, −2)", "(−2, 4)"],
+            answer: 0,
+            explain: t`$a = 2$; $(2, 4) = (2t^2, 4t)$ gives $t = 1$, so $t_2 = -1$ and the other end is $(2, -4)$. This focal chord is the latus rectum.`,
+          },
+          {
+            kind: "multi",
+            q: "Which are true for x²/9 − y²/4 = 1?",
+            options: ["2x − 3y = 0 is an asymptote.", "2x + 3y = 0 is an asymptote.", "3x − 2y = 0 is an asymptote.", "Both asymptotes pass through the centre."],
+            answers: [0, 1, 3],
+            explain: t`Asymptotes $y = \pm\frac{b}{a}x = \pm\frac{2}{3}x$, i.e. $2x \mp 3y = 0$, both through the centre $(0, 0)$.`,
+            difficulty: 2,
+          },
+          {
+            kind: "numeric",
+            q: "The normal to y² = 4x at the point with parameter t = 2 meets the y-axis at (0, k). Find k.",
+            answer: 12,
+            explain: t`$a = 1$: normal $y = -2x + 2(1)(2) + (1)(8) = -2x + 12$. At $x = 0$, $y = 12$. (The point is $(4, 4)$, and $y = -2x + 12$ passes through it ✓.)`,
+            difficulty: 3,
+            hint: t`Use $y = -tx + 2at + at^3$.`,
+          },
+          {
+            kind: "mcq",
+            q: "For which slope m does x²/9 − y²/16 = 1 have no tangent of slope m?",
+            options: ["m = 2", "m = 1", "m = −3", "m = 5"],
+            answer: 1,
+            explain: t`A tangent of slope $m$ needs $c^2 = 9m^2 - 16 > 0$, i.e. $|m| > \frac{4}{3}$. For $m = 1$, $9 - 16 < 0$, so there is none.`,
+            difficulty: 3,
+            hint: "c² must be positive.",
+          },
+        ],
+      },
+    ],
+  },
   /* @@NEXT@@ */
 ];
 

@@ -627,9 +627,797 @@ for i in range(len(temps)):
       },
     ],
   },
+  /* ------------------------------------------------------------------ */
+  /* Class 12 · Data Communication                                       */
+  /* ------------------------------------------------------------------ */
+  {
+    slug: "c12-cs-data-communication",
+    title: "Data Communication",
+    icon: "📡",
+    description: "Components of data communication, bandwidth and data transfer rate, simplex, half-duplex and full-duplex links, circuit and packet switching, wired and wireless transmission media, mobile generations 1G to 5G, and the protocols HTTP, FTP, PPP, SMTP and TCP/IP.",
+    lessons: [
+      {
+        slug: "c12-cs-communication-components-capacity",
+        title: "Components, Capacity and Modes of Communication",
+        summary: "The five components of data communication, bandwidth and data transfer rate with numericals, simplex, half-duplex and full-duplex communication, and circuit versus packet switching.",
+        minutes: 22,
+        xp: 55,
+        blocks: [
+          {
+            type: "illustration",
+            emoji: "📲",
+            caption: "When you send a photo from Hubballi to a friend in Delhi, it crosses copper, glass fibre and air in a few seconds.",
+          },
+          {
+            type: "text",
+            md: "**Communication** is the exchange of information between two or more parties. **Data communication** is the exchange of data between two or more **devices** (computers, phones, printers, sensors) through some **transmission medium**, such as a cable or radio waves. Sending an email, a video call and printing over Wi-Fi are all data communication.",
+          },
+          {
+            type: "table",
+            headers: ["Component", "Role", "Example"],
+            rows: [
+              ["Sender", "The device that sends the data", "Your phone sending a message"],
+              ["Receiver", "The device that receives the data", "Your friend's phone"],
+              ["Message", "The data being sent: text, image, audio, video", "A photo of the class notes"],
+              ["Communication media", "The path the data travels on", "Twisted pair cable, optical fibre, radio waves"],
+              ["Protocols", "The set of rules both sides follow", "HTTP, SMTP, TCP/IP"],
+            ],
+          },
+          {
+            type: "heading",
+            text: "Measuring the capacity of a medium",
+          },
+          {
+            type: "text",
+            md: "**Bandwidth** is the range of frequencies a channel can carry, the difference between its highest and lowest frequency. It is measured in **hertz (Hz)**: KHz, MHz, GHz. A channel with more bandwidth can carry more data at once, like a wider road carrying more vehicles.\n\n**Data transfer rate** is the number of **bits** sent from source to destination in one second, measured in **bits per second (bps)** and its multiples **Kbps, Mbps, Gbps** and **Tbps**. In the NCERT table each unit is $2^{10} = 1024$ times the previous one; many networking standards use 1000 instead, so use your textbook's value in the board exam. Remember that a **byte** is 8 bits, so file sizes in MB must be multiplied by 8 to get megabits.",
+          },
+          {
+            type: "example",
+            title: "How long will the download take?",
+            problem: "(a) How many seconds does it take to send a 25 MB file over an 8 Mbps link? (b) A 700 MB video is downloaded at 40 Mbps. Find the time. (c) A 120 MB file arrived in 30 seconds. Find the data transfer rate.",
+            steps: [
+              "(a) 25 MB = 25 × 8 = 200 Mb. Time = 200 / 8 = **25 s**.",
+              "(b) 700 MB = 5600 Mb. Time = 5600 / 40 = **140 s** (2 min 20 s).",
+              "(c) 120 MB = 960 Mb. Rate = 960 / 30 = **32 Mbps**.",
+            ],
+            answer: "25 s, 140 s and 32 Mbps (ignoring protocol overheads).",
+          },
+          {
+            type: "code",
+            lang: "python",
+            runnable: true,
+            caption: "The same numericals as a small function.",
+            code: r`def transfer_time(size_MB, rate_Mbps):
+    bits = size_MB * 8          # megabytes to megabits
+    return bits / rate_Mbps     # seconds
+
+print(transfer_time(25, 8), "s")
+print(transfer_time(700, 40), "s")
+rate = 120 * 8 / 30
+print(rate, "Mbps")`,
+          },
+          {
+            type: "text",
+            md: "Output: `25.0 s`, `140.0 s` and `32.0 Mbps`.",
+          },
+          {
+            type: "mistake",
+            wrong: "A 25 MB file on an 8 Mbps connection takes 25 / 8 ≈ 3 seconds.",
+            right: "MB is mega**bytes** and Mbps is mega**bits** per second. Convert first: 25 MB = 200 Mb, so it takes 200 / 8 = **25 s**.",
+            why: "The letters look almost the same. File sizes are counted in bytes (B) but links are rated in bits (b), and one byte is 8 bits.",
+          },
+          {
+            type: "heading",
+            text: "Types of data communication and switching",
+          },
+          {
+            type: "table",
+            headers: ["Type", "Direction of data", "Example"],
+            rows: [
+              ["Simplex", "One way only, always from the same sender to the same receiver", "Keyboard to computer, a radio or TV broadcast"],
+              ["Half-duplex", "Both ways, but only **one way at a time**", "Walkie-talkie: press to talk, release to listen"],
+              ["Full-duplex", "Both ways **at the same time**", "A mobile phone call, a video call"],
+            ],
+          },
+          {
+            type: "text",
+            md: "In a network, data from a sender usually passes through many switches before reaching the receiver. **Switching** decides how it travels.\n\nIn **circuit switching**, a dedicated path is set up between sender and receiver **before** communication starts, and it stays reserved for the whole session, as in a traditional landline telephone call. In **packet switching**, the message is broken into small **packets**; each packet carries the destination address and a sequence number and travels on its own, possibly by different routes. The packets are put back in order at the destination. No path is reserved, so the links are shared efficiently. The internet uses packet switching.",
+          },
+          {
+            type: "activity",
+            activity: {
+              kind: "sort",
+              prompt: "Simplex, half-duplex or full-duplex?",
+              groups: ["Simplex", "Half-duplex", "Full-duplex"],
+              items: [
+                { text: "FM radio station to your radio", group: 0, hint: "Listeners cannot send anything back on it." },
+                { text: "Computer sending pages to a basic printer", group: 0, hint: "The data flows one way only." },
+                { text: "Police walkie-talkie", group: 1, hint: "Only one person can talk at a time." },
+                { text: "Phone call between two friends", group: 2, hint: "Both can speak and hear together." },
+                { text: "Video call on a laptop", group: 2, hint: "Video and sound flow both ways at once." },
+              ],
+              explain: "Simplex is one way, half-duplex is two ways taking turns, and full-duplex is two ways at the same time.",
+            },
+          },
+          {
+            type: "checkpoint",
+            questions: [
+              {
+                kind: "mcq",
+                q: "Bandwidth of a channel is measured in:",
+                options: ["Hertz (Hz)", "Bits per second (bps)", "Bytes (B)", "Metres (m)"],
+                answer: 0,
+                explain: "Bandwidth is a range of frequencies, so it is in Hz. Data transfer rate is in bps.",
+              },
+              {
+                kind: "mcq",
+                q: "In which switching technique is a dedicated path reserved before data is sent?",
+                options: ["Circuit switching", "Packet switching", "Both", "Neither"],
+                answer: 0,
+                explain: "Circuit switching sets up the path first; packet switching sends independent packets with no reserved path.",
+              },
+            ],
+          },
+          {
+            type: "keypoints",
+            items: [
+              "Components: sender, receiver, message, communication media and protocols.",
+              "Bandwidth is measured in Hz; data transfer rate in bps (Kbps, Mbps, Gbps, Tbps).",
+              "1 byte = 8 bits: multiply MB by 8 before dividing by a rate in Mbps.",
+              "Simplex: one way; half-duplex: two ways, one at a time; full-duplex: two ways together.",
+              "Circuit switching reserves a path; packet switching sends numbered packets independently (internet).",
+            ],
+          },
+        ],
+        flashcards: [
+          { front: "Five components of data communication?", back: "Sender, receiver, message, communication media and protocols." },
+          { front: "Define bandwidth.", back: "The range of frequencies a channel can carry (highest minus lowest frequency), measured in Hz." },
+          { front: "Define data transfer rate.", back: "The number of bits sent from source to destination per second, measured in bps." },
+          { front: "Half-duplex example?", back: "A walkie-talkie: both directions, but one at a time." },
+          { front: "Full-duplex example?", back: "A telephone or video call: both directions at the same time." },
+          { front: "What is circuit switching?", back: "A dedicated path is set up between sender and receiver before communication and kept for the whole session." },
+          { front: "What is packet switching?", back: "The message is split into packets that travel independently, possibly by different routes, and are reassembled at the destination." },
+          { front: "Time to send 40 MB at 16 Mbps?", back: "40 × 8 = 320 Mb; 320 / 16 = 20 s." },
+        ],
+        quiz: [
+          {
+            kind: "numeric",
+            q: "How many seconds will it take to send a 15 MB file over a 6 Mbps link?",
+            answer: 20,
+            unit: "s",
+            explain: "15 MB = 120 Mb; 120 / 6 = 20 s.",
+          },
+          {
+            kind: "numeric",
+            q: "A 50 MB file is received in 10 seconds. What is the data transfer rate in Mbps?",
+            answer: 40,
+            unit: "Mbps",
+            explain: "50 MB = 400 Mb; 400 / 10 = 40 Mbps.",
+            difficulty: 2,
+          },
+          {
+            kind: "mcq",
+            q: "Which component of data communication is the set of rules the devices follow?",
+            options: ["Protocol", "Message", "Medium", "Receiver"],
+            answer: 0,
+            explain: "A protocol is the agreed set of rules for format, timing and error handling.",
+          },
+          {
+            kind: "mcq",
+            q: "A computer sends key presses from a keyboard. The keyboard never receives data back. This is:",
+            options: ["Simplex", "Half-duplex", "Full-duplex", "Packet switching"],
+            answer: 0,
+            explain: "Data flows in only one direction.",
+          },
+          {
+            kind: "truefalse",
+            q: "In packet switching, all packets of a message must travel by the same route.",
+            answer: false,
+            explain: "Each packet is routed independently and can take a different path; the sequence numbers let the receiver put them back in order.",
+          },
+          {
+            kind: "multi",
+            q: "Which statements about packet switching are correct?",
+            options: ["The message is broken into packets", "A path is reserved before sending", "Packets carry the destination address", "The internet uses it", "Links stay unused during silences"],
+            answers: [0, 2, 3],
+            explain: "Packet switching reserves no path and shares links, so links are not wasted during silences; that waste is a drawback of circuit switching.",
+          },
+          {
+            kind: "fill",
+            q: "One byte is made of ___ bits.",
+            answer: ["8", "eight"],
+            explain: "That is why MB is multiplied by 8 to get Mb.",
+          },
+          {
+            kind: "mcq",
+            q: "Which is the correct order of units from smallest to largest?",
+            options: ["bps, Kbps, Mbps, Gbps, Tbps", "Kbps, bps, Mbps, Tbps, Gbps", "bps, Mbps, Kbps, Gbps, Tbps", "Tbps, Gbps, Mbps, Kbps, bps"],
+            answer: 0,
+            explain: "Kilo, mega, giga, tera: each step is about a thousand (1024 in the NCERT table) times bigger.",
+          },
+        ],
+      },
+      {
+        slug: "c12-cs-transmission-media",
+        title: "Transmission Media: Wired and Wireless",
+        summary: "Guided media (twisted pair, coaxial cable, optical fibre) and unguided media (radio waves, microwaves, infrared), their frequency ranges, uses, advantages and limits, plus Bluetooth and WLAN.",
+        minutes: 20,
+        xp: 50,
+        blocks: [
+          {
+            type: "text",
+            md: "A **transmission medium** is the path along which signals travel from sender to receiver. **Guided** (wired) media carry signals along a physical cable. **Unguided** (wireless) media carry signals through air or space as electromagnetic waves, with no cable.",
+          },
+          {
+            type: "heading",
+            text: "Wired media",
+          },
+          {
+            type: "table",
+            headers: ["Medium", "Structure", "Features", "Used in"],
+            rows: [
+              ["Twisted pair cable", "Two insulated copper wires twisted around each other; unshielded (UTP) or shielded (STP)", "Cheap, easy to install and flexible; twisting reduces interference; signal weakens over long distances", "Telephone lines, Ethernet LAN cables"],
+              ["Coaxial cable", "Central copper conductor, insulating layer, braided metal shield and outer cover", "Better shielding and more bandwidth than twisted pair; thicker and costlier", "Cable TV, older LANs"],
+              ["Optical fibre", "Thin glass or plastic core with cladding; carries **light** by total internal reflection", "Very high bandwidth, long distances, not affected by electromagnetic interference; costly, fragile, hard to join; carries light one way, so a pair of fibres is used for two-way links", "Internet backbone, undersea cables, high-speed broadband"],
+            ],
+          },
+          {
+            type: "heading",
+            text: "Wireless media",
+          },
+          {
+            type: "table",
+            headers: ["Medium", "Frequency range (NCERT)", "Features", "Used in"],
+            rows: [
+              ["Radio waves", "3 KHz – 1 GHz", "Omnidirectional (spread in all directions); travel long distances; can pass through walls", "AM/FM radio, cordless phones, walkie-talkies"],
+              ["Microwaves", "1 GHz – 300 GHz", "Unidirectional, need **line of sight** between antennas; towers on hills or tall buildings; affected by rain; do not pass through solid objects well", "Long-distance links between towers, satellite communication, mobile networks"],
+              ["Infrared", "300 GHz – 400 THz", "Very short range, line of sight; cannot pass through walls, so a room's signal stays in the room", "TV and AC remote controls, some short-range data links"],
+            ],
+          },
+          {
+            type: "text",
+            md: "Two wireless technologies are part of the chapter. **Bluetooth** uses short-range radio waves at about **2.4 GHz** to connect devices a few metres apart, such as earphones, a phone and a smartwatch; a small Bluetooth network is called a **piconet**. A **wireless LAN (WLAN)**, commonly Wi-Fi, connects devices in a home, college or café to an **access point**, which in turn connects to the wired network and the internet.",
+          },
+          {
+            type: "example",
+            title: "Choosing a medium",
+            problem: "Suggest the best medium for each: (a) connecting two buildings of a college 3 km apart with very fast internet; (b) the network inside one computer lab; (c) a TV remote; (d) linking two towns separated by a river where cables are hard to lay.",
+            steps: [
+              "(a) Long distance and high bandwidth with no interference: **optical fibre**.",
+              "(b) Short distances, low cost, easy to install: **twisted pair (Ethernet) cable**.",
+              "(c) Short range inside one room, line of sight: **infrared**.",
+              "(d) No cable possible, towers can face each other: **microwave** link.",
+            ],
+            answer: "Optical fibre, twisted pair, infrared, microwave.",
+          },
+          {
+            type: "code",
+            lang: "python",
+            runnable: true,
+            caption: "Classify a signal by its frequency using the NCERT ranges.",
+            code: r`def band(f_hz):
+    if f_hz < 3e3 or f_hz > 400e12:
+        return "Out of range"
+    if f_hz < 1e9:
+        return "Radio wave"
+    if f_hz < 300e9:
+        return "Microwave"
+    return "Infrared"
+
+signals = [("FM radio", 98.3e6), ("Satellite TV", 12e9), ("TV remote", 350e12), ("AM radio", 612e3)]
+for name, f in signals:
+    print(name, "->", band(f))`,
+          },
+          {
+            type: "text",
+            md: "Output: `FM radio -> Radio wave`, `Satellite TV -> Microwave`, `TV remote -> Infrared`, `AM radio -> Radio wave`. Note that `3e3` means 3 × 10³ and `400e12` means 400 × 10¹² in Python.",
+          },
+          {
+            type: "mistake",
+            wrong: "Optical fibre carries electric current, just faster than copper.",
+            right: "Optical fibre carries **light pulses** through a glass or plastic core, kept inside by total internal reflection. That is why it is immune to electromagnetic interference.",
+            why: "All other cables carry electrical signals, so it is natural to assume fibre does too. Light is not disturbed by nearby motors or power lines, which is a key advantage in exam answers.",
+          },
+          {
+            type: "activity",
+            activity: {
+              kind: "match",
+              prompt: "Match each medium to its key feature.",
+              pairs: [
+                ["Twisted pair", "Wires twisted to reduce interference"],
+                ["Coaxial cable", "Central conductor with a braided metal shield"],
+                ["Optical fibre", "Light pulses by total internal reflection"],
+                ["Radio waves", "Omnidirectional and pass through walls"],
+                ["Microwaves", "Need line of sight between towers"],
+                ["Infrared", "Very short range, blocked by walls"],
+              ],
+              explain: "Each medium's structure decides its strength: shielding and twisting cut interference, light avoids it completely, and higher wireless frequencies need line of sight.",
+            },
+          },
+          {
+            type: "checkpoint",
+            questions: [
+              {
+                kind: "mcq",
+                q: "Which wireless medium is used by a TV remote control?",
+                options: ["Infrared", "Microwaves", "Radio waves", "Optical fibre"],
+                answer: 0,
+                explain: "Remotes use infrared: short range and line of sight, so they do not control the TV in the next room.",
+              },
+            ],
+          },
+          {
+            type: "callout",
+            tone: "exam",
+            title: "Board tip",
+            md: "A frequent 3-mark question asks for two advantages and one disadvantage of a medium, or a comparison of radio waves, microwaves and infrared. Learn the frequency ranges and one use for each.",
+          },
+          {
+            type: "keypoints",
+            items: [
+              "Guided media: twisted pair, coaxial cable, optical fibre. Unguided: radio waves, microwaves, infrared.",
+              "Optical fibre carries light, has the highest bandwidth and is immune to electromagnetic interference, but is costly and fragile.",
+              "Radio waves (3 KHz–1 GHz) are omnidirectional and pass through walls.",
+              "Microwaves (1–300 GHz) need line of sight; infrared (300 GHz–400 THz) is short range and blocked by walls.",
+              "Bluetooth: short-range radio at about 2.4 GHz (piconet); WLAN connects devices through an access point.",
+            ],
+          },
+        ],
+        flashcards: [
+          { front: "Guided vs unguided media?", back: "Guided media send signals along a cable; unguided media send them through air or space without a cable." },
+          { front: "Why are the wires in a twisted pair twisted?", back: "Twisting reduces interference (noise and crosstalk) from nearby wires." },
+          { front: "Layers of a coaxial cable?", back: "Central copper conductor, insulation, braided metal shield, outer plastic cover." },
+          { front: "Principle of optical fibre?", back: "Light travels in the core by total internal reflection." },
+          { front: "Frequency range of radio waves (NCERT)?", back: "3 KHz to 1 GHz." },
+          { front: "Frequency range of microwaves (NCERT)?", back: "1 GHz to 300 GHz." },
+          { front: "Frequency range of infrared (NCERT)?", back: "300 GHz to 400 THz." },
+          { front: "What is a piconet?", back: "A small network of devices connected using Bluetooth." },
+        ],
+        quiz: [
+          {
+            kind: "mcq",
+            q: "Which medium is best for an undersea cable carrying internet traffic between continents?",
+            options: ["Optical fibre", "Twisted pair", "Coaxial cable", "Infrared"],
+            answer: 0,
+            explain: "Only optical fibre offers very high bandwidth over thousands of kilometres with little loss.",
+          },
+          {
+            kind: "mcq",
+            q: "Which wireless medium is omnidirectional and can pass through walls?",
+            options: ["Radio waves", "Microwaves", "Infrared", "Laser"],
+            answer: 0,
+            explain: "Radio waves spread in all directions and penetrate walls; microwaves and infrared need line of sight.",
+          },
+          {
+            kind: "truefalse",
+            q: "Microwave communication needs the sending and receiving antennas to be in line of sight.",
+            answer: true,
+            explain: "Microwaves travel in straight lines, so towers are placed high and in view of each other.",
+          },
+          {
+            kind: "multi",
+            q: "Which are advantages of optical fibre?",
+            options: ["Very high bandwidth", "Immune to electromagnetic interference", "Cheap and easy to join", "Suitable for long distances", "Very flexible and hard to break"],
+            answers: [0, 1, 3],
+            explain: "Fibre is costly, needs skill to join and is fragile, so options 3 and 5 are its disadvantages, not advantages.",
+          },
+          {
+            kind: "fill",
+            q: "Bluetooth works at a frequency of about ___ GHz.",
+            answer: ["2.4"],
+            explain: "Bluetooth uses short-range radio signals around 2.4 GHz.",
+          },
+          {
+            kind: "mcq",
+            q: "Cable TV connections in homes have traditionally used:",
+            options: ["Coaxial cable", "Infrared", "Twisted pair", "Bluetooth"],
+            answer: 0,
+            explain: "Coaxial cable's shield and higher bandwidth suit TV signals.",
+          },
+          {
+            kind: "order",
+            q: "Arrange the wireless media in increasing order of frequency.",
+            items: ["Radio waves", "Microwaves", "Infrared"],
+            explain: "Radio (up to 1 GHz), then microwaves (1–300 GHz), then infrared (300 GHz–400 THz).",
+          },
+          {
+            kind: "mcq",
+            q: "Why does an infrared remote in one room not change the channel of a TV in the next room?",
+            options: ["Infrared cannot pass through walls", "Infrared is omnidirectional", "Infrared has a very low frequency", "Infrared needs a cable"],
+            answer: 0,
+            explain: "Infrared is blocked by walls and needs line of sight, so its signal stays in the room.",
+            difficulty: 2,
+          },
+        ],
+      },
+      {
+        slug: "c12-cs-mobile-generations-protocols",
+        title: "Mobile Telecommunication and Protocols",
+        summary: "How mobile networks grew from 1G analog voice to 5G, why protocols are needed, and what HTTP, FTP, PPP, SMTP and TCP/IP each do.",
+        minutes: 20,
+        xp: 50,
+        blocks: [
+          {
+            type: "text",
+            md: "Mobile phone technology has changed in **generations** (G). Each generation brought a new way of sending signals and new services, from voice-only calls to streaming video and connected machines.",
+          },
+          {
+            type: "table",
+            headers: ["Generation", "Period (approx.)", "Key features"],
+            rows: [
+              ["1G", "1980s", "**Analog** signals, voice calls only; poor voice quality, no security, short battery life"],
+              ["2G", "1990s", "**Digital** signals (GSM, CDMA); better call quality and security; **SMS** and **MMS**; basic data (GPRS, EDGE)"],
+              ["3G", "2000s", "Mobile internet at higher speed, **video calls**, web browsing and apps on smartphones"],
+              ["4G", "2010s", "**LTE**; much higher speed and all-IP network; HD video streaming, online gaming, video conferencing"],
+              ["5G", "2019 onwards (India from October 2022)", "Very high speed, **very low latency** (delay) and many connected devices at once; supports IoT, smart cities, remote surgery, self-driving vehicles"],
+            ],
+          },
+          {
+            type: "mistake",
+            wrong: "Each new generation just means a faster internet speed.",
+            right: "Generations also differ in **technology and services**: 1G was analog voice, 2G made calls digital and added SMS, and 5G's main gain is very low delay and support for huge numbers of devices, not only speed.",
+            why: "Advertisements talk mostly about speed. Board questions ask what each generation introduced, such as digital signals in 2G or video calls in 3G.",
+          },
+          {
+            type: "heading",
+            text: "Protocols",
+          },
+          {
+            type: "text",
+            md: "A **protocol** is a set of rules that the sender and receiver agree on for communicating. Two devices may be made by different companies and run different software, so without common rules they could not understand each other. Protocols decide the **format** of data, how fast data may be sent (**flow control**), how errors are detected and corrected, and how devices are **addressed** and take turns to use the medium.",
+          },
+          {
+            type: "table",
+            headers: ["Protocol", "Full form", "What it does"],
+            rows: [
+              ["HTTP", "HyperText Transfer Protocol", "Transfers web pages between a browser (client) and a web server using requests and responses"],
+              ["FTP", "File Transfer Protocol", "Uploads and downloads files between a client and a server"],
+              ["PPP", "Point-to-Point Protocol", "Directly connects two devices over a single link, for example a computer to an ISP's server"],
+              ["SMTP", "Simple Mail Transfer Protocol", "Sends (pushes) email from the sender's mail client to mail servers"],
+              ["TCP/IP", "Transmission Control Protocol / Internet Protocol", "The suite the internet runs on: TCP breaks data into packets and reassembles them reliably; IP addresses and routes each packet"],
+            ],
+          },
+          {
+            type: "code",
+            lang: "python",
+            runnable: true,
+            caption: "A model of what TCP does: number the packets, accept them in any order, rebuild the message.",
+            code: r`msg = "RESULTS OUT TODAY"
+size = 5
+packets = []
+for i in range(0, len(msg), size):
+    packets.append((i // size, msg[i:i + size]))
+print(packets)
+arrived = [packets[2], packets[0], packets[3], packets[1]]
+arrived.sort()
+print("".join(part for seq, part in arrived))`,
+          },
+          {
+            type: "text",
+            md: "Output:\n\n`[(0, 'RESUL'), (1, 'TS OU'), (2, 'T TOD'), (3, 'AY')]`\n\n`RESULTS OUT TODAY`\n\nThe 17-character message becomes 4 packets. They arrive out of order, but sorting the tuples by their sequence number (the first item) restores the message, which is the job of TCP at the receiving end.",
+          },
+          {
+            type: "example",
+            title: "Which protocol is at work?",
+            problem: "Name the protocol used in each case: (a) you open a college website in a browser; (b) you send an email to your teacher; (c) a web developer uploads 200 image files to a server; (d) packets of a video call are routed across the internet to the right address.",
+            steps: [
+              "(a) Web pages travel between browser and web server: **HTTP** (or HTTPS when secure).",
+              "(b) Sending email: **SMTP**.",
+              "(c) Transferring files to a server: **FTP**.",
+              "(d) Addressing and routing packets: **IP** (part of TCP/IP).",
+            ],
+            answer: "HTTP, SMTP, FTP, IP.",
+          },
+          {
+            type: "activity",
+            activity: {
+              kind: "match",
+              prompt: "Match the generation to what it introduced.",
+              pairs: [
+                ["1G", "Analog voice calls"],
+                ["2G", "Digital calls and SMS"],
+                ["3G", "Mobile internet and video calls"],
+                ["4G", "LTE with HD streaming"],
+                ["5G", "Very low latency for IoT"],
+              ],
+              explain: "Each generation added a new kind of service, not just more speed.",
+            },
+          },
+          {
+            type: "checkpoint",
+            questions: [
+              {
+                kind: "mcq",
+                q: "Which protocol is used to send email?",
+                options: ["SMTP", "FTP", "PPP", "HTTP"],
+                answer: 0,
+                explain: "SMTP pushes outgoing mail to mail servers. (Receiving mail uses protocols such as POP3 or IMAP.)",
+              },
+              {
+                kind: "mcq",
+                q: "Which generation first used digital signals and introduced SMS?",
+                options: ["2G", "1G", "3G", "4G"],
+                answer: 0,
+                explain: "1G was analog; 2G (GSM/CDMA) was digital and added SMS and MMS.",
+              },
+            ],
+          },
+          {
+            type: "callout",
+            tone: "exam",
+            title: "Board tip",
+            md: "Write protocol full forms exactly (HyperText Transfer Protocol, Simple Mail Transfer Protocol, Point-to-Point Protocol). For \"need for protocols\", list format, flow control, error control and addressing.",
+          },
+          {
+            type: "keypoints",
+            items: [
+              "1G analog voice; 2G digital with SMS/MMS; 3G mobile internet and video calls; 4G LTE high speed; 5G very low latency and massive IoT.",
+              "A protocol is a set of agreed rules for data format, flow control, error handling and addressing.",
+              "HTTP: web pages; FTP: files; PPP: direct link between two devices; SMTP: sending email.",
+              "TCP splits data into packets and reassembles them; IP addresses and routes each packet.",
+            ],
+          },
+        ],
+        flashcards: [
+          { front: "What did 1G use?", back: "Analog signals for voice calls only." },
+          { front: "What did 2G introduce?", back: "Digital signals (GSM/CDMA), better security, SMS and MMS." },
+          { front: "Key service of 3G?", back: "Mobile internet with video calls and smartphone apps." },
+          { front: "What does LTE belong to?", back: "4G mobile networks." },
+          { front: "Main gains of 5G?", back: "Very high speed, very low latency and support for a huge number of connected devices (IoT)." },
+          { front: "Define protocol.", back: "A set of rules agreed by communicating devices for formatting, sending, receiving and checking data." },
+          { front: "Full form of PPP?", back: "Point-to-Point Protocol." },
+          { front: "Roles of TCP and IP?", back: "TCP breaks data into packets and reassembles them reliably; IP addresses and routes each packet." },
+        ],
+        quiz: [
+          {
+            kind: "mcq",
+            q: "Which protocol transfers web pages from a web server to your browser?",
+            options: ["HTTP", "SMTP", "PPP", "FTP"],
+            answer: 0,
+            explain: "HTTP works by request and response between browser and web server.",
+          },
+          {
+            kind: "mcq",
+            q: "Which generation made remote surgery and self-driving cars practical because of its very low latency?",
+            options: ["5G", "4G", "3G", "2G"],
+            answer: 0,
+            explain: "5G's main feature for these uses is its very small delay.",
+          },
+          {
+            kind: "truefalse",
+            q: "1G mobile phones could send SMS messages.",
+            answer: false,
+            explain: "1G was analog and voice only; SMS came with 2G.",
+          },
+          {
+            kind: "fill",
+            q: "The full form of FTP is File ___ Protocol.",
+            answer: ["Transfer"],
+            explain: "File Transfer Protocol moves files between client and server.",
+          },
+          {
+            kind: "multi",
+            q: "Why are protocols needed?",
+            options: ["To agree on the format of data", "To control the flow of data", "To detect and handle errors", "To increase the bandwidth of the cable", "To identify sender and receiver addresses"],
+            answers: [0, 1, 2, 4],
+            explain: "Protocols are rules; they cannot change the physical bandwidth of a medium.",
+          },
+          {
+            kind: "mcq",
+            q: "In the TCP/IP suite, which part makes sure the packets are put back together in the right order?",
+            options: ["TCP", "IP", "HTTP", "PPP"],
+            answer: 0,
+            explain: "TCP numbers the packets and reassembles them; IP only addresses and routes them.",
+            difficulty: 2,
+          },
+          {
+            kind: "order",
+            q: "Arrange the mobile generations by when they appeared.",
+            items: ["Analog voice (1G)", "Digital with SMS (2G)", "Video calls (3G)", "LTE (4G)", "Low-latency IoT (5G)"],
+            explain: "1G in the 1980s through 5G from 2019.",
+          },
+        ],
+      },
+      {
+        slug: "c12-cs-data-communication-board-practice",
+        title: "Data Communication: Board Practice",
+        summary: "Mixed board-style questions: definitions, comparisons of media and switching, data rate numericals, a protocol case study and a small Python program.",
+        minutes: 20,
+        xp: 50,
+        blocks: [
+          {
+            type: "text",
+            md: "Board questions from this chapter are mostly definitions with examples, **differences** (circuit vs packet switching, guided vs unguided media, half vs full duplex), **case studies** (choose the medium or protocol) and short **numericals** on data transfer rate. Use tables for differences: examiners can see each point at a glance.",
+          },
+          {
+            type: "table",
+            headers: ["Circuit switching", "Packet switching"],
+            rows: [
+              ["Dedicated path set up before sending", "No path is reserved"],
+              ["Data follows the same path for the whole session", "Packets can follow different paths"],
+              ["Path stays reserved even when no data flows, wasting capacity", "Links are shared by many users' packets"],
+              ["Example: traditional landline call", "Example: the internet, email"],
+            ],
+          },
+          {
+            type: "example",
+            title: "Numerical with two steps",
+            problem: "A student must upload a 90 MB project video. Her home Wi-Fi gives 12 Mbps upload and the college lab gives 36 Mbps. How much time does she save by uploading from the lab?",
+            steps: [
+              "90 MB = 90 × 8 = 720 Mb.",
+              "At home: 720 / 12 = 60 s.",
+              "In the lab: 720 / 36 = 20 s.",
+              "Time saved = 60 − 20 = **40 s**.",
+            ],
+            answer: "40 seconds.",
+          },
+          {
+            type: "example",
+            title: "Case study",
+            problem: "A hospital in Mysuru has two blocks 2 km apart and wants high-speed links for scans, wireless access in the wards, and doctors' email. Suggest (a) the medium between blocks, (b) the technology in the wards, (c) the protocol for sending email, (d) the protocol to upload large scan files to a server.",
+            steps: [
+              "(a) 2 km, high bandwidth, no interference from hospital machines: **optical fibre**.",
+              "(b) Mobile devices in wards: **WLAN (Wi-Fi)** with access points.",
+              "(c) Sending email: **SMTP**.",
+              "(d) Uploading files: **FTP**.",
+            ],
+            answer: "Optical fibre, WLAN, SMTP, FTP.",
+          },
+          {
+            type: "mistake",
+            wrong: "Higher bandwidth and higher data transfer rate are measured in the same unit, bps.",
+            right: "**Bandwidth** is a range of frequencies measured in **Hz**; **data transfer rate** is bits per second, measured in **bps**. More bandwidth allows a higher data rate, but they are different quantities.",
+            why: "Internet plans are advertised as \"100 Mbps bandwidth\", so the words are mixed up in daily use. The NCERT definitions keep them separate.",
+          },
+          {
+            type: "checkpoint",
+            questions: [
+              {
+                kind: "numeric",
+                q: "How many seconds are needed to send a 4 GB file at 32 Mbps? (Take 1 GB = 1024 MB.)",
+                answer: 1024,
+                unit: "s",
+                explain: "4 GB = 4096 MB = 32768 Mb. 32768 / 32 = 1024 s (about 17 minutes).",
+                difficulty: 2,
+              },
+            ],
+          },
+          {
+            type: "heading",
+            text: "Program to write",
+          },
+          {
+            type: "text",
+            md: "Write a Python function `plan(size_MB, rates)` that takes a file size and a dictionary of connection names and speeds in Mbps, and prints the time on each connection, and then the fastest one.",
+          },
+          {
+            type: "code",
+            lang: "python",
+            runnable: true,
+            code: r`def plan(size_MB, rates):
+    best = None
+    for name, mbps in rates.items():
+        t = size_MB * 8 / mbps
+        print(name, ":", t, "s")
+        if best is None or t < best[1]:
+            best = (name, t)
+    print("Fastest:", best[0])
+
+plan(60, {"4G phone": 24, "Home Wi-Fi": 40, "Lab LAN": 96})`,
+          },
+          {
+            type: "text",
+            md: "Output:\n\n`4G phone : 20.0 s`\n\n`Home Wi-Fi : 12.0 s`\n\n`Lab LAN : 5.0 s`\n\n`Fastest: Lab LAN`\n\n60 MB is 480 Mb; dividing by 24, 40 and 96 gives 20, 12 and 5 seconds.",
+          },
+          {
+            type: "activity",
+            activity: {
+              kind: "sort",
+              prompt: "Guided or unguided medium?",
+              groups: ["Guided (wired)", "Unguided (wireless)"],
+              items: [
+                { text: "Ethernet cable in the lab", group: 0, hint: "Twisted pair copper wires." },
+                { text: "Undersea internet cable", group: 0, hint: "Optical fibre is a cable." },
+                { text: "Cable TV wire", group: 0, hint: "Coaxial cable." },
+                { text: "Satellite link", group: 1, hint: "Microwaves through space." },
+                { text: "Bluetooth earphones", group: 1, hint: "Short-range radio waves." },
+                { text: "AC remote", group: 1, hint: "Infrared through air." },
+              ],
+              explain: "If a physical cable guides the signal, the medium is guided; signals through air or space are unguided.",
+            },
+          },
+          {
+            type: "list",
+            ordered: true,
+            items: [
+              "Name the five components of data communication. (1 mark)",
+              "Differentiate between simplex and full-duplex communication with one example each. (2 marks)",
+              "Give two advantages and one limitation of microwave transmission. (3 marks)",
+              "What is a protocol? Expand HTTP and SMTP. (2 marks)",
+              "Compare 3G and 4G mobile technology on two points. (2 marks)",
+            ],
+          },
+          {
+            type: "callout",
+            tone: "exam",
+            title: "Board tip",
+            md: "In numericals, write the units at every step (MB → Mb → s). In case studies, give a one-line reason with each choice: \"optical fibre, because the distance is long and bandwidth must be high\".",
+          },
+          {
+            type: "keypoints",
+            items: [
+              "Use tables for differences: circuit vs packet switching, guided vs unguided, simplex vs duplex.",
+              "Data rate numericals: convert bytes to bits first (× 8), then divide by the rate.",
+              "Case studies: long distance and high speed → fibre; same room → infrared or Bluetooth; towers → microwave.",
+              "Know each protocol's full form and one use.",
+            ],
+          },
+        ],
+        flashcards: [
+          { front: "Two differences: circuit vs packet switching?", back: "Circuit reserves a dedicated path and keeps one route; packet reserves none and packets may take different routes." },
+          { front: "Time for 90 MB at 36 Mbps?", back: "720 Mb / 36 = 20 s." },
+          { front: "Best medium for 2 km high-speed link?", back: "Optical fibre." },
+          { front: "Protocol to upload files to a server?", back: "FTP (File Transfer Protocol)." },
+          { front: "Bandwidth unit vs data rate unit?", back: "Bandwidth: hertz (Hz). Data transfer rate: bits per second (bps)." },
+          { front: "Example of half-duplex?", back: "Walkie-talkie." },
+        ],
+        quiz: [
+          {
+            kind: "numeric",
+            q: "A link has a data transfer rate of 20 Mbps. How many MB can it send in 2 minutes?",
+            answer: 300,
+            unit: "MB",
+            explain: "2 minutes = 120 s; 20 × 120 = 2400 Mb; 2400 / 8 = 300 MB.",
+            difficulty: 2,
+          },
+          {
+            kind: "mcq",
+            q: "Which pair is correctly matched?",
+            options: ["Walkie-talkie: half-duplex", "Telephone call: simplex", "Radio broadcast: full-duplex", "Keyboard to computer: half-duplex"],
+            answer: 0,
+            explain: "A phone call is full-duplex, a broadcast is simplex and a keyboard is simplex.",
+          },
+          {
+            kind: "mcq",
+            q: "A company needs a link between two offices on opposite hills with no cable route. Which medium fits best?",
+            options: ["Microwave", "Infrared", "Twisted pair", "Bluetooth"],
+            answer: 0,
+            explain: "Microwave towers in line of sight cover such distances without cables; infrared and Bluetooth are short range.",
+          },
+          {
+            kind: "truefalse",
+            q: "In circuit switching, the reserved path can be used by other users when the two parties are silent.",
+            answer: false,
+            explain: "The path stays dedicated for the whole session, even during silence; that is why it can waste capacity.",
+          },
+          {
+            kind: "multi",
+            q: "Which of these are protocols?",
+            options: ["SMTP", "PPP", "LTE", "HTTP", "UTP"],
+            answers: [0, 1, 3],
+            explain: "LTE is a 4G mobile technology and UTP is a type of twisted pair cable.",
+          },
+          {
+            kind: "mcq",
+            q: "What is printed by `print(48 * 8 / 16)`?",
+            options: ["`24.0`", "`24`", "`3.0`", "`6.0`"],
+            answer: 0,
+            explain: "48 × 8 = 384; 384 / 16 = 24, and `/` always gives a float, 24.0.",
+          },
+          {
+            kind: "fill",
+            q: "The time delay between sending data and its arrival is called ___, and 5G keeps it very low.",
+            answer: ["latency"],
+            explain: "Low latency is the main reason 5G suits real-time uses like remote surgery.",
+          },
+        ],
+      },
+    ],
+  },
 ];
 
 /** Chapter title ("11:" / "12:" + exact title) → topic slug(s) that teach it. */
 export const links: Record<string, string | string[]> = {
   "12:Understanding Data": "c12-cs-understanding-data",
+  "12:Data Communication": "c12-cs-data-communication",
 };

@@ -851,8 +851,822 @@ The favourite question types are: ratio problems from the gas laws, gas escaping
     ],
   },
   /* END-STATES */
+  /* ------------------------------------------------------------------ */
+  /* s-Block Elements (ISC Class 11)                                      */
+  /* ------------------------------------------------------------------ */
+  {
+    slug: "c11-che-s-block",
+    title: "s-Block Elements",
+    icon: "🧂",
+    description: "Group 1 (alkali metals) and Group 2 (alkaline earth metals): electronic configuration, periodic trends, chemical reactivity, solutions in liquid ammonia, the anomalous behaviour of lithium and beryllium, diagonal relationships, important compounds of sodium and calcium, and the biological roles of Na, K, Mg and Ca.",
+    lessons: [
+      /* ---------------- Lesson 1 ---------------- */
+      {
+        slug: "c11-che-sb-alkali-metals",
+        title: "Group 1: The Alkali Metals",
+        summary: "Electronic configuration, atomic and ionic size, ionisation enthalpy, hydration enthalpy, physical properties and flame colours, reactions with air, water, hydrogen and halogens, reducing power and solutions in liquid ammonia.",
+        minutes: 22,
+        xp: 50,
+        blocks: [
+          {
+            type: "callout",
+            tone: "note",
+            title: "Board note",
+            md: "s-Block Elements was removed from the rationalised NCERT Class 11 book, so CBSE and Karnataka I PUC do not examine it. **ISC Class 11 keeps it.** JEE Advanced still lists alkali and alkaline earth metals and their important compounds.",
+          },
+          {
+            type: "illustration",
+            emoji: "🎆",
+            caption: "The yellow of a street lamp and the yellow flash when salt falls into a gas flame come from the same sodium atoms. Diwali sparklers use lithium and strontium salts for crimson red and barium salts for green.",
+          },
+          {
+            type: "text",
+            md: t`The **s-block** contains Groups 1 and 2, in which the last electron enters an **s orbital**. Group 1 — lithium (Li), sodium (Na), potassium (K), rubidium (Rb), caesium (Cs) and francium (Fr, radioactive) — are the **alkali metals**, because their oxides and hydroxides dissolve in water to give strong alkalis. Their general configuration is **[noble gas] ns¹**.
+
+With just one electron outside a noble-gas core, they lose it easily to form **M⁺** ions. They are never found free in nature; sodium and potassium are abundant (in rock salt, sea water and feldspar), while caesium and rubidium are rare.`,
+          },
+          {
+            type: "table",
+            headers: ["Property", "Li", "Na", "K", "Rb", "Cs", "Trend down the group"],
+            rows: [
+              ["Ionisation enthalpy (kJ mol⁻¹)", "520", "496", "419", "403", "376", "decreases (larger atoms)"],
+              ["Hydration enthalpy of M⁺ (kJ mol⁻¹)", "506", "406", "330", "310", "276", "decreases (larger ions)"],
+              ["Melting point (K)", "454", "371", "336", "312", "302", "decreases (weaker metallic bonding)"],
+              [t`$E^\circ$ M⁺/M (V)`, "−3.04", "−2.71", "−2.93", "−2.93", "−2.93", "Li most negative"],
+              ["Flame colour", "crimson red", "yellow", "violet (lilac)", "red-violet", "blue", "—"],
+            ],
+          },
+          {
+            type: "text",
+            md: t`**Physical properties.** The alkali metals are silvery white, soft (they can be cut with a knife) and light; Li, Na and K are less dense than water. Their metallic bonding is weak because each atom gives only one electron to the "sea", so melting points are low. Density generally increases down the group, but potassium is lighter than sodium.
+
+**Flame colours.** The heat of a flame excites the outer electron to a higher level; when it falls back, visible light of a definite wavelength is emitted. Because of this, alkali metals can be detected by **flame tests** and measured by **flame photometry**. Caesium and potassium lose electrons when light falls on them, so they are used in **photoelectric cells**.
+
+**Hydration.** Small ions attract water molecules strongly. Li⁺ has the highest hydration enthalpy, so it carries the largest shell of water: in aqueous solution hydrated Li⁺ is the **largest** ion and moves the **slowest**. Lithium salts are often hydrated (LiCl·2H₂O), while sodium and potassium salts are usually anhydrous.`,
+          },
+          {
+            type: "text",
+            md: t`**Chemical properties.** Reactivity increases down the group as ionisation enthalpy falls.
+
+- **With air:** they tarnish quickly and are stored under kerosene. On burning in excess air, lithium gives mainly the **monoxide** Li₂O, sodium the **peroxide** Na₂O₂, and K, Rb, Cs the **superoxides** MO₂. The large cations stabilise the large peroxide (O₂²⁻) and superoxide (O₂⁻) anions. Superoxides are paramagnetic and coloured (O₂⁻ has one unpaired electron); oxides and peroxides are colourless and diamagnetic.
+- **With water:** they give hydroxide and hydrogen. Lithium has the most negative E° but reacts **less vigorously** than sodium; NCERT relates this to its small size and very high hydration enthalpy. Potassium reacts so fast that the hydrogen catches fire.
+- **With hydrogen:** on heating they form ionic, high-melting hydrides **M⁺H⁻**.
+- **With halogens:** ionic halides M⁺X⁻; lithium halides are somewhat covalent because the small Li⁺ ion polarises the anion.
+- **Reducing power:** all are strong reducing agents; Li is the strongest **in water**, because its large hydration enthalpy outweighs its high ionisation enthalpy.`,
+          },
+          {
+            type: "formula",
+            tex: t`\begin{aligned} 4\text{Li} + \text{O}_2 &\to 2\text{Li}_2\text{O} \\ 2\text{Na} + \text{O}_2 &\to \text{Na}_2\text{O}_2 \\ \text{K} + \text{O}_2 &\to \text{KO}_2 \\ 2\text{M} + 2\text{H}_2\text{O} &\to 2\text{MOH} + \text{H}_2 \end{aligned}`,
+            caption: "Burning in excess air, and the reaction with water. All equations balanced.",
+          },
+          {
+            type: "example",
+            title: "Why is Li the strongest reducing agent in water?",
+            problem: "Lithium has the highest ionisation enthalpy in Group 1, yet the most negative standard electrode potential. Explain using an energy cycle.",
+            steps: [
+              "Converting M(s) to M⁺(aq) involves three steps: sublimation (energy taken in), ionisation (energy taken in) and hydration (energy released).",
+              "Li needs more energy for sublimation and ionisation than the other metals.",
+              "But Li⁺ is so small that its hydration enthalpy (about 506 kJ mol⁻¹) is far larger, and this more than repays the extra cost.",
+              "The overall change M(s) → M⁺(aq) is therefore most favourable for Li, giving E° = −3.04 V.",
+            ],
+            answer: "The very large hydration enthalpy of the small Li⁺ ion makes Li the strongest reducing agent in aqueous solution.",
+          },
+          {
+            type: "text",
+            md: t`**Solutions in liquid ammonia.** Alkali metals dissolve in liquid ammonia to give **deep blue** solutions that conduct electricity:
+
+$\text{M} + (x + y)\text{NH}_3 \to [\text{M(NH}_3)_x]^+ + [e(\text{NH}_3)_y]^-$
+
+The blue colour is due to the **ammoniated electron**, which absorbs in the red region of visible light. Dilute solutions are **paramagnetic** (unpaired solvated electrons). On standing they slowly release hydrogen, forming the amide: $\text{M}^+ + e^- + \text{NH}_3 \to \text{MNH}_2 + \tfrac{1}{2}\text{H}_2$. In concentrated solutions the colour changes to **bronze** and the solution becomes **diamagnetic** (electrons pair up and metal-ion clusters form).`,
+          },
+          {
+            type: "checkpoint",
+            questions: [
+              {
+                kind: "mcq",
+                q: "Which alkali metal ion has the lowest ionic mobility in aqueous solution?",
+                options: ["Li⁺", "Na⁺", "K⁺", "Cs⁺"],
+                answer: 0,
+                explain: "Li⁺ is most strongly hydrated; the hydrated ion is the largest and moves slowest.",
+              },
+            ],
+          },
+          {
+            type: "mistake",
+            wrong: "Li⁺ is the smallest alkali metal ion, so it must move fastest through water and conduct best.",
+            right: "The bare Li⁺ ion is smallest, but in water it carries the largest shell of water molecules. Hydrated Li⁺ is the biggest ion and has the lowest mobility; mobility order is Li⁺ < Na⁺ < K⁺ < Rb⁺ < Cs⁺.",
+            why: "It is natural to picture the bare ion. In solution the ion drags its hydration shell along, and the smallest ion grips water most tightly.",
+          },
+          {
+            type: "activity",
+            activity: {
+              kind: "match",
+              prompt: "Match each metal to the main product when it burns in excess air.",
+              pairs: [
+                ["Lithium", "Li₂O (monoxide)"],
+                ["Sodium", "Na₂O₂ (peroxide)"],
+                ["Potassium", "KO₂ (superoxide)"],
+                ["Caesium", "CsO₂ (superoxide)"],
+              ],
+              explain: "Bigger cations form stable lattices with bigger anions: Li⁺ fits O²⁻, Na⁺ fits O₂²⁻, and K⁺, Rb⁺, Cs⁺ fit O₂⁻.",
+            },
+          },
+          {
+            type: "callout",
+            tone: "exam",
+            title: "ISC exam tips",
+            md: "'Give reasons' questions dominate this chapter: Li is the strongest reducing agent; alkali metals are stored in kerosene; K and Cs are used in photoelectric cells; the blue colour of ammonia solutions. Answer each in one cause-and-effect sentence that names the property (size, ionisation enthalpy, hydration enthalpy).",
+          },
+          {
+            type: "keypoints",
+            items: [
+              "Group 1 configuration ns¹; they form M⁺ ions and are strongly electropositive.",
+              "Down the group: size increases, ionisation enthalpy, hydration enthalpy and melting point decrease.",
+              "In excess air: Li → Li₂O, Na → Na₂O₂, K/Rb/Cs → MO₂ (superoxide).",
+              "Li is the strongest reducing agent in water because of its very high hydration enthalpy.",
+              "Solutions in liquid NH₃ are blue, conducting and paramagnetic (ammoniated electrons); concentrated ones are bronze and diamagnetic.",
+            ],
+          },
+        ],
+        flashcards: [
+          { front: "General configuration of alkali metals", back: "[noble gas] ns¹" },
+          { front: "Flame colours of Li, Na, K", back: "Li crimson red, Na yellow, K violet (lilac)." },
+          { front: "Product of burning Na in excess air", back: "Sodium peroxide, Na₂O₂" },
+          { front: "Why are superoxides paramagnetic?", back: "The O₂⁻ ion has one unpaired electron." },
+          { front: "Strongest reducing agent among alkali metals in water", back: "Lithium (E° = −3.04 V), because of its very high hydration enthalpy." },
+          { front: "Cause of blue colour of Na in liquid NH₃", back: "Ammoniated (solvated) electrons absorbing red light." },
+          { front: "Why are alkali metals kept under kerosene?", back: "They react quickly with oxygen and moisture in air; kerosene keeps air out." },
+          { front: "Ionic mobility order in water", back: "Li⁺ < Na⁺ < K⁺ < Rb⁺ < Cs⁺ (hydrated Li⁺ is largest)." },
+        ],
+        quiz: [
+          {
+            kind: "mcq",
+            q: "Which alkali metal has the lowest melting point among Li, Na, K and Cs?",
+            options: ["Cs", "Li", "Na", "K"],
+            answer: 0,
+            explain: "Metallic bonding weakens as atoms get bigger, so melting point falls down the group; Cs melts at about 302 K.",
+          },
+          {
+            kind: "mcq",
+            q: "Potassium superoxide reacts with water to give",
+            options: ["KOH, H₂O₂ and O₂", "KOH and H₂", "K₂O and O₂", "KOH only"],
+            answer: 0,
+            explain: "2KO₂ + 2H₂O → 2KOH + H₂O₂ + O₂.",
+            difficulty: 2,
+            hint: "A superoxide gives both peroxide and oxygen with water.",
+          },
+          {
+            kind: "truefalse",
+            q: "Lithium reacts with water more vigorously than sodium because its standard electrode potential is more negative.",
+            answer: false,
+            explain: "Despite the more negative E°, lithium reacts less vigorously than sodium. E° measures how favourable the change is, not how fast it happens.",
+          },
+          {
+            kind: "multi",
+            q: "Which statements about a dilute solution of sodium in liquid ammonia are correct?",
+            options: ["It is blue.", "It conducts electricity.", "It is paramagnetic.", "It is bronze and diamagnetic."],
+            answers: [0, 1, 2],
+            explain: "Bronze colour and diamagnetism are seen only in concentrated solutions.",
+          },
+          {
+            kind: "mcq",
+            q: "The hydride formed when sodium is heated in hydrogen is",
+            options: ["ionic, Na⁺H⁻", "covalent, like CH₄", "metallic (interstitial)", "a polymer"],
+            answer: 0,
+            explain: "Alkali metals form saline (ionic) hydrides containing the H⁻ ion.",
+          },
+          {
+            kind: "mcq",
+            q: "Caesium is used in photoelectric cells because it",
+            options: ["has the lowest ionisation enthalpy, so light can remove its electron", "has the highest melting point", "is the most abundant alkali metal", "forms a superoxide"],
+            answer: 0,
+            explain: "Cs holds its outer electron so weakly that visible light can eject it.",
+          },
+          {
+            kind: "order",
+            q: "Arrange in increasing order of hydration enthalpy (magnitude).",
+            items: ["Cs⁺", "Rb⁺", "K⁺", "Na⁺", "Li⁺"],
+            explain: "Smaller ions attract water more strongly, so hydration enthalpy rises from Cs⁺ to Li⁺.",
+          },
+        ],
+      },
+      /* ---------------- Lesson 2 ---------------- */
+      {
+        slug: "c11-che-sb-lithium-sodium-compounds",
+        title: "Lithium's Anomalies and Compounds of Sodium",
+        summary: "General features of alkali metal compounds, how lithium differs from the rest of Group 1, its diagonal relationship with magnesium, the preparation and uses of sodium carbonate, sodium chloride, sodium hydroxide and sodium hydrogencarbonate, and the biological importance of sodium and potassium.",
+        minutes: 24,
+        xp: 55,
+        blocks: [
+          {
+            type: "illustration",
+            emoji: "🍞",
+            caption: "The baking soda that makes a dhokla fluffy, the washing soda in a dhobi's bucket and the caustic soda used to make soap are all sodium compounds, made in huge amounts from common salt.",
+          },
+          {
+            type: "text",
+            md: t`**General compounds of alkali metals.** Their **oxides** react with water to give strong bases: $\text{M}_2\text{O} + \text{H}_2\text{O} \to 2\text{MOH}$; peroxides give hydrogen peroxide: $\text{M}_2\text{O}_2 + 2\text{H}_2\text{O} \to 2\text{MOH} + \text{H}_2\text{O}_2$. The **hydroxides** are white crystalline solids, strongly basic, dissolving in water with much heat; basic strength increases down the group.
+
+**Halides** MX are high-melting ionic solids. For one metal, melting point falls F⁻ > Cl⁻ > Br⁻ > I⁻. LiF has low solubility in water (very high lattice enthalpy) and CsI also has low solubility (small hydration enthalpy of both ions).
+
+**Salts of oxo-acids:** carbonates and hydrogencarbonates of Na, K, Rb and Cs are very stable to heat, and their thermal stability and solubility increase down the group. Li₂CO₃ is the exception: it decomposes on heating.`,
+          },
+          {
+            type: "text",
+            md: t`**Anomalous behaviour of lithium.** Lithium differs from the rest of Group 1 because of its **exceptionally small atom and ion** and its **high polarising power** (charge/size ratio).
+
+1. Lithium is much harder, with higher melting and boiling points.
+2. It is the least reactive alkali metal but the strongest reducing agent in water.
+3. On burning in air it forms mainly Li₂O, and also the **nitride Li₃N** (no other alkali metal reacts directly with N₂).
+4. LiCl is deliquescent and crystallises as LiCl·2H₂O; the other chlorides are anhydrous.
+5. LiHCO₃ is not obtained as a solid, whereas the other hydrogencarbonates are solids.
+6. Li₂CO₃ and LiNO₃ decompose on heating to Li₂O; other nitrates give nitrites.
+7. LiF and Li₂O are much less soluble in water than the corresponding compounds of other alkali metals.
+8. Lithium does not form an ethynide (acetylide) with ethyne, unlike sodium.`,
+          },
+          {
+            type: "formula",
+            tex: t`4\text{LiNO}_3 \xrightarrow{\Delta} 2\text{Li}_2\text{O} + 4\text{NO}_2 + \text{O}_2 \qquad 2\text{NaNO}_3 \xrightarrow{\Delta} 2\text{NaNO}_2 + \text{O}_2`,
+            caption: "Lithium nitrate behaves like the Group 2 nitrates, not like sodium nitrate.",
+          },
+          {
+            type: "text",
+            md: "**Diagonal relationship of Li with Mg.** Lithium resembles magnesium (one period down, one group right) because their ions have similar sizes (Li⁺ 76 pm, Mg²⁺ 72 pm) and similar polarising power. Both metals are harder and lighter than their group members; LiOH and Mg(OH)₂ are weak bases that decompose on heating; both form nitrides (Li₃N, Mg₃N₂) by direct combination; neither forms a superoxide; their carbonates decompose to oxides and CO₂; neither forms a solid hydrogencarbonate; LiCl and MgCl₂ are deliquescent, crystallise as hydrates (LiCl·2H₂O, MgCl₂·8H₂O) and dissolve in ethanol.",
+          },
+          {
+            type: "checkpoint",
+            questions: [
+              {
+                kind: "multi",
+                q: "In which ways does lithium resemble magnesium?",
+                options: ["Both form nitrides by direct combination with N₂.", "Their carbonates decompose on heating.", "Both form superoxides when burnt.", "Their chlorides dissolve in ethanol."],
+                answers: [0, 1, 3],
+                explain: "Neither Li nor Mg forms a superoxide; Li gives Li₂O and Mg gives MgO.",
+              },
+            ],
+          },
+          {
+            type: "text",
+            md: t`**Sodium carbonate (washing soda, Na₂CO₃·10H₂O)** is made by the **Solvay (ammonia–soda) process**. Brine saturated with ammonia is treated with CO₂. Sodium hydrogencarbonate, which is only sparingly soluble in this solution, crystallises out and is heated to give the carbonate. Ammonia is recovered by heating the NH₄Cl solution with slaked lime, so the process is economical.
+
+Washing soda effloresces (loses water) in air; on heating it loses water to form the monohydrate, and above 373 K it becomes anhydrous **soda ash**. Its aqueous solution is alkaline because the carbonate ion is hydrolysed. Uses: water softening, laundry, manufacture of glass, soap, borax and caustic soda, and as a laboratory reagent.
+
+**Potassium carbonate cannot be made this way**, because KHCO₃ is too soluble to crystallise out.`,
+          },
+          {
+            type: "formula",
+            tex: t`\begin{aligned} \text{NH}_3 + \text{H}_2\text{O} + \text{CO}_2 &\to \text{NH}_4\text{HCO}_3 \\ \text{NaCl} + \text{NH}_4\text{HCO}_3 &\to \text{NaHCO}_3\downarrow + \text{NH}_4\text{Cl} \\ 2\text{NaHCO}_3 &\xrightarrow{\Delta} \text{Na}_2\text{CO}_3 + \text{CO}_2 + \text{H}_2\text{O} \\ 2\text{NH}_4\text{Cl} + \text{Ca(OH)}_2 &\to 2\text{NH}_3 + \text{CaCl}_2 + 2\text{H}_2\text{O} \end{aligned}`,
+            caption: "Solvay process. CO₂ comes from heating limestone (CaCO₃ → CaO + CO₂); the CaO is slaked to give the Ca(OH)₂. The only by-product is CaCl₂.",
+          },
+          {
+            type: "example",
+            title: "Yield in the Solvay process",
+            problem: "What is the maximum mass of anhydrous Na₂CO₃ that can be obtained from 117 g of NaCl by the Solvay process? (Na = 23, Cl = 35.5, C = 12, O = 16)",
+            steps: [
+              "Moles of NaCl = 117/58.5 = 2.0 mol.",
+              "Each NaCl gives one NaHCO₃, so 2.0 mol NaHCO₃ forms.",
+              "2NaHCO₃ → Na₂CO₃ + CO₂ + H₂O, so 2.0 mol NaHCO₃ gives 1.0 mol Na₂CO₃.",
+              "Mass = 1.0 × 106 = 106 g.",
+            ],
+            answer: "106 g of Na₂CO₃",
+          },
+          {
+            type: "table",
+            headers: ["Compound", "How it is obtained", "Key properties and uses"],
+            rows: [
+              ["Sodium chloride, NaCl", "Evaporation of sea water (about 2.7–2.9% salt by mass). Crude salt contains CaSO₄, CaCl₂ and MgCl₂; pure NaCl crystallises when HCl gas is passed into its saturated solution (common-ion effect).", "Melts at 1081 K; table salt; raw material for Na₂CO₃, NaOH and Cl₂."],
+              ["Sodium hydroxide (caustic soda), NaOH", "Electrolysis of brine in the **Castner–Kellner cell**: mercury cathode, carbon anode. Na forms an amalgam with Hg, which reacts with water to give NaOH and H₂; Cl₂ is released at the anode.", "White, translucent, deliquescent solid (m.p. 591 K); absorbs CO₂ from air to form Na₂CO₃. Used for soap, paper, rayon, petroleum refining and purifying bauxite."],
+              ["Sodium hydrogencarbonate (baking soda), NaHCO₃", t`Saturate Na$_2$CO$_3$ solution with CO$_2$: Na$_2$CO$_3$ + H$_2$O + CO$_2$ → 2NaHCO$_3$.`, "Releases CO₂ on heating, so it makes dough rise; mild antiseptic for skin infections; used in fire extinguishers and as an antacid."],
+            ],
+          },
+          {
+            type: "formula",
+            tex: t`\begin{aligned} \text{Cathode: } &\text{Na}^+ + e^- \xrightarrow{\text{Hg}} \text{Na-amalgam} \\ \text{Anode: } &\text{Cl}^- \to \tfrac{1}{2}\text{Cl}_2 + e^- \\ &2\text{Na-amalgam} + 2\text{H}_2\text{O} \to 2\text{NaOH} + 2\text{Hg} + \text{H}_2 \end{aligned}`,
+            caption: "Castner–Kellner cell. Using a mercury cathode stops Na⁺ ions being reduced to H₂ instead; the amalgam is removed and decomposed with water separately.",
+          },
+          {
+            type: "mistake",
+            wrong: "Potassium carbonate can also be made by the Solvay process, using KCl instead of NaCl.",
+            right: "The Solvay process works only because NaHCO₃ is sparingly soluble and crystallises out. KHCO₃ is much more soluble, so it does not precipitate and K₂CO₃ cannot be made this way.",
+            why: "Na and K usually behave alike, so learners extend the process. The key step is a precipitation, which depends on solubility, and that is where Na and K differ.",
+          },
+          {
+            type: "activity",
+            activity: {
+              kind: "order",
+              prompt: "Put the steps of the Solvay process in order.",
+              items: [
+                "Saturate brine with ammonia",
+                "Pass CO₂ to form NH₄HCO₃",
+                "NaHCO₃ crystallises and is filtered",
+                "Heat NaHCO₃ to give Na₂CO₃",
+                "Heat NH₄Cl with Ca(OH)₂ to recover NH₃",
+              ],
+              explain: "Ammonia and CO₂ are recycled; only NaCl and limestone are consumed, and CaCl₂ is the by-product.",
+            },
+          },
+          {
+            type: "text",
+            md: "**Biological importance of Na and K.** A 70 kg adult contains about 90 g of sodium and 170 g of potassium. **Na⁺** ions are mainly outside cells (in blood plasma and the fluid around cells) and take part in nerve-signal transmission, water balance and the transport of sugars and amino acids into cells. **K⁺** ions are the main cations **inside** cells, where they activate many enzymes and help oxidise glucose to make ATP. The difference in concentration across the cell membrane is kept up by the **sodium–potassium pump**, which uses energy from ATP.",
+          },
+          {
+            type: "keypoints",
+            items: [
+              "Lithium's anomalies come from its very small size and high polarising power; it resembles magnesium diagonally.",
+              "Li₂CO₃ and LiNO₃ decompose to Li₂O; LiHCO₃ is not known as a solid; Li alone forms Li₃N.",
+              "Solvay process: NaHCO₃ precipitates from ammoniated brine + CO₂, then is heated to Na₂CO₃; it cannot make K₂CO₃.",
+              "NaOH is made in the Castner–Kellner cell with a mercury cathode.",
+              "Na⁺ is mainly outside cells and K⁺ inside; the Na–K pump keeps the difference.",
+            ],
+          },
+        ],
+        flashcards: [
+          { front: "Why is lithium anomalous in Group 1?", back: "Its atom and ion are exceptionally small, giving high polarising power and high ionisation enthalpy." },
+          { front: "Diagonal partner of lithium", back: "Magnesium (similar ionic size and polarising power)." },
+          { front: "Product of heating LiNO₃", back: "Li₂O, NO₂ and O₂ (other alkali nitrates give nitrite + O₂)." },
+          { front: "Formula of washing soda", back: "Na₂CO₃·10H₂O" },
+          { front: "Why can't K₂CO₃ be made by the Solvay process?", back: "KHCO₃ is too soluble to crystallise out of the solution." },
+          { front: "By-product of the Solvay process", back: "Calcium chloride, CaCl₂" },
+          { front: "Cathode in the Castner–Kellner cell", back: "Mercury; sodium forms an amalgam that is later decomposed with water." },
+          { front: "Ions mainly inside and outside body cells", back: "K⁺ inside, Na⁺ outside; maintained by the Na–K pump." },
+        ],
+        quiz: [
+          {
+            kind: "mcq",
+            q: "Which alkali metal combines directly with nitrogen?",
+            options: ["Li", "Na", "K", "Cs"],
+            answer: 0,
+            explain: "6Li + N₂ → 2Li₃N. This is one of lithium's anomalous properties, shared with magnesium.",
+          },
+          {
+            kind: "mcq",
+            q: "An aqueous solution of sodium carbonate is",
+            options: ["alkaline, because CO₃²⁻ is hydrolysed", "neutral, because it is a salt", "acidic, because CO₂ dissolves", "neutral, because Na⁺ is a spectator"],
+            answer: 0,
+            explain: "CO₃²⁻ + H₂O ⇌ HCO₃⁻ + OH⁻; the OH⁻ makes the solution alkaline. (Na⁺ is indeed a spectator, but carbonate is not.)",
+          },
+          {
+            kind: "numeric",
+            q: "How many grams of NaHCO₃ must be heated to produce 2.2 g of CO₂? (Na = 23, H = 1, C = 12, O = 16)",
+            answer: 8.4,
+            tolerance: 0.05,
+            unit: "g",
+            explain: "2NaHCO₃ → Na₂CO₃ + CO₂ + H₂O. 2.2 g CO₂ = 0.05 mol, so 0.10 mol NaHCO₃ = 0.10 × 84 = 8.4 g.",
+            difficulty: 2,
+            hint: "Two moles of NaHCO₃ give one mole of CO₂.",
+          },
+          {
+            kind: "truefalse",
+            q: "Pure sodium chloride can be crystallised from its saturated solution by passing HCl gas through it.",
+            answer: true,
+            explain: "The extra Cl⁻ ions (common-ion effect) push the solubility equilibrium back so that NaCl crystallises.",
+          },
+          {
+            kind: "mcq",
+            q: "Which is the correct reason for using a mercury cathode in the Castner–Kellner cell?",
+            options: [
+              "Sodium dissolves in mercury as an amalgam instead of H₂ being released at the cathode",
+              "Mercury is a cheap metal",
+              "Mercury reacts with chlorine to remove it",
+              "Mercury makes NaOH insoluble",
+            ],
+            answer: 0,
+            explain: "On mercury, Na⁺ is discharged as an amalgam (hydrogen evolution is suppressed on Hg); the amalgam then reacts with water in a separate chamber.",
+          },
+          {
+            kind: "multi",
+            q: "Which of these are anomalous properties of lithium compared with sodium?",
+            options: ["LiCl crystallises as a hydrate", "LiHCO₃ is not known as a solid", "Li₂CO₃ decomposes on heating", "LiOH is a strong base that is stable to heat"],
+            answers: [0, 1, 2],
+            explain: "LiOH is a weaker base than NaOH and decomposes on strong heating to Li₂O, like Mg(OH)₂.",
+          },
+          {
+            kind: "mcq",
+            q: "The main cation inside body cells, which activates many enzymes, is",
+            options: ["K⁺", "Na⁺", "Ca²⁺", "Mg²⁺"],
+            answer: 0,
+            explain: "K⁺ is the most abundant cation inside cells; Na⁺ is outside.",
+          },
+        ],
+      },
+      /* ---------------- Lesson 3 ---------------- */
+      {
+        slug: "c11-che-sb-alkaline-earth",
+        title: "Group 2: The Alkaline Earth Metals and Calcium Compounds",
+        summary: "Trends in Group 2, reactions with air, water, hydrogen and acids, trends in solubility and thermal stability of their compounds, the anomalous behaviour of beryllium and its diagonal relationship with aluminium, important calcium compounds including plaster of Paris and cement, and the biological roles of Mg and Ca.",
+        minutes: 25,
+        xp: 55,
+        blocks: [
+          {
+            type: "illustration",
+            emoji: "🏛️",
+            caption: "The marble of the Taj Mahal, the chalk on a blackboard, the plaster cast on a broken arm and the cement in every building in India are all calcium compounds.",
+          },
+          {
+            type: "text",
+            md: t`Group 2 contains beryllium (Be), magnesium (Mg), calcium (Ca), strontium (Sr), barium (Ba) and radium (Ra, radioactive). They are called **alkaline earth metals** because their oxides and hydroxides are alkaline and are found in the earth's crust. The general configuration is **[noble gas] ns²**; they form **M²⁺** ions.
+
+Compared with Group 1 neighbours, their atoms are smaller (greater nuclear charge), their first ionisation enthalpies are higher, and their metallic bonding is stronger (two electrons per atom), so they are harder and have higher melting points. Their **second** ionisation enthalpy is smaller than the second ionisation enthalpy of the Group 1 metals, because it removes an outer electron, not one from a noble-gas core. The high hydration and lattice enthalpies of the small, doubly charged M²⁺ ions more than pay for the energy needed to remove two electrons, so the compounds are ionic and contain M²⁺ (not M⁺).`,
+          },
+          {
+            type: "table",
+            headers: ["Property", "Be", "Mg", "Ca", "Sr", "Ba"],
+            rows: [
+              ["First ionisation enthalpy (kJ mol⁻¹)", "899", "737", "590", "549", "503"],
+              ["Hydration enthalpy of M²⁺ (kJ mol⁻¹)", "2494", "1921", "1577", "1443", "1305"],
+              [t`$E^\circ$ M²⁺/M (V)`, "−1.97", "−2.36", "−2.84", "−2.89", "−2.92"],
+              ["Flame colour", "none", "none", "brick red", "crimson", "apple green"],
+            ],
+          },
+          {
+            type: "text",
+            md: t`Be and Mg give no flame colour: their electrons are held too tightly for a flame to excite them.
+
+**Chemical properties.** Reactivity increases down the group.
+
+- **Air and water:** Be and Mg are kinetically inert because a thin oxide film forms on them. Powdered Be burns in air to BeO and Be₃N₂; Mg burns with a dazzling white light to MgO and Mg₃N₂. Mg reacts with hot water; Ca, Sr and Ba react with cold water to give the hydroxide and hydrogen.
+- **Halogens:** all form MX₂ on heating. BeF₂ is best made by heating (NH₄)₂BeF₄.
+- **Hydrogen:** all except Be form hydrides MH₂ on heating; BeH₂ is made indirectly: $2\text{BeCl}_2 + \text{LiAlH}_4 \to 2\text{BeH}_2 + \text{LiCl} + \text{AlCl}_3$.
+- **Acids:** they react to release hydrogen: $\text{M} + 2\text{HCl} \to \text{MCl}_2 + \text{H}_2$.
+- **Reducing nature:** strong reducing agents, though weaker than the alkali metals. Beryllium's E° is less negative than expected because of its large ionisation enthalpy and sublimation enthalpy.
+- **Liquid ammonia:** like the alkali metals they dissolve to give deep blue-black solutions containing ammoniated electrons.`,
+          },
+          {
+            type: "table",
+            headers: ["Compound type", "Trend down the group", "Reason"],
+            rows: [
+              ["Hydroxides M(OH)₂: solubility and basic strength", "increase (Be(OH)₂ amphoteric, Ba(OH)₂ strongly basic)", "lattice enthalpy falls faster than hydration enthalpy"],
+              ["Carbonates MCO₃: solubility", "decrease", "hydration enthalpy of M²⁺ falls faster than lattice enthalpy (large anion)"],
+              ["Carbonates MCO₃: thermal stability", "increase (BeCO₃ is unstable; kept only under CO₂)", "small cations polarise and destabilise the large CO₃²⁻ ion"],
+              ["Sulphates MSO₄: solubility", "decrease (BeSO₄, MgSO₄ soluble; CaSO₄ sparingly; BaSO₄ insoluble)", "very high hydration enthalpies of Be²⁺ and Mg²⁺ outweigh the lattice enthalpy"],
+              ["Nitrates: on heating", t`all give oxide: 2M(NO$_3$)$_2$ → 2MO + 4NO$_2$ + O$_2$`, "same as LiNO₃"],
+            ],
+          },
+          {
+            type: "text",
+            md: "**Anomalous behaviour of beryllium.** Beryllium's exceptionally small atom and ion, high ionisation enthalpy and high polarising power make its compounds largely **covalent** and easily hydrolysed. Having no d orbitals in its valence shell, it shows a **maximum covalency of 4**, whereas the other members can reach 6. Its oxide and hydroxide are **amphoteric**. BeCl₂ is a chain polymer in the solid; in the vapour it is a chloride-bridged dimer, which breaks into linear monomers above about 1200 K.\n\n**Diagonal relationship of Be with Al.** Be(OH)₂ and Al(OH)₃ are both amphoteric, dissolving in excess alkali (Be(OH)₂ + 2OH⁻ → [Be(OH)₄]²⁻). Both metals are protected from acids by an oxide film; both chlorides have bridged structures in the vapour, dissolve in organic solvents and are strong Lewis acids (used as Friedel–Crafts catalysts); and both ions form complexes such as [BeF₄]²⁻ and [AlF₆]³⁻.",
+          },
+          {
+            type: "checkpoint",
+            questions: [
+              {
+                kind: "mcq",
+                q: "Which sulphate is most soluble in water?",
+                options: ["BeSO₄", "CaSO₄", "SrSO₄", "BaSO₄"],
+                answer: 0,
+                explain: "Be²⁺ has the largest hydration enthalpy, which outweighs the lattice enthalpy. BaSO₄ is so insoluble that it is used in barium-meal X-rays.",
+              },
+            ],
+          },
+          {
+            type: "table",
+            headers: ["Calcium compound", "Preparation", "Properties and uses"],
+            rows: [
+              ["Quicklime, CaO", "Heat limestone at 1070–1270 K: CaCO₃ ⇌ CaO + CO₂, removing CO₂ as it forms", "White, amorphous, m.p. 2870 K; basic oxide: CaO + SiO₂ → CaSiO₃, 6CaO + P₄O₁₀ → 2Ca₃(PO₄)₂. Used in cement, NaOH manufacture, purifying sugar, dyestuffs."],
+              ["Slaked lime, Ca(OH)₂", "Add water to quicklime: CaO + H₂O → Ca(OH)₂ (slaking)", "Lime water turns milky with CO₂ (CaCO₃ forms) and clears with excess CO₂ (soluble Ca(HCO₃)₂). Milk of lime + Cl₂ gives bleaching powder. Used in mortar, whitewash, glass-making, tanning, as a disinfectant."],
+              ["Calcium carbonate, CaCO₃", "Occurs as limestone, chalk, marble; made by passing CO₂ into slaked lime, or Na₂CO₃ + CaCl₂ → CaCO₃ + 2NaCl", "Decomposes to CaO and CO₂ at about 1200 K; releases CO₂ with dilute acids. Marble for building, flux in iron extraction, antacid, toothpaste, chewing gum filler."],
+              ["Plaster of Paris, CaSO₄·½H₂O", "Heat gypsum at 393 K: 2(CaSO₄·2H₂O) → 2(CaSO₄)·H₂O + 3H₂O", "Mixed with water it sets to a hard mass of gypsum within minutes. Above 393 K anhydrous CaSO₄ forms (dead burnt plaster), which does not set. Used for casts on fractures, statues, dentistry, decorative work."],
+            ],
+          },
+          {
+            type: "formula",
+            tex: t`\begin{aligned} \text{Ca(OH)}_2 + \text{CO}_2 &\to \text{CaCO}_3\downarrow + \text{H}_2\text{O} \\ \text{CaCO}_3 + \text{CO}_2 + \text{H}_2\text{O} &\to \text{Ca(HCO}_3)_2 \\ 2\text{Ca(OH)}_2 + 2\text{Cl}_2 &\to \text{CaCl}_2 + \text{Ca(OCl)}_2 + 2\text{H}_2\text{O} \end{aligned}`,
+            caption: "The lime-water test for CO₂, and the formation of bleaching powder (the active part is calcium hypochlorite).",
+          },
+          {
+            type: "text",
+            md: "**Cement (Portland cement)** is made by heating limestone with clay (which supplies SiO₂, Al₂O₃ and Fe₂O₃) to give **clinker**, then grinding it with 2–3% gypsum to slow down setting. A typical composition is CaO 50–60%, SiO₂ 20–25%, Al₂O₃ 5–10%, MgO 2–3%, Fe₂O₃ 1–2% and SO₃ 1–2%. For good quality the ratio of SiO₂ to (Al₂O₃ + Fe₂O₃) should be between 2.5 and 4, and the ratio of CaO to (SiO₂ + Al₂O₃ + Fe₂O₃) close to 2. The main constituents of clinker are tricalcium silicate Ca₃SiO₅ (about 51%), dicalcium silicate Ca₂SiO₄ (26%) and tricalcium aluminate Ca₃Al₂O₆ (11%). Setting is due to hydration of these silicates and aluminates, which link into a hard network.\n\n**Biological importance of Mg and Ca.** An adult body has about 25 g of Mg and 1200 g of Ca. Enzymes that use ATP need Mg²⁺, and chlorophyll contains magnesium. About 99% of the body's calcium is in bones and teeth; Ca²⁺ is also needed for nerve and muscle function, blood clotting and membranes. Plasma calcium is held near 100 mg L⁻¹ by the hormones calcitonin and parathyroid hormone.",
+          },
+          {
+            type: "example",
+            title: "Water lost when making plaster of Paris",
+            problem: "What percentage of the mass of gypsum (CaSO₄·2H₂O) is lost when it is converted completely into plaster of Paris? (Ca = 40, S = 32, O = 16, H = 1)",
+            steps: [
+              "Molar mass of CaSO₄·2H₂O = 136 + 36 = 172 g mol⁻¹, so 2 mol = 344 g.",
+              "2(CaSO₄·2H₂O) → 2(CaSO₄)·H₂O + 3H₂O; the water lost is 3 × 18 = 54 g.",
+              "Percentage loss = 54/344 × 100 = 15.7%.",
+            ],
+            answer: "About 15.7% of the mass is lost",
+          },
+          {
+            type: "mistake",
+            wrong: "Like the hydroxides, the sulphates of Group 2 become more soluble down the group.",
+            right: "The trends are opposite: hydroxides become more soluble down the group, but sulphates (and carbonates) become less soluble. BeSO₄ is very soluble; BaSO₄ is almost insoluble.",
+            why: "For a small anion like OH⁻ the lattice enthalpy falls quickly as the cation grows. For a large anion like SO₄²⁻ the lattice enthalpy hardly changes, so the falling hydration enthalpy decides the trend.",
+          },
+          {
+            type: "activity",
+            activity: {
+              kind: "sort",
+              prompt: "Which way does each property change down Group 2?",
+              groups: ["Increases down the group", "Decreases down the group"],
+              items: [
+                { text: "Solubility of hydroxides", group: 0, hint: "Ba(OH)₂ is fairly soluble; Mg(OH)₂ is milk of magnesia, a suspension." },
+                { text: "Solubility of sulphates", group: 1, hint: "BaSO₄ is used in barium meals because it does not dissolve." },
+                { text: "Thermal stability of carbonates", group: 0, hint: "Bigger cations polarise CO₃²⁻ less." },
+                { text: "First ionisation enthalpy", group: 1, hint: "Outer electrons are further from the nucleus." },
+                { text: "Basic strength of hydroxides", group: 0, hint: "Be(OH)₂ is amphoteric; Ba(OH)₂ is a strong base." },
+                { text: "Hydration enthalpy of M²⁺", group: 1, hint: "Larger ions attract water less." },
+              ],
+              explain: "Size governs everything here: as M²⁺ grows, hydration enthalpy and polarising power fall, and lattice enthalpy falls most for small anions.",
+            },
+          },
+          {
+            type: "keypoints",
+            items: [
+              "Group 2 configuration ns²; they form M²⁺; harder and less reactive than Group 1.",
+              "Ca, Sr and Ba give brick red, crimson and apple green flames; Be and Mg give none.",
+              "Down the group: hydroxide solubility and basicity rise; sulphate and carbonate solubility fall; carbonate stability rises.",
+              "Be is anomalous (covalent compounds, maximum covalency 4, amphoteric oxide) and resembles Al diagonally.",
+              "Gypsum at 393 K gives plaster of Paris CaSO₄·½H₂O; cement clinker is mainly calcium silicates and aluminate.",
+            ],
+          },
+        ],
+        flashcards: [
+          { front: "General configuration of Group 2", back: "[noble gas] ns²" },
+          { front: "Flame colours of Ca, Sr, Ba", back: "Brick red, crimson, apple green." },
+          { front: "Why do Be and Mg not colour a flame?", back: "Their electrons are too strongly bound to be excited by the flame." },
+          { front: "Maximum covalency of Be", back: "4 (no d orbitals in its valence shell)." },
+          { front: "Diagonal partner of beryllium", back: "Aluminium" },
+          { front: "Formula of plaster of Paris", back: "CaSO₄·½H₂O, made by heating gypsum at 393 K." },
+          { front: "Dead burnt plaster", back: "Anhydrous CaSO₄, formed above 393 K; it does not set with water." },
+          { front: "Why is gypsum added to cement clinker?", back: "To slow down the setting of cement." },
+          { front: "Lime water with excess CO₂", back: "Milkiness (CaCO₃) disappears as soluble Ca(HCO₃)₂ forms." },
+        ],
+        quiz: [
+          {
+            kind: "mcq",
+            q: "Which carbonate is thermally least stable?",
+            options: ["BeCO₃", "MgCO₃", "CaCO₃", "BaCO₃"],
+            answer: 0,
+            explain: "The tiny Be²⁺ ion strongly polarises the carbonate ion, so BeCO₃ decomposes most easily.",
+          },
+          {
+            kind: "mcq",
+            q: "Which hydroxide is amphoteric?",
+            options: ["Be(OH)₂", "Mg(OH)₂", "Ca(OH)₂", "Ba(OH)₂"],
+            answer: 0,
+            explain: "Be(OH)₂ dissolves in both acids and alkalis (forming [Be(OH)₄]²⁻), like Al(OH)₃.",
+          },
+          {
+            kind: "truefalse",
+            q: "Magnesium burnt in air gives a mixture of MgO and Mg₃N₂.",
+            answer: true,
+            explain: "Burning Mg reacts with both oxygen and nitrogen of the air.",
+          },
+          {
+            kind: "numeric",
+            q: "What volume of CO₂ at STP (22.4 L mol⁻¹) is released when 25 g of CaCO₃ is heated strongly? Give litres.",
+            answer: 5.6,
+            tolerance: 0.05,
+            unit: "L",
+            explain: "25/100 = 0.25 mol CaCO₃ gives 0.25 mol CO₂ = 0.25 × 22.4 = 5.6 L.",
+          },
+          {
+            kind: "multi",
+            q: "Which statements about plaster of Paris are correct?",
+            options: [
+              "It is CaSO₄·½H₂O.",
+              "It is made by heating gypsum at about 393 K.",
+              "When mixed with water it sets back into gypsum.",
+              "Heating it above 393 K makes it set faster.",
+            ],
+            answers: [0, 1, 2],
+            explain: "Above 393 K anhydrous 'dead burnt plaster' forms, which does not set with water.",
+            difficulty: 2,
+          },
+          {
+            kind: "mcq",
+            q: "The main constituent of Portland cement clinker is",
+            options: ["tricalcium silicate, Ca₃SiO₅", "calcium sulphate", "calcium chloride", "magnesium oxide"],
+            answer: 0,
+            explain: "Ca₃SiO₅ makes up about half of clinker; gypsum (CaSO₄·2H₂O) is added only in small amounts.",
+          },
+          {
+            kind: "mcq",
+            q: "Chlorophyll contains which metal?",
+            options: ["Mg", "Ca", "Fe", "Be"],
+            answer: 0,
+            explain: "A magnesium ion sits at the centre of the chlorophyll ring.",
+          },
+          {
+            kind: "order",
+            q: "Arrange the sulphates in decreasing order of solubility in water.",
+            items: ["BeSO₄", "MgSO₄", "CaSO₄", "SrSO₄", "BaSO₄"],
+            explain: "Hydration enthalpy falls down the group while the lattice enthalpy of the large sulphate salts stays nearly constant, so solubility falls.",
+          },
+        ],
+      },
+      /* ---------------- Exam edge ---------------- */
+      {
+        slug: "c11-che-sb-exam-edge",
+        title: "Exam edge: s-Block Elements",
+        summary: "What JEE Advanced and other entrance exams ask from Groups 1 and 2: trend reversals and their reasons, peroxide and superoxide chemistry, liquid-ammonia solutions, Li and Be anomalies, stoichiometry of KO₂ and Solvay, and identify-the-compound puzzles.",
+        minutes: 24,
+        xp: 60,
+        track: "exam",
+        blocks: [
+          {
+            type: "text",
+            md: "**Who needs this.** s-Block was removed from rationalised NCERT, and the current NEET, KCET and JEE Main syllabi follow that, so direct questions there are now rare. **JEE Advanced** still lists Groups 1 and 2 (reactivity, liquid-ammonia solutions, oxides, hydroxides, halides, oxo-acid salts, Li/Be anomalies, and compounds of Na and Ca), and ISC Class 11 examines it fully. The same reasoning (size, hydration enthalpy, lattice enthalpy, polarising power) also explains trends in p-block and coordination chemistry, so it repays the time. Always check the current information bulletin.\n\nThe favourites are: trend-ordering questions where the order **reverses** (mobility, reducing power in water, sulphate solubility), what superoxides and peroxides do with water and CO₂, statement-checking on liquid ammonia solutions, and short 'identify A, B, C' puzzles built on calcium and sodium compounds.",
+          },
+          {
+            type: "table",
+            headers: ["Trend", "Order", "The reason to quote"],
+            rows: [
+              ["Reducing power in water (Group 1)", "Li > Cs ≈ Rb ≈ K > Na", "hydration enthalpy of Li⁺"],
+              ["Ionic mobility in water", "Li⁺ < Na⁺ < K⁺ < Rb⁺ < Cs⁺", "hydrated size"],
+              ["Solubility of Group 2 hydroxides / sulphates", "hydroxides ↑ down; sulphates ↓ down", "small vs large anion: lattice vs hydration"],
+              ["Thermal stability of carbonates", "BeCO₃ < MgCO₃ < CaCO₃ < SrCO₃ < BaCO₃; Li₂CO₃ least stable in Group 1", "polarising power of cation"],
+              ["Lattice enthalpy of LiX", "LiF > LiCl > LiBr > LiI", "smaller anion, closer ions"],
+              ["Covalent character of Group 2 chlorides", "BeCl₂ > MgCl₂ > CaCl₂ > …", "Fajans' rules: small, highly charged cation"],
+            ],
+          },
+          {
+            type: "formula",
+            tex: t`4\text{KO}_2 + 2\text{CO}_2 \to 2\text{K}_2\text{CO}_3 + 3\text{O}_2 \qquad 2\text{Na}_2\text{O}_2 + 2\text{CO}_2 \to 2\text{Na}_2\text{CO}_3 + \text{O}_2`,
+            caption: "Why KO₂ (and Na₂O₂) can regenerate oxygen in closed spaces such as submarines and breathing apparatus.",
+          },
+          {
+            type: "example",
+            title: "NEET / KCET level: ordering with a reason",
+            problem: "Arrange BeCO₃, MgCO₃, CaCO₃ and BaCO₃ in increasing order of decomposition temperature, and give the reason.",
+            steps: [
+              "Decomposition MCO₃ → MO + CO₂ is helped when the cation distorts (polarises) the carbonate ion.",
+              "Polarising power is greatest for the smallest cation, Be²⁺, and falls as the cation grows.",
+              "So the carbonate becomes more stable, and needs a higher temperature, down the group.",
+            ],
+            answer: "BeCO₃ < MgCO₃ < CaCO₃ < BaCO₃",
+          },
+          {
+            type: "example",
+            title: "JEE Main level: KO₂ in a breathing mask",
+            problem: "How many grams of KO₂ are needed to release 48 g of O₂ by reaction with CO₂, and what mass of CO₂ is absorbed? (K = 39, O = 16, C = 12)",
+            steps: [
+              "4KO₂ + 2CO₂ → 2K₂CO₃ + 3O₂.",
+              "48 g O₂ = 1.5 mol. From the equation, 3 mol O₂ needs 4 mol KO₂, so 1.5 mol O₂ needs 2.0 mol KO₂.",
+              "Mass of KO₂ = 2.0 × 71 = 142 g.",
+              "CO₂ absorbed = 1.0 mol (half the KO₂) = 44 g.",
+            ],
+            answer: "142 g KO₂; 44 g CO₂ absorbed",
+          },
+          {
+            type: "example",
+            title: "JEE Advanced level: identify the compounds",
+            problem: "A white solid A gives a brick-red flame. On strong heating it loses mass, forming a white solid B and a gas C that turns lime water milky. B reacts with water with a hissing sound to give D. A suspension of D absorbs Cl₂ to give a bleaching agent E. Identify A to E and write the equations.",
+            steps: [
+              "Brick-red flame means calcium. A gas that turns lime water milky is CO₂, so A is CaCO₃ and C is CO₂.",
+              "CaCO₃ → CaO + CO₂ on heating, so B is quicklime CaO.",
+              "CaO + H₂O → Ca(OH)₂ (slaking, very exothermic: the hiss), so D is slaked lime.",
+              "2Ca(OH)₂ + 2Cl₂ → CaCl₂ + Ca(OCl)₂ + 2H₂O; E is bleaching powder (active part Ca(OCl)₂).",
+            ],
+            answer: "A = CaCO₃, B = CaO, C = CO₂, D = Ca(OH)₂, E = bleaching powder (Ca(OCl)₂ with CaCl₂)",
+          },
+          {
+            type: "checkpoint",
+            questions: [
+              {
+                kind: "mcq",
+                q: "Which alkali metal ion forms the most stable superoxide?",
+                options: ["Cs⁺", "Li⁺", "Na⁺", "K⁺"],
+                answer: 0,
+                explain: "Large cations stabilise large anions; superoxide stability increases K < Rb < Cs. Li does not form one.",
+              },
+            ],
+          },
+          {
+            type: "mistake",
+            wrong: "A more negative E° always means a faster reaction, so lithium must fizz most violently in water.",
+            right: "E° tells how favourable (thermodynamics) the reaction is, not how fast (kinetics). Lithium reacts more slowly than sodium or potassium.",
+            why: "Exams mix up 'strongest reducing agent' and 'most reactive'. Separate the energy argument (hydration enthalpy) from the rate observed.",
+          },
+          {
+            type: "mistake",
+            wrong: "Concentrated solutions of sodium in liquid ammonia are still blue and paramagnetic, just darker.",
+            right: "Concentrated solutions are bronze-coloured and diamagnetic, because the solvated electrons pair up and metal-ion clusters form.",
+            why: "Statement questions test this switch directly; learners remember only 'blue and paramagnetic'.",
+          },
+          {
+            type: "activity",
+            activity: {
+              kind: "reveal",
+              prompt: "Which is least soluble in water: LiF, LiI, CsF or NaCl?",
+              emoji: "🧪",
+              options: ["LiF", "LiI", "CsF", "NaCl"],
+              answer: 0,
+              trap: 1,
+              explain: "LiF has the smallest ions of all, so a very high lattice enthalpy that hydration cannot overcome. LiI is very soluble: its lattice is weak because I⁻ is large.",
+            },
+          },
+          {
+            type: "callout",
+            tone: "exam",
+            title: "Where marks are lost",
+            md: "In assertion–reason items, check that the reason actually explains the assertion: 'Li is the strongest reducing agent' is explained by hydration enthalpy, **not** by low ionisation enthalpy (Li's is the highest in the group). In balancing, remember superoxides give H₂O₂ and O₂ with water.",
+          },
+          {
+            type: "keypoints",
+            items: [
+              "Find the reason first (size, hydration, lattice, polarising power); the order follows from it.",
+              "Small anion (OH⁻, F⁻): lattice enthalpy decides; large anion (SO₄²⁻, CO₃²⁻, I⁻): hydration enthalpy decides.",
+              "KO₂ and Na₂O₂ absorb CO₂ and release O₂.",
+              "Li and Be are anomalous; they resemble Mg and Al diagonally.",
+              "Calcium puzzle chain: CaCO₃ → CaO → Ca(OH)₂ → CaCO₃ / Ca(HCO₃)₂ / bleaching powder.",
+            ],
+          },
+        ],
+        flashcards: [
+          { front: "Reaction of KO₂ with CO₂", back: "4KO₂ + 2CO₂ → 2K₂CO₃ + 3O₂" },
+          { front: "Reaction of Na₂O₂ with CO₂", back: "2Na₂O₂ + 2CO₂ → 2Na₂CO₃ + O₂" },
+          { front: "Least soluble lithium halide", back: "LiF (very high lattice enthalpy)." },
+          { front: "Most stable superoxide among alkali metals", back: "CsO₂ (largest cation)." },
+          { front: "Group 2 hydroxide used as an antacid", back: "Mg(OH)₂ (milk of magnesia)." },
+          { front: "Why is BaSO₄ used in barium-meal X-rays?", back: "It is insoluble (so non-toxic) and absorbs X-rays well." },
+          { front: "Concentrated alkali metal in liquid NH₃", back: "Bronze coloured and diamagnetic." },
+          { front: "Rule of thumb: lattice vs hydration", back: "For small anions lattice enthalpy controls solubility; for large anions hydration enthalpy controls it." },
+        ],
+        quiz: [
+          {
+            kind: "mcq",
+            q: "Which order of thermal stability is correct?",
+            options: ["Li₂CO₃ < Na₂CO₃ < K₂CO₃", "K₂CO₃ < Na₂CO₃ < Li₂CO₃", "Na₂CO₃ < Li₂CO₃ < K₂CO₃", "all are equally stable"],
+            answer: 0,
+            explain: "Li⁺ is small and polarising, so Li₂CO₃ decomposes on heating; stability increases down the group.",
+          },
+          {
+            kind: "numeric",
+            q: "Na₂O₂ is used to absorb CO₂ and release O₂ (2Na₂O₂ + 2CO₂ → 2Na₂CO₃ + O₂). How many grams of O₂ are released by 15.6 g of Na₂O₂? (Na = 23, O = 16)",
+            answer: 3.2,
+            tolerance: 0.05,
+            unit: "g",
+            explain: "M(Na₂O₂) = 78; 15.6/78 = 0.20 mol. 2 mol give 1 mol O₂, so 0.10 mol O₂ = 3.2 g.",
+            difficulty: 2,
+            hint: "Find moles of Na₂O₂ first.",
+          },
+          {
+            kind: "multi",
+            q: "Which statements are correct?",
+            options: [
+              "BeCl₂ is linear in the vapour above 1200 K.",
+              "Mg forms a nitride by direct combination with N₂.",
+              "CaSO₄ is more soluble than MgSO₄.",
+              "Be(OH)₂ dissolves in excess NaOH.",
+            ],
+            answers: [0, 1, 3],
+            explain: "MgSO₄ is readily soluble; CaSO₄ is only sparingly soluble.",
+            difficulty: 2,
+          },
+          {
+            kind: "mcq",
+            q: "Assertion: Lithium is the strongest reducing agent among alkali metals in aqueous solution. Reason: Lithium has the lowest ionisation enthalpy in Group 1.",
+            options: [
+              "Assertion true, reason false",
+              "Both true and the reason explains the assertion",
+              "Both true but the reason does not explain the assertion",
+              "Both false",
+            ],
+            answer: 0,
+            explain: "Li has the highest ionisation enthalpy in the group; its reducing power comes from its very large hydration enthalpy.",
+            difficulty: 2,
+            hint: "Check the ionisation enthalpy table.",
+          },
+          {
+            kind: "mcq",
+            q: "A metal X burns in excess air to give a yellow, paramagnetic solid. X is most likely",
+            options: ["K", "Li", "Na", "Mg"],
+            answer: 0,
+            explain: "KO₂ (superoxide) is yellow and paramagnetic. Na₂O₂ is pale yellow but diamagnetic (O₂²⁻ has no unpaired electrons).",
+            difficulty: 3,
+            hint: "Which oxygen anion has an unpaired electron?",
+          },
+          {
+            kind: "numeric",
+            q: "In the electrolysis of brine, how many moles of NaOH form for every mole of Cl₂ released?",
+            answer: 2,
+            explain: "Overall: 2NaCl + 2H₂O → 2NaOH + Cl₂ + H₂, so 2 mol NaOH per mole of Cl₂.",
+          },
+          {
+            kind: "mcq",
+            q: "Which pair shows a diagonal relationship?",
+            options: ["Be and Al", "Li and Na", "Mg and Ca", "Be and Mg"],
+            answer: 0,
+            explain: "Diagonal pairs are one period down and one group right: Li–Mg, Be–Al, B–Si.",
+          },
+          {
+            kind: "mcq",
+            q: "Lime water turns milky with CO₂ and then clears when more CO₂ is passed. The clear solution contains",
+            options: ["Ca(HCO₃)₂", "CaCO₃", "CaO", "Ca(OH)₂ only"],
+            answer: 0,
+            explain: "CaCO₃ + CO₂ + H₂O → Ca(HCO₃)₂, which is soluble.",
+          },
+        ],
+      },
+    ],
+  },
+  /* END-SBLOCK */
 ];
 
 export const links: Record<string, string | string[]> = {
   "11:States of Matter: Gaseous and Liquid States": "c11-che-states-of-matter",
+  "11:s-Block Elements": "c11-che-s-block",
 };

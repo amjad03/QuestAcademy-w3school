@@ -463,7 +463,7 @@ Both $K$ and $U$ are always positive and each repeats with period $T/2$, twice p
             type: "callout",
             tone: "note",
             title: "Who needs this lesson",
-            md: "Damped and forced oscillations and resonance were removed from the rationalised NCERT book, so CBSE and Karnataka I PUC board papers do not ask them. ISC Class 11 still teaches them, and JEE Main lists damped and forced oscillations and resonance (qualitative ideas). Combinations of springs are standard in JEE, NEET and KCET problems even though the book does not treat them separately.",
+            md: "Damped and forced oscillations and resonance were removed from the rationalised NCERT book, so CBSE and Karnataka I PUC board papers do not ask them. ISC Class 11 still teaches them. Recent JEE syllabi have been trimmed along with NCERT, so check the current information bulletin, but qualitative questions on damping and resonance still turn up in problem sets and coaching tests. Combinations of springs are standard in JEE, NEET and KCET problems even though the book does not treat them separately.",
           },
           {
             type: "text",
@@ -905,9 +905,916 @@ When $\omega_d$ is close to $\omega$, the amplitude becomes very large: this is 
       },
     ],
   },
+  /* ------------------------------------------------------------------ */
+  /* Waves (NCERT) — part of "Oscillations and Waves" (ISC)              */
+  /* ------------------------------------------------------------------ */
+  {
+    slug: "c11-phy-waves",
+    title: "Waves",
+    icon: "🌊",
+    description: "Transverse and longitudinal waves, the displacement relation of a progressive wave, wave speed on a string and in a gas, superposition, reflection, standing waves on strings and in pipes, beats, and the Doppler effect for JEE.",
+    lessons: [
+      /* ---------------- Lesson 1 ---------------- */
+      {
+        slug: "c11-phy-wave-types-equation",
+        title: "Transverse and Longitudinal Waves",
+        summary: "What a wave carries, transverse and longitudinal mechanical waves, the displacement relation for a progressive wave, and amplitude, phase, wavelength, angular wave number, period and frequency.",
+        minutes: 18,
+        xp: 45,
+        blocks: [
+          {
+            type: "illustration",
+            emoji: "🏟️",
+            caption: "In a Mexican wave at a cricket stadium, each fan only stands up and sits down, yet the wave races round the ground. The pattern travels; the people stay in their seats.",
+          },
+          {
+            type: "text",
+            md: t`A **wave** is a pattern of disturbance that travels through space, carrying **energy and momentum** from one place to another, without the medium itself moving along with it. Each particle of the medium only oscillates about its own mean position and passes the disturbance on to its neighbour.
+
+Physics deals with three kinds of waves:
+
+- **Mechanical waves** need a material medium and obey Newton's laws: waves on strings, water waves, sound, seismic waves.
+- **Electromagnetic waves** (light, radio waves, X-rays) need no medium; all travel at $c \approx 3 \times 10^8\ \text{m s}^{-1}$ in vacuum.
+- **Matter waves** are associated with moving particles such as electrons (Class 12).
+
+This chapter is about mechanical waves.`,
+          },
+          {
+            type: "text",
+            md: t`Mechanical waves come in two types.
+
+In a **transverse wave**, the particles of the medium oscillate **perpendicular** to the direction in which the wave travels. Flick one end of a long rope sideways: crests and troughs run along it.
+
+In a **longitudinal wave**, the particles oscillate **along** the direction of travel. Push and pull one end of a slinky: regions where the coils crowd together (**compressions**) and spread apart (**rarefactions**) move along it. Sound in air is longitudinal.
+
+A transverse mechanical wave needs a medium that resists a change of **shape** (shear). Solids and stretched strings do; liquids and gases do not, so inside a fluid only longitudinal waves travel. Longitudinal waves need only a resistance to change of **volume**, which all media have.`,
+          },
+          {
+            type: "table",
+            headers: ["Feature", "Transverse", "Longitudinal"],
+            rows: [
+              ["Particle motion", "perpendicular to travel", "along the travel"],
+              ["Pattern", "crests and troughs", "compressions and rarefactions"],
+              ["Media (mechanical)", "solids, strings, liquid surfaces", "solids, liquids and gases"],
+              ["Examples", "wave on a sitar string, S-waves of an earthquake", "sound in air, P-waves of an earthquake"],
+            ],
+          },
+          {
+            type: "text",
+            md: t`**Displacement relation for a progressive wave.** For a sinusoidal wave moving in the $+x$ direction, the displacement of the particle at position $x$ at time $t$ is given below. Each term has a name:
+
+- $a$: **amplitude**, the largest displacement of a particle;
+- $(kx - \omega t + \phi)$: **phase**; $\phi$ is the initial phase angle;
+- $\lambda$: **wavelength**, the least distance between two points in the same phase (crest to crest); $k = 2\pi/\lambda$ is the **angular wave number** (rad/m);
+- $T$: **period**, the time for one oscillation of a particle; $\omega = 2\pi/T$ and **frequency** $\nu = 1/T$.
+
+A minus sign between $kx$ and $\omega t$ means the wave travels towards $+x$; a plus sign means towards $-x$.`,
+          },
+          {
+            type: "formula",
+            tex: t`y(x, t) = a\sin(kx - \omega t + \phi), \qquad k = \frac{2\pi}{\lambda}, \qquad \omega = \frac{2\pi}{T}`,
+            caption: "A progressive (travelling) sinusoidal wave moving along +x.",
+          },
+          {
+            type: "formula",
+            tex: t`v = \frac{\lambda}{T} = \nu\lambda = \frac{\omega}{k}`,
+            caption: "In one period the wave moves forward by one wavelength. Follow a point of constant phase: kx − ωt = constant gives dx/dt = ω/k.",
+          },
+          {
+            type: "example",
+            title: "Reading a wave equation",
+            problem: t`A wave on a string is $y = 0.004\sin(0.8\pi x - 40\pi t)$, with $x, y$ in metres and $t$ in seconds. Find its amplitude, wavelength, frequency, period, speed and direction, and the largest speed of a particle of the string.`,
+            steps: [
+              t`Compare with $y = a\sin(kx - \omega t)$: $a = 0.004$ m $= 4$ mm, $k = 0.8\pi$ rad/m, $\omega = 40\pi$ rad/s.`,
+              t`$\lambda = 2\pi/k = 2\pi/0.8\pi = 2.5$ m.`,
+              t`$\nu = \omega/2\pi = 20$ Hz, so $T = 0.05$ s.`,
+              t`$v = \omega/k = 40\pi/0.8\pi = 50\ \text{m s}^{-1}$; the minus sign means it moves towards $+x$.`,
+              t`Particle velocity $\partial y/\partial t = -a\omega\cos(kx - \omega t)$, so its largest value is $a\omega = 0.004 \times 40\pi \approx 0.50\ \text{m s}^{-1}$.`,
+            ],
+            answer: "a = 4 mm, λ = 2.5 m, ν = 20 Hz, T = 0.05 s, v = 50 m/s along +x; maximum particle speed about 0.50 m/s, a hundred times smaller than the wave speed.",
+          },
+          {
+            type: "checkpoint",
+            questions: [
+              {
+                kind: "mcq",
+                q: t`The wave $y = a\sin(kx + \omega t)$ travels:`,
+                options: ["along +x", "along −x", "along +y", "it does not travel"],
+                answer: 1,
+                explain: t`Constant phase needs $kx + \omega t$ = constant, so $x$ decreases as $t$ grows: the wave moves along $-x$.`,
+              },
+              {
+                kind: "numeric",
+                q: "A wave of frequency 25 Hz travels at 50 m/s. Find its wavelength.",
+                answer: 2,
+                tolerance: 0.01,
+                unit: "m",
+                explain: t`$\lambda = v/\nu = 50/25 = 2$ m.`,
+              },
+            ],
+          },
+          {
+            type: "mistake",
+            wrong: "In a wave the medium moves along with the wave, and each particle moves at the wave speed.",
+            right: t`Only the disturbance (and its energy) travels at the wave speed $v = \omega/k$. Each particle just oscillates about its own mean position, with a speed that changes all the time and is at most $a\omega$.`,
+            why: "We see the crest move and imagine the water moving with it. But a leaf on a pond only bobs up and down as ripples pass. Wave speed depends on the medium; particle speed depends on amplitude and frequency.",
+          },
+          {
+            type: "activity",
+            activity: {
+              kind: "sort",
+              prompt: "Sort each wave as transverse or longitudinal.",
+              groups: ["Transverse", "Longitudinal"],
+              items: [
+                { text: "A wave on a plucked veena string", group: 0, hint: "The string moves sideways while the wave runs along it." },
+                { text: "Sound travelling through air", group: 1, hint: "Air layers are pushed and pulled along the direction of travel." },
+                { text: "S-waves (secondary waves) of an earthquake", group: 0, hint: "They shake the rock sideways and cannot pass through the liquid outer core." },
+                { text: "P-waves (primary waves) of an earthquake", group: 1, hint: "They compress and stretch the rock along their path." },
+                { text: "A pulse sent by pushing a slinky along its length", group: 1, hint: "The coils crowd together along the length." },
+                { text: "A rope shaken up and down at one end", group: 0, hint: "Each bit of rope moves up and down; the wave moves along." },
+              ],
+              explain: "Compare the direction a particle moves with the direction the wave travels: perpendicular means transverse, parallel means longitudinal.",
+            },
+          },
+          {
+            type: "callout",
+            tone: "exam",
+            title: "Board exam tip",
+            md: t`Questions on "given $y(x,t)$, find $a$, $\lambda$, $\nu$, $v$ and the direction" are routine marks. Always rewrite the equation into the form $a\sin(kx - \omega t + \phi)$ first, and check units: if $x$ is in cm, $k$ is in rad/cm. Do not confuse the wave speed $\omega/k$ with the particle speed $a\omega$.`,
+          },
+          {
+            type: "keypoints",
+            items: [
+              "A wave carries energy and momentum; the particles of the medium only oscillate about their mean positions.",
+              "Transverse: particle motion ⊥ travel (needs shear rigidity). Longitudinal: particle motion ∥ travel (any medium).",
+              t`Progressive wave: $y = a\sin(kx - \omega t + \phi)$, with $k = 2\pi/\lambda$, $\omega = 2\pi/T$.`,
+              t`Wave speed $v = \nu\lambda = \omega/k$; maximum particle speed $a\omega$.`,
+            ],
+          },
+        ],
+        flashcards: [
+          { front: "Wave", back: "A travelling disturbance that carries energy and momentum without carrying the medium along." },
+          { front: "Transverse wave", back: "Particles oscillate perpendicular to the direction of travel (crests and troughs)." },
+          { front: "Longitudinal wave", back: "Particles oscillate along the direction of travel (compressions and rarefactions)." },
+          { front: "Why no transverse waves inside a gas?", back: "A gas has no shear rigidity: it does not resist a change of shape." },
+          { front: "Displacement relation (wave along +x)", back: t`$y = a\sin(kx - \omega t + \phi)$` },
+          { front: "Angular wave number", back: t`$k = 2\pi/\lambda$, unit rad/m` },
+          { front: "Wave speed", back: t`$v = \nu\lambda = \omega/k$` },
+        ],
+        quiz: [
+          {
+            kind: "mcq",
+            q: t`For $y = 0.02\sin(4x - 200t)$ (SI units), the wave travels:`,
+            options: ["at 50 m/s along +x", "at 50 m/s along −x", "at 800 m/s along +x", "at 0.02 m/s along +x"],
+            answer: 0,
+            explain: t`$v = \omega/k = 200/4 = 50\ \text{m s}^{-1}$; the minus sign between the terms means $+x$.`,
+          },
+          {
+            kind: "truefalse",
+            q: "Transverse mechanical waves can travel through air.",
+            answer: false,
+            explain: "Air has no rigidity against change of shape, so only longitudinal (sound) waves travel through it.",
+          },
+          {
+            kind: "numeric",
+            q: "A sound wave of frequency 500 Hz has wavelength 0.68 m. Find its speed.",
+            answer: 340,
+            tolerance: 0.5,
+            unit: "m/s",
+            explain: t`$v = \nu\lambda = 500 \times 0.68 = 340\ \text{m s}^{-1}$.`,
+          },
+          {
+            kind: "numeric",
+            q: "A wave has wavelength 0.5 m. Find its angular wave number.",
+            answer: 12.57,
+            tolerance: 0.05,
+            unit: "rad/m",
+            explain: t`$k = 2\pi/\lambda = 2\pi/0.5 = 4\pi \approx 12.57$ rad/m.`,
+          },
+          {
+            kind: "multi",
+            q: "Which of these are longitudinal waves?",
+            options: ["Sound in air", "P-waves of an earthquake", "A compression pulse along a slinky", "A wave on a guitar string"],
+            answers: [0, 1, 2],
+            explain: "In the first three, the particles move along the direction of travel. The guitar string moves sideways: a transverse wave.",
+          },
+          {
+            kind: "mcq",
+            q: t`For the wave $y = a\sin(kx - \omega t)$, the maximum speed of a particle of the medium is:`,
+            options: [t`$\omega/k$`, t`$a\omega$`, t`$a\omega^2$`, t`$ak$`],
+            answer: 1,
+            explain: t`$\partial y/\partial t = -a\omega\cos(kx - \omega t)$, whose largest value is $a\omega$. $\omega/k$ is the wave speed.`,
+          },
+          {
+            kind: "numeric",
+            q: t`For $y = 0.05\sin(\pi x - 10\pi t)$ (SI units), find the ratio of the maximum particle speed to the wave speed.`,
+            answer: 0.157,
+            tolerance: 0.003,
+            difficulty: 2,
+            hint: t`Ratio $= \dfrac{a\omega}{\omega/k} = ak$.`,
+            explain: t`$a\omega = 0.05 \times 10\pi = 0.5\pi$; $v = 10\pi/\pi = 10$ m/s. Ratio $= 0.5\pi/10 = 0.05\pi \approx 0.157$.`,
+          },
+          {
+            kind: "mcq",
+            q: "Two points on a wave of wavelength 1 m are 25 cm apart along the direction of travel. Their phase difference is:",
+            options: ["π/4", "π/2", "π", "2π"],
+            answer: 1,
+            difficulty: 2,
+            hint: t`$\Delta\phi = \dfrac{2\pi}{\lambda}\Delta x$.`,
+            explain: t`$\Delta\phi = 2\pi(0.25)/1 = \pi/2$.`,
+          },
+        ],
+      },
+
+      /* ---------------- Lesson 2 ---------------- */
+      {
+        slug: "c11-phy-wave-speed-superposition",
+        title: "Speed of Waves and the Principle of Superposition",
+        summary: "Speed of a transverse wave on a stretched string, speed of sound in solids, liquids and gases, Newton's formula and Laplace's correction, and the principle of superposition with interference.",
+        minutes: 20,
+        xp: 50,
+        blocks: [
+          {
+            type: "illustration",
+            emoji: "🎻",
+            caption: "Tighten a violin peg and the note rises; a thick string gives a deeper note than a thin one. Tension and mass per length decide how fast waves run along a string.",
+          },
+          {
+            type: "text",
+            md: t`The speed of a mechanical wave depends on two properties of the **medium**, not on the source: an **elastic** property (how strongly it pulls back) and an **inertial** property (how much mass must be moved).
+
+For a stretched string, the restoring property is the **tension** $T$ (a force, unit N), and the inertial property is the **linear mass density** $\mu$ (mass per unit length, kg/m). The only combination of $T$ and $\mu$ with the dimensions of speed is $\sqrt{T/\mu}$: $[T/\mu] = \dfrac{[MLT^{-2}]}{[ML^{-1}]} = [L^2T^{-2}]$. A detailed analysis shows the constant is exactly 1.`,
+          },
+          {
+            type: "formula",
+            tex: t`v = \sqrt{\frac{T}{\mu}}`,
+            caption: "Speed of a transverse wave on a stretched string. It does not depend on the frequency or amplitude of the wave.",
+          },
+          {
+            type: "example",
+            title: "Wave speed on a wire",
+            problem: t`A steel wire 0.50 m long has a mass of 5.0 g. It is stretched with a tension of 100 N. Find the speed of transverse waves on it.`,
+            steps: [
+              t`$\mu = \dfrac{m}{L} = \dfrac{5.0 \times 10^{-3}}{0.50} = 1.0 \times 10^{-2}\ \text{kg m}^{-1}$.`,
+              t`$v = \sqrt{T/\mu} = \sqrt{100/0.01} = \sqrt{10^4} = 100\ \text{m s}^{-1}$.`,
+            ],
+            answer: "100 m/s",
+          },
+          {
+            type: "text",
+            md: t`**Speed of a longitudinal wave (sound).** In a fluid the restoring property is the **bulk modulus** $B$ and the inertial property is the **density** $\rho$, so $v = \sqrt{B/\rho}$. In a thin solid rod, Young's modulus takes the place of $B$: $v = \sqrt{Y/\rho}$. Solids are far stiffer, so sound is fastest in solids, slower in liquids and slowest in gases (about 5000 m/s in steel, 1500 m/s in water, 340 m/s in air).
+
+**Newton's formula.** Newton assumed that the pressure changes in a sound wave are **isothermal**, so $B = P$ and $v = \sqrt{P/\rho}$. For air at STP ($P = 1.013 \times 10^5$ Pa, $\rho = 1.293\ \text{kg m}^{-3}$) this gives about 280 m/s, some 15% less than the measured 331 m/s.
+
+**Laplace's correction.** Compressions and rarefactions happen so fast that heat has no time to flow, so the process is **adiabatic**, with $PV^\gamma$ = constant and $B = \gamma P$. For air, $\gamma \approx 1.4$.`,
+          },
+          {
+            type: "formula",
+            tex: t`v_{Newton} = \sqrt{\frac{P}{\rho}} \qquad\longrightarrow\qquad v_{Laplace} = \sqrt{\frac{\gamma P}{\rho}}`,
+            caption: "Laplace's correction multiplies Newton's value by √γ ≈ 1.18 for air.",
+          },
+          {
+            type: "example",
+            title: "Newton versus Laplace",
+            problem: t`Calculate the speed of sound in air at STP using (a) Newton's formula, (b) Laplace's formula. Take $P = 1.013 \times 10^5$ Pa, $\rho = 1.293\ \text{kg m}^{-3}$, $\gamma = 1.4$.`,
+            steps: [
+              t`(a) $\dfrac{P}{\rho} = \dfrac{1.013 \times 10^5}{1.293} \approx 7.83 \times 10^4\ \text{m}^2\text{s}^{-2}$, so $v = \sqrt{7.83 \times 10^4} \approx 280\ \text{m s}^{-1}$.`,
+              t`(b) Multiply by $\sqrt{1.4} \approx 1.183$: $v \approx 280 \times 1.183 \approx 331\ \text{m s}^{-1}$.`,
+            ],
+            answer: "(a) about 280 m/s; (b) about 331 m/s, which agrees with experiment.",
+          },
+          {
+            type: "list",
+            items: [
+              t`**Pressure:** for an ideal gas $P/\rho = RT/M$, so at a fixed temperature changing the pressure changes $\rho$ in the same ratio. The speed of sound does **not** depend on pressure.`,
+              t`**Temperature:** $v = \sqrt{\gamma RT/M}$, so $v \propto \sqrt{T}$ (T in kelvin). Near room temperature, sound in air speeds up by about 0.6 m/s per °C.`,
+              t`**Humidity:** moist air is less dense than dry air at the same pressure (water vapour, M = 18 g/mol, is lighter than air, M ≈ 29 g/mol), so sound travels slightly faster in humid air.`,
+            ],
+          },
+          {
+            type: "checkpoint",
+            questions: [
+              {
+                kind: "numeric",
+                q: "Sound travels at 331 m/s in air at 0 °C. Find its speed at 27 °C.",
+                answer: 347,
+                tolerance: 1,
+                unit: "m/s",
+                explain: t`$v \propto \sqrt{T}$: $v = 331\sqrt{300/273} = 331 \times 1.048 \approx 347\ \text{m s}^{-1}$.`,
+              },
+              {
+                kind: "mcq",
+                q: "Newton's formula for the speed of sound gave too low a value because he assumed the compressions were:",
+                options: ["adiabatic", "isothermal", "isobaric", "isochoric"],
+                answer: 1,
+                explain: t`Isothermal means $B = P$. The real process is adiabatic, $B = \gamma P$, which is larger.`,
+              },
+            ],
+          },
+          {
+            type: "text",
+            md: t`**The principle of superposition.** When two or more waves overlap in a medium, the net displacement at any point at any instant is the **algebraic sum** of the displacements each wave would produce alone: $y = y_1 + y_2 + \dots$ After crossing, each wave goes on as if the other had never been there.
+
+Take two waves of the same amplitude, frequency and wavelength moving the same way, differing in phase by $\phi$: $y_1 = a\sin(kx - \omega t)$ and $y_2 = a\sin(kx - \omega t + \phi)$. Adding with $\sin A + \sin B = 2\sin\tfrac{A+B}{2}\cos\tfrac{A-B}{2}$ gives a single wave of amplitude $2a\cos(\phi/2)$. This combining is called **interference**.`,
+          },
+          {
+            type: "formula",
+            tex: t`y = \left[2a\cos\frac{\phi}{2}\right]\sin\left(kx - \omega t + \frac{\phi}{2}\right)`,
+            caption: "φ = 0: amplitude 2a (constructive interference). φ = π: amplitude 0 (destructive interference).",
+          },
+          {
+            type: "mistake",
+            wrong: "Sound travels faster when air pressure is higher, because the molecules are packed more closely.",
+            right: t`At a fixed temperature, the speed of sound in a gas does not depend on pressure. It depends on temperature: $v = \sqrt{\gamma RT/M}$.`,
+            why: t`Higher pressure does make the gas stiffer (larger $B = \gamma P$), but it also makes it denser in exactly the same ratio, so $\gamma P/\rho$ is unchanged. Sound is slower on a high mountain because the air there is colder, not because the pressure is lower.`,
+          },
+          {
+            type: "activity",
+            activity: {
+              kind: "reveal",
+              prompt: "A string's tension is doubled. What happens to wave speed?",
+              emoji: "🎸",
+              options: ["It doubles", "It becomes √2 times", "It becomes four times", "It does not change"],
+              answer: 1,
+              trap: 0,
+              explain: t`$v = \sqrt{T/\mu}$, so speed grows as the square root of tension: doubling $T$ multiplies $v$ by $\sqrt{2} \approx 1.41$. To double the speed you need four times the tension.`,
+            },
+          },
+          {
+            type: "callout",
+            tone: "exam",
+            title: "Board exam tip",
+            md: "\"Explain Laplace's correction\" is a common 3-mark question. Write Newton's assumption (isothermal, B = P), show the numerical mismatch (about 280 m/s against 331 m/s), give Laplace's reason (fast changes, no time for heat exchange, adiabatic, B = γP), and finish with the corrected value. Also list the effects of pressure, temperature and humidity with one-line reasons.",
+          },
+          {
+            type: "keypoints",
+            items: [
+              t`String: $v = \sqrt{T/\mu}$, set by the medium, not by the source.`,
+              t`Fluids: $v = \sqrt{B/\rho}$; rods: $v = \sqrt{Y/\rho}$. Sound is fastest in solids.`,
+              t`Laplace: sound in a gas is adiabatic, $v = \sqrt{\gamma P/\rho}$; independent of pressure, $\propto \sqrt{T}$, slightly higher in humid air.`,
+              t`Superposition: displacements add. Two equal waves with phase difference $\phi$ give amplitude $2a\cos(\phi/2)$.`,
+            ],
+          },
+        ],
+        flashcards: [
+          { front: "Speed of a wave on a string", back: t`$v = \sqrt{T/\mu}$; T = tension, μ = mass per unit length.` },
+          { front: "Speed of sound in a fluid", back: t`$v = \sqrt{B/\rho}$` },
+          { front: "Speed of sound in a solid rod", back: t`$v = \sqrt{Y/\rho}$` },
+          { front: "Newton's formula and its error", back: t`$v = \sqrt{P/\rho}$, assumes isothermal changes; gives about 280 m/s, 15% too low.` },
+          { front: "Laplace's correction", back: t`Changes are adiabatic: $v = \sqrt{\gamma P/\rho}$ ≈ 331 m/s at STP.` },
+          { front: "Effect of temperature on speed of sound", back: t`$v \propto \sqrt{T}$ (kelvin).` },
+          { front: "Principle of superposition", back: "The net displacement is the algebraic sum of the displacements due to each wave." },
+          { front: "Resultant of two equal waves with phase difference φ", back: t`Amplitude $2a\cos(\phi/2)$` },
+        ],
+        quiz: [
+          {
+            kind: "mcq",
+            q: "The tension in a stretched string is made four times larger. The speed of waves on it becomes:",
+            options: ["four times", "twice", "half", "unchanged"],
+            answer: 1,
+            explain: t`$v \propto \sqrt{T}$, so $v$ becomes $\sqrt{4} = 2$ times.`,
+          },
+          {
+            kind: "numeric",
+            q: "A string has linear mass density 0.025 kg/m and tension 90 N. Find the speed of transverse waves.",
+            answer: 60,
+            tolerance: 0.5,
+            unit: "m/s",
+            explain: t`$v = \sqrt{90/0.025} = \sqrt{3600} = 60\ \text{m s}^{-1}$.`,
+          },
+          {
+            kind: "truefalse",
+            q: "At a fixed temperature, the speed of sound in air increases when the pressure increases.",
+            answer: false,
+            explain: t`Pressure and density change in the same ratio, so $\gamma P/\rho$ and the speed stay the same.`,
+          },
+          {
+            kind: "mcq",
+            q: "Laplace corrected Newton's formula by treating sound propagation in a gas as:",
+            options: ["isothermal", "adiabatic", "isobaric", "a transverse wave"],
+            answer: 1,
+            explain: t`Compressions and rarefactions are too fast for heat exchange, so $B = \gamma P$.`,
+          },
+          {
+            kind: "mcq",
+            q: "Two waves of equal amplitude a and equal frequency travel together with a phase difference of 2π/3. The resultant amplitude is:",
+            options: ["2a", "a", "a/2", "0"],
+            answer: 1,
+            explain: t`$2a\cos(\phi/2) = 2a\cos(\pi/3) = 2a \times \tfrac{1}{2} = a$.`,
+          },
+          {
+            kind: "multi",
+            q: "Which of these increase the speed of sound in air?",
+            options: ["A rise in temperature", "A rise in humidity", "A rise in pressure at constant temperature", "A larger amplitude of the sound"],
+            answers: [0, 1],
+            explain: "Speed grows with temperature and with humidity (lower density). Pressure at constant temperature and the loudness of the sound do not change it.",
+          },
+          {
+            kind: "numeric",
+            q: "At what temperature in °C is the speed of sound in air twice its value at 0 °C?",
+            answer: 819,
+            tolerance: 1,
+            unit: "°C",
+            difficulty: 2,
+            hint: t`$v \propto \sqrt{T}$ with T in kelvin.`,
+            explain: t`Doubling $v$ needs $T = 4 \times 273 = 1092$ K, that is $1092 - 273 = 819$ °C.`,
+          },
+          {
+            kind: "numeric",
+            q: "Find the ratio of the speed of sound in hydrogen to that in oxygen at the same temperature (both diatomic; M = 2 and 32 g/mol).",
+            answer: 4,
+            tolerance: 0.01,
+            difficulty: 2,
+            hint: t`$v = \sqrt{\gamma RT/M}$, and γ is the same for both.`,
+            explain: t`$\dfrac{v_H}{v_O} = \sqrt{\dfrac{M_O}{M_H}} = \sqrt{32/2} = 4$.`,
+          },
+        ],
+      },
+
+      /* ---------------- Lesson 3 ---------------- */
+      {
+        slug: "c11-phy-standing-waves-beats",
+        title: "Reflection, Standing Waves and Beats",
+        summary: "Reflection at rigid and open boundaries, standing waves with nodes and antinodes, normal modes of a string and of open and closed pipes, and beats.",
+        minutes: 24,
+        xp: 55,
+        blocks: [
+          {
+            type: "illustration",
+            emoji: "🪈",
+            caption: "A bansuri flute and a sitar both make notes with standing waves: one in a column of air, the other on a stretched string.",
+          },
+          {
+            type: "text",
+            md: t`**Reflection.** A wave reaching a boundary is reflected (wholly or partly).
+
+- At a **rigid boundary** (a string tied to a wall) the end cannot move, so the reflected wave is **inverted**: a crest returns as a trough. This is a phase change of $\pi$ (180°).
+- At an **open (free) boundary** (a string end on a light, freely sliding ring, or the open end of a pipe for sound) the reflected wave comes back **without** a phase change.
+
+**Standing waves.** When a wave $y_1 = a\sin(kx - \omega t)$ and its reflection $y_2 = a\sin(kx + \omega t)$, moving the other way, overlap, their sum (by superposition) is below. This pattern does not move along the string, so it is called a **standing (stationary) wave**.`,
+          },
+          {
+            type: "formula",
+            tex: t`y(x, t) = 2a\sin kx\,\cos\omega t`,
+            caption: "Each point oscillates with frequency ω and an amplitude 2a sin kx that depends on its position x.",
+          },
+          {
+            type: "text",
+            md: t`Points where the amplitude is **zero** ($\sin kx = 0$) are **nodes**: $x = n\lambda/2$, with $n = 0, 1, 2, \dots$ Points of **largest amplitude** $2a$ ($\sin kx = \pm 1$) are **antinodes**: $x = (n + \tfrac{1}{2})\lambda/2$. Neighbouring nodes (or antinodes) are $\lambda/2$ apart; a node and the next antinode are $\lambda/4$ apart. All points between two neighbouring nodes move in phase; across a node the phase flips. A standing wave does not carry energy along the string.
+
+**String fixed at both ends** (length $L$): both ends must be nodes, so $L$ must hold a whole number of half-wavelengths, $L = n\lambda/2$. Only certain frequencies, the **normal modes**, are possible. The lowest is the **fundamental** (first harmonic); the $n$-th mode is the $n$-th **harmonic**. A string has all harmonics.`,
+          },
+          {
+            type: "formula",
+            tex: t`\nu_n = \frac{n v}{2L} = \frac{n}{2L}\sqrt{\frac{T}{\mu}}, \qquad n = 1, 2, 3, \dots`,
+            caption: "Normal modes of a string of length L fixed at both ends.",
+          },
+          {
+            type: "text",
+            md: t`**Air columns.** In a pipe, a closed end is a **displacement node** (air cannot move into the wall) and an open end is (nearly) a **displacement antinode**.
+
+- **Closed at one end** (length $L$): node at the closed end, antinode at the open end, so $L = (2n - 1)\lambda/4$. Frequencies $\nu = (2n-1)\dfrac{v}{4L}$: only **odd harmonics** ($\nu_1, 3\nu_1, 5\nu_1, \dots$).
+- **Open at both ends**: antinodes at both ends, so $L = n\lambda/2$, $\nu = \dfrac{nv}{2L}$: **all harmonics**. Its fundamental is twice that of a closed pipe of the same length.
+
+**Board note (ISC):** the antinode forms slightly outside the open end. ISC adds this **end correction**, $e \approx 0.3d$ for a pipe of diameter $d$, so the effective length is $L + e$ (closed pipe) or $L + 2e$ (open pipe). NCERT ignores it.`,
+          },
+          {
+            type: "table",
+            headers: ["System", "Allowed lengths", "Frequencies", "Harmonics present"],
+            rows: [
+              ["String fixed at both ends", t`$L = n\lambda/2$`, t`$\nu = nv/2L$`, "all"],
+              ["Pipe open at both ends", t`$L = n\lambda/2$`, t`$\nu = nv/2L$`, "all"],
+              ["Pipe closed at one end", t`$L = (2n-1)\lambda/4$`, t`$\nu = (2n-1)v/4L$`, "odd only"],
+            ],
+          },
+          {
+            type: "example",
+            title: "Closed and open pipes",
+            problem: t`A pipe 34.0 cm long is (a) closed at one end, (b) open at both ends. Find the first three natural frequencies in each case. Take the speed of sound as $340\ \text{m s}^{-1}$ and ignore end correction.`,
+            steps: [
+              t`(a) Closed: $\nu_1 = \dfrac{v}{4L} = \dfrac{340}{4 \times 0.34} = 250$ Hz.`,
+              t`Only odd harmonics: $3\nu_1 = 750$ Hz and $5\nu_1 = 1250$ Hz.`,
+              t`(b) Open: $\nu_1 = \dfrac{v}{2L} = \dfrac{340}{0.68} = 500$ Hz; then $1000$ Hz and $1500$ Hz.`,
+            ],
+            answer: "Closed: 250, 750, 1250 Hz. Open: 500, 1000, 1500 Hz.",
+          },
+          {
+            type: "checkpoint",
+            questions: [
+              {
+                kind: "mcq",
+                q: "A string fixed at both ends vibrates in its second harmonic. How many nodes are there, counting the ends?",
+                options: ["1", "2", "3", "4"],
+                answer: 2,
+                explain: "The second harmonic has two loops (L = λ), so nodes are at both ends and at the middle: 3 nodes, 2 antinodes.",
+              },
+              {
+                kind: "numeric",
+                q: "Find the fundamental frequency of a pipe 25 cm long, closed at one end (v = 340 m/s).",
+                answer: 340,
+                tolerance: 0.5,
+                unit: "Hz",
+                explain: t`$\nu_1 = v/4L = 340/(4 \times 0.25) = 340$ Hz.`,
+              },
+            ],
+          },
+          {
+            type: "text",
+            md: t`**Beats.** Sound two tuning forks of slightly different frequencies $\nu_1$ and $\nu_2$ together. You hear one tone whose loudness swells and fades regularly: these are **beats**. At one instant the two waves are in phase (loud); a little later they are out of phase (soft).
+
+Adding $s_1 = a\cos\omega_1 t$ and $s_2 = a\cos\omega_2 t$ at one place gives the result below: a wave at the average frequency whose amplitude itself varies slowly. The loudness peaks whenever $\cos\omega_b t = \pm 1$, which happens twice per cycle of $\cos\omega_b t$, so the **beat frequency** is $\nu_1 - \nu_2$. Musicians tune a sitar or tanpura string against a reference by adjusting it until the beats vanish.`,
+          },
+          {
+            type: "formula",
+            tex: t`s = \left[2a\cos\omega_b t\right]\cos\omega_a t, \quad \omega_b = \frac{\omega_1 - \omega_2}{2},\ \ \omega_a = \frac{\omega_1 + \omega_2}{2}; \qquad \nu_{beat} = \nu_1 - \nu_2`,
+            caption: "Beats are heard clearly only when the two frequencies differ by a few hertz (roughly under 10 Hz).",
+          },
+          {
+            type: "example",
+            title: "Finding an unknown frequency with beats",
+            problem: "A tuning fork of 256 Hz and an unknown fork give 4 beats per second. When a little wax is stuck on the unknown fork, the beats increase to 6 per second. Find the unknown frequency.",
+            steps: [
+              "The unknown frequency is 256 ± 4: either 252 Hz or 260 Hz.",
+              "Wax adds mass to the prong, so it lowers the frequency of the unknown fork.",
+              "If it were 260 Hz, lowering it would bring it closer to 256 Hz and the beats would decrease. They increased instead.",
+              "So the unknown fork was 252 Hz; with wax it becomes 250 Hz, giving 6 beats per second.",
+            ],
+            answer: "252 Hz",
+          },
+          {
+            type: "mistake",
+            wrong: "A pipe closed at one end gives all harmonics, just like a string: ν, 2ν, 3ν, …",
+            right: "A closed pipe gives only odd harmonics: ν₁, 3ν₁, 5ν₁, … A string fixed at both ends and a pipe open at both ends give all harmonics.",
+            why: "The closed end must be a node and the open end an antinode, so the length can only be an odd number of quarter-wavelengths. The even harmonics would need a node or an antinode at both ends.",
+          },
+          {
+            type: "activity",
+            activity: {
+              kind: "match",
+              prompt: "Match each term to its meaning.",
+              pairs: [
+                ["Node", "Point that never moves in a standing wave"],
+                ["Antinode", "Point of largest amplitude in a standing wave"],
+                ["Closed end of a pipe", "Always a displacement node"],
+                ["Open end of a pipe", "Nearly a displacement antinode"],
+                ["Beat frequency", "Difference of two nearby frequencies"],
+              ],
+              explain: "Fixing the nodes and antinodes at the boundaries is all you need to find the allowed wavelengths of any string or pipe.",
+            },
+          },
+          {
+            type: "callout",
+            tone: "exam",
+            title: "Board exam tip",
+            md: t`For "show that only odd harmonics are present in a closed pipe" (3–5 marks), draw the first three modes with a node at the closed end and an antinode at the open end, write $L = \lambda/4,\ 3\lambda/4,\ 5\lambda/4$, and get $\nu_1 : \nu_2 : \nu_3 = 1 : 3 : 5$. Label every diagram with N and A. In beat problems, always state the effect of wax (lowers frequency) or filing (raises frequency) before choosing the answer.`,
+          },
+          {
+            type: "keypoints",
+            items: [
+              "Reflection at a rigid end inverts the wave (phase change π); at an open end there is no phase change.",
+              t`Standing wave $y = 2a\sin kx\cos\omega t$: nodes $\lambda/2$ apart; node to antinode $\lambda/4$; no energy carried along.`,
+              t`String fixed at both ends and open pipe: $\nu = nv/2L$, all harmonics. Closed pipe: $\nu = (2n-1)v/4L$, odd harmonics only.`,
+              t`Beat frequency $= \nu_1 - \nu_2$; wax lowers a fork's frequency, filing raises it.`,
+            ],
+          },
+        ],
+        flashcards: [
+          { front: "Reflection at a rigid boundary", back: "The wave is inverted: phase change of π." },
+          { front: "Standing wave equation", back: t`$y = 2a\sin kx\cos\omega t$` },
+          { front: "Distance between adjacent nodes", back: "λ/2 (node to nearest antinode: λ/4)" },
+          { front: "Normal modes of a string fixed at both ends", back: t`$\nu_n = nv/2L$, n = 1, 2, 3, …` },
+          { front: "Pipe closed at one end", back: t`$\nu = (2n-1)v/4L$: odd harmonics only.` },
+          { front: "Pipe open at both ends", back: t`$\nu = nv/2L$: all harmonics; fundamental twice that of a closed pipe of equal length.` },
+          { front: "Beat frequency", back: t`$\nu_{beat} = \nu_1 - \nu_2$` },
+          { front: "Effect of wax and filing on a tuning fork", back: "Wax (more mass) lowers the frequency; filing the prongs raises it." },
+        ],
+        quiz: [
+          {
+            kind: "mcq",
+            q: "In a standing wave, the distance between two consecutive nodes is:",
+            options: ["λ/4", "λ/2", "λ", "2λ"],
+            answer: 1,
+            explain: t`Nodes are at $x = n\lambda/2$, so neighbouring nodes are $\lambda/2$ apart.`,
+          },
+          {
+            kind: "numeric",
+            q: "A string 0.8 m long, fixed at both ends, carries waves at 320 m/s. Find its fundamental frequency.",
+            answer: 200,
+            tolerance: 0.5,
+            unit: "Hz",
+            explain: t`$\nu_1 = v/2L = 320/1.6 = 200$ Hz.`,
+          },
+          {
+            kind: "mcq",
+            q: "A pipe closed at one end can produce:",
+            options: ["all harmonics", "only even harmonics", "only odd harmonics", "only the fundamental"],
+            answer: 2,
+            explain: t`$L = (2n - 1)\lambda/4$ gives $\nu_1, 3\nu_1, 5\nu_1, \dots$`,
+          },
+          {
+            kind: "numeric",
+            q: "Find the fundamental frequency of a pipe 0.5 m long, open at both ends (v = 340 m/s).",
+            answer: 340,
+            tolerance: 0.5,
+            unit: "Hz",
+            explain: t`$\nu_1 = v/2L = 340/1.0 = 340$ Hz.`,
+          },
+          {
+            kind: "truefalse",
+            q: "A wave reflected from a rigid boundary undergoes a phase change of π.",
+            answer: true,
+            explain: "The end cannot move, so the reflected wave must cancel the incident one there: it comes back inverted.",
+          },
+          {
+            kind: "numeric",
+            q: "Tuning forks of 256 Hz and 260 Hz are sounded together. How many beats are heard per second?",
+            answer: 4,
+            tolerance: 0.01,
+            unit: "beats/s",
+            explain: "Beat frequency = 260 − 256 = 4 Hz.",
+          },
+          {
+            kind: "numeric",
+            q: "Fork A (384 Hz) and fork B give 6 beats/s. After B's prongs are filed slightly, the beats fall to 2 per second. Find B's original frequency.",
+            answer: 378,
+            tolerance: 0.5,
+            unit: "Hz",
+            difficulty: 2,
+            hint: "Filing raises the frequency. Which of 378 Hz and 390 Hz moves closer to 384 Hz when raised?",
+            explain: "B is 378 or 390 Hz. Filing raises B. From 390 it would move away from 384 and beats would rise; from 378 it moves to 382, giving 2 beats/s. So B was 378 Hz.",
+          },
+          {
+            kind: "multi",
+            q: "Which statements about a standing wave on a string are correct?",
+            options: [
+              "Nodes are always at rest",
+              "No net energy is carried along the string",
+              "All points between two adjacent nodes oscillate in phase",
+              "All points oscillate with the same amplitude",
+            ],
+            answers: [0, 1, 2],
+            difficulty: 2,
+            explain: t`The amplitude $2a\sin kx$ changes with position: zero at nodes, $2a$ at antinodes. Points within one loop share the phase of $\cos\omega t$.`,
+          },
+        ],
+      },
+
+      /* ---------------- Exam edge ---------------- */
+      {
+        slug: "c11-phy-waves-exam-edge",
+        title: "Exam edge: Waves",
+        summary: "What JEE, NEET, KCET and COMEDK ask from waves: string and sonometer results, open versus closed pipes, the resonance tube and end correction, reading standing-wave equations, and the Doppler effect for JEE Advanced.",
+        minutes: 25,
+        xp: 60,
+        track: "exam",
+        blocks: [
+          {
+            type: "text",
+            md: t`Waves gives one or two questions in JEE Main and NEET and a couple in KCET and COMEDK. The favourites are:
+
+- reading $a$, $\lambda$, $\nu$, $v$ and direction from a travelling or standing wave equation;
+- harmonics of strings and pipes, especially comparisons between open and closed pipes;
+- the sonometer and the resonance-tube experiment (with end correction);
+- beats with wax or filing.
+
+JEE Advanced adds the **Doppler effect**, combined with reflection (echoes) and beats.`,
+          },
+          {
+            type: "list",
+            items: [
+              t`**Wire:** $\mu = \rho A$ (density × cross-section), so $v = \sqrt{T/\rho A}$; the sonometer fundamental is $\nu = \dfrac{1}{2L}\sqrt{\dfrac{T}{\mu}}$, so $\nu \propto \sqrt{T}$ and $\nu \propto 1/L$.`,
+              t`**Consecutive harmonics:** for a string or open pipe, two neighbouring natural frequencies differ by the fundamental. For a closed pipe they differ by $2\nu_1$.`,
+              t`**Resonance tube** (closed pipe, variable length): the first two resonance lengths satisfy $L_2 - L_1 = \lambda/2$, so $v = 2\nu(L_2 - L_1)$, free of end correction; $e = \dfrac{L_2 - 3L_1}{2}$.`,
+              t`**Standing wave** $y = A\sin kx\cos\omega t$: each travelling wave has amplitude $A/2$, and the speed is $\omega/k$.`,
+              t`**Small changes:** for $\nu \propto \sqrt{T}$, a small $x\%$ change in tension changes the frequency by about $\tfrac{x}{2}\%$ (only for a few per cent).`,
+            ],
+          },
+          {
+            type: "formula",
+            tex: t`\nu' = \nu\,\frac{v + v_o}{v - v_s}`,
+            caption: "Doppler effect for sound (still air): v_o > 0 when the observer moves towards the source, v_s > 0 when the source moves towards the observer. Reverse the sign for motion away.",
+          },
+          {
+            type: "callout",
+            tone: "note",
+            title: "Board note: the Doppler effect",
+            md: "The Doppler effect was removed from the rationalised NCERT book, so CBSE and Karnataka I PUC board papers, NEET and KCET do not ask it, and the current JEE Main syllabus leaves it out. JEE Advanced keeps the Doppler effect for sound, so learn it if you are aiming there. ISC students should check their current CISCE syllabus. The frequency changes because a moving source squeezes or stretches the wavelength, and a moving observer meets wave crests faster or slower. It depends on velocities, never on distance.",
+          },
+          {
+            type: "example",
+            title: "KCET level: sonometer",
+            problem: t`A wire of linear mass density $0.02\ \text{kg m}^{-1}$ is stretched by a tension of 200 N between bridges 1.0 m apart. Find the wave speed, the fundamental frequency and the frequency of the third harmonic.`,
+            steps: [
+              t`$v = \sqrt{T/\mu} = \sqrt{200/0.02} = \sqrt{10^4} = 100\ \text{m s}^{-1}$.`,
+              t`$\nu_1 = v/2L = 100/2 = 50$ Hz.`,
+              t`$\nu_3 = 3\nu_1 = 150$ Hz.`,
+            ],
+            answer: "100 m/s, 50 Hz, 150 Hz.",
+          },
+          {
+            type: "example",
+            title: "NEET level: matching a closed and an open pipe",
+            problem: "The first overtone of a pipe 30 cm long, closed at one end, has the same frequency as the fundamental of an open pipe. Find the length of the open pipe.",
+            steps: [
+              t`The first overtone of a closed pipe is its third harmonic: $\nu = \dfrac{3v}{4L_c}$.`,
+              t`The fundamental of an open pipe: $\nu = \dfrac{v}{2L_o}$.`,
+              t`Equate: $\dfrac{3}{4L_c} = \dfrac{1}{2L_o}$, so $L_o = \dfrac{2L_c}{3} = \dfrac{2 \times 30}{3} = 20$ cm.`,
+            ],
+            answer: "20 cm",
+          },
+          {
+            type: "example",
+            title: "JEE Main level: resonance tube",
+            problem: "In a resonance-tube experiment with a 500 Hz tuning fork, the first two resonances occur at air-column lengths of 16.0 cm and 50.0 cm. Find the speed of sound and the end correction.",
+            steps: [
+              t`$L_2 - L_1 = \lambda/2 = 34.0$ cm, so $\lambda = 68.0$ cm.`,
+              t`$v = \nu\lambda = 500 \times 0.680 = 340\ \text{m s}^{-1}$.`,
+              t`First resonance: $L_1 + e = \lambda/4 = 17.0$ cm, so $e = 1.0$ cm.`,
+              t`Check with the shortcut: $e = (L_2 - 3L_1)/2 = (50.0 - 48.0)/2 = 1.0$ cm.`,
+            ],
+            answer: "340 m/s; end correction 1.0 cm.",
+          },
+          {
+            type: "example",
+            title: "JEE Main level: reading a standing wave",
+            problem: t`A standing wave on a string is $y = 4\sin\left(\dfrac{\pi x}{15}\right)\cos(96\pi t)$, with $x, y$ in cm and $t$ in s. Find the wavelength, the distance between adjacent nodes, the frequency, the speed of the component waves, their amplitude, and the amplitude of the point at $x = 5$ cm.`,
+            steps: [
+              t`$k = \pi/15$ rad/cm, so $\lambda = 2\pi/k = 30$ cm; adjacent nodes are $\lambda/2 = 15$ cm apart.`,
+              t`$\omega = 96\pi$ rad/s, so $\nu = 48$ Hz.`,
+              t`$v = \omega/k = 96\pi/(\pi/15) = 1440$ cm/s $= 14.4\ \text{m s}^{-1}$.`,
+              t`Each travelling wave has amplitude $4/2 = 2$ cm.`,
+              t`At $x = 5$ cm: amplitude $= 4\sin(\pi/3) = 4(0.866) \approx 3.46$ cm.`,
+            ],
+            answer: "λ = 30 cm, nodes 15 cm apart, ν = 48 Hz, v = 14.4 m/s, component amplitude 2 cm, amplitude at x = 5 cm about 3.46 cm.",
+          },
+          {
+            type: "example",
+            title: "JEE Advanced level: echo from a wall",
+            problem: t`A car moves at $20\ \text{m s}^{-1}$ straight towards a tall wall, sounding a 680 Hz horn. The speed of sound is $340\ \text{m s}^{-1}$ and the air is still. Find the frequency of the echo heard by the driver, and the beat frequency between the echo and the horn.`,
+            steps: [
+              t`Step 1, wall as observer (at rest), car as source moving towards it: $\nu_1 = 680\cdot\dfrac{340}{340 - 20} = 680 \times \dfrac{340}{320} = 722.5$ Hz.`,
+              t`Step 2, wall as a source at rest sending $\nu_1$; driver as observer moving towards it: $\nu_2 = 722.5 \times \dfrac{340 + 20}{340} = 765$ Hz.`,
+              t`Combined: $\nu_2 = \nu\,\dfrac{v + u}{v - u} = 680 \times \dfrac{360}{320} = 765$ Hz.`,
+              t`The driver also hears the horn directly at 680 Hz (no relative motion), so beats $= 765 - 680 = 85$ Hz.`,
+            ],
+            answer: "Echo at 765 Hz; 85 beats per second (heard as a rough tone rather than separate beats).",
+          },
+          {
+            type: "checkpoint",
+            questions: [
+              {
+                kind: "mcq",
+                q: "Why is the speed of sound found from L₂ − L₁ in a resonance-tube experiment?",
+                options: [
+                  "The end correction cancels out",
+                  "The second length is more accurate than the first",
+                  "The tube is open at both ends",
+                  "Temperature effects cancel out",
+                ],
+                answer: 0,
+                explain: t`$L_1 + e = \lambda/4$ and $L_2 + e = 3\lambda/4$; subtracting removes $e$ and gives $\lambda/2$.`,
+              },
+            ],
+          },
+          {
+            type: "mistake",
+            wrong: "Plucking a string harder or at a higher pitch makes waves travel faster along it.",
+            right: t`Wave speed on a string is $\sqrt{T/\mu}$, fixed by tension and mass per length. A higher frequency only means a shorter wavelength ($\lambda = v/\nu$).`,
+            why: "Higher notes 'feel' faster. But the speed is a property of the medium; frequency comes from the source, and the wavelength adjusts.",
+          },
+          {
+            type: "mistake",
+            wrong: "As an ambulance approaches at constant speed, the pitch you hear keeps rising, because it is getting closer.",
+            right: "While it approaches at constant speed along the line to you, the pitch is constant and higher than the true pitch. It drops suddenly to a constant lower pitch as it passes and moves away.",
+            why: "The siren gets louder as it comes closer, and loudness is mistaken for pitch. The Doppler shift depends only on velocities. (If it passes at a distance from you, the shift changes smoothly near the closest point, because the velocity component along the line of sight changes.)",
+          },
+          {
+            type: "mistake",
+            wrong: "For a closed pipe, the gap between consecutive natural frequencies equals the fundamental, just as for a string.",
+            right: "For a closed pipe, consecutive natural frequencies differ by 2ν₁ (they are ν₁, 3ν₁, 5ν₁, …). For a string or open pipe they differ by ν₁.",
+            why: "Exams give two neighbouring frequencies, such as 450 Hz and 750 Hz, and ask for the fundamental. For a closed pipe that gap of 300 Hz is 2ν₁, so ν₁ = 150 Hz, not 300 Hz.",
+          },
+          {
+            type: "activity",
+            activity: {
+              kind: "reveal",
+              prompt: "Same speed u: who hears the higher pitch?",
+              emoji: "🚑",
+              options: [
+                "Observer at rest, source moving towards them",
+                "Source at rest, observer moving towards it",
+                "Both hear the same pitch",
+              ],
+              answer: 0,
+              trap: 2,
+              explain: t`Source moving: $\nu v/(v - u)$. Observer moving: $\nu(v + u)/v$. Since $v^2 > v^2 - u^2$, the first is larger. Sound has a medium, so only relative motion is not enough: it matters which one moves through the air.`,
+            },
+          },
+          {
+            type: "keypoints",
+            items: [
+              t`String: $v = \sqrt{T/\mu}$; sonometer $\nu = \dfrac{1}{2L}\sqrt{T/\mu}$, $\nu \propto \sqrt{T}$, $\propto 1/L$.`,
+              "Neighbouring natural frequencies differ by ν₁ (string, open pipe) or 2ν₁ (closed pipe).",
+              t`Resonance tube: $v = 2\nu(L_2 - L_1)$; end correction $e = (L_2 - 3L_1)/2$.`,
+              t`Doppler (JEE Advanced): $\nu' = \nu(v + v_o)/(v - v_s)$, signs positive for approach; it depends on velocities, not distance.`,
+            ],
+          },
+        ],
+        flashcards: [
+          { front: "Wave speed on a wire of density ρ and cross-section A", back: t`$v = \sqrt{T/\rho A}$` },
+          { front: "Sonometer fundamental", back: t`$\nu = \dfrac{1}{2L}\sqrt{T/\mu}$` },
+          { front: "Resonance tube: speed of sound", back: t`$v = 2\nu(L_2 - L_1)$` },
+          { front: "Resonance tube: end correction", back: t`$e = (L_2 - 3L_1)/2$` },
+          { front: "Gap between consecutive harmonics (closed pipe)", back: "2ν₁" },
+          { front: "Doppler formula (still air)", back: t`$\nu' = \nu(v + v_o)/(v - v_s)$; + for approach.` },
+          { front: "Echo heard by a driver moving at u towards a wall", back: t`$\nu' = \nu(v + u)/(v - u)$` },
+          { front: "Standing wave A sin kx cos ωt", back: "Component waves have amplitude A/2 and speed ω/k." },
+        ],
+        quiz: [
+          {
+            kind: "numeric",
+            q: "A sonometer wire of linear mass density 0.01 kg/m is under 64 N tension, with bridges 0.5 m apart. Find the fundamental frequency.",
+            answer: 80,
+            tolerance: 0.5,
+            unit: "Hz",
+            explain: t`$v = \sqrt{64/0.01} = 80\ \text{m s}^{-1}$; $\nu = v/2L = 80/1 = 80$ Hz.`,
+          },
+          {
+            kind: "mcq",
+            q: "A closed pipe and an open pipe have the same length. The ratio of their fundamental frequencies (closed : open) is:",
+            options: ["1 : 2", "2 : 1", "1 : 4", "1 : 1"],
+            answer: 0,
+            explain: t`Closed: $v/4L$; open: $v/2L$. Ratio $= 1 : 2$.`,
+          },
+          {
+            kind: "numeric",
+            q: "The tension in a sonometer wire is increased by 44%. By what percentage does its fundamental frequency increase?",
+            answer: 20,
+            tolerance: 0.1,
+            unit: "%",
+            difficulty: 2,
+            hint: "44% is too large for the half-rule; use the exact square root.",
+            explain: t`$\nu \propto \sqrt{T}$: $\sqrt{1.44} = 1.2$, an increase of 20%. (The half-rule would wrongly give 22%.)`,
+          },
+          {
+            kind: "mcq",
+            q: "A source of frequency ν moves towards a stationary observer at one-tenth of the speed of sound. The observer hears:",
+            options: ["11ν/10", "10ν/9", "9ν/10", "10ν/11"],
+            answer: 1,
+            difficulty: 2,
+            hint: "Use v − v_s in the denominator.",
+            explain: t`$\nu' = \nu\dfrac{v}{v - v/10} = \nu\dfrac{10}{9}$. (11ν/10 is the answer for an observer moving at v/10 towards a source at rest.)`,
+          },
+          {
+            kind: "multi",
+            q: "Which statements about the Doppler effect in sound are correct?",
+            options: [
+              "The apparent frequency depends on velocities, not on the distance between source and observer",
+              "If source and observer are both at rest, a steady wind does not change the frequency heard",
+              "An observer moving towards a source at rest hears a higher frequency",
+              "A source approaching at constant speed along the line of sight gives a steadily rising pitch",
+            ],
+            answers: [0, 1, 2],
+            difficulty: 2,
+            explain: "With both at rest, as many crests arrive per second as are emitted, wind or no wind. On approach at constant velocity the pitch is constant (higher), not rising.",
+          },
+          {
+            kind: "numeric",
+            q: "A car moving at 10 m/s towards a cliff sounds a 330 Hz horn. Speed of sound 340 m/s. What frequency does the driver hear in the echo?",
+            answer: 350,
+            tolerance: 0.5,
+            unit: "Hz",
+            difficulty: 3,
+            hint: "Treat the cliff first as observer, then as source.",
+            explain: t`$\nu' = \nu\dfrac{v + u}{v - u} = 330 \times \dfrac{350}{330} = 350$ Hz.`,
+          },
+          {
+            kind: "numeric",
+            q: "With a 512 Hz fork, a resonance tube gives resonances at 16.0 cm and 49.5 cm. Find the speed of sound.",
+            answer: 343,
+            tolerance: 1,
+            unit: "m/s",
+            difficulty: 2,
+            explain: t`$v = 2\nu(L_2 - L_1) = 2 \times 512 \times 0.335 = 343\ \text{m s}^{-1}$.`,
+          },
+          {
+            kind: "mcq",
+            q: "A string fixed at both ends has two consecutive natural frequencies 315 Hz and 420 Hz. Its fundamental frequency is:",
+            options: ["105 Hz", "210 Hz", "52.5 Hz", "315 Hz"],
+            answer: 0,
+            difficulty: 3,
+            hint: "For a string, neighbouring harmonics differ by the fundamental.",
+            explain: "ν₁ = 420 − 315 = 105 Hz; then 315 = 3ν₁ and 420 = 4ν₁, which fits. (For a closed pipe the same pair would not fit odd harmonics of 52.5 Hz: 315/52.5 = 6 is even.)",
+          },
+        ],
+      },
+    ],
+  },
 ];
 
 /** Class 11 chapter title ("11:<exact title>") → topic slug(s) that teach it. */
 export const links: Record<string, string | string[]> = {
   "11:Oscillations": "c11-phy-oscillations",
+  "11:Waves": "c11-phy-waves",
+  "11:Oscillations and Waves": ["c11-phy-oscillations", "c11-phy-waves"],
 };
