@@ -2332,7 +2332,7 @@ In octahedral $[\text{MX}_2\text{L}_4]$ (e.g. $[\text{Co}(\text{NH}_3)_4\text{Cl
             rows: [
               ["4", t`$sp^3$`, "tetrahedral", t`$[\text{NiCl}_4]^{2-}$, $[\text{Ni}(\text{CO})_4]$`],
               ["4", t`$dsp^2$`, "square planar", t`$[\text{Ni}(\text{CN})_4]^{2-}$`],
-              ["5", t`$sp^3d$`, "trigonal bipyramidal", t`$[\text{Fe}(\text{CO})_5]$`],
+              ["5", t`$dsp^3$ (inner $d_{z^2}$)`, "trigonal bipyramidal", t`$[\text{Fe}(\text{CO})_5]$`],
               ["6", t`$d^2sp^3$ (inner orbital)`, "octahedral", t`$[\text{Co}(\text{NH}_3)_6]^{3+}$, $[\text{Fe}(\text{CN})_6]^{3-}$`],
               ["6", t`$sp^3d^2$ (outer orbital)`, "octahedral", t`$[\text{CoF}_6]^{3-}$`],
             ],

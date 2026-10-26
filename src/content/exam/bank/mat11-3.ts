@@ -235,7 +235,7 @@ const ch9: ExamQuestion[] = [
     options: [t`$3$ or $-\frac13$`, t`$-3$ or $\frac13$`, t`$1$ or $-1$`, t`$-3$ or $-\frac13$`],
     answer: 1,
     hint: t`Solve $\left|\dfrac{m-2}{1+2m}\right| = 1$.`,
-    explain: t`$\dfrac{m-2}{1+2m} = 1\Rightarrow m-2 = 1+2m\Rightarrow m = -3$; $\dfrac{m-2}{1+2m} = -1\Rightarrow m-2 = -1-2m\Rightarrow m = \frac13$. Check $m = -3$: $\left|\frac{-5}{-5}\right| = 1$ ✓. The values $3,-\frac13$ come from writing $1-2m$ in the denominator.`,
+    explain: t`$\dfrac{m-2}{1+2m} = 1\Rightarrow m-2 = 1+2m\Rightarrow m = -3$; $\dfrac{m-2}{1+2m} = -1\Rightarrow m-2 = -1-2m\Rightarrow m = \frac13$. Check $m = -3$: $\left|\frac{-5}{-5}\right| = 1$ ✓. The values $3,-\frac13$ are the answers for a line of slope $-2$ — a sign slip in $m_1$.`,
   }),
   q9(2, MAIN, 60, {
     kind: "mcq",
