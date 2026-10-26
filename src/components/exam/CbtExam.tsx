@@ -434,7 +434,7 @@ export function CbtExam({ test, pool }: { test: MockTest; pool: ExamQuestion[] }
                 ) : (
                   <div>
                     <label className="eyebrow" htmlFor="num-answer">
-                      {t("exam.cbt.numericLabel", "Enter your numerical answer")}{current.unit ? ` (${current.unit})` : ""}
+                      {t("exam.cbt.numericLabel", "Enter your numerical answer")}{current.kind === "numeric" && current.unit ? ` (${current.unit})` : ""}
                     </label>
                     <input
                       id="num-answer"

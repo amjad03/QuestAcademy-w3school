@@ -43,6 +43,7 @@ and `hint`. Wrong `mcq` options should be the mistakes learners really make.
 | 3–5 | 8–10 blocks | Short, friendly | any, 2–3 options / groups |
 | 6–8 | 10–12 blocks | Plain, one new term at a time | any |
 | 9–10 | 10–14 blocks, 12–18 min | Exact board terms, each defined | any; `reveal` for a misconception |
+| 11–12 | 12–16 blocks, 15–25 min | Exact NCERT / ISC terms, derivations where the board asks for them | any; `reveal` for a misconception, `order` for derivation steps |
 
 ## Rules
 
@@ -73,3 +74,18 @@ list (in `src/content/syllabus/`) links to it by title.
 
 Syntax-check a file with
 `npx esbuild src/content/subjects/extra/<file>.ts --log-level=error > /dev/null && echo OK`.
+
+## Classes 11–12: board lessons and the Exam edge
+
+Each Class 11–12 chapter has **board lessons** (NCERT / Karnataka PUC / ISC level: concepts,
+derivations, solved textbook-style problems) followed by **Exam edge** lessons
+(`track: "exam"`) for JEE (Main / Advanced), NEET, KCET and COMEDK:
+
+- the ideas exams test most in that chapter, shortcuts and when they are safe to use;
+- 3–5 worked examples rising from JEE Main / NEET level to JEE Advanced level (Biology: NEET
+  and KCET; "NCERT lines" that NEET turns into questions);
+- the classic traps as `mistake` blocks; quiz questions at exam difficulty.
+
+Chapter question banks (`src/content/exam/bank/`) hold original exam-style questions tagged by
+exam, difficulty (1 board / CET, 2 JEE Main / NEET, 3 JEE Advanced) and chapter. Never copy
+real past-paper questions; write new ones in the same style.

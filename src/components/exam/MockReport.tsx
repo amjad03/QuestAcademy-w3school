@@ -189,7 +189,7 @@ export function MockReport({ test, result, questions, onRetry }: { test: MockTes
                     </div>
                   ) : (
                     <div className="mt-3 text-sm font-semibold">
-                      {t("exam.report.yourAnswer", "Your answer:")} <b className="font-mono">{a ?? "—"}</b> · {t("exam.report.correctAnswer", "Correct:")} <b className="font-mono text-good-shade">{q.answer}</b>
+                      {t("exam.report.yourAnswer", "Your answer:")} <b className="font-mono">{a ?? "—"}</b> · {t("exam.report.correctAnswer", "Correct:")} <b className="font-mono text-good-shade">{q.kind === "numeric" ? q.answer : ""}</b>
                     </div>
                   )}
                   {q.explain && (

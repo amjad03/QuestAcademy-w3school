@@ -3,6 +3,7 @@ import { physicsQuestions } from "./questions-physics";
 import { chemistryQuestions } from "./questions-chemistry";
 import { biologyQuestions } from "./questions-biology";
 import { mathsQuestions } from "./questions-maths";
+import { bankQuestions } from "./bank";
 
 export { physicsQuestions, chemistryQuestions, biologyQuestions, mathsQuestions };
 
@@ -12,4 +13,5 @@ export const examQuestions: ExamQuestion[] = [
   ...chemistryQuestions,
   ...biologyQuestions,
   ...mathsQuestions,
+  ...bankQuestions,
 ];

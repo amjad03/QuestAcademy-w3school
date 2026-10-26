@@ -212,6 +212,8 @@ const MATHS_12: Row[] = [
   ["Probability", "mat.probability"],
   ["Vectors", "mat.vectors"],
   ["Three-dimensional Geometry", "mat.vectors"],
+  ["Application of Calculus (Commerce and Economics)", "mat.none"],
+  ["Linear Regression", "mat.none"],
   ["Linear Programming", "mat.none"],
 ];
 

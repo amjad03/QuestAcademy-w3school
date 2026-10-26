@@ -59,12 +59,33 @@ import * as phy9Ncert from "./phy-9-ncert";
 import * as phy9Icse from "./phy-9-icse";
 import * as bio9Ncert from "./bio-9-ncert";
 import * as bio9Icse from "./bio-9-icse";
+import * as phy12A from "./phy-12-a";
+import * as phy12B from "./phy-12-b";
+import * as phy12C from "./phy-12-c";
+import * as phy12D from "./phy-12-d";
+import * as phy12E from "./phy-12-e";
+import * as phy12F from "./phy-12-f";
+import * as che12A from "./che-12-a";
+import * as che12B from "./che-12-b";
+import * as che12C from "./che-12-c";
+import * as che12D from "./che-12-d";
+import * as mat12A from "./mat-12-a";
+import * as mat12B from "./mat-12-b";
+import * as mat12C from "./mat-12-c";
+import * as mat12D from "./mat-12-d";
+import * as mat12E from "./mat-12-e";
+import * as mat12F from "./mat-12-f";
+import * as bio12A from "./bio-12-a";
+import * as bio12B from "./bio-12-b";
+import * as bio12C from "./bio-12-c";
+import * as bio12D from "./bio-12-d";
+import * as bio12E from "./bio-12-e";
 
 /**
  * Chapters written to close syllabus gaps. Each batch file adds topics to one
  * course and maps syllabus chapter titles to them.
  */
-const BATCHES: Batch[] = [phyMech, phyHeat, phyMagnet, phyModern, phyIcse10, chePhys, cheInorg, cheOrg, cheIcse, bioDiversity, bioStructure, bioRepro, bioApplied, bioIcse10, bioBody, bioIcse9, matAlgebra, matCalcGeo, matIcse10A, matIcse10B, mat9Geo, mat9Num, socIndia, socWorld, socGeo, socCivics, socEcon, engGrammar, engWriting, hin10, kan10, cmp10, gk10, matAp10, phyCalorimetry, soc9World, soc9Ancient, soc9Medieval, soc9Econ, soc9IndiaGeo, soc9KaGeo, soc9Earth, soc9Atmos, soc9Democracy, soc9Govt, eng9, hin9, cmp9It, cmp9Java, mat9Alg, mat9Eq, mat9Tri, mat9Mens, mat9Data, che9Ncert, che9Icse, phy9Ncert, phy9Icse, bio9Ncert, bio9Icse];
+const BATCHES: Batch[] = [phyMech, phyHeat, phyMagnet, phyModern, phyIcse10, chePhys, cheInorg, cheOrg, cheIcse, bioDiversity, bioStructure, bioRepro, bioApplied, bioIcse10, bioBody, bioIcse9, matAlgebra, matCalcGeo, matIcse10A, matIcse10B, mat9Geo, mat9Num, socIndia, socWorld, socGeo, socCivics, socEcon, engGrammar, engWriting, hin10, kan10, cmp10, gk10, matAp10, phyCalorimetry, soc9World, soc9Ancient, soc9Medieval, soc9Econ, soc9IndiaGeo, soc9KaGeo, soc9Earth, soc9Atmos, soc9Democracy, soc9Govt, eng9, hin9, cmp9It, cmp9Java, mat9Alg, mat9Eq, mat9Tri, mat9Mens, mat9Data, che9Ncert, che9Icse, phy9Ncert, phy9Icse, bio9Ncert, bio9Icse, phy12A, phy12B, phy12C, phy12D, phy12E, phy12F, che12A, che12B, che12C, che12D, mat12A, mat12B, mat12C, mat12D, mat12E, mat12F, bio12A, bio12B, bio12C, bio12D, bio12E];
 
 /** Extra topics per course slug, in batch order. */
 export function extraTopics(course: string): Topic[] {
@@ -81,9 +102,14 @@ export const CHAPTER_LESSONS: Record<string, string[]> = {};
 for (const b of BATCHES) {
   for (const [title, slugs] of Object.entries(b.links ?? {}))
     for (const slug of typeof slugs === "string" ? [slugs] : slugs) {
+      const k = `${b.family ?? family(b.course)}|${title}`;
+      // A full lesson id ("course/topic/lesson") links an existing lesson from any course.
+      if (slug.split("/").length === 3) {
+        CHAPTER_LESSONS[k] = [...(CHAPTER_LESSONS[k] ?? []), slug];
+        continue;
+      }
       const t = b.topics?.find((x) => x.slug === slug);
       if (!t) continue;
-      const k = `${b.family ?? family(b.course)}|${title}`;
       CHAPTER_LESSONS[k] = [...(CHAPTER_LESSONS[k] ?? []), ...t.lessons.map((l) => `${b.course}/${t.slug}/${l.slug}`)];
     }
 }

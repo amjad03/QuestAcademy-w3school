@@ -175,6 +175,8 @@ export interface Lesson {
   /** End-of-lesson quiz (3–6 questions recommended). */
   quiz?: Question[];
   challenge?: CodeChallenge;
+  /** "exam": an Exam edge lesson (JEE / NEET / CET depth), shown after a chapter's board lessons. */
+  track?: "exam";
 }
 
 export interface Topic {
@@ -208,14 +210,17 @@ export interface Subject {
 /* Exam world                                                          */
 /* ------------------------------------------------------------------ */
 
-export type ExamId = "NEET" | "JEE";
+/** JEE = JEE (Main); JEE_ADV = JEE (Advanced). */
+export type ExamId = "NEET" | "JEE" | "JEE_ADV" | "KCET" | "COMEDK";
 export type ExamSubject = "physics" | "chemistry" | "biology" | "maths";
 
-export type ExamQuestion = Extract<Question, { kind: "mcq" | "numeric" }> & {
+export type ExamQuestion = Extract<Question, { kind: "mcq" | "numeric" | "multi" }> & {
   id: string;
   exams: ExamId[];
   subject: ExamSubject;
   chapter: string;
+  /** Class the chapter belongs to (Class 11 / 12 question banks). */
+  grade?: "11" | "12";
   /** Rough "time to solve" in seconds; used for pacing analytics. */
   idealTime?: number;
 };

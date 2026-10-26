@@ -85,7 +85,8 @@ export function assembleMock(test: MockTest, pool: ExamQuestion[], rnd: () => nu
 
 export function scoreQuestion(q: ExamQuestion, answer: number | null | undefined, marking: MockTest["marking"]) {
   if (answer === null || answer === undefined || Number.isNaN(answer)) return { status: "skipped" as const, marks: 0 };
-  const ok = q.kind === "mcq" ? answer === q.answer : Math.abs(answer - q.answer) <= (q.tolerance ?? 0.01) + 1e-9;
+  // Multi-correct answers are stored as a bitmask of the chosen option indexes.
+  const ok = q.kind === "mcq" ? answer === q.answer : q.kind === "multi" ? answer === q.answers.reduce((m, i) => m | (1 << i), 0) : Math.abs(answer - q.answer) <= (q.tolerance ?? 0.01) + 1e-9;
   if (ok) return { status: "correct" as const, marks: marking.correct };
   return { status: "wrong" as const, marks: q.kind === "numeric" ? marking.numericWrong : marking.wrong };
 }

@@ -1,9 +1,10 @@
 import type { FormulaSheet } from "@/content/types";
+import { bankFormulas } from "./bank";
 
 /** String.raw keeps TeX backslashes intact. */
 const t = String.raw;
 
-export const formulaSheets: FormulaSheet[] = [
+const baseSheets: FormulaSheet[] = [
   /* ============================ PHYSICS ============================ */
   {
     subject: "physics",
@@ -514,3 +515,6 @@ export const formulaSheets: FormulaSheet[] = [
     ],
   },
 ];
+
+/** Formula sheets: the original NEET / JEE sheets plus the Class 11–12 chapter sheets from the banks. */
+export const formulaSheets: FormulaSheet[] = [...baseSheets, ...bankFormulas];
