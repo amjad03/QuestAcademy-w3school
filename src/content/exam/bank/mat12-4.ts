@@ -162,14 +162,14 @@ const vectors: Raw[] = [
     explain: t`I: $|\vec c|^2 = |\vec a + \vec b|^2 \Rightarrow 49 = 9 + 25 + 2\vec a\cdot\vec b \Rightarrow \vec a\cdot\vec b = \frac{15}{2}$, so $\cos\theta = \frac{15/2}{15} = \frac12$ and $\theta = \frac{\pi}{3}$ — true. II: $0 = |\vec a + \vec b + \vec c|^2 = 9 + 25 + 49 + 2\sum\vec a\cdot\vec b$, so $\sum\vec a\cdot\vec b = -\frac{83}{2}$, not $+\frac{83}{2}$ — false.`,
   },
   {
-    kind: "numeric", difficulty: 2, exams: MAIN_NK, idealTime: 75,
+    kind: "numeric", difficulty: 2, exams: ADV_ONLY, idealTime: 75,
     q: t`Find the volume of the parallelepiped whose coterminous edges are $\vec a = \hat i + \hat j + \hat k$, $\vec b = \hat i - \hat j + \hat k$ and $\vec c = \hat i + 2\hat j - \hat k$.`,
     answer: 4,
     hint: t`Volume $= |[\vec a\ \vec b\ \vec c]|$.`,
     explain: t`$[\vec a\ \vec b\ \vec c] = \begin{vmatrix}1 & 1 & 1\\ 1 & -1 & 1\\ 1 & 2 & -1\end{vmatrix} = 1(1 - 2) - 1(-1 - 1) + 1(2 + 1) = -1 + 2 + 3 = 4$. Volume $= |4| = 4$ cubic units.`,
   },
   {
-    kind: "mcq", difficulty: 2, exams: MAIN_NK, idealTime: 70,
+    kind: "mcq", difficulty: 2, exams: ADV_ONLY, idealTime: 70,
     q: t`The vectors $\hat i + \hat j + \hat k$, $2\hat i + 3\hat j + \lambda\hat k$ and $\hat i + 2\hat j + 3\hat k$ are coplanar when $\lambda$ equals:`,
     options: [t`$-4$`, t`$2$`, t`$3$`, t`$4$`],
     answer: 3,
@@ -250,7 +250,7 @@ const vectors: Raw[] = [
     explain: t`R is true: a zero cross product means the vectors are parallel (or one is zero). That is exactly why A is false — $\vec a\times\vec b = \vec a\times\vec c$ only gives $\vec b - \vec c = \lambda\vec a$, i.e. $\vec c = \vec b + \lambda\vec a$. Example: $\vec a = \hat i$, $\vec b = \hat j$, $\vec c = \hat i + \hat j$ gives $\vec a\times\vec b = \vec a\times\vec c = \hat k$ but $\vec b\ne\vec c$.`,
   },
   {
-    kind: "numeric", difficulty: 2, exams: MAIN_NK, idealTime: 60,
+    kind: "numeric", difficulty: 2, exams: ADV_ONLY, idealTime: 60,
     q: t`If $[\vec a\ \vec b\ \vec c] = 3$, find $[\vec a + \vec b\ \ \vec b + \vec c\ \ \vec c + \vec a]$.`,
     answer: 6,
     hint: t`Expand by linearity; terms with a repeated vector vanish.`,
@@ -305,7 +305,7 @@ const vectors: Raw[] = [
     explain: t`$\vec c = \dfrac{2\vec a + 3\vec b}{5} = \dfrac{3\vec b + 2\vec a}{3 + 2}$, which is the section formula with $AC:CB = 3:2$. So the points are collinear and $C$ divides $AB$ internally in $3:2$. The coefficient of $\vec b$ (3) goes with the part $AC$ — reading it the other way gives $2:3$.`,
   },
   {
-    kind: "numeric", difficulty: 2, exams: MAIN_NK, idealTime: 75,
+    kind: "numeric", difficulty: 2, exams: ADV_ONLY, idealTime: 75,
     q: t`Find the volume of the tetrahedron with vertices $O(0, 0, 0)$, $A(1, 2, 1)$, $B(2, 1, 3)$ and $C(-1, 1, 2)$.`,
     answer: 2,
     hint: t`Volume $= \frac16|[\vec{OA}\ \vec{OB}\ \vec{OC}]|$.`,
@@ -366,7 +366,7 @@ const vectors: Raw[] = [
     explain: t`(A) $2 + 2\cos\theta < 1 \iff \cos\theta < -\frac12 \iff \theta\in(\frac{2\pi}{3}, \pi]$ ✓. (B) $2 - 2\cos\theta = 2 \iff \cos\theta = 0$ ✓. (C) $\sin\theta = \cos\theta$ on $[0, \pi]$ only at $\frac{\pi}{4}$ ✓. (D) Equal moduli give $\cos\theta = 0$, i.e. $\theta = \frac{\pi}{2}$, not $\frac{\pi}{3}$ ✗.`,
   },
   {
-    kind: "mcq", difficulty: 3, exams: ADV, idealTime: 120,
+    kind: "mcq", difficulty: 3, exams: ADV_ONLY, idealTime: 120,
     q: t`For any vectors $\vec a$, $\vec b$, the vector $\vec a\times(\vec a\times(\vec a\times\vec b))$ equals:`,
     options: [
       t`$|\vec a|^2(\vec a\times\vec b)$`,
@@ -379,7 +379,7 @@ const vectors: Raw[] = [
     explain: t`$\vec a\times(\vec a\times\vec b) = (\vec a\cdot\vec b)\vec a - |\vec a|^2\vec b$. Crossing with $\vec a$: $(\vec a\cdot\vec b)(\vec a\times\vec a) - |\vec a|^2(\vec a\times\vec b) = -|\vec a|^2(\vec a\times\vec b)$, since $\vec a\times\vec a = \vec 0$. The sign is the usual trap.`,
   },
   {
-    kind: "numeric", difficulty: 3, exams: ADV, idealTime: 90,
+    kind: "numeric", difficulty: 3, exams: ADV_ONLY, idealTime: 90,
     q: t`If $[\vec a\ \vec b\ \vec c] = 4$, find $[\vec a\times\vec b\ \ \vec b\times\vec c\ \ \vec c\times\vec a]$.`,
     answer: 16,
     hint: t`Use $(\vec a\times\vec b)\times(\vec b\times\vec c) = [\vec a\ \vec b\ \vec c]\,\vec b$, then dot with the remaining factor.`,
@@ -402,7 +402,7 @@ const vectors: Raw[] = [
     explain: t`The sum $= 6 - 2(\hat a\cdot\hat b + \hat b\cdot\hat c + \hat c\cdot\hat a)$. From $|\hat a + \hat b + \hat c|^2 = 3 + 2\sum\hat a\cdot\hat b\ge0$, $\sum\hat a\cdot\hat b\ge-\frac32$. Hence the sum $\le 6 + 3 = 9$, attained when $\hat a + \hat b + \hat c = \vec 0$ (three unit vectors at $120^\circ$). $12$ would need each pair opposite, which is impossible for three vectors.`,
   },
   {
-    kind: "mcq", difficulty: 3, exams: ADV, idealTime: 120,
+    kind: "mcq", difficulty: 3, exams: ADV_ONLY, idealTime: 120,
     q: t`$\hat a$, $\hat b$, $\hat c$ are unit vectors, $\hat b$ and $\hat c$ are not parallel, and $\hat a\times(\hat b\times\hat c) = \frac{\sqrt3}{2}\hat b$. The angles that $\hat a$ makes with $\hat b$ and with $\hat c$ are respectively:`,
     options: [
       t`$\frac{\pi}{2}$ and $\frac{\pi}{6}$`,
@@ -474,21 +474,21 @@ const geometry3d: Raw[] = [
     explain: t`Perpendicular lines: $a_1a_2 + b_1b_2 + c_1c_2 = 0 \Rightarrow 2(1) + k(2) + 3(4) = 0 \Rightarrow 2k = -14 \Rightarrow k = -7$.`,
   },
   {
-    kind: "mcq", difficulty: 1, exams: BASIC, idealTime: 45,
+    kind: "mcq", difficulty: 1, exams: ADV_ONLY, idealTime: 45,
     q: t`The distance of the point $(2, 3, -1)$ from the plane $2x - y + 2z + 7 = 0$ is:`,
     options: [t`$6$`, t`$\frac83$`, t`$\frac23$`, t`$2$`],
     answer: 3,
     explain: t`$d = \dfrac{|2(2) - 3 + 2(-1) + 7|}{\sqrt{4 + 1 + 4}} = \dfrac{|4 - 3 - 2 + 7|}{3} = \dfrac{6}{3} = 2$. $6$ forgets to divide by $|\vec n|$; $\frac83$ drops the $-1$ coordinate's contribution.`,
   },
   {
-    kind: "mcq", difficulty: 1, exams: BASIC, idealTime: 40,
+    kind: "mcq", difficulty: 1, exams: ADV_ONLY, idealTime: 40,
     q: t`The plane making intercepts $2$, $3$ and $4$ on the $x$-, $y$- and $z$-axes is:`,
     options: [t`$2x + 3y + 4z = 1$`, t`$3x + 4y + 6z = 12$`, t`$6x + 4y + 3z = 12$`, t`$2x + 3y + 4z = 24$`],
     answer: 2,
     explain: t`Intercept form: $\frac{x}{2} + \frac{y}{3} + \frac{z}{4} = 1$. Multiplying by $12$: $6x + 4y + 3z = 12$. Check: $(2, 0, 0)$ gives $12$ ✓. Writing the intercepts as coefficients (option A) is the usual mistake.`,
   },
   {
-    kind: "mcq", difficulty: 1, exams: BASIC, idealTime: 40,
+    kind: "mcq", difficulty: 1, exams: ADV_ONLY, idealTime: 40,
     q: t`The perpendicular distance of the origin from the plane $3x - 4y + 12z = 26$ is:`,
     options: [t`$26$`, t`$2$`, t`$\frac12$`, t`$\frac{26}{11}$`],
     answer: 1,
@@ -507,7 +507,7 @@ const geometry3d: Raw[] = [
     explain: t`The line passes through $\vec a$ and is parallel to $\vec{AB} = \vec b - \vec a$, so $\vec r = \vec a + \lambda(\vec b - \vec a)$; $\lambda = 0$ gives $A$ and $\lambda = 1$ gives $B$.`,
   },
   {
-    kind: "numeric", difficulty: 1, exams: BASIC, idealTime: 50,
+    kind: "numeric", difficulty: 1, exams: ADV_ONLY, idealTime: 50,
     q: t`Find the angle (in degrees) between the planes $2x - y + z = 6$ and $x + y + 2z = 7$.`,
     answer: 60,
     explain: t`The angle between planes is the angle between their normals: $\cos\theta = \dfrac{|2(1) + (-1)(1) + 1(2)|}{\sqrt6\sqrt6} = \dfrac36 = \dfrac12$, so $\theta = 60^\circ$.`,
@@ -520,14 +520,14 @@ const geometry3d: Raw[] = [
     explain: t`General point: $(1 + \lambda, 2 + 2\lambda, 3 + 3\lambda)$. On the $xy$-plane $z = 0$, so $\lambda = -1$, giving $(0, 0, 0)$. Option A just replaces $z$ by $0$ without moving along the line.`,
   },
   {
-    kind: "mcq", difficulty: 1, exams: BASIC, idealTime: 40,
+    kind: "mcq", difficulty: 1, exams: ADV_ONLY, idealTime: 40,
     q: t`The plane through $(1, 0, -1)$ perpendicular to the vector $2\hat i - \hat j + 3\hat k$ is:`,
     options: [t`$2x - y + 3z - 1 = 0$`, t`$2x - y + 3z + 1 = 0$`, t`$x - z = 2$`, t`$2x - y + 3z = 5$`],
     answer: 1,
     explain: t`$2(x - 1) - (y - 0) + 3(z + 1) = 0 \Rightarrow 2x - y + 3z + 1 = 0$. Check $(1, 0, -1)$: $2 - 0 - 3 + 1 = 0$ ✓.`,
   },
   {
-    kind: "mcq", difficulty: 1, exams: BASIC, idealTime: 45,
+    kind: "mcq", difficulty: 1, exams: ADV_ONLY, idealTime: 45,
     q: t`The foot of the perpendicular from the origin to the plane $2x + 3y + 6z = 49$ is:`,
     options: [t`$(4, 6, 12)$`, t`$\left(\frac27, \frac37, \frac67\right)$`, t`$(2, 3, 6)$`, t`$(1, 1, 1)$`],
     answer: 2,
@@ -536,7 +536,7 @@ const geometry3d: Raw[] = [
 
   /* ---- difficulty 2 ---- */
   {
-    kind: "mcq", difficulty: 2, exams: MAIN, idealTime: 60,
+    kind: "mcq", difficulty: 2, exams: ADV_ONLY, idealTime: 60,
     q: t`The line $\vec r = (2\hat i - \hat j + 3\hat k) + \lambda(\hat i + 2\hat j - 2\hat k)$ and the plane $\vec r\cdot(2\hat i - 3\hat j - 2\hat k) = 5$ are such that the line is:`,
     options: [
       "perpendicular to the plane",
@@ -565,7 +565,7 @@ const geometry3d: Raw[] = [
     explain: t`$\vec{PQ} = (\lambda - 4, 2\lambda - 2, 3\lambda - 2)$. $\vec{PQ}\cdot(1, 2, 3) = \lambda - 4 + 4\lambda - 4 + 9\lambda - 6 = 14\lambda - 14 = 0 \Rightarrow \lambda = 1$, so $Q = (1, 3, 5)$. Check: $\vec{PQ} = (-3, 0, 1)$ and $(-3)(1) + 0 + 1(3) = 0$ ✓. $(0, 1, 2)$ is just the given point on the line ($\lambda = 0$).`,
   },
   {
-    kind: "numeric", difficulty: 2, exams: MAIN, idealTime: 75,
+    kind: "numeric", difficulty: 2, exams: ADV_ONLY, idealTime: 75,
     q: t`The image of the point $(3, 1, 2)$ in the plane $x + y + z = 0$ is $(\alpha, \beta, \gamma)$. Find $\alpha + \beta + \gamma$.`,
     answer: -6,
     hint: t`Image $= P - \dfrac{2(ax_1 + by_1 + cz_1 + d)}{a^2 + b^2 + c^2}(a, b, c)$.`,
@@ -580,7 +580,7 @@ const geometry3d: Raw[] = [
     explain: t`First line: $(1 + \lambda, \lambda, -1 + \lambda)$. Second: $(2, 3 + \mu, 4 + 2\mu)$. Equating $x$: $\lambda = 1$, so the point is $(2, 1, 0)$. Then $3 + \mu = 1 \Rightarrow \mu = -2$ and $4 + 2\mu = 0$ ✓. The other options are points on only one of the lines.`,
   },
   {
-    kind: "mcq", difficulty: 2, exams: MAIN, idealTime: 60,
+    kind: "mcq", difficulty: 2, exams: ADV_ONLY, idealTime: 60,
     q: t`The angle between the line $\frac{x - 1}{2} = \frac{y + 1}{1} = \frac{z - 2}{2}$ and the plane $x + 2y + 2z = 5$ is:`,
     options: [t`$\cos^{-1}\frac89$`, t`$\sin^{-1}\frac89$`, t`$\sin^{-1}\frac19$`, t`$\frac{\pi}{2}$`],
     answer: 1,
@@ -588,7 +588,7 @@ const geometry3d: Raw[] = [
     explain: t`$\sin\phi = \dfrac{|\vec b\cdot\vec n|}{|\vec b||\vec n|} = \dfrac{|2 + 2 + 4|}{3\cdot3} = \dfrac89$, so $\phi = \sin^{-1}\frac89$. $\cos^{-1}\frac89$ is the angle between the line and the normal — the complement of the required angle.`,
   },
   {
-    kind: "mcq", difficulty: 2, exams: MAIN, idealTime: 90,
+    kind: "mcq", difficulty: 2, exams: ADV_ONLY, idealTime: 90,
     q: t`The plane through $A(2, 1, 0)$, $B(3, -2, -2)$ and $C(3, 1, 7)$ is:`,
     options: [t`$7x + 3y + z = 17$`, t`$7x + 3y - z = 17$`, t`$3x + 7y - z = 13$`, t`$7x + 3y - z = 0$`],
     answer: 1,
@@ -596,7 +596,7 @@ const geometry3d: Raw[] = [
     explain: t`$\vec{AB} = (1, -3, -2)$, $\vec{AC} = (1, 0, 7)$. $\vec{AB}\times\vec{AC} = (-21 - 0,\ -(7 + 2),\ 0 + 3) = (-21, -9, 3)\parallel(7, 3, -1)$. Plane: $7(x - 2) + 3(y - 1) - z = 0 \Rightarrow 7x + 3y - z = 17$. Check $B$: $21 - 6 + 2 = 17$ ✓, $C$: $21 + 3 - 7 = 17$ ✓.`,
   },
   {
-    kind: "mcq", difficulty: 2, exams: MAIN, idealTime: 90,
+    kind: "mcq", difficulty: 2, exams: ADV_ONLY, idealTime: 90,
     q: t`The plane through the line of intersection of $x + y + z = 1$ and $2x + 3y - z = 4$ that is parallel to the $x$-axis is:`,
     options: [t`$y - 3z + 2 = 0$`, t`$3y - z = 2$`, t`$y - 3z = 2$`, t`$x - 2y = -5$`],
     answer: 2,
@@ -604,7 +604,7 @@ const geometry3d: Raw[] = [
     explain: t`$(1 + 2k)x + (1 + 3k)y + (1 - k)z = 1 + 4k$. Parallel to the $x$-axis means the normal has no $x$-component: $k = -\frac12$. Then $-\frac12y + \frac32z = -1$, i.e. $y - 3z = 2$. Check: $(-1, 2, 0)$ lies on both given planes and $2 - 0 = 2$ ✓. Option A has the constant's sign flipped.`,
   },
   {
-    kind: "mcq", difficulty: 2, exams: MAIN, idealTime: 70,
+    kind: "mcq", difficulty: 2, exams: ADV_ONLY, idealTime: 70,
     q: t`The distance between the parallel planes $2x - y + 2z = 3$ and $4x - 2y + 4z + 5 = 0$ is:`,
     options: [t`$\frac16$`, t`$\frac{11}{6}$`, t`$\frac83$`, t`$\frac{11}{3}$`],
     answer: 1,
@@ -612,7 +612,7 @@ const geometry3d: Raw[] = [
     explain: t`Write the second plane as $2x - y + 2z + \frac52 = 0$ and the first as $2x - y + 2z - 3 = 0$. Distance $= \dfrac{|-3 - \frac52|}{3} = \dfrac{11/2}{3} = \dfrac{11}{6}$. Not halving the 5 gives $\frac83$; mishandling the signs gives $\frac16$.`,
   },
   {
-    kind: "mcq", difficulty: 2, exams: MAIN, idealTime: 90,
+    kind: "mcq", difficulty: 2, exams: ADV_ONLY, idealTime: 90,
     q: t`**Assertion (A):** The lines $\frac{x - 1}{2} = \frac{y - 2}{3} = \frac{z - 3}{4}$ and $\frac{x - 2}{3} = \frac{y - 3}{4} = \frac{z - 4}{5}$ are coplanar.<br>**Reason (R):** Two non-parallel lines $\vec r = \vec a_1 + \lambda\vec b_1$ and $\vec r = \vec a_2 + \mu\vec b_2$ are coplanar if and only if $(\vec a_2 - \vec a_1)\cdot(\vec b_1\times\vec b_2) = 0$.`,
     options: AR_OPTIONS,
     answer: 0,
@@ -620,7 +620,7 @@ const geometry3d: Raw[] = [
     explain: t`$\vec a_2 - \vec a_1 = (1, 1, 1)$; $\vec b_1\times\vec b_2 = (3\cdot5 - 4\cdot4,\ 4\cdot3 - 2\cdot5,\ 2\cdot4 - 3\cdot3) = (-1, 2, -1)$; dot product $= -1 + 2 - 1 = 0$. So A is true, R is the standard coplanarity condition, and A follows directly from R. (The lines in fact meet at $(-1, -1, -1)$.)`,
   },
   {
-    kind: "mcq", difficulty: 2, exams: MAIN, idealTime: 75,
+    kind: "mcq", difficulty: 2, exams: ADV_ONLY, idealTime: 75,
     q: t`The line through $(1, 2, 3)$ and $(2, 3, 5)$ meets the plane $x + y + z = 14$ at:`,
     options: [t`$(2, 3, 5)$`, t`$(3, 4, 6)$`, t`$(4, 5, 9)$`, t`$(3, 4, 7)$`],
     answer: 3,
@@ -636,7 +636,7 @@ const geometry3d: Raw[] = [
     explain: t`I: $3\cos^2 45^\circ = \frac32\ne1$, so no such line — false. II: $\frac12 + \frac14 + \frac14 = 1$ ✓ — true. (A line equally inclined to all three axes makes $\cos^{-1}\frac{1}{\sqrt3}\approx54.7^\circ$ with each.)`,
   },
   {
-    kind: "mcq", difficulty: 2, exams: MAIN, idealTime: 90,
+    kind: "mcq", difficulty: 2, exams: ADV_ONLY, idealTime: 90,
     q: t`The plane containing the line $\frac{x - 1}{2} = \frac{y + 1}{-1} = \frac{z}{3}$ and the point $(2, 0, 1)$ is:`,
     options: [t`$4x + y - 3z = 3$`, t`$4x - y - 3z = 5$`, t`$4x - y - 3z = 3$`, t`$x + y + z = 3$`],
     answer: 1,
@@ -651,7 +651,7 @@ const geometry3d: Raw[] = [
     explain: t`The directions are parallel ($\vec b_2 = 2\vec b_1$). With $\vec b = (2, -1, 2)$, $|\vec b| = 3$ and $\vec a_2 - \vec a_1 = (1, 0, 2)$: $\vec b\times(\vec a_2 - \vec a_1) = (-2 - 0,\ -(4 - 2),\ 0 + 1) = (-2, -2, 1)$, magnitude $3$. $d = \frac33 = 1$. The skew-line formula cannot be used here because $\vec b_1\times\vec b_2 = \vec 0$.`,
   },
   {
-    kind: "mcq", difficulty: 2, exams: MAIN, idealTime: 70,
+    kind: "mcq", difficulty: 2, exams: ADV_ONLY, idealTime: 70,
     q: t`The line $\frac{x - 1}{2} = \frac{y - 2}{a} = \frac{z - 3}{1}$ lies in the plane $x + y + z = b$. Then $(a, b)$ is:`,
     options: [t`$(3, 6)$`, t`$(-3, -6)$`, t`$(-3, 6)$`, t`$(-3, 3)$`],
     answer: 2,
@@ -659,7 +659,7 @@ const geometry3d: Raw[] = [
     explain: t`Direction $\cdot$ normal $= 2 + a + 1 = 0 \Rightarrow a = -3$. The point $(1, 2, 3)$ must satisfy the plane: $b = 6$. So $(a, b) = (-3, 6)$. The first condition alone only makes the line parallel to the plane.`,
   },
   {
-    kind: "mcq", difficulty: 2, exams: MAIN, idealTime: 75,
+    kind: "mcq", difficulty: 2, exams: ADV_ONLY, idealTime: 75,
     q: t`The plane through $(1, 2, -1)$ perpendicular to both the planes $x + y + z = 2$ and $2x - y + z = 3$ is:`,
     options: [t`$2x - y + 3z = -3$`, t`$2x + y - 3z = 1$`, t`$3x + y - z = 6$`, t`$2x + y - 3z = 7$`],
     answer: 3,
@@ -667,7 +667,7 @@ const geometry3d: Raw[] = [
     explain: t`$\vec n_1\times\vec n_2 = \begin{vmatrix}\hat i & \hat j & \hat k\\ 1 & 1 & 1\\ 2 & -1 & 1\end{vmatrix} = (1 + 1)\hat i - (1 - 2)\hat j + (-1 - 2)\hat k = (2, 1, -3)$. Plane: $2(x - 1) + (y - 2) - 3(z + 1) = 0 \Rightarrow 2x + y - 3z = 7$. Check: $2 + 2 + 3 = 7$ ✓.`,
   },
   {
-    kind: "numeric", difficulty: 2, exams: MAIN, idealTime: 60,
+    kind: "numeric", difficulty: 2, exams: ADV_ONLY, idealTime: 60,
     q: t`The plane $\frac{x}{a} + \frac{y}{b} + \frac{z}{c} = 1$ meets the axes at $A$, $B$, $C$, and the centroid of triangle $ABC$ is $(1, 2, 3)$. Find $a + b + c$.`,
     answer: 18,
     hint: t`$A = (a, 0, 0)$, $B = (0, b, 0)$, $C = (0, 0, c)$.`,
@@ -682,7 +682,7 @@ const geometry3d: Raw[] = [
     explain: t`$n = l + m$ gives $l^2 + m^2 - (l + m)^2 = -2lm = 0$, so $l = 0$ or $m = 0$. If $l = 0$: $m = n$, direction $(0, 1, 1)$. If $m = 0$: $l = n$, direction $(1, 0, 1)$. $\cos\theta = \frac{0 + 0 + 1}{\sqrt2\sqrt2} = \frac12$, so $\theta = \frac{\pi}{3}$.`,
   },
   {
-    kind: "mcq", difficulty: 2, exams: MAIN, idealTime: 100,
+    kind: "mcq", difficulty: 2, exams: ADV_ONLY, idealTime: 100,
     q: t`Match List-I with List-II.<br>List-I: (P) distance of $(1, 1, 1)$ from $x + y + z = 0$; (Q) distance of the origin from $2x - y + 2z = 9$; (R) distance between $x + 2y + 2z = 1$ and $x + 2y + 2z = 7$; (S) distance of $(3, 4, 0)$ from the $z$-axis.<br>List-II: (1) $2$ (2) $3$ (3) $\sqrt3$ (4) $5$`,
     options: [
       "P-3, Q-2, R-1, S-4",
@@ -769,7 +769,7 @@ const geometry3d: Raw[] = [
     explain: t`$1 - 2 + 3 - 5 = -3$, so the foot is $P - \frac{-3}{3}(1, -1, 1) = (2, 1, 4)$ ✓ (check $2 - 1 + 4 = 5$) and the image is $P + 2(1, -1, 1) = (3, 0, 5)$ ✓. Distance $= \frac{3}{\sqrt3} = \sqrt3$, not $3$ ✗. Substituting $P$ and $O$ into $x - y + z - 5$ gives $-3$ and $-5$ — the same sign, so the same side ✓.`,
   },
   {
-    kind: "mcq", difficulty: 3, exams: ["JEE", "JEE_ADV", "KCET"], idealTime: 150,
+    kind: "mcq", difficulty: 3, exams: ADV_ONLY, idealTime: 150,
     q: t`The plane bisecting the **acute** angle between the planes $x + 2y + 2z = 3$ and $2x - y + 2z = 6$ is:`,
     options: [t`$x - 3y = 3$`, t`$3x + y + 4z = 9$`, t`$3x + y + 4z + 9 = 0$`, t`$x - 3y + 4z = 9$`],
     answer: 1,
@@ -777,14 +777,14 @@ const geometry3d: Raw[] = [
     explain: t`Since $|\vec n_1| = |\vec n_2| = 3$, the two bisector planes are $(x + 2y + 2z - 3) = \pm(2x - y + 2z - 6)$: $P_1 - P_2 = 0$ gives $x - 3y = 3$ and $P_1 + P_2 = 0$ gives $3x + y + 4z = 9$. The angle between the normals satisfies $\cos\theta = \frac{\vec n_1\cdot\vec n_2}{9} = \frac49 > 0$, so $\theta\approx63.6^\circ$ is the acute angle; it is bisected by the plane whose normal is $\vec n_1 + \vec n_2 = (3, 1, 4)$, i.e. $3x + y + 4z = 9$. Check: the angle between this plane and $P_1$ is $\cos^{-1}\frac{13}{3\sqrt{26}}\approx31.8^\circ$, half of $63.6^\circ$ ✓. $x - 3y = 3$ bisects the obtuse angle.`,
   },
   {
-    kind: "numeric", difficulty: 3, exams: ADV, idealTime: 120, tolerance: 0.01,
+    kind: "numeric", difficulty: 3, exams: ADV_ONLY, idealTime: 120, tolerance: 0.01,
     q: t`Find the distance of the point $(2, 1, 3)$ from the plane $x + y + z = 12$, measured parallel to the line $\frac{x}{1} = \frac{y}{2} = \frac{z}{2}$.`,
     answer: 3.6,
     hint: t`Move from the point along the unit direction $\frac13(1, 2, 2)$ until you hit the plane.`,
     explain: t`Points on the line through $(2, 1, 3)$ in direction $(1, 2, 2)$: $(2 + t, 1 + 2t, 3 + 2t)$, and the distance moved is $3|t|$. On the plane: $6 + 5t = 12 \Rightarrow t = \frac65$. Distance $= 3\cdot\frac65 = \frac{18}{5} = 3.6$. The perpendicular distance $\frac{6}{\sqrt3}\approx3.46$ is a different quantity; forgetting the factor 3 gives $1.2$.`,
   },
   {
-    kind: "mcq", difficulty: 3, exams: ADV, idealTime: 120,
+    kind: "mcq", difficulty: 3, exams: ADV_ONLY, idealTime: 120,
     q: t`A variable plane passes through the fixed point $(2, 3, 4)$ and meets the coordinate axes at $A$, $B$, $C$. The locus of the centroid of triangle $ABC$ is:`,
     options: [
       t`$\frac2x + \frac3y + \frac4z = 1$`,
@@ -813,7 +813,7 @@ const geometry3d: Raw[] = [
     explain: t`$x = 2y = -2z = t$ gives $(t, \frac t2, -\frac t2)\parallel(2, 1, -1)$. $2x = y = 2z = t$ gives $(\frac t2, t, \frac t2)\parallel(1, 2, 1)$. $\cos\theta = \frac{2 + 2 - 1}{\sqrt6\sqrt6} = \frac12$, $\theta = 60^\circ$. Using the coefficients $(1, 2, -2)$ and $(2, 1, 2)$ as direction ratios gives a dot product of $0$ and the wrong answer $90^\circ$.`,
   },
   {
-    kind: "numeric", difficulty: 3, exams: ADV, idealTime: 120,
+    kind: "numeric", difficulty: 3, exams: ADV_ONLY, idealTime: 120,
     q: t`The lines $x - 1 = y - 2 = z - 3$ and $\frac{x - 1}{2} = \frac{y - 2}{3} = \frac{z - 3}{4}$ determine a plane $\Pi$. If $d$ is the distance of the point $(3, 0, 3)$ from $\Pi$, find $d^2$.`,
     answer: 6,
     hint: t`Both lines pass through $(1, 2, 3)$; the normal is $(1, 1, 1)\times(2, 3, 4)$.`,
