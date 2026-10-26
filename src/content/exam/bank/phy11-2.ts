@@ -28,7 +28,7 @@ const build = (no: string, chapter: string, qs: Q[]): ExamQuestion[] =>
 
 /* exam tag sets */
 const ALL: ExamId[] = ["NEET", "JEE", "KCET", "COMEDK"];
-const MAIN: ExamId[] = ["NEET", "JEE", "COMEDK"];
+const MAIN: ExamId[] = ["NEET", "JEE", "KCET", "COMEDK"];
 const JM: ExamId[] = ["JEE", "COMEDK"];
 const ADV: ExamId[] = ["JEE_ADV"];
 const JA: ExamId[] = ["JEE", "JEE_ADV"];
@@ -267,7 +267,7 @@ const ch5: Q[] = [
     options: [t`7.5 kW`, t`13.5 kW`, t`6 kW`, t`150 kW`],
     answer: 1,
     hint: "At constant speed, driving force = mg sin θ + resistance; P = Fv.",
-    explain: t`Driving force $F = mg\sin\theta + f = 1000\times10\times\tfrac{1}{20} + 400 = 500 + 400 = 900$ N. $P = Fv = 900\times15 = 13\,500$ W $= 13.5$ kW. 7.5 kW keeps only the gravity term, 6 kW only the resistance, and 150 kW forgets the $\sin\theta$.`,
+    explain: t`Driving force $F = mg\sin\theta + f = 1000\times10\times\tfrac{1}{20} + 400 = 500 + 400 = 900$ N. $P = Fv = 900\times15 = 13\,500$ W $= 13.5$ kW. 7.5 kW keeps only the gravity term, 6 kW only the resistance, and 150 kW is $mgv$, using the full weight instead of $mg\sin\theta$.`,
   },
   {
     kind: "numeric",
@@ -703,7 +703,7 @@ const ch6: Q[] = [
   {
     kind: "mcq",
     difficulty: 1,
-    exams: ALL,
+    exams: ADV,
     idealTime: 40,
     q: t`For a thin ring rolling without slipping on a level floor, the ratio of its rotational kinetic energy to its total kinetic energy is:`,
     options: [t`$\dfrac13$`, t`$\dfrac12$`, t`$\dfrac25$`, t`$\dfrac27$`],
@@ -723,7 +723,7 @@ const ch6: Q[] = [
   {
     kind: "mcq",
     difficulty: 1,
-    exams: ALL,
+    exams: ADV,
     idealTime: 40,
     q: t`A ring, a disc, a solid sphere and a hollow sphere of the same mass and radius are released together from rest at the top of the same rough incline and roll without slipping. Which reaches the bottom first?`,
     options: [t`Ring`, t`Disc`, t`Solid sphere`, t`Hollow sphere`],
@@ -773,7 +773,7 @@ const ch6: Q[] = [
   {
     kind: "mcq",
     difficulty: 1,
-    exams: ALL,
+    exams: JM,
     idealTime: 35,
     q: t`The moment of inertia of a uniform solid sphere of mass $M$ and radius $R$ about a tangent to its surface is:`,
     options: [t`$\dfrac25MR^2$`, t`$\dfrac75MR^2$`, t`$\dfrac53MR^2$`, t`$\dfrac32MR^2$`],
@@ -805,7 +805,7 @@ const ch6: Q[] = [
   {
     kind: "mcq",
     difficulty: 2,
-    exams: MAIN,
+    exams: JM,
     idealTime: 60,
     q: t`A uniform rod of mass 2 kg and length 3 m rotates about an axis perpendicular to it through a point 0.5 m from one end. Its moment of inertia about this axis is:`,
     options: [t`6.0 kg m$^2$`, t`2.0 kg m$^2$`, t`3.5 kg m$^2$`, t`1.5 kg m$^2$`],
@@ -838,7 +838,7 @@ const ch6: Q[] = [
   {
     kind: "mcq",
     difficulty: 2,
-    exams: MAIN,
+    exams: ADV,
     idealTime: 50,
     q: t`A uniform solid cylinder rolls without slipping down an incline of angle $\theta$. Its linear acceleration is:`,
     options: [t`$g\sin\theta$`, t`$\dfrac23 g\sin\theta$`, t`$\dfrac57 g\sin\theta$`, t`$\dfrac12 g\sin\theta$`],
@@ -849,7 +849,7 @@ const ch6: Q[] = [
   {
     kind: "numeric",
     difficulty: 2,
-    exams: JM,
+    exams: ADV,
     idealTime: 70,
     q: t`A uniform solid sphere is released from rest at a height of 1.12 m on an incline and rolls down without slipping. Find its speed (in m s$^{-1}$) at the bottom. Take $g = 10$ m s$^{-2}$.`,
     answer: 4,
@@ -893,7 +893,7 @@ const ch6: Q[] = [
   {
     kind: "mcq",
     difficulty: 2,
-    exams: MAIN,
+    exams: ADV,
     idealTime: 60,
     q: t`**Assertion (A):** A solid sphere and a hollow sphere of the same mass and radius are released together from the same height on a rough incline; both roll without slipping. The solid sphere reaches the bottom first. **Reason (R):** The solid sphere has the smaller moment of inertia, so a larger fraction of its kinetic energy is translational.`,
     options: AR,
@@ -980,7 +980,7 @@ const ch6: Q[] = [
   {
     kind: "mcq",
     difficulty: 2,
-    exams: MAIN,
+    exams: ADV,
     idealTime: 50,
     q: t`A ring and a disc of equal mass roll without slipping with the same speed of the centre. The ratio of their total kinetic energies (ring : disc) is:`,
     options: [t`3 : 4`, t`4 : 3`, t`2 : 1`, t`1 : 1`],
@@ -1013,7 +1013,7 @@ const ch6: Q[] = [
   {
     kind: "numeric",
     difficulty: 2,
-    exams: JM,
+    exams: ADV,
     idealTime: 50,
     q: t`A uniform disc of mass 2 kg and radius 0.5 m rolls without slipping on a level surface, its centre moving at 2 m s$^{-1}$. Find its total kinetic energy (in J).`,
     answer: 6,
@@ -1107,7 +1107,7 @@ const ch6: Q[] = [
   {
     kind: "mcq",
     difficulty: 3,
-    exams: JA,
+    exams: ADV,
     idealTime: 120,
     q: t`A uniform solid sphere is projected along a rough horizontal floor with speed $v_0$ and no initial spin. Its speed when it begins to roll without slipping is:`,
     options: [t`$\dfrac{2v_0}{7}$`, t`$\dfrac{2v_0}{3}$`, t`$\dfrac{v_0}{2}$`, t`$\dfrac{5v_0}{7}$`],
@@ -1118,7 +1118,7 @@ const ch6: Q[] = [
   {
     kind: "numeric",
     difficulty: 3,
-    exams: JA,
+    exams: ADV,
     idealTime: 120,
     q: t`A thin ring of radius 0.2 m is spun about its axis at 30 rad s$^{-1}$ and gently placed, with no translational velocity, on a rough horizontal floor. Find the speed (in m s$^{-1}$) of its centre once it starts rolling without slipping.`,
     answer: 3,
@@ -1151,7 +1151,7 @@ const ch6: Q[] = [
   {
     kind: "mcq",
     difficulty: 3,
-    exams: JA,
+    exams: ADV,
     idealTime: 110,
     q: t`For a uniform solid cylinder to roll down an incline of angle $\theta$ without slipping, the minimum coefficient of static friction required is:`,
     options: [t`$\dfrac{\tan\theta}{2}$`, t`$\dfrac{\tan\theta}{3}$`, t`$\dfrac{2\tan\theta}{7}$`, t`$\dfrac{2\tan\theta}{3}$`],
@@ -1189,7 +1189,7 @@ const ch6: Q[] = [
   {
     kind: "mcq",
     difficulty: 3,
-    exams: JA,
+    exams: ADV,
     idealTime: 120,
     q: t`A horizontal force $F$ is applied at the topmost point of a uniform solid cylinder of mass $M$ resting on a rough horizontal floor. If the cylinder rolls without slipping, the acceleration of its centre is:`,
     options: [t`$\dfrac{2F}{3M}$`, t`$\dfrac{F}{M}$`, t`$\dfrac{4F}{3M}$`, t`$\dfrac{3F}{2M}$`],
@@ -1283,7 +1283,7 @@ const ch7: Q[] = [
   {
     kind: "mcq",
     difficulty: 1,
-    exams: ALL,
+    exams: ADV,
     idealTime: 40,
     q: t`Which of the following is NOT a requirement for a geostationary satellite?`,
     options: [
@@ -1373,7 +1373,7 @@ const ch7: Q[] = [
   {
     kind: "mcq",
     difficulty: 1,
-    exams: ALL,
+    exams: ADV,
     idealTime: 35,
     q: t`The height of a geostationary satellite above the Earth's surface is approximately:`,
     options: [t`6400 km`, t`3600 km`, t`36 000 km`, t`360 000 km`],
@@ -1845,7 +1845,7 @@ export const formulas: FormulaSheet[] = [
       { name: "Field from potential", tex: t`E = -\dfrac{dV}{dr}` },
       { name: "Gravitational potential energy", tex: t`U = -\dfrac{Gm_1m_2}{r}`, note: "For many particles add over every pair once." },
       { name: "Escape speed", tex: t`v_e = \sqrt{\dfrac{2GM}{R}} = \sqrt{2gR} \approx 11.2\ \text{km s}^{-1}`, note: "Independent of the body's mass and direction of projection." },
-      { name: "Orbital speed", tex: t`v_o = \sqrt{\dfrac{GM}{r}},\qquad v_o(\text{surface}) = \sqrt{gR} \approx 7.9\ \text{km s}^{-1},\qquad v_e = \sqrt2\,v_o` },
+      { name: "Orbital speed", tex: t`v_o = \sqrt{\dfrac{GM}{r}},\qquad v_o(\text{surface}) = \sqrt{gR} \approx 7.9\ \text{km s}^{-1}\ (8\ \text{with } g = 10),\qquad v_e = \sqrt2\,v_o` },
       { name: "Orbital period", tex: t`T = 2\pi\sqrt{\dfrac{r^3}{GM}},\qquad T_{\text{surface}} = 2\pi\sqrt{\dfrac Rg} \approx 84\ \text{min}` },
       { name: "Energies of a satellite", tex: t`K = \dfrac{GMm}{2r},\quad U = -\dfrac{GMm}{r},\quad E = -\dfrac{GMm}{2r}`, note: "K = −E, U = 2E; binding energy = GMm/2r." },
       { name: "Energy to change orbit", tex: t`\Delta E = \dfrac{GMm}{2}\left(\dfrac{1}{r_1} - \dfrac{1}{r_2}\right)` },

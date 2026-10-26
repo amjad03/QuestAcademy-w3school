@@ -215,7 +215,7 @@ const ch1: Q[] = [
   {
     kind: "mcq",
     difficulty: 2,
-    exams: MAIN,
+    exams: ALL,
     idealTime: 60,
     q: t`Two quantities are $A = (2.5 \pm 0.1)$ and $B = (4.0 \pm 0.2)$. The product $Z = AB$ with its maximum absolute error is:`,
     options: [t`$10.0 \pm 0.3$`, t`$10.0 \pm 0.02$`, t`$10.0 \pm 0.9$`, t`$10.0 \pm 0.09$`],
@@ -226,7 +226,7 @@ const ch1: Q[] = [
   {
     kind: "mcq",
     difficulty: 2,
-    exams: MAIN,
+    exams: ALL,
     idealTime: 45,
     q: t`If $A = (15.2 \pm 0.3)$ cm and $B = (10.1 \pm 0.2)$ cm, then $A - B$ is:`,
     options: [t`$(5.1 \pm 0.1)$ cm`, t`$(5.1 \pm 0.5)$ cm`, t`$(5.1 \pm 0.36)$ cm`, t`$(5.1 \pm 0.05)$ cm`],
@@ -248,7 +248,7 @@ const ch1: Q[] = [
   {
     kind: "mcq",
     difficulty: 2,
-    exams: MAIN,
+    exams: ALL,
     idealTime: 75,
     q: t`In the van der Waals equation $\left(P + \dfrac{a}{V^2}\right)(V - b) = RT$, the dimensions of $a/b$ are:`,
     options: [t`$[ML^{-1}T^{-2}]$`, t`$[ML^{2}T^{-2}]$`, t`$[ML^{5}T^{-2}]$`, t`$[L^{3}]$`],
@@ -259,7 +259,7 @@ const ch1: Q[] = [
   {
     kind: "mcq",
     difficulty: 2,
-    exams: MAIN,
+    exams: ALL,
     idealTime: 60,
     q: t`The velocity of a particle is $v = at + \dfrac{b}{t + c}$, where $v$ is in m s$^{-1}$ and $t$ in seconds. The dimensions of $b$ are:`,
     options: [t`$[LT^{-2}]$`, t`$[T]$`, t`$[LT]$`, t`$[L]$`],
@@ -292,7 +292,7 @@ const ch1: Q[] = [
   {
     kind: "mcq",
     difficulty: 3,
-    exams: ALL,
+    exams: MAIN,
     idealTime: 90,
     q: t`In a vernier calliper, 10 vernier divisions coincide with 9 main-scale divisions of 1 mm each. With the jaws closed, the vernier zero lies to the left of the main-scale zero and the 7th vernier division coincides with a main-scale mark. When a rod is held between the jaws, the main scale reads 2.3 cm and the 6th vernier division coincides. The corrected length of the rod is:`,
     options: ["2.33 cm", "2.39 cm", "2.29 cm", "2.43 cm"],
@@ -415,7 +415,7 @@ const ch1: Q[] = [
   {
     kind: "mcq",
     difficulty: 2,
-    exams: MAIN,
+    exams: ALL,
     idealTime: 60,
     q: t`A force is written as $F = a\sqrt{x} + bt^2$, where $x$ is a distance and $t$ is time. The dimensions of $b/a$ are:`,
     options: [t`$[L^{-1/2}T^{2}]$`, t`$[L^{1/2}T^{-2}]$`, t`$[LT^{-2}]$`, t`$[L^{1/2}T^{-1}]$`],
@@ -762,7 +762,7 @@ const ch2: Q[] = [
   {
     kind: "mcq",
     difficulty: 2,
-    exams: MAIN,
+    exams: ALL,
     idealTime: 60,
     q: t`The position of a particle is $x = 3t^2 - 2t^3$ (SI units). At $t = 1$ s its velocity and acceleration are:`,
     options: [t`$0$ and $-6$ m s$^{-2}$`, t`$0$ and $6$ m s$^{-2}$`, t`$1$ m s$^{-1}$ and $0$`, t`$-6$ m s$^{-1}$ and $0$`],
@@ -773,7 +773,7 @@ const ch2: Q[] = [
   {
     kind: "numeric",
     difficulty: 3,
-    exams: MAIN,
+    exams: JA,
     idealTime: 90,
     q: t`A particle moves along the x-axis with $x = t^3 - 6t^2 + 9t$ (x in m, t in s). Find the total distance it travels from $t = 0$ to $t = 3$ s.`,
     answer: 8,
@@ -784,7 +784,7 @@ const ch2: Q[] = [
   {
     kind: "mcq",
     difficulty: 2,
-    exams: MAIN,
+    exams: ALL,
     idealTime: 60,
     q: t`The velocity of a particle depends on its position as $v = \alpha\sqrt{x}$, where $\alpha$ is a constant. Its acceleration is:`,
     options: [t`$\alpha^2$`, t`$\dfrac{\alpha}{2\sqrt x}$`, t`$\dfrac{\alpha^2}{2}$`, t`zero`],
@@ -996,7 +996,7 @@ const ch2: Q[] = [
   {
     kind: "mcq",
     difficulty: 3,
-    exams: ALL,
+    exams: JA,
     idealTime: 75,
     q: t`Car A starts from rest with acceleration 1 m s$^{-2}$. Two seconds later car B starts from the same point, in the same direction, with acceleration 4 m s$^{-2}$. B overtakes A at a time, measured from A's start, of:`,
     options: ["2 s", "4 s", "6 s", t`$\tfrac43$ s`],

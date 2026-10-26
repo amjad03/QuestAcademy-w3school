@@ -47,6 +47,8 @@ const NUM: ExamId[] = ["JEE"];
 const NUM_ADV: ExamId[] = ["JEE", "JEE_ADV"];
 const ADV: ExamId[] = ["JEE_ADV", "JEE"];
 const ADV_ONLY: ExamId[] = ["JEE_ADV"];
+/** Venn-diagram survey word problems: "practical problems" were cut from rationalised NCERT, so no KCET. */
+const SURVEY: ExamId[] = ["JEE", "COMEDK"];
 
 const AR = [
   "Both A and R are true and R is the correct explanation of A",
@@ -236,7 +238,7 @@ const ch1: ExamQuestion[] = [
     hint: t`$n(H\cup T\cup I) = \sum n - \sum n(\text{pairs}) + n(\text{all three})$.`,
     explain: t`$n(H\cup T\cup I) = (90+80+70)-(30+25+35)+15 = 240-90+15 = 165$. So $200-165 = 35$ read none. Forgetting to add back the triple gives 150 and the wrong answer 50.`,
   }),
-  q1(2, MAIN, 100, {
+  q1(2, SURVEY, 100, {
     kind: "mcq",
     q: "In a survey of 200 people, 90 read newspaper H, 80 read T, 70 read I; 30 read H and T, 25 read T and I, 35 read H and I, 15 read all three. The number of people who read exactly one newspaper is:",
     options: [t`$105$`, t`$165$`, t`$150$`, t`$45$`],
@@ -288,7 +290,7 @@ const ch1: ExamQuestion[] = [
     hint: t`Find $n(A\cap B)$ first.`,
     explain: t`$n(A\cap B) = 28+32-50 = 10$. Then $n(A\,\Delta\,B) = n(A\cup B)-n(A\cap B) = 50-10 = 40$ (that is, $18 + 22$ from $A-B$ and $B-A$). 18 alone is $n(A-B)$.`,
   }),
-  q1(2, MAIN, 60, {
+  q1(2, SURVEY, 60, {
     kind: "mcq",
     q: "In a group, 65% of the people like tea and 40% like coffee. The least possible percentage of people who like both is:",
     options: [t`$5\%$`, t`$25\%$`, t`$40\%$`, t`$0\%$`],
@@ -336,7 +338,7 @@ const ch1: ExamQuestion[] = [
     hint: "The union is the whole class.",
     explain: t`$60 = (35+30+28)-(12+10+14)+x = 93-36+x = 57+x$, so $x = 3$. Check the regions: only M $=12$, only P $=11$, only C $=7$, and the pair-only regions 9, 7, 11 — all non-negative, totalling $12+11+7+9+7+11+3 = 60$.`,
   }),
-  q1(2, MAIN, 90, {
+  q1(2, SURVEY, 90, {
     kind: "mcq",
     q: "In a town, 52% of families read paper A, 40% read B and 30% read C; 18% read A and B, 12% read B and C, 15% read A and C, and 6% read all three. The percentage of families that read at least two papers is:",
     options: [t`$27\%$`, t`$33\%$`, t`$39\%$`, t`$45\%$`],
@@ -942,7 +944,7 @@ const ch3: ExamQuestion[] = [
     answer: 1,
     explain: t`$\sin x$ has period $2\pi$, and $\sin kx$ has period $\frac{2\pi}{|k|}$, so $\sin2x$ has period $\pi$.`,
   }),
-  q3(1, BASIC, 35, {
+  q3(1, ADV_ONLY, 35, {
     kind: "mcq",
     q: t`The general solution of $\cos x = 0$ is:`,
     options: [t`$x = n\pi$`, t`$x = 2n\pi$`, t`$x = (2n+1)\frac\pi2$`, t`$x = n\pi+(-1)^n\frac\pi2$`],
@@ -995,14 +997,14 @@ const ch3: ExamQuestion[] = [
     answer: 1,
     explain: t`$\tan(A+B) = \dfrac{\frac12+\frac13}{1-\frac16} = \dfrac{5/6}{5/6} = 1$. Since $0<A+B<\pi$ and $\tan(A+B) = 1>0$, $A+B = \frac\pi4$.`,
   }),
-  q3(2, MAIN, 45, {
+  q3(2, ADV_ONLY, 45, {
     kind: "mcq",
     q: t`The general solution of $\cos x = \frac12$ is:`,
     options: [t`$x = n\pi\pm\frac\pi3$`, t`$x = 2n\pi\pm\frac\pi3$`, t`$x = n\pi+(-1)^n\frac\pi3$`, t`$x = 2n\pi+\frac\pi3$`],
     answer: 1,
     explain: t`$\cos x = \cos\alpha\iff x = 2n\pi\pm\alpha$. With $\alpha = \frac\pi3$: $x = 2n\pi\pm\frac\pi3$. $n\pi\pm\frac\pi3$ is the solution of $\cos^2x = \frac14$ (it includes $\frac{2\pi}3$, where $\cos = -\frac12$); $n\pi+(-1)^n\frac\pi3$ is the sine form.`,
   }),
-  q3(2, MAIN, 60, {
+  q3(2, ADV_ONLY, 60, {
     kind: "mcq",
     q: t`The general solution of $\sin2x+\cos x = 0$ is:`,
     options: [
@@ -1015,7 +1017,7 @@ const ch3: ExamQuestion[] = [
     hint: t`Factor out $\cos x$; never divide it away.`,
     explain: t`$2\sin x\cos x+\cos x = \cos x(2\sin x+1) = 0$. So $\cos x = 0$, i.e. $x = (2n+1)\frac\pi2$, or $\sin x = -\frac12 = \sin(-\frac\pi6)$, i.e. $x = n\pi+(-1)^n(-\frac\pi6) = n\pi-(-1)^n\frac\pi6$. Dividing by $\cos x$ loses the first family.`,
   }),
-  q3(2, NUM, 60, {
+  q3(2, ADV_ONLY, 60, {
     kind: "numeric",
     q: t`Find the number of solutions of $2\cos^2x+3\sin x = 0$ in $[0,2\pi]$.`,
     answer: 2,
@@ -1101,7 +1103,7 @@ const ch3: ExamQuestion[] = [
     answer: 2,
     explain: t`$\sin x+\cos x = \sqrt2\sin(x+\frac\pi4)\le\sqrt2\approx1.414$, so Statement II is true. Since $\frac32 = 1.5>\sqrt2$, the equation has no solution and Statement I is false.`,
   }),
-  q3(2, NUM, 60, {
+  q3(2, ADV_ONLY, 60, {
     kind: "numeric",
     q: t`Find the number of solutions of $\cos2x = \sin x$ in $[0,2\pi]$.`,
     answer: 3,
@@ -1194,7 +1196,7 @@ const ch3: ExamQuestion[] = [
     hint: t`Pair $\theta$ with $90^\circ-\theta$.`,
     explain: t`There are 18 terms. $\sin^2\theta+\sin^2(90^\circ-\theta) = 1$ pairs $5^\circ$ with $85^\circ$, …, $40^\circ$ with $50^\circ$: 8 pairs giving 8. Left over: $\sin^245^\circ = \frac12$ and $\sin^290^\circ = 1$. Total $9.5$.`,
   }),
-  q3(3, ADV, 100, {
+  q3(3, ADV_ONLY, 100, {
     kind: "mcq",
     q: t`The number of solutions of $\sin5x+\sin x = \sin3x$ in $[0,\pi]$ is:`,
     options: [t`$4$`, t`$5$`, t`$6$`, t`$8$`],
@@ -1202,7 +1204,7 @@ const ch3: ExamQuestion[] = [
     hint: "Use sum-to-product on the left and factor out sin 3x.",
     explain: t`$\sin5x+\sin x = 2\sin3x\cos2x$, so $\sin3x(2\cos2x-1) = 0$. $\sin3x = 0$: $x = 0, \frac\pi3, \frac{2\pi}3, \pi$. $\cos2x = \frac12$ with $2x\in[0,2\pi]$: $2x = \frac\pi3, \frac{5\pi}3$, so $x = \frac\pi6, \frac{5\pi}6$. All 6 are distinct. Cancelling $\sin3x$ leaves only 2.`,
   }),
-  q3(3, ADV, 80, {
+  q3(3, ADV_ONLY, 80, {
     kind: "mcq",
     q: t`The general solution of $\sin^4x+\cos^4x = \frac12$ is:`,
     options: [t`$x = \frac{n\pi}2+\frac\pi4$`, t`$x = n\pi+\frac\pi4$`, t`$x = \frac{n\pi}2$`, t`$x = 2n\pi\pm\frac\pi4$`],
@@ -1230,7 +1232,7 @@ const ch3: ExamQuestion[] = [
     hint: t`$a^3+b^3 = (a+b)^3-3ab(a+b)$ with $a = \sin^2x$, $b = \cos^2x$.`,
     explain: t`$\sin^6x+\cos^6x = 1-3\sin^2x\cos^2x = 1-\frac34\sin^22x$. So $M = 1$ (when $\sin2x = 0$) and $m = \frac14$ (when $\sin^22x = 1$), giving $M-m = \frac34 = 0.75$.`,
   }),
-  q3(3, ADV, 100, {
+  q3(3, ADV_ONLY, 100, {
     kind: "mcq",
     q: t`The number of solutions of $2\sin^2x+\sin^22x = 2$ in $(-\pi,\pi)$ is:`,
     options: [t`$4$`, t`$6$`, t`$8$`, t`$2$`],
@@ -1447,7 +1449,7 @@ const ch4: ExamQuestion[] = [
     q: t`$x^2+kx+4>0$ for every real $x$ exactly when:`,
     options: [t`$-4<k<4$`, t`$-4\le k\le4$`, t`$k>4$`, t`$-2<k<2$`],
     answer: 0,
-    explain: t`With leading coefficient $1>0$, the quadratic is always positive iff $D<0$: $k^2-16<0$, i.e. $-4<k<4$. At $k = \pm4$ it touches zero, so the inequality is not strict-true there.`,
+    explain: t`With leading coefficient $1>0$, the quadratic is always positive iff $D<0$: $k^2-16<0$, i.e. $-4<k<4$. At $k = \pm4$ the quadratic equals 0 at $x = \mp2$, so it is not positive for every $x$ and $\pm4$ are excluded.`,
   }),
   q4(2, MAIN, 40, {
     kind: "mcq",

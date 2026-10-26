@@ -1111,10 +1111,10 @@ const thermo: Raw[] = [
     exams: ADV,
     idealTime: 100,
     q: "For a reaction, ΔH° = −40.0 kJ mol⁻¹ and ΔS° = −100 J K⁻¹ mol⁻¹. The equilibrium constant at 300 K is approximately (R = 8.314 J K⁻¹ mol⁻¹):",
-    options: ["55", "1.8 × 10⁻²", "1.74", "5.7 × 10³"],
+    options: ["55", "1.8 × 10⁻²", "1.74", "9.2 × 10⁶"],
     answer: 0,
     hint: "First ΔG° = ΔH° − TΔS°, then log K.",
-    explain: t`$\Delta G^\circ = -40\,000 - 300(-100) = -10\,000$ J mol$^{-1}$. $\log K = \dfrac{10\,000}{2.303 \times 8.314 \times 300} = \dfrac{10\,000}{5744} = 1.741$, so $K = 10^{1.741} \approx 55$. 1.74 is $\log K$ itself; $1.8\times10^{-2}$ is $1/K$ (sign error); $5.7\times10^3$ ignores the entropy term.`,
+    explain: t`$\Delta G^\circ = -40\,000 - 300(-100) = -10\,000$ J mol$^{-1}$. $\log K = \dfrac{10\,000}{2.303 \times 8.314 \times 300} = \dfrac{10\,000}{5744} = 1.741$, so $K = 10^{1.741} \approx 55$. 1.74 is $\log K$ itself; $1.8\times10^{-2}$ is $1/K$ (sign error); $9.2\times10^6$ ignores the entropy term ($\log K = 40\,000/5744 = 6.96$).`,
   },
   {
     kind: "mcq",
@@ -1368,7 +1368,7 @@ const equilibrium: Raw[] = [
     options: ["1.8 × 10⁻¹⁰ M", "1.34 × 10⁻⁵ M", "9.0 × 10⁻¹¹ M", "3.6 × 10⁻¹⁰ M"],
     answer: 1,
     hint: "For an AB salt, K_sp = s².",
-    explain: t`AgCl ⇌ Ag$^+$ + Cl$^-$; $K_{sp} = s^2$, so $s = \sqrt{1.8\times10^{-10}} = 1.34\times10^{-5}$ mol L$^{-1}$. Writing $s = K_{sp}$ or $K_{sp}/2$ gives the other values.`,
+    explain: t`AgCl ⇌ Ag$^+$ + Cl$^-$; $K_{sp} = s^2$, so $s = \sqrt{1.8\times10^{-10}} = 1.34\times10^{-5}$ mol L$^{-1}$. Writing $s = K_{sp}$, $K_{sp}/2$ or $2K_{sp}$ gives the other values.`,
   },
   {
     kind: "mcq",
@@ -1563,7 +1563,7 @@ const equilibrium: Raw[] = [
     options: ["1.8 × 10⁻⁵", "5.6 × 10⁻¹⁰", "5.6 × 10⁻⁵", "1.8 × 10⁻⁹"],
     answer: 1,
     hint: "K_a × K_b = K_w for a conjugate pair.",
-    explain: t`$K_a = \dfrac{K_w}{K_b} = \dfrac{1.0\times10^{-14}}{1.8\times10^{-5}} = 5.6\times10^{-10}$. Equivalently, p$K_a$ = 14 − 4.74 = 9.26. A strong conjugate partner pairs with a weak one.`,
+    explain: t`$K_a = \dfrac{K_w}{K_b} = \dfrac{1.0\times10^{-14}}{1.8\times10^{-5}} = 5.6\times10^{-10}$. Equivalently, p$K_a$ = 14 − 4.74 = 9.26. The weaker a base, the stronger its conjugate acid (and vice versa).`,
   },
   {
     kind: "numeric",
