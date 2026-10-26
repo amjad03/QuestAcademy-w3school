@@ -1,5 +1,456 @@
-import type { ExamQuestion, FormulaSheet } from "@/content/types";
+import type { ExamId, ExamQuestion, FormulaSheet } from "@/content/types";
 
-export const questions: ExamQuestion[] = [];
+/*
+ * Class 11 Physics bank, part 3:
+ *   08 Mechanical Properties of Solids
+ *   09 Mechanical Properties of Fluids
+ *   10 Thermal Properties of Matter
+ *   11 Thermodynamics
+ * All questions are original. Unless a question says otherwise, g = 10 m s⁻²,
+ * ρ(water) = 1000 kg m⁻³ and R = 8.314 J mol⁻¹ K⁻¹.
+ */
 
+const t = String.raw;
+
+type DistOmit<T, K extends PropertyKey> = T extends unknown ? Omit<T, K> : never;
+type Q = DistOmit<ExamQuestion, "id" | "subject" | "chapter" | "grade">;
+
+const build = (no: string, chapter: string, qs: Q[]): ExamQuestion[] =>
+  qs.map(
+    (q, i) =>
+      ({
+        ...q,
+        id: `phy11-3-${no}-${String(i + 1).padStart(3, "0")}`,
+        subject: "physics",
+        chapter,
+        grade: "11",
+      }) as ExamQuestion,
+  );
+
+/* exam tag sets */
+const ALL: ExamId[] = ["NEET", "JEE", "KCET", "COMEDK"];
+const MAIN: ExamId[] = ["NEET", "JEE", "COMEDK"];
+const JM: ExamId[] = ["JEE", "COMEDK"];
+const ADV: ExamId[] = ["JEE_ADV"];
+const JA: ExamId[] = ["JEE", "JEE_ADV"];
+
+const AR = [
+  "Both A and R are true and R is the correct explanation of A",
+  "Both A and R are true but R is not the correct explanation of A",
+  "A is true but R is false",
+  "A is false but R is true",
+];
+const S12 = [
+  "Both Statement I and Statement II are true",
+  "Both Statement I and Statement II are false",
+  "Statement I is true but Statement II is false",
+  "Statement I is false but Statement II is true",
+];
+
+/* ================================================================== */
+/* 08  Mechanical Properties of Solids                                 */
+/* ================================================================== */
+const CH8 = "Mechanical Properties of Solids";
+const ch8: Q[] = [
+  {
+    kind: "mcq",
+    difficulty: 1,
+    exams: ALL,
+    idealTime: 30,
+    q: t`The SI unit of stress is:`,
+    options: [t`N m$^{-2}$`, t`N m`, "It has no unit", t`N m$^{-1}$`],
+    answer: 0,
+    explain: t`Stress = restoring force per unit area, so its unit is N m$^{-2}$ = pascal (Pa), the same as pressure. "No unit" describes strain; N m$^{-1}$ is the unit of surface tension or spring constant.`,
+  },
+  {
+    kind: "mcq",
+    difficulty: 1,
+    exams: ALL,
+    idealTime: 30,
+    q: t`Longitudinal strain in a stretched wire is:`,
+    options: [
+      "Change in length divided by original length, a dimensionless number",
+      "Force divided by area, measured in pascal",
+      "Change in length, measured in metre",
+      "Stress divided by Young's modulus, measured in pascal",
+    ],
+    answer: 0,
+    explain: t`Strain $= \Delta L/L$, a ratio of two lengths, so it has no unit or dimensions. Force per area is stress. Stress$/Y$ does equal strain, but it is dimensionless, not in pascal.`,
+  },
+  {
+    kind: "mcq",
+    difficulty: 1,
+    exams: ALL,
+    idealTime: 30,
+    q: t`The Young's modulus of a perfectly rigid body is:`,
+    options: ["Zero", "One", "Infinite", "Equal to its bulk modulus"],
+    answer: 2,
+    explain: t`A perfectly rigid body shows zero strain for any finite stress, so $Y = \text{stress}/\text{strain} \to \infty$. Zero would describe a body that offers no resistance at all to deformation.`,
+  },
+  {
+    kind: "mcq",
+    difficulty: 1,
+    exams: ALL,
+    idealTime: 35,
+    q: t`On the stress–strain curve of a metal wire, Hooke's law (stress ∝ strain) is obeyed up to the:`,
+    options: ["Proportional limit", "Yield point", "Ultimate tensile strength point", "Fracture point"],
+    answer: 0,
+    explain: t`The curve is a straight line only up to the proportional limit. Between it and the elastic limit (yield point) the wire still recovers its length but stress is no longer proportional to strain. Beyond the yield point there is permanent set; the maximum of the curve is the ultimate tensile strength and the wire breaks at the fracture point.`,
+  },
+  {
+    kind: "mcq",
+    difficulty: 1,
+    exams: ALL,
+    idealTime: 30,
+    q: t`The compressibility of a material is:`,
+    options: [
+      "The reciprocal of its bulk modulus",
+      "The reciprocal of its Young's modulus",
+      "Equal to its bulk modulus",
+      "The product of its bulk modulus and volume",
+    ],
+    answer: 0,
+    explain: t`Compressibility $k = \dfrac{1}{B} = -\dfrac{1}{V}\dfrac{\Delta V}{\Delta p}$. Gases are very compressible because their bulk modulus is small; solids are the least compressible.`,
+  },
+  {
+    kind: "mcq",
+    difficulty: 1,
+    exams: ALL,
+    idealTime: 30,
+    q: t`Which of these materials has the largest Young's modulus?`,
+    options: ["Steel", "Copper", "Glass", "Rubber"],
+    answer: 0,
+    explain: t`Typical values: steel $\approx 2\times10^{11}$ Pa, copper $\approx 1.1\times10^{11}$ Pa, glass $\approx 0.65\times10^{11}$ Pa, rubber $\sim 10^{6}$–$10^{7}$ Pa. A larger $Y$ means a smaller strain for a given stress — in physics steel is "more elastic" than rubber.`,
+  },
+  {
+    kind: "mcq",
+    difficulty: 1,
+    exams: ALL,
+    idealTime: 35,
+    q: t`For an isotropic material whose volume does not change when it is stretched, Poisson's ratio is:`,
+    options: ["0.5", "0", "1", "−1"],
+    answer: 0,
+    explain: t`$\Delta V/V = \varepsilon(1 - 2\sigma)$ for a stretched rod with longitudinal strain $\varepsilon$. No volume change needs $1 - 2\sigma = 0$, so $\sigma = 0.5$, the theoretical upper limit (rubber is close to it).`,
+  },
+  {
+    kind: "mcq",
+    difficulty: 1,
+    exams: ALL,
+    idealTime: 30,
+    q: t`The modulus of rigidity (shear modulus) of a material relates to:`,
+    options: [
+      "A change of shape with no change of volume",
+      "A change of volume with no change of shape",
+      "A change of length under a longitudinal force",
+      "A change of length perpendicular to the applied force",
+    ],
+    answer: 0,
+    explain: t`A tangential (shearing) stress produces a shear strain $\theta \approx \Delta x/L$ that changes the shape of the body, not its volume: $G = \dfrac{F/A}{\theta}$. Volume change at constant shape is the bulk modulus; change of length is Young's modulus; the transverse change enters Poisson's ratio.`,
+  },
+  {
+    kind: "mcq",
+    difficulty: 1,
+    exams: ALL,
+    idealTime: 30,
+    q: t`The elastic potential energy stored per unit volume of a stretched wire is:`,
+    options: [
+      t`$\tfrac12 \times$ stress $\times$ strain`,
+      t`stress $\times$ strain`,
+      t`$\tfrac12 \times$ stress / strain`,
+      t`$2 \times$ stress $\times$ strain`,
+    ],
+    answer: 0,
+    explain: t`Work done in stretching $= \tfrac12 F\,\Delta L$. Dividing by volume $AL$: $u = \tfrac12 \dfrac{F}{A}\dfrac{\Delta L}{L} = \tfrac12\,\text{stress}\times\text{strain} = \dfrac{\text{stress}^2}{2Y}$. The factor $\tfrac12$ appears because the force rises from 0 to $F$ during stretching.`,
+  },
+  {
+    kind: "mcq",
+    difficulty: 1,
+    exams: ALL,
+    idealTime: 50,
+    q: t`Match each modulus (Column I) with the ratio that defines it (Column II).
+Column I: (P) Young's modulus (Q) Bulk modulus (R) Shear modulus (S) Poisson's ratio
+Column II: (1) tangential stress / shear strain (2) lateral strain / longitudinal strain (3) longitudinal stress / longitudinal strain (4) hydraulic stress / volume strain`,
+    options: [
+      "P–3, Q–4, R–1, S–2",
+      "P–3, Q–1, R–4, S–2",
+      "P–4, Q–3, R–1, S–2",
+      "P–3, Q–4, R–2, S–1",
+    ],
+    answer: 0,
+    explain: t`$Y = \dfrac{F/A}{\Delta L/L}$, $B = -\dfrac{p}{\Delta V/V}$, $G = \dfrac{F_t/A}{\theta}$ and Poisson's ratio $\sigma = \dfrac{\Delta d/d}{\Delta L/L}$ (magnitudes). So P–3, Q–4, R–1, S–2.`,
+  },
+  {
+    kind: "numeric",
+    difficulty: 2,
+    exams: ALL,
+    idealTime: 60,
+    q: t`A steel wire 2 m long with cross-sectional area 1 mm$^2$ carries a load of 10 kg. Taking $Y = 2\times10^{11}$ N m$^{-2}$ and $g = 10$ m s$^{-2}$, find the extension of the wire in mm.`,
+    answer: 1,
+    unit: "mm",
+    hint: "ΔL = FL/(AY); convert mm² to m².",
+    explain: t`$F = 100$ N, $A = 1\times10^{-6}$ m$^2$. $\Delta L = \dfrac{FL}{AY} = \dfrac{100\times2}{10^{-6}\times2\times10^{11}} = \dfrac{200}{2\times10^{5}} = 10^{-3}$ m $= 1$ mm. A common slip is taking 1 mm$^2 = 10^{-3}$ m$^2$, which gives 0.001 mm.`,
+  },
+  {
+    kind: "mcq",
+    difficulty: 2,
+    exams: ALL,
+    idealTime: 60,
+    q: t`Two wires A and B of the same material carry equal loads. Their lengths are in the ratio 1 : 2 and their diameters in the ratio 2 : 1. The ratio of their extensions $\Delta L_A : \Delta L_B$ is:`,
+    options: ["1 : 8", "1 : 4", "8 : 1", "1 : 2"],
+    answer: 0,
+    hint: "ΔL ∝ L/d² for the same F and Y.",
+    explain: t`$\Delta L = \dfrac{4FL}{\pi d^2 Y} \propto \dfrac{L}{d^2}$. $\dfrac{\Delta L_A}{\Delta L_B} = \dfrac{1}{2}\times\left(\dfrac{1}{2}\right)^2 = \dfrac18$. 1 : 4 comes from using $d$ instead of $d^2$.`,
+  },
+  {
+    kind: "mcq",
+    difficulty: 2,
+    exams: ALL,
+    idealTime: 50,
+    q: t`The bulk modulus of water is $2.2\times10^{9}$ Pa. The percentage decrease in the volume of a sample of water when the pressure on it is increased by $1.1\times10^{7}$ Pa is:`,
+    options: ["0.5%", "0.05%", "5%", "0.2%"],
+    answer: 0,
+    hint: "ΔV/V = Δp/B.",
+    explain: t`$\dfrac{\Delta V}{V} = \dfrac{\Delta p}{B} = \dfrac{1.1\times10^{7}}{2.2\times10^{9}} = 5\times10^{-3} = 0.5\%$. Forgetting to multiply the fraction by 100 gives 0.005 — not among the options — and slipping a power of ten gives 0.05% or 5%.`,
+  },
+  {
+    kind: "numeric",
+    difficulty: 2,
+    exams: ALL,
+    idealTime: 50,
+    q: t`A wire is stretched by 2 mm when a force of 200 N is applied gradually within its elastic limit. Find the elastic potential energy stored in the wire, in joule.`,
+    answer: 0.2,
+    tolerance: 0.01,
+    unit: "J",
+    hint: "The force grows from 0 to F, so use the average force.",
+    explain: t`$U = \tfrac12 F\,\Delta L = \tfrac12\times200\times2\times10^{-3} = 0.2$ J. Writing $F\,\Delta L = 0.4$ J ignores that the force builds up from zero.`,
+  },
+  {
+    kind: "mcq",
+    difficulty: 2,
+    exams: MAIN,
+    idealTime: 70,
+    q: t`A metal cube of side 10 cm is fixed at its base. A tangential force of $1\times10^{4}$ N is applied to its top face. If the shear modulus is $4\times10^{10}$ Pa, the lateral displacement of the top face is:`,
+    options: [t`2.5 μm`, t`25 μm`, t`0.25 μm`, t`2.5 mm`],
+    answer: 0,
+    hint: "Shear strain = Δx/L = F/(AG).",
+    explain: t`$A = 0.01$ m$^2$. Shear strain $\theta = \dfrac{F}{AG} = \dfrac{10^4}{0.01\times4\times10^{10}} = 2.5\times10^{-5}$. $\Delta x = \theta L = 2.5\times10^{-5}\times0.1 = 2.5\times10^{-6}$ m $= 2.5$ μm. Forgetting to multiply by $L$ (or using $L = 1$ m) gives 25 μm.`,
+  },
+  {
+    kind: "mcq",
+    difficulty: 2,
+    exams: ALL,
+    idealTime: 50,
+    q: t`A wire elongates by $\Delta L$ under a certain load. Another wire of the same material, with double the length and double the radius, carries the same load. Its elongation is:`,
+    options: [t`$\Delta L/2$`, t`$\Delta L$`, t`$2\Delta L$`, t`$\Delta L/4$`],
+    answer: 0,
+    hint: "ΔL ∝ L/r².",
+    explain: t`$\Delta L' = \Delta L\times\dfrac{2}{2^2} = \dfrac{\Delta L}{2}$. Treating area as proportional to $r$ would give $\Delta L$; ignoring the length change gives $\Delta L/4$.`,
+  },
+  {
+    kind: "mcq",
+    difficulty: 2,
+    exams: MAIN,
+    idealTime: 60,
+    q: t`A uniform wire hangs vertically from a rigid support and stretches under its own weight. If a wire of the same material and cross-section but twice as long is hung the same way, its elongation due to its own weight becomes:`,
+    options: ["4 times", "2 times", "8 times", "Unchanged"],
+    answer: 0,
+    hint: "The average tension acts over the whole length.",
+    explain: t`Tension rises linearly from 0 at the bottom to $W$ at the top, so the elongation is that of the full weight acting on half the length: $\Delta L = \dfrac{WL}{2AY} = \dfrac{\rho g L^2}{2Y}$. Since $W$ itself $\propto L$, $\Delta L \propto L^2$: doubling $L$ makes it 4 times. "2 times" forgets that the weight also doubles.`,
+  },
+  {
+    kind: "mcq",
+    difficulty: 2,
+    exams: ["NEET", "KCET", "COMEDK"],
+    idealTime: 45,
+    q: t`Assertion (A): Steel is more elastic than rubber.
+Reason (R): For the same stress, the strain produced in steel is much smaller than that in rubber.`,
+    options: AR,
+    answer: 0,
+    explain: t`In physics, "more elastic" means a larger modulus of elasticity. $Y = \text{stress}/\text{strain}$, and for equal stress steel's strain is far smaller, so $Y_{\text{steel}} \gg Y_{\text{rubber}}$. R is exactly why A holds.`,
+  },
+  {
+    kind: "mcq",
+    difficulty: 2,
+    exams: ["NEET", "JEE", "KCET"],
+    idealTime: 60,
+    q: t`Statement I: A material whose fracture point lies close to its elastic limit is called brittle.
+Statement II: Elastomers such as rubber obey Hooke's law throughout their large elastic region.`,
+    options: S12,
+    answer: 2,
+    explain: t`Statement I is true: a brittle material breaks soon after the elastic limit, with little plastic region (a ductile one has a long plastic region). Statement II is false: elastomers (rubber, the tissue of the aorta) can be stretched elastically to very large strains, but their stress–strain curve is not a straight line, so they do not obey Hooke's law.`,
+  },
+  {
+    kind: "mcq",
+    difficulty: 2,
+    exams: ALL,
+    idealTime: 60,
+    q: t`A steel rod is clamped rigidly between two walls at room temperature and then heated by 50 K. For steel, $\alpha = 1.2\times10^{-5}$ K$^{-1}$ and $Y = 2\times10^{11}$ Pa. The thermal stress developed in the rod is:`,
+    options: [t`$1.2\times10^{8}$ Pa`, t`$1.2\times10^{6}$ Pa`, t`$6\times10^{7}$ Pa`, t`$2.4\times10^{8}$ Pa`],
+    answer: 0,
+    hint: "The walls prevent the free expansion αLΔT; the strain is αΔT.",
+    explain: t`The rod would freely expand by $\alpha L\Delta T$; the walls compress it back, so strain $= \alpha\Delta T$. Stress $= Y\alpha\Delta T = 2\times10^{11}\times1.2\times10^{-5}\times50 = 1.2\times10^{8}$ Pa. The stress does not depend on the rod's length or area.`,
+  },
+  {
+    kind: "numeric",
+    difficulty: 2,
+    exams: JM,
+    idealTime: 75,
+    q: t`A rod is stretched so that its length increases by 0.5%. If Poisson's ratio of the material is 0.3, find the percentage increase in its volume.`,
+    answer: 0.2,
+    tolerance: 0.01,
+    unit: "%",
+    hint: "ΔV/V = ΔL/L − 2(Δr/r).",
+    explain: t`$V = \pi r^2 L$ ⟹ $\dfrac{\Delta V}{V} = \dfrac{\Delta L}{L} + 2\dfrac{\Delta r}{r}$. Lateral strain $\dfrac{\Delta r}{r} = -0.3\times0.5\% = -0.15\%$. So $\dfrac{\Delta V}{V} = 0.5\% - 0.3\% = 0.2\%$. Forgetting the factor 2 on the radius gives 0.35%.`,
+  },
+  {
+    kind: "mcq",
+    difficulty: 2,
+    exams: ALL,
+    idealTime: 60,
+    q: t`A steel wire ($Y = 2\times10^{11}$ Pa) and a copper wire ($Y = 1\times10^{11}$ Pa) of equal length and equal cross-section are joined end to end, and the combination is hung vertically with a load at the bottom. Ignoring their weights, the ratio of the extension of the steel wire to that of the copper wire is:`,
+    options: ["1 : 2", "2 : 1", "1 : 1", "1 : 4"],
+    answer: 0,
+    hint: "In series, both wires carry the same tension.",
+    explain: t`Both wires carry the same tension, so the same stress. $\Delta L = \dfrac{FL}{AY} \propto \dfrac1Y$: $\dfrac{\Delta L_s}{\Delta L_c} = \dfrac{Y_c}{Y_s} = \dfrac12$. Equal stresses (1 : 1) is true, but the question asks for extensions.`,
+  },
+  {
+    kind: "numeric",
+    difficulty: 2,
+    exams: ALL,
+    idealTime: 60,
+    q: t`The breaking stress of a metal is $8\times10^{8}$ N m$^{-2}$ and its density is 8000 kg m$^{-3}$. What is the greatest length (in km) of a uniform wire of this metal that can hang vertically from its top without breaking under its own weight? ($g = 10$ m s$^{-2}$)`,
+    answer: 10,
+    unit: "km",
+    hint: "The topmost section carries the whole weight ρALg.",
+    explain: t`The stress is greatest at the top: $\dfrac{\rho A L g}{A} = \rho g L$. Setting $\rho g L = 8\times10^{8}$: $L = \dfrac{8\times10^{8}}{8000\times10} = 10^{4}$ m $= 10$ km. The answer does not depend on the cross-section.`,
+  },
+  {
+    kind: "mcq",
+    difficulty: 2,
+    exams: ALL,
+    idealTime: 50,
+    q: t`A wire with $Y = 2\times10^{11}$ Pa is under a tensile stress of $2\times10^{8}$ Pa. The elastic energy stored per unit volume is:`,
+    options: [t`$1\times10^{5}$ J m$^{-3}$`, t`$2\times10^{5}$ J m$^{-3}$`, t`$5\times10^{4}$ J m$^{-3}$`, t`$1\times10^{-3}$ J m$^{-3}$`],
+    answer: 0,
+    hint: "u = stress²/(2Y).",
+    explain: t`Strain $= \dfrac{2\times10^8}{2\times10^{11}} = 10^{-3}$. $u = \tfrac12\times2\times10^{8}\times10^{-3} = 1\times10^{5}$ J m$^{-3}$. Dropping the $\tfrac12$ gives $2\times10^5$; $10^{-3}$ is just the strain.`,
+  },
+  {
+    kind: "mcq",
+    difficulty: 2,
+    exams: MAIN,
+    idealTime: 50,
+    q: t`An ideal gas at pressure $p$ is compressed slowly at constant temperature. Its bulk modulus under these conditions is:`,
+    options: [t`$p$`, t`$\gamma p$`, t`$1/p$`, t`$p/\gamma$`],
+    answer: 0,
+    hint: "Differentiate pV = constant.",
+    explain: t`For an isothermal change $pV = $ const, so $p\,dV + V\,dp = 0$ ⟹ $B = -V\dfrac{dp}{dV} = p$. For an adiabatic change $pV^\gamma = $ const gives $B = \gamma p$. $1/p$ is the isothermal compressibility.`,
+  },
+  {
+    kind: "mcq",
+    difficulty: 2,
+    exams: JM,
+    idealTime: 50,
+    q: t`For a certain material, Young's modulus is 2.4 times its modulus of rigidity. Using $Y = 2G(1 + \sigma)$, its Poisson's ratio is:`,
+    options: ["0.2", "0.4", "0.5", "1.2"],
+    answer: 0,
+    explain: t`$2.4G = 2G(1 + \sigma)$ ⟹ $1 + \sigma = 1.2$ ⟹ $\sigma = 0.2$. 1.2 is $1 + \sigma$; 0.4 comes from forgetting the 2.`,
+  },
+  {
+    kind: "multi",
+    difficulty: 2,
+    exams: ADV,
+    idealTime: 70,
+    q: t`Which of the following statements are correct?`,
+    options: [
+      "The shear modulus of a liquid is zero",
+      "The bulk modulus of a gas is much smaller than that of a solid",
+      "The Young's modulus of a wire increases if the wire is made longer",
+      "Within the elastic limit, a stretched wire returns to its original length when the load is removed",
+    ],
+    answers: [0, 1, 3],
+    hint: "A modulus is a property of the material, not of the sample.",
+    explain: t`(A) A liquid cannot sustain a static shear stress, so $G = 0$ ✓. (B) Gases are highly compressible: $B \sim 10^5$ Pa against $\sim10^{11}$ Pa for steel ✓. (C) False: $Y$ depends only on the material (and temperature), not on length or area — a longer wire stretches more, but $Y$ is the same. (D) That is the meaning of the elastic limit ✓.`,
+  },
+  {
+    kind: "mcq",
+    difficulty: 3,
+    exams: JA,
+    idealTime: 120,
+    q: t`A uniform rope of mass $m$, length $L$, cross-section $A$ and Young's modulus $Y$ hangs vertically from a ceiling. The ratio of the extension of its upper half to that of its lower half is:`,
+    options: ["3 : 1", "1 : 1", "2 : 1", "4 : 1"],
+    answer: 0,
+    hint: "Tension at height y above the lower end is mgy/L. Integrate.",
+    explain: t`At height $y$ above the bottom, $T(y) = mgy/L$. Extension of a slice: $d(\Delta L) = \dfrac{T\,dy}{AY}$. Lower half: $\displaystyle\int_0^{L/2}\dfrac{mgy}{LAY}dy = \dfrac{mgL}{8AY}$. Whole rope: $\dfrac{mgL}{2AY}$. Upper half $= \dfrac{mgL}{2AY} - \dfrac{mgL}{8AY} = \dfrac{3mgL}{8AY}$. Ratio 3 : 1. "1 : 1" ignores that the upper part carries more weight.`,
+  },
+  {
+    kind: "multi",
+    difficulty: 3,
+    exams: ADV,
+    idealTime: 120,
+    q: t`A uniform rod of length $L$, cross-section $A$ and Young's modulus $Y$ lies on a smooth horizontal floor. A constant horizontal force $F$ pulls one end along the rod's length. Which statements are correct?`,
+    options: [
+      t`The stress at the midpoint of the rod is $F/(2A)$`,
+      "The stress is the same at every cross-section",
+      t`The total extension of the rod is $FL/(2AY)$`,
+      "The stress at the free (rear) end is zero",
+    ],
+    answers: [0, 2, 3],
+    hint: "Each part of the rod has the same acceleration F/M; the tension at a section accelerates only the part behind it.",
+    explain: t`Acceleration $a = F/M$. At distance $x$ from the rear end, the tension accelerates the mass $Mx/L$ behind it: $T(x) = Fx/L$. So the stress is $0$ at the rear end ✓ (D), $F/(2A)$ at the middle ✓ (A), and $F/A$ at the pulled end — not uniform (B false). Extension $= \displaystyle\int_0^L\dfrac{Fx}{LAY}dx = \dfrac{FL}{2AY}$ ✓ (C).`,
+  },
+  {
+    kind: "multi",
+    difficulty: 3,
+    exams: ADV,
+    idealTime: 100,
+    q: t`A wire of length $L$ and radius $r$ stretches by $\Delta L$ under a load $W$. It is replaced by a wire of the same material with length $2L$ and radius $2r$, carrying the same load $W$. For the new wire:`,
+    options: [
+      "The extension is halved",
+      "The stress becomes one-fourth",
+      "The strain becomes one-fourth",
+      "The elastic energy stored doubles",
+    ],
+    answers: [0, 1, 2],
+    hint: "Find stress, then strain = stress/Y, then extension = strain × length.",
+    explain: t`Area becomes $4\times$, so stress $W/A$ becomes $\tfrac14$ ✓. Strain $=$ stress$/Y$ also becomes $\tfrac14$ ✓. Extension $=$ strain $\times$ length $= \tfrac14\times2 = \tfrac12$ ✓. Energy $U = \tfrac12 W\Delta L$ also halves, so (D) is false.`,
+  },
+  {
+    kind: "numeric",
+    difficulty: 3,
+    exams: JA,
+    idealTime: 120,
+    q: t`A steel wire of cross-section 1 mm$^2$ is held taut between two rigid supports. At 30 °C its tension is 20 N. For steel $\alpha = 1.2\times10^{-5}$ K$^{-1}$ and $Y = 2\times10^{11}$ Pa. At what temperature (in °C) does the tension become zero? (Ignore any expansion of the supports.)`,
+    answer: 38.3,
+    tolerance: 0.2,
+    unit: "°C",
+    hint: "Heating a fixed wire reduces its tension by YAαΔT.",
+    explain: t`Heating would lengthen the wire, so with fixed ends the tension falls by $\Delta T = YA\alpha\,\Delta\theta$. Each kelvin reduces it by $2\times10^{11}\times10^{-6}\times1.2\times10^{-5} = 2.4$ N. Zero tension needs $\Delta\theta = 20/2.4 = 8.33$ K, i.e. $\theta = 38.3$ °C. Cooling (to 21.7 °C) would increase the tension instead.`,
+  },
+  {
+    kind: "mcq",
+    difficulty: 3,
+    exams: JA,
+    idealTime: 130,
+    q: t`A thin uniform rod of length $L$, density $\rho$ and Young's modulus $Y$ rotates in a horizontal plane about a vertical axis through one end with angular speed $\omega$. The total elongation of the rod is:`,
+    options: [t`$\dfrac{\rho\omega^2L^3}{3Y}$`, t`$\dfrac{\rho\omega^2L^3}{2Y}$`, t`$\dfrac{\rho\omega^2L^3}{6Y}$`, t`$\dfrac{2\rho\omega^2L^3}{3Y}$`],
+    answer: 0,
+    hint: "The tension at distance x supplies the centripetal force for the part beyond x.",
+    explain: t`Tension at $x$: $T(x) = \displaystyle\int_x^L \rho A\omega^2 s\,ds = \dfrac{\rho A\omega^2}{2}(L^2 - x^2)$. Elongation $= \displaystyle\int_0^L\dfrac{T}{AY}dx = \dfrac{\rho\omega^2}{2Y}\left(L^3 - \dfrac{L^3}{3}\right) = \dfrac{\rho\omega^2L^3}{3Y}$. Using the maximum tension along the whole length gives $\rho\omega^2L^3/(2Y)$.`,
+  },
+  {
+    kind: "numeric",
+    difficulty: 3,
+    exams: JA,
+    idealTime: 100,
+    q: t`A 10 kg block hangs from a steel wire of length 2 m and cross-section 1 mm$^2$ ($Y = 2\times10^{11}$ Pa). Treating the wire as a light spring, find the angular frequency (in rad s$^{-1}$) of small vertical oscillations of the block.`,
+    answer: 100,
+    unit: "rad/s",
+    hint: "A wire behaves as a spring of constant k = YA/L.",
+    explain: t`$F = \dfrac{YA}{L}\Delta L$, so $k = \dfrac{YA}{L} = \dfrac{2\times10^{11}\times10^{-6}}{2} = 10^{5}$ N m$^{-1}$. $\omega = \sqrt{k/m} = \sqrt{10^4} = 100$ rad s$^{-1}$ (frequency $\approx 15.9$ Hz).`,
+  },
+];
+
+/*CH9*/
+export const questions: ExamQuestion[] = [...build("08", CH8, ch8)];
 export const formulas: FormulaSheet[] = [];
