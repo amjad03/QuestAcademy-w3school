@@ -769,8 +769,758 @@ const digestion: Topic = {
   ],
 };
 
-export const topics: Topic[] = [digestion];
+/* ------------------------------------------------------------------ */
+/* NCERT Class 11: Breathing and Exchange of Gases                      */
+/* ------------------------------------------------------------------ */
+const breathing: Topic = {
+  slug: "c11-bio-breathing-exchange-gases",
+  title: "Breathing and Exchange of Gases",
+  icon: "🫁",
+  description:
+    "Respiratory organs in animals, the human respiratory system, the mechanism of breathing, lung volumes, exchange and transport of O₂ and CO₂, regulation of breathing and respiratory disorders.",
+  lessons: [
+    {
+      slug: "c11-bio-respiratory-organs",
+      title: "Respiratory Organs and the Human Respiratory System",
+      summary:
+        "Breathing versus cellular respiration, respiratory organs across the animal kingdom, and the human airways, lungs, pleura and thoracic chamber.",
+      minutes: 18,
+      xp: 45,
+      blocks: [
+        {
+          type: "text",
+          md: "Run up three flights of stairs and you breathe faster without deciding to. Cells use O₂ to break down glucose and fatty acids for energy and release CO₂, which is harmful in excess. So O₂ must be brought in continuously and CO₂ removed. This exchange of O₂ from the atmosphere with CO₂ produced by cells is called **breathing**, commonly known as respiration.\n\nDo not confuse it with **cellular respiration**, the chemical breakdown of food inside cells (studied in *Respiration in Plants*).",
+        },
+        { type: "heading", text: "Respiratory organs in animals" },
+        {
+          type: "table",
+          headers: ["Animals", "How they exchange gases"],
+          rows: [
+            ["Sponges, coelenterates, flatworms", "Simple diffusion over the whole body surface"],
+            ["Earthworms", "Moist cuticle (skin)"],
+            ["Insects", "Network of tubes, the **tracheal tubes**"],
+            ["Most aquatic arthropods and molluscs", "Special vascular structures called **gills** (branchial respiration)"],
+            ["Fishes", "Gills"],
+            ["Terrestrial animals", "Vascular bags called **lungs** (pulmonary respiration)"],
+            ["Amphibians (frogs)", "Lungs, and also through moist skin (cutaneous respiration)"],
+            ["Reptiles, birds, mammals", "Lungs"],
+          ],
+        },
+        {
+          type: "text",
+          md: "The choice of mechanism depends mainly on the **habitat** and the **level of organisation** of the animal.",
+        },
+        { type: "heading", text: "The human respiratory system" },
+        {
+          type: "list",
+          ordered: true,
+          items: [
+            "A pair of **external nostrils** opens out above the upper lip and leads through the **nasal passage** into the **nasal chamber**.",
+            "The nasal chamber opens into the **pharynx**, a common passage for food and air.",
+            "The pharynx opens through the larynx into the trachea. The **larynx** is a cartilaginous box that helps in sound production (the sound box). During swallowing, the glottis is covered by the **epiglottis**, a thin elastic cartilaginous flap, so food does not enter the larynx.",
+            "The **trachea** is a straight tube running down to the mid-thoracic cavity, where it divides at the level of the **5th thoracic vertebra** into the right and left **primary bronchi**.",
+            "Each bronchus divides into secondary and tertiary bronchi and then into bronchioles, ending in very thin **terminal bronchioles**.",
+            "Terminal bronchioles give rise to many very thin, irregular-walled, vascularised bag-like structures, the **alveoli**.",
+          ],
+        },
+        {
+          type: "text",
+          md: "The trachea, primary, secondary and tertiary bronchi and the initial bronchioles are supported by **incomplete cartilaginous rings**, which keep them from collapsing. The branching network of bronchi, bronchioles and alveoli makes up the **lungs**.\n\nThe lungs are covered by a double-layered **pleura** with **pleural fluid** between the layers, which reduces friction on the lung surface. The outer pleural membrane is in close contact with the thoracic lining; the inner one touches the lung surface.",
+        },
+        {
+          type: "table",
+          headers: ["Part", "Extent", "Job"],
+          rows: [
+            ["Conducting part", "External nostrils up to the terminal bronchioles", "Carries air to the alveoli, clears it of foreign particles, humidifies it and brings it to body temperature"],
+            ["Respiratory or exchange part", "Alveoli and their ducts", "Actual site of diffusion of O₂ and CO₂ between blood and air"],
+          ],
+        },
+        {
+          type: "checkpoint",
+          questions: [
+            {
+              kind: "mcq",
+              q: "The trachea divides into the primary bronchi at the level of the:",
+              options: ["3rd cervical vertebra", "5th thoracic vertebra", "1st lumbar vertebra", "12th thoracic vertebra"],
+              answer: 1,
+              explain: "The trachea divides into right and left primary bronchi at about the 5th thoracic vertebra.",
+            },
+          ],
+        },
+        {
+          type: "text",
+          md: "The lungs lie in the **thoracic chamber**, an air-tight chamber formed dorsally by the **vertebral column**, ventrally by the **sternum**, laterally by the **ribs** and on the lower side by the dome-shaped **diaphragm**. Because it is air-tight, any change in the volume of the thoracic cavity is reflected in the lung (pulmonary) cavity. This is what makes breathing possible.",
+        },
+        {
+          type: "example",
+          title: "Steps of respiration",
+          problem: "List the steps by which an O₂ molecule from the air reaches a muscle cell and a CO₂ molecule leaves it.",
+          steps: [
+            "Breathing or pulmonary ventilation: atmospheric air is drawn in and CO₂-rich alveolar air is released out.",
+            "Diffusion of gases (O₂ and CO₂) across the alveolar membrane.",
+            "Transport of gases by the blood.",
+            "Diffusion of O₂ and CO₂ between blood and tissues.",
+            "Utilisation of O₂ by cells for catabolic reactions and the release of CO₂ (cellular respiration).",
+          ],
+          answer: "Ventilation → alveolar diffusion → transport in blood → tissue diffusion → cellular respiration.",
+        },
+        {
+          type: "mistake",
+          wrong: "Gas exchange happens all along the airways, in the trachea and bronchi too.",
+          right: "Exchange happens only in the **respiratory part** (alveoli and their ducts). The conducting part only carries, cleans, warms and moistens the air.",
+          why: "Air touches the whole airway, so it seems gases could cross anywhere. But only the alveoli have walls thin enough and are wrapped in dense capillary networks; the cartilage-supported tubes are too thick.",
+        },
+        {
+          type: "activity",
+          activity: {
+            kind: "match",
+            prompt: "Match each animal with its respiratory organ.",
+            pairs: [
+              ["Cockroach", "Tracheal tubes"],
+              ["Earthworm", "Moist cuticle"],
+              ["Prawn", "Gills"],
+              ["Hydra", "Whole body surface"],
+              ["Pigeon", "Lungs"],
+            ],
+            explain: "Simple animals use the body surface; earthworms their moist skin; insects tracheae; aquatic arthropods gills; birds and other land vertebrates lungs.",
+          },
+        },
+        {
+          type: "keypoints",
+          items: [
+            "Breathing exchanges O₂ and CO₂ with the environment; cellular respiration uses O₂ inside cells.",
+            "Organs: body surface, moist cuticle, tracheae, gills, lungs, skin (frogs).",
+            "Airway: nostrils → nasal chamber → pharynx → larynx → trachea → bronchi → bronchioles → alveoli.",
+            "Trachea divides at T5; cartilaginous rings up to the initial bronchioles; lungs wrapped in double pleura.",
+            "Conducting part: nostrils to terminal bronchioles; exchange part: alveoli and ducts.",
+          ],
+        },
+      ],
+      flashcards: [
+        { front: "Epiglottis", back: "Thin elastic cartilaginous flap that covers the glottis during swallowing." },
+        { front: "Larynx", back: "Cartilaginous box (sound box) that helps in sound production." },
+        { front: "Where does the trachea divide?", back: "At the level of the 5th thoracic vertebra, into right and left primary bronchi." },
+        { front: "Pleural fluid", back: "Fluid between the two pleural layers; reduces friction on the lung surface." },
+        { front: "Conducting part of the respiratory system", back: "External nostrils up to terminal bronchioles: transports, cleans, humidifies and warms air." },
+        { front: "Cutaneous respiration", back: "Gas exchange through moist skin, as in frogs." },
+        { front: "Walls of the thoracic chamber", back: "Vertebral column (dorsal), sternum (ventral), ribs (lateral), diaphragm (below)." },
+      ],
+      quiz: [
+        {
+          kind: "mcq",
+          q: "Respiratory organs of insects are:",
+          options: ["Gills", "Tracheal tubes", "Book lungs only", "Moist skin"],
+          answer: 1,
+          explain: "Insects breathe through a network of tracheal tubes.",
+        },
+        {
+          kind: "mcq",
+          q: "Which of these is part of the exchange (respiratory) region?",
+          options: ["Trachea", "Tertiary bronchi", "Alveolar ducts", "Pharynx"],
+          answer: 2,
+          explain: "The alveoli and their ducts form the exchange part; the rest conducts air.",
+        },
+        {
+          kind: "truefalse",
+          q: "The thoracic chamber is anatomically air-tight.",
+          answer: true,
+          explain: "Because it is air-tight, a change in thoracic volume changes lung volume and pressure.",
+        },
+        {
+          kind: "fill",
+          q: "The lungs are covered by a double-layered membrane called the ___.",
+          answer: ["pleura"],
+          explain: "The pleura with pleural fluid between its layers protects the lungs and reduces friction.",
+        },
+        {
+          kind: "multi",
+          q: "Which structures are supported by incomplete cartilaginous rings?",
+          options: ["Trachea", "Primary bronchi", "Tertiary bronchi", "Alveoli", "Initial bronchioles"],
+          answers: [0, 1, 2, 4],
+          explain: "Rings support the trachea, all bronchi and the initial bronchioles; alveoli have very thin walls without cartilage.",
+          difficulty: 2,
+        },
+        {
+          kind: "order",
+          q: "Arrange the path of inhaled air.",
+          items: ["External nostrils", "Nasal chamber", "Pharynx", "Larynx", "Trachea", "Bronchi"],
+          explain: "Nostrils → nasal chamber → pharynx → larynx → trachea → bronchi → bronchioles → alveoli.",
+        },
+        {
+          kind: "mcq",
+          q: "The mechanism of breathing in an animal depends mainly on:",
+          options: ["Its size alone", "Its habitat and level of organisation", "Its diet", "Its colour"],
+          answer: 1,
+          explain: "Habitat (water or land) and body organisation decide the breathing mechanism.",
+        },
+      ],
+    },
+    {
+      slug: "c11-bio-mechanism-of-breathing",
+      title: "Mechanism of Breathing and Respiratory Volumes",
+      summary:
+        "How the diaphragm and intercostal muscles create pressure gradients for inspiration and expiration, breathing rate, the spirometer, and lung volumes and capacities.",
+      minutes: 20,
+      xp: 50,
+      blocks: [
+        {
+          type: "text",
+          md: "Air moves only from higher to lower pressure. Breathing works by changing the volume of the thoracic chamber, which changes the pressure inside the lungs (**intra-pulmonary pressure**) compared with the **atmospheric pressure**.\n\nBreathing has two stages: **inspiration** (air drawn in) and **expiration** (alveolar air released out).",
+        },
+        {
+          type: "table",
+          headers: ["", "Inspiration", "Expiration"],
+          rows: [
+            ["Diaphragm", "Contracts and flattens; thoracic volume rises along the antero-posterior axis", "Relaxes and returns to its dome shape"],
+            ["External intercostal muscles", "Contract and lift the ribs and sternum; volume rises along the dorso-ventral axis", "Relax; ribs and sternum come back"],
+            ["Thoracic and pulmonary volume", "Increases", "Decreases"],
+            ["Intra-pulmonary pressure", "Falls below atmospheric pressure", "Rises slightly above atmospheric pressure"],
+            ["Air flow", "Into the lungs", "Out of the lungs"],
+          ],
+        },
+        {
+          type: "text",
+          md: "Quiet expiration is mostly **passive**: the muscles simply relax. We can increase the strength of inspiration and expiration with the help of **additional muscles in the abdomen** (and internal intercostals) during exercise or forceful breathing.\n\nA healthy adult breathes **12–16 times per minute**. The volume of air involved can be measured with a **spirometer**, which helps in the clinical assessment of lung function.",
+        },
+        {
+          type: "checkpoint",
+          questions: [
+            {
+              kind: "mcq",
+              q: "During inspiration the intra-pulmonary pressure is:",
+              options: ["Higher than atmospheric", "Equal to atmospheric", "Lower than atmospheric", "Zero"],
+              answer: 2,
+              explain: "Lung volume increases, so pressure falls below atmospheric and air rushes in.",
+            },
+          ],
+        },
+        { type: "heading", text: "Respiratory volumes and capacities" },
+        {
+          type: "table",
+          headers: ["Volume", "Meaning", "Healthy adult value"],
+          rows: [
+            ["Tidal volume (TV)", "Air inspired or expired during a normal breath", "About 500 mL (6000–8000 mL per minute)"],
+            ["Inspiratory reserve volume (IRV)", "Extra air that can be inspired by forcible inspiration", "2500–3000 mL"],
+            ["Expiratory reserve volume (ERV)", "Extra air that can be expired by forcible expiration", "1000–1100 mL"],
+            ["Residual volume (RV)", "Air that stays in the lungs even after forcible expiration", "1100–1200 mL"],
+          ],
+        },
+        {
+          type: "formula",
+          tex: t`\begin{aligned} \text{IC} &= \text{TV} + \text{IRV} & \text{EC} &= \text{TV} + \text{ERV} \\ \text{FRC} &= \text{ERV} + \text{RV} & \text{VC} &= \text{ERV} + \text{TV} + \text{IRV} \\ \text{TLC} &= \text{VC} + \text{RV} & & \end{aligned}`,
+          caption: "Capacities are sums of volumes. IC inspiratory capacity, EC expiratory capacity, FRC functional residual capacity, VC vital capacity, TLC total lung capacity.",
+        },
+        {
+          type: "text",
+          md: "**Vital capacity** is the maximum volume of air a person can breathe in after a forced expiration (or breathe out after a forced inspiration). **Total lung capacity** is all the air in the lungs at the end of a forced inspiration. **Functional residual capacity** is the air left in the lungs after a normal expiration.",
+        },
+        {
+          type: "example",
+          title: "Working out capacities",
+          problem: "A spirometer test on an athlete gives TV = 500 mL, IRV = 3000 mL, ERV = 1100 mL and RV = 1200 mL. Find IC, FRC, VC and TLC. If she breathes 14 times a minute at rest, what volume does she move per minute?",
+          steps: [
+            "IC = TV + IRV = 500 + 3000 = 3500 mL.",
+            "FRC = ERV + RV = 1100 + 1200 = 2300 mL.",
+            "VC = ERV + TV + IRV = 1100 + 500 + 3000 = 4600 mL.",
+            "TLC = VC + RV = 4600 + 1200 = 5800 mL.",
+            "Volume per minute = TV × rate = 500 × 14 = 7000 mL.",
+          ],
+          answer: "IC 3500 mL, FRC 2300 mL, VC 4600 mL, TLC 5800 mL; 7000 mL (7 L) per minute.",
+        },
+        {
+          type: "mistake",
+          wrong: "Vital capacity is all the air the lungs can hold.",
+          right: "That is **total lung capacity**. Vital capacity leaves out the **residual volume**, which can never be breathed out: TLC = VC + RV.",
+          why: "*Vital* sounds like *everything*. But some air always stays in the alveoli and airways, keeping them open, and a spirometer cannot record it.",
+        },
+        {
+          type: "activity",
+          activity: {
+            kind: "order",
+            prompt: "Order the events of inspiration.",
+            items: [
+              "Diaphragm and external intercostal muscles contract",
+              "Thoracic chamber volume increases",
+              "Pulmonary volume increases",
+              "Intra-pulmonary pressure falls below atmospheric",
+              "Air moves into the lungs",
+            ],
+            explain: "Muscle contraction comes first; volume change causes the pressure change, and the pressure gradient moves the air.",
+          },
+        },
+        {
+          type: "callout",
+          tone: "exam",
+          title: "Board tip",
+          md: "In a 3-mark answer on the mechanism of breathing, name both muscles, say which axis each enlarges (diaphragm: antero-posterior; external intercostals: dorso-ventral) and state the pressure change. Write the capacity relations as equations; marks are often given for the correct sums.",
+        },
+        {
+          type: "keypoints",
+          items: [
+            "Breathing depends on pressure gradients created by changing thoracic volume.",
+            "Inspiration: diaphragm and external intercostals contract; expiration at rest is passive.",
+            "Rate 12–16 per minute; measured with a spirometer.",
+            "TV 500, IRV 2500–3000, ERV 1000–1100, RV 1100–1200 mL.",
+            "VC = TV + IRV + ERV; TLC = VC + RV; FRC = ERV + RV.",
+          ],
+        },
+      ],
+      flashcards: [
+        { front: "Muscles of quiet inspiration", back: "Diaphragm and external intercostal muscles." },
+        { front: "Is normal expiration active or passive?", back: "Passive: the muscles relax and the lungs recoil." },
+        { front: "Tidal volume", back: "About 500 mL: air moved in a normal breath." },
+        { front: "Residual volume", back: "1100–1200 mL: air left after forcible expiration." },
+        { front: "Vital capacity", back: "ERV + TV + IRV: maximum air breathed out after a forced inspiration." },
+        { front: "Functional residual capacity", back: "ERV + RV: air left after a normal expiration." },
+        { front: "Normal breathing rate", back: "12–16 breaths per minute." },
+      ],
+      quiz: [
+        {
+          kind: "numeric",
+          q: "TV = 500 mL, IRV = 2500 mL, ERV = 1000 mL. What is the vital capacity in mL?",
+          answer: 4000,
+          unit: "mL",
+          explain: "VC = 500 + 2500 + 1000 = 4000 mL.",
+        },
+        {
+          kind: "mcq",
+          q: "Which volume cannot be measured directly by a spirometer?",
+          options: ["Tidal volume", "Residual volume", "Inspiratory reserve volume", "Expiratory reserve volume"],
+          answer: 1,
+          explain: "Residual volume never leaves the lungs, so it cannot be breathed into a spirometer; nor can TLC or FRC that include it.",
+          difficulty: 2,
+        },
+        {
+          kind: "truefalse",
+          q: "Contraction of the diaphragm increases the volume of the thoracic chamber in the antero-posterior axis.",
+          answer: true,
+          explain: "The diaphragm flattens and lengthens the chest from front to back (antero-posterior axis).",
+        },
+        {
+          kind: "fill",
+          q: "Expiratory capacity = tidal volume + ___.",
+          answer: ["ERV", "expiratory reserve volume"],
+          explain: "EC = TV + ERV.",
+        },
+        {
+          kind: "numeric",
+          q: "A person has a tidal volume of 500 mL and breathes 16 times a minute. How many mL of air does she breathe per minute?",
+          answer: 8000,
+          unit: "mL",
+          explain: "500 × 16 = 8000 mL.",
+        },
+        {
+          kind: "mcq",
+          q: "Inspiratory capacity includes:",
+          options: ["TV + ERV", "TV + IRV", "ERV + RV", "VC + RV"],
+          answer: 1,
+          explain: "IC = TV + IRV, all the air you can breathe in after a normal expiration.",
+        },
+        {
+          kind: "numeric",
+          q: "VC = 4500 mL and RV = 1200 mL. What is the total lung capacity in mL?",
+          answer: 5700,
+          unit: "mL",
+          explain: "TLC = VC + RV = 4500 + 1200 = 5700 mL.",
+        },
+      ],
+    },
+    {
+      slug: "c11-bio-gas-exchange-transport",
+      title: "Exchange and Transport of Gases, Regulation and Disorders",
+      summary:
+        "Partial pressures, the diffusion membrane, how haemoglobin and plasma carry O₂ and CO₂, the oxygen dissociation curve, control of breathing and respiratory disorders.",
+      minutes: 22,
+      xp: 55,
+      blocks: [
+        {
+          type: "text",
+          md: "Alveoli are the primary sites of gas exchange; exchange also happens between blood and tissues. Gases cross by **simple diffusion**, driven by differences in **partial pressure** (the pressure each gas in a mixture contributes, written pO₂ and pCO₂). Diffusion also depends on how soluble the gas is and how thick the membrane is.",
+        },
+        {
+          type: "table",
+          headers: ["Site", "pO₂ (mm Hg)", "pCO₂ (mm Hg)"],
+          rows: [
+            ["Atmospheric air", "159", "0.3"],
+            ["Alveoli", "104", "40"],
+            ["Deoxygenated blood", "40", "45"],
+            ["Oxygenated blood", "95", "40"],
+            ["Tissues", "40", "45"],
+          ],
+        },
+        {
+          type: "text",
+          md: "O₂ moves from alveoli (104) to deoxygenated blood (40) and from oxygenated blood (95) to tissues (40). CO₂ moves the other way: tissues (45) → blood, and blood (45) → alveoli (40). The CO₂ gradient is small, but CO₂ is **20–25 times more soluble** than O₂, so much more CO₂ diffuses per unit difference.\n\nThe **diffusion membrane** has three layers: the thin squamous epithelium of the alveoli, the endothelium of the alveolar capillaries and the basement substance between them. Its total thickness is much less than a millimetre, which favours diffusion.",
+        },
+        { type: "heading", text: "Transport of oxygen" },
+        {
+          type: "text",
+          md: "About **97%** of O₂ is carried by RBCs and **3%** dissolved in plasma. **Haemoglobin** is a red, iron-containing pigment in RBCs; each haemoglobin molecule can carry up to **four O₂** molecules, binding reversibly to form **oxyhaemoglobin**. Binding depends mainly on pO₂; pCO₂, H⁺ concentration and temperature also affect it.\n\nPlotting percentage saturation of haemoglobin against pO₂ gives a **sigmoid** curve, the **oxygen dissociation curve**. In the alveoli (high pO₂, low pCO₂, fewer H⁺, lower temperature) oxyhaemoglobin forms; in the tissues (low pO₂, high pCO₂, more H⁺, higher temperature) O₂ is released. Under normal conditions, every **100 mL of oxygenated blood delivers about 5 mL of O₂** to the tissues.",
+        },
+        {
+          type: "formula",
+          tex: t`\mathrm{CO_2 + H_2O \;\underset{\text{carbonic anhydrase}}{\rightleftharpoons}\; H_2CO_3 \;\rightleftharpoons\; HCO_3^- + H^+}`,
+          caption: "In the tissues the reaction runs to the right (bicarbonate formed); in the alveoli it runs to the left and CO₂ is released.",
+        },
+        { type: "heading", text: "Transport of carbon dioxide" },
+        {
+          type: "text",
+          md: "CO₂ is carried: about **20–25%** by haemoglobin as **carbamino-haemoglobin**, about **70%** as **bicarbonate**, and about **7%** dissolved in plasma. Carbamino binding depends on pCO₂, and pO₂ also matters: high pCO₂ and low pO₂ in tissues favour binding; low pCO₂ and high pO₂ in the alveoli release CO₂. The enzyme **carbonic anhydrase**, very concentrated in RBCs (minute amounts in plasma), speeds up the reaction above. Every **100 mL of deoxygenated blood delivers about 4 mL of CO₂** to the alveoli.",
+        },
+        {
+          type: "checkpoint",
+          questions: [
+            {
+              kind: "mcq",
+              q: "Most CO₂ is carried in blood as:",
+              options: ["Carbamino-haemoglobin", "Dissolved CO₂", "Bicarbonate", "Carbonic acid"],
+              answer: 2,
+              explain: "About 70% of CO₂ travels as bicarbonate; 20–25% as carbamino-haemoglobin and about 7% dissolved.",
+            },
+          ],
+        },
+        {
+          type: "text",
+          md: "**Regulation of respiration.** A **respiratory rhythm centre** in the **medulla** sets the rhythm. A **pneumotaxic centre** in the **pons** can moderate it: its signal reduces the duration of inspiration and so alters the breathing rate. A **chemosensitive area** next to the rhythm centre is highly sensitive to **CO₂ and H⁺**; when they rise, it signals the rhythm centre to remove them faster. Receptors in the **aortic arch** and **carotid artery** also detect changes in CO₂ and H⁺. The role of O₂ in regulating breathing is quite insignificant.",
+        },
+        {
+          type: "table",
+          headers: ["Disorder", "Cause and effect"],
+          rows: [
+            ["Asthma", "Difficulty in breathing with wheezing, due to inflammation of bronchi and bronchioles"],
+            ["Emphysema", "Chronic disorder; alveolar walls are damaged, so the respiratory surface decreases. A major cause is cigarette smoking."],
+            ["Occupational respiratory disorders", "Long exposure to dust (stone-grinding, mining) causes inflammation and fibrosis (proliferation of fibrous tissue) and serious lung damage; e.g. silicosis, asbestosis. Workers should wear protective masks."],
+          ],
+        },
+        {
+          type: "example",
+          title: "Oxygen delivered per minute",
+          problem: "At rest the heart pumps about 5 L of blood per minute. Using NCERT's figure that 100 mL of oxygenated blood delivers about 5 mL of O₂ to tissues, how much O₂ do the tissues receive each minute?",
+          steps: [
+            "5 L = 5000 mL of blood per minute.",
+            "Number of 100 mL portions = 5000 ÷ 100 = 50.",
+            "O₂ delivered = 50 × 5 mL = 250 mL per minute.",
+          ],
+          answer: "About 250 mL of O₂ per minute (more during exercise, when tissue pO₂ falls further).",
+        },
+        {
+          type: "mistake",
+          wrong: "Low O₂ in the blood is the main trigger that makes us breathe faster.",
+          right: "The main triggers are a rise in **CO₂ and H⁺**, sensed by the chemosensitive area of the medulla and by receptors in the aortic arch and carotid artery. O₂ plays an insignificant role.",
+          why: "We breathe to get O₂, so it seems O₂ should drive breathing. But at normal altitudes blood O₂ hardly changes, while CO₂ builds up quickly whenever breathing lags.",
+        },
+        {
+          type: "activity",
+          activity: {
+            kind: "sort",
+            prompt: "Where do these conditions favour what? Sort them.",
+            groups: ["Favour forming oxyhaemoglobin (alveoli)", "Favour releasing O₂ (tissues)"],
+            items: [
+              { text: "High pO₂", group: 0, hint: "O₂ is plentiful in fresh alveolar air." },
+              { text: "Low pCO₂", group: 0, hint: "Alveolar CO₂ is only about 40 mm Hg." },
+              { text: "High H⁺ concentration", group: 1, hint: "Active tissues are more acidic." },
+              { text: "Higher temperature", group: 1, hint: "Working muscles are warm." },
+              { text: "Lower temperature", group: 0, hint: "Lung capillaries are cooler than working muscle." },
+              { text: "High pCO₂", group: 1, hint: "Tissues produce CO₂." },
+            ],
+            explain: "Alveolar conditions load O₂ onto haemoglobin; tissue conditions (low pO₂, high pCO₂, high H⁺, warmth) unload it, shifting the curve to the right.",
+          },
+        },
+        {
+          type: "keypoints",
+          items: [
+            "Exchange by diffusion down partial pressure gradients; alveolar pO₂ 104, pCO₂ 40 mm Hg.",
+            "CO₂ is 20–25 times more soluble than O₂; the diffusion membrane has three thin layers.",
+            "O₂: 97% as oxyhaemoglobin, 3% in plasma; 100 mL blood gives about 5 mL O₂ to tissues.",
+            "CO₂: about 70% as bicarbonate, 20–25% carbamino-haemoglobin, 7% in plasma; carbonic anhydrase in RBCs.",
+            "Control: rhythm centre (medulla), pneumotaxic centre (pons), chemosensitive area for CO₂ and H⁺.",
+          ],
+        },
+      ],
+      flashcards: [
+        { front: "pO₂ and pCO₂ of alveolar air", back: "104 and 40 mm Hg." },
+        { front: "pO₂ and pCO₂ of deoxygenated blood", back: "40 and 45 mm Hg." },
+        { front: "Three layers of the diffusion membrane", back: "Alveolar squamous epithelium, capillary endothelium, basement substance between them." },
+        { front: "Shape of the oxygen dissociation curve", back: "Sigmoid (S-shaped)." },
+        { front: "Carbonic anhydrase", back: "Enzyme, mainly in RBCs, that speeds CO₂ + H₂O ⇌ H₂CO₃." },
+        { front: "Pneumotaxic centre", back: "In the pons; shortens inspiration and changes breathing rate." },
+        { front: "Emphysema", back: "Alveolar walls damaged, respiratory surface reduced; mainly due to smoking." },
+      ],
+      quiz: [
+        {
+          kind: "mcq",
+          q: "pO₂ in oxygenated blood is about:",
+          options: ["159 mm Hg", "104 mm Hg", "95 mm Hg", "40 mm Hg"],
+          answer: 2,
+          explain: "Oxygenated blood has pO₂ about 95 mm Hg; alveoli 104, atmosphere 159, tissues 40.",
+        },
+        {
+          kind: "numeric",
+          q: "About what percentage of O₂ is carried dissolved in plasma?",
+          answer: 3,
+          unit: "%",
+          explain: "97% is carried by haemoglobin in RBCs, 3% in plasma.",
+        },
+        {
+          kind: "truefalse",
+          q: "The chemosensitive area near the respiratory rhythm centre responds mainly to changes in CO₂ and H⁺.",
+          answer: true,
+          explain: "It is highly sensitive to CO₂ and H⁺, and signals the rhythm centre.",
+        },
+        {
+          kind: "mcq",
+          q: "Wheezing due to inflammation of the bronchi and bronchioles is seen in:",
+          options: ["Emphysema", "Asthma", "Silicosis", "Pneumonia only"],
+          answer: 1,
+          explain: "Asthma is difficulty in breathing with wheezing due to inflamed bronchi and bronchioles.",
+        },
+        {
+          kind: "fill",
+          q: "CO₂ bound to haemoglobin is called ___.",
+          answer: ["carbamino-haemoglobin", "carbaminohaemoglobin", "carbamino haemoglobin", "carbaminohemoglobin"],
+          explain: "CO₂ binds to the amino groups of haemoglobin as carbamino-haemoglobin.",
+        },
+        {
+          kind: "numeric",
+          q: "A person's cardiac output is 6 L per minute. Using 4 mL of CO₂ released per 100 mL of deoxygenated blood, how many mL of CO₂ reach the alveoli per minute?",
+          answer: 240,
+          unit: "mL",
+          explain: "6000 ÷ 100 = 60 portions; 60 × 4 = 240 mL per minute.",
+          difficulty: 2,
+        },
+        {
+          kind: "multi",
+          q: "Which factors favour release of O₂ from oxyhaemoglobin in tissues?",
+          options: ["Low pO₂", "High pCO₂", "Low H⁺", "High temperature", "Low temperature"],
+          answers: [0, 1, 3],
+          explain: "Low pO₂, high pCO₂, high H⁺ and high temperature favour dissociation.",
+          difficulty: 2,
+        },
+      ],
+    },
+    {
+      slug: "c11-bio-breathing-exam-edge",
+      title: "Exam edge: Breathing and Exchange of Gases",
+      summary:
+        "What NEET and KCET ask from this chapter: partial pressures, lung volume arithmetic, CO₂ transport percentages, oxygen dissociation curve shifts, regulation centres, and the traps behind them.",
+      minutes: 24,
+      xp: 60,
+      track: "exam",
+      blocks: [
+        {
+          type: "callout",
+          tone: "exam",
+          title: "Why this chapter matters",
+          md: "Human physiology carries heavy weight in NEET Biology, and this chapter gives about 1–2 NEET questions and 1–2 KCET questions most years. Favourites: **partial pressure table**, **volumes and capacities sums**, **CO₂ transport percentages**, **factors shifting the oxygen dissociation curve**, **pneumotaxic centre** and **disorders**.",
+        },
+        {
+          type: "table",
+          headers: ["Result worth memorising", "Value / rule"],
+          rows: [
+            ["Capacities", "IC = TV + IRV; EC = TV + ERV; FRC = ERV + RV; VC = TV + IRV + ERV; TLC = VC + RV"],
+            ["Not measurable by spirometer", "RV, FRC, TLC (all contain RV)"],
+            ["Solubility", "CO₂ is 20–25 times more soluble than O₂"],
+            ["O₂ transport", "97% Hb, 3% plasma; about 5 mL per 100 mL blood to tissues"],
+            ["CO₂ transport", "70% bicarbonate, 20–25% carbamino-Hb, 7% plasma; about 4 mL per 100 mL to alveoli"],
+            ["Right shift of dissociation curve", "High pCO₂, high H⁺ (low pH), high temperature: Hb gives up O₂ more easily (the Bohr effect, a name used beyond NCERT)"],
+          ],
+        },
+        {
+          type: "text",
+          md: "**NCERT lines NEET likes to test**: the trachea divides at the 5th thoracic vertebra; the role of oxygen in regulation is quite insignificant; the pneumotaxic centre reduces the duration of inspiration; the diffusion membrane is much less than a millimetre thick; a healthy human breathes 12–16 times a minute.",
+        },
+        {
+          type: "example",
+          title: "NEET-style: volume arithmetic",
+          problem: "Which gives the functional residual capacity? (a) TV + ERV (b) ERV + RV (c) IRV + TV + ERV (d) TV + IRV",
+          steps: [
+            "FRC = air left after a normal (tidal) expiration.",
+            "After a normal expiration you could still push out the ERV, and the RV would stay behind.",
+            "So FRC = ERV + RV.",
+          ],
+          answer: "(b) ERV + RV.",
+        },
+        {
+          type: "example",
+          title: "Assertion and reason",
+          problem: "Assertion (A): Although the pCO₂ gradient between blood and alveoli is only about 5 mm Hg, CO₂ exchange is efficient. Reason (R): CO₂ is 20–25 times more soluble than O₂. Choose: (1) both true, R explains A; (2) both true, R does not explain A; (3) A true, R false; (4) A false, R true.",
+          steps: [
+            "Gradient: deoxygenated blood 45 → alveoli 40, so only 5 mm Hg. A is true.",
+            "Rate of diffusion depends on solubility as well as gradient, so the higher solubility of CO₂ makes up for the small gradient. R is true and explains A.",
+          ],
+          answer: "(1).",
+        },
+        {
+          type: "example",
+          title: "KCET-style: reading the curve",
+          problem: "During heavy exercise a muscle's temperature rises and lactic acid lowers its pH. How does the oxygen dissociation curve shift, and what does it mean for the muscle?",
+          steps: [
+            "Higher temperature and higher H⁺ lower haemoglobin's affinity for O₂.",
+            "Lower affinity means less saturation at the same pO₂: the curve shifts to the right.",
+            "So more O₂ is unloaded in the working muscle, exactly where it is needed.",
+          ],
+          answer: "Right shift; haemoglobin releases more O₂ to the exercising muscle.",
+        },
+        {
+          type: "example",
+          title: "Harder: combining numbers",
+          problem: "A climber has TV = 450 mL, IRV = 2800 mL, ERV = 1050 mL, RV = 1150 mL. After acclimatisation her breathing rate becomes 20 per minute with the same TV. Find her VC, TLC and the air moved per minute. Which of these values cannot be found with a simple spirometer?",
+          steps: [
+            "VC = 450 + 2800 + 1050 = 4300 mL.",
+            "TLC = VC + RV = 4300 + 1150 = 5450 mL.",
+            "Air per minute = 450 × 20 = 9000 mL = 9 L.",
+            "TLC contains RV, which a spirometer cannot record, so TLC (like RV) cannot be found directly.",
+          ],
+          answer: "VC 4300 mL, TLC 5450 mL, 9 L per minute; TLC (and RV) need other methods.",
+        },
+        {
+          type: "mistake",
+          wrong: "Most CO₂ is carried by haemoglobin as carbamino-haemoglobin.",
+          right: "About **70%** travels as **bicarbonate**; only 20–25% as carbamino-haemoglobin.",
+          why: "Since haemoglobin carries most O₂ (97%), students assume it carries most CO₂ too. CO₂ is mainly converted to HCO₃⁻ by carbonic anhydrase.",
+        },
+        {
+          type: "mistake",
+          wrong: "The pneumotaxic centre is in the medulla and increases inspiration.",
+          right: "The pneumotaxic centre is in the **pons**; it **reduces the duration of inspiration**. The rhythm centre and chemosensitive area are in the medulla.",
+          why: "All breathing centres get lumped together as *medulla*. Questions swap the location or the action to make a wrong option.",
+        },
+        {
+          type: "activity",
+          activity: {
+            kind: "reveal",
+            prompt: "Which site has the lowest pO₂?",
+            options: ["Alveoli", "Oxygenated blood", "Tissues", "Atmospheric air"],
+            answer: 2,
+            trap: 1,
+            explain: "Tissues (and deoxygenated blood) have pO₂ about 40 mm Hg, the lowest. Oxygenated blood is 95, alveoli 104, air 159.",
+          },
+        },
+        {
+          type: "checkpoint",
+          questions: [
+            {
+              kind: "mcq",
+              q: "Silicosis and asbestosis are examples of:",
+              options: ["Emphysema", "Occupational respiratory disorders", "Asthma", "Infectious diseases"],
+              answer: 1,
+              explain: "Long exposure to dust causes fibrosis of the lungs; these are occupational disorders.",
+            },
+          ],
+        },
+        {
+          type: "keypoints",
+          items: [
+            "Learn the partial pressure table and capacity sums; most NEET questions come straight from them.",
+            "RV, FRC and TLC cannot be measured with a spirometer.",
+            "O₂: 97% Hb; CO₂: 70% HCO₃⁻.",
+            "Right shift: high pCO₂, H⁺ and temperature, as in exercising tissues.",
+            "Pons = pneumotaxic (shortens inspiration); medulla = rhythm centre + chemosensitive area.",
+          ],
+        },
+      ],
+      flashcards: [
+        { front: "Which volumes cannot be measured by a spirometer?", back: "RV and any capacity that includes it: FRC, TLC." },
+        { front: "pCO₂ gradient blood → alveoli", back: "45 → 40 mm Hg, only 5 mm Hg." },
+        { front: "Right shift of the O₂ dissociation curve", back: "Caused by high pCO₂, high H⁺, high temperature; O₂ unloads more easily." },
+        { front: "O₂ given to tissues per 100 mL blood", back: "About 5 mL." },
+        { front: "CO₂ given to alveoli per 100 mL blood", back: "About 4 mL." },
+        { front: "Receptors outside the brain sensing CO₂ and H⁺", back: "In the aortic arch and carotid artery." },
+        { front: "Where is the respiratory rhythm centre?", back: "Medulla oblongata." },
+      ],
+      quiz: [
+        {
+          kind: "mcq",
+          q: "Which is NOT correct about the human diffusion membrane?",
+          options: [
+            "It includes the alveolar squamous epithelium",
+            "It includes the capillary endothelium",
+            "Its total thickness is several millimetres",
+            "It includes a basement substance",
+          ],
+          answer: 2,
+          explain: "The membrane is much less than a millimetre thick, which allows fast diffusion.",
+          difficulty: 2,
+        },
+        {
+          kind: "numeric",
+          q: "IRV = 2600 mL, TV = 500 mL, ERV = 1000 mL, RV = 1200 mL. What is the total lung capacity in mL?",
+          answer: 5300,
+          unit: "mL",
+          explain: "VC = 2600 + 500 + 1000 = 4100; TLC = 4100 + 1200 = 5300 mL.",
+          difficulty: 2,
+        },
+        {
+          kind: "mcq",
+          q: "Assertion: Expiration during quiet breathing is passive. Reason: Expiration occurs when the diaphragm and external intercostal muscles relax. Choose:",
+          options: ["Both true; R explains A", "Both true; R does not explain A", "A true, R false", "A false, R true"],
+          answer: 0,
+          explain: "Quiet expiration needs no muscle contraction: relaxation of the diaphragm and external intercostals lets the chest recoil.",
+          difficulty: 2,
+        },
+        {
+          kind: "multi",
+          q: "Which statements are correct?",
+          options: [
+            "About 7% of CO₂ is carried dissolved in plasma",
+            "Carbonic anhydrase is present in high concentration in RBCs",
+            "Each haemoglobin molecule carries up to two O₂ molecules",
+            "The oxygen dissociation curve is sigmoid",
+          ],
+          answers: [0, 1, 3],
+          explain: "Each haemoglobin can carry up to four O₂ molecules.",
+          difficulty: 2,
+        },
+        {
+          kind: "mcq",
+          q: "If a person's pons were damaged so that the pneumotaxic centre could not act, the most likely effect is:",
+          options: [
+            "Breathing stops completely",
+            "Inspirations become longer and deeper (prolonged inspiration)",
+            "The chemosensitive area stops responding to CO₂",
+            "Expiration becomes active at rest",
+          ],
+          answer: 1,
+          explain: "The pneumotaxic centre normally shortens inspiration; without it, inspiration is prolonged. The rhythm centre in the medulla still keeps breathing going.",
+          difficulty: 3,
+          hint: "What does the pneumotaxic signal normally do to inspiration?",
+        },
+        {
+          kind: "numeric",
+          q: "During exercise cardiac output rises to 20 L per minute and each 100 mL of blood delivers 15 mL O₂. How many litres of O₂ do tissues receive per minute?",
+          answer: 3,
+          unit: "L",
+          explain: "20000 ÷ 100 = 200 portions; 200 × 15 mL = 3000 mL = 3 L.",
+          difficulty: 3,
+          hint: "Convert litres of blood to 100 mL portions first.",
+        },
+        {
+          kind: "mcq",
+          q: "Arrange atmospheric air (A), alveoli (B), oxygenated blood (C) and tissues (D) in decreasing pO₂.",
+          options: ["A > B > C > D", "B > A > C > D", "A > C > B > D", "C > B > A > D"],
+          answer: 0,
+          explain: "159 > 104 > 95 > 40 mm Hg.",
+        },
+        {
+          kind: "mcq",
+          q: "In emphysema, the main reason breathing becomes difficult is:",
+          options: [
+            "Narrowing of the trachea",
+            "Damage to alveolar walls reducing the respiratory surface",
+            "Excess pleural fluid",
+            "Paralysis of the diaphragm",
+          ],
+          answer: 1,
+          explain: "Emphysema damages alveolar walls, so the surface for gas exchange shrinks.",
+        },
+      ],
+    },
+  ],
+};
+
+export const topics: Topic[] = [digestion, breathing];
 
 export const links: Record<string, string | string[]> = {
-  "11:Human Physiology": ["c11-bio-digestion-absorption"],
+  "11:Breathing and Exchange of Gases": "c11-bio-breathing-exchange-gases",
+  "11:Human Physiology": ["c11-bio-digestion-absorption", "c11-bio-breathing-exchange-gases"],
 };
