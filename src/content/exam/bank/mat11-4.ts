@@ -991,10 +991,10 @@ const ch14: ExamQuestion[] = [
   q14(2, MAIN, 70, {
     kind: "mcq",
     q: "4 boys and 3 girls stand in a row at random. The probability that no two girls stand together is:",
-    options: [t`$\frac27$`, t`$\frac17$`, t`$\frac47$`, t`$\frac{4}{35}$`],
+    options: [t`$\frac27$`, t`$\frac17$`, t`$\frac47$`, t`$\frac57$`],
     answer: 0,
     hint: "Seat the boys first and put the girls in the gaps.",
-    explain: t`Boys: $4!$ ways, leaving 5 gaps; girls go into 3 of them in $^5P_3 = 60$ ways. $\frac{24\cdot60}{7!} = \frac{1440}{5040} = \frac27$. $\frac4{35} = \frac{\binom53}{\binom73}\cdot\ldots$ comes from mixing choices and arrangements.`,
+    explain: t`Boys: $4!$ ways, leaving 5 gaps; girls go into 3 of them in $^5P_3 = 60$ ways. $\frac{24\cdot60}{7!} = \frac{1440}{5040} = \frac27$. $\frac57$ is the complement (some two girls together).`,
   }),
   q14(2, MAIN, 60, {
     kind: "mcq",
@@ -1008,7 +1008,7 @@ const ch14: ExamQuestion[] = [
     q: "A bag has 5 red, 4 blue and 3 green balls. Three balls are drawn at random. The probability that they are of three different colours is:",
     options: [t`$\frac3{11}$`, t`$\frac{1}{11}$`, t`$\frac{5}{12}$`, t`$\frac{6}{11}$`],
     answer: 0,
-    explain: t`Favourable $= 5\cdot4\cdot3 = 60$; total $\binom{12}3 = 220$. $\frac{60}{220} = \frac3{11}$. Multiplying the favourable count by $3!$ (ordering the colours) gives an impossible answer above 1 or $\frac{6}{11}$-type errors.`,
+    explain: t`Favourable $= 5\cdot4\cdot3 = 60$; total $\binom{12}3 = 220$. $\frac{60}{220} = \frac3{11}$. Multiplying the favourable count by $3!$ (ordering the colours) gives $\frac{360}{220}>1$, a sign of mixing ordered and unordered counts.`,
   }),
   q14(2, MAIN, 60, {
     kind: "mcq",
@@ -1131,10 +1131,10 @@ const ch14: ExamQuestion[] = [
   q14(3, ADV, 80, {
     kind: "mcq",
     q: "Six people, including A, B and C, stand in a row in random order. The probability that A is somewhere to the left of B and B is somewhere to the left of C is:",
-    options: [t`$\frac13$`, t`$\frac16$`, t`$\frac1{20}$`, t`$\frac1{120}$`],
+    options: [t`$\frac13$`, t`$\frac16$`, t`$\frac1{30}$`, t`$\frac1{120}$`],
     answer: 1,
     hint: "Only the relative order of A, B, C matters.",
-    explain: t`All $3! = 6$ relative orders of A, B, C are equally likely, and exactly one is A, B, C. So $\frac16$. $\frac1{20} = \frac{4\cdot3!}{6!}\cdot\ldots$ comes from (wrongly) requiring them to be adjacent.`,
+    explain: t`All $3! = 6$ relative orders of A, B, C are equally likely, and exactly one is A, B, C. So $\frac16$. $\frac1{30} = \frac{4!}{6!}$ wrongly requires them to stand together as a block ABC.`,
   }),
   q14(3, ADV, 120, {
     kind: "mcq",

@@ -647,7 +647,7 @@ const ch10: ExamQuestion[] = [
     options: [t`$\pm\sqrt{13}$`, t`$\pm\sqrt{19}$`, t`$\pm\sqrt7$`, t`$\pm\sqrt{11}$`],
     answer: 1,
     hint: t`Tangency condition: $c^2 = a^2m^2+b^2$.`,
-    explain: t`$c^2 = 4\cdot4+3 = 19$, so $c = \pm\sqrt{19}$. Using $a^2m^2-b^2$ (the hyperbola condition) gives $\pm\sqrt{13}$; using $b^2m^2+a^2$ gives $\pm\sqrt{16}$… and $3\cdot4+4$ is not offered — $\sqrt7$ and $\sqrt{11}$ come from $4+3$ and $4\cdot2+3$.`,
+    explain: t`$c^2 = 4\cdot4+3 = 19$, so $c = \pm\sqrt{19}$. Using $a^2m^2-b^2$ (the hyperbola condition) gives $\pm\sqrt{13}$; forgetting to square $m$ gives $4\cdot2+3 = 11$, and dropping $m$ altogether gives $4+3 = 7$.`,
   }),
   q10(2, MAIN, 60, {
     kind: "mcq",
@@ -725,7 +725,7 @@ const ch10: ExamQuestion[] = [
     options: [t`$(8,-8)$`, t`$(18,12)$`, t`$(2,-4)$`, t`$(18,-12)$`],
     answer: 3,
     hint: t`If the normal at $t_1$ meets the curve again at $t_2$, then $t_2 = -t_1-\frac2{t_1}$.`,
-    explain: t`$a = 2$, $(2,4)$ has $t_1 = 1$, so $t_2 = -1-2 = -3$: the point $(at_2^2, 2at_2) = (18,-12)$. Check: the normal $y = -x+6$ (slope $-\frac{1}{t_1}\cdot$… $= -t_1$) passes through $(18,-12)$ and $144 = 8\cdot18$ ✓. $(18,12)$ has the wrong sign; $(2,-4)$ is the other end of the latus rectum.`,
+    explain: t`$a = 2$, $(2,4)$ has $t_1 = 1$, so $t_2 = -1-2 = -3$: the point $(at_2^2, 2at_2) = (18,-12)$. Check: the normal $y = -t_1x+2at_1+at_1^3 = -x+6$ passes through $(18,-12)$ and $144 = 8\cdot18$ ✓. $(18,12)$ has the wrong sign; $(2,-4)$ is the other end of the latus rectum.`,
   }),
   q10(3, ADV, 100, {
     kind: "mcq",
@@ -733,7 +733,7 @@ const ch10: ExamQuestion[] = [
     options: [t`$9x+8y=26$`, t`$8x+9y=25$`, t`$9x+8y=36$`, t`$9x-8y=10$`],
     answer: 0,
     hint: t`Use $T = S_1$.`,
-    explain: t`$T = S_1$: $\frac{2x}{16}+\frac{y}{9} = \frac4{16}+\frac19$, i.e. $\frac x8+\frac y9 = \frac{13}{36}$. Multiply by 72: $9x+8y = 26$. It passes through $(2,1)$ ✓ (as it must). $9x+8y = 36$ is $T = 1$ — the chord of contact / polar, not the midpoint chord.`,
+    explain: t`$T = S_1$: $\frac{2x}{16}+\frac{y}{9} = \frac4{16}+\frac19$, i.e. $\frac x8+\frac y9 = \frac{13}{36}$. Multiply by 72: $9x+8y = 26$. It passes through $(2,1)$ ✓ (as it must). $9x+8y = 36$ keeps the right direction but does not pass through $(2,1)$; $8x+9y = 25$ swaps the coefficients.`,
   }),
   q10(3, NUM_ADV, 120, {
     kind: "numeric",
