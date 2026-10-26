@@ -49,7 +49,7 @@ export const topics: Topic[] = [
               ["1883", "Edison effect: current flows from a hot filament to a nearby plate in vacuum (thermionic emission)", "Thomas Edison"],
               ["1904", "Vacuum diode (Fleming valve), used to detect radio signals", "J. A. Fleming"],
               ["1906", "Vacuum triode (Audion): a grid controls the current, so it can amplify", "Lee de Forest"],
-              ["1947", "Point-contact transistor", "Bardeen, Brattain and Shockley, Bell Laboratories"],
+              ["1947", "Point-contact transistor", "Bardeen and Brattain, Bell Laboratories (Shockley added the junction transistor in 1948)"],
               ["1958–59", "Integrated circuit (IC): many components on one chip", "Jack Kilby (Texas Instruments), Robert Noyce (Fairchild)"],
               ["1971", "First commercial microprocessor, the Intel 4004", "Intel"],
             ],
@@ -136,7 +136,7 @@ export const topics: Topic[] = [
         ],
         flashcards: [
           { front: "Electronics", back: "The study and use of devices that control the flow of charge carriers (electrons, holes) in vacuum, gases or semiconductors." },
-          { front: "Who invented the transistor, and when?", back: "Bardeen, Brattain and Shockley at Bell Laboratories, in 1947." },
+          { front: "Who invented the transistor, and when?", back: "Bardeen and Brattain at Bell Laboratories built the point-contact transistor in 1947; Shockley followed with the junction transistor in 1948." },
           { front: "Who made the first integrated circuits?", back: "Jack Kilby (Texas Instruments, 1958) and Robert Noyce (Fairchild, 1959)." },
           { front: "Active component", back: "One that can control current and give power gain or switching, using energy from a DC supply. Examples: transistor, IC, vacuum tube." },
           { front: "Passive component", back: "One that cannot amplify; it only resists, stores or transfers energy. Examples: resistor, capacitor, inductor, transformer." },
