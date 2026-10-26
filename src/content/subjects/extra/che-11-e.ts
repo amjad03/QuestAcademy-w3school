@@ -2451,10 +2451,763 @@ Adding (CH₃)₃SiCl caps the chain ends and controls the chain length; CH₃Si
     ],
   },
   /* END-PBLOCK */
+  /* ------------------------------------------------------------------ */
+  /* Environmental Chemistry (ISC Class 11)                               */
+  /* ------------------------------------------------------------------ */
+  {
+    slug: "c11-che-environmental",
+    title: "Environmental Chemistry",
+    icon: "🌍",
+    description: "Tropospheric pollution by gases and particulates, the greenhouse effect, acid rain, classical and photochemical smog, ozone depletion and the ozone hole, water pollution, BOD and drinking-water standards, soil pollution by pesticides, industrial waste, and green chemistry.",
+    lessons: [
+      /* ---------------- Lesson 1 ---------------- */
+      {
+        slug: "c11-che-env-air",
+        title: "Air Pollution in the Troposphere",
+        summary: "Layers of the atmosphere, gaseous pollutants (oxides of sulphur and nitrogen, hydrocarbons, CO and CO₂), the greenhouse effect and global warming, acid rain, particulate pollutants, classical and photochemical smog and how to control them.",
+        minutes: 23,
+        xp: 55,
+        blocks: [
+          {
+            type: "callout",
+            tone: "note",
+            title: "Board note",
+            md: "Environmental Chemistry was removed from the rationalised NCERT Class 11 book, so CBSE and Karnataka I PUC do not examine it. **ISC Class 11 keeps it.**",
+          },
+          {
+            type: "illustration",
+            emoji: "🌫️",
+            caption: "Every winter Delhi wakes up under a grey-brown haze, while in summer Indian cities get a sharp, eye-stinging smog on sunny afternoons. They are two different chemical problems with different causes.",
+          },
+          {
+            type: "text",
+            md: "**Environmental chemistry** studies the chemical processes in the environment and how human activity changes them. **Environmental pollution** is any undesirable change in the surroundings that harms plants, animals or people; the substance responsible is a **pollutant**. Pollutants may be **biodegradable** (broken down by natural processes, such as discarded vegetables) or **non-biodegradable** (slow to break down, such as DDT, plastics and heavy metals).\n\nThe lowest layer of the atmosphere, up to about 10 km, is the **troposphere**: it contains the air we breathe, clouds and weather. Above it, from about 10 to 50 km, is the **stratosphere**, which contains the **ozone layer**. Pollution of the troposphere is caused by **gaseous pollutants** (oxides of sulphur, nitrogen and carbon, hydrogen sulphide, hydrocarbons, ozone and other oxidants) and **particulate pollutants** (dust, mist, fumes, smoke and smog).",
+          },
+          {
+            type: "table",
+            headers: ["Pollutant", "Main sources", "Effects"],
+            rows: [
+              ["Sulphur dioxide, SO₂", "burning sulphur-containing coal and oil (power stations), smelting of ores", "respiratory problems (asthma, bronchitis, emphysema), eye irritation; stiffens flower buds so they fall off; forms SO₃ and acid rain"],
+              ["Oxides of nitrogen, NO and NO₂", "lightning; burning fuel at high temperature in vehicle engines and power plants (N₂ + O₂ → 2NO)", "NO₂ irritates the lungs (acute respiratory disease in children), damages leaves and slows photosynthesis, damages textile fibres and metals; causes photochemical smog and acid rain"],
+              ["Hydrocarbons", "incomplete combustion of fuel in vehicles", "many are carcinogenic; cause ageing of plant tissues and shedding of leaves, flowers and twigs"],
+              ["Carbon monoxide, CO", "incomplete combustion (vehicle exhaust, burning wood and coal, cigarettes)", "binds to haemoglobin about 300 times more strongly than O₂; 3–4% carboxyhaemoglobin in blood greatly reduces oxygen supply: headache, weak eyesight, nervousness, heart problems"],
+              ["Carbon dioxide, CO₂", "respiration, burning of fossil fuels, decomposition of limestone in cement making, deforestation", "not toxic at normal levels, but a major greenhouse gas: excess CO₂ causes global warming"],
+            ],
+          },
+          {
+            type: "formula",
+            tex: t`\begin{aligned} 2\text{SO}_2 + \text{O}_2 &\to 2\text{SO}_3 \quad (\text{catalysed by particulates}) \\ \text{SO}_2 + \text{O}_3 &\to \text{SO}_3 + \text{O}_2 \qquad \text{SO}_2 + \text{H}_2\text{O}_2 \to \text{H}_2\text{SO}_4 \\ \text{N}_2 + \text{O}_2 &\xrightarrow{\text{high } T} 2\text{NO} \qquad 2\text{NO} + \text{O}_2 \to 2\text{NO}_2 \qquad \text{NO} + \text{O}_3 \to \text{NO}_2 + \text{O}_2 \end{aligned}`,
+            caption: "Oxidation of SO₂ and NO in the air. The uncatalysed oxidation of SO₂ is slow; particulate matter, ozone and H₂O₂ speed it up.",
+          },
+          {
+            type: "text",
+            md: "**Greenhouse effect and global warming.** About 75% of the solar energy reaching the earth is absorbed by the surface, which warms up and radiates infrared (heat) radiation. **Greenhouse gases** such as CO₂, CH₄, N₂O, O₃, water vapour and chlorofluorocarbons (CFCs) absorb part of this infrared and re-radiate it back, trapping heat, just as the glass of a greenhouse traps heat inside. Without this natural effect the average surface temperature would be about −18 °C instead of about 15 °C. Rising levels of these gases from burning fossil fuels and deforestation increase the effect, causing **global warming**: melting of polar ice and glaciers, rising sea levels, and changes in rainfall and in the spread of diseases such as malaria and dengue.",
+          },
+          {
+            type: "text",
+            md: t`**Acid rain.** Even unpolluted rain is slightly acidic, with **pH about 5.6**, because it dissolves atmospheric CO₂:
+
+$\text{H}_2\text{O} + \text{CO}_2 \rightleftharpoons \text{H}_2\text{CO}_3 \rightleftharpoons \text{H}^+ + \text{HCO}_3^-$
+
+Rain with pH **below 5.6** is called **acid rain**. It forms when oxides of sulphur and nitrogen are oxidised and dissolve in water:
+
+$2\text{SO}_2 + \text{O}_2 + 2\text{H}_2\text{O} \to 2\text{H}_2\text{SO}_4$ and $4\text{NO}_2 + \text{O}_2 + 2\text{H}_2\text{O} \to 4\text{HNO}_3$
+
+Acid rain washes nutrients out of soil, harms crops, forests and aquatic life, dissolves heavy metals (Cu, Pb, Hg, Al) from soil and pipes into drinking water, and **corrodes marble and limestone buildings**: $\text{CaCO}_3 + \text{H}_2\text{SO}_4 \to \text{CaSO}_4 + \text{H}_2\text{O} + \text{CO}_2$. The marble of the Taj Mahal in Agra has been threatened by acid-forming gases from industries and the oil refinery near Mathura, and strict controls on industries around it were ordered to protect it.`,
+          },
+          {
+            type: "checkpoint",
+            questions: [
+              {
+                kind: "mcq",
+                q: "Rain is called acid rain when its pH is below",
+                options: ["5.6", "7.0", "6.5", "4.0"],
+                answer: 0,
+                explain: "Natural rain is already about pH 5.6 because of dissolved CO₂; acid rain is more acidic than that.",
+              },
+            ],
+          },
+          {
+            type: "text",
+            md: "**Particulate pollutants** are tiny solid particles or liquid droplets suspended in air. **Viable** particulates are living (bacteria, fungi, moulds, algae, pollen). **Non-viable** particulates are: **smoke** (solid and mixed particles from burning organic matter), **dust** (fine solid particles above 1 μm from crushing and grinding, such as sawdust, fly ash, cement dust), **mists** (liquid droplets, for example from spraying pesticides) and **fumes** (from condensing vapours in distillation, boiling and other processes). Particles smaller than about 5 μm can lodge deep in the lungs. Lead from older leaded petrol came out as lead halide particulates.\n\n**Smog** (smoke + fog) is of two kinds.",
+          },
+          {
+            type: "table",
+            headers: ["Feature", "Classical smog", "Photochemical smog"],
+            rows: [
+              ["Climate", "cool, humid", "warm, dry, sunny"],
+              ["Made of", "smoke, fog and sulphur dioxide", "products of sunlight acting on NOx and hydrocarbons from vehicle exhaust"],
+              ["Chemical nature", "reducing (contains SO₂)", "oxidising (contains O₃, NO₂, PAN)"],
+              ["Typical example", "London smog (winter)", "Los Angeles smog (summer)"],
+              ["Effects", "bronchitis, breathing difficulty", "eye irritation, headache, chest pain, dry throat, cough; rubber cracks; plants and painted surfaces damaged"],
+            ],
+          },
+          {
+            type: "formula",
+            tex: t`\begin{aligned} \text{NO}_2(\text{g}) &\xrightarrow{h\nu} \text{NO}(\text{g}) + \text{O}(\text{g}) \\ \text{O}(\text{g}) + \text{O}_2(\text{g}) &\rightleftharpoons \text{O}_3(\text{g}) \\ \text{NO}(\text{g}) + \text{O}_3(\text{g}) &\to \text{NO}_2(\text{g}) + \text{O}_2(\text{g}) \\ 3\text{CH}_4 + 2\text{O}_3 &\to 3\text{CH}_2\text{O} + 3\text{H}_2\text{O} \end{aligned}`,
+            caption: "Formation of photochemical smog. O₃ and NO₂ react with unburnt hydrocarbons to form formaldehyde (HCHO), acrolein and peroxyacetyl nitrate (PAN), which sting the eyes.",
+          },
+          {
+            type: "mistake",
+            wrong: "The greenhouse effect is a form of pollution; without it the earth would be better off.",
+            right: "The natural greenhouse effect keeps the earth's average temperature near 15 °C instead of about −18 °C and makes life possible. The problem is the *enhanced* effect from extra greenhouse gases released by human activity, which causes global warming.",
+            why: "News reports use 'greenhouse effect' and 'global warming' as if they meant the same thing. One is a natural, useful process; the other is its unwanted intensification.",
+          },
+          {
+            type: "activity",
+            activity: {
+              kind: "sort",
+              prompt: "Classical smog or photochemical smog?",
+              groups: ["Classical smog", "Photochemical smog"],
+              items: [
+                { text: "Forms in cool, humid weather", group: 0, hint: "Fog needs moisture and cold." },
+                { text: "Contains PAN and ozone", group: 1, hint: "These are made by sunlight-driven reactions." },
+                { text: "Reducing in nature", group: 0, hint: "SO₂ is a reducing agent." },
+                { text: "Needs strong sunlight", group: 1, hint: "The first step is NO₂ split by light." },
+                { text: "Smoke + fog + SO₂", group: 0, hint: "The original 'smoke + fog'." },
+                { text: "Oxidising in nature", group: 1, hint: "Ozone and NO₂ are oxidants." },
+              ],
+              explain: "Classical smog is a cold, wet mixture of smoke and SO₂; photochemical smog is made by sunlight from vehicle NOx and hydrocarbons and is full of oxidants.",
+            },
+          },
+          {
+            type: "callout",
+            tone: "exam",
+            title: "ISC exam tips",
+            md: "Write the reactions for acid rain and photochemical smog as balanced equations, and know the control measures: **catalytic converters** in vehicles (convert NO and CO into N₂ and CO₂ and burn hydrocarbons), and planting trees such as *Pinus*, *Juniperus*, *Quercus*, *Pyrus* and *Vitis*, which can metabolise NO₂.",
+          },
+          {
+            type: "keypoints",
+            items: [
+              "Troposphere (0–10 km) holds our air; stratosphere (10–50 km) holds the ozone layer.",
+              "SO₂, NOx, CO, hydrocarbons and particulates are the main tropospheric pollutants.",
+              "Greenhouse gases (CO₂, CH₄, N₂O, O₃, H₂O, CFCs) trap infrared; excess causes global warming.",
+              "Normal rain has pH ≈ 5.6; acid rain (H₂SO₄, HNO₃) has pH below 5.6 and corrodes marble.",
+              "Classical smog is reducing (smoke, fog, SO₂); photochemical smog is oxidising (O₃, NO₂, PAN, HCHO).",
+            ],
+          },
+        ],
+        flashcards: [
+          { front: "Troposphere", back: "Lowest layer of the atmosphere, up to about 10 km, where weather occurs." },
+          { front: "pH of normal rain water", back: "About 5.6, due to dissolved CO₂ forming carbonic acid." },
+          { front: "Acids in acid rain", back: "Sulphuric acid and nitric acid (with some carbonic acid)." },
+          { front: "Effect of acid rain on marble", back: "CaCO₃ + H₂SO₄ → CaSO₄ + H₂O + CO₂ (marble cancer)." },
+          { front: "Why is CO poisonous?", back: "It forms carboxyhaemoglobin, about 300 times more stable than oxyhaemoglobin, blocking O₂ transport." },
+          { front: "Classical smog", back: "Smoke + fog + SO₂, in cool humid climates; reducing." },
+          { front: "Photochemical smog", back: "Formed by sunlight acting on NOx and hydrocarbons in warm, dry, sunny climates; oxidising (O₃, NO₂, PAN)." },
+          { front: "PAN", back: "Peroxyacetyl nitrate, an eye-irritating oxidant in photochemical smog." },
+          { front: "Average temperature of the earth without the greenhouse effect", back: "About −18 °C (actual average about 15 °C)." },
+        ],
+        quiz: [
+          {
+            kind: "multi",
+            q: "Which gases are greenhouse gases?",
+            options: ["CO₂", "CH₄", "N₂", "CFCs"],
+            answers: [0, 1, 3],
+            explain: "N₂ does not absorb infrared radiation; CO₂, CH₄ and CFCs do.",
+          },
+          {
+            kind: "mcq",
+            q: "Photochemical smog is common in",
+            options: ["warm, dry, sunny cities with heavy traffic", "cold, foggy winter mornings", "areas with no vehicles", "coastal areas at night"],
+            answer: 0,
+            explain: "Sunlight and NOx and hydrocarbons from vehicles are the ingredients.",
+          },
+          {
+            kind: "mcq",
+            q: "Which reaction starts the formation of photochemical smog?",
+            options: ["NO₂ → NO + O in sunlight", "SO₂ + O₂ → SO₃", "CO + O₂ → CO₂", "N₂ + O₂ → 2NO"],
+            answer: 0,
+            explain: "Light splits NO₂, and the oxygen atom formed combines with O₂ to make ozone.",
+            difficulty: 2,
+          },
+          {
+            kind: "truefalse",
+            q: "Classical smog is oxidising in nature.",
+            answer: false,
+            explain: "Classical smog contains SO₂, so it is reducing; photochemical smog is oxidising.",
+          },
+          {
+            kind: "mcq",
+            q: "Which type of particulate is fly ash?",
+            options: ["Dust", "Mist", "Fume", "Viable particulate"],
+            answer: 0,
+            explain: "Fly ash consists of fine solid particles, classed as dust.",
+          },
+          {
+            kind: "mcq",
+            q: "Catalytic converters in cars reduce pollution mainly by converting",
+            options: ["NO and CO into N₂ and CO₂", "CO₂ into CO", "SO₂ into H₂SO₄", "N₂ into NO"],
+            answer: 0,
+            explain: "They reduce NO to N₂ and oxidise CO (and hydrocarbons) to CO₂ and H₂O.",
+          },
+          {
+            kind: "fill",
+            q: "Natural rain water has a pH of about ___.",
+            answer: ["5.6"],
+            explain: "Dissolved CO₂ gives a little carbonic acid.",
+          },
+        ],
+      },
+      /* ---------------- Lesson 2 ---------------- */
+      {
+        slug: "c11-che-env-ozone-water",
+        title: "Ozone Depletion and Water Pollution",
+        summary: "How ozone forms in the stratosphere and how CFCs destroy it, the Antarctic ozone hole, effects of UV radiation, sources of water pollution, dissolved oxygen and BOD, chemical pollutants, eutrophication and international drinking-water standards.",
+        minutes: 24,
+        xp: 55,
+        blocks: [
+          {
+            type: "illustration",
+            emoji: "🛡️",
+            caption: "Twenty to thirty kilometres above Bengaluru, a thin layer of ozone absorbs most of the sun's harmful ultraviolet rays. If all of it were brought down to ground pressure, it would be only a few millimetres thick.",
+          },
+          {
+            type: "text",
+            md: t`**Formation of ozone.** In the stratosphere, ultraviolet radiation splits oxygen molecules into atoms, which then combine with more O₂:
+
+$\text{O}_2(\text{g}) \xrightarrow{\text{UV}} \text{O}(\text{g}) + \text{O}(\text{g})$ and $\text{O}(\text{g}) + \text{O}_2(\text{g}) \rightleftharpoons \text{O}_3(\text{g})$
+
+Ozone is thermodynamically unstable and decomposes back to O₂, so a **dynamic balance** between its formation and decomposition is set up. The ozone layer absorbs UV radiation and protects life on earth.
+
+**Depletion by CFCs.** Chlorofluorocarbons (CFCs, Freons) are non-reactive, non-flammable and non-toxic, so they were widely used in refrigerators, air conditioners, plastic foams and for cleaning electronic parts. Being unreactive, they drift up to the stratosphere, where UV light breaks them to give **chlorine free radicals**, which destroy ozone in a **chain reaction**.`,
+          },
+          {
+            type: "formula",
+            tex: t`\begin{aligned} \text{CF}_2\text{Cl}_2(\text{g}) &\xrightarrow{h\nu} \text{Cl}^\bullet(\text{g}) + {}^\bullet\text{CF}_2\text{Cl}(\text{g}) \\ \text{Cl}^\bullet(\text{g}) + \text{O}_3(\text{g}) &\to \text{ClO}^\bullet(\text{g}) + \text{O}_2(\text{g}) \\ \text{ClO}^\bullet(\text{g}) + \text{O}(\text{g}) &\to \text{Cl}^\bullet(\text{g}) + \text{O}_2(\text{g}) \end{aligned}`,
+            caption: "The chlorine radical is regenerated in the last step, so one Cl atom can destroy thousands of ozone molecules. Net: O₃ + O → 2O₂.",
+          },
+          {
+            type: "text",
+            md: t`**The ozone hole over Antarctica.** In the 1980s scientists working in Antarctica found that ozone over the South Pole falls sharply every spring (September–October). In summer, the radicals are tied up in harmless 'reservoir' molecules:
+
+$\text{ClO}^\bullet + \text{NO}_2 \to \text{ClONO}_2$ and $\text{Cl}^\bullet + \text{CH}_4 \to {}^\bullet\text{CH}_3 + \text{HCl}$
+
+In the very cold Antarctic winter, **polar stratospheric clouds** form. On their surfaces the reservoirs react:
+
+$\text{ClONO}_2 + \text{H}_2\text{O} \to \text{HOCl} + \text{HNO}_3$ and $\text{ClONO}_2 + \text{HCl} \to \text{Cl}_2 + \text{HNO}_3$
+
+When sunlight returns in spring, HOCl and Cl₂ are split by light into chlorine radicals ($\text{HOCl} \to {}^\bullet\text{OH} + \text{Cl}^\bullet$; $\text{Cl}_2 \to 2\text{Cl}^\bullet$), which destroy ozone rapidly, creating the ozone hole.
+
+**Effects of ozone depletion:** more UV reaches the ground, causing skin cancer (melanoma), ageing of skin, cataract and sunburn; death of many phytoplankton (which upsets fish food chains); mutations in plants; greater evaporation of surface water and drier soil; and damage to paints and fibres, which fade faster.`,
+          },
+          {
+            type: "checkpoint",
+            questions: [
+              {
+                kind: "mcq",
+                q: "Why can a single chlorine atom destroy many ozone molecules?",
+                options: [
+                  "It is regenerated at the end of each cycle (chain reaction)",
+                  "It is very heavy",
+                  "It forms a stable compound with ozone",
+                  "It absorbs UV light",
+                ],
+                answer: 0,
+                explain: "Cl• + O₃ → ClO• + O₂ and ClO• + O → Cl• + O₂: the Cl• comes back and repeats the cycle.",
+              },
+            ],
+          },
+          {
+            type: "text",
+            md: "**Water pollution.** Pollution from a definite place (a factory drain, a sewage outlet) is **point-source** pollution; pollution from spread-out sources (fertiliser and pesticide run-off from farms, acid rain, storm-water drainage) is **non-point-source** pollution.\n\n**Pathogens** from domestic sewage and animal excreta, such as *Escherichia coli* and *Streptococcus faecalis*, cause gastrointestinal diseases.\n\n**Organic wastes** (leaves, grass, trash, sewage) are broken down by bacteria, which use up the **dissolved oxygen (DO)** in water. Cold water can hold up to about 10 ppm of dissolved oxygen; if DO falls below about 6 ppm, fish cannot grow well. When oxygen runs out, anaerobic bacteria take over and produce foul-smelling gases.\n\nThe amount of oxygen needed by bacteria to break down the organic matter in a given volume of water is the **biochemical oxygen demand (BOD)**. It measures how much organic pollution water carries. **Clean water has BOD below 5 ppm; highly polluted water has BOD of 17 ppm or more.**",
+          },
+          {
+            type: "text",
+            md: "**Chemical pollutants** include: **heavy metals** such as cadmium, mercury and nickel, which our bodies cannot excrete and which damage the kidneys, central nervous system and liver; **petroleum** products and oil spills; **pesticides** and **polychlorinated biphenyls (PCBs)**, which are carcinogenic; **detergents**, whose breakdown uses up oxygen; and **fertilisers** containing phosphates and nitrates.\n\n**Eutrophication:** when phosphates and nitrates enrich a lake or pond, algae grow explosively (an **algal bloom**), covering the surface. When they die, their decomposition uses up dissolved oxygen, so fish and other animals die and biodiversity is lost. This process, in which a nutrient-rich water body supports a dense plant population that kills animal life by depriving it of oxygen, is eutrophication.",
+          },
+          {
+            type: "table",
+            headers: ["Substance", "Prescribed limit / safe level", "Effect if exceeded"],
+            rows: [
+              ["Fluoride", "about 1 ppm is desirable", "Above 2 ppm: brown mottling of teeth; above 10 ppm: harmful to bones and teeth. Too little causes tooth decay."],
+              ["Lead", "upper limit 50 ppb", "damages kidney, liver and reproductive system"],
+              ["Sulphate", "below about 500 ppm", "laxative effect at higher levels"],
+              ["Nitrate", "maximum 50 ppm", "methaemoglobinaemia ('blue baby' syndrome)"],
+              ["Other metals (ppm)", "Fe 0.2, Mn 0.05, Al 0.2, Cu 3.0, Zn 5.0, Cd 0.005", "various toxic effects"],
+            ],
+          },
+          {
+            type: "text",
+            md: "Fluoride at about 1 ppm strengthens tooth enamel by converting **hydroxyapatite**, [3Ca₃(PO₄)₂·Ca(OH)₂], into the harder **fluorapatite**, [3Ca₃(PO₄)₂·CaF₂]. In parts of India where groundwater has excess fluoride, people suffer from mottled teeth and bone damage (fluorosis).",
+          },
+          {
+            type: "example",
+            title: "Finding the BOD of a sample",
+            problem: "A river-water sample is saturated with air; its dissolved oxygen is 8.5 ppm. After being kept sealed in the dark at 20 °C for 5 days, the DO falls to 1.5 ppm. Find the BOD and comment on the water.",
+            steps: [
+              "Oxygen used by bacteria = initial DO − final DO = 8.5 − 1.5 = 7.0 ppm.",
+              "BOD (5-day) = 7.0 ppm.",
+              "Clean water has BOD below 5 ppm; 7.0 ppm shows a significant load of organic matter, though below the 17 ppm of highly polluted water.",
+            ],
+            answer: "BOD = 7.0 ppm: the water is polluted (not clean), but not highly polluted",
+          },
+          {
+            type: "mistake",
+            wrong: "A high BOD means the water has a lot of dissolved oxygen, so it is healthy.",
+            right: "A high BOD means bacteria *need* a lot of oxygen to break down the organic matter present, so the water is heavily polluted and its oxygen will be used up.",
+            why: "'Oxygen demand' sounds like 'oxygen content'. BOD measures what will be consumed, not what is present.",
+          },
+          {
+            type: "activity",
+            activity: {
+              kind: "order",
+              prompt: "Put the stages of eutrophication in order.",
+              items: [
+                "Fertiliser run-off adds phosphates and nitrates to a lake",
+                "Algae grow rapidly and form a bloom",
+                "Algae die and are decomposed by bacteria",
+                "Dissolved oxygen falls sharply",
+                "Fish and other animals die",
+              ],
+              explain: "Too many nutrients, not too few, set off the chain: the oxygen is used up by decomposition of the extra plant matter.",
+            },
+          },
+          {
+            type: "keypoints",
+            items: [
+              "Ozone forms when UV splits O₂; it is in dynamic balance with its decomposition.",
+              "CFCs release Cl• radicals in the stratosphere, which destroy O₃ in a chain reaction.",
+              "The Antarctic ozone hole forms in spring after polar stratospheric clouds release Cl₂ and HOCl.",
+              "BOD measures organic pollution: clean water below 5 ppm, highly polluted 17 ppm or more.",
+              "Drinking-water limits: F⁻ about 1 ppm, Pb 50 ppb, nitrate 50 ppm, sulphate 500 ppm.",
+            ],
+          },
+        ],
+        flashcards: [
+          { front: "Where is the ozone layer?", back: "In the stratosphere (about 10–50 km above the earth)." },
+          { front: "Free radical released from CFCs", back: "Chlorine radical, Cl•" },
+          { front: "Net reaction of Cl-catalysed ozone loss", back: "O₃ + O → 2O₂ (Cl• is regenerated)." },
+          { front: "Role of polar stratospheric clouds", back: "Their surfaces convert ClONO₂ and HCl into Cl₂ and HOCl, which release Cl• in spring sunlight." },
+          { front: "BOD", back: "Amount of oxygen needed by bacteria to break down the organic matter in a given volume of water." },
+          { front: "BOD of clean and highly polluted water", back: "Clean: below 5 ppm. Highly polluted: 17 ppm or more." },
+          { front: "Eutrophication", back: "Nutrient enrichment of a water body causing algal blooms, oxygen depletion and death of animal life." },
+          { front: "Blue baby syndrome", back: "Methaemoglobinaemia caused by nitrate above about 50 ppm in drinking water." },
+          { front: "Effect of fluoride above 2 ppm", back: "Brown mottling of teeth." },
+        ],
+        quiz: [
+          {
+            kind: "mcq",
+            q: "The ozone hole is most pronounced over",
+            options: ["Antarctica in spring", "the equator in summer", "India during the monsoon", "the Arctic in summer"],
+            answer: 0,
+            explain: "Polar stratospheric clouds form in the Antarctic winter; sunlight in spring releases chlorine radicals.",
+          },
+          {
+            kind: "mcq",
+            q: "Which reaction keeps chlorine in a harmless reservoir in summer?",
+            options: ["ClO• + NO₂ → ClONO₂", "Cl• + O₃ → ClO• + O₂", "Cl₂ → 2Cl•", "HOCl → •OH + Cl•"],
+            answer: 0,
+            explain: "Chlorine nitrate locks up ClO•; the other reactions release or use active radicals.",
+            difficulty: 2,
+          },
+          {
+            kind: "numeric",
+            q: "The maximum nitrate concentration allowed in drinking water is 50 ppm. Treating 1 L of water as 1 kg, what is the maximum mass of nitrate in mg per litre?",
+            answer: 50,
+            unit: "mg",
+            explain: "1 ppm = 1 mg per kg, so 50 ppm in 1 kg (1 L) of water = 50 mg.",
+          },
+          {
+            kind: "multi",
+            q: "Which are effects of ozone depletion?",
+            options: ["skin cancer", "cataract", "death of phytoplankton", "acid rain"],
+            answers: [0, 1, 2],
+            explain: "Acid rain is caused by SO₂ and NOx, not by ozone loss.",
+          },
+          {
+            kind: "truefalse",
+            q: "Fluoride in drinking water at about 1 ppm is harmful and must be removed completely.",
+            answer: false,
+            explain: "About 1 ppm is desirable: it converts hydroxyapatite in enamel into harder fluorapatite. Only higher levels are harmful.",
+          },
+          {
+            kind: "mcq",
+            q: "Below what dissolved-oxygen level does the growth of fish get inhibited?",
+            options: ["about 6 ppm", "about 20 ppm", "about 50 ppm", "about 0.1 ppm"],
+            answer: 0,
+            explain: "Cold water holds up to about 10 ppm O₂; below about 6 ppm fish growth suffers.",
+          },
+          {
+            kind: "mcq",
+            q: "The upper limit of lead in drinking water is",
+            options: ["50 ppb", "50 ppm", "5 ppm", "500 ppm"],
+            answer: 0,
+            explain: "Lead is toxic at very low levels; the limit is 50 parts per billion.",
+          },
+        ],
+      },
+      /* ---------------- Lesson 3 ---------------- */
+      {
+        slug: "c11-che-env-soil-green",
+        title: "Soil Pollution, Industrial Waste and Green Chemistry",
+        summary: "Pesticides, insecticides and herbicides as soil pollutants, biomagnification of DDT, biodegradable and non-biodegradable industrial wastes, strategies to control pollution and waste management, and green chemistry in everyday life.",
+        minutes: 20,
+        xp: 50,
+        blocks: [
+          {
+            type: "illustration",
+            emoji: "🌾",
+            caption: "Pesticides helped India's Green Revolution protect wheat and rice from pests, but some of them stay in the soil for years and climb up the food chain into birds, fish and people.",
+          },
+          {
+            type: "text",
+            md: "**Soil pollution** is caused mainly by **pesticides**, which are chemicals used to kill pests: **insecticides** (against insects), **herbicides** (against weeds) and **fungicides** (against fungi).\n\nAfter the Second World War, **DDT** was widely used to control malaria-carrying mosquitoes and crop pests. Insects soon developed resistance, and DDT turned out to be a serious problem: it is **non-biodegradable** and **fat-soluble**, so it is stored in fatty tissue instead of being excreted. As it passes from plankton to fish to birds, its concentration rises at each step (**biomagnification**). High DDT levels disturbed calcium metabolism in birds, causing thin eggshells and early breaking of eggs. DDT is now banned or tightly restricted in many countries.\n\nLater insecticides such as **organophosphates** and **carbamates** break down faster, but many are severe nerve poisons. **Herbicides** include inorganic compounds such as **sodium chlorate (NaClO₃)** and **sodium arsenite (Na₃AsO₃)**, and many organic compounds; most are toxic to mammals, though less persistent than organochlorines.",
+          },
+          {
+            type: "example",
+            title: "How biomagnification builds up",
+            problem: "Lake water contains 0.00003 ppm of a pesticide. Its concentration rises roughly 10 times at each of four feeding levels: water → plankton → small fish → large fish → fish-eating bird. Estimate the concentration in the bird.",
+            steps: [
+              "Four steps, each a factor of 10, give a total factor of 10⁴ = 10 000.",
+              "Concentration in the bird ≈ 0.00003 × 10 000 = 0.3 ppm.",
+              "The bird has about 10 000 times the concentration in the water, because the pesticide is stored in fat at every level instead of being excreted.",
+            ],
+            answer: "About 0.3 ppm, ten thousand times the level in the water",
+          },
+          {
+            type: "text",
+            md: "**Industrial waste** is either **biodegradable** (from cotton mills, food processing units, paper mills and textile factories) or **non-biodegradable**: fly ash from thermal power plants, blast-furnace slag and steel-melting slag from iron and steel plants, mud and tailings from aluminium, zinc and copper plants, gypsum from fertiliser plants, and hazardous wastes such as inflammable materials, explosives and highly reactive substances. Fly ash and slag can be reused in **cement manufacture**, turning waste into a resource.\n\n**Strategies to control pollution** start with **waste management**: collect household waste separately as biodegradable (sent to landfills or composting, where it becomes manure) and non-biodegradable (sent for recycling: glass, metal, plastic, paper). Uncollected waste blocks drains, breeds flies and pollutes groundwater.",
+          },
+          {
+            type: "checkpoint",
+            questions: [
+              {
+                kind: "mcq",
+                q: "DDT accumulates up the food chain mainly because it is",
+                options: ["non-biodegradable and fat-soluble", "very soluble in water", "a gas at room temperature", "rapidly broken down by bacteria"],
+                answer: 0,
+                explain: "It is not broken down and dissolves in fat, so organisms store it instead of excreting it.",
+              },
+            ],
+          },
+          {
+            type: "text",
+            md: "**Green chemistry** is a way of thinking that uses existing chemical knowledge to reduce harm to the environment: making products by routes that create less waste, use safer chemicals and solvents (preferably water), use less energy (sunlight, microwaves, catalysts), and convert as much of the starting material as possible into the desired product.",
+          },
+          {
+            type: "table",
+            headers: ["Area", "Older method", "Greener method"],
+            rows: [
+              ["Dry cleaning of clothes", "tetrachloroethene (Cl₂C=CCl₂), a suspected carcinogen that contaminates groundwater", "liquid carbon dioxide with a suitable detergent; H₂O₂ with a catalyst for bleaching in laundry"],
+              ["Bleaching of paper", "chlorine gas (forms harmful chlorinated by-products)", "hydrogen peroxide with a suitable catalyst"],
+              ["Making ethanal", "multi-step oxidation routes with toxic reagents", "one-step oxidation of ethene in water with an ionic catalyst (Pd(II)/Cu(II)), about 90% yield"],
+            ],
+          },
+          {
+            type: "formula",
+            tex: t`2\,\text{CH}_2{=}\text{CH}_2 + \text{O}_2 \xrightarrow{\text{Pd(II)/Cu(II), water}} 2\,\text{CH}_3\text{CHO}`,
+            caption: "Green synthesis of ethanal: water as solvent, a catalyst, one step, and all atoms of the reactants end up in the product.",
+          },
+          {
+            type: "mistake",
+            wrong: "Biodegradable industrial waste is harmless, so it can be dumped directly into rivers.",
+            right: "Biodegradable waste is broken down by bacteria, but this uses up dissolved oxygen and raises the BOD of the river, killing fish. It must be treated before release.",
+            why: "'Biodegradable' sounds like 'safe'. It only means the waste will not persist; the breakdown itself has an oxygen cost.",
+          },
+          {
+            type: "activity",
+            activity: {
+              kind: "sort",
+              prompt: "Biodegradable or non-biodegradable waste?",
+              groups: ["Biodegradable", "Non-biodegradable"],
+              items: [
+                { text: "Waste from a food-processing unit", group: 0, hint: "Food is broken down by microbes." },
+                { text: "Fly ash from a thermal power plant", group: 1, hint: "It is mostly mineral oxides." },
+                { text: "Blast-furnace slag", group: 1, hint: "A glassy silicate from iron making." },
+                { text: "Waste from a paper mill (pulp)", group: 0, hint: "Cellulose is broken down by microbes." },
+                { text: "DDT residues", group: 1, hint: "It persists for years in soil." },
+                { text: "Cotton-mill waste", group: 0, hint: "Cotton is natural cellulose." },
+              ],
+              explain: "Natural organic materials are broken down by microbes; mineral wastes and many synthetic chemicals are not, so they need reuse or safe disposal.",
+            },
+          },
+          {
+            type: "callout",
+            tone: "exam",
+            title: "ISC exam tips",
+            md: "Short-answer questions ask for 'two examples of green chemistry in daily life': liquid CO₂ for dry cleaning and H₂O₂ for bleaching paper are the safest answers. For DDT, use the words non-biodegradable, fat-soluble and biomagnification.",
+          },
+          {
+            type: "keypoints",
+            items: [
+              "Pesticides (insecticides, herbicides, fungicides) are the main soil pollutants.",
+              "DDT is non-biodegradable and fat-soluble, so it biomagnifies; it thinned the eggshells of birds.",
+              "Industrial wastes are biodegradable (food, paper, cotton) or non-biodegradable (fly ash, slag, tailings); fly ash and slag can go into cement.",
+              "Separate household waste: biodegradable for compost, non-biodegradable for recycling.",
+              "Green chemistry: liquid CO₂ for dry cleaning, H₂O₂ for bleaching, one-step catalytic synthesis of ethanal in water.",
+            ],
+          },
+        ],
+        flashcards: [
+          { front: "Biomagnification", back: "The rise in concentration of a persistent pollutant at each step up a food chain." },
+          { front: "Why is DDT harmful to birds?", back: "It biomagnifies and disturbs calcium metabolism, causing thin eggshells that break early." },
+          { front: "Two inorganic herbicides", back: "Sodium chlorate (NaClO₃) and sodium arsenite (Na₃AsO₃)." },
+          { front: "Two non-biodegradable industrial wastes", back: "Fly ash (thermal power plants) and slag (iron and steel plants)." },
+          { front: "Use of fly ash and slag", back: "In the manufacture of cement." },
+          { front: "Green chemistry", back: "Using chemical knowledge to reduce waste, hazardous substances and energy use in making chemicals." },
+          { front: "Green replacement for tetrachloroethene in dry cleaning", back: "Liquid CO₂ with a suitable detergent." },
+          { front: "Green bleaching agent for paper", back: "Hydrogen peroxide with a suitable catalyst." },
+        ],
+        quiz: [
+          {
+            kind: "mcq",
+            q: "Which solvent replaced tetrachloroethene in green dry cleaning?",
+            options: ["liquid CO₂", "benzene", "carbon tetrachloride", "chloroform"],
+            answer: 0,
+            explain: "Liquid CO₂ with a detergent is non-toxic and leaves no harmful residue.",
+          },
+          {
+            kind: "mcq",
+            q: "Which is a herbicide?",
+            options: ["Sodium chlorate", "DDT", "Organomercury compound", "Penicillin"],
+            answer: 0,
+            explain: "NaClO₃ kills weeds; DDT is an insecticide, organomercury compounds are fungicides.",
+          },
+          {
+            kind: "truefalse",
+            q: "Fly ash from thermal power plants is a biodegradable waste.",
+            answer: false,
+            explain: "Fly ash is mineral and non-biodegradable; it is reused in cement and bricks.",
+          },
+          {
+            kind: "multi",
+            q: "Which properties of DDT make it accumulate in food chains?",
+            options: ["It is non-biodegradable.", "It is fat-soluble.", "It is very soluble in water.", "It is quickly excreted."],
+            answers: [0, 1],
+            explain: "A water-soluble, easily excreted chemical would not build up.",
+          },
+          {
+            kind: "mcq",
+            q: "In the green synthesis of ethanal from ethene, the solvent is",
+            options: ["water", "carbon tetrachloride", "benzene", "liquid ammonia"],
+            answer: 0,
+            explain: "The reaction is carried out in water with a Pd(II)/Cu(II) ionic catalyst.",
+          },
+          {
+            kind: "numeric",
+            q: "A pesticide is magnified 10 times at each of 3 food-chain steps. If water has 0.0002 ppm, what is the concentration (ppm) in the top consumer?",
+            answer: 0.2,
+            tolerance: 0.001,
+            unit: "ppm",
+            explain: "0.0002 × 10³ = 0.2 ppm.",
+            difficulty: 2,
+          },
+          {
+            kind: "mcq",
+            q: "Which household waste should go for composting?",
+            options: ["Vegetable peels", "Glass bottles", "Aluminium cans", "Plastic bags"],
+            answer: 0,
+            explain: "Biodegradable waste becomes manure on composting; the others are recycled.",
+          },
+        ],
+      },
+      /* ---------------- Exam edge ---------------- */
+      {
+        slug: "c11-che-env-exam-edge",
+        title: "Exam edge: Environmental Chemistry",
+        summary: "Who still tests this chapter, the reactions and numbers worth remembering, pH and ppm calculations, BOD reasoning, ozone-destroying chain mechanisms and atom economy in green chemistry.",
+        minutes: 20,
+        xp: 55,
+        track: "exam",
+        blocks: [
+          {
+            type: "text",
+            md: "**Who needs this.** Environmental Chemistry left rationalised NCERT, and the current JEE Main, NEET and KCET syllabi follow that, so direct questions are now rare; it was never a JEE Advanced topic. **ISC Class 11 examines it**, and its chemistry keeps reappearing elsewhere: oxides of nitrogen and sulphur and ozone in Class 12 p-block, free-radical chain reactions in organic chemistry, and pH and ppm calculations in solutions and ionic equilibrium. Check the current information bulletin.\n\nOld entrance papers liked: the pH of normal rain and acid rain, classical vs photochemical smog, CFC chain reactions, the ozone hole sequence, BOD values, the drinking-water limits for F⁻, Pb, NO₃⁻ and SO₄²⁻, and green-chemistry examples.",
+          },
+          {
+            type: "table",
+            headers: ["Number worth knowing", "Value"],
+            rows: [
+              ["pH of normal rain / acid rain", "≈ 5.6 / below 5.6"],
+              ["BOD clean / highly polluted water", "< 5 ppm / ≥ 17 ppm"],
+              ["DO needed for fish", "at least about 6 ppm (cold water holds up to about 10 ppm)"],
+              ["Fluoride", "≈ 1 ppm desirable; > 2 ppm mottling; > 10 ppm bone damage"],
+              ["Lead / nitrate / sulphate limits", "50 ppb / 50 ppm / 500 ppm"],
+              ["CO vs O₂ binding to haemoglobin", "CO ≈ 300 times stronger"],
+              ["Earth's average temperature with / without greenhouse effect", "≈ 15 °C / ≈ −18 °C"],
+            ],
+          },
+          {
+            type: "formula",
+            tex: t`\text{ppm} = \frac{\text{mass of solute}}{\text{mass of solution}} \times 10^6 \qquad \frac{[\text{H}^+]_1}{[\text{H}^+]_2} = 10^{\,\text{pH}_2 - \text{pH}_1} \qquad \text{atom economy} = \frac{M(\text{desired product})}{\sum M(\text{reactants})} \times 100\%`,
+            caption: "For dilute water samples, 1 ppm ≈ 1 mg per litre. Atom economy is a green-chemistry yardstick (from the stoichiometric equation).",
+          },
+          {
+            type: "example",
+            title: "NEET / KCET level: how acidic is acid rain?",
+            problem: "A rain sample has pH 4.0. How many times greater is its H⁺ concentration than that of normal rain (pH 5.6)?",
+            steps: [
+              t`Ratio $= 10^{5.6 - 4.0} = 10^{1.6}$.`,
+              t`$10^{1.6} = 10 \times 10^{0.6} \approx 10 \times 3.98 = 39.8$.`,
+            ],
+            answer: "About 40 times more H⁺",
+          },
+          {
+            type: "example",
+            title: "JEE Main level: is this water safe?",
+            problem: "A 2.0 L groundwater sample contains 0.12 g of nitrate ions and 0.8 mg of fluoride. Is it within the drinking-water limits? (Take 1 L of water as 1 kg.)",
+            steps: [
+              "Nitrate: 0.12 g = 120 mg in 2.0 kg, so 60 mg per kg = 60 ppm.",
+              "This is above the 50 ppm limit: risk of methaemoglobinaemia.",
+              "Fluoride: 0.8 mg in 2.0 kg = 0.4 ppm, below the desirable 1 ppm (safe, though low for tooth protection).",
+            ],
+            answer: "Nitrate (60 ppm) exceeds the limit; fluoride (0.4 ppm) is within the limit. The water is not fit to drink without treatment.",
+          },
+          {
+            type: "example",
+            title: "JEE Advanced level: atom economy",
+            problem: t`Compare the atom economy of making ethanal (a) by the green route $2\text{C}_2\text{H}_4 + \text{O}_2 \to 2\text{CH}_3\text{CHO}$ and (b) by oxidising ethanol with acidified dichromate: $3\text{C}_2\text{H}_5\text{OH} + \text{K}_2\text{Cr}_2\text{O}_7 + 4\text{H}_2\text{SO}_4 \to 3\text{CH}_3\text{CHO} + \text{K}_2\text{SO}_4 + \text{Cr}_2(\text{SO}_4)_3 + 7\text{H}_2\text{O}$. (Molar masses: C₂H₄ 28, O₂ 32, CH₃CHO 44, C₂H₅OH 46, K₂Cr₂O₇ 294, H₂SO₄ 98)`,
+            steps: [
+              "(a) Reactants: 2 × 28 + 32 = 88 g; desired product: 2 × 44 = 88 g. Atom economy = 88/88 × 100 = 100%.",
+              "(b) First check the equation balances: C 6 = 6; H 18 + 8 = 26 = 12 + 14; O 3 + 7 + 16 = 26 = 3 + 4 + 12 + 7; Cr, K and S balance too.",
+              "(b) Reactants: 3 × 46 + 294 + 4 × 98 = 138 + 294 + 392 = 824 g; desired product: 3 × 44 = 132 g.",
+              "Atom economy = 132/824 × 100 ≈ 16%. The rest ends up as chromium and potassium sulphate waste and water.",
+            ],
+            answer: "(a) 100%; (b) about 16%. The catalytic route is far greener.",
+          },
+          {
+            type: "checkpoint",
+            questions: [
+              {
+                kind: "mcq",
+                q: "In the chain Cl• + O₃ → ClO• + O₂; ClO• + O → Cl• + O₂, the chlorine radical acts as a",
+                options: ["catalyst", "reactant used up", "final product", "inhibitor"],
+                answer: 0,
+                explain: "It is consumed in one step and regenerated in the next, so it is a catalyst for O₃ + O → 2O₂.",
+              },
+            ],
+          },
+          {
+            type: "mistake",
+            wrong: "Ozone depletion causes global warming, and the ozone hole is the same as the greenhouse effect.",
+            right: "They are different problems. Ozone depletion (stratosphere, caused by Cl• from CFCs) lets more UV reach the ground. Global warming (troposphere, caused by greenhouse gases) traps infrared. CFCs happen to be involved in both.",
+            why: "Both are linked with CFCs and 'the atmosphere', so they are often merged. Separate them by layer, radiation type and mechanism.",
+          },
+          {
+            type: "mistake",
+            wrong: "Rain with pH 6 is acid rain because its pH is below 7.",
+            right: "Acid rain is rain with pH below 5.6. Normal rain is already slightly acidic (about 5.6) because of dissolved CO₂, so pH 6 rain is not acid rain.",
+            why: "Students take pH 7 as the cut-off for 'acidic' everywhere; for rain the reference point is 5.6.",
+          },
+          {
+            type: "activity",
+            activity: {
+              kind: "order",
+              prompt: "Order the steps that create the Antarctic ozone hole.",
+              items: [
+                "In summer Cl is held as ClONO₂ and HCl",
+                "Polar stratospheric clouds form in winter",
+                "ClONO₂ reacts with H₂O and HCl to give HOCl and Cl₂",
+                "Spring sunlight splits HOCl and Cl₂ into Cl•",
+                "Cl• destroys ozone in a chain reaction",
+              ],
+              explain: "The clouds convert harmless reservoirs into light-sensitive molecules, which release chlorine radicals as soon as the sun returns.",
+            },
+          },
+          {
+            type: "callout",
+            tone: "exam",
+            title: "Where marks are lost",
+            md: "Write radicals with a dot (Cl•, ClO•) and show that Cl• is regenerated; examiners look for the chain. In ppm problems, convert everything to the same mass unit before dividing, and state the limit you compare with.",
+          },
+          {
+            type: "keypoints",
+            items: [
+              "Every pH unit is a factor of 10 in [H⁺]; acid rain is measured against pH 5.6.",
+              "ppm in water ≈ mg per litre; compare with the limits (NO₃⁻ 50 ppm, Pb 50 ppb, F⁻ about 1 ppm).",
+              "High BOD = high organic pollution; it falls below 5 ppm only for clean water.",
+              "Cl• is a catalyst in ozone destruction; polar stratospheric clouds release it in spring.",
+              "Atom economy compares product mass with total reactant mass; catalytic one-step routes score highest.",
+            ],
+          },
+        ],
+        flashcards: [
+          { front: "How many times more acidic is rain of pH 4.6 than normal rain?", back: "10 times (one pH unit below 5.6)." },
+          { front: "1 ppm in dilute water", back: "About 1 mg of solute per litre." },
+          { front: "Atom economy", back: "Mass of desired product ÷ total mass of reactants × 100%, from the balanced equation." },
+          { front: "Ozone depletion vs global warming", back: "Ozone depletion: stratosphere, UV, Cl• from CFCs. Global warming: troposphere, infrared, greenhouse gases." },
+          { front: "Reservoir molecules for chlorine", back: "ClONO₂ (chlorine nitrate) and HCl." },
+          { front: "Greenhouse gases also harmful to ozone", back: "CFCs (they trap infrared and release Cl• in the stratosphere)." },
+          { front: "Gas that forms PAN and ozone in smog", back: "NO₂ (with hydrocarbons and sunlight)." },
+          { front: "Limit of nitrate in drinking water", back: "50 ppm" },
+        ],
+        quiz: [
+          {
+            kind: "numeric",
+            q: "How many times greater is [H⁺] in rain of pH 3.6 than in normal rain of pH 5.6?",
+            answer: 100,
+            explain: "10^(5.6 − 3.6) = 10² = 100.",
+          },
+          {
+            kind: "mcq",
+            q: "A water sample has BOD 20 ppm. It is",
+            options: ["highly polluted", "clean", "ideal for fish", "distilled"],
+            answer: 0,
+            explain: "BOD of 17 ppm or more indicates highly polluted water.",
+          },
+          {
+            kind: "multi",
+            q: "Which pairs are correctly matched?",
+            options: [
+              "Classical smog — reducing",
+              "Photochemical smog — PAN",
+              "Ozone hole — infrared radiation",
+              "Acid rain — pH below 5.6",
+            ],
+            answers: [0, 1, 3],
+            explain: "The ozone hole lets more ultraviolet (not infrared) radiation reach the earth.",
+            difficulty: 2,
+          },
+          {
+            kind: "numeric",
+            q: "A 500 mL sample of water contains 0.025 mg of lead. Find the lead concentration in ppb (take 1 mL = 1 g).",
+            answer: 50,
+            tolerance: 0.5,
+            unit: "ppb",
+            explain: "0.025 mg = 2.5 × 10⁻⁵ g in 500 g. (2.5 × 10⁻⁵/500) × 10⁹ = 50 ppb, exactly at the limit.",
+            difficulty: 3,
+            hint: "ppb = (mass of solute/mass of solution) × 10⁹.",
+          },
+          {
+            kind: "mcq",
+            q: "Assertion: CFCs are ideal refrigerants yet are being phased out. Reason: CFCs are unreactive in the troposphere, so they reach the stratosphere and release chlorine radicals.",
+            options: [
+              "Both true; the reason explains the assertion",
+              "Both true; the reason does not explain the assertion",
+              "Assertion true, reason false",
+              "Both false",
+            ],
+            answer: 0,
+            explain: "Their very stability lets them survive long enough to reach the ozone layer, where UV breaks them.",
+            difficulty: 2,
+          },
+          {
+            kind: "numeric",
+            q: "What is the atom economy (%) of the reaction CaCO₃ → CaO + CO₂ if CaO is the desired product? (CaCO₃ = 100, CaO = 56)",
+            answer: 56,
+            tolerance: 0.5,
+            unit: "%",
+            explain: "56/100 × 100 = 56%; the CO₂ is a by-product (and a greenhouse gas).",
+            difficulty: 2,
+          },
+          {
+            kind: "mcq",
+            q: "Which gas is primarily responsible for the 'marble cancer' of monuments?",
+            options: ["SO₂", "CO", "CH₄", "N₂"],
+            answer: 0,
+            explain: "SO₂ forms H₂SO₄, which converts CaCO₃ to CaSO₄.",
+          },
+        ],
+      },
+    ],
+  },
+  /* END-ENV */
 ];
 
 export const links: Record<string, string | string[]> = {
   "11:States of Matter: Gaseous and Liquid States": "c11-che-states-of-matter",
   "11:s-Block Elements": "c11-che-s-block",
   "11:p-Block Elements (Groups 13 and 14)": "c11-che-p-block-13-14",
+  "11:Environmental Chemistry": "c11-che-environmental",
 };

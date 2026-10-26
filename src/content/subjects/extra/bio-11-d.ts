@@ -2776,7 +2776,780 @@ const plantGrowth: Topic = {
   ],
 };
 
-export const topics: Topic[] = [photosynthesis, respiration, plantGrowth];
+/* ------------------------------------------------------------------ */
+/* Transport in Plants (ISC; removed from rationalised NCERT)          */
+/* ------------------------------------------------------------------ */
+const transport: Topic = {
+  slug: "c11-bio-transport-in-plants",
+  title: "Transport in Plants",
+  icon: "💧",
+  description:
+    "For ISC (and older NEET and KCET papers): diffusion, facilitated diffusion and active transport, water potential, osmosis, plasmolysis and imbibition, water absorption and the ascent of sap, transpiration and stomata, mineral uptake, and phloem transport by pressure flow.",
+  lessons: [
+    /* ---------------- Lesson 1: means of transport and water relations ---------------- */
+    {
+      slug: "c11-bio-tp-diffusion-water-potential",
+      title: "Means of Transport and Plant–Water Relations",
+      summary:
+        "Short and long-distance transport, simple diffusion, facilitated diffusion and active transport compared, water potential and its components, osmosis, plasmolysis and imbibition.",
+      minutes: 24,
+      xp: 55,
+      blocks: [
+        {
+          type: "callout",
+          tone: "note",
+          title: "Board note",
+          md: "This chapter was **removed from the rationalised NCERT book**, so CBSE and Karnataka I PUC do not examine it. **ISC Class 11** includes it under Plant Physiology. Older NEET and KCET papers asked questions from it regularly, and its ideas (water potential, stomata) are used in Photosynthesis.",
+        },
+        {
+          type: "text",
+          md: "A coconut palm on the Kerala coast lifts water more than 20 m from its roots to its leaves, and sends sugar from its leaves down to its roots. Over short distances, substances move from cell to cell by **diffusion** and by **cytoplasmic streaming** aided by active transport. Over long distances they move through the vascular system, xylem and phloem; this is **translocation**.\n\nIn flowering plants, water and minerals travel mostly **one way**, upwards in xylem. Organic food and some mineral nutrients move in **many directions** in phloem.",
+        },
+        {
+          type: "table",
+          headers: ["Property", "Simple diffusion", "Facilitated transport", "Active transport"],
+          rows: [
+            ["Needs special membrane proteins", "No", "Yes", "Yes"],
+            ["Highly selective", "No", "Yes", "Yes"],
+            ["Transport saturates", "No", "Yes", "Yes"],
+            ["Uphill transport (against gradient)", "No", "No", "Yes"],
+            ["Needs ATP energy", "No", "No", "Yes"],
+          ],
+        },
+        {
+          type: "text",
+          md: "**Diffusion** is passive and slow; it needs no energy. Molecules move at random from a region of higher concentration to lower. It happens in gases and liquids and is the only means of gas movement within the plant body. Its rate depends on the concentration gradient, the permeability of the membrane, temperature and pressure. Lipid-soluble substances pass through membranes easily.\n\n**Facilitated diffusion**: hydrophilic substances need membrane proteins to cross. The proteins give sites for diffusion but do not set up a gradient, so movement is still downhill and needs no ATP. **Porins** form large pores in the outer membranes of plastids, mitochondria and some bacteria. **Aquaporins** are water channels. In **symport** two molecules cross together in the same direction; in **antiport** they move in opposite directions; in **uniport** one molecule moves on its own.\n\n**Active transport** uses energy (ATP) to pump molecules **against** a concentration gradient. It is carried out by membrane proteins, so it is specific, can saturate and is sensitive to inhibitors.",
+        },
+        {
+          type: "heading",
+          text: "Water potential",
+        },
+        {
+          type: "formula",
+          tex: t`\Psi_w = \Psi_s + \Psi_p`,
+          caption: "Water potential = solute potential + pressure potential. Units: pascals (usually MPa). Water always moves from higher (less negative) to lower (more negative) Ψw.",
+        },
+        {
+          type: "text",
+          md: "Water molecules have kinetic energy. The more free water there is in a system, the higher its **water potential (Ψw)**. **Pure water** at standard temperature, not under pressure, has the highest water potential, taken as **zero**.\n\nDissolving solute lowers the free energy of water, so **solute potential (Ψs) is always negative**; more solute means more negative Ψs. Pressure above atmospheric raises water potential. When water enters a plant cell, the protoplast presses on the wall: this **turgor pressure** gives a positive **pressure potential (Ψp)**. Water in the xylem under tension has a negative Ψp.",
+        },
+        {
+          type: "example",
+          title: "Which way will water move?",
+          problem: "Cell A has Ψs = −0.9 MPa and Ψp = 0.4 MPa. The neighbouring cell B has Ψs = −0.6 MPa and Ψp = 0.3 MPa. Which way does water flow?",
+          steps: [
+            "Ψw of A = −0.9 + 0.4 = −0.5 MPa.",
+            "Ψw of B = −0.6 + 0.3 = −0.3 MPa.",
+            "Water moves from higher to lower Ψw: −0.3 is higher than −0.5.",
+          ],
+          answer: "From B to A, even though A has the higher turgor pressure.",
+        },
+        {
+          type: "text",
+          md: "**Osmosis** is the diffusion of water across a selectively permeable membrane, from higher to lower water potential, until equilibrium. **Osmotic pressure** is the positive pressure that must be applied to stop water entering a solution through such a membrane; it is numerically equal to osmotic (solute) potential but opposite in sign. A **potato osmometer** (a hollowed potato with sugar solution, placed in water) shows osmosis in a classroom.\n\n**Imbibition** is a special kind of diffusion where water is absorbed by solids (colloids), causing a large increase in volume: dry seeds and dry wood swell. It needs a water potential gradient between the absorbent and the liquid, and an affinity between them. Imbibing seedlings can push up through soil.",
+        },
+        {
+          type: "table",
+          headers: ["External solution", "Water movement", "State of the cell"],
+          rows: [
+            ["Hypotonic (more dilute than cell sap)", "Water enters", "**Turgid**: protoplast presses on the rigid wall, which stops it from bursting"],
+            ["Isotonic", "No net movement", "**Flaccid**"],
+            ["Hypertonic (more concentrated)", "Water leaves; protoplast shrinks from the wall", "**Plasmolysed**: the space between wall and protoplast fills with the external solution, because the wall is freely permeable"],
+          ],
+        },
+        {
+          type: "checkpoint",
+          questions: [
+            {
+              kind: "numeric",
+              q: "A cell has Ψs = −1.2 MPa and Ψp = 0.5 MPa. What is its water potential (MPa)?",
+              answer: -0.7,
+              tolerance: 0.01,
+              unit: "MPa",
+              explain: "Ψw = Ψs + Ψp = −1.2 + 0.5 = −0.7 MPa.",
+            },
+          ],
+        },
+        {
+          type: "mistake",
+          wrong: "Pure water has a positive water potential, and adding sugar raises it further.",
+          right: "Pure water's water potential is zero, the highest possible at atmospheric pressure; adding solute makes it negative.",
+          why: "'More concentrated' sounds like 'more potential'. But water potential measures the free energy of water itself, and solute molecules reduce the free water.",
+        },
+        {
+          type: "activity",
+          activity: {
+            kind: "reveal",
+            prompt: "A cell with Ψw = −0.5 MPa is put in a solution of Ψ = −0.8 MPa. Predict.",
+            emoji: "🧪",
+            options: [
+              "Water enters the cell; it becomes turgid",
+              "Water leaves the cell; it may plasmolyse",
+              "No change, because the cell wall blocks water",
+            ],
+            answer: 1,
+            trap: 0,
+            explain: "−0.5 is higher than −0.8, so water flows out of the cell into the solution. If enough leaves, the protoplast pulls away from the wall.",
+          },
+        },
+        {
+          type: "keypoints",
+          items: [
+            "Simple diffusion: no proteins, no ATP, downhill. Facilitated: proteins, no ATP, downhill, selective. Active: proteins and ATP, uphill.",
+            "Ψw = Ψs + Ψp; pure water Ψw = 0; Ψs is always negative; Ψp is usually positive (turgor), negative in xylem under tension.",
+            "Osmosis: water across a selectively permeable membrane from higher to lower Ψw.",
+            "Hypotonic → turgid; isotonic → flaccid; hypertonic → plasmolysis. Imbibition: absorption of water by colloids with swelling.",
+          ],
+        },
+      ],
+      flashcards: [
+        { front: "Water potential of pure water", back: "Zero (at standard temperature, not under pressure)." },
+        { front: "Components of water potential", back: "Ψw = Ψs + Ψp." },
+        { front: "Sign of solute potential", back: "Always negative." },
+        { front: "What are porins?", back: "Proteins forming large pores in the outer membranes of plastids, mitochondria and some bacteria." },
+        { front: "Symport vs antiport", back: "Symport: two molecules cross in the same direction. Antiport: in opposite directions." },
+        { front: "What fills the space between wall and protoplast in a plasmolysed cell?", back: "The external solution, since the cell wall is freely permeable." },
+        { front: "Define imbibition.", back: "Absorption of water by solid colloids, causing a great increase in volume." },
+        { front: "Which form of transport can move substances uphill?", back: "Active transport, using ATP." },
+      ],
+      quiz: [
+        {
+          kind: "mcq",
+          q: "Which feature is shared by facilitated diffusion and active transport but not simple diffusion?",
+          options: ["Needs ATP", "Uphill movement", "Needs membrane proteins", "No selectivity"],
+          answer: 2,
+          explain: "Both use membrane proteins; only active transport needs ATP and moves uphill.",
+        },
+        {
+          kind: "numeric",
+          q: "Cell X has Ψs = −0.8 MPa and Ψp = 0.2 MPa. What is its Ψw (MPa)?",
+          answer: -0.6,
+          tolerance: 0.01,
+          unit: "MPa",
+          explain: "−0.8 + 0.2 = −0.6 MPa.",
+        },
+        {
+          kind: "truefalse",
+          q: "A plant cell placed in pure water bursts like a red blood cell.",
+          answer: false,
+          explain: "The rigid cell wall resists expansion; the cell becomes turgid but does not burst.",
+        },
+        {
+          kind: "mcq",
+          q: "Swelling of dry seeds when soaked is mainly due to:",
+          options: ["Active transport", "Imbibition", "Plasmolysis", "Transpiration"],
+          answer: 1,
+          explain: "Seed colloids absorb water by imbibition and swell greatly.",
+        },
+        {
+          kind: "mcq",
+          q: "Osmotic pressure and osmotic potential are:",
+          options: [
+            "Equal in magnitude and sign",
+            "Equal in magnitude but opposite in sign",
+            "Unrelated",
+            "Both always positive",
+          ],
+          answer: 1,
+          explain: "Osmotic pressure is the positive pressure that stops osmosis; osmotic potential is the same number with a negative sign.",
+          difficulty: 2,
+        },
+        {
+          kind: "multi",
+          q: "Which affect the rate of simple diffusion?",
+          options: ["Concentration gradient", "Membrane permeability", "Temperature", "ATP supply"],
+          answers: [0, 1, 2],
+          explain: "Diffusion is passive; ATP is not involved. Pressure also affects it.",
+          difficulty: 2,
+        },
+        {
+          kind: "mcq",
+          q: "Cell P (Ψw = −0.4 MPa) touches cell Q (Ψw = −0.7 MPa). Water moves:",
+          options: ["From Q to P", "From P to Q", "Equally both ways", "Not at all"],
+          answer: 1,
+          explain: "From higher (−0.4) to lower (−0.7) water potential.",
+        },
+      ],
+    },
+    /* ---------------- Lesson 2: water absorption, ascent of sap, transpiration ---------------- */
+    {
+      slug: "c11-bio-tp-water-transpiration",
+      title: "Water Absorption, Ascent of Sap and Transpiration",
+      summary:
+        "How roots absorb water through the apoplast and symplast, root pressure and guttation, the cohesion–tension–transpiration pull model, stomatal opening, factors affecting transpiration and its uses to the plant.",
+      minutes: 24,
+      xp: 55,
+      blocks: [
+        {
+          type: "text",
+          md: "A single maize plant can take up about 3 litres of water in a day. Water enters mainly through **root hairs**, thin extensions of epidermal cells that greatly increase the absorbing surface. It moves mostly by diffusion into the root, then crosses the root cortex by two pathways.",
+        },
+        {
+          type: "table",
+          headers: ["Feature", "Apoplast pathway", "Symplast pathway"],
+          rows: [
+            ["Route", "Through cell walls and intercellular spaces (non-living)", "Through cytoplasm of cells linked by plasmodesmata"],
+            ["Crosses membranes?", "No", "Yes, at entry into the first cell"],
+            ["Speed", "Fast; moves by mass flow", "Slower; aided by cytoplasmic streaming"],
+            ["Blocked at", "Endodermis, by the **Casparian strip**", "Continues into the stele"],
+          ],
+        },
+        {
+          type: "text",
+          md: "Most water flow in the cortex is apoplastic, because the cortical cells are loosely packed. At the **endodermis**, a band of **suberin** in the cell walls, the **Casparian strip**, is impervious to water. So water must cross the plasma membrane and enter the symplast, which lets the plant control what reaches the xylem. Beyond the endodermis water may move by either path into the xylem.\n\nSome plants get water and minerals with the help of **mycorrhiza**, a symbiosis of a fungus with the root. *Pinus* seeds cannot germinate and establish without mycorrhizae.",
+        },
+        {
+          type: "text",
+          md: "**Root pressure.** Ions are actively transported into the root xylem, and water follows by osmosis, raising pressure inside. This positive pressure can push water a modest height. It is seen when a stem is cut close to the soil on a humid day: sap oozes out. At night and early morning, when transpiration is low, excess water collects as droplets around special openings of veins near the tips of grass blades and leaves of many herbaceous plants: **guttation**. Root pressure gives only a small push; it is not the main force in tall trees, but it may help re-establish continuous water columns in the xylem that break under tension.",
+        },
+        {
+          type: "heading",
+          text: "The cohesion–tension–transpiration pull model",
+        },
+        {
+          type: "text",
+          md: "Less than **1%** of the water reaching the leaves is used in photosynthesis and growth; most is lost through stomata. Water is not pushed up a tree; it is **pulled**. As water evaporates from the thin film over mesophyll cell walls, more water is drawn from the xylem. This pull is transmitted down an unbroken column of water because of:\n\n- **Cohesion**: mutual attraction between water molecules;\n- **Adhesion**: attraction of water to polar surfaces such as tracheary element walls;\n- **Surface tension**: water molecules attract each other more in the liquid than in the gas phase.\n\nThese give water high **tensile strength** and high **capillarity** in the thin tracheids and vessels.",
+        },
+        {
+          type: "formula",
+          tex: t`\Psi_{\text{soil}} > \Psi_{\text{root}} > \Psi_{\text{stem xylem}} > \Psi_{\text{leaf}} > \Psi_{\text{air}}`,
+          caption: "Water flows down a gradient of water potential from soil to air; the largest drop is from leaf to dry air.",
+        },
+        {
+          type: "text",
+          md: "**Transpiration** is the evaporative loss of water by plants, mainly through **stomata**, which also allow exchange of O₂ and CO₂. Stomata open when the **guard cells become turgid**. The outer walls of guard cells (away from the pore) are thin; the inner walls (towards the pore) are thick and elastic. When turgor rises, the outer walls bulge out and pull the inner walls into a crescent shape. **Cellulose microfibrils** in the walls are oriented **radially** rather than longitudinally, which makes opening easier. When guard cells lose water, the elastic inner walls regain their shape and the pore closes. Dorsiventral (dicot) leaves usually have more stomata on the **lower** surface; isobilateral (monocot) leaves have about the same on both.",
+        },
+        {
+          type: "table",
+          headers: ["Factors affecting transpiration", "Examples"],
+          rows: [
+            ["External", "Temperature, light, humidity, wind speed"],
+            ["Plant", "Number and distribution of stomata, percentage of stomata open, water status of the plant, canopy structure"],
+          ],
+        },
+        {
+          type: "list",
+          items: [
+            "Creates the **transpiration pull** for absorption and transport of water.",
+            "Supplies water for photosynthesis.",
+            "Carries minerals from the soil to all parts of the plant.",
+            "**Cools leaf surfaces**, sometimes by 10–15 degrees, by evaporative cooling.",
+            "Keeps cells turgid, maintaining the shape and structure of the plant.",
+          ],
+        },
+        {
+          type: "example",
+          title: "Following the gradient",
+          problem: "Typical values on a dry afternoon: soil −0.3 MPa, root xylem −0.6 MPa, leaf cells −1.5 MPa, outside air about −95 MPa. Where is the largest drop, and what happens if humidity rises to near 100%?",
+          steps: [
+            "Each step down is more negative, so water moves soil → root → leaf → air.",
+            "Drops: soil to root 0.3 MPa; root to leaf 0.9 MPa; leaf to air about 93.5 MPa. The largest is leaf to air.",
+            "Near 100% humidity the air's water potential rises close to zero, the leaf-to-air gradient collapses and transpiration slows sharply.",
+          ],
+          answer: "The steepest drop is from leaf to air, which drives the pull; humid air reduces transpiration by removing that gradient.",
+        },
+        {
+          type: "checkpoint",
+          questions: [
+            {
+              kind: "mcq",
+              q: "Guard cells open the stomatal pore when they:",
+              options: ["Lose water and become flaccid", "Gain water and become turgid", "Lose their chloroplasts", "Become plasmolysed"],
+              answer: 1,
+              explain: "Turgid guard cells bulge outward and pull the thick inner walls apart.",
+            },
+          ],
+        },
+        {
+          type: "mistake",
+          wrong: "Root pressure pushes water to the top of tall trees.",
+          right: "The main force in tall trees is the transpiration pull; root pressure gives only a modest push.",
+          why: "Root pressure is easy to see as oozing sap, so it seems powerful. It is absent or low in many trees and cannot support columns tens of metres tall.",
+        },
+        {
+          type: "activity",
+          activity: {
+            kind: "order",
+            prompt: "Trace a water molecule from soil to air.",
+            items: ["Soil water", "Root hair", "Root cortex", "Endodermis", "Xylem of root and stem", "Leaf mesophyll and stomata"],
+            explain: "Water enters root hairs, crosses the cortex mostly by the apoplast, is forced into the symplast at the endodermis, rises in xylem and evaporates from mesophyll through stomata.",
+          },
+        },
+        {
+          type: "keypoints",
+          items: [
+            "Apoplast: walls and spaces, fast, blocked by the Casparian strip; symplast: through cytoplasm and plasmodesmata.",
+            "Root pressure: active ion uptake into xylem; seen as exudation and guttation; minor in tall trees.",
+            "Cohesion, adhesion and surface tension let transpiration pull water up the xylem.",
+            "Stomata open when guard cells are turgid; radial microfibrils help; transpiration cools leaves and carries minerals.",
+          ],
+        },
+      ],
+      flashcards: [
+        { front: "What blocks the apoplast at the endodermis?", back: "The Casparian strip, a band of suberin in the cell walls." },
+        { front: "What is guttation?", back: "Loss of water as droplets through special openings of veins near leaf tips, at night or early morning, due to root pressure." },
+        { front: "Three properties of water used in the transpiration pull", back: "Cohesion, adhesion and surface tension." },
+        { front: "Share of water reaching leaves used in photosynthesis and growth", back: "Less than 1%." },
+        { front: "Orientation of cellulose microfibrils in guard cells", back: "Radial, which makes the stomata easier to open." },
+        { front: "Which plant's seeds need mycorrhiza to establish?", back: "*Pinus*." },
+        { front: "By how much can transpiration cool leaves?", back: "Sometimes by 10–15 degrees." },
+      ],
+      quiz: [
+        {
+          kind: "mcq",
+          q: "Which pathway of water movement does not cross any membrane until the endodermis?",
+          options: ["Symplast", "Apoplast", "Vacuolar", "Phloem"],
+          answer: 1,
+          explain: "The apoplast is the non-living continuum of walls and spaces.",
+        },
+        {
+          kind: "mcq",
+          q: "Guttation is best explained by:",
+          options: ["Transpiration pull", "Root pressure", "Imbibition", "Plasmolysis"],
+          answer: 1,
+          explain: "Root pressure forces water out of vein endings when transpiration is low.",
+        },
+        {
+          kind: "truefalse",
+          q: "Dorsiventral dicot leaves usually have more stomata on the lower surface.",
+          answer: true,
+          explain: "Isobilateral monocot leaves have roughly equal numbers on both surfaces.",
+        },
+        {
+          kind: "multi",
+          q: "Which are functions of transpiration?",
+          options: ["Cooling the leaf surface", "Transporting minerals upwards", "Keeping cells turgid", "Loading sucrose into phloem"],
+          answers: [0, 1, 2],
+          explain: "Sucrose loading is active transport in the phloem, not a function of transpiration.",
+          difficulty: 2,
+        },
+        {
+          kind: "mcq",
+          q: "Which factor would REDUCE the rate of transpiration?",
+          options: ["Higher temperature", "Higher wind speed", "Higher humidity", "More stomata open"],
+          answer: 2,
+          explain: "Humid air reduces the water potential gradient between leaf and air.",
+        },
+        {
+          kind: "fill",
+          q: "The mutual attraction between water molecules is called ___.",
+          answer: ["cohesion"],
+          explain: "Attraction to other polar surfaces is adhesion.",
+        },
+        {
+          kind: "mcq",
+          q: "In guard cells, the wall facing the pore is:",
+          options: ["Thin and inelastic", "Thick and elastic", "Absent", "Made of suberin"],
+          answer: 1,
+          explain: "The thick, elastic inner wall is pulled into a crescent when the thin outer wall bulges.",
+          difficulty: 2,
+        },
+      ],
+    },
+    /* ---------------- Lesson 3: minerals and phloem ---------------- */
+    {
+      slug: "c11-bio-tp-minerals-phloem",
+      title: "Uptake of Minerals and Phloem Transport",
+      summary:
+        "Why minerals are taken up actively, the endodermis as a control point, translocation and remobilisation of minerals, source and sink, and the pressure flow (mass flow) hypothesis with the girdling experiment.",
+      minutes: 20,
+      xp: 50,
+      blocks: [
+        {
+          type: "text",
+          md: "Unlike water, most minerals cannot enter roots passively. Two reasons: minerals are present in soil as **charged ions** that cannot cross membranes freely, and their concentration in the soil is usually **lower** than in the root. So most minerals enter root cells by **active absorption**, using ATP. Specific proteins in the membranes of root hair cells actively pump ions from the soil into the cytoplasm of epidermal cells.\n\nTransport proteins of the **endodermal** cells are control points: they adjust the quantity and types of solutes that reach the xylem. Because of its suberin layer, the endodermis can actively move ions in **one direction only**.",
+        },
+        {
+          type: "text",
+          md: "**Translocation of mineral ions.** Once in the xylem, ions are carried up in the **transpiration stream**. The chief sinks are the growing regions (apical and lateral meristems), young leaves, developing flowers, fruits and seeds, and storage organs. Ions are unloaded at the fine vein endings by diffusion and active uptake.\n\nMinerals are often **remobilised** from older, senescing parts to younger leaves, especially **nitrogen, phosphorus, sulphur and potassium**. Structural elements such as **calcium** are not remobilised. Xylem sap carries some nitrogen as inorganic ions, but much as amino acids and related compounds; small amounts of P and S travel as organic compounds.",
+        },
+        {
+          type: "heading",
+          text: "Phloem transport: from source to sink",
+        },
+        {
+          type: "text",
+          md: "Food, mainly **sucrose**, is moved by the phloem from a **source** (where it is made or released, usually mature leaves) to a **sink** (where it is used or stored). Source and sink can swap: in early spring, sugar stored in roots is sent to the opening buds, so the root becomes a source. Hence phloem transport is **bidirectional**, unlike the one-way flow in xylem. Phloem sap is mainly water and sucrose, with other sugars, hormones and amino acids.",
+        },
+        {
+          type: "table",
+          headers: ["Feature", "Xylem", "Phloem"],
+          rows: [
+            ["Main contents", "Water and mineral ions", "Sucrose, amino acids, hormones, water"],
+            ["Direction", "Upward only", "Up and down (source to sink)"],
+            ["Driving force", "Transpiration pull (and root pressure)", "Pressure gradient set up by active loading and unloading"],
+            ["Conducting cells", "Dead tracheids and vessels", "Living sieve tube cells with companion cells"],
+          ],
+        },
+        {
+          type: "list",
+          ordered: true,
+          items: [
+            "At the source, glucose made in photosynthesis is converted to **sucrose**.",
+            "Sucrose is moved into companion cells and then into sieve tube cells by **active transport** (phloem loading).",
+            "The sieve tube becomes hypertonic, so **water enters from the nearby xylem by osmosis**.",
+            "Osmotic pressure builds up and the sap moves by **mass flow** towards areas of lower pressure.",
+            "At the sink, sucrose is **actively transported out** of the phloem and used or stored (for example as starch or cellulose).",
+            "As sugar leaves, the phloem's water potential rises and **water moves out**, lowering pressure at the sink end.",
+          ],
+        },
+        {
+          type: "text",
+          md: "This is the **pressure flow (mass flow) hypothesis**. Sieve tubes form long columns with holes in their end walls, the **sieve plates**; cytoplasmic strands pass through these holes, forming continuous filaments. Loading and unloading cost energy, but the flow along the tube itself is driven by the pressure difference.",
+        },
+        {
+          type: "example",
+          title: "The girdling experiment",
+          problem: "A ring of bark down to the wood is carefully removed from a tree trunk. After a few weeks the bark just above the ring swells, while the leaves stay green for a long time. Explain both observations.",
+          steps: [
+            "Bark includes phloem; the wood (xylem) is left intact.",
+            "Food moving down in phloem cannot cross the ring, so it piles up above it and the bark there swells.",
+            "Xylem is intact, so water still reaches the leaves and they stay green; the roots below slowly starve and the tree eventually dies.",
+          ],
+          answer: "Phloem carries food downward; removing it blocks sugar transport, while xylem continues to supply water.",
+        },
+        {
+          type: "checkpoint",
+          questions: [
+            {
+              kind: "mcq",
+              q: "In the pressure flow model, water enters the sieve tube at the source because:",
+              options: [
+                "Sucrose loading makes the sieve tube hypertonic",
+                "Root pressure pushes it in",
+                "The sieve tube is dead",
+                "Transpiration pulls it in",
+              ],
+              answer: 0,
+              explain: "Active loading of sucrose lowers the sieve tube's water potential; water follows by osmosis.",
+            },
+          ],
+        },
+        {
+          type: "mistake",
+          wrong: "Phloem always carries food downward from leaves to roots.",
+          right: "Phloem carries food from source to sink in either direction, and source and sink can change with season.",
+          why: "Textbook diagrams show leaves at the top and roots at the bottom. But young leaves, buds and fruits above a leaf are sinks too, and storage roots become sources in spring.",
+        },
+        {
+          type: "activity",
+          activity: {
+            kind: "sort",
+            prompt: "Does this step need energy (active) or not (passive)?",
+            groups: ["Active (uses ATP)", "Passive"],
+            items: [
+              { text: "Loading sucrose into sieve tubes at the source", group: 0, hint: "Sucrose is pumped against its gradient." },
+              { text: "Water entering the sieve tube at the source", group: 1, hint: "It follows by osmosis." },
+              { text: "Mass flow of sap along the sieve tube", group: 1, hint: "It is driven by a pressure difference." },
+              { text: "Unloading sucrose at the sink", group: 0, hint: "Sucrose is actively moved out." },
+              { text: "Uptake of most mineral ions by root hairs", group: 0, hint: "Ions are charged and less concentrated in soil." },
+              { text: "Water moving up the xylem", group: 1, hint: "Pulled by transpiration." },
+            ],
+            explain: "Energy is spent where solutes are pumped across membranes; water and bulk sap move passively down pressure or water potential gradients.",
+          },
+        },
+        {
+          type: "keypoints",
+          items: [
+            "Most minerals are absorbed actively; endodermal transport proteins control what enters the xylem.",
+            "Ions travel up in the transpiration stream; N, P, S, K are remobilised from old leaves, Ca is not.",
+            "Phloem moves sucrose from source to sink in both directions.",
+            "Pressure flow: active loading → water enters by osmosis → mass flow → active unloading at the sink; girdling shows phloem carries food.",
+          ],
+        },
+      ],
+      flashcards: [
+        { front: "Two reasons minerals are absorbed actively", back: "They are charged ions that cannot freely cross membranes, and their concentration in soil is lower than in the root." },
+        { front: "Which elements are readily remobilised?", back: "Nitrogen, phosphorus, sulphur and potassium." },
+        { front: "Which element is not remobilised and why?", back: "Calcium, because it is a structural component." },
+        { front: "Main sugar transported in phloem", back: "Sucrose." },
+        { front: "Define source and sink.", back: "Source: where food is made or released. Sink: where food is used or stored." },
+        { front: "Other name for the pressure flow hypothesis", back: "Mass flow hypothesis." },
+        { front: "What does the girdling experiment show?", back: "Phloem (in the bark) is the tissue that carries food; food piles up above the ring." },
+      ],
+      quiz: [
+        {
+          kind: "mcq",
+          q: "Phloem transport is described as bidirectional because:",
+          options: [
+            "Water moves both ways in xylem",
+            "Source and sink can be above or below and can swap",
+            "Sieve plates have pores",
+            "Companion cells are living",
+          ],
+          answer: 1,
+          explain: "Sap flows from wherever the source is to wherever the sink is.",
+        },
+        {
+          kind: "truefalse",
+          q: "The movement of sap along the sieve tube itself needs ATP at every point.",
+          answer: false,
+          explain: "Loading and unloading need ATP; bulk flow along the tube is driven by pressure.",
+          difficulty: 2,
+        },
+        {
+          kind: "mcq",
+          q: "Deficiency symptoms of calcium appear first in young leaves because calcium is:",
+          options: ["Highly mobile", "Not remobilised from older tissues", "Absorbed as an anion", "Stored in vacuoles of young leaves"],
+          answer: 1,
+          explain: "Calcium is structural and stays where it was laid down, so new growth suffers first.",
+          difficulty: 2,
+        },
+        {
+          kind: "order",
+          q: "Order the steps of phloem transport by pressure flow.",
+          items: [
+            "Glucose converted to sucrose at the source",
+            "Sucrose actively loaded into sieve tubes",
+            "Water enters from xylem by osmosis",
+            "Sap moves by mass flow towards the sink",
+            "Sucrose actively unloaded at the sink",
+          ],
+          explain: "Loading creates high pressure at the source; unloading lowers it at the sink, so sap flows between them.",
+        },
+        {
+          kind: "mcq",
+          q: "After girdling a tree, the bark swells:",
+          options: ["Below the ring", "Above the ring", "Only in the roots", "Nowhere"],
+          answer: 1,
+          explain: "Food moving down accumulates above the ring.",
+        },
+        {
+          kind: "multi",
+          q: "Which are chief sinks for mineral ions?",
+          options: ["Apical and lateral meristems", "Young leaves", "Developing fruits and seeds", "Old senescing leaves"],
+          answers: [0, 1, 2],
+          explain: "Senescing leaves are sources of remobilised minerals, not sinks.",
+        },
+        {
+          kind: "fill",
+          q: "The end walls of sieve tube elements with holes are called sieve ___.",
+          answer: ["plates", "plate"],
+          explain: "Cytoplasmic strands pass through the sieve plates.",
+        },
+      ],
+    },
+    /* ---------------- Exam edge ---------------- */
+    {
+      slug: "c11-bio-tp-exam-edge",
+      title: "Exam edge: Transport in Plants",
+      summary:
+        "For ISC and for anyone using older NEET and KCET papers: water potential calculations, comparing transport types, apoplast and symplast, the cohesion–tension model, stomatal mechanics and pressure flow, with statement, assertion–reason and numeric practice.",
+      minutes: 22,
+      xp: 55,
+      track: "exam",
+      blocks: [
+        {
+          type: "text",
+          md: "**Which exams?** ISC examines this chapter in full. The current NEET and KCET syllabi follow the rationalised NCERT book, which dropped it, but older NEET papers (up to 2023) and KCET papers gave it 1–2 questions a year, so past-paper practice still includes it. Check your own exam's latest syllabus. The questions are mainly water potential numbers, transport-type tables and NCERT-style statements.",
+        },
+        {
+          type: "list",
+          items: [
+            "Old NCERT line: Ψw of pure water is **zero**; Ψs is always **negative**.",
+            "Old NCERT line: porins are in the **outer membranes** of plastids, mitochondria and some bacteria.",
+            "Old NCERT line: less than **1%** of water reaching leaves is used in photosynthesis and growth.",
+            "Old NCERT line: transpiration can cool leaves by **10–15 degrees**.",
+            "Old NCERT line: C4 plants are about **twice as efficient** as C3 in conserving water; they lose about half as much water per CO₂ fixed.",
+            "Old NCERT line: *Pinus* seeds cannot germinate and establish without **mycorrhiza**.",
+          ],
+        },
+        {
+          type: "table",
+          headers: ["Shortcut", "Safe to use when"],
+          rows: [
+            ["Ψw = Ψs + Ψp, water to the less negative side", "Any two cells or a cell and a solution (ignore gravity in short distances)"],
+            ["At incipient plasmolysis Ψp = 0, so Ψw = Ψs", "The protoplast has just started to leave the wall"],
+            ["Fully turgid cell in pure water: Ψw = 0, so Ψp = −Ψs", "At equilibrium with pure water"],
+            ["Only active transport is uphill and needs ATP", "Comparing the three transport types"],
+          ],
+        },
+        {
+          type: "formula",
+          tex: t`\text{At equilibrium: } \Psi_w(\text{cell}) = \Psi_w(\text{outside}) \quad\Rightarrow\quad \Psi_p = \Psi_w(\text{outside}) - \Psi_s(\text{cell})`,
+          caption: "Use this to find the final turgor pressure after a cell is placed in a solution (assuming Ψs changes little).",
+        },
+        {
+          type: "example",
+          title: "NEET style: statement counting",
+          problem: "How many are correct? (i) Facilitated diffusion can move a substance against its gradient. (ii) In antiport, two molecules move in opposite directions. (iii) The Casparian strip is made of suberin. (iv) Guttation happens mainly at noon. (v) Phloem loading is an active process.",
+          steps: [
+            "(i) Wrong: only active transport is uphill.",
+            "(ii) Correct.",
+            "(iii) Correct.",
+            "(iv) Wrong: guttation occurs at night and early morning, when transpiration is low.",
+            "(v) Correct.",
+          ],
+          answer: "Three: (ii), (iii) and (v).",
+        },
+        {
+          type: "example",
+          title: "Assertion–reason",
+          problem: "A: Water can rise to the top of tall trees without the plant spending ATP on its movement in xylem. R: Transpiration from leaves creates a tension that is transmitted down a cohesive water column.",
+          steps: [
+            "A is true: ascent of sap in xylem is passive; the energy comes from the sun driving evaporation.",
+            "R is true: cohesion and adhesion keep the column continuous so the pull reaches the roots.",
+            "R explains A.",
+          ],
+          answer: "Both A and R are true, and R is the correct explanation of A.",
+        },
+        {
+          type: "example",
+          title: "Chain of three cells",
+          problem: "Cells P, Q and R are in a row. P: Ψs = −1.0, Ψp = 0.6. Q: Ψs = −0.9, Ψp = 0.2. R: Ψs = −0.5, Ψp = 0.3 (all MPa). Find the direction of water flow.",
+          steps: [
+            "Ψw(P) = −1.0 + 0.6 = −0.4 MPa.",
+            "Ψw(Q) = −0.9 + 0.2 = −0.7 MPa.",
+            "Ψw(R) = −0.5 + 0.3 = −0.2 MPa.",
+            "Water goes from higher to lower: R (−0.2) and P (−0.4) are both higher than Q (−0.7). Also R is higher than P.",
+          ],
+          answer: "Water flows into Q from both P and R; Q has the lowest water potential.",
+        },
+        {
+          type: "example",
+          title: "Harder: equilibrium turgor",
+          problem: "A cell with Ψs = −1.2 MPa and Ψp = 0.4 MPa is placed (a) in pure water, (b) in a sucrose solution of Ψ = −1.2 MPa. Assuming Ψs barely changes, find the final Ψp in each case and describe the cell.",
+          steps: [
+            "Starting Ψw = −1.2 + 0.4 = −0.8 MPa.",
+            "(a) Pure water has Ψw = 0, higher than −0.8, so water enters. At equilibrium Ψw = 0, so Ψp = 0 − (−1.2) = +1.2 MPa: fully turgid.",
+            "(b) The solution's Ψ = −1.2 is lower than −0.8, so water leaves. At equilibrium Ψw = −1.2, so Ψp = −1.2 − (−1.2) = 0: the cell is at incipient plasmolysis.",
+          ],
+          answer: "(a) Ψp = 1.2 MPa, fully turgid. (b) Ψp = 0, incipient plasmolysis.",
+        },
+        {
+          type: "mistake",
+          wrong: "A cell with high turgor pressure must have a high water potential, so water always flows out of it.",
+          right: "Water potential depends on both Ψs and Ψp. A turgid cell with very negative Ψs can still take water from a less turgid neighbour.",
+          why: "Students compare only one component. Always add Ψs and Ψp before deciding the direction.",
+        },
+        {
+          type: "mistake",
+          wrong: "Porins are found in the plasma membrane of all plant cells.",
+          right: "Porins are in the outer membranes of plastids, mitochondria and some bacteria.",
+          why: "'Pores' sound like a general membrane feature. NEET used this exact location as a trap.",
+        },
+        {
+          type: "mistake",
+          wrong: "Stomata open because guard cells have thick outer walls that push them apart.",
+          right: "The inner walls (facing the pore) are thick and elastic; the thin outer walls bulge as turgor rises, pulling the inner walls apart.",
+          why: "It is easy to mix up which wall is thick. Picture the pore edge: thick and elastic, so it bends into a crescent rather than stretching.",
+        },
+        {
+          type: "activity",
+          activity: {
+            kind: "match",
+            prompt: "Match each observation to its explanation.",
+            pairs: [
+              ["Sap oozes from a cut stem near soil on a humid day", "Root pressure"],
+              ["Dry seeds crack a hard surface as they swell", "Imbibition"],
+              ["Protoplast pulls away from the wall in salt solution", "Plasmolysis"],
+              ["Bark above a removed ring swells", "Food blocked in phloem"],
+              ["Leaf surface is cooler than the air on a hot day", "Evaporative cooling by transpiration"],
+            ],
+            explain: "Each classic observation points to one mechanism; exams turn these into match-the-column questions.",
+          },
+        },
+        {
+          type: "checkpoint",
+          questions: [
+            {
+              kind: "numeric",
+              q: "A cell at incipient plasmolysis has Ψs = −0.75 MPa. What is its Ψw (MPa)?",
+              answer: -0.75,
+              tolerance: 0.01,
+              unit: "MPa",
+              explain: "At incipient plasmolysis Ψp = 0, so Ψw = Ψs = −0.75 MPa.",
+              difficulty: 2,
+            },
+          ],
+        },
+        {
+          type: "keypoints",
+          items: [
+            "Add Ψs and Ψp before deciding flow; water moves to the more negative side.",
+            "Incipient plasmolysis: Ψp = 0. Fully turgid in pure water: Ψw = 0, Ψp = −Ψs.",
+            "Only active transport is uphill and uses ATP; facilitated diffusion is selective and saturates but is downhill.",
+            "Xylem flow is passive (transpiration pull); phloem loading and unloading are active, flow is by pressure.",
+          ],
+        },
+      ],
+      flashcards: [
+        { front: "Ψp at incipient plasmolysis", back: "Zero, so Ψw = Ψs." },
+        { front: "Ψw of a fully turgid cell in pure water", back: "Zero; its Ψp equals −Ψs." },
+        { front: "Is ascent of sap in xylem active or passive?", back: "Passive; driven by transpiration pull." },
+        { front: "Which transport type shows saturation but needs no ATP?", back: "Facilitated diffusion." },
+        { front: "When does guttation occur?", back: "At night and early morning, when transpiration is low and root pressure is high." },
+        { front: "Water-use advantage of C4 plants", back: "They lose about half as much water as C3 plants per CO₂ fixed." },
+        { front: "Which guard cell wall is thick and elastic?", back: "The inner wall, facing the pore." },
+      ],
+      quiz: [
+        {
+          kind: "mcq",
+          q: "Assertion (A): Mineral ions are mostly absorbed actively by roots. Reason (R): Mineral ions are usually more concentrated in the soil than in root cells.",
+          options: AR,
+          answer: 2,
+          explain: "A is true, but R is false: ion concentration in soil is usually lower than in the root, which is why uphill (active) transport is needed.",
+          difficulty: 2,
+        },
+        {
+          kind: "numeric",
+          q: "A cell has Ψs = −0.9 MPa and is in equilibrium with a solution of Ψ = −0.6 MPa. What is its Ψp (MPa)?",
+          answer: 0.3,
+          tolerance: 0.01,
+          unit: "MPa",
+          explain: "Ψp = Ψw − Ψs = −0.6 − (−0.9) = 0.3 MPa.",
+          difficulty: 3,
+          hint: "At equilibrium the cell's Ψw equals the solution's.",
+        },
+        {
+          kind: "mcq",
+          q: "Which statement about the symplast pathway is correct?",
+          options: [
+            "It never crosses a membrane",
+            "It passes through plasmodesmata from cell to cell",
+            "It is blocked by the Casparian strip",
+            "It is faster than the apoplast",
+          ],
+          answer: 1,
+          explain: "Symplastic water moves through cytoplasm linked by plasmodesmata; it is slower and is the route past the endodermis.",
+        },
+        {
+          kind: "multi",
+          q: "Which features are true of active transport?",
+          options: ["Uses ATP", "Can be uphill", "Shows saturation", "Is non-selective"],
+          answers: [0, 1, 2],
+          explain: "Active transport is highly selective because it uses specific carrier proteins.",
+        },
+        {
+          kind: "numeric",
+          q: "Cells A (Ψs = −0.7, Ψp = 0.1 MPa) and B (Ψs = −0.4, Ψp = 0.0 MPa) are in contact. By how much (MPa) does B's Ψw exceed A's?",
+          answer: 0.2,
+          tolerance: 0.01,
+          unit: "MPa",
+          explain: "Ψw(A) = −0.6, Ψw(B) = −0.4; difference 0.2 MPa, so water flows from B to A.",
+          difficulty: 2,
+        },
+        {
+          kind: "mcq",
+          q: "The cohesion–tension theory needs a continuous water column. What helps re-establish broken columns?",
+          options: ["Guttation", "Root pressure", "Phloem loading", "Imbibition by bark"],
+          answer: 1,
+          explain: "Root pressure may refill and reconnect xylem columns that break under tension.",
+          difficulty: 2,
+        },
+        {
+          kind: "mcq",
+          q: "If a plant cell is placed in an isotonic solution it will become:",
+          options: ["Turgid", "Flaccid", "Plasmolysed", "Burst"],
+          answer: 1,
+          explain: "No net water movement; the cell is flaccid.",
+        },
+      ],
+    },
+  ],
+};
+
+export const topics: Topic[] = [transport, photosynthesis, respiration, plantGrowth];
 
 export const links: Record<string, string | string[]> = {
   "11:Photosynthesis in Higher Plants": "c11-bio-photosynthesis",
