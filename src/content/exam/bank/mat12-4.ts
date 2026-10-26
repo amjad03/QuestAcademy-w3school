@@ -4,7 +4,8 @@ import type { ExamId, ExamQuestion, FormulaSheet } from "@/content/types";
  * Class 12 Maths — Vector Algebra, Three Dimensional Geometry, Linear Programming, Probability.
  * All questions are original, written in JEE Main / JEE Advanced / KCET / COMEDK style.
  * Note: Linear Programming is not in the JEE Main / Advanced syllabus, so those items are
- * tagged KCET / COMEDK only.
+ * tagged KCET / COMEDK only. Planes and the scalar / vector triple product were dropped from
+ * the JEE Main (2024) syllabus and are not in rationalised NCERT, so those items are JEE_ADV only.
  */
 
 const t = String.raw;
@@ -1498,7 +1499,7 @@ export const formulas: FormulaSheet[] = [
       { name: "Areas", tex: t`\text{parallelogram} = |\vec a\times\vec b|,\quad \text{triangle } ABC = \tfrac12|\vec{AB}\times\vec{AC}|,\quad \text{parallelogram from diagonals} = \tfrac12|\vec d_1\times\vec d_2|` },
       { name: "Lagrange's identity", tex: t`|\vec a\times\vec b|^2 + (\vec a\cdot\vec b)^2 = |\vec a|^2|\vec b|^2` },
       { name: "Angle bisectors", tex: t`\text{internal}\parallel\hat a + \hat b,\qquad \text{external}\parallel\hat a - \hat b` },
-      { name: "Scalar triple product", tex: t`[\vec a\ \vec b\ \vec c] = \vec a\cdot(\vec b\times\vec c) = \begin{vmatrix}a_1 & a_2 & a_3\\ b_1 & b_2 & b_3\\ c_1 & c_2 & c_3\end{vmatrix}`, note: "cyclic shifts keep the value; swapping two vectors changes the sign; a repeated vector gives 0" },
+      { name: "Scalar triple product", tex: t`[\vec a\ \vec b\ \vec c] = \vec a\cdot(\vec b\times\vec c) = \begin{vmatrix}a_1 & a_2 & a_3\\ b_1 & b_2 & b_3\\ c_1 & c_2 & c_3\end{vmatrix}`, note: "cyclic shifts keep the value; swapping two vectors changes the sign; a repeated vector gives 0. Triple products: JEE Advanced (not in JEE Main 2024 or rationalised NCERT)" },
       { name: "Volume and coplanarity", tex: t`V_{\text{parallelepiped}} = |[\vec a\ \vec b\ \vec c]|,\quad V_{\text{tetrahedron}} = \tfrac16|[\vec a\ \vec b\ \vec c]|,\quad \text{coplanar} \iff [\vec a\ \vec b\ \vec c] = 0` },
       { name: "Triple product identities", tex: t`[\vec a + \vec b\ \ \vec b + \vec c\ \ \vec c + \vec a] = 2[\vec a\ \vec b\ \vec c],\qquad [\vec a\times\vec b\ \ \vec b\times\vec c\ \ \vec c\times\vec a] = [\vec a\ \vec b\ \vec c]^2` },
       { name: "Vector triple product", tex: t`\vec a\times(\vec b\times\vec c) = (\vec a\cdot\vec c)\vec b - (\vec a\cdot\vec b)\vec c`, note: t`not associative: $(\vec a\times\vec b)\times\vec c = (\vec a\cdot\vec c)\vec b - (\vec b\cdot\vec c)\vec a$` },
@@ -1518,7 +1519,7 @@ export const formulas: FormulaSheet[] = [
       { name: "Shortest distance (parallel lines)", tex: t`d = \dfrac{|\vec b\times(\vec a_2 - \vec a_1)|}{|\vec b|}` },
       { name: "Coplanarity of two lines", tex: t`(\vec a_2 - \vec a_1)\cdot(\vec b_1\times\vec b_2) = 0 \iff \begin{vmatrix}x_2 - x_1 & y_2 - y_1 & z_2 - z_1\\ a_1 & b_1 & c_1\\ a_2 & b_2 & c_2\end{vmatrix} = 0` },
       { name: "Foot of perpendicular from P to a line", tex: t`Q = \vec a + \lambda\vec b \text{ with } (\vec Q - \vec P)\cdot\vec b = 0` },
-      { name: "Plane: normal forms", tex: t`\vec r\cdot\hat n = d\ \ (d = \text{distance from } O);\qquad lx + my + nz = d` },
+      { name: "Plane: normal forms", tex: t`\vec r\cdot\hat n = d\ \ (d = \text{distance from } O);\qquad lx + my + nz = d`, note: "planes (this and the items below): JEE Advanced (not in JEE Main 2024 or rationalised NCERT)" },
       { name: "Plane: general and point–normal", tex: t`ax + by + cz + d = 0;\qquad a(x - x_1) + b(y - y_1) + c(z - z_1) = 0` },
       { name: "Plane: intercept form", tex: t`\dfrac{x}{a} + \dfrac{y}{b} + \dfrac{z}{c} = 1` },
       { name: "Plane through three points", tex: t`\begin{vmatrix}x - x_1 & y - y_1 & z - z_1\\ x_2 - x_1 & y_2 - y_1 & z_2 - z_1\\ x_3 - x_1 & y_3 - y_1 & z_3 - z_1\end{vmatrix} = 0`, note: t`equivalently $\vec n = \vec{AB}\times\vec{AC}$` },

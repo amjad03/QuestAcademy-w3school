@@ -1222,7 +1222,7 @@ const ch13 = mk(C13, [
 /* syllabus, so the multi-correct items here are tagged JEE only.       */
 /* ------------------------------------------------------------------ */
 const SPL = ["NEET", "JEE", "COMEDK"] as ExamQuestion["exams"];
-const GATE = ["NEET", "JEE", "KCET", "COMEDK"] as ExamQuestion["exams"];
+const GATE = ["NEET", "JEE", "COMEDK"] as ExamQuestion["exams"];
 
 const ch14 = mk(C14, [
   {

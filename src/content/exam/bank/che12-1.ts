@@ -28,8 +28,6 @@ const chapter = (no: string, title: string, list: Raw[]): ExamQuestion[] =>
 
 /** Board / KCET / COMEDK level and most JEE Main / NEET MCQs. */
 const ALL: ExamId[] = ["NEET", "JEE", "KCET", "COMEDK"];
-/** JEE Main / NEET level MCQs. */
-const MAIN: ExamId[] = ["NEET", "JEE", "COMEDK"];
 /** JEE Main numerical-value questions. */
 const NUM: ExamId[] = ["JEE"];
 /** JEE Main + Advanced. */
@@ -147,7 +145,7 @@ const solutions: Raw[] = [
   {
     kind: "mcq",
     difficulty: 2,
-    exams: MAIN,
+    exams: ALL,
     idealTime: 60,
     q: t`**Statement I:** The solubility of a gas in a liquid usually decreases as the temperature is raised.<br>**Statement II:** The Henry's law constant $K_H$ of a gas increases with rise in temperature.<br>Choose the correct option.`,
     options: [
@@ -421,7 +419,7 @@ const solutions: Raw[] = [
   {
     kind: "mcq",
     difficulty: 2,
-    exams: MAIN,
+    exams: ALL,
     idealTime: 75,
     q: "A 0.050 m aqueous solution of a salt MX$_2$ freezes at $-0.2325\\,^\\circ$C. ($K_f$ of water = 1.86 K kg mol$^{-1}$.) The degree of dissociation of MX$_2$ is:",
     options: ["25%", "50%", "75%", "100%"],
@@ -459,7 +457,7 @@ const solutions: Raw[] = [
   {
     kind: "mcq",
     difficulty: 2,
-    exams: MAIN,
+    exams: ALL,
     idealTime: 60,
     q: t`**Assertion (A):** The molal elevation constant $K_b$ is a characteristic of the solvent.<br>**Reason (R):** $K_b = \dfrac{R\,M_1\,T_b^2}{1000\,\Delta_{\text{vap}}H}$, where $M_1$ (g mol$^{-1}$), $T_b$ and $\Delta_{\text{vap}}H$ are the molar mass, boiling point and molar enthalpy of vaporisation of the solvent.`,
     options: [
@@ -534,7 +532,7 @@ const solutions: Raw[] = [
   {
     kind: "mcq",
     difficulty: 2,
-    exams: MAIN,
+    exams: ALL,
     idealTime: 60,
     q: t`**Statement I:** The elevation of boiling point of 0.1 m aqueous urea is the same as that of 0.1 m aqueous glucose.<br>**Statement II:** The molal elevation constant of water depends on the molar mass of the solute dissolved in it.`,
     options: [
@@ -581,7 +579,7 @@ const solutions: Raw[] = [
   {
     kind: "mcq",
     difficulty: 2,
-    exams: MAIN,
+    exams: ALL,
     idealTime: 60,
     q: "An aqueous solution of a non-electrolyte freezes at $-0.372\\,^\\circ$C. Its boiling point elevation is ($K_f = 1.86$ K kg mol$^{-1}$, $K_b = 0.512$ K kg mol$^{-1}$):",
     options: ["0.372 K", "0.0512 K", "0.205 K", "0.102 K"],
@@ -1001,7 +999,7 @@ const electrochemistry: Raw[] = [
   {
     kind: "mcq",
     difficulty: 2,
-    exams: MAIN,
+    exams: ALL,
     idealTime: 50,
     q: "**Assertion (A):** The conductivity of an aqueous electrolyte solution decreases on dilution.<br>**Reason (R):** On dilution, the number of ions per unit volume decreases.",
     options: [
@@ -1070,7 +1068,7 @@ const electrochemistry: Raw[] = [
   {
     kind: "mcq",
     difficulty: 2,
-    exams: MAIN,
+    exams: ALL,
     idealTime: 50,
     q: "**Statement I:** The electrical conductance of metals decreases with increase in temperature.<br>**Statement II:** The conductance of electrolyte solutions increases with increase in temperature.",
     options: [
@@ -1559,7 +1557,7 @@ const kinetics: Raw[] = [
   {
     kind: "mcq",
     difficulty: 2,
-    exams: MAIN,
+    exams: ALL,
     idealTime: 60,
     q: t`For the same reaction, $\log_{10} k = 12.0 - \dfrac{6.0\times10^3\ \text{K}}{T}$ ($k$ in s$^{-1}$). At what temperature will $k = 1.0\times10^{-3}$ s$^{-1}$?`,
     options: ["500 K", "667 K", "400 K", "333 K"],
@@ -1585,7 +1583,7 @@ const kinetics: Raw[] = [
   {
     kind: "mcq",
     difficulty: 2,
-    exams: MAIN,
+    exams: ALL,
     idealTime: 50,
     q: "**Assertion (A):** For an elementary reaction, the order with respect to each reactant equals its stoichiometric coefficient.<br>**Reason (R):** An elementary reaction occurs in a single step, so its rate depends on the number of molecules that collide in that step.",
     options: [
@@ -1600,7 +1598,7 @@ const kinetics: Raw[] = [
   {
     kind: "mcq",
     difficulty: 2,
-    exams: MAIN,
+    exams: ALL,
     idealTime: 50,
     q: "**Statement I:** For a zero-order reaction, the rate remains constant with time until the reactant is almost used up.<br>**Statement II:** The half-life of a zero-order reaction is independent of the initial concentration.",
     options: [
@@ -1658,7 +1656,7 @@ const kinetics: Raw[] = [
   {
     kind: "mcq",
     difficulty: 2,
-    exams: MAIN,
+    exams: ALL,
     idealTime: 70,
     q: "A reaction has $E_a = 28.72$ kJ mol$^{-1}$. At 300 K, the fraction of molecular collisions having energy equal to or greater than $E_a$ is about ($R = 8.314$ J K$^{-1}$ mol$^{-1}$):",
     options: [
