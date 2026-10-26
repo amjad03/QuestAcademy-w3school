@@ -1265,4 +1265,5 @@ Then the top point moves at $v_{cm} + R\omega = 2v_{cm}$, and the contact point 
 export const links: Record<string, string | string[]> = {
   "11:System of Particles and Rotational Motion": "c11-rotational-motion",
   "11:Motion of System of Particles and Rigid Body": ["c11-rotational-motion"],
+  "11:Gravitation": "c11-gravitation",
 };

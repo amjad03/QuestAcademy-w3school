@@ -876,3 +876,210 @@ With $m = n$ and $r = n$, and $\binom{n}{n-k} = \binom{n}{k}$, this gives the su
       },
     ],
   },
+
+  /* ------------------------------------------------------------------ */
+  /* Class 11: Sequences and Series (NCERT, Karnataka I PUC, ISC)        */
+  /* ------------------------------------------------------------------ */
+  {
+    slug: "c11-sequences-series",
+    title: "Sequences and Series (Class 11)",
+    icon: "🪜",
+    description: "Sequences, series and sigma notation, arithmetic and geometric progressions, AM, GM and the AM–GM inequality, sums of special series, and the JEE tools: AGP, telescoping and the method of differences.",
+    lessons: [
+      {
+        slug: "c11-sequences-ap",
+        title: "Sequences, Series and Arithmetic Progressions",
+        summary: "A sequence as a list with a rule, finite and infinite series, sigma notation, the nth term and sum of an AP, arithmetic means, and getting a_n from S_n.",
+        minutes: 20,
+        xp: 50,
+        blocks: [
+          {
+            type: "illustration",
+            emoji: "🪙",
+            caption: "Meera saves ₹50 in the first week and ₹10 more each week after that: 50, 60, 70, 80, … How much has she saved after a year? Sequences and series answer this in one line.",
+          },
+          {
+            type: "text",
+            md: t`A **sequence** is an ordered list of numbers $a_1, a_2, a_3, \ldots$ in which there is a first term, a second term and so on. Formally it is a function whose domain is the natural numbers $\{1, 2, 3, \ldots\}$ (an **infinite sequence**) or $\{1, 2, \ldots, n\}$ (a **finite sequence**). The term $a_n$ is the **nth term** or **general term**.
+
+Some sequences have a formula, like $a_n = n^2 + 1$: 2, 5, 10, 17, … Others are given by a **recurrence**, where each term is built from earlier ones, like the Fibonacci sequence $a_1 = a_2 = 1$, $a_n = a_{n-1} + a_{n-2}$. Some, like the primes 2, 3, 5, 7, 11, …, have no simple formula at all.`,
+          },
+          {
+            type: "example",
+            title: "Terms from a rule",
+            problem: t`Write the first five terms of (a) $a_n = \frac{(-1)^{n}n}{n+1}$ and (b) $a_1 = 1$, $a_n = 2a_{n-1} + 1$ for $n \ge 2$.`,
+            steps: [
+              t`(a) Put $n = 1, 2, 3, 4, 5$: $-\frac{1}{2}, \frac{2}{3}, -\frac{3}{4}, \frac{4}{5}, -\frac{5}{6}$.`,
+              t`(b) $a_2 = 2(1) + 1 = 3$, $a_3 = 2(3) + 1 = 7$, $a_4 = 15$, $a_5 = 31$.`,
+            ],
+            answer: t`(a) $-\frac{1}{2}, \frac{2}{3}, -\frac{3}{4}, \frac{4}{5}, -\frac{5}{6}$ (b) 1, 3, 7, 15, 31`,
+          },
+          {
+            type: "text",
+            md: t`If $a_1, a_2, a_3, \ldots$ is a sequence, the expression $a_1 + a_2 + a_3 + \cdots$ is the associated **series**. It is finite or infinite as the sequence is. With the Greek letter sigma, $a_1 + a_2 + \cdots + a_n = \sum_{k=1}^{n}a_k$. A series means the indicated sum, not just its value.
+
+An **arithmetic progression (AP)** is a sequence in which each term after the first is obtained by adding the same number $d$, the **common difference**: $a, a + d, a + 2d, \ldots$ Its nth term is $a_n = a + (n-1)d$.`,
+          },
+          {
+            type: "text",
+            md: t`**Sum of n terms of an AP.** Write the sum forwards and backwards:
+
+$S_n = a + (a + d) + \cdots + [a + (n-1)d]$
+$S_n = [a + (n-1)d] + [a + (n-2)d] + \cdots + a$
+
+Add the two lines term by term. Each of the $n$ pairs adds to $2a + (n-1)d$, so $2S_n = n[2a + (n-1)d]$.`,
+          },
+          {
+            type: "formula",
+            tex: t`a_n = a + (n-1)d \qquad S_n = \frac{n}{2}\left[2a + (n-1)d\right] = \frac{n}{2}(a + l)`,
+            caption: "a = first term, d = common difference, l = last (nth) term.",
+          },
+          {
+            type: "example",
+            title: "Sum of a block of an AP",
+            problem: "Find the sum of all two-digit multiples of 7.",
+            steps: [
+              t`The multiples are $14, 21, \ldots, 98$: an AP with $a = 14$, $d = 7$, $l = 98$.`,
+              t`Number of terms: $98 = 14 + (n-1)7$ gives $n - 1 = 12$, so $n = 13$.`,
+              t`$S_{13} = \frac{13}{2}(14 + 98) = \frac{13}{2} \times 112 = 13 \times 56$.`,
+            ],
+            answer: "728",
+          },
+          {
+            type: "text",
+            md: t`**Properties.** Adding, subtracting, multiplying or dividing every term of an AP by the same non-zero constant gives another AP. Three numbers $a, b, c$ are in AP exactly when $2b = a + c$.
+
+The **arithmetic mean (AM)** of $a$ and $b$ is $A = \frac{a + b}{2}$; then $a, A, b$ is an AP. To insert $n$ numbers $A_1, \ldots, A_n$ between $a$ and $b$ so that all $n + 2$ numbers form an AP, note that $b$ is term number $n + 2$: $b = a + (n+1)d$, so $d = \frac{b - a}{n + 1}$.`,
+          },
+          {
+            type: "checkpoint",
+            questions: [
+              {
+                kind: "mcq",
+                q: "Insert 4 arithmetic means between 3 and 23. The means are",
+                options: ["7, 11, 15, 19", "5, 10, 15, 20", "8, 13, 18, 23", "7, 12, 17, 22"],
+                answer: 0,
+                explain: t`$d = \frac{23 - 3}{4 + 1} = 4$, so the means are 7, 11, 15, 19.`,
+              },
+            ],
+          },
+          {
+            type: "example",
+            title: "From the sum to the nth term",
+            problem: t`The sum of the first $n$ terms of a sequence is $S_n = 3n^2 + 2n$. Find $a_n$ and show the sequence is an AP.`,
+            steps: [
+              t`For $n \ge 2$: $a_n = S_n - S_{n-1} = 3n^2 + 2n - [3(n-1)^2 + 2(n-1)]$.`,
+              t`$= 3[n^2 - (n-1)^2] + 2 = 3(2n - 1) + 2 = 6n - 1$.`,
+              t`Check $n = 1$ separately: $a_1 = S_1 = 5 = 6(1) - 1$. ✓`,
+              t`$a_n - a_{n-1} = 6$ for every $n \ge 2$, a constant.`,
+            ],
+            answer: t`$a_n = 6n - 1$; the sequence 5, 11, 17, … is an AP with $d = 6$.`,
+          },
+          {
+            type: "mistake",
+            wrong: t`If $S_n = 3n^2 + 2n$ then the nth term is $3n^2 + 2n$, or $a_1 = S_1 - S_0$ is a separate rule.`,
+            right: t`$S_n$ is the total of $n$ terms, not the $n$th term. Use $a_n = S_n - S_{n-1}$ for $n \ge 2$ and $a_1 = S_1$.`,
+            why: t`Both are written with a subscript $n$, so they look alike. Mixing them up gives a wrong common difference straight away.`,
+          },
+          {
+            type: "activity",
+            activity: {
+              kind: "order",
+              prompt: "Order the steps of the AP sum derivation.",
+              items: [
+                "Write S(n) from the first term to the last",
+                "Write S(n) again from the last term to the first",
+                "Add the two lines pair by pair",
+                "Each of the n pairs equals 2a + (n − 1)d",
+                "Divide by 2: S(n) = n/2 [2a + (n − 1)d]",
+              ],
+              explain: "Reversing the sum makes every pair equal. This idea (a famous trick for 1 + 2 + … + 100) is the whole derivation.",
+            },
+          },
+          {
+            type: "callout",
+            tone: "note",
+            title: "Board note",
+            md: "In the rationalised NCERT Class 11 chapter (CBSE, Karnataka I PUC) arithmetic progressions are treated as revision of Class 10, and the full AP section has been trimmed; the AM appears with the AM–GM inequality. ISC Class 11 teaches AP in full. KCET, COMEDK and JEE assume all of it, so learn this lesson whichever board you write.",
+          },
+          {
+            type: "callout",
+            tone: "exam",
+            title: "Board-exam tips",
+            md: t`State the formula before substituting; marks are given for it. In "how many terms" questions, $n$ must be a positive integer: reject a negative or fractional root and say why. For three numbers in AP with a given sum, take them as $a - d$, $a$, $a + d$.`,
+          },
+          {
+            type: "keypoints",
+            items: [
+              "A sequence is a function on the natural numbers; a series is the sum of its terms.",
+              t`AP: $a_n = a + (n-1)d$, $S_n = \frac{n}{2}[2a + (n-1)d] = \frac{n}{2}(a + l)$.`,
+              t`$a, b, c$ in AP $\iff 2b = a + c$; the AM of $a$ and $b$ is $\frac{a+b}{2}$.`,
+              t`$n$ means between $a$ and $b$: $d = \frac{b-a}{n+1}$.`,
+              t`$a_n = S_n - S_{n-1}$ for $n \ge 2$, with $a_1 = S_1$.`,
+            ],
+          },
+        ],
+        flashcards: [
+          { front: "Sequence", back: "An ordered list of numbers; formally a function with domain N (infinite) or {1, 2, …, n} (finite)." },
+          { front: "Series", back: t`The sum $a_1 + a_2 + a_3 + \cdots$ of the terms of a sequence.` },
+          { front: "nth term of an AP", back: t`$a_n = a + (n-1)d$` },
+          { front: "Sum of n terms of an AP", back: t`$S_n = \frac{n}{2}[2a + (n-1)d] = \frac{n}{2}(a + l)$` },
+          { front: "Arithmetic mean of a and b", back: t`$\frac{a + b}{2}$` },
+          { front: t`Common difference when inserting $n$ AMs between $a$ and $b$`, back: t`$d = \frac{b - a}{n + 1}$` },
+          { front: t`nth term from $S_n$`, back: t`$a_n = S_n - S_{n-1}$ ($n \ge 2$), $a_1 = S_1$` },
+        ],
+        quiz: [
+          {
+            kind: "numeric",
+            q: "Find the 20th term of the AP 7, 11, 15, …",
+            answer: 83,
+            explain: t`$a_{20} = 7 + 19 \times 4 = 83$.`,
+          },
+          {
+            kind: "numeric",
+            q: "Find the sum of the first 25 odd natural numbers.",
+            answer: 625,
+            explain: t`$S_{25} = \frac{25}{2}[2 + 24 \times 2] = \frac{25}{2} \times 50 = 625$; in general the first $n$ odd numbers add to $n^2$.`,
+          },
+          {
+            kind: "mcq",
+            q: t`If $S_n = 2n^2 + 3n$, the common difference of the AP is`,
+            options: ["4", "2", "5", "3"],
+            answer: 0,
+            explain: t`$a_n = S_n - S_{n-1} = 4n + 1$, so $d = 4$. (Quick rule: $S_n = An^2 + Bn$ gives $d = 2A$.)`,
+          },
+          {
+            kind: "numeric",
+            q: "How many terms are there in the AP 5, 9, 13, …, 201?",
+            answer: 50,
+            explain: t`$201 = 5 + (n-1)4$ gives $n - 1 = 49$, so $n = 50$.`,
+          },
+          {
+            kind: "truefalse",
+            q: "Every sequence can be described by an explicit formula for its nth term.",
+            answer: false,
+            explain: "The prime numbers 2, 3, 5, 7, 11, … form a sequence, but no simple formula gives the nth prime.",
+          },
+          {
+            kind: "fill",
+            q: t`If $a, b, c$ are in AP, then $2b = $ ___.`,
+            answer: ["a + c", "a+c", "c + a", "c+a"],
+            explain: t`$b - a = c - b$, so $2b = a + c$.`,
+          },
+          {
+            kind: "numeric",
+            q: "The 7th term of an AP is 12 and its 12th term is 7. Find its 19th term.",
+            answer: 0,
+            difficulty: 2,
+            hint: "Subtract the two equations to get d.",
+            explain: t`$a + 6d = 12$, $a + 11d = 7$, so $d = -1$ and $a = 18$. $a_{19} = 18 - 18 = 0$.`,
+          },
+          {
+            kind: "mcq",
+            q: "Meera saves ₹50 in week 1 and ₹10 more each week. What has she saved after 52 weeks?",
+            options: ["₹15,860", "₹13,260", "₹2,600", "₹16,120"],
+            answer: 0,
+            explain: t`$S_{52} = \frac{52}{2}[2(50) + 51(10)] = 26 \times 610 = 15\,860$, so ₹15,860.`,
+          },
+        ],
+      },
