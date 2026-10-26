@@ -26,7 +26,11 @@ const mk = (chapter: string, no: string, rows: Row[]): ExamQuestion[] =>
       subject: "biology",
       chapter,
       grade: "12",
-      exams: r.x ?? (r.d === 3 ? ["NEET"] : ["NEET", "KCET"]),
+      exams:
+        r.x ??
+        (r.d === 3 && (r.o === SI || r.o === AR || r.q.startsWith("How many"))
+          ? ["NEET"]
+          : ["NEET", "KCET"]),
       kind: "mcq",
       difficulty: r.d,
       idealTime: r.t,
@@ -145,7 +149,7 @@ const ch5: Row[] = [
     o: ["3.3 × 10⁷", "6.6 × 10⁷", "3.3 × 10⁹", "1.32 × 10⁸"],
     a: 0,
     h: "Divide the total bp by bp per nucleosome.",
-    e: "Number of nucleosomes = 6.6 × 10⁹ ÷ 200 = 3.3 × 10⁷. Dividing by 100 gives 6.6 × 10⁷; dividing by 2 (a slip) gives 3.3 × 10⁹; multiplying by 200/10⁴ style errors give 1.32 × 10⁸.",
+    e: "Number of nucleosomes = 6.6 × 10⁹ ÷ 200 = 3.3 × 10⁷. Dividing by 100 gives 6.6 × 10⁷; dividing by 2 (a slip) gives 3.3 × 10⁹; dividing by 50 instead of 200 gives 1.32 × 10⁸.",
   },
   {
     d: 2, t: 80,
@@ -846,7 +850,7 @@ const ch6: Row[] = [
     o: ["490", "420", "700", "810"],
     a: 0,
     h: "q² = 90/1000.",
-    e: "q² = 0.09 → q = 0.3, p = 0.7. AA = p² × 1000 = 0.49 × 1000 = 490; Aa = 2pq × 1000 = 0.42 × 1000 = 420 (check: 490 + 420 + 90 = 1000). 700 uses p instead of p²; 810 uses (1 − q²)² style errors; 420 is the heterozygote count.",
+    e: "q² = 0.09 → q = 0.3, p = 0.7. AA = p² × 1000 = 0.49 × 1000 = 490; Aa = 2pq × 1000 = 0.42 × 1000 = 420 (check: 490 + 420 + 90 = 1000). 700 uses p instead of p²; 810 comes from a wrong square root (q = 0.1, so p = 0.9 and p² = 0.81); 420 is the heterozygote count.",
   },
   {
     d: 3, t: 100,
