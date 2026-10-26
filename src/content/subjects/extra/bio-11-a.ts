@@ -284,7 +284,7 @@ const livingWorld: Topic = {
           questions: [
             {
               kind: "mcq",
-              q: "Housefly and mango differ at which lowest category in the table?",
+              q: "What is the highest category at which housefly and mango are still different?",
               options: ["Order", "Class", "Phylum / Division", "Kingdom"],
               answer: 3,
               explain: "Housefly is in Animalia and mango is in Plantae; they share nothing even at the kingdom level.",
@@ -418,7 +418,7 @@ const livingWorld: Topic = {
         },
         {
           type: "text",
-          md: "So living organisms are **self-replicating, evolving and self-regulating interactive systems capable of responding to external stimuli**. A patient in a coma kept alive by machines shows metabolism but has lost self-consciousness; this is why defining life matters in medicine and law too.\n\nReproduction in non-cellular ways: yeast and *Hydra* reproduce by **budding**; *Planaria* shows true **regeneration** from fragments; filamentous algae, fungi and the protonema of mosses multiply by **fragmentation**.",
+          md: "So living organisms are **self-replicating, evolving and self-regulating interactive systems capable of responding to external stimuli**. A patient in a coma kept alive by machines shows metabolism but has lost self-consciousness; this is why defining life matters in medicine and law too.\n\nAsexual reproduction: yeast and *Hydra* reproduce by **budding**; *Planaria* shows true **regeneration** from fragments; filamentous algae, fungi and the protonema of mosses multiply by **fragmentation**.",
         },
         {
           type: "mistake",
@@ -584,7 +584,7 @@ const livingWorld: Topic = {
       blocks: [
         {
           type: "text",
-          md: "**NEET** usually takes 1–2 questions from this short chapter, together with 8–10 from the whole Diversity unit (Living World, Biological Classification, Plant Kingdom, Animal Kingdom). Almost all are direct NCERT lines: the rules of nomenclature, the organism table and the meaning of category, taxon and systematics. **KCET** asks the same facts as one-liners, plus taxonomical aids that some state books still teach.",
+          md: "**NEET** usually takes 1–2 questions from this short chapter, together with 8–10 from the whole Diversity unit (Living World, Biological Classification, Plant Kingdom, Animal Kingdom). Almost all are direct NCERT lines: the rules of nomenclature, the organism table and the meaning of category, taxon and systematics. **KCET** asks the same facts as one-liners; older KCET papers also asked about taxonomical aids (removed from the rationalised NCERT).",
         },
         {
           type: "list",
@@ -2210,7 +2210,7 @@ const plantKingdom: Topic = {
           type: "callout",
           tone: "note",
           title: "Board note",
-          md: "This section was **removed from the rationalised NCERT book**. ISC teaches alternation of generations, and NEET and KCET questions on examples like *Fucus* and *Ectocarpus* still appear, so learn the table.",
+          md: "This section was **removed from the rationalised NCERT book**. ISC teaches alternation of generations, and older NEET and KCET papers asked about examples like *Fucus* and *Ectocarpus*, so learn the table if your syllabus includes it.",
         },
         {
           type: "table",
@@ -2356,7 +2356,7 @@ const plantKingdom: Topic = {
       blocks: [
         {
           type: "text",
-          md: "**NEET** typically asks 3–4 questions from Plant Kingdom. The highest-yield areas are: the algae comparison table, examples for each group and class, bryophyte and pteridophyte life cycles, heterospory, gymnosperm features and life-cycle patterns. **KCET** asks direct one-liners like 'agar is obtained from' or 'coralloid roots occur in'.",
+          md: "**NEET** typically asks 3–4 questions from Plant Kingdom. The highest-yield areas are: the algae comparison table, examples for each group and class, bryophyte and pteridophyte life cycles, heterospory and gymnosperm features (older papers also asked life-cycle patterns, now removed from the rationalised NCERT). **KCET** asks direct one-liners like 'agar is obtained from' or 'coralloid roots occur in'.",
         },
         {
           type: "list",

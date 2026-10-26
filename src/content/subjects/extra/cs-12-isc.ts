@@ -2536,7 +2536,7 @@ Right diagonal sum = 8
             type: "text",
             md: t`**Address calculation.** An array is stored in consecutive memory cells. If the first element is at the **base address** B and each element takes W bytes, element A[i] of an array with lower bound $L$ is at $B + W(i - L)$.
 
-A 2D array A[$L_r$..$U_r$, $L_c$..$U_c$] has $R = U_r - L_r + 1$ rows and $C = U_c - L_c + 1$ columns. In **row-major** order (row by row, as Java and C store arrays), A[i][j] is at $B + W[(i - L_r)C + (j - L_c)]$. In **column-major** order (column by column), it is at $B + W[(j - L_c)R + (i - L_r)]$. Theory papers give arrays with any lower bounds, even negative ones, although Java indices always start at 0.`,
+A 2D array A[$L_r$..$U_r$, $L_c$..$U_c$] has $R = U_r - L_r + 1$ rows and $C = U_c - L_c + 1$ columns. In **row-major** order (row by row, as C stores arrays), A[i][j] is at $B + W[(i - L_r)C + (j - L_c)]$. In **column-major** order (column by column), it is at $B + W[(j - L_c)R + (i - L_r)]$. Theory papers give arrays with any lower bounds, even negative ones, although Java indices always start at 0.`,
           },
           {
             type: "example",

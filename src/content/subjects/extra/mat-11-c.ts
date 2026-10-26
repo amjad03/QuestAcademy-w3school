@@ -477,7 +477,7 @@ The terms keep growing while this ratio is more than 1. That gives the **greates
           },
           {
             type: "example",
-            title: "KCET level: rational terms",
+            title: "KCET / COMEDK level: rational terms",
             problem: t`How many rational terms are there in the expansion of $\left(\sqrt{3} + 2^{1/4}\right)^{12}$?`,
             steps: [
               t`$T_{r+1} = \binom{12}{r}3^{(12-r)/2}\,2^{r/4}$.`,
@@ -690,7 +690,7 @@ Adding and subtracting these two results: $C_0 + C_2 + C_4 + \cdots = C_1 + C_3 
           },
           {
             type: "example",
-            title: "KCET level: a weighted sum",
+            title: "KCET / COMEDK level: a weighted sum",
             problem: t`Evaluate $\sum_{r=1}^{10} r\binom{10}{r}$.`,
             steps: [
               t`Absorb: $r\binom{10}{r} = 10\binom{9}{r-1}$.`,
@@ -1725,7 +1725,7 @@ For two positive numbers $A = \frac{a+b}{2}$, $G = \sqrt{ab}$ and $H = \frac{2ab
           },
           {
             type: "example",
-            title: "KCET level: an infinite AGP",
+            title: "COMEDK level: an infinite AGP",
             problem: t`Find $1 + \frac{2}{3} + \frac{3}{9} + \frac{4}{27} + \cdots$ to infinity.`,
             steps: [
               t`$S = 1 + \frac{2}{3} + \frac{3}{9} + \cdots$ and $\frac{1}{3}S = \frac{1}{3} + \frac{2}{9} + \cdots$.`,
