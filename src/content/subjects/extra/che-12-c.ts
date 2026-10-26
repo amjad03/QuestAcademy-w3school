@@ -792,7 +792,7 @@ export const topics: Topic[] = [
             q: "2-Bromo-2-methylbutane is heated with potassium tert-butoxide in tert-butanol. The major product is:",
             options: ["2-Methylbut-2-ene", "2-Methylbut-1-ene", "2-tert-Butoxy-2-methylbutane", "2-Methylbutan-2-ol"],
             answer: 1,
-            explain: "The bulky base removes the easily reached H of the CH₃ on C2 rather than the internal CH₂ H, so the less substituted Hofmann alkene is major. A 3° halide does not undergo SN2.",
+            explain: "The bulky base removes an easily reached H of a CH₃ group on C2 rather than the internal CH₂ H, so the less substituted Hofmann alkene is major. A 3° halide does not undergo SN2.",
             difficulty: 2,
             hint: "Think about which β-hydrogens a bulky base can reach.",
           },
@@ -1083,7 +1083,7 @@ export const topics: Topic[] = [
         blocks: [
           {
             type: "text",
-            md: "Alcohols react in two ways. As **nucleophiles**, the O–H bond breaks: with active metals and in esterification. As **electrophiles**, the C–O bond breaks after the –OH is protonated (turning a poor leaving group, OH⁻, into a good one, H₂O): with HX, PX₃ and in dehydration.\n\n**With metals:** 2R–OH + 2Na → 2R–O⁻Na⁺ + H₂ (sodium alkoxide). Phenol also reacts with Na, and, unlike alcohols, with aqueous NaOH: C₆H₅OH + NaOH → C₆H₅O⁻Na⁺ + H₂O.\n\n**Esterification:** R–OH + R′COOH ⇌ R′COOR + H₂O, catalysed by conc. H₂SO₄; water is removed to push the equilibrium forward. Acid chlorides and anhydrides also acylate alcohols and phenols; pyridine is added to take up the HCl formed. Acetylating salicylic acid with acetic anhydride gives **aspirin** (acetylsalicylic acid).",
+            md: "Alcohols react in two ways. When the **O–H bond** breaks, they act as acids (with active metals) or as **nucleophiles** (in esterification). As **electrophiles**, the C–O bond breaks after the –OH is protonated (turning a poor leaving group, OH⁻, into a good one, H₂O): with HX, PX₃ and in dehydration.\n\n**With metals:** 2R–OH + 2Na → 2R–O⁻Na⁺ + H₂ (sodium alkoxide). Phenol also reacts with Na, and, unlike alcohols, with aqueous NaOH: C₆H₅OH + NaOH → C₆H₅O⁻Na⁺ + H₂O.\n\n**Esterification:** R–OH + R′COOH ⇌ R′COOR + H₂O, catalysed by conc. H₂SO₄; water is removed to push the equilibrium forward. Acid chlorides and anhydrides also acylate alcohols and phenols; pyridine is added to take up the HCl formed. Acetylating salicylic acid with acetic anhydride gives **aspirin** (acetylsalicylic acid).",
           },
           {
             type: "text",
@@ -1208,7 +1208,7 @@ export const topics: Topic[] = [
             type: "callout",
             tone: "exam",
             title: "Board tips",
-            md: "The 3-step mechanism of dehydration of ethanol is a frequent 3-mark question: show the oxonium ion, label step 2 as slow, and show H⁺ regenerated. Learn the conditions of Kolbe's and Reimer–Tiemann reactions with the product names. For 'distinguish' questions: Lucas test (1°/2°/3°), bromine water or neutral FeCl₃ (phenol gives a violet colour), NaHCO₃ (acid vs phenol).",
+            md: "The 3-step mechanism of dehydration of ethanol is a frequent 3-mark question: show the oxonium ion, label step 2 as slow, and show H⁺ regenerated. Learn the conditions of Kolbe's and Reimer–Tiemann reactions with the product names. For 'distinguish' questions: Lucas test (1°/2°/3°), bromine water or neutral FeCl₃ (phenol gives a violet colour), NaHCO₃ (acid vs phenol). The CBSE syllabus lists chemical properties of **primary** alcohols only (plus identifying 1°/2°/3° and the dehydration mechanism); check your current syllabus, and learn the rest for ISC and entrance exams.",
           },
           {
             type: "keypoints",

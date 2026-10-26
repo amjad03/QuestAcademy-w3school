@@ -949,7 +949,7 @@ The sign of the derivative decides this. Let $f$ be continuous on $[a, b]$ and d
             type: "callout",
             tone: "exam",
             title: "Board tips",
-            md: t`Write the factorised $f'(x)$, mark the critical points on a number line, and show the sign of $f'$ in each part, either as a small table or in words. Examiners give a mark for the sign test, not just the final intervals. Both closed and open end points ($[3, \infty)$ or $(3, \infty)$) are accepted for these intervals.`,
+            md: t`Write the factorised $f'(x)$, mark the critical points on a number line, and show the sign of $f'$ in each part, either as a small table or in words. Examiners give a mark for the sign test, not just the final intervals. Both closed and open end points ($[3, \infty)$ or $(3, \infty)$) are usually accepted for these intervals.`,
           },
           {
             type: "keypoints",

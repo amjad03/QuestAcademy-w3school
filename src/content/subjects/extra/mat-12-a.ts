@@ -524,7 +524,7 @@ A function $f : X \to Y$ is **invertible** if there is a function $g : Y \to X$ 
             type: "callout",
             tone: "note",
             title: "Board note",
-            md: "ISC Class 12 includes composite functions and the inverse of a bijective function in this unit. The current CBSE syllabus lists only types of relations and one-one and onto functions for this chapter, so composition and invertibility may appear lightly or not at all in a CBSE paper; check the year's syllabus. They are still needed for Karnataka CET, JEE and the next chapter on inverse trigonometric functions.",
+            md: "ISC Class 12 includes composite functions and the inverse of a bijective function in this unit. The current CBSE syllabus lists only types of relations and one-one and onto functions for this chapter, so composition and invertibility may appear lightly or not at all in a CBSE paper; check the year's syllabus. JEE Main lists composition of functions, and the idea of an inverse is needed for the next chapter on inverse trigonometric functions. Karnataka II PUC and KCET follow the rationalised NCERT book, so check whether your year's syllabus includes this section.",
           },
           {
             type: "callout",
@@ -1071,7 +1071,7 @@ $y = \sin^{-1} x$ rises from $\left(-1, -\frac{\pi}{2}\right)$ through $(0, 0)$ 
             type: "callout",
             tone: "note",
             title: "Who needs this lesson",
-            md: "ISC Class 12 students study these properties for the board exam. CBSE and Karnataka II PUC students do not need them for the board paper (they were removed from the rationalised NCERT book), but JEE Main, JEE Advanced, KCET and COMEDK still use them, so treat this as essential exam preparation.",
+            md: "ISC Class 12 students study these properties for the board exam. CBSE and Karnataka II PUC students do not need them for the board paper (they were removed from the rationalised NCERT book), but JEE Main and JEE Advanced problems still use them, and they speed up many KCET and COMEDK questions, so treat this as essential exam preparation.",
           },
           {
             type: "text",
@@ -1399,7 +1399,7 @@ $\tan(\sin^{-1}x) = \frac{x}{\sqrt{1 - x^2}}$ for $|x| < 1$. For any conversion,
                 { text: t`$\cos^{-1}(-x) = \pi - \cos^{-1}x$, $x \in [-1, 1]$`, group: 0, hint: "This is the rule for the branch [0, π]." },
                 { text: t`$2\tan^{-1}x = \sin^{-1}\frac{2x}{1 + x^2}$, $x \in \mathbb{R}$`, group: 1, hint: "For x = 2 the left side exceeds π/2." },
               ],
-              explain: "Identities that start with the inverse function inside are safe; identities that end with an inverse function hold only when the angle stays in the principal branch.",
+              explain: "f(f⁻¹(x)) = x is always safe. f⁻¹(f(x)) = x and conversions between inverse functions hold only when the angle stays in the principal branch, so test a negative value or a large angle before trusting one.",
             },
           },
           {
