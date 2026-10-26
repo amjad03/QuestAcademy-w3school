@@ -599,9 +599,567 @@ const amplifiers: Topic = {
   ],
 };
 
-export const topics: Topic[] = [amplifiers];
+/* ------------------------------------------------------------------ */
+/* 12: Feedback Amplifiers and Oscillators                             */
+/* ------------------------------------------------------------------ */
+const feedback: Topic = {
+  slug: "c12-ele-feedback-oscillators",
+  title: "Feedback Amplifiers and Oscillators",
+  icon: "🔁",
+  description: "Positive and negative feedback, the gain-with-feedback formula, advantages of negative feedback, the Barkhausen criterion, and LC, RC, Wien bridge and crystal oscillators.",
+  lessons: [
+    {
+      slug: "c12-ele-negative-feedback",
+      title: "Feedback in Amplifiers",
+      summary: "What feedback is, the derivation of A_f = A/(1 + Aβ), why negative feedback trades gain for stability, bandwidth and low distortion, and the four feedback types.",
+      minutes: 20,
+      xp: 50,
+      blocks: [
+        {
+          type: "illustration",
+          emoji: "🚿",
+          caption: "Adjusting a geyser tap: you feel the water and turn the knob back if it is too hot. Feeding back the result to correct the input is feedback.",
+        },
+        {
+          type: "text",
+          md: "**Feedback** means taking a part of the output of an amplifier and returning it to the input. The block that does this is the **feedback network**, and the fraction of output sent back is the **feedback factor β** (do not confuse it with the transistor's current gain). The gain without feedback is the **open-loop gain A**.",
+        },
+        {
+          type: "text",
+          md: "If the returned signal is **in phase** with the input, it adds to the input: **positive (regenerative) feedback**. If it is **180° out of phase**, it subtracts from the input: **negative (degenerative) feedback**. Amplifiers use negative feedback; oscillators use positive feedback.",
+        },
+        {
+          type: "activity",
+          activity: {
+            kind: "order",
+            prompt: "Order the steps of the derivation of gain with negative feedback.",
+            items: [
+              "Feedback voltage v_f = β v_o",
+              "Amplifier input v_i = v_s − v_f",
+              "Output v_o = A(v_s − β v_o)",
+              "v_o (1 + Aβ) = A v_s",
+              "A_f = v_o / v_s = A / (1 + Aβ)",
+            ],
+            explain: "With positive feedback the minus sign in v_s − v_f becomes plus, giving A_f = A/(1 − Aβ). When Aβ = 1 that gain becomes infinite, which is the condition for oscillation.",
+          },
+        },
+        {
+          type: "formula",
+          tex: t`A_f = \frac{A}{1 + A\beta}\ \ (\text{negative}),\qquad A_f = \frac{A}{1 - A\beta}\ \ (\text{positive}),\qquad A_f \approx \frac{1}{\beta}\ \text{if } A\beta \gg 1`,
+          caption: "Aβ is the loop gain and (1 + Aβ) is the amount of feedback (often quoted in dB: 20 log(1 + Aβ)).",
+        },
+        {
+          type: "example",
+          title: "Gain with feedback and gain stability",
+          problem: "An amplifier has open-loop gain A = 1000 and negative feedback with β = 0.01. (a) Find A_f. (b) If ageing makes A drop by 20%, find the new A_f and its percentage change.",
+          steps: [
+            t`(a) $A\beta = 1000 \times 0.01 = 10$, so $A_f = \frac{1000}{1 + 10} = 90.9$.`,
+            t`(b) New $A = 800$, $A\beta = 8$, so $A_f = \frac{800}{9} = 88.9$.`,
+            t`Change in $A_f = \frac{88.9 - 90.9}{90.9} \times 100 \approx -2.2\%$.`,
+            "A 20% change in A caused only about a 2% change in the gain with feedback.",
+          ],
+          answer: "A_f = 90.9 falling to 88.9: only about 2.2% change for a 20% change in A.",
+        },
+        {
+          type: "checkpoint",
+          questions: [
+            {
+              kind: "numeric",
+              q: "A = 500 and β = 0.018 (negative feedback). Find A_f.",
+              answer: 50,
+              explain: "Aβ = 9, A_f = 500/(1 + 9) = 50.",
+            },
+          ],
+        },
+        {
+          type: "table",
+          headers: ["Property", "Effect of negative feedback"],
+          rows: [
+            ["Voltage gain", "reduced by the factor (1 + Aβ)"],
+            ["Gain stability", "improved: A_f ≈ 1/β depends on passive components, not on the transistor"],
+            ["Bandwidth", t`increased: $\text{BW}_f = \text{BW}(1 + A\beta)$ (gain × bandwidth stays constant)`],
+            ["Distortion and noise (generated inside the amplifier)", "reduced by the factor (1 + Aβ)"],
+            ["Input impedance (series feedback at input)", "increased"],
+            ["Output impedance (voltage feedback at output)", "decreased"],
+          ],
+        },
+        {
+          type: "text",
+          md: "**Four types.** The feedback signal may be taken from the output as a **voltage** (network in parallel with the load) or a **current** (network in series with the load), and fed to the input in **series** or in **shunt**. That gives voltage-series, voltage-shunt, current-series and current-shunt feedback. A CE amplifier with an unbypassed R_E has current-series feedback. The **emitter follower** (common collector) has voltage-series feedback with β = 1, so its gain is just below 1, with high input and low output impedance, which makes it a good buffer.",
+        },
+        {
+          type: "example",
+          title: "Bandwidth with feedback",
+          problem: "An amplifier has a mid-band gain of 200 and a bandwidth of 20 kHz. Negative feedback with β = 0.05 is applied. Find the new gain and bandwidth.",
+          steps: [
+            t`$1 + A\beta = 1 + 200 \times 0.05 = 11$.`,
+            t`$A_f = 200/11 \approx 18.2$.`,
+            t`$\text{BW}_f = 20 \times 11 = 220$ kHz. Check: $200 \times 20 = 4000 \approx 18.2 \times 220$.`,
+          ],
+          answer: "Gain ≈ 18.2; bandwidth = 220 kHz.",
+        },
+        {
+          type: "mistake",
+          wrong: "Negative feedback is bad because it throws away gain.",
+          right: "Negative feedback deliberately gives up gain to buy stable gain, wider bandwidth, less distortion and less noise. Extra gain is cheap to add with another stage.",
+          why: "Beginners judge an amplifier only by its gain. A gain that changes with temperature, transistor replacement or frequency is far less useful than a smaller gain that stays fixed.",
+        },
+        {
+          type: "callout",
+          tone: "exam",
+          title: "Board tip",
+          md: "The derivation of A_f = A/(1 + Aβ) with a block diagram (amplifier A, feedback network β, mixer at the input) is a common 3-mark question. Always draw arrows showing v_s, v_f, v_i and v_o, and state that for negative feedback v_f is subtracted.",
+        },
+        {
+          type: "keypoints",
+          items: [
+            "Feedback factor β = v_f / v_o; loop gain = Aβ.",
+            "Negative feedback: A_f = A/(1 + Aβ) ≈ 1/β for large Aβ.",
+            "Negative feedback lowers gain but improves stability, bandwidth, distortion and noise.",
+            "Positive feedback: A_f = A/(1 − Aβ); used in oscillators.",
+            "Emitter follower: voltage-series feedback, β = 1, gain ≈ 1, a buffer.",
+          ],
+        },
+      ],
+      flashcards: [
+        { front: "Feedback factor β", back: "The fraction of the output voltage fed back to the input: β = v_f / v_o." },
+        { front: "Gain with negative feedback", back: "A_f = A / (1 + Aβ)." },
+        { front: "Gain with positive feedback", back: "A_f = A / (1 − Aβ); it becomes very large as Aβ → 1." },
+        { front: "Bandwidth with negative feedback", back: "BW_f = BW (1 + Aβ); the gain–bandwidth product is constant." },
+        { front: "Why is A_f stable when Aβ ≫ 1?", back: "A_f ≈ 1/β, which depends only on resistors in the feedback network, not on the transistor." },
+        { front: "Emitter follower", back: "CC amplifier with 100% voltage-series negative feedback; gain ≈ 1, high input impedance, low output impedance." },
+        { front: "Four types of negative feedback", back: "Voltage-series, voltage-shunt, current-series, current-shunt." },
+      ],
+      quiz: [
+        {
+          kind: "mcq",
+          q: "Negative feedback in an amplifier:",
+          options: ["increases gain and bandwidth", "reduces gain and increases bandwidth", "increases distortion", "reduces bandwidth"],
+          answer: 1,
+          explain: "Gain falls by (1 + Aβ) and bandwidth rises by the same factor.",
+        },
+        {
+          kind: "numeric",
+          q: "An amplifier with A = 10⁵ has negative feedback with β = 0.01. Find A_f to the nearest whole number.",
+          answer: 100,
+          tolerance: 0.2,
+          explain: "A_f = 10⁵ / (1 + 1000) = 99.9 ≈ 100 = 1/β.",
+          difficulty: 2,
+        },
+        {
+          kind: "numeric",
+          q: "An amplifier has gain 100 without feedback. What β is needed (negative feedback) to bring the gain down to 20?",
+          answer: 0.04,
+          tolerance: 0.001,
+          explain: "20 = 100/(1 + 100β) → 1 + 100β = 5 → β = 0.04.",
+          difficulty: 2,
+        },
+        {
+          kind: "truefalse",
+          q: "In positive feedback, the feedback signal is 180° out of phase with the input signal.",
+          answer: false,
+          explain: "In positive feedback the feedback is in phase with the input. Out of phase is negative feedback.",
+        },
+        {
+          kind: "fill",
+          q: "An emitter follower uses voltage-___ negative feedback.",
+          answer: ["series"],
+          explain: "The output (emitter) voltage is fed back in series with the input base–emitter loop.",
+        },
+        {
+          kind: "multi",
+          q: "Which improve when negative feedback is applied?",
+          options: ["Gain stability", "Bandwidth", "Harmonic distortion", "Open-loop gain"],
+          answers: [0, 1, 2],
+          explain: "The open-loop gain A is a property of the amplifier itself; feedback lowers the closed-loop gain.",
+        },
+        {
+          kind: "numeric",
+          q: "An amplifier of bandwidth 15 kHz has (1 + Aβ) = 8 after negative feedback. Find the new bandwidth in kHz.",
+          answer: 120,
+          unit: "kHz",
+          explain: "BW_f = 15 × 8 = 120 kHz.",
+        },
+      ],
+    },
+    {
+      slug: "c12-ele-oscillators",
+      title: "Oscillators: Barkhausen Criterion, LC, RC and Crystal",
+      summary: "How an oscillator makes AC from DC, the tank circuit, the Barkhausen criterion, and the Hartley, Colpitts, RC phase shift, Wien bridge and crystal oscillators with their frequency formulas.",
+      minutes: 24,
+      xp: 55,
+      blocks: [
+        {
+          type: "text",
+          md: "An **oscillator** is a circuit that produces a continuous AC signal of a chosen frequency with no input signal. It converts DC power from the supply into AC power. It is basically an **amplifier with positive feedback**. Oscillators make the carrier in radio transmitters, the clock in computers and the tick in quartz watches.",
+        },
+        {
+          type: "text",
+          md: t`**Tank circuit.** A charged capacitor connected across an inductor discharges through it; the magnetic field then collapses and recharges the capacitor the other way. Energy swaps between the electric field of C and the magnetic field of L at $f = \frac{1}{2\pi\sqrt{LC}}$. The coil's resistance wastes a little energy every cycle, so the oscillations die out (**damped oscillations**). An amplifier that feeds back just enough energy in the right phase gives **sustained (undamped) oscillations**.`,
+        },
+        {
+          type: "formula",
+          tex: t`|A\beta| = 1 \qquad\text{and}\qquad \text{total phase shift around the loop} = 0^\circ \text{ or } 360^\circ`,
+          caption: "Barkhausen criterion for sustained oscillation. In practice Aβ is kept slightly greater than 1 at switch-on so that noise builds up into oscillation; the amplitude then settles.",
+        },
+        {
+          type: "table",
+          headers: ["Oscillator", "Frequency-deciding network", "Frequency", "Condition / note"],
+          rows: [
+            ["Hartley", "tapped inductor L₁, L₂ with one capacitor C", t`$f = \dfrac{1}{2\pi\sqrt{(L_1 + L_2 + 2M)C}}$`, "RF; M = mutual inductance"],
+            ["Colpitts", "tapped capacitor C₁, C₂ with one inductor L", t`$f = \dfrac{1}{2\pi\sqrt{LC_T}},\ C_T = \dfrac{C_1C_2}{C_1 + C_2}$`, "RF; very stable"],
+            ["RC phase shift", "three identical RC sections, each giving 60°", t`$f = \dfrac{1}{2\pi RC\sqrt{6}}$`, "β = 1/29, so amplifier gain ≥ 29"],
+            ["Wien bridge", "series RC and parallel RC (lead–lag network)", t`$f = \dfrac{1}{2\pi RC}$`, "β = 1/3, so gain ≥ 3; audio frequencies"],
+            ["Crystal", "quartz crystal (piezoelectric)", "set by the crystal cut and size", "extremely stable frequency"],
+          ],
+        },
+        {
+          type: "example",
+          title: "Hartley and Colpitts frequencies",
+          problem: "(a) A Hartley oscillator has L₁ = 2 mH, L₂ = 3 mH (negligible mutual inductance) and C = 100 pF. (b) A Colpitts oscillator has L = 100 μH and C₁ = C₂ = 1 nF. Find each frequency.",
+          steps: [
+            t`(a) $L_T = 2 + 3 = 5$ mH. $f = \frac{1}{2\pi\sqrt{5\times10^{-3}\times100\times10^{-12}}} = \frac{1}{2\pi\times7.07\times10^{-7}} \approx 225$ kHz.`,
+            t`(b) $C_T = \frac{1 \times 1}{1 + 1} = 0.5$ nF.`,
+            t`(b) $f = \frac{1}{2\pi\sqrt{100\times10^{-6}\times0.5\times10^{-9}}} = \frac{1}{2\pi\times2.236\times10^{-7}} \approx 712$ kHz.`,
+          ],
+          answer: "Hartley ≈ 225 kHz; Colpitts ≈ 712 kHz.",
+        },
+        {
+          type: "text",
+          md: "**RC phase shift oscillator (in words).** A CE amplifier's collector output is fed back to its base through three RC sections in a ladder (series C, shunt R). The amplifier gives 180°. At one frequency the three sections together give another 180°, making 360°. At that frequency the network attenuates the signal to 1/29, so the amplifier needs a gain of at least 29.",
+        },
+        {
+          type: "example",
+          title: "RC phase shift and Wien bridge",
+          problem: "(a) An RC phase shift oscillator uses R = 10 kΩ and C = 10 nF in each section. (b) A Wien bridge oscillator uses R = 10 kΩ and C = 0.01 μF. Find each frequency and the minimum amplifier gain.",
+          steps: [
+            t`(a) $f = \frac{1}{2\pi RC\sqrt{6}} = \frac{1}{2\pi \times 10^4 \times 10^{-8} \times 2.449} \approx 650$ Hz; minimum gain 29.`,
+            t`(b) $f = \frac{1}{2\pi RC} = \frac{1}{2\pi \times 10^4 \times 10^{-8}} \approx 1592$ Hz.`,
+            t`(b) The lead–lag network gives $\beta = 1/3$ at this frequency, so $A \geq 3$. With an op-amp non-inverting amplifier, $1 + R_f/R_1 = 3$, i.e. $R_f = 2R_1$.`,
+          ],
+          answer: "(a) ≈ 650 Hz, gain ≥ 29; (b) ≈ 1.59 kHz, gain ≥ 3 (R_f = 2R₁).",
+        },
+        {
+          type: "checkpoint",
+          questions: [
+            {
+              kind: "mcq",
+              q: "In an RC phase shift oscillator, how much phase shift does the RC network provide?",
+              options: ["60°", "90°", "180°", "360°"],
+              answer: 2,
+              explain: "The CE amplifier gives 180° and the three RC sections give the other 180° (about 60° each), totalling 360°.",
+            },
+          ],
+        },
+        {
+          type: "text",
+          md: "**Crystal oscillator.** A thin slice of quartz shows the **piezoelectric effect**: an AC voltage across it makes it vibrate mechanically, and the vibration produces a voltage. Its electrical equivalent is a series L-C-R branch in parallel with a small capacitance, so it has a **series resonant frequency f_s** and a slightly higher **parallel resonant frequency f_p**. Its quality factor Q is very high (tens of thousands or more), so the frequency hardly drifts. A quartz watch uses a 32 768 Hz crystal.",
+        },
+        {
+          type: "mistake",
+          wrong: "An oscillator creates energy, since it gives an AC output without any input.",
+          right: "An oscillator only converts DC energy from the power supply into AC energy. Without V_CC it gives nothing.",
+          why: "Unlike an amplifier there is no visible input signal, so it can look like something from nothing. The feedback loop simply decides the frequency; the supply provides every joule.",
+        },
+        {
+          type: "activity",
+          activity: {
+            kind: "reveal",
+            prompt: "Wien bridge: gain set to 2 instead of 3. What happens?",
+            emoji: "📉",
+            options: [
+              "It oscillates at a lower frequency",
+              "Oscillations do not start (or die out)",
+              "It oscillates with a larger amplitude",
+            ],
+            answer: 1,
+            trap: 0,
+            explain: "Frequency is set only by R and C. With A = 2 and β = 1/3, Aβ = 2/3 < 1, so the Barkhausen condition fails and any oscillation dies away. A gain much above 3 gives a clipped, distorted output.",
+          },
+        },
+        {
+          type: "callout",
+          tone: "exam",
+          title: "Board tip",
+          md: "For any oscillator 5-marker: name it, describe the circuit (amplifier + frequency-deciding network), show how 360° phase shift is obtained, state the frequency formula and the gain condition. In the lab, measure frequency on the CRO and compare with the formula; expect a few per cent difference because of component tolerance.",
+        },
+        {
+          type: "keypoints",
+          items: [
+            "Oscillator = amplifier + positive feedback; converts DC to AC with no input.",
+            "Barkhausen: |Aβ| = 1 and loop phase 0° or 360°.",
+            "Tank circuit: f = 1/2π√(LC); Hartley uses L₁ + L₂ + 2M, Colpitts uses C₁C₂/(C₁ + C₂).",
+            "RC phase shift: f = 1/(2πRC√6), gain ≥ 29. Wien bridge: f = 1/(2πRC), gain ≥ 3.",
+            "Crystal oscillators are the most stable because quartz has a very high Q.",
+          ],
+        },
+      ],
+      flashcards: [
+        { front: "Barkhausen criterion", back: "Loop gain |Aβ| = 1 and total loop phase shift 0° or 360°." },
+        { front: "Hartley oscillator frequency", back: "f = 1 / (2π√((L₁ + L₂ + 2M) C)) — tapped inductor." },
+        { front: "Colpitts oscillator frequency", back: "f = 1 / (2π√(L C_T)), C_T = C₁C₂ / (C₁ + C₂) — tapped capacitor." },
+        { front: "RC phase shift oscillator", back: "f = 1/(2πRC√6); network gives 180° and β = 1/29, so A ≥ 29." },
+        { front: "Wien bridge oscillator", back: "f = 1/(2πRC); β = 1/3 at resonance, so A ≥ 3." },
+        { front: "Piezoelectric effect", back: "A crystal produces a voltage when stressed and vibrates when a voltage is applied." },
+        { front: "Damped oscillations", back: "Oscillations in a tank circuit whose amplitude decreases because of resistance losses." },
+        { front: "Why are crystal oscillators very stable?", back: "Quartz has an extremely high Q, so its resonant frequency hardly changes." },
+      ],
+      quiz: [
+        {
+          kind: "mcq",
+          q: "Which oscillator uses a tapped capacitor in its tank circuit?",
+          options: ["Hartley", "Colpitts", "Wien bridge", "RC phase shift"],
+          answer: 1,
+          explain: "Colpitts: tapped capacitor (C₁, C₂). Hartley: tapped inductor.",
+        },
+        {
+          kind: "numeric",
+          q: "A Wien bridge oscillator has R = 5 kΩ and C = 0.01 μF. Find its frequency in Hz (nearest whole number).",
+          answer: 3183,
+          tolerance: 2,
+          unit: "Hz",
+          explain: "f = 1/(2π × 5000 × 10⁻⁸) = 1/(3.142 × 10⁻⁴) ≈ 3183 Hz.",
+          difficulty: 2,
+        },
+        {
+          kind: "numeric",
+          q: "What minimum voltage gain must the amplifier of an RC phase shift oscillator have?",
+          answer: 29,
+          explain: "The three-section RC network attenuates by 1/29 at the oscillation frequency, so A ≥ 29.",
+        },
+        {
+          kind: "truefalse",
+          q: "For oscillations to start, the loop gain Aβ is made slightly greater than 1.",
+          answer: true,
+          explain: "Then small noise voltages grow into oscillations; non-linearity later reduces the gain to exactly 1.",
+        },
+        {
+          kind: "fill",
+          q: "A quartz crystal works because of the ___ effect.",
+          answer: ["piezoelectric", "piezo-electric"],
+          explain: "Mechanical stress gives voltage and voltage gives mechanical vibration.",
+        },
+        {
+          kind: "numeric",
+          q: "A Colpitts oscillator has C₁ = C₂ = 0.1 μF and L = 0.5 mH. Find its frequency in kHz (to 1 decimal place).",
+          answer: 31.8,
+          tolerance: 0.1,
+          unit: "kHz",
+          explain: "C_T = 0.05 μF; f = 1/(2π√(0.5×10⁻³ × 0.05×10⁻⁶)) = 1/(2π × 5×10⁻⁶) ≈ 31.8 kHz.",
+          difficulty: 2,
+        },
+        {
+          kind: "mcq",
+          q: "An oscillator is essentially:",
+          options: ["an amplifier with negative feedback", "an amplifier with positive feedback", "a rectifier with a filter", "an amplifier with no feedback"],
+          answer: 1,
+          explain: "In-phase (positive) feedback with Aβ = 1 sustains oscillations.",
+        },
+        {
+          kind: "multi",
+          q: "Which are used mainly at radio frequencies?",
+          options: ["Hartley oscillator", "Colpitts oscillator", "RC phase shift oscillator", "Wien bridge oscillator"],
+          answers: [0, 1],
+          explain: "LC oscillators suit RF. RC oscillators would need impractically small R and C at RF, so they are used at audio frequencies.",
+        },
+      ],
+    },
+    {
+      slug: "c12-ele-feedback-oscillators-board-practice",
+      title: "Board practice: Feedback Amplifiers and Oscillators",
+      summary: "Mixed board-style questions on feedback gain, bandwidth, Barkhausen criterion and oscillator frequencies.",
+      minutes: 20,
+      xp: 45,
+      blocks: [
+        {
+          type: "text",
+          md: "Practise the question types that appear every year from this chapter: the feedback derivation, advantages of negative feedback, the Barkhausen criterion, one oscillator in detail, and numericals on A_f and oscillator frequency.",
+        },
+        {
+          type: "list",
+          ordered: true,
+          items: [
+            "Distinguish between positive and negative feedback. (2 marks)",
+            "Derive the expression for gain of an amplifier with negative feedback. (3 marks)",
+            "State the Barkhausen criterion. (2 marks)",
+            "With a circuit, explain the working of a Colpitts (or Hartley) oscillator. (5 marks)",
+            "What is the piezoelectric effect? Why is a crystal oscillator preferred in clocks? (3 marks)",
+          ],
+        },
+        {
+          type: "example",
+          title: "Numerical 1: stability of gain",
+          problem: "An amplifier has A = 10 000 and negative feedback with β = 0.001. Find A_f. If A falls to 5000, find the new A_f.",
+          steps: [
+            t`$A\beta = 10$, $A_f = \frac{10\,000}{11} \approx 909$.`,
+            t`New $A\beta = 5$, $A_f = \frac{5000}{6} \approx 833$.`,
+            "A 50% fall in A has changed A_f by only about 8%.",
+          ],
+          answer: "A_f ≈ 909, then ≈ 833 (about 8% change).",
+        },
+        {
+          type: "example",
+          title: "Numerical 2: choosing R for an RC oscillator",
+          problem: "An RC phase shift oscillator must work at 1 kHz using C = 0.01 μF in each section. Find R.",
+          steps: [
+            t`$f = \frac{1}{2\pi RC\sqrt{6}} \Rightarrow R = \frac{1}{2\pi f C\sqrt{6}}$.`,
+            t`$R = \frac{1}{2\pi \times 1000 \times 10^{-8} \times 2.449} \approx 6.5$ kΩ.`,
+          ],
+          answer: "R ≈ 6.5 kΩ (use a 6.8 kΩ standard resistor and trim).",
+        },
+        {
+          type: "example",
+          title: "Numerical 3: Hartley with mutual inductance",
+          problem: "A Hartley oscillator has L₁ = 15 μH, L₂ = 3 μH, mutual inductance M = 1 μH and C = 200 pF. Find its frequency.",
+          steps: [
+            t`$L_T = L_1 + L_2 + 2M = 15 + 3 + 2 = 20$ μH.`,
+            t`$f = \frac{1}{2\pi\sqrt{20\times10^{-6}\times200\times10^{-12}}} = \frac{1}{2\pi\times 6.32\times10^{-8}} \approx 2.52$ MHz.`,
+          ],
+          answer: "f ≈ 2.52 MHz.",
+        },
+        {
+          type: "example",
+          title: "Numerical 4: designing a Wien bridge oscillator",
+          problem: "Design an op-amp Wien bridge oscillator for 1 kHz using C = 0.1 μF. The gain-setting resistor R₁ is 10 kΩ. Find R and the feedback resistor R_f.",
+          steps: [
+            t`$R = \frac{1}{2\pi f C} = \frac{1}{2\pi \times 1000 \times 10^{-7}} \approx 1.59$ kΩ.`,
+            t`Gain needed $= 1 + \frac{R_f}{R_1} \geq 3 \Rightarrow R_f \geq 2R_1 = 20$ kΩ.`,
+          ],
+          answer: "R ≈ 1.59 kΩ (use 1.6 kΩ); R_f = 20 kΩ (slightly more in practice so oscillations start).",
+        },
+        {
+          type: "checkpoint",
+          questions: [
+            {
+              kind: "numeric",
+              q: "A tank circuit has L = 1 mH and C = 1 nF. Find its resonant frequency in kHz (nearest whole number).",
+              answer: 159,
+              tolerance: 0.5,
+              unit: "kHz",
+              explain: "f = 1/(2π√(10⁻³ × 10⁻⁹)) = 1/(2π × 10⁻⁶) ≈ 159 kHz.",
+            },
+          ],
+        },
+        {
+          type: "mistake",
+          wrong: "If I double C in an LC oscillator, the frequency halves.",
+          right: "f ∝ 1/√C, so doubling C divides f by √2 (about 0.707 times). To halve f you need 4 times the capacitance.",
+          why: "Students treat the formula as if f ∝ 1/C. In RC oscillators f ∝ 1/(RC), so doubling C does halve f there; in LC oscillators the square root changes things.",
+        },
+        {
+          type: "activity",
+          activity: {
+            kind: "match",
+            prompt: "Match each oscillator with its feature.",
+            pairs: [
+              ["Hartley", "tapped inductor"],
+              ["Colpitts", "tapped capacitor"],
+              ["RC phase shift", "three RC sections, A ≥ 29"],
+              ["Wien bridge", "lead–lag network, A ≥ 3"],
+              ["Crystal", "very high Q, best stability"],
+            ],
+            explain: "Learn these as a table. The tapped element (L or C) tells Hartley from Colpitts.",
+          },
+        },
+        {
+          type: "table",
+          headers: ["Positive feedback", "Negative feedback"],
+          rows: [
+            ["feedback in phase with input", "feedback 180° out of phase with input"],
+            ["increases gain", "decreases gain"],
+            ["reduces stability, may oscillate", "improves stability"],
+            ["used in oscillators", "used in amplifiers"],
+            ["A_f = A/(1 − Aβ)", "A_f = A/(1 + Aβ)"],
+          ],
+        },
+        {
+          type: "callout",
+          tone: "exam",
+          title: "Board tip",
+          md: "Convert units before substituting: pF = 10⁻¹² F, nF = 10⁻⁹ F, μF = 10⁻⁶ F, μH = 10⁻⁶ H, mH = 10⁻³ H. Most wrong answers in oscillator numericals come from a missed power of ten, not from the formula.",
+        },
+        {
+          type: "keypoints",
+          items: [
+            "Large Aβ makes A_f ≈ 1/β, almost independent of A.",
+            "Gain × bandwidth is constant under negative feedback.",
+            "LC: f ∝ 1/√(LC). RC: f ∝ 1/(RC).",
+            "Know the tapped element, frequency formula and gain condition of each oscillator.",
+          ],
+        },
+      ],
+      flashcards: [
+        { front: "Amount of feedback in dB", back: "20 log₁₀(1 + Aβ)." },
+        { front: "If C in an LC tank is made 4 times larger, frequency becomes…", back: "half (f ∝ 1/√C)." },
+        { front: "Total inductance in Hartley with mutual inductance M (series aiding)", back: "L₁ + L₂ + 2M." },
+        { front: "1 pF in farads", back: "10⁻¹² F." },
+        { front: "Which oscillator is used in quartz watches?", back: "Crystal oscillator (32 768 Hz)." },
+        { front: "Main difference between amplifier and oscillator", back: "An amplifier needs an input signal; an oscillator produces output without any input signal." },
+      ],
+      quiz: [
+        {
+          kind: "numeric",
+          q: "Negative feedback with β = 0.02 is applied to an amplifier of gain 400. Find A_f (to 1 decimal place).",
+          answer: 44.4,
+          tolerance: 0.1,
+          explain: "Aβ = 8; A_f = 400/9 ≈ 44.4.",
+        },
+        {
+          kind: "mcq",
+          q: "The Barkhausen criterion requires the total phase shift around the loop to be:",
+          options: ["90°", "180°", "0° or 360°", "270°"],
+          answer: 2,
+          explain: "Feedback must be in phase with the input: 0° or 360°.",
+        },
+        {
+          kind: "numeric",
+          q: "An LC oscillator runs at 400 kHz. If the capacitance is made 4 times larger, what is the new frequency in kHz?",
+          answer: 200,
+          unit: "kHz",
+          explain: "f ∝ 1/√C, √4 = 2, so 400/2 = 200 kHz.",
+          difficulty: 2,
+        },
+        {
+          kind: "truefalse",
+          q: "Wien bridge oscillators are commonly used to generate radio frequencies of hundreds of MHz.",
+          answer: false,
+          explain: "Wien bridge (an RC oscillator) is used for audio frequencies; RF uses LC or crystal oscillators.",
+        },
+        {
+          kind: "fill",
+          q: "In a Hartley oscillator the frequency-deciding tank uses a tapped ___.",
+          answer: ["inductor", "inductance", "coil"],
+          explain: "Hartley: tapped inductor; Colpitts: tapped capacitor.",
+        },
+        {
+          kind: "order",
+          q: "Arrange the steps by which oscillations build up in an oscillator.",
+          items: [
+            "Supply is switched on and noise appears at the input",
+            "Amplifier boosts the noise at the tank's frequency",
+            "Feedback returns it in phase with Aβ slightly above 1",
+            "Amplitude grows until the amplifier's gain limits it",
+            "Steady oscillations with Aβ = 1",
+          ],
+          explain: "Oscillators start from noise; the frequency-selective network picks one frequency and non-linearity fixes the final amplitude.",
+        },
+        {
+          kind: "mcq",
+          q: "A crystal has series resonance f_s and parallel resonance f_p. Which is true?",
+          options: ["f_p is slightly lower than f_s", "f_p is slightly higher than f_s", "f_p = 2f_s", "they are always equal"],
+          answer: 1,
+          explain: "The parallel (holder) capacitance makes f_p slightly higher than f_s.",
+          difficulty: 2,
+        },
+      ],
+    },
+  ],
+};
+
+export const topics: Topic[] = [amplifiers, feedback];
 
 /** Chapter title ("11:" / "12:" + exact title) → topic slug(s) that teach it. */
 export const links: Record<string, string | string[]> = {
   "12:Transistor Amplifiers": "c12-ele-transistor-amplifiers",
+  "12:Feedback Amplifiers and Oscillators": "c12-ele-feedback-oscillators",
 };

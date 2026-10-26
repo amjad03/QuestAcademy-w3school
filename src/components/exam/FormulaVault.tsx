@@ -1,8 +1,9 @@
 "use client";
 
 import Link from "next/link";
-import { useMemo, useState } from "react";
-import { Atom, ChevronLeft, Dna, Eye, EyeOff, FlaskConical, Pi, ScrollText, Search, type LucideIcon } from "lucide-react";
+import { useEffect, useMemo, useState } from "react";
+import { useSearchParams } from "next/navigation";
+import { Atom, ChevronLeft, Dna, Eye, EyeOff, FlaskConical, Pi, ScrollText, Search, X, type LucideIcon } from "lucide-react";
 import clsx from "clsx";
 import type { ExamSubject, FormulaSheet } from "@/content/types";
 import { SUBJECT_META } from "@/lib/exam";
@@ -21,15 +22,22 @@ export function FormulaVault({ sheets }: { sheets: Sheet[] }) {
   const [q, setQ] = useState("");
   const [quiz, setQuiz] = useState(false);
   const [revealed, setRevealed] = useState<Set<string>>(new Set());
+  // Deep link from a class chapter page: /exam/formulas?chapter=<chapter title>
+  const params = useSearchParams();
+  const [only, setOnly] = useState<string | null>(null);
+  useEffect(() => {
+    const c = params.get("chapter");
+    setOnly(c && sheets.some((s) => s.chapter === c) ? c : null);
+  }, [params, sheets]);
 
   const subjects = Array.from(new Set(sheets.map((s) => s.subject)));
   const shown = useMemo(() => {
     const term = q.toLowerCase();
     return sheets
-      .filter((s) => subject === "all" || s.subject === subject)
+      .filter((s) => (!only || s.chapter === only) && (subject === "all" || s.subject === subject))
       .map((s) => ({ ...s, items: s.items.filter((i) => !term || [i.name, i.note ?? "", s.chapter].join(" ").toLowerCase().includes(term)) }))
       .filter((s) => s.items.length);
-  }, [sheets, subject, q]);
+  }, [sheets, subject, q, only]);
 
   return (
     <div className="mx-auto max-w-[1180px] px-4 py-8 sm:px-6">
@@ -78,6 +86,15 @@ export function FormulaVault({ sheets }: { sheets: Sheet[] }) {
           {quiz ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />} {quiz ? t("exam.formulas.selfTestOn", "Self-test on") : t("exam.formulas.selfTestOff", "Self-test off")}
         </button>
       </div>
+
+      {only && (
+        <div className="mt-4 flex flex-wrap items-center gap-2 rounded-2xl bg-accent-soft px-4 py-3 text-sm font-bold">
+          <span className="min-w-0 flex-1">{t("exam.formulas.onlyChapter", "Showing the sheet for {chapter}", { chapter: only })}</span>
+          <button className="btn-ghost !px-3 !py-1.5 text-xs" onClick={() => setOnly(null)}>
+            <X className="h-3.5 w-3.5" /> {t("exam.formulas.showAll", "Show all chapters")}
+          </button>
+        </div>
+      )}
 
       <div className="mt-8 space-y-10">
         {shown.map((sh) => {

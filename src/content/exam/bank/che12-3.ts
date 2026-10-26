@@ -1350,11 +1350,403 @@ const ch9: Item[] = [
 ];
 
 /* ================================================================== */
+/* Chapter 10 — Biomolecules                                           */
+/* ================================================================== */
+
+const CH10 = "Biomolecules";
+
+const ch10: Item[] = [
+  {
+    kind: "mcq", exams: B, difficulty: 1, idealTime: 35,
+    q: "On prolonged heating with HI, glucose gives n-hexane. This shows that:",
+    options: [
+      "Glucose contains an aldehyde group",
+      "All six carbon atoms of glucose are in a straight chain",
+      "Glucose has five –OH groups",
+      "Glucose has a cyclic structure",
+    ],
+    answer: 1,
+    explain: "HI/heat reduces every functional group to C–H, leaving the carbon skeleton: CH₃(CH₂)₄CH₃, an unbranched chain of 6 C. The –CHO is shown by Br₂ water / oxime, the five –OH by acetylation.",
+  },
+  {
+    kind: "mcq", exams: B, difficulty: 1, idealTime: 40,
+    q: "Sucrose is a non-reducing sugar because:",
+    options: [
+      "It contains no –OH groups",
+      "Its glycosidic bond joins C1 of α-D-glucose to C2 of β-D-fructose, so neither reducing group is free",
+      "It is a polysaccharide",
+      "It contains only fructose units",
+    ],
+    answer: 1,
+    explain: "Both anomeric carbons — the aldehydic C1 of glucose and the ketonic C2 of fructose — are tied up in the glycosidic link, so no hemiacetal / open-chain carbonyl can form and sucrose cannot reduce Tollens' or Fehling's reagents.",
+  },
+  {
+    kind: "mcq", exams: B, difficulty: 1, idealTime: 30,
+    q: "Which vitamin must be supplied regularly in the diet because it is water-soluble and is not stored in the body?",
+    options: ["Vitamin A", "Vitamin D", "Vitamin C", "Vitamin K"],
+    answer: 2,
+    explain: "Vitamins B-group and C are water-soluble and are readily excreted in urine. A, D, E and K are fat-soluble and stored in the liver and adipose tissue. (Vitamin B₁₂ is an exception among water-soluble vitamins: it can be stored in the liver.)",
+  },
+  {
+    kind: "mcq", exams: B, difficulty: 1, idealTime: 30,
+    q: "Which base is present in RNA but not in DNA?",
+    options: ["Adenine", "Thymine", "Cytosine", "Uracil"],
+    answer: 3,
+    explain: "DNA contains A, G, C and T; RNA contains A, G, C and U (uracil replaces thymine). Thymine is found only in DNA.",
+  },
+  {
+    kind: "mcq", exams: B, difficulty: 1, idealTime: 30,
+    q: "In proteins, amino acids are linked by peptide bonds. A peptide bond is:",
+    options: ["–CO–O–", "–CO–NH–", "–NH–NH–", "–O–O–"],
+    answer: 1,
+    explain: "The –COOH of one amino acid condenses with the –NH₂ of the next, eliminating water and forming an amide link –CO–NH–. –CO–O– is an ester bond.",
+  },
+  {
+    kind: "mcq", exams: B, difficulty: 1, idealTime: 35,
+    q: "Cellulose is a linear polymer of:",
+    options: [
+      "α-D-glucose units joined by C1–C4 glycosidic links",
+      "β-D-glucose units joined by C1–C4 glycosidic links",
+      "β-D-fructose units joined by C2–C1 links",
+      "α-D-glucose units with C1–C6 branches",
+    ],
+    answer: 1,
+    explain: "Cellulose is an unbranched chain of β-D-glucose linked β(1→4). Starch (amylose) uses α(1→4) links; amylopectin and glycogen also have α(1→6) branches. Humans lack the enzyme for β(1→4) links, so cannot digest cellulose.",
+  },
+  {
+    kind: "mcq", exams: B, difficulty: 1, idealTime: 35,
+    q: "Which statement about the components of starch is correct?",
+    options: [
+      "Amylose is water-soluble, unbranched and forms 15–20% of starch",
+      "Amylose is branched and forms 80–85% of starch",
+      "Amylopectin is a linear chain of β-D-glucose",
+      "Starch contains fructose and glucose in equal amounts",
+    ],
+    answer: 0,
+    explain: "Amylose: water-soluble, long unbranched α(1→4) chain, 15–20%. Amylopectin: water-insoluble, α(1→4) chain branched by α(1→6) links, 80–85%.",
+  },
+  {
+    kind: "mcq", exams: B, difficulty: 1, idealTime: 30,
+    q: "Glucose is oxidised by bromine water to:",
+    options: ["Saccharic acid", "Gluconic acid", "n-Hexane", "Glucose oxime"],
+    answer: 1,
+    explain: "Br₂ water is a mild oxidant that converts only the –CHO into –COOH: glucose → gluconic acid, HOCH₂(CHOH)₄COOH. This proves the carbonyl is an aldehyde. Nitric acid oxidises both ends → saccharic acid.",
+  },
+  {
+    kind: "mcq", exams: B, difficulty: 1, idealTime: 30,
+    q: "Which of the following is an essential amino acid?",
+    options: ["Glycine", "Alanine", "Valine", "Glutamic acid"],
+    answer: 2,
+    explain: "Essential amino acids cannot be synthesised in the body and must come from food — valine, leucine, isoleucine, lysine, threonine, methionine, phenylalanine, tryptophan, arginine, histidine. Glycine, alanine and glutamic acid are non-essential.",
+  },
+  {
+    kind: "mcq", exams: B, difficulty: 1, idealTime: 35,
+    q: "When an egg is boiled, the albumin coagulates. During this denaturation:",
+    options: [
+      "The primary structure of the protein is destroyed",
+      "Peptide bonds are hydrolysed to amino acids",
+      "Secondary and tertiary structures are disrupted but the primary structure remains intact",
+      "The protein is converted into a carbohydrate",
+    ],
+    answer: 2,
+    explain: "Heat or pH change breaks H-bonds and other weak interactions, so the helix/sheet and folding are lost and biological activity disappears. Covalent peptide bonds are not broken, so the amino-acid sequence (primary structure) survives. Curdling of milk is another example.",
+  },
+  {
+    kind: "mcq", exams: B, difficulty: 1, idealTime: 30,
+    q: "Deficiency of vitamin D causes:",
+    options: ["Scurvy", "Rickets (in children) / osteomalacia", "Beriberi", "Xerophthalmia"],
+    answer: 1,
+    explain: "Vitamin D is needed for calcium and phosphate absorption, so its deficiency leads to soft bones (rickets in children, osteomalacia in adults). Scurvy — vitamin C; beriberi — B₁; xerophthalmia — A.",
+  },
+  {
+    kind: "mcq", exams: B, difficulty: 1, idealTime: 30,
+    q: "A nucleotide consists of:",
+    options: [
+      "A nitrogenous base and a pentose sugar only",
+      "A nitrogenous base, a pentose sugar and a phosphate group",
+      "Two pentose sugars and a phosphate group",
+      "An amino acid and a sugar",
+    ],
+    answer: 1,
+    explain: "Base + sugar (linked at C1′) = nucleoside. Nucleoside + phosphate (esterified at C5′) = nucleotide. Nucleotides are joined by 3′,5′-phosphodiester links to form nucleic acids.",
+  },
+  {
+    kind: "numeric", exams: N, difficulty: 1, idealTime: 50,
+    q: "The number of chiral (asymmetric) carbon atoms in the open-chain structure of D-glucose is ____.",
+    answer: 4,
+    explain: "OHC–C*HOH–C*HOH–C*HOH–C*HOH–CH₂OH: C-2 to C-5 each carry four different groups → 4 stereocentres (2⁴ = 16 aldohexose stereoisomers). In the cyclic pyranose form C-1 becomes a fifth stereocentre.",
+  },
+  /* ---------------- difficulty 2 ---------------- */
+  {
+    kind: "mcq", exams: M, difficulty: 2, idealTime: 45,
+    q: "Glucose reacts with acetic anhydride to form a pentaacetate. This indicates that glucose has:",
+    options: [
+      "Five –OH groups, each on a different carbon",
+      "An aldehyde group",
+      "A ketone group",
+      "Five carbon atoms",
+    ],
+    answer: 0,
+    explain: "Each –OH is acetylated, giving five –OCOCH₃ groups. Since glucose is stable, the five –OH must be on different carbons (two –OH on one carbon would lose water).",
+  },
+  {
+    kind: "mcq", exams: M, difficulty: 2, idealTime: 60,
+    q: "Statement I: Glucose does not give the Schiff's test and does not form a hydrogensulphite addition product with NaHSO₃, although it contains an aldehyde group.\nStatement II: Glucose exists mainly as a cyclic hemiacetal (pyranose) in which the –CHO is not free.",
+    options: [
+      "Both statements are true and II is the correct explanation of I",
+      "Both statements are true but II is not the correct explanation of I",
+      "Statement I is true, Statement II is false",
+      "Statement I is false, Statement II is true",
+    ],
+    answer: 0,
+    explain: "The C-5 –OH adds to the C-1 aldehyde to form a six-membered ring. Only a tiny equilibrium fraction is open-chain, too little for Schiff's and NaHSO₃ tests. This, together with the existence of α and β anomers, is the evidence for the cyclic structure.",
+  },
+  {
+    kind: "mcq", exams: M, difficulty: 2, idealTime: 55,
+    q: "Sucrose (dextrorotatory) on hydrolysis gives an equimolar mixture of D-(+)-glucose and D-(−)-fructose that is laevorotatory. This mixture is called invert sugar because:",
+    options: [
+      "Glucose is converted into fructose",
+      "The laevorotation of fructose (−92.4°) is larger than the dextrorotation of glucose (+52.5°), so the sign of rotation changes",
+      "Fructose is converted into glucose",
+      "The hydrolysis is catalysed by an enzyme called invertase",
+    ],
+    answer: 1,
+    explain: "Sucrose is +66.5°. After hydrolysis, the equimolar mixture has a net rotation ≈ (52.5 − 92.4)/2 ≈ −20°, i.e. the sign 'inverts' from + to −. The enzyme invertase does catalyse the reaction, but the name refers to the change in rotation.",
+  },
+  {
+    kind: "mcq", exams: M, difficulty: 2, idealTime: 50,
+    q: "Lactose (milk sugar) is a reducing disaccharide made of:",
+    options: [
+      "Two α-D-glucose units linked C1–C4",
+      "β-D-galactose and β-D-glucose linked between C1 of galactose and C4 of glucose",
+      "α-D-glucose and β-D-fructose linked C1–C2",
+      "β-D-galactose and β-D-fructose linked C1–C2",
+    ],
+    answer: 1,
+    explain: "In lactose, C1 of β-D-galactose is joined to C4 of β-D-glucose. The glucose C1 remains free (hemiacetal), so lactose is reducing. Option A is maltose; option C is sucrose.",
+  },
+  {
+    kind: "mcq", exams: M, difficulty: 2, idealTime: 50,
+    q: "Glycine is dissolved in a strongly acidic solution (pH ≈ 1). The predominant form of glycine is:",
+    options: ["H₂N–CH₂–COO⁻", "H₃N⁺–CH₂–COO⁻", "H₃N⁺–CH₂–COOH", "H₂N–CH₂–COOH"],
+    answer: 2,
+    hint: "Start from the zwitterion and add H⁺.",
+    explain: "In water glycine exists as the zwitterion H₃N⁺CH₂COO⁻. Strong acid protonates the carboxylate → H₃N⁺CH₂COOH (cation; migrates to the cathode). In strong base –NH₃⁺ loses H⁺ → H₂NCH₂COO⁻. The neutral form H₂NCH₂COOH is negligible in solution.",
+  },
+  {
+    kind: "mcq", exams: M, difficulty: 2, idealTime: 45,
+    q: "Which statement about naturally occurring α-amino acids is correct?",
+    options: [
+      "All are optically active",
+      "All except glycine are optically active, and most have the L-configuration",
+      "All have the D-configuration",
+      "They exist as neutral molecules H₂N–CHR–COOH in the solid state",
+    ],
+    answer: 1,
+    explain: "In glycine R = H, so the α-carbon has two identical H atoms and is not chiral. All others are chiral and natural ones are L-amino acids. In the solid they are zwitterions (salt-like, high m.p.).",
+  },
+  {
+    kind: "mcq", exams: M, difficulty: 2, idealTime: 50,
+    q: "The α-helix secondary structure of a protein is stabilised mainly by:",
+    options: [
+      "Disulphide bonds between cysteine residues",
+      "Hydrogen bonds between the –C=O of one peptide unit and the –NH of a peptide unit four residues further along the same chain",
+      "Ionic bonds between side chains of adjacent chains",
+      "Hydrogen bonds between neighbouring chains laid side by side",
+    ],
+    answer: 1,
+    explain: "In the right-handed α-helix, each C=O hydrogen-bonds with the N–H four residues ahead (i → i+4) within the same chain. H-bonds between side-by-side chains describe the β-pleated sheet. Disulphide and ionic bonds contribute mainly to tertiary structure.",
+  },
+  {
+    kind: "mcq", exams: M, difficulty: 2, idealTime: 45,
+    q: "Which statement about DNA base pairing is correct?",
+    options: [
+      "A pairs with G through three hydrogen bonds",
+      "A pairs with T through two hydrogen bonds and G pairs with C through three",
+      "A pairs with U through two hydrogen bonds",
+      "G pairs with T through three hydrogen bonds",
+    ],
+    answer: 1,
+    explain: "A purine always pairs with a pyrimidine: A=T (2 H-bonds) and G≡C (3 H-bonds). This gives the Chargaff ratios A = T and G = C. A–U pairing occurs in RNA, not in the DNA double helix.",
+  },
+  {
+    kind: "mcq", exams: M, difficulty: 2, idealTime: 45,
+    q: "Glucose and gluconic acid both give saccharic acid (glucaric acid) on oxidation with nitric acid. This indicates that glucose contains:",
+    options: ["A ketonic group", "A primary alcoholic (–CH₂OH) group", "A secondary alcohol at C-2 only", "A carboxyl group"],
+    answer: 1,
+    explain: "HNO₃ oxidises the –CHO and the terminal –CH₂OH to –COOH, giving HOOC–(CHOH)₄–COOH. Since gluconic acid (already –COOH at C-1) gives the same product, the other end must be a primary alcohol.",
+  },
+  {
+    kind: "mcq", exams: M, difficulty: 2, idealTime: 60,
+    q: "Match the vitamin (List I) with its deficiency disease (List II).\nList I: (P) Vitamin A (Q) Vitamin B₁ (R) Vitamin B₁₂ (S) Vitamin K\nList II: (1) Pernicious anaemia (2) Increased blood-clotting time (3) Xerophthalmia (4) Beriberi",
+    options: ["P-3, Q-4, R-1, S-2", "P-4, Q-3, R-1, S-2", "P-3, Q-1, R-4, S-2", "P-3, Q-4, R-2, S-1"],
+    answer: 0,
+    explain: "Vitamin A (retinol) — xerophthalmia, night blindness. B₁ (thiamine) — beriberi. B₁₂ (cyanocobalamin) — pernicious anaemia. K (phylloquinone) — increased blood-clotting time.",
+  },
+  {
+    kind: "mcq", exams: M, difficulty: 2, idealTime: 45,
+    q: "Glycogen, the storage polysaccharide of animals, is structurally most similar to:",
+    options: ["Cellulose", "Amylose", "Amylopectin, but more highly branched", "Chitin"],
+    answer: 2,
+    explain: "Glycogen ('animal starch') is a polymer of α-D-glucose with α(1→4) chains and α(1→6) branches like amylopectin, but it is even more branched. It is stored in liver, muscle and brain and broken down to glucose when needed.",
+  },
+  {
+    kind: "mcq", exams: M, difficulty: 2, idealTime: 45,
+    q: "Which statement about fructose is correct?",
+    options: [
+      "It is an aldohexose that forms a six-membered pyranose ring in sucrose",
+      "It is a ketohexose with the C=O at C-2, laevorotatory, and is present as a five-membered furanose ring in sucrose",
+      "It is a pentose sugar",
+      "It is a non-reducing sugar",
+    ],
+    answer: 1,
+    explain: "Fructose, C₆H₁₂O₆, has a ketone at C-2 and belongs to the D-series, with a laevorotation: D-(−)-fructose. The C-5 –OH adds to C-2, giving a five-membered (furanose) ring. Being an α-hydroxy ketone, it does reduce Tollens' and Fehling's reagents.",
+  },
+  {
+    kind: "mcq", exams: M, difficulty: 2, idealTime: 45,
+    q: "Assertion (A): Vitamin C must be taken regularly in the diet.\nReason (R): Vitamin C is water-soluble and is readily excreted in urine, so it cannot be stored in the body.",
+    options: [
+      "Both A and R are true and R is the correct explanation of A",
+      "Both A and R are true but R is not the correct explanation of A",
+      "A is true but R is false",
+      "A is false but R is true",
+    ],
+    answer: 0,
+    explain: "Water-soluble vitamins (B-group except B₁₂, and C) are not stored, so a regular dietary supply is needed. R explains A.",
+  },
+  {
+    kind: "mcq", exams: M, difficulty: 2, idealTime: 45,
+    q: "α-D-(+)-Glucopyranose and β-D-(+)-glucopyranose are:",
+    options: [
+      "Enantiomers",
+      "Anomers — they differ only in the configuration at C-1",
+      "Structural (position) isomers",
+      "Identical compounds",
+    ],
+    answer: 1,
+    explain: "Ring closure creates a new stereocentre at C-1 (the anomeric carbon). The two forms differ only there (–OH below or above the ring in the Haworth projection) → anomers, a special kind of diastereomer (epimers at C-1). They are not mirror images, so they are not enantiomers.",
+  },
+  {
+    kind: "mcq", exams: M, difficulty: 2, idealTime: 50,
+    q: "The dipeptide glycylalanine (Gly–Ala) has the structure:",
+    options: [
+      "H₂N–CH₂–CO–NH–CH(CH₃)–COOH",
+      "H₂N–CH(CH₃)–CO–NH–CH₂–COOH",
+      "H₂N–CH₂–NH–CO–CH(CH₃)–COOH",
+      "HOOC–CH₂–NH–CO–CH(CH₃)–NH₂",
+    ],
+    answer: 0,
+    explain: "Peptides are written from the N-terminus to the C-terminus. In Gly–Ala, glycine keeps the free –NH₂ and its –CO is bonded to the N of alanine, which keeps the free –COOH. Option B is Ala–Gly.",
+  },
+  {
+    kind: "numeric", exams: N, difficulty: 2, idealTime: 60,
+    q: "How many different tripeptides can be formed from glycine, alanine and valine if each amino acid is used exactly once in each tripeptide?",
+    answer: 6,
+    explain: "A peptide has direction (N- to C-terminus), so the number of sequences is 3! = 6: GAV, GVA, AGV, AVG, VGA, VAG. (If repetition were allowed, 3³ = 27.)",
+  },
+  {
+    kind: "numeric", exams: N, difficulty: 2, idealTime: 70,
+    q: "The molar mass (in g mol⁻¹) of the tripeptide Gly–Ala–Val is ____. (Molar masses: glycine 75, alanine 89, valine 117, water 18)",
+    answer: 245,
+    explain: "Forming two peptide bonds releases two water molecules: 75 + 89 + 117 − 2 × 18 = 281 − 36 = 245 g/mol. Forgetting the water gives 281; subtracting three waters gives 227.",
+  },
+  {
+    kind: "numeric", exams: N, difficulty: 2, idealTime: 50,
+    q: "A double-stranded DNA sample contains 20% adenine (by number of bases). The percentage of cytosine in it is ____.",
+    answer: 30,
+    explain: "Chargaff's rule: A = T and G = C. A + T = 40%, so G + C = 60% and C = 30%.",
+  },
+  /* ---------------- difficulty 3 ---------------- */
+  {
+    kind: "numeric", exams: AJ, difficulty: 3, idealTime: 90,
+    q: "Periodic acid (HIO₄) cleaves each C–C bond between carbons bearing –OH or C=O groups (one HIO₄ per bond). Assuming the open-chain form, the number of moles of HIO₄ consumed per mole of glucose is ____.",
+    answer: 5,
+    explain: "OHC–CHOH–CHOH–CHOH–CHOH–CH₂OH has 5 C–C bonds, all between oxygenated carbons, so 5 HIO₄ are used. Products: C-1 to C-5 each become HCOOH (5 mol) and C-6 becomes HCHO (1 mol).",
+  },
+  {
+    kind: "numeric", exams: AJ, difficulty: 3, idealTime: 90,
+    q: "Specific rotations: D-glucose +52.5°, D-fructose −92.4°. The specific rotation (in degrees, with sign) of invert sugar obtained by complete hydrolysis of sucrose is ____.",
+    answer: -19.95, tolerance: 0.1, unit: "°",
+    explain: "Hydrolysis gives equal moles — and, since both are C₆H₁₂O₆, equal masses — of glucose and fructose. The specific rotation of the mixture is the mass-weighted average: (52.5 − 92.4)/2 = −19.95° ≈ −20°.",
+  },
+  {
+    kind: "numeric", exams: AJ, difficulty: 3, idealTime: 100,
+    q: "Pure α-D-glucose ([α] = +112°) and pure β-D-glucose ([α] = +19°) both change in water to an equilibrium value of +52.5° (mutarotation). Neglecting the open-chain form, the percentage of the β-anomer at equilibrium is ____ (nearest integer).",
+    answer: 64, tolerance: 0.5, unit: "%",
+    explain: "Let the β fraction be x: 112(1 − x) + 19x = 52.5 → 112 − 93x = 52.5 → x = 59.5/93 = 0.640 → 64% β (36% α). β predominates because all its ring substituents, including the C-1 –OH, can be equatorial.",
+  },
+  {
+    kind: "mcq", exams: AJ, difficulty: 3, idealTime: 80,
+    q: "Glucose, fructose and mannose give the same osazone with excess phenylhydrazine. The reason is that:",
+    options: [
+      "All three have the same configuration at every carbon",
+      "Osazone formation involves only C-1 and C-2, and the three sugars have identical configurations at C-3, C-4 and C-5",
+      "All three are aldoses",
+      "Phenylhydrazine converts all of them into glucose first",
+    ],
+    answer: 1,
+    explain: "In osazone formation both C-1 and C-2 become C=N–NHPh, so any stereochemical difference at C-2 (glucose vs mannose, which are C-2 epimers) or the C-1/C-2 carbonyl position (fructose is a 2-ketose) is erased. Their C-3–C-5 configurations are the same, so the osazones are identical. Fructose is a ketose, so 'all aldoses' is false. Galactose, a C-4 epimer, gives a different osazone.",
+  },
+  {
+    kind: "mcq", exams: AJ, difficulty: 3, idealTime: 80,
+    q: "Assertion (A): Glucose pentaacetate does not react with hydroxylamine.\nReason (R): In the pentaacetate the C-1 –OH of the cyclic hemiacetal is acetylated, so the ring cannot open to give a free –CHO group.",
+    options: [
+      "Both A and R are true and R is the correct explanation of A",
+      "Both A and R are true but R is not the correct explanation of A",
+      "A is true but R is false",
+      "A is false but R is true",
+    ],
+    answer: 0,
+    explain: "Free glucose forms an oxime because its hemiacetal can open to the aldehyde. Acetylating the anomeric –OH locks the ring (it becomes an acylal-type acetal), so no –CHO is available. This is one of the classical proofs of the cyclic structure. R explains A.",
+  },
+  {
+    kind: "mcq", exams: AJ, difficulty: 3, idealTime: 80,
+    q: "Match the polysaccharide (List I) with its structure (List II).\nList I: (P) Amylose (Q) Amylopectin (R) Cellulose (S) Glycogen\nList II: (1) Unbranched β(1→4) chain of β-D-glucose (2) Unbranched α(1→4) chain of α-D-glucose (3) α(1→4) chain with α(1→6) branches every 20–25 units (4) α(1→4) / α(1→6) polymer, more highly branched, stored in liver and muscle",
+    options: ["P-2, Q-3, R-1, S-4", "P-3, Q-2, R-1, S-4", "P-2, Q-4, R-1, S-3", "P-1, Q-3, R-2, S-4"],
+    answer: 0,
+    explain: "Amylose — linear α(1→4) (2). Amylopectin — α(1→4) with α(1→6) branch points (3). Cellulose — linear β(1→4) (1). Glycogen — like amylopectin but more branched, animal storage (4).",
+  },
+  {
+    kind: "multi", exams: A, difficulty: 3, idealTime: 80,
+    q: "Which of the following are reducing sugars?",
+    options: ["Glucose", "Fructose", "Maltose", "Sucrose"],
+    answers: [0, 1, 2],
+    explain: "Glucose (aldose) and maltose (free C-1 hemiacetal on the second glucose) reduce Tollens' and Fehling's reagents. Fructose also does: in alkaline solution the α-hydroxy ketone isomerises (via an enediol) and is oxidised. Sucrose has both anomeric carbons locked in the glycosidic bond and is non-reducing.",
+  },
+  {
+    kind: "multi", exams: A, difficulty: 3, idealTime: 80,
+    q: "Which statements about DNA are correct?",
+    options: [
+      "Its sugar is 2-deoxy-D-ribose",
+      "It contains uracil in place of thymine",
+      "Its two strands are antiparallel and held together by hydrogen bonds between complementary bases",
+      "Adenine pairs with guanine",
+    ],
+    answers: [0, 2],
+    explain: "A true (RNA has D-ribose). B false — uracil is in RNA. C true — Watson–Crick double helix, one strand 5′→3′ and the other 3′→5′. D false — A pairs with T, G with C.",
+  },
+  {
+    kind: "multi", exams: A, difficulty: 3, idealTime: 90,
+    q: "Which statements about protein structure are correct?",
+    options: [
+      "The primary structure is the sequence of amino acids in the polypeptide chain",
+      "Denaturation destroys the primary structure",
+      "Quaternary structure is the spatial arrangement of two or more polypeptide subunits, as in haemoglobin",
+      "Globular proteins such as insulin and albumin are usually soluble in water",
+    ],
+    answers: [0, 2, 3],
+    explain: "A, C and D are correct. B is false: denaturation disrupts secondary/tertiary (and quaternary) structure, but peptide bonds — the primary structure — are intact. Fibrous proteins (keratin, myosin) are insoluble; globular proteins are generally water-soluble.",
+  },
+];
+
+/* ================================================================== */
 /* Exports                                                             */
 /* ================================================================== */
 
 /** Original exam-style questions (JEE Main / Advanced, NEET, KCET, COMEDK) for the chapters below. */
-export const questions: ExamQuestion[] = [...build(CH7, "07", ch7), ...build(CH8, "08", ch8), ...build(CH9, "09", ch9)];
+export const questions: ExamQuestion[] = [...build(CH7, "07", ch7), ...build(CH8, "08", ch8), ...build(CH9, "09", ch9),
+  ...build(CH10, "10", ch10),
+];
 
 /** One formula / quick-revision sheet per chapter. */
 export const formulas: FormulaSheet[] = [];

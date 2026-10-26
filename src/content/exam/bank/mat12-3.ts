@@ -748,7 +748,7 @@ const areas: ExamQuestion[] = [
     ],
     answer: 0,
     hint: "Use symmetry about the x-axis.",
-    explain: t`Area $= 2\int_1^2\sqrt{4 - x^2}dx = 2\left[\frac x2\sqrt{4 - x^2} + 2\sin^{-1}\frac x2\right]_1^2 = 2\left[\pi - \left(\frac{\sqrt3}{2} + \frac\pi3\right)\right] = \frac{4\pi}{3} - \sqrt3$. Option 2 is the upper half only; option 4 is the larger region minus... (check: larger region $= 4\pi - \left(\frac{4\pi}{3} - \sqrt3\right) = \frac{8\pi}{3} + \sqrt3$, which is option 3).`,
+    explain: t`Area $= 2\int_1^2\sqrt{4 - x^2}dx = 2\left[\frac x2\sqrt{4 - x^2} + 2\sin^{-1}\frac x2\right]_1^2 = 2\left[\pi - \left(\frac{\sqrt3}{2} + \frac\pi3\right)\right] = \frac{4\pi}{3} - \sqrt3$. Option 2 is the upper half only. The larger region is $4\pi - \left(\frac{4\pi}{3} - \sqrt3\right) = \frac{8\pi}{3} + \sqrt3$ (option 3); option 4 has the sign of $\sqrt3$ wrong.`,
   }),
   mcq(AOI, 2, ALL, 55, {
     q: t`The area bounded by $y = \ln x$, the $x$-axis and the line $x = e$ is:`,
@@ -852,7 +852,7 @@ const areas: ExamQuestion[] = [
     ],
     answer: 0,
     hint: t`The curves meet at $(1, \pm2)$. Take the upper half and split at $x = 1$.`,
-    explain: t`$x^2 + 4x = 5 \Rightarrow x = 1$, $y = \pm2$. Upper half: parabola from 0 to 1, circle from 1 to $\sqrt5$. $\int_0^12\sqrt x\,dx = \frac43$. $\int_1^{\sqrt5}\sqrt{5 - x^2}dx = \left[\frac x2\sqrt{5 - x^2} + \frac52\sin^{-1}\frac{x}{\sqrt5}\right]_1^{\sqrt5} = \frac{5\pi}{4} - 1 - \frac52\sin^{-1}\frac1{\sqrt5}$. Doubling: $2\left(\frac13 + \frac{5\pi}{4} - \frac52\sin^{-1}\frac1{\sqrt5}\right) = \frac23 + \frac{5\pi}{2} - 5\sin^{-1}\frac{1}{\sqrt5} \approx 6.20$. Option 2 is the upper half only (it equals half of option 1 plus $\frac13 + ... $ — check: half of the area is $\frac13 + \frac{5\pi}{4} - \frac52\sin^{-1}\frac1{\sqrt5}$, so option 2 also forgets the $-1$).`,
+    explain: t`$x^2 + 4x = 5 \Rightarrow x = 1$, $y = \pm2$. Upper half: parabola from 0 to 1, circle from 1 to $\sqrt5$. $\int_0^12\sqrt x\,dx = \frac43$. $\int_1^{\sqrt5}\sqrt{5 - x^2}dx = \left[\frac x2\sqrt{5 - x^2} + \frac52\sin^{-1}\frac{x}{\sqrt5}\right]_1^{\sqrt5} = \frac{5\pi}{4} - 1 - \frac52\sin^{-1}\frac1{\sqrt5}$. Doubling: $2\left(\frac13 + \frac{5\pi}{4} - \frac52\sin^{-1}\frac1{\sqrt5}\right) = \frac23 + \frac{5\pi}{2} - 5\sin^{-1}\frac{1}{\sqrt5} \approx 6.20$. Option 2 is the upper half with the $-1$ from the lower limit forgotten; option 4 uses $\frac83$ (both halves of the parabola part counted twice).`,
   }),
   mcq(AOI, 3, JA, 180, {
     q: t`The area of the region $\{(x, y): xy \le 4,\ 1 \le y \le x^2,\ x \ge 0\}$ is:`,
@@ -864,7 +864,7 @@ const areas: ExamQuestion[] = [
     ],
     answer: 0,
     hint: t`Use horizontal strips: for each $y$, $x$ runs from $\sqrt y$ to $4/y$.`,
-    explain: t`For fixed $y \ge 1$, $y \le x^2$ means $x \ge \sqrt y$ and $xy \le 4$ means $x \le \frac4y$. This needs $\sqrt y \le \frac4y$, i.e. $y \le 4^{2/3}$ (where $y = x^2$ meets $xy = 4$ at $x = 4^{1/3}$). Area $= \int_1^{4^{2/3}}\left(\frac4y - \sqrt y\right)dy = 4\ln 4^{2/3} - \frac23(4 - 1) = \frac{16}{3}\ln 2 - 2 \approx 1.697$. Option 4 wrongly runs $y$ up to 4 (where $xy = 4$ meets $y = x^2$ only if... it doesn't): $\int_1^4\frac4y - \int_1^4\sqrt y = 8\ln 2 - \frac{14}{3}$.`,
+    explain: t`For fixed $y \ge 1$, $y \le x^2$ means $x \ge \sqrt y$ and $xy \le 4$ means $x \le \frac4y$. This needs $\sqrt y \le \frac4y$, i.e. $y \le 4^{2/3}$ (where $y = x^2$ meets $xy = 4$ at $x = 4^{1/3}$). Area $= \int_1^{4^{2/3}}\left(\frac4y - \sqrt y\right)dy = 4\ln 4^{2/3} - \frac23(4 - 1) = \frac{16}{3}\ln 2 - 2 \approx 1.697$. Option 4 runs $y$ all the way to 4 without checking that $\sqrt y \le \frac4y$: $\int_1^4\left(\frac4y - \sqrt y\right)dy = 8\ln 2 - \frac{14}{3}$, which subtracts strips that are not in the region (above $y = 4^{2/3}$ the integrand is negative).`,
   }),
   num(AOI, 3, JA, 180, {
     q: t`The line $y = mx$ ($0 < m < 2$) divides the region between $y = 2x - x^2$ and the $x$-axis into two parts of equal area. Find $m$ (correct to two decimal places).`,
@@ -890,7 +890,14 @@ const areas: ExamQuestion[] = [
     options: [t`$\pi - \dfrac23$`, t`$\dfrac\pi2 - \dfrac13$`, t`$\pi + \dfrac23$`, t`$2\pi - \dfrac23$`],
     answer: 0,
     hint: t`Solve $x^2(1 + x^2) = 2$.`,
-    explain: t`$x^4 + x^2 - 2 = 0 \Rightarrow (x^2 + 2)(x^2 - 1) = 0 \Rightarrow x = \pm1$. Area $= \int_{-1}^1\left(\frac{2}{1 + x^2} - x^2\right)dx = 2\left[\tan^{-1}x\right]_{-1}^{1} \cdot\frac12\cdot 2 - \frac23 = 2\cdot\frac\pi2 - \frac23 = \pi - \frac23$. Option 2 is just the half from 0 to 1.`,
+    explain: t`$x^4 + x^2 - 2 = 0 \Rightarrow (x^2 + 2)(x^2 - 1) = 0 \Rightarrow x = \pm1$. Area $= \int_{-1}^1\left(\frac{2}{1 + x^2} - x^2\right)dx = 2\left[\tan^{-1}x\right]_{-1}^{1} - \left[\frac{x^3}{3}\right]_{-1}^{1} = 2\cdot\frac\pi2 - \frac23 = \pi - \frac23$. Option 2 is just the half from 0 to 1.`,
+  }),
+  mcq(AOI, 2, MAIN, 80, {
+    q: t`The area of the region inside the circle $x^2 + y^2 = 4$ and above both lines $y = \sqrt3\,x$ and $y = -\sqrt3\,x$ is:`,
+    options: [t`$\dfrac{2\pi}{3}$`, t`$\dfrac{\pi}{3}$`, t`$\dfrac{4\pi}{3}$`, t`$\dfrac{2\pi}{3} - \sqrt3$`],
+    answer: 0,
+    hint: "Find the angles the two lines make with the x-axis.",
+    explain: t`$y = \sqrt3x$ makes $60^\circ$ and $y = -\sqrt3x$ makes $120^\circ$ with the positive $x$-axis. The region is the sector between them, of angle $60^\circ = \frac\pi3$: area $= \frac12r^2\theta = \frac12\cdot4\cdot\frac\pi3 = \frac{2\pi}{3}$. By integration: $2\int_0^1\left(\sqrt{4 - x^2} - \sqrt3x\right)dx = 2\left(\frac{\sqrt3}{2} + \frac\pi3 - \frac{\sqrt3}{2}\right) = \frac{2\pi}{3}$ ✓. Option 4 wrongly subtracts a triangle that is not part of the region.`,
   }),
   multi(AOI, 3, ADV, 150, {
     q: t`Let $R$ be the region bounded by $y = x^2$ and $y = 2x$. Which of the following is/are correct?`,
