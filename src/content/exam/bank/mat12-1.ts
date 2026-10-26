@@ -164,14 +164,14 @@ const ch1: ExamQuestion[] = [
     hint: t`Treat diagonal pairs and unordered pairs $\{a,b\}$, $a\ne b$, separately.`,
     explain: t`The 3 diagonal pairs can be chosen freely ($2^3$ ways). The 6 off-diagonal ordered pairs form 3 unordered pairs $\{(a,b),(b,a)\}$, and symmetry forces each to be taken both-or-neither ($2^3$ ways). Total $2^3\cdot2^3=2^6=64$. In general the count is $2^{n(n+1)/2}$.`,
   }),
-  q1(2, MAIN, 90, {
+  q1(2, MAIN_ONLY, 90, {
     kind: "numeric",
     q: t`Find the number of equivalence relations on the set $\{1,2,3,4\}$.`,
     answer: 15,
     hint: "Equivalence relations correspond one-to-one with partitions of the set.",
     explain: t`Count partitions of a 4-element set by block sizes: $\{4\}$: 1; $\{3,1\}$: 4; $\{2,2\}$: 3; $\{2,1,1\}$: $ {}^4C_2 = 6$; $\{1,1,1,1\}$: 1. Total $1+4+3+6+1 = 15$ (the Bell number $B_4$).`,
   }),
-  q1(2, MAIN, 90, {
+  q1(2, MAIN_ONLY, 90, {
     kind: "numeric",
     q: t`Find the number of onto functions from a set with 4 elements to a set with 3 elements.`,
     answer: 36,
@@ -239,7 +239,7 @@ const ch1: ExamQuestion[] = [
     hint: "f(x) has the same sign as x; solve the two cases separately.",
     explain: t`For $x\ge0$: $y=\frac{x}{1+x}\Rightarrow x = \frac{y}{1-y}$ with $y\ge0$. For $x<0$: $y = \frac{x}{1-x}\Rightarrow x=\frac{y}{1+y}$ with $y<0$. Both cases are $x = \frac{y}{1-|y|}$, so $f^{-1}(x)=\frac{x}{1-|x|}$ on $(-1,1)$.`,
   }),
-  q1(2, MAIN, 70, {
+  q1(2, MAIN_ONLY, 70, {
     kind: "numeric",
     q: t`$A$ is a set with 4 elements. Find the number of functions from $A$ to $A$ that are **not** one-one.`,
     answer: 232,
@@ -275,7 +275,7 @@ const ch1: ExamQuestion[] = [
     hint: "Check monotonicity and the range of each function.",
     explain: t`$x^3$ is strictly increasing with range $\mathbb R$: bijective (P-1). $x^2$ is even with range $[0,\infty)$: neither (Q-4). $e^x$ is increasing with range $(0,\infty)$: one-one, not onto (R-2). $x^3-x$ vanishes at $0,\pm1$ but has range $\mathbb R$: onto, not one-one (S-3).`,
   }),
-  q1(2, MAIN, 90, {
+  q1(2, MAIN_ONLY, 90, {
     kind: "numeric",
     q: t`Let $A = \{1,2,\dots,12\}$. On $A\times A$ define $(a,b)\,R\,(c,d)$ iff $ad = bc$. Find the number of elements in the equivalence class of $(2,3)$.`,
     answer: 4,
@@ -494,7 +494,7 @@ const ch2: ExamQuestion[] = [
     answer: 1,
     explain: t`For $|x|<1$, $2\tan^{-1}x = \tan^{-1}\frac{2x}{1-x^2} = \tan^{-1}\frac{2/3}{8/9} = \tan^{-1}\frac34$. $\tan^{-1}\frac23$ forgets the denominator. (It also equals $\sin^{-1}\frac{2x}{1+x^2} = \sin^{-1}\frac35$, not $\sin^{-1}\frac34$.)`,
   }),
-  q2(2, MAIN, 60, {
+  q2(2, MAIN_ONLY, 60, {
     kind: "numeric",
     q: t`Find the value of $\sin\left(2\tan^{-1}\frac12\right)$.`,
     answer: 0.8,
@@ -526,7 +526,7 @@ const ch2: ExamQuestion[] = [
     hint: t`Find a multiple of $\pi$ near 10 so the answer lands in $[-\frac\pi2,\frac\pi2]$.`,
     explain: t`$3\pi\approx9.42$, so $10\in\left[\frac{5\pi}2,\frac{7\pi}2\right]$, where $\sin^{-1}(\sin x) = 3\pi-x$. Check: $3\pi-10\approx-0.58\in[-\frac\pi2,\frac\pi2]$ and $\sin(3\pi-10) = \sin(\pi-10) = \sin10$. $10-3\pi$ has the right size but the wrong sign; $4\pi-10\approx2.57$ is outside the range.`,
   }),
-  q2(2, MAIN, 80, {
+  q2(2, MAIN_ONLY, 80, {
     kind: "numeric",
     q: t`Find the value of $\cos^{-1}(\cos5)+\sin^{-1}(\sin5)$ (angles in radians).`,
     answer: 0,
@@ -573,7 +573,7 @@ const ch2: ExamQuestion[] = [
     hint: t`$\frac{1}{1+n(n+1)} = \frac{(n+1)-n}{1+n(n+1)}$.`,
     explain: t`Each term is $\tan^{-1}(n+1)-\tan^{-1}n$, so the sum telescopes to $S = \tan^{-1}11-\tan^{-1}1$. Then $\tan S = \frac{11-1}{1+11} = \frac{10}{12} = \frac56$. $\frac{10}{11}$ comes from forgetting the $1+ab$ in the denominator.`,
   }),
-  q2(2, MAIN, 70, {
+  q2(2, MAIN_ONLY, 70, {
     kind: "numeric",
     q: t`If $\sin^{-1}x+\sin^{-1}y+\sin^{-1}z = \frac{3\pi}{2}$, find the value of $x^{2026}+y^{2027}+z^{2028}+\dfrac{6}{x+y+z}$.`,
     answer: 5,
@@ -620,7 +620,7 @@ const ch2: ExamQuestion[] = [
     hint: "sin⁻¹ and tan⁻¹ are odd; cos⁻¹ and cot⁻¹ use π minus the value.",
     explain: t`(P) $-\sin^{-1}\frac{\sqrt3}2 = -\frac\pi3$. (Q) $\pi-\frac\pi4 = \frac{3\pi}4$. (R) $-\frac\pi4$. (S) $\pi-\cot^{-1}\frac1{\sqrt3} = \pi-\frac\pi3 = \frac{2\pi}3$. So P-3, Q-4, R-2, S-1.`,
   }),
-  q2(2, MAIN, 80, {
+  q2(2, MAIN_ONLY, 80, {
     kind: "numeric",
     q: t`Find the value of $6\tan\left(\cos^{-1}\frac45+\tan^{-1}\frac23\right)$.`,
     answer: 17,
@@ -834,21 +834,21 @@ const ch3: ExamQuestion[] = [
     answer: 1,
     explain: t`Multiplying out, $A^2 = \begin{pmatrix} \cos2\alpha & -\sin2\alpha\\ \sin2\alpha & \cos2\alpha\end{pmatrix}$ (two rotations by $\alpha$ make one by $2\alpha$). So $\cos2\alpha = 0$, $\sin2\alpha = 1$, giving $2\alpha = \frac\pi2$ and $\alpha = \frac\pi4$.`,
   }),
-  q3(2, MAIN, 70, {
+  q3(2, MAIN_ONLY, 70, {
     kind: "numeric",
     q: t`Find the number of $3\times3$ symmetric matrices whose entries are each $0$, $1$ or $2$.`,
     answer: 729,
     hint: "Only the diagonal and the entries above it can be chosen freely.",
     explain: t`A symmetric matrix is fixed by its 3 diagonal entries and its 3 entries above the diagonal: 6 free entries, each with 3 choices. $3^6 = 729$. Counting all 9 entries gives $3^9$, which is too many.`,
   }),
-  q3(2, MAIN, 70, {
+  q3(2, MAIN_ONLY, 70, {
     kind: "numeric",
     q: t`Find the number of $3\times3$ skew-symmetric matrices whose entries are each $-1$, $0$ or $1$.`,
     answer: 27,
     hint: "What are the diagonal entries of a skew-symmetric matrix?",
     explain: t`The diagonal entries must be 0. The 3 entries above the diagonal are free (3 choices each), and those below are their negatives, which still lie in $\{-1,0,1\}$. $3^3 = 27$.`,
   }),
-  q3(2, MAIN, 60, {
+  q3(2, MAIN_ONLY, 60, {
     kind: "numeric",
     q: t`If $A = \begin{pmatrix} 1 & 1\\ 0 & 1\end{pmatrix}$, find the sum of all the entries of $A^{50}$.`,
     answer: 52,
@@ -900,7 +900,7 @@ const ch3: ExamQuestion[] = [
     hint: "Compute A² directly, or use the Cayley–Hamilton relation A² − (tr A)A + (det A)I = O.",
     explain: t`$A^2 = \begin{pmatrix} 7 & 18\\ 6 & 19\end{pmatrix}$ and $6A = \begin{pmatrix} 12 & 18\\ 6 & 24\end{pmatrix}$, so $A^2-6A = -5I$ and $k = -5$. This matches $A^2-(\operatorname{tr}A)A+(\det A)I = O$ with trace 6 and determinant 5. The sign slip gives $+5$.`,
   }),
-  q3(2, MAIN_ONLY, 90, {
+  q3(2, MAIN, 90, {
     kind: "mcq",
     q: t`$A = \frac13\begin{pmatrix} 2 & -2 & 1\\ 1 & 2 & 2\\ a & b & -2\end{pmatrix}$ satisfies $AA^T = I$. Then $(a,b)$ is:`,
     options: [t`$(1,2)$`, t`$(-2,-1)$`, t`$(2,1)$`, t`$(2,-1)$`],
@@ -972,7 +972,7 @@ const ch3: ExamQuestion[] = [
     hint: t`Transpose each expression using $(XYZ)^T = Z^TY^TX^T$.`,
     explain: t`$(ABA^T)^T = AB^TA^T = -ABA^T$: skew-symmetric. $(BAB^T)^T = BA^TB^T = BAB^T$: symmetric, so the second option is false. $(AB)^T = B^TA^T = -BA$, which need not equal $AB$. $(A+B)^T = A-B\ne A+B$ unless $B = O$.`,
   }),
-  q3(2, MAIN, 90, {
+  q3(2, MAIN_ONLY, 90, {
     kind: "numeric",
     q: t`Find the number of $2\times2$ matrices $A$ with every entry $0$ or $1$ such that $A^2 = O$.`,
     answer: 3,
@@ -1162,7 +1162,7 @@ const ch4: ExamQuestion[] = [
     answer: 3,
     explain: t`The determinant of a triangular matrix is the product of its diagonal entries: $2\cdot3\cdot(-1) = -6$.`,
   }),
-  q4(2, MAIN, 60, {
+  q4(2, MAIN_ONLY, 60, {
     kind: "numeric",
     q: t`$A$ is a $3\times3$ matrix with $|A| = 2$. Find $|\operatorname{adj}(\operatorname{adj}A)|$.`,
     answer: 16,
@@ -1185,7 +1185,7 @@ const ch4: ExamQuestion[] = [
     hint: "Area uses an absolute value, so expect two cases.",
     explain: t`Area $= \frac12|k(0-3)+6(3-0)+0| = \frac12|18-3k| = 9$, so $|6-k| = 6$ and $k = 0$ or $12$. Their sum is $12$. Dropping the modulus gives only $k = 0$.`,
   }),
-  q4(2, MAIN, 70, {
+  q4(2, MAIN_ONLY, 70, {
     kind: "numeric",
     q: t`Solve $x+y+z = 6$, $x-y+z = 2$, $2x+y-z = 1$ and find $x+2y+3z$.`,
     answer: 14,
@@ -1261,7 +1261,7 @@ const ch4: ExamQuestion[] = [
     hint: "Multiply each option by the matrix, or think of the matrix as taking running sums.",
     explain: t`The matrix sends $(x_1,x_2,x_3)$ to the running sums $(x_1, x_1+x_2, x_1+x_2+x_3)$; its inverse takes successive differences. Check row 3: $(0,-1,1)\cdot$ columns gives $(1-1,\ 1-1,\ 1) = (0,0,1)$. The first option negates every lower entry, which is wrong: its row 3 gives $(-1,0,1)$, not $(0,0,1)$.`,
   }),
-  q4(2, MAIN, 90, {
+  q4(2, MAIN_ONLY, 90, {
     kind: "numeric",
     q: t`The system $x+y+z = 1$, $x+2y+3z = 4$, $x+3y+\lambda z = \mu$ has infinitely many solutions. Find $\lambda+\mu$.`,
     answer: 12,

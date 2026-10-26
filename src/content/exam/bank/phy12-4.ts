@@ -21,6 +21,8 @@ const C14 = "Semiconductor Electronics: Materials, Devices and Simple Circuits";
 const ALL = ["NEET", "JEE", "KCET", "COMEDK"] as ExamQuestion["exams"];
 const MAIN = ["NEET", "JEE"] as ExamQuestion["exams"];
 const ADV = ["JEE", "JEE_ADV"] as ExamQuestion["exams"];
+/* NEET + JEE Main items on rationalised-NCERT content, also asked in KCET. */
+const MAINK = ["NEET", "JEE", "KCET"] as ExamQuestion["exams"];
 
 /* ------------------------------------------------------------------ */
 /* Chapter 11 — Dual Nature of Radiation and Matter                     */
@@ -45,7 +47,7 @@ const ch11 = mk(C11, [
     q: t`An electron starting from rest is accelerated through a potential difference of 100 V. Its de Broglie wavelength is about:`,
     options: ["1.23 Å", "12.3 Å", "0.123 Å", "0.39 Å"],
     answer: 0,
-    explain: t`For an electron, $\lambda = \dfrac{h}{\sqrt{2meV}} = \dfrac{1.227}{\sqrt{V}}$ nm $= \dfrac{12.27}{\sqrt{V}}$ Å. With $V = 100$ V, $\lambda = 12.27/10 = 1.23$ Å. 12.3 Å forgets the square root's effect; 0.123 Å mixes up nm and Å.`,
+    explain: t`For an electron, $\lambda = \dfrac{h}{\sqrt{2meV}} = \dfrac{1.227}{\sqrt{V}}$ nm $= \dfrac{12.27}{\sqrt{V}}$ Å. With $V = 100$ V, $\lambda = 12.27/10 = 1.23$ Å. 12.3 Å forgets to divide by $\sqrt{V}$ (it is the value for 1 V); 0.123 Å mixes up nm and Å.`,
   },
   {
     id: "phy12-4-11-004", exams: ALL, kind: "mcq", difficulty: 1, idealTime: 40,
@@ -157,7 +159,7 @@ const ch11 = mk(C11, [
     explain: t`$\lambda = h/\sqrt{2mK}$; with equal $K$, $\lambda_p/\lambda_\alpha = \sqrt{m_\alpha/m_p} = \sqrt{4} = 2$. 4 : 1 forgets the square root; $2\sqrt2 : 1$ is the equal-accelerating-voltage result.`,
   },
   {
-    id: "phy12-4-11-018", exams: MAIN, kind: "mcq", difficulty: 2, idealTime: 60,
+    id: "phy12-4-11-018", exams: MAINK, kind: "mcq", difficulty: 2, idealTime: 60,
     q: t`A (non-relativistic) electron and a photon have the same de Broglie wavelength. Then:`,
     options: [
       "they have the same momentum and the same energy",
@@ -177,7 +179,7 @@ const ch11 = mk(C11, [
     explain: t`Photon energy $= 1240/620 = 2.0$ eV $= 3.2 \times 10^{-19}$ J. $N = \dfrac{P}{E} = \dfrac{3.2 \times 10^{-3}}{3.2 \times 10^{-19}} = 1.0 \times 10^{16} = 10 \times 10^{15}$ per second, so $x = 10$.`,
   },
   {
-    id: "phy12-4-11-020", exams: MAIN, kind: "mcq", difficulty: 2, idealTime: 60,
+    id: "phy12-4-11-020", exams: MAINK, kind: "mcq", difficulty: 2, idealTime: 60,
     q: t`A 60 W parallel beam of light falls normally on a perfectly reflecting mirror. The force exerted on the mirror is:`,
     options: [t`$4 \times 10^{-7}$ N`, t`$2 \times 10^{-7}$ N`, t`$1 \times 10^{-7}$ N`, t`$8 \times 10^{-7}$ N`],
     answer: 0,
@@ -198,7 +200,7 @@ const ch11 = mk(C11, [
     explain: t`Experimentally emission is instantaneous (< $10^{-9}$ s). The wave picture would need time for an electron to accumulate enough energy from faint light, but in the photon picture one photon gives its entire $h\nu$ to one electron at once. So R correctly explains A.`,
   },
   {
-    id: "phy12-4-11-022", exams: MAIN, kind: "mcq", difficulty: 2, idealTime: 50,
+    id: "phy12-4-11-022", exams: MAINK, kind: "mcq", difficulty: 2, idealTime: 50,
     q: t`**Statement I:** The maximum kinetic energy of photoelectrons varies linearly with the frequency of the incident light.<br>**Statement II:** The maximum kinetic energy of photoelectrons is directly proportional to the frequency of the incident light.`,
     options: [
       "Both Statement I and Statement II are true",
@@ -259,7 +261,7 @@ const ch11 = mk(C11, [
     explain: t`Photon energy $= 1240/496 = 2.5$ eV $= 4.0 \times 10^{-19}$ J. Photons per second $= 10^{-3}/(4 \times 10^{-19}) = 2.5 \times 10^{15}$. Electrons per second $= 1\%$ of this $= 2.5 \times 10^{13}$. $I = 2.5 \times 10^{13} \times 1.6 \times 10^{-19} = 4 \times 10^{-6}$ A $= 4$ μA.`,
   },
   {
-    id: "phy12-4-11-028", exams: MAIN, kind: "mcq", difficulty: 2, idealTime: 90,
+    id: "phy12-4-11-028", exams: MAINK, kind: "mcq", difficulty: 2, idealTime: 90,
     q: t`The de Broglie wavelength of a thermal neutron at 300 K, taking its kinetic energy as $\tfrac{3}{2}kT$, is about ($m_n = 1.675 \times 10^{-27}$ kg, $k = 1.38 \times 10^{-23}$ J/K):`,
     options: ["0.145 nm", "0.0145 nm", "1.45 nm", "0.178 nm"],
     answer: 0,
@@ -568,7 +570,7 @@ const ch12 = mk(C12, [
     explain: t`$T = \dfrac{2\pi r}{v} \propto \dfrac{n^2}{1/n} = n^3$ (for fixed $Z$, $T \propto n^3/Z^2$). $T_1 : T_2 = 1 : 8$. 1 : 4 uses only $r \propto n^2$.`,
   },
   {
-    id: "phy12-4-12-019", exams: MAIN, kind: "mcq", difficulty: 2, idealTime: 60,
+    id: "phy12-4-12-019", exams: MAINK, kind: "mcq", difficulty: 2, idealTime: 60,
     q: t`The electron revolving in a Bohr orbit is equivalent to a current loop. The current for the $n = 2$ orbit of hydrogen compared with the $n = 1$ orbit is:`,
     options: ["1/8 times", "1/4 times", "1/2 times", "8 times"],
     answer: 0,
@@ -576,7 +578,7 @@ const ch12 = mk(C12, [
     explain: t`$I = \dfrac{e}{T}$ and $T \propto n^3$, so $I \propto 1/n^3$ and $I_2/I_1 = 1/8$. (The magnetic moment $IA \propto \dfrac{1}{n^3}\cdot n^4 = n$ — it increases.)`,
   },
   {
-    id: "phy12-4-12-020", exams: MAIN, kind: "mcq", difficulty: 2, idealTime: 75,
+    id: "phy12-4-12-020", exams: MAINK, kind: "mcq", difficulty: 2, idealTime: 75,
     q: t`An electron of kinetic energy 12.5 eV collides with a hydrogen atom in its ground state. Ignoring recoil, the number of different spectral lines the atom can then emit is:`,
     options: ["3", "1", "6", "10"],
     answer: 0,
@@ -596,7 +598,7 @@ const ch12 = mk(C12, [
     explain: t`Bohr's model works only for one-electron systems (H, He$^+$, Li$^{2+}$). In neutral helium the two electrons repel each other, which the model has no way to include. So R correctly explains A.`,
   },
   {
-    id: "phy12-4-12-022", exams: MAIN, kind: "mcq", difficulty: 2, idealTime: 50,
+    id: "phy12-4-12-022", exams: MAINK, kind: "mcq", difficulty: 2, idealTime: 50,
     q: t`**Statement I:** Within any one spectral series of hydrogen, the lines crowd closer together towards the short-wavelength end (series limit).<br>**Statement II:** The energy levels of the hydrogen atom get closer together as $n$ increases.`,
     options: [
       "Both Statement I and Statement II are true",
@@ -658,7 +660,7 @@ const ch12 = mk(C12, [
     explain: t`$n^2 = 4.761/0.529 = 9$, so $n = 3$ and $E_3 = -13.6/9 = -1.51$ eV. The energy needed is 1.51 eV.`,
   },
   {
-    id: "phy12-4-12-029", exams: MAIN, kind: "mcq", difficulty: 2, idealTime: 60,
+    id: "phy12-4-12-029", exams: MAINK, kind: "mcq", difficulty: 2, idealTime: 60,
     q: t`The de Broglie wavelength of the electron in the second Bohr orbit of hydrogen ($r_1 = 0.529$ Å) is about:`,
     options: ["6.65 Å", "13.3 Å", "3.32 Å", "1.66 Å"],
     answer: 0,
@@ -1215,10 +1217,12 @@ const ch13 = mk(C13, [
 /* Chapter 14 — Semiconductor Electronics                               */
 /* Special-purpose diodes (Zener, LED, photodiode, solar cell) are out  */
 /* of the rationalised NCERT text but remain in the JEE Main / NEET     */
-/* syllabus; logic gates are tagged JEE / KCET / COMEDK only.           */
+/* syllabus; logic gates (OR/AND/NOT/NAND/NOR) are in the NEET and JEE  */
+/* Main 2024 syllabi. Semiconductors are not in the JEE Advanced        */
+/* syllabus, so the multi-correct items here are tagged JEE only.       */
 /* ------------------------------------------------------------------ */
 const SPL = ["NEET", "JEE", "COMEDK"] as ExamQuestion["exams"];
-const GATE = ["JEE", "KCET", "COMEDK"] as ExamQuestion["exams"];
+const GATE = ["NEET", "JEE", "KCET", "COMEDK"] as ExamQuestion["exams"];
 
 const ch14 = mk(C14, [
   {
@@ -1357,7 +1361,7 @@ const ch14 = mk(C14, [
     explain: t`Branch 2 carries no current. The circuit is $50 + 50 = 100$ Ω in series, so $I = 10/100 = 0.10$ A. Treating both branches as conducting gives $50 + 25 = 75$ Ω and 0.13 A.`,
   },
   {
-    id: "phy12-4-14-018", exams: MAIN, kind: "mcq", difficulty: 2, idealTime: 60,
+    id: "phy12-4-14-018", exams: MAINK, kind: "mcq", difficulty: 2, idealTime: 60,
     q: t`A 220 V (rms), 50 Hz supply is applied to an ideal half-wave rectifier with a resistive load. The average (DC) value of the output voltage is about:`,
     options: ["99 V", "198 V", "156 V", "311 V"],
     answer: 0,
@@ -1502,7 +1506,7 @@ const ch14 = mk(C14, [
     explain: t`Between peaks the capacitor discharges through the load with time constant $RC$. A larger $RC$ compared with the time between pulses means less fall in voltage. A higher ripple frequency (full-wave rather than half-wave) also helps; a lower frequency makes it worse.`,
   },
   {
-    id: "phy12-4-14-034", exams: MAIN, kind: "mcq", difficulty: 2, idealTime: 50,
+    id: "phy12-4-14-034", exams: MAINK, kind: "mcq", difficulty: 2, idealTime: 50,
     q: t`When the forward voltage across a diode is raised from 0.70 V to 0.80 V, the current rises from 10 mA to 30 mA. The dynamic resistance of the diode in this range is:`,
     options: ["5 Ω", "40 Ω", "26.7 Ω", "70 Ω"],
     answer: 0,
@@ -1523,7 +1527,7 @@ const ch14 = mk(C14, [
     explain: t`Forward bias means the p-side is at a higher potential than the n-side. Only (−2 V, −5 V) satisfies this, since −2 V > −5 V. In the other cases the n-side is higher, so the diode is reverse biased.`,
   },
   {
-    id: "phy12-4-14-037", exams: ["JEE", "JEE_ADV"], kind: "multi", difficulty: 3, idealTime: 90,
+    id: "phy12-4-14-037", exams: ["JEE"], kind: "multi", difficulty: 3, idealTime: 90,
     q: t`For an n-type semiconductor at room temperature, which statements are correct? (One or more options may be correct.)`,
     options: [
       "Free electrons are the majority carriers",
@@ -1535,7 +1539,7 @@ const ch14 = mk(C14, [
     explain: t`(A) true. (B) false: every free electron is balanced by a fixed positive donor ion, so the crystal is neutral. (C) true: the mass-action law holds at equilibrium. (D) true: that is why nearly all donors are ionised at room temperature ($kT \approx 0.026$ eV, with the tail of the distribution doing the rest).`,
   },
   {
-    id: "phy12-4-14-038", exams: ["JEE", "JEE_ADV"], kind: "multi", difficulty: 3, idealTime: 90,
+    id: "phy12-4-14-038", exams: ["JEE"], kind: "multi", difficulty: 3, idealTime: 90,
     q: t`For a p-n junction, which statements are correct? (One or more options may be correct.)`,
     options: [
       "The depletion region becomes wider under reverse bias",
@@ -1554,7 +1558,7 @@ const ch14 = mk(C14, [
     explain: t`Load current is fixed: $6/1200 = 5$ mA. At 16 V, series current $= (16 - 6)/400 = 25$ mA, so $I_Z = 25 - 5 = 20$ mA. (At 10 V: series current 10 mA, $I_Z = 5$ mA — still positive, so the Zener regulates over the whole range.)`,
   },
   {
-    id: "phy12-4-14-040", exams: ["JEE", "JEE_ADV"], kind: "multi", difficulty: 3, idealTime: 100,
+    id: "phy12-4-14-040", exams: ["JEE"], kind: "multi", difficulty: 3, idealTime: 100,
     q: t`A sinusoidal voltage of peak value 10 V and frequency 50 Hz is applied to an ideal diode in series with a resistor (half-wave rectifier). Which statements are correct? (One or more options may be correct.)`,
     options: [
       "The average (DC) voltage across the resistor is about 3.18 V",
@@ -1600,7 +1604,7 @@ const ch14 = mk(C14, [
     explain: t`If both conducted: $(6 - V) + (2 - V) = V$ (currents in mA), so $V = 2.67$ V — but then P is above B's 2 V and B's diode would be reverse biased, a contradiction. So only A's diode conducts: $V_P = 6 \times \dfrac{1}{1 + 1} = 3.0$ V, current 3 mA, and B's diode is indeed reverse biased (2 V < 3 V).`,
   },
   {
-    id: "phy12-4-14-045", exams: ["JEE", "JEE_ADV"], kind: "multi", difficulty: 3, idealTime: 90,
+    id: "phy12-4-14-045", exams: ["JEE"], kind: "multi", difficulty: 3, idealTime: 90,
     q: t`Which statements about special-purpose diodes are correct? (One or more options may be correct.)`,
     options: [
       "A Zener diode is heavily doped, so its depletion region is very thin",
@@ -1687,7 +1691,7 @@ export const formulas: FormulaSheet[] = [
       { name: "Energy sharing in two-body break-up", tex: t`K_1 = Q\,\dfrac{m_2}{m_1 + m_2}`, note: "Lighter product takes more energy (e.g. α-decay, D–T neutron)" },
       { name: "Decay law (JEE Advanced)", tex: t`N = N_0e^{-\lambda t} = N_0\left(\tfrac12\right)^{t/T_{1/2}},\quad A = \lambda N` },
       { name: "Half-life and mean life (JEE Advanced)", tex: t`T_{1/2} = \dfrac{\ln 2}{\lambda} = \dfrac{0.693}{\lambda},\quad \tau = \dfrac{1}{\lambda} = 1.44\,T_{1/2}` },
-      { name: "Parallel decay modes", tex: t`\lambda = \lambda_1 + \lambda_2,\quad \dfrac{1}{T} = \dfrac{1}{T_1} + \dfrac{1}{T_2}` },
+      { name: "Parallel decay modes (JEE Advanced)", tex: t`\lambda = \lambda_1 + \lambda_2,\quad \dfrac{1}{T} = \dfrac{1}{T_1} + \dfrac{1}{T_2}` },
       { name: "α, β, γ changes (JEE Advanced)", tex: t`\alpha: (Z, A) \to (Z-2, A-4);\ \beta^-: Z \to Z+1;\ \beta^+: Z \to Z-1;\ \gamma: \text{no change}` },
     ],
   },
@@ -1710,7 +1714,7 @@ export const formulas: FormulaSheet[] = [
       { name: "Capacitor filter", tex: t`\text{ripple small when } RC \gg T_\text{ripple}` },
       { name: "Zener regulator", tex: t`I_R = \dfrac{V_\text{in} - V_Z}{R_s},\quad I_L = \dfrac{V_Z}{R_L},\quad I_Z = I_R - I_L`, note: "Zener: heavily doped, used in reverse breakdown" },
       { name: "Optoelectronic devices", tex: t`\lambda_\text{max} = \dfrac{hc}{E_g},\quad E_\text{photon (LED)} \approx E_g`, note: "Photodiode: reverse bias; LED: forward bias; solar cell: no bias, I–V in 4th quadrant" },
-      { name: "Basic gates", tex: t`\text{OR}: A + B;\ \text{AND}: A\cdot B;\ \text{NOT}: \bar A;\ \text{NAND}: \overline{A\cdot B};\ \text{NOR}: \overline{A + B}`, note: "Gates: JEE Main / KCET / COMEDK" },
+      { name: "Basic gates", tex: t`\text{OR}: A + B;\ \text{AND}: A\cdot B;\ \text{NOT}: \bar A;\ \text{NAND}: \overline{A\cdot B};\ \text{NOR}: \overline{A + B}`, note: "Gates: NEET / JEE Main / KCET / COMEDK" },
       { name: "De Morgan's theorems", tex: t`\overline{A + B} = \bar A\cdot\bar B,\quad \overline{A\cdot B} = \bar A + \bar B` },
       { name: "Universal gates", tex: t`\text{NAND/NOR with tied inputs} = \text{NOT};\ \overline{\bar A\cdot\bar B} = A + B;\ \overline{\bar A + \bar B} = A\cdot B` },
     ],
