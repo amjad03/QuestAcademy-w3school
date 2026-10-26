@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { ArrowLeft, BookOpen, Check, ChevronRight, Clock, Layers, Sigma, Target, Trophy } from "lucide-react";
+import { ArrowLeft, BookOpen, Check, ChevronRight, Clock, Layers, Sigma, Target, Trophy, Zap } from "lucide-react";
 import clsx from "clsx";
 import { useT } from "@/i18n";
 import { useSharedText } from "@/i18n/content";
@@ -181,6 +181,8 @@ function Chapter({ myClass, subject, chapter }: { myClass: MyClass; subject: Cla
   const lessonsDone = useLearner((s) => s.lessons);
   const mastery = useLearner((s) => s.mastery);
   const { lessons, ready } = useLessonOutlines(chapter.lessonIds);
+  const boardLessons = lessons.filter((l) => l.track !== "exam");
+  const examLessons = lessons.filter((l) => l.track === "exam");
   const sessions = chapterSessionHrefs(chapter);
   const idx = subject.chapters.indexOf(chapter);
   const prevCh = subject.chapters[idx - 1];
@@ -208,10 +210,27 @@ function Chapter({ myClass, subject, chapter }: { myClass: MyClass; subject: Cla
             </h2>
             <ol className="card divide-y divide-line overflow-hidden">
               {ready
-                ? lessons.map((l, i) => <LessonRow key={l.id} n={i + 1} lesson={l} done={Boolean(lessonsDone[l.id])} current={l.id === p.nextLesson && !p.done} />)
+                ? boardLessons.map((l, i) => <LessonRow key={l.id} n={i + 1} lesson={l} done={Boolean(lessonsDone[l.id])} current={l.id === p.nextLesson && !p.done} />)
                 : chapter.lessonIds.map((id) => <li key={id} className="h-[68px] animate-pulse" />)}
             </ol>
           </section>
+
+          {ready && examLessons.length > 0 && (
+            <section aria-labelledby="ch-exam" className="mt-6">
+              <h2 id="ch-exam" className="flex flex-wrap items-baseline gap-x-2 text-lg font-bold">
+                <span className="inline-flex items-center gap-1.5">
+                  <Zap className="h-5 w-5 text-accent" aria-hidden /> {t("class.examEdge", "Exam edge")}
+                </span>
+                <span className="text-sm font-semibold text-muted">{t("class.examEdgeSub", "JEE · NEET · KCET · COMEDK")}</span>
+              </h2>
+              <p className="mb-3 mt-1 text-sm text-muted">{t("class.examEdgeHint", "Entrance-level problems, shortcuts and traps for this chapter. Do the board lessons first.")}</p>
+              <ol className="card divide-y divide-line overflow-hidden">
+                {examLessons.map((l, i) => (
+                  <LessonRow key={l.id} n={boardLessons.length + i + 1} lesson={l} done={Boolean(lessonsDone[l.id])} current={l.id === p.nextLesson && !p.done} />
+                ))}
+              </ol>
+            </section>
+          )}
 
           <section aria-labelledby="ch-practise" className="mt-6">
             <h2 id="ch-practise" className="mb-3 text-lg font-bold">

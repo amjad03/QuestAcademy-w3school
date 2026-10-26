@@ -32,6 +32,8 @@ export interface CourseLesson {
   questions: number;
   minutes: number;
   hasVideo: boolean;
+  /** "exam": an Exam edge lesson (JEE / NEET / CET depth). */
+  track?: "exam";
 }
 
 export interface Assessment {
@@ -113,7 +115,7 @@ function buildOutline(s: Subject): CourseOutline {
       if (qCount) items.push({ id: `${id}:practice`, kind: "practice", title: `Practice: ${l.title}`, href: `/session/${s.slug}/${t.slug}/${l.slug}`, minutes: Math.max(2, Math.round(qCount * 0.8)), xp: qCount * 5 });
       if (l.flashcards?.length) items.push({ id: `${id}:cards`, kind: "cards", title: "Flashcards", href: `${href}?item=cards`, minutes: 2, xp: 5 });
       if (l.challenge) items.push({ id: `${id}:challenge`, kind: "challenge", title: l.challenge.title, href: `${href}?item=challenge`, minutes: 10, xp: 50 });
-      return { id, slug: l.slug, title: l.title, summary: l.summary, href, unitSlug: t.slug, items, questions: qCount, minutes: items.reduce((a, i) => a + i.minutes, 0), hasVideo: Boolean(video) };
+      return { id, slug: l.slug, title: l.title, summary: l.summary, href, unitSlug: t.slug, items, questions: qCount, minutes: items.reduce((a, i) => a + i.minutes, 0), hasVideo: Boolean(video), ...(l.track ? { track: l.track } : {}) };
     });
     const withQ = lessons.filter((l) => l.questions > 0);
     const half = withQ.slice(0, Math.ceil(withQ.length / 2));
