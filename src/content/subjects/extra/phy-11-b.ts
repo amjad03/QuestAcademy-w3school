@@ -550,7 +550,7 @@ Centripetal force is not a new kind of force. It is the name for whichever real 
             type: "text",
             md: t`**The leaning cyclist** (ISC and JEE also ask this). A cyclist taking a turn leans inward by angle $\theta$ from the vertical so that the resultant of the normal force and friction from the road passes through the centre of mass. Then $\tan\theta = \dfrac{v^2}{rg}$: faster turns or sharper curves need more lean.
 
-**Board note.** ISC Class 11 also covers motion in a vertical circle under this chapter; it is taught with energy methods in the Exam edge lesson of Work, Energy and Power.`,
+**Board note.** Motion in a vertical circle is on the board syllabi too (CBSE lists it under Work, Energy and Power; ISC may teach it alongside circular motion). It is taught with energy methods in the Exam edge lesson of Work, Energy and Power.`,
           },
           {
             type: "callout",
@@ -1414,7 +1414,7 @@ As the spring is stretched from 0 to $x$, the work done by the spring force is $
             type: "callout",
             tone: "exam",
             title: "Board tip",
-            md: t`State both definitions of a conservative force and give two examples of each kind. In energy problems, write a clear energy equation (initial K + V = final K + V, plus work against friction if any) before substituting numbers. **Board note:** all three boards expect the general principle too: energy changes from one form to another (mechanical, heat, electrical, chemical), but the total energy of an isolated system stays constant.`,
+            md: t`State both definitions of a conservative force and give two examples of each kind. In energy problems, write a clear energy equation (initial K + V = final K + V, plus work against friction if any) before substituting numbers. **Board note:** also know the general principle (ISC asks it; NCERT's section on forms of energy may be trimmed in rationalised editions): energy changes from one form to another (mechanical, heat, electrical, chemical), but the total energy of an isolated system stays constant.`,
           },
           {
             type: "keypoints",
@@ -1567,7 +1567,7 @@ A collision in which total kinetic energy is also conserved is **elastic**. One 
           },
           {
             type: "text",
-            md: t`**Special cases** of the elastic result: if $m_1 = m_2$, then $v_{1f} = 0$ and $v_{2f} = v_{1i}$: the bodies **exchange velocities**. This is why heavy water and graphite, whose light nuclei are close in mass to the neutron, are used to slow neutrons in nuclear reactors. If $m_2 \gg m_1$ (a ball hitting a wall), the light body rebounds with almost its original speed. If $m_1 \gg m_2$, the heavy body carries on almost unchanged and the light one moves off at nearly $2v_{1i}$.
+            md: t`**Special cases** of the elastic result: if $m_1 = m_2$, then $v_{1f} = 0$ and $v_{2f} = v_{1i}$: the bodies **exchange velocities**. This is why heavy water and graphite, whose nuclei are light (deuterium, carbon), are used to slow neutrons in nuclear reactors. If $m_2 \gg m_1$ (a ball hitting a wall), the light body rebounds with almost its original speed. If $m_1 \gg m_2$, the heavy body carries on almost unchanged and the light one moves off at nearly $2v_{1i}$.
 
 **Collisions in two dimensions.** Momentum is conserved separately along $x$ and $y$. For $m_2$ initially at rest: $m_1v_{1i} = m_1v_{1f}\cos\theta_1 + m_2v_{2f}\cos\theta_2$ and $0 = m_1v_{1f}\sin\theta_1 - m_2v_{2f}\sin\theta_2$. With four unknowns and only these equations (plus KE for an elastic collision), one quantity such as an angle must be measured. For an elastic glancing collision of equal masses with one at rest, the two bodies move off at **90°** to each other.`,
           },
@@ -1791,7 +1791,7 @@ The big habit: **use energy when the question asks for speed at a position, and 
             type: "mistake",
             wrong: "In the bullet-and-block problem I equated the bullet's kinetic energy to (m + M)gh.",
             right: "Use momentum conservation for the impact (it is completely inelastic), then energy conservation for the swing afterwards.",
-            why: "Energy conservation feels universal, but kinetic energy is not conserved during the impact; most of it becomes heat. Mixing the stages gives answers about ten times too small for the bullet speed.",
+            why: "Energy conservation feels universal, but kinetic energy is not conserved during the impact; most of it becomes heat. Mixing the stages gives a bullet speed that is far too small (ten times too small in the example above).",
           },
           {
             type: "checkpoint",

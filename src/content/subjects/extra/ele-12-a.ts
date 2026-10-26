@@ -2022,7 +2022,7 @@ const opamp: Topic = {
         {
           type: "mistake",
           wrong: "An op-amp integrator turns a square wave into a sine wave.",
-          right: "An integrator turns a square wave into a triangular wave (straight-line ramps up and down). A sine input gives a (negative) cosine output.",
+          right: "An integrator turns a square wave into a triangular wave (straight-line ramps up and down). A sine input gives a cosine output (shifted by 90°).",
           why: "The integral of a constant is a straight line, not a curve. Each half of the square wave is a constant, so the output rises or falls linearly.",
         },
         {
