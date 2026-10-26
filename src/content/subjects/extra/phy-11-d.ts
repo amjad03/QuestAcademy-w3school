@@ -273,7 +273,7 @@ In the lab it is found with **Searle's apparatus**: two long wires of the same m
             type: "text",
             md: t`**Poisson's ratio.** When a wire is stretched it also becomes thinner. The ratio of lateral strain $(\Delta d/d)$ to longitudinal strain $(\Delta L/L)$, taken as a positive number, is **Poisson's ratio** $\sigma$. It has no unit. For steel $\sigma \approx 0.28$–$0.30$; for most materials it lies between 0 and 0.5.
 
-*Board note:* some recent printings of the rationalised NCERT book shorten this subsection, but ISC, Karnataka PUC question papers and JEE still use Poisson's ratio.`,
+*Board note:* the rationalised NCERT book (followed by CBSE and Karnataka PUC) has dropped Poisson's ratio and the elastic-energy subsection below, and the current JEE Main syllabus does not list them. The ISC syllabus keeps them and older JEE and CET papers used them, so check your current syllabus.`,
           },
           {
             type: "checkpoint",
@@ -927,7 +927,7 @@ The **coefficient of viscosity** $\eta$ is the shearing stress divided by the ra
             type: "text",
             md: t`**Reynolds number** $R_e = \rho v d/\eta$ (d = diameter of the pipe) tells whether flow is streamline or turbulent. It is a pure number: roughly, flow is streamline for $R_e$ below about 1000, turbulent above about 2000, and unsteady in between.
 
-*Board note:* Reynolds number is in the ISC syllabus and is used in JEE. Some recent rationalised NCERT printings leave it out; check your edition.`,
+*Board note:* Reynolds number is not in the rationalised NCERT book (CBSE, Karnataka PUC) or the current JEE Main syllabus. The ISC syllabus includes it and older JEE papers used it; check your current syllabus.`,
           },
           {
             type: "mistake",

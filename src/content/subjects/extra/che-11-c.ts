@@ -1981,7 +1981,7 @@ The quickest tool is the **n-factor** (valence factor): the number of electrons 
           },
           {
             type: "text",
-            md: t`**Oxidation states from structure.** Average values can hide the real states. In CrO$_5$ (one oxide O and two peroxide O$_2^{2-}$ groups), Cr is **+6**, not +10. In H$_2$SO$_5$ (peroxomonosulphuric acid, one O–O bond), S is **+6**, not +8. In S$_4$O$_6^{2-}$ the average is +2.5, but the two central S atoms are **0** and the two end S atoms are **+5**. In NH$_4$NO$_3$ the two N atoms are −3 and +5. A real oxidation state above the group number (like +8 for S) is a signal that a peroxide link is present.`,
+            md: t`**Oxidation states from structure.** Average values can hide the real states. In CrO$_5$ (one oxide O and two peroxide O$_2^{2-}$ groups), Cr is **+6**, not +10. In H$_2$SO$_5$ (peroxomonosulphuric acid, one O–O bond), S is **+6**, not +8. In S$_4$O$_6^{2-}$ the average is +2.5, but the two central S atoms are **0** and the two end S atoms are **+5**. In NH$_4$NO$_3$ the two N atoms are −3 and +5. If the sum rule gives a value above the element's maximum oxidation state (like +8 for S, whose maximum is +6), that is a signal that a peroxide link is present.`,
           },
           {
             type: "example",
@@ -2100,7 +2100,7 @@ The quickest tool is the **n-factor** (valence factor): the number of electrons 
           { front: "n-factor of KMnO₄ in neutral medium", back: "3 (MnO₄⁻ → MnO₂)" },
           { front: "Oxidation state of Cr in CrO₅", back: "+6 (two peroxide groups)" },
           { front: "Oxidation states of S in S₄O₆²⁻", back: "+5, 0, 0, +5 (average +2.5)" },
-          { front: "Volume strength of H₂O₂", back: "Volume strength = 11.2 × molarity (litres of O₂ at STP per litre of solution)." },
+          { front: "Volume strength of H₂O₂", back: "Volume strength = 11.2 × molarity (litres of O₂ at STP, 273 K and 1 atm, per litre of solution). This comes from the Hydrogen chapter, which rationalised NCERT has dropped; it still appears in JEE-style titration problems." },
           { front: "Normality from molarity", back: "N = n-factor × M" },
         ],
         quiz: [
@@ -2131,7 +2131,7 @@ The quickest tool is the **n-factor** (valence factor): the number of electrons 
             q: "What is the molarity of '11.2 volume' H₂O₂?",
             answer: 1,
             tolerance: 0.01,
-            explain: "2H₂O₂ → 2H₂O + O₂: 1 mol H₂O₂ gives 11.2 L O₂ at STP. So 11.2 volume means 1 mol per litre: 1.0 M (2 N).",
+            explain: "2H₂O₂ → 2H₂O + O₂: 1 mol H₂O₂ gives 0.5 mol O₂ = 11.2 L at STP (273 K, 1 atm; 22.4 L mol⁻¹). So 11.2 volume means 1 mol per litre: 1.0 M (2 N).",
             difficulty: 2,
             hint: "Volume strength = 11.2 × molarity.",
           },

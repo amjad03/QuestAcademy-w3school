@@ -16,7 +16,7 @@ export const topics: Topic[] = [
     slug: "c11-phy-oscillations",
     title: "Oscillations",
     icon: "🎐",
-    description: "Periodic and oscillatory motion, simple harmonic motion and its link with circular motion, energy in SHM, the spring–mass system and the simple pendulum, with damped and forced oscillations for ISC and JEE.",
+    description: "Periodic and oscillatory motion, simple harmonic motion and its link with circular motion, energy in SHM, the spring–mass system and the simple pendulum, with damped and forced oscillations for ISC (and as background for JEE).",
     lessons: [
       /* ---------------- Lesson 1 ---------------- */
       {
@@ -455,7 +455,7 @@ Both $K$ and $U$ are always positive and each repeats with period $T/2$, twice p
       {
         slug: "c11-phy-damped-forced-springs",
         title: "Combinations of Springs, Damped and Forced Oscillations",
-        summary: "Springs in series and parallel, damped oscillations with decaying amplitude, forced oscillations and resonance. Needed for ISC and JEE; not in the rationalised NCERT.",
+        summary: "Springs in series and parallel, damped oscillations with decaying amplitude, forced oscillations and resonance. Needed for ISC; not in the rationalised NCERT or the current JEE Main syllabus.",
         minutes: 20,
         xp: 50,
         blocks: [

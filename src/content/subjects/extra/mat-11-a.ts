@@ -346,7 +346,7 @@ The three regions $A - B$, $A \cap B$ and $B - A$ do not overlap, and together t
             type: "callout",
             tone: "note",
             title: "Board note",
-            md: t`The survey-type "practical problems on union and intersection" and the three-set formula are not in every edition of the rationalised NCERT chapter. ISC Class 11 and KCET regularly use them, and they are needed for JEE, so learn them whatever your board.`,
+            md: t`The survey-type "practical problems on union and intersection" (and the three-set formula) were dropped from the rationalised NCERT chapter, so CBSE and PUC board papers are unlikely to set them. ISC Class 11 still uses them, and counting questions of this kind still appear in JEE and other entrance tests, so learn them whatever your board.`,
           },
           {
             type: "callout",
@@ -1310,7 +1310,7 @@ For $n \le x < n + 1$ (with $n$ an integer), $[x] = n$. So on $[0, 1)$ the value
                 { text: "y = x²", group: 0, hint: "Each x gives one value of x²." },
                 { text: "y² = x", group: 1, hint: "x = 4 gives y = 2 and y = −2." },
                 { text: "y = |x|", group: 0, hint: "Each x has exactly one modulus." },
-                { text: "y = [x]", group: 0, hint: "Each x has exactly one greatest integer below it." },
+                { text: "y = [x]", group: 0, hint: "Each x has exactly one greatest integer not exceeding it." },
                 { text: "x² + y² = 1", group: 1, hint: "x = 0 gives y = ±1, and x = 2 gives none." },
                 { text: "y = 1/x", group: 1, hint: "x = 0 in R has no image." },
               ],
@@ -2040,7 +2040,7 @@ Also, $-x$ is the mirror image of $x$ in the $x$-axis, so $\cos(-x) = \cos x$ (c
             type: "callout",
             tone: "note",
             title: "Board note: who needs this lesson",
-            md: t`The rationalised NCERT book (used by CBSE since 2023–24) has dropped the section on trigonometric equations. **ISC** Class 11 still includes it, and **JEE Main, JEE Advanced, KCET and COMEDK** ask questions on it every year. Karnataka I PUC follows the NCERT book; check the current PUC board syllabus, and learn this lesson anyway if you are writing KCET.`,
+            md: t`The rationalised NCERT book (used by CBSE since 2023–24) has dropped the section on trigonometric equations, and the JEE Main syllabus from 2024 lists only trigonometric identities and functions (though "number of solutions" questions still turn up inside other topics). **ISC** Class 11 still includes it, and it is in the **JEE Advanced** syllabus. Karnataka I PUC and KCET follow the rationalised NCERT book, so check the current PUC/KCET and COMEDK syllabi; learn this lesson anyway if you are aiming for JEE.`,
           },
           {
             type: "text",
@@ -2445,7 +2445,7 @@ Solutions with $0 \le x < 2\pi$ are called **principal solutions**. A formula wi
         blocks: [
           {
             type: "text",
-            md: t`**What the exams ask.** **JEE Main** usually asks for the **number of solutions** in a given interval, or for the sum of solutions. **JEE Advanced** combines equations with ranges, inequalities and graphs. **KCET** and **COMEDK** ask for general or principal solutions directly. CBSE students: this topic is outside the rationalised NCERT book but fully inside the JEE and KCET syllabi.`,
+            md: t`**What the exams ask.** **JEE Advanced** combines equations with ranges, inequalities and graphs, and often asks for the **number of solutions** in a given interval or for the sum of solutions. **JEE Main** dropped trigonometric equations from its 2024 syllabus, but solution-counting still appears inside other questions. **ISC** asks for general or principal solutions directly. CBSE and PUC students: this topic is outside the rationalised NCERT book, so check whether your board or KCET/COMEDK syllabus still lists it.`,
           },
           {
             type: "list",
