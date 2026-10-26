@@ -712,6 +712,19 @@ const ch2: Q[] = [
     a: 1,
     e: "In Phycomycetes asexual reproduction is by **zoospores (motile)** or **aplanospores (non-motile)**, produced **endogenously in sporangia**. Sexually they form zygospores by fusion of two gametes, which may be isogamous, anisogamous or oogamous. Conidia (exogenous) are asexual spores of Ascomycetes; asci and basidia bear sexual spores.",
   },
+  {
+    d: 3, t: 100,
+    h: "Recall which diseases are caused by viruses and which symptoms are seen in plants.",
+    q: "Which one of the following statements about viruses is **incorrect**?",
+    o: [
+      "The protein coat (capsid) is made of small subunits called capsomeres arranged in helical or polyhedral geometric forms",
+      "Mumps, small pox, herpes and influenza are viral diseases of humans",
+      "Viral infection in plants may cause mosaic formation, leaf rolling and curling, yellowing and vein clearing, dwarfing and stunted growth",
+      "Tobacco mosaic virus contains both DNA and RNA enclosed in a capsid",
+    ],
+    a: 3,
+    e: "**No virus contains both RNA and DNA**; a virus is a nucleoprotein whose genetic material is infectious. Tobacco mosaic virus, like most plant viruses, has single-stranded RNA. The capsid of capsomeres (helical or polyhedral), the listed human viral diseases (AIDS too) and the plant symptoms are all NCERT facts.",
+  },
 ];
 
 /* ================================================================== */

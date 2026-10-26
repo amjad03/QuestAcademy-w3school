@@ -2516,6 +2516,18 @@ $2\text{SO}_2 + \text{O}_2 + 2\text{H}_2\text{O} \to 2\text{H}_2\text{SO}_4$ and
 Acid rain washes nutrients out of soil, harms crops, forests and aquatic life, dissolves heavy metals (Cu, Pb, Hg, Al) from soil and pipes into drinking water, and **corrodes marble and limestone buildings**: $\text{CaCO}_3 + \text{H}_2\text{SO}_4 \to \text{CaSO}_4 + \text{H}_2\text{O} + \text{CO}_2$. The marble of the Taj Mahal in Agra has been threatened by acid-forming gases from industries and the oil refinery near Mathura, and strict controls on industries around it were ordered to protect it.`,
           },
           {
+            type: "example",
+            title: "How much marble does acid rain eat?",
+            problem: "Acid rain falling on a marble statue delivers 9.8 g of H₂SO₄. What mass of marble (CaCO₃) can it dissolve, and what volume of CO₂ at STP (22.4 L mol⁻¹) is released? (Ca = 40, C = 12, O = 16, H = 1, S = 32)",
+            steps: [
+              "CaCO₃ + H₂SO₄ → CaSO₄ + H₂O + CO₂ (1 : 1 : 1).",
+              "Moles of H₂SO₄ = 9.8/98 = 0.10 mol.",
+              "CaCO₃ attacked = 0.10 mol × 100 g mol⁻¹ = 10 g.",
+              "CO₂ released = 0.10 mol × 22.4 L mol⁻¹ = 2.24 L.",
+            ],
+            answer: "10 g of marble; 2.24 L of CO₂. The CaSO₄ formed flakes off, so the carving slowly wears away.",
+          },
+          {
             type: "checkpoint",
             questions: [
               {

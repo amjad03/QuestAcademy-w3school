@@ -566,7 +566,7 @@ A liquid freezes when its vapour pressure equals that of the solid. The solution
               items: [
                 "A non-volatile solute takes up part of the surface",
                 "Fewer solvent molecules escape, so vapour pressure falls",
-                "At the normal boiling point the solution's vapour pressure is below 1 atm",
+                "At the solvent's normal boiling point the solution's vapour pressure is below 1 atm",
                 "The solution must be heated further to reach 1 atm",
                 "So the boiling point rises in proportion to molality",
               ],
@@ -1896,7 +1896,7 @@ For a **strong electrolyte** (KCl), $\Lambda_m$ rises gently and fits a straight
             headers: ["Shortcut", "Safe when"],
             rows: [
               [t`$E^\circ_3 = \dfrac{n_1E^\circ_1 + n_2E^\circ_2}{n_3}$`, "Adding two half-reactions to get a third half-reaction. Combine ΔG° (−nFE°), never E° directly."],
-              [t`$E^\circ_3 = E^\circ_1 + E^\circ_2$`, "Only when two half-reactions are combined into a full cell reaction (electrons cancel)."],
+              [t`$E^\circ_{\text{cell}} = E^\circ_{\text{red}} + E^\circ_{\text{ox}} = E^\circ_{\text{cathode}} - E^\circ_{\text{anode}}$`, "Only when two half-reactions are combined into a full cell reaction (electrons cancel). Here E°ox is the oxidation potential, the negative of the anode's reduction potential."],
               [t`$\log K = nE^\circ/0.059$`, "298 K only."],
               [t`$E_{\text{H}^+/\text{H}_2} = -0.059\,\text{pH}$`, t`$p_{\text{H}_2} = 1$ bar, 298 K.`],
               [t`Concentration cell: $E = \dfrac{0.059}{n}\log\dfrac{c_{\text{cathode}}}{c_{\text{anode}}}$`, "Same electrode both sides; the cathode is the more concentrated side for a cation."],
