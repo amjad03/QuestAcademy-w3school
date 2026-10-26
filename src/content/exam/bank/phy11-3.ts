@@ -397,7 +397,7 @@ Statement II: Elastomers such as rubber obey Hooke's law throughout their large 
     ],
     answers: [1, 2, 3],
     hint: "Each part of the rod has the same acceleration F/M; the tension at a section accelerates only the part behind it.",
-    explain: t`Acceleration $a = F/M$. At distance $x$ from the rear end, the tension accelerates the mass $Mx/L$ behind it: $T(x) = Fx/L$. So the stress is $0$ at the rear end ✓ (C), $F/(2A)$ at the middle ✓ (D), and $F/A$ at the pulled end — not uniform (B false). Extension $= \displaystyle\int_0^L\dfrac{Fx}{LAY}dx = \dfrac{FL}{2AY}$ ✓ (B).`,
+    explain: t`Acceleration $a = F/M$. At distance $x$ from the rear end, the tension accelerates the mass $Mx/L$ behind it: $T(x) = Fx/L$. So the stress is $0$ at the rear end ✓ (C), $F/(2A)$ at the middle ✓ (D), and $F/A$ at the pulled end — not uniform (A false). Extension $= \displaystyle\int_0^L\dfrac{Fx}{LAY}dx = \dfrac{FL}{2AY}$ ✓ (B).`,
   },
   {
     kind: "multi",

@@ -1,0 +1,508 @@
+[
+ {
+  "lesson": "c12-cs-tokens-types-operators",
+  "i": 5,
+  "lang": "python",
+  "runnable": true,
+  "code": "L1 = [10, 20, 30]\nL2 = L1\nL2.append(40)\nprint(L1)\nprint(L1 is L2)\ns = \"quest\"\nt = s.upper()\nprint(s, t)\nT = (4, 5, [6, 7])\nT[2].append(8)\nprint(T)\nprint(type(3 + 4j), type(None), type((7,)), type((7)))",
+  "keys": [
+   "type",
+   "lang",
+   "runnable",
+   "caption",
+   "code"
+  ]
+ },
+ {
+  "lesson": "c12-cs-flow-and-sequences",
+  "i": 1,
+  "lang": "python",
+  "runnable": true,
+  "code": "total = 0\nfor i in range(1, 11):\n    if i % 3 == 0:\n        continue\n    if i > 8:\n        break\n    total += i\nprint(total)\nn = 6\nwhile n > 0:\n    n -= 2\nelse:\n    print(\"loop over, n =\", n)",
+  "keys": [
+   "type",
+   "lang",
+   "runnable",
+   "caption",
+   "code"
+  ]
+ },
+ {
+  "lesson": "c12-cs-flow-and-sequences",
+  "i": 5,
+  "lang": "python",
+  "runnable": true,
+  "code": "s = \"BENGALURU\"\nprint(s[0], s[-1], s[2:5], s[::-1])\nprint(s[1:8:2], len(s), s.count(\"U\"))\nprint(s.lower().capitalize(), s.find(\"GAL\"), s.replace(\"U\", \"u\"))\nprint(\"cs,ip,ai\".split(\",\"), \"-\".join([\"12\", \"A\"]))",
+  "keys": [
+   "type",
+   "lang",
+   "runnable",
+   "code"
+  ]
+ },
+ {
+  "lesson": "c12-cs-flow-and-sequences",
+  "i": 11,
+  "lang": "python",
+  "runnable": true,
+  "code": "stock = {\"pen\": 40, \"pencil\": 25}\nstock[\"eraser\"] = 15\nstock[\"pen\"] += 10\nprint(stock)\nprint(stock.get(\"ruler\", 0), len(stock))\nfor item, qty in stock.items():\n    if qty < 30:\n        print(item, \"is low\")\nprint(list(stock.keys()))",
+  "keys": [
+   "type",
+   "lang",
+   "runnable",
+   "caption",
+   "code"
+  ]
+ },
+ {
+  "lesson": "c12-cs-revision-board-practice",
+  "i": 2,
+  "lang": "python",
+  "runnable": true,
+  "code": "word = \"Mysuru\"\nout = \"\"\nfor ch in word:\n    if ch in \"aeiouAEIOU\":\n        out += \"*\"\n    elif ch.isupper():\n        out += ch.lower()\n    else:\n        out += ch.upper()\nprint(out)",
+  "keys": [
+   "type",
+   "lang",
+   "runnable",
+   "caption",
+   "code"
+  ]
+ },
+ {
+  "lesson": "c12-cs-revision-board-practice",
+  "i": 11,
+  "lang": "python",
+  "runnable": true,
+  "code": "line = \"Chandrayaan three landed near the lunar south pole\"\nwords = line.split()\ncount = 0\nlongest = \"\"\nfor w in words:\n    if len(w) > 4:\n        count += 1\n    if len(w) > len(longest):\n        longest = w\nprint(\"Words longer than 4:\", count)\nprint(\"Longest word:\", longest)",
+  "keys": [
+   "type",
+   "lang",
+   "runnable",
+   "code"
+  ]
+ },
+ {
+  "lesson": "c12-cs-defining-functions",
+  "i": 2,
+  "lang": "python",
+  "code": "def function_name(parameter1, parameter2):   # function header\n    \"\"\"optional docstring\"\"\"\n    statements                               # function body (indented)\n    return value                             # optional",
+  "keys": [
+   "type",
+   "lang",
+   "caption",
+   "code"
+  ]
+ },
+ {
+  "lesson": "c12-cs-defining-functions",
+  "i": 6,
+  "lang": "python",
+  "runnable": true,
+  "code": "def bill(amount, gst=18, discount=0):\n    tax = amount * gst / 100\n    return amount + tax - discount\n\nprint(bill(1000))\nprint(bill(1000, 5))\nprint(bill(1000, discount=100))\nprint(bill(gst=12, amount=500))\n\ndef stats(a, b, c):\n    total = a + b + c\n    return total, total / 3\n\ns, avg = stats(70, 80, 96)\nprint(s, avg)\nprint(stats(1, 2, 3))",
+  "keys": [
+   "type",
+   "lang",
+   "runnable",
+   "caption",
+   "code"
+  ]
+ },
+ {
+  "lesson": "c12-cs-scope-and-passing",
+  "i": 2,
+  "lang": "python",
+  "runnable": true,
+  "code": "count = 10\n\ndef show():\n    count = 5\n    print(\"inside:\", count)\n\ndef change():\n    global count\n    count = count + 1\n    print(\"changed:\", count)\n\nshow()\nprint(\"outside:\", count)\nchange()\nprint(\"outside:\", count)",
+  "keys": [
+   "type",
+   "lang",
+   "runnable",
+   "caption",
+   "code"
+  ]
+ },
+ {
+  "lesson": "c12-cs-scope-and-passing",
+  "i": 8,
+  "lang": "python",
+  "runnable": true,
+  "code": "def update(n, L):\n    n = n * 2\n    L.append(n)\n    print(\"in function:\", n, L)\n\nx = 4\nnums = [1, 2]\nupdate(x, nums)\nprint(\"after call:\", x, nums)",
+  "keys": [
+   "type",
+   "lang",
+   "runnable",
+   "code"
+  ]
+ },
+ {
+  "lesson": "c12-cs-functions-board-practice",
+  "i": 2,
+  "lang": "python",
+  "runnable": true,
+  "code": "def Change(P, Q=30):\n    P = P + Q\n    Q = P - Q\n    print(P, \"#\", Q)\n    return P\n\nR = 150\nS = 100\nR = Change(R, S)\nprint(R, \"#\", S)\nS = Change(S)",
+  "keys": [
+   "type",
+   "lang",
+   "runnable",
+   "caption",
+   "code"
+  ]
+ },
+ {
+  "lesson": "c12-cs-functions-board-practice",
+  "i": 10,
+  "lang": "python",
+  "runnable": true,
+  "code": "def count_vowels(text):\n    n = 0\n    for ch in text.lower():\n        if ch in \"aeiou\":\n            n += 1\n    return n\n\ndef is_palindrome(word):\n    w = word.lower()\n    return w == w[::-1]\n\ndef lshift(arr, n):\n    return arr[n:] + arr[:n]\n\nprint(count_vowels(\"Hampi Utsav\"))\nprint(is_palindrome(\"Malayalam\"), is_palindrome(\"Kannada\"))\nprint(lshift([10, 20, 30, 40, 50], 2))",
+  "keys": [
+   "type",
+   "lang",
+   "runnable",
+   "caption",
+   "code"
+  ]
+ },
+ {
+  "lesson": "c12-cs-errors-and-exceptions",
+  "i": 9,
+  "lang": "python",
+  "runnable": true,
+  "code": "def set_age(age):\n    if age < 0:\n        raise ValueError(\"age cannot be negative\")\n    return age\n\ntry:\n    set_age(-3)\nexcept ValueError as err:\n    print(\"Caught:\", err)\n\ndef avg(marks):\n    assert len(marks) > 0, \"empty list\"\n    return sum(marks) / len(marks)\n\nprint(avg([60, 70]))\ntry:\n    avg([])\nexcept AssertionError as err:\n    print(\"Assertion failed:\", err)",
+  "keys": [
+   "type",
+   "lang",
+   "runnable",
+   "code"
+  ]
+ },
+ {
+  "lesson": "c12-cs-try-except-finally",
+  "i": 1,
+  "lang": "python",
+  "code": "try:\n    statements that may raise an exception\nexcept ZeroDivisionError:\n    runs if that exception occurred\nexcept (ValueError, TypeError):\n    one clause can catch several exceptions\nexcept:\n    catches any other exception (keep it last)\nelse:\n    runs only if the try block raised NO exception\nfinally:\n    always runs, exception or not",
+  "keys": [
+   "type",
+   "lang",
+   "caption",
+   "code"
+  ]
+ },
+ {
+  "lesson": "c12-cs-try-except-finally",
+  "i": 3,
+  "lang": "python",
+  "runnable": true,
+  "code": "def divide(a, b):\n    try:\n        q = a / b\n    except ZeroDivisionError:\n        print(\"Cannot divide by zero\")\n    except TypeError:\n        print(\"Numbers only\")\n    else:\n        print(\"Quotient:\", q)\n    finally:\n        print(\"Done with\", a, b)\n\ndivide(9, 3)\ndivide(9, 0)\ndivide(9, \"3\")",
+  "keys": [
+   "type",
+   "lang",
+   "runnable",
+   "caption",
+   "code"
+  ]
+ },
+ {
+  "lesson": "c12-cs-try-except-finally",
+  "i": 9,
+  "lang": "python",
+  "runnable": true,
+  "code": "data = [\"12\", \"x\", \"0\", \"4\"]\ntotal = 0\nfor item in data:\n    try:\n        total += 24 // int(item)\n    except ValueError:\n        print(\"bad:\", item)\n    except ZeroDivisionError:\n        print(\"zero skipped\")\nprint(\"total =\", total)",
+  "keys": [
+   "type",
+   "lang",
+   "runnable",
+   "caption",
+   "code"
+  ]
+ },
+ {
+  "lesson": "c12-cs-text-files",
+  "i": 4,
+  "lang": "python",
+  "runnable": true,
+  "code": "f = open(\"poem.txt\", \"w\")\nf.write(\"Rain on the hills\\n\")\nf.writelines([\"Mist in the valley\\n\", \"Coffee in Coorg\\n\"])\nf.close()\n\nwith open(\"poem.txt\", \"r\") as f:\n    print(f.read(4))\n    print(f.readline(), end=\"\")\n    rest = f.readlines()\nprint(rest)\nprint(f.closed)",
+  "keys": [
+   "type",
+   "lang",
+   "runnable",
+   "caption",
+   "code"
+  ]
+ },
+ {
+  "lesson": "c12-cs-text-files",
+  "i": 9,
+  "lang": "python",
+  "runnable": true,
+  "code": "with open(\"notes.txt\", \"w\") as f:\n    f.write(\"The Ganga flows east.\\nthe Kaveri flows to the Bay.\\nA dam stands on the river.\\n\")\n\ndef count_the(fname):\n    n = 0\n    with open(fname) as f:\n        for word in f.read().split():\n            if word.lower() == \"the\":\n                n += 1\n    return n\n\ndef lines_starting_T(fname):\n    with open(fname) as f:\n        for line in f:\n            if line[0] in \"Tt\":\n                print(line, end=\"\")\n\nprint(count_the(\"notes.txt\"))\nlines_starting_T(\"notes.txt\")",
+  "keys": [
+   "type",
+   "lang",
+   "runnable",
+   "caption",
+   "code"
+  ]
+ },
+ {
+  "lesson": "c12-cs-binary-files-pickle",
+  "i": 2,
+  "lang": "python",
+  "runnable": true,
+  "code": "import pickle\n\nstudents = [\n    {\"roll\": 1, \"name\": \"Ananya\", \"marks\": 91},\n    {\"roll\": 2, \"name\": \"Farhan\", \"marks\": 78},\n    {\"roll\": 3, \"name\": \"Lakshmi\", \"marks\": 85},\n]\nwith open(\"students.dat\", \"wb\") as f:\n    for rec in students:\n        pickle.dump(rec, f)\n\ndef show_above(limit):\n    with open(\"students.dat\", \"rb\") as f:\n        try:\n            while True:\n                rec = pickle.load(f)\n                if rec[\"marks\"] > limit:\n                    print(rec[\"roll\"], rec[\"name\"], rec[\"marks\"])\n        except EOFError:\n            pass\n\nshow_above(80)",
+  "keys": [
+   "type",
+   "lang",
+   "runnable",
+   "caption",
+   "code"
+  ]
+ },
+ {
+  "lesson": "c12-cs-binary-files-pickle",
+  "i": 7,
+  "lang": "python",
+  "runnable": true,
+  "code": "import pickle\n\nwith open(\"students.dat\", \"wb\") as f:\n    pickle.dump([1, \"Ananya\", 91], f)\n    pickle.dump([2, \"Farhan\", 78], f)\n    pickle.dump([3, \"Lakshmi\", 85], f)\n\ndef update_marks(roll, new_marks):\n    records = []\n    found = False\n    with open(\"students.dat\", \"rb\") as f:\n        try:\n            while True:\n                rec = pickle.load(f)\n                if rec[0] == roll:\n                    rec[2] = new_marks\n                    found = True\n                records.append(rec)\n        except EOFError:\n            pass\n    with open(\"students.dat\", \"wb\") as f:\n        for rec in records:\n            pickle.dump(rec, f)\n    return found\n\nprint(update_marks(2, 82))\nprint(update_marks(9, 50))\nwith open(\"students.dat\", \"rb\") as f:\n    try:\n        while True:\n            print(pickle.load(f))\n    except EOFError:\n        print(\"end of file\")",
+  "keys": [
+   "type",
+   "lang",
+   "runnable",
+   "code"
+  ]
+ },
+ {
+  "lesson": "c12-cs-csv-files",
+  "i": 2,
+  "lang": "python",
+  "runnable": true,
+  "code": "import csv\n\nrows = [[\"Roll\", \"Name\", \"Marks\"], [1, \"Ananya\", 91], [2, \"Farhan\", 78], [3, \"Lakshmi\", 85]]\nwith open(\"result.csv\", \"w\", newline=\"\") as f:\n    w = csv.writer(f)\n    w.writerow(rows[0])\n    w.writerows(rows[1:])\n\nwith open(\"result.csv\") as f:\n    print(f.read(), end=\"\")\n\nwith open(\"result.csv\", \"r\", newline=\"\") as f:\n    r = csv.reader(f)\n    next(r)\n    total = 0\n    for row in r:\n        print(row)\n        total += int(row[2])\nprint(\"Total:\", total)",
+  "keys": [
+   "type",
+   "lang",
+   "runnable",
+   "code"
+  ]
+ },
+ {
+  "lesson": "c12-cs-csv-files",
+  "i": 6,
+  "lang": "python",
+  "runnable": true,
+  "code": "import csv\n\ndef add_user(uid, pwd):\n    with open(\"users.csv\", \"a\", newline=\"\") as f:\n        csv.writer(f).writerow([uid, pwd])\n\ndef find_password(uid):\n    with open(\"users.csv\", newline=\"\") as f:\n        for row in csv.reader(f):\n            if row[0] == uid:\n                return row[1]\n    return \"not found\"\n\nopen(\"users.csv\", \"w\").close()\nadd_user(\"asha12\", \"Mango@7\")\nadd_user(\"ravi_k\", \"Kite#21\")\nprint(find_password(\"ravi_k\"))\nprint(find_password(\"john\"))",
+  "keys": [
+   "type",
+   "lang",
+   "runnable",
+   "caption",
+   "code"
+  ]
+ },
+ {
+  "lesson": "c12-cs-stack-operations",
+  "i": 4,
+  "lang": "python",
+  "runnable": true,
+  "code": "stack = []\n\ndef is_empty(stk):\n    return len(stk) == 0\n\ndef push(stk, item):\n    stk.append(item)\n\ndef pop(stk):\n    if is_empty(stk):\n        print(\"Underflow\")\n        return None\n    return stk.pop()\n\ndef peek(stk):\n    if is_empty(stk):\n        return None\n    return stk[-1]\n\ndef display(stk):\n    for i in range(len(stk) - 1, -1, -1):\n        print(stk[i])\n\npush(stack, \"Plate 1\")\npush(stack, \"Plate 2\")\npush(stack, \"Plate 3\")\nprint(\"Top:\", peek(stack))\nprint(\"Popped:\", pop(stack))\ndisplay(stack)\npop(stack); pop(stack)\nprint(pop(stack))",
+  "keys": [
+   "type",
+   "lang",
+   "runnable",
+   "caption",
+   "code"
+  ]
+ },
+ {
+  "lesson": "c12-cs-stack-operations",
+  "i": 10,
+  "lang": "python",
+  "runnable": true,
+  "code": "def reverse(text):\n    stk = []\n    for ch in text:\n        stk.append(ch)\n    out = \"\"\n    while stk:\n        out += stk.pop()\n    return out\nprint(reverse(\"STACK\"))\n\ndef balanced(expr):\n    stk = []\n    pairs = {\")\": \"(\", \"]\": \"[\", \"}\": \"{\"}\n    for ch in expr:\n        if ch in \"([{\":\n            stk.append(ch)\n        elif ch in \")]}\":\n            if not stk or stk.pop() != pairs[ch]:\n                return False\n    return len(stk) == 0\nprint(balanced(\"(a+b)*[c-d]\"), balanced(\"(a+b]\"), balanced(\"((a)\"))",
+  "keys": [
+   "type",
+   "lang",
+   "runnable",
+   "caption",
+   "code"
+  ]
+ },
+ {
+  "lesson": "c12-cs-stack-expressions",
+  "i": 9,
+  "lang": "python",
+  "runnable": true,
+  "code": "def to_postfix(infix):\n    prec = {\"+\": 1, \"-\": 1, \"*\": 2, \"/\": 2}\n    stk = []\n    out = \"\"\n    for ch in infix:\n        if ch.isalnum():\n            out += ch\n        elif ch == \"(\":\n            stk.append(ch)\n        elif ch == \")\":\n            while stk[-1] != \"(\":\n                out += stk.pop()\n            stk.pop()\n        else:\n            while stk and stk[-1] != \"(\" and prec[stk[-1]] >= prec[ch]:\n                out += stk.pop()\n            stk.append(ch)\n    while stk:\n        out += stk.pop()\n    return out\n\ndef eval_postfix(tokens):\n    stk = []\n    for t in tokens.split():\n        if t.isdigit():\n            stk.append(int(t))\n        else:\n            b = stk.pop()\n            a = stk.pop()\n            if t == \"+\": stk.append(a + b)\n            elif t == \"-\": stk.append(a - b)\n            elif t == \"*\": stk.append(a * b)\n            elif t == \"/\": stk.append(a / b)\n    return stk.pop()\n\nprint(to_postfix(\"(A+B)*(C-D)/E\"))\nprint(eval_postfix(\"7 8 2 * 4 / +\"))",
+  "keys": [
+   "type",
+   "lang",
+   "runnable",
+   "caption",
+   "code"
+  ]
+ },
+ {
+  "lesson": "c12-cs-stack-expressions",
+  "i": 11,
+  "lang": "python",
+  "runnable": true,
+  "code": "R = {\"Ankit\": 92, \"Bhavna\": 78, \"Chetan\": 88, \"Divya\": 95}\nST = []\n\ndef PUSH(R, ST):\n    for name in R:\n        if R[name] > 85:\n            ST.append(name)\n\ndef POP_ALL(ST):\n    while ST:\n        print(ST.pop(), end=\" \")\n    print()\n    print(\"Stack Empty\")\n\nPUSH(R, ST)\nprint(ST)\nPOP_ALL(ST)",
+  "keys": [
+   "type",
+   "lang",
+   "runnable",
+   "caption",
+   "code"
+  ]
+ },
+ {
+  "lesson": "c12-cs-sql-ddl-dml",
+  "i": 3,
+  "lang": "sql",
+  "code": "CREATE DATABASE school;\nSHOW DATABASES;\nUSE school;\nCREATE TABLE STUDENT (\n  AdmNo  INT PRIMARY KEY,\n  Name   VARCHAR(25) NOT NULL,\n  Class  INT DEFAULT 12,\n  Stream CHAR(4),\n  Email  VARCHAR(30) UNIQUE\n);\nCREATE TABLE FEES (\n  ReceiptNo CHAR(5) PRIMARY KEY,\n  AdmNo     INT,\n  Amount    FLOAT,\n  PaidOn    DATE,\n  FOREIGN KEY (AdmNo) REFERENCES STUDENT(AdmNo)\n);\nSHOW TABLES;\nDESCRIBE STUDENT;",
+  "keys": [
+   "type",
+   "lang",
+   "caption",
+   "code"
+  ]
+ },
+ {
+  "lesson": "c12-cs-sql-ddl-dml",
+  "i": 4,
+  "lang": "sql",
+  "code": "ALTER TABLE STUDENT ADD Phone CHAR(10);      -- add an attribute\nALTER TABLE STUDENT DROP Phone;               -- remove an attribute\nALTER TABLE STUDENT MODIFY Name VARCHAR(40);  -- change a column's type\nDROP TABLE FEES;                              -- delete a table itself\n-- with FEES gone, no foreign key depends on STUDENT's primary key:\nALTER TABLE STUDENT DROP PRIMARY KEY;         -- remove the primary key\nALTER TABLE STUDENT ADD PRIMARY KEY (AdmNo);  -- add a primary key\nDROP DATABASE school;                         -- delete the whole database",
+  "keys": [
+   "type",
+   "lang",
+   "caption",
+   "code"
+  ]
+ },
+ {
+  "lesson": "c12-cs-sql-ddl-dml",
+  "i": 6,
+  "lang": "sql",
+  "runnable": true,
+  "code": "CREATE TABLE STUDENT (\n  AdmNo INT PRIMARY KEY,\n  Name VARCHAR(25) NOT NULL,\n  Class INT DEFAULT 12,\n  Stream CHAR(4),\n  Email VARCHAR(30) UNIQUE\n);\nINSERT INTO STUDENT VALUES (1201, 'Kavya', 12, 'PCMC', 'kavya@sch.in');\nINSERT INTO STUDENT (AdmNo, Name, Stream) VALUES (1202, 'Imran', 'PCMB');\nINSERT INTO STUDENT VALUES (1105, 'Pooja', 11, 'PCMC', NULL);\nUPDATE STUDENT SET Email = 'imran@sch.in' WHERE AdmNo = 1202;\nUPDATE STUDENT SET Class = Class + 1 WHERE Class = 11;\nDELETE FROM STUDENT WHERE Stream = 'PCMB';\nSELECT * FROM STUDENT;",
+  "keys": [
+   "type",
+   "lang",
+   "runnable",
+   "caption",
+   "code"
+  ]
+ },
+ {
+  "lesson": "c12-cs-sql-select",
+  "i": 2,
+  "lang": "sql",
+  "runnable": true,
+  "code": "CREATE TABLE STAFF (\n  SID INT PRIMARY KEY,\n  Name VARCHAR(20) NOT NULL,\n  Dept VARCHAR(10),\n  Salary INT,\n  City VARCHAR(15),\n  Bonus INT\n);\nINSERT INTO STAFF VALUES (101, 'Anil', 'Sales', 42000, 'Pune', 3000);\nINSERT INTO STAFF VALUES (102, 'Bhavya', 'IT', 65000, 'Bengaluru', NULL);\nINSERT INTO STAFF VALUES (103, 'Chirag', 'HR', 38000, 'Mysuru', 2000);\nINSERT INTO STAFF VALUES (104, 'Deepa', 'IT', 72000, 'Bengaluru', 5000);\nINSERT INTO STAFF VALUES (105, 'Esha', 'Sales', 45000, 'Mangaluru', NULL);\nINSERT INTO STAFF VALUES (106, 'Farooq', 'HR', 40000, 'Pune', 2500);\nINSERT INTO STAFF VALUES (107, 'Gita', 'IT', 58000, 'Mysuru', 4000);\nSELECT Name, Salary * 12 AS Annual FROM STAFF WHERE Dept = 'IT';",
+  "keys": [
+   "type",
+   "lang",
+   "runnable",
+   "caption",
+   "code"
+  ]
+ },
+ {
+  "lesson": "c12-cs-sql-select",
+  "i": 8,
+  "lang": "sql",
+  "runnable": true,
+  "code": "CREATE TABLE STAFF (\n  SID INT PRIMARY KEY,\n  Name VARCHAR(20) NOT NULL,\n  Dept VARCHAR(10),\n  Salary INT,\n  City VARCHAR(15),\n  Bonus INT\n);\nINSERT INTO STAFF VALUES (101, 'Anil', 'Sales', 42000, 'Pune', 3000);\nINSERT INTO STAFF VALUES (102, 'Bhavya', 'IT', 65000, 'Bengaluru', NULL);\nINSERT INTO STAFF VALUES (103, 'Chirag', 'HR', 38000, 'Mysuru', 2000);\nINSERT INTO STAFF VALUES (104, 'Deepa', 'IT', 72000, 'Bengaluru', 5000);\nINSERT INTO STAFF VALUES (105, 'Esha', 'Sales', 45000, 'Mangaluru', NULL);\nINSERT INTO STAFF VALUES (106, 'Farooq', 'HR', 40000, 'Pune', 2500);\nINSERT INTO STAFF VALUES (107, 'Gita', 'IT', 58000, 'Mysuru', 4000);\nSELECT Name, Dept, Salary FROM STAFF ORDER BY Dept, Salary DESC;",
+  "keys": [
+   "type",
+   "lang",
+   "runnable",
+   "code"
+  ]
+ },
+ {
+  "lesson": "c12-cs-sql-aggregates-joins",
+  "i": 3,
+  "lang": "sql",
+  "runnable": true,
+  "code": "CREATE TABLE STAFF (\n  SID INT PRIMARY KEY,\n  Name VARCHAR(20) NOT NULL,\n  Dept VARCHAR(10),\n  Salary INT,\n  City VARCHAR(15),\n  Bonus INT\n);\nINSERT INTO STAFF VALUES (101, 'Anil', 'Sales', 42000, 'Pune', 3000);\nINSERT INTO STAFF VALUES (102, 'Bhavya', 'IT', 65000, 'Bengaluru', NULL);\nINSERT INTO STAFF VALUES (103, 'Chirag', 'HR', 38000, 'Mysuru', 2000);\nINSERT INTO STAFF VALUES (104, 'Deepa', 'IT', 72000, 'Bengaluru', 5000);\nINSERT INTO STAFF VALUES (105, 'Esha', 'Sales', 45000, 'Mangaluru', NULL);\nINSERT INTO STAFF VALUES (106, 'Farooq', 'HR', 40000, 'Pune', 2500);\nINSERT INTO STAFF VALUES (107, 'Gita', 'IT', 58000, 'Mysuru', 4000);\nSELECT Dept, COUNT(*) AS Staff, SUM(Salary) AS Total, AVG(Salary) AS AvgSal\nFROM STAFF\nGROUP BY Dept\nORDER BY Dept;",
+  "keys": [
+   "type",
+   "lang",
+   "runnable",
+   "caption",
+   "code"
+  ]
+ },
+ {
+  "lesson": "c12-cs-sql-aggregates-joins",
+  "i": 9,
+  "lang": "sql",
+  "runnable": true,
+  "code": "CREATE TABLE STAFF (\n  SID INT PRIMARY KEY,\n  Name VARCHAR(20) NOT NULL,\n  Dept VARCHAR(10),\n  Salary INT,\n  City VARCHAR(15),\n  Bonus INT\n);\nINSERT INTO STAFF VALUES (101, 'Anil', 'Sales', 42000, 'Pune', 3000);\nINSERT INTO STAFF VALUES (102, 'Bhavya', 'IT', 65000, 'Bengaluru', NULL);\nINSERT INTO STAFF VALUES (103, 'Chirag', 'HR', 38000, 'Mysuru', 2000);\nINSERT INTO STAFF VALUES (104, 'Deepa', 'IT', 72000, 'Bengaluru', 5000);\nINSERT INTO STAFF VALUES (105, 'Esha', 'Sales', 45000, 'Mangaluru', NULL);\nINSERT INTO STAFF VALUES (106, 'Farooq', 'HR', 40000, 'Pune', 2500);\nINSERT INTO STAFF VALUES (107, 'Gita', 'IT', 58000, 'Mysuru', 4000);\nCREATE TABLE DEPT (Dept VARCHAR(10) PRIMARY KEY, HOD VARCHAR(20), Floor INT);\nINSERT INTO DEPT VALUES ('Sales', 'Rao', 1);\nINSERT INTO DEPT VALUES ('IT', 'Iyer', 3);\nINSERT INTO DEPT VALUES ('HR', 'Khan', 2);\nSELECT S.Name, S.Dept, D.HOD, D.Floor\nFROM STAFF AS S, DEPT AS D\nWHERE S.Dept = D.Dept AND S.City = 'Pune';",
+  "keys": [
+   "type",
+   "lang",
+   "runnable",
+   "code"
+  ]
+ },
+ {
+  "lesson": "c12-cs-mysql-connector-basics",
+  "i": 4,
+  "lang": "python",
+  "code": "import mysql.connector as sqltor\n\ncon = sqltor.connect(host=\"localhost\", user=\"root\",\n                     passwd=\"tiger\", database=\"school\")\nif con.is_connected():\n    print(\"Connected\")\ncur = con.cursor()\ncur.execute(\"SELECT AdmNo, Name, Marks FROM STUDENT ORDER BY Marks DESC\")\nfirst = cur.fetchone()\nprint(first)\ntwo = cur.fetchmany(2)\nprint(two)\nrest = cur.fetchall()\nprint(rest)\nprint(\"Rows read:\", cur.rowcount)\ncon.close()",
+  "keys": [
+   "type",
+   "lang",
+   "caption",
+   "code"
+  ]
+ },
+ {
+  "lesson": "c12-cs-mysql-connector-basics",
+  "i": 5,
+  "lang": "python",
+  "code": "Connected\n(1201, 'Kavya', 92)\n[(1105, 'Pooja', 88), (1202, 'Imran', 84)]\n[(1107, 'Tenzing', 76)]\nRows read: 4",
+  "keys": [
+   "type",
+   "lang",
+   "caption",
+   "code"
+  ]
+ },
+ {
+  "lesson": "c12-cs-python-sql-programs",
+  "i": 2,
+  "lang": "python",
+  "code": "import mysql.connector as sqltor\n\ncon = sqltor.connect(host=\"localhost\", user=\"root\",\n                     passwd=\"tiger\", database=\"school\")\ncur = con.cursor()\n\ncur.execute(\"INSERT INTO STUDENT VALUES (%s, %s, %s, %s)\", (1210, \"Ritu\", 12, 81))\ncon.commit()\nprint(\"Inserted:\", cur.rowcount)\n\ncur.execute(\"UPDATE STUDENT SET Marks = Marks + 5 WHERE Class = %s\", (11,))\ncon.commit()\nprint(\"Updated:\", cur.rowcount)\n\ncur.execute(\"DELETE FROM STUDENT WHERE Marks < %s\", (82,))\ncon.commit()\nprint(\"Deleted:\", cur.rowcount)\n\ncur.execute(\"SELECT Name, Marks FROM STUDENT WHERE Class = 12 ORDER BY Name\")\nfor row in cur.fetchall():\n    print(row[0], row[1])\ncon.close()",
+  "keys": [
+   "type",
+   "lang",
+   "caption",
+   "code"
+  ]
+ },
+ {
+  "lesson": "c12-cs-python-sql-programs",
+  "i": 3,
+  "lang": "python",
+  "code": "Inserted: 1\nUpdated: 2\nDeleted: 2\nImran 84\nKavya 92",
+  "keys": [
+   "type",
+   "lang",
+   "caption",
+   "code"
+  ]
+ },
+ {
+  "lesson": "c12-cs-python-sql-programs",
+  "i": 8,
+  "lang": "python",
+  "code": "import mysql.connector as sqltor\n\ndef add_student(con):\n    adm = int(input(\"AdmNo: \"))\n    nm = input(\"Name: \")\n    cls = int(input(\"Class: \"))\n    mk = int(input(\"Marks: \"))\n    cur = con.cursor()\n    cur.execute(\"INSERT INTO STUDENT VALUES (%s, %s, %s, %s)\", (adm, nm, cls, mk))\n    con.commit()\n    print(\"Record added\")\n\ndef show_toppers(con, cutoff):\n    cur = con.cursor()\n    cur.execute(\"SELECT Name, Marks FROM STUDENT WHERE Marks > {} ORDER BY Name\".format(cutoff))\n    rows = cur.fetchall()\n    for r in rows:\n        print(r[0], \"-\", r[1])\n    print(\"Total:\", cur.rowcount)\n\ncon = sqltor.connect(host=\"localhost\", user=\"root\",\n                     passwd=\"tiger\", database=\"school\")\nshow_toppers(con, 85)\ncon.close()",
+  "keys": [
+   "type",
+   "lang",
+   "caption",
+   "code"
+  ]
+ }
+]
