@@ -1999,7 +1999,796 @@ The key skill is the **sketch**: once the region is drawn, the integral is routi
       },
     ],
   },
+
+  /* ------------------------------------------------------------------ */
+  /* Differential Equations (NCERT Ch 9, ISC Differential Equations)     */
+  /* ------------------------------------------------------------------ */
+  {
+    slug: "c12-differential-equations",
+    title: "Differential Equations",
+    icon: "🌱",
+    description: "Order and degree, general and particular solutions, variables separable, homogeneous and linear differential equations.",
+    lessons: [
+      {
+        slug: "c12-de-basics",
+        title: "Order, Degree and Solutions",
+        summary: "What a differential equation is, how to find its order and degree, general and particular solutions, and forming a differential equation from a family of curves.",
+        minutes: 18,
+        xp: 45,
+        blocks: [
+          {
+            type: "illustration",
+            emoji: "🦠",
+            caption: "Bacteria in a warm dish multiply faster when there are more of them. 'Rate of growth is proportional to the number present' is a differential equation.",
+          },
+          {
+            type: "text",
+            md: t`A **differential equation** is an equation involving derivatives of a dependent variable with respect to an independent variable, for example $\frac{dy}{dx} = 2xy$. When there is only one independent variable it is an **ordinary differential equation**; these are the only kind in Class 12. We write $y' = \frac{dy}{dx}$, $y'' = \frac{d^2y}{dx^2}$, and so on.
+
+The **order** is the order of the highest derivative in the equation. The **degree** (defined only when the equation is a **polynomial in the derivatives** $y', y'', \ldots$) is the highest power of the highest-order derivative, after removing fractions and radicals in the derivatives.`,
+          },
+          {
+            type: "table",
+            headers: ["Equation", "Order", "Degree"],
+            rows: [
+              [t`$\frac{dy}{dx} = \cos x$`, "1", "1"],
+              [t`$(y'')^3 + (y')^4 - \sin y = 0$`, "2", "3"],
+              [t`$y''' + 2y'' + \sin(y') = 0$`, "3", t`not defined ($\sin y'$ is not a polynomial in $y'$)`],
+              [t`$\left(1 + (y')^2\right)^{3/2} = y''$`, "2", t`2 (square both sides first)`],
+            ],
+          },
+          {
+            type: "mistake",
+            wrong: t`The degree of $\left(1 + (y')^2\right)^{3/2} = y''$ is 1, because $y''$ appears to the power 1.`,
+            right: t`First make the equation free of radicals in the derivatives. Squaring gives $\left(1 + (y')^2\right)^3 = (y'')^2$, so the order is 2 and the degree is 2.`,
+            why: t`Degree is read only when the equation is a polynomial in the derivatives. A fractional power $\frac{3}{2}$ is not allowed, and removing it changes the power of $y''$.`,
+          },
+          {
+            type: "checkpoint",
+            questions: [
+              {
+                kind: "mcq",
+                q: t`The order and degree of $(y''')^2 + (y'')^3 + y = 0$ are`,
+                options: ["order 3, degree 2", "order 2, degree 3", "order 3, degree 3", "order 3, degree not defined"],
+                answer: 0,
+                explain: t`The highest derivative is $y'''$ (order 3), and it appears squared (degree 2). The cube on $y''$ does not matter.`,
+              },
+            ],
+          },
+          {
+            type: "text",
+            md: t`A **solution** of a differential equation is a function $y = \phi(x)$ that makes the equation true when substituted. The **general solution** contains arbitrary constants; for an equation of order $n$ it has $n$ independent arbitrary constants. A **particular solution** has no arbitrary constants; they are fixed by given conditions, such as $y(0) = 1$.`,
+          },
+          {
+            type: "example",
+            title: "Verifying a general solution",
+            problem: t`Show that $y = a\cos x + b\sin x$ is a solution of $y'' + y = 0$.`,
+            steps: [
+              t`$y' = -a\sin x + b\cos x$.`,
+              t`$y'' = -a\cos x - b\sin x = -y$.`,
+              t`So $y'' + y = 0$ for every $a, b$. Two constants for a second-order equation: this is the general solution.`,
+            ],
+            answer: t`Verified; $y = a\cos x + b\sin x$ is the general solution of $y'' + y = 0$.`,
+          },
+          {
+            type: "example",
+            title: "Checking a single function",
+            problem: t`Is $y = e^{-3x}$ a solution of $y'' + y' - 6y = 0$?`,
+            steps: [
+              t`$y' = -3e^{-3x}$, $y'' = 9e^{-3x}$.`,
+              t`$y'' + y' - 6y = (9 - 3 - 6)e^{-3x} = 0$.`,
+            ],
+            answer: "Yes. It has no arbitrary constant, so it is a particular solution.",
+          },
+          {
+            type: "text",
+            md: t`**Forming a differential equation.** Given a family of curves with $n$ arbitrary constants, differentiate $n$ times and eliminate the constants. The result is a differential equation of order $n$ satisfied by every member of the family.`,
+          },
+          {
+            type: "example",
+            title: "Eliminating two constants",
+            problem: t`Form the differential equation of the family $y = Ae^{2x} + Be^{-x}$.`,
+            steps: [
+              t`$y' = 2Ae^{2x} - Be^{-x}$ and $y'' = 4Ae^{2x} + Be^{-x}$.`,
+              t`$y'' - y' = 2Ae^{2x} + 2Be^{-x} = 2y$.`,
+            ],
+            answer: t`$y'' - y' - 2y = 0$ (order 2, matching the two constants).`,
+          },
+          {
+            type: "callout",
+            tone: "note",
+            title: "Board note",
+            md: "Forming differential equations from families of curves was removed from the rationalised NCERT chapter, so CBSE and Karnataka PUC no longer set it. ISC still includes it, and JEE and KCET ask for the order or degree of the equation of a family.",
+          },
+          {
+            type: "activity",
+            activity: {
+              kind: "match",
+              prompt: "Match each equation with its order and degree.",
+              pairs: [
+                [t`$y' + y = e^x$`, "order 1, degree 1"],
+                [t`$(y'')^2 + y' = 0$`, "order 2, degree 2"],
+                [t`$y''' + (y')^5 = x$`, "order 3, degree 1"],
+                [t`$y'' + \cos(y') = 0$`, "order 2, degree not defined"],
+                [t`$(y')^3 + y = x$`, "order 1, degree 3"],
+              ],
+              explain: "Order comes from the highest derivative; degree is the power of that derivative only, and it exists only for polynomial equations in the derivatives.",
+            },
+          },
+          {
+            type: "callout",
+            tone: "exam",
+            title: "Board tip",
+            md: "A 1-mark question often asks for \"order + degree\" or the product. Write both separately before combining, and say \"degree not defined\" with a reason when the derivatives sit inside sin, log or e.",
+          },
+          {
+            type: "keypoints",
+            items: [
+              "Order: highest derivative present. Degree: its power, when the equation is a polynomial in derivatives.",
+              "Clear radicals and fractions in the derivatives before reading the degree.",
+              "General solution of an order-n equation has n arbitrary constants; a particular solution has none.",
+              "To form an equation: differentiate as many times as there are constants, then eliminate them.",
+            ],
+          },
+        ],
+        flashcards: [
+          { front: "Order of a differential equation", back: "The order of the highest derivative in it." },
+          { front: "Degree of a differential equation", back: "Power of the highest-order derivative, when the equation is a polynomial in derivatives." },
+          { front: t`Degree of $y'' + \sin(y') = 0$`, back: "Not defined." },
+          { front: "General solution", back: "A solution with as many arbitrary constants as the order." },
+          { front: "Particular solution", back: "A solution with the constants fixed by given conditions." },
+          { front: "Forming an equation from n constants", back: "Differentiate n times and eliminate the constants; order = n." },
+        ],
+        quiz: [
+          {
+            kind: "truefalse",
+            q: t`The degree of $y'' + e^{y'} = 0$ is not defined.`,
+            answer: true,
+            explain: t`$e^{y'}$ is not a polynomial in $y'$.`,
+          },
+          {
+            kind: "numeric",
+            q: "How many arbitrary constants are in the general solution of a fourth-order differential equation?",
+            answer: 4,
+            explain: "The number of independent arbitrary constants equals the order.",
+          },
+          {
+            kind: "mcq",
+            q: t`Which function is a solution of $y'' - 4y = 0$?`,
+            options: [t`$e^{2x}$`, t`$\sin 2x$`, t`$x^2$`, t`$\cos 2x$`],
+            answer: 0,
+            explain: t`$(e^{2x})'' = 4e^{2x}$, so $y'' - 4y = 0$. For $\sin 2x$, $y'' = -4y$, which solves $y'' + 4y = 0$ instead.`,
+          },
+          {
+            kind: "mcq",
+            q: t`The differential equation of the family of lines $y = mx$ through the origin is`,
+            options: [t`$xy' = y$`, t`$y' = m$`, t`$y'' = 0$`, t`$y' = xy$`],
+            answer: 0,
+            explain: t`$y' = m = \frac{y}{x}$, so $xy' = y$. $y' = m$ still contains the constant, which must be eliminated.`,
+            difficulty: 2,
+          },
+          {
+            kind: "numeric",
+            q: t`What is the degree of $\left(1 + (y')^2\right)^{3/2} = 5y''$?`,
+            answer: 2,
+            explain: t`Square: $(1 + (y')^2)^3 = 25(y'')^2$; the highest derivative $y''$ has power 2.`,
+            difficulty: 2,
+            hint: "Remove the fractional power first.",
+          },
+          {
+            kind: "mcq",
+            q: t`The particular solution of $y' = 2x$ with $y(1) = 4$ is`,
+            options: [t`$y = x^2 + 3$`, t`$y = x^2 + 4$`, t`$y = 2x^2 + 2$`, t`$y = x^2 - 3$`],
+            answer: 0,
+            explain: t`$y = x^2 + C$ and $4 = 1 + C$, so $C = 3$.`,
+          },
+          {
+            kind: "mcq",
+            q: t`The order of the differential equation of the family $y = A\cos(x + B)$ is`,
+            options: ["2", "1", "3", "0"],
+            answer: 0,
+            explain: t`Two independent arbitrary constants $A$ and $B$, so the order is 2 (the equation is $y'' + y = 0$).`,
+          },
+        ],
+      },
+      {
+        slug: "c12-de-separable-homogeneous",
+        title: "Variables Separable and Homogeneous Equations",
+        summary: "Solving first-order equations by separating the variables, and homogeneous equations by the substitution y = vx.",
+        minutes: 22,
+        xp: 55,
+        blocks: [
+          {
+            type: "text",
+            md: t`A first-order equation $\frac{dy}{dx} = F(x, y)$ is **variables separable** if $F(x, y) = g(x)\,h(y)$. Then put all the $y$'s with $dy$ and all the $x$'s with $dx$:
+
+$\frac{dy}{h(y)} = g(x)\,dx \;\Rightarrow\; \int\frac{dy}{h(y)} = \int g(x)\,dx + C.$
+
+One constant $C$ is enough, because two constants on the two sides combine into one.`,
+          },
+          {
+            type: "example",
+            title: "A general solution",
+            problem: t`Solve $\frac{dy}{dx} = \frac{1 + y^2}{1 + x^2}$.`,
+            steps: [
+              t`Separate: $\frac{dy}{1 + y^2} = \frac{dx}{1 + x^2}$.`,
+              t`Integrate both sides: $\tan^{-1} y = \tan^{-1} x + C$.`,
+            ],
+            answer: t`$\tan^{-1} y = \tan^{-1} x + C$.`,
+          },
+          {
+            type: "example",
+            title: "A particular solution",
+            problem: t`Solve $\frac{dy}{dx} = 2x e^{-y}$, given $y = 0$ when $x = 0$.`,
+            steps: [
+              t`Separate: $e^{y}\,dy = 2x\,dx$.`,
+              t`Integrate: $e^{y} = x^2 + C$.`,
+              t`At $x = 0$, $y = 0$: $1 = 0 + C$, so $C = 1$.`,
+              t`$e^y = x^2 + 1$, so $y = \log(x^2 + 1)$.`,
+            ],
+            answer: t`$y = \log(1 + x^2)$.`,
+          },
+          {
+            type: "mistake",
+            wrong: t`From $\frac{dy}{dx} = y$: $\log|y| = x + C$, so $y = e^x + C$.`,
+            right: t`$\log|y| = x + C$ gives $|y| = e^{x + C} = e^C e^x$, so $y = Ae^x$ with $A = \pm e^C$ (and $y = 0$ is also a solution, $A = 0$).`,
+            why: t`The constant was added inside the logarithm, so it becomes a **factor** after exponentiating. $y = e^x + C$ does not satisfy $y' = y$ unless $C = 0$: check by differentiating.`,
+          },
+          {
+            type: "checkpoint",
+            questions: [
+              {
+                kind: "mcq",
+                q: t`The general solution of $\frac{dy}{dx} = e^{x + y}$ is`,
+                options: [t`$e^x + e^{-y} = C$`, t`$e^x - e^{y} = C$`, t`$e^{x+y} = C$`, t`$e^{-x} + e^{y} = C$`],
+                answer: 0,
+                explain: t`$e^{-y}\,dy = e^x\,dx$ gives $-e^{-y} = e^x + C'$, i.e. $e^x + e^{-y} = C$.`,
+              },
+            ],
+          },
+          {
+            type: "text",
+            md: t`A function $F(x, y)$ is **homogeneous of degree** $n$ if $F(\lambda x, \lambda y) = \lambda^n F(x, y)$ for all $\lambda$. For example $x^2 + xy$ has degree 2, and $\frac{x + y}{x - y}$ has degree 0.
+
+The equation $\frac{dy}{dx} = F(x, y)$ is a **homogeneous differential equation** if $F$ is homogeneous of degree 0. Then $F$ depends only on $\frac{y}{x}$, and the substitution $y = vx$ makes the variables separable.`,
+          },
+          {
+            type: "list",
+            ordered: true,
+            items: [
+              t`Check that $F(\lambda x, \lambda y) = F(x, y)$.`,
+              t`Put $y = vx$, so $\frac{dy}{dx} = v + x\frac{dv}{dx}$.`,
+              t`Simplify to $x\frac{dv}{dx} = G(v)$ and separate: $\frac{dv}{G(v)} = \frac{dx}{x}$.`,
+              t`Integrate, then replace $v$ by $\frac{y}{x}$.`,
+              t`If the equation is easier as $\frac{dx}{dy} = H(x, y)$, use $x = vy$ instead.`,
+            ],
+          },
+          {
+            type: "example",
+            title: "Substitution y = vx",
+            problem: t`Solve $x^2\frac{dy}{dx} = y^2 + xy$.`,
+            steps: [
+              t`$\frac{dy}{dx} = \frac{y^2 + xy}{x^2}$ is homogeneous of degree 0. Put $y = vx$: $v + x\frac{dv}{dx} = v^2 + v$.`,
+              t`So $x\frac{dv}{dx} = v^2$, i.e. $\frac{dv}{v^2} = \frac{dx}{x}$.`,
+              t`Integrate: $-\frac{1}{v} = \log|x| + C$.`,
+              t`Put $v = \frac{y}{x}$: $-\frac{x}{y} = \log|x| + C$.`,
+            ],
+            answer: t`$-\frac{x}{y} = \log|x| + C$ (equivalently $x + y\log|x| + Cy = 0$).`,
+          },
+          {
+            type: "example",
+            title: "An inverse tangent appears",
+            problem: t`Solve $(x - y)\frac{dy}{dx} = x + y$.`,
+            steps: [
+              t`$\frac{dy}{dx} = \frac{x + y}{x - y} = \frac{1 + v}{1 - v}$ with $y = vx$.`,
+              t`$x\frac{dv}{dx} = \frac{1 + v}{1 - v} - v = \frac{1 + v^2}{1 - v}$, so $\frac{1 - v}{1 + v^2}\,dv = \frac{dx}{x}$.`,
+              t`Integrate: $\tan^{-1} v - \frac{1}{2}\log(1 + v^2) = \log|x| + C$.`,
+              t`With $v = \frac{y}{x}$: $\log|x| + \frac{1}{2}\log\left(1 + \frac{y^2}{x^2}\right) = \frac{1}{2}\log(x^2 + y^2)$.`,
+            ],
+            answer: t`$\tan^{-1}\frac{y}{x} = \frac{1}{2}\log(x^2 + y^2) + C$.`,
+          },
+          {
+            type: "activity",
+            activity: {
+              kind: "sort",
+              prompt: "Is the equation dy/dx = F(x, y) homogeneous?",
+              groups: ["Homogeneous", "Not homogeneous"],
+              items: [
+                { text: t`$\frac{dy}{dx} = \frac{x + y}{x - y}$`, group: 0, hint: "Every term has degree 1, so the ratio has degree 0." },
+                { text: t`$\frac{dy}{dx} = \frac{x^2 + y}{x}$`, group: 1, hint: t`$x^2$ has degree 2 but $y$ has degree 1.` },
+                { text: t`$\frac{dy}{dx} = \frac{y}{x} + \sin\frac{y}{x}$`, group: 0, hint: t`It depends only on $\frac{y}{x}$.` },
+                { text: t`$\frac{dy}{dx} = \frac{x + y + 1}{x - y}$`, group: 1, hint: "The constant 1 has degree 0, the other terms degree 1." },
+                { text: t`$\frac{dy}{dx} = \frac{x^2 + y^2}{xy}$`, group: 0, hint: "Degree 2 over degree 2." },
+                { text: t`$\frac{dy}{dx} = e^{x - y}$`, group: 1, hint: t`$e^{\lambda(x - y)}$ is not $e^{x-y}$; this one is separable instead.` },
+              ],
+              explain: t`Replace $x, y$ by $\lambda x, \lambda y$. If every $\lambda$ cancels, the equation is homogeneous and $y = vx$ works.`,
+            },
+          },
+          {
+            type: "callout",
+            tone: "exam",
+            title: "Board tip",
+            md: t`For a homogeneous equation, the first mark is for showing $F(\lambda x, \lambda y) = \lambda^0 F(x, y)$; do not skip it. Remember to substitute $v = \frac{y}{x}$ back at the end. If a condition is given, find $C$ and write the particular solution separately.`,
+          },
+          {
+            type: "keypoints",
+            items: [
+              t`Separable: $\frac{dy}{h(y)} = g(x)\,dx$, then integrate both sides with one constant.`,
+              t`Constants inside a log become factors: $\log|y| = x + C \Rightarrow y = Ae^x$.`,
+              t`Homogeneous: $F(\lambda x, \lambda y) = F(x, y)$; put $y = vx$, $\frac{dy}{dx} = v + x\frac{dv}{dx}$.`,
+              t`For $\frac{dx}{dy} = H(x, y)$ homogeneous, use $x = vy$.`,
+            ],
+          },
+        ],
+        flashcards: [
+          { front: "Variables separable form", back: t`$\frac{dy}{dx} = g(x)h(y)$` },
+          { front: "Homogeneous function of degree n", back: t`$F(\lambda x, \lambda y) = \lambda^n F(x, y)$` },
+          { front: "Substitution for a homogeneous equation", back: t`$y = vx$, $\frac{dy}{dx} = v + x\frac{dv}{dx}$` },
+          { front: t`Solution of $\frac{dy}{dx} = ky$`, back: t`$y = Ae^{kx}$` },
+          { front: t`When to use $x = vy$`, back: t`When the equation is $\frac{dx}{dy} = H(x, y)$ with $H$ homogeneous of degree 0.` },
+          { front: "How many constants in a first-order general solution?", back: "One." },
+        ],
+        quiz: [
+          {
+            kind: "mcq",
+            q: t`For the homogeneous equation $\frac{dy}{dx} = \frac{x^2 + y^2}{2xy}$, the right substitution is`,
+            options: [t`$y = vx$`, t`$y = v + x$`, t`$y = x^v$`, t`$v = x + y$`],
+            answer: 0,
+            explain: t`Degree 2 over degree 2: homogeneous of degree 0, so put $y = vx$.`,
+          },
+          {
+            kind: "numeric",
+            q: t`If $\frac{dy}{dx} = y$ and $y(0) = 2$, find $y(\log 3)$.`,
+            answer: 6,
+            explain: t`$y = 2e^x$, so $y(\log 3) = 2\cdot 3 = 6$.`,
+          },
+          {
+            kind: "truefalse",
+            q: t`$\frac{dy}{dx} = \frac{x^3 + y^3}{x^2 y}$ is a homogeneous differential equation.`,
+            answer: true,
+            explain: t`Numerator and denominator both have degree 3, so the right side has degree 0.`,
+          },
+          {
+            kind: "mcq",
+            q: t`The general solution of $x\,dy - y\,dx = 0$ is`,
+            options: [t`$y = Cx$`, t`$xy = C$`, t`$y = x + C$`, t`$x^2 + y^2 = C$`],
+            answer: 0,
+            explain: t`$\frac{dy}{y} = \frac{dx}{x}$ gives $\log|y| = \log|x| + \log|C|$, so $y = Cx$.`,
+          },
+          {
+            kind: "numeric",
+            q: t`Solve $\frac{dy}{dx} = 2xy$ with $y(0) = 1$, and give $y(1)$ (to 2 decimal places).`,
+            answer: 2.72,
+            tolerance: 0.01,
+            explain: t`$\frac{dy}{y} = 2x\,dx$, $\log y = x^2 + C$, $C = 0$: $y = e^{x^2}$, so $y(1) = e \approx 2.72$.`,
+            difficulty: 2,
+          },
+          {
+            kind: "mcq",
+            q: t`The general solution of $\frac{dy}{dx} = \frac{x + y}{x}$ ($x > 0$) is`,
+            options: [t`$y = x\log x + Cx$`, t`$y = \log x + C$`, t`$y = x + C\log x$`, t`$y = Ce^{x}$`],
+            answer: 0,
+            explain: t`With $y = vx$: $v + xv' = 1 + v$, so $xv' = 1$, $v = \log x + C$ and $y = x\log x + Cx$.`,
+            difficulty: 2,
+            hint: t`The $v$ terms cancel on both sides.`,
+          },
+          {
+            kind: "mcq",
+            q: t`Which equation is variables separable but not homogeneous?`,
+            options: [t`$\frac{dy}{dx} = e^{x - y}$`, t`$\frac{dy}{dx} = \frac{y}{x}$`, t`$\frac{dy}{dx} = \frac{x - y}{x + y}$`, t`$\frac{dy}{dx} = \frac{x + y + 2}{x - 1}$`],
+            answer: 0,
+            explain: t`$e^{x - y} = e^x e^{-y}$ separates, but it is not unchanged by $x \to \lambda x$, $y \to \lambda y$. $\frac{y}{x}$ is both; the third is homogeneous only; the last is neither.`,
+            difficulty: 2,
+          },
+        ],
+      },
+      {
+        slug: "c12-de-linear",
+        title: "Linear Differential Equations",
+        summary: "First-order linear equations dy/dx + Py = Q and dx/dy + P₁x = Q₁, the integrating factor, and growth problems.",
+        minutes: 22,
+        xp: 55,
+        blocks: [
+          {
+            type: "text",
+            md: t`A first-order **linear differential equation** has the form
+
+$\frac{dy}{dx} + Py = Q,$
+
+where $P$ and $Q$ are constants or functions of $x$ only. "Linear" means $y$ and $\frac{dy}{dx}$ appear only to the first power and are not multiplied together.`,
+          },
+          {
+            type: "formula",
+            tex: t`\text{I.F.} = e^{\int P\,dx},\qquad y\cdot\text{I.F.} = \int Q\cdot\text{I.F.}\,dx + C`,
+            caption: "I.F. is the integrating factor.",
+          },
+          {
+            type: "list",
+            ordered: true,
+            items: [
+              t`**Why it works.** Multiply the equation by $g(x) = e^{\int P\,dx}$: $g\frac{dy}{dx} + Pg\,y = Qg$.`,
+              t`Since $g' = Pg$, the left side is $g y' + g' y = \frac{d}{dx}(y\,g)$.`,
+              t`So $\frac{d}{dx}(y\,g) = Qg$. Integrate both sides: $y\,g = \int Qg\,dx + C$.`,
+            ],
+          },
+          {
+            type: "example",
+            title: "Constant P",
+            problem: t`Solve $\frac{dy}{dx} + y = e^{-x}$.`,
+            steps: [
+              t`$P = 1$, $Q = e^{-x}$. I.F. $= e^{\int 1\,dx} = e^x$.`,
+              t`$y e^x = \int e^{-x}e^x\,dx = \int 1\,dx = x + C$.`,
+            ],
+            answer: t`$y = (x + C)e^{-x}$.`,
+          },
+          {
+            type: "example",
+            title: "Make the coefficient of dy/dx equal to 1",
+            problem: t`Solve $x\frac{dy}{dx} + 2y = x^2$ ($x > 0$), given $y = 1$ when $x = 1$.`,
+            steps: [
+              t`Divide by $x$: $\frac{dy}{dx} + \frac{2}{x}y = x$. So $P = \frac{2}{x}$, $Q = x$.`,
+              t`I.F. $= e^{\int \frac{2}{x}dx} = e^{2\log x} = x^2$.`,
+              t`$y x^2 = \int x\cdot x^2\,dx = \frac{x^4}{4} + C$.`,
+              t`At $(1, 1)$: $1 = \frac{1}{4} + C$, so $C = \frac{3}{4}$.`,
+            ],
+            answer: t`$y = \frac{x^2}{4} + \frac{3}{4x^2}$.`,
+          },
+          {
+            type: "checkpoint",
+            questions: [
+              {
+                kind: "mcq",
+                q: t`The integrating factor of $\frac{dy}{dx} + y\tan x = \sec x$ is`,
+                options: [t`$\sec x$`, t`$\cos x$`, t`$e^{\tan x}$`, t`$\log\sec x$`],
+                answer: 0,
+                explain: t`$e^{\int\tan x\,dx} = e^{\log\sec x} = \sec x$.`,
+              },
+            ],
+          },
+          {
+            type: "text",
+            md: t`Some equations are linear in $x$ instead of $y$: $\frac{dx}{dy} + P_1 x = Q_1$, where $P_1, Q_1$ are constants or functions of $y$. Then I.F. $= e^{\int P_1\,dy}$ and $x\cdot\text{I.F.} = \int Q_1\cdot\text{I.F.}\,dy + C$. Try this when the given equation is not linear in $y$.`,
+          },
+          {
+            type: "example",
+            title: "Linear in x",
+            problem: t`Solve $(x + 2y^2)\frac{dy}{dx} = y$, $y > 0$.`,
+            steps: [
+              t`Not linear in $y$. Flip: $\frac{dx}{dy} = \frac{x + 2y^2}{y} = \frac{x}{y} + 2y$, so $\frac{dx}{dy} - \frac{1}{y}x = 2y$.`,
+              t`I.F. $= e^{-\int\frac{dy}{y}} = e^{-\log y} = \frac{1}{y}$.`,
+              t`$\frac{x}{y} = \int 2y\cdot\frac{1}{y}\,dy = 2y + C$.`,
+            ],
+            answer: t`$x = 2y^2 + Cy$.`,
+          },
+          {
+            type: "callout",
+            tone: "note",
+            title: "Board note: growth and decay",
+            md: t`ISC also asks simple applications. If a quantity grows (or decays) at a rate proportional to itself, $\frac{dN}{dt} = kN$, then separating gives $N = N_0e^{kt}$, where $N_0$ is the value at $t = 0$ ($k > 0$ growth, $k < 0$ decay). CBSE and Karnataka PUC set such questions less often, but the method is the same.`,
+          },
+          {
+            type: "example",
+            title: "Growth of bacteria",
+            problem: "A bacteria culture doubles in 3 hours, growing at a rate proportional to its size. How long does it take to triple?",
+            steps: [
+              t`$N = N_0e^{kt}$. Doubling in 3 h: $e^{3k} = 2$, so $k = \frac{\log 2}{3}$.`,
+              t`Tripling: $e^{kt} = 3$, so $t = \frac{\log 3}{k} = \frac{3\log 3}{\log 2}$.`,
+              t`$\frac{\log 3}{\log 2} \approx \frac{1.0986}{0.6931} \approx 1.585$, so $t \approx 4.75$ h.`,
+            ],
+            answer: "About 4.75 hours (exactly 3 log 3 / log 2 hours).",
+          },
+          {
+            type: "mistake",
+            wrong: t`For $x\frac{dy}{dx} + 2y = x^2$, take $P = 2$, so I.F. $= e^{2x}$.`,
+            right: t`First divide by the coefficient of $\frac{dy}{dx}$: $\frac{dy}{dx} + \frac{2}{x}y = x$. Now $P = \frac{2}{x}$ and I.F. $= x^2$.`,
+            why: t`The formula is proved for the standard form where $\frac{dy}{dx}$ has coefficient 1. With any other coefficient, the left side is not the derivative of $y\cdot$I.F., and the answer will not satisfy the equation.`,
+          },
+          {
+            type: "activity",
+            activity: {
+              kind: "order",
+              prompt: "Order the steps for solving a linear equation.",
+              items: [
+                "Write it as dy/dx + Py = Q",
+                "Find I.F. = e^(∫P dx)",
+                "Write y × I.F. = ∫ Q × I.F. dx + C",
+                "Integrate the right side",
+                "Use the given condition to find C",
+              ],
+              explain: "Standard form comes first: P and Q can only be read off once the coefficient of dy/dx is 1.",
+            },
+          },
+          {
+            type: "callout",
+            tone: "exam",
+            title: "Board tip",
+            md: t`Marks are split roughly as: standard form and I.F. (1), the solution formula (1), the integration (1), the constant (1). Simplify $e^{\log f(x)} = f(x)$ in the I.F.; leaving it unsimplified makes the next integral look harder than it is.`,
+          },
+          {
+            type: "keypoints",
+            items: [
+              t`Linear in $y$: $\frac{dy}{dx} + Py = Q$; I.F. $= e^{\int P\,dx}$; $y\cdot$I.F. $= \int Q\cdot$I.F.$\,dx + C$.`,
+              t`Make the coefficient of $\frac{dy}{dx}$ equal to 1 first.`,
+              t`If it is not linear in $y$, try $\frac{dx}{dy} + P_1x = Q_1$.`,
+              t`$\frac{dN}{dt} = kN \Rightarrow N = N_0e^{kt}$.`,
+            ],
+          },
+        ],
+        flashcards: [
+          { front: "Standard linear form", back: t`$\frac{dy}{dx} + Py = Q$, with $P, Q$ functions of $x$` },
+          { front: "Integrating factor", back: t`$e^{\int P\,dx}$` },
+          { front: "Solution of a linear equation", back: t`$y\cdot\text{I.F.} = \int Q\cdot\text{I.F.}\,dx + C$` },
+          { front: "Linear in x", back: t`$\frac{dx}{dy} + P_1x = Q_1$; I.F. $= e^{\int P_1\,dy}$` },
+          { front: t`$e^{\log f(x)}$`, back: t`$f(x)$` },
+          { front: "Exponential growth law", back: t`$N = N_0e^{kt}$` },
+        ],
+        quiz: [
+          {
+            kind: "mcq",
+            q: t`The integrating factor of $x\frac{dy}{dx} - y = x^2$ ($x > 0$) is`,
+            options: [t`$\frac{1}{x}$`, t`$x$`, t`$e^{-x}$`, t`$-\log x$`],
+            answer: 0,
+            explain: t`Standard form: $\frac{dy}{dx} - \frac{1}{x}y = x$, so I.F. $= e^{-\log x} = \frac{1}{x}$.`,
+          },
+          {
+            kind: "mcq",
+            q: t`The general solution of $\frac{dy}{dx} - y = e^x$ is`,
+            options: [t`$y = (x + C)e^x$`, t`$y = e^x + C$`, t`$y = xe^{-x} + C$`, t`$y = Ce^{-x}$`],
+            answer: 0,
+            explain: t`I.F. $= e^{-x}$: $ye^{-x} = \int 1\,dx = x + C$.`,
+          },
+          {
+            kind: "truefalse",
+            q: t`$\frac{dy}{dx} + y^2 = x$ is a linear differential equation.`,
+            answer: false,
+            explain: t`$y^2$ is a second power of $y$, so it is not linear.`,
+          },
+          {
+            kind: "numeric",
+            q: t`Solve $\frac{dy}{dx} + \frac{y}{x} = 1$ ($x > 0$) with $y(1) = 1$, and give $y(2)$.`,
+            answer: 1.25,
+            explain: t`I.F. $= x$: $xy = \frac{x^2}{2} + C$, $C = \frac{1}{2}$. So $y = \frac{x}{2} + \frac{1}{2x}$ and $y(2) = 1 + \frac{1}{4} = 1.25$.`,
+            difficulty: 2,
+          },
+          {
+            kind: "mcq",
+            q: t`For $\frac{dx}{dy} + x = y$, the integrating factor is`,
+            options: [t`$e^y$`, t`$e^x$`, t`$e^{-y}$`, t`$y$`],
+            answer: 0,
+            explain: t`It is linear in $x$ with $P_1 = 1$, so I.F. $= e^{\int 1\,dy} = e^y$.`,
+          },
+          {
+            kind: "numeric",
+            q: t`The solution of $\frac{dy}{dx} + 2y = 4$ with $y(0) = 0$ is $y = 2(1 - e^{-2x})$. What value does $y$ approach as $x \to \infty$?`,
+            answer: 2,
+            explain: t`$e^{-2x} \to 0$, so $y \to 2$. (Check: I.F. $e^{2x}$, $ye^{2x} = 2e^{2x} + C$, $C = -2$.)`,
+          },
+          {
+            kind: "numeric",
+            q: "A radioactive sample decays at a rate proportional to its mass. Half of it remains after 5 years. What fraction remains after 15 years?",
+            answer: 0.125,
+            explain: t`$m = m_0e^{kt}$ with $e^{5k} = \frac{1}{2}$, so after 15 years $e^{15k} = \left(\frac{1}{2}\right)^3 = \frac{1}{8}$.`,
+            difficulty: 2,
+          },
+        ],
+      },
+      {
+        slug: "c12-de-exam",
+        title: "Exam edge: Differential Equations",
+        summary: "What JEE, KCET and COMEDK ask: order and degree of families, reducible substitutions, exact differentials, Bernoulli equations and curve problems.",
+        minutes: 24,
+        xp: 60,
+        track: "exam",
+        blocks: [
+          {
+            type: "text",
+            md: t`Differential equations give one or two questions in most JEE Main papers and regular questions in KCET and COMEDK. CETs ask order and degree, and direct separable or linear equations. JEE adds substitutions such as $v = x + y$, **exact differentials**, **Bernoulli** equations, and geometric conditions on tangents and normals. JEE Advanced mixes them with integral equations such as $f(x) = 1 + \int_0^x f(t)\,dt$.`,
+          },
+          {
+            type: "table",
+            headers: ["Expression", "Exact differential of"],
+            rows: [
+              [t`$x\,dy + y\,dx$`, t`$d(xy)$`],
+              [t`$\frac{x\,dy - y\,dx}{x^2}$`, t`$d\left(\frac{y}{x}\right)$`],
+              [t`$\frac{y\,dx - x\,dy}{y^2}$`, t`$d\left(\frac{x}{y}\right)$`],
+              [t`$\frac{x\,dy - y\,dx}{x^2 + y^2}$`, t`$d\left(\tan^{-1}\frac{y}{x}\right)$`],
+              [t`$\frac{x\,dy + y\,dx}{xy}$`, t`$d(\log xy)$`],
+              [t`$x\,dx + y\,dy$`, t`$d\left(\frac{x^2 + y^2}{2}\right)$`],
+            ],
+          },
+          {
+            type: "text",
+            md: t`**Two reducible types.**
+
+$\frac{dy}{dx} = f(ax + by + c)$: put $v = ax + by + c$; then $\frac{dv}{dx} = a + b f(v)$ is separable.
+
+**Bernoulli:** $\frac{dy}{dx} + Py = Qy^n$ ($n \ne 0, 1$): divide by $y^n$ and put $z = y^{1-n}$; the equation becomes linear in $z$.`,
+          },
+          {
+            type: "example",
+            title: "KCET level: degree after clearing a radical",
+            problem: t`Find the order and degree of $\left[1 + \left(\frac{dy}{dx}\right)^2\right]^{3/2} = \frac{d^2y}{dx^2}$, the equation of curves of unit curvature.`,
+            steps: [
+              t`Square both sides: $\left[1 + (y')^2\right]^3 = (y'')^2$.`,
+              t`Highest derivative: $y''$, so the order is 2; its power is 2.`,
+            ],
+            answer: "Order 2, degree 2.",
+          },
+          {
+            type: "example",
+            title: "JEE Main level: substitution v = x + y + 1",
+            problem: t`Solve $\frac{dy}{dx} = (x + y + 1)^2$.`,
+            steps: [
+              t`Put $v = x + y + 1$: $\frac{dv}{dx} = 1 + \frac{dy}{dx} = 1 + v^2$.`,
+              t`Separate: $\frac{dv}{1 + v^2} = dx$, so $\tan^{-1} v = x + C$.`,
+            ],
+            answer: t`$\tan^{-1}(x + y + 1) = x + C$, i.e. $y = \tan(x + C) - x - 1$.`,
+          },
+          {
+            type: "checkpoint",
+            questions: [
+              {
+                kind: "mcq",
+                q: t`The solution of $x\,dy + y\,dx = \frac{dx}{x}$ is`,
+                options: [t`$xy = \log|x| + C$`, t`$\frac{y}{x} = \log|x| + C$`, t`$xy = -\frac{1}{x} + C$`, t`$y = x\log|x| + C$`],
+                answer: 0,
+                explain: t`The left side is $d(xy)$, so integrating gives $xy = \log|x| + C$.`,
+              },
+            ],
+          },
+          {
+            type: "example",
+            title: "JEE Main level: spot the exact differential",
+            problem: t`Solve $x\,dy - y\,dx = (x^2 + y^2)\,dx$.`,
+            steps: [
+              t`Divide by $x^2 + y^2$: $\frac{x\,dy - y\,dx}{x^2 + y^2} = dx$.`,
+              t`The left side is $d\left(\tan^{-1}\frac{y}{x}\right)$.`,
+              t`Integrate: $\tan^{-1}\frac{y}{x} = x + C$.`,
+            ],
+            answer: t`$y = x\tan(x + C)$.`,
+          },
+          {
+            type: "example",
+            title: "JEE Main level: a Bernoulli equation",
+            problem: t`Solve $\frac{dy}{dx} + y = y^2e^x$.`,
+            steps: [
+              t`Divide by $y^2$: $y^{-2}\frac{dy}{dx} + y^{-1} = e^x$. Put $z = y^{-1}$, so $\frac{dz}{dx} = -y^{-2}\frac{dy}{dx}$.`,
+              t`Then $-\frac{dz}{dx} + z = e^x$, i.e. $\frac{dz}{dx} - z = -e^x$.`,
+              t`I.F. $= e^{-x}$: $ze^{-x} = \int -1\,dx = -x + C$.`,
+              t`So $\frac{1}{y} = e^x(C - x)$.`,
+            ],
+            answer: t`$y = \frac{e^{-x}}{C - x}$.`,
+          },
+          {
+            type: "example",
+            title: "JEE Advanced level: a condition on the tangent",
+            problem: t`A curve in $x > 0$ passes through $(1, 1)$. At every point $P(x, y)$ on it, the tangent cuts the $y$-axis at a height equal to the $x$-coordinate of $P$. Find the curve.`,
+            steps: [
+              t`Tangent at $P$: $Y - y = y'(X - x)$. At $X = 0$: $Y = y - xy'$.`,
+              t`Condition: $y - xy' = x$, i.e. $\frac{dy}{dx} - \frac{1}{x}y = -1$, a linear equation.`,
+              t`I.F. $= e^{-\log x} = \frac{1}{x}$: $\frac{y}{x} = \int -\frac{1}{x}\,dx = -\log x + C$.`,
+              t`At $(1, 1)$: $C = 1$.`,
+            ],
+            answer: t`$y = x(1 - \log x)$.`,
+          },
+          {
+            type: "mistake",
+            wrong: t`For the Bernoulli equation $\frac{dy}{dx} + Py = Qy^3$, put $z = y^{2}$.`,
+            right: t`Put $z = y^{1 - n} = y^{-2}$. Then $\frac{dz}{dx} = -2y^{-3}\frac{dy}{dx}$, and after dividing by $y^3$ the equation becomes $\frac{dz}{dx} - 2Pz = -2Q$.`,
+            why: t`The new variable must match the $y^{-n}\frac{dy}{dx}$ term that appears after dividing by $y^n$. Only $y^{1-n}$ has a derivative proportional to it.`,
+          },
+          {
+            type: "mistake",
+            wrong: t`For the family of all circles of radius $r$, the equation has order 3, because a circle has three constants $h, k, r$.`,
+            right: t`Here $r$ is fixed; only $h$ and $k$ vary. Two arbitrary constants give order 2: $\left[1 + (y')^2\right]^3 = r^2(y'')^2$.`,
+            why: t`Order equals the number of constants that vary across the family. A constant fixed in the question (like a given radius) is not arbitrary.`,
+          },
+          {
+            type: "activity",
+            activity: {
+              kind: "match",
+              prompt: "Match each expression to the function it is the differential of.",
+              pairs: [
+                [t`$x\,dy + y\,dx$`, t`$xy$`],
+                [t`$\frac{x\,dy - y\,dx}{x^2}$`, t`$\frac{y}{x}$`],
+                [t`$\frac{x\,dy - y\,dx}{x^2 + y^2}$`, t`$\tan^{-1}\frac{y}{x}$`],
+                [t`$\frac{y\,dx - x\,dy}{y^2}$`, t`$\frac{x}{y}$`],
+              ],
+              explain: "These four come from the product and quotient rules. Spotting them turns a hard equation into a one-line integration.",
+            },
+          },
+          {
+            type: "keypoints",
+            items: [
+              t`$\frac{dy}{dx} = f(ax + by + c)$: put $v = ax + by + c$.`,
+              t`Bernoulli $\frac{dy}{dx} + Py = Qy^n$: $z = y^{1-n}$ makes it linear.`,
+              "Learn the exact differentials of xy, y/x, x/y and tan⁻¹(y/x).",
+              t`Tangent problems: $y$-intercept $y - xy'$, $x$-intercept $x - \frac{y}{y'}$.`,
+              t`Integral equations: differentiate to get a DE, and use the integral at a limit to get the initial value.`,
+            ],
+          },
+        ],
+        flashcards: [
+          { front: t`$d\left(\frac{y}{x}\right)$`, back: t`$\frac{x\,dy - y\,dx}{x^2}$` },
+          { front: t`$d\left(\tan^{-1}\frac{y}{x}\right)$`, back: t`$\frac{x\,dy - y\,dx}{x^2 + y^2}$` },
+          { front: "Bernoulli substitution", back: t`$z = y^{1-n}$ for $\frac{dy}{dx} + Py = Qy^n$` },
+          { front: t`$\frac{dy}{dx} = f(ax + by + c)$`, back: t`Put $v = ax + by + c$; $\frac{dv}{dx} = a + bf(v)$.` },
+          { front: "y-intercept of the tangent at (x, y)", back: t`$y - x\frac{dy}{dx}$` },
+          { front: "Order of the equation of circles of fixed radius", back: "2 (degree 2)" },
+        ],
+        quiz: [
+          {
+            kind: "mcq",
+            q: t`If $f$ is continuous and $f(x) = 1 + \int_0^x f(t)\,dt$ for all $x$, then $f(1)$ equals`,
+            options: [t`$e$`, "1", "2", t`$e - 1$`],
+            answer: 0,
+            explain: t`Differentiate: $f'(x) = f(x)$; put $x = 0$: $f(0) = 1$. So $f(x) = e^x$ and $f(1) = e$.`,
+            difficulty: 3,
+            hint: "Differentiate both sides, and read off f(0) from the equation.",
+          },
+          {
+            kind: "mcq",
+            q: t`The solution of $x\,dy - y\,dx = x^3\,dx$ ($x \ne 0$) is`,
+            options: [t`$y = \frac{x^3}{2} + Cx$`, t`$y = x^3 + C$`, t`$xy = \frac{x^4}{4} + C$`, t`$y = \frac{x^2}{2} + C$`],
+            answer: 0,
+            explain: t`Divide by $x^2$: $d\left(\frac{y}{x}\right) = x\,dx$, so $\frac{y}{x} = \frac{x^2}{2} + C$.`,
+            difficulty: 2,
+          },
+          {
+            kind: "numeric",
+            q: t`For the differential equation of all circles of radius 3 (centre anywhere in the plane), find order + degree.`,
+            answer: 4,
+            explain: t`Eliminating $h, k$ from $(x - h)^2 + (y - k)^2 = 9$ gives $\left[1 + (y')^2\right]^3 = 9(y'')^2$: order 2, degree 2.`,
+            difficulty: 3,
+            hint: "Only the centre varies.",
+          },
+          {
+            kind: "mcq",
+            q: t`The solution of $\frac{dy}{dx} + \frac{y}{x} = y^2$ ($x > 0$) is`,
+            options: [t`$\frac{1}{xy} = C - \log x$`, t`$xy = \log x + C$`, t`$\frac{1}{y} = x\log x + C$`, t`$y = \frac{x}{C - \log x}$`],
+            answer: 0,
+            explain: t`$z = \frac{1}{y}$: $\frac{dz}{dx} - \frac{z}{x} = -1$. I.F. $\frac{1}{x}$: $\frac{z}{x} = -\log x + C$, i.e. $\frac{1}{xy} = C - \log x$.`,
+            difficulty: 2,
+          },
+          {
+            kind: "multi",
+            q: t`Which equations are linear in $y$? (Select all.)`,
+            options: [t`$y' + x^2y = \sin x$`, t`$y' + y^2 = x$`, t`$xy' + y = e^x$`, t`$yy' + x = 0$`],
+            answers: [0, 2],
+            explain: t`$y^2$ and $yy'$ are not linear. The first and third have $y$ and $y'$ to the first power with coefficients in $x$.`,
+          },
+          {
+            kind: "numeric",
+            q: t`A curve through $(1, 2)$ has slope $\frac{2y}{x}$ at every point $(x, y)$. Find $y$ when $x = 3$.`,
+            answer: 18,
+            explain: t`$\frac{dy}{y} = \frac{2\,dx}{x}$ gives $y = Cx^2$; $C = 2$, so $y(3) = 18$.`,
+          },
+          {
+            kind: "mcq",
+            q: t`The general solution of $\frac{dy}{dx} = \sin(x + y)$ is`,
+            options: [t`$\tan(x + y) - \sec(x + y) = x + C$`, t`$\tan(x + y) + \sec(x + y) = x + C$`, t`$\cos(x + y) = x + C$`, t`$\log|1 + \sin(x + y)| = x + C$`],
+            answer: 0,
+            explain: t`$v = x + y$: $\frac{dv}{1 + \sin v} = dx$. $\frac{1}{1 + \sin v} = \frac{1 - \sin v}{\cos^2 v} = \sec^2 v - \sec v\tan v$, which integrates to $\tan v - \sec v$.`,
+            difficulty: 3,
+            hint: t`Multiply top and bottom by $1 - \sin v$.`,
+          },
+          {
+            kind: "numeric",
+            q: "A town's population grows at a rate proportional to itself and doubles in 10 years. In how many years does it become 8 times as large?",
+            answer: 30,
+            unit: "years",
+            explain: t`$P = P_0e^{kt}$; $8 = 2^3$, so it takes three doubling times: 30 years.`,
+          },
+        ],
+      },
+    ],
+  },
 ];
 
 /** Class 12 chapter title ("12:<exact title>") → topic slug(s), or full lesson ids, that teach it. */
-export const links: Record<string, string | string[]> = {};
+export const links: Record<string, string | string[]> = {
+  "12:Integrals": "c12-integrals",
+  "12:Application of Integrals": "c12-application-of-integrals",
+  "12:Applications of Integrals": ["c12-application-of-integrals"],
+  "12:Differential Equations": "c12-differential-equations",
+};

@@ -1670,6 +1670,765 @@ Aliphatic diazonium salts are very unstable and decompose at once (that is why 1
       },
     ],
   },
+  /* ------------------------------------------------------------------ */
+  /* Biomolecules (chemistry chapter)                                   */
+  /* ------------------------------------------------------------------ */
+  {
+    slug: "c12-biomolecules",
+    title: "Biomolecules",
+    icon: "🧬",
+    description: "The chemistry of carbohydrates (glucose, fructose, disaccharides, polysaccharides), amino acids and proteins, enzymes, vitamins, nucleic acids and hormones.",
+    lessons: [
+      {
+        slug: "c12-carbohydrates",
+        title: "Carbohydrates",
+        summary: "Classifying carbohydrates, how chemists proved the open-chain and ring structures of glucose, D/L notation, fructose, the glycosidic link in sucrose, maltose and lactose, and the polysaccharides starch, cellulose and glycogen.",
+        minutes: 25,
+        xp: 55,
+        blocks: [
+          {
+            type: "illustration",
+            emoji: "🍯",
+            caption: "Honey, jaggery, rice, wheat and cotton are all carbohydrates. Ayurveda has used honey as a base for medicines for centuries.",
+          },
+          {
+            type: "text",
+            md: t`**Carbohydrates** are optically active **polyhydroxy aldehydes or ketones**, or compounds that give these on hydrolysis. Many fit the formula $\text{C}_x(\text{H}_2\text{O})_y$ (hence "hydrates of carbon"), but the formula is not a definition: acetic acid, C₂H₄O₂, fits it and is not a carbohydrate, while rhamnose, C₆H₁₂O₅, does not fit and is one.
+
+By their behaviour on hydrolysis:
+- **Monosaccharides** cannot be hydrolysed into simpler polyhydroxy aldehydes or ketones: glucose, fructose, ribose. An **aldose** has a –CHO group, a **ketose** a >C=O group; glucose is an *aldohexose* and fructose a *ketohexose*.
+- **Oligosaccharides** give 2 to 10 monosaccharide units: sucrose, maltose and lactose are **disaccharides**.
+- **Polysaccharides** give a large number of units: starch, cellulose, glycogen. They are not sweet and are called non-sugars.
+
+Carbohydrates that reduce Fehling's solution and Tollens' reagent are **reducing sugars**. All monosaccharides are reducing; a disaccharide is reducing only if a reducing group is left free after the units join.`,
+          },
+          {
+            type: "text",
+            md: t`**Preparation of glucose.** (1) Boiling sucrose with dilute HCl or H₂SO₄ in alcoholic solution gives glucose and fructose in equal amounts. (2) Commercially, **starch** is hydrolysed by boiling with dilute H₂SO₄ at 393 K under 2–3 atm pressure.`,
+          },
+          {
+            type: "formula",
+            tex: t`\text{C}_{12}\text{H}_{22}\text{O}_{11} + \text{H}_2\text{O} \xrightarrow{\text{H}^+} \underset{\text{glucose}}{\text{C}_6\text{H}_{12}\text{O}_6} + \underset{\text{fructose}}{\text{C}_6\text{H}_{12}\text{O}_6} \qquad (\text{C}_6\text{H}_{10}\text{O}_5)_n + n\,\text{H}_2\text{O} \xrightarrow{\text{H}^+,\ 393\ \text{K},\ 2\text{–}3\ \text{atm}} n\,\text{C}_6\text{H}_{12}\text{O}_6`,
+          },
+          {
+            type: "table",
+            headers: ["Reaction of glucose", "Product", "What it proves"],
+            rows: [
+              ["Prolonged heating with HI", "n-Hexane", "Six carbons in a straight chain"],
+              ["Hydroxylamine; HCN", "Oxime; cyanohydrin", "A carbonyl group is present"],
+              ["Bromine water (mild oxidant)", "Gluconic acid, a six-carbon acid", "The carbonyl is an aldehyde (–CHO)"],
+              ["Acetic anhydride", "Glucose pentaacetate", "Five –OH groups, on different carbons (stable)"],
+              ["Nitric acid", "Saccharic (glucaric) acid, a dicarboxylic acid", "A primary alcohol (–CH₂OH) at the other end"],
+            ],
+          },
+          {
+            type: "text",
+            md: t`So the open-chain structure is $\text{OHC–(CHOH)}_4\text{–CH}_2\text{OH}$. Glucose has four chiral carbons (C-2 to C-5). Its natural form is **D-(+)-glucose**. "D" means that the –OH on the **lowest chiral carbon (C-5)** is on the right in the Fischer projection, like (+)-glyceraldehyde, which is taken as the D reference. "(+)" means the compound is dextrorotatory. **D/L tells configuration, not the direction of rotation**: D-fructose is laevorotatory, D-(−)-fructose.
+
+**Why a ring?** The open chain fails to explain some facts: glucose does not give **Schiff's test** or the **2,4-DNP test**, and does not form a **hydrogensulphite addition product** with NaHSO₃; its **pentaacetate does not react with hydroxylamine** (so there is no free –CHO); and glucose exists in **two crystalline forms**, α (m.p. 419 K, from a concentrated solution at 303 K) and β (m.p. 423 K, from a hot saturated solution at 371 K).
+
+The –OH at **C-5** adds to the –CHO at C-1, forming a cyclic **hemiacetal** with a six-membered ring of five carbons and one oxygen (a **pyranose**, like pyran). C-1 becomes a new chiral centre, the **anomeric carbon**, and the α and β forms, which differ only in the configuration at C-1, are called **anomers**.
+
+**Fructose**, C₆H₁₂O₆, has its keto group at C-2 and the same configuration as glucose at C-3, C-4, C-5. The –OH at C-5 adds to the C-2 carbonyl, giving a five-membered **furanose** ring (like furan), again in α and β forms.`,
+          },
+          {
+            type: "checkpoint",
+            questions: [
+              {
+                kind: "mcq",
+                q: "Which reaction shows that the carbonyl group of glucose is an aldehyde group?",
+                options: ["Reaction with HI to give n-hexane", "Oxidation by bromine water to gluconic acid", "Acetylation to a pentaacetate", "Reaction with hydroxylamine to give an oxime"],
+                answer: 1,
+                explain: "A mild oxidant gives a six-carbon carboxylic acid with the same carbons. Only an aldehyde is oxidised so easily without breaking the chain.",
+              },
+              {
+                kind: "truefalse",
+                q: "The \"D\" in D-(+)-glucose means that glucose rotates plane-polarised light to the right.",
+                answer: false,
+                explain: "D refers to configuration at C-5, compared with glyceraldehyde. Rotation is shown separately by (+) or (−). D-fructose is laevorotatory.",
+              },
+            ],
+          },
+          {
+            type: "table",
+            headers: ["Disaccharide", "Units", "Glycosidic link", "Reducing?"],
+            rows: [
+              ["Sucrose (cane sugar)", "α-D-glucose + β-D-fructose", "C-1 of glucose to C-2 of fructose", "**No**: both reducing groups are used"],
+              ["Maltose", "Two α-D-glucose", "C-1 of one to C-4 of the other", "Yes: C-1 of the second unit is free"],
+              ["Lactose (milk sugar)", "β-D-galactose + β-D-glucose", "C-1 of galactose to C-4 of glucose", "Yes: C-1 of glucose is free"],
+            ],
+          },
+          {
+            type: "text",
+            md: t`The bond that joins two monosaccharides through an oxygen atom, with loss of water, is the **glycosidic linkage**.
+
+**Invert sugar.** Sucrose is dextrorotatory ($+66.5°$). Its hydrolysis gives D-(+)-glucose ($+52.5°$) and D-(−)-fructose ($-92.4°$). Fructose rotates more strongly, so the mixture is **laevorotatory**. The sign of rotation changes from + to −, so hydrolysis of sucrose is called **inversion** and the product mixture **invert sugar**.
+
+**Polysaccharides.** **Starch**, the main food store of plants, is a polymer of α-glucose with two parts. **Amylose** (15–20%) is water-soluble and unbranched, with 200–1000 α-D-(+)-glucose units joined C-1 → C-4. **Amylopectin** (80–85%) is insoluble and branched: chains joined C-1 → C-4, with C-1 → C-6 links at the branches. **Cellulose**, the main material of plant cell walls (cotton, wood), is an unbranched chain of **β-D-glucose** units joined C-1 → C-4; humans lack the enzyme to break β-links, so we cannot digest it. **Glycogen**, the animal store ("animal starch") in liver, muscles and brain, is like amylopectin but **more highly branched**; it is also found in yeast and fungi.`,
+          },
+          {
+            type: "example",
+            title: "Why sucrose fails Tollens' test",
+            problem: "Explain why maltose reduces Tollens' reagent but sucrose does not, though both are disaccharides of hexoses.",
+            steps: [
+              "A sugar reduces Tollens' reagent if one unit has a free hemiacetal carbon (C-1 of an aldose, C-2 of a ketose), which can open to the aldehyde or α-hydroxy ketone form.",
+              "In maltose, C-1 of the first glucose is linked to C-4 of the second. C-1 of the second glucose is still a hemiacetal, so the ring can open: maltose is reducing.",
+              "In sucrose, C-1 of glucose is linked to C-2 of fructose. Both anomeric carbons are used in the glycosidic bond, so neither ring can open.",
+            ],
+            answer: "Maltose has a free anomeric carbon (reducing sugar); in sucrose both anomeric carbons form the glycosidic link (non-reducing).",
+          },
+          {
+            type: "mistake",
+            wrong: "Starch and cellulose are both chains of glucose, so the only difference is the length of the chain.",
+            right: "Starch is made of α-D-glucose units; cellulose of β-D-glucose units joined C-1 → C-4. This one change at C-1 gives cellulose straight, tightly packed chains and makes it indigestible for humans.",
+            why: "Both are written (C₆H₁₀O₅)ₙ and both hydrolyse to glucose, so they look the same on paper. The difference lies in the configuration of the anomeric carbon.",
+          },
+          {
+            type: "activity",
+            activity: {
+              kind: "sort",
+              prompt: "Reducing or non-reducing sugar?",
+              groups: ["Reducing", "Non-reducing"],
+              items: [
+                { text: "Glucose", group: 0, hint: "Every monosaccharide is reducing." },
+                { text: "Fructose", group: 0, hint: "A ketose, but its α-hydroxy ketone reduces Tollens' and Fehling's." },
+                { text: "Sucrose", group: 1, hint: "C-1 of glucose and C-2 of fructose are both tied up." },
+                { text: "Maltose", group: 0, hint: "C-1 of the second glucose is free." },
+                { text: "Lactose", group: 0, hint: "C-1 of the glucose unit is free." },
+                { text: "Starch", group: 1, hint: "A non-sugar polysaccharide; it does not give Fehling's test." },
+              ],
+              explain: "If any unit keeps a free anomeric carbon, the sugar is reducing. Sucrose and polysaccharides such as starch are non-reducing.",
+            },
+          },
+          {
+            type: "callout",
+            tone: "exam",
+            title: "Board exam tip",
+            md: "A favourite 3-mark question: \"Give two reactions of glucose that cannot be explained by its open-chain structure.\" Write any two of: no Schiff's / 2,4-DNP test, no NaHSO₃ adduct, pentaacetate does not react with NH₂OH, two forms α and β. Draw Haworth or Fischer structures neatly if asked; the anomeric –OH position earns the mark.",
+          },
+          {
+            type: "keypoints",
+            items: [
+              "Glucose: aldohexose, OHC–(CHOH)₄–CH₂OH, proved by HI, NH₂OH/HCN, Br₂ water, acetylation and HNO₃.",
+              "D/L is configuration at the lowest chiral carbon, compared with glyceraldehyde; (+)/(−) is rotation.",
+              "Ring: C-5 OH + C-1 CHO → pyranose; α and β anomers differ at C-1. Fructose forms a furanose ring.",
+              "Sucrose (non-reducing, α1→β2), maltose (α1→4), lactose (β1→4): the last two are reducing. Inversion gives laevorotatory invert sugar.",
+              "Starch = amylose + amylopectin (α-glucose); cellulose = β-glucose; glycogen = highly branched animal store.",
+            ],
+          },
+        ],
+        flashcards: [
+          { front: "Carbohydrate (definition)", back: "Optically active polyhydroxy aldehyde or ketone, or a compound that gives these on hydrolysis." },
+          { front: "Glucose + HI (prolonged heating)", back: "n-Hexane: the six carbons form a straight chain." },
+          { front: "Glucose + bromine water", back: "Gluconic acid: proves the carbonyl group is an aldehyde." },
+          { front: "Glucose + nitric acid", back: "Saccharic (glucaric) acid: both ends oxidised, so a –CH₂OH is present." },
+          { front: "Anomers", back: "Cyclic forms differing only in configuration at C-1 (the anomeric carbon), e.g. α- and β-D-glucose." },
+          { front: "Pyranose vs furanose", back: "Six-membered ring (glucose) vs five-membered ring (fructose)." },
+          { front: "Invert sugar", back: "Equimolar glucose + fructose from sucrose hydrolysis; laevorotatory because fructose (−92.4°) outweighs glucose (+52.5°)." },
+          { front: "Amylose vs amylopectin", back: "Amylose: 15–20%, soluble, unbranched α1→4. Amylopectin: 80–85%, insoluble, branched with α1→6 links." },
+          { front: "Cellulose", back: "Unbranched β-D-glucose chain, C-1 → C-4. Main material of plant cell walls; not digested by humans." },
+        ],
+        quiz: [
+          {
+            kind: "mcq",
+            q: "Which observation is NOT explained by the open-chain structure of glucose?",
+            options: ["It forms an oxime with hydroxylamine", "It does not form an addition product with NaHSO₃", "It is oxidised by bromine water", "It forms a pentaacetate"],
+            answer: 1,
+            explain: "A free aldehyde should add NaHSO₃. The failure shows that most glucose exists as the cyclic hemiacetal.",
+          },
+          {
+            kind: "mcq",
+            q: "In sucrose, the glycosidic linkage joins:",
+            options: ["C-1 of α-glucose and C-4 of glucose", "C-1 of α-glucose and C-2 of β-fructose", "C-1 of β-galactose and C-4 of glucose", "C-1 of β-glucose and C-6 of fructose"],
+            answer: 1,
+            explain: "Both anomeric carbons (C-1 of glucose, C-2 of fructose) are used, which is why sucrose is non-reducing.",
+          },
+          {
+            kind: "mcq",
+            q: "Lactose on hydrolysis gives:",
+            options: ["Glucose and fructose", "Two glucose units", "Galactose and glucose", "Galactose and fructose"],
+            answer: 2,
+            explain: "Lactose (milk sugar) is made of β-D-galactose and β-D-glucose.",
+          },
+          {
+            kind: "mcq",
+            q: "Which polysaccharide is most highly branched?",
+            options: ["Amylose", "Amylopectin", "Glycogen", "Cellulose"],
+            answer: 2,
+            explain: "Glycogen is built like amylopectin but with many more branch points. Amylose and cellulose are unbranched.",
+          },
+          {
+            kind: "numeric",
+            q: "How many chiral carbon atoms are present in the open-chain form of glucose?",
+            answer: 4,
+            explain: "C-2, C-3, C-4 and C-5 each carry four different groups. C-1 (CHO) and C-6 (CH₂OH) are not chiral.",
+          },
+          {
+            kind: "multi",
+            q: "Which statements are correct? Select all that apply.",
+            options: ["α- and β-D-glucose are anomers", "Fructose is a reducing sugar", "Sucrose is laevorotatory", "Cellulose is a polymer of β-D-glucose"],
+            answers: [0, 1, 3],
+            explain: "Sucrose is dextrorotatory (+66.5°); it is the hydrolysis product, invert sugar, that is laevorotatory.",
+            difficulty: 2,
+          },
+          {
+            kind: "fill",
+            q: "Glucose forms a six-membered ring when the –OH group on carbon number ___ adds to the aldehyde group.",
+            answer: ["5", "C-5", "five", "C5"],
+            explain: "C-5 OH + C-1 CHO gives a ring of C-1 to C-5 plus the ring oxygen: six atoms (pyranose).",
+          },
+          {
+            kind: "truefalse",
+            q: "All compounds with the formula Cₓ(H₂O)ᵧ are carbohydrates.",
+            answer: false,
+            explain: "Acetic acid, C₂(H₂O)₂, fits the formula but is not a carbohydrate; rhamnose, C₆H₁₂O₅, is a carbohydrate that does not fit.",
+          },
+        ],
+      },
+      {
+        slug: "c12-proteins-enzymes",
+        title: "Amino Acids, Proteins and Enzymes",
+        summary: "α-Amino acids and zwitterions, the peptide bond, fibrous and globular proteins, the four levels of protein structure, denaturation and enzymes as biocatalysts.",
+        minutes: 22,
+        xp: 50,
+        blocks: [
+          {
+            type: "illustration",
+            emoji: "🥚",
+            caption: "Boil an egg and the clear, runny white turns firm and white. The protein albumin has been denatured: its shape is lost, though its chain of amino acids is not broken.",
+          },
+          {
+            type: "text",
+            md: t`**Amino acids** contain an amino group (–NH₂) and a carboxyl group (–COOH). Those obtained when proteins are hydrolysed are **α-amino acids**: both groups are on the same carbon, $\text{R–CH(NH}_2\text{)–COOH}$. The side chain R decides the amino acid: H in glycine, CH₃ in alanine, CH₂C₆H₅ in phenylalanine, CH₂SH in cysteine.
+
+They are classed as **neutral** (one –NH₂ and one –COOH, e.g. glycine), **acidic** (more –COOH, e.g. aspartic acid, glutamic acid) or **basic** (more –NH₂, e.g. lysine, arginine). Amino acids our body can make are **non-essential**; those we must get from food are **essential**. NCERT lists ten essential amino acids, including valine, leucine, isoleucine, lysine, threonine, methionine, phenylalanine, tryptophan, arginine and histidine.
+
+Amino acids are colourless crystalline solids, soluble in water, with high melting points; they behave like **salts** rather than ordinary amines or acids. In water the –COOH loses a proton to the –NH₂, forming a dipolar ion called a **zwitterion**, $\text{H}_3\text{N}^+\text{–CH(R)–COO}^-$. It reacts with both acids and bases, so amino acids are **amphoteric**. Except glycine (R = H), all naturally occurring α-amino acids are optically active, and most have the **L-configuration**.`,
+          },
+          {
+            type: "text",
+            md: t`**Peptide bond.** The –COOH of one amino acid and the –NH₂ of another join with loss of water, forming an amide link **–CO–NH–**, called a **peptide bond**. Two amino acids give a **dipeptide**, three a tripeptide. More than ten give a **polypeptide**; a polypeptide with more than about a hundred amino acid residues and molar mass above 10 000 u is called a **protein**.
+
+**Fibrous and globular proteins.** In **fibrous proteins**, the chains run parallel and are held by hydrogen and disulphide bonds; they are usually insoluble in water. Examples: keratin (hair, wool, silk) and myosin (muscle). In **globular proteins**, the chains coil into a roughly spherical shape; they are usually water-soluble. Examples: insulin and albumins.`,
+          },
+          {
+            type: "formula",
+            tex: t`\text{H}_2\text{N–CH(R)–COOH} + \text{H}_2\text{N–CH(R')–COOH} \rightarrow \text{H}_2\text{N–CH(R)–}\underbrace{\text{CO–NH}}_{\text{peptide bond}}\text{–CH(R')–COOH} + \text{H}_2\text{O}`,
+            caption: "Peptide bond formation: a condensation reaction that releases one water molecule per bond.",
+          },
+          {
+            type: "example",
+            title: "Writing a dipeptide",
+            problem: "Write the structure of the dipeptide glycylalanine (Gly–Ala) and say how many different dipeptides can be made from one glycine and one alanine.",
+            steps: [
+              "In Gly–Ala, glycine supplies the free –NH₂ end (N-terminal) and its –COOH forms the peptide bond with the –NH₂ of alanine.",
+              "H₂N–CH₂–COOH + H₂N–CH(CH₃)–COOH → H₂N–CH₂–CO–NH–CH(CH₃)–COOH + H₂O.",
+              "The order can also be reversed: alanine first, giving Ala–Gly, H₂N–CH(CH₃)–CO–NH–CH₂–COOH, a different compound.",
+            ],
+            answer: "Gly–Ala is H₂N–CH₂–CO–NH–CH(CH₃)–COOH; two dipeptides (Gly–Ala and Ala–Gly) are possible.",
+          },
+          {
+            type: "checkpoint",
+            questions: [
+              {
+                kind: "mcq",
+                q: "Which α-amino acid is NOT optically active?",
+                options: ["Alanine", "Glycine", "Valine", "Phenylalanine"],
+                answer: 1,
+                explain: "In glycine, H₂N–CH₂–COOH, the α-carbon carries two hydrogens, so it is not chiral.",
+              },
+            ],
+          },
+          {
+            type: "table",
+            headers: ["Level", "What it describes", "Held by"],
+            rows: [
+              ["Primary", "The sequence of amino acids in each chain", "Peptide (covalent) bonds"],
+              ["Secondary", "Local shape of the chain: **α-helix** (a right-handed coil) or **β-pleated sheet** (chains side by side)", "Hydrogen bonds between >C=O and –NH– groups"],
+              ["Tertiary", "Overall folding of the whole chain: fibrous or globular", "Hydrogen bonds, disulphide links, van der Waals forces, electrostatic attraction"],
+              ["Quaternary", "Spatial arrangement of two or more chains (sub-units)", "The same non-covalent forces (and sometimes disulphide links)"],
+            ],
+          },
+          {
+            type: "text",
+            md: t`In the **α-helix**, each –NH group is hydrogen bonded to a >C=O group of an adjacent turn of the helix. In the **β-pleated sheet**, the chains are stretched out almost fully and lie side by side, held by hydrogen bonds between neighbouring chains.
+
+**Denaturation.** A protein in its natural state in a cell is a **native protein**. A change in temperature or pH (or adding certain chemicals) disturbs the hydrogen bonds, so the globules unfold and the helix uncoils, and the protein loses its biological activity. **Secondary and tertiary structures are destroyed, but the primary structure stays intact.** Examples: the coagulation of egg white on boiling, and the curdling of milk by lactic acid made by bacteria.
+
+**Enzymes** are biological catalysts. Almost all are **globular proteins**, and each is highly **specific**: it catalyses one reaction or one kind of reaction. They are usually named after the compound or the reaction they act on: **maltase** hydrolyses maltose to glucose; enzymes that oxidise one substrate while reducing another are *oxidoreductases*. Most names end in **-ase**. Like any catalyst, an enzyme speeds up a reaction by lowering its activation energy; it works under mild conditions of temperature and pH in the body.`,
+          },
+          {
+            type: "mistake",
+            wrong: "When a protein is denatured by heat, its peptide bonds break and it turns back into amino acids.",
+            right: "Denaturation destroys the secondary and tertiary structure, not the primary structure. The peptide bonds stay; only the folding held by hydrogen bonds and other weak forces is lost.",
+            why: "Because the protein stops working and changes completely in look, learners assume the chain itself is broken. Breaking peptide bonds is hydrolysis, which needs acid, alkali or enzymes.",
+          },
+          {
+            type: "activity",
+            activity: {
+              kind: "match",
+              prompt: "Match each level of protein structure to its description.",
+              pairs: [
+                ["Primary", "Order of amino acids in the chain"],
+                ["Secondary", "α-Helix or β-pleated sheet"],
+                ["Tertiary", "Overall folding into a fibre or globule"],
+                ["Quaternary", "Arrangement of several sub-unit chains"],
+              ],
+              explain: "Each level builds on the one before. Denaturation removes the higher levels but leaves the primary sequence.",
+            },
+          },
+          {
+            type: "callout",
+            tone: "exam",
+            title: "Board exam tip",
+            md: "\"What happens when a protein is denatured?\" earns full marks only if you say which structures are lost (2° and 3°), which remains (1°), and give an example (boiled egg, curdled milk). For zwitterion questions, draw H₃N⁺–CH(R)–COO⁻ and say \"amphoteric\".",
+          },
+          {
+            type: "keypoints",
+            items: [
+              "α-Amino acids, R–CH(NH₂)–COOH, exist as zwitterions; they are amphoteric; all except glycine are optically active (mostly L).",
+              "Peptide bond = –CO–NH–; more than ten residues = polypeptide; about 100+ residues and 10 000 u+ = protein.",
+              "Fibrous (keratin, myosin; insoluble) vs globular (insulin, albumin; soluble).",
+              "Primary (sequence), secondary (α-helix, β-sheet), tertiary (folding), quaternary (sub-units).",
+              "Denaturation destroys 2° and 3° structure; enzymes are specific globular-protein catalysts.",
+            ],
+          },
+        ],
+        flashcards: [
+          { front: "Zwitterion", back: "Dipolar ion of an amino acid, H₃N⁺–CH(R)–COO⁻. Explains salt-like properties and amphoteric behaviour." },
+          { front: "Essential amino acid", back: "One that the body cannot make and must get from food, e.g. valine, leucine, lysine." },
+          { front: "Peptide bond", back: "Amide link –CO–NH– formed between –COOH of one amino acid and –NH₂ of the next, with loss of water." },
+          { front: "Fibrous vs globular proteins", back: "Fibrous: parallel chains, insoluble (keratin, myosin). Globular: coiled spheres, soluble (insulin, albumin)." },
+          { front: "α-Helix", back: "Right-handed coil; each –NH is hydrogen bonded to a >C=O of an adjacent turn." },
+          { front: "Forces in tertiary structure", back: "Hydrogen bonds, disulphide links, van der Waals forces, electrostatic attraction." },
+          { front: "Denaturation", back: "Loss of 2° and 3° structure (and activity) by heat or pH change; primary structure intact." },
+          { front: "Enzyme", back: "Biological catalyst, almost always a globular protein, highly specific; e.g. maltase: maltose → glucose." },
+        ],
+        quiz: [
+          {
+            kind: "mcq",
+            q: "In aqueous solution an α-amino acid exists mainly as:",
+            options: ["A neutral molecule H₂N–CH(R)–COOH", "A zwitterion H₃N⁺–CH(R)–COO⁻", "An anion only", "A cation only"],
+            answer: 1,
+            explain: "The acidic –COOH transfers its proton to the basic –NH₂ within the same molecule.",
+          },
+          {
+            kind: "mcq",
+            q: "Which bonding is responsible for the α-helix secondary structure?",
+            options: ["Peptide bonds", "Disulphide bonds", "Hydrogen bonds between >C=O and –NH– groups", "Ionic bonds between side chains"],
+            answer: 2,
+            explain: "The helix is held by hydrogen bonds between the >C=O of one turn and the –NH– of the next.",
+          },
+          {
+            kind: "mcq",
+            q: "Which is a globular protein?",
+            options: ["Keratin", "Myosin", "Insulin", "Silk fibroin"],
+            answer: 2,
+            explain: "Insulin and albumins are globular. Keratin, myosin and silk are fibrous.",
+          },
+          {
+            kind: "truefalse",
+            q: "During denaturation, the primary structure of a protein is destroyed.",
+            answer: false,
+            explain: "Only secondary and tertiary structures are lost; the amino acid sequence is unchanged.",
+          },
+          {
+            kind: "numeric",
+            q: "How many peptide bonds are present in a linear polypeptide made of 51 amino acid residues?",
+            answer: 50,
+            explain: "A linear chain of n residues has n − 1 peptide bonds: 51 − 1 = 50.",
+            difficulty: 2,
+          },
+          {
+            kind: "mcq",
+            q: "Which amino acid is basic?",
+            options: ["Glycine", "Glutamic acid", "Lysine", "Alanine"],
+            answer: 2,
+            explain: "Lysine has an extra –NH₂ in its side chain. Glutamic acid is acidic; glycine and alanine are neutral.",
+          },
+          {
+            kind: "multi",
+            q: "Which are examples of protein denaturation? Select all that apply.",
+            options: ["Coagulation of egg white on boiling", "Curdling of milk by lactic acid", "Digestion of protein to amino acids", "Loss of activity of an enzyme heated to 80 °C"],
+            answers: [0, 1, 3],
+            explain: "Heat and acid (lactic acid made by bacteria) unfold proteins and destroy their activity. Digestion breaks peptide bonds: that is hydrolysis, not denaturation.",
+            difficulty: 2,
+          },
+        ],
+      },
+      {
+        slug: "c12-vitamins-nucleic-acids",
+        title: "Vitamins, Nucleic Acids and Hormones",
+        summary: "Fat- and water-soluble vitamins and their deficiency diseases, the chemical make-up of DNA and RNA, base pairing and the double helix, and an elementary look at hormones.",
+        minutes: 20,
+        xp: 50,
+        blocks: [
+          {
+            type: "illustration",
+            emoji: "🍊",
+            caption: "Amla and citrus fruits are rich in vitamin C. Sailors on long voyages once suffered from scurvy until they carried lemons and limes.",
+          },
+          {
+            type: "text",
+            md: "**Vitamins** are organic compounds needed in small amounts in the diet for normal growth and health; most cannot be made by the body. A shortage causes a specific deficiency disease. They are grouped by solubility:\n\n- **Fat-soluble: A, D, E, K.** They dissolve in fats and oils, are insoluble in water, and are **stored** in the liver and adipose (fat-storing) tissue.\n- **Water-soluble: B group and C.** They must be supplied regularly in the diet, because they are readily excreted in urine and cannot be stored (except vitamin B₁₂).\n\nVitamin H (biotin) is neither fat- nor water-soluble.",
+          },
+          {
+            type: "table",
+            headers: ["Vitamin", "Sources", "Deficiency disease"],
+            rows: [
+              ["A", "Fish liver oil, carrots, butter, milk", "Xerophthalmia (hardening of the cornea), night blindness"],
+              ["B₁ (thiamine)", "Yeast, milk, green vegetables, cereals", "Beri-beri (loss of appetite, retarded growth)"],
+              ["B₂ (riboflavin)", "Milk, egg white, liver, kidney", "Cheilosis (cracks at the corners of the mouth), digestive disorders, burning skin"],
+              ["B₆ (pyridoxine)", "Yeast, milk, egg yolk, cereals, grams", "Convulsions"],
+              ["B₁₂", "Meat, fish, egg, curd", "Pernicious anaemia (red cells short of haemoglobin)"],
+              ["C (ascorbic acid)", "Citrus fruits, amla, green leafy vegetables", "Scurvy (bleeding gums)"],
+              ["D", "Sunlight on skin, fish, egg yolk", "Rickets (children), osteomalacia (adults)"],
+              ["E", "Vegetable oils such as wheat germ oil and sunflower oil", "Increased fragility of red blood cells, muscular weakness"],
+              ["K", "Green leafy vegetables", "Increased blood clotting time"],
+            ],
+          },
+          {
+            type: "checkpoint",
+            questions: [
+              {
+                kind: "mcq",
+                q: "Which vitamin is water-soluble and yet stored in the body?",
+                options: ["Vitamin C", "Vitamin B₁", "Vitamin B₁₂", "Vitamin K"],
+                answer: 2,
+                explain: "Water-soluble vitamins are normally excreted and not stored, with vitamin B₁₂ as the exception. Vitamin K is fat-soluble.",
+              },
+            ],
+          },
+          {
+            type: "text",
+            md: "**Nucleic acids** are found in the nucleus of every cell; they carry hereditary information. They are long-chain polymers of **nucleotides** (polynucleotides). There are two kinds: **deoxyribonucleic acid (DNA)** and **ribonucleic acid (RNA)**.\n\nComplete hydrolysis of a nucleic acid gives three things: a **pentose sugar**, **phosphoric acid** and **nitrogen-containing bases**.\n\n- In DNA the sugar is **β-D-2-deoxyribose**; in RNA it is **β-D-ribose**. Deoxyribose has H instead of OH at C-2'.\n- DNA bases: **adenine (A), guanine (G), cytosine (C), thymine (T)**. RNA has **uracil (U)** in place of thymine. A and G are **purines** (two rings); C, T and U are **pyrimidines** (one ring).\n\nA base joined to C-1' of the sugar is a **nucleoside**. When a phosphate is esterified to the C-5' –OH of the nucleoside, it becomes a **nucleotide**. Nucleotides link through **phosphodiester bonds** between C-5' of one sugar and C-3' of the next.",
+          },
+          {
+            type: "formula",
+            tex: t`\text{Nucleoside} = \text{base} + \text{sugar} \qquad \text{Nucleotide} = \text{base} + \text{sugar} + \text{phosphate}`,
+          },
+          {
+            type: "text",
+            md: "**DNA double helix.** In 1953 James Watson and Francis Crick proposed that DNA is made of **two strands coiled around each other in a double helix**, held by **hydrogen bonds between specific base pairs**: adenine pairs with thymine (**A–T, two hydrogen bonds**) and guanine pairs with cytosine (**G–C, three hydrogen bonds**). The two strands are therefore **complementary**. RNA is usually a single strand, which may fold back on itself.\n\n**Biological functions.** DNA is the chemical basis of heredity: it reproduces itself (**replication**) during cell division, passing identical copies to daughter cells. Proteins are actually made by RNA molecules. There are three types: **messenger RNA (m-RNA)**, **ribosomal RNA (r-RNA)** and **transfer RNA (t-RNA)**.",
+          },
+          {
+            type: "example",
+            title: "Using base-pairing rules",
+            problem: "A sample of double-stranded DNA contains 18% adenine. Find the percentages of thymine, guanine and cytosine. Also write the complementary strand for 5'–ATGCCA–3'.",
+            steps: [
+              "A pairs with T, so %T = %A = 18%.",
+              "A + T = 36%, so G + C = 100 − 36 = 64%. G pairs with C, so each is 64 ÷ 2 = 32%.",
+              "For the complementary strand, replace A↔T and G↔C and run it in the opposite direction: 3'–TACGGT–5'.",
+            ],
+            answer: "T = 18%, G = 32%, C = 32%. Complementary strand: 3'–TACGGT–5' (that is, 5'–TGGCAT–3').",
+          },
+          {
+            type: "mistake",
+            wrong: "DNA and RNA differ only because RNA has uracil instead of thymine.",
+            right: "They differ in the sugar as well: DNA contains 2-deoxyribose and RNA contains ribose. DNA is usually double-stranded; RNA is usually single-stranded.",
+            why: "The U-for-T swap is the most memorable difference, so learners stop there. The name itself (deoxyribo- vs ribo-) points to the sugar difference.",
+          },
+          {
+            type: "callout",
+            tone: "note",
+            title: "Board note: hormones (elementary idea)",
+            md: "**Hormones** are chemical messengers made by endocrine glands and carried by the blood to target organs. Chemically they are **steroids** (e.g. oestrogens, androgens), **polypeptides** (e.g. insulin, endorphins) or **amino acid derivatives** (e.g. adrenaline (epinephrine), noradrenaline, thyroxine). Insulin and glucagon keep blood glucose in a narrow range; thyroxine controls metabolic rate, and lack of iodine in the diet causes goitre. The CBSE syllabus lists hormones as an elementary idea and ISC includes them; check the current year's syllabus for how much is examined.",
+          },
+          {
+            type: "activity",
+            activity: {
+              kind: "sort",
+              prompt: "Fat-soluble or water-soluble vitamin?",
+              groups: ["Fat-soluble", "Water-soluble"],
+              items: [
+                { text: "Vitamin A", group: 0, hint: "Stored in the liver; remember A, D, E, K." },
+                { text: "Vitamin C", group: 1, hint: "Ascorbic acid: excreted in urine, needed daily." },
+                { text: "Vitamin D", group: 0, hint: "One of A, D, E, K." },
+                { text: "Vitamin B₁", group: 1, hint: "The whole B group is water-soluble." },
+                { text: "Vitamin K", group: 0, hint: "One of A, D, E, K." },
+                { text: "Vitamin B₁₂", group: 1, hint: "Water-soluble, even though it is stored in the liver." },
+                { text: "Vitamin E", group: 0, hint: "Found in vegetable oils." },
+              ],
+              explain: "A, D, E and K are fat-soluble and can be stored; the B group and C are water-soluble and must be eaten regularly (B₁₂ is the stored exception).",
+            },
+          },
+          {
+            type: "callout",
+            tone: "exam",
+            title: "Board exam tip",
+            md: "Two common 2-mark questions: \"Give two differences between DNA and RNA\" (sugar, base T/U, double/single strand, function) and \"Name the vitamin whose deficiency causes …\" Learn the table of deficiency diseases exactly; spellings like *xerophthalmia* and *osteomalacia* matter.",
+          },
+          {
+            type: "keypoints",
+            items: [
+              "Fat-soluble vitamins A, D, E, K are stored; water-soluble B and C are not (B₁₂ excepted).",
+              "Deficiencies: A night blindness, B₁ beri-beri, B₁₂ pernicious anaemia, C scurvy, D rickets, K slow clotting.",
+              "Nucleotide = base + pentose + phosphate; linked by 5'–3' phosphodiester bonds.",
+              "DNA: deoxyribose, A G C T, double helix with A–T (2 H-bonds) and G–C (3 H-bonds). RNA: ribose, A G C U, mostly single strand.",
+              "DNA replicates and stores heredity; m-RNA, r-RNA and t-RNA make proteins.",
+            ],
+          },
+        ],
+        flashcards: [
+          { front: "Fat-soluble vitamins", back: "A, D, E, K: stored in liver and adipose tissue." },
+          { front: "Vitamin C deficiency", back: "Scurvy (bleeding gums)." },
+          { front: "Vitamin D deficiency", back: "Rickets in children, osteomalacia in adults." },
+          { front: "Vitamin B₁₂ deficiency", back: "Pernicious anaemia." },
+          { front: "Sugar in DNA vs RNA", back: "DNA: β-D-2-deoxyribose. RNA: β-D-ribose." },
+          { front: "Nucleoside vs nucleotide", back: "Nucleoside = base + sugar. Nucleotide = nucleoside + phosphate at C-5'." },
+          { front: "Base pairing in DNA", back: "A–T with two hydrogen bonds, G–C with three hydrogen bonds." },
+          { front: "Three types of RNA", back: "Messenger (m-RNA), ribosomal (r-RNA), transfer (t-RNA)." },
+        ],
+        quiz: [
+          {
+            kind: "mcq",
+            q: "Deficiency of which vitamin increases blood clotting time?",
+            options: ["Vitamin A", "Vitamin E", "Vitamin K", "Vitamin B₆"],
+            answer: 2,
+            explain: "Vitamin K is needed for blood clotting. Vitamin E deficiency causes fragile red cells and muscular weakness.",
+          },
+          {
+            kind: "mcq",
+            q: "Which base is present in RNA but not in DNA?",
+            options: ["Adenine", "Thymine", "Uracil", "Cytosine"],
+            answer: 2,
+            explain: "RNA uses uracil in place of thymine.",
+          },
+          {
+            kind: "mcq",
+            q: "In a nucleotide, the phosphate group is attached to which carbon of the pentose sugar?",
+            options: ["C-1'", "C-2'", "C-3'", "C-5'"],
+            answer: 3,
+            explain: "The base is on C-1' and the phosphate is esterified to the C-5' –OH. In the chain, the next phosphodiester link is to C-3'.",
+          },
+          {
+            kind: "numeric",
+            q: "A double-stranded DNA sample has 30% guanine. What percentage of its bases is adenine?",
+            answer: 20,
+            unit: "%",
+            explain: "G = C = 30%, so G + C = 60%. A + T = 40%, and A = T = 20%.",
+            difficulty: 2,
+          },
+          {
+            kind: "multi",
+            q: "Which vitamins are water-soluble? Select all that apply.",
+            options: ["Vitamin B₂", "Vitamin C", "Vitamin D", "Vitamin B₆"],
+            answers: [0, 1, 3],
+            explain: "The B group and C are water-soluble; D is fat-soluble.",
+          },
+          {
+            kind: "mcq",
+            q: "How many hydrogen bonds join a guanine–cytosine base pair?",
+            options: ["1", "2", "3", "4"],
+            answer: 2,
+            explain: "G–C has three hydrogen bonds; A–T has two. That is why DNA rich in G–C pairs is more stable to heat.",
+          },
+          {
+            kind: "truefalse",
+            q: "Purines (adenine and guanine) always pair with pyrimidines in DNA.",
+            answer: true,
+            explain: "A (purine) pairs with T (pyrimidine) and G (purine) with C (pyrimidine), keeping the width of the double helix constant.",
+          },
+        ],
+      },
+      {
+        slug: "c12-biomolecules-exam-edge",
+        title: "Exam edge: Biomolecules",
+        summary: "The NCERT lines that NEET, JEE Main, KCET and COMEDK turn into questions, with numericals on stereoisomers, optical rotation, acetylation and peptides.",
+        minutes: 22,
+        xp: 60,
+        track: "exam",
+        blocks: [
+          {
+            type: "text",
+            md: "**What the exams ask.** **NEET and KCET** ask almost straight from NCERT lines: reducing/non-reducing sugars, the glycosidic links, the amylose/amylopectin percentages, vitamin deficiency diseases, bases in DNA/RNA, protein structure levels. They often use **assertion–reason** and statement-pair formats. **JEE Main and COMEDK** add small numericals: chiral centres and stereoisomers, specific rotation of invert sugar, mass gain on acetylation, peptide counts, base-pair percentages. JEE Advanced rarely asks this chapter on its own, but uses glucose and amino acids inside organic problems.",
+          },
+          {
+            type: "table",
+            headers: ["NCERT line", "How it turns into a question"],
+            rows: [
+              ["Amylose 15–20%, amylopectin 80–85% of starch", "\"Which part of starch is water-soluble and present in smaller amount?\""],
+              ["Glucose pentaacetate does not react with NH₂OH", "\"Which fact supports the cyclic structure?\""],
+              ["Sucrose +66.5°, glucose +52.5°, fructose −92.4°", "Invert sugar sign and value"],
+              ["All α-amino acids except glycine are optically active", "\"Which amino acid is achiral?\""],
+              ["Vitamin B₁₂ is stored though water-soluble", "Odd-one-out questions"],
+              ["A–T two H-bonds, G–C three H-bonds", "Base-pair percentage numericals"],
+            ],
+          },
+          {
+            type: "formula",
+            tex: t`\text{Number of stereoisomers} = 2^n \quad (n = \text{chiral centres, no symmetry}) \qquad [\alpha]_{\text{mix}} = \sum x_i [\alpha]_i`,
+            caption: "x is the mole (or mass) fraction for a mixture of sugars of the same molar mass.",
+          },
+          {
+            type: "example",
+            title: "KCET level: stereoisomers of an aldohexose",
+            problem: "How many stereoisomers are possible for the open-chain aldohexose structure, and how many of them are D-sugars? How many chiral carbons does the pyranose ring form have?",
+            steps: [
+              "Open chain OHC–(CHOH)₄–CH₂OH: C-2, C-3, C-4, C-5 are chiral, n = 4, and the molecule has no symmetry.",
+              "Stereoisomers = 2⁴ = 16, existing as 8 pairs of enantiomers: 8 D and 8 L sugars (D-glucose is one of the 8 D-aldohexoses).",
+              "In the ring form, C-1 becomes a new chiral centre (the anomeric carbon), so there are 5 chiral carbons.",
+            ],
+            answer: "16 stereoisomers (8 D, 8 L); the pyranose form has 5 chiral carbons.",
+          },
+          {
+            type: "example",
+            title: "NEET level: assertion and reason",
+            problem: "Assertion (A): Sucrose does not reduce Fehling's solution. Reason (R): In sucrose the glycosidic link is between C-1 of α-glucose and C-4 of β-fructose. Choose: both true and R explains A; both true but R does not explain A; A true, R false; A false, R true.",
+            steps: [
+              "Check A: sucrose is a non-reducing sugar. A is true.",
+              "Check R: the link is C-1 of α-glucose to **C-2** of β-fructose, not C-4. R is false.",
+              "The correct reason would be that both anomeric carbons are used in the bond, so no free hemiacetal is left.",
+            ],
+            answer: "A is true but R is false.",
+          },
+          {
+            type: "example",
+            title: "JEE Main level: invert sugar",
+            problem: "Sucrose is completely hydrolysed. Taking [α] of glucose = +52.5° and of fructose = −92.4°, find the specific rotation of the resulting mixture.",
+            steps: [
+              "1 mol sucrose gives 1 mol glucose + 1 mol fructose; both have M = 180, so mass fractions are 0.5 each.",
+              "[α]mix = 0.5(+52.5°) + 0.5(−92.4°) = 26.25° − 46.2° = −19.95°.",
+              "The sign has changed from + (sucrose, +66.5°) to −: inversion.",
+            ],
+            answer: "About −20° (−19.95°): invert sugar is laevorotatory.",
+          },
+          {
+            type: "example",
+            title: "JEE Main level: acetylation and peptides",
+            problem: "(a) What mass of glucose pentaacetate is formed from 9.0 g of glucose (M = 180)? (b) How many different tripeptides can be made using glycine, alanine and valine, each used exactly once?",
+            steps: [
+              "(a) Each acetylation replaces –OH by –OCOCH₃, adding C₂H₂O = 42 g/mol. Five OH groups: 180 + 5 × 42 = 390 g/mol.",
+              "Moles of glucose = 9.0 ÷ 180 = 0.050 mol, so pentaacetate = 0.050 × 390 = 19.5 g.",
+              "(b) A tripeptide has a direction (N-terminal to C-terminal), so every order is a different compound: 3! = 3 × 2 × 1 = 6.",
+              "(If repeats were allowed, the count would be 3³ = 27.)",
+            ],
+            answer: "(a) 19.5 g; (b) 6 tripeptides.",
+          },
+          {
+            type: "mistake",
+            wrong: "Fructose is a ketose, so it cannot reduce Tollens' reagent or Fehling's solution.",
+            right: "Fructose is a reducing sugar. Its α-hydroxy ketone group (–CO–CH₂OH) is oxidised by Tollens' and Fehling's reagents in alkaline solution.",
+            why: "Learners carry over \"ketones do not give Tollens' test\" from the carbonyl chapter. Sugars are an exception, because the –OH next to C=O makes the ketose easy to oxidise in alkali.",
+          },
+          {
+            type: "mistake",
+            wrong: "D-glucose is dextrorotatory because of the letter D.",
+            right: "D refers to the configuration at C-5 (–OH on the right in the Fischer projection). The sign of rotation is measured and written separately: D-(+)-glucose but D-(−)-fructose.",
+            why: "\"D\" and \"dextro\" sound alike, and for glucose they happen to match, which hides the difference.",
+          },
+          {
+            type: "activity",
+            activity: {
+              kind: "reveal",
+              prompt: "Which of these does the human body NOT digest?",
+              emoji: "🌾",
+              options: ["Amylose", "Glycogen", "Cellulose", "Maltose"],
+              answer: 2,
+              trap: 0,
+              explain: "Cellulose is made of β-glucose with β1→4 links, which human enzymes cannot hydrolyse. Amylose, glycogen and maltose all have α links, which our amylase and maltase can break.",
+            },
+          },
+          {
+            type: "checkpoint",
+            questions: [
+              {
+                kind: "mcq",
+                q: "Which pair are anomers?",
+                options: ["D-glucose and L-glucose", "α-D-glucopyranose and β-D-glucopyranose", "D-glucose and D-fructose", "D-glucose and D-galactose"],
+                answer: 1,
+                explain: "Anomers differ only at the anomeric carbon (C-1). D/L glucose are enantiomers; glucose and fructose are functional isomers; glucose and galactose are epimers (at C-4).",
+              },
+            ],
+          },
+          {
+            type: "keypoints",
+            items: [
+              "Learn the exact NCERT numbers: 15–20% amylose, +66.5° / +52.5° / −92.4°, 419 K and 423 K for α and β glucose.",
+              "Stereoisomers 2ⁿ: open-chain aldohexose 16 (8 D); ring form has 5 chiral carbons.",
+              "Acetylation adds 42 g/mol per OH; glucose pentaacetate is 390 g/mol.",
+              "Peptides: n residues have n − 1 peptide bonds; distinct amino acids used once give n! sequences.",
+              "Fructose is reducing; sucrose and polysaccharides are not. D/L ≠ (+)/(−).",
+            ],
+          },
+        ],
+        flashcards: [
+          { front: "Stereoisomers of open-chain aldohexoses", back: "2⁴ = 16 (8 D and 8 L)." },
+          { front: "Molar mass of glucose pentaacetate", back: "180 + 5 × 42 = 390 g/mol." },
+          { front: "Specific rotation of invert sugar", back: "About −20° (from +52.5° and −92.4° in a 1 : 1 mixture)." },
+          { front: "Epimers", back: "Sugars differing at one chiral carbon other than the anomeric one, e.g. glucose and galactose (C-4)." },
+          { front: "Why fructose reduces Tollens' reagent", back: "Its α-hydroxy ketone group is oxidised in alkaline solution." },
+          { front: "Peptide bonds in a chain of n residues", back: "n − 1." },
+          { front: "Starch composition", back: "Amylose 15–20% (soluble, unbranched); amylopectin 80–85% (insoluble, branched)." },
+        ],
+        quiz: [
+          {
+            kind: "mcq",
+            q: "Which of the following is a non-reducing sugar?",
+            options: ["Fructose", "Maltose", "Sucrose", "Lactose"],
+            answer: 2,
+            explain: "In sucrose both anomeric carbons are used in the glycosidic bond. The others all have a free hemiacetal carbon or an α-hydroxy ketone.",
+          },
+          {
+            kind: "numeric",
+            q: "18.0 g of glucose is completely acetylated with acetic anhydride. What is the mass (in g) of glucose pentaacetate formed?",
+            answer: 39,
+            tolerance: 0.1,
+            unit: "g",
+            explain: "0.100 mol glucose × 390 g/mol = 39.0 g.",
+            difficulty: 2,
+            hint: "Each –OH → –OCOCH₃ adds 42 g/mol.",
+          },
+          {
+            kind: "numeric",
+            q: "How many stereoisomers are possible for an open-chain aldopentose, OHC–(CHOH)₃–CH₂OH?",
+            answer: 8,
+            explain: "Three chiral carbons (C-2, C-3, C-4): 2³ = 8.",
+            difficulty: 2,
+          },
+          {
+            kind: "mcq",
+            q: "Assertion: Glucose does not give the 2,4-DNP test. Reason: In solution glucose exists mainly as a cyclic hemiacetal, with very little free aldehyde.",
+            options: ["Both true; the reason explains the assertion", "Both true; the reason does not explain the assertion", "Assertion true, reason false", "Assertion false, reason true"],
+            answer: 0,
+            explain: "The cyclic form has no free –CHO for 2,4-DNP to attack, and this is exactly why the test fails.",
+            difficulty: 2,
+          },
+          {
+            kind: "multi",
+            q: "Which statements are correct? Select all that apply.",
+            options: ["Amylopectin has α1→6 links at branch points", "Cellulose has β1→4 links", "Glycogen is less branched than amylopectin", "Maltose has an α1→4 link"],
+            answers: [0, 1, 3],
+            explain: "Glycogen is more highly branched than amylopectin.",
+          },
+          {
+            kind: "numeric",
+            q: "How many different tetrapeptides can be formed from four different amino acids, each used exactly once?",
+            answer: 24,
+            explain: "Every sequence is a different compound: 4! = 24.",
+            difficulty: 2,
+            hint: "A peptide has an N-terminal and a C-terminal end, so order matters.",
+          },
+          {
+            kind: "mcq",
+            q: "A dipeptide on complete hydrolysis gives glycine and alanine. Which statement is true?",
+            options: ["It must be Gly–Ala", "It could be Gly–Ala or Ala–Gly; hydrolysis alone cannot tell", "It is optically inactive", "It contains two peptide bonds"],
+            answer: 1,
+            explain: "Both sequences give the same two amino acids. One peptide bond only; the alanine residue makes it chiral.",
+            difficulty: 3,
+            hint: "What information about order is lost on hydrolysis?",
+          },
+          {
+            kind: "mcq",
+            q: "Which disease is caused by deficiency of vitamin B₁ (thiamine)?",
+            options: ["Scurvy", "Beri-beri", "Pernicious anaemia", "Rickets"],
+            answer: 1,
+            explain: "Thiamine deficiency causes beri-beri. Scurvy is C, pernicious anaemia B₁₂ and rickets D.",
+          },
+        ],
+      },
+    ],
+  },
 ];
 
 /** Class 12 chapter title ("12:<exact title>") → topic slug(s), or full lesson ids, that teach it. */
@@ -1677,4 +2436,5 @@ export const links: Record<string, string | string[]> = {
   "12:Aldehydes, Ketones and Carboxylic Acids": "c12-aldehydes-ketones-acids",
   "12:Amines": "c12-amines",
   "12:Organic Compounds containing Nitrogen": ["c12-amines"],
+  "12:Biomolecules": "c12-biomolecules",
 };
