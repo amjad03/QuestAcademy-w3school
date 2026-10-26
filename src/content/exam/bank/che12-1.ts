@@ -110,12 +110,12 @@ const solutions: Raw[] = [
     idealTime: 40,
     q: t`Henry's law is written as $p = K_H\,x$. At the same partial pressure and temperature, a gas with a larger value of $K_H$ has:`,
     options: [
-      "a higher solubility in the liquid",
       "a lower solubility in the liquid",
+      "a higher solubility in the liquid",
       "the same solubility as any other gas",
       "a solubility that does not depend on pressure",
     ],
-    answer: 1,
+    answer: 0,
     explain: t`From $x = p/K_H$, at fixed $p$ the mole fraction of dissolved gas is inversely proportional to $K_H$. So a larger $K_H$ means a smaller $x$, i.e. lower solubility. Solubility still increases with pressure for every gas.`,
   },
   {
@@ -136,12 +136,12 @@ const solutions: Raw[] = [
     idealTime: 40,
     q: "Deep-sea divers can suffer from 'the bends' when they surface too quickly. The underlying principle and the gas responsible are:",
     options: [
-      "Raoult's law; oxygen",
       "Henry's law; nitrogen",
+      "Raoult's law; oxygen",
       "Henry's law; carbon dioxide",
       "Osmosis; helium",
     ],
-    answer: 1,
+    answer: 0,
     explain: "At depth the pressure is high, so (Henry's law) more N2 dissolves in the blood. On rapid ascent the pressure falls, the dissolved N2 comes out as bubbles and blocks capillaries — the bends. Tanks are therefore filled with air diluted with helium (11.7% He, 56.2% N2, 32.1% O2), since He is much less soluble in blood.",
   },
   {
@@ -500,8 +500,8 @@ const solutions: Raw[] = [
     exams: ALL,
     idealTime: 35,
     q: "The SI-compatible unit commonly used for the molal depression constant $K_f$ is:",
-    options: ["K mol kg$^{-1}$", "K kg mol$^{-1}$", "mol kg$^{-1}$ K$^{-1}$", "K L mol$^{-1}$"],
-    answer: 1,
+    options: ["K mol kg$^{-1}$", "K L mol$^{-1}$", "mol kg$^{-1}$ K$^{-1}$", "K kg mol$^{-1}$"],
+    answer: 3,
     explain: t`From $\Delta T_f = K_f m$: $K_f = \Delta T_f/m$, with units K / (mol kg$^{-1}$) = K kg mol$^{-1}$. K L mol$^{-1}$ would correspond to molarity, which is not used here.`,
   },
   {
@@ -1191,8 +1191,8 @@ const electrochemistry: Raw[] = [
     exams: ALL,
     idealTime: 35,
     q: "Which metal will NOT liberate hydrogen from dilute hydrochloric acid?",
-    options: ["Zinc", "Iron", "Copper", "Magnesium"],
-    answer: 2,
+    options: ["Zinc", "Iron", "Magnesium", "Copper"],
+    answer: 3,
     explain: "Metals with negative standard reduction potentials (below hydrogen in the electrochemical series) can reduce H+ to H2: Mg (−2.37 V), Zn (−0.76 V), Fe (−0.44 V). Copper has E° = +0.34 V, so Cu + 2H+ → Cu2+ + H2 has a negative emf and does not occur.",
   },
   {
@@ -1286,8 +1286,8 @@ const kinetics: Raw[] = [
     exams: ALL,
     idealTime: 40,
     q: "The rate constant of a first-order reaction is $6.93 \\times 10^{-3}$ s$^{-1}$. Its half-life is:",
-    options: ["69.3 s", "100 s", "1000 s", "0.01 s"],
-    answer: 1,
+    options: ["69.3 s", "0.01 s", "1000 s", "100 s"],
+    answer: 3,
     explain: t`$t_{1/2} = \dfrac{0.693}{k} = \dfrac{0.693}{6.93\times10^{-3}} = 100$ s, independent of the initial concentration.`,
   },
   {
@@ -1575,11 +1575,11 @@ const kinetics: Raw[] = [
     q: "In a reaction that occurs through several steps, the rate-determining step is:",
     options: [
       "the fastest step",
-      "the slowest step",
       "always the first step",
       "the step that produces the final product",
+      "the slowest step",
     ],
-    answer: 1,
+    answer: 3,
     explain: "The overall rate cannot exceed the rate of the slowest step, just as a queue moves at the pace of the slowest counter. The rate law is therefore governed by the slowest (rate-determining) step, which need not be the first or last step.",
   },
   {
