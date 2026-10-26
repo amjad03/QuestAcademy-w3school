@@ -571,7 +571,7 @@ export const topics: Topic[] = [
             kind: "fill",
             q: "In 2000, maize hybrids were developed with twice the amount of the amino acids lysine and ___.",
             answer: ["tryptophan"],
-            explain: "Lysine and tryptophan are essential amino acids that ordinary maize lacks.",
+            explain: "Lysine and tryptophan are essential amino acids in which ordinary maize protein is poor.",
           },
           {
             kind: "mcq",
@@ -644,7 +644,7 @@ export const topics: Topic[] = [
             title: "Rescuing an infected banana crop",
             problem: "A banana farmer's suckers are all infected with bunchy top virus. Why will a tissue-culture lab use the shoot tip and not a leaf piece to make new plants?",
             steps: [
-              "Viruses spread through vascular tissue and dividing cells, but the apical meristem has no vascular tissue and divides very fast.",
+              "Viruses spread mainly through the vascular tissue, but the apical meristem has no vascular tissue and its cells divide very fast, keeping ahead of the virus.",
               "So the meristem cells usually carry no virus even in an infected plant.",
               "A meristem explant grown on medium gives plantlets free of virus; a leaf piece would carry the virus into every plantlet.",
               "Micropropagation then multiplies these virus-free somaclones quickly.",
@@ -1594,7 +1594,7 @@ export const topics: Topic[] = [
             type: "callout",
             tone: "note",
             title: "Board note",
-            md: "This chapter (old NCERT Class 12 chapter 16) is in the **ISC** syllabus under Ecology and Environment. The rationalised NCERT dropped it, so **CBSE, Karnataka II PUC and the current NEET** do not include it. Parts of it (pollution, ozone, global warming) are also met in Class 11 Chemistry (Environmental Chemistry, now also trimmed) and in EVS.",
+            md: "This chapter (old NCERT Class 12 chapter 16) is in the **ISC** syllabus under Ecology and Environment. The rationalised NCERT dropped it, so **CBSE, Karnataka II PUC and the current NEET** do not include it. Parts of it (pollution, ozone, global warming) are also met in Class 11 Chemistry (Environmental Chemistry, now also dropped from the rationalised NCERT) and in EVS.",
           },
           {
             type: "text",
@@ -1619,7 +1619,7 @@ export const topics: Topic[] = [
           {
             type: "list",
             items: [
-              "In the 1990s Delhi was among the most polluted cities of the world; vehicles were a major source. After a Supreme Court order, **all public transport buses** (and many taxis and auto-rickshaws) switched from diesel to **CNG** by the end of **2002**.",
+              "In the 1990s Delhi was among the most polluted cities of the world; vehicles were a major source. After a Supreme Court order, **all public transport buses** were converted from diesel to **CNG** by the end of **2002**; many taxis and auto-rickshaws also moved to CNG.",
               "**CNG** burns more efficiently than petrol or diesel, leaves very little unburnt, is cheaper, and cannot easily be stolen or adulterated. The difficulty is laying pipelines and filling stations.",
               "Other steps: phasing out old vehicles, **unleaded petrol**, low-sulphur petrol and diesel, catalytic converters, and stricter emission norms.",
               "India's **auto fuel policy** set the road map: **Euro II** norms meant sulphur at 350 ppm in diesel and 150 ppm in petrol, and aromatic hydrocarbons at 42% of the fuel. **Bharat Stage** norms followed; today India uses **Bharat Stage VI** (from April 2020).",
@@ -1645,7 +1645,7 @@ export const topics: Topic[] = [
             type: "mistake",
             wrong: "A catalytic converter removes carbon dioxide from vehicle exhaust.",
             right: "A catalytic converter **produces** CO₂: it oxidises hydrocarbons and CO to CO₂ (and water) and reduces nitric oxide to nitrogen. It cuts **toxic** gases, not CO₂.",
-            why: "Students link 'pollution control' with 'less CO₂'. But CO₂ is the harmless end product the converter is designed to make from more toxic gases.",
+            why: "Students link 'pollution control' with 'less CO₂'. But CO₂ is the far less toxic end product the converter is designed to make from more toxic gases.",
           },
           {
             type: "activity",
