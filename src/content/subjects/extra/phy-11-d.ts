@@ -1478,9 +1478,855 @@ Fluids is one of the most regular Class 11 chapters in JEE Main and NEET papers,
       },
     ],
   },
+  /* ------------------------------------------------------------------ */
+  /* Thermal Properties of Matter (NCERT)                                 */
+  /* ------------------------------------------------------------------ */
+  {
+    slug: "c11-phy-thermal",
+    title: "Thermal Properties of Matter",
+    icon: "🌡️",
+    description: "Temperature scales, the ideal gas law and absolute temperature, thermal expansion, calorimetry, change of state and latent heat, conduction, convection, radiation, Stefan's and Wien's laws and Newton's law of cooling.",
+    lessons: [
+      {
+        slug: "c11-phy-temperature-expansion",
+        title: "Temperature Scales and Thermal Expansion",
+        summary: "Temperature and its scales, absolute temperature from the ideal gas law, linear, area and volume expansion, and the anomalous expansion of water.",
+        minutes: 20,
+        xp: 50,
+        blocks: [
+          {
+            type: "illustration",
+            emoji: "🛤️",
+            caption: "On a hot May afternoon in Nagpur, the steel rails of a track are a few millimetres longer than on a winter night. Small gaps or special joints give them room to grow.",
+          },
+          {
+            type: "text",
+            md: t`**Temperature** is a measure of how hot or cold a body is. **Heat** is the energy that flows from one body to another *because* of a temperature difference. Heat flows until both reach the same temperature: they are then in **thermal equilibrium**.
+
+A thermometer uses a property that changes steadily with temperature, such as the length of a mercury column. Two **fixed points** set the scale: the **ice point** (melting of pure ice at 1 atm) and the **steam point** (boiling of pure water at 1 atm). The Celsius scale calls them 0 °C and 100 °C; the Fahrenheit scale calls them 32 °F and 212 °F, so 100 Celsius degrees span 180 Fahrenheit degrees.`,
+          },
+          {
+            type: "formula",
+            tex: t`\frac{t_F - 32}{180} = \frac{t_C}{100}, \qquad T\,(\text{K}) = t_C + 273.15`,
+            caption: "Any two linear scales are related by (reading − lower fixed point) ÷ (upper − lower fixed point).",
+          },
+          {
+            type: "text",
+            md: t`**Absolute temperature.** For a low-density gas, $PV = \mu RT$ (the **ideal gas law**, with $\mu$ the number of moles and $R = 8.31\ \text{J mol}^{-1}\text{K}^{-1}$). At constant volume the pressure is proportional to temperature. In a **constant-volume gas thermometer**, a graph of pressure against Celsius temperature is a straight line, and every gas extrapolates to zero pressure at the same point, $-273.15$ °C. This is **absolute zero**, the zero of the **Kelvin (absolute) scale**.
+
+The Kelvin scale takes the **triple point of water**, where ice, water and vapour coexist, as its reference: 273.16 K (0.01 °C, at about 0.006 atm). (Since 2019 the kelvin is formally defined by fixing the Boltzmann constant, which keeps the triple point at 273.16 K to high accuracy.) A temperature change of 1 K equals a change of 1 °C.`,
+          },
+          {
+            type: "example",
+            title: "Converting between scales",
+            problem: "(a) A healthy body temperature is 37 °C. What is it in °F and in K? (b) At what temperature do the Celsius and Fahrenheit scales show the same number?",
+            steps: [
+              t`(a) $t_F = \tfrac{9}{5} t_C + 32 = \tfrac{9}{5}(37) + 32 = 66.6 + 32 = 98.6$ °F. $T = 37 + 273.15 = 310.15$ K.`,
+              t`(b) Put $t_F = t_C = x$: $x = \tfrac{9}{5}x + 32$, so $-\tfrac{4}{5}x = 32$ and $x = -40$.`,
+            ],
+            answer: "(a) 98.6 °F and about 310 K. (b) −40 °C = −40 °F.",
+          },
+          {
+            type: "heading",
+            text: "Thermal expansion",
+          },
+          {
+            type: "text",
+            md: t`Most substances expand on heating. For a small temperature rise $\Delta T$, the fractional change in length, area or volume is proportional to $\Delta T$. The constants are the coefficients of **linear expansion** $\alpha_l$, **area expansion** $\alpha_a$ and **volume expansion** $\alpha_v$, all in $\text{K}^{-1}$.
+
+Typical $\alpha_l$ values: aluminium $2.5 \times 10^{-5}$, copper $1.7 \times 10^{-5}$, iron and steel $1.2 \times 10^{-5}$, Pyrex glass $0.32 \times 10^{-5}$, and invar (a nickel–iron alloy) much smaller still, which is why invar is used for measuring tapes and clock pendulums. Liquids expand more than solids, and gases much more: for an ideal gas at constant pressure $\alpha_v = 1/T$, about $3.7 \times 10^{-3}\ \text{K}^{-1}$ at 0 °C.`,
+          },
+          {
+            type: "formula",
+            tex: t`\Delta L = \alpha_l L\,\Delta T, \qquad \Delta A = \alpha_a A\,\Delta T, \qquad \Delta V = \alpha_v V\,\Delta T, \qquad \alpha_a = 2\alpha_l, \quad \alpha_v = 3\alpha_l`,
+            caption: "The relations α_a = 2α_l and α_v = 3α_l hold for isotropic solids and small ΔT.",
+          },
+          {
+            type: "activity",
+            activity: {
+              kind: "order",
+              prompt: "Order the steps showing α_v = 3α_l for a cube.",
+              items: [
+                "Take a cube of side l; its volume is V = l³",
+                "On heating by ΔT, each side becomes l(1 + α_l ΔT)",
+                "New volume V' = l³(1 + α_l ΔT)³",
+                "Expand and drop the tiny (α_l ΔT)² and (α_l ΔT)³ terms: V' ≈ V(1 + 3α_l ΔT)",
+                "Compare with ΔV = α_v V ΔT to get α_v = 3α_l",
+              ],
+              explain: "Because α_l ΔT is a tiny number (around 10⁻³ or less), its square and cube are negligible. The same steps on a square give α_a = 2α_l.",
+            },
+          },
+          {
+            type: "example",
+            title: "Gaps between rails",
+            problem: t`Steel rails are 12.5 m long. The track is laid when the rails are at 10 °C, and they can reach 50 °C in summer. What gap is needed between neighbouring rails? ($\alpha_{steel} = 1.2 \times 10^{-5}\ \text{K}^{-1}$)`,
+            steps: [
+              t`$\Delta T = 50 - 10 = 40$ K.`,
+              t`$\Delta L = \alpha L\,\Delta T = 1.2 \times 10^{-5} \times 12.5 \times 40$.`,
+              t`$\Delta L = 6.0 \times 10^{-3}$ m.`,
+            ],
+            answer: "A gap of at least 6.0 mm. Without it, the rails would buckle under thermal stress.",
+          },
+          {
+            type: "text",
+            md: t`**Anomalous expansion of water.** Water *contracts* when heated from 0 °C to 4 °C, so its density is **greatest at 4 °C**. Above 4 °C it expands normally. In winter, the surface water of a lake cools and sinks until the whole lake is at 4 °C. Further cooling makes the top layer lighter, so it stays on top and freezes. Ice, a poor conductor, then insulates the water below, and fish survive in water at about 4 °C at the bottom.`,
+          },
+          {
+            type: "checkpoint",
+            questions: [
+              {
+                kind: "numeric",
+                q: "An aluminium sheet of area 1.0 m² is heated by 50 K. By how many cm² does its area increase? (α_l = 2.5 × 10⁻⁵ K⁻¹)",
+                answer: 25,
+                tolerance: 0.2,
+                unit: "cm²",
+                explain: t`$\Delta A = 2\alpha_l A\Delta T = 2 \times 2.5 \times 10^{-5} \times 1.0 \times 50 = 2.5 \times 10^{-3}$ m² $= 25$ cm².`,
+                hint: "Area expansion coefficient is twice the linear one.",
+              },
+            ],
+          },
+          {
+            type: "mistake",
+            wrong: "When a metal plate with a hole is heated, the plate expands into the hole, so the hole gets smaller.",
+            right: "The hole gets larger, exactly as if it were filled with the same metal.",
+            why: "Every length in the plate, including the hole's circumference, grows by the factor (1 + αΔT). That is why a tight metal lid on a glass jar loosens when held under hot water.",
+          },
+          {
+            type: "callout",
+            tone: "exam",
+            title: "Board tip",
+            md: "Scale conversion is a 1-mark favourite: write the general relation (t − LFP)/(UFP − LFP) and you can handle any made-up scale. For 2–3 marks, explain the anomalous expansion of water with its effect on aquatic life, or derive α_v = 3α_l. Remember: a temperature difference of 1 K is the same as 1 °C, so α is the same in K⁻¹ and °C⁻¹.",
+          },
+          {
+            type: "keypoints",
+            items: [
+              "Celsius 0–100, Fahrenheit 32–212: (t_F − 32)/180 = t_C/100; T = t_C + 273.15.",
+              "Absolute zero (−273.15 °C) comes from extrapolating gas pressure to zero; triple point of water = 273.16 K.",
+              "ΔL = αLΔT; α_a = 2α_l, α_v = 3α_l; gases: α_v = 1/T.",
+              "Water is densest at 4 °C, so lakes freeze from the top.",
+              "Holes and cavities expand on heating like the material around them.",
+            ],
+          },
+        ],
+        flashcards: [
+          { front: "Celsius–Fahrenheit relation", back: "(t_F − 32)/180 = t_C/100, or t_F = (9/5)t_C + 32." },
+          { front: "Temperature equal on Celsius and Fahrenheit", back: "−40°." },
+          { front: "Absolute zero", back: "−273.15 °C = 0 K, the temperature where an ideal gas's pressure would extrapolate to zero." },
+          { front: "Triple point of water", back: "273.16 K (0.01 °C) at about 0.006 atm; the reference point of the Kelvin scale." },
+          { front: "Relation between expansion coefficients", back: "α_a = 2α_l and α_v = 3α_l." },
+          { front: "Volume expansion coefficient of an ideal gas at constant pressure", back: "α_v = 1/T (≈ 1/273 K⁻¹ at 0 °C)." },
+          { front: "Temperature of maximum density of water", back: "4 °C." },
+          { front: "Why is invar used in clock pendulums?", back: "Its coefficient of linear expansion is very small, so its length barely changes with temperature." },
+        ],
+        quiz: [
+          {
+            kind: "numeric",
+            q: "Convert 50 °C to °F.",
+            answer: 122,
+            tolerance: 0.1,
+            unit: "°F",
+            explain: t`$t_F = \tfrac{9}{5} \times 50 + 32 = 90 + 32 = 122$ °F.`,
+          },
+          {
+            kind: "mcq",
+            q: "The ratio α_a : α_l for an isotropic solid is:",
+            options: ["1 : 1", "2 : 1", "3 : 1", "1 : 2"],
+            answer: 1,
+            explain: "Area is two lengths multiplied, so α_a = 2α_l.",
+          },
+          {
+            kind: "numeric",
+            q: "A brass rod 1.0 m long (α = 1.8 × 10⁻⁵ K⁻¹) is heated from 20 °C to 120 °C. Find its increase in length in mm.",
+            answer: 1.8,
+            tolerance: 0.01,
+            unit: "mm",
+            explain: t`$\Delta L = 1.8 \times 10^{-5} \times 1.0 \times 100 = 1.8 \times 10^{-3}$ m $= 1.8$ mm.`,
+          },
+          {
+            kind: "truefalse",
+            q: "Water has its maximum density at 4 °C.",
+            answer: true,
+            explain: "Between 0 °C and 4 °C water contracts on heating; above 4 °C it expands. So it is densest at 4 °C.",
+          },
+          {
+            kind: "mcq",
+            q: "A circular hole is cut in an iron plate. When the plate is heated, the diameter of the hole:",
+            options: ["Decreases", "Increases", "Stays the same", "Increases only if the hole is large"],
+            answer: 1,
+            explain: "The hole expands as if it were made of iron, so its diameter grows by the factor (1 + αΔT).",
+          },
+          {
+            kind: "mcq",
+            q: "At constant pressure, the volume coefficient of expansion of an ideal gas at 0 °C is about:",
+            options: ["1/100 K⁻¹", "1/273 K⁻¹", "1/373 K⁻¹", "273 K⁻¹"],
+            answer: 1,
+            explain: t`For an ideal gas $\alpha_v = 1/T = 1/273$ K⁻¹ at 273 K, about $3.7 \times 10^{-3}$ K⁻¹.`,
+            difficulty: 2,
+          },
+          {
+            kind: "numeric",
+            q: "A thermometer on a made-up scale reads 20° at the ice point and 220° at the steam point. What does it read at 40 °C?",
+            answer: 100,
+            tolerance: 0.1,
+            unit: "°",
+            explain: t`$(x - 20)/(220 - 20) = 40/100$, so $x - 20 = 80$ and $x = 100°$.`,
+            difficulty: 2,
+          },
+          {
+            kind: "multi",
+            q: "Which statements are correct?",
+            options: [
+              "A change of 1 K equals a change of 1 °C",
+              "All gases in a constant-volume thermometer extrapolate to zero pressure at about −273 °C",
+              "Lakes freeze from the bottom up",
+              "Liquids generally expand more than solids for the same temperature rise",
+            ],
+            answers: [0, 1, 3],
+            explain: "The Kelvin and Celsius degrees are equal in size. Because water is densest at 4 °C, lakes freeze from the top down.",
+          },
+        ],
+      },
+      {
+        slug: "c11-phy-calorimetry-latent-heat",
+        title: "Specific Heat, Calorimetry and Change of State",
+        summary: "Heat capacity and specific heat, the principle of calorimetry, melting, boiling, sublimation, regelation and latent heat, with mixture problems.",
+        minutes: 22,
+        xp: 55,
+        blocks: [
+          {
+            type: "text",
+            md: t`Heating 1 kg of water by 1 K needs far more energy than heating 1 kg of iron by 1 K. The **heat capacity** of a body is $S = \Delta Q/\Delta T$. The **specific heat capacity** of a substance is the heat needed per unit mass per unit temperature rise, $s = \Delta Q/(m\,\Delta T)$, in $\text{J kg}^{-1}\text{K}^{-1}$. The **molar specific heat capacity** is per mole: $C = \Delta Q/(\mu\,\Delta T)$. For gases it depends on the conditions, so we use $C_p$ (constant pressure) and $C_v$ (constant volume).
+
+Water has the highest specific heat of common substances. That is why it is used as a coolant in car radiators and hot-water bags, and why coastal cities like Mumbai and Chennai have milder temperature swings than inland ones.`,
+          },
+          {
+            type: "formula",
+            tex: t`Q = m\,s\,\Delta T`,
+            caption: "Q in joule, m in kg, s in J kg⁻¹ K⁻¹, ΔT in K (or °C).",
+          },
+          {
+            type: "table",
+            headers: ["Substance", t`Specific heat $s$ (approx., J kg⁻¹ K⁻¹)`],
+            rows: [
+              ["Water", "4186"],
+              ["Ice", "2100"],
+              ["Aluminium", "900"],
+              ["Iron", "450"],
+              ["Copper", "386"],
+              ["Mercury", "140"],
+            ],
+          },
+          {
+            type: "text",
+            md: t`**Calorimetry** means measuring heat. If no heat is lost to the surroundings, **heat lost by the hot body = heat gained by the cold body**. A **calorimeter** is a well-insulated copper or aluminium vessel with a stirrer. Its own heat capacity is often given as a **water equivalent**: the mass of water that would absorb the same heat for the same temperature rise.`,
+          },
+          {
+            type: "example",
+            title: "Finding a specific heat",
+            problem: t`A 0.20 kg metal block at 150 °C is dropped into 0.15 kg of water at 27 °C in a calorimeter of water equivalent 0.025 kg. The final temperature is 40 °C. Find the specific heat of the metal. ($s_{water} = 4186\ \text{J kg}^{-1}\text{K}^{-1}$)`,
+            steps: [
+              t`Heat gained by water + calorimeter $= (0.15 + 0.025) \times 4186 \times (40 - 27) = 0.175 \times 4186 \times 13 = 9523$ J.`,
+              t`Heat lost by the metal $= 0.20 \times s \times (150 - 40) = 22\,s$.`,
+              t`Equate: $22\,s = 9523$, so $s \approx 433\ \text{J kg}^{-1}\text{K}^{-1}$.`,
+            ],
+            answer: "About 433 J kg⁻¹ K⁻¹, close to iron.",
+          },
+          {
+            type: "heading",
+            text: "Change of state and latent heat",
+          },
+          {
+            type: "text",
+            md: t`**Melting** (solid → liquid) happens at the **melting point**; **boiling** (liquid → vapour throughout the liquid) at the **boiling point**. While the state changes, the **temperature stays constant** even though heat is being supplied: the energy goes into separating molecules, not into raising their kinetic energy.
+
+The boiling point rises with pressure: a **pressure cooker** cooks rice faster at about 120 °C, while at high altitude, as in Leh, water boils below 100 °C and cooking is slow. The melting point of ice *falls* with pressure, so a loaded wire passes through a block of ice and the ice refreezes above it: **regelation**. Some solids go straight to vapour: **sublimation** (dry ice, iodine, camphor). At the **triple point** all three states coexist.`,
+          },
+          {
+            type: "formula",
+            tex: t`Q = mL, \qquad L_f(\text{ice}) = 3.33 \times 10^{5}\ \text{J kg}^{-1}, \qquad L_v(\text{water}) = 22.6 \times 10^{5}\ \text{J kg}^{-1}`,
+            caption: "Latent heat L is the heat per unit mass for a change of state at constant temperature. In calories: 80 cal g⁻¹ and 540 cal g⁻¹.",
+          },
+          {
+            type: "activity",
+            activity: {
+              kind: "order",
+              prompt: "Heat ice at −10 °C until steam. Order the stages.",
+              items: [
+                "Ice warms from −10 °C to 0 °C",
+                "Ice melts at 0 °C (temperature constant)",
+                "Water warms from 0 °C to 100 °C",
+                "Water boils at 100 °C (temperature constant)",
+                "Steam warms above 100 °C",
+              ],
+              explain: "The heating curve has three sloping parts and two flat parts. The flat parts are the changes of state, where heat supplied is latent heat. The boiling step is the longest because L_v is much larger than L_f.",
+            },
+          },
+          {
+            type: "example",
+            title: "Ice in warm water",
+            problem: t`100 g of ice at 0 °C is put into 400 g of water at 40 °C. Find the final temperature. ($L_f = 3.33 \times 10^{5}\ \text{J kg}^{-1}$, $s_{water} = 4186\ \text{J kg}^{-1}\text{K}^{-1}$; ignore the container.)`,
+            steps: [
+              t`Check first: heat to melt all the ice $= 0.1 \times 3.33 \times 10^{5} = 33\,300$ J. Heat the water can give cooling to 0 °C $= 0.4 \times 4186 \times 40 = 66\,976$ J. That is more, so all the ice melts and the final temperature is above 0 °C.`,
+              t`Heat lost by warm water $= 0.4 \times 4186 \times (40 - T) = 66\,976 - 1674.4\,T$.`,
+              t`Heat gained by ice $= 33\,300 + 0.1 \times 4186 \times T = 33\,300 + 418.6\,T$.`,
+              t`Equate: $33\,676 = 2093\,T$, so $T \approx 16.1$ °C.`,
+            ],
+            answer: "About 16 °C.",
+          },
+          {
+            type: "checkpoint",
+            questions: [
+              {
+                kind: "numeric",
+                q: "How much heat (in MJ) turns 1.0 kg of ice at 0 °C into steam at 100 °C? (L_f = 3.33 × 10⁵ J kg⁻¹, L_v = 22.6 × 10⁵ J kg⁻¹, s = 4186 J kg⁻¹ K⁻¹)",
+                answer: 3.01,
+                tolerance: 0.02,
+                unit: "MJ",
+                explain: t`Melt: $3.33 \times 10^{5}$ J; warm: $4186 \times 100 = 4.19 \times 10^{5}$ J; boil: $22.6 \times 10^{5}$ J. Total $\approx 30.1 \times 10^{5}$ J $= 3.01$ MJ.`,
+              },
+            ],
+          },
+          {
+            type: "mistake",
+            wrong: "While ice is melting on a stove, its temperature keeps rising, because heat keeps flowing in.",
+            right: "During melting (and boiling), the temperature stays fixed until the whole sample has changed state.",
+            why: "We expect heating to mean warming. During a change of state, the energy breaks the bonds holding molecules in place (latent heat), so the average kinetic energy, and so the temperature, does not change.",
+          },
+          {
+            type: "callout",
+            tone: "exam",
+            title: "Board tip",
+            md: "In every mixture problem, first check whether all the ice melts (or all the steam condenses); then write one heat-balance equation. Examiners also ask why a burn from steam at 100 °C is worse than one from water at 100 °C: each gram of steam gives out its large latent heat (about 540 cal) as it condenses on the skin, before it starts cooling.",
+          },
+          {
+            type: "keypoints",
+            items: [
+              "Q = msΔT; specific heat in J kg⁻¹ K⁻¹; water ≈ 4186, the highest of common substances.",
+              "Calorimetry: heat lost = heat gained (no losses).",
+              "Q = mL at constant temperature; ice 3.33 × 10⁵ J kg⁻¹, water to steam 22.6 × 10⁵ J kg⁻¹.",
+              "Boiling point rises with pressure; ice's melting point falls with pressure (regelation).",
+              "Sublimation: solid → vapour directly (dry ice, iodine, camphor).",
+            ],
+          },
+        ],
+        flashcards: [
+          { front: "Specific heat capacity", back: "Heat per unit mass per unit temperature rise: s = Q/(mΔT), J kg⁻¹ K⁻¹." },
+          { front: "Principle of calorimetry", back: "In an isolated system, heat lost by hot bodies = heat gained by cold bodies." },
+          { front: "Water equivalent of a calorimeter", back: "The mass of water with the same heat capacity as the calorimeter." },
+          { front: "Latent heat of fusion of ice", back: "3.33 × 10⁵ J kg⁻¹ (about 80 cal g⁻¹)." },
+          { front: "Latent heat of vaporisation of water", back: "22.6 × 10⁵ J kg⁻¹ (about 540 cal g⁻¹)." },
+          { front: "Regelation", back: "Ice melts under pressure (its melting point falls) and refreezes when the pressure is removed." },
+          { front: "Why does a pressure cooker cook faster?", back: "Higher pressure raises the boiling point of water to about 120 °C." },
+          { front: "Sublimation", back: "A direct change from solid to vapour, e.g. dry ice, iodine, camphor." },
+        ],
+        quiz: [
+          {
+            kind: "numeric",
+            q: "How much heat (in kJ) is needed to warm 2.0 kg of water from 25 °C to 75 °C? (s = 4186 J kg⁻¹ K⁻¹)",
+            answer: 418.6,
+            tolerance: 0.5,
+            unit: "kJ",
+            explain: t`$Q = 2.0 \times 4186 \times 50 = 4.186 \times 10^{5}$ J $= 418.6$ kJ.`,
+          },
+          {
+            kind: "mcq",
+            q: "Water is used in car radiators mainly because it has a:",
+            options: ["Low boiling point", "High specific heat capacity", "Low density", "High thermal expansion"],
+            answer: 1,
+            explain: "A high specific heat means water carries away a lot of heat for a small rise in its own temperature.",
+          },
+          {
+            kind: "truefalse",
+            q: "At a hill station, water boils at a temperature lower than 100 °C.",
+            answer: true,
+            explain: "Air pressure is lower at high altitude, and the boiling point falls with pressure.",
+          },
+          {
+            kind: "numeric",
+            q: "Find the heat (in kJ) needed to melt 0.50 kg of ice at 0 °C. (L_f = 3.33 × 10⁵ J kg⁻¹)",
+            answer: 166.5,
+            tolerance: 0.5,
+            unit: "kJ",
+            explain: t`$Q = mL = 0.50 \times 3.33 \times 10^{5} = 1.665 \times 10^{5}$ J $= 166.5$ kJ.`,
+          },
+          {
+            kind: "mcq",
+            q: "A thin wire with heavy weights at its ends cuts slowly through a block of ice, but the block stays in one piece. This shows:",
+            options: ["Sublimation", "Regelation", "Evaporation", "Anomalous expansion"],
+            answer: 1,
+            explain: "Pressure under the wire lowers the melting point, so the ice melts there; the water refreezes above the wire once the pressure is removed.",
+          },
+          {
+            kind: "multi",
+            q: "Which of these sublime at ordinary pressure?",
+            options: ["Dry ice (solid CO₂)", "Iodine", "Camphor", "Candle wax"],
+            answers: [0, 1, 2],
+            explain: "Dry ice, iodine and camphor pass directly from solid to vapour. Wax melts into a liquid first.",
+          },
+          {
+            kind: "mcq",
+            q: "A burn from steam at 100 °C is worse than one from boiling water at 100 °C because steam:",
+            options: [
+              "Is at a higher temperature",
+              "Releases its latent heat of vaporisation on condensing",
+              "Has a higher specific heat than water",
+              "Moves faster than water",
+            ],
+            answer: 1,
+            explain: "Both are at 100 °C, but each kilogram of steam first gives out 22.6 × 10⁵ J as it condenses on the skin.",
+          },
+          {
+            kind: "numeric",
+            q: "500 g of water at 80 °C is mixed with 300 g of water at 20 °C. Find the final temperature in °C (no heat losses).",
+            answer: 57.5,
+            tolerance: 0.1,
+            unit: "°C",
+            explain: t`$500(80 - T) = 300(T - 20)$ gives $40\,000 + 6000 = 800\,T$, so $T = 57.5$ °C.`,
+            difficulty: 2,
+          },
+        ],
+      },
+      {
+        slug: "c11-phy-heat-transfer",
+        title: "Conduction, Convection, Radiation and Newton's Law of Cooling",
+        summary: "Thermal conductivity and heat current, convection currents, black-body radiation with Stefan's and Wien's laws, and how hot bodies cool.",
+        minutes: 24,
+        xp: 55,
+        blocks: [
+          {
+            type: "illustration",
+            emoji: "🍲",
+            caption: "In a kitchen, the steel spoon in the dal gets hot (conduction), the dal itself churns as it boils (convection), and you feel the stove's warmth on your face (radiation).",
+          },
+          {
+            type: "text",
+            md: t`Heat moves in three ways. **Conduction** passes energy from molecule to molecule with no bulk movement of matter; it is the main mode in solids. **Convection** carries heat by the actual movement of the fluid; it happens in liquids and gases, not in solids. **Radiation** carries energy as electromagnetic waves; it needs no medium and travels at the speed of light, which is how the Sun's energy reaches Earth through empty space.`,
+          },
+          {
+            type: "text",
+            md: t`**Conduction.** For a bar of length $L$ and cross-section $A$ with its ends held at $T_C$ and $T_D$ ($T_C > T_D$), the steady rate of heat flow, the **heat current** $H$, is given below. $K$ is the **thermal conductivity** of the material (W m⁻¹ K⁻¹). Metals are good conductors (copper about 385, steel about 50), while glass (about 0.8), wood and especially still air (about 0.024) are poor ones.
+
+So cooking pots have copper bottoms, a woollen sweater keeps you warm by trapping still air, and thick mud walls keep village homes cool in summer. Treating $L/(KA)$ as a **thermal resistance** lets you combine slabs in series and parallel like resistors.`,
+          },
+          {
+            type: "formula",
+            tex: t`H = \frac{dQ}{dt} = K A\,\frac{T_C - T_D}{L}, \qquad R_{th} = \frac{L}{KA}`,
+            caption: "In the steady state the heat current is the same through every section of a series combination.",
+          },
+          {
+            type: "example",
+            title: "Junction of two rods",
+            problem: "A copper rod and a steel rod of the same length and cross-section are joined end to end. The free end of copper is kept at 100 °C and that of steel at 0 °C. Find the temperature of the junction in the steady state. (K_copper = 385, K_steel = 50 W m⁻¹ K⁻¹; the sides are insulated.)",
+            steps: [
+              t`Steady state: the same heat current flows through both rods, $H_{Cu} = H_{steel}$.`,
+              t`$385\,A\,(100 - T)/L = 50\,A\,(T - 0)/L$.`,
+              t`$38\,500 - 385\,T = 50\,T$, so $435\,T = 38\,500$.`,
+              t`$T \approx 88.5$ °C.`,
+            ],
+            answer: "About 88.5 °C. Most of the temperature drop happens across the poorer conductor, steel.",
+          },
+          {
+            type: "text",
+            md: t`**Convection.** Heated fluid expands, becomes less dense and rises, while cooler fluid sinks to take its place: **natural convection**. A fan or pump drives **forced convection**, as in a car radiator or the human blood circulation.
+
+On a summer day the land heats faster than the sea, warm air rises over the land and cool air flows in from the sea: a **sea breeze**. At night the land cools faster and the flow reverses: a **land breeze**. On a planetary scale, convection drives the **trade winds** that blow towards the equator.`,
+          },
+          {
+            type: "text",
+            md: t`**Radiation.** Every body radiates energy. A **black body** absorbs all radiation falling on it, and it is also the best possible emitter (good absorbers are good emitters). The **Stefan–Boltzmann law** says the energy radiated per second by a body of area $A$ at absolute temperature $T$ is $H = e\sigma AT^4$, with $\sigma = 5.67 \times 10^{-8}\ \text{W m}^{-2}\text{K}^{-4}$ and **emissivity** $e$ (1 for a black body, less for others). A body in surroundings at $T_s$ loses energy at the net rate $e\sigma A(T^4 - T_s^4)$.
+
+**Wien's displacement law:** the wavelength at which a black body radiates most strongly is inversely proportional to its absolute temperature. A heated iron rod glows dull red, then orange, then white as it gets hotter.`,
+          },
+          {
+            type: "formula",
+            tex: t`H = e\sigma A T^4, \qquad \lambda_m T = b = 2.9 \times 10^{-3}\ \text{m K}`,
+            caption: "T must be in kelvin in both laws.",
+          },
+          {
+            type: "example",
+            title: "Temperature of the Sun's surface",
+            problem: "Sunlight is most intense at a wavelength of about 500 nm. Estimate the temperature of the Sun's surface, treating it as a black body.",
+            steps: [
+              t`Wien's law: $T = b/\lambda_m$.`,
+              t`$T = 2.9 \times 10^{-3} / 5.0 \times 10^{-7} = 5.8 \times 10^{3}$ K.`,
+            ],
+            answer: "About 5800 K.",
+          },
+          {
+            type: "checkpoint",
+            questions: [
+              {
+                kind: "numeric",
+                q: "The absolute temperature of a black body is doubled. By what factor does the power it radiates increase?",
+                answer: 16,
+                explain: t`$H \propto T^4$, so $2^4 = 16$.`,
+              },
+            ],
+          },
+          {
+            type: "heading",
+            text: "Newton's law of cooling",
+          },
+          {
+            type: "text",
+            md: t`For a **small** temperature difference, the rate at which a body loses heat is proportional to the difference between its temperature $T$ and the surroundings' temperature $T_s$: $-\dfrac{dQ}{dt} = k(T - T_s)$. For a body of mass $m$ and specific heat $s$, $\dfrac{dT}{dt} = -K(T - T_s)$ with $K = k/(ms)$. Integrating gives $T - T_s = (T_0 - T_s)e^{-Kt}$, so a graph of $\ln(T - T_s)$ against time is a straight line.
+
+For quick sums, exams use the **average form**: $\dfrac{T_1 - T_2}{t} = K\left(\dfrac{T_1 + T_2}{2} - T_s\right)$.`,
+          },
+          {
+            type: "example",
+            title: "A cup of tea cooling",
+            problem: "A cup of tea cools from 80 °C to 60 °C in 5 minutes in a room at 20 °C. What will its temperature be after another 5 minutes?",
+            steps: [
+              t`First interval: $\dfrac{80 - 60}{5} = K\left(\dfrac{80 + 60}{2} - 20\right)$, so $4 = 50K$ and $K = 0.08\ \text{min}^{-1}$.`,
+              t`Second interval: $\dfrac{60 - T}{5} = 0.08\left(\dfrac{60 + T}{2} - 20\right)$.`,
+              t`Multiply by 5: $60 - T = 0.2(60 + T) - 8 = 4 + 0.2\,T$.`,
+              t`$56 = 1.2\,T$, so $T \approx 46.7$ °C.`,
+            ],
+            answer: "About 46.7 °C. It cools by only about 13 °C this time, because the excess over room temperature is smaller.",
+          },
+          {
+            type: "activity",
+            activity: {
+              kind: "sort",
+              prompt: "Which mode of heat transfer is mainly at work?",
+              groups: ["Conduction", "Convection", "Radiation"],
+              items: [
+                { text: "A steel spoon in hot tea gets hot at the handle", group: 0, hint: "Heat passes along a solid without the spoon moving." },
+                { text: "Sea breeze on a summer afternoon", group: 1, hint: "Warm air over land rises and cooler sea air moves in." },
+                { text: "Sunlight warming the Earth", group: 2, hint: "Space between Sun and Earth has no medium." },
+                { text: "Water in a pan circulating as it heats", group: 1, hint: "Hot water rises, cold water sinks." },
+                { text: "Warmth felt sitting beside a bonfire", group: 2, hint: "Hot air rises away from you; the warmth reaches you as infrared waves." },
+                { text: "A cold floor tile feels colder than a mat", group: 0, hint: "Tile conducts heat away from your feet faster." },
+              ],
+              explain: "Conduction needs contact and no flow of matter, convection needs a moving fluid, and radiation needs neither.",
+            },
+          },
+          {
+            type: "mistake",
+            wrong: "A red-hot iron rod is hotter than a white-hot one, because red feels like the hottest colour.",
+            right: "The white-hot rod is hotter. As temperature rises, the peak wavelength shifts from red towards shorter wavelengths (Wien's law), and the glow turns orange, yellow and white.",
+            why: "Everyday colour codes use red for 'hot', which misleads. Wien's law λ_m T = constant means a hotter body peaks at a shorter wavelength.",
+          },
+          {
+            type: "keypoints",
+            items: [
+              "Conduction H = KA(T_C − T_D)/L; thermal resistance L/(KA) adds in series.",
+              "Convection needs a moving fluid: sea and land breezes, trade winds.",
+              "Radiation needs no medium; Stefan: H = eσAT⁴; Wien: λ_m T = 2.9 × 10⁻³ m K.",
+              "Newton's law of cooling: cooling rate ∝ (T − T_s), for small differences.",
+              "Good absorbers are good emitters; a black body is both the best absorber and emitter.",
+            ],
+          },
+        ],
+        flashcards: [
+          { front: "Heat current by conduction", back: "H = KA(T_C − T_D)/L." },
+          { front: "SI unit of thermal conductivity", back: "W m⁻¹ K⁻¹." },
+          { front: "Sea breeze", back: "By day, land warms faster; warm air rises over land and cooler air flows in from the sea." },
+          { front: "Stefan–Boltzmann law", back: "Power radiated H = eσAT⁴, σ = 5.67 × 10⁻⁸ W m⁻² K⁻⁴." },
+          { front: "Wien's displacement law", back: "λ_m T = b ≈ 2.9 × 10⁻³ m K: hotter bodies peak at shorter wavelengths." },
+          { front: "Newton's law of cooling", back: "Rate of loss of heat ∝ (T − T_s), valid for small temperature differences." },
+          { front: "Emissivity", back: "Ratio of energy radiated by a body to that by a black body at the same temperature; between 0 and 1." },
+          { front: "Graph that is a straight line in Newton cooling", back: "ln(T − T_s) against time, with slope −K." },
+        ],
+        quiz: [
+          {
+            kind: "numeric",
+            q: "A glass window of area 1.0 m² and thickness 4.0 mm has inside and outside faces at temperatures differing by 10 K. K_glass = 0.80 W m⁻¹ K⁻¹. Find the heat current in W.",
+            answer: 2000,
+            tolerance: 5,
+            unit: "W",
+            explain: t`$H = KA\Delta T/L = 0.80 \times 1.0 \times 10/0.004 = 2000$ W.`,
+          },
+          {
+            kind: "mcq",
+            q: "Convection cannot take place in:",
+            options: ["Water", "Air", "A solid iron bar", "Molten wax"],
+            answer: 2,
+            explain: "Convection needs the material itself to move. Particles in a solid stay in place, so heat moves only by conduction.",
+          },
+          {
+            kind: "truefalse",
+            q: "Thermal radiation needs a material medium to travel.",
+            answer: false,
+            explain: "Thermal radiation is electromagnetic, so it crosses empty space; that is how sunlight reaches us.",
+          },
+          {
+            kind: "numeric",
+            q: "A black body is at 5000 K. Find the wavelength of its maximum emission in nm. (b = 2.9 × 10⁻³ m K)",
+            answer: 580,
+            tolerance: 1,
+            unit: "nm",
+            explain: t`$\lambda_m = b/T = 2.9 \times 10^{-3}/5000 = 5.8 \times 10^{-7}$ m $= 580$ nm.`,
+          },
+          {
+            kind: "numeric",
+            q: "A black body of surface area 0.10 m² is at 1000 K. Find the power it radiates, in W. (σ = 5.67 × 10⁻⁸ W m⁻² K⁻⁴)",
+            answer: 5670,
+            tolerance: 10,
+            unit: "W",
+            explain: t`$H = \sigma AT^4 = 5.67 \times 10^{-8} \times 0.10 \times 10^{12} = 5670$ W.`,
+            difficulty: 2,
+          },
+          {
+            kind: "mcq",
+            q: "According to Newton's law of cooling, the rate of cooling of a body is proportional to:",
+            options: [
+              "Its temperature in °C",
+              "The fourth power of its temperature",
+              "The difference between its temperature and the surroundings",
+              "Its mass",
+            ],
+            answer: 2,
+            explain: "Rate of cooling ∝ (T − T_s), for small temperature differences. The T⁴ law is Stefan's law for total emission.",
+          },
+          {
+            kind: "multi",
+            q: "Which statements are correct?",
+            options: [
+              "Good absorbers of radiation are good emitters",
+              "A woollen sweater keeps us warm mainly by trapping still air",
+              "Copper has a lower thermal conductivity than glass",
+              "Land breeze blows from land to sea at night",
+            ],
+            answers: [0, 1, 3],
+            explain: "Copper (about 385 W m⁻¹ K⁻¹) conducts heat hundreds of times better than glass (about 0.8 W m⁻¹ K⁻¹).",
+          },
+        ],
+      },
+      {
+        slug: "c11-phy-thermal-exam",
+        title: "Exam edge: Thermal Properties for JEE, NEET and CETs",
+        summary: "Radiation ratios, pendulum clocks, mixtures with ice and steam, slabs in series and parallel, and the growth of ice on a pond, at entrance-exam level.",
+        minutes: 25,
+        xp: 60,
+        track: "exam",
+        blocks: [
+          {
+            type: "text",
+            md: t`**What the exams ask.** NEET and KCET set direct questions on calorimetry mixtures, Wien's and Stefan's laws, Newton's law of cooling and expansion coefficients. JEE Main adds pendulum clocks and thermal stress, apparent expansion of liquids, and conduction through slabs in series and parallel. JEE Advanced asks the growth of ice on a pond, radial heat flow and cooling with radiation, often combined with calorimetry.
+
+Together with thermodynamics, this chapter is a steady scorer in every engineering and medical entrance exam, and the mixture problem is one of NEET's favourite numericals.`,
+          },
+          {
+            type: "table",
+            headers: ["Result", "When it is safe"],
+            rows: [
+              [t`Pendulum clock: fractional time lost $= \tfrac{1}{2}\alpha\Delta\theta$; per day $86\,400 \times \tfrac{1}{2}\alpha\Delta\theta$ s`, "Small αΔθ. Hotter → longer pendulum → clock loses; colder → gains."],
+              [t`Apparent expansion: $\gamma_{app} = \gamma_{liquid} - \gamma_{vessel}$`, "Liquid heated in a vessel that also expands."],
+              [t`Slabs in series (equal lengths): $K_{eq} = \dfrac{2K_1K_2}{K_1 + K_2}$; in parallel (equal areas): $K_{eq} = \dfrac{K_1 + K_2}{2}$`, "Steady state, sides insulated; otherwise use thermal resistances."],
+              [t`Radiated power $\propto r^2T^4$; $\lambda_m \propto 1/T$`, "Black bodies (or the same emissivity); T in kelvin."],
+              [t`Ice layer: $t = \dfrac{\rho L}{2K\Delta T}(x_2^2 - x_1^2)$`, "Water below at 0 °C, air above at fixed −ΔT, heat lost only by conduction through the ice."],
+            ],
+          },
+          {
+            type: "example",
+            title: "KCET / NEET level: two stars",
+            problem: "Two stars of the same radius emit most strongly at 400 nm and 600 nm. Treating them as black bodies, find the ratio of the power radiated by the first to that by the second.",
+            steps: [
+              t`Wien: $T \propto 1/\lambda_m$, so $T_1/T_2 = 600/400 = 1.5$.`,
+              t`Stefan, same area: $P_1/P_2 = (T_1/T_2)^4 = 1.5^4$.`,
+              t`$1.5^2 = 2.25$; $2.25^2 = 5.06$.`,
+            ],
+            answer: "About 5.1 : 1. The bluer star is hotter and much more powerful.",
+          },
+          {
+            type: "example",
+            title: "JEE Main level: pendulum clock",
+            problem: t`A pendulum clock with a brass rod ($\alpha = 2.0 \times 10^{-5}\ \text{K}^{-1}$) keeps correct time at 20 °C. How many seconds does it gain or lose per day at 30 °C?`,
+            steps: [
+              t`Period $T = 2\pi\sqrt{L/g}$, so $\Delta T/T = \tfrac{1}{2}\Delta L/L = \tfrac{1}{2}\alpha\Delta\theta$.`,
+              t`$\tfrac{1}{2}\alpha\Delta\theta = 0.5 \times 2.0 \times 10^{-5} \times 10 = 1.0 \times 10^{-4}$.`,
+              t`Time error per day $= 86\,400 \times 1.0 \times 10^{-4} = 8.64$ s.`,
+              "The pendulum is longer, so each swing takes longer and the clock runs slow.",
+            ],
+            answer: "It loses about 8.6 s per day.",
+          },
+          {
+            type: "example",
+            title: "NEET level: not all the ice melts",
+            problem: "50 g of ice at 0 °C is added to 100 g of water at 20 °C. Find the final temperature and the mass of ice that melts. (L_f = 80 cal g⁻¹, s = 1 cal g⁻¹ °C⁻¹)",
+            steps: [
+              t`Heat the water can give in cooling to 0 °C: $100 \times 1 \times 20 = 2000$ cal.`,
+              t`Heat needed to melt all the ice: $50 \times 80 = 4000$ cal. That is more than 2000 cal, so not all the ice melts.`,
+              "So the final temperature is 0 °C, with ice and water together.",
+              t`Ice melted $= 2000/80 = 25$ g.`,
+            ],
+            answer: "Final temperature 0 °C; 25 g of ice melts and 25 g remains.",
+          },
+          {
+            type: "example",
+            title: "JEE Main level: two slabs in series",
+            problem: t`A wall is made of two slabs of equal thickness and area, with conductivities $K$ and $2K$. The outer face of the $K$ slab is at 100 °C and that of the $2K$ slab at 0 °C. Find the interface temperature and the equivalent conductivity.`,
+            steps: [
+              t`Same heat current through both: $K(100 - T)/L = 2K(T - 0)/L$.`,
+              t`$100 - T = 2T$, so $T = 33.3$ °C.`,
+              t`Thermal resistances add: $\dfrac{2L}{K_{eq}A} = \dfrac{L}{KA} + \dfrac{L}{2KA}$, giving $K_{eq} = \dfrac{2}{1 + 1/2}K = \dfrac{4K}{3}$.`,
+            ],
+            answer: "Interface at about 33 °C; K_eq = 4K/3, matching 2K₁K₂/(K₁ + K₂).",
+          },
+          {
+            type: "example",
+            title: "JEE Advanced level: ice forming on a pond",
+            problem: t`The air above a pond is at −10 °C and the water is at 0 °C. How long does it take for the ice layer to grow from zero to 5.0 cm? $K_{ice} = 2.2\ \text{W m}^{-1}\text{K}^{-1}$, $\rho_{ice} = 900\ \text{kg m}^{-3}$, $L = 3.36 \times 10^{5}\ \text{J kg}^{-1}$.`,
+            steps: [
+              t`When the ice is $x$ thick, heat flows up through it at $H = KA\Delta T/x$.`,
+              t`To freeze a further layer $dx$, heat $\rho A\,dx\,L$ must leave: $\rho AL\,dx = (KA\Delta T/x)\,dt$.`,
+              t`So $x\,dx = \dfrac{K\Delta T}{\rho L}\,dt$; integrating, $t = \dfrac{\rho L}{2K\Delta T}(x_2^2 - x_1^2)$.`,
+              t`$t = \dfrac{900 \times 3.36 \times 10^{5} \times (0.050)^2}{2 \times 2.2 \times 10} = \dfrac{7.56 \times 10^{5}}{44} \approx 1.72 \times 10^{4}$ s.`,
+            ],
+            answer: "About 1.7 × 10⁴ s, roughly 4.8 hours. Doubling the thickness takes four times as long, since t ∝ x².",
+          },
+          {
+            type: "checkpoint",
+            questions: [
+              {
+                kind: "numeric",
+                q: "An ice layer takes 2 hours to grow from 0 to 2 cm. Under the same conditions, how many hours does it take to grow from 2 cm to 4 cm?",
+                answer: 6,
+                explain: t`$t \propto x_2^2 - x_1^2$: $(16 - 4)/(4 - 0) = 3$, so $3 \times 2 = 6$ hours.`,
+                difficulty: 3,
+              },
+            ],
+          },
+          {
+            type: "mistake",
+            wrong: "In an ice–water mixture problem, write one heat-balance equation straight away and solve for T.",
+            right: "First compare the heat available with the heat needed to melt all the ice. If it is not enough, the final temperature is 0 °C and only part of the ice melts.",
+            why: "Solving blindly can give a negative final temperature with 'water' below 0 °C, or more ice melted than you had. The physics changes when the change of state is incomplete.",
+          },
+          {
+            type: "mistake",
+            wrong: "In Stefan's law, use temperatures in °C: a body at 200 °C radiates 16 times as much as one at 100 °C.",
+            right: "Convert to kelvin: (473/373)⁴ ≈ 2.6, not 16.",
+            why: "Stefan's and Wien's laws are about absolute temperature. Only temperature differences (as in conduction and expansion) can be used in °C.",
+          },
+          {
+            type: "mistake",
+            wrong: "A pendulum clock runs fast in summer because heat speeds up its mechanism.",
+            right: "In summer the pendulum expands, its period T = 2π√(L/g) increases, and the clock runs slow (loses time).",
+            why: "The clock counts swings. Longer swings mean fewer ticks per real second.",
+          },
+          {
+            type: "activity",
+            activity: {
+              kind: "match",
+              prompt: "Match each problem to its key relation.",
+              pairs: [
+                ["Clock with a metal pendulum on a hot day", "ΔT/T = ½αΔθ"],
+                ["Mercury rising in a glass thermometer", "γ_app = γ_liquid − γ_vessel"],
+                ["Two equal slabs in series", "K_eq = 2K₁K₂/(K₁ + K₂)"],
+                ["Comparing the power of two stars", "P ∝ r²T⁴"],
+                ["Ice thickening on a lake", "t ∝ x²"],
+              ],
+              explain: "Each classic problem has a one-line shortcut, but check its conditions: kelvin for radiation, small αΔθ for clocks, and steady state for conduction.",
+            },
+          },
+          {
+            type: "keypoints",
+            items: [
+              "Clock error ½αΔθ per second, × 86 400 per day; hot → loses.",
+              "Mixtures: always check if the change of state is complete.",
+              "Series slabs: add L/(KA); parallel: add KA/L.",
+              "Radiation: P ∝ r²T⁴, λ_m ∝ 1/T, with T in kelvin.",
+              "Ice layer time ∝ x²; Newton cooling average form for quick numericals.",
+            ],
+          },
+        ],
+        flashcards: [
+          { front: "Time lost per day by a pendulum clock", back: "86 400 × ½ α Δθ seconds (hotter → slow)." },
+          { front: "Apparent expansion of a liquid", back: "γ_app = γ_real − γ_vessel." },
+          { front: "Equivalent K, two equal slabs in series", back: "2K₁K₂/(K₁ + K₂)." },
+          { front: "Equivalent K, two equal-area rods in parallel", back: "(K₁ + K₂)/2." },
+          { front: "Power ratio of two black bodies", back: "P₁/P₂ = (r₁/r₂)²(T₁/T₂)⁴." },
+          { front: "Time for ice to grow from x₁ to x₂", back: "t = ρL(x₂² − x₁²)/(2KΔT)." },
+          { front: "First step in every ice/steam mixture problem", back: "Check whether the heat available is enough for the whole change of state." },
+        ],
+        quiz: [
+          {
+            kind: "mcq",
+            q: "Two identical black spheres are at 227 °C and 727 °C. The ratio of power radiated by the hotter to the cooler is:",
+            options: ["3.2", "4", "16", "10.4"],
+            answer: 2,
+            explain: t`In kelvin: 1000 K and 500 K, ratio 2, so $2^4 = 16$. Using °C gives $(727/227)^4 \approx 105$, which is wrong.`,
+            difficulty: 2,
+          },
+          {
+            kind: "numeric",
+            q: "A steel pendulum clock (α = 1.2 × 10⁻⁵ K⁻¹) is correct at 15 °C. How many seconds does it lose per day at 35 °C?",
+            answer: 10.4,
+            tolerance: 0.1,
+            unit: "s",
+            explain: t`$86\,400 \times \tfrac{1}{2} \times 1.2 \times 10^{-5} \times 20 = 86\,400 \times 1.2 \times 10^{-4} = 10.4$ s.`,
+            difficulty: 2,
+          },
+          {
+            kind: "numeric",
+            q: "20 g of steam at 100 °C is passed into 200 g of water at 20 °C. Find the final temperature in °C. (L_v = 540 cal g⁻¹, s = 1 cal g⁻¹ °C⁻¹, no losses)",
+            answer: 76.4,
+            tolerance: 0.2,
+            unit: "°C",
+            explain: t`Check: water needs $200 \times 80 = 16\,000$ cal to reach 100 °C, more than the $10\,800$ cal from condensing all the steam, so all the steam condenses and $T < 100$ °C. Balance: $20 \times 540 + 20(100 - T) = 200(T - 20)$ gives $12\,800 - 20T = 200T - 4000$, so $T = 16\,800/220 \approx 76.4$ °C.`,
+            difficulty: 2,
+            hint: "Steam gives latent heat and then cools as water from 100 °C to T.",
+          },
+          {
+            kind: "mcq",
+            q: "Two rods of the same length and area, with conductivities K₁ and K₂, are placed side by side (in parallel) between the same two reservoirs. The equivalent conductivity is:",
+            options: ["K₁ + K₂", "(K₁ + K₂)/2", "2K₁K₂/(K₁ + K₂)", "√(K₁K₂)"],
+            answer: 1,
+            explain: "Heat currents add: K_eq(2A) = K₁A + K₂A, so K_eq = (K₁ + K₂)/2. 2K₁K₂/(K₁ + K₂) is the series result.",
+          },
+          {
+            kind: "numeric",
+            q: "A body cools from 70 °C to 50 °C in 4 minutes in a room at 20 °C. Using Newton's law of cooling, find its temperature after another 4 minutes, in °C.",
+            answer: 38,
+            tolerance: 0.2,
+            unit: "°C",
+            explain: t`Average form: $20/4 = K(60 - 20)$, so $K = 0.125$ per min. Then $(50 - T)/4 = 0.125\left(\tfrac{50 + T}{2} - 20\right)$, giving $50 - T = 2.5 + 0.25T$ and $T = 38$ °C. (The exponential law gives the same: excess 50 → 30 → 18.)`,
+            difficulty: 2,
+          },
+          {
+            kind: "numeric",
+            q: "Mercury has γ = 18.2 × 10⁻⁵ K⁻¹ and the glass bulb has α_l = 0.90 × 10⁻⁵ K⁻¹. Find the coefficient of apparent expansion of mercury in this glass, in units of 10⁻⁵ K⁻¹.",
+            answer: 15.5,
+            tolerance: 0.05,
+            unit: "× 10⁻⁵ K⁻¹",
+            explain: t`$\gamma_{glass} = 3\alpha_l = 2.7 \times 10^{-5}$; $\gamma_{app} = 18.2 - 2.7 = 15.5 \times 10^{-5}$ K⁻¹.`,
+            difficulty: 2,
+            hint: "Convert the glass's linear coefficient to a volume coefficient first.",
+          },
+          {
+            kind: "mcq",
+            q: "A black body at 2900 K emits most strongly at a wavelength of about (b = 2.9 × 10⁻³ m K):",
+            options: ["100 nm", "500 nm", "1 μm", "10 μm"],
+            answer: 2,
+            explain: t`$\lambda_m = 2.9 \times 10^{-3}/2900 = 1.0 \times 10^{-6}$ m $= 1$ μm, in the infrared.`,
+          },
+          {
+            kind: "multi",
+            q: "A metal sphere cools in a room. Which statements are correct?",
+            options: [
+              "Its rate of cooling decreases as it approaches room temperature",
+              "A graph of ln(T − T_s) against time is a straight line (for small T − T_s)",
+              "A polished sphere cools faster than an identical blackened one",
+              "A sphere of the same material but larger radius cools more slowly",
+            ],
+            answers: [0, 1, 3],
+            explain: "A polished surface has low emissivity, so it radiates less and cools more slowly. A larger sphere has less surface area per unit mass (∝ 1/r), so it cools more slowly.",
+            difficulty: 3,
+          },
+        ],
+      },
+    ],
+  },
 ];
 
 /** Class 11 chapter title ("11:<exact title>") → topic slug(s) that teach it. */
 export const links: Record<string, string | string[]> = {
   "11:Mechanical Properties of Solids": "c11-phy-solids",
+  "11:Mechanical Properties of Fluids": "c11-phy-fluids",
+  "11:Thermal Properties of Matter": "c11-phy-thermal",
+  "11:Properties of Bulk Matter": ["c11-phy-solids", "c11-phy-fluids", "c11-phy-thermal"],
+  "11:Heat and Thermodynamics": "c11-phy-thermal",
 };
