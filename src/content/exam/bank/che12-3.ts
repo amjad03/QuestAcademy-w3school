@@ -915,11 +915,446 @@ const ch8: Item[] = [
 ];
 
 /* ================================================================== */
+/* Chapter 9 — Amines                                                  */
+/* ================================================================== */
+
+const CH9 = "Amines";
+
+const ch9: Item[] = [
+  {
+    kind: "mcq", exams: B, difficulty: 1, idealTime: 40,
+    q: "Ethanamide is warmed with Br₂ and aqueous NaOH. The amine formed is:",
+    options: ["Ethanamine", "Methanamine", "N-Methylethanamide", "Propanamine"],
+    answer: 1,
+    explain: "Hofmann bromamide degradation: RCONH₂ + Br₂ + 4NaOH → RNH₂ + Na₂CO₃ + 2NaBr + 2H₂O. The carbonyl carbon is lost as carbonate, so the amine has one carbon fewer: CH₃CONH₂ → CH₃NH₂. LiAlH₄ reduction would keep all carbons (ethanamine).",
+  },
+  {
+    kind: "mcq", exams: B, difficulty: 1, idealTime: 40,
+    q: "Gabriel phthalimide synthesis is used to prepare:",
+    options: ["Pure primary aliphatic amines", "Secondary amines", "Aromatic primary amines such as aniline", "Tertiary amines"],
+    answer: 0,
+    explain: "Potassium phthalimide is N-alkylated by an alkyl halide (SN2) and the N-alkylphthalimide is hydrolysed → R–NH₂ only, uncontaminated by 2°/3° amines. Aryl halides do not undergo this substitution, so aniline cannot be made this way.",
+  },
+  {
+    kind: "mcq", exams: B, difficulty: 1, idealTime: 40,
+    q: "Which amine gives an offensive-smelling isocyanide when warmed with CHCl₃ and alcoholic KOH?",
+    options: ["N-Methylaniline", "N,N-Dimethylaniline", "Aniline", "Triethylamine"],
+    answer: 2,
+    explain: "The carbylamine (isocyanide) test is given only by primary amines (aliphatic or aromatic): C₆H₅NH₂ + CHCl₃ + 3KOH → C₆H₅NC + 3KCl + 3H₂O. 2° and 3° amines lack the two N–H hydrogens needed.",
+  },
+  {
+    kind: "mcq", exams: B, difficulty: 1, idealTime: 40,
+    q: "Reduction of nitrobenzene with iron scrap and HCl is preferred industrially because:",
+    options: [
+      "Iron is a stronger reducing agent than tin",
+      "FeCl₂ formed is hydrolysed, releasing HCl, so only a small amount of acid is needed",
+      "It gives N-phenylhydroxylamine as the main product",
+      "It avoids the need for neutralisation",
+    ],
+    answer: 1,
+    explain: "FeCl₂ produced in the reaction gets hydrolysed and regenerates HCl, so the acid is effectively recycled — cheap and economical. The product is aniline (as its salt, freed with base).",
+  },
+  {
+    kind: "mcq", exams: B, difficulty: 1, idealTime: 35,
+    q: "(CH₃)₂NH is a ____ amine and its IUPAC name is ____.",
+    options: [
+      "primary; dimethylamine",
+      "secondary; N-methylmethanamine",
+      "secondary; dimethanamine",
+      "tertiary; N,N-dimethylamine",
+    ],
+    answer: 1,
+    explain: "N carries two alkyl groups → secondary (2°). IUPAC: the larger (here equal) group is the parent methanamine with an N-methyl substituent → N-methylmethanamine. 'Dimethylamine' is the common name.",
+  },
+  {
+    kind: "mcq", exams: B, difficulty: 1, idealTime: 35,
+    q: "Aniline reacts with bromine water at room temperature to give:",
+    options: ["4-Bromoaniline", "2-Bromoaniline", "2,4,6-Tribromoaniline (white precipitate)", "3-Bromoaniline"],
+    answer: 2,
+    explain: "–NH₂ is a powerful activating, o/p-directing group, so all three o/p positions are brominated at once. To stop at mono-bromination, the –NH₂ must first be acetylated.",
+  },
+  {
+    kind: "mcq", exams: B, difficulty: 1, idealTime: 35,
+    q: "Benzenediazonium chloride is treated with Cu₂Cl₂ / HCl. This is the Sandmeyer reaction and the product is:",
+    options: ["Chlorobenzene", "Phenol", "Benzene", "Benzyl chloride"],
+    answer: 0,
+    explain: "ArN₂⁺Cl⁻ + CuCl/HCl → ArCl + N₂. With copper powder + HCl it is the Gattermann reaction (same product). Phenol needs warm water; benzene needs H₃PO₂ or ethanol.",
+  },
+  {
+    kind: "mcq", exams: B, difficulty: 1, idealTime: 35,
+    q: "Benzenediazonium chloride is converted into benzene by treatment with:",
+    options: ["Warm water", "Hypophosphorous acid (H₃PO₂)", "KI", "CuCN / KCN"],
+    answer: 1,
+    explain: "Mild reducing agents such as H₃PO₂ (or ethanol) replace –N₂⁺ by H: ArN₂Cl + H₃PO₂ + H₂O → ArH + N₂ + H₃PO₃ + HCl. Warm water gives phenol, KI gives iodobenzene, CuCN gives benzonitrile.",
+  },
+  {
+    kind: "mcq", exams: B, difficulty: 1, idealTime: 35,
+    q: "Benzenediazonium chloride couples with phenol in alkaline medium to give an orange dye. The dye is:",
+    options: ["4-Aminoazobenzene", "4-Hydroxyazobenzene", "2-Hydroxybiphenyl", "Diphenyl ether"],
+    answer: 1,
+    explain: "The diazonium ion (weak electrophile) attacks the highly activated phenoxide at the para position → p-hydroxyazobenzene (orange). Coupling with aniline gives p-aminoazobenzene (yellow).",
+  },
+  {
+    kind: "mcq", exams: B, difficulty: 1, idealTime: 35,
+    q: "The Hinsberg reagent, used to distinguish 1°, 2° and 3° amines, is:",
+    options: ["Benzoyl chloride", "Benzenesulphonyl chloride", "p-Toluidine", "Nitrous acid"],
+    answer: 1,
+    explain: "C₆H₅SO₂Cl reacts with 1° amines to give an alkali-soluble sulphonamide, with 2° amines to give an alkali-insoluble sulphonamide, and does not react with 3° amines.",
+  },
+  {
+    kind: "mcq", exams: B, difficulty: 1, idealTime: 35,
+    q: "Which is the weakest base?",
+    options: ["NH₃", "CH₃NH₂", "(CH₃)₂NH", "C₆H₅NH₂"],
+    answer: 3,
+    explain: "In aniline the nitrogen lone pair is delocalised into the ring, so it is far less available for protonation (pKb 9.38 vs 4.75 for NH₃). The alkylamines are stronger than NH₃ because of the +I effect.",
+  },
+  {
+    kind: "mcq", exams: B, difficulty: 1, idealTime: 35,
+    q: "Ethanamine is treated with NaNO₂ and dilute HCl at room temperature. The observation and main organic product are:",
+    options: [
+      "Brisk evolution of N₂; ethanol",
+      "Yellow oily layer; N-nitrosoethanamine",
+      "No reaction",
+      "A stable diazonium salt",
+    ],
+    answer: 0,
+    explain: "Primary aliphatic amines form very unstable aliphatic diazonium salts that decompose at once: RNH₂ + HNO₂ → [RN₂⁺] → ROH + N₂↑ (quantitative N₂ is used to estimate amines). Yellow oily N-nitrosamines come from 2° amines.",
+  },
+  {
+    kind: "mcq", exams: B, difficulty: 1, idealTime: 35,
+    q: "Aniline reacts with ethanoyl chloride in the presence of pyridine. The product is:",
+    options: ["N-Phenylethanamide (acetanilide)", "4-Aminoacetophenone", "N-Ethylaniline", "Anilinium chloride only"],
+    answer: 0,
+    explain: "Acylation is nucleophilic substitution at the acyl carbon: C₆H₅NH₂ + CH₃COCl → C₆H₅NHCOCH₃ + HCl. Pyridine removes the HCl, shifting the equilibrium forward. Ring acylation does not occur.",
+  },
+  {
+    kind: "mcq", exams: B, difficulty: 1, idealTime: 35,
+    q: "Among the isomeric amines of formula C₃H₉N, the lowest boiling point is shown by:",
+    options: ["Propan-1-amine", "Propan-2-amine", "N-Methylethanamine", "N,N-Dimethylmethanamine"],
+    answer: 3,
+    explain: "Intermolecular H-bonding needs N–H. 1° amines have two N–H, 2° one, 3° none. Trimethylamine (3°) cannot H-bond with itself and boils lowest (≈ 276 K); propan-1-amine boils highest (≈ 321 K).",
+  },
+  {
+    kind: "mcq", exams: B, difficulty: 1, idealTime: 35,
+    q: "Diazotisation of aniline is carried out at 273–278 K because:",
+    options: [
+      "NaNO₂ decomposes above 278 K",
+      "Benzenediazonium chloride is unstable and decomposes (to phenol + N₂) at higher temperature",
+      "Aniline is volatile above 278 K",
+      "The reaction is endothermic",
+    ],
+    answer: 1,
+    explain: "Arenediazonium salts are stabilised by resonance with the ring but still decompose when warmed in water, giving phenol and N₂. They are therefore made in ice-cold solution and used immediately.",
+  },
+  {
+    kind: "numeric", exams: N, difficulty: 1, idealTime: 60,
+    q: "12.3 g of nitrobenzene is completely reduced to aniline with Sn / HCl (then NaOH). The mass of aniline obtained (in g) is ____. (C = 12, H = 1, N = 14, O = 16)",
+    answer: 9.3, tolerance: 0.05, unit: "g",
+    explain: "C₆H₅NO₂ (M = 123) → C₆H₅NH₂ (M = 93), 1 : 1. Moles = 12.3/123 = 0.1 → 0.1 × 93 = 9.3 g.",
+  },
+  /* ---------------- difficulty 2 ---------------- */
+  {
+    kind: "mcq", exams: M, difficulty: 2, idealTime: 55,
+    q: "The correct order of basic strength of the methyl-substituted amines in aqueous solution is:",
+    options: [
+      "(CH₃)₃N > (CH₃)₂NH > CH₃NH₂ > NH₃",
+      "(CH₃)₂NH > CH₃NH₂ > (CH₃)₃N > NH₃",
+      "CH₃NH₂ > (CH₃)₂NH > (CH₃)₃N > NH₃",
+      "(CH₃)₂NH > (CH₃)₃N > CH₃NH₂ > NH₃",
+    ],
+    answer: 1,
+    hint: "In water, basicity depends on +I effect, H-bond solvation of the ammonium ion, and steric hindrance.",
+    explain: "pKb: (CH₃)₂NH 3.27, CH₃NH₂ 3.38, (CH₃)₃N 4.22, NH₃ 4.75. The 3° ammonium ion has only one N–H for H-bond stabilisation by water, so trimethylamine falls below methylamine. (The ethyl series differs: Et₂NH > Et₃N > EtNH₂ > NH₃.) Option A is the gas-phase order.",
+  },
+  {
+    kind: "mcq", exams: M, difficulty: 2, idealTime: 55,
+    q: "The correct order of basic strength of the ethyl-substituted amines in aqueous solution is:",
+    options: [
+      "(C₂H₅)₂NH > (C₂H₅)₃N > C₂H₅NH₂ > NH₃",
+      "(C₂H₅)₃N > (C₂H₅)₂NH > C₂H₅NH₂ > NH₃",
+      "(C₂H₅)₂NH > C₂H₅NH₂ > (C₂H₅)₃N > NH₃",
+      "C₂H₅NH₂ > (C₂H₅)₂NH > (C₂H₅)₃N > NH₃",
+    ],
+    answer: 0,
+    explain: "pKb: Et₂NH 3.00, Et₃N 3.25, EtNH₂ 3.29, NH₃ 4.75. With ethyl groups the stronger +I effect outweighs the loss of solvation for the 3° amine, so Et₃N lies above EtNH₂ — unlike the methyl series, where Me₃N lies below MeNH₂ (option C pattern).",
+  },
+  {
+    kind: "mcq", exams: M, difficulty: 2, idealTime: 50,
+    q: "Assertion (A): In the gas phase, the basicity order is 3° amine > 2° amine > 1° amine > NH₃.\nReason (R): In the gas phase there is no solvation, so only the electron-releasing (+I) effect of alkyl groups decides basicity.",
+    options: [
+      "Both A and R are true and R is the correct explanation of A",
+      "Both A and R are true but R is not the correct explanation of A",
+      "A is true but R is false",
+      "A is false but R is true",
+    ],
+    answer: 0,
+    explain: "More alkyl groups → more +I → better stabilised ammonium cation. Without water, solvation and its steric effects do not interfere, so the order follows the number of alkyl groups. R explains A.",
+  },
+  {
+    kind: "mcq", exams: M, difficulty: 2, idealTime: 55,
+    q: "The best way to prepare 4-bromoaniline from aniline is:",
+    options: [
+      "Br₂ water at room temperature",
+      "Br₂ in CS₂ at 273 K, without protection",
+      "(CH₃CO)₂O / pyridine; then Br₂ in CH₃COOH; then hydrolysis with H⁺ or OH⁻",
+      "NaNO₂ / HCl at 273 K, then CuBr / HBr",
+    ],
+    answer: 2,
+    hint: "The –NH₂ group must be made less activating.",
+    explain: "Acetylation turns –NH₂ into –NHCOCH₃, whose N lone pair is shared with the C=O, so the ring is only moderately activated and the bulky group favours para → 4-bromoacetanilide → hydrolysis gives 4-bromoaniline. Bromine water gives the tribromo compound; Sandmeyer with CuBr gives bromobenzene (the –NH₂ is lost).",
+  },
+  {
+    kind: "mcq", exams: M, difficulty: 2, idealTime: 50,
+    q: "Assertion (A): Aniline does not undergo Friedel–Crafts alkylation.\nReason (R): Aniline, a Lewis base, forms a salt with the Lewis acid AlCl₃, and the positively charged nitrogen strongly deactivates the ring.",
+    options: [
+      "Both A and R are true and R is the correct explanation of A",
+      "Both A and R are true but R is not the correct explanation of A",
+      "A is true but R is false",
+      "A is false but R is true",
+    ],
+    answer: 0,
+    explain: "C₆H₅NH₂ + AlCl₃ → C₆H₅NH₂⁺–AlCl₃⁻. The N⁺ withdraws electrons from the ring, so electrophilic substitution fails. R explains A.",
+  },
+  {
+    kind: "mcq", exams: M, difficulty: 2, idealTime: 55,
+    q: "Ethanamine and N-ethylethanamine are each treated with benzenesulphonyl chloride. Which statement is correct?",
+    options: [
+      "Both products dissolve in aqueous KOH",
+      "Only the product from ethanamine dissolves in aqueous KOH",
+      "Only the product from N-ethylethanamine dissolves in aqueous KOH",
+      "Neither amine reacts",
+    ],
+    answer: 1,
+    hint: "Which sulphonamide still has an N–H next to the strongly electron-withdrawing SO₂ group?",
+    explain: "C₆H₅SO₂NHC₂H₅ (from the 1° amine) has an acidic N–H (flanked by the –SO₂– group) and dissolves in KOH as its salt. C₆H₅SO₂N(C₂H₅)₂ (from the 2° amine) has no N–H and is insoluble in alkali. 3° amines do not react.",
+  },
+  {
+    kind: "mcq", exams: M, difficulty: 2, idealTime: 70,
+    q: "Match List I (conversion of benzenediazonium chloride) with List II (reagent).\nList I: (P) → chlorobenzene (Sandmeyer) (Q) → chlorobenzene (Gattermann) (R) → fluorobenzene (S) → benzene\nList II: (1) HBF₄, then heat (2) Cu powder / HCl (3) H₃PO₂ / H₂O (4) Cu₂Cl₂ / HCl",
+    options: ["P-4, Q-2, R-1, S-3", "P-2, Q-4, R-1, S-3", "P-4, Q-2, R-3, S-1", "P-1, Q-2, R-4, S-3"],
+    answer: 0,
+    explain: "Sandmeyer uses cuprous halide (4); Gattermann uses copper powder + HX (2); fluorobenzene comes from the diazonium fluoroborate on heating, the Balz–Schiemann reaction (1); H₃PO₂ reduces ArN₂⁺ to ArH (3).",
+  },
+  {
+    kind: "mcq", exams: M, difficulty: 2, idealTime: 50,
+    q: "Aniline is heated with conc. H₂SO₄ at 453–473 K. The product, which exists as a dipolar ion, is:",
+    options: ["Anilinium hydrogensulphate only", "2-Aminobenzenesulphonic acid", "4-Aminobenzenesulphonic acid (sulphanilic acid)", "3-Aminobenzenesulphonic acid"],
+    answer: 2,
+    explain: "Anilinium hydrogensulphate forms first; on heating it rearranges to p-aminobenzenesulphonic acid, which exists as the zwitterion H₃N⁺–C₆H₄–SO₃⁻ (high m.p., insoluble in organic solvents).",
+  },
+  {
+    kind: "mcq", exams: M, difficulty: 2, idealTime: 55,
+    q: "Arrange in decreasing order of basic strength: (I) aniline (II) 4-nitroaniline (III) 4-methylaniline (IV) 4-methoxyaniline.",
+    options: ["IV > III > I > II", "III > IV > I > II", "I > III > IV > II", "II > I > III > IV"],
+    answer: 0,
+    hint: "Electron donors raise the electron density on N; electron acceptors lower it.",
+    explain: "pKb: 4-methoxyaniline 8.70 (+R of OCH₃), 4-methylaniline 8.92 (+I/hyperconjugation), aniline 9.38, 4-nitroaniline 13.0 (–R pulls the lone pair into the ring and onto NO₂). Lower pKb = stronger base.",
+  },
+  {
+    kind: "mcq", exams: M, difficulty: 2, idealTime: 50,
+    q: "Ethyl chloride is heated with ethanolic ammonia in a sealed tube. Which statement is correct?",
+    options: [
+      "Only ethanamine is formed",
+      "A mixture of 1°, 2°, 3° amines and the quaternary ammonium salt is formed; excess NH₃ favours the 1° amine",
+      "Only tetraethylammonium chloride is formed",
+      "No reaction occurs, because NH₃ is a weak nucleophile",
+    ],
+    answer: 1,
+    explain: "Ammonolysis gives the 1° amine, which is itself a nucleophile and reacts further with C₂H₅Cl to give 2°, 3° amines and finally (C₂H₅)₄N⁺Cl⁻. A large excess of ammonia makes the first step dominant. This is why Gabriel synthesis is used for pure 1° amines.",
+  },
+  {
+    kind: "mcq", exams: M, difficulty: 2, idealTime: 50,
+    q: "Which sequence converts bromoethane into propan-1-amine (an amine with one more carbon)?",
+    options: [
+      "Excess NH₃, heat",
+      "Potassium phthalimide, then hydrolysis",
+      "KCN (ethanolic), then LiAlH₄ / H₂O",
+      "AgCN, then H₃O⁺",
+    ],
+    answer: 2,
+    explain: "CN⁻ adds a carbon: C₂H₅Br → C₂H₅CN; reduction of the nitrile gives C₂H₅CH₂NH₂ (propan-1-amine). NH₃ and Gabriel give ethanamine (same carbon count). AgCN gives ethyl isocyanide (C₂H₅NC), which hydrolyses to ethanamine + HCOOH.",
+  },
+  {
+    kind: "mcq", exams: M, difficulty: 2, idealTime: 45,
+    q: "Benzenediazonium chloride is converted into iodobenzene simply by:",
+    options: ["Cu₂I₂ / HI only (Sandmeyer)", "Shaking with aqueous KI", "HBF₄ followed by NaI", "I₂ / HNO₃"],
+    answer: 1,
+    explain: "Iodide is a good enough nucleophile / electron donor to replace –N₂⁺ without a copper catalyst: ArN₂Cl + KI → ArI + KCl + N₂. Iodine cannot be introduced well by direct electrophilic iodination, so this is the standard route.",
+  },
+  {
+    kind: "mcq", exams: M, difficulty: 2, idealTime: 50,
+    q: "Benzenediazonium chloride couples with aniline in mildly acidic medium. The yellow dye formed is:",
+    options: ["4-Aminoazobenzene", "Diazoaminobenzene only", "4-Hydroxyazobenzene", "N-Phenylbenzamide"],
+    answer: 0,
+    explain: "The diazonium ion attacks the para position of aniline → H₂N–C₆H₄–N=N–C₆H₅, p-aminoazobenzene (aniline yellow). Coupling with phenol gives the orange hydroxy compound.",
+  },
+  {
+    kind: "mcq", exams: M, difficulty: 2, idealTime: 50,
+    q: "Benzenediazonium chloride couples with N,N-dimethylaniline. The product ('butter yellow') is:",
+    options: [
+      "2-(Dimethylamino)azobenzene",
+      "4-(Dimethylamino)azobenzene",
+      "N,N-Dimethyl-N-phenylazoanilinium chloride",
+      "3-(Dimethylamino)azobenzene",
+    ],
+    answer: 1,
+    explain: "–N(CH₃)₂ strongly activates the ring towards the weak diazonium electrophile and directs para (ortho is hindered): C₆H₅N=N–C₆H₄–N(CH₃)₂ (para).",
+  },
+  {
+    kind: "mcq", exams: M, difficulty: 2, idealTime: 70,
+    q: "An aromatic amine C₇H₉N reacts with NaNO₂ / HCl at 273 K; the solution then couples with alkaline β-naphthol to give a red dye. With benzenesulphonyl chloride the amine gives an alkali-soluble product. The amine is:",
+    options: ["Benzylamine", "N-Methylaniline", "4-Methylaniline (p-toluidine)", "N,N-Dimethylaniline"],
+    answer: 2,
+    explain: "Coupling with β-naphthol needs a stable arenediazonium salt → a primary amine with –NH₂ on the ring. Alkali-soluble Hinsberg product → 1° amine. p-Toluidine (CH₃C₆H₄NH₂, C₇H₉N) fits. Benzylamine is 1° but aliphatic-type: its diazonium salt decomposes to benzyl alcohol + N₂. N-Methylaniline is 2°; N,N-dimethylaniline is 3° and has formula C₈H₁₁N.",
+  },
+  {
+    kind: "mcq", exams: M, difficulty: 2, idealTime: 55,
+    q: "Arrange in decreasing order of basicity: (I) ethanamine (II) benzylamine (III) aniline (IV) 4-nitroaniline.",
+    options: ["I > II > III > IV", "II > I > III > IV", "I > III > II > IV", "III > II > I > IV"],
+    answer: 0,
+    explain: "In benzylamine the CH₂ group isolates N from the ring, so the lone pair is not delocalised (pKb ≈ 4.7); the phenyl is only weakly –I, so it is a little weaker than ethanamine (3.29). Aniline (9.38) has a delocalised lone pair, and the –NO₂ in 4-nitroaniline (13.0) withdraws it further.",
+  },
+  {
+    kind: "mcq", exams: M, difficulty: 2, idealTime: 50,
+    q: "Aniline cannot be prepared by the Gabriel phthalimide synthesis because:",
+    options: [
+      "Aniline is too basic to be released by hydrolysis",
+      "Aryl halides do not undergo nucleophilic substitution with the phthalimide anion",
+      "Phthalimide is not acidic enough to form a potassium salt",
+      "Aniline reacts with phthalic acid",
+    ],
+    answer: 1,
+    explain: "The key step is SN2 attack of the phthalimide anion on the halide. The C–X bond of an aryl halide has partial double-bond character and the sp² carbon cannot be attacked from the back, so N-arylation fails. (Phthalimide N–H is acidic, being flanked by two C=O groups.)",
+  },
+  {
+    kind: "numeric", exams: N, difficulty: 2, idealTime: 70,
+    q: "The total number of isomeric amines (1°, 2° and 3°) with molecular formula C₃H₉N is ____.",
+    answer: 4,
+    explain: "1°: propan-1-amine, propan-2-amine; 2°: N-methylethanamine; 3°: N,N-dimethylmethanamine. Total = 4.",
+  },
+  {
+    kind: "numeric", exams: N, difficulty: 2, idealTime: 80,
+    q: "The total number of structurally isomeric amines with molecular formula C₄H₁₁N is ____.",
+    answer: 8,
+    hint: "Count 1°, 2° and 3° separately.",
+    explain: "1° (4): butan-1-amine, butan-2-amine, 2-methylpropan-1-amine, 2-methylpropan-2-amine. 2° (3): N-methylpropan-1-amine, N-methylpropan-2-amine, N-ethylethanamine. 3° (1): N,N-dimethylethanamine. Total = 8.",
+  },
+  {
+    kind: "numeric", exams: N, difficulty: 2, idealTime: 70,
+    q: "How many of the following give a positive carbylamine test?\naniline, N-methylaniline, benzylamine, ethanamine, N-ethylethanamine, triethylamine, 4-methylaniline, 2-methylpropan-2-amine",
+    answer: 5,
+    explain: "Only 1° amines respond: aniline, benzylamine, ethanamine, 4-methylaniline and 2-methylpropan-2-amine (tert-butylamine is a 1° amine — the N carries one alkyl group, even though that carbon is tertiary). Total = 5.",
+  },
+  {
+    kind: "numeric", exams: N, difficulty: 2, idealTime: 70,
+    q: "5.9 g of ethanamide undergoes Hofmann bromamide degradation with 100% yield. The mass of amine formed (in g) is ____. (C = 12, H = 1, N = 14, O = 16)",
+    answer: 3.1, tolerance: 0.05, unit: "g",
+    explain: "CH₃CONH₂ (M = 59) → CH₃NH₂ (M = 31). Moles = 5.9/59 = 0.1 → 0.1 × 31 = 3.1 g. Taking ethanamine (M = 45 → 4.5 g) forgets that one carbon is lost.",
+  },
+  /* ---------------- difficulty 3 ---------------- */
+  {
+    kind: "mcq", exams: AJ, difficulty: 3, idealTime: 80,
+    q: "Assertion (A): Nitration of aniline with a mixture of conc. HNO₃ and conc. H₂SO₄ gives a substantial amount (≈ 47%) of 3-nitroaniline.\nReason (R): –NH₂ is a meta-directing group.",
+    options: [
+      "Both A and R are true and R is the correct explanation of A",
+      "Both A and R are true but R is not the correct explanation of A",
+      "A is true but R is false",
+      "A is false but R is true",
+    ],
+    answer: 2,
+    hint: "What does aniline become in strongly acidic medium?",
+    explain: "A is true: products are roughly 51% para, 47% meta, 2% ortho (plus oxidation tars). R is false: –NH₂ is o/p-directing. The meta product arises because in strong acid aniline is protonated to the anilinium ion, C₆H₅NH₃⁺, whose –NH₃⁺ group is meta-directing and deactivating.",
+  },
+  {
+    kind: "mcq", exams: AJ, difficulty: 3, idealTime: 100,
+    q: "Which sequence converts aniline into 1,3,5-tribromobenzene?",
+    options: [
+      "Br₂ / H₂O; then NaNO₂ + HCl at 273 K; then H₃PO₂",
+      "NaNO₂ + HCl at 273 K; then H₃PO₂; then excess Br₂ / FeBr₃",
+      "(CH₃CO)₂O; then Br₂; then H₃O⁺",
+      "NaNO₂ + HCl at 273 K; then CuBr; then Br₂ / FeBr₃",
+    ],
+    answer: 0,
+    hint: "Use –NH₂ to place the bromines, then remove it.",
+    explain: "–NH₂ directs Br to 2,4,6 → 2,4,6-tribromoaniline. Diazotisation and reduction with H₃PO₂ then removes the nitrogen, leaving bromines that are mutually meta: 1,3,5-tribromobenzene. Brominating benzene or bromobenzene directly gives o/p-substituted products; option C stops at 4-bromoaniline.",
+  },
+  {
+    kind: "mcq", exams: AJ, difficulty: 3, idealTime: 90,
+    q: "An amine C₄H₁₁N is optically active. It gives an alkali-soluble product with benzenesulphonyl chloride and evolves N₂ with nitrous acid at room temperature. The amine is:",
+    options: ["Butan-1-amine", "Butan-2-amine", "N-Ethylethanamine", "2-Methylpropan-2-amine"],
+    answer: 1,
+    explain: "Alkali-soluble Hinsberg product and N₂ with HNO₂ → aliphatic 1° amine. Of the four 1° amines C₄H₁₁N, only butan-2-amine, CH₃CH(NH₂)CH₂CH₃, has a stereocentre (H, NH₂, CH₃, C₂H₅). Butan-1-amine and tert-butylamine are achiral; N-ethylethanamine is 2°.",
+  },
+  {
+    kind: "mcq", exams: AJ, difficulty: 3, idealTime: 70,
+    q: "Which of the following is the strongest base in aqueous solution?",
+    options: ["CH₃NH₂", "(CH₃)₃N", "(C₂H₅)₂NH", "C₆H₅CH₂NH₂"],
+    answer: 2,
+    explain: "pKb: (C₂H₅)₂NH 3.00, CH₃NH₂ 3.38, (CH₃)₃N 4.22, C₆H₅CH₂NH₂ ≈ 4.7. Diethylamine combines strong +I from two ethyl groups with reasonable solvation (two N–H in the cation) and is the strongest simple amine base in water.",
+  },
+  {
+    kind: "numeric", exams: AJ, difficulty: 3, idealTime: 80,
+    q: "In the balanced equation for Hofmann bromamide degradation, RCONH₂ + Br₂ + x NaOH → RNH₂ + Na₂CO₃ + 2NaBr + 2H₂O, the value of x is ____.",
+    answer: 4,
+    explain: "Balance Na: 2 (Na₂CO₃) + 2 (NaBr) = 4. Check O: 1 + 4 = 3 + 2 ✓; H: 2 + 4 = 2 + 4 ✓. So x = 4.",
+  },
+  {
+    kind: "numeric", exams: AJ, difficulty: 3, idealTime: 80,
+    q: "The number of isomeric amines of formula C₇H₉N that contain a benzene ring is ____.",
+    answer: 5,
+    explain: "Benzylamine (C₆H₅CH₂NH₂); 2-, 3- and 4-methylaniline (o-, m-, p-toluidine); N-methylaniline (C₆H₅NHCH₃). Total = 5.",
+  },
+  {
+    kind: "multi", exams: A, difficulty: 3, idealTime: 90,
+    q: "Which methods give a primary amine free from secondary and tertiary amines?",
+    options: [
+      "Gabriel phthalimide synthesis",
+      "Hofmann bromamide degradation of an amide",
+      "Reduction of a nitrile with LiAlH₄",
+      "Heating an alkyl halide with ethanolic NH₃",
+    ],
+    answers: [0, 1, 2],
+    explain: "A, B and C each deliver exactly one alkyl group to nitrogen. Ammonolysis (D) gives a mixture because the 1° amine formed is itself nucleophilic and is alkylated further.",
+  },
+  {
+    kind: "multi", exams: A, difficulty: 3, idealTime: 90,
+    q: "Which of the following correctly give aniline?",
+    options: [
+      "Nitrobenzene + Sn / HCl, then NaOH",
+      "Bromobenzene + potassium phthalimide, then hydrolysis",
+      "Benzamide + Br₂ / NaOH",
+      "Chlorobenzene + aqueous NH₃ at room temperature",
+    ],
+    answers: [0, 2],
+    explain: "A: standard reduction. C: Hofmann degradation of C₆H₅CONH₂ gives C₆H₅NH₂. B fails because aryl halides do not undergo SN2. D fails because aryl halides need drastic conditions (high T and P with Cu₂O catalyst) for ammonolysis.",
+  },
+  {
+    kind: "multi", exams: A, difficulty: 3, idealTime: 90,
+    q: "Which statements about benzenediazonium chloride are correct?",
+    options: [
+      "It is prepared from aniline, NaNO₂ and HCl at 273–278 K",
+      "With CuCN / KCN it gives benzonitrile",
+      "Ethanol reduces it to benzene",
+      "Warming it with aqueous KF gives fluorobenzene",
+    ],
+    answers: [0, 1, 2],
+    explain: "A, B (Sandmeyer cyanation) and C (C₂H₅OH is a mild reducing agent, like H₃PO₂, and is itself oxidised to ethanal) are correct. D is false: fluorobenzene is made by the Balz–Schiemann route — precipitate ArN₂⁺BF₄⁻ with HBF₄, then heat.",
+  },
+  {
+    kind: "multi", exams: A, difficulty: 3, idealTime: 80,
+    q: "Which of the following are stronger bases than aniline?",
+    options: ["4-Methylaniline", "Benzylamine", "4-Nitroaniline", "Acetanilide (N-phenylethanamide)"],
+    answers: [0, 1],
+    explain: "4-Methylaniline (pKb 8.92) is stronger because –CH₃ donates electrons. Benzylamine (≈ 4.7) is far stronger since its lone pair is not conjugated with the ring. 4-Nitroaniline (13.0) is much weaker, and in acetanilide the lone pair is delocalised onto the C=O, so it is essentially neutral.",
+  },
+];
+
+/* ================================================================== */
 /* Exports                                                             */
 /* ================================================================== */
 
 /** Original exam-style questions (JEE Main / Advanced, NEET, KCET, COMEDK) for the chapters below. */
-export const questions: ExamQuestion[] = [...build(CH7, "07", ch7), ...build(CH8, "08", ch8)];
+export const questions: ExamQuestion[] = [...build(CH7, "07", ch7), ...build(CH8, "08", ch8), ...build(CH9, "09", ch9)];
 
 /** One formula / quick-revision sheet per chapter. */
 export const formulas: FormulaSheet[] = [];

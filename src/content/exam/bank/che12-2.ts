@@ -12,7 +12,6 @@ const t = String.raw;
 type Draft<T = ExamQuestion> = T extends unknown ? Omit<T, "id" | "subject" | "chapter" | "grade"> : never;
 
 const ALL: ExamId[] = ["NEET", "JEE", "KCET", "COMEDK"];
-const MAIN: ExamId[] = ["NEET", "JEE", "COMEDK"];
 const ADV: ExamId[] = ["JEE", "JEE_ADV"];
 const MULTI: ExamId[] = ["JEE_ADV"];
 
@@ -1223,7 +1222,594 @@ const coordination: Draft[] = [
 /* ================================================================== */
 /* Chapter 6: Haloalkanes and Haloarenes                               */
 /* ================================================================== */
-const haloalkanes: Draft[] = [];
+const haloalkanes: Draft[] = [
+  /* ---------- difficulty 1 ---------- */
+  {
+    kind: "mcq",
+    difficulty: 1,
+    exams: ALL,
+    idealTime: 40,
+    q: "The IUPAC name of (CH₃)₃C–CH₂Cl (neopentyl chloride) is:",
+    options: ["1-Chloro-2,2-dimethylpropane", "2,2-Dimethyl-3-chloropropane", "1-Chloro-2-methylbutane", "tert-Pentyl chloride"],
+    answer: 0,
+    explain:
+      "The longest chain containing the C–Cl carbon has three carbons; numbering from the CH₂Cl end gives Cl at C-1 and two methyls at C-2: 1-chloro-2,2-dimethylpropane. Numbering from the other end gives higher locants; the butane name miscounts the chain (only 5 C in total, arranged as a propane with two methyls).",
+  },
+  {
+    kind: "mcq",
+    difficulty: 1,
+    exams: ALL,
+    idealTime: 40,
+    q: "The best reagent for converting an alcohol into an alkyl chloride, because both by-products are gases that escape, is:",
+    options: ["PCl₅", "PCl₃", "SOCl₂", "HCl / ZnCl₂"],
+    answer: 2,
+    explain:
+      "$\\text{R–OH} + \\text{SOCl}_2 \\rightarrow \\text{R–Cl} + \\text{SO}_2\\uparrow + \\text{HCl}\\uparrow$. Both by-products leave as gases, so pure R–Cl is left. PCl₅ leaves liquid POCl₃, PCl₃ leaves H₃PO₃, and Lucas reagent works well only for 2° and 3° alcohols.",
+  },
+  {
+    kind: "mcq",
+    difficulty: 1,
+    exams: ALL,
+    idealTime: 35,
+    q: "Alkyl iodides are conveniently made by heating alkyl chlorides or bromides with NaI in dry acetone. This is the:",
+    options: ["Swarts reaction", "Finkelstein reaction", "Sandmeyer reaction", "Wurtz reaction"],
+    answer: 1,
+    explain:
+      "Finkelstein reaction: $\\text{R–X} + \\text{NaI} \\rightarrow \\text{R–I} + \\text{NaX}$ (X = Cl, Br). NaCl and NaBr are insoluble in dry acetone and precipitate, which drives the equilibrium forward (Le Chatelier). Swarts gives fluorides; Sandmeyer works on diazonium salts; Wurtz couples alkyl halides.",
+  },
+  {
+    kind: "mcq",
+    difficulty: 1,
+    exams: ALL,
+    idealTime: 35,
+    q: "In the Swarts reaction an alkyl chloride or bromide is heated with a metallic fluoride such as AgF, Hg₂F₂, CoF₂ or SbF₃. The product is:",
+    options: ["An alkyl fluoride", "An alkene", "An alkyl iodide", "An alcohol"],
+    answer: 0,
+    explain:
+      "Swarts reaction: $\\text{CH}_3\\text{Br} + \\text{AgF} \\rightarrow \\text{CH}_3\\text{F} + \\text{AgBr}$. It is the standard way to make alkyl fluorides, since direct fluorination is too violent.",
+  },
+  {
+    kind: "mcq",
+    difficulty: 1,
+    exams: ALL,
+    idealTime: 35,
+    q: "The order of reactivity of halogen acids with a given alcohol is:",
+    options: ["HCl > HBr > HI", "HI > HBr > HCl", "HBr > HI > HCl", "HCl > HI > HBr"],
+    answer: 1,
+    explain:
+      "The H–X bond gets weaker down the group (HI weakest), so HI is the strongest acid and I⁻ is a good nucleophile. Reactivity: HI > HBr > HCl. HCl is so slow with primary alcohols that anhydrous ZnCl₂ is needed.",
+  },
+  {
+    kind: "mcq",
+    difficulty: 1,
+    exams: ALL,
+    idealTime: 40,
+    q: "Which isomer of C₄H₉Br has the highest boiling point?",
+    options: ["1-Bromobutane", "2-Bromobutane", "1-Bromo-2-methylpropane", "2-Bromo-2-methylpropane"],
+    answer: 0,
+    explain:
+      "For isomeric haloalkanes, branching makes the molecule more compact, reducing surface area and van der Waals forces, so the boiling point falls. The straight-chain 1-bromobutane (≈ 375 K) is highest; the most branched 2-bromo-2-methylpropane (≈ 346 K) is lowest.",
+  },
+  {
+    kind: "mcq",
+    difficulty: 1,
+    exams: ALL,
+    idealTime: 40,
+    q: "Chloroform is stored in closed, dark-coloured bottles filled to the brim because in air and light it is oxidised to the poisonous gas:",
+    options: ["Mustard gas", "Phosgene (COCl₂)", "Chlorine", "Carbon monoxide"],
+    answer: 1,
+    explain:
+      "$2\\text{CHCl}_3 + \\text{O}_2 \\xrightarrow{h\\nu} 2\\text{COCl}_2 + 2\\text{HCl}$. Phosgene (carbonyl chloride) is extremely poisonous. Dark bottles cut out light and filling to the brim keeps out air.",
+  },
+  {
+    kind: "mcq",
+    difficulty: 1,
+    exams: ALL,
+    idealTime: 35,
+    q: "Bromomethane is heated with sodium metal in dry ether. The organic product is:",
+    options: ["Methane", "Ethane", "Propane", "Methanol"],
+    answer: 1,
+    explain:
+      "Wurtz reaction: $2\\text{CH}_3\\text{Br} + 2\\text{Na} \\xrightarrow{\\text{dry ether}} \\text{CH}_3\\text{–CH}_3 + 2\\text{NaBr}$. Two alkyl groups join, so the product has twice the carbon number: ethane.",
+  },
+  {
+    kind: "mcq",
+    difficulty: 1,
+    exams: ALL,
+    idealTime: 40,
+    q: "Benzenediazonium chloride is treated with cuprous chloride in HCl to give chlorobenzene. This is the:",
+    options: ["Gattermann–Koch reaction", "Sandmeyer reaction", "Fittig reaction", "Finkelstein reaction"],
+    answer: 1,
+    explain:
+      "Sandmeyer reaction: $\\text{C}_6\\text{H}_5\\text{N}_2^+\\text{Cl}^- \\xrightarrow{\\text{CuCl/HCl}} \\text{C}_6\\text{H}_5\\text{Cl} + \\text{N}_2$. When copper powder and HCl are used instead, it is called the Gattermann reaction (Gattermann–Koch is a formylation and does not apply).",
+  },
+  {
+    kind: "mcq",
+    difficulty: 1,
+    exams: ALL,
+    idealTime: 40,
+    q: "Chlorobenzene reacts with Cl₂ in the presence of anhydrous FeCl₃. The major product is:",
+    options: ["1,2-Dichlorobenzene", "1,3-Dichlorobenzene", "1,4-Dichlorobenzene", "Hexachlorocyclohexane"],
+    answer: 2,
+    explain:
+      "Chlorine is an ortho/para director (its +R effect controls where the electrophile goes). The para product is major because the ortho position is sterically crowded. Meta substitution is minor, and hexachlorocyclohexane comes from free-radical addition to benzene in UV light, not from this reaction.",
+  },
+  {
+    kind: "mcq",
+    difficulty: 1,
+    exams: ALL,
+    idealTime: 35,
+    q: "Freon-12, once widely used as a refrigerant and aerosol propellant, is:",
+    options: ["CCl₄", "CHCl₃", "CCl₂F₂", "CF₄"],
+    answer: 2,
+    explain:
+      "Freon-12 is dichlorodifluoromethane, CCl₂F₂. Freons are stable, non-toxic and non-corrosive, but in the stratosphere UV light breaks C–Cl bonds and the Cl radicals destroy ozone.",
+  },
+  {
+    kind: "mcq",
+    difficulty: 1,
+    exams: ALL,
+    idealTime: 35,
+    q: "Methylmagnesium bromide reacts with water to give:",
+    options: ["Methanol", "Methane", "Ethane", "Bromomethane"],
+    answer: 1,
+    explain:
+      "The C–Mg bond is highly polar with carbon carrying negative charge, so the Grignard reagent is a very strong base and takes a proton from water: $\\text{CH}_3\\text{MgBr} + \\text{H}_2\\text{O} \\rightarrow \\text{CH}_4 + \\text{Mg(OH)Br}$. This is why Grignard reagents must be made and used in dry ether.",
+  },
+  {
+    kind: "numeric",
+    difficulty: 1,
+    exams: ALL,
+    idealTime: 50,
+    q: "How many structural isomers are possible for C₄H₉Br?",
+    answer: 4,
+    explain:
+      "Two carbon skeletons (butane, 2-methylpropane), each with two distinct positions: 1-bromobutane, 2-bromobutane, 1-bromo-2-methylpropane and 2-bromo-2-methylpropane, so 4. (2-Bromobutane is chiral, but enantiomers are stereoisomers, not structural isomers.)",
+  },
+  {
+    kind: "mcq",
+    difficulty: 1,
+    exams: ALL,
+    idealTime: 40,
+    q: "p-Dichlorobenzene has a much higher melting point than its ortho and meta isomers because:",
+    options: [
+      "It has the largest dipole moment",
+      "It is symmetrical and packs better in the crystal lattice",
+      "It forms hydrogen bonds",
+      "It has the highest molar mass",
+    ],
+    answer: 1,
+    explain:
+      "The para isomer is symmetrical and fits closely into the crystal lattice, so more energy is needed to melt it. Its dipole moment is actually zero; all three isomers have the same molar mass, and none of them hydrogen-bonds.",
+  },
+
+  /* ---------- difficulty 2 ---------- */
+  {
+    kind: "mcq",
+    difficulty: 2,
+    exams: ALL,
+    idealTime: 50,
+    hint: "SN2 needs back-side attack, so crowding matters.",
+    q: "The correct order of reactivity towards SN2 substitution is:",
+    options: [
+      "CH₃Br > CH₃CH₂Br > (CH₃)₂CHBr > (CH₃)₃CBr",
+      "(CH₃)₃CBr > (CH₃)₂CHBr > CH₃CH₂Br > CH₃Br",
+      "CH₃CH₂Br > CH₃Br > (CH₃)₂CHBr > (CH₃)₃CBr",
+      "(CH₃)₂CHBr > CH₃CH₂Br > CH₃Br > (CH₃)₃CBr",
+    ],
+    answer: 0,
+    explain:
+      "In SN2 the nucleophile attacks from the side opposite the leaving group through a crowded five-coordinate transition state. Each extra alkyl group adds steric hindrance, so methyl > 1° > 2° > 3°. The reverse order is the SN1 order (carbocation stability).",
+  },
+  {
+    kind: "mcq",
+    difficulty: 2,
+    exams: ALL,
+    idealTime: 50,
+    hint: "SN1 rate follows carbocation stability.",
+    q: "Which compound undergoes SN1 hydrolysis the fastest?",
+    options: ["C₆H₅CH₂Br", "(C₆H₅)₂CHBr", "CH₃CH₂Br", "(CH₃)₂CHBr"],
+    answer: 1,
+    explain:
+      "The rate-determining step is ionisation to a carbocation. (C₆H₅)₂CH⁺ is stabilised by resonance with two benzene rings, more than the benzyl cation (one ring), which in turn is far more stable than the isopropyl and ethyl cations.",
+  },
+  {
+    kind: "mcq",
+    difficulty: 2,
+    exams: ALL,
+    idealTime: 60,
+    hint: "Compare CIP priorities in the reactant and the product.",
+    q: "(R)-2-Bromobutane reacts with aqueous NaOH by the SN2 mechanism. The product is:",
+    options: ["(R)-Butan-2-ol", "(S)-Butan-2-ol", "A racemic mixture of butan-2-ol", "But-2-ene"],
+    answer: 1,
+    explain:
+      "SN2 inverts the configuration (Walden inversion). In the reactant the priorities are Br > C₂H₅ > CH₃ > H; in the product OH > C₂H₅ > CH₃ > H. OH takes the place of Br in priority but sits on the opposite side, so the R label becomes S. A racemic mixture is the SN1 outcome, and but-2-ene would come from elimination with alcoholic KOH.",
+  },
+  {
+    kind: "mcq",
+    difficulty: 2,
+    exams: ALL,
+    idealTime: 60,
+    q: "Alkyl halides give alkyl cyanides (R–CN) with KCN but isocyanides (R–NC) with AgCN. The reason is:",
+    options: [
+      "KCN is covalent and AgCN is ionic",
+      "KCN is ionic, so the more nucleophilic carbon attacks; AgCN is mainly covalent, so only the nitrogen lone pair is free to attack",
+      "Silver ions react with nitriles to form isocyanides",
+      "The cyanide ion has a lone pair only on nitrogen",
+    ],
+    answer: 1,
+    explain:
+      "CN⁻ is ambident: it can attack through C or N. KCN is ionic and supplies free CN⁻, which attacks through carbon (C–C bond is stronger), giving R–CN. AgCN is largely covalent (Ag–C≡N); carbon is tied up with silver, so nitrogen's lone pair attacks, giving R–NC. CN⁻ has lone pairs on both atoms.",
+  },
+  {
+    kind: "mcq",
+    difficulty: 2,
+    exams: ALL,
+    idealTime: 70,
+    q: "Match the reagent (reacting with R–X) with the main product. (a) KCN (b) AgCN (c) KNO₂ (d) AgNO₂; (i) R–NC (ii) R–NO₂ (iii) R–CN (iv) R–O–N=O",
+    options: [
+      "a-iii, b-i, c-iv, d-ii",
+      "a-i, b-iii, c-ii, d-iv",
+      "a-iii, b-i, c-ii, d-iv",
+      "a-i, b-iii, c-iv, d-ii",
+    ],
+    answer: 0,
+    explain:
+      "Ionic salts supply the free ambident anion: CN⁻ from KCN attacks through C (giving the nitrile), and NO₂⁻ from KNO₂ attacks through O (giving the alkyl nitrite). The silver salts are largely covalent, so the atom bonded to Ag is tied up and the other end attacks: AgCN gives the isocyanide (N attacks) and AgNO₂ gives the nitroalkane (N attacks).",
+  },
+  {
+    kind: "mcq",
+    difficulty: 2,
+    exams: ALL,
+    idealTime: 60,
+    hint: "Zaitsev: the more substituted alkene is favoured.",
+    q: "2-Bromo-2-methylbutane is heated with alcoholic KOH. The major product is:",
+    options: ["2-Methylbut-1-ene", "2-Methylbut-2-ene", "3-Methylbut-1-ene", "2-Methylbutan-2-ol"],
+    answer: 1,
+    explain:
+      "Alcoholic KOH (strong base, ethanol) causes β-elimination. H can be lost from C-1 or C-3; losing it from C-3 gives the trisubstituted 2-methylbut-2-ene, which is more stable and is the major product (Saytzeff rule). 2-Methylbut-1-ene is minor; 3-methylbut-1-ene cannot form (wrong skeleton position); the alcohol needs aqueous KOH.",
+  },
+  {
+    kind: "mcq",
+    difficulty: 2,
+    exams: ALL,
+    idealTime: 50,
+    q: "Propene reacts with HBr in the presence of benzoyl peroxide. The major product is:",
+    options: ["2-Bromopropane", "1-Bromopropane", "1,2-Dibromopropane", "3-Bromopropene"],
+    answer: 1,
+    explain:
+      "With peroxide, HBr adds by a free-radical chain (Kharasch / peroxide effect): Br• adds to the terminal carbon to give the more stable secondary radical, then H is taken from HBr. The result is anti-Markovnikov 1-bromopropane. Without peroxide, Markovnikov addition gives 2-bromopropane. The peroxide effect is not seen with HCl or HI.",
+  },
+  {
+    kind: "mcq",
+    difficulty: 2,
+    exams: ALL,
+    idealTime: 60,
+    q: "Assertion (A): Chlorobenzene is far less reactive than chloromethane towards nucleophilic substitution. Reason (R): Due to resonance, the C–Cl bond in chlorobenzene acquires partial double-bond character.",
+    options: [
+      "Both A and R are true and R is the correct explanation of A",
+      "Both A and R are true but R is not the correct explanation of A",
+      "A is true but R is false",
+      "A is false but R is true",
+    ],
+    answer: 0,
+    explain:
+      "A Cl lone pair delocalises into the ring, giving the C–Cl bond partial double-bond character; it is shorter (169 pm against 177 pm in CH₃Cl) and harder to break. Other factors (sp² carbon, unstable phenyl cation, electron-rich ring repelling the nucleophile) add to it, but R is the standard and correct explanation.",
+  },
+  {
+    kind: "mcq",
+    difficulty: 2,
+    exams: ALL,
+    idealTime: 60,
+    hint: "Electron-withdrawing groups at ortho/para stabilise the carbanion intermediate.",
+    q: "The correct order of ease of hydrolysis (by aqueous NaOH) of the following is:",
+    options: [
+      "2,4,6-Trinitrochlorobenzene > 2,4-dinitrochlorobenzene > 4-nitrochlorobenzene > chlorobenzene",
+      "Chlorobenzene > 4-nitrochlorobenzene > 2,4-dinitrochlorobenzene > 2,4,6-trinitrochlorobenzene",
+      "4-Nitrochlorobenzene > 2,4-dinitrochlorobenzene > 2,4,6-trinitrochlorobenzene > chlorobenzene",
+      "All four react at the same rate",
+    ],
+    answer: 0,
+    explain:
+      "Nitro groups at ortho and para positions withdraw electrons and delocalise the negative charge of the Meisenheimer intermediate. More such groups mean milder conditions: chlorobenzene needs 623 K and 300 atm, 4-nitro about 443 K, 2,4-dinitro about 368 K, and 2,4,6-trinitro reacts with warm water (≈ 323 K).",
+  },
+  {
+    kind: "mcq",
+    difficulty: 2,
+    exams: ALL,
+    idealTime: 45,
+    q: "Chlorobenzene and chloromethane are treated together with sodium in dry ether. The cross-coupled product is:",
+    options: ["Biphenyl", "Toluene", "Ethane", "Benzene"],
+    answer: 1,
+    explain:
+      "Wurtz–Fittig reaction: $\\text{C}_6\\text{H}_5\\text{Cl} + \\text{CH}_3\\text{Cl} + 2\\text{Na} \\rightarrow \\text{C}_6\\text{H}_5\\text{CH}_3 + 2\\text{NaCl}$. Biphenyl (Fittig) and ethane (Wurtz) form only as side products from like–like coupling.",
+  },
+  {
+    kind: "numeric",
+    difficulty: 2,
+    exams: ALL,
+    idealTime: 60,
+    hint: "Each H attached to O or N is acidic enough to protonate a Grignard reagent.",
+    q: "How many moles of methane are produced when 1 mole of 2-aminoethanol (HO–CH₂–CH₂–NH₂) reacts with excess CH₃MgBr?",
+    answer: 3,
+    unit: "mol",
+    explain:
+      "CH₃MgBr removes every 'active' hydrogen (on O, N, S or terminal alkyne C) as CH₄. 2-Aminoethanol has one O–H and two N–H, so 3 mol CH₄. The C–H bonds of CH₂ are not acidic enough.",
+  },
+  {
+    kind: "mcq",
+    difficulty: 2,
+    exams: ALL,
+    idealTime: 50,
+    hint: "Dipole moment = charge × distance; C–F is short.",
+    q: "Which halomethane has the highest dipole moment?",
+    options: ["CH₃F", "CH₃Cl", "CH₃Br", "CH₃I"],
+    answer: 1,
+    explain:
+      "Dipole moments: CH₃Cl 1.860 D, CH₃F 1.847 D, CH₃Br 1.830 D, CH₃I 1.636 D. F is the most electronegative, but the C–F bond is so short that the charge × distance product is slightly smaller than for C–Cl. Picking CH₃F is the classic trap.",
+  },
+  {
+    kind: "mcq",
+    difficulty: 2,
+    exams: ALL,
+    idealTime: 45,
+    q: "The correct order of density of the following liquids is:",
+    options: ["CCl₄ > CHCl₃ > CH₂Cl₂", "CH₂Cl₂ > CHCl₃ > CCl₄", "CHCl₃ > CCl₄ > CH₂Cl₂", "CHCl₃ > CH₂Cl₂ > CCl₄"],
+    answer: 0,
+    explain:
+      "Density rises with the number and mass of halogen atoms: CH₂Cl₂ (≈ 1.34 g cm⁻³) < CHCl₃ (≈ 1.49) < CCl₄ (≈ 1.59).",
+  },
+  {
+    kind: "mcq",
+    difficulty: 2,
+    exams: ALL,
+    idealTime: 60,
+    q: "Statement I: In chlorobenzene, chlorine deactivates the ring towards electrophilic substitution. Statement II: Chlorine directs incoming electrophiles to the ortho and para positions.",
+    options: [
+      "Both Statement I and Statement II are correct",
+      "Statement I is correct but Statement II is incorrect",
+      "Statement I is incorrect but Statement II is correct",
+      "Both Statement I and Statement II are incorrect",
+    ],
+    answer: 0,
+    explain:
+      "Cl withdraws electrons inductively (−I), which outweighs its resonance donation (+R), so the ring is less reactive than benzene. But +R raises electron density specifically at ortho and para, and it stabilises the σ-complexes for o/p attack, so it is an o/p director. Both statements are correct.",
+  },
+  {
+    kind: "numeric",
+    difficulty: 2,
+    exams: ALL,
+    idealTime: 50,
+    hint: "SN2 is first order in each reactant.",
+    q: "A primary alkyl bromide reacts with OH⁻ by the SN2 mechanism. If the concentrations of both the alkyl bromide and OH⁻ are doubled, by what factor does the initial rate increase?",
+    answer: 4,
+    explain:
+      "Rate $= k[\\text{RBr}][\\text{OH}^-]$. Doubling both gives $2 \\times 2 = 4$ times the rate. For an SN1 reaction (rate $= k[\\text{RBr}]$) the same change would only double the rate.",
+  },
+  {
+    kind: "numeric",
+    difficulty: 2,
+    exams: ALL,
+    idealTime: 70,
+    hint: "Count positional isomers and geometrical isomers.",
+    q: "2-Bromobutane is heated with alcoholic KOH. How many different alkenes (including stereoisomers) can form?",
+    answer: 3,
+    explain:
+      "Loss of H from C-1 gives but-1-ene; loss of H from C-3 gives but-2-ene, which exists as cis and trans isomers. Total 3 (trans-but-2-ene is the major product). Answering 2 forgets the geometrical isomers.",
+  },
+  {
+    kind: "numeric",
+    difficulty: 2,
+    exams: ALL,
+    idealTime: 90,
+    hint: "A chiral carbon carries four different groups.",
+    q: "How many of the following compounds are chiral? 2-chlorobutane, 1-chlorobutane, 2-chloro-2-methylbutane, 3-chloropentane, 2-bromo-3-methylbutane, 1-chloro-2-methylbutane",
+    answer: 3,
+    explain:
+      "Chiral: 2-chlorobutane (C-2: H, Cl, CH₃, C₂H₅); 2-bromo-3-methylbutane (C-2: H, Br, CH₃, CH(CH₃)₂); 1-chloro-2-methylbutane (C-2: H, CH₃, C₂H₅, CH₂Cl). Achiral: 1-chlorobutane (no stereocentre), 2-chloro-2-methylbutane (two CH₃ on C-2) and 3-chloropentane (two C₂H₅ on C-3). Total 3.",
+  },
+  {
+    kind: "mcq",
+    difficulty: 2,
+    exams: ALL,
+    idealTime: 60,
+    hint: "SN1 goes through a planar carbocation.",
+    q: "Optically active 3-bromo-3-methylhexane is hydrolysed in aqueous acetone (SN1 conditions). The product 3-methylhexan-3-ol is obtained:",
+    options: [
+      "With complete retention of configuration",
+      "With complete inversion of configuration",
+      "Largely racemised",
+      "As a meso compound",
+    ],
+    answer: 2,
+    explain:
+      "The tertiary bromide ionises to a planar carbocation, which water can attack from either face. Both enantiomers form, so the product is largely racemic (often with slight excess of inversion because the departing Br⁻ briefly shields one face). Complete inversion is the SN2 outcome; meso needs two stereocentres.",
+  },
+  {
+    kind: "mcq",
+    difficulty: 2,
+    exams: ALL,
+    idealTime: 50,
+    q: "Which chloride is the most reactive towards SN1 substitution?",
+    options: ["CH₂=CH–CH₂Cl", "CH₃CH₂CH₂Cl", "CH₂=CHCl", "C₆H₅Cl"],
+    answer: 0,
+    explain:
+      "Allyl chloride ionises to the resonance-stabilised allyl cation (CH₂=CH–CH₂⁺ ↔ ⁺CH₂–CH=CH₂), so it reacts readily. n-Propyl chloride gives an unstable primary cation. Vinyl chloride and chlorobenzene have a C–Cl bond with partial double-bond character on an sp² carbon and are very unreactive.",
+  },
+  {
+    kind: "mcq",
+    difficulty: 2,
+    exams: ALL,
+    idealTime: 45,
+    hint: "Leaving-group ability follows C–X bond strength.",
+    q: "For a given alkyl group, the order of reactivity of alkyl halides in nucleophilic substitution is:",
+    options: ["R–F > R–Cl > R–Br > R–I", "R–I > R–Br > R–Cl > R–F", "R–Cl > R–Br > R–I > R–F", "R–Br > R–I > R–Cl > R–F"],
+    answer: 1,
+    explain:
+      "The C–X bond enthalpy falls from C–F to C–I and the halide ion becomes a weaker base (better leaving group), so R–I reacts fastest and R–F slowest. The order of bond polarity is the opposite, which is why the reversed option is tempting.",
+  },
+
+  /* ---------- difficulty 3 ---------- */
+  {
+    kind: "numeric",
+    difficulty: 3,
+    exams: ADV,
+    idealTime: 150,
+    hint: "Check every distinct carbon, then look for new stereocentres.",
+    q: "2-Methylbutane is monochlorinated in light. How many monochloro products are possible, counting stereoisomers separately?",
+    answer: 6,
+    explain:
+      "There are four kinds of H in (CH₃)₂CH–CH₂–CH₃. 1-Chloro-2-methylbutane (C-2 becomes chiral: 2 enantiomers); 2-chloro-2-methylbutane (achiral: 1); 2-chloro-3-methylbutane (C-2 chiral: 2); 1-chloro-3-methylbutane (achiral: 1). Total 4 structural isomers and 6 stereoisomeric products.",
+  },
+  {
+    kind: "numeric",
+    difficulty: 3,
+    exams: ADV,
+    idealTime: 120,
+    hint: "Primary means Br on a CH₂ group bonded to one carbon.",
+    q: "How many structural isomers of C₅H₁₁Br are primary alkyl bromides?",
+    answer: 4,
+    explain:
+      "1-Bromopentane; 1-bromo-2-methylbutane; 1-bromo-3-methylbutane; 1-bromo-2,2-dimethylpropane (neopentyl bromide). Total 4. (The other four C₅H₁₁Br isomers are 2-bromopentane, 3-bromopentane, 2-bromo-3-methylbutane (secondary) and 2-bromo-2-methylbutane (tertiary).)",
+  },
+  {
+    kind: "multi",
+    difficulty: 3,
+    exams: MULTI,
+    idealTime: 110,
+    q: "Which of the following statements about the SN2 mechanism is/are correct?",
+    options: [
+      "It occurs in a single step and is second order overall",
+      "It proceeds with inversion of configuration at the carbon attacked",
+      "It involves a carbocation intermediate",
+      "It is favoured by polar aprotic solvents such as acetone or DMSO",
+    ],
+    answers: [0, 1, 3],
+    explain:
+      "SN2 is concerted: the bond to the nucleophile forms as the C–X bond breaks, so rate $= k[\\text{RX}][\\text{Nu}^-]$ (A) and back-side attack inverts the configuration (B). Polar aprotic solvents do not solvate the nucleophile strongly, leaving it reactive (D). A carbocation intermediate is the hallmark of SN1, so C is wrong.",
+  },
+  {
+    kind: "multi",
+    difficulty: 3,
+    exams: MULTI,
+    idealTime: 110,
+    q: "Which of the following statements about the SN1 mechanism is/are correct?",
+    options: [
+      "It proceeds with complete inversion of configuration",
+      "Its rate does not depend on the concentration of the nucleophile",
+      "Rearrangement of the carbon skeleton is possible",
+      "Benzyl chloride reacts faster than ethyl chloride by this mechanism",
+    ],
+    answers: [1, 2, 3],
+    explain:
+      "The slow step is ionisation of R–X alone, so rate $= k[\\text{RX}]$ (B). A free carbocation can undergo hydride or methyl shifts (C). The benzyl cation is resonance-stabilised whereas the ethyl cation is not (D). The planar carbocation is attacked on both faces, giving racemisation, not complete inversion (A is wrong).",
+  },
+  {
+    kind: "multi",
+    difficulty: 3,
+    exams: MULTI,
+    idealTime: 120,
+    q: "Which of the following statements about chlorobenzene is/are correct?",
+    options: [
+      "Its C–Cl bond is shorter than the C–Cl bond in chloromethane",
+      "It is converted to phenol by aqueous NaOH at about 623 K and 300 atm (Dow process)",
+      "Heating it with sodium in dry ether gives biphenyl",
+      "The chlorine atom activates the ring towards electrophilic substitution",
+    ],
+    answers: [0, 1, 2],
+    explain:
+      "Partial double-bond character and sp² carbon make the C–Cl bond shorter (≈ 169 pm vs 177 pm) (A). Without activating groups, displacement of Cl needs drastic conditions (B). Fittig reaction: 2C₆H₅Cl + 2Na → C₆H₅–C₆H₅ + 2NaCl (C). Chlorine is deactivating (−I > +R), so D is wrong even though it is o/p directing.",
+  },
+  {
+    kind: "multi",
+    difficulty: 3,
+    exams: MULTI,
+    idealTime: 110,
+    q: "In which of the following reactions of alkyl halides is a new C–C bond formed?",
+    options: [
+      "R–Cl + NaI in dry acetone",
+      "2 R–Br + 2 Na in dry ether",
+      "R–Br + KCN in aqueous ethanol",
+      "R–Br + AgF",
+    ],
+    answers: [1, 2],
+    explain:
+      "Wurtz coupling joins two alkyl groups (R–R) (B), and cyanide attacks through carbon to give R–C≡N (C), which adds one carbon to the chain. Finkelstein (A) and Swarts (D) only exchange one halogen for another.",
+  },
+  {
+    kind: "multi",
+    difficulty: 3,
+    exams: MULTI,
+    idealTime: 110,
+    q: "Which of the following statements about polyhalogen compounds is/are correct?",
+    options: [
+      "Freons are highly reactive and toxic, which is why they were used as refrigerants",
+      "DDT is not biodegradable and accumulates in the fatty tissue of animals",
+      "Chloroform is slowly oxidised by air in light to phosgene",
+      "Release of CCl₄ into the air contributes to depletion of the ozone layer",
+    ],
+    answers: [1, 2, 3],
+    explain:
+      "DDT is stable, poorly metabolised and fat-soluble, so it accumulates along food chains (B). CHCl₃ + O₂ (light) gives COCl₂ (C). CCl₄ reaching the upper atmosphere releases Cl atoms that destroy ozone (D). Freons were chosen because they are unreactive, non-toxic and non-corrosive, so A is wrong.",
+  },
+  {
+    kind: "mcq",
+    difficulty: 3,
+    exams: ["JEE", "JEE_ADV", "NEET"],
+    idealTime: 100,
+    q: "Propene is treated with HBr in the presence of peroxide to give A. A is heated with alcoholic KOH to give B. B is treated with HBr (no peroxide) to give C. C is:",
+    options: ["1-Bromopropane", "2-Bromopropane", "1,2-Dibromopropane", "Propan-2-ol"],
+    answer: 1,
+    explain:
+      "A = 1-bromopropane (anti-Markovnikov, peroxide effect). Dehydrobromination of A with alcoholic KOH gives B = propene. Ordinary (ionic) addition of HBr to propene follows Markovnikov's rule: C = 2-bromopropane. The sequence is a way to move Br from C-1 to C-2.",
+  },
+  {
+    kind: "mcq",
+    difficulty: 3,
+    exams: ADV,
+    idealTime: 110,
+    hint: "A primary carbocation next to a quaternary carbon rearranges.",
+    q: "Neopentyl bromide, (CH₃)₃C–CH₂Br, is heated in aqueous ethanol with Ag⁺ (forcing SN1 conditions). The main substitution product is:",
+    options: ["2,2-Dimethylpropan-1-ol", "2-Methylbutan-2-ol", "3-Methylbutan-2-ol", "2-Methylbutan-1-ol"],
+    answer: 1,
+    explain:
+      "Ionisation would give the very unstable primary cation (CH₃)₃C–CH₂⁺, which immediately undergoes a 1,2-methyl shift to the tertiary cation (CH₃)₂C⁺–CH₂CH₃. Water attacks that cation to give 2-methylbutan-2-ol. 2,2-Dimethylpropan-1-ol would need direct substitution without rearrangement, which SN2 cannot achieve here because of extreme steric hindrance.",
+  },
+  {
+    kind: "mcq",
+    difficulty: 3,
+    exams: ADV,
+    idealTime: 100,
+    hint: "β-branching hinders back-side attack even at a primary carbon.",
+    q: "The correct order of SN2 rate with I⁻ in acetone is:",
+    options: [
+      "CH₃CH₂CH₂Br > (CH₃)₂CHBr > (CH₃)₃CCH₂Br",
+      "(CH₃)₃CCH₂Br > CH₃CH₂CH₂Br > (CH₃)₂CHBr",
+      "(CH₃)₂CHBr > CH₃CH₂CH₂Br > (CH₃)₃CCH₂Br",
+      "CH₃CH₂CH₂Br > (CH₃)₃CCH₂Br > (CH₃)₂CHBr",
+    ],
+    answer: 0,
+    explain:
+      "n-Propyl bromide is an unhindered primary halide and reacts fastest. Isopropyl bromide is secondary and slower. Neopentyl bromide is primary, but the bulky tert-butyl group next to the reacting carbon blocks back-side attack so completely that it is roughly 10⁵ times slower than ethyl bromide, slower even than the secondary halide. Ranking by '1° > 2°' alone gives the wrong fourth option.",
+  },
+  {
+    kind: "mcq",
+    difficulty: 3,
+    exams: ["JEE", "JEE_ADV", "NEET"],
+    idealTime: 100,
+    hint: "Draw the resonance forms of the cation.",
+    q: "3-Chlorobut-1-ene, CH₂=CH–CHCl–CH₃, is hydrolysed under SN1 conditions. The product is:",
+    options: [
+      "Only but-3-en-2-ol",
+      "A mixture of but-3-en-2-ol and but-2-en-1-ol",
+      "Only butan-2-ol",
+      "Only but-1-en-1-ol",
+    ],
+    answer: 1,
+    explain:
+      "Ionisation gives an allylic cation with positive charge shared between C-1 and C-3: CH₂=CH–CH⁺–CH₃ ↔ ⁺CH₂–CH=CH–CH₃. Water attacks either end, giving but-3-en-2-ol and the rearranged but-2-en-1-ol (allylic rearrangement). Butan-2-ol would need the double bond to be reduced; but-1-en-1-ol is an unstable enol.",
+  },
+];
 
 /** Original exam-style questions (JEE Main / Advanced, NEET, KCET, COMEDK) for the chapters below. */
 export const questions: ExamQuestion[] = [
@@ -1234,5 +1820,82 @@ export const questions: ExamQuestion[] = [
 
 /** One formula / quick-revision sheet per chapter. */
 export const formulas: FormulaSheet[] = [
-  /* FORMULAS */
+  {
+    subject: "chemistry",
+    chapter: "The d- and f-Block Elements",
+    items: [
+      { name: "General configuration (d-block)", tex: t`(n-1)d^{1\text{–}10}\,ns^{1\text{–}2}`, note: "Pd is 4d¹⁰ 5s⁰. Transition element: incomplete d in the atom or a common ion (so Zn, Cd, Hg are not)." },
+      { name: "Exceptional 3d configurations", tex: t`\text{Cr}: [\text{Ar}]\,3d^5 4s^1,\qquad \text{Cu}: [\text{Ar}]\,3d^{10} 4s^1`, note: "Half-filled / fully filled d sub-shells are extra stable." },
+      { name: "Ions: remove 4s before 3d", tex: t`\text{Fe}^{2+} = 3d^6,\ \ \text{Fe}^{3+} = 3d^5,\ \ \text{Mn}^{2+} = 3d^5,\ \ \text{Cu}^{2+} = 3d^9`, note: "4s fills first but also empties first." },
+      { name: "Spin-only magnetic moment", tex: t`\mu = \sqrt{n(n+2)}\ \text{BM}`, note: "n = unpaired electrons: 1 → 1.73, 2 → 2.83, 3 → 3.87, 4 → 4.90, 5 → 5.92 BM." },
+      { name: "Oxidation states", tex: t`\text{Max} = (n-1)d + ns\ \text{electrons up to Mn } (+7)`, note: "Most states at Mn; Sc only +3, Zn only +2. Higher states stabilised by O (Mn₂O₇) more than by F (MnF₄)." },
+      { name: "E° anomalies (M²⁺/M)", tex: t`E^\circ_{\text{Cu}^{2+}/\text{Cu}} = +0.34\ \text{V (only positive)}`, note: "Mn (d⁵), Zn (d¹⁰) and Ni (large −ΔhydH) are more negative than the trend." },
+      { name: "E° (M³⁺/M²⁺)", tex: t`\text{Co}\,(+1.97) > \text{Mn}\,(+1.57) > \text{Fe}\,(+0.77) > \text{V}\,(-0.26) > \text{Ti}\,(-0.37) > \text{Cr}\,(-0.41)`, note: "Mn³⁺, Co³⁺ oxidants; Cr²⁺ reductant (→ t₂g³)." },
+      { name: "Colour", tex: t`\text{d–d transition needs } d^1\text{–}d^9`, note: "Sc³⁺, Ti⁴⁺ (d⁰), Cu⁺, Zn²⁺ (d¹⁰) colourless. MnO₄⁻, Cr₂O₇²⁻ coloured by charge transfer (LMCT)." },
+      { name: "Chromate ⇌ dichromate", tex: t`2\,\text{CrO}_4^{2-} + 2\,\text{H}^+ \rightleftharpoons \text{Cr}_2\text{O}_7^{2-} + \text{H}_2\text{O}`, note: "Yellow ⇌ orange; Cr stays +6. Dichromate: two tetrahedra sharing one O, Cr–O–Cr ≈ 126°." },
+      { name: "Chromite to chromate", tex: t`4\,\text{FeCr}_2\text{O}_4 + 8\,\text{Na}_2\text{CO}_3 + 7\,\text{O}_2 \rightarrow 8\,\text{Na}_2\text{CrO}_4 + 2\,\text{Fe}_2\text{O}_3 + 8\,\text{CO}_2`, note: "Then acidify → Na₂Cr₂O₇, + KCl → K₂Cr₂O₇." },
+      { name: "Dichromate in acid", tex: t`\text{Cr}_2\text{O}_7^{2-} + 14\,\text{H}^+ + 6e^- \rightarrow 2\,\text{Cr}^{3+} + 7\,\text{H}_2\text{O}`, note: "E° = 1.33 V; n-factor 6 (equivalent mass M/6). Oxidises Fe²⁺, I⁻ → I₂, H₂S → S, Sn²⁺ → Sn⁴⁺." },
+      { name: "Manganate from MnO₂", tex: t`2\,\text{MnO}_2 + 4\,\text{KOH} + \text{O}_2 \rightarrow 2\,\text{K}_2\text{MnO}_4 + 2\,\text{H}_2\text{O}`, note: "Green manganate (d¹, paramagnetic)." },
+      { name: "Manganate disproportionation", tex: t`3\,\text{MnO}_4^{2-} + 4\,\text{H}^+ \rightarrow 2\,\text{MnO}_4^- + \text{MnO}_2 + 2\,\text{H}_2\text{O}`, note: "Commercially: electrolytic oxidation of manganate in alkali." },
+      { name: "Permanganate: acidic", tex: t`\text{MnO}_4^- + 8\,\text{H}^+ + 5e^- \rightarrow \text{Mn}^{2+} + 4\,\text{H}_2\text{O}`, note: "E° = 1.52 V; n-factor 5. Fe²⁺ → Fe³⁺, C₂O₄²⁻ → CO₂, I⁻ → I₂, NO₂⁻ → NO₃⁻." },
+      { name: "Permanganate: neutral / faintly alkaline", tex: t`\text{MnO}_4^- + 2\,\text{H}_2\text{O} + 3e^- \rightarrow \text{MnO}_2 + 4\,\text{OH}^-`, note: "n-factor 3. I⁻ → IO₃⁻, S₂O₃²⁻ → SO₄²⁻, Mn²⁺ → MnO₂." },
+      { name: "Oxide character", tex: t`\text{MnO (basic)} \to \text{Mn}_2\text{O}_7\ (\text{acidic});\quad \text{Cr}_2\text{O}_3,\ \text{V}_2\text{O}_5\ \text{amphoteric}`, note: "Acidity rises with oxidation state." },
+      { name: "Lanthanoid configuration", tex: t`[\text{Xe}]\,4f^{1\text{–}14}\,5d^{0\text{–}1}\,6s^2`, note: "5d¹ in La, Ce, Gd (4f⁷), Lu (4f¹⁴). Common state +3; Ce⁴⁺ oxidant, Eu²⁺/Yb²⁺ reductants." },
+      { name: "Lanthanoid contraction", tex: t`r(\text{La}^{3+}) > \dots > r(\text{Lu}^{3+})`, note: "Poor 4f shielding. Zr ≈ Hf, Nb ≈ Ta; basicity La(OH)₃ > … > Lu(OH)₃." },
+      { name: "Actinoids", tex: t`[\text{Rn}]\,5f^{1\text{–}14}\,6d^{0\text{–}1}\,7s^2`, note: "All radioactive; wider oxidation-state range (up to +7 for Np, Pu); actinoid contraction > lanthanoid contraction." },
+      { name: "Interstitial compounds and alloys", tex: t`\text{TiC},\ \text{Mn}_4\text{N},\ \text{Fe}_3\text{H}`, note: "Hard, high m.p., metallic conduction, inert. Mischmetal ≈ 95% Ln + 5% Fe: lighter flints." },
+      { name: "Catalysts", tex: t`\text{V}_2\text{O}_5\ (\text{contact}),\ \text{Fe}\ (\text{Haber}),\ \text{Ni}\ (\text{hydrogenation}),\ \text{TiCl}_4 + \text{AlR}_3\ (\text{Ziegler–Natta})`, note: "Variable oxidation states and surface adsorption." },
+    ],
+  },
+  {
+    subject: "chemistry",
+    chapter: "Coordination Compounds",
+    items: [
+      { name: "Werner's theory", tex: t`\text{primary valence} = \text{oxidation state};\ \ \text{secondary valence} = \text{CN}`, note: "Only counter-ions (outside [ ]) precipitate with AgNO₃; CoCl₃·5NH₃ = [Co(NH₃)₅Cl]Cl₂ → 2 AgCl." },
+      { name: "Oxidation state of the metal", tex: t`x + \sum(\text{ligand charges}) = \text{charge on the complex ion}`, note: "Neutral: NH₃, H₂O, CO, en, PPh₃. Anionic: Cl⁻, CN⁻, NO₂⁻, C₂O₄²⁻, EDTA⁴⁻." },
+      { name: "Denticity", tex: t`\text{en, ox}^{2-}\ (2),\ \ \text{dien}\ (3),\ \ \text{EDTA}^{4-}\ (6)`, note: "Ambidentate: NO₂⁻ (N/O), SCN⁻ (S/N), CN⁻ (C/N)." },
+      { name: "Nomenclature rules", tex: t`\text{cation first; ligands alphabetical; metal (O.S.)}`, note: "Anionic ligands end in -o (chlorido, cyanido); anionic complex: metal + -ate (ferrate, cuprate, argentate, plumbate)." },
+      { name: "Spectrochemical series", tex: t`\text{I}^- < \text{Br}^- < \text{SCN}^- < \text{Cl}^- < \text{S}^{2-} < \text{F}^- < \text{OH}^- < \text{C}_2\text{O}_4^{2-} < \text{H}_2\text{O} < \text{NCS}^- < \text{EDTA}^{4-} < \text{NH}_3 < \text{en} < \text{CN}^- < \text{CO}`, note: "Strong-field ligands give low-spin complexes." },
+      { name: "Octahedral splitting", tex: t`t_{2g}: -0.4\,\Delta_o,\qquad e_g: +0.6\,\Delta_o`, note: "Barycentre preserved." },
+      { name: "CFSE (octahedral)", tex: t`\text{CFSE} = (-0.4\,n_{t_{2g}} + 0.6\,n_{e_g})\,\Delta_o\ (+\,mP)`, note: "Low-spin d⁶: −2.4 Δₒ; high-spin d⁵: 0; d³: −1.2 Δₒ; high-spin d⁴: −0.6 Δₒ." },
+      { name: "Tetrahedral splitting", tex: t`\Delta_t = \tfrac{4}{9}\,\Delta_o;\quad e: -0.6\,\Delta_t,\ \ t_2: +0.4\,\Delta_t`, note: "Δₜ < P, so tetrahedral complexes are high spin." },
+      { name: "High vs low spin", tex: t`\Delta_o > P \Rightarrow \text{low spin};\quad \Delta_o < P \Rightarrow \text{high spin}`, note: "Only d⁴–d⁷ octahedral ions have a choice." },
+      { name: "VBT hybridisation", tex: t`\text{CN } 4: sp^3\ (\text{tetrahedral}),\ dsp^2\ (\text{square planar});\ \ \text{CN } 6: d^2sp^3\ (\text{inner}),\ sp^3d^2\ (\text{outer})`, note: "[Ni(CN)₄]²⁻ dsp²; [NiCl₄]²⁻ sp³; [Co(NH₃)₆]³⁺ d²sp³; [CoF₆]³⁻ sp³d²; [Ni(NH₃)₆]²⁺ sp³d²." },
+      { name: "Spin-only moment", tex: t`\mu = \sqrt{n(n+2)}\ \text{BM}`, note: "[Fe(CN)₆]⁴⁻ 0; [Fe(CN)₆]³⁻ 1.73; [NiCl₄]²⁻ 2.83; [CoF₆]³⁻ 4.90; [Fe(H₂O)₆]³⁺ 5.92 BM." },
+      { name: "Colour and Δ", tex: t`\Delta_o = \frac{N_A h c}{\lambda_{\max}}`, note: "Colour seen is complementary to the absorbed colour. [Ti(H₂O)₆]³⁺: λ ≈ 498 nm, Δₒ ≈ 240 kJ mol⁻¹, violet." },
+      { name: "Structural isomerism", tex: t`\text{ionisation, linkage, coordination, solvate (hydrate)}`, note: "Hydrate isomers of CrCl₃·6H₂O: violet [Cr(H₂O)₆]Cl₃, blue-green [Cr(H₂O)₅Cl]Cl₂·H₂O, green [Cr(H₂O)₄Cl₂]Cl·2H₂O." },
+      { name: "Geometrical isomer counts", tex: t`[\text{Ma}_2\text{b}_2]_{sq}: 2;\ \ [\text{Ma}_4\text{b}_2]: 2;\ \ [\text{Ma}_3\text{b}_3]: 2\ (fac/mer);\ \ [\text{Ma}_2\text{b}_2\text{c}_2]: 5`, note: "Tetrahedral MA₂B₂ shows no geometrical isomerism." },
+      { name: "Stereoisomer counts (with en)", tex: t`[\text{M(AA)}_3]: 2;\ \ [\text{M(AA)}_2\text{b}_2]: 3;\ \ [\text{M(AA)a}_2\text{b}_2]: 4;\ \ [\text{Ma}_2\text{b}_2\text{c}_2]: 6`, note: "cis-[M(AA)₂b₂] is chiral; trans is not. Square planar complexes are almost never chiral." },
+      { name: "Stability constants", tex: t`\beta_n = K_1 K_2 \cdots K_n,\qquad \log\beta_n = \sum \log K_i`, note: "Usually K₁ > K₂ > … ; chelates are extra stable (chelate effect, entropy)." },
+      { name: "Synergic bonding in carbonyls", tex: t`\text{M} \leftarrow \text{C}\ (\sigma),\quad \text{M} \rightarrow \pi^*(\text{CO})`, note: "Back-bonding lengthens C–O and lowers ν(CO)." },
+      { name: "Carbonyl structures", tex: t`\text{Ni(CO)}_4\ \text{tetrahedral},\ \text{Fe(CO)}_5\ \text{TBP},\ \text{Cr(CO)}_6\ \text{octahedral}`, note: "Mn₂(CO)₁₀ has a Mn–Mn bond; Co₂(CO)₈ has a Co–Co bond and two bridging CO." },
+      { name: "18-electron rule", tex: t`\text{valence e}^-(\text{M}) + 2 \times (\text{no. of CO}) = 18`, note: "Fe(CO)₅, Cr(CO)₆, Ni(CO)₄ obey it; V(CO)₆ is 17e." },
+      { name: "Applications", tex: t`\text{EDTA (Ca}^{2+}\text{/Mg}^{2+}\text{ hardness), cisplatin, [RhCl(PPh}_3)_3]`, note: "Chlorophyll Mg, haemoglobin Fe, vitamin B₁₂ Co; Ni purified as Ni(CO)₄ (Mond); Ag/Au extracted as [M(CN)₂]⁻." },
+    ],
+  },
+  {
+    subject: "chemistry",
+    chapter: "Haloalkanes and Haloarenes",
+    items: [
+      { name: "Alcohol → alkyl halide", tex: t`\text{R–OH} + \text{SOCl}_2 \rightarrow \text{R–Cl} + \text{SO}_2\uparrow + \text{HCl}\uparrow`, note: "Also HCl/ZnCl₂ (Lucas), PCl₅, PCl₃, red P + Br₂/I₂. HX reactivity: HI > HBr > HCl; alcohols 3° > 2° > 1°." },
+      { name: "Addition of HX to alkenes", tex: t`\text{CH}_3\text{CH=CH}_2 \xrightarrow{\text{HBr}} \text{CH}_3\text{CHBrCH}_3;\quad \xrightarrow{\text{HBr, peroxide}} \text{CH}_3\text{CH}_2\text{CH}_2\text{Br}`, note: "Peroxide (Kharasch) effect only for HBr." },
+      { name: "Finkelstein reaction", tex: t`\text{R–X} + \text{NaI} \xrightarrow{\text{dry acetone}} \text{R–I} + \text{NaX}\downarrow`, note: "X = Cl, Br; NaX precipitates." },
+      { name: "Swarts reaction", tex: t`\text{R–Br} + \text{AgF} \rightarrow \text{R–F} + \text{AgBr}`, note: "Also Hg₂F₂, CoF₂, SbF₃." },
+      { name: "Sandmeyer reaction", tex: t`\text{ArN}_2^+\text{X}^- \xrightarrow{\text{CuX/HX}} \text{Ar–X} + \text{N}_2`, note: "Cu powder/HX: Gattermann. Ar–I by warming with KI (no Cu needed)." },
+      { name: "Physical properties", tex: t`\text{b.p.: RI > RBr > RCl > RF};\ \ \text{straight chain > branched}`, note: "Density CH₂Cl₂ < CHCl₃ < CCl₄. Dipole: CH₃Cl > CH₃F > CH₃Br > CH₃I. p-Dihalobenzene has the highest m.p." },
+      { name: "SN2", tex: t`\text{rate} = k[\text{RX}][\text{Nu}^-]`, note: "One step, back-side attack, inversion. CH₃ > 1° > 2° > 3°; neopentyl very slow. Polar aprotic solvent." },
+      { name: "SN1", tex: t`\text{rate} = k[\text{RX}]`, note: "Carbocation; racemisation; rearrangements. 3° > 2° > 1°; benzylic and allylic fast. Polar protic solvent." },
+      { name: "Leaving-group order", tex: t`\text{R–I} > \text{R–Br} > \text{R–Cl} > \text{R–F}`, note: "Follows weakening C–X bond." },
+      { name: "Ambident nucleophiles", tex: t`\text{KCN} \to \text{R–CN};\ \text{AgCN} \to \text{R–NC};\ \text{KNO}_2 \to \text{R–ONO};\ \text{AgNO}_2 \to \text{R–NO}_2`, note: "Ionic salt vs covalent silver salt." },
+      { name: "Aqueous vs alcoholic KOH", tex: t`\text{aq. KOH} \to \text{R–OH (substitution)};\quad \text{alc. KOH} \to \text{alkene (elimination)}`, note: "Saytzeff: more substituted alkene is major. 3° halides favour elimination." },
+      { name: "Grignard reagent", tex: t`\text{R–X} + \text{Mg} \xrightarrow{\text{dry ether}} \text{RMgX};\quad \text{RMgX} + \text{H}_2\text{O} \rightarrow \text{R–H} + \text{Mg(OH)X}`, note: "Any active H (OH, NH, SH, ≡C–H) gives R–H." },
+      { name: "Wurtz, Wurtz–Fittig, Fittig", tex: t`2\text{RX} + 2\text{Na} \rightarrow \text{R–R};\quad \text{ArX} + \text{RX} + 2\text{Na} \rightarrow \text{Ar–R};\quad 2\text{ArX} + 2\text{Na} \rightarrow \text{Ar–Ar}`, note: "All in dry ether." },
+      { name: "Low reactivity of haloarenes", tex: t`\text{C–Cl: 169 pm (Ar–Cl)} < \text{177 pm (CH}_3\text{Cl)}`, note: "Resonance (partial C=Cl), sp² carbon, unstable phenyl cation, π-electron repulsion of the nucleophile." },
+      { name: "Nucleophilic aromatic substitution", tex: t`\text{C}_6\text{H}_5\text{Cl} \xrightarrow[\ 623\,\text{K},\ 300\,\text{atm}\ ]{\text{NaOH}} \text{C}_6\text{H}_5\text{ONa} \xrightarrow{\text{H}^+} \text{C}_6\text{H}_5\text{OH}`, note: "o/p-NO₂ makes it easier: 4-nitro 443 K, 2,4-dinitro 368 K, 2,4,6-trinitro 323 K (warm water)." },
+      { name: "Electrophilic substitution of haloarenes", tex: t`-I > +R\ \Rightarrow\ \text{deactivating but } o/p\text{-directing}`, note: "Cl₂/FeCl₃, HNO₃/H₂SO₄, H₂SO₄, RCl/AlCl₃, RCOCl/AlCl₃ all give mainly para." },
+      { name: "Chirality", tex: t`\text{C with four different groups} \Rightarrow \text{chiral};\ \ 2^n\ \text{stereoisomers (max)}`, note: "Racemic mixture: optically inactive (external compensation)." },
+      { name: "Chloroform oxidation", tex: t`2\,\text{CHCl}_3 + \text{O}_2 \xrightarrow{h\nu} 2\,\text{COCl}_2 + 2\,\text{HCl}`, note: "Stored in dark, full bottles." },
+      { name: "Polyhalogen compounds", tex: t`\text{Freon-12} = \text{CCl}_2\text{F}_2;\ \ \text{DDT};\ \ \text{CHI}_3\ (\text{antiseptic, frees I}_2)`, note: "Freons and CCl₄ deplete ozone; DDT is non-biodegradable and accumulates in fatty tissue." },
+    ],
+  },
 ];

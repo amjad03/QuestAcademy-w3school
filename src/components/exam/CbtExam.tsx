@@ -3,7 +3,7 @@
 import Link from "next/link";
 import { useCallback, useEffect, useMemo, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
-import { AlertTriangle, ArrowLeft, Bookmark, Check, ChevronLeft, ChevronRight, Clock, Delete, Eraser, Flag, Info, LayoutGrid, Lock, X } from "lucide-react";
+import { AlertTriangle, ArrowLeft, Bookmark, Check, ChevronLeft, ChevronRight, Clock, Delete, Eraser, Flag, Info as InfoIcon, LayoutGrid, Lock, X } from "lucide-react";
 import clsx from "clsx";
 import type { ExamQuestion, ExamSubject } from "@/content/types";
 import { Md, MdInline } from "@/components/Md";
@@ -549,13 +549,13 @@ export function CbtExam({ test, pool, formulaChapters = [] }: { test: MockTest; 
                 </span>
               </label>
             )}
-            <div className={clsx("mt-4 flex gap-2 rounded-xl p-3 text-sm font-semibold", short ? "bg-warn-soft text-ink" : "bg-good-soft")} role="status">
+            <div className={clsx("mt-4 flex gap-2 rounded-xl p-3 text-sm font-semibold", short ? "bg-warn/15 text-ink" : "bg-good-soft")} role="status">
               {short ? <AlertTriangle className="mt-0.5 h-4 w-4 shrink-0 text-warn-shade" /> : <Check className="mt-0.5 h-4 w-4 shrink-0 text-good" strokeWidth={3} />}
               <span>
                 {short
                   ? available === 0
                     ? t("exam.cbt.noneAvailable", "No questions match this scope yet. Try a wider scope.")
-                    : t("exam.cbt.shortNote", "{got} of {n} questions available for this scope — the test runs with what we have (marks scale to match). More questions are being added.", { got: available, n: total })
+                    : t("exam.cbt.shortNote", "{got} of {n} questions available for this scope — the test runs with what we have (max marks adjust to match). More questions are being added.", { got: available, n: total })
                   : t("exam.cbt.fullNote", "All {n} questions available.", { n: total })}
                 {borrowed > 0 && <span className="block text-xs text-muted">{t("exam.cbt.borrowedNote", "{n} of them come from similar exams’ banks.", { n: borrowed })}</span>}
               </span>
@@ -632,7 +632,7 @@ export function CbtExam({ test, pool, formulaChapters = [] }: { test: MockTest; 
   const subjSections = test.sections.filter((s) => s.subject === current.subject && session.sec.includes(s.id));
   const marking = markingFor(currentSection, current.kind);
   const counts = countsFor((q) => q.subject === current.subject);
-  const allCounts = countsFor((q, i) => !sectional || blocks.indexOf(q.subject) <= session.block || i < 0);
+  const allCounts = countsFor(() => true);
   const blockIdx = session.block;
   const fmtTime = (sec: number) => `${String(Math.floor(sec / 3600)).padStart(2, "0")}:${String(Math.floor((sec % 3600) / 60)).padStart(2, "0")}:${String(sec % 60).padStart(2, "0")}`;
 
@@ -761,12 +761,12 @@ export function CbtExam({ test, pool, formulaChapters = [] }: { test: MockTest; 
             );
           })}
         <span className="flex min-w-0 items-center gap-1.5 text-xs font-bold text-muted">
-          <Info className="h-3.5 w-3.5 shrink-0" aria-hidden /> <span>{markingText(marking)}</span>
+          <InfoIcon className="h-3.5 w-3.5 shrink-0" aria-hidden /> <span>{markingText(marking)}</span>
         </span>
       </div>
 
       {notice && (
-        <div className="flex items-center gap-2 border-b-2 border-warn bg-warn-soft px-4 py-2 text-sm font-bold" role="status">
+        <div className="flex items-center gap-2 border-b-2 border-warn bg-warn/15 px-4 py-2 text-sm font-bold" role="status">
           <AlertTriangle className="h-4 w-4 shrink-0 text-warn-shade" /> {notice}
         </div>
       )}
@@ -997,7 +997,7 @@ function Keypad({ onKey, labels }: { onKey: (k: string) => void; labels: { back:
 }
 
 function Info2() {
-  return <Info className="mt-0.5 h-4 w-4 shrink-0 text-accent" aria-hidden />;
+  return <InfoIcon className="mt-0.5 h-4 w-4 shrink-0 text-accent" aria-hidden />;
 }
 
 function PaletteDot({ status, label, big }: { status: Status; label?: string; big?: boolean }) {
