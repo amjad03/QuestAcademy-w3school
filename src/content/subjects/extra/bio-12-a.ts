@@ -2132,7 +2132,7 @@ const health: Topic = {
         {
           type: "mistake",
           wrong: "Lactational amenorrhea is a reliable contraceptive for as long as the mother breastfeeds.",
-          right: "It works only while breastfeeding is intense and fully, and only up to a maximum of six months after delivery.",
+          right: "It works only while breastfeeding is intense and full, and only up to a maximum of six months after delivery.",
           why: "Mothers often notice their periods have not returned and assume they cannot conceive. Ovulation can return before the first period, so the method fails easily beyond six months or with reduced feeding.",
         },
         {
@@ -2140,7 +2140,7 @@ const health: Topic = {
           activity: {
             kind: "sort",
             prompt: "Sort each contraceptive by type.",
-            groups: ["Barrier", "IUD", "Hormonal / surgical"],
+            groups: ["Barrier", "IUD", "Oral pill / surgical"],
             items: [
               { text: "Cervical cap", group: 0, hint: "It covers the cervix during coitus." },
               { text: "Nirodh", group: 0, hint: "A brand of male condom." },
@@ -2260,7 +2260,7 @@ const health: Topic = {
         },
         {
           type: "text",
-          md: "MTP is a matter of debate on emotional, ethical, religious and social grounds. A major worry is its **misuse for female foeticide** after illegal sex determination. Most MTPs are done illegally by unqualified quacks, which is unsafe and can be fatal.",
+          md: "MTP is a matter of debate on emotional, ethical, religious and social grounds. A major worry is its **misuse for female foeticide** after illegal sex determination. Another dangerous trend is illegal abortion by unqualified quacks, which is unsafe and can be fatal.",
         },
         {
           type: "heading",

@@ -36,9 +36,22 @@ const AR = [
   "A is false but R is true",
 ];
 
+/**
+ * Rotates the options of ordinary MCQs so that correct answers are spread over all four
+ * positions (statement and assertion–reason sets, and purely numeric option lists, keep
+ * their fixed order). Rotation keeps the cyclic order of the options.
+ */
+function spread(it: Q, i: number, no: number): { o: string[]; a: number } {
+  if (it.o === ST || it.o === AR || it.o.every((x) => /^[0-9]/.test(x))) return { o: it.o, a: it.a };
+  const target = (i * 3 + no) % 4;
+  const k = (it.a - target + 4) % 4;
+  return { o: it.o.map((_, j) => it.o[(j + k) % 4]), a: target };
+}
+
 function build(chapter: string, no: number, list: Q[]): ExamQuestion[] {
-  return list.map(
-    (it, i): ExamQuestion => ({
+  return list.map((it, i): ExamQuestion => {
+    const { o, a } = spread(it, i, no);
+    return {
       id: `bio11-2-${String(no).padStart(2, "0")}-${String(i + 1).padStart(3, "0")}`,
       subject: "biology",
       chapter,
@@ -48,12 +61,12 @@ function build(chapter: string, no: number, list: Q[]): ExamQuestion[] {
       difficulty: it.d,
       idealTime: it.t,
       q: it.q,
-      options: it.o,
-      answer: it.a,
+      options: o,
+      answer: a,
       explain: it.e,
       ...(it.h ? { hint: it.h } : {}),
-    }),
-  );
+    };
+  });
 }
 
 /* ================================================================== */
@@ -1513,7 +1526,7 @@ const ch12: Q[] = [
     ],
     a: 3,
     h: "In stems, the living cells are organised in thin layers inside and beneath the bark.",
-    e: "Reasons: each part handles its own gas exchange; plants do not present great demands (only during photosynthesis are large volumes exchanged, and then O₂ is produced inside); respiration rates are low; diffusion distances are short because living cells are close to the surface (most cells in the stem interior are dead and only provide support); loose parenchyma forms air spaces. Option 4 is false: living cells respire.",
+    e: "Reasons: each part handles its own gas exchange; plants do not present great demands (only during photosynthesis are large volumes exchanged, and then O₂ is produced inside); respiration rates are low; diffusion distances are short because living cells are close to the surface (most cells in the stem interior are dead and only provide support); loose parenchyma forms air spaces. The claim that plant cells are dead and do not respire is false: living cells respire.",
   },
   {
     d: 1, t: 45,

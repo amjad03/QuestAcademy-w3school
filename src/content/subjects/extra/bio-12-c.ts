@@ -638,7 +638,7 @@ export const topics: Topic[] = [
           },
           {
             type: "example",
-            title: "Harder: two generations of selection",
+            title: "Harder: one generation of selection",
             problem: "In an equilibrium population q = 0.5. A drug kills all aa individuals before they breed in one generation. What is q in the next generation?",
             steps: [
               "Before selection: AA = 0.25, Aa = 0.50, aa = 0.25.",
@@ -1592,7 +1592,7 @@ export const topics: Topic[] = [
           },
           {
             type: "text",
-            md: "**Microbes** are found everywhere: in soil, water, air, inside our bodies, and even in thermal vents hotter than 100°C, deep in soil and under snow. They include bacteria, fungi, protozoa, microscopic algae, viruses, viroids and prions. Some cause disease, but many are useful. Bacteria and fungi can be grown on **nutritive media** in the lab, where they form visible **colonies**.",
+            md: "**Microbes** are found everywhere: in soil, water, air, inside our bodies, and even in thermal vents (geysers) as hot as 100°C, deep in soil and under snow. They include bacteria, fungi, protozoa, microscopic algae, viruses, viroids and prions. Some cause disease, but many are useful. Bacteria and fungi can be grown on **nutritive media** in the lab, where they form visible **colonies**.",
           },
           {
             type: "heading",

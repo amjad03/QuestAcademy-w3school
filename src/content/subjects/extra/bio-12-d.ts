@@ -1077,7 +1077,7 @@ export const topics: Topic[] = [
           {
             type: "mistake",
             wrong: "The 1990 gene therapy permanently cured ADA deficiency, because the corrected gene was put back into the patient.",
-            right: "The corrected lymphocytes are **not immortal**, so the patient needs periodic infusions. A permanent cure would need the gene put into cells at early embryonic stages (or into ADA-producing marrow cells).",
+            right: "The corrected lymphocytes are **not immortal**, so the patient needs periodic infusions. A permanent cure would need the gene (isolated from ADA-producing marrow cells) put into cells at early embryonic stages.",
             why: "'Gene therapy' sounds like a one-time fix. Here the gene went into mature, short-lived cells, not into stem cells that keep dividing.",
           },
           {
