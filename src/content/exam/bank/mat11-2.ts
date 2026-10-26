@@ -1406,6 +1406,6 @@ const ch8: ExamQuestion[] = [
     options: [t`$2$`, t`$2^{1 + 1/\sqrt2}$`, t`$2^{-\sqrt2}$`, t`$2^{1 - 1/\sqrt2}$`],
     answer: 3,
     hint: t`AM–GM, then use $\sin x + \cos x \ge -\sqrt2$.`,
-    explain: t`$2^{\sin x} + 2^{\cos x} \ge 2\sqrt{2^{\sin x + \cos x}} = 2^{1 + (\sin x + \cos x)/2} \ge 2^{1 - \sqrt2/2} = 2^{1 - 1/\sqrt2}$. Both equalities hold together at $x = \tfrac{5\pi}{4}$ ($\sin x = \cos x = -\tfrac1{\sqrt2}$), so this is the minimum. $2$ is the value at $x = \tfrac{\pi}{2}$-type points? No — at $\sin x + \cos x = 0$ AM–GM gives only a lower bound of 2; the expression goes lower when both are negative. $2^{1+1/\sqrt2}$ is the corresponding bound at the maximum of $\sin x + \cos x$.`,
+    explain: t`$2^{\sin x} + 2^{\cos x} \ge 2\sqrt{2^{\sin x + \cos x}} = 2^{1 + (\sin x + \cos x)/2} \ge 2^{1 - \sqrt2/2} = 2^{1 - 1/\sqrt2}$. Both equalities hold together at $x = \tfrac{5\pi}{4}$ ($\sin x = \cos x = -\tfrac1{\sqrt2}$), so this is the minimum. The option $2$ is only the AM–GM bound when $\sin x + \cos x = 0$; the expression is smaller when both are negative (at $\tfrac{5\pi}{4}$ it is $2\cdot2^{-1/\sqrt2} \approx 1.22$). $2^{1+1/\sqrt2}$ uses the maximum of $\sin x + \cos x$ instead of the minimum.`,
   }),
 ];
