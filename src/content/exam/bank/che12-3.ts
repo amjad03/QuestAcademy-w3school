@@ -479,11 +479,447 @@ const ch7: Item[] = [
 ];
 
 /* ================================================================== */
+/* Chapter 8 — Aldehydes, Ketones and Carboxylic Acids                 */
+/* ================================================================== */
+
+const CH8 = "Aldehydes, Ketones and Carboxylic Acids";
+
+const ch8: Item[] = [
+  {
+    kind: "mcq", exams: B, difficulty: 1, idealTime: 40,
+    q: "An acyl chloride is converted into an aldehyde by hydrogen over palladium supported on barium sulphate (poisoned with sulphur / quinoline). This reaction is called:",
+    options: ["Stephen reaction", "Rosenmund reduction", "Etard reaction", "Clemmensen reduction"],
+    answer: 1,
+    explain: "Rosenmund reduction: RCOCl + H₂ → RCHO + HCl over Pd–BaSO₄. The catalyst is poisoned so the aldehyde is not reduced further to the alcohol. Stephen reaction starts from a nitrile.",
+  },
+  {
+    kind: "mcq", exams: B, difficulty: 1, idealTime: 40,
+    q: "Ethanenitrile is reduced with SnCl₂ / HCl and the product is hydrolysed. The final product is:",
+    options: ["Ethanamine", "Ethanal", "Ethanoic acid", "Ethanol"],
+    answer: 1,
+    explain: "Stephen reaction: RC≡N + SnCl₂/HCl → imine hydrochloride RCH=NH·HCl → H₃O⁺ → RCHO. So CH₃CN gives CH₃CHO. Complete reduction (LiAlH₄, Na/C₂H₅OH) would give ethanamine; hydrolysis without reduction gives ethanoic acid.",
+  },
+  {
+    kind: "mcq", exams: B, difficulty: 1, idealTime: 40,
+    q: "Toluene is treated with chromyl chloride (CrO₂Cl₂) in CS₂ and the complex is hydrolysed. The product is:",
+    options: ["Benzoic acid", "Benzyl alcohol", "Benzaldehyde", "Benzyl chloride"],
+    answer: 2,
+    explain: "Etard reaction: CrO₂Cl₂ oxidises the methyl group to a chromium complex that hydrolyses to C₆H₅CHO. Strong oxidants (KMnO₄) would take toluene all the way to benzoic acid.",
+  },
+  {
+    kind: "mcq", exams: B, difficulty: 1, idealTime: 35,
+    q: "Which reagent distinguishes propanal from propanone?",
+    options: ["2,4-Dinitrophenylhydrazine", "Tollens' reagent", "NaHSO₃ (saturated)", "Hydroxylamine"],
+    answer: 1,
+    explain: "Aldehydes are easily oxidised: propanal reduces ammoniacal AgNO₃ to a silver mirror; propanone does not. Both carbonyls react with 2,4-DNP, NH₂OH and NaHSO₃, so those cannot distinguish them.",
+  },
+  {
+    kind: "mcq", exams: B, difficulty: 1, idealTime: 40,
+    q: "Which of the following does NOT give a red precipitate with Fehling's solution?",
+    options: ["Ethanal", "Methanal", "Propanal", "Benzaldehyde"],
+    answer: 3,
+    explain: "Fehling's test (Cu²⁺ → Cu₂O, red) is given by aliphatic aldehydes. Aromatic aldehydes such as benzaldehyde do not respond (though they do give Tollens' test).",
+  },
+  {
+    kind: "mcq", exams: B, difficulty: 1, idealTime: 35,
+    q: "Acetophenone is heated with zinc amalgam and concentrated HCl. The product is:",
+    options: ["1-Phenylethanol", "Ethylbenzene", "Styrene", "Benzoic acid"],
+    answer: 1,
+    explain: "Clemmensen reduction converts >C=O into >CH₂: C₆H₅COCH₃ → C₆H₅CH₂CH₃. Reduction to the alcohol (1-phenylethanol) needs NaBH₄ or LiAlH₄.",
+  },
+  {
+    kind: "mcq", exams: B, difficulty: 1, idealTime: 40,
+    q: "The IUPAC name of CH₃CH₂–CO–CH(CH₃)₂ is:",
+    options: ["2-Methylpentan-3-one", "4-Methylpentan-3-one", "Ethyl isopropyl ketone-3-one", "2-Methylbutan-3-one"],
+    answer: 0,
+    explain: "Main chain: 5 C (CH₃CH₂–CO–CH–CH₃ with a CH₃ branch). Numbering from the branched end gives the C=O locant 3 and the methyl locant 2 (lower than 4) → 2-methylpentan-3-one. 'Ethyl isopropyl ketone' is the common name.",
+  },
+  {
+    kind: "mcq", exams: B, difficulty: 1, idealTime: 40,
+    q: "Carboxylic acids boil higher than alcohols of comparable molar mass mainly because:",
+    options: [
+      "They are ionised in the liquid state",
+      "They exist as hydrogen-bonded dimers, even in the vapour phase",
+      "They have higher molar masses",
+      "They form intramolecular hydrogen bonds",
+    ],
+    answer: 1,
+    explain: "Two –COOH groups pair through two O–H···O=C hydrogen bonds (cyclic dimer). These bonds are stronger and more extensive than in alcohols and persist even in the vapour, so more energy is needed to vaporise the acid.",
+  },
+  {
+    kind: "mcq", exams: B, difficulty: 1, idealTime: 35,
+    q: "Sodium ethanoate is heated with soda lime (NaOH + CaO). The gas evolved is:",
+    options: ["Ethane", "Methane", "Ethene", "Carbon monoxide"],
+    answer: 1,
+    explain: "Decarboxylation: RCOONa + NaOH → R–H + Na₂CO₃. The product has one carbon fewer: CH₃COONa → CH₄. Ethane would come from Kolbe electrolysis of sodium ethanoate.",
+  },
+  {
+    kind: "mcq", exams: B, difficulty: 1, idealTime: 40,
+    q: "Ethanoic acid is treated with Cl₂ in the presence of a small amount of red phosphorus. This Hell–Volhard–Zelinsky reaction gives:",
+    options: ["Chloroethane", "Ethanoyl chloride", "Chloroethanoic acid", "Chloromethane"],
+    answer: 2,
+    explain: "HVZ reaction halogenates the α-carbon of an acid having α-hydrogens: CH₃COOH → ClCH₂COOH (further Cl₂ gives di- and tri-chloroacetic acids). Ethanoyl chloride is made with PCl₅ or SOCl₂.",
+  },
+  {
+    kind: "mcq", exams: B, difficulty: 1, idealTime: 40,
+    q: "Benzene is treated with CO and HCl in the presence of anhydrous AlCl₃ / CuCl. The product is:",
+    options: ["Benzoic acid", "Benzoyl chloride", "Benzaldehyde", "Chlorobenzene"],
+    answer: 2,
+    explain: "Gattermann–Koch reaction: CO + HCl generate a formyl-cation equivalent (HCO⁺) that attacks the ring → C₆H₅CHO.",
+  },
+  {
+    kind: "mcq", exams: B, difficulty: 1, idealTime: 40,
+    q: "Which reagent reduces ethanoic acid to ethanol?",
+    options: ["NaBH₄", "LiAlH₄ followed by H₂O", "H₂ / Pd–BaSO₄", "Zn-Hg / HCl"],
+    answer: 1,
+    explain: "Carboxylic acids are reduced to 1° alcohols by LiAlH₄ (or B₂H₆). NaBH₄ is too mild to reduce the –COOH group. Rosenmund's catalyst acts on acyl chlorides; Clemmensen acts on aldehydes/ketones.",
+  },
+  {
+    kind: "mcq", exams: B, difficulty: 1, idealTime: 35,
+    q: "Which test is given by both aldehydes and ketones?",
+    options: ["Tollens' test", "Fehling's test", "Orange-red precipitate with 2,4-dinitrophenylhydrazine", "Schiff's reagent (pink colour)"],
+    answer: 2,
+    explain: "2,4-DNP condenses with any >C=O to give a coloured 2,4-dinitrophenylhydrazone. Tollens', Fehling's and Schiff's tests depend on the easy oxidation (or specific reaction) of aldehydes and are negative for ketones.",
+  },
+  {
+    kind: "mcq", exams: B, difficulty: 1, idealTime: 40,
+    q: "Bromoethane is converted into propanoic acid by the sequence:",
+    options: [
+      "KCN, then H₂ / Ni",
+      "Mg in dry ether, then CO₂, then H₃O⁺",
+      "Aqueous KOH, then KMnO₄",
+      "Mg in dry ether, then HCHO, then H₃O⁺",
+    ],
+    answer: 1,
+    explain: "C₂H₅MgBr adds to CO₂ to give C₂H₅COOMgBr, which is hydrolysed to C₂H₅COOH — one carbon more than the halide. Aq. KOH then KMnO₄ gives ethanoic acid (no extra carbon); HCHO gives propan-1-ol; KCN then H₂/Ni gives propan-1-amine.",
+  },
+  {
+    kind: "mcq", exams: B, difficulty: 1, idealTime: 35,
+    q: "Benzoic acid and phenol can be distinguished by:",
+    options: ["Aqueous NaOH", "Aqueous NaHCO₃", "Sodium metal", "Neutral water"],
+    answer: 1,
+    explain: "Carboxylic acids (pKa ≈ 4.2) are stronger than H₂CO₃ and liberate CO₂ (effervescence) with NaHCO₃; phenol (pKa ≈ 10) does not. Both dissolve in NaOH and both release H₂ with Na.",
+  },
+  {
+    kind: "numeric", exams: N, difficulty: 1, idealTime: 60,
+    q: "2.2 g of ethanal is warmed with excess Tollens' reagent. The mass of silver deposited (in g) is ____. (Ag = 108, C = 12, H = 1, O = 16)",
+    answer: 10.8, tolerance: 0.1, unit: "g",
+    explain: "RCHO + 2[Ag(NH₃)₂]⁺ + 3OH⁻ → RCOO⁻ + 2Ag + 2H₂O + 4NH₃. Moles CH₃CHO = 2.2/44 = 0.05 → Ag = 0.10 mol → 10.8 g.",
+  },
+  /* ---------------- difficulty 2 ---------------- */
+  {
+    kind: "mcq", exams: M, difficulty: 2, idealTime: 55,
+    q: "The correct order of reactivity towards nucleophilic addition (e.g. HCN) is:",
+    options: [
+      "HCHO > CH₃CHO > CH₃COCH₃ > C₆H₅COCH₃",
+      "CH₃COCH₃ > CH₃CHO > HCHO > C₆H₅COCH₃",
+      "C₆H₅COCH₃ > CH₃COCH₃ > CH₃CHO > HCHO",
+      "CH₃CHO > HCHO > C₆H₅COCH₃ > CH₃COCH₃",
+    ],
+    answer: 0,
+    hint: "Two factors: electron release to the carbonyl carbon, and crowding around it.",
+    explain: "Alkyl groups (+I) reduce the positive character of the carbonyl carbon and add steric hindrance, so HCHO (no alkyl) > CH₃CHO (one) > CH₃COCH₃ (two). In acetophenone the phenyl ring also conjugates with C=O (+R), lowering electrophilicity further → least reactive.",
+  },
+  {
+    kind: "mcq", exams: M, difficulty: 2, idealTime: 50,
+    q: "Assertion (A): Benzaldehyde is less reactive than propanal towards nucleophilic addition.\nReason (R): The polarity of the carbonyl group in benzaldehyde is reduced by resonance with the benzene ring.",
+    options: [
+      "Both A and R are true and R is the correct explanation of A",
+      "Both A and R are true but R is not the correct explanation of A",
+      "A is true but R is false",
+      "A is false but R is true",
+    ],
+    answer: 0,
+    explain: "The ring donates electron density into the C=O by conjugation (C₆H₅–CH=O ↔ ⁺C₆H₅=CH–O⁻), so the carbonyl carbon is less electrophilic than in propanal. R correctly explains A.",
+  },
+  {
+    kind: "mcq", exams: M, difficulty: 2, idealTime: 45,
+    q: "Which compound will NOT undergo aldol condensation with dilute NaOH?",
+    options: ["Ethanal", "Propanone", "Benzaldehyde", "Propanal"],
+    answer: 2,
+    hint: "Aldol needs an enolate.",
+    explain: "Aldol condensation requires at least one α-hydrogen to form the enolate. Benzaldehyde (C₆H₅CHO) has none; with conc. NaOH it undergoes Cannizzaro reaction instead. The other three all have α-H.",
+  },
+  {
+    kind: "mcq", exams: M, difficulty: 2, idealTime: 45,
+    q: "Benzaldehyde is heated with concentrated NaOH. The products are:",
+    options: [
+      "Benzyl alcohol and sodium benzoate",
+      "Benzoin",
+      "Benzoic acid and benzene",
+      "Cinnamaldehyde",
+    ],
+    answer: 0,
+    explain: "Cannizzaro reaction (no α-H): one molecule is oxidised and one reduced by hydride transfer: 2C₆H₅CHO + NaOH → C₆H₅CH₂OH + C₆H₅COONa. Benzoin needs CN⁻ catalysis; cinnamaldehyde needs an aldehyde with α-H.",
+  },
+  {
+    kind: "mcq", exams: M, difficulty: 2, idealTime: 55,
+    q: "An equimolar mixture of methanal and benzaldehyde is heated with concentrated NaOH. The main products are:",
+    options: [
+      "Sodium benzoate and methanol",
+      "Sodium methanoate (formate) and benzyl alcohol",
+      "Sodium benzoate and benzyl alcohol only",
+      "Sodium methanoate and methanol only",
+    ],
+    answer: 1,
+    hint: "In a crossed Cannizzaro reaction, which aldehyde is attacked by OH⁻ fastest?",
+    explain: "HCHO is the more reactive carbonyl, so OH⁻ adds to it and it becomes the hydride donor (is oxidised) → HCOO⁻Na⁺; benzaldehyde accepts the hydride (is reduced) → C₆H₅CH₂OH. This is why HCHO is used as a sacrificial reducing agent.",
+  },
+  {
+    kind: "mcq", exams: M, difficulty: 2, idealTime: 50,
+    q: "Benzaldehyde and acetophenone are warmed with dilute NaOH. The product of this Claisen–Schmidt condensation is:",
+    options: [
+      "C₆H₅CH(OH)–COC₆H₅",
+      "C₆H₅CH=CH–COC₆H₅",
+      "C₆H₅CH₂OH + C₆H₅COONa",
+      "C₆H₅CH=CH–CHO",
+    ],
+    answer: 1,
+    explain: "Only acetophenone has α-H; its enolate attacks benzaldehyde, and the β-hydroxyketone dehydrates readily (the C=C is conjugated with both rings) → benzalacetophenone (chalcone), 1,3-diphenylprop-2-en-1-one. Option A is benzoin; D (cinnamaldehyde) would need ethanal.",
+  },
+  {
+    kind: "mcq", exams: M, difficulty: 2, idealTime: 45,
+    q: "The correct order of acidic strength is:",
+    options: [
+      "CH₃COOH > BrCH₂COOH > ClCH₂COOH > FCH₂COOH",
+      "FCH₂COOH > ClCH₂COOH > BrCH₂COOH > CH₃COOH",
+      "ClCH₂COOH > FCH₂COOH > BrCH₂COOH > CH₃COOH",
+      "BrCH₂COOH > ClCH₂COOH > FCH₂COOH > CH₃COOH",
+    ],
+    answer: 1,
+    explain: "Electron-withdrawing halogens (–I) stabilise the carboxylate; the effect follows electronegativity F > Cl > Br. pKa: FCH₂COOH 2.66, ClCH₂COOH 2.86, BrCH₂COOH 2.90, CH₃COOH 4.76.",
+  },
+  {
+    kind: "mcq", exams: M, difficulty: 2, idealTime: 50,
+    q: "Arrange in decreasing order of acidity: methanoic acid, ethanoic acid, benzoic acid.",
+    options: [
+      "Ethanoic > benzoic > methanoic",
+      "Benzoic > methanoic > ethanoic",
+      "Methanoic > benzoic > ethanoic",
+      "Methanoic > ethanoic > benzoic",
+    ],
+    answer: 2,
+    explain: "pKa: HCOOH 3.75, C₆H₅COOH 4.19, CH₃COOH 4.76. HCOOH has no electron-releasing group; the sp² phenyl carbon is mildly electron-withdrawing; CH₃ (+I) destabilises the acetate ion most.",
+  },
+  {
+    kind: "mcq", exams: M, difficulty: 2, idealTime: 50,
+    q: "A ketone also contains an acid-sensitive acetal group. To convert its C=O into CH₂ without destroying the acetal, the best method is:",
+    options: [
+      "Clemmensen reduction (Zn-Hg / conc. HCl)",
+      "Wolff–Kishner reduction (NH₂NH₂, then KOH in ethylene glycol, heat)",
+      "NaBH₄ in methanol",
+      "H₂ / Pd–BaSO₄",
+    ],
+    answer: 1,
+    explain: "Wolff–Kishner works in strongly basic conditions (hydrazone → alkane + N₂), so acid-labile groups survive. Clemmensen needs hot conc. HCl, which would hydrolyse the acetal. NaBH₄ only gives the alcohol.",
+  },
+  {
+    kind: "mcq", exams: M, difficulty: 2, idealTime: 55,
+    q: "Statement I: Reactions of aldehydes and ketones with ammonia derivatives (H₂N–Z) are carried out in weakly acidic medium (pH ≈ 3.5).\nStatement II: In strongly acidic medium the nitrogen of H₂N–Z is protonated and loses its nucleophilicity, while in neutral medium the carbonyl is not activated.",
+    options: [
+      "Both statements are true and II is the correct explanation of I",
+      "Both statements are true but II is not the correct explanation of I",
+      "Statement I is true, Statement II is false",
+      "Statement I is false, Statement II is true",
+    ],
+    answer: 0,
+    explain: "Mild acid protonates the carbonyl oxygen (making carbon more electrophilic) yet leaves enough free H₂N–Z to attack. Too much acid converts the nucleophile into H₃N⁺–Z. Statement II is exactly the reason for Statement I.",
+  },
+  {
+    kind: "mcq", exams: M, difficulty: 2, idealTime: 50,
+    q: "Assertion (A): Benzoic acid does not undergo Friedel–Crafts alkylation or acylation.\nReason (R): The –COOH group deactivates the ring and the AlCl₃ catalyst gets bonded to the carboxyl group.",
+    options: [
+      "Both A and R are true and R is the correct explanation of A",
+      "Both A and R are true but R is not the correct explanation of A",
+      "A is true but R is false",
+      "A is false but R is true",
+    ],
+    answer: 0,
+    explain: "–COOH is an electron-withdrawing, meta-directing deactivator, and the Lewis acid AlCl₃ complexes with its oxygen atoms, deactivating the ring further. Both are true and R explains A. (Benzoic acid can still be nitrated, giving m-nitrobenzoic acid.)",
+  },
+  {
+    kind: "mcq", exams: M, difficulty: 2, idealTime: 70,
+    q: "Match the named reaction (List I) with the reagent used (List II).\nList I: (P) Rosenmund reduction (Q) Stephen reaction (R) Etard reaction (S) Gattermann–Koch reaction\nList II: (1) CrO₂Cl₂, then H₃O⁺ (2) CO + HCl, anhyd. AlCl₃ / CuCl (3) H₂, Pd–BaSO₄ (4) SnCl₂ + HCl, then H₃O⁺",
+    options: ["P-3, Q-4, R-1, S-2", "P-4, Q-3, R-1, S-2", "P-3, Q-4, R-2, S-1", "P-3, Q-1, R-4, S-2"],
+    answer: 0,
+    explain: "Rosenmund: acyl chloride + H₂/Pd–BaSO₄ (3). Stephen: nitrile + SnCl₂/HCl (4). Etard: methylarene + chromyl chloride (1). Gattermann–Koch: arene + CO/HCl (2).",
+  },
+  {
+    kind: "mcq", exams: M, difficulty: 2, idealTime: 50,
+    q: "An ester, CH₃CH₂COOC₂H₅, is to be converted into propanal in one step. The suitable reagent is:",
+    options: ["LiAlH₄ (excess), then H₂O", "DIBAL-H at low temperature, then H₂O", "NaBH₄", "SnCl₂ / HCl"],
+    answer: 1,
+    explain: "Diisobutylaluminium hydride, (i-Bu)₂AlH, delivers one hydride and stops at the aldehyde stage when used cold, reducing esters (and nitriles) to aldehydes. LiAlH₄ goes on to propan-1-ol. NaBH₄ does not reduce esters readily; SnCl₂/HCl is for nitriles.",
+  },
+  {
+    kind: "mcq", exams: M, difficulty: 2, idealTime: 50,
+    q: "An aqueous solution of sodium propanoate is electrolysed (Kolbe's electrolysis). The hydrocarbon formed at the anode is:",
+    options: ["Ethane", "Propane", "Butane", "Hexane"],
+    answer: 2,
+    explain: "At the anode RCOO⁻ → RCOO· → R· + CO₂, and two R· radicals couple: 2C₂H₅· → C₄H₁₀ (butane). H₂ is evolved at the cathode. Ethane would come from sodium ethanoate.",
+  },
+  {
+    kind: "mcq", exams: M, difficulty: 2, idealTime: 50,
+    q: "The order of reactivity of carboxylic acid derivatives towards nucleophilic acyl substitution is:",
+    options: [
+      "Amide > ester > anhydride > acyl chloride",
+      "Acyl chloride > anhydride > ester > amide",
+      "Ester > acyl chloride > amide > anhydride",
+      "Anhydride > acyl chloride > amide > ester",
+    ],
+    answer: 1,
+    hint: "Better leaving group and weaker resonance donation to C=O → more reactive.",
+    explain: "Leaving-group ability Cl⁻ > RCOO⁻ > RO⁻ > NH₂⁻, and resonance donation of the substituent into C=O increases Cl < OCOR < OR < NH₂. So RCOCl > (RCO)₂O > RCOOR′ > RCONH₂.",
+  },
+  {
+    kind: "mcq", exams: M, difficulty: 2, idealTime: 60,
+    q: "Propanoic acid is treated with Br₂ / red phosphorus and the product is then heated with excess ammonia. The final product is:",
+    options: ["Propanamide", "3-Aminopropanoic acid", "2-Aminopropanoic acid (alanine)", "Ethanamine"],
+    answer: 2,
+    explain: "HVZ brominates the α-carbon: CH₃CH₂COOH → CH₃CHBrCOOH. Ammonia displaces bromide (SN2) → CH₃CH(NH₂)COOH, alanine. Propanamide would need the acid chloride + NH₃; 3-amino would need substitution at the β-carbon, which HVZ does not do.",
+  },
+  {
+    kind: "mcq", exams: M, difficulty: 2, idealTime: 70,
+    q: "A compound C₈H₈O forms an orange precipitate with 2,4-DNP, gives a yellow precipitate with I₂/NaOH, does not reduce Tollens' reagent, and on vigorous oxidation gives benzoic acid. The compound is:",
+    options: ["Phenylethanal", "4-Methylbenzaldehyde", "Acetophenone", "2-Methylbenzaldehyde"],
+    answer: 2,
+    explain: "2,4-DNP positive + Tollens negative → ketone. Iodoform → CH₃CO– group. Oxidation to benzoic acid → monosubstituted benzene ring. C₆H₅COCH₃ (C₈H₈O) fits. The other three are aldehydes (Tollens positive) and the methylbenzaldehydes would oxidise to phthalic/terephthalic acids.",
+  },
+  {
+    kind: "numeric", exams: N, difficulty: 2, idealTime: 75,
+    q: "How many of the following give a positive iodoform test?\nCH₃CHO, CH₃COCH₃, C₆H₅COCH₃, CH₃CH₂COCH₂CH₃, HCHO, CH₃CH₂CHO, CH₃COCH₂CH₃, CH₃CH₂OH, CH₃COOH",
+    answer: 5,
+    hint: "Need CH₃CO– attached to H or C, or CH₃CH(OH)–. A CH₃CO– in an acid does not count.",
+    explain: "Positive: CH₃CHO, CH₃COCH₃, C₆H₅COCH₃, CH₃COCH₂CH₃ (butanone), CH₃CH₂OH (oxidised to CH₃CHO) = 5. Negative: pentan-3-one, HCHO, propanal (no CH₃CO–), and ethanoic acid (its CH₃CO– is part of a resonance-stabilised –COOH, which is not halogenated under these conditions).",
+  },
+  {
+    kind: "numeric", exams: N, difficulty: 2, idealTime: 70,
+    q: "How many of the following reduce Tollens' reagent?\nHCHO, CH₃CHO, C₆H₅CHO, HCOOH, CH₃COCH₃, CH₃COOH, C₆H₅COCH₃",
+    answer: 4,
+    explain: "All aldehydes — aliphatic and aromatic — give the silver mirror: HCHO, CH₃CHO, C₆H₅CHO. Methanoic acid (H–COOH) also contains an aldehyde-like H–C=O and is oxidised to CO₂. Ketones and ethanoic acid do not. Total = 4.",
+  },
+  {
+    kind: "numeric", exams: N, difficulty: 2, idealTime: 70,
+    q: "0.30 g of a monobasic carboxylic acid needs 25.0 mL of 0.20 M NaOH for complete neutralisation. The molar mass of the acid (in g mol⁻¹) is ____.",
+    answer: 60,
+    explain: "Moles NaOH = 0.025 × 0.20 = 0.005 mol = moles of monobasic acid. M = 0.30/0.005 = 60 g/mol → ethanoic acid, CH₃COOH.",
+  },
+  {
+    kind: "numeric", exams: N, difficulty: 2, idealTime: 75,
+    q: "A mixture of ethanal and propanal is treated with dilute NaOH. Ignoring stereoisomers and dehydration, the number of different β-hydroxy aldehydes (aldol products) possible is ____.",
+    answer: 4,
+    hint: "Each aldehyde can act as the enolate donor and as the acceptor.",
+    explain: "Both have α-H, so each can be donor or acceptor: ethanal + ethanal, propanal + propanal, ethanal enolate + propanal, propanal enolate + ethanal → 2 self + 2 crossed = 4 aldols.",
+  },
+  {
+    kind: "numeric", exams: N, difficulty: 2, idealTime: 80,
+    q: "The total number of structurally isomeric aldehydes and ketones with molecular formula C₅H₁₀O is ____.",
+    answer: 7,
+    explain: "Aldehydes (C₄H₉–CHO, four butyl groups): pentanal, 2-methylbutanal, 3-methylbutanal, 2,2-dimethylpropanal = 4. Ketones: pentan-2-one, pentan-3-one, 3-methylbutan-2-one = 3. Total = 7.",
+  },
+  /* ---------------- difficulty 3 ---------------- */
+  {
+    kind: "mcq", exams: AJ, difficulty: 3, idealTime: 100,
+    q: "Hexane-2,5-dione is heated with aqueous NaOH. The major product is:",
+    options: ["3-Methylcyclopent-2-en-1-one", "2-Methylcyclopent-2-en-1-one", "Cyclohex-2-en-1-one", "2,5-Dimethylfuran"],
+    answer: 0,
+    hint: "Find the enolate that closes a five- or six-membered ring.",
+    explain: "Intramolecular aldol: the enolate at C-1 (terminal CH₃) attacks the C-5 carbonyl, forming a five-membered ring (C1–C5). Dehydration gives the conjugated enone; the ring carbon from C-5 carries the methyl and the C=C, so the product is 3-methylcyclopent-2-en-1-one. Attack from C-3 would form a strained three-membered ring. 2,5-Dimethylfuran forms only under acid (Paal–Knorr), not with NaOH.",
+  },
+  {
+    kind: "mcq", exams: AJ, difficulty: 3, idealTime: 90,
+    q: "Arrange in decreasing order of acidity: (I) benzoic acid (II) 4-nitrobenzoic acid (III) 4-methylbenzoic acid (IV) 4-methoxybenzoic acid.",
+    options: ["II > I > III > IV", "II > I > IV > III", "I > II > III > IV", "IV > III > I > II"],
+    answer: 0,
+    hint: "At the para position –OCH₃ donates by resonance more strongly than –CH₃ does by hyperconjugation.",
+    explain: "–NO₂ (–R, –I) stabilises the benzoate → strongest (pKa 3.41). Benzoic acid 4.19. –CH₃ (+I/hyperconjugation) 4.36. –OCH₃ at para is a strong +R donor → weakest (4.47). So II > I > III > IV.",
+  },
+  {
+    kind: "mcq", exams: AJ, difficulty: 3, idealTime: 80,
+    q: "Assertion (A): 2-Methylbenzoic acid is a stronger acid than benzoic acid, although –CH₃ is electron-releasing.\nReason (R): The ortho substituent twists the –COOH out of the plane of the ring, reducing resonance between ring and carboxyl (the 'ortho effect').",
+    options: [
+      "Both A and R are true and R is the correct explanation of A",
+      "Both A and R are true but R is not the correct explanation of A",
+      "A is true but R is false",
+      "A is false but R is true",
+    ],
+    answer: 0,
+    explain: "pKa: o-toluic acid 3.91 vs benzoic acid 4.19. Almost every ortho substituent raises benzoic acid's acidity. Steric inhibition of resonance stops the ring from donating electrons into the carboxyl group, and that stabilises the carboxylate relative to the acid. R explains A.",
+  },
+  {
+    kind: "mcq", exams: AJ, difficulty: 3, idealTime: 80,
+    q: "Glyoxal (OHC–CHO) is heated with concentrated NaOH and then acidified. The product is:",
+    options: ["Oxalic acid", "Ethane-1,2-diol", "Glycolic acid (HOCH₂–COOH)", "A 1 : 1 mixture of oxalic acid and ethane-1,2-diol"],
+    answer: 2,
+    explain: "Glyoxal has no α-H, so it undergoes an intramolecular Cannizzaro reaction: OH⁻ adds to one CHO, which transfers a hydride to the other CHO in the same molecule. One end is oxidised to –COO⁻ and the other reduced to –CH₂OH → HOCH₂COO⁻ → glycolic acid on acidification.",
+  },
+  {
+    kind: "mcq", exams: AJ, difficulty: 3, idealTime: 75,
+    q: "Semicarbazide (H₂N–NH–CO–NH₂) reacts with a ketone through only one of its NH₂ groups. The semicarbazone formed is:",
+    options: ["R₂C=N–NH–CO–NH₂", "R₂C=N–CO–NH–NH₂", "R₂C(OH)–NH–CO–NH–NH₂", "R₂C=N–N=C=O"],
+    answer: 0,
+    hint: "Which NH₂ lone pair is delocalised into the C=O?",
+    explain: "The –NH₂ attached directly to C=O is an amide nitrogen; its lone pair is delocalised onto oxygen, so it is weakly nucleophilic. The terminal –NH₂ of the hydrazine part (–NH–NH₂) is free and attacks → R₂C=N–NH–CO–NH₂.",
+  },
+  {
+    kind: "mcq", exams: AJ, difficulty: 3, idealTime: 110,
+    q: "Benzene is acylated with succinic anhydride / AlCl₃ to give X. X is reduced with Zn-Hg / HCl to Y, and Y is heated with conc. H₂SO₄ (or H₃PO₄) to give Z. Z is:",
+    options: [
+      "4-Phenylbutanoic acid",
+      "4-Oxo-4-phenylbutanoic acid",
+      "3,4-Dihydronaphthalen-1(2H)-one (α-tetralone)",
+      "Naphthalene",
+    ],
+    answer: 2,
+    explain: "X = C₆H₅CO–CH₂CH₂–COOH (Friedel–Crafts acylation). Clemmensen reduces only the ketone: Y = C₆H₅CH₂CH₂CH₂COOH. Strong acid then makes the –COOH attack the ring ortho to the chain (intramolecular acylation), closing a six-membered ring → α-tetralone (Haworth synthesis; further reduction / dehydrogenation leads to naphthalene). Options A and B are Y and X.",
+  },
+  {
+    kind: "numeric", exams: AJ, difficulty: 3, idealTime: 90,
+    q: "On ignition, 0.458 g of the silver salt of a monobasic organic acid leaves 0.216 g of metallic silver. The molar mass of the acid (in g mol⁻¹) is ____. (Ag = 108)",
+    answer: 122,
+    explain: "Moles Ag = 0.216/108 = 0.002 = moles of RCOOAg. M(salt) = 0.458/0.002 = 229. The acid RCOOH has H in place of Ag: 229 − 108 + 1 = 122 → benzoic acid. A common slip is reporting 229 or forgetting to add back the H (121).",
+  },
+  {
+    kind: "multi", exams: A, difficulty: 3, idealTime: 80,
+    q: "Which reagents convert cyclohexanone directly into cyclohexane?",
+    options: ["Zn-Hg / conc. HCl", "NH₂NH₂, then KOH in ethylene glycol at 453 K", "NaBH₄ in ethanol", "LiAlH₄, then H₂O"],
+    answers: [0, 1],
+    explain: "Clemmensen (acidic) and Wolff–Kishner (basic) both reduce >C=O to >CH₂. NaBH₄ and LiAlH₄ stop at the alcohol (cyclohexanol).",
+  },
+  {
+    kind: "multi", exams: A, difficulty: 3, idealTime: 90,
+    q: "Which of the following give a positive test with BOTH Tollens' reagent and Fehling's solution?",
+    options: ["Ethanal", "Benzaldehyde", "Methanoic acid", "Propanone"],
+    answers: [0, 2],
+    explain: "Aliphatic aldehydes give both tests. Methanoic acid (H–COOH) is a reducing agent and reduces both Tollens' and Fehling's reagents (oxidised to CO₂). Benzaldehyde gives Tollens' but not Fehling's. Propanone gives neither.",
+  },
+  {
+    kind: "multi", exams: A, difficulty: 3, idealTime: 80,
+    q: "Which aldehydes undergo the Cannizzaro reaction with concentrated NaOH?",
+    options: ["Methanal", "2,2-Dimethylpropanal", "Benzaldehyde", "Propanal"],
+    answers: [0, 1, 2],
+    explain: "Cannizzaro needs an aldehyde without α-hydrogen. HCHO, (CH₃)₃C–CHO and C₆H₅CHO qualify. Propanal has α-H and undergoes aldol condensation instead.",
+  },
+  {
+    kind: "multi", exams: A, difficulty: 3, idealTime: 90,
+    q: "Which statements about carboxylic acids are correct?",
+    options: [
+      "They do not form oximes or 2,4-DNP derivatives, because resonance in –COOH lowers the electrophilicity of the carbonyl carbon",
+      "LiAlH₄ reduces RCOOH to RCH₂OH",
+      "NaBH₄ reduces RCOOH to RCH₂OH in methanol",
+      "They are weaker acids than phenol",
+    ],
+    answers: [0, 1],
+    explain: "A true: the –OH lone pair is delocalised into C=O, so typical carbonyl addition reactions do not occur. B true. C false: NaBH₄ does not reduce acids. D false: carboxylic acids (pKa ≈ 4–5) are much stronger than phenol (pKa ≈ 10) because the carboxylate charge is shared equally by two oxygens.",
+  },
+];
+
+/* ================================================================== */
 /* Exports                                                             */
 /* ================================================================== */
 
 /** Original exam-style questions (JEE Main / Advanced, NEET, KCET, COMEDK) for the chapters below. */
-export const questions: ExamQuestion[] = [...build(CH7, "07", ch7)];
+export const questions: ExamQuestion[] = [...build(CH7, "07", ch7), ...build(CH8, "08", ch8)];
 
 /** One formula / quick-revision sheet per chapter. */
 export const formulas: FormulaSheet[] = [];

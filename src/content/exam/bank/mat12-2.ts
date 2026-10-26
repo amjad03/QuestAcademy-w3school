@@ -1,7 +1,475 @@
-import type { ExamQuestion, FormulaSheet } from "@/content/types";
+import type { ExamId, ExamQuestion, FormulaSheet } from "@/content/types";
 
-/** Original exam-style questions (JEE Main / Advanced, NEET, KCET, COMEDK) for the chapters below. */
-export const questions: ExamQuestion[] = [];
+/**
+ * Class 12 Maths — Continuity and Differentiability (NCERT ch. 5) and Application of
+ * Derivatives (NCERT ch. 6). Original exam-style questions for JEE Main / Advanced, KCET, COMEDK.
+ */
+const t = String.raw;
+
+const C5 = { subject: "maths", chapter: "Continuity and Differentiability", grade: "12" } as const;
+const C6 = { subject: "maths", chapter: "Application of Derivatives", grade: "12" } as const;
+
+const ALL: ExamId[] = ["JEE", "KCET", "COMEDK"];
+const MAIN: ExamId[] = ["JEE", "COMEDK"];
+const ADV: ExamId[] = ["JEE", "JEE_ADV"];
+const ADV_ONLY: ExamId[] = ["JEE_ADV"];
+
+const AR = [
+  "Both A and R are true and R is the correct explanation of A",
+  "Both A and R are true but R is not the correct explanation of A",
+  "A is true but R is false",
+  "A is false but R is true",
+];
+const S12 = [
+  "Both Statement I and Statement II are true",
+  "Both Statement I and Statement II are false",
+  "Statement I is true but Statement II is false",
+  "Statement I is false but Statement II is true",
+];
+
+/* ================= Chapter 5: Continuity and Differentiability ================= */
+const ch5: ExamQuestion[] = [
+  {
+    ...C5, id: "mat12-2-05-001", exams: ALL, kind: "mcq", difficulty: 1, idealTime: 45,
+    q: t`If $f(x) = \begin{cases} kx + 1, & x \le 5 \\ 3x - 5, & x > 5 \end{cases}$ is continuous at $x = 5$, then $k$ equals:`,
+    options: [t`$\dfrac{9}{5}$`, t`$\dfrac{5}{9}$`, t`$2$`, t`$\dfrac{11}{5}$`],
+    answer: 0,
+    explain: t`Continuity at 5 needs $f(5) = \lim_{x\to5^+} f(x)$: $5k + 1 = 3(5) - 5 = 10$, so $k = 9/5$. Writing $5k - 1 = 10$ (a sign slip) gives the distractor $11/5$.`,
+  },
+  {
+    ...C5, id: "mat12-2-05-002", exams: ALL, kind: "mcq", difficulty: 1, idealTime: 45,
+    q: t`For $f(x) = \dfrac{x^2 - 9}{x - 3}$ $(x \ne 3)$ and $f(3) = k$ to be continuous at $x = 3$, $k$ must be:`,
+    options: [t`$3$`, t`$6$`, t`$9$`, t`$0$`],
+    answer: 1,
+    explain: t`For $x \ne 3$, $f(x) = x + 3$, so $\lim_{x\to3} f(x) = 6$. Hence $k = 6$. Putting $x = 3$ directly in $x$ (or in the numerator) gives the wrong choices 3 or 0.`,
+  },
+  {
+    ...C5, id: "mat12-2-05-003", exams: ALL, kind: "mcq", difficulty: 1, idealTime: 45,
+    q: t`The value of $f(0)$ that makes $f(x) = \dfrac{\sin 3x}{x}$ continuous at $x = 0$ is:`,
+    options: [t`$1$`, t`$\dfrac{1}{3}$`, t`$3$`, t`$0$`],
+    answer: 2,
+    explain: t`$\dfrac{\sin 3x}{x} = 3\cdot\dfrac{\sin 3x}{3x} \to 3$. So $f(0) = 3$. The choice $1/3$ comes from inverting the factor.`,
+  },
+  {
+    ...C5, id: "mat12-2-05-004", exams: ALL, kind: "mcq", difficulty: 1, idealTime: 45,
+    q: t`The number of points in the open interval $(-2, 3)$ at which $f(x) = [x]$ (greatest integer function) is discontinuous is:`,
+    options: [t`$3$`, t`$4$`, t`$5$`, t`$6$`],
+    answer: 1,
+    explain: t`$[x]$ jumps at every integer. The integers strictly inside $(-2, 3)$ are $-1, 0, 1, 2$: four points. Counting the end points $-2$ and $3$ (not in the interval) gives the wrong answer 6.`,
+  },
+  {
+    ...C5, id: "mat12-2-05-005", exams: ALL, kind: "mcq", difficulty: 1, idealTime: 45,
+    q: t`Which of the following functions is NOT differentiable at $x = 0$?`,
+    options: [t`$x|x|$`, t`$|x|$`, t`$x^2$`, t`$e^x$`],
+    answer: 1,
+    explain: t`For $|x|$: LHD $= -1$, RHD $= +1$, so it has a corner at 0. $x|x|$ has derivative $2|x|$, which is $0$ at $x=0$ from both sides, so it is differentiable; $x^2$ and $e^x$ are smooth everywhere.`,
+  },
+  {
+    ...C5, id: "mat12-2-05-006", exams: ALL, kind: "mcq", difficulty: 1, idealTime: 40,
+    q: t`$\dfrac{d}{dx}\,\sin(x^2)$ equals:`,
+    options: [t`$\cos(x^2)$`, t`$2x\sin(x^2)$`, t`$2x\cos(x^2)$`, t`$2\cos x$`],
+    answer: 2,
+    explain: t`Chain rule: derivative of the outer $\sin u$ is $\cos u$, times $u' = 2x$, giving $2x\cos(x^2)$. Forgetting the inner derivative gives $\cos(x^2)$.`,
+  },
+  {
+    ...C5, id: "mat12-2-05-007", exams: ALL, kind: "mcq", difficulty: 1, idealTime: 40,
+    q: t`If $y = \log(\sin x)$, $0 < x < \pi$, then $\dfrac{dy}{dx}$ is:`,
+    options: [t`$\tan x$`, t`$\dfrac{1}{\sin x}$`, t`$-\cot x$`, t`$\cot x$`],
+    answer: 3,
+    explain: t`$\dfrac{dy}{dx} = \dfrac{1}{\sin x}\cdot\cos x = \cot x$. Writing only $1/\sin x$ forgets the chain rule; $-\cot x$ confuses it with the derivative of $\log\cos x$ (which is $-\tan x$).`,
+  },
+  {
+    ...C5, id: "mat12-2-05-008", exams: ALL, kind: "mcq", difficulty: 2, idealTime: 75,
+    q: t`For $-\dfrac{1}{\sqrt2} < x < \dfrac{1}{\sqrt2}$, the derivative of $y = \sin^{-1}\!\left(2x\sqrt{1 - x^2}\right)$ is:`,
+    options: [t`$\dfrac{2}{\sqrt{1-x^2}}$`, t`$\dfrac{1}{\sqrt{1-x^2}}$`, t`$-\dfrac{2}{\sqrt{1-x^2}}$`, t`$\dfrac{2x}{\sqrt{1-x^2}}$`],
+    answer: 0,
+    hint: t`Put $x = \sin\theta$.`,
+    explain: t`With $x = \sin\theta$, $2x\sqrt{1-x^2} = \sin 2\theta$. For $|x| < 1/\sqrt2$, $\theta \in (-\pi/4, \pi/4)$, so $2\theta \in (-\pi/2, \pi/2)$ and $y = 2\theta = 2\sin^{-1}x$. Hence $y' = \dfrac{2}{\sqrt{1-x^2}}$. The negative answer belongs to the range $x > 1/\sqrt2$, where $y = \pi - 2\sin^{-1}x$.`,
+  },
+  {
+    ...C5, id: "mat12-2-05-009", exams: ALL, kind: "mcq", difficulty: 1, idealTime: 50,
+    q: t`If $y = x^x$ $(x > 0)$, then $\dfrac{dy}{dx}$ is:`,
+    options: [t`$x\cdot x^{x-1}$`, t`$x^x\log x$`, t`$x^x(1 + \log x)$`, t`$x^x(1 - \log x)$`],
+    answer: 2,
+    explain: t`Take logs: $\log y = x\log x$. Differentiate: $\dfrac{y'}{y} = \log x + 1$, so $y' = x^x(1 + \log x)$. The power rule ($x\cdot x^{x-1}$) and the exponential rule ($x^x\log x$) each give only one of the two terms.`,
+  },
+  {
+    ...C5, id: "mat12-2-05-010", exams: ALL, kind: "mcq", difficulty: 1, idealTime: 40,
+    q: t`If $x = at^2$ and $y = 2at$, then $\dfrac{dy}{dx}$ equals:`,
+    options: [t`$t$`, t`$\dfrac{1}{t}$`, t`$2t$`, t`$-\dfrac{1}{t}$`],
+    answer: 1,
+    explain: t`$\dfrac{dy}{dx} = \dfrac{dy/dt}{dx/dt} = \dfrac{2a}{2at} = \dfrac{1}{t}$. Dividing the other way round gives $t$.`,
+  },
+  {
+    ...C5, id: "mat12-2-05-011", exams: ALL, kind: "mcq", difficulty: 1, idealTime: 45,
+    q: t`If $y = Ae^{2x} + Be^{-2x}$, where $A, B$ are constants, then $\dfrac{d^2y}{dx^2}$ equals:`,
+    options: [t`$4y$`, t`$-4y$`, t`$2y$`, t`$y$`],
+    answer: 0,
+    explain: t`$y' = 2Ae^{2x} - 2Be^{-2x}$, $y'' = 4Ae^{2x} + 4Be^{-2x} = 4y$. The sign flips twice for the $e^{-2x}$ term, so there is no minus sign ($-4y$ would be for $\sin 2x, \cos 2x$).`,
+  },
+  {
+    ...C5, id: "mat12-2-05-012", exams: ALL, kind: "mcq", difficulty: 1, idealTime: 40,
+    q: t`If $x^2 + y^2 = 25$, then $\dfrac{dy}{dx}$ is:`,
+    options: [t`$\dfrac{x}{y}$`, t`$-\dfrac{y}{x}$`, t`$\dfrac{y}{x}$`, t`$-\dfrac{x}{y}$`],
+    answer: 3,
+    explain: t`Differentiate implicitly: $2x + 2y\,y' = 0 \Rightarrow y' = -x/y$.`,
+  },
+  {
+    ...C5, id: "mat12-2-05-013", exams: ALL, kind: "numeric", difficulty: 1, idealTime: 40,
+    q: t`If $f(x) = x^3 - 2x$, find $f'(2)$.`,
+    answer: 10,
+    explain: t`$f'(x) = 3x^2 - 2$, so $f'(2) = 12 - 2 = 10$.`,
+  },
+  {
+    ...C5, id: "mat12-2-05-014", exams: ALL, kind: "mcq", difficulty: 1, idealTime: 50,
+    q: t`The value of $c$ in Rolle's theorem for $f(x) = x^2 - 4x + 3$ on $[1, 3]$ is:`,
+    options: [t`$1.5$`, t`$2$`, t`$2.5$`, t`$3$`],
+    answer: 1,
+    explain: t`$f(1) = 0 = f(3)$ and $f$ is a polynomial, so Rolle applies. $f'(c) = 2c - 4 = 0 \Rightarrow c = 2 \in (1, 3)$. $c = 3$ is an end point and is never allowed.`,
+  },
+  {
+    ...C5, id: "mat12-2-05-015", exams: ALL, kind: "mcq", difficulty: 1, idealTime: 55,
+    q: t`The value of $c$ given by the Mean Value Theorem for $f(x) = x^3$ on $[0, 3]$ is:`,
+    options: [t`$\dfrac{3}{2}$`, t`$1$`, t`$\sqrt3$`, t`$\sqrt2$`],
+    answer: 2,
+    explain: t`$\dfrac{f(3) - f(0)}{3 - 0} = \dfrac{27}{3} = 9$. Solve $f'(c) = 3c^2 = 9$: $c = \sqrt3 \approx 1.73 \in (0, 3)$. The midpoint $3/2$ works only for quadratics.`,
+  },
+  {
+    ...C5, id: "mat12-2-05-016", exams: ALL, kind: "mcq", difficulty: 1, idealTime: 45,
+    q: t`The function $f(x) = |x - 2|$ is:`,
+    options: [
+      "continuous and differentiable everywhere",
+      t`continuous everywhere but not differentiable at $x = 2$`,
+      t`discontinuous at $x = 2$`,
+      t`differentiable everywhere except at $x = 0$`,
+    ],
+    answer: 1,
+    explain: t`$|x-2|$ is a shifted $|x|$: continuous everywhere, with a corner at $x = 2$ (LHD $= -1$, RHD $= +1$). The corner moves with the shift, so $x = 0$ is not special.`,
+  },
+  {
+    ...C5, id: "mat12-2-05-017", exams: ALL, kind: "mcq", difficulty: 2, idealTime: 60,
+    q: t`If $f(x) = \dfrac{1 - \cos 4x}{x^2}$ for $x \ne 0$ is continuous at $x = 0$, then $f(0)$ equals:`,
+    options: [t`$4$`, t`$8$`, t`$16$`, t`$2$`],
+    answer: 1,
+    hint: t`$1 - \cos\theta = 2\sin^2(\theta/2)$.`,
+    explain: t`$1 - \cos 4x = 2\sin^2 2x$, so $f(x) = 2\left(\dfrac{\sin 2x}{x}\right)^2 \to 2(2)^2 = 8$. Using $1 - \cos\theta \approx \theta^2$ without the $\tfrac12$ gives 16; dropping the square on 2 gives 4.`,
+  },
+  {
+    ...C5, id: "mat12-2-05-018", exams: ALL, kind: "numeric", difficulty: 2, idealTime: 60,
+    q: t`$f(x) = \begin{cases} 2x + a, & x < 1 \\ 5, & x = 1 \\ bx^2 - a, & x > 1 \end{cases}$ is continuous at $x = 1$. Find $a + b$.`,
+    answer: 11,
+    hint: "Both one-sided limits must equal f(1).",
+    explain: t`Left limit: $2 + a = 5 \Rightarrow a = 3$. Right limit: $b - a = 5 \Rightarrow b = 8$. So $a + b = 11$.`,
+  },
+  {
+    ...C5, id: "mat12-2-05-019", exams: MAIN, kind: "numeric", difficulty: 2, idealTime: 75,
+    q: t`Find the number of points at which $f(x) = |x^2 - 4| + |x - 1|$ is not differentiable.`,
+    answer: 3,
+    hint: "Look for the zeros of the expressions inside the modulus signs.",
+    explain: t`$|x^2 - 4|$ has corners at $x = \pm2$ (where $x^2 - 4$ changes sign with non-zero slope $\pm4$); $|x - 1|$ has a corner at $x = 1$. At each of these points the other term is differentiable, so the corners cannot cancel. Total: $x = -2, 1, 2$, i.e. 3 points.`,
+  },
+  {
+    ...C5, id: "mat12-2-05-020", exams: MAIN, kind: "mcq", difficulty: 2, idealTime: 75,
+    q: t`At $x = 2$, the function $f(x) = [x]\sin(\pi x)$ (where $[\,\cdot\,]$ is the greatest integer function) is:`,
+    options: [
+      "continuous and differentiable",
+      "continuous but not differentiable",
+      "discontinuous",
+      "differentiable but not continuous",
+    ],
+    answer: 1,
+    hint: "Compute the left- and right-hand derivatives separately; [x] is 1 just left of 2 and 2 just right of 2.",
+    explain: t`Near $2^-$, $f = \sin\pi x$; near $2^+$, $f = 2\sin\pi x$; $f(2) = 0$. Both sides tend to $0$, so $f$ is continuous. LHD $= \pi\cos 2\pi = \pi$, RHD $= 2\pi\cos 2\pi = 2\pi$; they differ, so $f$ is not differentiable. ("Differentiable but not continuous" is impossible for any function.)`,
+  },
+  {
+    ...C5, id: "mat12-2-05-021", exams: ALL, kind: "numeric", difficulty: 2, idealTime: 70,
+    q: t`For the curve $x^3 + y^3 = 6xy$, find $\dfrac{dy}{dx}$ at the point $(3, 3)$.`,
+    answer: -1,
+    hint: "Differentiate implicitly; the product xy needs the product rule.",
+    explain: t`$3x^2 + 3y^2y' = 6y + 6xy' \Rightarrow y' = \dfrac{2y - x^2}{y^2 - 2x}$. At $(3,3)$ (which lies on the curve: $54 = 54$): $y' = \dfrac{6 - 9}{9 - 6} = -1$.`,
+  },
+  {
+    ...C5, id: "mat12-2-05-022", exams: ALL, kind: "mcq", difficulty: 2, idealTime: 75,
+    q: t`If $y = \dfrac{\sin^{-1}x}{\sqrt{1 - x^2}}$, $|x| < 1$, then $(1 - x^2)\dfrac{dy}{dx} - xy$ equals:`,
+    options: [t`$1$`, t`$0$`, t`$-1$`, t`$x$`],
+    answer: 0,
+    hint: t`Clear the denominator first: $y\sqrt{1-x^2} = \sin^{-1}x$.`,
+    explain: t`Differentiate $y\sqrt{1-x^2} = \sin^{-1}x$: $y'\sqrt{1-x^2} - \dfrac{xy}{\sqrt{1-x^2}} = \dfrac{1}{\sqrt{1-x^2}}$. Multiply by $\sqrt{1-x^2}$: $(1-x^2)y' - xy = 1$.`,
+  },
+  {
+    ...C5, id: "mat12-2-05-023", exams: ALL, kind: "mcq", difficulty: 2, idealTime: 80,
+    q: t`If $y = (\sin x)^{\cos x}$, $0 < x < \pi$, then $\dfrac{dy}{dx}$ is:`,
+    options: [
+      t`$(\sin x)^{\cos x}\left(\cos x\cot x - \sin x\log\sin x\right)$`,
+      t`$(\sin x)^{\cos x}\left(\cos x\cot x + \sin x\log\sin x\right)$`,
+      t`$\cos x\,(\sin x)^{\cos x - 1}\cos x$`,
+      t`$(\sin x)^{\cos x}\left(\sin x\log\sin x - \cos x\cot x\right)$`,
+    ],
+    answer: 0,
+    hint: "Variable base and variable power: use logarithmic differentiation.",
+    explain: t`$\log y = \cos x\log\sin x$. Then $\dfrac{y'}{y} = -\sin x\log\sin x + \cos x\cdot\dfrac{\cos x}{\sin x}$, so $y' = (\sin x)^{\cos x}(\cos x\cot x - \sin x\log\sin x)$. The "+" version misses the minus from $(\cos x)' = -\sin x$; the third option treats the exponent as a constant.`,
+  },
+  {
+    ...C5, id: "mat12-2-05-024", exams: ALL, kind: "mcq", difficulty: 2, idealTime: 60,
+    q: t`If $x = a(\theta - \sin\theta)$ and $y = a(1 - \cos\theta)$, then $\dfrac{dy}{dx}$ at $\theta = \dfrac{\pi}{3}$ is:`,
+    options: [t`$\dfrac{1}{\sqrt3}$`, t`$1$`, t`$2$`, t`$\sqrt3$`],
+    answer: 3,
+    hint: t`Simplify $\dfrac{\sin\theta}{1 - \cos\theta}$ with half-angle formulas.`,
+    explain: t`$\dfrac{dy}{dx} = \dfrac{a\sin\theta}{a(1 - \cos\theta)} = \cot\dfrac{\theta}{2}$. At $\theta = \pi/3$: $\cot\dfrac{\pi}{6} = \sqrt3$. Using $\tan(\theta/2)$ by mistake gives $1/\sqrt3$.`,
+  },
+  {
+    ...C5, id: "mat12-2-05-025", exams: MAIN, kind: "mcq", difficulty: 2, idealTime: 75,
+    q: t`If $x = t^2$ and $y = t^3$, then $\dfrac{d^2y}{dx^2}$ equals:`,
+    options: [t`$\dfrac{3}{2}$`, t`$\dfrac{3}{4t}$`, t`$\dfrac{3t}{4}$`, t`$\dfrac{3}{2t}$`],
+    answer: 1,
+    hint: t`$\dfrac{d^2y}{dx^2} = \dfrac{d}{dt}\!\left(\dfrac{dy}{dx}\right)\Big/\dfrac{dx}{dt}$.`,
+    explain: t`$\dfrac{dy}{dx} = \dfrac{3t^2}{2t} = \dfrac{3t}{2}$. Then $\dfrac{d^2y}{dx^2} = \dfrac{d}{dt}\left(\dfrac{3t}{2}\right)\cdot\dfrac{dt}{dx} = \dfrac32\cdot\dfrac{1}{2t} = \dfrac{3}{4t}$. Stopping at $\frac{d}{dt}(3t/2) = 3/2$ (forgetting to divide by $dx/dt$) is the classic error.`,
+  },
+  {
+    ...C5, id: "mat12-2-05-026", exams: MAIN, kind: "mcq", difficulty: 2, idealTime: 75,
+    q: t`For $|x| < 1$, the derivative of $\tan^{-1}\!\left(\dfrac{2x}{1 - x^2}\right)$ with respect to $\sin^{-1}\!\left(\dfrac{2x}{1 + x^2}\right)$ is:`,
+    options: [t`$-1$`, t`$2$`, t`$1$`, t`$\dfrac12$`],
+    answer: 2,
+    hint: t`Put $x = \tan\theta$ in both.`,
+    explain: t`With $x = \tan\theta$, $\theta \in (-\pi/4, \pi/4)$: $\tan^{-1}(\tan 2\theta) = 2\theta$ and $\sin^{-1}(\sin 2\theta) = 2\theta$, since $2\theta \in (-\pi/2, \pi/2)$. Both functions equal $2\tan^{-1}x$, so the derivative of one w.r.t. the other is $1$.`,
+  },
+  {
+    ...C5, id: "mat12-2-05-027", exams: ALL, kind: "mcq", difficulty: 2, idealTime: 70,
+    q: t`If $e^y(x + 1) = 1$, which relation holds?`,
+    options: [
+      t`$\dfrac{d^2y}{dx^2} = -\left(\dfrac{dy}{dx}\right)^2$`,
+      t`$\dfrac{d^2y}{dx^2} = \dfrac{dy}{dx}$`,
+      t`$\dfrac{d^2y}{dx^2} = \left(\dfrac{dy}{dx}\right)^2$`,
+      t`$\dfrac{d^2y}{dx^2} + \dfrac{dy}{dx} = 0$`,
+    ],
+    answer: 2,
+    hint: "Solve for y first.",
+    explain: t`$y = -\log(x+1)$, so $y' = -\dfrac{1}{x+1}$ and $y'' = \dfrac{1}{(x+1)^2} = (y')^2$. Since $(y')^2 > 0$ while $y' < 0$, the options $y'' = y'$ and $y'' = -(y')^2$ fail.`,
+  },
+  {
+    ...C5, id: "mat12-2-05-028", exams: MAIN, kind: "mcq", difficulty: 2, idealTime: 70,
+    q: t`**Assertion (A):** $f(x) = |x|^3$ is differentiable at $x = 0$.<br>**Reason (R):** $g(x) = |x|$ is not differentiable at $x = 0$.`,
+    options: AR,
+    answer: 1,
+    hint: t`Compute $\lim_{h\to0} \dfrac{|h|^3}{h}$.`,
+    explain: t`$f'(0) = \lim_{h\to0}\dfrac{|h|^3}{h} = \lim_{h\to0} h|h| = 0$, so A is true. R is also true (LHD $-1$, RHD $1$). But R does not explain A — if anything, it would suggest the opposite; A holds because the cube flattens the corner.`,
+  },
+  {
+    ...C5, id: "mat12-2-05-029", exams: MAIN, kind: "mcq", difficulty: 2, idealTime: 70,
+    q: t`**Statement I:** $f(x) = x^{1/3}$ is continuous at $x = 0$.<br>**Statement II:** $f(x) = x^{1/3}$ is differentiable at $x = 0$.`,
+    options: S12,
+    answer: 2,
+    hint: t`Look at $\dfrac{h^{1/3}}{h}$ as $h \to 0$.`,
+    explain: t`$x^{1/3} \to 0 = f(0)$, so it is continuous. But $\dfrac{f(h) - f(0)}{h} = h^{-2/3} \to +\infty$: the graph has a vertical tangent at the origin, so $f$ is not differentiable there.`,
+  },
+  {
+    ...C5, id: "mat12-2-05-030", exams: ALL, kind: "mcq", difficulty: 2, idealTime: 80,
+    q: t`Match List I (function) with List II (derivative):<br>(P) $e^{x^2}$ (Q) $\log(\log x)$ (R) $\tan^{-1}(e^x)$ (S) $\sqrt{\sin x}$<br>(1) $\dfrac{1}{x\log x}$ (2) $\dfrac{\cos x}{2\sqrt{\sin x}}$ (3) $2xe^{x^2}$ (4) $\dfrac{e^x}{1 + e^{2x}}$`,
+    options: [
+      "P-3, Q-4, R-1, S-2",
+      "P-2, Q-1, R-4, S-3",
+      "P-3, Q-1, R-4, S-2",
+      "P-1, Q-3, R-2, S-4",
+    ],
+    answer: 2,
+    hint: "Each one is a single chain-rule step.",
+    explain: t`(P) $(e^{x^2})' = 2xe^{x^2}$ → 3. (Q) $\dfrac{1}{\log x}\cdot\dfrac1x$ → 1. (R) $\dfrac{e^x}{1 + (e^x)^2}$ → 4. (S) $\dfrac{\cos x}{2\sqrt{\sin x}}$ → 2. So P-3, Q-1, R-4, S-2.`,
+  },
+  {
+    ...C5, id: "mat12-2-05-031", exams: MAIN, kind: "numeric", difficulty: 2, idealTime: 90,
+    q: t`If $y = e^{2\sin^{-1}x}$, $|x| < 1$, then $(1 - x^2)\dfrac{d^2y}{dx^2} - x\dfrac{dy}{dx} = ky$. Find $k$.`,
+    answer: 4,
+    hint: t`First write $\sqrt{1-x^2}\,y' = 2y$, then differentiate again.`,
+    explain: t`$y' = \dfrac{2y}{\sqrt{1-x^2}}$, i.e. $\sqrt{1-x^2}\,y' = 2y$. Differentiate: $\sqrt{1-x^2}\,y'' - \dfrac{x y'}{\sqrt{1-x^2}} = 2y'$. Multiply by $\sqrt{1-x^2}$: $(1-x^2)y'' - xy' = 2\sqrt{1-x^2}\,y' = 2(2y) = 4y$. So $k = 4$ (in general $k = a^2$ for $e^{a\sin^{-1}x}$).`,
+  },
+  {
+    ...C5, id: "mat12-2-05-032", exams: ALL, kind: "numeric", difficulty: 2, idealTime: 60, tolerance: 0.01,
+    q: t`$f(x) = \dfrac{e^{3x} - 1}{\log(1 + 2x)}$ for $x \ne 0$. Find the value of $f(0)$ that makes $f$ continuous at $x = 0$.`,
+    answer: 1.5,
+    hint: t`Use $\lim \dfrac{e^u - 1}{u} = 1$ and $\lim\dfrac{\log(1+u)}{u} = 1$.`,
+    explain: t`$f(x) = \dfrac{e^{3x} - 1}{3x}\cdot\dfrac{2x}{\log(1 + 2x)}\cdot\dfrac{3}{2} \to 1\cdot1\cdot\dfrac32 = 1.5$.`,
+  },
+  {
+    ...C5, id: "mat12-2-05-033", exams: ALL, kind: "mcq", difficulty: 2, idealTime: 70,
+    q: t`If $f(x) = \begin{cases} x^2, & x \le 1 \\ ax + b, & x > 1 \end{cases}$ is differentiable at $x = 1$, then $(a, b)$ is:`,
+    options: [t`$(1, 0)$`, t`$(2, 1)$`, t`$(2, -1)$`, t`$(-2, 3)$`],
+    answer: 2,
+    hint: "Differentiable needs both continuity and equal one-sided derivatives.",
+    explain: t`Continuity: $1 = a + b$. Equal derivatives: LHD $= 2x|_{1} = 2$, RHD $= a$, so $a = 2$ and $b = -1$. $(1,0)$ is continuous but has a corner; $(2,1)$ ignores continuity.`,
+  },
+  {
+    ...C5, id: "mat12-2-05-034", exams: MAIN, kind: "mcq", difficulty: 2, idealTime: 80,
+    q: t`If $xy = e^{x - y}$ $(x, y > 0)$, then $\dfrac{dy}{dx}$ equals:`,
+    options: [
+      t`$\dfrac{y(x - 1)}{x(1 + y)}$`,
+      t`$\dfrac{y(x + 1)}{x(1 - y)}$`,
+      t`$\dfrac{x(y - 1)}{y(1 + x)}$`,
+      t`$\dfrac{y(1 - x)}{x(1 + y)}$`,
+    ],
+    answer: 0,
+    hint: "Take log of both sides first.",
+    explain: t`$\log x + \log y = x - y$. Differentiate: $\dfrac1x + \dfrac{y'}{y} = 1 - y'$, so $y'\left(\dfrac1y + 1\right) = 1 - \dfrac1x$, giving $y' = \dfrac{y(x-1)}{x(1+y)}$.`,
+  },
+  {
+    ...C5, id: "mat12-2-05-035", exams: MAIN, kind: "numeric", difficulty: 2, idealTime: 60,
+    q: t`$f$ is a differentiable function with $f'(x) = \sqrt{2x^2 - 1}$. If $y = f(x^2)$, find $\dfrac{dy}{dx}$ at $x = 1$.`,
+    answer: 2,
+    hint: "Chain rule: the inner function is x².",
+    explain: t`$\dfrac{dy}{dx} = f'(x^2)\cdot 2x$. At $x = 1$: $f'(1)\cdot2 = \sqrt{2 - 1}\cdot 2 = 2$. Writing $f'(x)\cdot 2x$ instead of $f'(x^2)\cdot 2x$ happens to agree at $x=1$, but not elsewhere.`,
+  },
+  {
+    ...C5, id: "mat12-2-05-036", exams: MAIN, kind: "mcq", difficulty: 2, idealTime: 70,
+    q: t`If $f(x) = \dfrac{1}{1 - x}$, the set of points where the composite $y = f(f(x))$ is discontinuous is:`,
+    options: [t`$\{1\}$`, t`$\{0\}$`, t`$\{1, 2\}$`, t`$\{0, 1\}$`],
+    answer: 3,
+    hint: "The inner function fails at x = 1; the outer one fails where the inner function equals 1.",
+    explain: t`$f(x)$ is undefined at $x = 1$. $f(f(x))$ is also undefined where $f(x) = 1$, i.e. $\dfrac{1}{1-x} = 1 \Rightarrow x = 0$. Indeed $f(f(x)) = \dfrac{x - 1}{x}$ for $x \ne 0, 1$. So the points are $\{0, 1\}$. Only listing $x=1$ misses the hidden point.`,
+  },
+  {
+    ...C5, id: "mat12-2-05-037", exams: ALL, kind: "mcq", difficulty: 2, idealTime: 60,
+    q: t`The value of $c$ in the Mean Value Theorem for $f(x) = \log x$ on $[1, e]$ is:`,
+    options: [t`$\dfrac{e}{2}$`, t`$e - 1$`, t`$\sqrt e$`, t`$\dfrac{e + 1}{2}$`],
+    answer: 1,
+    hint: t`$f'(c) = \dfrac{f(e) - f(1)}{e - 1}$.`,
+    explain: t`$\dfrac{\log e - \log 1}{e - 1} = \dfrac{1}{e - 1} = f'(c) = \dfrac1c$, so $c = e - 1 \approx 1.718 \in (1, e)$. The midpoint $(e+1)/2$ is the answer only for a quadratic.`,
+  },
+  {
+    ...C5, id: "mat12-2-05-038", exams: ALL, kind: "mcq", difficulty: 2, idealTime: 60,
+    q: t`Which function satisfies all the hypotheses of Rolle's theorem on $[-1, 1]$?`,
+    options: [t`$|x|$`, t`$x^3$`, t`$\dfrac{1}{x^2}$`, t`$x^2 + 1$`],
+    answer: 3,
+    hint: "Check continuity on [a, b], differentiability on (a, b) and f(a) = f(b).",
+    explain: t`$x^2 + 1$: polynomial, $f(-1) = f(1) = 2$ ✓ (and $c = 0$). $|x|$ is not differentiable at $0$; $x^3$ has $f(-1) = -1 \ne 1 = f(1)$; $1/x^2$ is not even defined (so not continuous) at $0$.`,
+  },
+  {
+    ...C5, id: "mat12-2-05-039", exams: ADV_ONLY, kind: "multi", difficulty: 3, idealTime: 150,
+    q: t`Let $f(x) = \max\{x, x^3\}$, $x \in \mathbb{R}$. Which of the following is/are correct?`,
+    options: [
+      t`$f$ is continuous on $\mathbb{R}$`,
+      t`$f$ is not differentiable at exactly three points`,
+      t`$f$ is differentiable at $x = 0$`,
+      t`$f'(1/2) = 1$`,
+    ],
+    answers: [0, 1, 3],
+    hint: t`Solve $x^3 \ge x$, i.e. $x(x-1)(x+1) \ge 0$.`,
+    explain: t`$x^3 \ge x$ on $[-1, 0] \cup [1, \infty)$, so $f = x^3$ there and $f = x$ on $(-\infty, -1) \cup (0, 1)$. The pieces meet at $x = -1, 0, 1$, so $f$ is continuous (A). Slopes: at $-1$: $1$ vs $3$; at $0$: $0$ vs $1$; at $1$: $1$ vs $3$ — corners at all three (B true, C false). On $(0, 1)$, $f = x$, so $f'(1/2) = 1$ (D).`,
+  },
+  {
+    ...C5, id: "mat12-2-05-040", exams: ADV_ONLY, kind: "multi", difficulty: 3, idealTime: 120,
+    q: t`For $f(x) = x|x|$, which of the following is/are correct?`,
+    options: [
+      t`$f$ is differentiable at $x = 0$`,
+      t`$f'$ is continuous at $x = 0$`,
+      t`$f''(0)$ exists`,
+      t`$f'(x) = 2x$ for all $x$`,
+    ],
+    answers: [0, 1],
+    hint: t`Write $f = x^2$ for $x \ge 0$ and $-x^2$ for $x < 0$.`,
+    explain: t`$f'(x) = 2x$ for $x > 0$, $-2x$ for $x < 0$, and $f'(0) = \lim h|h|/h = 0$. So $f'(x) = 2|x|$ — continuous everywhere (A, B true), but $2|x|$ has a corner at $0$, so $f''(0)$ does not exist (C false). $f'(x) = 2|x| \ne 2x$ for $x < 0$ (D false).`,
+  },
+  {
+    ...C5, id: "mat12-2-05-041", exams: ADV_ONLY, kind: "multi", difficulty: 3, idealTime: 150,
+    q: t`Let $f(x) = x^2\sin\dfrac1x$ for $x \ne 0$ and $f(0) = 0$. Which of the following is/are correct?`,
+    options: [
+      t`$f$ is continuous at $x = 0$`,
+      t`$f$ is differentiable at $x = 0$ and $f'(0) = 0$`,
+      t`$f'$ is continuous at $x = 0$`,
+      t`$\lim_{x \to 0} f'(x)$ exists`,
+    ],
+    answers: [0, 1],
+    hint: t`For $x \ne 0$, $f'(x) = 2x\sin\frac1x - \cos\frac1x$.`,
+    explain: t`$|x^2\sin(1/x)| \le x^2 \to 0$, so $f$ is continuous. $f'(0) = \lim h\sin(1/h) = 0$ (squeeze). For $x \ne 0$, $f'(x) = 2x\sin\frac1x - \cos\frac1x$; the first term $\to 0$ but $\cos\frac1x$ oscillates, so $\lim_{x\to0} f'(x)$ does not exist and $f'$ is discontinuous at 0. A function can be differentiable with a discontinuous derivative.`,
+  },
+  {
+    ...C5, id: "mat12-2-05-042", exams: ADV_ONLY, kind: "multi", difficulty: 3, idealTime: 120,
+    q: t`If $y = e^x(\sin x + \cos x)$, which of the following is/are correct?`,
+    options: [
+      t`$\dfrac{dy}{dx} = 2e^x\cos x$`,
+      t`$\dfrac{d^2y}{dx^2} - 2\dfrac{dy}{dx} + 2y = 0$`,
+      t`$\dfrac{d^2y}{dx^2}$ at $x = 0$ equals $2$`,
+      t`$\dfrac{d^2y}{dx^2}$ at $x = 0$ equals $0$`,
+    ],
+    answers: [0, 1, 2],
+    hint: "Differentiate with the product rule and watch the sine terms cancel.",
+    explain: t`$y' = e^x(\sin x + \cos x) + e^x(\cos x - \sin x) = 2e^x\cos x$. $y'' = 2e^x(\cos x - \sin x)$, so $y''(0) = 2$. Check: $y'' - 2y' + 2y = 2e^x\cos x - 2e^x\sin x - 4e^x\cos x + 2e^x\sin x + 2e^x\cos x = 0$. So A, B, C hold and D fails.`,
+  },
+  {
+    ...C5, id: "mat12-2-05-043", exams: ADV_ONLY, kind: "multi", difficulty: 3, idealTime: 150,
+    q: t`For $f(x) = x(x - 1)(x - 2)$, which of the following is/are correct?`,
+    options: [
+      t`Rolle's theorem on $[0, 1]$ gives $c = 1 - \dfrac{1}{\sqrt3}$`,
+      t`Rolle's theorem on $[1, 2]$ gives $c = 1 + \dfrac{1}{\sqrt3}$`,
+      t`There are exactly two points in $(0, 2)$ where $f'(x) = 0$`,
+      t`The Mean Value Theorem on $[0, 3]$ is satisfied by $c = 0$`,
+    ],
+    answers: [0, 1, 2],
+    hint: t`$f(x) = x^3 - 3x^2 + 2x$, so $f'(x) = 3x^2 - 6x + 2$.`,
+    explain: t`$f'(x) = 0 \Rightarrow x = 1 \pm \dfrac{1}{\sqrt3} \approx 0.42, 1.58$, one in each of $(0,1)$ and $(1,2)$, and $f(0) = f(1) = f(2) = 0$. So A, B, C hold. On $[0, 3]$: $\dfrac{f(3) - f(0)}{3} = \dfrac{6}{3} = 2$; $3c^2 - 6c + 2 = 2 \Rightarrow c = 0$ or $2$. $c$ must lie in the open interval, so $c = 2$, not $0$ — D is false.`,
+  },
+  {
+    ...C5, id: "mat12-2-05-044", exams: ADV, kind: "numeric", difficulty: 3, idealTime: 120,
+    q: t`Let $f(x) = \lim_{n\to\infty}\dfrac{x^{2n} - 1}{x^{2n} + 1}$. Find the number of points of discontinuity of $f$ on $\mathbb{R}$.`,
+    answer: 2,
+    hint: t`Treat $|x| < 1$, $|x| = 1$ and $|x| > 1$ separately.`,
+    explain: t`For $|x| < 1$, $x^{2n} \to 0$ so $f = -1$; for $|x| > 1$, divide by $x^{2n}$: $f = 1$; at $x = \pm1$, $f = 0$. $f$ jumps at $x = -1$ and $x = 1$ only: 2 points.`,
+  },
+  {
+    ...C5, id: "mat12-2-05-045", exams: ADV, kind: "numeric", difficulty: 3, idealTime: 150,
+    q: t`A differentiable function $f$ satisfies $f(x + y) = f(x) + f(y) + 2xy$ for all real $x, y$, and $f'(0) = 5$. Find $f(2)$.`,
+    answer: 14,
+    hint: t`Put $x = y = 0$ to get $f(0)$, then use the definition of $f'(x)$.`,
+    explain: t`$x = y = 0$ gives $f(0) = 0$. $f'(x) = \lim_{h\to0}\dfrac{f(x+h) - f(x)}{h} = \lim_{h\to0}\dfrac{f(h) + 2xh}{h} = f'(0) + 2x = 5 + 2x$. So $f(x) = 5x + x^2 + C$ with $C = f(0) = 0$; $f(2) = 10 + 4 = 14$.`,
+  },
+  {
+    ...C5, id: "mat12-2-05-046", exams: ADV, kind: "mcq", difficulty: 3, idealTime: 120,
+    q: t`For $-1 < x < 1$, the derivative of $y = \tan^{-1}\!\left(\dfrac{\sqrt{1 + x} - \sqrt{1 - x}}{\sqrt{1 + x} + \sqrt{1 - x}}\right)$ is:`,
+    options: [
+      t`$-\dfrac{1}{2\sqrt{1 - x^2}}$`,
+      t`$\dfrac{1}{2\sqrt{1 - x^2}}$`,
+      t`$\dfrac{1}{\sqrt{1 - x^2}}$`,
+      t`$-\dfrac{1}{2(1 + x^2)}$`,
+    ],
+    answer: 1,
+    hint: t`Put $x = \cos 2\theta$.`,
+    explain: t`With $x = \cos2\theta$, $\theta \in (0, \pi/2)$: $\sqrt{1+x} = \sqrt2\cos\theta$, $\sqrt{1-x} = \sqrt2\sin\theta$. The fraction is $\dfrac{\cos\theta - \sin\theta}{\cos\theta + \sin\theta} = \tan\left(\dfrac\pi4 - \theta\right)$, and $\frac\pi4 - \theta \in (-\frac\pi4, \frac\pi4)$, so $y = \dfrac\pi4 - \dfrac12\cos^{-1}x$. Then $y' = -\dfrac12\cdot\dfrac{-1}{\sqrt{1-x^2}} = \dfrac{1}{2\sqrt{1-x^2}}$. Losing the sign of $(\cos^{-1}x)'$ gives the negative option.`,
+  },
+  {
+    ...C5, id: "mat12-2-05-047", exams: ADV, kind: "numeric", difficulty: 3, idealTime: 150, tolerance: 0.01,
+    q: t`For the curve $x^2 + xy + y^2 = 3$, find $\dfrac{d^2y}{dx^2}$ at the point $(1, 1)$. (Give the answer correct to two decimal places.)`,
+    answer: -0.6667,
+    hint: "Differentiate the once-differentiated equation again rather than the quotient formula.",
+    explain: t`First: $2x + y + xy' + 2yy' = 0 \Rightarrow y' = -\dfrac{2x + y}{x + 2y} = -1$ at $(1,1)$. Differentiate again: $2 + 2y' + xy'' + 2(y')^2 + 2yy'' = 0$. At $(1,1)$ with $y' = -1$: $2 - 2 + 2 + 3y'' = 0 \Rightarrow y'' = -\dfrac23 \approx -0.67$.`,
+  },
+  {
+    ...C5, id: "mat12-2-05-048", exams: ADV, kind: "mcq", difficulty: 3, idealTime: 120,
+    q: t`The number of points in $(0, \pi)$ at which $f(x) = [2\sin x]$ is discontinuous ($[\,\cdot\,]$ = greatest integer function) is:`,
+    options: [t`$2$`, t`$3$`, t`$4$`, t`$5$`],
+    answer: 1,
+    hint: t`$2\sin x$ takes values in $(0, 2]$; look where it reaches an integer.`,
+    explain: t`$f = 0$ while $2\sin x < 1$, $f = 1$ while $1 \le 2\sin x < 2$, and $f = 2$ only at $x = \pi/2$ where $2\sin x = 2$. Jumps occur at $x = \pi/6$ and $5\pi/6$ (where $2\sin x = 1$), and at $x = \pi/2$ the value 2 differs from the nearby value 1. Total 3; forgetting the isolated point $\pi/2$ gives 2.`,
+  },
+  {
+    ...C5, id: "mat12-2-05-049", exams: ADV, kind: "mcq", difficulty: 3, idealTime: 150,
+    q: t`The number of points at which $f(x) = \left|x^2 - 3|x| + 2\right|$ is not differentiable is:`,
+    options: [t`$3$`, t`$4$`, t`$5$`, t`$6$`],
+    answer: 2,
+    hint: t`Let $g(x) = x^2 - 3|x| + 2 = (|x| - 1)(|x| - 2)$. Check the zeros of $g$ and also $x = 0$.`,
+    explain: t`$g$ has simple zeros at $x = \pm1, \pm2$ with non-zero slope, so $|g|$ has corners there (4 points). At $x = 0$, $g(0) = 2 > 0$ so $f = g$ near 0, and $g'(0^\pm) = \mp3$ — another corner. Total 5. Missing the corner of $|x|$ at 0 gives 4.`,
+  },
+  {
+    ...C5, id: "mat12-2-05-050", exams: ADV, kind: "mcq", difficulty: 3, idealTime: 150,
+    q: t`The number of points at which $f(x) = (x^2 - 4)\left|x^2 - 5x + 6\right| + \sin|x|$ is not differentiable is:`,
+    options: [t`$1$`, t`$2$`, t`$3$`, t`$4$`],
+    answer: 1,
+    hint: t`$x^2 - 5x + 6 = (x - 2)(x - 3)$. A factor $(x - a)$ multiplying $|x - a|$ smooths the corner.`,
+    explain: t`$|x^2 - 5x + 6| = |x-2||x-3|$ has corners at 2 and 3. At $x = 2$: $(x^2 - 4)|x - 2| = (x + 2)(x - 2)|x - 2|$, and $(x-2)|x-2|$ is differentiable, so no corner. At $x = 3$: $x^2 - 4 = 5 \ne 0$, so the corner stays. $\sin|x|$ has LHD $-1$, RHD $1$ at 0, while the first term is smooth there. Answer: $x = 0, 3$ — 2 points.`,
+  },
+];
+
+/* ================= Chapter 6: Application of Derivatives ================= */
+const ch6: ExamQuestion[] = [];
+
+export const questions: ExamQuestion[] = [...ch5, ...ch6];
 
 /** One formula / quick-revision sheet per chapter. */
 export const formulas: FormulaSheet[] = [];

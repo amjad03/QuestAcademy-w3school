@@ -635,7 +635,590 @@ const dBlock: Draft[] = [
 /* ================================================================== */
 /* Chapter 5: Coordination Compounds                                   */
 /* ================================================================== */
-const coordination: Draft[] = [];
+const coordination: Draft[] = [
+  /* ---------- difficulty 1 ---------- */
+  {
+    kind: "mcq",
+    difficulty: 1,
+    exams: ALL,
+    idealTime: 40,
+    q: "The coordination number and the oxidation state of iron in K₃[Fe(CN)₆] are respectively:",
+    options: ["6 and +2", "6 and +3", "3 and +3", "9 and +3"],
+    answer: 1,
+    explain:
+      "Six CN⁻ ligands are bonded to Fe, so the coordination number is 6. Charge balance: $3(+1) + x + 6(-1) = 0$ gives $x = +3$. +2 is the value in K₄[Fe(CN)₆]; 3 is the number of K⁺ counter-ions, not ligands.",
+  },
+  {
+    kind: "mcq",
+    difficulty: 1,
+    exams: ALL,
+    idealTime: 35,
+    q: "Which of the following is an ambidentate ligand?",
+    options: ["NH₃", "NO₂⁻", "C₂O₄²⁻", "H₂NCH₂CH₂NH₂"],
+    answer: 1,
+    explain:
+      "An ambidentate ligand has two different donor atoms but uses only one at a time. NO₂⁻ binds through N (nitrito-N) or through O (nitrito-O). NH₃ has only one donor atom; oxalate and ethane-1,2-diamine are bidentate (both donor atoms bind together, forming a chelate).",
+  },
+  {
+    kind: "numeric",
+    difficulty: 1,
+    exams: ALL,
+    idealTime: 50,
+    q: "One mole of CoCl₃·5NH₃ is treated with excess AgNO₃ solution at room temperature. How many moles of AgCl precipitate?",
+    answer: 2,
+    unit: "mol",
+    explain:
+      "Co(III) has a coordination number of 6. Five NH₃ and one Cl⁻ fill the inner sphere: [Co(NH₃)₅Cl]Cl₂. Only the two ionisable (counter-ion) Cl⁻ react with Ag⁺, so 2 mol AgCl form. Answering 3 counts the coordinated chloride as well.",
+  },
+  {
+    kind: "mcq",
+    difficulty: 1,
+    exams: ALL,
+    idealTime: 40,
+    q: "The IUPAC name of [Co(NH₃)₅Cl]Cl₂ is:",
+    options: [
+      "Pentaamminechloridocobalt(III) chloride",
+      "Chloridopentaamminecobalt(III) chloride",
+      "Pentaamminechloridocobalt(II) chloride",
+      "Pentaamminechloridocobaltate(III) chloride",
+    ],
+    answer: 0,
+    explain:
+      "Ligands are named in alphabetical order ignoring multiplying prefixes: ammine (a) before chlorido (c). Oxidation state: $x + 0 - 1 = +2$ (the complex cation is 2+), so $x = +3$. The '-ate' ending is used only for anionic complexes.",
+  },
+  {
+    kind: "mcq",
+    difficulty: 1,
+    exams: ALL,
+    idealTime: 30,
+    q: "The ethylenediaminetetraacetate ion (EDTA⁴⁻) is a:",
+    options: ["Bidentate ligand", "Tetradentate ligand", "Hexadentate ligand", "Monodentate ligand"],
+    answer: 2,
+    explain:
+      "EDTA⁴⁻ binds through two N atoms and four carboxylate O atoms, so it is hexadentate. Students often say tetradentate by counting only the four acetate groups and forgetting the two nitrogens.",
+  },
+  {
+    kind: "mcq",
+    difficulty: 1,
+    exams: ALL,
+    idealTime: 35,
+    q: "Which ligand forms a chelate ring with a metal ion?",
+    options: ["Cl⁻", "H₂O", "Ethane-1,2-diamine", "CO"],
+    answer: 2,
+    explain:
+      "A chelate forms when one ligand binds through two or more donor atoms, closing a ring with the metal. Ethane-1,2-diamine (en) binds through both N atoms and makes a five-membered ring. Cl⁻, H₂O and CO are monodentate.",
+  },
+  {
+    kind: "mcq",
+    difficulty: 1,
+    exams: ALL,
+    idealTime: 35,
+    q: "Which of the following is a homoleptic complex?",
+    options: ["[Co(NH₃)₄Cl₂]⁺", "[Co(NH₃)₆]³⁺", "[Pt(NH₃)₂Cl₂]", "[Co(en)₂Cl₂]⁺"],
+    answer: 1,
+    explain:
+      "A homoleptic complex has only one kind of ligand. [Co(NH₃)₆]³⁺ has six NH₃ only. The other three contain two kinds of ligand (heteroleptic).",
+  },
+  {
+    kind: "mcq",
+    difficulty: 1,
+    exams: ALL,
+    idealTime: 35,
+    q: "In the spectrochemical series, which ligand produces the smallest crystal-field splitting?",
+    options: ["F⁻", "H₂O", "I⁻", "CN⁻"],
+    answer: 2,
+    explain:
+      "The series runs I⁻ < Br⁻ < SCN⁻ < Cl⁻ < S²⁻ < F⁻ < OH⁻ < C₂O₄²⁻ < H₂O < NCS⁻ < edta⁴⁻ < NH₃ < en < CN⁻ < CO. Iodide is the weakest-field ligand; CN⁻ (and CO) are the strongest.",
+  },
+  {
+    kind: "mcq",
+    difficulty: 1,
+    exams: ALL,
+    idealTime: 35,
+    q: "Wilkinson's catalyst, used for the homogeneous hydrogenation of alkenes, is:",
+    options: ["[RhCl(PPh₃)₃]", "[PtCl₂(NH₃)₂]", "TiCl₄ + Al(C₂H₅)₃", "[Ni(CO)₄]"],
+    answer: 0,
+    explain:
+      "Wilkinson's catalyst is chloridotris(triphenylphosphine)rhodium(I), [RhCl(PPh₃)₃]. cis-[PtCl₂(NH₃)₂] is cisplatin (an anticancer drug), TiCl₄ + AlEt₃ is the Ziegler–Natta catalyst and [Ni(CO)₄] is the volatile carbonyl used in the Mond process.",
+  },
+  {
+    kind: "mcq",
+    difficulty: 1,
+    exams: ALL,
+    idealTime: 40,
+    q: "Match the biologically important compound with its central metal. (a) Chlorophyll (b) Haemoglobin (c) Vitamin B₁₂ (d) Cisplatin; (i) Co (ii) Pt (iii) Mg (iv) Fe",
+    options: [
+      "a-iii, b-iv, c-i, d-ii",
+      "a-iv, b-iii, c-i, d-ii",
+      "a-iii, b-i, c-iv, d-ii",
+      "a-ii, b-iv, c-i, d-iii",
+    ],
+    answer: 0,
+    explain:
+      "Chlorophyll is a magnesium complex, haemoglobin contains iron (haem), vitamin B₁₂ (cyanocobalamin) contains cobalt and cisplatin is a platinum(II) complex.",
+  },
+  {
+    kind: "mcq",
+    difficulty: 1,
+    exams: ALL,
+    idealTime: 40,
+    q: "[Co(NH₃)₅(SO₄)]Br and [Co(NH₃)₅Br]SO₄ are an example of:",
+    options: ["Linkage isomerism", "Ionisation isomerism", "Coordination isomerism", "Geometrical isomerism"],
+    answer: 1,
+    explain:
+      "The two compounds swap a ligand inside the coordination sphere with the counter-ion outside it, so they give different ions in solution (one gives Br⁻, the other SO₄²⁻). That is ionisation isomerism. Linkage isomerism needs an ambidentate ligand; coordination isomerism needs both cation and anion to be complexes.",
+  },
+  {
+    kind: "mcq",
+    difficulty: 1,
+    exams: ALL,
+    idealTime: 35,
+    q: "Which complex can show linkage isomerism?",
+    options: ["[Co(NH₃)₆]Cl₃", "[Co(NH₃)₅(NO₂)]Cl₂", "[Pt(NH₃)₂Cl₂]", "[Cr(H₂O)₆]Cl₃"],
+    answer: 1,
+    explain:
+      "NO₂⁻ is ambidentate: it can bind through N (nitro, yellow) or through O (nitrito, red), so [Co(NH₃)₅(NO₂)]Cl₂ has linkage isomers. The other complexes contain no ambidentate ligand.",
+  },
+  {
+    kind: "mcq",
+    difficulty: 1,
+    exams: ALL,
+    idealTime: 45,
+    q: "For the same metal, ligands and metal–ligand distances, the tetrahedral splitting Δₜ is related to the octahedral splitting Δₒ by:",
+    options: ["Δₜ = (4/9) Δₒ", "Δₜ = (9/4) Δₒ", "Δₜ = Δₒ", "Δₜ = (2/3) Δₒ"],
+    answer: 0,
+    explain:
+      "With only four ligands, none of which points straight at a d orbital, the splitting is smaller: $\\Delta_t = \\tfrac49\\Delta_o$. Because Δₜ is usually smaller than the pairing energy, tetrahedral complexes are almost always high spin.",
+  },
+  {
+    kind: "mcq",
+    difficulty: 1,
+    exams: ALL,
+    idealTime: 40,
+    q: "According to Werner's theory, the secondary valence of the metal in a complex corresponds to its:",
+    options: [
+      "Oxidation state, satisfied by negative ions",
+      "Coordination number, satisfied by ligands and directed in space",
+      "Number of counter-ions",
+      "Number of unpaired electrons",
+    ],
+    answer: 1,
+    explain:
+      "Werner's primary valence is ionisable and equals the oxidation state; it is satisfied by negative ions. The secondary valence is non-ionisable, equals the coordination number, is satisfied by neutral molecules or negative ions, and is directed in space, which gives the complex its definite geometry.",
+  },
+
+  /* ---------- difficulty 2 ---------- */
+  {
+    kind: "mcq",
+    difficulty: 2,
+    exams: ALL,
+    idealTime: 60,
+    hint: "CN⁻ is a strong-field ligand; Ni²⁺ is d⁸.",
+    q: "The hybridisation and magnetic behaviour of [Ni(CN)₄]²⁻ are:",
+    options: ["sp³, paramagnetic", "dsp², diamagnetic", "sp³, diamagnetic", "dsp², paramagnetic"],
+    answer: 1,
+    explain:
+      "Ni²⁺ is $3d^8$. Strong-field CN⁻ pairs the eight electrons into four 3d orbitals, leaving one 3d orbital empty. That 3d with 4s and two 4p orbitals gives dsp² hybrids: square planar, no unpaired electrons, so diamagnetic. [NiCl₄]²⁻, with weak-field Cl⁻, is the sp³, paramagnetic case.",
+  },
+  {
+    kind: "numeric",
+    difficulty: 2,
+    exams: ALL,
+    idealTime: 70,
+    hint: "Cl⁻ is weak-field; work out the geometry first.",
+    q: "Calculate the spin-only magnetic moment (in BM) of the tetrahedral complex [NiCl₄]²⁻. Give the answer to two decimal places.",
+    answer: 2.83,
+    tolerance: 0.03,
+    unit: "BM",
+    explain:
+      "Ni²⁺ is d⁸. Weak-field Cl⁻ does not force pairing, so the complex is sp³ (tetrahedral) with 2 unpaired electrons (e⁴ t₂⁴ in crystal-field terms). $\\mu = \\sqrt{2(2+2)} = \\sqrt8 \\approx 2.83$ BM.",
+  },
+  {
+    kind: "mcq",
+    difficulty: 2,
+    exams: ALL,
+    idealTime: 60,
+    hint: "Outer-orbital complexes use the 4d orbitals (sp³d²).",
+    q: "Which of the following is an outer-orbital (high-spin) octahedral complex?",
+    options: ["[Co(NH₃)₆]³⁺", "[Fe(CN)₆]³⁻", "[CoF₆]³⁻", "[Fe(CN)₆]⁴⁻"],
+    answer: 2,
+    explain:
+      "F⁻ is a weak-field ligand. In [CoF₆]³⁻ the six d electrons of Co³⁺ stay spread out (4 unpaired), so the inner 3d orbitals are not free and the complex uses sp³d² (4s, 4p, 4d) hybrids: outer orbital, high spin. NH₃ and CN⁻ pair the electrons, so the other three use d²sp³ (inner orbital).",
+  },
+  {
+    kind: "mcq",
+    difficulty: 2,
+    exams: ALL,
+    idealTime: 60,
+    hint: "Fill t₂g first when Δₒ > P; each t₂g electron is −0.4 Δₒ.",
+    q: "Ignoring pairing energy, the crystal-field stabilisation energy (CFSE) of a low-spin d⁶ octahedral complex is:",
+    options: ["−0.4 Δₒ", "−1.2 Δₒ", "−2.4 Δₒ", "−1.8 Δₒ"],
+    answer: 2,
+    explain:
+      "Low-spin d⁶ is $t_{2g}^6 e_g^0$. CFSE $= 6(-0.4\\Delta_o) + 0(+0.6\\Delta_o) = -2.4\\Delta_o$. The high-spin arrangement $t_{2g}^4 e_g^2$ would give $-1.6 + 1.2 = -0.4\\Delta_o$.",
+  },
+  {
+    kind: "numeric",
+    difficulty: 2,
+    exams: ALL,
+    idealTime: 80,
+    hint: "High-spin d⁴ is t₂g³ e_g¹.",
+    q: "The CFSE of a high-spin d⁴ octahedral complex is $-x\\,\\Delta_o$ (ignoring pairing energy). Find $x$.",
+    answer: 0.6,
+    tolerance: 0.01,
+    explain:
+      "High spin d⁴: $t_{2g}^3 e_g^1$. CFSE $= 3(-0.4) + 1(+0.6) = -1.2 + 0.6 = -0.6\\,\\Delta_o$, so $x = 0.6$. The low-spin form $t_{2g}^4$ would give −1.6 Δₒ.",
+  },
+  {
+    kind: "mcq",
+    difficulty: 2,
+    exams: ALL,
+    idealTime: 60,
+    hint: "Think of the facial and meridional arrangements.",
+    q: "The number of geometrical isomers of the octahedral complex [Co(NH₃)₃Cl₃] is:",
+    options: ["1", "2", "3", "4"],
+    answer: 1,
+    explain:
+      "An octahedral [MA₃B₃] complex has two geometrical isomers: fac (the three A on one triangular face) and mer (the three A in a plane passing through the metal, like a meridian). Neither is chiral.",
+  },
+  {
+    kind: "numeric",
+    difficulty: 2,
+    exams: ALL,
+    idealTime: 90,
+    hint: "Count trans and cis, then check whether either is chiral.",
+    q: "What is the total number of stereoisomers (geometrical + optical) of [Co(en)₂Cl₂]⁺?",
+    answer: 3,
+    explain:
+      "There are two geometrical isomers. trans-[Co(en)₂Cl₂]⁺ has a mirror plane, so it is optically inactive. cis-[Co(en)₂Cl₂]⁺ has no mirror plane and exists as a pair of enantiomers. Total $= 1 + 2 = 3$.",
+  },
+  {
+    kind: "mcq",
+    difficulty: 2,
+    exams: ALL,
+    idealTime: 50,
+    q: "[Co(NH₃)₆][Cr(CN)₆] and [Cr(NH₃)₆][Co(CN)₆] are:",
+    options: ["Ionisation isomers", "Coordination isomers", "Linkage isomers", "Hydrate isomers"],
+    answer: 1,
+    explain:
+      "Both the cation and the anion are complexes, and the ligands are exchanged between the two metal centres. This is coordination isomerism. No counter-ion is swapped (ionisation), no ambidentate ligand changes its donor atom (linkage) and no water moves (hydrate).",
+  },
+  {
+    kind: "mcq",
+    difficulty: 2,
+    exams: ALL,
+    idealTime: 60,
+    hint: "Only Cl⁻ outside the square bracket reacts with Ag⁺.",
+    q: "Three hydrate isomers of CrCl₃·6H₂O are known. Which one gives 1 mol of AgCl per mole of complex with excess AgNO₃?",
+    options: ["[Cr(H₂O)₆]Cl₃", "[Cr(H₂O)₅Cl]Cl₂·H₂O", "[Cr(H₂O)₄Cl₂]Cl·2H₂O", "[Cr(H₂O)₃Cl₃]·3H₂O"],
+    answer: 2,
+    explain:
+      "Precipitated AgCl equals the number of ionisable Cl⁻. [Cr(H₂O)₆]Cl₃ gives 3, [Cr(H₂O)₅Cl]Cl₂·H₂O gives 2 and [Cr(H₂O)₄Cl₂]Cl·2H₂O gives 1. [Cr(H₂O)₃Cl₃]·3H₂O would have no ionisable chloride and give 0.",
+  },
+  {
+    kind: "mcq",
+    difficulty: 2,
+    exams: ALL,
+    idealTime: 50,
+    q: "The violet colour of [Ti(H₂O)₆]³⁺ is due to:",
+    options: [
+      "Transfer of an electron from H₂O to Ti³⁺",
+      "Promotion of the single d electron from t₂g to e_g",
+      "Promotion of an electron from e_g to t₂g",
+      "Absorption of violet light",
+    ],
+    answer: 1,
+    explain:
+      "Ti³⁺ is d¹; in the octahedral field the electron sits in t₂g. It absorbs light (around 498 nm, blue-green) to jump to e_g. The colour seen is the complementary colour, violet. So the complex absorbs blue-green, not violet, light; e_g → t₂g would be emission, and charge transfer is not the cause here.",
+  },
+  {
+    kind: "mcq",
+    difficulty: 2,
+    exams: ALL,
+    idealTime: 50,
+    q: "Which order of ligand field strength is correct?",
+    options: [
+      "Cl⁻ < H₂O < NH₃ < CN⁻",
+      "H₂O < Cl⁻ < NH₃ < CN⁻",
+      "Cl⁻ < NH₃ < H₂O < CN⁻",
+      "CN⁻ < NH₃ < H₂O < Cl⁻",
+    ],
+    answer: 0,
+    explain:
+      "From the spectrochemical series: halides are weak, then O-donors (H₂O), then N-donors (NH₃, en), and C-donors (CN⁻, CO) are strongest. So Cl⁻ < H₂O < NH₃ < CN⁻.",
+  },
+  {
+    kind: "mcq",
+    difficulty: 2,
+    exams: ALL,
+    idealTime: 60,
+    hint: "Back-donation fills an antibonding orbital of CO.",
+    q: "Compared with free carbon monoxide, the C–O bond in a metal carbonyl is:",
+    options: [
+      "Shorter, because CO donates its lone pair",
+      "Longer, because the metal back-donates electrons into the π* orbital of CO",
+      "Unchanged, because the bonding is purely σ",
+      "Shorter, because the metal removes electrons from π*",
+    ],
+    answer: 1,
+    explain:
+      "Synergic bonding: CO donates its carbon lone pair to an empty metal orbital (σ bond) and the filled metal d orbitals donate back into the empty π* orbital of CO (π back-bond). Filling π* lowers the C–O bond order, so the C–O bond is longer and its stretching frequency is lower than in free CO.",
+  },
+  {
+    kind: "mcq",
+    difficulty: 2,
+    exams: ALL,
+    idealTime: 50,
+    q: "The geometry and magnetic nature of [Ni(CO)₄] are:",
+    options: [
+      "Square planar, diamagnetic",
+      "Tetrahedral, paramagnetic",
+      "Tetrahedral, diamagnetic",
+      "Square planar, paramagnetic",
+    ],
+    answer: 2,
+    explain:
+      "Ni is in the 0 oxidation state ($3d^8 4s^2$). Strong-field CO pushes the 4s electrons into 3d, giving $3d^{10}$; the empty 4s and 4p orbitals form sp³ hybrids. So [Ni(CO)₄] is tetrahedral with all electrons paired (diamagnetic).",
+  },
+  {
+    kind: "mcq",
+    difficulty: 2,
+    exams: ALL,
+    idealTime: 45,
+    q: "The shape of iron pentacarbonyl, [Fe(CO)₅], is:",
+    options: ["Square pyramidal", "Trigonal bipyramidal", "Octahedral", "Tetrahedral"],
+    answer: 1,
+    explain:
+      "[Fe(CO)₅] has five CO ligands arranged trigonal bipyramidally around Fe(0) (dsp³). Octahedral is [Cr(CO)₆] and tetrahedral is [Ni(CO)₄]. Square pyramidal is the other five-coordinate shape, but it is not the one adopted by Fe(CO)₅.",
+  },
+  {
+    kind: "numeric",
+    difficulty: 2,
+    exams: ALL,
+    idealTime: 70,
+    hint: "β₄ = K₁K₂K₃K₄, so logs add.",
+    q: "The stepwise formation constants for [Cu(NH₃)₄]²⁺ have log K₁ = 4.0, log K₂ = 3.2, log K₃ = 2.7 and log K₄ = 2.0. What is log β₄, the overall formation constant? Give one decimal place.",
+    answer: 11.9,
+    tolerance: 0.05,
+    explain:
+      "$\\beta_4 = K_1K_2K_3K_4$, so $\\log\\beta_4 = 4.0 + 3.2 + 2.7 + 2.0 = 11.9$. (Multiplying the log values, or averaging them, are common slips.) The steady fall from K₁ to K₄ is normal: each step has fewer water sites left to replace.",
+  },
+  {
+    kind: "mcq",
+    difficulty: 2,
+    exams: ALL,
+    idealTime: 50,
+    q: "The IUPAC name of K₃[Fe(C₂O₄)₃] is:",
+    options: [
+      "Potassium trioxalatoiron(III)",
+      "Potassium trioxalatoferrate(III)",
+      "Potassium trioxalatoferrate(II)",
+      "Tripotassium oxalatoferrate(III)",
+    ],
+    answer: 1,
+    explain:
+      "The complex is an anion, so the metal takes its Latin '-ate' name: ferrate. Oxidation state: $3(+1) + x + 3(-2) = 0$, so $x = +3$. The number of K⁺ ions is not stated in the name.",
+  },
+  {
+    kind: "mcq",
+    difficulty: 2,
+    exams: ALL,
+    idealTime: 60,
+    hint: "Alphabetical order of ligand names; specify the donor atom of NO₂⁻.",
+    q: "The IUPAC name of [Pt(NH₃)₂Cl(NO₂)] (NO₂⁻ bonded through N) is:",
+    options: [
+      "Diamminechloridonitrito-N-platinum(II)",
+      "Chloridodiamminenitrito-N-platinum(II)",
+      "Diamminechloridonitrito-N-platinate(II)",
+      "Diamminechloridonitrito-N-platinum(IV)",
+    ],
+    answer: 0,
+    explain:
+      "Ligands go in alphabetical order of their names, ignoring 'di': ammine, chlorido, nitrito-N. The complex is neutral, so the metal keeps its normal name (platinum, not platinate). Oxidation state: $x + 0 - 1 - 1 = 0$, so $x = +2$.",
+  },
+  {
+    kind: "mcq",
+    difficulty: 2,
+    exams: ALL,
+    idealTime: 50,
+    q: "The correct formula of tetraamminediaquacobalt(III) chloride is:",
+    options: ["[Co(NH₃)₄(H₂O)₂]Cl₂", "[Co(NH₃)₄(H₂O)₂]Cl₃", "[Co(NH₃)₄(H₂O)Cl]Cl₂", "[Co(H₂O)₄(NH₃)₂]Cl₃"],
+    answer: 1,
+    explain:
+      "Four NH₃ and two H₂O are neutral, so the cation carries the +3 charge of Co(III) and needs three Cl⁻: [Co(NH₃)₄(H₂O)₂]Cl₃. The Cl₂ option would mean Co(II); the last option swaps the counts of NH₃ and H₂O.",
+  },
+  {
+    kind: "mcq",
+    difficulty: 2,
+    exams: ALL,
+    idealTime: 50,
+    hint: "Count the ions each compound gives in water.",
+    q: "Which aqueous solution (same concentration) has the highest molar conductivity?",
+    options: ["[Co(NH₃)₃Cl₃]", "[Co(NH₃)₄Cl₂]Cl", "[Co(NH₃)₅Cl]Cl₂", "[Co(NH₃)₆]Cl₃"],
+    answer: 3,
+    explain:
+      "Molar conductivity rises with the number of ions produced: [Co(NH₃)₆]Cl₃ gives 4 ions, [Co(NH₃)₅Cl]Cl₂ gives 3, [Co(NH₃)₄Cl₂]Cl gives 2 and [Co(NH₃)₃Cl₃] gives none (non-electrolyte).",
+  },
+  {
+    kind: "mcq",
+    difficulty: 2,
+    exams: ALL,
+    idealTime: 60,
+    q: "Assertion (A): [Fe(H₂O)₆]²⁺ is paramagnetic, whereas [Fe(CN)₆]⁴⁻ is diamagnetic. Reason (R): CN⁻ is a strong-field ligand and causes pairing of the d electrons of Fe²⁺.",
+    options: [
+      "Both A and R are true and R is the correct explanation of A",
+      "Both A and R are true but R is not the correct explanation of A",
+      "A is true but R is false",
+      "A is false but R is true",
+    ],
+    answer: 0,
+    explain:
+      "Fe²⁺ is d⁶. With weak-field H₂O it is high spin ($t_{2g}^4 e_g^2$, 4 unpaired, paramagnetic). With strong-field CN⁻, Δₒ exceeds the pairing energy and all six electrons pair in t₂g ($t_{2g}^6$, diamagnetic). R explains A.",
+  },
+
+  /* ---------- difficulty 3 ---------- */
+  {
+    kind: "numeric",
+    difficulty: 3,
+    exams: ADV,
+    idealTime: 150,
+    hint: "Ask, for each pair of like ligands, whether it is cis or trans.",
+    q: "How many geometrical isomers are possible for an octahedral complex of the type [Ma₂b₂c₂] (a, b, c are monodentate)?",
+    answer: 5,
+    explain:
+      "Label each pair cis (C) or trans (T). Possible combinations: (T,T,T); (T,C,C), (C,T,C), (C,C,T) — one pair trans, other two cis; and (C,C,C) — all cis. (T,T,C)-type combinations are impossible, because if two pairs are trans the third must also be trans. Total geometrical isomers = 5. Only the all-cis isomer is chiral, so there are 6 stereoisomers in all.",
+  },
+  {
+    kind: "numeric",
+    difficulty: 3,
+    exams: ADV,
+    idealTime: 180,
+    hint: "en must span cis positions. Place a₂ and b₂ in the four remaining sites.",
+    q: "What is the total number of stereoisomers (including optical isomers) of [Co(en)(NH₃)₂Cl₂]⁺?",
+    answer: 4,
+    explain:
+      "en occupies two cis sites. Of the remaining four, two are trans to the en donors and two are trans to each other (axial). (1) Both NH₃ axial (trans), both Cl trans to en: has a mirror plane. (2) Both Cl axial (trans): has a mirror plane. (3) NH₃ cis and Cl cis (one of each axial): no mirror plane, so it exists as two enantiomers. Total = 2 + 2 = 4 (three geometrical isomers).",
+  },
+  {
+    kind: "multi",
+    difficulty: 3,
+    exams: MULTI,
+    idealTime: 120,
+    hint: "Co³⁺ is d⁶; compare NH₃ and F⁻.",
+    q: "Which of the following statements is/are correct?",
+    options: [
+      "[Co(NH₃)₆]³⁺ is an inner-orbital (d²sp³) complex and is diamagnetic",
+      "[CoF₆]³⁻ is an outer-orbital (sp³d²) complex with four unpaired electrons",
+      "Both [Co(NH₃)₆]³⁺ and [CoF₆]³⁻ are inner-orbital complexes",
+      "The spin-only magnetic moment of [CoF₆]³⁻ is about 4.90 BM",
+    ],
+    answers: [0, 1, 3],
+    explain:
+      "Co³⁺ is d⁶. NH₃ pairs the electrons ($t_{2g}^6$), freeing two 3d orbitals for d²sp³: inner orbital, diamagnetic (A). F⁻ is weak-field: 4 unpaired electrons remain, so sp³d² (outer orbital) is used (B), and $\\mu = \\sqrt{4 \\times 6} = 4.90$ BM (D). C contradicts B.",
+  },
+  {
+    kind: "multi",
+    difficulty: 3,
+    exams: MULTI,
+    idealTime: 110,
+    q: "Which of the following species is/are optically active?",
+    options: ["cis-[Co(en)₂Cl₂]⁺", "trans-[Co(en)₂Cl₂]⁺", "[Co(en)₃]³⁺", "cis-[Pt(NH₃)₂Cl₂]"],
+    answers: [0, 2],
+    explain:
+      "cis-[Co(en)₂Cl₂]⁺ and [Co(en)₃]³⁺ lack any mirror plane or centre of symmetry and are chiral (Δ and Λ forms). trans-[Co(en)₂Cl₂]⁺ has a mirror plane. Square planar cis-[Pt(NH₃)₂Cl₂] lies in a plane, which is itself a mirror plane, so it is achiral.",
+  },
+  {
+    kind: "multi",
+    difficulty: 3,
+    exams: MULTI,
+    idealTime: 110,
+    q: "Which of the following statements about metal carbonyls is/are correct?",
+    options: [
+      "The M–C bond has both σ and π character",
+      "Back-donation from the metal strengthens the C–O bond",
+      "[Cr(CO)₆] is octahedral",
+      "[Mn₂(CO)₁₀] contains a Mn–Mn bond",
+    ],
+    answers: [0, 2, 3],
+    explain:
+      "Synergic bonding gives the M–C bond σ (C → M) and π (M → CO π*) character (A). Back-donation into π* weakens the C–O bond, so B is wrong. [Cr(CO)₆] is octahedral (C). [Mn₂(CO)₁₀] is two square-pyramidal Mn(CO)₅ units joined by a Mn–Mn bond (D).",
+  },
+  {
+    kind: "multi",
+    difficulty: 3,
+    exams: MULTI,
+    idealTime: 110,
+    hint: "d⁸ ions with strong-field ligands, and Pt(II), tend to be square planar.",
+    q: "Which of the following complexes is/are square planar?",
+    options: ["[Ni(CN)₄]²⁻", "[PtCl₄]²⁻", "[NiCl₄]²⁻", "[Cu(NH₃)₄]²⁺"],
+    answers: [0, 1, 3],
+    explain:
+      "[Ni(CN)₄]²⁻ is dsp² square planar. Pt(II) (5d⁸) has a large Δ and is square planar even with Cl⁻. [Cu(NH₃)₄]²⁺ is square planar (dsp² in VBT). [NiCl₄]²⁻ is tetrahedral (sp³) because Cl⁻ is weak-field.",
+  },
+  {
+    kind: "multi",
+    difficulty: 3,
+    exams: MULTI,
+    idealTime: 110,
+    q: "Which of the following is/are diamagnetic?",
+    options: ["[Fe(CN)₆]⁴⁻", "[Co(NH₃)₆]³⁺", "[Fe(H₂O)₆]²⁺", "[Ni(CO)₄]"],
+    answers: [0, 1, 3],
+    explain:
+      "[Fe(CN)₆]⁴⁻ and [Co(NH₃)₆]³⁺ are low-spin d⁶ ($t_{2g}^6$): no unpaired electrons. [Ni(CO)₄] is Ni(0) rearranged to 3d¹⁰: diamagnetic. [Fe(H₂O)₆]²⁺ is high-spin d⁶ with 4 unpaired electrons (4.90 BM).",
+  },
+  {
+    kind: "mcq",
+    difficulty: 3,
+    exams: ["JEE", "JEE_ADV", "NEET"],
+    idealTime: 90,
+    hint: "Which configurations give equal numbers of +0.6 and −0.4 contributions?",
+    q: "Which of the following octahedral complexes has zero CFSE?",
+    options: ["[Fe(H₂O)₆]³⁺ (high spin)", "[Fe(CN)₆]³⁻", "[Cr(H₂O)₆]³⁺", "[Co(NH₃)₆]³⁺"],
+    answer: 0,
+    explain:
+      "High-spin d⁵ is $t_{2g}^3 e_g^2$: CFSE $= 3(-0.4) + 2(+0.6) = 0$. Low-spin [Fe(CN)₆]³⁻ ($t_{2g}^5$) has −2.0 Δₒ, [Cr(H₂O)₆]³⁺ ($t_{2g}^3$) has −1.2 Δₒ and [Co(NH₃)₆]³⁺ ($t_{2g}^6$) has −2.4 Δₒ.",
+  },
+  {
+    kind: "mcq",
+    difficulty: 3,
+    exams: ["JEE", "JEE_ADV", "NEET"],
+    idealTime: 120,
+    hint: "Δₒ per mole = N_A h c / λ.",
+    q: "[Ti(H₂O)₆]³⁺ shows its d–d absorption maximum at 498 nm. Taking $h = 6.626 \\times 10^{-34}$ J s, $c = 3.0 \\times 10^8$ m s⁻¹ and $N_A = 6.022 \\times 10^{23}$ mol⁻¹, Δₒ is about:",
+    options: ["240 kJ mol⁻¹", "120 kJ mol⁻¹", "24.0 kJ mol⁻¹", "480 kJ mol⁻¹"],
+    answer: 0,
+    explain:
+      "For d¹ the single band corresponds directly to Δₒ. $E = \\dfrac{N_A h c}{\\lambda} = \\dfrac{6.022\\times10^{23} \\times 6.626\\times10^{-34} \\times 3.0\\times10^{8}}{498\\times10^{-9}} \\approx 2.40 \\times 10^5$ J mol⁻¹ = 240 kJ mol⁻¹. Dividing by 2 or misplacing a power of ten gives the distractors.",
+  },
+  {
+    kind: "mcq",
+    difficulty: 3,
+    exams: ADV,
+    idealTime: 100,
+    hint: "Valence electrons of M(0) + 2 per CO.",
+    q: "Which of the following neutral mononuclear carbonyls obeys the 18-electron rule?",
+    options: ["[V(CO)₆]", "[Fe(CO)₅]", "[Co(CO)₄]", "[Mn(CO)₅]"],
+    answer: 1,
+    explain:
+      "Count metal valence electrons plus 2 per CO. Fe: 8 + 10 = 18. V: 5 + 12 = 17; Co: 9 + 8 = 17; Mn: 7 + 10 = 17. The 17-electron Co(CO)₄ and Mn(CO)₅ fragments reach 18 by dimerising (Co₂(CO)₈, Mn₂(CO)₁₀ with an M–M bond); V(CO)₆ is a rare stable 17-electron, paramagnetic carbonyl.",
+  },
+  {
+    kind: "mcq",
+    difficulty: 3,
+    exams: ["JEE", "JEE_ADV", "NEET"],
+    idealTime: 100,
+    q: "Statement I: [Ni(NH₃)₆]²⁺ is an outer-orbital (sp³d²) complex. Statement II: Low-spin tetrahedral complexes are rarely observed because Δₜ is usually smaller than the pairing energy.",
+    options: [
+      "Both Statement I and Statement II are correct",
+      "Statement I is correct but Statement II is incorrect",
+      "Statement I is incorrect but Statement II is correct",
+      "Both Statement I and Statement II are incorrect",
+    ],
+    answer: 0,
+    explain:
+      "Ni²⁺ is d⁸: even with pairing, eight electrons fill four 3d orbitals and leave only one empty, but d²sp³ needs two. So the six-coordinate complex must use 4d orbitals (sp³d², 2 unpaired electrons): Statement I is correct. Δₜ = (4/9)Δₒ is nearly always below the pairing energy, so tetrahedral complexes are high spin: Statement II is correct.",
+  },
+];
 
 /* ================================================================== */
 /* Chapter 6: Haloalkanes and Haloarenes                               */
