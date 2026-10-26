@@ -359,7 +359,7 @@ If $n$ is **odd**, $n + 1$ is even and there are **two** middle terms, the $\lef
             type: "callout",
             tone: "note",
             title: "Board note",
-            md: t`The rationalised NCERT book used by **CBSE** and **Karnataka I PUC** has shortened this chapter: the separate section on general and middle terms has been moved out of the main text, so check your current board syllabus before the exam. **ISC** Class 11 still teaches general and middle terms, and ISC also proves the theorem by **mathematical induction** (assume it for $n = k$, multiply by $(a + b)$ and use Pascal's rule). **JEE Main, KCET and COMEDK** ask general-term questions almost every year, so every aspirant needs this lesson.`,
+            md: t`The rationalised NCERT book used by **CBSE** and **Karnataka I PUC** has shortened this chapter: the separate section on general and middle terms (and its exercise) has been removed, so check your current board syllabus before the exam. **ISC** Class 11 still teaches general and middle terms, and ISC also proves the theorem by **mathematical induction** (assume it for $n = k$, multiply by $(a + b)$ and use Pascal's rule). The **JEE Main** syllabus still lists "general term and middle term", and JEE Main and **COMEDK** ask general-term questions almost every year, so every aspirant needs this lesson. **KCET** follows the Karnataka PUC syllabus, so check whether your KCET year includes this section.`,
           },
           {
             type: "callout",
@@ -454,7 +454,7 @@ If $n$ is **odd**, $n + 1$ is even and there are **two** middle terms, the $\lef
             type: "callout",
             tone: "exam",
             title: "What the exams ask",
-            md: t`**JEE Main** has about one binomial question in most shifts: a coefficient or constant term, the number of rational terms, a remainder, or a coefficient sum (next lesson). **JEE Advanced** mixes binomial coefficients with series or with the integral part of $(a + \sqrt{b})^n$. **KCET** and **COMEDK** ask direct general-term and middle-term questions that reward speed. Everything starts from $T_{r+1}$.`,
+            md: t`**JEE Main** has about one binomial question in most shifts: a coefficient or constant term, the number of rational terms, a remainder, or a coefficient sum (next lesson). **JEE Advanced** mixes binomial coefficients with series or with the integral part of $(a + \sqrt{b})^n$. **COMEDK** (and **KCET**, in years whose PUC syllabus includes general and middle terms) asks direct general-term and middle-term questions that reward speed. Everything starts from $T_{r+1}$.`,
           },
           {
             type: "text",
@@ -1130,7 +1130,7 @@ The **arithmetic mean (AM)** of $a$ and $b$ is $A = \frac{a + b}{2}$; then $a, A
             type: "text",
             md: t`**Sum to infinity.** If $|r| < 1$, then $r^n \to 0$ as $n$ grows, so $S_n = \frac{a(1 - r^n)}{1 - r}$ gets as close as we like to $\frac{a}{1 - r}$. This value is the **sum to infinity** $S_\infty$. If $|r| \ge 1$ the terms do not shrink and the infinite GP has no finite sum.
 
-(NCERT places infinite series in an appendix rather than the main chapter; ISC, KCET, COMEDK and JEE use $S_\infty$ freely.)`,
+(The CBSE syllabus lists "infinite G.P. and its sum", and ISC, KCET, COMEDK and JEE use $S_\infty$ freely.)`,
           },
           {
             type: "formula",
@@ -1419,7 +1419,7 @@ So once we know $\sum k$, $\sum k^2$ and $\sum k^3$, we can add up any series wh
             type: "callout",
             tone: "note",
             title: "Board note",
-            md: t`The section on sums of special series ($\sum n$, $\sum n^2$, $\sum n^3$) has been dropped from the rationalised NCERT chapter used by **CBSE** and **Karnataka I PUC**; check your current syllabus. **ISC** Class 11 lists these sums explicitly, and **JEE Main, KCET and COMEDK** use them all the time (and in Class 12 integration as limits of sums).`,
+            md: t`The section on sums of special series ($\sum n$, $\sum n^2$, $\sum n^3$) has been dropped from the rationalised NCERT chapter used by **CBSE** and **Karnataka I PUC**; check your current syllabus. **ISC** Class 11 lists these sums explicitly, and the **JEE Advanced** syllabus names them. The JEE Main syllabus from 2024 no longer lists special series by name, but its series questions still need these sums as tools, and COMEDK uses them too.`,
           },
           {
             type: "callout",
@@ -1710,7 +1710,7 @@ For two positive numbers $A = \frac{a+b}{2}$, $G = \sqrt{ab}$ and $H = \frac{2ab
             type: "callout",
             tone: "exam",
             title: "What the exams ask",
-            md: "These three methods sum almost every non-standard series in **JEE Main** and **JEE Advanced**: an AGP (one factor in AP, one in GP), a fraction that splits into a difference of two terms, or a series whose differences settle into an AP or GP. **KCET** and **COMEDK** ask the simpler forms, usually an infinite AGP or a sum like Σ 1/(k(k + 1)).",
+            md: "These three methods sum almost every non-standard series in **JEE Main** and **JEE Advanced**: an AGP (one factor in AP, one in GP), a fraction that splits into a difference of two terms, or a series whose differences settle into an AP or GP. The JEE Advanced syllabus lists arithmetico-geometric series; the JEE Main syllabus from 2024 does not name AGP, though such sums can still appear. **COMEDK** (and occasionally **KCET**) ask the simpler forms, usually an infinite AGP or a sum like Σ 1/(k(k + 1)).",
           },
           {
             type: "text",

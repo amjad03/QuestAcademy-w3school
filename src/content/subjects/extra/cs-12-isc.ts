@@ -3926,7 +3926,7 @@ Sample run 2: input 146
               ["Multilevel", "C extends B, B extends A", "yes"],
               ["Hierarchical", "B extends A and C extends A", "yes"],
               ["Multiple", "C extends A and B together", "no (a class can extend only one class); achieved with interfaces"],
-              ["Hybrid", "a mix of the above", "only through interfaces"],
+              ["Hybrid", "a mix of the above", "yes, unless the mix includes multiple inheritance; then only through interfaces"],
             ],
           },
           {

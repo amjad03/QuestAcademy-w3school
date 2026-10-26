@@ -968,7 +968,7 @@ $(x - x_1)(x - x_2) + (y - y_1)(y - y_2) = 0$.
             activity: {
               kind: "sort",
               prompt: "What does each equation represent?",
-              groups: ["Circle of positive radius", "Point circle", "Not a real circle"],
+              groups: ["Circle of positive radius", "Point circle", "Not a circle, or no real points"],
               items: [
                 { text: "x² + y² − 2x − 4y + 1 = 0", group: 0, hint: "g² + f² − c = 1 + 4 − 1 = 4 > 0." },
                 { text: "2x² + 2y² − 8x + 3 = 0", group: 0, hint: "Divide by 2: 4 + 0 − 1.5 = 2.5 > 0." },
@@ -2470,7 +2470,7 @@ ISC Class 11 includes the condition for $y = mx + c$ to touch a conic and the ta
   },
   /* ------------------------------------------------------------------ */
   /* Class 11: Introduction to Three Dimensional Geometry (NCERT,        */
-  /* Karnataka I PUC; ISC has no Class 11 3D chapter)                    */
+  /* Karnataka I PUC; ISC Class 11 Section B)                            */
   /* ------------------------------------------------------------------ */
   {
     slug: "c11-mat-3d-geometry",
@@ -2593,7 +2593,7 @@ Points on the coordinate planes and axes have zeros: on the XY-plane $z = 0$, so
             type: "callout",
             tone: "note",
             title: "Board note",
-            md: "This chapter is in the NCERT book for CBSE and Karnataka I PUC. ISC teaches three-dimensional geometry only in Class 12 (with vectors), and JEE and KCET use all of it there, so ISC students aiming for JEE or KCET should still learn this topic.",
+            md: "This chapter is in the NCERT book for CBSE and Karnataka I PUC. ISC Class 11 lists Introduction to Three-dimensional Geometry in Section B (the alternative to Section C), so ISC students who skip Section B should still learn it: Class 12 vectors and 3D, and JEE and KCET, use all of it.",
           },
           {
             type: "callout",
