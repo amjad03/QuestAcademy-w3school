@@ -61,13 +61,15 @@ const SUBJECT_ICON: Record<string, string> = {
   hindi: "hindi",
   kannada: "kannada",
   computers: "computer-applications",
+  electronics: "electronics",
+  cs: "computer-science",
   gk: "general-knowledge",
 };
 
 /** Lessons from these courses are too advanced for Class 10 and below (NEET / JEE and Class 11–12). */
 const ADVANCED_COURSE = /^(exam-|[a-z]+-senior$)/;
 
-const isSenior = (grade: string) => /^(11|12|PUC-1|PUC-2|NEET|JEE)$/.test(grade);
+const isSenior = (grade: string) => /^(11|12|PUC-1|PUC-2|NEET|JEE|JEE_ADV|KCET|COMEDK)$/.test(grade);
 
 /** Only the lessons that fit the class: no NEET / JEE or Class 11–12 lessons up to Class 10. */
 export function lessonsForClass(lessonIds: string[], grade: string): string[] {
@@ -98,6 +100,16 @@ export function classFromSyllabus(board: Board, grade: string): MyClass | null {
       subjects.push({ id: "social", name: "Social Science", icon: SUBJECT_ICON.social, parts, chapters: parts.flatMap((p) => p.chapters) });
       continue;
     }
+    // Entrance-exam syllabi span Classes 11 and 12: one part per class.
+    const classes = [...new Set(s.chapters.map((c) => c.grade).filter(Boolean))] as string[];
+    if (classes.length > 1) {
+      const parts = classes.map((k) => {
+        const name = `Class ${k}`;
+        return { name, chapters: toChapters({ ...s, chapters: s.chapters.filter((c) => c.grade === k) }, name) };
+      });
+      subjects.push({ id: s.id, name: s.name, icon: SUBJECT_ICON[s.id] ?? "math-high", parts, chapters: parts.flatMap((p) => p.chapters) });
+      continue;
+    }
     const chapters = toChapters(s, null);
     subjects.push({ id: s.id, name: s.name, icon: SUBJECT_ICON[s.id] ?? "math-high", parts: [{ name: null, chapters }], chapters });
   }
@@ -109,7 +121,8 @@ const OPTIONAL_BY_BOARD: Partial<Record<Board, string[]>> = { cbse: ["kannada"],
 
 /** The subjects ticked by default for a class. */
 export function defaultSubjects(c: MyClass): string[] {
-  const off = (c.board && OPTIONAL_BY_BOARD[c.board]) ?? [];
+  // PCME / PCM-CS subjects are opt-in: the learner ticks them during setup.
+  const off = [...((c.board && OPTIONAL_BY_BOARD[c.board]) ?? []), "electronics", "cs"];
   return c.subjects.map((s) => s.id).filter((id) => !off.includes(id));
 }
 

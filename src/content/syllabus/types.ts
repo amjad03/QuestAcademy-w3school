@@ -1,4 +1,4 @@
-import type { ExamSubject } from "@/content/types";
+import type { ExamId, ExamSubject } from "@/content/types";
 import type { Board } from "@/lib/modes";
 
 export interface SyllabusChapter {
@@ -16,6 +16,8 @@ export interface SyllabusChapter {
   examSubject?: ExamSubject;
   /** Formula vault chapter, when one exists. */
   formulaChapter?: string;
+  /** NCERT class of the chapter, for entrance-exam syllabi that span Classes 11 and 12. */
+  grade?: "11" | "12";
 }
 
 export interface SyllabusSubject {
@@ -28,7 +30,7 @@ export interface SyllabusGrade {
   id: string;
   name: string;
   /** Board / entrance exam this year ends in (for the countdown). */
-  exam?: { name: string; month: number; day: number } | { name: string; examId: "NEET" | "JEE" };
+  exam?: { name: string; month: number; day: number } | { name: string; examId: ExamId };
   subjects: SyllabusSubject[];
 }
 

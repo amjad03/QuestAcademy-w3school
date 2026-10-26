@@ -5,6 +5,7 @@
  */
 import { subject } from "./build";
 import * as N from "./ncert";
+import * as S from "./senior-extra";
 import * as X from "./class10";
 import * as Y from "./class9";
 import type { SyllabusBoard } from "./types";
@@ -61,6 +62,7 @@ export const CBSE: SyllabusBoard = {
         subject("cbse:11", "chemistry", "Chemistry", N.CHEMISTRY_11),
         subject("cbse:11", "biology", "Biology", N.BIOLOGY_11),
         subject("cbse:11", "maths", "Mathematics", N.MATHS_11),
+        subject("cbse:11", "cs", "Computer Science", S.CS_CBSE_11),
       ],
     },
     {
@@ -72,6 +74,7 @@ export const CBSE: SyllabusBoard = {
         subject("cbse:12", "chemistry", "Chemistry", N.CHEMISTRY_12),
         subject("cbse:12", "biology", "Biology", N.BIOLOGY_12),
         subject("cbse:12", "maths", "Mathematics", N.MATHS_12),
+        subject("cbse:12", "cs", "Computer Science", S.CS_CBSE_12),
       ],
     },
   ],

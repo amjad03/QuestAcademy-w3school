@@ -239,6 +239,7 @@ export const TOPICS = {
   "hin.none": { lessons: [] },
   "kan.none": { lessons: [] },
   "cmp.none": { lessons: [] },
+  "ele.none": { lessons: [] },
   "gk.none": { lessons: [] },
 } satisfies Record<string, Topic>;
 

@@ -286,10 +286,10 @@ Methanal, ethanal and propanone mix with water in all proportions because their 
             questions: [
               {
                 kind: "mcq",
-                q: "Arrange in decreasing reactivity towards HCN: ethanal (P), propanone (Q), methanal (R), benzaldehyde (S).",
-                options: ["R > P > S > Q", "R > P > Q > S", "P > R > S > Q", "Q > P > R > S"],
+                q: "Arrange in decreasing reactivity towards HCN: ethanal (P), propanone (Q), methanal (R), butan-2-one (S).",
+                options: ["R > P > Q > S", "R > P > S > Q", "P > R > Q > S", "S > Q > P > R"],
                 answer: 0,
-                explain: "Fewest and smallest groups react fastest: HCHO > CH₃CHO. Benzaldehyde is an aldehyde but resonance lowers its reactivity; acetone has two alkyl groups and is least reactive of the four.",
+                explain: "Fewer and smaller groups on the carbonyl carbon mean less steric hindrance and less electron release: HCHO > CH₃CHO > CH₃COCH₃ > CH₃COC₂H₅ (the ethyl group is bulkier than methyl).",
               },
             ],
           },

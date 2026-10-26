@@ -22,6 +22,8 @@ import { physicsSenior } from "./subjects/senior/physics-senior";
 import { chemistrySenior } from "./subjects/senior/chemistry-senior";
 import { biologySenior } from "./subjects/senior/biology-senior";
 import { mathsSenior } from "./subjects/senior/maths-senior";
+import { electronics } from "./subjects/senior/electronics";
+import { computerScience } from "./subjects/senior/computer-science";
 import { extraTopics } from "./subjects/extra";
 
 import { examPhysics } from "./subjects/exam/exam-physics";
@@ -66,6 +68,8 @@ const ALL_SUBJECTS: Subject[] = [
   chemistrySenior,
   biologySenior,
   mathsSenior,
+  electronics,
+  computerScience,
   examPhysics,
   examChemistry,
   examBiology,

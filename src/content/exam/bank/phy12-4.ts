@@ -1,7 +1,421 @@
 import type { ExamQuestion, FormulaSheet } from "@/content/types";
 
-/** Original exam-style questions (JEE Main / Advanced, NEET, KCET, COMEDK) for the chapters below. */
-export const questions: ExamQuestion[] = [];
+/*
+ * Class 12 Physics, chapters 11–14: Dual Nature of Radiation and Matter, Atoms, Nuclei,
+ * Semiconductor Electronics. Original exam-style questions (JEE Main / Advanced, NEET, KCET, COMEDK).
+ * Constants used unless a question says otherwise: h = 6.63e-34 J s, c = 3e8 m/s,
+ * e = 1.6e-19 C, m_e = 9.1e-31 kg, hc = 1240 eV nm, 1 u = 931.5 MeV/c^2.
+ */
 
-/** One formula / quick-revision sheet per chapter. */
-export const formulas: FormulaSheet[] = [];
+const t = String.raw;
+
+type Raw = ExamQuestion extends infer T ? (T extends unknown ? Omit<T, "subject" | "chapter" | "grade"> : never) : never;
+const mk = (chapter: string, list: Raw[]): ExamQuestion[] =>
+  list.map((q) => ({ ...q, subject: "physics", chapter, grade: "12" }) as ExamQuestion);
+
+const C11 = "Dual Nature of Radiation and Matter";
+const C12 = "Atoms";
+const C13 = "Nuclei";
+const C14 = "Semiconductor Electronics: Materials, Devices and Simple Circuits";
+
+const ALL = ["NEET", "JEE", "KCET", "COMEDK"] as ExamQuestion["exams"];
+const MAIN = ["NEET", "JEE"] as ExamQuestion["exams"];
+const ADV = ["JEE", "JEE_ADV"] as ExamQuestion["exams"];
+
+/* ------------------------------------------------------------------ */
+/* Chapter 11 — Dual Nature of Radiation and Matter                     */
+/* ------------------------------------------------------------------ */
+const ch11 = mk(C11, [
+  {
+    id: "phy12-4-11-001", exams: ALL, kind: "mcq", difficulty: 1, idealTime: 45,
+    q: t`The work function of a metal is 2.5 eV. The threshold wavelength for photoelectric emission from it is (take $hc = 1240$ eV nm):`,
+    options: ["496 nm", "248 nm", "620 nm", "4960 nm"],
+    answer: 0,
+    explain: t`At threshold the photon energy just equals the work function: $\lambda_0 = \dfrac{hc}{\phi} = \dfrac{1240\ \text{eV nm}}{2.5\ \text{eV}} = 496$ nm. 248 nm is what you get by doubling the work function by mistake; 4960 nm is a misplaced decimal.`,
+  },
+  {
+    id: "phy12-4-11-002", exams: ALL, kind: "mcq", difficulty: 1, idealTime: 40,
+    q: t`The energy of a photon of wavelength 500 nm is about:`,
+    options: ["2.48 eV", "24.8 eV", "1.24 eV", "4.96 eV"],
+    answer: 0,
+    explain: t`$E = \dfrac{hc}{\lambda} = \dfrac{1240\ \text{eV nm}}{500\ \text{nm}} = 2.48$ eV. 1.24 eV would be the energy at 1000 nm and 4.96 eV at 250 nm.`,
+  },
+  {
+    id: "phy12-4-11-003", exams: ALL, kind: "mcq", difficulty: 1, idealTime: 45,
+    q: t`An electron starting from rest is accelerated through a potential difference of 100 V. Its de Broglie wavelength is about:`,
+    options: ["1.23 Å", "12.3 Å", "0.123 Å", "0.39 Å"],
+    answer: 0,
+    explain: t`For an electron, $\lambda = \dfrac{h}{\sqrt{2meV}} = \dfrac{1.227}{\sqrt{V}}$ nm $= \dfrac{12.27}{\sqrt{V}}$ Å. With $V = 100$ V, $\lambda = 12.27/10 = 1.23$ Å. 12.3 Å forgets the square root's effect; 0.123 Å mixes up nm and Å.`,
+  },
+  {
+    id: "phy12-4-11-004", exams: ALL, kind: "mcq", difficulty: 1, idealTime: 40,
+    q: t`In a photoelectric experiment, the stopping potential $V_0$ is plotted against the frequency $\nu$ of the incident light. The slope of the straight line obtained is:`,
+    options: [t`$h$`, t`$h/e$`, t`$e/h$`, t`$\phi/e$`],
+    answer: 1,
+    explain: t`Einstein's equation $eV_0 = h\nu - \phi$ gives $V_0 = \dfrac{h}{e}\nu - \dfrac{\phi}{e}$. The slope is $h/e$, the same for every metal; $-\phi/e$ is the intercept on the $V_0$ axis. The slope is $h$ only for a $K_\text{max}$–$\nu$ graph.`,
+  },
+  {
+    id: "phy12-4-11-005", exams: ALL, kind: "mcq", difficulty: 1, idealTime: 30,
+    q: t`The wave nature of electrons was first confirmed experimentally by:`,
+    options: ["Hertz and Lenard", "Davisson and Germer", "Millikan", "J. J. Thomson"],
+    answer: 1,
+    explain: t`Davisson and Germer (1927) observed diffraction of an electron beam from a nickel crystal, with a peak at 50° for 54 V electrons, matching $\lambda = h/p$. Hertz and Lenard studied the photoelectric effect, Millikan verified Einstein's photoelectric equation, and Thomson measured $e/m$ of the electron.`,
+  },
+  {
+    id: "phy12-4-11-006", exams: ALL, kind: "mcq", difficulty: 1, idealTime: 45,
+    q: t`The momentum of a photon of energy 3 eV is:`,
+    options: [t`$1.6 \times 10^{-27}$ kg m/s`, t`$4.8 \times 10^{-27}$ kg m/s`, t`$1.6 \times 10^{-19}$ kg m/s`, t`$5.3 \times 10^{-28}$ kg m/s`],
+    answer: 0,
+    explain: t`For a photon $p = E/c = \dfrac{3 \times 1.6 \times 10^{-19}}{3 \times 10^8} = 1.6 \times 10^{-27}$ kg m/s. $4.8 \times 10^{-27}$ forgets to divide by the 3 in $c$; $5.3 \times 10^{-28}$ divides by 3 twice.`,
+  },
+  {
+    id: "phy12-4-11-007", exams: ALL, kind: "mcq", difficulty: 1, idealTime: 30,
+    q: t`When a metal is heated strongly so that its free electrons gain enough thermal energy to escape, the process is called:`,
+    options: ["Photoelectric emission", "Field emission", "Thermionic emission", "Secondary emission"],
+    answer: 2,
+    explain: t`Heat supplying the energy to cross the work-function barrier is thermionic emission (used in the cathode of a vacuum tube). Field emission needs a very strong electric field (about $10^8$ V/m), and photoelectric emission needs light of suitable frequency.`,
+  },
+  {
+    id: "phy12-4-11-008", exams: ALL, kind: "mcq", difficulty: 1, idealTime: 30,
+    q: t`Of the following metals, the one with the lowest work function (and so the most easily used in photocells for visible light) is:`,
+    options: ["Platinum", "Copper", "Sodium", "Caesium"],
+    answer: 3,
+    explain: t`Typical values: Cs ≈ 2.14 eV, Na ≈ 2.75 eV, Cu ≈ 4.65 eV, Pt ≈ 5.65 eV. Caesium (an alkali metal with a loosely bound outer electron) has the lowest, so even visible light ejects electrons from it.`,
+  },
+  {
+    id: "phy12-4-11-009", exams: ALL, kind: "mcq", difficulty: 1, idealTime: 40,
+    q: t`A ball of mass 0.12 kg moves at 20 m/s. Its de Broglie wavelength is of the order of:`,
+    options: [t`$2.8 \times 10^{-34}$ m`, t`$2.8 \times 10^{-10}$ m`, t`$5.5 \times 10^{-33}$ m`, t`$3.6 \times 10^{33}$ m`],
+    answer: 0,
+    explain: t`$\lambda = \dfrac{h}{mv} = \dfrac{6.63 \times 10^{-34}}{0.12 \times 20} = 2.76 \times 10^{-34}$ m. This is far smaller than any aperture or atom, which is why macroscopic objects show no wave behaviour. $5.5 \times 10^{-33}$ m comes from using $h/m$ only; $3.6 \times 10^{33}$ m is $mv/h$ inverted.`,
+  },
+  {
+    id: "phy12-4-11-010", exams: ALL, kind: "mcq", difficulty: 1, idealTime: 30,
+    q: t`Which phenomenon can be explained only by treating light as a stream of particles (photons)?`,
+    options: ["Interference", "Diffraction", "Polarisation", "Photoelectric effect"],
+    answer: 3,
+    explain: t`The existence of a threshold frequency, the independence of maximum kinetic energy from intensity and the absence of time lag can only be explained if light energy comes in quanta $h\nu$ absorbed by single electrons. Interference, diffraction and polarisation are wave effects.`,
+  },
+  {
+    id: "phy12-4-11-011", exams: ALL, kind: "mcq", difficulty: 1, idealTime: 40,
+    q: t`An electron and a proton move with the same speed. The ratio of their de Broglie wavelengths $\lambda_e : \lambda_p$ is about:`,
+    options: ["1836 : 1", "1 : 1836", "43 : 1", "1 : 1"],
+    answer: 0,
+    explain: t`$\lambda = h/(mv)$; at equal speeds $\lambda \propto 1/m$, so $\lambda_e/\lambda_p = m_p/m_e \approx 1836$. The lighter electron has the longer wavelength. 43 : 1 ($\approx\sqrt{1836}$) is the answer for equal kinetic energies, not equal speeds.`,
+  },
+  {
+    id: "phy12-4-11-012", exams: ALL, kind: "mcq", difficulty: 1, idealTime: 40,
+    q: t`Light of a fixed frequency above the threshold falls on a photosensitive surface. If the intensity of the light is doubled:`,
+    options: [
+      "both the saturation current and the stopping potential double",
+      "the saturation current doubles and the stopping potential is unchanged",
+      "the stopping potential doubles and the saturation current is unchanged",
+      "neither changes",
+    ],
+    answer: 1,
+    explain: t`Doubling the intensity at the same frequency doubles the number of photons per second, so twice as many electrons are emitted and the saturation current doubles. Each photon still carries $h\nu$, so $K_\text{max} = h\nu - \phi$ and hence $V_0$ do not change.`,
+  },
+  {
+    id: "phy12-4-11-013", exams: ALL, kind: "numeric", difficulty: 1, idealTime: 40,
+    q: t`Photons of energy 3.5 eV fall on a metal of work function 2.3 eV. Find the stopping potential in volts.`,
+    answer: 1.2, tolerance: 0.01, unit: "V",
+    explain: t`$K_\text{max} = h\nu - \phi = 3.5 - 2.3 = 1.2$ eV, and $eV_0 = K_\text{max}$, so $V_0 = 1.2$ V.`,
+  },
+  {
+    id: "phy12-4-11-014", exams: ALL, kind: "numeric", difficulty: 2, idealTime: 60,
+    q: t`Light of wavelength 310 nm falls on a metal of work function 2.2 eV. Find the stopping potential in volts (take $hc = 1240$ eV nm).`,
+    answer: 1.8, tolerance: 0.02, unit: "V",
+    hint: t`First convert the wavelength to a photon energy in eV.`,
+    explain: t`$E = 1240/310 = 4.0$ eV. $K_\text{max} = 4.0 - 2.2 = 1.8$ eV, so $V_0 = 1.8$ V.`,
+  },
+  {
+    id: "phy12-4-11-015", exams: ALL, kind: "mcq", difficulty: 2, idealTime: 60,
+    q: t`Metals A and B have work functions 2 eV and 4 eV. Their stopping potential versus frequency graphs are:`,
+    options: [
+      "parallel straight lines, with the threshold frequency of B twice that of A",
+      "straight lines of different slopes meeting at the origin",
+      "parallel straight lines with the same threshold frequency",
+      "straight lines, with the slope for B twice that for A",
+    ],
+    answer: 0,
+    explain: t`$V_0 = (h/e)\nu - \phi/e$. The slope $h/e$ is a universal constant, so the lines are parallel. The threshold frequency $\nu_0 = \phi/h$ is proportional to the work function, so $\nu_{0B} = 2\nu_{0A}$. The work function shifts the line, it never changes its slope.`,
+  },
+  {
+    id: "phy12-4-11-016", exams: ALL, kind: "mcq", difficulty: 2, idealTime: 60,
+    q: t`A proton and an $\alpha$-particle are each accelerated from rest through the same potential difference. The ratio $\lambda_p/\lambda_\alpha$ of their de Broglie wavelengths is:`,
+    options: [t`$2\sqrt{2}$`, t`$1/(2\sqrt{2})$`, t`$2$`, t`$\sqrt{2}$`],
+    answer: 0,
+    hint: t`Kinetic energy gained is $qV$, and $p = \sqrt{2mK}$.`,
+    explain: t`$\lambda = \dfrac{h}{\sqrt{2mqV}}$, so $\dfrac{\lambda_p}{\lambda_\alpha} = \sqrt{\dfrac{m_\alpha q_\alpha}{m_p q_p}} = \sqrt{4 \times 2} = 2\sqrt{2}$. The answer 2 ignores the alpha's double charge (that is the equal-kinetic-energy result); $1/(2\sqrt2)$ is the inverted ratio.`,
+  },
+  {
+    id: "phy12-4-11-017", exams: ALL, kind: "mcq", difficulty: 2, idealTime: 50,
+    q: t`A proton and an $\alpha$-particle have the same kinetic energy. The ratio $\lambda_p : \lambda_\alpha$ of their de Broglie wavelengths is:`,
+    options: ["2 : 1", "1 : 2", "4 : 1", t`$2\sqrt{2} : 1$`],
+    answer: 0,
+    hint: t`At equal kinetic energy, $\lambda \propto 1/\sqrt{m}$.`,
+    explain: t`$\lambda = h/\sqrt{2mK}$; with equal $K$, $\lambda_p/\lambda_\alpha = \sqrt{m_\alpha/m_p} = \sqrt{4} = 2$. 4 : 1 forgets the square root; $2\sqrt2 : 1$ is the equal-accelerating-voltage result.`,
+  },
+  {
+    id: "phy12-4-11-018", exams: MAIN, kind: "mcq", difficulty: 2, idealTime: 60,
+    q: t`A (non-relativistic) electron and a photon have the same de Broglie wavelength. Then:`,
+    options: [
+      "they have the same momentum and the same energy",
+      "they have the same momentum, and the photon's energy is greater than the electron's kinetic energy",
+      "they have the same momentum, and the electron's kinetic energy is greater than the photon's energy",
+      "they have different momenta",
+    ],
+    answer: 1,
+    hint: t`Compare $pc$ with $p^2/2m$.`,
+    explain: t`$\lambda = h/p$ for both, so momenta are equal. Photon energy $= pc$; electron kinetic energy $= \dfrac{p^2}{2m} = pc \cdot \dfrac{v}{2c}$. Since $v \ll c$, the electron's kinetic energy is much smaller than the photon's energy.`,
+  },
+  {
+    id: "phy12-4-11-019", exams: ALL, kind: "numeric", difficulty: 2, idealTime: 70,
+    q: t`A laser emits 3.2 mW of light of wavelength 620 nm. If the number of photons emitted per second is $x \times 10^{15}$, find $x$ (take $hc = 1240$ eV nm, $e = 1.6\times10^{-19}$ C).`,
+    answer: 10, tolerance: 0.1,
+    hint: t`Number of photons per second = power ÷ energy per photon.`,
+    explain: t`Photon energy $= 1240/620 = 2.0$ eV $= 3.2 \times 10^{-19}$ J. $N = \dfrac{P}{E} = \dfrac{3.2 \times 10^{-3}}{3.2 \times 10^{-19}} = 1.0 \times 10^{16} = 10 \times 10^{15}$ per second, so $x = 10$.`,
+  },
+  {
+    id: "phy12-4-11-020", exams: MAIN, kind: "mcq", difficulty: 2, idealTime: 60,
+    q: t`A 60 W parallel beam of light falls normally on a perfectly reflecting mirror. The force exerted on the mirror is:`,
+    options: [t`$4 \times 10^{-7}$ N`, t`$2 \times 10^{-7}$ N`, t`$1 \times 10^{-7}$ N`, t`$8 \times 10^{-7}$ N`],
+    answer: 0,
+    hint: t`Each reflected photon has its momentum reversed.`,
+    explain: t`Momentum delivered per second by the beam is $P/c$. On reflection the momentum reverses, so the change is $2P/c$: $F = \dfrac{2 \times 60}{3 \times 10^8} = 4 \times 10^{-7}$ N. $2 \times 10^{-7}$ N is the force on a perfectly absorbing surface.`,
+  },
+  {
+    id: "phy12-4-11-021", exams: ALL, kind: "mcq", difficulty: 2, idealTime: 50,
+    q: t`**Assertion (A):** Photoelectric emission starts without any measurable time lag, even with very faint light.<br>**Reason (R):** In the photon picture, each electron absorbs the whole energy of a single photon in one event.`,
+    options: [
+      "Both A and R are true and R is the correct explanation of A",
+      "Both A and R are true but R is not the correct explanation of A",
+      "A is true but R is false",
+      "A is false but R is true",
+    ],
+    answer: 0,
+    hint: t`Think about what the wave picture predicts for faint light.`,
+    explain: t`Experimentally emission is instantaneous (< $10^{-9}$ s). The wave picture would need time for an electron to accumulate enough energy from faint light, but in the photon picture one photon gives its entire $h\nu$ to one electron at once. So R correctly explains A.`,
+  },
+  {
+    id: "phy12-4-11-022", exams: MAIN, kind: "mcq", difficulty: 2, idealTime: 50,
+    q: t`**Statement I:** The maximum kinetic energy of photoelectrons varies linearly with the frequency of the incident light.<br>**Statement II:** The maximum kinetic energy of photoelectrons is directly proportional to the frequency of the incident light.`,
+    options: [
+      "Both Statement I and Statement II are true",
+      "Statement I is true but Statement II is false",
+      "Statement I is false but Statement II is true",
+      "Both Statement I and Statement II are false",
+    ],
+    answer: 1,
+    explain: t`$K_\text{max} = h\nu - \phi$ is a straight line of slope $h$, but it has a non-zero intercept $-\phi$ and is zero at $\nu = \nu_0$. Linear, yes; directly proportional (a line through the origin), no.`,
+  },
+  {
+    id: "phy12-4-11-023", exams: ALL, kind: "mcq", difficulty: 2, idealTime: 60,
+    q: t`Light of wavelength 248 nm gives a stopping potential of 2.5 V for a certain metal. The stopping potential for light of wavelength 310 nm on the same metal is (take $hc = 1240$ eV nm):`,
+    options: ["1.5 V", "2.0 V", "3.1 V", "1.0 V"],
+    answer: 0,
+    hint: t`Find the work function first.`,
+    explain: t`At 248 nm, $E = 5.0$ eV, so $\phi = 5.0 - 2.5 = 2.5$ eV. At 310 nm, $E = 4.0$ eV and $V_0 = 4.0 - 2.5 = 1.5$ V. 2.0 V comes from wrongly assuming $V_0 \propto 1/\lambda$ (scaling $2.5 \times 248/310$), which ignores the work function.`,
+  },
+  {
+    id: "phy12-4-11-024", exams: ALL, kind: "mcq", difficulty: 2, idealTime: 75,
+    q: t`When light of wavelength $\lambda$ falls on a metal, the stopping potential is $4V$. When light of wavelength $2\lambda$ is used, it is $V$. The threshold wavelength of the metal is:`,
+    options: [t`$3\lambda$`, t`$4\lambda$`, t`$2\lambda$`, t`$6\lambda$`],
+    answer: 0,
+    hint: t`Write Einstein's equation twice and subtract.`,
+    explain: t`$\dfrac{hc}{\lambda} - \phi = 4eV$ and $\dfrac{hc}{2\lambda} - \phi = eV$. Subtracting: $\dfrac{hc}{2\lambda} = 3eV$, so $\dfrac{hc}{\lambda} = 6eV$ and $\phi = 6eV - 4eV = 2eV = \dfrac{hc}{3\lambda}$. Hence $\lambda_0 = hc/\phi = 3\lambda$.`,
+  },
+  {
+    id: "phy12-4-11-025", exams: ["JEE_ADV"], kind: "multi", difficulty: 2, idealTime: 75,
+    q: t`In a photoelectric experiment, which of the following statements are correct? (One or more options may be correct.)`,
+    options: [
+      "At a fixed frequency, the saturation current is proportional to the intensity of the light",
+      "The stopping potential does not depend on the intensity of the light",
+      "The maximum kinetic energy of the photoelectrons increases with the intensity of the light",
+      "Light of frequency below the threshold frequency does not eject electrons, however intense it is",
+    ],
+    answers: [0, 1, 3],
+    hint: t`Intensity controls the number of photons, frequency controls their energy.`,
+    explain: t`(A) More photons per second mean proportionally more photoelectrons — true. (B) $eV_0 = h\nu - \phi$ has no intensity term — true. (C) false, for the same reason. (D) Each photon has energy $h\nu < \phi$, and an electron absorbs only one photon, so no emission — true.`,
+  },
+  {
+    id: "phy12-4-11-026", exams: ["JEE_ADV"], kind: "multi", difficulty: 2, idealTime: 75,
+    q: t`An electron is accelerated from rest through a potential difference $V$. If $V$ is made four times larger, then (one or more options may be correct):`,
+    options: [
+      "its de Broglie wavelength is halved",
+      "its momentum doubles",
+      "its speed doubles",
+      "a proton accelerated through the new potential would have a longer de Broglie wavelength than the electron",
+    ],
+    answers: [0, 1, 2],
+    hint: t`$K = eV$, $p = \sqrt{2mK}$, $\lambda = h/p$.`,
+    explain: t`$K$ becomes 4 times, so $p = \sqrt{2mK}$ and $v = \sqrt{2K/m}$ both double, and $\lambda = h/p$ halves. (D) is false: through the same $V$ a proton has the same charge but 1836 times the mass, so its momentum is larger and its wavelength shorter.`,
+  },
+  {
+    id: "phy12-4-11-027", exams: MAIN, kind: "numeric", difficulty: 2, idealTime: 90,
+    q: t`Light of wavelength 496 nm and power 1 mW falls on the cathode of a photocell. If only 1% of the incident photons eject photoelectrons, find the saturation photocurrent in microamperes (take $hc = 1240$ eV nm, $e = 1.6 \times 10^{-19}$ C).`,
+    answer: 4, tolerance: 0.05, unit: "μA",
+    hint: t`Current = (electrons per second) × $e$.`,
+    explain: t`Photon energy $= 1240/496 = 2.5$ eV $= 4.0 \times 10^{-19}$ J. Photons per second $= 10^{-3}/(4 \times 10^{-19}) = 2.5 \times 10^{15}$. Electrons per second $= 1\%$ of this $= 2.5 \times 10^{13}$. $I = 2.5 \times 10^{13} \times 1.6 \times 10^{-19} = 4 \times 10^{-6}$ A $= 4$ μA.`,
+  },
+  {
+    id: "phy12-4-11-028", exams: MAIN, kind: "mcq", difficulty: 2, idealTime: 90,
+    q: t`The de Broglie wavelength of a thermal neutron at 300 K, taking its kinetic energy as $\tfrac{3}{2}kT$, is about ($m_n = 1.675 \times 10^{-27}$ kg, $k = 1.38 \times 10^{-23}$ J/K):`,
+    options: ["0.145 nm", "0.0145 nm", "1.45 nm", "0.178 nm"],
+    answer: 0,
+    hint: t`$\lambda = h/\sqrt{2mK} = h/\sqrt{3mkT}$.`,
+    explain: t`$3mkT = 3 \times 1.675 \times 10^{-27} \times 1.38 \times 10^{-23} \times 300 = 2.08 \times 10^{-47}$, whose square root is $4.56 \times 10^{-24}$ kg m/s. $\lambda = 6.63 \times 10^{-34}/4.56 \times 10^{-24} = 1.45 \times 10^{-10}$ m $= 0.145$ nm — comparable to interatomic spacings, which is why thermal neutrons diffract from crystals. 0.178 nm results from using $K = kT$.`,
+  },
+  {
+    id: "phy12-4-11-029", exams: ALL, kind: "mcq", difficulty: 2, idealTime: 60,
+    q: t`A particle of mass $m$ moving with speed $v$ (de Broglie wavelength $\lambda$) collides with a particle of mass $2m$ at rest, and the two stick together. The de Broglie wavelength of the combined body is:`,
+    options: [t`$\lambda$`, t`$3\lambda$`, t`$\lambda/3$`, t`$2\lambda/3$`],
+    answer: 0,
+    hint: t`What is conserved in any collision?`,
+    explain: t`Momentum is conserved: the combined body has momentum $mv$, the same as before. Since $\lambda = h/p$ depends only on momentum, the wavelength stays $\lambda$. $3\lambda$ comes from wrongly using the new speed $v/3$ with the old mass.`,
+  },
+  {
+    id: "phy12-4-11-030", exams: MAIN, kind: "numeric", difficulty: 2, idealTime: 60,
+    q: t`The kinetic energy of a particle is increased by 44%. By what percentage does its de Broglie wavelength decrease?`,
+    answer: 16.67, tolerance: 0.1, unit: "%",
+    hint: t`$\lambda \propto 1/\sqrt{K}$.`,
+    explain: t`$\lambda'/\lambda = 1/\sqrt{1.44} = 1/1.2 = 0.8333$. The decrease is $1 - 0.8333 = 0.1667$, i.e. about 16.7%. (22% — half of 44% — is the tempting but wrong small-change estimate here.)`,
+  },
+  {
+    id: "phy12-4-11-031", exams: ALL, kind: "mcq", difficulty: 2, idealTime: 75,
+    q: t`Match the features of photoelectric graphs in Column I with their meaning in Column II.<br>Column I: (P) slope of $V_0$–$\nu$ graph; (Q) intercept of $V_0$–$\nu$ graph on the $\nu$-axis; (R) intercept of $V_0$–$\nu$ graph on the $V_0$-axis (extended); (S) saturation current at fixed frequency.<br>Column II: (1) $-\phi/e$; (2) threshold frequency; (3) $h/e$; (4) proportional to intensity.`,
+    options: [
+      "P-3, Q-2, R-1, S-4",
+      "P-3, Q-1, R-2, S-4",
+      "P-1, Q-2, R-3, S-4",
+      "P-4, Q-2, R-1, S-3",
+    ],
+    answer: 0,
+    explain: t`$V_0 = (h/e)\nu - \phi/e$: slope $h/e$ (P-3); $V_0 = 0$ at $\nu = \phi/h = \nu_0$ (Q-2); at $\nu = 0$ the line extends to $-\phi/e$ (R-1); saturation current counts electrons per second, which is proportional to intensity (S-4).`,
+  },
+  {
+    id: "phy12-4-11-032", exams: ALL, kind: "mcq", difficulty: 1, idealTime: 45,
+    q: t`Through what potential difference must an electron (from rest) be accelerated so that its de Broglie wavelength is 1 Å?`,
+    options: ["about 150 V", "about 12.3 V", "about 1.5 V", "about 1500 V"],
+    answer: 0,
+    explain: t`$\lambda(\text{Å}) = 12.27/\sqrt{V}$, so $\sqrt{V} = 12.27$ and $V = 150.5$ V. 12.3 V forgets to square.`,
+  },
+  {
+    id: "phy12-4-11-033", exams: ALL, kind: "mcq", difficulty: 2, idealTime: 50,
+    q: t`Light of frequency $1.5\nu_0$ ($\nu_0$ = threshold frequency) falls on a metal. If the frequency is changed to $3\nu_0$, the maximum kinetic energy of the photoelectrons becomes:`,
+    options: ["4 times", "2 times", "3 times", "unchanged"],
+    answer: 0,
+    hint: t`$K_\text{max} = h(\nu - \nu_0)$.`,
+    explain: t`Initially $K_1 = h(1.5\nu_0 - \nu_0) = 0.5h\nu_0$; finally $K_2 = h(3\nu_0 - \nu_0) = 2h\nu_0$. Ratio 4. "2 times" assumes $K \propto \nu$, forgetting the work function.`,
+  },
+  {
+    id: "phy12-4-11-034", exams: ALL, kind: "mcq", difficulty: 2, idealTime: 50,
+    q: t`**Assertion (A):** Photoelectrons emitted from a metal surface have kinetic energies ranging from zero up to a maximum value.<br>**Reason (R):** All free electrons in a metal occupy the same energy level.`,
+    options: [
+      "Both A and R are true and R is the correct explanation of A",
+      "Both A and R are true but R is not the correct explanation of A",
+      "A is true but R is false",
+      "A is false but R is true",
+    ],
+    answer: 2,
+    explain: t`A is true. R is false: free electrons occupy a band of levels, and those deeper inside need more than $\phi$ to escape and also lose energy in collisions on the way out. Only the least-bound electrons come out with $K_\text{max} = h\nu - \phi$; that spread is the real reason for the range.`,
+  },
+  {
+    id: "phy12-4-11-036", exams: ADV, kind: "numeric", difficulty: 3, idealTime: 150,
+    q: t`Light of photon energy 4.5 eV falls on a metal of work function 2.0 eV. The fastest photoelectrons enter a uniform magnetic field of $1.0 \times 10^{-4}$ T perpendicular to their velocity. Find the radius of their circular path in centimetres ($m_e = 9.1 \times 10^{-31}$ kg, $e = 1.6 \times 10^{-19}$ C).`,
+    answer: 5.33, tolerance: 0.1, unit: "cm",
+    hint: t`$r = p/(eB)$ with $p = \sqrt{2mK_\text{max}}$.`,
+    explain: t`$K_\text{max} = 4.5 - 2.0 = 2.5$ eV $= 4.0 \times 10^{-19}$ J. $p = \sqrt{2 \times 9.1 \times 10^{-31} \times 4.0 \times 10^{-19}} = \sqrt{7.28 \times 10^{-49}} = 8.53 \times 10^{-25}$ kg m/s. $r = \dfrac{p}{eB} = \dfrac{8.53 \times 10^{-25}}{1.6 \times 10^{-19} \times 10^{-4}} = 0.0533$ m $= 5.33$ cm. Slower photoelectrons move in smaller circles.`,
+  },
+  {
+    id: "phy12-4-11-037", exams: ADV, kind: "mcq", difficulty: 3, idealTime: 150,
+    q: t`A parallel beam of light of intensity 1500 W/m² falls on a flat plate of area 2 m² at an angle of 60° to the normal. The plate reflects 50% of the light and absorbs the rest. The component of the force on the plate along its normal is:`,
+    options: [t`$3.75 \times 10^{-6}$ N`, t`$7.5 \times 10^{-6}$ N`, t`$2.5 \times 10^{-6}$ N`, t`$5.0 \times 10^{-6}$ N`],
+    answer: 0,
+    hint: t`Power intercepted is $IA\cos\theta$; each absorbed photon gives normal momentum $p\cos\theta$, each reflected photon $2p\cos\theta$.`,
+    explain: t`Power intercepted $= IA\cos\theta = 1500 \times 2 \times 0.5 = 1500$ W, carrying momentum $1500/c$ per second along the beam. Normal momentum delivered per second: absorbed half gives $\cos\theta$, reflected half gives $2\cos\theta$, total factor $(1 + r)\cos\theta = 1.5 \times 0.5 = 0.75$. $F_n = 0.75 \times 1500/(3 \times 10^8) = 3.75 \times 10^{-6}$ N. $7.5 \times 10^{-6}$ N misses one $\cos\theta$; $5.0 \times 10^{-6}$ N treats the plate as perfectly reflecting; $2.5 \times 10^{-6}$ N treats it as perfectly absorbing.`,
+  },
+  {
+    id: "phy12-4-11-038", exams: ADV, kind: "numeric", difficulty: 3, idealTime: 180,
+    q: t`The electric field of a light wave at a point is $E = E_0\,[1 + \cos(2 \times 10^{15} t)]\cos(10^{16} t)$, with $t$ in seconds. This light falls on a metal of work function 4.0 eV. Find the maximum kinetic energy of the photoelectrons in eV ($\hbar = 1.055 \times 10^{-34}$ J s).`,
+    answer: 3.91, tolerance: 0.1, unit: "eV",
+    hint: t`Expand the product: the light contains three angular frequencies.`,
+    explain: t`$E = E_0\cos(10^{16}t) + \tfrac{E_0}{2}[\cos(1.2 \times 10^{16}t) + \cos(0.8 \times 10^{16}t)]$. The highest angular frequency is $\omega = 1.2 \times 10^{16}$ rad/s, giving photon energy $\hbar\omega = 1.055 \times 10^{-34} \times 1.2 \times 10^{16} = 1.266 \times 10^{-18}$ J $= 7.91$ eV. $K_\text{max} = 7.91 - 4.0 = 3.91$ eV. Using only the carrier ($10^{16}$ rad/s, 6.59 eV) gives 2.59 eV — wrong because the fastest electrons come from the highest-frequency component. (Also note $\omega$, not $\nu$: $E = \hbar\omega$.)`,
+  },
+  {
+    id: "phy12-4-11-039", exams: ADV, kind: "mcq", difficulty: 3, idealTime: 120,
+    q: t`An electron (mass $m$, non-relativistic) has de Broglie wavelength $\lambda_e$. A photon has energy equal to the electron's kinetic energy. The photon's wavelength is:`,
+    options: [t`$\dfrac{2mc\lambda_e^2}{h}$`, t`$\dfrac{h\lambda_e^2}{2mc}$`, t`$\dfrac{mc\lambda_e^2}{h}$`, t`$\dfrac{2mc\lambda_e}{h}$`],
+    answer: 0,
+    hint: t`Write the electron's kinetic energy in terms of $\lambda_e$.`,
+    explain: t`$K = \dfrac{p^2}{2m} = \dfrac{h^2}{2m\lambda_e^2}$. The photon wavelength is $\lambda_\gamma = \dfrac{hc}{K} = \dfrac{2mc\lambda_e^2}{h}$. Dimension check: $mc\lambda/h$ is dimensionless, so $mc\lambda_e^2/h$ has dimensions of length — the last option fails that test.`,
+  },
+  {
+    id: "phy12-4-11-040", exams: ["JEE_ADV"], kind: "multi", difficulty: 3, idealTime: 120,
+    q: t`In a Davisson–Germer type experiment, electrons accelerated through 54 V are diffracted by a nickel crystal and a strong peak is seen at a certain scattering angle. Which statements are correct? (One or more options may be correct.)`,
+    options: [
+      "The de Broglie wavelength of the electrons is about 0.167 nm",
+      "If the accelerating voltage is increased, the diffraction peak moves to a smaller angle",
+      "Neutrons of the same kinetic energy would have a longer de Broglie wavelength than the electrons",
+      "Photons of energy 54 eV would have the same wavelength as these electrons",
+    ],
+    answers: [0, 1],
+    hint: t`For fixed lattice spacing, $\sin\theta \propto \lambda$.`,
+    explain: t`(A) $\lambda = 1.227/\sqrt{54} = 0.167$ nm — true. (B) Higher $V$ means shorter $\lambda$, and the Bragg-type condition $d\sin\theta = n\lambda$ then gives a smaller angle — true. (C) At equal $K$, $\lambda \propto 1/\sqrt{m}$, so the heavier neutron has a shorter wavelength — false. (D) A 54 eV photon has $\lambda = 1240/54 = 23$ nm, vastly longer — false.`,
+  },
+  {
+    id: "phy12-4-11-041", exams: ADV, kind: "numeric", difficulty: 3, idealTime: 180,
+    q: t`An isolated metal sphere of radius 1 cm, initially uncharged, has work function 4.7 eV. It is illuminated by light of wavelength 200 nm. It emits photoelectrons until it charges up enough to stop further emission. If the number of electrons emitted is $N = x \times 10^{7}$, find $x$ ($hc = 1240$ eV nm, $1/4\pi\varepsilon_0 = 9 \times 10^9$ N m²/C², $e = 1.6 \times 10^{-19}$ C).`,
+    answer: 1.04, tolerance: 0.02,
+    hint: t`Emission stops when the sphere's potential equals the stopping potential.`,
+    explain: t`Photon energy $= 1240/200 = 6.2$ eV, so $V_0 = 6.2 - 4.7 = 1.5$ V. The sphere's potential $V = \dfrac{Q}{4\pi\varepsilon_0 r}$ must reach 1.5 V: $Q = \dfrac{1.5 \times 0.01}{9 \times 10^9} = 1.667 \times 10^{-12}$ C. $N = Q/e = 1.04 \times 10^7$, so $x = 1.04$.`,
+  },
+  {
+    id: "phy12-4-11-042", exams: ["JEE_ADV"], kind: "multi", difficulty: 3, idealTime: 120,
+    q: t`Light of wavelength 310 nm falls on a metal of work function 2.0 eV ($hc = 1240$ eV nm). Which statements are correct? (One or more options may be correct.)`,
+    options: [
+      "The maximum kinetic energy of the photoelectrons is 2.0 eV",
+      "The minimum de Broglie wavelength of the emitted electrons is about 0.87 nm",
+      "Doubling the intensity doubles the number of electrons emitted per second",
+      "Changing the wavelength to 248 nm raises the stopping potential by 1.24 V",
+    ],
+    answers: [0, 1, 2],
+    hint: t`The fastest electron has the shortest wavelength.`,
+    explain: t`(A) $E = 4.0$ eV, $K_\text{max} = 2.0$ eV — true. (B) $\lambda_\text{min} = 1.227/\sqrt{2.0} = 0.868$ nm — true (slower electrons have longer wavelengths). (C) true. (D) At 248 nm, $E = 5.0$ eV, $K_\text{max} = 3.0$ eV, so $V_0$ rises by 1.0 V, not 1.24 V — false.`,
+  },
+  {
+    id: "phy12-4-11-043", exams: ADV, kind: "mcq", difficulty: 3, idealTime: 150,
+    q: t`Light of wavelength $\lambda$ falls on a metal of work function $\phi$, and the fastest photoelectrons have de Broglie wavelength $\lambda_d$. For a small change in $\lambda$, $d\lambda_d/d\lambda$ is proportional to:`,
+    options: [t`$\lambda_d^3/\lambda^2$`, t`$\lambda_d^2/\lambda^3$`, t`$\lambda_d/\lambda$`, t`$\lambda^2/\lambda_d^3$`],
+    answer: 0,
+    hint: t`$\lambda_d = h/\sqrt{2mK}$ with $K = hc/\lambda - \phi$; differentiate.`,
+    explain: t`$\lambda_d = \dfrac{h}{\sqrt{2m}}K^{-1/2}$, so $\dfrac{d\lambda_d}{d\lambda} = \dfrac{h}{\sqrt{2m}}\left(-\tfrac12\right)K^{-3/2}\dfrac{dK}{d\lambda}$ with $\dfrac{dK}{d\lambda} = -\dfrac{hc}{\lambda^2}$. Thus $\dfrac{d\lambda_d}{d\lambda} \propto \dfrac{K^{-3/2}}{\lambda^2} \propto \dfrac{\lambda_d^3}{\lambda^2}$ (because $K^{-1/2} \propto \lambda_d$).`,
+  },
+  {
+    id: "phy12-4-11-044", exams: ADV, kind: "numeric", difficulty: 3, idealTime: 120,
+    q: t`An electron accelerated from rest through 10 kV has the same de Broglie wavelength as an X-ray photon. Find the photon's energy in keV ($hc = 1240$ eV nm).`,
+    answer: 101, tolerance: 1.5, unit: "keV",
+    hint: t`First find the electron's wavelength.`,
+    explain: t`$\lambda = 1.227/\sqrt{10^4}$ nm $= 0.01227$ nm. Photon energy $= 1240/0.01227$ eV $= 1.01 \times 10^5$ eV $\approx 101$ keV — about ten times the electron's own 10 keV, as expected since $E_\gamma/K_e = 2c/v$.`,
+  },
+  {
+    id: "phy12-4-11-045", exams: ["JEE_ADV"], kind: "multi", difficulty: 3, idealTime: 120,
+    q: t`A 6.6 W beam of light of wavelength 600 nm falls normally on a surface ($h = 6.63 \times 10^{-34}$ J s, $c = 3 \times 10^8$ m/s). Which statements are correct? (One or more options may be correct.)`,
+    options: [
+      t`About $2 \times 10^{19}$ photons arrive per second`,
+      t`If the surface absorbs all the light, the force on it is $2.2 \times 10^{-8}$ N`,
+      t`Each photon has momentum of about $1.1 \times 10^{-27}$ kg m/s`,
+      t`If the surface reflects all the light, the force on it is $2.2 \times 10^{-8}$ N`,
+    ],
+    answers: [0, 1, 2],
+    explain: t`Photon energy $= hc/\lambda = 6.63 \times 10^{-34} \times 3 \times 10^8/(6 \times 10^{-7}) = 3.32 \times 10^{-19}$ J, so $N = 6.6/3.32 \times 10^{-19} \approx 2.0 \times 10^{19}$ per s (A true). Absorbing: $F = P/c = 2.2 \times 10^{-8}$ N (B true). $p = h/\lambda = 1.105 \times 10^{-27}$ kg m/s (C true). Reflecting doubles the force to $4.4 \times 10^{-8}$ N (D false).`,
+  },
+  {
+    id: "phy12-4-11-046", exams: ALL, kind: "mcq", difficulty: 2, idealTime: 60,
+    q: t`An $\alpha$-particle and a proton are accelerated from rest through potentials $V_\alpha$ and $V_p$ so that they end up with the same de Broglie wavelength. The ratio $V_\alpha/V_p$ is:`,
+    options: ["1/8", "8", "1/2", "1/4"],
+    answer: 0,
+    hint: t`Equal wavelengths mean equal momenta.`,
+    explain: t`Equal $\lambda$ means equal $p = \sqrt{2mqV}$, so $m_\alpha q_\alpha V_\alpha = m_p q_p V_p$: $V_\alpha/V_p = \dfrac{1}{4 \times 2} = \dfrac18$. 1/4 ignores the double charge; 8 is inverted.`,
+  },
+]);

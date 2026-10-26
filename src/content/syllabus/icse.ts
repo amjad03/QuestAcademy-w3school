@@ -7,6 +7,7 @@ import { subject, type Row } from "./build";
 import type { SyllabusBoard } from "./types";
 import * as X from "./class10";
 import * as Y from "./class9";
+import * as S from "./senior-extra";
 
 const PHYSICS_9: Row[] = [
   ["Measurements and Experimentation", "phy.units"],
@@ -273,6 +274,7 @@ export const ICSE: SyllabusBoard = {
         subject("icse:11", "chemistry", "Chemistry", CHEMISTRY_11),
         subject("icse:11", "biology", "Biology", BIOLOGY_11),
         subject("icse:11", "maths", "Mathematics", MATHS_11),
+        subject("icse:11", "cs", "Computer Science", S.CS_ISC_11),
       ],
     },
     {
@@ -284,6 +286,7 @@ export const ICSE: SyllabusBoard = {
         subject("icse:12", "chemistry", "Chemistry", CHEMISTRY_12),
         subject("icse:12", "biology", "Biology", BIOLOGY_12),
         subject("icse:12", "maths", "Mathematics", MATHS_12),
+        subject("icse:12", "cs", "Computer Science", S.CS_ISC_12),
       ],
     },
   ],
