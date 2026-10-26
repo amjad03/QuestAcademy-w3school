@@ -150,6 +150,7 @@ A **universal set** $U$ is the basic set that contains all the sets in a given d
                 { text: "Multiples of 7", group: 2, hint: "7, 14, 21, … never ends." },
                 { text: "Real numbers between 0 and 1", group: 2, hint: "The interval (0, 1) never runs out of numbers." },
               ],
+              explain: "A finite set can be counted to an end, however large it is. A description that no object satisfies gives the empty set, which also counts as finite.",
             },
           },
           {

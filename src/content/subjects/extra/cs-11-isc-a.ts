@@ -644,9 +644,677 @@ const numbers: Topic = {
   ],
 };
 
-export const topics: Topic[] = [numbers];
+/* ------------------------------------------------------------------ */
+/* 2. Propositional Logic                                              */
+/* ------------------------------------------------------------------ */
+const propLogic: Topic = {
+  slug: "c11-isc-propositional-logic",
+  title: "Propositional Logic",
+  icon: "🧠",
+  description: "Propositions, the connectives ~, ∧, ∨, ⇒ and ⇔, truth tables and well-formed formulae, tautology, contradiction and contingency, converse, inverse and contrapositive, and the equivalence laws used to simplify formulae.",
+  lessons: [
+    {
+      slug: "c11-isc-propositions-connectives",
+      title: "Propositions, Connectives and Truth Tables",
+      summary: "What a proposition is, the five connectives with their truth tables, well-formed formulae, writing word statements as formulae, and evaluating them in Java.",
+      minutes: 22,
+      xp: 50,
+      blocks: [
+        {
+          type: "illustration",
+          emoji: "🚦",
+          caption: "\"If the signal is red, the car stops.\" A traffic camera does not care about feelings; it checks whether each part is true or false. Propositional logic is exactly this kind of true/false reasoning, and it is how a computer makes every decision.",
+        },
+        {
+          type: "text",
+          md: "A **proposition** (or statement) is a declarative sentence that is either **true** or **false**, but not both. Its **truth value** is T (true) or F (false).\n\n\"Bengaluru is the capital of Karnataka\" is a proposition (T). \"7 is an even number\" is a proposition (F). \"Close the door\", \"What time is it?\" and \"x + 2 = 5\" are **not** propositions: a command and a question have no truth value, and the last one depends on x.\n\nA **simple** (atomic) proposition has no connective. A **compound** proposition joins simple ones with **connectives**. We name simple propositions with **propositional variables** p, q, r.",
+        },
+        {
+          type: "table",
+          headers: ["Connective", "Symbol", "Read as", "True when", "Java"],
+          rows: [
+            ["**Negation**", "~p", "not p", "p is false", "`!p`"],
+            ["**Conjunction**", "p ∧ q", "p and q", "both are true", "`p && q`"],
+            ["**Disjunction**", "p ∨ q", "p or q", "at least one is true", "`p || q`"],
+            ["**Implication** (conditional)", "p ⇒ q", "if p then q", "every case except p true and q false", "`!p || q`"],
+            ["**Biconditional**", "p ⇔ q", "p if and only if q", "both have the same value", "`p == q`"],
+          ],
+        },
+        {
+          type: "table",
+          headers: ["p", "q", "~p", "p ∧ q", "p ∨ q", "p ⇒ q", "p ⇔ q"],
+          rows: [
+            ["T", "T", "F", "T", "T", "T", "T"],
+            ["T", "F", "F", "F", "T", "F", "F"],
+            ["F", "T", "T", "F", "T", "T", "F"],
+            ["F", "F", "T", "F", "F", "T", "T"],
+          ],
+        },
+        {
+          type: "text",
+          md: "In p ⇒ q, p is the **antecedent** (hypothesis) and q is the **consequent** (conclusion). Think of it as a promise: \"If you score 90, I will buy you a cycle.\" The promise is broken only if you score 90 and get no cycle (T ⇒ F). If you do not score 90, the promise is not broken whatever happens, so both rows with p = F are true.",
+        },
+        {
+          type: "mistake",
+          wrong: "p ⇒ q is false when p is false, because nothing \"follows\" from a false statement.",
+          right: "p ⇒ q is false in **only one row**: p true and q false. When p is false the implication is **true** (it is said to be *vacuously* true). So p ⇒ q ≡ ~p ∨ q.",
+          why: "In everyday speech \"if... then\" suggests cause and effect, so a false \"if\" feels like it should make the whole sentence false. Logic only asks whether the promise was broken, and a promise with an unmet condition cannot be broken.",
+        },
+        {
+          type: "text",
+          md: "A **well-formed formula (wff)** is a formula built by the rules: every propositional variable (and T, F) is a wff; if A and B are wffs, so are ~A, (A ∧ B), (A ∨ B), (A ⇒ B) and (A ⇔ B). So (p ∧ ~q) ⇒ r is a wff, but p ∧ ∨ q and p ~ q are not.\n\nThe usual **precedence** is ~ first, then ∧, then ∨, then ⇒, then ⇔. Use brackets whenever there is any doubt.\n\nAn **interpretation** of a wff gives a truth value to each variable. With n variables there are $2^n$ interpretations, so a truth table has $2^n$ rows.",
+        },
+        {
+          type: "example",
+          title: "From words to a wff",
+          problem: "Let p: \"Riya studies\", q: \"Riya passes\", r: \"Riya gets a prize\". Write \"If Riya studies and does not get a prize, she still passes\" as a wff, and find its value when p = T, q = F, r = F.",
+          steps: [
+            "\"Riya studies and does not get a prize\" is p ∧ ~r.",
+            "\"If ... she still passes\" makes this the antecedent and q the consequent: (p ∧ ~r) ⇒ q.",
+            "With p = T, r = F: ~r = T, so p ∧ ~r = T.",
+            "q = F, so the formula is T ⇒ F = F.",
+          ],
+          answer: "(p ∧ ~r) ⇒ q; for p = T, q = F, r = F its value is **false**.",
+        },
+        {
+          type: "checkpoint",
+          questions: [
+            {
+              kind: "mcq",
+              q: "How many rows does the truth table of (p ∨ q) ⇒ (r ∧ s) have?",
+              options: ["16", "8", "4", "32"],
+              answer: 0,
+              explain: "There are 4 variables, so $2^4$ = 16 rows.",
+            },
+          ],
+        },
+        {
+          type: "code",
+          lang: "java",
+          caption: "TruthTable.java: the five connectives with Java booleans",
+          code: `public class TruthTable
+{
+    static char tf(boolean b)
+    {
+        return b ? 'T' : 'F';
+    }
+
+    public static void main(String[] args)
+    {
+        boolean[] values = {true, false};
+        System.out.println("p q | AND OR IMP BICOND");
+        for (boolean p : values)
+        {
+            for (boolean q : values)
+            {
+                boolean imp = !p || q;      // p => q is the same as ~p OR q
+                boolean bic = (p == q);     // p <=> q is true when both match
+                System.out.println(tf(p) + " " + tf(q) + " |  "
+                        + tf(p && q) + "   " + tf(p || q) + "   "
+                        + tf(imp) + "    " + tf(bic));
+            }
+        }
+    }
+}`,
+        },
+        {
+          type: "example",
+          title: "Output of TruthTable.java",
+          problem: "Give the exact output of TruthTable.java.",
+          steps: [
+            "The outer loop takes p = true, then false; for each p the inner loop takes q = true, then false. So the rows come in the order TT, TF, FT, FF.",
+            "`imp` is `!p || q`, which is false only for p = T, q = F.",
+            "`bic` is `p == q`, true for TT and FF.",
+          ],
+          answer: "p q | AND OR IMP BICOND\nT T |  T   T   T    T\nT F |  F   T   F    F\nF T |  F   T   T    F\nF F |  F   F   T    T",
+        },
+        {
+          type: "activity",
+          activity: {
+            kind: "sort",
+            prompt: "Is each sentence a proposition?",
+            groups: ["Proposition", "Not a proposition"],
+            items: [
+              { text: "The Kaveri flows through Karnataka.", group: 0, hint: "It is a declarative sentence and it is true." },
+              { text: "2 + 2 = 5", group: 0, hint: "It has a definite truth value: false. False statements are still propositions." },
+              { text: "Please submit your project.", group: 1, hint: "A request or command has no truth value." },
+              { text: "Is Java case-sensitive?", group: 1, hint: "A question is neither true nor false." },
+              { text: "x is greater than 10.", group: 1, hint: "Its truth depends on x, which is not given." },
+              { text: "Every prime number is odd.", group: 0, hint: "It is false (2 is prime and even), but it has a truth value." },
+            ],
+            explain: "A proposition needs a definite truth value. False sentences count; commands, questions and sentences with an unknown variable do not.",
+          },
+        },
+        {
+          type: "callout",
+          tone: "exam",
+          title: "ISC tip",
+          md: "Draw truth tables with the variables in the standard order (TT, TF, FT, FF, or 1 1, 1 0, 0 1, 0 0) and add a column for each sub-formula before the final one. Examiners give step marks for the intermediate columns, and a missing row is the most common way to lose the whole question.",
+        },
+        {
+          type: "keypoints",
+          items: [
+            "A proposition is a declarative sentence that is either true or false.",
+            "Connectives: ~ (not), ∧ (and), ∨ (or), ⇒ (if...then), ⇔ (if and only if).",
+            "p ⇒ q is false only when p is true and q is false; it equals ~p ∨ q.",
+            "p ⇔ q is true when p and q have the same value.",
+            "n variables give $2^n$ interpretations (truth-table rows).",
+          ],
+        },
+      ],
+      flashcards: [
+        { front: "Proposition", back: "A declarative sentence that is either true or false, but not both." },
+        { front: "Conjunction p ∧ q", back: "True only when both p and q are true." },
+        { front: "Disjunction p ∨ q", back: "True when at least one of p, q is true (inclusive or)." },
+        { front: "Implication p ⇒ q", back: "False only when p is true and q is false. Equivalent to ~p ∨ q." },
+        { front: "Biconditional p ⇔ q", back: "True when p and q have the same truth value; same as (p ⇒ q) ∧ (q ⇒ p)." },
+        { front: "Antecedent and consequent", back: "In p ⇒ q, p is the antecedent (hypothesis) and q the consequent (conclusion)." },
+        { front: "Well-formed formula (wff)", back: "A formula built correctly from variables, T, F, connectives and brackets according to the formation rules." },
+        { front: "Rows in a truth table", back: "$2^n$ for n propositional variables." },
+      ],
+      quiz: [
+        {
+          kind: "mcq",
+          q: "Which of these is a proposition?",
+          options: ["The Sun rises in the west.", "Open the window.", "Where is Hampi?", "y + 3 = 7"],
+          answer: 0,
+          explain: "It is false, but it has a definite truth value. A command, a question and an equation with an unknown are not propositions.",
+        },
+        {
+          kind: "truefalse",
+          q: "If p is false, then p ⇒ q is true whatever the value of q.",
+          answer: true,
+          explain: "Both rows with p = F give T. An implication is false only for T ⇒ F.",
+        },
+        {
+          kind: "mcq",
+          q: "p = T, q = F, r = T. What is the value of (p ∨ q) ⇒ (q ∧ r)?",
+          options: ["F", "T", "Cannot be found", "Depends on precedence only"],
+          answer: 0,
+          explain: "p ∨ q = T, q ∧ r = F, and T ⇒ F = F.",
+          difficulty: 2,
+        },
+        {
+          kind: "fill",
+          q: "In Java, p ⇒ q can be written as `___ || q`.",
+          answer: ["!p"],
+          explain: "p ⇒ q ≡ ~p ∨ q, and ~ is `!` in Java.",
+        },
+        {
+          kind: "mcq",
+          q: "Which is NOT a well-formed formula?",
+          options: ["p ∨ ∧ q", "~(p ∧ q)", "(p ⇒ q) ⇔ r", "~(~p) ∨ q"],
+          answer: 0,
+          explain: "Two binary connectives cannot stand side by side. Repeated negation, as in ~(~p), is allowed.",
+        },
+        {
+          kind: "numeric",
+          q: "How many rows are there in the truth table of a formula with 5 propositional variables?",
+          answer: 32,
+          explain: "$2^5$ = 32.",
+        },
+        {
+          kind: "mcq",
+          q: "Let p: \"It is a holiday\" and q: \"The school is open\". Which wff says \"The school is open only if it is not a holiday\"?",
+          options: ["q ⇒ ~p", "~p ⇒ q", "p ⇒ q", "q ∧ ~p"],
+          answer: 0,
+          explain: "\"A only if B\" means A ⇒ B. Here A is q and B is ~p. Writing ~p ⇒ q (the converse) is the usual slip.",
+          difficulty: 3,
+          hint: "\"A only if B\" is A ⇒ B, not B ⇒ A.",
+        },
+        {
+          kind: "multi",
+          q: "For which (p, q) is p ⇔ q true? (Choose all that apply)",
+          options: ["p = T, q = T", "p = T, q = F", "p = F, q = T", "p = F, q = F"],
+          answers: [0, 3],
+          explain: "A biconditional is true when both sides have the same value.",
+        },
+      ],
+    },
+    {
+      slug: "c11-isc-tautology-equivalence-laws",
+      title: "Tautologies, Equivalence Laws and Simplification",
+      summary: "Tautology, contradiction and contingency; satisfiable, unsatisfiable and valid formulae; converse, inverse and contrapositive; the equivalence laws and how to simplify a wff with them.",
+      minutes: 24,
+      xp: 55,
+      blocks: [
+        {
+          type: "text",
+          md: "Some formulae have the same value in every row of their truth table. We classify every wff by its final column:\n\n- **Tautology**: true in **every** interpretation, e.g. p ∨ ~p. A tautology is also called a **valid** formula.\n- **Contradiction**: false in every interpretation, e.g. p ∧ ~p. It is **unsatisfiable**.\n- **Contingency**: true in some rows and false in others, e.g. p ⇒ q.\n\nA formula is **satisfiable** if it is true in **at least one** interpretation. So tautologies and contingencies are satisfiable; only contradictions are not.",
+        },
+        {
+          type: "text",
+          md: "Two wffs A and B are **logically equivalent**, written A ≡ B, if they have the same truth value in every interpretation. Equivalently, A ⇔ B is a tautology.\n\nFrom an implication p ⇒ q we form three related statements:\n\n- **Converse**: q ⇒ p\n- **Inverse**: ~p ⇒ ~q\n- **Contrapositive**: ~q ⇒ ~p\n\nThe **contrapositive is equivalent** to the original. The converse and the inverse are equivalent to **each other**, but **not** to the original.",
+        },
+        {
+          type: "example",
+          title: "Converse, inverse and contrapositive in words",
+          problem: "Write the converse, inverse and contrapositive of \"If it rains, the match is cancelled.\" Which one means the same as the original?",
+          steps: [
+            "p: it rains; q: the match is cancelled. The statement is p ⇒ q.",
+            "Converse (q ⇒ p): If the match is cancelled, it rains.",
+            "Inverse (~p ⇒ ~q): If it does not rain, the match is not cancelled.",
+            "Contrapositive (~q ⇒ ~p): If the match is not cancelled, it did not rain.",
+            "A match can be cancelled for other reasons (a power cut), so the converse can be false while the original is true. Only the contrapositive always agrees.",
+          ],
+          answer: "Only the contrapositive, \"If the match is not cancelled, it did not rain\", is equivalent to the original.",
+        },
+        {
+          type: "mistake",
+          wrong: "The converse of a true statement is also true: if \"If p then q\" holds, then \"If q then p\" holds.",
+          right: "The converse q ⇒ p is a **different** statement. For p = F, q = T the original is true but the converse is false. The statement that always matches the original is the **contrapositive** ~q ⇒ ~p.",
+          why: "Many familiar sentences are true both ways (\"a triangle is equilateral if and only if its angles are equal\"), so swapping the parts feels safe. Those are biconditionals. \"If it is a mango, it is a fruit\" is true, but \"If it is a fruit, it is a mango\" is not.",
+        },
+        {
+          type: "table",
+          headers: ["Law", "Equivalence"],
+          rows: [
+            ["Commutative", "p ∧ q ≡ q ∧ p; p ∨ q ≡ q ∨ p"],
+            ["Associative", "(p ∧ q) ∧ r ≡ p ∧ (q ∧ r); (p ∨ q) ∨ r ≡ p ∨ (q ∨ r)"],
+            ["Distributive", "p ∧ (q ∨ r) ≡ (p ∧ q) ∨ (p ∧ r); p ∨ (q ∧ r) ≡ (p ∨ q) ∧ (p ∨ r)"],
+            ["De Morgan's", "~(p ∧ q) ≡ ~p ∨ ~q; ~(p ∨ q) ≡ ~p ∧ ~q"],
+            ["Implication", "p ⇒ q ≡ ~p ∨ q"],
+            ["Biconditional", "p ⇔ q ≡ (p ⇒ q) ∧ (q ⇒ p)"],
+            ["Double negation", "~(~p) ≡ p"],
+            ["Excluded middle", "p ∨ ~p ≡ T"],
+            ["Contradiction", "p ∧ ~p ≡ F"],
+            ["Identity and domination", "p ∧ T ≡ p; p ∨ F ≡ p; p ∨ T ≡ T; p ∧ F ≡ F"],
+            ["Idempotent", "p ∧ p ≡ p; p ∨ p ≡ p"],
+            ["Absorption", "p ∨ (p ∧ q) ≡ p; p ∧ (p ∨ q) ≡ p"],
+          ],
+        },
+        {
+          type: "example",
+          title: "Simplifying with the laws",
+          problem: "Simplify ~(p ∨ ~q) ∨ (~p ∧ ~q).",
+          steps: [
+            "De Morgan's law on the first part: ~(p ∨ ~q) ≡ ~p ∧ ~(~q).",
+            "Double negation: ~(~q) ≡ q, so the first part is ~p ∧ q.",
+            "The formula is (~p ∧ q) ∨ (~p ∧ ~q). Distributive law (take ~p out): ~p ∧ (q ∨ ~q).",
+            "Excluded middle: q ∨ ~q ≡ T, so we get ~p ∧ T.",
+            "Identity law: ~p ∧ T ≡ ~p.",
+          ],
+          answer: "~(p ∨ ~q) ∨ (~p ∧ ~q) ≡ ~p",
+        },
+        {
+          type: "checkpoint",
+          questions: [
+            {
+              kind: "mcq",
+              q: "The negation of p ⇒ q is:",
+              options: ["p ∧ ~q", "~p ⇒ ~q", "~p ∧ q", "q ⇒ p"],
+              answer: 0,
+              explain: "~(p ⇒ q) ≡ ~(~p ∨ q) ≡ p ∧ ~q by De Morgan's law and double negation. ~p ⇒ ~q is the inverse, not the negation.",
+              difficulty: 2,
+            },
+          ],
+        },
+        {
+          type: "example",
+          title: "Proving a tautology without a truth table",
+          problem: "Show that p ⇒ (q ⇒ p) is a tautology.",
+          steps: [
+            "Implication law on the inner part: q ⇒ p ≡ ~q ∨ p.",
+            "Implication law on the outer part: ~p ∨ (~q ∨ p).",
+            "Associative and commutative laws: (~p ∨ p) ∨ ~q.",
+            "Excluded middle: ~p ∨ p ≡ T, and domination: T ∨ ~q ≡ T.",
+          ],
+          answer: "p ⇒ (q ⇒ p) ≡ T, so it is a tautology (a valid formula).",
+        },
+        {
+          type: "code",
+          lang: "java",
+          caption: "Classify.java: let Java check every interpretation",
+          code: `public class Classify
+{
+    static boolean imp(boolean a, boolean b)
+    {
+        return !a || b;
+    }
+
+    // formula number f, evaluated for one row of the truth table
+    static boolean wff(int f, boolean p, boolean q)
+    {
+        if (f == 1)
+            return imp(p, q) == imp(!q, !p);   // (p => q) <=> (~q => ~p)
+        else if (f == 2)
+            return p && !p;                    // p AND ~p
+        else
+            return imp(q, p);                  // q => p
+    }
+
+    public static void main(String[] args)
+    {
+        boolean[] values = {true, false};
+        for (int f = 1; f <= 3; f++)
+        {
+            int trueRows = 0;
+            for (boolean p : values)
+                for (boolean q : values)
+                    if (wff(f, p, q))
+                        trueRows++;
+            String kind;
+            if (trueRows == 4)
+                kind = "tautology";
+            else if (trueRows == 0)
+                kind = "contradiction";
+            else
+                kind = "contingency";
+            System.out.println("Formula " + f + ": " + trueRows + " true rows, " + kind);
+        }
+    }
+}`,
+        },
+        {
+          type: "text",
+          md: "Output:\n\n`Formula 1: 4 true rows, tautology`\n\n`Formula 2: 0 true rows, contradiction`\n\n`Formula 3: 3 true rows, contingency`\n\nFormula 1 says an implication is equivalent to its contrapositive; Java confirms it is true in all 4 rows. The converse q ⇒ p (formula 3) fails in one row (p = F, q = T).",
+        },
+        {
+          type: "activity",
+          activity: {
+            kind: "sort",
+            prompt: "Classify each formula.",
+            groups: ["Tautology", "Contradiction", "Contingency"],
+            items: [
+              { text: "p ∨ ~p", group: 0, hint: "One of p, ~p is always true." },
+              { text: "(p ∧ q) ⇒ p", group: 0, hint: "If p ∧ q is true, p must be true, so T ⇒ F never happens." },
+              { text: "p ∧ ~p", group: 1, hint: "p and ~p can never both be true." },
+              { text: "~(p ⇒ p)", group: 1, hint: "p ⇒ p is always true, so its negation is always false." },
+              { text: "p ⇒ q", group: 2, hint: "False for p = T, q = F; true otherwise." },
+              { text: "p ∨ q", group: 2, hint: "False only when both are false." },
+            ],
+            explain: "Look at the final column: all T is a tautology, all F is a contradiction, a mix is a contingency.",
+          },
+        },
+        {
+          type: "callout",
+          tone: "exam",
+          title: "ISC tip",
+          md: "When you simplify with laws, write the **name of the law** against every step. \"Prove using a truth table\" and \"prove using laws\" are different instructions; use the method asked for. To show two formulae are **not** equivalent, one row where they differ is enough.",
+        },
+        {
+          type: "keypoints",
+          items: [
+            "Tautology (valid): always true. Contradiction (unsatisfiable): always false. Contingency: sometimes true.",
+            "Satisfiable: true in at least one interpretation.",
+            "Contrapositive ~q ⇒ ~p ≡ p ⇒ q; converse and inverse are equivalent to each other only.",
+            "Key laws: De Morgan's, implication (p ⇒ q ≡ ~p ∨ q), distributive, excluded middle, double negation.",
+            "~(p ⇒ q) ≡ p ∧ ~q.",
+          ],
+        },
+      ],
+      flashcards: [
+        { front: "Tautology", back: "A wff that is true in every interpretation, e.g. p ∨ ~p. Also called a valid formula." },
+        { front: "Contradiction", back: "A wff that is false in every interpretation, e.g. p ∧ ~p. It is unsatisfiable." },
+        { front: "Contingency", back: "A wff that is true in some interpretations and false in others." },
+        { front: "Satisfiable", back: "True in at least one interpretation (tautologies and contingencies)." },
+        { front: "Contrapositive of p ⇒ q", back: "~q ⇒ ~p. It is logically equivalent to p ⇒ q." },
+        { front: "Converse and inverse of p ⇒ q", back: "Converse q ⇒ p; inverse ~p ⇒ ~q. They are equivalent to each other but not to p ⇒ q." },
+        { front: "De Morgan's laws", back: "~(p ∧ q) ≡ ~p ∨ ~q and ~(p ∨ q) ≡ ~p ∧ ~q." },
+        { front: "Negation of p ⇒ q", back: "p ∧ ~q." },
+        { front: "Absorption laws", back: "p ∨ (p ∧ q) ≡ p and p ∧ (p ∨ q) ≡ p." },
+      ],
+      quiz: [
+        {
+          kind: "mcq",
+          q: "(p ⇒ q) ∧ (q ⇒ p) is equivalent to:",
+          options: ["p ⇔ q", "p ∧ q", "p ∨ q", "~p ⇒ q"],
+          answer: 0,
+          explain: "This is the biconditional law.",
+        },
+        {
+          kind: "mcq",
+          q: "Which formula is a contradiction?",
+          options: ["(p ∨ q) ∧ (~p ∧ ~q)", "p ⇒ (p ∨ q)", "p ∨ (q ∨ ~q)", "p ⇔ q"],
+          answer: 0,
+          explain: "~p ∧ ~q ≡ ~(p ∨ q), so the formula is A ∧ ~A with A = p ∨ q, which is always false. Options 2 and 3 are tautologies; p ⇔ q is a contingency.",
+          difficulty: 2,
+        },
+        {
+          kind: "truefalse",
+          q: "Every tautology is satisfiable.",
+          answer: true,
+          explain: "A tautology is true in every interpretation, so it is certainly true in at least one.",
+        },
+        {
+          kind: "fill",
+          q: "The contrapositive of \"If a number is divisible by 4, it is even\" is \"If a number is not even, it is not ___ by 4\".",
+          answer: ["divisible"],
+          explain: "~q ⇒ ~p: if not even, then not divisible by 4.",
+        },
+        {
+          kind: "mcq",
+          q: "Using the laws, p ∨ (p ∧ q) simplifies to:",
+          options: ["p", "q", "p ∧ q", "T"],
+          answer: 0,
+          explain: "Absorption law. Check: if p = T the whole is T; if p = F both parts are F. So the value is always p.",
+        },
+        {
+          kind: "multi",
+          q: "Which are equivalent to ~(p ∧ ~q)? (Choose all that apply)",
+          options: ["~p ∨ q", "p ⇒ q", "~q ⇒ ~p", "q ⇒ p"],
+          answers: [0, 1, 2],
+          explain: "De Morgan: ~p ∨ ~(~q) = ~p ∨ q = p ⇒ q, and the contrapositive ~q ⇒ ~p is the same. q ⇒ p is the converse.",
+          difficulty: 3,
+        },
+        {
+          kind: "order",
+          q: "Put the steps of simplifying ~(~p ∧ q) ∧ (p ∨ q) in order.",
+          items: [
+            "De Morgan: (p ∨ ~q) ∧ (p ∨ q)",
+            "Distributive (take p out): p ∨ (~q ∧ q)",
+            "Contradiction law: p ∨ F",
+            "Identity law: p",
+          ],
+          explain: "~(~p ∧ q) = ~(~p) ∨ ~q = p ∨ ~q. Then p ∨ (~q ∧ q) = p ∨ F = p.",
+          difficulty: 2,
+        },
+        {
+          kind: "truefalse",
+          q: "The inverse of a statement is logically equivalent to its converse.",
+          answer: true,
+          explain: "The inverse ~p ⇒ ~q is the contrapositive of the converse q ⇒ p, so they are equivalent.",
+        },
+      ],
+    },
+    {
+      slug: "c11-isc-propositional-logic-board-practice",
+      title: "Board Practice: Propositional Logic",
+      summary: "Mixed ISC-style questions: truth tables for three variables, word problems, proofs with laws, and a Java program that prints a three-variable truth table.",
+      minutes: 22,
+      xp: 55,
+      blocks: [
+        {
+          type: "text",
+          md: "Board papers ask propositional logic in three ways: build a truth table, translate between words and symbols, and prove or simplify using laws. This lesson has one of each, plus a program.",
+        },
+        {
+          type: "example",
+          title: "Truth table with intermediate columns",
+          problem: "Using a truth table, state whether (p ⇒ q) ∧ (q ⇒ p) and p ⇔ q are equivalent.",
+          steps: [
+            "Row TT: p ⇒ q = T, q ⇒ p = T, AND = T; p ⇔ q = T.",
+            "Row TF: p ⇒ q = F, q ⇒ p = T, AND = F; p ⇔ q = F.",
+            "Row FT: p ⇒ q = T, q ⇒ p = F, AND = F; p ⇔ q = F.",
+            "Row FF: p ⇒ q = T, q ⇒ p = T, AND = T; p ⇔ q = T.",
+            "The final columns T, F, F, T match in all four rows.",
+          ],
+          answer: "They are logically equivalent (the biconditional law).",
+        },
+        {
+          type: "example",
+          title: "Word problem",
+          problem: "p: \"The password is correct\", q: \"The OTP is correct\", r: \"Access is granted\". Write: \"Access is granted if and only if both the password and the OTP are correct\". Then write its contrapositive-style consequence: what must be true if access is not granted?",
+          steps: [
+            "The rule is r ⇔ (p ∧ q).",
+            "From it, r ⇒ (p ∧ q) and (p ∧ q) ⇒ r both hold.",
+            "Contrapositive of (p ∧ q) ⇒ r: ~r ⇒ ~(p ∧ q).",
+            "De Morgan: ~(p ∧ q) ≡ ~p ∨ ~q.",
+          ],
+          answer: "r ⇔ (p ∧ q). If access is not granted, then ~p ∨ ~q: the password is wrong or the OTP is wrong (or both).",
+        },
+        {
+          type: "mistake",
+          wrong: "~(p ∧ q) means \"not p and not q\", so if access is refused, both the password and the OTP must be wrong.",
+          right: "By De Morgan's law ~(p ∧ q) ≡ ~p **∨** ~q: at least one of them is wrong. The connective changes from ∧ to ∨ when the negation is pushed inside.",
+          why: "It feels natural to \"multiply the not into the bracket\" and keep the connective. But \"not both\" is weaker than \"neither\": a correct password with a wrong OTP is still \"not both\".",
+        },
+        {
+          type: "checkpoint",
+          questions: [
+            {
+              kind: "mcq",
+              q: "Which law proves ~(p ∨ q) ≡ ~p ∧ ~q?",
+              options: ["De Morgan's law", "Distributive law", "Absorption law", "Law of implication"],
+              answer: 0,
+              explain: "It is the second of De Morgan's laws.",
+            },
+          ],
+        },
+        {
+          type: "code",
+          lang: "java",
+          caption: "Table3.java: write a program to print the truth table of F = (p ∧ q) ∨ (~p ∧ r)",
+          code: `public class Table3
+{
+    public static void main(String[] args)
+    {
+        int count = 0;
+        System.out.println("p q r  F");
+        for (int p = 1; p >= 0; p--)
+        {
+            for (int q = 1; q >= 0; q--)
+            {
+                for (int r = 1; r >= 0; r--)
+                {
+                    boolean P = (p == 1), Q = (q == 1), R = (r == 1);
+                    boolean F = (P && Q) || (!P && R);
+                    if (F)
+                        count++;
+                    System.out.println(p + " " + q + " " + r + "  " + (F ? 1 : 0));
+                }
+            }
+        }
+        System.out.println("F is true in " + count + " rows");
+    }
+}`,
+        },
+        {
+          type: "example",
+          title: "Predict the output",
+          problem: "Without running it, give the output of Table3.java.",
+          steps: [
+            "Three nested loops each count 1 then 0, so there are 2 × 2 × 2 = 8 rows in the order 111, 110, 101, 100, 011, 010, 001, 000.",
+            "When p = 1, ~p is false, so F = q. Rows 111 and 110 give 1; rows 101 and 100 give 0.",
+            "When p = 0, F = r. Rows 011 and 001 give 1; rows 010 and 000 give 0.",
+            "Four rows are true.",
+          ],
+          answer: "p q r  F\n1 1 1  1\n1 1 0  1\n1 0 1  0\n1 0 0  0\n0 1 1  1\n0 1 0  0\n0 0 1  1\n0 0 0  0\nF is true in 4 rows",
+        },
+        {
+          type: "activity",
+          activity: {
+            kind: "match",
+            prompt: "Match each formula with an equivalent one.",
+            pairs: [
+              ["p ⇒ q", "~p ∨ q"],
+              ["~(p ∨ q)", "~p ∧ ~q"],
+              ["p ∧ (p ∨ q)", "p"],
+              ["~(p ⇒ q)", "p ∧ ~q"],
+              ["p ⇔ q", "(p ⇒ q) ∧ (q ⇒ p)"],
+            ],
+            explain: "Implication law, De Morgan's law, absorption, negation of an implication and the biconditional law. These five cover most board simplifications.",
+          },
+        },
+        {
+          type: "callout",
+          tone: "tip",
+          title: "Practical-exam tip",
+          md: "To print a truth table in Java, use one loop per variable, counting from 1 down to 0, so the rows come out in the standard order. Convert the int to boolean with `p == 1`. Java has no ⇒ operator: write `!a || b`. For ⇔ use `a == b`.",
+        },
+        {
+          type: "callout",
+          tone: "exam",
+          title: "ISC tip",
+          md: "If asked to \"state whether the formula is a tautology\", a complete truth table with a clear final column and a one-line conclusion (\"all entries are T, hence a tautology\") earns full marks. With laws, finish on T to prove a tautology.",
+        },
+        {
+          type: "keypoints",
+          items: [
+            "Equivalence by truth table: the final columns must match in every row.",
+            "\"A if and only if B\" is A ⇔ B; \"A only if B\" is A ⇒ B.",
+            "Pushing ~ inside a bracket swaps ∧ and ∨ (De Morgan).",
+            "In Java: `!` for ~, `&&` for ∧, `||` for ∨, `!a || b` for ⇒, `a == b` for ⇔.",
+          ],
+        },
+      ],
+      flashcards: [
+        { front: "\"A only if B\"", back: "A ⇒ B." },
+        { front: "\"A if B\"", back: "B ⇒ A." },
+        { front: "\"Not both p and q\"", back: "~(p ∧ q) ≡ ~p ∨ ~q (at least one is false)." },
+        { front: "\"Neither p nor q\"", back: "~(p ∨ q) ≡ ~p ∧ ~q (both are false)." },
+        { front: "Java for p ⇔ q", back: "`p == q` for two boolean values." },
+        { front: "Standard row order for 3 variables", back: "111, 110, 101, 100, 011, 010, 001, 000 (or TTT ... FFF)." },
+        { front: "(p ∧ q) ∨ (~p ∧ r)", back: "Takes the value of q when p is true and the value of r when p is false." },
+      ],
+      quiz: [
+        {
+          kind: "mcq",
+          q: "p = F, q = T, r = F. Value of (p ∧ q) ∨ (~p ∧ r)?",
+          options: ["F", "T", "Undefined", "Same as q"],
+          answer: 0,
+          explain: "p is false, so the formula takes the value of r, which is F.",
+        },
+        {
+          kind: "mcq",
+          q: "Which formula is a tautology?",
+          options: ["(p ∧ (p ⇒ q)) ⇒ q", "(q ∧ (p ⇒ q)) ⇒ p", "p ⇒ (p ∧ q)", "(p ∨ q) ⇒ p"],
+          answer: 0,
+          explain: "If p is true and p ⇒ q is true, q must be true, so T ⇒ F never happens. Option 2 fails for p = F, q = T; option 3 fails for p = T, q = F; option 4 fails for p = F, q = T.",
+          difficulty: 3,
+        },
+        {
+          kind: "fill",
+          q: "\"I will come only if you call me\" with p: I will come, q: you call me, is written p ___ q (one symbol).",
+          answer: ["⇒", "=>", "->", "→"],
+          explain: "\"A only if B\" means A ⇒ B.",
+        },
+        {
+          kind: "truefalse",
+          q: "p ⇒ q and q ⇒ p always have the same truth value.",
+          answer: false,
+          explain: "They differ when p = T, q = F and when p = F, q = T.",
+        },
+        {
+          kind: "numeric",
+          q: "In how many rows of its truth table is p ∨ q ∨ r false?",
+          answer: 1,
+          explain: "A disjunction is false only when every part is false: just the row p = q = r = F.",
+        },
+        {
+          kind: "mcq",
+          q: "Which Java expression correctly evaluates p ⇒ (q ∧ r) for boolean p, q, r?",
+          options: ["`!p || (q && r)`", "`p || (q && r)`", "`!p && (q && r)`", "`(p && q) || r`"],
+          answer: 0,
+          explain: "A ⇒ B ≡ ~A ∨ B with A = p and B = q ∧ r.",
+        },
+        {
+          kind: "multi",
+          q: "Which of these are satisfiable? (Choose all that apply)",
+          options: ["p ∧ q", "p ∨ ~p", "p ∧ ~p", "~p ⇒ p"],
+          answers: [0, 1, 3],
+          explain: "p ∧ q is true for p = q = T; p ∨ ~p is always true; ~p ⇒ p ≡ p ∨ p ≡ p, true when p = T. Only p ∧ ~p is never true.",
+          difficulty: 2,
+        },
+      ],
+    },
+  ],
+};
+
+export const topics: Topic[] = [numbers, propLogic];
 
 /** Chapter title ("11:" / "12:" + exact title) → topic slug(s) that teach it. */
 export const links: Record<string, string | string[]> = {
   "11:Numbers": "c11-isc-numbers",
+  "11:Propositional Logic": "c11-isc-propositional-logic",
 };

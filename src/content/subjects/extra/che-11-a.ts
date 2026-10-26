@@ -76,10 +76,6 @@ Common prefixes: milli (m) $= 10^{-3}$, micro ($\mu$) $= 10^{-6}$, nano (n) $= 1
             caption: "The kelvin scale has no negative values: 0 K (−273.15 °C) is the lowest possible temperature.",
           },
           {
-            type: "heading",
-            text: "Uncertainty: significant figures",
-          },
-          {
             type: "list",
             ordered: true,
             items: [
@@ -224,7 +220,7 @@ Common prefixes: milli (m) $= 10^{-3}$, micro ($\mu$) $= 10^{-6}$, nano (n) $= 1
             q: "Which is NOT an SI base unit?",
             options: ["kelvin", "mole", "litre", "candela"],
             answer: 2,
-            explain: "The litre is a derived (and non-SI but accepted) unit of volume, equal to 1 dm³. Kelvin, mole and candela are base units.",
+            explain: "The litre is not an SI unit; it is accepted for use with SI and equals 1 dm³. Kelvin, mole and candela are base units.",
           },
           {
             kind: "numeric",
@@ -290,10 +286,6 @@ Most elements are mixtures of **isotopes**, so the value in tables is the **aver
               t`Sum $= 35.453$ u.`,
             ],
             answer: "35.45 u. No single chlorine atom has this mass; it is an average.",
-          },
-          {
-            type: "heading",
-            text: "The mole",
           },
           {
             type: "formula",
@@ -806,9 +798,9 @@ For $\text{CH}_4(g) + 2\text{O}_2(g) \rightarrow \text{CO}_2(g) + 2\text{H}_2\te
           {
             kind: "mcq",
             q: "Which has the largest number of atoms? (H = 1, C = 12, O = 16, Na = 23)",
-            options: ["1 g H₂", "16 g O₂", "23 g Na", "11 g CO₂"],
-            answer: 2,
-            explain: "1 g H₂ = 0.5 mol × 2 = 1 mol atoms; 16 g O₂ = 0.5 × 2 = 1 mol; 23 g Na = 1 mol; 11 g CO₂ = 0.25 × 3 = 0.75 mol. Three tie at 1 mol... so look again: all of H₂, O₂ and Na give 1 mol atoms.",
+            options: ["2 g H₂", "16 g O₂", "23 g Na", "11 g CO₂"],
+            answer: 0,
+            explain: "2 g H₂ = 1 mol molecules = 2 mol atoms; 16 g O₂ = 0.5 mol × 2 = 1 mol atoms; 23 g Na = 1 mol atoms; 11 g CO₂ = 0.25 mol × 3 = 0.75 mol atoms. Count atoms, not molecules.",
             difficulty: 2,
           },
           {

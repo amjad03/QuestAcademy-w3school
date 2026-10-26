@@ -2109,6 +2109,787 @@ The two equivalents are linked by source transformation: $V_{Th} = I_N R_N$, or 
       },
     ],
   },
+  /* ------------------------------------------------------------------ */
+  /* AC Fundamentals                                                     */
+  /* ------------------------------------------------------------------ */
+  {
+    slug: "c11-ele-ac-fundamentals",
+    title: "AC Fundamentals",
+    icon: "〰️",
+    description: "Sinusoidal AC and its terms, average and RMS values, form and peak factors, reactance, impedance and power factor of RL, RC and RLC circuits, and series and parallel resonance.",
+    lessons: [
+      {
+        slug: "c11-ele-ac-waveform-rms",
+        title: "The AC Waveform, Average and RMS Values",
+        summary: "Instantaneous, peak and peak-to-peak values, frequency, period and phase, and the average and RMS values with form factor and peak factor.",
+        minutes: 20,
+        xp: 50,
+        blocks: [
+          {
+            type: "text",
+            md: "The socket in your home in India supplies **230 V at 50 Hz**. The voltage is not steady: it swings from positive to negative and back fifty times every second. That '230 V' is a special kind of average that tells you how much heating power the supply gives.",
+          },
+          {
+            type: "text",
+            md: t`An **alternating** voltage changes its size continuously and reverses its direction periodically. The standard form is a sine wave:
+
+$v = V_m \sin(\omega t + \phi)$
+
+Here $v$ is the **instantaneous value**, $V_m$ the **peak value** (amplitude), $\omega = 2\pi f$ the **angular frequency** in rad/s, and $\phi$ the **phase** at $t = 0$. One complete set of positive and negative values is a **cycle**; the time it takes is the **period** $T$, and the number of cycles per second is the **frequency** $f = 1/T$, in hertz (Hz).`,
+          },
+          {
+            type: "table",
+            headers: ["Term", "Meaning", "For Indian mains"],
+            rows: [
+              ["Peak value V_m", "largest value in a cycle", "≈ 325 V"],
+              ["Peak-to-peak V_pp", "from the positive peak to the negative peak, 2V_m", "≈ 651 V"],
+              ["Frequency f", "cycles per second", "50 Hz"],
+              ["Period T", "time of one cycle, 1/f", "20 ms"],
+              ["Angular frequency ω", "2πf", "≈ 314 rad/s"],
+            ],
+          },
+          {
+            type: "text",
+            md: t`**Phase difference**: two waves of the same frequency may reach their peaks at different times. In $v_1 = V_1\sin\omega t$ and $v_2 = V_2\sin(\omega t - 30°)$, $v_2$ reaches its peak later, so $v_2$ **lags** $v_1$ by 30° (or $v_1$ **leads** $v_2$ by 30°).`,
+          },
+          {
+            type: "heading",
+            text: "Average and RMS values",
+          },
+          {
+            type: "text",
+            md: t`Over a full cycle the positive and negative halves cancel, so the average of a sine wave is zero. The **average value** is therefore taken over **half a cycle**.
+
+The **RMS (root mean square) value** is the steady DC value that would produce the **same heating** in a resistor. Square the wave, take the mean over a cycle, then take the square root. AC voltmeters and ammeters read RMS values, and '230 V mains' is an RMS value.`,
+          },
+          {
+            type: "formula",
+            tex: t`V_{\text{avg}} = \frac{2V_m}{\pi} = 0.637\,V_m \qquad V_{\text{rms}} = \frac{V_m}{\sqrt{2}} = 0.707\,V_m`,
+            caption: t`Form factor $= \frac{V_{\text{rms}}}{V_{\text{avg}}} = 1.11$ and peak (crest) factor $= \frac{V_m}{V_{\text{rms}}} = \sqrt{2} = 1.414$, for a sine wave. For a square wave all three values are equal, so both factors are 1.`,
+          },
+          {
+            type: "example",
+            title: "Mains values",
+            problem: "The mains supply is 230 V (RMS), 50 Hz. Find its peak value, peak-to-peak value, average value and period.",
+            steps: [
+              t`$V_m = \sqrt{2} \times 230 = 325.3$ V.`,
+              t`$V_{pp} = 2V_m = 650.5$ V.`,
+              t`$V_{\text{avg}} = 0.637 \times 325.3 = 207.1$ V (or $230/1.11$).`,
+              t`$T = 1/f = 1/50 = 0.02$ s $= 20$ ms.`,
+            ],
+            answer: "V_m ≈ 325 V, V_pp ≈ 651 V, V_avg ≈ 207 V, T = 20 ms.",
+          },
+          {
+            type: "example",
+            title: "Reading an equation",
+            problem: t`A voltage is $v = 100\sin(314t + \pi/6)$ V. Find the peak value, RMS value, frequency, period and the value at $t = 0$.`,
+            steps: [
+              t`Compare with $V_m\sin(\omega t + \phi)$: $V_m = 100$ V, $\omega = 314$ rad/s, $\phi = \pi/6 = 30°$.`,
+              t`$V_{\text{rms}} = 100/\sqrt{2} = 70.7$ V.`,
+              t`$f = \omega/2\pi = 314/6.28 = 50$ Hz; $T = 20$ ms.`,
+              t`At $t = 0$: $v = 100\sin 30° = 50$ V.`,
+            ],
+            answer: "V_m = 100 V, V_rms = 70.7 V, f = 50 Hz, T = 20 ms, v(0) = 50 V.",
+          },
+          {
+            type: "checkpoint",
+            questions: [
+              {
+                kind: "numeric",
+                q: "An AC ammeter reads 5 A. What is the peak current (in A)?",
+                answer: 7.07,
+                tolerance: 0.02,
+                unit: "A",
+                explain: t`Meters read RMS, so $I_m = \sqrt{2} \times 5 = 7.07$ A.`,
+              },
+            ],
+          },
+          {
+            type: "mistake",
+            wrong: "The 230 V mains voltage is the peak value, so the voltage never goes above 230 V.",
+            right: "230 V is the **RMS** value. The peak is about 325 V, so insulation and capacitors on the mains side must be rated well above 230 V.",
+            why: "We usually think of a quoted voltage as 'the' voltage. For AC, the RMS value is quoted because it gives the same heating as that DC voltage, but the wave rises to √2 times this at its peaks.",
+          },
+          {
+            type: "activity",
+            activity: {
+              kind: "match",
+              prompt: "Match each quantity to its value for a sine wave.",
+              pairs: [
+                ["RMS value", "0.707 V_m"],
+                ["Average value (half cycle)", "0.637 V_m"],
+                ["Form factor", "1.11"],
+                ["Peak factor", "1.414"],
+                ["Average over a full cycle", "0"],
+              ],
+              explain: "RMS ÷ average = 0.707/0.637 = 1.11, and peak ÷ RMS = √2 = 1.414. The full-cycle average is zero because the two halves cancel.",
+            },
+          },
+          {
+            type: "callout",
+            tone: "exam",
+            title: "Board tip",
+            md: "Define RMS value carefully: 'the RMS value of an AC is the steady DC that produces the same heat in a given resistor in the same time.' Many students write 'average value', which loses the mark. Remember the numbers 0.637, 0.707, 1.11 and 1.414.",
+          },
+          {
+            type: "keypoints",
+            items: [
+              "v = V_m sin(ωt + φ); ω = 2πf; T = 1/f.",
+              "V_pp = 2V_m; V_avg (half cycle) = 0.637V_m; V_rms = 0.707V_m.",
+              "Form factor 1.11; peak factor 1.414 (sine wave).",
+              "Meters and mains ratings use RMS values; Indian mains: 230 V RMS, 50 Hz, peak ≈ 325 V.",
+            ],
+          },
+        ],
+        flashcards: [
+          { front: "RMS value of an AC", back: "The steady DC value that produces the same heat in a resistor in the same time; V_m/√2 for a sine wave." },
+          { front: "Average value of a sine wave", back: "2V_m/π = 0.637V_m over half a cycle; zero over a full cycle." },
+          { front: "Form factor", back: "RMS ÷ average = 1.11 for a sine wave." },
+          { front: "Peak (crest) factor", back: "Peak ÷ RMS = 1.414 for a sine wave." },
+          { front: "Peak value of 230 V mains", back: "About 325 V." },
+          { front: "Period of a 50 Hz supply", back: "20 ms." },
+          { front: "Phase difference", back: "The angle by which one wave leads or lags another of the same frequency." },
+          { front: "Form and peak factor of a square wave", back: "Both are 1, since peak, RMS and average values are equal." },
+        ],
+        quiz: [
+          {
+            kind: "numeric",
+            q: t`For $v = 311\sin(100\pi t)$ V, what is the frequency (in Hz)?`,
+            answer: 50,
+            unit: "Hz",
+            explain: t`$\omega = 100\pi = 2\pi f$, so $f = 50$ Hz.`,
+          },
+          {
+            kind: "numeric",
+            q: t`For the same $v = 311\sin(100\pi t)$ V, what is the RMS voltage (in V)?`,
+            answer: 220,
+            tolerance: 1,
+            unit: "V",
+            explain: t`$311/\sqrt{2} \approx 220$ V.`,
+          },
+          {
+            kind: "mcq",
+            q: "The form factor of a sinusoidal wave is:",
+            options: ["0.707", "1.11", "1.414", "0.637"],
+            answer: 1,
+            explain: "Form factor = V_rms/V_avg = 0.707/0.637 = 1.11.",
+          },
+          {
+            kind: "truefalse",
+            q: "An AC voltmeter connected to the mains reads the peak value of the voltage.",
+            answer: false,
+            explain: "AC meters are calibrated to read RMS values.",
+          },
+          {
+            kind: "numeric",
+            q: "A sine wave has a peak-to-peak value of 20 V. What is its RMS value (in V)?",
+            answer: 7.07,
+            tolerance: 0.02,
+            unit: "V",
+            explain: t`$V_m = 10$ V, so $V_{\text{rms}} = 10/\sqrt{2} = 7.07$ V.`,
+            difficulty: 2,
+          },
+          {
+            kind: "fill",
+            q: "If i₂ reaches its peak a quarter cycle after i₁, then i₂ ___ i₁ by 90°.",
+            answer: ["lags"],
+            explain: "A wave that peaks later lags the other.",
+          },
+          {
+            kind: "numeric",
+            q: "A 50 Hz voltage has a peak of 325 V and is zero at t = 0, rising. What is its instantaneous value (in V) at t = 2.5 ms?",
+            answer: 230,
+            tolerance: 1,
+            unit: "V",
+            explain: t`$\omega t = 2\pi \times 50 \times 0.0025 = \pi/4$; $v = 325\sin 45° = 325 \times 0.707 \approx 230$ V.`,
+            difficulty: 3,
+          },
+          {
+            kind: "mcq",
+            q: "A frequency of 1 kHz has a period of:",
+            options: ["1 s", "10 ms", "1 ms", "1 µs"],
+            answer: 2,
+            explain: "T = 1/1000 s = 1 ms.",
+          },
+        ],
+      },
+      {
+        slug: "c11-ele-reactance-impedance",
+        title: "Reactance, Impedance and Power Factor",
+        summary: "R, L and C on AC, inductive and capacitive reactance, phase relations, impedance of series RL, RC and RLC circuits, and true power and power factor.",
+        minutes: 24,
+        xp: 60,
+        blocks: [
+          {
+            type: "text",
+            md: "A capacitor blocks DC, yet AC seems to pass through it. An inductor is just a wire for DC, yet it holds back AC. To handle AC circuits we need a new quantity that changes with frequency: **reactance**.",
+          },
+          {
+            type: "table",
+            headers: ["Element", "Opposition", "Phase of current", "Average power"],
+            rows: [
+              ["Pure R", "R (same at all f)", "in phase with V", t`$V_{\text{rms}}I_{\text{rms}}$`],
+              ["Pure L", t`$X_L = 2\pi f L$ (rises with f)`, "**lags** V by 90°", "zero"],
+              ["Pure C", t`$X_C = \dfrac{1}{2\pi f C}$ (falls with f)`, "**leads** V by 90°", "zero"],
+            ],
+          },
+          {
+            type: "text",
+            md: "**Reactance** is the opposition offered by an inductor or a capacitor to AC; it is measured in ohms, but unlike resistance it uses no energy on average: energy is stored for a quarter cycle and returned in the next. A memory aid is **CIVIL**: in C, I leads V; in L, V leads I.\n\nAt DC (f = 0), X_L = 0 (an inductor is a short) and X_C is infinite (a capacitor is open). At very high f, the reverse is true.",
+          },
+          {
+            type: "example",
+            title: "Reactances at 50 Hz",
+            problem: "Find the reactance of (a) a 0.1 H inductor and (b) a 100 µF capacitor at 50 Hz. What is the reactance of the capacitor at 1 kHz?",
+            steps: [
+              t`(a) $X_L = 2\pi f L = 2\pi \times 50 \times 0.1 = 31.4\ \Omega$.`,
+              t`(b) $X_C = \frac{1}{2\pi f C} = \frac{1}{2\pi \times 50 \times 100 \times 10^{-6}} = 31.8\ \Omega$.`,
+              t`At 1 kHz the frequency is 20 times higher, so $X_C = 31.8/20 = 1.59\ \Omega$.`,
+            ],
+            answer: "X_L ≈ 31.4 Ω, X_C ≈ 31.8 Ω at 50 Hz and ≈ 1.59 Ω at 1 kHz.",
+          },
+          {
+            type: "heading",
+            text: "Series circuits and impedance",
+          },
+          {
+            type: "text",
+            md: t`In a series circuit the same current flows through every element, but the voltages are out of phase, so they add as **phasors** (like vectors), not as plain numbers. The total opposition is the **impedance** $Z$, in ohms, and $I = V/Z$. The angle $\phi$ between the supply voltage and the current is the **phase angle**, and $\cos\phi$ is the **power factor**.`,
+          },
+          {
+            type: "formula",
+            tex: t`Z = \sqrt{R^2 + (X_L - X_C)^2} \qquad \tan\phi = \frac{X_L - X_C}{R} \qquad \cos\phi = \frac{R}{Z} \qquad P = V_{\text{rms}}I_{\text{rms}}\cos\phi`,
+            caption: "For series RL put X_C = 0 (current lags); for series RC put X_L = 0 (current leads). True power is dissipated only in R: P = I²R.",
+          },
+          {
+            type: "example",
+            title: "Series RL circuit",
+            problem: "A coil has resistance 30 Ω and inductive reactance 40 Ω. It is connected to 200 V AC. Find Z, I, the power factor, the phase angle and the power used.",
+            steps: [
+              t`$Z = \sqrt{30^2 + 40^2} = \sqrt{2500} = 50\ \Omega$.`,
+              t`$I = V/Z = 200/50 = 4$ A.`,
+              t`$\cos\phi = R/Z = 30/50 = 0.6$ (lagging), so $\phi = 53.1°$.`,
+              t`$P = VI\cos\phi = 200 \times 4 \times 0.6 = 480$ W. Check: $I^2R = 16 \times 30 = 480$ W.`,
+            ],
+            answer: "Z = 50 Ω, I = 4 A, pf = 0.6 lagging, φ ≈ 53.1°, P = 480 W.",
+          },
+          {
+            type: "example",
+            title: "Series RLC circuit",
+            problem: "R = 40 Ω, X_L = 80 Ω and X_C = 50 Ω are in series across 230 V AC. Find Z, I, the voltage across each element and the power factor.",
+            steps: [
+              t`Net reactance $= 80 - 50 = 30\ \Omega$ (inductive). $Z = \sqrt{40^2 + 30^2} = 50\ \Omega$.`,
+              t`$I = 230/50 = 4.6$ A.`,
+              t`$V_R = 4.6 \times 40 = 184$ V, $V_L = 4.6 \times 80 = 368$ V, $V_C = 4.6 \times 50 = 230$ V.`,
+              t`Phasor check: $\sqrt{184^2 + (368 - 230)^2} = \sqrt{33\,856 + 19\,044} = 230$ V.`,
+              t`$\cos\phi = 40/50 = 0.8$ lagging, since $X_L > X_C$.`,
+            ],
+            answer: "Z = 50 Ω, I = 4.6 A, V_R = 184 V, V_L = 368 V, V_C = 230 V, pf = 0.8 lagging.",
+          },
+          {
+            type: "mistake",
+            wrong: "The element voltages in a series AC circuit must add up to the supply voltage, so V_R = 184 V, V_L = 368 V and V_C = 230 V on a 230 V supply cannot be right.",
+            right: "The voltages are out of phase and must be added as phasors: $V = \\sqrt{V_R^2 + (V_L - V_C)^2}$. A single element can even have **more** voltage than the supply.",
+            why: "In DC circuits plain addition always works, so it feels like a law. In AC, V_L and V_C point in opposite directions on the phasor diagram and partly cancel, while V_R is at right angles to both.",
+          },
+          {
+            type: "checkpoint",
+            questions: [
+              {
+                kind: "numeric",
+                q: "A series RC circuit has R = 6 Ω and X_C = 8 Ω. What is its impedance (in Ω)?",
+                answer: 10,
+                unit: "Ω",
+                explain: t`$Z = \sqrt{36 + 64} = 10\ \Omega$; current leads the voltage.`,
+              },
+            ],
+          },
+          {
+            type: "activity",
+            activity: {
+              kind: "sort",
+              prompt: "Does the current lead, lag or stay in phase with the voltage?",
+              groups: ["Current leads", "Current lags", "In phase"],
+              items: [
+                { text: "Pure capacitor", group: 0, hint: "CIVIL: in C, I comes before V." },
+                { text: "Pure inductor", group: 1, hint: "In L, V comes before I." },
+                { text: "Pure resistor", group: 2, hint: "Ohm's law holds at every instant." },
+                { text: "Series RLC with X_C > X_L", group: 0, hint: "The circuit is net capacitive." },
+                { text: "Series RL circuit", group: 1, hint: "The inductor makes it net inductive." },
+                { text: "Series RLC with X_L = X_C", group: 2, hint: "The reactances cancel, leaving only R." },
+              ],
+              explain: "Net inductive circuits have lagging current, net capacitive circuits leading current, and a purely resistive (or resonant) circuit has the current in phase.",
+            },
+          },
+          {
+            type: "callout",
+            tone: "exam",
+            title: "Board tip",
+            md: "In RLC numericals, draw the impedance triangle (R across, X_L − X_C up, Z as the hypotenuse) and the voltage phasor diagram. State whether the power factor is lagging or leading; a bare number like '0.8' may lose half a mark.",
+          },
+          {
+            type: "keypoints",
+            items: [
+              "X_L = 2πfL rises with frequency; X_C = 1/(2πfC) falls with frequency.",
+              "Pure L: I lags V by 90°; pure C: I leads V by 90°; neither uses average power.",
+              "Z = √(R² + (X_L − X_C)²); I = V/Z.",
+              "Power factor cos φ = R/Z; true power P = VI cos φ = I²R.",
+              "Series AC voltages add as phasors, not as numbers.",
+            ],
+          },
+        ],
+        flashcards: [
+          { front: "Inductive reactance", back: "X_L = 2πfL; zero at DC and rises with frequency." },
+          { front: "Capacitive reactance", back: "X_C = 1/(2πfC); infinite at DC and falls with frequency." },
+          { front: "Phase in a pure inductor", back: "Current lags voltage by 90°." },
+          { front: "Phase in a pure capacitor", back: "Current leads voltage by 90°." },
+          { front: "Impedance of series RLC", back: "Z = √(R² + (X_L − X_C)²)." },
+          { front: "Power factor", back: "cos φ = R/Z = true power ÷ apparent power (VI)." },
+          { front: "Wattless current", back: "Current in a pure L or C: it flows but the average power is zero." },
+          { front: "CIVIL", back: "In a Capacitor I leads V; V leads I in an inductor (L)." },
+        ],
+        quiz: [
+          {
+            kind: "numeric",
+            q: "What is the reactance (in Ω) of a 1 µF capacitor at 1 kHz?",
+            answer: 159.2,
+            tolerance: 0.5,
+            unit: "Ω",
+            explain: t`$X_C = \frac{1}{2\pi \times 1000 \times 10^{-6}} = 159.2\ \Omega$.`,
+          },
+          {
+            kind: "mcq",
+            q: "If the frequency of the supply is doubled, the reactance of an inductor:",
+            options: ["Halves", "Doubles", "Stays the same", "Becomes four times"],
+            answer: 1,
+            explain: t`$X_L = 2\pi fL$ is proportional to $f$.`,
+          },
+          {
+            kind: "numeric",
+            q: "A series RL circuit has R = 30 Ω and X_L = 40 Ω. What is its power factor?",
+            answer: 0.6,
+            tolerance: 0.01,
+            explain: t`$Z = 50\ \Omega$, $\cos\phi = 30/50 = 0.6$ lagging.`,
+          },
+          {
+            kind: "truefalse",
+            q: "A pure inductor connected to AC consumes no average power.",
+            answer: true,
+            explain: "It stores energy in its magnetic field for a quarter cycle and returns it in the next, so the average power is zero.",
+          },
+          {
+            kind: "numeric",
+            q: "A series circuit has R = 8 Ω, X_L = 10 Ω, X_C = 4 Ω across 100 V. What current (in A) flows?",
+            answer: 10,
+            unit: "A",
+            explain: t`$Z = \sqrt{64 + 36} = 10\ \Omega$; $I = 100/10 = 10$ A.`,
+            difficulty: 2,
+          },
+          {
+            kind: "numeric",
+            q: "For the same circuit (R = 8 Ω, X_L = 10 Ω, X_C = 4 Ω, 100 V), what true power (in W) is used?",
+            answer: 800,
+            unit: "W",
+            explain: t`$P = I^2R = 100 \times 8 = 800$ W, or $VI\cos\phi = 100 \times 10 \times 0.8$.`,
+            difficulty: 2,
+          },
+          {
+            kind: "fill",
+            q: "The total opposition of a circuit to alternating current is called ___.",
+            answer: ["impedance"],
+            explain: "Impedance Z combines resistance and reactance.",
+          },
+          {
+            kind: "multi",
+            q: "In a series RLC circuit with X_C greater than X_L, which statements are true?",
+            options: ["The circuit is net capacitive", "Current leads the supply voltage", "The power factor is 1", "V_C is larger than V_L"],
+            answers: [0, 1, 3],
+            explain: "The same current flows through L and C, so the larger reactance takes the larger voltage. The power factor is 1 only at resonance.",
+            difficulty: 2,
+          },
+        ],
+      },
+      {
+        slug: "c11-ele-resonance",
+        title: "Series and Parallel Resonance",
+        summary: "Resonant frequency, the behaviour of series (acceptor) and parallel (rejector) resonant circuits, Q-factor, bandwidth and dynamic impedance.",
+        minutes: 22,
+        xp: 55,
+        blocks: [
+          {
+            type: "text",
+            md: "Turn the tuning knob of an FM radio from 91.1 MHz to 93.5 MHz and a different station comes in. The knob changes a capacitance in an LC circuit so that it responds strongly to just one frequency. This is **resonance**.",
+          },
+          {
+            type: "text",
+            md: t`In a series RLC circuit, $X_L$ rises with frequency and $X_C$ falls. At one frequency they are equal and cancel. This is **series resonance**. Then $Z = R$ (its **minimum**), the current is **maximum** ($I = V/R$), the current is in phase with the voltage, and the power factor is 1.`,
+          },
+          {
+            type: "formula",
+            tex: t`X_L = X_C \;\Rightarrow\; 2\pi f_0 L = \frac{1}{2\pi f_0 C} \;\Rightarrow\; f_0 = \frac{1}{2\pi\sqrt{LC}}`,
+            caption: "The same formula gives the resonant frequency of an ideal parallel LC (tank) circuit.",
+          },
+          {
+            type: "text",
+            md: t`The **quality factor** $Q$ measures how sharp the resonance is. For a series circuit, $Q = \frac{X_L}{R} = \frac{2\pi f_0 L}{R} = \frac{1}{R}\sqrt{\frac{L}{C}}$. At resonance $V_L = V_C = Q \times V$, so a series resonant circuit gives **voltage magnification**.
+
+The **bandwidth** is the range of frequencies between the two **half-power points**, where the current falls to $I_{\max}/\sqrt{2}$: $\text{BW} = f_2 - f_1 = f_0/Q$. High Q means a narrow bandwidth and good **selectivity**.`,
+          },
+          {
+            type: "example",
+            title: "Series resonance",
+            problem: "A series circuit has L = 10 mH, C = 0.1 µF and R = 10 Ω, fed by 10 V. Find f₀, the current at resonance, Q, the bandwidth and V_L at resonance.",
+            steps: [
+              t`$LC = 0.01 \times 10^{-7} = 10^{-9}$, $\sqrt{LC} = 3.162 \times 10^{-5}$ s. $f_0 = \frac{1}{2\pi \times 3.162 \times 10^{-5}} \approx 5033$ Hz.`,
+              t`At resonance $Z = R$: $I = 10/10 = 1$ A.`,
+              t`$Q = \frac{1}{R}\sqrt{\frac{L}{C}} = \frac{1}{10}\sqrt{\frac{0.01}{10^{-7}}} = \frac{316.2}{10} = 31.6$.`,
+              t`$\text{BW} = f_0/Q = 5033/31.6 \approx 159$ Hz.`,
+              t`$V_L = V_C = QV = 31.6 \times 10 = 316$ V, far more than the 10 V supply.`,
+            ],
+            answer: "f₀ ≈ 5.03 kHz, I = 1 A, Q ≈ 31.6, BW ≈ 159 Hz, V_L ≈ 316 V.",
+          },
+          {
+            type: "checkpoint",
+            questions: [
+              {
+                kind: "numeric",
+                q: "A radio coil of 250 µH must resonate at 1 MHz. What capacitance (in pF) is needed?",
+                answer: 101,
+                tolerance: 1,
+                unit: "pF",
+                explain: t`$C = \frac{1}{4\pi^2 f^2 L} = \frac{1}{39.48 \times 10^{12} \times 2.5 \times 10^{-4}} = 1.01 \times 10^{-10}$ F $\approx 101$ pF.`,
+                difficulty: 2,
+              },
+            ],
+          },
+          {
+            type: "heading",
+            text: "Parallel resonance: the tank circuit",
+          },
+          {
+            type: "text",
+            md: t`In a **parallel resonant (tank) circuit**, a coil (L with its small resistance R) is in parallel with a capacitor C. At resonance the branch currents in L and C are nearly equal and opposite, so the **line current is minimum** and the **impedance is maximum**. This maximum is the **dynamic impedance** $Z_D = \frac{L}{CR}$, which is purely resistive.
+
+The resonant frequency is $f_r = \frac{1}{2\pi}\sqrt{\frac{1}{LC} - \frac{R^2}{L^2}}$, which is very close to $\frac{1}{2\pi\sqrt{LC}}$ when R is small. A large current circulates between L and C (**current magnification**, by Q).`,
+          },
+          {
+            type: "table",
+            headers: ["At resonance", "Series RLC", "Parallel (tank)"],
+            rows: [
+              ["Impedance", "minimum, Z = R", "maximum, Z_D = L/CR"],
+              ["Line current", "maximum, V/R", "minimum, V/Z_D"],
+              ["Magnifies", "voltage (V_L = V_C = QV)", "current (circulating current = Q × line current)"],
+              ["Power factor", "1", "1"],
+              ["Called", "acceptor circuit", "rejector circuit"],
+              ["Used in", "tuning a radio receiver to a station", "oscillator tank circuits, IF stages, wave traps"],
+            ],
+          },
+          {
+            type: "example",
+            title: "Dynamic impedance",
+            problem: "A coil of 10 mH and resistance 10 Ω is in parallel with a 0.1 µF capacitor. Find the dynamic impedance and the resonant frequency.",
+            steps: [
+              t`$Z_D = \frac{L}{CR} = \frac{0.01}{10^{-7} \times 10} = 10^4\ \Omega = 10$ kΩ.`,
+              t`$\frac{1}{LC} = 10^9$ and $\frac{R^2}{L^2} = \frac{100}{10^{-4}} = 10^6$.`,
+              t`$f_r = \frac{1}{2\pi}\sqrt{10^9 - 10^6} \approx 5030$ Hz, only slightly below the ideal 5033 Hz.`,
+            ],
+            answer: "Z_D = 10 kΩ; f_r ≈ 5.03 kHz.",
+          },
+          {
+            type: "mistake",
+            wrong: "At resonance, a parallel LC circuit draws maximum current from the supply, just like a series circuit.",
+            right: "A **series** resonant circuit draws **maximum** current (minimum Z). A **parallel** resonant circuit draws **minimum** current (maximum Z).",
+            why: "Both are called 'resonance', so learners expect the same behaviour. In the parallel circuit the large L and C currents cancel each other in the supply line, so only a small current is drawn even though a large current circulates inside the tank.",
+          },
+          {
+            type: "activity",
+            activity: {
+              kind: "reveal",
+              prompt: "If the capacitance of a tuned circuit is made 4 times larger, what happens to f₀?",
+              emoji: "📻",
+              options: ["It becomes 4 times larger", "It becomes 4 times smaller", "It halves", "It doubles"],
+              answer: 2,
+              trap: 1,
+              explain: t`$f_0 \propto 1/\sqrt{C}$, so 4 times the capacitance gives $1/\sqrt{4} = 1/2$ the frequency. The square root is the trap.`,
+            },
+          },
+          {
+            type: "callout",
+            tone: "exam",
+            title: "Board tip",
+            md: "Sketch the current versus frequency curve for series resonance (a peak at f₀, with f₁ and f₂ marked at 0.707 I_max) and the impedance versus frequency curve for parallel resonance (a peak at f_r). A labelled graph is worth marks in any resonance answer.",
+          },
+          {
+            type: "keypoints",
+            items: [
+              "Resonance: X_L = X_C; f₀ = 1/(2π√(LC)).",
+              "Series: Z minimum (= R), current maximum, voltage magnification QV; acceptor circuit.",
+              "Parallel: Z maximum (Z_D = L/CR), line current minimum, current magnification; rejector circuit.",
+              "Q = X_L/R = (1/R)√(L/C); bandwidth = f₀/Q between the half-power points.",
+            ],
+          },
+        ],
+        flashcards: [
+          { front: "Resonant frequency of an LC circuit", back: "f₀ = 1/(2π√(LC))." },
+          { front: "Condition for series resonance", back: "X_L = X_C, so Z = R and current is maximum." },
+          { front: "Q-factor of a series resonant circuit", back: "Q = X_L/R = (1/R)√(L/C) = f₀/BW." },
+          { front: "Bandwidth", back: "f₂ − f₁, the range between the half-power points where I = I_max/√2; BW = f₀/Q." },
+          { front: "Dynamic impedance", back: "The (maximum, resistive) impedance of a parallel resonant circuit: Z_D = L/CR." },
+          { front: "Acceptor and rejector circuits", back: "Series resonant circuit = acceptor (low Z at f₀); parallel resonant circuit = rejector (high Z at f₀)." },
+          { front: "Effect of high Q", back: "Sharper resonance, narrower bandwidth, better selectivity." },
+          { front: "Voltage magnification", back: "In series resonance, V_L = V_C = Q × supply voltage." },
+        ],
+        quiz: [
+          {
+            kind: "numeric",
+            q: "What is the resonant frequency (in Hz) of L = 1 mH and C = 1 µF? Give the nearest whole number.",
+            answer: 5033,
+            tolerance: 5,
+            unit: "Hz",
+            explain: t`$\sqrt{LC} = \sqrt{10^{-9}} = 3.162 \times 10^{-5}$ s; $f_0 = 1/(2\pi \times 3.162 \times 10^{-5}) \approx 5033$ Hz.`,
+          },
+          {
+            kind: "mcq",
+            q: "At series resonance, the impedance of the circuit is:",
+            options: ["Maximum", "Equal to R, its minimum", "Zero", "Equal to X_L + X_C"],
+            answer: 1,
+            explain: "X_L and X_C cancel, leaving only R.",
+          },
+          {
+            kind: "numeric",
+            q: "A series resonant circuit has f₀ = 10 kHz and Q = 50. What is its bandwidth (in Hz)?",
+            answer: 200,
+            unit: "Hz",
+            explain: t`$\text{BW} = f_0/Q = 10\,000/50 = 200$ Hz.`,
+          },
+          {
+            kind: "truefalse",
+            q: "A parallel resonant circuit is called a rejector circuit because it offers maximum impedance at resonance.",
+            answer: true,
+            explain: "At f_r it takes very little line current, so it 'rejects' that frequency in a series line, or develops maximum voltage across itself.",
+          },
+          {
+            kind: "numeric",
+            q: "A series RLC circuit at resonance has Q = 20 and is fed by 5 V. What is the voltage (in V) across the capacitor?",
+            answer: 100,
+            unit: "V",
+            explain: t`$V_C = QV = 20 \times 5 = 100$ V.`,
+            difficulty: 2,
+          },
+          {
+            kind: "numeric",
+            q: "A coil (L = 1 mH, R = 5 Ω) is in parallel with C = 0.02 µF. What is the dynamic impedance (in kΩ)?",
+            answer: 10,
+            unit: "kΩ",
+            explain: t`$Z_D = \frac{L}{CR} = \frac{10^{-3}}{2 \times 10^{-8} \times 5} = 10^4\ \Omega = 10$ kΩ.`,
+            difficulty: 2,
+          },
+          {
+            kind: "fill",
+            q: "At the half-power points, the current in a series resonant circuit is ___ times its maximum value.",
+            answer: ["0.707", "1/√2", "0.71"],
+            explain: "Power ∝ I², so half power means I = I_max/√2 = 0.707 I_max.",
+          },
+          {
+            kind: "mcq",
+            q: "To make a series tuned circuit more selective, you should:",
+            options: ["Increase its resistance", "Decrease its resistance", "Remove the capacitor", "Lower the supply voltage"],
+            answer: 1,
+            explain: "Q = (1/R)√(L/C); lower R gives higher Q and a narrower bandwidth.",
+          },
+        ],
+      },
+      {
+        slug: "c11-ele-ac-practice",
+        title: "Board Practice: AC Fundamentals",
+        summary: "Mixed board-style numericals on AC values, reactance, impedance, power factor and resonance.",
+        minutes: 22,
+        xp: 55,
+        blocks: [
+          {
+            type: "text",
+            md: "AC numericals in the board paper are usually two or three steps long. Write the formula, substitute with units, and state lead or lag where it applies. Try each problem before you read the steps.",
+          },
+          {
+            type: "example",
+            title: "Series RC circuit on the mains",
+            problem: "A 100 Ω resistor and a 10 µF capacitor are in series across 230 V, 50 Hz. Find X_C, Z, I and the power factor.",
+            steps: [
+              t`$X_C = \frac{1}{2\pi \times 50 \times 10 \times 10^{-6}} = 318.3\ \Omega$.`,
+              t`$Z = \sqrt{100^2 + 318.3^2} = 333.6\ \Omega$.`,
+              t`$I = 230/333.6 = 0.689$ A.`,
+              t`$\cos\phi = 100/333.6 = 0.30$, leading (the circuit is capacitive).`,
+            ],
+            answer: "X_C ≈ 318 Ω, Z ≈ 334 Ω, I ≈ 0.69 A, pf ≈ 0.30 leading.",
+          },
+          {
+            type: "example",
+            title: "Choosing C for resonance",
+            problem: "What capacitance must be put in series with a 0.5 H inductor so that the circuit resonates at 50 Hz?",
+            steps: [
+              t`From $f_0 = \frac{1}{2\pi\sqrt{LC}}$: $C = \frac{1}{4\pi^2 f_0^2 L}$.`,
+              t`$C = \frac{1}{4\pi^2 \times 2500 \times 0.5} = \frac{1}{49\,348} = 2.03 \times 10^{-5}$ F.`,
+            ],
+            answer: "C ≈ 20.3 µF.",
+          },
+          {
+            type: "checkpoint",
+            questions: [
+              {
+                kind: "numeric",
+                q: "A sine wave has an average (half-cycle) value of 63.7 V. What is its RMS value (in V)?",
+                answer: 70.7,
+                tolerance: 0.2,
+                unit: "V",
+                explain: "RMS = form factor × average = 1.11 × 63.7 ≈ 70.7 V (the peak is 100 V).",
+              },
+            ],
+          },
+          {
+            type: "example",
+            title: "Q and bandwidth",
+            problem: "A series circuit with L = 0.1 H, C = 10 µF and R = 20 Ω is fed by 12 V. Find f₀, Q, the bandwidth and the current and V_L at resonance.",
+            steps: [
+              t`$f_0 = \frac{1}{2\pi\sqrt{0.1 \times 10^{-5}}} = \frac{1}{2\pi \times 10^{-3}} = 159.2$ Hz.`,
+              t`$Q = \frac{1}{R}\sqrt{\frac{L}{C}} = \frac{1}{20}\sqrt{10^4} = 5$.`,
+              t`$\text{BW} = 159.2/5 = 31.8$ Hz.`,
+              t`$I = V/R = 12/20 = 0.6$ A; $V_L = QV = 60$ V.`,
+            ],
+            answer: "f₀ ≈ 159 Hz, Q = 5, BW ≈ 31.8 Hz, I = 0.6 A, V_L = 60 V.",
+          },
+          {
+            type: "example",
+            title: "Reading a CRO trace",
+            problem: "On a CRO set to 5 V/div and 2 ms/div, a sine wave is 4 divisions from the top peak to the bottom peak, and one cycle spans 5 divisions. Find V_pp, V_m, V_rms and the frequency.",
+            steps: [
+              t`$V_{pp} = 4 \times 5 = 20$ V, so $V_m = 10$ V.`,
+              t`$V_{\text{rms}} = 10/\sqrt{2} = 7.07$ V.`,
+              t`$T = 5 \times 2 = 10$ ms, so $f = 1/0.01 = 100$ Hz.`,
+            ],
+            answer: "V_pp = 20 V, V_m = 10 V, V_rms ≈ 7.07 V, f = 100 Hz.",
+          },
+          {
+            type: "mistake",
+            wrong: "Power in an AC circuit is always V × I.",
+            right: t`$V_{\text{rms}}I_{\text{rms}}$ is the **apparent power** (in volt-amperes). The **true power** is $VI\cos\phi$, in watts.`,
+            why: "In DC circuits P = VI always holds. In AC, part of the current is wattless (it goes back and forth into L or C), so only the in-phase part of the current, I cos φ, delivers energy.",
+          },
+          {
+            type: "activity",
+            activity: {
+              kind: "order",
+              prompt: "Order the steps for a series RLC numerical.",
+              items: [
+                "Find X_L = 2πfL and X_C = 1/(2πfC)",
+                "Find Z = √(R² + (X_L − X_C)²)",
+                "Find I = V/Z",
+                "Find the element voltages IR, IX_L, IX_C",
+                "Find cos φ = R/Z and say lead or lag",
+              ],
+              explain: "Reactances first, then impedance, then current. Everything else follows from the current.",
+            },
+          },
+          {
+            type: "table",
+            headers: ["If the frequency rises…", "X_L", "X_C", "Series RLC current"],
+            rows: [
+              ["below f₀ towards f₀", "rises", "falls", "rises to its peak at f₀"],
+              ["above f₀", "rises", "falls", "falls again (circuit becomes inductive)"],
+            ],
+          },
+          {
+            type: "callout",
+            tone: "exam",
+            title: "Practical exam tip",
+            md: "In the series resonance experiment, keep the signal generator's output voltage constant while you change the frequency, note the current at each step, and take extra readings close to the peak. Plot current against frequency; read f₀ at the peak and f₁, f₂ at 0.707 of the peak current to find bandwidth and Q.",
+          },
+          {
+            type: "checkpoint",
+            questions: [
+              {
+                kind: "mcq",
+                q: "A series RLC circuit is fed below its resonant frequency. The circuit behaves as:",
+                options: ["Purely resistive", "Capacitive, current leads", "Inductive, current lags", "Open circuit"],
+                answer: 1,
+                explain: "Below f₀, X_C > X_L, so the circuit is net capacitive and the current leads.",
+                difficulty: 2,
+              },
+            ],
+          },
+          {
+            type: "keypoints",
+            items: [
+              "Convert: V_m = √2 V_rms, V_avg = 0.637V_m, V_rms = 1.11 V_avg.",
+              "Reactances first, then Z, then I; always state lead or lag.",
+              "True power VI cos φ; apparent power VI.",
+              "Below f₀ a series RLC circuit is capacitive; above f₀ it is inductive.",
+            ],
+          },
+        ],
+        flashcards: [
+          { front: "Apparent power", back: "V_rms × I_rms, in volt-amperes (VA)." },
+          { front: "True power", back: "V_rms I_rms cos φ, in watts; dissipated only in resistance." },
+          { front: "Capacitance to resonate with L at f₀", back: "C = 1/(4π²f₀²L)." },
+          { front: "Series RLC below resonance", back: "X_C > X_L: capacitive, current leads." },
+          { front: "Series RLC above resonance", back: "X_L > X_C: inductive, current lags." },
+          { front: "How to find Q from a resonance graph", back: "Q = f₀/(f₂ − f₁), with f₁ and f₂ read at 0.707 of the peak current." },
+        ],
+        quiz: [
+          {
+            kind: "numeric",
+            q: "An AC voltage has a peak of 50 V. What is its average value (in V) over a half cycle?",
+            answer: 31.85,
+            tolerance: 0.1,
+            unit: "V",
+            explain: t`$0.637 \times 50 = 31.85$ V.`,
+          },
+          {
+            kind: "numeric",
+            q: "At what frequency (in Hz) does a 0.1 H inductor have a reactance of 314 Ω?",
+            answer: 500,
+            tolerance: 1,
+            unit: "Hz",
+            explain: t`$f = X_L/(2\pi L) = 314/(0.628) = 500$ Hz.`,
+          },
+          {
+            kind: "mcq",
+            q: "A circuit takes 5 A from 200 V AC with power factor 0.8. Its true power is:",
+            options: ["1000 W", "800 W", "1250 W", "640 W"],
+            answer: 1,
+            explain: "P = VI cos φ = 200 × 5 × 0.8 = 800 W. 1000 VA is the apparent power.",
+          },
+          {
+            kind: "truefalse",
+            q: "Increasing the inductance in a series LC circuit raises its resonant frequency.",
+            answer: false,
+            explain: "f₀ = 1/(2π√(LC)) falls as L rises.",
+          },
+          {
+            kind: "numeric",
+            q: "A series RLC circuit has R = 5 Ω and is at resonance on a 20 V supply. What power (in W) does it take?",
+            answer: 80,
+            unit: "W",
+            explain: t`At resonance $I = 20/5 = 4$ A and $P = I^2R = 80$ W (pf = 1, so also $VI = 80$ W).`,
+            difficulty: 2,
+          },
+          {
+            kind: "numeric",
+            q: "A series RL circuit takes 2 A from 100 V AC and uses 120 W. What is its power factor?",
+            answer: 0.6,
+            tolerance: 0.01,
+            explain: t`$\cos\phi = P/(VI) = 120/200 = 0.6$ lagging.`,
+            difficulty: 2,
+          },
+          {
+            kind: "order",
+            q: "Order the periods from shortest to longest.",
+            items: ["1 MHz", "10 kHz", "50 Hz", "1 Hz"],
+            explain: "T = 1/f: 1 µs, 0.1 ms, 20 ms, 1 s. Higher frequency means a shorter period.",
+          },
+        ],
+      },
+    ],
+  },
 ];
 
 /** Chapter title ("11:" / "12:" + exact title) → topic slug(s) that teach it. */
@@ -2116,4 +2897,5 @@ export const links: Record<string, string | string[]> = {
   "11:Introduction to Electronics": "c11-ele-introduction",
   "11:Passive Components": "c11-ele-passive-components",
   "11:DC Circuits and Network Theorems": "c11-ele-dc-circuits-theorems",
+  "11:AC Fundamentals": "c11-ele-ac-fundamentals",
 };

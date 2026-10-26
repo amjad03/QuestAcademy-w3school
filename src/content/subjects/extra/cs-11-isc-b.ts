@@ -755,9 +755,886 @@ const methods: Topic = {
   ],
 };
 
-export const topics: Topic[] = [methods];
+/* ------------------------------------------------------------------ */
+/* 2. Arrays                                                           */
+/* ------------------------------------------------------------------ */
+const arrays: Topic = {
+  slug: "c11-isc-cs-arrays",
+  title: "Arrays",
+  icon: "🗃️",
+  description: "Single- and two-dimensional arrays, traversal, maximum and minimum, linear and binary search, bubble and selection sort, matrices and address calculation.",
+  lessons: [
+    {
+      slug: "c11-isc-arrays-one-d",
+      title: "Single-Dimensional Arrays and Linear Search",
+      summary: "Declaring, creating and initialising arrays, the length field, default values, traversal for total, maximum and minimum, linear search and the address of an element.",
+      minutes: 20,
+      xp: 50,
+      blocks: [
+        {
+          type: "illustration",
+          emoji: "🚆",
+          caption: "A train has numbered coaches: S1, S2, S3 and so on. Every coach is the same kind of thing, they stand side by side, and you find one by its number. An array stores values the same way.",
+        },
+        {
+          type: "text",
+          md: "An **array** is a collection of a fixed number of values of the **same type**, stored in consecutive memory locations under one name. Each value is an **element**, reached by its **index** (subscript) written in square brackets. In Java the first index is **0** and the last is **length − 1**.\n\nAn array is a **structured (composite) data type** and in Java it is an **object**: the array variable holds a reference to it.",
+        },
+        {
+          type: "table",
+          headers: ["Step", "Code", "What it does"],
+          rows: [
+            ["Declare", "`int[] m;`", "makes a reference variable; no array exists yet"],
+            ["Create", "`m = new int[5];`", "creates 5 int elements, all set to 0"],
+            ["Both together", "`int[] m = new int[5];`", "declare and create in one line"],
+            ["Initialise", "`int[] m = {72, 85, 64, 91, 58};`", "size is fixed at 5 by the list"],
+            ["Size", "`m.length`", "number of elements (a field, no brackets)"],
+          ],
+        },
+        {
+          type: "code",
+          lang: "java",
+          caption: "Marks.java",
+          code: java`public class Marks
+{
+    public static void main(String[] args)
+    {
+        int[] m = {72, 85, 64, 91, 58};
+        int sum = 0, max = m[0], min = m[0];
+        for (int i = 0; i < m.length; i++)
+        {
+            sum += m[i];
+            if (m[i] > max)
+                max = m[i];
+            if (m[i] < min)
+                min = m[i];
+        }
+        System.out.println("Total = " + sum);
+        System.out.println("Average = " + (double) sum / m.length);
+        System.out.println("Highest = " + max + ", Lowest = " + min);
+
+        double[] d = new double[3];
+        boolean[] f = new boolean[2];
+        String[] s = new String[2];
+        System.out.println(d[0] + " " + f[1] + " " + s[0]);
+    }
+}`,
+        },
+        {
+          type: "text",
+          md: "Output:\n\n`Total = 370`\n`Average = 74.0`\n`Highest = 91, Lowest = 58`\n`0.0 false null`\n\nThe loop visits every element once: this is **traversal**. Starting `max` and `min` at `m[0]` (not at 0) makes the code correct even when all marks are negative or all are large. The last line shows **default values** of a new array: 0 for `int`, 0.0 for `double`, `false` for `boolean`, `'\u0000'` for `char`, and `null` for objects such as `String`.",
+        },
+        {
+          type: "mistake",
+          wrong: "An array of 5 elements has indexes 1 to 5, so the loop should be `for (int i = 1; i <= m.length; i++)`.",
+          right: "Indexes run from **0 to length − 1**. The correct loop is `for (int i = 0; i < m.length; i++)`. Using `m[5]` on a 5-element array throws an `ArrayIndexOutOfBoundsException` at run time.",
+          why: "We count from 1 in daily life, and roll numbers start at 1. Java counts the offset from the first element, and the first element is 0 steps away from the start.",
+        },
+        {
+          type: "checkpoint",
+          questions: [
+            {
+              kind: "mcq",
+              q: "For `int[] a = new int[8];` which is the index of the last element?",
+              options: ["7", "8", "9", "0"],
+              answer: 0,
+              explain: "Indexes go from 0 to length − 1 = 7.",
+            },
+          ],
+        },
+        {
+          type: "text",
+          md: "**Linear search** looks for a value (the **key**) by checking the elements one by one from the start. It stops when it finds the key or reaches the end. It works on **unsorted** data. In the worst case it makes **n** comparisons for n elements.",
+        },
+        {
+          type: "code",
+          lang: "java",
+          caption: "LinearSearch.java",
+          code: java`public class LinearSearch
+{
+    // returns the index of the first match, or -1 if key is absent
+    static int search(int[] a, int key)
+    {
+        for (int i = 0; i < a.length; i++)
+            if (a[i] == key)
+                return i;
+        return -1;
+    }
+
+    public static void main(String[] args)
+    {
+        int[] roll = {14, 7, 22, 9, 30, 7};
+        System.out.println(search(roll, 7));
+        System.out.println(search(roll, 25));
+    }
+}`,
+        },
+        {
+          type: "text",
+          md: t`Output: \`1\` then \`-1\`. The method returns at the **first** 7 (index 1) and never reaches the second one at index 5.
+
+**Address of an element.** Elements are stored one after another, so if the first element is at base address $B$, each element takes $W$ bytes, and the lowest index is $L_B$, the address of element $A[i]$ is:`,
+        },
+        {
+          type: "formula",
+          tex: t`\text{Address}(A[i]) = B + W \times (i - L_B)`,
+          caption: "Single-dimensional array; the number of elements is U − L + 1 for index range L to U.",
+        },
+        {
+          type: "example",
+          title: "Address calculation",
+          problem: "An array A[10 … 40] stores 2-byte elements. The base address is 1500. Find the address of A[25] and the number of elements.",
+          steps: [
+            t`$B = 1500$, $W = 2$, $L_B = 10$, $i = 25$.`,
+            t`$\text{Address} = 1500 + 2 \times (25 - 10) = 1500 + 30 = 1530$.`,
+            t`Number of elements $= 40 - 10 + 1 = 31$.`,
+          ],
+          answer: "Address of A[25] = 1530; the array has 31 elements.",
+        },
+        {
+          type: "activity",
+          activity: {
+            kind: "reveal",
+            prompt: "What is the default value of each element after `char[] c = new char[3];`?",
+            emoji: "🔣",
+            options: ["The space character ' '", "The null character '\\u0000' (code 0)", "null", "The digit '0'"],
+            answer: 1,
+            trap: 0,
+            explain: "A new char array is filled with the character whose code is 0, written '\\u0000'. It prints as nothing visible, which is why it is often mistaken for a space (code 32).",
+          },
+        },
+        {
+          type: "callout",
+          tone: "exam",
+          title: "ISC tip",
+          md: "Write `a.length` for arrays and `s.length()` for Strings: mixing them up is a common deduction. In address questions, write the formula first, then substitute; the method mark is given even if the arithmetic slips.",
+        },
+        {
+          type: "keypoints",
+          items: [
+            "An array holds a fixed number of same-type elements in consecutive locations; indexes run 0 to length − 1.",
+            "`length` is a field of every array; a new array gets default values (0, 0.0, false, '\\u0000', null).",
+            "Start max and min at the first element, then traverse the rest.",
+            "Linear search checks elements one by one, works on unsorted data and needs up to n comparisons.",
+            "Address(A[i]) = B + W × (i − L).",
+          ],
+        },
+      ],
+      flashcards: [
+        { front: "Array", back: "A fixed-size collection of elements of the same type, stored in consecutive locations and reached by index." },
+        { front: "First and last index of an array of size n", back: "0 and n − 1." },
+        { front: "`a.length` vs `s.length()`", back: "`length` is a field of an array; `length()` is a method of String." },
+        { front: "Default values of a new array", back: "int 0, double 0.0, boolean false, char '\\u0000', objects null." },
+        { front: "ArrayIndexOutOfBoundsException", back: "The run-time exception thrown when an index is below 0 or ≥ length." },
+        { front: "Linear search", back: "Compare the key with each element in turn; works on unsorted data; at most n comparisons." },
+        { front: "Address of A[i] (1-D)", back: "B + W × (i − L), where B = base address, W = element size, L = lower bound." },
+      ],
+      quiz: [
+        {
+          kind: "mcq",
+          q: "Which statement creates an array of 10 doubles?",
+          options: ["`double[] d = new double[10];`", "`double d = new double[10];`", "`double[] d = new double(10);`", "`double[10] d;`"],
+          answer: 0,
+          explain: "The variable must be an array type `double[]`, and the size goes in square brackets after `new double`.",
+        },
+        {
+          kind: "numeric",
+          q: "`int[] p = {3, 9, 4, 1};` What is `p[p.length - 1] + p[1]`?",
+          answer: 10,
+          explain: "p.length − 1 = 3, so p[3] = 1; p[1] = 9; 1 + 9 = 10.",
+        },
+        {
+          kind: "truefalse",
+          q: "Linear search can only be used when the array is sorted.",
+          answer: false,
+          explain: "Linear search checks every element in turn, so the order does not matter. It is binary search that needs sorted data.",
+        },
+        {
+          kind: "numeric",
+          q: "An array B[5 … 54] has 4-byte elements and base address 2000. What is the address of B[20]?",
+          answer: 2060,
+          explain: "2000 + 4 × (20 − 5) = 2000 + 60 = 2060.",
+          difficulty: 2,
+        },
+        {
+          kind: "fill",
+          q: "Accessing `a[a.length]` throws an ___ at run time.",
+          answer: ["ArrayIndexOutOfBoundsException"],
+          explain: "The last valid index is length − 1, so index length is out of bounds.",
+        },
+        {
+          kind: "mcq",
+          q: "What does `search(roll, 9)` return for `roll = {14, 7, 22, 9, 30, 7}` in LinearSearch.java?",
+          options: ["3", "4", "9", "-1"],
+          answer: 0,
+          explain: "9 is the fourth element, at index 3.",
+        },
+        {
+          kind: "mcq",
+          q: "Why does Marks.java start `max` at `m[0]` instead of 0?",
+          options: ["So that it works even if every value is negative", "Because Java does not allow int max = 0", "To make the loop run faster", "Because m[0] is always the largest"],
+          answer: 0,
+          explain: "If all values were negative, a max starting at 0 would wrongly stay 0. Starting at a real element is always safe.",
+          difficulty: 2,
+        },
+      ],
+    },
+    {
+      slug: "c11-isc-arrays-sort-search",
+      title: "Sorting and Binary Search",
+      summary: "Bubble sort and selection sort traced pass by pass, binary search on a sorted array, and how the techniques compare.",
+      minutes: 22,
+      xp: 55,
+      blocks: [
+        {
+          type: "illustration",
+          emoji: "📚",
+          caption: "Finding a word in a dictionary is quick because the words are in order: you open the middle, see which half the word is in, and repeat. Sorting first makes searching fast.",
+        },
+        {
+          type: "text",
+          md: "**Sorting** arranges the elements in ascending (or descending) order.\n\n**Bubble sort** compares each pair of **adjacent** elements and swaps them if they are in the wrong order. After pass 1 the largest element has \"bubbled\" to the last position; after pass 2 the second largest is in place, and so on. For n elements, n − 1 passes are enough.",
+        },
+        {
+          type: "code",
+          lang: "java",
+          caption: "Bubble.java",
+          code: java`public class Bubble
+{
+    public static void main(String[] args)
+    {
+        int[] a = {29, 10, 14, 37, 13};
+        int n = a.length;
+        for (int i = 0; i < n - 1; i++)
+        {
+            for (int j = 0; j < n - 1 - i; j++)
+            {
+                if (a[j] > a[j + 1])
+                {
+                    int tmp = a[j];
+                    a[j] = a[j + 1];
+                    a[j + 1] = tmp;
+                }
+            }
+            System.out.print("Pass " + (i + 1) + ":");
+            for (int k = 0; k < n; k++)
+                System.out.print(" " + a[k]);
+            System.out.println();
+        }
+    }
+}`,
+        },
+        {
+          type: "example",
+          title: "Tracing bubble sort",
+          problem: "Show the array after each pass of Bubble.java for {29, 10, 14, 37, 13}.",
+          steps: [
+            "Pass 1: swap 29/10, swap 29/14, keep 29/37, swap 37/13 → `10 14 29 13 37`. 37 is now in place.",
+            "Pass 2 (inner loop stops one earlier): keep 10/14, keep 14/29, swap 29/13 → `10 14 13 29 37`.",
+            "Pass 3: keep 10/14, swap 14/13 → `10 13 14 29 37`.",
+            "Pass 4: no swaps → `10 13 14 29 37`.",
+          ],
+          answer: "Pass 1: 10 14 29 13 37\nPass 2: 10 14 13 29 37\nPass 3: 10 13 14 29 37\nPass 4: 10 13 14 29 37",
+        },
+        {
+          type: "text",
+          md: "**Selection sort** finds the **smallest** element in the unsorted part and swaps it into the first unsorted position. It makes at most one swap per pass.",
+        },
+        {
+          type: "code",
+          lang: "java",
+          caption: "Selection.java",
+          code: java`public class Selection
+{
+    public static void main(String[] args)
+    {
+        int[] a = {29, 10, 14, 37, 13};
+        for (int i = 0; i < a.length - 1; i++)
+        {
+            int min = i;
+            for (int j = i + 1; j < a.length; j++)
+                if (a[j] < a[min])
+                    min = j;
+            int tmp = a[i];
+            a[i] = a[min];
+            a[min] = tmp;
+            System.out.print("Pass " + (i + 1) + ":");
+            for (int k = 0; k < a.length; k++)
+                System.out.print(" " + a[k]);
+            System.out.println();
+        }
+    }
+}`,
+        },
+        {
+          type: "text",
+          md: "Output:\n\n`Pass 1: 10 29 14 37 13`\n`Pass 2: 10 13 14 37 29`\n`Pass 3: 10 13 14 37 29`\n`Pass 4: 10 13 14 29 37`\n\nIn pass 3 the smallest of {14, 37, 29} is already in position 2, so it is swapped with itself and nothing changes.",
+        },
+        {
+          type: "checkpoint",
+          questions: [
+            {
+              kind: "mcq",
+              q: "After pass 1 of bubble sort (ascending), which element is certainly in its final place?",
+              options: ["The largest, at the last index", "The smallest, at index 0", "The middle element", "None"],
+              answer: 0,
+              explain: "Each pass carries the largest remaining element to the end. Selection sort is the one that fixes the smallest first.",
+            },
+          ],
+        },
+        {
+          type: "text",
+          md: "**Binary search** works only on a **sorted** array. Compare the key with the middle element `mid = (lo + hi) / 2`. If equal, stop. If the key is larger, search the right half (`lo = mid + 1`); if smaller, the left half (`hi = mid - 1`). Each step halves the range, so about log₂ n comparisons are enough: at most 10 for 1000 elements.",
+        },
+        {
+          type: "code",
+          lang: "java",
+          caption: "BinarySearch.java",
+          code: java`public class BinarySearch
+{
+    static int search(int[] a, int key)
+    {
+        int lo = 0, hi = a.length - 1;
+        while (lo <= hi)
+        {
+            int mid = (lo + hi) / 2;
+            System.out.println("lo=" + lo + " hi=" + hi + " mid=" + mid);
+            if (a[mid] == key)
+                return mid;
+            else if (a[mid] < key)
+                lo = mid + 1;
+            else
+                hi = mid - 1;
+        }
+        return -1;
+    }
+
+    public static void main(String[] args)
+    {
+        int[] a = {5, 12, 18, 23, 37, 41, 56, 62, 78};
+        System.out.println("56 at " + search(a, 56));
+        System.out.println("20 at " + search(a, 20));
+    }
+}`,
+        },
+        {
+          type: "text",
+          md: "Output:\n\n`lo=0 hi=8 mid=4`\n`lo=5 hi=8 mid=6`\n`56 at 6`\n`lo=0 hi=8 mid=4`\n`lo=0 hi=3 mid=1`\n`lo=2 hi=3 mid=2`\n`lo=3 hi=3 mid=3`\n`20 at -1`\n\nFor 20 the range shrinks until `lo` (4) passes `hi` (3); the loop ends and −1 means \"not found\".",
+        },
+        {
+          type: "mistake",
+          wrong: "Binary search is always better than linear search, so use it on any array.",
+          right: "Binary search gives correct answers **only on sorted data**. On an unsorted array it can miss a value that is present. For a small or unsorted list, linear search is the right choice.",
+          why: "Binary search throws away half the array based on one comparison. That is only safe if order guarantees the key cannot be in the discarded half.",
+        },
+        {
+          type: "activity",
+          activity: {
+            kind: "sort",
+            prompt: "Which technique does each statement describe?",
+            groups: ["Bubble sort", "Selection sort", "Binary search"],
+            items: [
+              { text: "Swaps adjacent elements that are out of order", group: 0, hint: "Neighbours are compared." },
+              { text: "Largest element reaches the end after pass 1", group: 0, hint: "It bubbles to the end." },
+              { text: "At most one swap in each pass", group: 1, hint: "It swaps only the minimum into place." },
+              { text: "Smallest remaining element is placed at the front", group: 1, hint: "It selects the minimum." },
+              { text: "Needs the array to be sorted first", group: 2, hint: "Halving only works on ordered data." },
+              { text: "Compares the key with the middle element", group: 2, hint: "mid = (lo + hi) / 2." },
+            ],
+            explain: "Bubble sort swaps neighbours; selection sort selects the minimum and swaps once per pass; binary search halves a sorted range.",
+          },
+        },
+        {
+          type: "callout",
+          tone: "exam",
+          title: "ISC tip",
+          md: "Questions often ask for the array \"after the second pass\" of a sort. Write each pass on a new line. **Insertion sort** (taking each element and inserting it into its place in the already-sorted left part) may also be asked; know how it differs from the two above.",
+        },
+        {
+          type: "keypoints",
+          items: [
+            "Bubble sort: compare and swap neighbours; n − 1 passes; largest goes to the end each pass.",
+            "Selection sort: find the minimum of the unsorted part and swap it into place; one swap per pass.",
+            "Binary search needs a sorted array; mid = (lo + hi) / 2; stop when found or lo > hi.",
+            "Binary search needs about log₂ n comparisons; linear search up to n.",
+          ],
+        },
+      ],
+      flashcards: [
+        { front: "Bubble sort", back: "Repeatedly compare adjacent elements and swap if out of order; the largest moves to the end each pass." },
+        { front: "Selection sort", back: "Each pass finds the smallest element of the unsorted part and swaps it into the first unsorted position." },
+        { front: "Insertion sort", back: "Takes the next element and inserts it into its correct place in the sorted left part." },
+        { front: "Binary search: condition", back: "The array must be sorted." },
+        { front: "Binary search: mid", back: "mid = (lo + hi) / 2; move lo = mid + 1 or hi = mid − 1." },
+        { front: "Passes needed to sort n elements (bubble or selection)", back: "n − 1." },
+        { front: "Maximum comparisons in binary search of 1000 elements", back: "10, since 2¹⁰ = 1024 ≥ 1000." },
+      ],
+      quiz: [
+        {
+          kind: "mcq",
+          q: "What is {5, 1, 4, 2} after the first pass of bubble sort (ascending)?",
+          options: ["1 4 2 5", "1 5 4 2", "1 2 4 5", "1 4 5 2"],
+          answer: 0,
+          explain: "Swap 5/1 → 1 5 4 2; swap 5/4 → 1 4 5 2; swap 5/2 → 1 4 2 5.",
+        },
+        {
+          kind: "mcq",
+          q: "What is {5, 1, 4, 2} after the first pass of selection sort (ascending)?",
+          options: ["1 5 4 2", "1 4 2 5", "1 2 4 5", "5 1 4 2"],
+          answer: 0,
+          explain: "The minimum 1 is swapped with the first element 5.",
+        },
+        {
+          kind: "numeric",
+          q: "In BinarySearch.java, how many times is the `lo=... hi=... mid=...` line printed when searching for 78?",
+          answer: 4,
+          explain: "mid = 4 (37), lo = 5; mid = 6 (56), lo = 7; mid = 7 (62), lo = 8; mid = 8 (78) found. Four probes.",
+          difficulty: 2,
+        },
+        {
+          kind: "truefalse",
+          q: "Binary search on {40, 10, 30, 20} for the key 10 is guaranteed to find it.",
+          answer: false,
+          explain: "The array is not sorted. mid = 1 holds 10 here by luck, but in general binary search on unsorted data can miss a key, so it is not guaranteed.",
+        },
+        {
+          kind: "fill",
+          q: "In bubble sort the inner loop runs `j < n - 1 - i` because after pass i the last ___ elements are already in place.",
+          answer: ["i", "i elements"],
+          explain: "Each finished pass fixes one more element at the end, so it need not be compared again.",
+          difficulty: 2,
+        },
+        {
+          kind: "order",
+          q: "Order the steps of one round of binary search.",
+          items: ["Find mid = (lo + hi) / 2", "Compare a[mid] with the key", "If equal, return mid", "Otherwise move lo or hi to discard half"],
+          explain: "Find the middle, compare, stop if found, otherwise halve the range and repeat.",
+        },
+        {
+          kind: "multi",
+          q: "Which statements are true?",
+          options: ["Selection sort makes at most one swap per pass", "Bubble sort compares only adjacent elements", "Binary search works on unsorted data", "Both sorts need n − 1 passes for n elements"],
+          answers: [0, 1, 3],
+          explain: "Binary search needs sorted data; the other three are correct.",
+        },
+      ],
+    },
+    {
+      slug: "c11-isc-arrays-two-d",
+      title: "Two-Dimensional Arrays and Address Calculation",
+      summary: "Matrices as arrays of arrays, row and column traversal, row sums and transpose, and row-major and column-major address calculation.",
+      minutes: 22,
+      xp: 55,
+      blocks: [
+        {
+          type: "illustration",
+          emoji: "🎭",
+          caption: "Seats in a theatre are named by row and seat number: row C, seat 7. A two-dimensional array names each element by a row index and a column index in the same way.",
+        },
+        {
+          type: "text",
+          md: "A **two-dimensional (double-dimensional) array** stores data in **rows** and **columns**, like a matrix. `int[][] m = new int[2][3];` makes 2 rows and 3 columns: 6 elements, `m[0][0]` to `m[1][2]`.\n\nIn Java a 2-D array is an **array of arrays**: `m.length` is the number of rows and `m[i].length` is the number of columns in row i. We traverse it with **nested loops**: the outer loop for rows, the inner loop for columns.",
+        },
+        {
+          type: "code",
+          lang: "java",
+          caption: "Matrix.java",
+          code: java`public class Matrix
+{
+    public static void main(String[] args)
+    {
+        int[][] m = { {3, 8, 1}, {4, 6, 5} };
+        System.out.println("Rows = " + m.length + ", Columns = " + m[0].length);
+        for (int i = 0; i < m.length; i++)
+        {
+            int rowSum = 0;
+            for (int j = 0; j < m[i].length; j++)
+            {
+                System.out.print(m[i][j] + " ");
+                rowSum += m[i][j];
+            }
+            System.out.println("| " + rowSum);
+        }
+
+        int[][] tr = new int[m[0].length][m.length];
+        for (int i = 0; i < m.length; i++)
+            for (int j = 0; j < m[0].length; j++)
+                tr[j][i] = m[i][j];
+
+        System.out.println("Transpose:");
+        for (int i = 0; i < tr.length; i++)
+        {
+            for (int j = 0; j < tr[i].length; j++)
+                System.out.print(tr[i][j] + " ");
+            System.out.println();
+        }
+    }
+}`,
+        },
+        {
+          type: "text",
+          md: "Output:\n\n`Rows = 2, Columns = 3`\n`3 8 1 | 12`\n`4 6 5 | 15`\n`Transpose:`\n`3 4 `\n`8 6 `\n`1 5 `\n\nThe **transpose** turns rows into columns: element `m[i][j]` goes to `tr[j][i]`, so a 2 × 3 matrix becomes 3 × 2.",
+        },
+        {
+          type: "checkpoint",
+          questions: [
+            {
+              kind: "numeric",
+              q: "How many elements does `int[][] x = new int[4][6];` have?",
+              answer: 24,
+              explain: "4 rows × 6 columns = 24 elements.",
+            },
+          ],
+        },
+        {
+          type: "mistake",
+          wrong: "`m[1][2]` in `int[][] m = { {3, 8, 1}, {4, 6, 5} }` means the element in row 2, column 1, so it is 6.",
+          right: "The **first** index is the row and the **second** is the column, both from 0. `m[1][2]` is row 1 (the second row), column 2 (the third column): **5**.",
+          why: "In maths we often say \"column then row\" for coordinates (x, y). Java arrays always use [row][column], and both counts start from 0.",
+        },
+        {
+          type: "text",
+          md: "**Storing a matrix in memory.** Memory is a single line of locations, so a 2-D array must be laid out in one of two orders:\n\n- **Row-major**: all of row 0, then all of row 1, and so on (Java, C, C++ use this idea).\n- **Column-major**: all of column 0, then all of column 1, and so on (FORTRAN uses this).\n\nFor an array A[Lr … Ur][Lc … Uc] with M rows, N columns, base address B and element size W:",
+        },
+        {
+          type: "formula",
+          tex: t`\text{Row-major: } A[i][j] = B + W\left[\,N\,(i - L_r) + (j - L_c)\,\right]`,
+          caption: "N = number of columns = Uc − Lc + 1",
+        },
+        {
+          type: "formula",
+          tex: t`\text{Column-major: } A[i][j] = B + W\left[\,(i - L_r) + M\,(j - L_c)\,\right]`,
+          caption: "M = number of rows = Ur − Lr + 1",
+        },
+        {
+          type: "example",
+          title: "Row-major and column-major address",
+          problem: "An array A[1 … 10][1 … 15] stores 2-byte elements from base address 2000. Find the address of A[4][7] in row-major and in column-major order.",
+          steps: [
+            t`M = 10 − 1 + 1 = 10 rows, N = 15 − 1 + 1 = 15 columns, W = 2, B = 2000, Lr = Lc = 1.`,
+            t`Row-major: $2000 + 2[15(4 - 1) + (7 - 1)] = 2000 + 2[45 + 6] = 2000 + 102 = 2102$.`,
+            t`Column-major: $2000 + 2[(4 - 1) + 10(7 - 1)] = 2000 + 2[3 + 60] = 2000 + 126 = 2126$.`,
+          ],
+          answer: "Row-major: 2102. Column-major: 2126.",
+        },
+        {
+          type: "activity",
+          activity: {
+            kind: "order",
+            prompt: "Order the elements of a 2 × 2 matrix in column-major storage.",
+            items: ["A[0][0]", "A[1][0]", "A[0][1]", "A[1][1]"],
+            explain: "Column-major stores the whole first column (rows 0 and 1) before moving to the second column. Row-major would give A[0][0], A[0][1], A[1][0], A[1][1].",
+          },
+        },
+        {
+          type: "callout",
+          tone: "exam",
+          title: "ISC tip",
+          md: "In address questions, first write M and N, then write which formula you are using. Read the question carefully: if it gives the address of some other element instead of the base address, substitute that element first to find B. Check that the lower bounds (often 1, sometimes negative) are subtracted correctly.",
+        },
+        {
+          type: "keypoints",
+          items: [
+            "A 2-D array is an array of arrays: `m.length` rows, `m[i].length` columns.",
+            "Use nested loops: outer for rows, inner for columns. Index is always [row][column].",
+            "Transpose: `tr[j][i] = m[i][j]`; an M × N matrix becomes N × M.",
+            "Row-major: B + W[N(i − Lr) + (j − Lc)]. Column-major: B + W[(i − Lr) + M(j − Lc)].",
+          ],
+        },
+      ],
+      flashcards: [
+        { front: "2-D array", back: "Data in rows and columns; in Java an array of arrays, accessed as m[row][column]." },
+        { front: "Number of rows / columns of `int[][] m`", back: "`m.length` rows; `m[0].length` columns (for a rectangular array)." },
+        { front: "Transpose of a matrix", back: "Rows become columns: tr[j][i] = m[i][j]." },
+        { front: "Row-major order", back: "Elements stored row by row: all of row 0, then row 1, …" },
+        { front: "Column-major order", back: "Elements stored column by column: all of column 0, then column 1, …" },
+        { front: "Row-major address formula", back: "B + W[N(i − Lr) + (j − Lc)], N = number of columns." },
+        { front: "Column-major address formula", back: "B + W[(i − Lr) + M(j − Lc)], M = number of rows." },
+      ],
+      quiz: [
+        {
+          kind: "mcq",
+          q: "For `int[][] m = { {3, 8, 1}, {4, 6, 5} };` what is `m[0][2] + m[1][0]`?",
+          options: ["5", "13", "9", "7"],
+          answer: 0,
+          explain: "m[0][2] = 1 and m[1][0] = 4; 1 + 4 = 5.",
+        },
+        {
+          kind: "numeric",
+          q: "A[1 … 5][1 … 4], 4-byte elements, base 1000. Address of A[3][2] in row-major order?",
+          answer: 1036,
+          explain: "N = 4. 1000 + 4[4(3 − 1) + (2 − 1)] = 1000 + 4 × 9 = 1036.",
+          difficulty: 2,
+        },
+        {
+          kind: "numeric",
+          q: "Same array A[1 … 5][1 … 4], 4-byte elements, base 1000. Address of A[3][2] in column-major order?",
+          answer: 1028,
+          explain: "M = 5. 1000 + 4[(3 − 1) + 5(2 − 1)] = 1000 + 4 × 7 = 1028.",
+          difficulty: 2,
+        },
+        {
+          kind: "truefalse",
+          q: "The transpose of a 3 × 5 matrix is a 5 × 3 matrix.",
+          answer: true,
+          explain: "Rows and columns swap roles.",
+        },
+        {
+          kind: "fill",
+          q: "In `int[][] m = new int[3][7];`, `m[2].length` is ___.",
+          answer: ["7"],
+          explain: "Each row has 7 columns.",
+        },
+        {
+          kind: "mcq",
+          q: "In which order is a 2-D array stored if all elements of the first column come first?",
+          options: ["Column-major", "Row-major", "Ascending", "Random"],
+          answer: 0,
+          explain: "Storing column by column is column-major order.",
+        },
+        {
+          kind: "mcq",
+          q: "Which loop header prints every element of row i correctly?",
+          options: ["`for (int j = 0; j < m[i].length; j++)`", "`for (int j = 0; j <= m[i].length; j++)`", "`for (int j = 1; j <= m.length; j++)`", "`for (int j = 0; j < m.length(); j++)`"],
+          answer: 0,
+          explain: "Columns in row i go from 0 to m[i].length − 1. `<=` overruns; `m.length` counts rows; `length()` is not an array method.",
+        },
+      ],
+    },
+    {
+      slug: "c11-isc-arrays-board-practice",
+      title: "Board Practice: Arrays",
+      summary: "Mixed ISC-style questions: output tracing with array aliasing, address calculation with a negative lower bound, and a matrix program for diagonal sums and symmetry.",
+      minutes: 22,
+      xp: 55,
+      blocks: [
+        {
+          type: "text",
+          md: "Practise the three things ISC asks most on arrays: predicting output, calculating addresses, and writing a complete array program.",
+        },
+        {
+          type: "code",
+          lang: "java",
+          caption: "ArrTrace.java",
+          code: java`public class ArrTrace
+{
+    public static void main(String[] args)
+    {
+        int[] a = {2, 4, 6, 8, 10};
+        for (int i = 1; i < a.length; i++)
+            a[i] = a[i] + a[i - 1];
+        for (int i = 0; i < a.length; i++)
+            System.out.print(a[i] + " ");
+        System.out.println();
+        int[] b = a;
+        b[0] = 100;
+        System.out.println(a[0] + " " + a[a.length - 1] / 5);
+    }
+}`,
+        },
+        {
+          type: "example",
+          title: "Output question",
+          problem: "Give the output of ArrTrace.java.",
+          steps: [
+            "Each element becomes itself plus the new value of the one before it (a running total): 2, 2 + 4 = 6, 6 + 6 = 12, 12 + 8 = 20, 20 + 10 = 30.",
+            "`int[] b = a;` copies the reference, not the array. `b` and `a` are two names for one array, so `b[0] = 100` also changes `a[0]`.",
+            "`a[a.length - 1] / 5` = 30 / 5 = 6.",
+          ],
+          answer: "2 6 12 20 30\n100 6",
+        },
+        {
+          type: "mistake",
+          wrong: "`int[] b = a;` makes b a separate copy of the array, so changing b leaves a unchanged.",
+          right: "It copies only the **reference**: both names point to the same array. To make a real copy, create a new array and copy each element in a loop (or use `a.clone()`).",
+          why: "For primitives, `=` copies the value, so it feels the same for arrays. An array variable's value is an address, and copying an address gives a second way to reach the same object.",
+        },
+        {
+          type: "checkpoint",
+          questions: [
+            {
+              kind: "numeric",
+              q: "In ArrTrace.java, what would `a[2] + b[3]` be at the end?",
+              answer: 32,
+              explain: "a and b are the same array: a[2] = 12 and b[3] = 20, total 32.",
+            },
+          ],
+        },
+        {
+          type: "example",
+          title: "Address with a negative lower bound",
+          problem: "An array P[−5 … 20] stores 4-byte elements with base address 1000. Find the number of elements and the address of P[3].",
+          steps: [
+            "Number of elements = U − L + 1 = 20 − (−5) + 1 = 26.",
+            t`Address $= 1000 + 4 \times (3 - (-5)) = 1000 + 4 \times 8 = 1032$.`,
+          ],
+          answer: "26 elements; address of P[3] = 1032.",
+        },
+        {
+          type: "text",
+          md: "**Program to write.** A square matrix has a **left (main) diagonal** `m[i][i]` and a **right diagonal** `m[i][n - 1 - i]`. It is **symmetric** if `m[i][j] == m[j][i]` for every i and j, that is, if it equals its transpose. Write a class with a method for each and test it on a 3 × 3 matrix.",
+        },
+        {
+          type: "code",
+          lang: "java",
+          caption: "Diagonal.java",
+          code: java`public class Diagonal
+{
+    int[][] m;
+    int n;
+
+    Diagonal(int[][] data)
+    {
+        m = data;
+        n = data.length;
+    }
+
+    // sum of the left diagonal m[i][i]
+    int leftSum()
+    {
+        int s = 0;
+        for (int i = 0; i < n; i++)
+            s += m[i][i];
+        return s;
+    }
+
+    // sum of the right diagonal m[i][n-1-i]
+    int rightSum()
+    {
+        int s = 0;
+        for (int i = 0; i < n; i++)
+            s += m[i][n - 1 - i];
+        return s;
+    }
+
+    // true if the matrix equals its transpose
+    boolean isSymmetric()
+    {
+        for (int i = 0; i < n; i++)
+            for (int j = 0; j < n; j++)
+                if (m[i][j] != m[j][i])
+                    return false;
+        return true;
+    }
+
+    public static void main(String[] args)
+    {
+        int[][] a = { {2, 7, 5}, {7, 4, 1}, {5, 1, 9} };
+        Diagonal ob = new Diagonal(a);
+        System.out.println("Left diagonal sum = " + ob.leftSum());
+        System.out.println("Right diagonal sum = " + ob.rightSum());
+        System.out.println("Symmetric: " + ob.isSymmetric());
+    }
+}`,
+        },
+        {
+          type: "text",
+          md: "Output:\n\n`Left diagonal sum = 15`\n`Right diagonal sum = 14`\n`Symmetric: true`\n\nLeft: 2 + 4 + 9 = 15. Right: m[0][2] + m[1][1] + m[2][0] = 5 + 4 + 5 = 14. Each pair across the main diagonal matches (7 and 7, 5 and 5, 1 and 1), so the matrix is symmetric.",
+        },
+        {
+          type: "activity",
+          activity: {
+            kind: "match",
+            prompt: "Match each expression to its meaning in an n × n matrix m.",
+            pairs: [
+              ["m[i][i]", "Element on the left diagonal"],
+              ["m[i][n - 1 - i]", "Element on the right diagonal"],
+              ["m[j][i]", "Element in the transpose at position [i][j]"],
+              ["m[0][j]", "Element in the first row"],
+            ],
+            explain: "Same row and column index gives the left diagonal; row + column = n − 1 gives the right diagonal; swapping the indexes gives the transpose.",
+          },
+        },
+        {
+          type: "callout",
+          tone: "exam",
+          title: "ISC tip",
+          md: "In the practical exam, matrix questions usually ask you to accept M and N, reject invalid sizes with a message, then print the original and the result matrix. Print matrices row by row with spaces so the examiner can check them, and test with at least one 3 × 3 and one non-square input.",
+        },
+        {
+          type: "checkpoint",
+          questions: [
+            {
+              kind: "truefalse",
+              q: "For an odd-sized square matrix, the centre element is on both diagonals.",
+              answer: true,
+              explain: "For n = 3 the centre is m[1][1]: i = 1 and n − 1 − i = 1, so it lies on both diagonals.",
+            },
+          ],
+        },
+        {
+          type: "keypoints",
+          items: [
+            "Array assignment copies the reference; both names then share one array.",
+            "Number of elements = U − L + 1; take care when L is negative.",
+            "Left diagonal m[i][i]; right diagonal m[i][n − 1 − i]; symmetric if m[i][j] = m[j][i].",
+            "Split matrix programs into small methods and print matrices row by row.",
+          ],
+        },
+      ],
+      flashcards: [
+        { front: "Effect of `int[] b = a;`", back: "b refers to the same array as a; no copy is made." },
+        { front: "How to really copy an array", back: "Create a new array of the same length and copy each element in a loop (or use clone())." },
+        { front: "Left diagonal of n × n matrix", back: "Elements m[i][i] for i = 0 to n − 1." },
+        { front: "Right diagonal of n × n matrix", back: "Elements m[i][n − 1 − i]." },
+        { front: "Symmetric matrix", back: "A square matrix equal to its transpose: m[i][j] = m[j][i] for all i, j." },
+        { front: "Number of elements in A[L … U]", back: "U − L + 1." },
+      ],
+      quiz: [
+        {
+          kind: "numeric",
+          q: "How many elements does Q[−10 … 10] have?",
+          answer: 21,
+          explain: "10 − (−10) + 1 = 21.",
+        },
+        {
+          kind: "numeric",
+          q: "For the matrix { {1, 2, 3}, {4, 5, 6}, {7, 8, 9} }, what is the right diagonal sum?",
+          answer: 15,
+          explain: "3 + 5 + 7 = 15.",
+        },
+        {
+          kind: "truefalse",
+          q: "The matrix { {1, 2}, {3, 1} } is symmetric.",
+          answer: false,
+          explain: "m[0][1] = 2 but m[1][0] = 3.",
+        },
+        {
+          kind: "mcq",
+          q: "`int[] x = {1, 2, 3}; int[] y = x; y[1] = 9;` What does `x[1]` print?",
+          options: ["9", "2", "1", "0"],
+          answer: 0,
+          explain: "x and y refer to the same array.",
+        },
+        {
+          kind: "numeric",
+          q: "An array R[−3 … 12] of 8-byte elements has base address 500. Address of R[0]?",
+          answer: 524,
+          explain: "500 + 8 × (0 − (−3)) = 500 + 24 = 524.",
+          difficulty: 2,
+        },
+        {
+          kind: "mcq",
+          q: "What is printed by `int[] a = {1, 2, 3, 4}; for (int i = 1; i < 4; i++) a[i] += a[i-1]; System.out.println(a[3]);`?",
+          options: ["10", "7", "4", "6"],
+          answer: 0,
+          explain: "Running totals: 1, 3, 6, 10.",
+        },
+        {
+          kind: "fill",
+          q: "A square matrix that equals its own transpose is called ___.",
+          answer: ["symmetric", "a symmetric matrix"],
+          explain: "Symmetric means m[i][j] = m[j][i] for all i, j.",
+        },
+      ],
+    },
+  ],
+};
+
+export const topics: Topic[] = [methods, arrays];
 
 /** Chapter title ("11:" / "12:" + exact title) → topic slug(s) that teach it. */
 export const links: Record<string, string | string[]> = {
   "11:Methods": "c11-isc-cs-methods",
+  "11:Arrays": "c11-isc-cs-arrays",
 };
