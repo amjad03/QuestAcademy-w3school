@@ -1,11 +1,1223 @@
 import type { Topic } from "@/content/types";
 
+/** String.raw keeps TeX backslashes intact. */
+const t = String.raw;
+
 /** Course these chapters belong to. */
 export const course = "maths-senior";
 /** Syllabus family: chapter titles below are matched against `mat` rows in src/content/syllabus/. */
 export const family = "mat";
 
-export const topics: Topic[] = [];
+export const topics: Topic[] = [
+  /* ------------------------------------------------------------------ */
+  /* Matrices (NCERT Class 12 Ch 3; ISC Class 12)                        */
+  /* ------------------------------------------------------------------ */
+  {
+    slug: "c12-matrices",
+    title: "Matrices",
+    icon: "🔲",
+    description: "Order and types of matrices, equality, addition, scalar and matrix multiplication, transpose, symmetric and skew-symmetric matrices, and invertible matrices, with JEE-level powers, counting and trace ideas.",
+    lessons: [
+      {
+        slug: "c12-matrix-basics",
+        title: "Matrices: Order, Types and Equality",
+        summary: "What a matrix is, how its order and entries are named, the special types of matrices, and how equal matrices give equations.",
+        minutes: 16,
+        xp: 40,
+        blocks: [
+          {
+            type: "illustration",
+            emoji: "🏪",
+            caption: "A shop in Mysuru records pens, pencils and erasers sold on Monday and Tuesday. Two rows and three columns of numbers: that table is a matrix.",
+          },
+          {
+            type: "text",
+            md: t`A **matrix** is an ordered rectangular array of numbers (or functions) arranged in rows and columns. Each number is an **element** or **entry**. Matrices are named with capital letters $A, B, C$.
+
+A matrix with $m$ rows and $n$ columns has **order** $m \times n$ (read "m by n") and has $mn$ elements. The element in the $i$-th row and $j$-th column is written $a_{ij}$: the **row number comes first**, then the column number.`,
+          },
+          {
+            type: "formula",
+            tex: t`A = [a_{ij}]_{m \times n} = \begin{bmatrix} a_{11} & a_{12} & \cdots & a_{1n} \\ a_{21} & a_{22} & \cdots & a_{2n} \\ \vdots & \vdots & & \vdots \\ a_{m1} & a_{m2} & \cdots & a_{mn} \end{bmatrix}`,
+            caption: t`General $m \times n$ matrix; $1 \le i \le m$, $1 \le j \le n$.`,
+          },
+          {
+            type: "example",
+            title: "Building a matrix from a rule",
+            problem: t`Construct the $2 \times 3$ matrix $A = [a_{ij}]$ with $a_{ij} = |2i - 3j|$.`,
+            steps: [
+              t`Row 1 ($i = 1$): $a_{11} = |2 - 3| = 1$, $a_{12} = |2 - 6| = 4$, $a_{13} = |2 - 9| = 7$.`,
+              t`Row 2 ($i = 2$): $a_{21} = |4 - 3| = 1$, $a_{22} = |4 - 6| = 2$, $a_{23} = |4 - 9| = 5$.`,
+              t`Write the rows one under the other: 2 rows, 3 columns.`,
+            ],
+            answer: t`$A = \begin{bmatrix} 1 & 4 & 7 \\ 1 & 2 & 5 \end{bmatrix}$`,
+          },
+          {
+            type: "mistake",
+            wrong: t`"$a_{23}$ is the entry in column 2, row 3."`,
+            right: t`$a_{23}$ is in **row 2, column 3**. In $a_{ij}$ and in the order $m \times n$, rows always come first.`,
+            why: "In coordinate geometry we write (x, y), across first and then up, so learners carry that habit over. Matrices use the opposite habit: down to the row, then across to the column.",
+          },
+          {
+            type: "text",
+            md: t`**Types of matrices.** A **column matrix** has one column ($m \times 1$); a **row matrix** has one row ($1 \times n$). A **square matrix** has $m = n$; its entries $a_{11}, a_{22}, \ldots, a_{nn}$ form the **(leading) diagonal**.
+
+A square matrix is **diagonal** if every entry off the diagonal is 0. A diagonal matrix with all diagonal entries equal to the same number $k$ is a **scalar matrix**. A scalar matrix with $k = 1$ is the **identity matrix** $I_n$. A matrix with every entry 0 is a **zero (null) matrix** $O$, of any order.`,
+          },
+          {
+            type: "table",
+            headers: ["Type", "Condition", "Example"],
+            rows: [
+              ["Column matrix", t`order $m \times 1$`, t`$\begin{bmatrix} 2 \\ -1 \\ 5 \end{bmatrix}$`],
+              ["Row matrix", t`order $1 \times n$`, t`$\begin{bmatrix} 3 & 0 & -4 \end{bmatrix}$`],
+              ["Diagonal", t`square, $a_{ij} = 0$ for $i \ne j$`, t`$\begin{bmatrix} 2 & 0 \\ 0 & -5 \end{bmatrix}$`],
+              ["Scalar", t`diagonal, $a_{ii} = k$`, t`$\begin{bmatrix} 3 & 0 \\ 0 & 3 \end{bmatrix}$`],
+              ["Identity", t`scalar with $k = 1$`, t`$I_2 = \begin{bmatrix} 1 & 0 \\ 0 & 1 \end{bmatrix}$`],
+              ["Zero", "every entry 0", t`$\begin{bmatrix} 0 & 0 & 0 \\ 0 & 0 & 0 \end{bmatrix}$`],
+            ],
+          },
+          {
+            type: "checkpoint",
+            questions: [
+              {
+                kind: "numeric",
+                q: "A matrix has 12 elements. How many different orders are possible for it?",
+                answer: 6,
+                explain: t`Orders are pairs $m \times n$ with $mn = 12$: $1 \times 12$, $12 \times 1$, $2 \times 6$, $6 \times 2$, $3 \times 4$, $4 \times 3$. That is 6.`,
+              },
+              {
+                kind: "truefalse",
+                q: "Every identity matrix is a scalar matrix, and every scalar matrix is a diagonal matrix.",
+                answer: true,
+                explain: t`$I_n$ is the scalar matrix with $k = 1$, and a scalar matrix is a diagonal matrix with equal diagonal entries.`,
+              },
+            ],
+          },
+          {
+            type: "text",
+            md: t`**Equality of matrices.** Two matrices $A = [a_{ij}]$ and $B = [b_{ij}]$ are **equal** if (i) they have the **same order** and (ii) $a_{ij} = b_{ij}$ for every $i$ and $j$. So one matrix equation gives as many ordinary equations as there are entries.`,
+          },
+          {
+            type: "example",
+            title: "Solving from equal matrices",
+            problem: t`Find $a, b, c, d$ if $\begin{bmatrix} 2a + b & a - 2b \\ 5c - d & 4c + 3d \end{bmatrix} = \begin{bmatrix} 4 & -3 \\ 11 & 24 \end{bmatrix}$.`,
+            steps: [
+              t`Equate entries: $2a + b = 4$, $a - 2b = -3$, $5c - d = 11$, $4c + 3d = 24$.`,
+              t`From $2a + b = 4$, $b = 4 - 2a$. Then $a - 2(4 - 2a) = -3$, so $5a = 5$, $a = 1$ and $b = 2$.`,
+              t`From $5c - d = 11$, $d = 5c - 11$. Then $4c + 3(5c - 11) = 24$, so $19c = 57$, $c = 3$ and $d = 4$.`,
+              t`Check: $2 + 2 = 4$, $1 - 4 = -3$, $15 - 4 = 11$, $12 + 12 = 24$.`,
+            ],
+            answer: t`$a = 1$, $b = 2$, $c = 3$, $d = 4$`,
+          },
+          {
+            type: "activity",
+            activity: {
+              kind: "match",
+              prompt: "Match each description to the type of matrix.",
+              pairs: [
+                ["Has exactly one column", "Column matrix"],
+                ["Rows equal columns in number", "Square matrix"],
+                ["Diagonal with all diagonal entries equal", "Scalar matrix"],
+                ["Diagonal entries 1, all others 0", "Identity matrix"],
+                ["Every entry is 0", "Zero matrix"],
+              ],
+              explain: "The types nest: identity is a special scalar matrix, scalar is a special diagonal matrix, and diagonal matrices are always square.",
+            },
+          },
+          {
+            type: "callout",
+            tone: "exam",
+            title: "Board tips",
+            md: t`Questions on order, types and equality are 1-mark MCQs or part of a 2-mark question. When you construct a matrix from a rule, show at least one computed entry per row; when you solve from equality, write the equations first, then solve. Remember that a $2 \times 3$ matrix and a $3 \times 2$ matrix can never be equal.`,
+          },
+          {
+            type: "keypoints",
+            items: [
+              t`Order $m \times n$: $m$ rows, $n$ columns, $mn$ elements; $a_{ij}$ is in row $i$, column $j$.`,
+              "Square, diagonal, scalar and identity matrices nest inside each other; row, column and zero matrices can be of any matching order.",
+              "Equal matrices have the same order and equal corresponding entries.",
+              "A matrix equation turns into a set of ordinary equations, one per entry.",
+            ],
+          },
+        ],
+        flashcards: [
+          { front: t`Order of a matrix with 3 rows and 5 columns`, back: t`$3 \times 5$, with 15 elements.` },
+          { front: t`Where is $a_{32}$?`, back: "Row 3, column 2." },
+          { front: "Scalar matrix", back: t`A diagonal matrix whose diagonal entries are all equal to the same number $k$.` },
+          { front: t`Identity matrix $I_n$`, back: "The square matrix of order n with 1 on the diagonal and 0 everywhere else." },
+          { front: "When are two matrices equal?", back: "Same order and every pair of corresponding entries equal." },
+          { front: "Is a zero matrix always square?", back: t`No. A zero matrix can have any order, e.g. $O_{2 \times 3}$.` },
+        ],
+        quiz: [
+          {
+            kind: "mcq",
+            q: t`For $A = [a_{ij}]_{3 \times 2}$ with $a_{ij} = i + 2j$, what is $a_{31}$?`,
+            options: ["5", "7", "8", "4"],
+            answer: 0,
+            explain: t`$a_{31} = 3 + 2(1) = 5$. Option 7 comes from swapping $i$ and $j$: $1 + 2(3) = 7$.`,
+          },
+          {
+            kind: "numeric",
+            q: "How many elements does a matrix of order 4 × 7 have?",
+            answer: 28,
+            explain: t`$4 \times 7 = 28$.`,
+          },
+          {
+            kind: "mcq",
+            q: t`Which of these is a scalar matrix?`,
+            options: [
+              t`$\begin{bmatrix} 4 & 0 \\ 0 & 4 \end{bmatrix}$`,
+              t`$\begin{bmatrix} 4 & 0 \\ 0 & -4 \end{bmatrix}$`,
+              t`$\begin{bmatrix} 4 & 4 \\ 4 & 4 \end{bmatrix}$`,
+              t`$\begin{bmatrix} 4 & 0 & 0 \end{bmatrix}$`,
+            ],
+            answer: 0,
+            explain: "A scalar matrix is diagonal with equal diagonal entries. The second is diagonal but the entries differ; the third is not diagonal; the fourth is not square.",
+          },
+          {
+            kind: "truefalse",
+            q: t`$\begin{bmatrix} 1 & 2 \end{bmatrix}$ and $\begin{bmatrix} 1 \\ 2 \end{bmatrix}$ are equal matrices.`,
+            answer: false,
+            explain: t`They have the same entries but different orders ($1 \times 2$ and $2 \times 1$), so they are not equal.`,
+          },
+          {
+            kind: "numeric",
+            q: t`If $\begin{bmatrix} x + y & 3 \\ 1 & x - y \end{bmatrix} = \begin{bmatrix} 9 & 3 \\ 1 & 1 \end{bmatrix}$, find $x$.`,
+            answer: 5,
+            explain: t`$x + y = 9$ and $x - y = 1$; adding, $2x = 10$, so $x = 5$ (and $y = 4$).`,
+          },
+          {
+            kind: "multi",
+            q: t`Which statements are true for every square matrix of order 3 that is diagonal?`,
+            options: [
+              t`$a_{12} = 0$`,
+              t`$a_{11} = a_{22}$`,
+              t`$a_{31} = a_{13}$`,
+              "It is an identity matrix",
+            ],
+            answers: [0, 2],
+            explain: t`Off-diagonal entries are 0, so $a_{12} = 0$ and $a_{31} = a_{13} = 0$. Diagonal entries need not be equal, so it need not be scalar or identity.`,
+            difficulty: 2,
+            hint: "Only the off-diagonal entries are forced.",
+          },
+        ],
+      },
+      {
+        slug: "c12-matrix-operations",
+        title: "Operations on Matrices",
+        summary: "Addition, scalar multiplication and matrix multiplication, their properties, and why AB need not equal BA.",
+        minutes: 20,
+        xp: 50,
+        blocks: [
+          {
+            type: "illustration",
+            emoji: "🧾",
+            caption: "Add the January and February sales tables of two Pune shops entry by entry and you get the two-month total. Multiply the quantity table by a price column and you get the money earned.",
+          },
+          {
+            type: "text",
+            md: t`**Addition.** If $A = [a_{ij}]$ and $B = [b_{ij}]$ have the **same order**, $A + B = [a_{ij} + b_{ij}]$. Matrices of different orders cannot be added.
+
+**Scalar multiplication.** For a number $k$, $kA = [k\,a_{ij}]$: every entry is multiplied by $k$. The **negative** is $-A = (-1)A$ and the **difference** is $A - B = A + (-1)B$.`,
+          },
+          {
+            type: "formula",
+            tex: t`A + B = B + A,\quad (A + B) + C = A + (B + C),\quad A + O = A,\quad k(A + B) = kA + kB,\quad (k + l)A = kA + lA`,
+            caption: "Properties of addition and scalar multiplication (same order throughout).",
+          },
+          {
+            type: "example",
+            title: "Linear combination",
+            problem: t`If $A = \begin{bmatrix} 1 & -2 \\ 3 & 0 \end{bmatrix}$ and $B = \begin{bmatrix} 2 & 1 \\ -1 & 4 \end{bmatrix}$, find $2A - 3B$.`,
+            steps: [
+              t`$2A = \begin{bmatrix} 2 & -4 \\ 6 & 0 \end{bmatrix}$ and $3B = \begin{bmatrix} 6 & 3 \\ -3 & 12 \end{bmatrix}$.`,
+              t`Subtract entry by entry: $\begin{bmatrix} 2 - 6 & -4 - 3 \\ 6 + 3 & 0 - 12 \end{bmatrix}$.`,
+            ],
+            answer: t`$2A - 3B = \begin{bmatrix} -4 & -7 \\ 9 & -12 \end{bmatrix}$`,
+          },
+          {
+            type: "text",
+            md: t`**Multiplication.** $AB$ is defined only when the **number of columns of $A$ equals the number of rows of $B$**. If $A$ is $m \times n$ and $B$ is $n \times p$, then $AB$ is $m \times p$. The $(i, k)$ entry of $AB$ is the $i$-th row of $A$ "dotted" with the $k$-th column of $B$: multiply matching entries and add.`,
+          },
+          {
+            type: "formula",
+            tex: t`(AB)_{ik} = \sum_{j=1}^{n} a_{ij}\, b_{jk} = a_{i1}b_{1k} + a_{i2}b_{2k} + \cdots + a_{in}b_{nk}`,
+          },
+          {
+            type: "example",
+            title: "Row times column",
+            problem: t`Find $AB$ for $A = \begin{bmatrix} 1 & 2 \\ 3 & -1 \end{bmatrix}$ and $B = \begin{bmatrix} 2 & 0 & 1 \\ 1 & 3 & -2 \end{bmatrix}$. Is $BA$ defined?`,
+            steps: [
+              t`$A$ is $2 \times 2$ and $B$ is $2 \times 3$: inner numbers match (2 and 2), so $AB$ is $2 \times 3$.`,
+              t`Row 1 of $A$ = (1, 2): $1(2) + 2(1) = 4$, $1(0) + 2(3) = 6$, $1(1) + 2(-2) = -3$.`,
+              t`Row 2 of $A$ = (3, −1): $3(2) - 1(1) = 5$, $3(0) - 1(3) = -3$, $3(1) - 1(-2) = 5$.`,
+              t`$BA$: $B$ is $2 \times 3$ and $A$ is $2 \times 2$; 3 columns but only 2 rows, so $BA$ is not defined.`,
+            ],
+            answer: t`$AB = \begin{bmatrix} 4 & 6 & -3 \\ 5 & -3 & 5 \end{bmatrix}$; $BA$ is not defined.`,
+          },
+          {
+            type: "text",
+            md: t`**Properties of multiplication** (whenever the products are defined): $(AB)C = A(BC)$ (associative), $A(B + C) = AB + AC$ and $(A + B)C = AC + BC$ (distributive), and $AI = IA = A$ for a square $A$ and identity $I$ of the same order.
+
+Two properties of numbers **fail**: in general $AB \ne BA$ (not commutative), and $AB = O$ does **not** force $A = O$ or $B = O$.`,
+          },
+          {
+            type: "example",
+            title: "Non-zero matrices with a zero product",
+            problem: t`Let $A = \begin{bmatrix} 0 & 1 \\ 0 & 0 \end{bmatrix}$ and $B = \begin{bmatrix} 1 & 0 \\ 0 & 0 \end{bmatrix}$. Find $AB$ and $BA$.`,
+            steps: [
+              t`$AB = \begin{bmatrix} 0(1) + 1(0) & 0(0) + 1(0) \\ 0 & 0 \end{bmatrix} = \begin{bmatrix} 0 & 0 \\ 0 & 0 \end{bmatrix}$.`,
+              t`$BA = \begin{bmatrix} 1(0) + 0(0) & 1(1) + 0(0) \\ 0 & 0 \end{bmatrix} = \begin{bmatrix} 0 & 1 \\ 0 & 0 \end{bmatrix}$.`,
+            ],
+            answer: t`$AB = O$ although $A \ne O$ and $B \ne O$; also $BA \ne AB$.`,
+          },
+          {
+            type: "mistake",
+            wrong: t`"$(A + B)^2 = A^2 + 2AB + B^2$, just like numbers."`,
+            right: t`$(A + B)^2 = (A + B)(A + B) = A^2 + AB + BA + B^2$. It equals $A^2 + 2AB + B^2$ only when $AB = BA$.`,
+            why: "The usual identity hides the step ab + ba = 2ab, which uses commutativity. Matrices do not commute in general, so AB and BA must be kept separate.",
+          },
+          {
+            type: "checkpoint",
+            questions: [
+              {
+                kind: "mcq",
+                q: t`$A$ is $3 \times 2$ and $B$ is $2 \times 4$. What is the order of $AB$?`,
+                options: [t`$3 \times 4$`, t`$2 \times 2$`, t`$4 \times 3$`, "not defined"],
+                answer: 0,
+                explain: t`$(3 \times 2)(2 \times 4)$: inner 2s match, and the outer numbers give $3 \times 4$.`,
+              },
+              {
+                kind: "truefalse",
+                q: t`If $A^2 = O$ for a square matrix $A$, then $A = O$.`,
+                answer: false,
+                explain: t`$A = \begin{bmatrix} 0 & 1 \\ 0 & 0 \end{bmatrix}$ is non-zero but $A^2 = O$.`,
+              },
+            ],
+          },
+          {
+            type: "example",
+            title: "A matrix satisfying a polynomial",
+            problem: t`Show that $A = \begin{bmatrix} 3 & 1 \\ -1 & 2 \end{bmatrix}$ satisfies $A^2 - 5A + 7I = O$.`,
+            steps: [
+              t`$A^2 = \begin{bmatrix} 9 - 1 & 3 + 2 \\ -3 - 2 & -1 + 4 \end{bmatrix} = \begin{bmatrix} 8 & 5 \\ -5 & 3 \end{bmatrix}$.`,
+              t`$5A = \begin{bmatrix} 15 & 5 \\ -5 & 10 \end{bmatrix}$ and $7I = \begin{bmatrix} 7 & 0 \\ 0 & 7 \end{bmatrix}$.`,
+              t`$A^2 - 5A + 7I = \begin{bmatrix} 8 - 15 + 7 & 5 - 5 + 0 \\ -5 + 5 + 0 & 3 - 10 + 7 \end{bmatrix}$.`,
+            ],
+            answer: t`$A^2 - 5A + 7I = \begin{bmatrix} 0 & 0 \\ 0 & 0 \end{bmatrix} = O$`,
+          },
+          {
+            type: "activity",
+            activity: {
+              kind: "reveal",
+              prompt: "A is 2 × 3 and B is 3 × 2. Which products exist?",
+              emoji: "✖️",
+              options: ["Only AB", "Only BA", "Both AB and BA", "Neither"],
+              answer: 2,
+              trap: 0,
+              explain: "AB is (2 × 3)(3 × 2) = 2 × 2 and BA is (3 × 2)(2 × 3) = 3 × 3. Both exist, but they cannot be equal because their orders differ.",
+            },
+          },
+          {
+            type: "callout",
+            tone: "exam",
+            title: "Board tips",
+            md: t`Write the order check first ("$2 \times 2$ times $2 \times 3$ gives $2 \times 3$"), then show each row-times-column sum for at least the first row. Most lost marks are sign slips in products with negative entries. In "show that $A^2 - 5A + 7I = O$" questions, remember the constant becomes $7I$, never just $7$.`,
+          },
+          {
+            type: "keypoints",
+            items: [
+              "Add or subtract only matrices of the same order, entry by entry; kA multiplies every entry by k.",
+              t`$AB$ needs columns of $A$ = rows of $B$; $(m \times n)(n \times p) = m \times p$.`,
+              "Matrix multiplication is associative and distributive, but not commutative.",
+              t`$AB = O$ is possible with $A \ne O$, $B \ne O$; so $AB = AC$ does not give $B = C$ in general.`,
+            ],
+          },
+        ],
+        flashcards: [
+          { front: "When can two matrices be added?", back: "Only when they have the same order." },
+          { front: "When is AB defined?", back: "When the number of columns of A equals the number of rows of B." },
+          { front: t`Order of $AB$ if $A$ is $m \times n$, $B$ is $n \times p$`, back: t`$m \times p$` },
+          { front: t`$(A + B)^2$ for matrices`, back: t`$A^2 + AB + BA + B^2$` },
+          { front: t`Does $AB = O$ imply $A = O$ or $B = O$?`, back: t`No. Example: $A = \begin{bmatrix} 0 & 1 \\ 0 & 0 \end{bmatrix}$, $B = \begin{bmatrix} 1 & 0 \\ 0 & 0 \end{bmatrix}$.` },
+          { front: t`$AI$ for a square $A$`, back: t`$AI = IA = A$, with $I$ of the same order.` },
+          { front: t`$(A - B)(A + B)$ for matrices`, back: t`$A^2 + AB - BA - B^2$, equal to $A^2 - B^2$ only if $AB = BA$.` },
+        ],
+        quiz: [
+          {
+            kind: "mcq",
+            q: t`If $A = \begin{bmatrix} 1 & 2 \\ 0 & 3 \end{bmatrix}$, then $A^2$ is`,
+            options: [
+              t`$\begin{bmatrix} 1 & 8 \\ 0 & 9 \end{bmatrix}$`,
+              t`$\begin{bmatrix} 1 & 4 \\ 0 & 9 \end{bmatrix}$`,
+              t`$\begin{bmatrix} 2 & 4 \\ 0 & 6 \end{bmatrix}$`,
+              t`$\begin{bmatrix} 1 & 6 \\ 0 & 9 \end{bmatrix}$`,
+            ],
+            answer: 0,
+            explain: t`Row 1 times column 2: $1(2) + 2(3) = 8$; the other entries are $1, 0, 9$. Squaring each entry gives the wrong $\begin{bmatrix} 1 & 4 \\ 0 & 9 \end{bmatrix}$, and $2A$ is not $A^2$.`,
+          },
+          {
+            kind: "numeric",
+            q: t`$\begin{bmatrix} 2 & -1 & 3 \end{bmatrix} \begin{bmatrix} 4 \\ 5 \\ -1 \end{bmatrix} = [x]$. Find $x$.`,
+            answer: 0,
+            explain: t`$2(4) + (-1)(5) + 3(-1) = 8 - 5 - 3 = 0$.`,
+          },
+          {
+            kind: "mcq",
+            q: t`$A$ is $3 \times 4$. For which order of $B$ are both $AB$ and $BA$ defined?`,
+            options: [t`$4 \times 3$`, t`$3 \times 4$`, t`$4 \times 4$`, t`$3 \times 3$`],
+            answer: 0,
+            explain: t`$AB$ needs $B$ to have 4 rows; $BA$ needs $B$ to have 3 columns. So $B$ is $4 \times 3$.`,
+            difficulty: 2,
+          },
+          {
+            kind: "truefalse",
+            q: t`For any two square matrices of the same order, $(A + B)(A - B) = A^2 - B^2$.`,
+            answer: false,
+            explain: t`$(A + B)(A - B) = A^2 - AB + BA - B^2$, which equals $A^2 - B^2$ only if $AB = BA$.`,
+          },
+          {
+            kind: "numeric",
+            q: t`If $3\begin{bmatrix} x & 2 \\ 1 & 0 \end{bmatrix} - \begin{bmatrix} 4 & 6 \\ 3 & 1 \end{bmatrix} = \begin{bmatrix} 5 & 0 \\ 0 & -1 \end{bmatrix}$, find $x$.`,
+            answer: 3,
+            explain: t`Top-left entry: $3x - 4 = 5$, so $x = 3$.`,
+          },
+          {
+            kind: "multi",
+            q: "Which properties hold for all square matrices A, B, C of the same order?",
+            options: [
+              t`$A(BC) = (AB)C$`,
+              t`$AB = BA$`,
+              t`$A(B + C) = AB + AC$`,
+              t`$AB = AC \Rightarrow B = C$`,
+            ],
+            answers: [0, 2],
+            explain: "Multiplication is associative and distributive. It is not commutative, and cancellation fails because non-zero matrices can multiply to O.",
+            difficulty: 2,
+            hint: "Two of these are true for numbers but not for matrices.",
+          },
+          {
+            kind: "mcq",
+            q: t`If $A = \begin{bmatrix} 2 & 1 \\ 0 & 3 \end{bmatrix}$, which $k$ makes $A^2 = 5A + kI$?`,
+            options: ["−6", "6", "5", "−5"],
+            answer: 0,
+            explain: t`$A^2 = \begin{bmatrix} 4 & 5 \\ 0 & 9 \end{bmatrix}$ and $5A = \begin{bmatrix} 10 & 5 \\ 0 & 15 \end{bmatrix}$. So $kI = A^2 - 5A = \begin{bmatrix} -6 & 0 \\ 0 & -6 \end{bmatrix}$, giving $k = -6$.`,
+            difficulty: 2,
+            hint: t`Compute $A^2 - 5A$ and compare it with $kI$.`,
+          },
+        ],
+      },
+      {
+        slug: "c12-transpose-symmetric-invertible",
+        title: "Transpose, Symmetric Matrices and Invertible Matrices",
+        summary: "The transpose and its rules, symmetric and skew-symmetric matrices, splitting any square matrix into the two, and the meaning of an inverse.",
+        minutes: 20,
+        xp: 50,
+        blocks: [
+          {
+            type: "illustration",
+            emoji: "🔄",
+            caption: "A cricket score table with players down the side and matches across can be flipped so that matches run down and players run across. Same data, rows and columns swapped: the transpose.",
+          },
+          {
+            type: "text",
+            md: t`The **transpose** of $A = [a_{ij}]_{m \times n}$ is the matrix $A'$ (also written $A^T$) of order $n \times m$ obtained by turning rows into columns: $A' = [a_{ji}]$. The first row of $A$ becomes the first column of $A'$, and so on.`,
+          },
+          {
+            type: "formula",
+            tex: t`(A')' = A,\qquad (kA)' = kA',\qquad (A + B)' = A' + B',\qquad (AB)' = B'A'`,
+            caption: "Properties of transpose (whenever the sums and products are defined).",
+          },
+          {
+            type: "mistake",
+            wrong: t`"$(AB)' = A'B'$."`,
+            right: t`$(AB)' = B'A'$: the order **reverses**. Likewise $(ABC)' = C'B'A'$.`,
+            why: t`If $A$ is $2 \times 3$ and $B$ is $3 \times 4$, then $A'B'$ is $(3 \times 2)(4 \times 3)$, which is not even defined. Only $B'A'$, of order $4 \times 2$, matches $(AB)'$.`,
+          },
+          {
+            type: "text",
+            md: t`A square matrix is **symmetric** if $A' = A$, that is $a_{ij} = a_{ji}$ for all $i, j$ (mirror image across the diagonal). It is **skew-symmetric** if $A' = -A$, that is $a_{ij} = -a_{ji}$.
+
+In a skew-symmetric matrix, putting $i = j$ gives $a_{ii} = -a_{ii}$, so $2a_{ii} = 0$: **every diagonal entry of a skew-symmetric matrix is 0**.`,
+          },
+          {
+            type: "list",
+            ordered: true,
+            items: [
+              t`**Theorem 1.** For any square $A$: $(A + A')' = A' + (A')' = A' + A$, so $A + A'$ is symmetric.`,
+              t`$(A - A')' = A' - A = -(A - A')$, so $A - A'$ is skew-symmetric.`,
+              t`**Theorem 2.** Write $A = \frac{1}{2}(A + A') + \frac{1}{2}(A - A') = P + Q$.`,
+              t`By Theorem 1, $P = \frac{1}{2}(A + A')$ is symmetric and $Q = \frac{1}{2}(A - A')$ is skew-symmetric. So every square matrix is the sum of a symmetric and a skew-symmetric matrix (and this split is unique).`,
+            ],
+          },
+          {
+            type: "example",
+            title: "Splitting a matrix",
+            problem: t`Express $A = \begin{bmatrix} 1 & 2 & 4 \\ 6 & 8 & 2 \\ 2 & -2 & 7 \end{bmatrix}$ as $P + Q$ with $P$ symmetric and $Q$ skew-symmetric.`,
+            steps: [
+              t`$A' = \begin{bmatrix} 1 & 6 & 2 \\ 2 & 8 & -2 \\ 4 & 2 & 7 \end{bmatrix}$.`,
+              t`$P = \frac{1}{2}(A + A') = \frac{1}{2}\begin{bmatrix} 2 & 8 & 6 \\ 8 & 16 & 0 \\ 6 & 0 & 14 \end{bmatrix} = \begin{bmatrix} 1 & 4 & 3 \\ 4 & 8 & 0 \\ 3 & 0 & 7 \end{bmatrix}$, which is symmetric.`,
+              t`$Q = \frac{1}{2}(A - A') = \frac{1}{2}\begin{bmatrix} 0 & -4 & 2 \\ 4 & 0 & 4 \\ -2 & -4 & 0 \end{bmatrix} = \begin{bmatrix} 0 & -2 & 1 \\ 2 & 0 & 2 \\ -1 & -2 & 0 \end{bmatrix}$, skew-symmetric with zero diagonal.`,
+              t`Check: $P + Q = \begin{bmatrix} 1 & 2 & 4 \\ 6 & 8 & 2 \\ 2 & -2 & 7 \end{bmatrix} = A$.`,
+            ],
+            answer: t`$A = \begin{bmatrix} 1 & 4 & 3 \\ 4 & 8 & 0 \\ 3 & 0 & 7 \end{bmatrix} + \begin{bmatrix} 0 & -2 & 1 \\ 2 & 0 & 2 \\ -1 & -2 & 0 \end{bmatrix}$`,
+          },
+          {
+            type: "activity",
+            activity: {
+              kind: "sort",
+              prompt: "Symmetric, skew-symmetric or neither?",
+              groups: ["Symmetric", "Skew-symmetric", "Neither"],
+              items: [
+                { text: t`$\begin{bmatrix} 1 & 2 \\ 2 & 3 \end{bmatrix}$`, group: 0, hint: t`$a_{12} = a_{21} = 2$.` },
+                { text: t`$\begin{bmatrix} 0 & -4 \\ 4 & 0 \end{bmatrix}$`, group: 1, hint: "Zero diagonal, opposite off-diagonal entries." },
+                { text: t`$\begin{bmatrix} 0 & 3 \\ 3 & 0 \end{bmatrix}$`, group: 0, hint: "A zero diagonal alone does not make it skew; here the off-diagonal entries are equal." },
+                { text: t`$\begin{bmatrix} 1 & -2 \\ 2 & 1 \end{bmatrix}$`, group: 2, hint: "Off-diagonal entries are opposite, but the diagonal is not zero." },
+                { text: t`$\begin{bmatrix} 0 & 1 & -2 \\ -1 & 0 & 3 \\ 2 & -3 & 0 \end{bmatrix}$`, group: 1, hint: t`Each $a_{ji} = -a_{ij}$ and the diagonal is zero.` },
+                { text: t`$\begin{bmatrix} 2 & 1 \\ 3 & 2 \end{bmatrix}$`, group: 2, hint: "1 and 3 are neither equal nor opposite." },
+                { text: t`$I_3$`, group: 0, hint: t`$I' = I$.` },
+              ],
+              explain: "Symmetric: mirror entries equal. Skew-symmetric: mirror entries opposite AND every diagonal entry 0.",
+            },
+          },
+          {
+            type: "text",
+            md: t`**Invertible matrices.** A square matrix $A$ of order $n$ is **invertible** if there is a square matrix $B$ of the same order with $AB = BA = I$. Then $B$ is the **inverse** of $A$, written $A^{-1}$. A rectangular matrix has no inverse.
+
+**Uniqueness.** If $B$ and $C$ are both inverses of $A$, then $B = BI = B(AC) = (BA)C = IC = C$. **Reversal law.** If $A$ and $B$ are invertible of the same order, $(AB)^{-1} = B^{-1}A^{-1}$, because $(AB)(B^{-1}A^{-1}) = A(BB^{-1})A^{-1} = AA^{-1} = I$, and similarly in the other order.`,
+          },
+          {
+            type: "example",
+            title: "Checking an inverse",
+            problem: t`Show that $B = \begin{bmatrix} 3 & -5 \\ -1 & 2 \end{bmatrix}$ is the inverse of $A = \begin{bmatrix} 2 & 5 \\ 1 & 3 \end{bmatrix}$.`,
+            steps: [
+              t`$AB = \begin{bmatrix} 6 - 5 & -10 + 10 \\ 3 - 3 & -5 + 6 \end{bmatrix} = \begin{bmatrix} 1 & 0 \\ 0 & 1 \end{bmatrix}$.`,
+              t`$BA = \begin{bmatrix} 6 - 5 & 15 - 15 \\ -2 + 2 & -5 + 6 \end{bmatrix} = \begin{bmatrix} 1 & 0 \\ 0 & 1 \end{bmatrix}$.`,
+            ],
+            answer: t`$AB = BA = I$, so $B = A^{-1}$.`,
+          },
+          {
+            type: "checkpoint",
+            questions: [
+              {
+                kind: "mcq",
+                q: t`$A$ is skew-symmetric of order 3 with $a_{12} = 5$. Then $a_{21} + a_{33}$ is`,
+                options: ["−5", "5", "0", "10"],
+                answer: 0,
+                explain: t`$a_{21} = -a_{12} = -5$ and $a_{33} = 0$, so the sum is $-5$.`,
+              },
+              {
+                kind: "truefalse",
+                q: t`If $A$ and $B$ are symmetric of the same order, then $AB$ is always symmetric.`,
+                answer: false,
+                explain: t`$(AB)' = B'A' = BA$, so $AB$ is symmetric only when $AB = BA$.`,
+              },
+            ],
+          },
+          {
+            type: "callout",
+            tone: "note",
+            title: "Board note",
+            md: "The rationalised NCERT book (CBSE, and Karnataka II PUC which follows it) has dropped elementary row and column operations and finding an inverse by them; inverses are found with the adjoint in the Determinants chapter. Older books and some JEE solutions still use row operations, so it is worth knowing they exist.",
+          },
+          {
+            type: "callout",
+            tone: "exam",
+            title: "Board tips",
+            md: t`"Express as the sum of a symmetric and a skew-symmetric matrix" is a regular 3–4 mark question. Marks are given for $A'$, for $P$ and $Q$, for showing $P' = P$ and $Q' = -Q$, and for the final check $P + Q = A$. Do not skip the check: a single wrong entry shows up there.`,
+          },
+          {
+            type: "keypoints",
+            items: [
+              t`$A'$ swaps rows and columns; $(AB)' = B'A'$.`,
+              t`Symmetric: $A' = A$. Skew-symmetric: $A' = -A$, with every diagonal entry 0.`,
+              t`Every square matrix is uniquely $\frac{1}{2}(A + A') + \frac{1}{2}(A - A')$.`,
+              t`An inverse exists only for some square matrices, is unique, and $(AB)^{-1} = B^{-1}A^{-1}$.`,
+            ],
+          },
+        ],
+        flashcards: [
+          { front: t`Order of $A'$ if $A$ is $3 \times 5$`, back: t`$5 \times 3$` },
+          { front: t`$(AB)'$`, back: t`$B'A'$ (order reverses).` },
+          { front: "Symmetric matrix", back: t`Square matrix with $A' = A$, i.e. $a_{ij} = a_{ji}$.` },
+          { front: "Skew-symmetric matrix", back: t`Square matrix with $A' = -A$; all diagonal entries are 0.` },
+          { front: "Symmetric part of A", back: t`$P = \frac{1}{2}(A + A')$` },
+          { front: "Skew-symmetric part of A", back: t`$Q = \frac{1}{2}(A - A')$` },
+          { front: t`$(AB)^{-1}$`, back: t`$B^{-1}A^{-1}$, for invertible $A$, $B$ of the same order.` },
+        ],
+        quiz: [
+          {
+            kind: "mcq",
+            q: t`If $A = \begin{bmatrix} 1 & 3 \\ 0 & 2 \end{bmatrix}$, then $A + A'$ is`,
+            options: [
+              t`$\begin{bmatrix} 2 & 3 \\ 3 & 4 \end{bmatrix}$`,
+              t`$\begin{bmatrix} 2 & 6 \\ 0 & 4 \end{bmatrix}$`,
+              t`$\begin{bmatrix} 0 & 3 \\ -3 & 0 \end{bmatrix}$`,
+              t`$\begin{bmatrix} 2 & 3 \\ 0 & 4 \end{bmatrix}$`,
+            ],
+            answer: 0,
+            explain: t`$A' = \begin{bmatrix} 1 & 0 \\ 3 & 2 \end{bmatrix}$; adding gives $\begin{bmatrix} 2 & 3 \\ 3 & 4 \end{bmatrix}$, a symmetric matrix as expected.`,
+          },
+          {
+            kind: "truefalse",
+            q: "A skew-symmetric matrix can have a non-zero entry on its diagonal.",
+            answer: false,
+            explain: t`$a_{ii} = -a_{ii}$ forces $a_{ii} = 0$.`,
+          },
+          {
+            kind: "numeric",
+            q: t`$\begin{bmatrix} 0 & a & 3 \\ 2 & 0 & b \\ c & -1 & 0 \end{bmatrix}$ is skew-symmetric. Find $a + b + c$.`,
+            answer: -4,
+            explain: t`$a = -2$, $b = -(-1) = 1$, $c = -3$. Sum $= -2 + 1 - 3 = -4$.`,
+            difficulty: 2,
+            hint: t`Use $a_{ij} = -a_{ji}$ for each mirror pair.`,
+          },
+          {
+            kind: "mcq",
+            q: t`For any square matrix $A$, the matrix $AA'$ is`,
+            options: ["always symmetric", "always skew-symmetric", "always the identity", "neither in general"],
+            answer: 0,
+            explain: t`$(AA')' = (A')'A' = AA'$, so $AA'$ is symmetric.`,
+          },
+          {
+            kind: "mcq",
+            q: t`If $A$ is symmetric and $B$ is skew-symmetric of the same order, then $AB - BA$ is`,
+            options: ["symmetric", "skew-symmetric", "zero", "neither"],
+            answer: 0,
+            explain: t`$(AB - BA)' = B'A' - A'B' = (-B)A - A(-B) = AB - BA$. It equals its own transpose, so it is symmetric.`,
+            difficulty: 3,
+            hint: t`Use $A' = A$, $B' = -B$ and reverse each product.`,
+          },
+          {
+            kind: "multi",
+            q: "Which statements are always true for invertible square matrices A and B of the same order?",
+            options: [
+              t`$(AB)^{-1} = B^{-1}A^{-1}$`,
+              t`$(A^{-1})^{-1} = A$`,
+              t`$(AB)^{-1} = A^{-1}B^{-1}$`,
+              t`$(A')^{-1} = (A^{-1})'$`,
+            ],
+            answers: [0, 1, 3],
+            explain: t`The reversal law gives the first. $A$ undoes $A^{-1}$, giving the second. Transposing $AA^{-1} = I$ gives $(A^{-1})'A' = I$, so the fourth holds. The third has the wrong order.`,
+            difficulty: 2,
+            hint: "Inverse and transpose both reverse the order of a product.",
+          },
+        ],
+      },
+      {
+        slug: "c12-matrices-exam-edge",
+        title: "Exam edge: Matrices for JEE, KCET and COMEDK",
+        summary: "Counting matrices, powers through nilpotent parts, idempotent and involutory matrices, the trace trick, and the traps examiners set.",
+        minutes: 22,
+        xp: 60,
+        track: "exam",
+        blocks: [
+          {
+            type: "text",
+            md: t`**What the exams ask.** KCET and COMEDK ask direct questions: order of a product, entries of $A^2$ or $A^3$, symmetric and skew-symmetric parts, and simple polynomial identities like $A^2 - kA + lI = O$. JEE Main adds counting matrices with given entries, powers $A^n$ by pattern, and properties of special matrices. JEE Advanced combines these with trace and commuting arguments, often as multi-correct questions.`,
+          },
+          {
+            type: "table",
+            headers: ["Name", "Condition", "Useful fact"],
+            rows: [
+              ["Idempotent", t`$A^2 = A$`, t`$A^n = A$ for all $n \ge 1$`],
+              ["Involutory", t`$A^2 = I$`, t`$A^{-1} = A$`],
+              ["Nilpotent (index k)", t`$A^k = O$, $A^{k-1} \ne O$`, t`$I + A$ is invertible`],
+              ["Orthogonal", t`$AA' = A'A = I$`, t`$A^{-1} = A'$`],
+              ["Trace", t`$\operatorname{tr}A = \sum a_{ii}$`, t`$\operatorname{tr}(AB) = \operatorname{tr}(BA)$`],
+            ],
+          },
+          {
+            type: "formula",
+            tex: t`AB = BA \;\Rightarrow\; (A + B)^n = \sum_{r=0}^{n} \binom{n}{r} A^{n-r} B^{r}`,
+            caption: t`The binomial theorem is safe only for commuting matrices. $I$ commutes with every matrix, so $(I + N)^n$ can always be expanded.`,
+          },
+          {
+            type: "example",
+            title: "KCET level: counting symmetric matrices",
+            problem: t`How many $3 \times 3$ symmetric matrices have every entry from $\{0, 1, 2\}$? How many skew-symmetric matrices have entries from $\{-1, 0, 1\}$?`,
+            steps: [
+              t`A symmetric $3 \times 3$ matrix is fixed by its 3 diagonal entries and the 3 entries above the diagonal: 6 free places.`,
+              t`Each place has 3 choices, so $3^6 = 729$ symmetric matrices.`,
+              t`A skew-symmetric matrix has a zero diagonal; the 3 entries above the diagonal are free and fix those below.`,
+              t`Each has 3 choices from $\{-1, 0, 1\}$, and its mirror $-a$ is also in the set, so $3^3 = 27$.`,
+            ],
+            answer: "729 symmetric; 27 skew-symmetric.",
+          },
+          {
+            type: "example",
+            title: "JEE Main level: a power through a nilpotent part",
+            problem: t`Find $A^{10}$ for $A = \begin{bmatrix} 1 & 0 & 0 \\ 2 & 1 & 0 \\ 3 & 2 & 1 \end{bmatrix}$.`,
+            steps: [
+              t`Write $A = I + N$ with $N = \begin{bmatrix} 0 & 0 & 0 \\ 2 & 0 & 0 \\ 3 & 2 & 0 \end{bmatrix}$.`,
+              t`$N^2$: the only non-zero entry is $(3,1)$: row 3 of $N$ times column 1 of $N$ $= 3(0) + 2(2) + 0(3) = 4$. So $N^2 = \begin{bmatrix} 0 & 0 & 0 \\ 0 & 0 & 0 \\ 4 & 0 & 0 \end{bmatrix}$ and $N^3 = O$.`,
+              t`$I$ and $N$ commute, so $A^{10} = I + 10N + \binom{10}{2}N^2 = I + 10N + 45N^2$.`,
+              t`Entries: $(2,1) = 20$, $(3,2) = 20$, $(3,1) = 10(3) + 45(4) = 30 + 180 = 210$.`,
+              t`Check the pattern with $n = 2$: formula gives $(3,1) = 6 + 4 = 10$; directly, row 3 of $A$ times column 1 of $A$ $= 3 + 4 + 3 = 10$.`,
+            ],
+            answer: t`$A^{10} = \begin{bmatrix} 1 & 0 & 0 \\ 20 & 1 & 0 \\ 210 & 20 & 1 \end{bmatrix}$`,
+          },
+          {
+            type: "mistake",
+            wrong: t`"$A^{10}$ of a matrix is found by raising each entry to the power 10," or "$(A + B)^n$ expands by the binomial theorem for any $A$, $B$."`,
+            right: t`Powers are repeated matrix products. The binomial expansion is allowed only when the two matrices commute, as $I$ and $N$ do.`,
+            why: "Entry-wise powers work only for diagonal matrices, which makes the shortcut feel safe. For any matrix with off-diagonal entries it gives a wrong answer at once.",
+          },
+          {
+            type: "example",
+            title: "JEE Main level: idempotent matrices",
+            problem: t`$A$ is a square matrix with $A^2 = A$. Find $k$ if $(I + A)^5 = I + kA$.`,
+            steps: [
+              t`$I$ and $A$ commute, so $(I + A)^5 = \sum_{r=0}^{5} \binom{5}{r} A^r$.`,
+              t`$A^r = A$ for every $r \ge 1$, so the sum is $I + \left[\binom{5}{1} + \binom{5}{2} + \cdots + \binom{5}{5}\right]A$.`,
+              t`The bracket is $2^5 - 1 = 31$.`,
+            ],
+            answer: t`$k = 31$; in general $(I + A)^n = I + (2^n - 1)A$.`,
+          },
+          {
+            type: "example",
+            title: "JEE Advanced level: the trace argument",
+            problem: t`Prove that no two $n \times n$ matrices $A$, $B$ (real entries) satisfy $AB - BA = I$.`,
+            steps: [
+              t`$\operatorname{tr}(AB) = \sum_i \sum_j a_{ij}b_{ji} = \sum_j \sum_i b_{ji}a_{ij} = \operatorname{tr}(BA)$.`,
+              t`Trace is linear, so $\operatorname{tr}(AB - BA) = \operatorname{tr}(AB) - \operatorname{tr}(BA) = 0$.`,
+              t`But $\operatorname{tr}(I_n) = n \ge 1$. A matrix with trace 0 cannot equal one with trace $n$.`,
+            ],
+            answer: t`Impossible, because $\operatorname{tr}(AB - BA) = 0 \ne n = \operatorname{tr}(I)$.`,
+          },
+          {
+            type: "mistake",
+            wrong: t`"A $3 \times 3$ symmetric matrix with entries from a set of $k$ numbers: there are $k^9$ of them."`,
+            right: t`Only the entries on and above the diagonal are free: $k^{6}$. In general an $n \times n$ symmetric matrix has $\frac{n(n+1)}{2}$ free entries, and a skew-symmetric one has $\frac{n(n-1)}{2}$.`,
+            why: t`$k^9$ counts all matrices. Symmetry ties each entry below the diagonal to one above it, so those choices are not independent.`,
+          },
+          {
+            type: "checkpoint",
+            questions: [
+              {
+                kind: "numeric",
+                q: t`How many $2 \times 2$ matrices with entries from $\{0, 1\}$ are there?`,
+                answer: 16,
+                explain: t`4 entries, 2 choices each: $2^4 = 16$.`,
+              },
+            ],
+          },
+          {
+            type: "activity",
+            activity: {
+              kind: "match",
+              prompt: "Match each matrix type to its key consequence.",
+              pairs: [
+                [t`$A^2 = A$`, t`$A^n = A$`],
+                [t`$A^2 = I$`, t`$A^{-1} = A$`],
+                [t`$AA' = I$`, t`$A^{-1} = A'$`],
+                [t`$N^2 = O$`, t`$(I + N)^n = I + nN$`],
+              ],
+              explain: "These four facts turn most JEE power and inverse questions into one-line answers.",
+            },
+          },
+          {
+            type: "callout",
+            tone: "exam",
+            title: "When shortcuts are safe",
+            md: t`Use the binomial theorem only after checking that the parts commute. Use $\operatorname{tr}(AB) = \operatorname{tr}(BA)$ freely, but $\operatorname{tr}(ABC) = \operatorname{tr}(BAC)$ is **not** true in general (only cyclic shifts like $\operatorname{tr}(CAB)$ are safe). For powers, compute $A^2$ and $A^3$ first and look for a pattern before guessing.`,
+          },
+          {
+            type: "keypoints",
+            items: [
+              t`Count free entries: $n^2$ in general, $\frac{n(n+1)}{2}$ symmetric, $\frac{n(n-1)}{2}$ skew-symmetric (diagonal 0).`,
+              t`Split $A = I + N$ with $N$ nilpotent to get $A^n$ quickly.`,
+              t`Idempotent: $(I + A)^n = I + (2^n - 1)A$. Involutory: $A^{-1} = A$.`,
+              t`$\operatorname{tr}(AB) = \operatorname{tr}(BA)$, so $AB - BA$ can never be $I$.`,
+            ],
+          },
+        ],
+        flashcards: [
+          { front: "Idempotent matrix", back: t`$A^2 = A$; then $A^n = A$ for all $n \ge 1$.` },
+          { front: "Involutory matrix", back: t`$A^2 = I$, so $A^{-1} = A$.` },
+          { front: "Orthogonal matrix", back: t`$AA' = A'A = I$, so $A^{-1} = A'$.` },
+          { front: t`$\operatorname{tr}(AB)$ vs $\operatorname{tr}(BA)$`, back: "Always equal (when both products are square)." },
+          { front: t`Free entries in an $n \times n$ symmetric matrix`, back: t`$\frac{n(n+1)}{2}$` },
+          { front: t`Free entries in an $n \times n$ skew-symmetric matrix`, back: t`$\frac{n(n-1)}{2}$ (diagonal is 0).` },
+          { front: t`When is $(A + B)^2 = A^2 + 2AB + B^2$?`, back: t`Exactly when $AB = BA$.` },
+          { front: t`$\begin{bmatrix} 1 & a \\ 0 & 1 \end{bmatrix}^n$`, back: t`$\begin{bmatrix} 1 & na \\ 0 & 1 \end{bmatrix}$` },
+        ],
+        quiz: [
+          {
+            kind: "numeric",
+            q: t`How many $3 \times 3$ matrices with entries from $\{0, 1\}$ are symmetric?`,
+            answer: 64,
+            explain: t`6 free entries (3 diagonal + 3 above), each 2 choices: $2^6 = 64$.`,
+            difficulty: 1,
+          },
+          {
+            kind: "mcq",
+            q: t`If $A = \begin{bmatrix} 1 & 3 \\ 0 & 1 \end{bmatrix}$, then $A^{20}$ is`,
+            options: [
+              t`$\begin{bmatrix} 1 & 60 \\ 0 & 1 \end{bmatrix}$`,
+              t`$\begin{bmatrix} 1 & 3^{20} \\ 0 & 1 \end{bmatrix}$`,
+              t`$\begin{bmatrix} 1 & 23 \\ 0 & 1 \end{bmatrix}$`,
+              t`$\begin{bmatrix} 20 & 60 \\ 0 & 20 \end{bmatrix}$`,
+            ],
+            answer: 0,
+            explain: t`$A = I + N$ with $N = \begin{bmatrix} 0 & 3 \\ 0 & 0 \end{bmatrix}$, $N^2 = O$. So $A^{20} = I + 20N$, top-right entry $60$.`,
+            difficulty: 2,
+          },
+          {
+            kind: "numeric",
+            q: t`$A$ is idempotent ($A^2 = A$). If $(I + A)^7 = I + kA$, find $k$.`,
+            answer: 127,
+            explain: t`$k = 2^7 - 1 = 127$.`,
+            difficulty: 2,
+            hint: t`Every power $A^r$ with $r \ge 1$ equals $A$.`,
+          },
+          {
+            kind: "mcq",
+            q: t`If $A$ is involutory ($A^2 = I$), then $\frac{1}{2}(I + A)$ is`,
+            options: ["idempotent", "involutory", "nilpotent", "skew-symmetric"],
+            answer: 0,
+            explain: t`$\left[\frac{1}{2}(I + A)\right]^2 = \frac{1}{4}(I + 2A + A^2) = \frac{1}{4}(2I + 2A) = \frac{1}{2}(I + A)$.`,
+            difficulty: 2,
+            hint: t`Square it and use $A^2 = I$.`,
+          },
+          {
+            kind: "multi",
+            q: t`$A$ and $B$ are $3 \times 3$ real matrices. Which are always true?`,
+            options: [
+              t`$\operatorname{tr}(AB) = \operatorname{tr}(BA)$`,
+              t`$\operatorname{tr}(A + B) = \operatorname{tr}A + \operatorname{tr}B$`,
+              t`$\operatorname{tr}(AB) = \operatorname{tr}A \cdot \operatorname{tr}B$`,
+              t`$AB - BA \ne I$`,
+            ],
+            answers: [0, 1, 3],
+            explain: t`Trace is linear and $\operatorname{tr}(AB) = \operatorname{tr}(BA)$, which rules out $AB - BA = I$ (trace 0 vs 3). Trace is not multiplicative: for $A = B = I_3$, $\operatorname{tr}(AB) = 3$ but $\operatorname{tr}A \cdot \operatorname{tr}B = 9$.`,
+            difficulty: 3,
+            hint: "Test the doubtful one with A = B = I.",
+          },
+          {
+            kind: "mcq",
+            q: t`$A$ and $B$ are symmetric matrices of the same order. Then $AB - BA$ is`,
+            options: ["skew-symmetric", "symmetric", "the zero matrix", "the identity"],
+            answer: 0,
+            explain: t`$(AB - BA)' = B'A' - A'B' = BA - AB = -(AB - BA)$.`,
+            difficulty: 2,
+          },
+          {
+            kind: "numeric",
+            q: t`For $A = \begin{bmatrix} 1 & 0 & 0 \\ 1 & 1 & 0 \\ 1 & 1 & 1 \end{bmatrix}$, find the $(3,1)$ entry of $A^{5}$.`,
+            answer: 15,
+            explain: t`$N = A - I$ has 1s in places $(2,1), (3,1), (3,2)$. $N^2$ has only the $(3,1)$ entry $= 1$, and $N^3 = O$. So $A^5 = I + 5N + 10N^2$ and the $(3,1)$ entry is $5 + 10 = 15$.`,
+            difficulty: 3,
+            hint: t`Find $N^2$ for $N = A - I$, then use $(I + N)^5$.`,
+          },
+          {
+            kind: "mcq",
+            q: t`$A$ is a $3 \times 3$ matrix with $A^3 = O$ and $A^2 \ne O$. Which matrix is the inverse of $I - A$?`,
+            options: [t`$I + A + A^2$`, t`$I + A$`, t`$I - A + A^2$`, "It is not invertible"],
+            answer: 0,
+            explain: t`$(I - A)(I + A + A^2) = I + A + A^2 - A - A^2 - A^3 = I - A^3 = I$.`,
+            difficulty: 3,
+            hint: t`Think of $1 - x^3 = (1 - x)(1 + x + x^2)$; $I$ and $A$ commute.`,
+          },
+        ],
+      },
+    ],
+  },
+  /* ------------------------------------------------------------------ */
+  /* Determinants (NCERT Class 12 Ch 4; ISC Class 12)                    */
+  /* ------------------------------------------------------------------ */
+  {
+    slug: "c12-determinants",
+    title: "Determinants",
+    icon: "🧮",
+    description: "Determinants of order 2 and 3, properties, area of a triangle, minors and cofactors, adjoint and inverse, and solving linear systems by the matrix method, with JEE-level identities and consistency questions.",
+    lessons: [
+      {
+        slug: "c12-determinant-expansion-area",
+        title: "Determinants: Expansion and Area of a Triangle",
+        summary: "What a determinant is, how to expand determinants of order 2 and 3 along any row or column, the rule |kA| = kⁿ|A|, and areas, collinearity and lines from determinants.",
+        minutes: 20,
+        xp: 50,
+        blocks: [
+          {
+            type: "illustration",
+            emoji: "📐",
+            caption: "A surveyor in Hubballi has the coordinates of three corners of a triangular plot. One 3 × 3 determinant gives its area in a single line.",
+          },
+          {
+            type: "text",
+            md: t`To every **square** matrix $A$ we attach a single number called its **determinant**, written $|A|$, $\det A$ or $\Delta$. Rectangular matrices have no determinant.
+
+For order 1, $|[a]| = a$. (Here the bars do not mean absolute value: $|[-3]| = -3$.) For order 2 the determinant is "down-diagonal product minus up-diagonal product".`,
+          },
+          {
+            type: "formula",
+            tex: t`\begin{vmatrix} a_{11} & a_{12} \\ a_{21} & a_{22} \end{vmatrix} = a_{11}a_{22} - a_{12}a_{21}`,
+          },
+          {
+            type: "text",
+            md: t`For order 3, **expand along a row (or column)**: take each entry of that row, multiply by $(-1)^{i+j}$ times the $2 \times 2$ determinant left after deleting its row and column, and add. The signs follow the chessboard pattern
+$\begin{matrix} + & - & + \\ - & + & - \\ + & - & + \end{matrix}$.
+
+Expanding along **any** row or column gives the **same value**, so pick the row or column with the most zeros.`,
+          },
+          {
+            type: "formula",
+            tex: t`\begin{vmatrix} a_{11} & a_{12} & a_{13} \\ a_{21} & a_{22} & a_{23} \\ a_{31} & a_{32} & a_{33} \end{vmatrix} = a_{11}\begin{vmatrix} a_{22} & a_{23} \\ a_{32} & a_{33} \end{vmatrix} - a_{12}\begin{vmatrix} a_{21} & a_{23} \\ a_{31} & a_{33} \end{vmatrix} + a_{13}\begin{vmatrix} a_{21} & a_{22} \\ a_{31} & a_{32} \end{vmatrix}`,
+            caption: t`Expansion along $R_1$.`,
+          },
+          {
+            type: "example",
+            title: "Expanding along the row with a zero",
+            problem: t`Evaluate $\Delta = \begin{vmatrix} 1 & 2 & -1 \\ 3 & 0 & 2 \\ -2 & 1 & 4 \end{vmatrix}$.`,
+            steps: [
+              t`Row 2 contains a 0, so expand along $R_2$. Its signs are $-, +, -$.`,
+              t`$\Delta = -3\begin{vmatrix} 2 & -1 \\ 1 & 4 \end{vmatrix} + 0 - 2\begin{vmatrix} 1 & 2 \\ -2 & 1 \end{vmatrix}$.`,
+              t`$= -3(8 + 1) - 2(1 + 4) = -27 - 10$.`,
+              t`Check along $R_1$: $1(0 - 2) - 2(12 + 4) + (-1)(3 - 0) = -2 - 32 - 3 = -37$.`,
+            ],
+            answer: t`$\Delta = -37$`,
+          },
+          {
+            type: "mistake",
+            wrong: t`"Expanding along row 2, the signs are $+, -, +$, the same as row 1."`,
+            right: t`The sign of position $(i, j)$ is $(-1)^{i+j}$. Row 2 starts with $(-1)^{2+1} = -1$, so its signs are $-, +, -$.`,
+            why: "Learners practise mostly with row 1 and memorise its pattern. Using + − + on row 2 flips the sign of the whole answer, which is one of the commonest lost marks.",
+          },
+          {
+            type: "checkpoint",
+            questions: [
+              {
+                kind: "numeric",
+                q: t`Evaluate $\begin{vmatrix} 2 & -3 \\ 4 & 5 \end{vmatrix}$.`,
+                answer: 22,
+                explain: t`$2(5) - (-3)(4) = 10 + 12 = 22$.`,
+              },
+              {
+                kind: "truefalse",
+                q: "Expanding a 3 × 3 determinant along column 2 can give a different value from expanding along row 1.",
+                answer: false,
+                explain: "Every row and every column gives the same value; that is why we are free to choose the one with zeros.",
+              },
+            ],
+          },
+          {
+            type: "text",
+            md: t`**Three facts used all the time.** For a square matrix $A$ of order $n$ and a number $k$: $|kA| = k^n|A|$, because each of the $n$ rows gets a factor $k$. Also $|A'| = |A|$ and $|AB| = |A|\,|B|$ for square matrices of the same order.`,
+          },
+          {
+            type: "activity",
+            activity: {
+              kind: "reveal",
+              prompt: "A is 3 × 3 with |A| = 2. What is |3A|?",
+              emoji: "🔢",
+              options: ["6", "18", "54", "27"],
+              answer: 2,
+              trap: 0,
+              explain: t`Each of the 3 rows is multiplied by 3, so $|3A| = 3^3 \cdot 2 = 54$. The answer 6 forgets that the factor comes out once per row.`,
+            },
+          },
+          {
+            type: "text",
+            md: t`**Area of a triangle.** With vertices $(x_1, y_1), (x_2, y_2), (x_3, y_3)$, the area is half the absolute value of the determinant below. Area is positive, so take the absolute value; when the area is given, use **both** signs of the determinant.
+
+The three points are **collinear** exactly when this determinant is 0. Replacing $(x_3, y_3)$ by a general point $(x, y)$ and setting it equal to 0 gives the **equation of the line** through two points.`,
+          },
+          {
+            type: "formula",
+            tex: t`\text{Area} = \frac{1}{2}\left|\,\begin{vmatrix} x_1 & y_1 & 1 \\ x_2 & y_2 & 1 \\ x_3 & y_3 & 1 \end{vmatrix}\,\right| = \frac{1}{2}\left|x_1(y_2 - y_3) + x_2(y_3 - y_1) + x_3(y_1 - y_2)\right|`,
+          },
+          {
+            type: "example",
+            title: "Area given, vertex unknown",
+            problem: t`Find $k$ if the triangle with vertices $(k, 0)$, $(4, 0)$ and $(0, 2)$ has area 4 square units.`,
+            steps: [
+              t`$\frac{1}{2}\begin{vmatrix} k & 0 & 1 \\ 4 & 0 & 1 \\ 0 & 2 & 1 \end{vmatrix} = \pm 4$.`,
+              t`Expand: $k(0 - 2) - 0 + 1(8 - 0) = 8 - 2k$, so $\frac{1}{2}(8 - 2k) = \pm 4$.`,
+              t`$8 - 2k = 8$ gives $k = 0$; $8 - 2k = -8$ gives $k = 8$.`,
+              t`Check: base from $x = 0$ to $4$ (or $4$ to $8$) is 4 and height is 2, so area $= \frac{1}{2}(4)(2) = 4$.`,
+            ],
+            answer: t`$k = 0$ or $k = 8$`,
+          },
+          {
+            type: "example",
+            title: "Equation of a line",
+            problem: t`Using determinants, find the equation of the line through $(1, 2)$ and $(3, 6)$.`,
+            steps: [
+              t`A point $(x, y)$ is on the line when $\begin{vmatrix} x & y & 1 \\ 1 & 2 & 1 \\ 3 & 6 & 1 \end{vmatrix} = 0$.`,
+              t`Expand along $R_1$: $x(2 - 6) - y(1 - 3) + 1(6 - 6) = -4x + 2y$.`,
+              t`$-4x + 2y = 0$ simplifies to $y = 2x$. Both points satisfy it.`,
+            ],
+            answer: t`$y = 2x$`,
+          },
+          {
+            type: "callout",
+            tone: "exam",
+            title: "Board tips",
+            md: t`Write the expansion with its signs before simplifying. In area questions, examiners deduct a mark if the final area is negative or if only one value of $k$ is given when the area is fixed. For collinearity, write "$\Delta = 0$, hence the points are collinear" as a sentence.`,
+          },
+          {
+            type: "keypoints",
+            items: [
+              "Only square matrices have determinants; expand along any row or column with chessboard signs.",
+              t`$|kA| = k^n|A|$, $|A'| = |A|$, $|AB| = |A||B|$.`,
+              t`Area $= \frac{1}{2}|\Delta|$; when the area is given, solve $\Delta = \pm 2(\text{area})$.`,
+              t`$\Delta = 0$ means collinear points; with $(x, y)$ as a vertex it gives the line's equation.`,
+            ],
+          },
+        ],
+        flashcards: [
+          { front: t`$\begin{vmatrix} a & b \\ c & d \end{vmatrix}$`, back: t`$ad - bc$` },
+          { front: "Sign of the (2, 3) position in a 3 × 3 expansion", back: t`$(-1)^{2+3} = -1$` },
+          { front: t`$|kA|$ for $A$ of order $n$`, back: t`$k^n|A|$` },
+          { front: t`$|AB|$`, back: t`$|A|\,|B|$ for square $A$, $B$ of the same order.` },
+          { front: "Area of a triangle by determinant", back: t`$\frac{1}{2}\left|\begin{vmatrix} x_1 & y_1 & 1 \\ x_2 & y_2 & 1 \\ x_3 & y_3 & 1 \end{vmatrix}\right|$` },
+          { front: "Condition for three points to be collinear", back: t`The area determinant is 0.` },
+          { front: "Which row or column should you expand along?", back: "Any gives the same value; pick the one with the most zeros." },
+        ],
+        quiz: [
+          {
+            kind: "mcq",
+            q: t`$\begin{vmatrix} \cos\theta & -\sin\theta \\ \sin\theta & \cos\theta \end{vmatrix}$ equals`,
+            options: ["1", t`$\cos 2\theta$`, "0", "−1"],
+            answer: 0,
+            explain: t`$\cos^2\theta - (-\sin\theta)(\sin\theta) = \cos^2\theta + \sin^2\theta = 1$. The option $\cos 2\theta$ comes from a sign slip.`,
+          },
+          {
+            kind: "numeric",
+            q: t`Evaluate $\begin{vmatrix} 2 & 0 & 0 \\ 3 & -1 & 0 \\ 4 & 5 & 3 \end{vmatrix}$.`,
+            answer: -6,
+            explain: t`Expand along $R_1$: $2\begin{vmatrix} -1 & 0 \\ 5 & 3 \end{vmatrix} = 2(-3) = -6$. It is the product of the diagonal entries, as for any triangular matrix.`,
+          },
+          {
+            kind: "numeric",
+            q: "Find the area (square units) of the triangle with vertices (0, 0), (4, 0) and (0, 6).",
+            answer: 12,
+            explain: t`$\frac{1}{2}|0(0 - 6) + 4(6 - 0) + 0(0 - 0)| = \frac{1}{2}(24) = 12$.`,
+          },
+          {
+            kind: "mcq",
+            q: t`$A$ is $2 \times 2$ with $|A| = 3$. Then $|-2A|$ is`,
+            options: ["12", "−12", "−6", "6"],
+            answer: 0,
+            explain: t`$|-2A| = (-2)^2|A| = 4 \times 3 = 12$. For even order the sign of $k$ disappears.`,
+            difficulty: 2,
+          },
+          {
+            kind: "numeric",
+            q: "Find k if (2, 3), (4, k) and (6, −3) are collinear.",
+            answer: 0,
+            explain: t`$2(k + 3) + 4(-3 - 3) + 6(3 - k) = 2k + 6 - 24 + 18 - 6k = -4k = 0$, so $k = 0$. Check: $(4, 0)$ is the midpoint of the other two.`,
+          },
+          {
+            kind: "truefalse",
+            q: "A matrix of order 2 × 3 has a determinant.",
+            answer: false,
+            explain: "Determinants are defined only for square matrices.",
+          },
+          {
+            kind: "multi",
+            q: t`$A$ is a $3 \times 3$ matrix. Which are always true?`,
+            options: [t`$|A'| = |A|$`, t`$|2A| = 8|A|$`, t`$|-A| = |A|$`, t`$|A^2| = |A|^2$`],
+            answers: [0, 1, 3],
+            explain: t`$|-A| = (-1)^3|A| = -|A|$, so the third is false. The others follow from $|A'| = |A|$, $|kA| = k^3|A|$ and $|AB| = |A||B|$.`,
+            difficulty: 2,
+            hint: t`Use $|kA| = k^n|A|$ with $n = 3$.`,
+          },
+        ],
+      },
+      {
+        slug: "c12-determinant-properties",
+        title: "Properties of Determinants",
+        summary: "The row and column properties that create zeros, simplify determinants and factorise them, as taught in ISC and needed for JEE.",
+        minutes: 20,
+        xp: 50,
+        blocks: [
+          {
+            type: "text",
+            md: t`Expanding a $3 \times 3$ determinant with letters or large numbers is slow and error-prone. The **properties of determinants** let you change rows and columns in controlled ways, create zeros, pull out common factors, and often see the answer without full expansion.`,
+          },
+          {
+            type: "callout",
+            tone: "note",
+            title: "Board note",
+            md: "The rationalised NCERT book (CBSE) no longer has a separate section on properties of determinants, so CBSE board papers do not ask proofs using them. ISC teaches them and asks simplification and factorisation questions, and JEE Main, JEE Advanced, KCET and COMEDK use them constantly. Every student should be able to use them.",
+          },
+          {
+            type: "list",
+            ordered: true,
+            items: [
+              t`**Transpose:** $|A'| = |A|$. So every row property is also a column property.`,
+              t`**Swap:** interchanging two rows (or columns) changes the sign of the determinant.`,
+              t`**Equal or proportional rows:** if two rows (or columns) are identical or proportional, the determinant is 0.`,
+              t`**Scalar:** multiplying one row (or column) by $k$ multiplies the determinant by $k$. So a common factor of a row can be taken out.`,
+              t`**Sum:** if each entry of a row is a sum of two terms, the determinant splits into the sum of two determinants.`,
+              t`**Row operation:** adding $k$ times one row to another row does not change the value.`,
+            ],
+          },
+          {
+            type: "formula",
+            tex: t`R_i \to R_i + kR_j \;(i \ne j) \quad\text{and}\quad C_i \to C_i + kC_j \quad\text{leave } \Delta \text{ unchanged}`,
+          },
+          {
+            type: "example",
+            title: "Spot the proportional row",
+            problem: t`Evaluate $\begin{vmatrix} 102 & 18 & 36 \\ 1 & 3 & 4 \\ 17 & 3 & 6 \end{vmatrix}$ without expanding.`,
+            steps: [
+              t`Look for a common factor: $102 = 6 \times 17$, $18 = 6 \times 3$, $36 = 6 \times 6$.`,
+              t`So $R_1 = 6R_3$. Take 6 out of $R_1$: the new $R_1$ equals $R_3$.`,
+              "Two identical rows make the determinant 0.",
+            ],
+            answer: "The value is 0.",
+          },
+          {
+            type: "example",
+            title: "Create a common column",
+            problem: t`Show that $\begin{vmatrix} 1 & a & b + c \\ 1 & b & c + a \\ 1 & c & a + b \end{vmatrix} = 0$.`,
+            steps: [
+              t`Apply $C_3 \to C_3 + C_2$ (value unchanged). The third column becomes $a + b + c$ in every row.`,
+              t`Take $(a + b + c)$ out of $C_3$: $(a + b + c)\begin{vmatrix} 1 & a & 1 \\ 1 & b & 1 \\ 1 & c & 1 \end{vmatrix}$.`,
+              t`Now $C_1 = C_3$, so the determinant is 0.`,
+            ],
+            answer: "The determinant is 0 for all a, b, c.",
+          },
+          {
+            type: "mistake",
+            wrong: t`"$R_1 \to 2R_1 + R_2$ is a row operation, so the value does not change."`,
+            right: t`Only $R_i \to R_i + kR_j$ keeps the value. $R_1 \to 2R_1 + R_2$ first doubles $R_1$, so the new determinant is $2\Delta$.`,
+            why: "Both look like 'adding rows'. The difference is whether the row being replaced is itself multiplied: scaling the replaced row scales the determinant.",
+          },
+          {
+            type: "checkpoint",
+            questions: [
+              {
+                kind: "mcq",
+                q: t`$\Delta = 5$. Rows 1 and 3 are interchanged and then $C_2$ is multiplied by 2. The new value is`,
+                options: ["−10", "10", "−5", "5"],
+                answer: 0,
+                explain: t`The swap makes it $-5$; doubling a column makes it $-10$.`,
+              },
+            ],
+          },
+          {
+            type: "example",
+            title: "Factorising: the Vandermonde determinant",
+            problem: t`Prove that $\begin{vmatrix} 1 & 1 & 1 \\ a & b & c \\ a^2 & b^2 & c^2 \end{vmatrix} = (a - b)(b - c)(c - a)$.`,
+            steps: [
+              t`$C_2 \to C_2 - C_1$, $C_3 \to C_3 - C_1$: $\begin{vmatrix} 1 & 0 & 0 \\ a & b - a & c - a \\ a^2 & b^2 - a^2 & c^2 - a^2 \end{vmatrix}$.`,
+              t`Take $(b - a)$ from $C_2$ and $(c - a)$ from $C_3$: $(b - a)(c - a)\begin{vmatrix} 1 & 0 & 0 \\ a & 1 & 1 \\ a^2 & b + a & c + a \end{vmatrix}$.`,
+              t`Expand along $R_1$: $(b - a)(c - a)\left[(c + a) - (b + a)\right] = (b - a)(c - a)(c - b)$.`,
+              t`$(b - a)(c - b) = (a - b)(b - c)$ (two sign changes), so the value is $(a - b)(b - c)(c - a)$.`,
+            ],
+            answer: t`$(a - b)(b - c)(c - a)$`,
+          },
+          {
+            type: "activity",
+            activity: {
+              kind: "sort",
+              prompt: "What happens to the value of the determinant?",
+              groups: ["Unchanged", "Changes sign", "Multiplied by k"],
+              items: [
+                { text: "Take the transpose", group: 0, hint: "|A'| = |A|." },
+                { text: t`$R_1 \to R_1 + 3R_2$`, group: 0, hint: "Adding a multiple of another row." },
+                { text: t`Swap $R_1$ and $R_2$`, group: 1, hint: "One interchange flips the sign." },
+                { text: t`Swap $C_1$ and $C_3$`, group: 1, hint: "Columns behave like rows." },
+                { text: t`$C_2 \to kC_2$`, group: 2, hint: "One column scaled by k." },
+                { text: t`$R_2 \to R_2 - R_1 - R_3$`, group: 0, hint: t`$R_2$ itself is not scaled.` },
+                { text: t`$R_3 \to kR_3 + R_1$`, group: 2, hint: t`$R_3$ is scaled by $k$ before $R_1$ is added.` },
+              ],
+              explain: "Swaps flip the sign, scaling one line scales the value, and adding multiples of other lines changes nothing.",
+            },
+          },
+          {
+            type: "text",
+            md: t`Two more quick facts follow from these properties. A determinant with a whole row (or column) of zeros is 0. The determinant of a **triangular** matrix (all zeros above, or all below, the diagonal) is the product of its diagonal entries; for a diagonal matrix too.`,
+          },
+          {
+            type: "callout",
+            tone: "exam",
+            title: "Exam tips",
+            md: t`Write every operation you use ($C_1 \to C_1 + C_2 + C_3$, then "taking $(a + b + c)$ common from $C_1$") above the step; ISC awards method marks for these. A good first move: if the rows or columns add up to the same expression, add them all into one line and take it out as a factor.`,
+          },
+          {
+            type: "keypoints",
+            items: [
+              t`Swap two lines: sign changes. Two equal or proportional lines: value 0.`,
+              t`Scale one line by $k$: value multiplied by $k$; common factors can be taken out.`,
+              t`$R_i \to R_i + kR_j$ keeps the value; use it to create zeros before expanding.`,
+              t`Triangular determinant = product of diagonal entries; $\begin{vmatrix} 1 & 1 & 1 \\ a & b & c \\ a^2 & b^2 & c^2 \end{vmatrix} = (a - b)(b - c)(c - a)$.`,
+            ],
+          },
+        ],
+        flashcards: [
+          { front: "Interchanging two rows of a determinant", back: "Changes its sign." },
+          { front: "Two proportional rows", back: "The determinant is 0." },
+          { front: t`Effect of $R_i \to R_i + kR_j$`, back: "No change in the value." },
+          { front: t`Effect of $R_1 \to kR_1$`, back: t`The value is multiplied by $k$.` },
+          { front: "Determinant of a triangular matrix", back: "Product of the diagonal entries." },
+          { front: "Vandermonde determinant", back: t`$\begin{vmatrix} 1 & 1 & 1 \\ a & b & c \\ a^2 & b^2 & c^2 \end{vmatrix} = (a - b)(b - c)(c - a)$` },
+        ],
+        quiz: [
+          {
+            kind: "numeric",
+            q: t`Evaluate $\begin{vmatrix} 1 & 2 & 3 \\ 2 & 4 & 6 \\ 7 & 8 & 9 \end{vmatrix}$.`,
+            answer: 0,
+            explain: t`$R_2 = 2R_1$, so the rows are proportional and the value is 0.`,
+          },
+          {
+            kind: "numeric",
+            q: t`For every real $x$, $\begin{vmatrix} x & x + 1 \\ x - 1 & x \end{vmatrix}$ equals what number?`,
+            answer: 1,
+            explain: t`$x^2 - (x + 1)(x - 1) = x^2 - (x^2 - 1) = 1$.`,
+          },
+          {
+            kind: "mcq",
+            q: t`$\Delta = 4$. Every entry of $R_2$ is multiplied by 3, and then $R_1 \to R_1 + 2R_3$. The new value is`,
+            options: ["12", "24", "36", "4"],
+            answer: 0,
+            explain: t`Scaling $R_2$ by 3 gives 12; adding $2R_3$ to $R_1$ keeps it 12.`,
+          },
+          {
+            kind: "numeric",
+            q: t`Evaluate $\begin{vmatrix} 1 & 1 & 1 \\ 1 & 2 & 3 \\ 1 & 4 & 9 \end{vmatrix}$.`,
+            answer: 2,
+            explain: t`This is Vandermonde with $a = 1, b = 2, c = 3$: $(1 - 2)(2 - 3)(3 - 1) = (-1)(-1)(2) = 2$. Direct expansion: $1(18 - 12) - 1(9 - 3) + 1(4 - 2) = 2$.`,
+            difficulty: 2,
+          },
+          {
+            kind: "multi",
+            q: "Which operations leave the value of a determinant unchanged?",
+            options: [
+              t`$R_1 \leftrightarrow R_2$`,
+              t`$C_1 \to C_1 + C_2 + C_3$`,
+              "Taking the transpose",
+              t`$R_3 \to 2R_3 - R_1$`,
+            ],
+            answers: [1, 2],
+            explain: t`A swap changes the sign, and $R_3 \to 2R_3 - R_1$ doubles the value. Adding other columns to $C_1$ and transposing keep it the same.`,
+            difficulty: 2,
+            hint: "Ask: is the line being replaced itself multiplied by something?",
+          },
+          {
+            kind: "mcq",
+            q: t`$\begin{vmatrix} a - b & b - c & c - a \\ b - c & c - a & a - b \\ c - a & a - b & b - c \end{vmatrix}$ equals`,
+            options: ["0", t`$(a - b)(b - c)(c - a)$`, t`$a + b + c$`, t`$3abc$`],
+            answer: 0,
+            explain: t`$C_1 \to C_1 + C_2 + C_3$ makes the first column all zeros, since $(a - b) + (b - c) + (c - a) = 0$.`,
+            difficulty: 2,
+            hint: "Add the three columns.",
+          },
+          {
+            kind: "truefalse",
+            q: "If every entry of one column of a determinant is 0, the determinant is 0.",
+            answer: true,
+            explain: "Expand along that column: every term has a factor 0.",
+          },
+        ],
+      },
+    ],
+  },
+];
 
 /** Class 12 chapter title ("12:<exact title>") → topic slug(s), or full lesson ids, that teach it. */
 export const links: Record<string, string | string[]> = {};
