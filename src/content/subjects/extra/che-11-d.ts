@@ -1533,6 +1533,11 @@ The **resonance (mesomeric) effect** is the polarity produced by this delocalisa
             ],
           },
           {
+            type: "formula",
+            tex: t`\mathrm{CH_3CH{=}CH_2 + HBr \longrightarrow CH_3CHBrCH_3} \qquad \mathrm{CH_3CH{=}CH_2 + HBr \xrightarrow{(C_6H_5CO)_2O_2} CH_3CH_2CH_2Br}`,
+            caption: "Left: Markovnikov addition (ionic, via the 2° carbocation). Right: anti-Markovnikov addition with benzoyl peroxide (free radical).",
+          },
+          {
             type: "text",
             md: "**Peroxide effect (Kharash effect).** In the presence of a peroxide such as benzoyl peroxide, HBr adds the **opposite** way (**anti-Markovnikov**): propene gives **1-bromopropane**. The peroxide starts a **free-radical** chain: Br• adds to the terminal carbon to give the more stable secondary radical, which then takes H from HBr. This happens **only with HBr**: the H–Cl bond (430.5 kJ mol⁻¹) is too strong to be broken by the radicals, and with HI (298.7 kJ mol⁻¹) the I• atoms combine to form I₂ instead of adding.",
           },
@@ -1874,6 +1879,11 @@ The **resonance (mesomeric) effect** is the polarity produced by this delocalisa
           {
             type: "text",
             md: "**Aromaticity (Hückel's rule).** A compound is aromatic if it is **planar**, **cyclic**, has **complete delocalisation** of π electrons in the ring (every ring atom has a p orbital) and contains **(4n + 2) π electrons**, n = 0, 1, 2 …",
+          },
+          {
+            type: "formula",
+            tex: t`\text{number of } \pi \text{ electrons} = 4n + 2 \qquad (n = 0, 1, 2, \ldots \;\Rightarrow\; 2, 6, 10, 14, \ldots)`,
+            caption: "Hückel's rule, applied only to planar, cyclic, fully conjugated rings.",
           },
           {
             type: "table",

@@ -1148,7 +1148,649 @@ Over a full cycle ΔU = 0, so $W = Q_1 - Q_2$. A steam engine and a car's petrol
       },
     ],
   },
-  /* @@KINETIC@@ */
+  /* ------------------------------------------------------------------ */
+  /* Kinetic Theory (NCERT / Karnataka PUC)                               */
+  /* = Behaviour of Perfect Gases and Kinetic Theory of Gases (ISC)       */
+  /* ------------------------------------------------------------------ */
+  {
+    slug: "c11-phy-kinetic-theory",
+    title: "Kinetic Theory",
+    icon: "🎈",
+    description:
+      "Molecular nature of matter, the ideal gas equation, the kinetic theory derivation of gas pressure, kinetic interpretation of temperature, rms speed, equipartition of energy, specific heats of gases and solids, and mean free path.",
+    lessons: [
+      /* ---------------- Lesson 1 ---------------- */
+      {
+        slug: "c11-phy-ideal-gas-pressure",
+        title: "Molecular Nature of Matter, Ideal Gas and Pressure of a Gas",
+        summary:
+          "Atoms and Avogadro's law, the ideal gas equation PV = μRT = Nk_BT, Dalton's law of partial pressures, the assumptions of kinetic theory and the derivation of P = ⅓nm⟨v²⟩.",
+        minutes: 22,
+        xp: 50,
+        blocks: [
+          {
+            type: "illustration",
+            emoji: "🎈",
+            caption:
+              "A balloon stays inflated because about 10²³ air molecules inside strike every square centimetre of its skin every second, each one bouncing back and giving the rubber a tiny push.",
+          },
+          {
+            type: "text",
+            md: t`**Kinetic theory** explains the behaviour of gases from the motion of their molecules. It rests on the atomic picture of matter: Dalton's atomic theory, Gay-Lussac's law of combining volumes, and **Avogadro's law**: equal volumes of all gases at the same temperature and pressure contain the same number of molecules. One mole contains $N_A = 6.02\times10^{23}$ molecules, and at STP (273 K, 1 atm) one mole of any gas occupies about 22.4 L.
+
+In a gas, molecules are far apart compared with their size (in air at room conditions the spacing is roughly ten molecular diameters), and they interact only during brief collisions. This is why gases are easy to compress and why kinetic theory works best for them.`,
+          },
+          {
+            type: "text",
+            md: t`At low pressure and high temperature, all gases obey the same laws. **Boyle's law**: at constant T, $PV$ is constant. **Charles' law**: at constant P, $V \propto T$. Combined with Avogadro's law, these give the **ideal gas equation**. A gas that obeys it exactly at all P and T is an **ideal gas**. Real gases come close to ideal behaviour at low pressure and high temperature, when the molecules are far apart and their attractions matter little.`,
+          },
+          {
+            type: "formula",
+            tex: t`PV = \mu RT = N k_B T \qquad \mu = \frac{N}{N_A} = \frac{M_{\text{sample}}}{M_0} \qquad k_B = \frac{R}{N_A}`,
+            caption: "R = 8.314 J mol⁻¹ K⁻¹, N_A = 6.02 × 10²³ mol⁻¹, Boltzmann constant k_B = 1.38 × 10⁻²³ J K⁻¹. M₀ is the molar mass. In terms of number density n = N/V: P = n k_B T.",
+          },
+          {
+            type: "text",
+            md: t`**Dalton's law of partial pressures.** In a mixture of ideal gases that do not react, each gas behaves as if it were alone in the container. The total pressure is the sum of the partial pressures: $P = P_1 + P_2 + \dots = (\mu_1 + \mu_2 + \dots)\dfrac{RT}{V}$. So the partial pressure of each gas is proportional to its number of moles.`,
+          },
+          {
+            type: "example",
+            title: "How many molecules in a cubic centimetre?",
+            problem: t`Find the number of molecules in 1 cm³ of an ideal gas at STP ($P = 1.013\times10^5$ Pa, $T = 273$ K, $k_B = 1.38\times10^{-23}$ J K⁻¹).`,
+            steps: [
+              t`$n = \dfrac{P}{k_BT} = \dfrac{1.013\times10^5}{1.38\times10^{-23}\times273}$.`,
+              t`Denominator $= 3.767\times10^{-21}$, so $n \approx 2.69\times10^{25}$ m⁻³.`,
+              t`1 cm³ $= 10^{-6}$ m³, so the number is $2.69\times10^{25}\times10^{-6} = 2.69\times10^{19}$.`,
+            ],
+            answer: t`About $2.7\times10^{19}$ molecules per cm³, the same for every gas at STP (this is called Loschmidt's number).`,
+          },
+          {
+            type: "list",
+            items: [
+              "A gas is made of a very large number of identical molecules in constant random motion.",
+              "The size of a molecule is negligible compared with the space between molecules.",
+              "Molecules exert no forces on each other or on the walls except during collisions.",
+              "All collisions (between molecules and with the walls) are elastic, and a collision lasts a negligibly short time.",
+              "Between collisions a molecule moves in a straight line with constant velocity; gravity is neglected.",
+              "In equilibrium the molecules are spread uniformly and no direction of motion is preferred.",
+            ],
+          },
+          {
+            type: "example",
+            title: "Derivation: pressure of an ideal gas",
+            problem: t`Using the assumptions above, show that the pressure of a gas with n molecules per unit volume, each of mass m, is $P = \tfrac{1}{3}nm\langle v^2\rangle$.`,
+            steps: [
+              t`Take a wall of area A perpendicular to the x-axis. A molecule with velocity $(v_x, v_y, v_z)$ hits it elastically and rebounds with $(-v_x, v_y, v_z)$. Its momentum changes by $-2mv_x$, so it gives the wall momentum $2mv_x$.`,
+              t`In time Δt, molecules within a distance $v_x\Delta t$ of the wall can reach it, that is those in a volume $Av_x\Delta t$. Only half of them move towards the wall, so the number of hits is $\tfrac{1}{2}nAv_x\Delta t$.`,
+              t`Momentum given to the wall: $Q = (2mv_x)(\tfrac{1}{2}nAv_x\Delta t) = nmv_x^2A\Delta t$. Pressure = force per area $= \dfrac{Q}{A\Delta t} = nmv_x^2$.`,
+              t`Molecules have different speeds, so use the average: $P = nm\langle v_x^2\rangle$.`,
+              t`No direction is special, so $\langle v_x^2\rangle = \langle v_y^2\rangle = \langle v_z^2\rangle = \tfrac{1}{3}\langle v^2\rangle$, giving $P = \tfrac{1}{3}nm\langle v^2\rangle$.`,
+            ],
+            answer: t`$P = \tfrac{1}{3}nm\langle v^2\rangle = \tfrac{1}{3}\rho\langle v^2\rangle$, where $\rho = nm$ is the density. Collisions between molecules do not change this result, because in equilibrium they do not change the overall distribution of velocities.`,
+          },
+          {
+            type: "formula",
+            tex: t`P = \frac{1}{3}\,n m \langle v^2\rangle = \frac{1}{3}\rho \langle v^2\rangle \qquad PV = \frac{2}{3}\,E_{\text{tr}}`,
+            caption: "E_tr = N × ½m⟨v²⟩ is the total translational kinetic energy of the gas: pressure is two-thirds of the translational kinetic energy per unit volume.",
+          },
+          {
+            type: "example",
+            title: "Pressure from density and speed",
+            problem: t`A gas has density 1.2 kg/m³ and the mean of the squares of its molecular speeds is $\langle v^2\rangle = (500\text{ m/s})^2$. Find its pressure.`,
+            steps: [
+              t`$P = \tfrac{1}{3}\rho\langle v^2\rangle = \tfrac{1}{3}\times1.2\times500^2$.`,
+              t`$= 0.4\times2.5\times10^5 = 1.0\times10^5$ Pa.`,
+            ],
+            answer: "P = 1.0 × 10⁵ Pa, close to atmospheric pressure, as for air at room temperature.",
+          },
+          {
+            type: "checkpoint",
+            questions: [
+              {
+                kind: "mcq",
+                q: "At a fixed temperature, the number of molecules per unit volume of a gas is doubled. The pressure:",
+                options: ["doubles", "stays the same", "halves", "becomes four times"],
+                answer: 0,
+                explain: t`$P = \tfrac{1}{3}nm\langle v^2\rangle$; at fixed T, $\langle v^2\rangle$ is fixed, so P ∝ n.`,
+              },
+            ],
+          },
+          {
+            type: "mistake",
+            wrong: "Gas pressure is caused by molecules colliding with one another.",
+            right: "Pressure comes from molecules hitting the walls and transferring momentum to them. Collisions between molecules only share out momentum inside the gas.",
+            why: "We picture molecules crowding and jostling, so the 'pushing against each other' idea feels natural. But the derivation counts only the momentum given to the wall; intermolecular collisions conserve momentum and leave the velocity distribution unchanged in equilibrium.",
+          },
+          {
+            type: "activity",
+            activity: {
+              kind: "order",
+              prompt: "Order the steps of the pressure derivation.",
+              items: [
+                "One molecule rebounds from the wall, giving it momentum 2mvₓ",
+                "Count hits in time Δt: ½ n A vₓ Δt molecules",
+                "Momentum per unit time per unit area gives P = n m vₓ²",
+                "Average over all molecules: P = n m ⟨vₓ²⟩",
+                "Isotropy, ⟨vₓ²⟩ = ⟨v²⟩/3, gives P = ⅓ n m ⟨v²⟩",
+              ],
+              explain: "Think one molecule, then how many hit, then the force per area, then the average, then the 3-D symmetry. The factor ⅓ comes only from the last step.",
+            },
+          },
+          {
+            type: "callout",
+            tone: "exam",
+            title: "Board tips and ISC note",
+            md: t`The pressure derivation is a standard 5-mark board question: draw the cube, say why the momentum change is $2mv_x$, explain the factor ½ and the factor ⅓. **ISC** (and some PUC papers) also ask you to *deduce gas laws* from $PV = \tfrac{1}{3}Nm\langle v^2\rangle$ with $\tfrac{1}{2}m\langle v^2\rangle \propto T$: at constant T, PV is constant (Boyle); at constant P, V ∝ T (Charles); equal volumes at the same P and T have equal N (Avogadro); and at the same pressure the rms speed varies as $1/\sqrt{\rho}$ (Graham's law of diffusion).`,
+          },
+          {
+            type: "keypoints",
+            items: [
+              t`Ideal gas: $PV = \mu RT = Nk_BT$, or $P = nk_BT$; real gases approach it at low P and high T.`,
+              "Dalton's law: total pressure = sum of partial pressures of non-reacting gases.",
+              t`Kinetic theory gives $P = \tfrac{1}{3}nm\langle v^2\rangle = \tfrac{1}{3}\rho\langle v^2\rangle$.`,
+              t`$PV = \tfrac{2}{3}E_{\text{tr}}$: pressure is ⅔ of the translational kinetic energy per unit volume.`,
+            ],
+          },
+        ],
+        flashcards: [
+          { front: "Avogadro's law", back: "Equal volumes of all gases at the same temperature and pressure contain the same number of molecules." },
+          { front: "Ideal gas equation in two forms", back: "PV = μRT = Nk_BT (or P = nk_BT with n = N/V)." },
+          { front: "Boltzmann constant", back: "k_B = R/N_A = 1.38 × 10⁻²³ J K⁻¹." },
+          { front: "Dalton's law of partial pressures", back: "Total pressure of a mixture of non-reacting ideal gases = sum of the partial pressures, P = (μ₁ + μ₂ + …)RT/V." },
+          { front: "Pressure from kinetic theory", back: "P = ⅓ n m ⟨v²⟩ = ⅓ ρ ⟨v²⟩." },
+          { front: "Why the factor ⅓?", back: "Random motion has no preferred direction, so ⟨vₓ²⟩ = ⟨v²⟩/3." },
+          { front: "When do real gases behave ideally?", back: "At low pressure and high temperature." },
+        ],
+        quiz: [
+          {
+            kind: "numeric",
+            q: "How many moles of an ideal gas occupy 24.9 L at 1.0 × 10⁵ Pa and 300 K? (R = 8.314 J mol⁻¹ K⁻¹)",
+            answer: 1,
+            tolerance: 0.01,
+            unit: "mol",
+            explain: t`$\mu = \dfrac{PV}{RT} = \dfrac{10^5\times24.9\times10^{-3}}{8.314\times300} = \dfrac{2490}{2494} \approx 1.0$ mol.`,
+          },
+          {
+            kind: "truefalse",
+            q: "The pressure of a gas is caused mainly by molecules colliding with one another.",
+            answer: false,
+            explain: "Pressure is the momentum delivered per unit time per unit area to the walls.",
+          },
+          {
+            kind: "numeric",
+            q: "A gas at 1.0 × 10⁵ Pa has density 0.09 kg/m³. Find the rms speed of its molecules in m/s.",
+            answer: 1826,
+            tolerance: 5,
+            unit: "m/s",
+            difficulty: 2,
+            hint: "Rearrange P = ⅓ρ⟨v²⟩.",
+            explain: t`$v_{\text{rms}} = \sqrt{3P/\rho} = \sqrt{3\times10^5/0.09} = \sqrt{3.33\times10^6} \approx 1826$ m/s.`,
+          },
+          {
+            kind: "mcq",
+            q: "A container holds 2 mol of N₂ and 3 mol of O₂ at a total pressure of 5 atm. The partial pressure of O₂ is:",
+            options: ["3 atm", "2 atm", "5 atm", "2.5 atm"],
+            answer: 0,
+            explain: "Partial pressure ∝ moles: (3/5) × 5 atm = 3 atm.",
+          },
+          {
+            kind: "multi",
+            q: "Which are assumptions of the kinetic theory of an ideal gas?",
+            options: [
+              "Collisions are elastic",
+              "Molecules attract each other strongly between collisions",
+              "The size of molecules is negligible compared with their separation",
+              "Molecules move randomly with no preferred direction",
+            ],
+            answers: [0, 2, 3],
+            explain: "Kinetic theory assumes no forces between molecules except during collisions.",
+          },
+          {
+            kind: "fill",
+            q: "In the equation PV = Nk_BT, k_B is called the ___ constant.",
+            answer: ["Boltzmann", "Boltzmann's"],
+            explain: "k_B = R/N_A = 1.38 × 10⁻²³ J K⁻¹ is the Boltzmann constant.",
+          },
+          {
+            kind: "mcq",
+            q: "A real gas behaves most like an ideal gas at:",
+            options: ["low pressure and high temperature", "high pressure and low temperature", "high pressure and high temperature", "low pressure and low temperature"],
+            answer: 0,
+            explain: "Then the molecules are far apart (small size effect) and move fast (attractions matter little).",
+          },
+          {
+            kind: "numeric",
+            q: "For an ideal gas, PV = (2/3)E_tr. If a gas in a 2 m³ container is at 1.5 × 10⁵ Pa, find its total translational kinetic energy in kJ.",
+            answer: 450,
+            unit: "kJ",
+            difficulty: 2,
+            explain: t`$E_{\text{tr}} = \tfrac{3}{2}PV = 1.5\times1.5\times10^5\times2 = 4.5\times10^5$ J = 450 kJ.`,
+          },
+        ],
+      },
+
+      /* ---------------- Lesson 2 ---------------- */
+      {
+        slug: "c11-phy-temperature-equipartition",
+        title: "Kinetic Temperature, Equipartition, Specific Heats and Mean Free Path",
+        summary:
+          "Average kinetic energy and temperature, rms speed, degrees of freedom and the law of equipartition, molar specific heats of gases, solids and water, and the mean free path of gas molecules.",
+        minutes: 24,
+        xp: 55,
+        blocks: [
+          {
+            type: "text",
+            md: t`Compare $PV = \tfrac{2}{3}E_{\text{tr}}$ from kinetic theory with $PV = Nk_BT$. They agree only if $E_{\text{tr}} = \tfrac{3}{2}Nk_BT$, so the average translational kinetic energy of one molecule is $\tfrac{3}{2}k_BT$.
+
+This is the **kinetic interpretation of temperature**: the absolute temperature of a gas is a measure of the average kinetic energy of its molecules. It does not depend on pressure, volume or the kind of gas. At the same temperature, a heavy argon atom and a light helium atom have the same average translational kinetic energy, so the lighter atom must move faster.`,
+          },
+          {
+            type: "formula",
+            tex: t`\left\langle \tfrac{1}{2}mv^2 \right\rangle = \frac{3}{2}k_BT \qquad v_{\text{rms}} = \sqrt{\langle v^2\rangle} = \sqrt{\frac{3k_BT}{m}} = \sqrt{\frac{3RT}{M_0}} = \sqrt{\frac{3P}{\rho}}`,
+            caption: "m = mass of one molecule, M₀ = molar mass in kg/mol. v_rms ∝ √T and ∝ 1/√M₀.",
+          },
+          {
+            type: "example",
+            title: "Speed of oxygen molecules in a room",
+            problem: t`Find the average translational kinetic energy of a molecule and the rms speed of oxygen molecules ($M_0 = 0.032$ kg/mol) at 27 °C. ($k_B = 1.38\times10^{-23}$ J K⁻¹, $R = 8.314$ J mol⁻¹ K⁻¹)`,
+            steps: [
+              t`$T = 300$ K. $\langle KE\rangle = \tfrac{3}{2}k_BT = 1.5\times1.38\times10^{-23}\times300 = 6.21\times10^{-21}$ J.`,
+              t`$v_{\text{rms}} = \sqrt{\dfrac{3RT}{M_0}} = \sqrt{\dfrac{3\times8.314\times300}{0.032}} = \sqrt{2.34\times10^5}$.`,
+              t`$v_{\text{rms}} \approx 484$ m/s.`,
+            ],
+            answer: t`$6.21\times10^{-21}$ J per molecule (the same for every gas at 300 K) and $v_{\text{rms}} \approx 484$ m/s for O₂, faster than sound in air.`,
+          },
+          {
+            type: "checkpoint",
+            questions: [
+              {
+                kind: "numeric",
+                q: "At the same temperature, how many times the rms speed of oxygen (M = 32 g/mol) is the rms speed of hydrogen (M = 2 g/mol)?",
+                answer: 4,
+                explain: t`$v_{\text{rms}} \propto 1/\sqrt{M}$: $\sqrt{32/2} = \sqrt{16} = 4$.`,
+              },
+            ],
+          },
+          {
+            type: "text",
+            md: t`The **degrees of freedom** of a molecule are the independent ways in which it can move (and store energy). A monatomic molecule (He, Ne, Ar) has only **3 translational** degrees of freedom. A rigid diatomic molecule (O₂, N₂ at room temperature) has 3 translational and **2 rotational** degrees of freedom; rotation about the line joining the atoms does not count, because the moment of inertia about it is negligible. At high temperatures a diatomic molecule also **vibrates** along its axis, and this mode stores energy in two forms, kinetic and potential.
+
+**Law of equipartition of energy:** in thermal equilibrium at temperature T, each quadratic term in the energy of a molecule (each translational or rotational degree of freedom) has an average energy of $\tfrac{1}{2}k_BT$. Each vibrational mode contributes $2\times\tfrac{1}{2}k_BT = k_BT$, because it has both kinetic and potential energy.`,
+          },
+          {
+            type: "example",
+            title: "Derivation: specific heats of a rigid diatomic gas",
+            problem: t`Use the law of equipartition to find $C_v$, $C_p$ and γ for a diatomic ideal gas whose molecules do not vibrate.`,
+            steps: [
+              t`Energy per molecule: 3 translational + 2 rotational terms, each $\tfrac{1}{2}k_BT$: total $\tfrac{5}{2}k_BT$.`,
+              t`Per mole: $U = \tfrac{5}{2}k_BTN_A = \tfrac{5}{2}RT$.`,
+              t`$C_v = \dfrac{dU}{dT} = \tfrac{5}{2}R$; $C_p = C_v + R = \tfrac{7}{2}R$.`,
+              t`$\gamma = \dfrac{C_p}{C_v} = \dfrac{7}{5} = 1.4$.`,
+            ],
+            answer: t`$C_v = \tfrac{5}{2}R \approx 20.8$ J mol⁻¹ K⁻¹, $C_p = \tfrac{7}{2}R$, $\gamma = 1.4$, which matches measured values for air, N₂ and O₂ at room temperature.`,
+          },
+          {
+            type: "table",
+            headers: ["Gas", "Energy terms per molecule", "Cv", "Cp", "γ = Cp/Cv"],
+            rows: [
+              ["Monatomic (He, Ar)", "3 translational", t`$\tfrac{3}{2}R$`, t`$\tfrac{5}{2}R$`, t`$\tfrac{5}{3} \approx 1.67$`],
+              ["Rigid diatomic (O₂, N₂)", "3 tr + 2 rot", t`$\tfrac{5}{2}R$`, t`$\tfrac{7}{2}R$`, t`$\tfrac{7}{5} = 1.40$`],
+              ["Diatomic with vibration", "3 tr + 2 rot + 1 vib (counts twice)", t`$\tfrac{7}{2}R$`, t`$\tfrac{9}{2}R$`, t`$\tfrac{9}{7} \approx 1.29$`],
+              ["Polyatomic, f vibrational modes", "3 tr + 3 rot + f vib", t`$(3 + f)R$`, t`$(4 + f)R$`, t`$\dfrac{4+f}{3+f}$`],
+            ],
+          },
+          {
+            type: "text",
+            md: t`**Solids.** Each atom of a solid vibrates about a fixed point in 3 directions, and each vibration has kinetic and potential energy, so the average energy per atom is $3k_BT$. Per mole $U = 3RT$ and $C = 3R$ (about 25 J mol⁻¹ K⁻¹); this is the **Dulong and Petit law**. For a solid, $C_p \approx C_v$ since its expansion is tiny.
+
+**Water.** Treating each of the three atoms of a water molecule like an atom in a solid gives $C \approx 9R \approx 75$ J mol⁻¹ K⁻¹, close to the measured value.
+
+**Limits.** At low temperatures measured specific heats fall below these values, and the vibrational modes "switch off". Classical equipartition cannot explain this; quantum theory does.`,
+          },
+          {
+            type: "text",
+            md: t`Molecules in air move at hundreds of metres per second, yet a smell takes a while to cross a room, because each molecule keeps colliding and changing direction. The average distance a molecule travels between two collisions is its **mean free path** l.
+
+A molecule of diameter d collides with every molecule whose centre lies within a distance d of its path. In time Δt it sweeps out a cylinder of volume $\pi d^2\langle v\rangle\Delta t$ and makes $n\pi d^2\langle v\rangle\Delta t$ collisions, so $l = \dfrac{1}{n\pi d^2}$. Taking into account that the other molecules also move adds a factor $\sqrt2$.`,
+          },
+          {
+            type: "formula",
+            tex: t`l = \frac{1}{\sqrt{2}\,n\pi d^2} = \frac{k_BT}{\sqrt{2}\,\pi d^2 P}`,
+            caption: "n = number of molecules per unit volume, d = molecular diameter. l depends only on n and d; at fixed pressure it grows with T, at fixed n it does not depend on T.",
+          },
+          {
+            type: "example",
+            title: "Mean free path of nitrogen at STP",
+            problem: t`Estimate the mean free path of N₂ molecules at STP, where $n = 2.69\times10^{25}$ m⁻³. Take the molecular diameter $d = 3.0\times10^{-10}$ m. Compare it with the average spacing between molecules.`,
+            steps: [
+              t`$\pi d^2 = 3.1416\times9.0\times10^{-20} = 2.83\times10^{-19}$ m².`,
+              t`$\sqrt2\,n\pi d^2 = 1.414\times2.69\times10^{25}\times2.83\times10^{-19} \approx 1.08\times10^{7}$ m⁻¹.`,
+              t`$l \approx \dfrac{1}{1.08\times10^7} \approx 9.3\times10^{-8}$ m (about 93 nm).`,
+              t`Average spacing $\approx n^{-1/3} = (2.69\times10^{25})^{-1/3} \approx 3.3\times10^{-9}$ m.`,
+            ],
+            answer: t`$l \approx 9\times10^{-8}$ m: about 300 molecular diameters and nearly 30 times the average spacing between molecules.`,
+          },
+          {
+            type: "mistake",
+            wrong: "At the same temperature, all gases have the same rms speed.",
+            right: "At the same temperature, all gases have the same average translational kinetic energy per molecule, (3/2)k_BT. The rms speed is √(3RT/M₀), so lighter molecules move faster.",
+            why: "'Temperature measures molecular motion' is easily heard as 'temperature fixes the speed'. It fixes the energy ½mv², so a smaller m needs a larger v.",
+          },
+          {
+            type: "activity",
+            activity: {
+              kind: "match",
+              prompt: "Match each gas model with its value of γ.",
+              pairs: [
+                ["Monatomic (He)", "5/3"],
+                ["Rigid diatomic (N₂)", "7/5"],
+                ["Diatomic with vibration", "9/7"],
+                ["Rigid non-linear polyatomic (NH₃)", "4/3"],
+              ],
+              explain: "For a gas with f energy terms per molecule, Cv = fR/2 and γ = 1 + 2/f: f = 3, 5, 7 and 6 give 5/3, 7/5, 9/7 and 4/3.",
+            },
+          },
+          {
+            type: "keypoints",
+            items: [
+              t`Average translational KE per molecule $= \tfrac{3}{2}k_BT$: temperature measures molecular kinetic energy.`,
+              t`$v_{\text{rms}} = \sqrt{3RT/M_0}$; at the same T lighter gases move faster.`,
+              "Equipartition: ½k_BT per translational or rotational term; k_BT per vibrational mode.",
+              "Cv: monatomic 3R/2, rigid diatomic 5R/2, solids 3R (Dulong–Petit), water ≈ 9R.",
+              t`Mean free path $l = 1/(\sqrt2\,n\pi d^2)$.`,
+            ],
+          },
+        ],
+        flashcards: [
+          { front: "Average translational KE of a gas molecule", back: "(3/2)k_BT, independent of the kind of gas, its pressure or volume." },
+          { front: "rms speed formula", back: "v_rms = √(3k_BT/m) = √(3RT/M₀) = √(3P/ρ)." },
+          { front: "Law of equipartition of energy", back: "In equilibrium, each quadratic energy term (translational or rotational) has average energy ½k_BT; a vibrational mode gets k_BT." },
+          { front: "Degrees of freedom of a rigid diatomic molecule", back: "5: three translational and two rotational." },
+          { front: "γ from energy terms f", back: "Cv = fR/2, Cp = (f/2 + 1)R, γ = 1 + 2/f." },
+          { front: "Dulong and Petit law", back: "Molar specific heat of a solid ≈ 3R ≈ 25 J mol⁻¹ K⁻¹." },
+          { front: "Mean free path", back: "l = 1/(√2 n π d²) = k_BT/(√2 π d² P)." },
+          { front: "Why do measured specific heats fall at low T?", back: "Vibrational (and some rotational) modes stop taking energy; this is a quantum effect that classical equipartition cannot explain." },
+        ],
+        quiz: [
+          {
+            kind: "numeric",
+            q: "Find the average translational kinetic energy of a gas molecule at 27 °C, in units of 10⁻²¹ J. (k_B = 1.38 × 10⁻²³ J K⁻¹)",
+            answer: 6.21,
+            tolerance: 0.02,
+            explain: t`$\tfrac{3}{2}k_BT = 1.5\times1.38\times10^{-23}\times300 = 6.21\times10^{-21}$ J.`,
+          },
+          {
+            kind: "mcq",
+            q: "A gas is at 300 K. At what temperature will the rms speed of its molecules be doubled?",
+            options: ["1200 K", "600 K", "424 K", "900 K"],
+            answer: 0,
+            explain: "v_rms ∝ √T, so doubling v_rms needs 4 × 300 = 1200 K. 600 K would raise it only √2 times.",
+          },
+          {
+            kind: "numeric",
+            q: "Using equipartition, find γ for a diatomic gas whose molecules do not vibrate.",
+            answer: 1.4,
+            tolerance: 0.01,
+            explain: "Cv = 5R/2, Cp = 7R/2, γ = 7/5 = 1.4.",
+          },
+          {
+            kind: "mcq",
+            q: "For a rigid non-linear polyatomic gas such as NH₃ (vibrations ignored), the molar specific heat at constant volume is:",
+            options: ["3R", "5R/2", "3R/2", "7R/2"],
+            answer: 0,
+            difficulty: 2,
+            explain: "3 translational + 3 rotational terms: U = 3RT per mole, so Cv = 3R (and γ = 4/3).",
+          },
+          {
+            kind: "truefalse",
+            q: "In a sealed rigid container, the mean free path of the gas molecules does not change when the gas is heated.",
+            answer: true,
+            difficulty: 2,
+            explain: "l = 1/(√2 n π d²) depends on n and d. In a sealed rigid container n is fixed, so l is unchanged (the molecules just collide more often).",
+          },
+          {
+            kind: "multi",
+            q: "Select all correct statements.",
+            options: [
+              "Each rotational degree of freedom has average energy ½k_BT.",
+              "A vibrational mode of a diatomic molecule contributes k_BT on average.",
+              "The molar specific heat of most solids at room temperature is about 3R.",
+              "A monatomic gas has 5 degrees of freedom.",
+            ],
+            answers: [0, 1, 2],
+            explain: "A monatomic gas has only 3 (translational) degrees of freedom.",
+          },
+          {
+            kind: "numeric",
+            q: "At constant temperature, the pressure of a gas is doubled. By what factor does the mean free path change?",
+            answer: 0.5,
+            tolerance: 0.01,
+            explain: "At constant T, n ∝ P, so l = 1/(√2 n π d²) halves.",
+          },
+          {
+            kind: "numeric",
+            q: "Find the internal energy, in joules, of 2 mol of a rigid diatomic ideal gas at 300 K. (R = 8.314 J mol⁻¹ K⁻¹)",
+            answer: 12471,
+            tolerance: 10,
+            unit: "J",
+            difficulty: 2,
+            explain: t`$U = \mu\cdot\tfrac{5}{2}RT = 2\times2.5\times8.314\times300 \approx 12\,471$ J.`,
+          },
+        ],
+      },
+
+      /* ---------------- Exam edge ---------------- */
+      {
+        slug: "c11-phy-exam-kinetic",
+        title: "Exam edge: Gas Speeds, Mixtures and Mean Free Path",
+        summary:
+          "What JEE, NEET, KCET and COMEDK ask from kinetic theory: rms, average and most probable speeds, energy and γ of gas mixtures, mixing of gases at different temperatures, and how mean free path and collision frequency change.",
+        minutes: 22,
+        xp: 60,
+        track: "exam",
+        blocks: [
+          {
+            type: "text",
+            md: t`Kinetic theory is a short chapter but a reliable scorer. **NEET** and **KCET** ask direct questions on $v_{\text{rms}}$, average kinetic energy, degrees of freedom and γ. **JEE Main** and **COMEDK** add the three molecular speeds, internal energy and γ of mixtures, and mixing of gases. **JEE Advanced** combines it with thermodynamics, for example how collision frequency changes in an adiabatic process. Almost every question reduces to three ideas: KE ∝ T, $C_v = \tfrac{f}{2}R$, and $l \propto 1/n$.`,
+          },
+          {
+            type: "table",
+            headers: ["Speed", "Formula", "Ratio (×√(RT/M₀))", "Use it for"],
+            rows: [
+              ["Most probable", t`$v_{mp} = \sqrt{2RT/M_0}$`, t`$\sqrt2 \approx 1.41$`, "peak of the Maxwell speed curve"],
+              ["Average (mean)", t`$\langle v\rangle = \sqrt{8RT/(\pi M_0)}$`, t`$\sqrt{8/\pi} \approx 1.60$`, "collision rate, mean free path arguments"],
+              ["Root mean square", t`$v_{\text{rms}} = \sqrt{3RT/M_0}$`, t`$\sqrt3 \approx 1.73$`, "pressure and kinetic energy"],
+            ],
+          },
+          {
+            type: "formula",
+            tex: t`C_{v,\text{mix}} = \frac{\mu_1C_{v1} + \mu_2C_{v2}}{\mu_1 + \mu_2} \qquad \frac{\mu_1 + \mu_2}{\gamma_{\text{mix}} - 1} = \frac{\mu_1}{\gamma_1 - 1} + \frac{\mu_2}{\gamma_2 - 1} \qquad M_{\text{mix}} = \frac{\mu_1M_1 + \mu_2M_2}{\mu_1 + \mu_2}`,
+            caption: "For non-reacting ideal gases. The internal energies add; Cp,mix = Cv,mix + R. Always v_mp < ⟨v⟩ < v_rms.",
+          },
+          {
+            type: "example",
+            title: "KCET level: doubling the rms speed",
+            problem: t`At what temperature (in °C) will the rms speed of the molecules of a gas be twice its value at 27 °C?`,
+            steps: [
+              t`$v_{\text{rms}} \propto \sqrt{T}$, so doubling the speed needs $T_2 = 4T_1$.`,
+              t`$T_1 = 300$ K, so $T_2 = 1200$ K.`,
+              t`In Celsius: $1200 - 273 = 927$ °C.`,
+            ],
+            answer: "927 °C (not 54 °C: the relation is with kelvin temperature, and it is a square-root one).",
+          },
+          {
+            type: "example",
+            title: "NEET / JEE Main level: γ of a mixture",
+            problem: t`A container holds 2 mol of helium and 3 mol of oxygen (rigid molecules). Find γ of the mixture.`,
+            steps: [
+              t`$C_{v,\text{mix}} = \dfrac{2\times\tfrac{3}{2}R + 3\times\tfrac{5}{2}R}{5} = \dfrac{3R + 7.5R}{5} = 2.1R$.`,
+              t`$C_{p,\text{mix}} = 2.1R + R = 3.1R$.`,
+              t`$\gamma_{\text{mix}} = \dfrac{3.1}{2.1} = \dfrac{31}{21} \approx 1.48$.`,
+              t`Check with the second formula: $\dfrac{5}{\gamma - 1} = \dfrac{2}{2/3} + \dfrac{3}{0.4} = 3 + 7.5 = 10.5$, so $\gamma - 1 = 0.476$. ✔`,
+            ],
+            answer: t`$\gamma_{\text{mix}} = 31/21 \approx 1.48$. (A mole-weighted average of the two γ values would give about 1.51, which is wrong.)`,
+          },
+          {
+            type: "example",
+            title: "JEE Main level: mixing gases at different temperatures",
+            problem: t`2 mol of helium at 300 K and 1 mol of oxygen at 400 K are mixed in a rigid, insulated container. Find the final temperature.`,
+            steps: [
+              t`Rigid and insulated: W = 0 and Q = 0, so the total internal energy is conserved.`,
+              t`Initial U $= 2\times\tfrac{3}{2}R\times300 + 1\times\tfrac{5}{2}R\times400 = 900R + 1000R = 1900R$.`,
+              t`Final U $= \left(2\times\tfrac{3}{2}R + 1\times\tfrac{5}{2}R\right)T = 5.5RT$.`,
+              t`$T = \dfrac{1900}{5.5} \approx 345.5$ K.`,
+            ],
+            answer: "About 345 K. It is not the mole-weighted average (≈ 333 K) because each mole of O₂ stores more energy per kelvin than a mole of He.",
+          },
+          {
+            type: "example",
+            title: "JEE Advanced level: collision frequency in an adiabatic expansion",
+            problem: t`A monatomic ideal gas expands adiabatically and reversibly to twice its volume. By what factor does the number of collisions per second made by one molecule change?`,
+            steps: [
+              t`Collision frequency $\nu = \dfrac{\langle v\rangle}{l}$, with $\langle v\rangle \propto \sqrt{T}$ and $l = \dfrac{1}{\sqrt2\,n\pi d^2} \propto \dfrac{1}{n} \propto V$.`,
+              t`So $\nu \propto \dfrac{\sqrt T}{V}$.`,
+              t`Adiabatic, monatomic: $TV^{2/3} = $ constant, so $T \propto V^{-2/3}$ and $\sqrt T \propto V^{-1/3}$.`,
+              t`$\nu \propto V^{-1/3}/V = V^{-4/3}$. Doubling V: $\nu_2/\nu_1 = 2^{-4/3} \approx 0.397$.`,
+            ],
+            answer: t`The collision frequency falls to $2^{-4/3} \approx 0.40$ of its value: fewer molecules per volume and slower ones.`,
+          },
+          {
+            type: "mistake",
+            wrong: "γ of a mixture is the average of the γ values of the gases.",
+            right: "Average the heat capacities, not γ: find Cv,mix (mole-weighted), then Cp,mix = Cv,mix + R, then γ = Cp/Cv.",
+            why: "γ is a ratio, and ratios do not average linearly. The internal energies of the gases add, so Cv values add with mole weights, but γ does not.",
+          },
+          {
+            type: "mistake",
+            wrong: "Heating a gas always increases its mean free path, because the molecules move faster.",
+            right: "l = 1/(√2 n π d²) does not contain speed. At fixed n (rigid container), heating does not change l. At fixed pressure, heating lowers n, so l ∝ T increases.",
+            why: "Faster molecules do travel farther per second, but they also meet other molecules sooner; distance between collisions depends only on how crowded the gas is.",
+          },
+          {
+            type: "activity",
+            activity: {
+              kind: "reveal",
+              prompt: "H₂ and O₂ at the same temperature: which has more average KE per molecule?",
+              emoji: "⚖️",
+              options: ["H₂, because its molecules are faster", "O₂, because its molecules are heavier", "Both are equal"],
+              answer: 2,
+              trap: 0,
+              explain: "Average translational KE per molecule is (3/2)k_BT for every gas. Both are diatomic, so their total (translational + rotational) KE per molecule, (5/2)k_BT, is also equal. H₂ is faster only because it is lighter.",
+            },
+          },
+          {
+            type: "checkpoint",
+            questions: [
+              {
+                kind: "numeric",
+                q: "Five molecules have speeds 1, 2, 3, 4 and 5 km/s. Find their rms speed in km/s.",
+                answer: 3.32,
+                tolerance: 0.01,
+                unit: "km/s",
+                explain: t`$v_{\text{rms}} = \sqrt{(1 + 4 + 9 + 16 + 25)/5} = \sqrt{11} \approx 3.32$ km/s, larger than the average speed of 3 km/s.`,
+              },
+            ],
+          },
+          {
+            type: "callout",
+            tone: "tip",
+            title: "Which degrees of freedom to use",
+            md: t`Unless the question says vibrations are active or the temperature is very high, take diatomic gases as **rigid** (f = 5, γ = 1.4). For a mixture, add up U: $U = \sum \mu_i\tfrac{f_i}{2}RT$. In ratio questions write every quantity as a power of T, V or n first: $v \propto \sqrt{T/M}$, $l \propto 1/n$, $P \propto nT$.`,
+          },
+          {
+            type: "keypoints",
+            items: [
+              t`$v_{mp} : \langle v\rangle : v_{\text{rms}} = \sqrt2 : \sqrt{8/\pi} : \sqrt3$; always $v_{mp} < \langle v\rangle < v_{\text{rms}}$.`,
+              "For mixtures, add internal energies and mole-weighted Cv; never average γ directly.",
+              "Mixing in a rigid insulated vessel conserves total U.",
+              t`$l \propto 1/n$ and collision frequency $\nu = \langle v\rangle/l \propto n\sqrt{T}$.`,
+            ],
+          },
+        ],
+        flashcards: [
+          { front: "Three molecular speeds", back: "v_mp = √(2RT/M), ⟨v⟩ = √(8RT/πM), v_rms = √(3RT/M); ratio about 1 : 1.13 : 1.22." },
+          { front: "Cv of a mixture", back: "Mole-weighted average: (μ₁Cv₁ + μ₂Cv₂)/(μ₁ + μ₂)." },
+          { front: "γ of a mixture", back: "(μ₁ + μ₂)/(γ − 1) = μ₁/(γ₁ − 1) + μ₂/(γ₂ − 1)." },
+          { front: "Mixing gases in a rigid insulated vessel", back: "Total internal energy is conserved: T = Σμᵢ Cvᵢ Tᵢ / Σμᵢ Cvᵢ." },
+          { front: "Collision frequency", back: "ν = ⟨v⟩/l = √2 n π d² ⟨v⟩, so ν ∝ n√T." },
+          { front: "Mean free path at constant pressure", back: "l = k_BT/(√2 π d² P), so l ∝ T." },
+          { front: "Internal energy of 1 mol He + 1 mol N₂ at T", back: "(3/2)RT + (5/2)RT = 4RT." },
+        ],
+        quiz: [
+          {
+            kind: "mcq",
+            q: "For a gas at temperature T, the ratio v_mp : ⟨v⟩ : v_rms is:",
+            options: ["√2 : √(8/π) : √3", "√3 : √(8/π) : √2", "1 : 1 : 1", "√2 : √3 : √(8/π)"],
+            answer: 0,
+            explain: "v_mp = √(2RT/M), ⟨v⟩ = √(8RT/πM), v_rms = √(3RT/M), and √2 < √(8/π) < √3.",
+          },
+          {
+            kind: "numeric",
+            q: "Find γ for a mixture of 1 mol of a monatomic gas and 1 mol of a rigid diatomic gas.",
+            answer: 1.5,
+            tolerance: 0.01,
+            difficulty: 2,
+            explain: t`$C_{v,\text{mix}} = (1.5R + 2.5R)/2 = 2R$, $C_{p,\text{mix}} = 3R$, $\gamma = 1.5$.`,
+          },
+          {
+            kind: "numeric",
+            q: "Find the rms speed of nitrogen molecules (M = 0.028 kg/mol) at 27 °C, in m/s. (R = 8.314 J mol⁻¹ K⁻¹)",
+            answer: 517,
+            tolerance: 3,
+            unit: "m/s",
+            explain: t`$v_{\text{rms}} = \sqrt{3\times8.314\times300/0.028} = \sqrt{2.67\times10^5} \approx 517$ m/s.`,
+          },
+          {
+            kind: "mcq",
+            q: "A gas is heated at constant pressure so that its kelvin temperature doubles. Its mean free path:",
+            options: ["doubles", "stays the same", "halves", "increases √2 times"],
+            answer: 0,
+            difficulty: 2,
+            explain: "At constant P, n ∝ 1/T, and l ∝ 1/n ∝ T.",
+          },
+          {
+            kind: "multi",
+            q: "Equal masses of H₂ and O₂ are at the same temperature. Which statements are true?",
+            options: [
+              "The average translational KE per molecule is the same for both",
+              "There are 16 times as many H₂ molecules as O₂ molecules",
+              "The total translational KE of the H₂ sample is 16 times that of the O₂ sample",
+              "The rms speed of H₂ is 16 times that of O₂",
+            ],
+            answers: [0, 1, 2],
+            difficulty: 2,
+            hint: "Equal masses: number of molecules ∝ 1/M.",
+            explain: "Same T gives the same KE per molecule; N ∝ 1/M gives 32/2 = 16 times as many H₂ molecules, so 16 times the total KE. v_rms ∝ 1/√M is only 4 times larger.",
+          },
+          {
+            kind: "numeric",
+            q: "1 mol of helium at 250 K and 2 mol of nitrogen (rigid) at 400 K are mixed in a rigid insulated vessel. Find the final temperature in kelvin.",
+            answer: 365.4,
+            tolerance: 0.5,
+            unit: "K",
+            difficulty: 3,
+            hint: "Conserve total internal energy.",
+            explain: t`$U = 1.5R(250) + 2(2.5R)(400) = 375R + 2000R = 2375R$. $\sum\mu C_v = 1.5R + 5R = 6.5R$. $T = 2375/6.5 \approx 365.4$ K.`,
+          },
+          {
+            kind: "mcq",
+            q: "At very high temperature, when the vibration of a diatomic molecule is fully active, the molar Cv is:",
+            options: ["7R/2", "5R/2", "3R/2", "9R/2"],
+            answer: 0,
+            explain: "3 translational + 2 rotational terms give 5/2 R, and one vibrational mode adds R: total 7R/2. (9R/2 is Cp.)",
+          },
+          {
+            kind: "numeric",
+            q: "The kelvin temperature of a gas in a sealed rigid container is made four times larger. By what factor does the collision frequency of a molecule change?",
+            answer: 2,
+            difficulty: 3,
+            hint: "Collision frequency ∝ n√T, and n is fixed.",
+            explain: "n is fixed, so l is unchanged, and ν = ⟨v⟩/l ∝ √T = √4 = 2.",
+          },
+        ],
+      },
+    ],
+  },
 ];
 
 export const links: Record<string, string | string[]> = {
