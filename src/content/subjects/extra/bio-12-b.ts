@@ -2137,4 +2137,6 @@ export const topics: Topic[] = [
 export const links: Record<string, string | string[]> = {
   "12:Principles of Inheritance and Variation": "c12-principles-of-inheritance",
   "12:Molecular Basis of Inheritance": "c12-molecular-basis-of-inheritance",
+  // ISC unit: these genetics topics come first; bio-12-c adds evolution after them.
+  "12:Genetics and Evolution": ["c12-principles-of-inheritance", "c12-molecular-basis-of-inheritance"],
 };
