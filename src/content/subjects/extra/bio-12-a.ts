@@ -2034,10 +2034,614 @@ const human: Topic = {
   ],
 };
 
-export const topics: Topic[] = [flowering, human];
+/* ------------------------------------------------------------------ */
+/* Reproductive Health                                                 */
+/* ------------------------------------------------------------------ */
+const health: Topic = {
+  slug: "c12-reproductive-health",
+  title: "Reproductive Health",
+  icon: "🩺",
+  description:
+    "Reproductive health and the strategies to improve it, population stabilisation and birth control, contraceptive methods, medical termination of pregnancy, sexually transmitted infections, infertility and assisted reproductive technologies.",
+  lessons: [
+    /* ---------------- Lesson 1: health, population, contraception ---------------- */
+    {
+      slug: "c12-reproductive-health-contraception",
+      title: "Reproductive Health, Population Stabilisation and Contraception",
+      summary:
+        "What reproductive health means, India's programmes, reasons for population growth, the ideal contraceptive and every NCERT method of birth control with how it works.",
+      minutes: 24,
+      xp: 60,
+      blocks: [
+        {
+          type: "text",
+          md: "According to the **World Health Organisation (WHO)**, **reproductive health** means a total well-being in all aspects of reproduction: **physical, emotional, behavioural and social**. A society with people whose reproductive organs are physically and functionally normal, and who interact normally in all sex-related aspects, is reproductively healthy.\n\nIndia was among the first countries in the world to start action plans at the national level for total reproductive health. **Family planning** programmes began in **1951**. Improved programmes covering wider reproduction-related areas are now called **Reproductive and Child Health Care (RCH)** programmes.",
+        },
+        {
+          type: "list",
+          items: [
+            "Creating **awareness** about reproduction-related aspects through audio-visual and print media, with help from governmental and non-governmental agencies; parents, teachers and close relatives also have a role.",
+            "**Sex education in schools**, so that young people get correct information and myths and misconceptions are removed.",
+            "Educating people, especially fertile couples and those in marriageable age groups, about **birth control** options, care of pregnant mothers, post-natal care of mother and child, the importance of breastfeeding, and **equal opportunities for the male and female child**.",
+            "A **statutory ban on amniocentesis for sex determination**, to legally check female foeticide; and massive **child immunisation**.",
+            "**Research** on reproduction-related areas, e.g. **Saheli**, a new oral contraceptive for females developed at the **Central Drug Research Institute (CDRI), Lucknow**.",
+          ],
+        },
+        {
+          type: "callout",
+          tone: "note",
+          title: "Amniocentesis",
+          md: "**Amniocentesis** is a foetal test based on the chromosomal pattern in the **amniotic fluid** around the developing embryo. It can detect genetic disorders, but because it also reveals the sex of the foetus it was misused for sex determination; hence the statutory ban for that purpose.",
+        },
+        {
+          type: "heading",
+          text: "Population stabilisation",
+        },
+        {
+          type: "text",
+          md: "Better health facilities and living conditions caused a **population explosion**. The world population was about **2 billion in 1900**, about **6 billion by 2000** and **7.2 billion in 2011**. India's population was about **350 million at Independence**, came close to the billion mark by 2000 and crossed **1.2 billion in May 2011**.\n\nThe probable reasons are a rapid **decline in the death rate**, in the **maternal mortality rate (MMR)** and **infant mortality rate (IMR)**, and an increase in the number of people of **reproducible age**. Even though the 2011 census showed a growth rate below 2% (20 per 1000 per year), the absolute increase is huge. Steps taken: motivating smaller families with contraceptive methods, slogans such as **'Hum Do Hamare Do'**, and raising the **marriageable age to 18 years for females and 21 years for males**, with incentives for small families.",
+        },
+        {
+          type: "text",
+          md: "An **ideal contraceptive** should be **user-friendly**, easily available, effective and **reversible**, with **no or least side-effects**, and it should not interfere with sexual drive, desire or the sexual act.",
+        },
+        {
+          type: "table",
+          headers: ["Method", "Examples", "How it works"],
+          rows: [
+            ["**Natural**", "Periodic abstinence (avoid coitus on days 10–17, the fertile period); withdrawal (coitus interruptus); **lactational amenorrhea**", "Avoid meeting of ovum and sperm. Lactational amenorrhea: during intense breastfeeding ovulation and the cycle do not occur; effective only up to a **maximum of 6 months** after parturition. No side-effects, but high chance of failure"],
+            ["**Barrier**", "Condoms (male, e.g. 'Nirodh'; female); diaphragms, cervical caps, vaults", "Physically stop sperm meeting the ovum. Condoms of thin rubber/latex also protect from STIs and AIDS. Diaphragms, caps and vaults cover the cervix and are **reusable**; spermicidal creams, jellies and foams are used with them"],
+            ["**IUDs**", "Non-medicated (Lippes loop); copper-releasing (CuT, Cu7, Multiload 375); hormone-releasing (Progestasert, LNG-20)", "Increase **phagocytosis of sperm** in the uterus; **Cu ions suppress sperm motility** and fertilising capacity; hormone-releasing IUDs make the uterus unsuitable for implantation and the cervix hostile to sperm. Inserted by doctors or trained nurses; ideal for **spacing** children; widely accepted in India"],
+            ["**Oral pills**", "Progestogen or progestogen–estrogen combinations; **Saheli** (non-steroidal, once a week)", "Inhibit **ovulation** and **implantation**, and alter cervical mucus to prevent or slow sperm entry. Taken daily for **21 days**, starting preferably within the first five days of the cycle, then a 7-day gap (when menstruation occurs)"],
+            ["**Injections / implants**", "Progestogen alone or with estrogen, under the skin", "Same action as pills, but effective for much longer"],
+            ["**Emergency**", "Progestogens, progestogen–estrogen combination, or an IUD within **72 hours** of coitus", "Used after rape or casual unprotected intercourse to avoid possible pregnancy"],
+            ["**Surgical (sterilisation)**", "**Vasectomy** (male): small part of vas deferens removed or tied through a small incision on the scrotum. **Tubectomy** (female): small part of the fallopian tube removed or tied through a small incision in the abdomen or through the vagina", "Block gamete transport. Highly effective, but **reversibility is very poor**; a terminal method"],
+          ],
+        },
+        {
+          type: "example",
+          title: "Choosing a method",
+          problem: "Priya and Arjun, a young couple in Bengaluru, have a one-year-old child. They want to wait at least three years before a second child, do not want daily pills, and want a reversible, highly effective method. Which NCERT method suits them best, and how does it act?",
+          steps: [
+            "Natural methods have a high failure rate, so they are not ideal.",
+            "Sterilisation is nearly irreversible, so it does not suit a couple planning another child.",
+            "An IUD is inserted once, works for years, is reversible on removal and is ideal for spacing children.",
+            "A copper-releasing IUD such as CuT: copper ions suppress sperm motility and fertilising capacity, and the IUD increases phagocytosis of sperm in the uterus.",
+          ],
+          answer: "A copper-releasing IUD (e.g. CuT or Multiload 375), ideal for spacing children.",
+        },
+        {
+          type: "checkpoint",
+          questions: [
+            {
+              kind: "mcq",
+              q: "Saheli, the once-a-week oral pill, was developed at:",
+              options: ["AIIMS, New Delhi", "CDRI, Lucknow", "ICMR, Pune", "IARI, New Delhi"],
+              answer: 1,
+              explain: "Saheli is a non-steroidal preparation developed by scientists at the Central Drug Research Institute, Lucknow.",
+            },
+            {
+              kind: "numeric",
+              q: "Emergency contraceptives are effective if used within how many hours of coitus?",
+              answer: 72,
+              unit: "hours",
+              explain: "Progestogens, progestogen–estrogen combinations or IUDs within 72 hours of coitus are very effective emergency contraceptives.",
+            },
+          ],
+        },
+        {
+          type: "mistake",
+          wrong: "Lactational amenorrhea is a reliable contraceptive for as long as the mother breastfeeds.",
+          right: "It works only while breastfeeding is intense and fully, and only up to a maximum of six months after delivery.",
+          why: "Mothers often notice their periods have not returned and assume they cannot conceive. Ovulation can return before the first period, so the method fails easily beyond six months or with reduced feeding.",
+        },
+        {
+          type: "activity",
+          activity: {
+            kind: "sort",
+            prompt: "Sort each contraceptive by type.",
+            groups: ["Barrier", "IUD", "Hormonal / surgical"],
+            items: [
+              { text: "Cervical cap", group: 0, hint: "It covers the cervix during coitus." },
+              { text: "Nirodh", group: 0, hint: "A brand of male condom." },
+              { text: "Multiload 375", group: 1, hint: "A copper-releasing device placed in the uterus." },
+              { text: "LNG-20", group: 1, hint: "A hormone-releasing device placed in the uterus." },
+              { text: "Saheli", group: 2, hint: "A once-a-week pill." },
+              { text: "Tubectomy", group: 2, hint: "The fallopian tube is cut or tied." },
+            ],
+            explain: "LNG-20 and Progestasert release hormones but are still IUDs, because they are devices placed in the uterus.",
+          },
+        },
+        {
+          type: "callout",
+          tone: "exam",
+          title: "Board tip",
+          md: "Questions on contraception usually ask for one example of each type and its mode of action. Always pair the name with the action: 'CuT – Cu ions suppress sperm motility'; 'pills – inhibit ovulation and implantation'. Add one line on side-effects (nausea, abdominal pain, breakthrough bleeding, irregular menstrual bleeding or even breast cancer for some methods) when asked why contraception is not a regular requirement.",
+        },
+        {
+          type: "keypoints",
+          items: [
+            "Reproductive health = physical, emotional, behavioural and social well-being in reproduction (WHO).",
+            "Family planning began in 1951; now the RCH programmes.",
+            "Population rise: falling death rate, MMR and IMR; more people of reproducible age.",
+            "Methods: natural, barrier, IUDs, pills/injections/implants, emergency (72 h), sterilisation.",
+            "Lactational amenorrhea: up to 6 months only; sterilisation: poor reversibility.",
+          ],
+        },
+      ],
+      flashcards: [
+        { front: "Reproductive health (WHO)", back: "Total well-being in all aspects of reproduction: physical, emotional, behavioural and social." },
+        { front: "Year India began family planning", back: "1951." },
+        { front: "Marriageable age in India", back: "18 years for females, 21 years for males." },
+        { front: "Copper-releasing IUDs", back: "CuT, Cu7, Multiload 375." },
+        { front: "Hormone-releasing IUDs", back: "Progestasert, LNG-20." },
+        { front: "Non-medicated IUD", back: "Lippes loop." },
+        { front: "How oral pills act", back: "Inhibit ovulation and implantation; alter cervical mucus to stop or slow sperm." },
+        { front: "Vasectomy", back: "A small part of the vas deferens is removed or tied through a small incision on the scrotum." },
+        { front: "Periodic abstinence period", back: "Days 10 to 17 of the menstrual cycle (fertile period)." },
+      ],
+      quiz: [
+        {
+          kind: "mcq",
+          q: "Which contraceptive also protects against sexually transmitted infections?",
+          options: ["CuT", "Oral pill", "Condom", "Tubectomy"],
+          answer: 2,
+          explain: "Condoms prevent contact with body fluids, so they also protect against STIs and AIDS.",
+        },
+        {
+          kind: "mcq",
+          q: "Copper ions released from a CuT:",
+          options: ["Inhibit ovulation", "Suppress sperm motility and fertilising capacity", "Make the cervix hostile only", "Block the fallopian tubes"],
+          answer: 1,
+          explain: "Cu ions suppress sperm motility and their fertilising capacity.",
+        },
+        {
+          kind: "truefalse",
+          q: "Diaphragms, cervical caps and vaults are reusable.",
+          answer: true,
+          explain: "These rubber barriers are inserted to cover the cervix and can be reused.",
+        },
+        {
+          kind: "numeric",
+          q: "A woman uses periodic abstinence and avoids coitus from day 10 to day 17 of her cycle, both days included. For how many days does she abstain?",
+          answer: 8,
+          unit: "days",
+          explain: "Days 10, 11, 12, 13, 14, 15, 16, 17 = 8 days.",
+        },
+        {
+          kind: "multi",
+          q: "Which are probable reasons for the population explosion according to NCERT?",
+          options: ["Decline in MMR", "Decline in IMR", "Increase in the number of people of reproducible age", "Rise in the death rate"],
+          answers: [0, 1, 2],
+          explain: "A rapid decline in death rate, MMR and IMR and more people of reproducible age are the reasons.",
+        },
+        {
+          kind: "mcq",
+          q: "Hormone-releasing IUDs act mainly by:",
+          options: ["Releasing copper ions", "Making the uterus unsuitable for implantation and the cervix hostile to sperm", "Killing sperm by phagocytosis only", "Blocking the vas deferens"],
+          answer: 1,
+          explain: "Progestasert and LNG-20 release hormones that act on the uterus and cervix.",
+          difficulty: 2,
+        },
+        {
+          kind: "fill",
+          q: "The statutory ban on ___ for sex determination aims to check female foeticide.",
+          answer: ["amniocentesis"],
+          explain: "Amniocentesis reveals the chromosomal pattern of the foetus, including its sex.",
+        },
+        {
+          kind: "mcq",
+          q: "Which feature of sterilisation makes it unsuitable for couples who may want another child?",
+          options: ["Low effectiveness", "Very poor reversibility", "Needs daily use", "High cost of hormones"],
+          answer: 1,
+          explain: "Vasectomy and tubectomy are highly effective but their reversibility is very poor.",
+        },
+      ],
+    },
+
+    /* ---------------- Lesson 2: MTP, STIs, infertility ---------------- */
+    {
+      slug: "c12-mtp-sti-infertility-art",
+      title: "MTP, Sexually Transmitted Infections, Infertility and ART",
+      summary:
+        "Medical termination of pregnancy and the law, common STIs and their prevention, causes of infertility and assisted reproductive technologies: IVF–ET, ZIFT, IUT, GIFT, ICSI, AI and IUI.",
+      minutes: 22,
+      xp: 55,
+      blocks: [
+        {
+          type: "text",
+          md: "**Medical termination of pregnancy (MTP)**, or induced abortion, is the intentional or voluntary termination of pregnancy before full term. Nearly **45 to 50 million** MTPs are performed in a year all over the world, which accounts for about **one-fifth** of all conceived pregnancies.\n\nMTP is used to get rid of unwanted pregnancies due to casual unprotected intercourse or failure of contraception, and when continuing the pregnancy could be harmful or even fatal to the mother or the foetus or both. MTPs are **relatively safe in the first trimester** (up to 12 weeks). Second-trimester abortions are much riskier.",
+        },
+        {
+          type: "callout",
+          tone: "note",
+          title: "The law in India (as given in NCERT)",
+          md: "India **legalised MTP in 1971** with strict conditions to avoid misuse. Under the **MTP (Amendment) Act, 2017** described in NCERT, a pregnancy may be terminated on certain grounds within the **first 12 weeks** on the opinion of **one** registered medical practitioner; between **12 and 24 weeks**, **two** registered medical practitioners must agree, in good faith, that the grounds exist. The grounds are a risk to the life or grave injury to the physical or mental health of the woman, or a substantial risk that the child would be born with serious abnormalities. The aim is to reduce illegal abortions and the resulting maternal deaths and illness.\n\nThe Act was amended again in 2021. For board and NEET answers, write what NCERT states.",
+        },
+        {
+          type: "text",
+          md: "MTP is a matter of debate on emotional, ethical, religious and social grounds. A major worry is its **misuse for female foeticide** after illegal sex determination. Most MTPs are done illegally by unqualified quacks, which is unsafe and can be fatal.",
+        },
+        {
+          type: "heading",
+          text: "Sexually transmitted infections (STIs)",
+        },
+        {
+          type: "text",
+          md: "Diseases or infections transmitted through sexual intercourse are called **sexually transmitted infections (STIs)**, also **venereal diseases (VD)** or **reproductive tract infections (RTI)**. Common ones are **gonorrhoea, syphilis, genital herpes, chlamydiasis, genital warts, trichomoniasis, hepatitis-B and HIV** (which causes AIDS).\n\nExcept **hepatitis-B, genital herpes and HIV**, the others are **completely curable** if detected early and treated properly. **Hepatitis-B and HIV** are also transmitted by sharing injection needles or surgical instruments with infected persons, by transfusion of infected blood, and from an infected mother to the foetus.",
+        },
+        {
+          type: "list",
+          items: [
+            "Early symptoms are minor: itching, fluid discharge, slight pain, swellings in the genital region. Infected females are often **asymptomatic**, so the infection may go undetected for long.",
+            "Late complications: **pelvic inflammatory disease (PID)**, abortions, still births, **ectopic pregnancies**, infertility, and even cancer of the reproductive tract.",
+            "Incidence is very high in the **15–24 years** age group.",
+            "Prevention: avoid sex with an unknown partner or multiple partners; always use **condoms** during coitus; in case of doubt, consult a qualified doctor early for diagnosis and complete treatment.",
+          ],
+        },
+        {
+          type: "heading",
+          text: "Infertility and assisted reproductive technologies",
+        },
+        {
+          type: "text",
+          md: "A large number of couples are **infertile**: unable to produce children in spite of unprotected sexual cohabitation. The reasons may be physical, congenital, diseases, drugs, immunological or even psychological. In India the female is often blamed, but the problem very often lies with the **male partner**. Specialised infertility clinics diagnose and correct some disorders and use special techniques called **assisted reproductive technologies (ART)**.",
+        },
+        {
+          type: "table",
+          headers: ["Technique", "What is done"],
+          rows: [
+            ["**IVF–ET** (test tube baby)", "In vitro fertilisation (outside the body, in conditions like those inside) followed by **embryo transfer**. Ova from the wife or a donor and sperm from the husband or a donor are fused in the laboratory"],
+            ["**ZIFT**", "Zygote intra fallopian transfer: the zygote or early embryo with **up to 8 blastomeres** is transferred into the **fallopian tube**"],
+            ["**IUT**", "Intra uterine transfer: an embryo with **more than 8 blastomeres** is transferred into the **uterus**"],
+            ["**GIFT**", "Gamete intra fallopian transfer: an **ovum from a donor** is transferred into the fallopian tube of a female who cannot produce ova but can provide a suitable environment for fertilisation and development"],
+            ["**ICSI**", "Intra cytoplasmic sperm injection: a sperm is **directly injected into the ovum** in the laboratory to form an embryo"],
+            ["**AI / IUI**", "Artificial insemination: semen from the husband or a healthy donor is introduced into the **vagina** or into the **uterus** (**intra-uterine insemination, IUI**). Used when the male cannot inseminate or has a very low sperm count"],
+          ],
+        },
+        {
+          type: "text",
+          md: "Embryos formed by **in vivo** fertilisation (fusion of gametes inside the female) can also be used for such transfer to help females who cannot conceive. ART needs very high precision handling by specialists and is expensive, so it is available in only a few centres in India. Emotional, religious and social factors also limit its use. **Legal adoption** of orphaned and destitute children is one of the best methods for couples looking for parenthood.",
+        },
+        {
+          type: "example",
+          title: "Choosing an ART technique",
+          problem: "Sunita's ovaries do not produce ova, but her fallopian tubes and uterus are healthy. Her husband has a normal sperm count. Which technique places a donor's ovum where fertilisation can occur naturally inside Sunita's body?",
+          steps: [
+            "She cannot provide ova, so a donor ovum is needed.",
+            "Her tubes and uterus can support fertilisation and development, so fertilisation can occur inside her body.",
+            "The technique that transfers a donor ovum into the fallopian tube of such a female is GIFT.",
+          ],
+          answer: "GIFT (gamete intra fallopian transfer).",
+        },
+        {
+          type: "checkpoint",
+          questions: [
+            {
+              kind: "mcq",
+              q: "Which STIs are NOT completely curable?",
+              options: ["Gonorrhoea, syphilis, chlamydiasis", "Hepatitis-B, genital herpes, HIV", "Trichomoniasis, genital warts, syphilis", "Chlamydiasis, gonorrhoea, hepatitis-B"],
+              answer: 1,
+              explain: "NCERT lists hepatitis-B, genital herpes and HIV as the ones not completely curable.",
+            },
+          ],
+        },
+        {
+          type: "mistake",
+          wrong: "In ZIFT the embryo is placed in the uterus, and in IUT it is placed in the fallopian tube.",
+          right: "ZIFT puts a zygote or early embryo (up to 8 blastomeres) into the fallopian tube. IUT puts an embryo with more than 8 blastomeres into the uterus.",
+          why: "Read the names: Z-I-F-T = Zygote Intra Fallopian Transfer; I-U-T = Intra Uterine Transfer. The embryo goes where it would naturally be at that stage: early in the tube, later in the uterus.",
+        },
+        {
+          type: "activity",
+          activity: {
+            kind: "match",
+            prompt: "Match each technique with what it does.",
+            pairs: [
+              ["ZIFT", "Embryo up to 8 blastomeres into the fallopian tube"],
+              ["IUT", "Embryo with more than 8 blastomeres into the uterus"],
+              ["GIFT", "Donor ovum into the fallopian tube"],
+              ["ICSI", "Sperm injected directly into the ovum"],
+              ["IUI", "Semen introduced into the uterus"],
+            ],
+            explain: "Each acronym spells out what is moved and where it goes: Zygote, Gamete, Sperm (cytoplasmic injection), Insemination.",
+          },
+        },
+        {
+          type: "keypoints",
+          items: [
+            "MTP legalised in India in 1971; safe mainly in the first trimester (12 weeks).",
+            "45–50 million MTPs per year worldwide, about one-fifth of pregnancies.",
+            "STIs: gonorrhoea, syphilis, genital herpes, chlamydiasis, genital warts, trichomoniasis, hepatitis-B, HIV; highest in 15–24 years.",
+            "Not completely curable: hepatitis-B, genital herpes, HIV.",
+            "ZIFT (≤ 8 blastomeres, tube), IUT (> 8, uterus), GIFT (donor ovum, tube), ICSI, AI/IUI.",
+          ],
+        },
+      ],
+      flashcards: [
+        { front: "MTP", back: "Medical termination of pregnancy: intentional termination before full term." },
+        { front: "Year MTP was legalised in India", back: "1971." },
+        { front: "Safest period for MTP", back: "First trimester (up to 12 weeks)." },
+        { front: "STIs transmitted also by needles and blood", back: "Hepatitis-B and HIV." },
+        { front: "Complications of untreated STIs", back: "PID, abortions, still births, ectopic pregnancy, infertility, reproductive tract cancer." },
+        { front: "ZIFT", back: "Zygote or embryo with up to 8 blastomeres transferred into the fallopian tube." },
+        { front: "IUT", back: "Embryo with more than 8 blastomeres transferred into the uterus." },
+        { front: "GIFT", back: "Donor ovum transferred into the fallopian tube of a female who cannot produce ova." },
+        { front: "ICSI", back: "Sperm injected directly into the ovum in the laboratory." },
+      ],
+      quiz: [
+        {
+          kind: "mcq",
+          q: "Which age group shows the highest incidence of STIs?",
+          options: ["5–14 years", "15–24 years", "30–40 years", "Above 50 years"],
+          answer: 1,
+          explain: "NCERT: incidence of STIs is very high among persons in the 15–24 years age group.",
+        },
+        {
+          kind: "numeric",
+          q: "If 45 million MTPs are one-fifth of all conceived pregnancies in a year, how many pregnancies (in millions) are conceived in that year?",
+          answer: 225,
+          unit: "million",
+          explain: "45 × 5 = 225 million.",
+        },
+        {
+          kind: "mcq",
+          q: "A man has a very low sperm count. Which simple ART technique is suitable?",
+          options: ["GIFT", "Artificial insemination / IUI", "Tubectomy", "Amniocentesis"],
+          answer: 1,
+          explain: "AI or IUI is used when the male cannot inseminate or has a very low sperm count.",
+        },
+        {
+          kind: "truefalse",
+          q: "Infected females with an STI are often asymptomatic.",
+          answer: true,
+          explain: "Early symptoms are minor and females may show none, so infection often goes undetected.",
+        },
+        {
+          kind: "multi",
+          q: "Which are sexually transmitted infections?",
+          options: ["Trichomoniasis", "Chlamydiasis", "Genital warts", "Typhoid"],
+          answers: [0, 1, 2],
+          explain: "Typhoid spreads through contaminated food and water, not sexually.",
+        },
+        {
+          kind: "mcq",
+          q: "Ectopic pregnancy, a complication of untreated STIs, means:",
+          options: ["Implantation outside the uterus, e.g. in the fallopian tube", "Twin pregnancy", "Pregnancy beyond 9 months", "Pregnancy without fertilisation"],
+          answer: 0,
+          explain: "In an ectopic pregnancy the embryo implants outside the uterus, often in a scarred fallopian tube.",
+          difficulty: 2,
+        },
+        {
+          kind: "fill",
+          q: "In ___, a single sperm is injected directly into the cytoplasm of an ovum.",
+          answer: ["ICSI", "intra cytoplasmic sperm injection", "intracytoplasmic sperm injection"],
+          explain: "ICSI = intra cytoplasmic sperm injection.",
+        },
+        {
+          kind: "mcq",
+          q: "According to the MTP law as described in NCERT, a pregnancy of 16 weeks may be terminated on permitted grounds if:",
+          options: ["One registered medical practitioner agrees", "Two registered medical practitioners agree", "The woman alone decides", "It cannot be terminated at all"],
+          answer: 1,
+          explain: "Between 12 and 24 weeks, two registered medical practitioners must form the opinion in good faith that the grounds exist.",
+          difficulty: 2,
+        },
+      ],
+    },
+
+    /* ---------------- Exam edge ---------------- */
+    {
+      slug: "c12-reproductive-health-exam-edge",
+      title: "Exam edge: Reproductive Health",
+      summary:
+        "NEET and KCET favourites: contraceptive examples with mode of action, the ART acronyms, STI lists, NCERT numbers and assertion–reason practice.",
+      minutes: 20,
+      xp: 50,
+      track: "exam",
+      blocks: [
+        {
+          type: "text",
+          md: "**NEET** asks 1–3 questions from this chapter, mostly match-the-column on contraceptives and ART, plus statement questions on STIs and MTP. **KCET** asks direct facts: Saheli and CDRI, 1951, 72 hours, 6 months, the IUD examples. The questions are easy if each name is linked with its mode of action.",
+        },
+        {
+          type: "table",
+          headers: ["Method", "Main action (one line)"],
+          rows: [
+            ["Periodic abstinence", "Avoid coitus on days 10–17"],
+            ["Lactational amenorrhea", "No ovulation during intense breastfeeding; up to 6 months"],
+            ["Condom, diaphragm, cap, vault", "Barrier to sperm"],
+            ["Lippes loop", "Non-medicated IUD; increases phagocytosis of sperm"],
+            ["CuT, Cu7, Multiload 375", "Cu ions suppress sperm motility and fertilising capacity"],
+            ["Progestasert, LNG-20", "Uterus unsuitable for implantation; cervix hostile to sperm"],
+            ["Pills (21 days), Saheli (weekly)", "Inhibit ovulation and implantation; alter cervical mucus"],
+            ["Vasectomy / tubectomy", "Block transport of gametes; very poor reversibility"],
+          ],
+        },
+        {
+          type: "formula",
+          tex: t`\text{ZIFT: } \le 8 \text{ blastomeres} \rightarrow \text{fallopian tube} \qquad \text{IUT: } > 8 \text{ blastomeres} \rightarrow \text{uterus}`,
+          caption: "The one numerical cut-off NEET tests in ART. GIFT moves a gamete (donor ovum), not an embryo.",
+        },
+        {
+          type: "list",
+          items: [
+            "NCERT line: India started family planning in **1951**.",
+            "NCERT line: Saheli is **non-steroidal**, taken **once a week**, from **CDRI, Lucknow**.",
+            "NCERT line: emergency contraception within **72 hours**.",
+            "NCERT line: lactational amenorrhea effective only up to a **maximum of six months** after parturition.",
+            "NCERT line: MTPs are relatively safe in the **first trimester**; about **45–50 million** per year worldwide.",
+            "NCERT line: except **hepatitis-B, genital herpes and HIV**, STIs are completely curable if treated early.",
+          ],
+        },
+        {
+          type: "example",
+          title: "NEET level: match the column",
+          problem: "Match: (a) Multiload 375 (b) LNG-20 (c) Lippes loop (d) Saheli — with (i) hormone-releasing IUD (ii) non-medicated IUD (iii) copper-releasing IUD (iv) oral pill.",
+          steps: [
+            "Multiload 375 releases copper: (a)-(iii).",
+            "LNG-20 releases levonorgestrel, a hormone: (b)-(i).",
+            "Lippes loop has no drug: (c)-(ii).",
+            "Saheli is a weekly oral pill: (d)-(iv).",
+          ],
+          answer: "a-iii, b-i, c-ii, d-iv.",
+        },
+        {
+          type: "example",
+          title: "Assertion–reason reasoning",
+          problem: "A: Copper-releasing IUDs are effective contraceptives. R: Copper ions released suppress sperm motility and the fertilising capacity of sperm.",
+          steps: [
+            "A is true: CuT and Multiload are widely used and effective.",
+            "R is true: this is the NCERT mode of action.",
+            "R directly explains why the device prevents fertilisation.",
+          ],
+          answer: "Both A and R are true, and R is the correct explanation of A.",
+        },
+        {
+          type: "example",
+          title: "Harder: two-step reasoning",
+          problem: "A: Oral contraceptive pills are taken for 21 days followed by a 7-day gap. R: Pills inhibit ovulation and implantation. Decide the relation, and explain what happens in the 7-day gap.",
+          steps: [
+            "A is true: NCERT gives the 21-day course started within the first five days of the cycle, then a 7-day gap.",
+            "R is true: that is how pills act.",
+            "But R does not explain why there is a 7-day gap. The gap allows menstruation to occur (the hormones are withdrawn and the endometrium sheds).",
+          ],
+          answer: "Both A and R are true, but R is not the correct explanation of A. In the 7-day gap menstruation occurs.",
+        },
+        {
+          type: "mistake",
+          wrong: "LNG-20 is a hormonal pill, so it cannot be an IUD.",
+          right: "LNG-20 and Progestasert are hormone-releasing IUDs: devices placed in the uterus that release hormones.",
+          why: "Students sort by 'hormone' and forget the device. In a match question, an IUD is any device inserted into the uterus, whatever it releases.",
+        },
+        {
+          type: "mistake",
+          wrong: "In GIFT, the zygote is transferred into the fallopian tube.",
+          right: "In GIFT a gamete (a donor ovum) is transferred; the zygote is transferred in ZIFT.",
+          why: "Both acronyms end in IFT (intra fallopian transfer). The first letter tells you what moves: G = gamete, Z = zygote.",
+        },
+        {
+          type: "activity",
+          activity: {
+            kind: "reveal",
+            prompt: "Which contraceptive gives protection against STIs as well?",
+            emoji: "🛡️",
+            options: ["Copper-T", "Condom", "Oral pill", "Vasectomy"],
+            answer: 1,
+            trap: 3,
+            explain: "Only barrier methods like condoms stop contact with body fluids. Vasectomy blocks sperm but not infections carried in semen.",
+          },
+        },
+        {
+          type: "checkpoint",
+          questions: [
+            {
+              kind: "mcq",
+              q: "A: Sterilisation is advised as a terminal method to prevent further pregnancies. R: Reversibility of surgical methods is very poor.",
+              options: AR,
+              answer: 0,
+              explain: "Because reversibility is very poor, sterilisation is meant for those who want no more children.",
+            },
+          ],
+        },
+        {
+          type: "keypoints",
+          items: [
+            "Pair every contraceptive name with its mode of action.",
+            "ZIFT ≤ 8 blastomeres (tube); IUT > 8 (uterus); GIFT moves a donor ovum.",
+            "Non-curable STIs: hepatitis-B, genital herpes, HIV.",
+            "Key numbers: 1951, 72 h, 6 months, 21 + 7 days, 15–24 years, 45–50 million.",
+          ],
+        },
+      ],
+      flashcards: [
+        { front: "Saheli", back: "Non-steroidal, once-a-week oral contraceptive from CDRI, Lucknow." },
+        { front: "Lippes loop", back: "Non-medicated IUD." },
+        { front: "LNG-20", back: "Hormone-releasing IUD." },
+        { front: "Emergency contraception window", back: "Within 72 hours of coitus." },
+        { front: "Cut-off between ZIFT and IUT", back: "8 blastomeres." },
+        { front: "STIs not completely curable", back: "Hepatitis-B, genital herpes, HIV." },
+        { front: "Pill schedule", back: "Daily for 21 days, then a 7-day gap during which menstruation occurs." },
+      ],
+      quiz: [
+        {
+          kind: "mcq",
+          q: "A: Lactational amenorrhea is a natural method of contraception. R: Ovulation and the menstrual cycle do not occur during the period of intense lactation.",
+          options: AR,
+          answer: 0,
+          explain: "Both NCERT statements; R is the reason the method works (up to six months).",
+        },
+        {
+          kind: "mcq",
+          q: "A: Hepatitis-B can spread through sharing injection needles. R: Hepatitis-B is completely curable if detected early.",
+          options: AR,
+          answer: 2,
+          explain: "A is true. R is false: hepatitis-B is one of the three STIs that are not completely curable.",
+          difficulty: 2,
+        },
+        {
+          kind: "mcq",
+          q: "Match: (a) ZIFT (b) IUT (c) GIFT (d) ICSI — with (i) donor ovum into tube (ii) sperm into ovum (iii) up to 8 blastomeres into tube (iv) more than 8 blastomeres into uterus.",
+          options: ["a-iii, b-iv, c-i, d-ii", "a-iv, b-iii, c-i, d-ii", "a-iii, b-iv, c-ii, d-i", "a-i, b-iv, c-iii, d-ii"],
+          answer: 0,
+          explain: "ZIFT = early embryo to tube; IUT = later embryo to uterus; GIFT = gamete to tube; ICSI = sperm injection.",
+          difficulty: 2,
+        },
+        {
+          kind: "multi",
+          q: "Which statements are correct as per NCERT?",
+          options: [
+            "Hormone-releasing IUDs make the cervix hostile to sperm",
+            "Vasectomy is done through a small incision on the scrotum",
+            "Barrier methods include the CuT",
+            "Diaphragms are reusable",
+          ],
+          answers: [0, 1, 3],
+          explain: "CuT is an IUD, not a barrier method.",
+          difficulty: 2,
+        },
+        {
+          kind: "numeric",
+          q: "A woman starts her oral pill course on day 3 of her cycle and takes one pill daily for the full course. On which day of the cycle does she take her last pill of that course?",
+          answer: 23,
+          explain: "21 pills starting on day 3: day 3 + 20 = day 23.",
+          difficulty: 3,
+          hint: "The first pill is taken on day 3, so add 20, not 21.",
+        },
+        {
+          kind: "mcq",
+          q: "Which is NOT a feature of an ideal contraceptive?",
+          options: ["Reversible", "User-friendly", "Interferes with sexual drive", "Least side-effects"],
+          answer: 2,
+          explain: "An ideal contraceptive should not interfere with sexual drive, desire or the sexual act.",
+        },
+        {
+          kind: "mcq",
+          q: "Which pair is wrongly matched?",
+          options: ["Tubectomy – fallopian tube", "Multiload 375 – copper", "Progestasert – non-medicated IUD", "Nirodh – male condom"],
+          answer: 2,
+          explain: "Progestasert is a hormone-releasing IUD; Lippes loop is the non-medicated one.",
+          difficulty: 2,
+        },
+        {
+          kind: "mcq",
+          q: "A couple's infertility is due to the woman's blocked fallopian tubes; both produce healthy gametes. Which technique fits best?",
+          options: ["GIFT", "IVF followed by IUT", "Artificial insemination", "ZIFT into the blocked tube"],
+          answer: 1,
+          explain: "Gametes cannot meet in blocked tubes, and transfer into the tube (GIFT, ZIFT) is not useful. Fertilise in vitro and transfer the embryo into the uterus.",
+          difficulty: 3,
+          hint: "Which ART methods bypass the fallopian tube entirely?",
+        },
+      ],
+    },
+  ],
+};
+
+export const topics: Topic[] = [flowering, human, health];
 
 /** Class 12 chapter title ("12:<exact title>") → topic slug(s), or full lesson ids, that teach it. */
 export const links: Record<string, string | string[]> = {
   "12:Sexual Reproduction in Flowering Plants": "c12-sexual-reproduction-flowering-plants",
   "12:Human Reproduction": "c12-human-reproduction",
+  "12:Reproductive Health": "c12-reproductive-health",
+  "12:Reproduction": ["c12-sexual-reproduction-flowering-plants", "c12-human-reproduction", "c12-reproductive-health"],
 };

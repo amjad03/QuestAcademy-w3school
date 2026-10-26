@@ -1617,10 +1617,593 @@ For an ideal transformer (no flux leakage, no losses, negligible primary resista
       },
     ],
   },
+  /* ------------------------------------------------------------------ */
+  /* Electromagnetic Waves (NCERT Ch 8; ISC: Electromagnetic Waves)      */
+  /* ------------------------------------------------------------------ */
+  {
+    slug: "c12-electromagnetic-waves",
+    title: "Electromagnetic Waves",
+    icon: "📡",
+    description: "Displacement current, the sources and nature of electromagnetic waves, and the electromagnetic spectrum from radio waves to gamma rays.",
+    lessons: [
+      {
+        slug: "c12-emw-displacement-nature",
+        title: "Displacement Current and the Nature of EM Waves",
+        summary: "Why Maxwell added displacement current to Ampere's law, how accelerated charges radiate, and the properties of electromagnetic waves.",
+        minutes: 22,
+        xp: 50,
+        blocks: [
+          {
+            type: "illustration",
+            emoji: "📡",
+            caption: "A mobile tower, a Wi-Fi router and the Sun all send out the same kind of wave: electric and magnetic fields travelling together at the speed of light.",
+          },
+          {
+            type: "text",
+            md: t`Faraday showed that a changing magnetic field produces an electric field. James Clerk Maxwell asked whether a changing **electric** field could produce a magnetic field. He found that Ampère's circuital law, $\oint\vec{B}\cdot d\vec{l} = \mu_0 i$, gives contradictory answers while a capacitor is charging, and fixed it.`,
+          },
+          {
+            type: "list",
+            ordered: true,
+            items: [
+              t`A capacitor is being charged by a current $i$. Take a circle of radius $r$ around the wire, just outside the capacitor.`,
+              t`Use a flat disc bounded by the circle, crossed by the wire: Ampère's law gives $B(2\pi r) = \mu_0 i$.`,
+              t`Now use a pot-shaped surface with the same rim that passes between the plates. No current crosses it, so Ampère's law gives $B = 0$. Both surfaces cannot be right.`,
+              t`Between the plates the electric field is $E = q/(\varepsilon_0 A)$, so the electric flux is $\Phi_E = q/\varepsilon_0$, and $\varepsilon_0\,d\Phi_E/dt = dq/dt = i$.`,
+              t`Maxwell called $i_d = \varepsilon_0\,d\Phi_E/dt$ the **displacement current**. Adding it to the conduction current gives the same answer for every surface.`,
+            ],
+          },
+          {
+            type: "formula",
+            tex: t`\oint \vec{B}\cdot d\vec{l} = \mu_0\left(i_c + \varepsilon_0\frac{d\Phi_E}{dt}\right)`,
+            caption: "The Ampère–Maxwell law. Displacement current is not a flow of charge; it is a changing electric field, and it produces a magnetic field just as a real current does.",
+          },
+          {
+            type: "example",
+            title: "Inside a charging capacitor",
+            problem: t`A parallel-plate capacitor with plates of area $0.01\ \text{m}^2$ is charged by a steady current of 0.2 A. Find the displacement current between the plates and the rate at which the electric field changes. Take $\varepsilon_0 = 8.85\times10^{-12}$ C² N⁻¹ m⁻².`,
+            steps: [
+              t`The displacement current between the plates equals the conduction current in the wires: $i_d = 0.2$ A.`,
+              t`$i_d = \varepsilon_0A\,\dfrac{dE}{dt}$, so $\dfrac{dE}{dt} = \dfrac{0.2}{8.85\times10^{-12}\times0.01}$.`,
+              t`$\dfrac{dE}{dt} \approx 2.26\times10^{12}$ V m⁻¹ s⁻¹.`,
+            ],
+            answer: "0.2 A; the field grows at about 2.3 × 10¹² V/m every second.",
+          },
+          {
+            type: "text",
+            md: t`With this correction, electricity and magnetism are described by four equations, now called **Maxwell's equations**: Gauss's law for electricity ($\oint\vec{E}\cdot d\vec{A} = Q/\varepsilon_0$), Gauss's law for magnetism ($\oint\vec{B}\cdot d\vec{A} = 0$), Faraday's law ($\oint\vec{E}\cdot d\vec{l} = -d\Phi_B/dt$) and the Ampère–Maxwell law. A changing E makes B and a changing B makes E, so the two fields can keep each other going and travel through empty space. Maxwell predicted these **electromagnetic waves** and calculated their speed; it came out equal to the measured speed of light, showing that **light is an electromagnetic wave**.`,
+          },
+          {
+            type: "text",
+            md: t`**Sources.** A charge at rest gives only an electric field; a charge moving steadily gives a steady current and a steady magnetic field. Neither radiates. **Accelerated charges** produce electromagnetic waves. A charge oscillating at frequency $\nu$ sends out waves of the same frequency $\nu$. Heinrich Hertz first produced and detected such waves (1887); Jagadish Chandra Bose in Kolkata worked with waves of wavelength 25 mm to 5 mm; Guglielmo Marconi sent radio signals over long distances.
+
+**Nature.** For a wave travelling along $z$: $E_x = E_0\sin(kz - \omega t)$ and $B_y = B_0\sin(kz - \omega t)$.
+- $\vec{E}$ and $\vec{B}$ are perpendicular to each other and to the direction of travel: the waves are **transverse**, travelling along $\vec{E}\times\vec{B}$.
+- E and B oscillate in phase, with $E_0/B_0 = c$.
+- No medium is needed. In vacuum all of them travel at $c = 1/\sqrt{\mu_0\varepsilon_0}$; in a medium at $v = 1/\sqrt{\mu\varepsilon}$.
+- They carry energy and momentum. A wave carrying energy $U$ delivers momentum $p = U/c$ when fully absorbed, so light exerts a small **radiation pressure**.`,
+          },
+          {
+            type: "formula",
+            tex: t`c = \frac{1}{\sqrt{\mu_0\varepsilon_0}} \approx 3\times10^8\ \text{m/s}, \qquad \frac{E_0}{B_0} = c, \qquad c = \nu\lambda = \frac{\omega}{k}`,
+          },
+          {
+            type: "example",
+            title: "Fields of a radio wave",
+            problem: t`A 25 MHz plane wave in vacuum has a peak magnetic field of $2\times10^{-8}$ T. Find the peak electric field, the wavelength, $k$ and $\omega$.`,
+            steps: [
+              t`$E_0 = cB_0 = 3\times10^8\times2\times10^{-8} = 6$ V/m.`,
+              t`$\lambda = c/\nu = 3\times10^8/2.5\times10^7 = 12$ m.`,
+              t`$k = 2\pi/\lambda \approx 0.524$ rad/m; $\omega = 2\pi\nu \approx 1.57\times10^8$ rad/s.`,
+            ],
+            answer: "6 V/m, 12 m, about 0.52 rad/m and 1.57 × 10⁸ rad/s.",
+          },
+          {
+            type: "checkpoint",
+            questions: [
+              {
+                kind: "numeric",
+                q: "Speed of an EM wave (in units of 10⁸ m/s) in a non-magnetic medium of relative permittivity 4?",
+                answer: 1.5,
+                explain: t`$v = c/\sqrt{\varepsilon_r\mu_r} = 3\times10^8/\sqrt4 = 1.5\times10^8$ m/s.`,
+              },
+            ],
+          },
+          {
+            type: "activity",
+            activity: {
+              kind: "reveal",
+              prompt: "E points along +x and B along +y. Which way does the wave travel?",
+              emoji: "🧭",
+              options: ["Along +z", "Along +x, the direction of E", "Along −z"],
+              answer: 0,
+              trap: 1,
+              explain: t`The wave travels along $\vec{E}\times\vec{B}$, and $\hat{x}\times\hat{y} = \hat{z}$. E and B are both perpendicular to the direction of travel; that is what transverse means.`,
+            },
+          },
+          {
+            type: "mistake",
+            wrong: "Displacement current is charge jumping across the gap between the capacitor plates.",
+            right: "No charge crosses the gap. Displacement current is the name for ε₀ dΦE/dt, the rate of change of electric flux, which produces a magnetic field just like a conduction current.",
+            why: "The word 'current' suggests moving charge. Maxwell's term is about the effect: between the plates, the changing field makes the same magnetic field that the wire current makes outside.",
+          },
+          {
+            type: "callout",
+            tone: "exam",
+            title: "Board exam tips",
+            md: t`This chapter carries few marks but is easy to score. Expect: the definition and expression of displacement current with the charging-capacitor argument, the sketch of a plane EM wave (E along x, B along y, travel along z, both sinusoids in phase), and $c = 1/\sqrt{\mu_0\varepsilon_0}$. Label all three axes in the sketch.`,
+          },
+          {
+            type: "keypoints",
+            items: [
+              t`Displacement current $i_d = \varepsilon_0\,d\Phi_E/dt$; Ampère–Maxwell law $\oint B\cdot dl = \mu_0(i_c + i_d)$.`,
+              "Accelerated charges radiate EM waves at their frequency of oscillation.",
+              "E and B are perpendicular to each other and to the direction of travel, in phase, with E₀ = cB₀.",
+              t`Speed in vacuum $c = 1/\sqrt{\mu_0\varepsilon_0}$; no medium needed; they carry energy and momentum.`,
+            ],
+          },
+        ],
+        flashcards: [
+          { front: "Displacement current", back: t`$i_d = \varepsilon_0\,d\Phi_E/dt$: the term Maxwell added to Ampère's law for a changing electric field.` },
+          { front: "Ampère–Maxwell law", back: t`$\oint\vec{B}\cdot d\vec{l} = \mu_0 i_c + \mu_0\varepsilon_0\,d\Phi_E/dt$` },
+          { front: "What produces EM waves?", back: "Accelerated (for example, oscillating) charges." },
+          { front: "Speed of EM waves in vacuum", back: t`$c = 1/\sqrt{\mu_0\varepsilon_0} \approx 3\times10^8$ m/s.` },
+          { front: "Ratio of field amplitudes in an EM wave", back: t`$E_0/B_0 = c$.` },
+          { front: "Direction of travel of an EM wave", back: t`Along $\vec{E}\times\vec{B}$.` },
+          { front: "Momentum delivered by an EM wave of energy U absorbed fully", back: t`$p = U/c$.` },
+          { front: "Who first produced EM waves in the laboratory?", back: "Heinrich Hertz, in 1887." },
+        ],
+        quiz: [
+          {
+            kind: "mcq",
+            q: "Displacement current is produced by:",
+            options: ["a steady electric field", "a changing electric field", "a steady magnetic field", "the flow of charge across a capacitor gap"],
+            answer: 1,
+            explain: t`$i_d = \varepsilon_0\,d\Phi_E/dt$ exists only when the electric flux changes.`,
+          },
+          {
+            kind: "numeric",
+            q: "In an EM wave in vacuum the peak electric field is 30 V/m. Peak magnetic field in μT?",
+            answer: 0.1,
+            unit: "μT",
+            explain: t`$B_0 = E_0/c = 30/(3\times10^8) = 10^{-7}$ T = 0.1 μT.`,
+          },
+          {
+            kind: "truefalse",
+            q: "Electromagnetic waves need a material medium to travel.",
+            answer: false,
+            explain: "They are self-sustaining oscillations of E and B and travel through vacuum; sunlight crosses empty space to reach us.",
+          },
+          {
+            kind: "mcq",
+            q: "Which of these does NOT radiate electromagnetic waves?",
+            options: ["An electron oscillating in an antenna", "A charge moving in a circle at constant speed", "A charge moving in a straight line at constant velocity", "An electron slowing down on hitting a metal target"],
+            answer: 2,
+            explain: "Only accelerated charges radiate. Circular motion at constant speed is accelerated (direction changes); uniform straight-line motion is not.",
+            difficulty: 2,
+          },
+          {
+            kind: "numeric",
+            q: "A capacitor is being charged by a current of 1.5 A in the connecting wires. What is the displacement current (in A) between its plates?",
+            answer: 1.5,
+            unit: "A",
+            explain: "The displacement current between the plates equals the conduction current in the wires, keeping the total current continuous.",
+          },
+          {
+            kind: "multi",
+            q: "Which statements about a plane EM wave in vacuum are true?",
+            options: ["E and B oscillate in phase", "E is parallel to the direction of travel", "E₀ = cB₀", "It travels at the same speed whatever its frequency"],
+            answers: [0, 2, 3],
+            explain: "E and B are in phase, perpendicular to the direction of travel, with E₀ = cB₀, and every frequency travels at c in vacuum.",
+          },
+          {
+            kind: "mcq",
+            q: t`An EM wave has $E_y = E_0\sin(kx - \omega t)$. Its magnetic field oscillates along:`,
+            options: ["the x-axis", "the y-axis", "the z-axis", "any direction"],
+            answer: 2,
+            explain: t`The wave travels along +x and E is along y; B must be perpendicular to both, so along z ($\hat{y}\times\hat{z} = \hat{x}$).`,
+            difficulty: 2,
+          },
+        ],
+      },
+      {
+        slug: "c12-emw-spectrum",
+        title: "The Electromagnetic Spectrum",
+        summary: "Radio waves, microwaves, infrared, visible light, ultraviolet, X-rays and gamma rays: their ranges, how they are produced and detected, and their uses.",
+        minutes: 18,
+        xp: 45,
+        blocks: [
+          {
+            type: "illustration",
+            emoji: "🌈",
+            caption: "The colours of a rainbow are a tiny slice of a much bigger family of waves, most of which our eyes cannot see.",
+          },
+          {
+            type: "text",
+            md: t`Arranged by frequency (or wavelength), electromagnetic waves form the **electromagnetic spectrum**. All of them travel at $c$ in vacuum and obey $c = \nu\lambda$; they differ only in frequency and so in how they are made and how they interact with matter. The boundaries between regions are not sharp; neighbouring regions overlap.`,
+          },
+          {
+            type: "table",
+            headers: ["Type", "Wavelength range", "Produced by", "Detected by"],
+            rows: [
+              ["Radio", "> 0.1 m", "Rapid acceleration and deceleration of electrons in aerials", "Receiver aerials"],
+              ["Microwave", "0.1 m to 1 mm", "Klystron valve, magnetron valve, Gunn diode", "Point-contact diodes"],
+              ["Infrared", "1 mm to 700 nm", "Vibration of atoms and molecules", "Thermopiles, bolometer, infrared photographic film"],
+              ["Visible light", "700 nm to 400 nm", "Electrons in atoms moving between energy levels", "The eye, photocells, photographic film"],
+              ["Ultraviolet", "400 nm to 1 nm", "Inner-shell electrons in atoms; very hot bodies like the Sun", "Photocells, photographic film"],
+              ["X-rays", "1 nm to 10⁻³ nm", "X-ray tubes; inner-shell electrons", "Photographic film, Geiger tubes, ionisation chamber"],
+              ["Gamma rays", "< 10⁻³ nm", "Radioactive decay of the nucleus", "Photographic film, Geiger tubes, ionisation chamber"],
+            ],
+          },
+          {
+            type: "text",
+            md: t`**Radio waves.** AM band 530 kHz to 1710 kHz; short-wave bands up to about 54 MHz; TV from 54 MHz to 890 MHz; FM radio 88 MHz to 108 MHz. Mobile phones use the ultra-high-frequency (UHF) band.
+
+**Microwaves** (short radio waves) suit **radar** for aircraft navigation and speed guns. In a **microwave oven** the frequency is chosen so that the water molecules in food absorb the energy strongly; their increased motion heats the food.
+
+**Infrared** waves are often called heat waves: water molecules in most materials absorb them readily, and the material warms up. Infrared lamps are used in physiotherapy. Infrared radiation trapped by the Earth's atmosphere keeps the planet warm (**greenhouse effect**). Remote controls of TVs and ACs use infrared LEDs.`,
+          },
+          {
+            type: "text",
+            md: t`**Visible light** (about $4\times10^{14}$ Hz to $7\times10^{14}$ Hz) is the part our eyes detect. Other animals have different ranges; snakes can sense infrared.
+
+**Ultraviolet** comes mainly from the Sun. Most of it is absorbed by the **ozone layer** high in the atmosphere, which protects us, because large doses harm living tissue. UV is absorbed by ordinary glass, so welders wear special glass goggles. Its short wavelength allows very precise **LASIK** eye surgery, and UV lamps kill germs in **water purifiers**.
+
+**X-rays** are used in **medical diagnosis** and in treating some cancers. Over-exposure damages living tissue, so it must be avoided.
+
+**Gamma rays** have the highest frequencies. They are produced in nuclear reactions and by radioactive nuclei, and are used in medicine to destroy cancer cells.`,
+          },
+          {
+            type: "example",
+            title: "Which region is it?",
+            problem: "Find the frequency of (a) a 3 cm wave used in radar, (b) a 500 nm wave. Name each region.",
+            steps: [
+              t`(a) $\nu = c/\lambda = 3\times10^8/0.03 = 10^{10}$ Hz = 10 GHz. 3 cm lies between 1 mm and 0.1 m: **microwave**.`,
+              t`(b) $\nu = 3\times10^8/(5\times10^{-7}) = 6\times10^{14}$ Hz. 500 nm lies between 400 nm and 700 nm: **visible** (green light).`,
+            ],
+            answer: "(a) 10 GHz, microwave; (b) 6 × 10¹⁴ Hz, visible light.",
+          },
+          {
+            type: "example",
+            title: "An FM station",
+            problem: "An FM station broadcasts at 100 MHz. What is the wavelength of its waves?",
+            steps: [
+              t`$\lambda = c/\nu = 3\times10^8/(1\times10^8)$.`,
+              t`$\lambda = 3$ m, inside the radio region (> 0.1 m).`,
+            ],
+            answer: "3 m.",
+          },
+          {
+            type: "checkpoint",
+            questions: [
+              {
+                kind: "mcq",
+                q: "Which radiation is used in LASIK eye surgery and in germ-killing lamps of water purifiers?",
+                options: ["Infrared", "Ultraviolet", "Microwave", "Gamma rays"],
+                answer: 1,
+                explain: "Both are uses of ultraviolet radiation listed in NCERT.",
+              },
+            ],
+          },
+          {
+            type: "activity",
+            activity: {
+              kind: "order",
+              prompt: "Arrange from lowest to highest frequency.",
+              items: ["Microwaves", "Infrared", "Visible light", "Ultraviolet", "X-rays", "Gamma rays"],
+              explain: "Frequency rises (and wavelength falls) from microwaves to gamma rays. Radio waves would come before microwaves.",
+            },
+          },
+          {
+            type: "mistake",
+            wrong: "Radio waves are sound waves, and X-rays travel faster than radio waves because they have more energy.",
+            right: "Radio waves are electromagnetic, not sound. In vacuum every EM wave, from radio to gamma, travels at the same speed c ≈ 3 × 10⁸ m/s.",
+            why: "We 'hear' radio, so it feels like sound; but the radio set turns the EM signal into sound. Higher frequency means more energy per photon, not more speed.",
+          },
+          {
+            type: "callout",
+            tone: "exam",
+            title: "Board exam tips",
+            md: "Learn the order of the spectrum, one way of producing each wave, and one or two uses. Typical 1–2 mark questions: 'Name the EM waves used in radar / to kill germs / for night vision / in physiotherapy', 'Which waves are absorbed by the ozone layer?', 'Arrange in increasing wavelength'. Write the region name exactly as in NCERT.",
+          },
+          {
+            type: "keypoints",
+            items: [
+              "Order of increasing frequency: radio, microwave, infrared, visible, ultraviolet, X-rays, gamma rays.",
+              "All travel at c in vacuum; c = νλ.",
+              "Microwaves: radar, ovens. Infrared: heat, remote controls, greenhouse effect.",
+              "Ultraviolet: absorbed by ozone, LASIK, water purifiers. X-rays: diagnosis. Gamma: cancer treatment.",
+            ],
+          },
+        ],
+        flashcards: [
+          { front: "Visible light wavelength range", back: "About 400 nm (violet) to 700 nm (red)." },
+          { front: "FM radio band", back: "88 MHz to 108 MHz." },
+          { front: "Devices that produce microwaves", back: "Klystron, magnetron and Gunn diode." },
+          { front: "Why are infrared waves called heat waves?", back: "Water molecules in most materials absorb them readily, which raises the temperature." },
+          { front: "Which radiation does the ozone layer absorb?", back: "Most of the Sun's ultraviolet radiation." },
+          { front: "Source of gamma rays", back: "Radioactive decay of nuclei and other nuclear reactions." },
+          { front: "Detectors of X-rays", back: "Photographic film, Geiger tubes and ionisation chambers." },
+        ],
+        quiz: [
+          {
+            kind: "mcq",
+            q: "Which of these has the longest wavelength?",
+            options: ["X-rays", "Infrared", "Microwaves", "Ultraviolet"],
+            answer: 2,
+            explain: "Microwaves (1 mm to 0.1 m) are longer than infrared, ultraviolet and X-rays.",
+          },
+          {
+            kind: "mcq",
+            q: "Radar systems used for aircraft navigation use:",
+            options: ["gamma rays", "microwaves", "ultraviolet", "visible light"],
+            answer: 1,
+            explain: "Short-wavelength microwaves are used in radar.",
+          },
+          {
+            kind: "numeric",
+            q: "Wavelength (in m) of the waves from an AM station broadcasting at 1000 kHz?",
+            answer: 300,
+            unit: "m",
+            explain: t`$\lambda = 3\times10^8/10^6 = 300$ m.`,
+          },
+          {
+            kind: "truefalse",
+            q: "In vacuum, gamma rays travel faster than radio waves.",
+            answer: false,
+            explain: "All EM waves travel at the same speed c in vacuum.",
+          },
+          {
+            kind: "mcq",
+            q: "A bolometer is used to detect:",
+            options: ["infrared radiation", "radio waves", "gamma rays", "sound"],
+            answer: 0,
+            explain: "Thermopiles and bolometers sense the heating effect of infrared radiation.",
+          },
+          {
+            kind: "mcq",
+            q: "The radiation responsible for keeping the Earth warm through the greenhouse effect is:",
+            options: ["ultraviolet", "X-rays", "infrared", "microwave"],
+            answer: 2,
+            explain: "Infrared radiation from the Earth's surface is trapped by gases in the atmosphere.",
+          },
+          {
+            kind: "numeric",
+            q: "Frequency (in units of 10¹⁴ Hz) of red light of wavelength 750 nm?",
+            answer: 4,
+            explain: t`$\nu = 3\times10^8/(7.5\times10^{-7}) = 4\times10^{14}$ Hz.`,
+            difficulty: 2,
+          },
+          {
+            kind: "multi",
+            q: "Which uses are correctly matched?",
+            options: ["X-rays: medical diagnosis", "Ultraviolet: LASIK eye surgery", "Gamma rays: TV remote controls", "Infrared: physiotherapy lamps"],
+            answers: [0, 1, 3],
+            explain: "TV remotes use infrared, not gamma rays. The other three matches are correct.",
+          },
+        ],
+      },
+      {
+        slug: "c12-emw-exam-edge",
+        title: "Exam edge: EM Waves for JEE, NEET and CETs",
+        summary: "Field equations, energy density, intensity, radiation pressure and displacement current problems, from KCET level to JEE Advanced.",
+        minutes: 20,
+        xp: 50,
+        track: "exam",
+        blocks: [
+          {
+            type: "text",
+            md: "EM waves is a short chapter that gives almost sure marks: usually one question in NEET, KCET, COMEDK and JEE Main. The questions are of a few fixed types: read λ, ν and E₀ from a wave equation; find the direction of E or B; energy density, intensity and radiation pressure; displacement current; and the order and uses of the spectrum.",
+          },
+          {
+            type: "table",
+            headers: ["Exam", "Typical questions"],
+            rows: [
+              ["KCET / COMEDK / NEET", "Order of the spectrum and uses; E₀ = cB₀; speed in a medium; displacement current definition"],
+              ["NEET", "NCERT lines: sources, detectors, ozone, LASIK, microwave oven, greenhouse effect"],
+              ["JEE Main", "Wave equation reading, energy density, intensity, momentum and radiation force"],
+              ["JEE Advanced", "B field from displacement current inside a capacitor; radiation force at angles; combining with optics"],
+            ],
+          },
+          {
+            type: "list",
+            items: [
+              t`**Wave equation:** in $B = B_0\sin(kx \mp \omega t)$, $\lambda = 2\pi/k$, $\nu = \omega/2\pi$, and $\omega/k = c$ in vacuum. The sign with $-\omega t$ means travel along $+x$; $+\omega t$ means $-x$.`,
+              t`**Energy density:** $u_E = \tfrac12\varepsilon_0E^2$ and $u_B = B^2/2\mu_0$ are **equal**. Average total $\langle u\rangle = \tfrac12\varepsilon_0E_0^2 = \varepsilon_0E_{rms}^2$.`,
+              t`**Intensity:** $I = \langle u\rangle c = \tfrac12 c\varepsilon_0E_0^2$. For a point source of power $P$, $I = P/4\pi r^2$.`,
+              t`**Radiation pressure** (normal incidence): $I/c$ on a perfect absorber, $2I/c$ on a perfect reflector. Force $=$ pressure $\times$ area.`,
+              t`**Medium:** $v = c/\sqrt{\varepsilon_r\mu_r}$, so refractive index $n = \sqrt{\varepsilon_r\mu_r}$.`,
+              t`**Capacitor with circular plates of radius R:** between the plates, $B = \dfrac{\mu_0 i r}{2\pi R^2}$ for $r < R$ and $\dfrac{\mu_0 i}{2\pi r}$ for $r \ge R$.`,
+            ],
+          },
+          {
+            type: "formula",
+            tex: t`I = \tfrac12 c\,\varepsilon_0 E_0^2 = \frac{c B_0^2}{2\mu_0}, \qquad p_{rad} = \frac{I}{c}\ \text{(absorbed)}, \quad \frac{2I}{c}\ \text{(reflected)}`,
+          },
+          {
+            type: "example",
+            title: "KCET / NEET level: reading a wave",
+            problem: t`For a wave in vacuum, $B_y = 4\times10^{-8}\sin(2.0\times10^3 x - 6.0\times10^{11} t)$ T. Find λ, ν, E₀, the direction of travel and the direction of E.`,
+            steps: [
+              t`$k = 2.0\times10^3$ rad/m, so $\lambda = 2\pi/k \approx 3.14\times10^{-3}$ m = 3.14 mm.`,
+              t`$\omega = 6.0\times10^{11}$ rad/s, so $\nu = \omega/2\pi \approx 9.55\times10^{10}$ Hz. Check $\omega/k = 3\times10^8$ m/s.`,
+              t`$E_0 = cB_0 = 3\times10^8\times4\times10^{-8} = 12$ V/m.`,
+              t`The phase is $kx - \omega t$, so it travels along $+x$. E must satisfy $\vec{E}\times\vec{B} \parallel +\hat{x}$ with B along $\hat{y}$: $(-\hat{z})\times\hat{y} = \hat{x}$, so $E_z = -12\sin(2.0\times10^3x - 6.0\times10^{11}t)$ V/m.`,
+            ],
+            answer: "λ ≈ 3.1 mm, ν ≈ 9.5 × 10¹⁰ Hz, E₀ = 12 V/m, travels along +x, E along the z-axis.",
+          },
+          {
+            type: "example",
+            title: "JEE Main level: fields in sunlight",
+            problem: t`Sunlight of intensity $1000$ W/m² falls normally on a surface. Find the peak electric and magnetic fields and the average energy density. Use $c = 3\times10^8$ m/s, $\varepsilon_0 = 8.85\times10^{-12}$ SI units.`,
+            steps: [
+              t`$E_0 = \sqrt{\dfrac{2I}{c\varepsilon_0}} = \sqrt{\dfrac{2000}{3\times10^8\times8.85\times10^{-12}}} = \sqrt{7.53\times10^5} \approx 868$ V/m.`,
+              t`$B_0 = E_0/c \approx 2.9\times10^{-6}$ T.`,
+              t`$\langle u\rangle = I/c = 1000/(3\times10^8) \approx 3.3\times10^{-6}$ J/m³.`,
+            ],
+            answer: "E₀ ≈ 870 V/m, B₀ ≈ 2.9 μT, ⟨u⟩ ≈ 3.3 μJ/m³.",
+          },
+          {
+            type: "example",
+            title: "JEE Main level: radiation force",
+            problem: "The same sunlight (1000 W/m²) falls normally on a 2 m² perfectly reflecting sheet. Find the force on it, and the force if the sheet were perfectly black.",
+            steps: [
+              t`Reflector: $F = \dfrac{2IA}{c} = \dfrac{2\times1000\times2}{3\times10^8} \approx 1.33\times10^{-5}$ N.`,
+              t`Absorber: $F = \dfrac{IA}{c} \approx 6.7\times10^{-6}$ N, half as much, because reflected light reverses its momentum.`,
+            ],
+            answer: "About 1.3 × 10⁻⁵ N (mirror) and 6.7 × 10⁻⁶ N (black sheet).",
+          },
+          {
+            type: "example",
+            title: "JEE Advanced level: B field between capacitor plates",
+            problem: "A capacitor with circular plates of radius 5 cm is charged by a current of 0.15 A. Find the magnetic field between the plates at 2 cm and at 5 cm from the axis.",
+            steps: [
+              t`The displacement current is spread evenly over the plate area. Inside radius $r$ it is $i_d(r) = i\,r^2/R^2$.`,
+              t`Ampère–Maxwell law on a circle of radius $r$: $B(2\pi r) = \mu_0 i r^2/R^2$, so $B = \dfrac{\mu_0 i r}{2\pi R^2}$.`,
+              t`At $r = 0.02$ m: $B = \dfrac{2\times10^{-7}\times0.15\times0.02}{0.0025} = 2.4\times10^{-7}$ T.`,
+              t`At $r = R = 0.05$ m: $B = \dfrac{\mu_0 i}{2\pi R} = \dfrac{2\times10^{-7}\times0.15}{0.05} = 6.0\times10^{-7}$ T, the same as near a straight wire carrying 0.15 A.`,
+            ],
+            answer: "0.24 μT at 2 cm and 0.60 μT at the edge.",
+          },
+          {
+            type: "checkpoint",
+            questions: [
+              {
+                kind: "mcq",
+                q: "In a plane EM wave, the ratio of average electric energy density to average magnetic energy density is:",
+                options: ["c", "1/c", "1", t`$c^2$`],
+                answer: 2,
+                explain: t`$\tfrac12\varepsilon_0E^2 = \tfrac12\varepsilon_0c^2B^2 = B^2/2\mu_0$, using $c^2 = 1/\mu_0\varepsilon_0$. They are equal.`,
+              },
+            ],
+          },
+          {
+            type: "mistake",
+            wrong: "E₀ is 3 × 10⁸ times B₀, so almost all the energy of an EM wave is in its electric field.",
+            right: "The energy is shared equally: u_E = u_B at every point.",
+            why: "The numbers E₀ and B₀ are in different units, so comparing them directly means nothing. Put them into ½ε₀E² and B²/2μ₀ and they come out equal.",
+          },
+          {
+            type: "mistake",
+            wrong: "Radiation pressure on a mirror is the same as on a black surface, I/c.",
+            right: "A perfect reflector feels 2I/c; a perfect absorber feels I/c.",
+            why: "Reflected light reverses its momentum, so the change in momentum is twice as large, just as a ball bouncing back from a wall gives it twice the push of a ball that sticks.",
+          },
+          {
+            type: "activity",
+            activity: {
+              kind: "sort",
+              prompt: "True for EM waves in vacuum, or false?",
+              groups: ["True", "False"],
+              items: [
+                { text: "They are transverse", group: 0, hint: "E and B are both perpendicular to the direction of travel." },
+                { text: "Higher frequency waves travel faster", group: 1, hint: "All frequencies travel at c in vacuum." },
+                { text: "They carry momentum", group: 0, hint: "That is why light exerts radiation pressure." },
+                { text: "E and B are 90° out of phase", group: 1, hint: "In a travelling plane wave they rise and fall together." },
+                { text: "Their speed is 1/√(μ₀ε₀)", group: 0, hint: "Maxwell's result, equal to the speed of light." },
+                { text: "They can be polarised", group: 0, hint: "Being transverse, their E field can be confined to one plane." },
+              ],
+              explain: "EM waves are transverse, carry energy and momentum, travel at c whatever the frequency, and have E and B in phase.",
+            },
+          },
+          {
+            type: "callout",
+            tone: "tip",
+            title: "NCERT lines that become questions",
+            md: "Accelerated charges radiate; an oscillating charge gives waves of its own frequency. J. C. Bose worked with waves of 25 mm to 5 mm. Microwave oven frequency is chosen to match absorption by water molecules. Infrared is absorbed readily by water molecules (heat waves). UV is absorbed by ordinary glass and by the ozone layer. Gamma rays come from nuclei.",
+          },
+          {
+            type: "keypoints",
+            items: [
+              t`From a wave equation: $\lambda = 2\pi/k$, $\nu = \omega/2\pi$, $E_0 = cB_0$, travel along $\vec{E}\times\vec{B}$.`,
+              t`Energy shared equally; $I = \tfrac12c\varepsilon_0E_0^2$.`,
+              "Radiation pressure: I/c (absorber), 2I/c (reflector).",
+              t`$n = \sqrt{\varepsilon_r\mu_r}$; inside a charging capacitor $B \propto r$, outside $B \propto 1/r$.`,
+            ],
+          },
+        ],
+        flashcards: [
+          { front: "Intensity of an EM wave in terms of E₀", back: t`$I = \tfrac12 c\varepsilon_0E_0^2$` },
+          { front: "Average energy density of an EM wave", back: t`$\langle u\rangle = \tfrac12\varepsilon_0E_0^2 = I/c$, shared equally between E and B.` },
+          { front: "Radiation pressure on an absorber and on a reflector", back: "I/c and 2I/c (normal incidence)." },
+          { front: "Refractive index from ε_r and μ_r", back: t`$n = \sqrt{\varepsilon_r\mu_r}$` },
+          { front: "B between circular capacitor plates (r < R)", back: t`$B = \mu_0 i r/(2\pi R^2)$, growing linearly with r.` },
+          { front: "Reading direction from sin(kx − ωt)", back: "Travels along +x; sin(kx + ωt) travels along −x." },
+          { front: "Intensity at distance r from a point source of power P", back: t`$I = P/(4\pi r^2)$` },
+        ],
+        quiz: [
+          {
+            kind: "numeric",
+            q: "The peak magnetic field of an EM wave in vacuum is 5 × 10⁻⁸ T. Peak electric field (in V/m)?",
+            answer: 15,
+            unit: "V/m",
+            explain: t`$E_0 = cB_0 = 3\times10^8\times5\times10^{-8} = 15$ V/m.`,
+          },
+          {
+            kind: "numeric",
+            q: "Intensity (in W/m²) of an EM wave with E₀ = 100 V/m? Use c = 3 × 10⁸ m/s, ε₀ = 8.85 × 10⁻¹² SI units.",
+            answer: 13.3,
+            tolerance: 0.1,
+            unit: "W/m²",
+            explain: t`$I = \tfrac12\times3\times10^8\times8.85\times10^{-12}\times10^4 \approx 13.3$ W/m².`,
+            difficulty: 2,
+          },
+          {
+            kind: "numeric",
+            q: "Light of intensity 600 W/m² falls normally on a perfectly absorbing 5 m² surface. Force on it (in μN)?",
+            answer: 10,
+            unit: "μN",
+            explain: t`$F = IA/c = 600\times5/(3\times10^8) = 10^{-5}$ N = 10 μN.`,
+            difficulty: 2,
+          },
+          {
+            kind: "mcq",
+            q: "In an EM wave, E is along +y and B along +z. The wave travels along:",
+            options: ["+x", "−x", "+y", "+z"],
+            answer: 0,
+            explain: t`Direction of travel is $\vec{E}\times\vec{B}$: $\hat{y}\times\hat{z} = \hat{x}$.`,
+          },
+          {
+            kind: "mcq",
+            q: "A non-magnetic medium has relative permittivity 2.25. Its refractive index for EM waves is:",
+            options: ["2.25", "1.5", "1.25", "0.67"],
+            answer: 1,
+            explain: t`$n = \sqrt{\varepsilon_r\mu_r} = \sqrt{2.25} = 1.5$.`,
+          },
+          {
+            kind: "numeric",
+            q: "A capacitor with circular plates of radius 10 cm is charged by a current of 2 A. Magnetic field (in μT) between the plates at 5 cm from the axis? (μ₀ = 4π × 10⁻⁷ T m/A)",
+            answer: 2,
+            unit: "μT",
+            explain: t`$B = \dfrac{\mu_0 i r}{2\pi R^2} = \dfrac{2\times10^{-7}\times2\times0.05}{0.01} = 2\times10^{-6}$ T = 2 μT.`,
+            difficulty: 3,
+            hint: "Only the displacement current inside the 5 cm circle counts: a quarter of the total.",
+          },
+          {
+            kind: "multi",
+            q: "A parallel beam of light falls normally on a surface. Which statements are true?",
+            options: ["A perfect reflector feels twice the force of a perfect absorber", "The momentum delivered per second to an absorber is P/c, where P is the beam power", "Radiation pressure is zero because light has no mass", "Doubling the intensity doubles the radiation pressure"],
+            answers: [0, 1, 3],
+            explain: "Light carries momentum U/c even though photons have no rest mass. Force = P/c on an absorber, 2P/c on a reflector, and pressure is proportional to intensity.",
+            difficulty: 2,
+          },
+          {
+            kind: "mcq",
+            q: t`A wave has $E = 20\sin(3\times10^6x + 9\times10^{14}t)$ V/m. It travels:`,
+            options: ["along +x at 3 × 10⁸ m/s", "along −x at 3 × 10⁸ m/s", "along +x at 3 × 10⁶ m/s", "along −x at 9 × 10¹⁴ m/s"],
+            answer: 1,
+            explain: t`Phase $kx + \omega t$ means travel along $-x$; speed $\omega/k = 9\times10^{14}/3\times10^6 = 3\times10^8$ m/s.`,
+          },
+        ],
+      },
+    ],
+  },
 ];
 
 /** Class 12 chapter title ("12:<exact title>") → topic slug(s), or full lesson ids, that teach it. */
 export const links: Record<string, string | string[]> = {
   "12:Electromagnetic Induction": "c12-electromagnetic-induction",
   "12:Alternating Current": "c12-alternating-current",
+  "12:Electromagnetic Waves": "c12-electromagnetic-waves",
+  "12:Electromagnetic Induction and Alternating Currents": ["c12-electromagnetic-induction", "c12-alternating-current"],
 };
