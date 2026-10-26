@@ -1250,10 +1250,1170 @@ print(longest)`,
   ],
 };
 
-export const topics: Topic[] = [flowOfControl, strings];
+/* ------------------------------------------------------------------ */
+/* Lists                                                                */
+/* ------------------------------------------------------------------ */
+const lists: Topic = {
+  slug: "c11-cs-lists",
+  title: "Lists",
+  icon: "📋",
+  description: "Lists as mutable ordered sequences: indexing, slicing, operators, traversal, list methods and built-in functions, copying and aliasing, nested lists and passing lists to functions.",
+  lessons: [
+    {
+      slug: "list-basics",
+      title: "Lists: Creating, Indexing, Slicing and Traversing",
+      summary: "Creating lists, indexing and slicing, mutability, concatenation, repetition, membership, and traversing a list to sum, search and find the largest element.",
+      minutes: 20,
+      xp: 50,
+      blocks: [
+        {
+          type: "illustration",
+          emoji: "🛒",
+          caption: "A shopping list: items in order, you can add, cross out or change items. A Python list works the same way.",
+        },
+        {
+          type: "text",
+          md: "A **list** is an **ordered sequence** of elements written in square brackets and separated by commas: `marks = [72, 85, 68]`. The elements can be of **different types**, even other lists: `[\"apple\", 3.5, True, [1, 2]]`. `[]` is the **empty list**, and `list(\"abc\")` builds `['a', 'b', 'c']` from a string.\n\nIndexing and slicing work exactly as for strings: indices 0 to n − 1 from the left and −1 to −n from the right, and `L[start:stop:step]` excludes stop.",
+        },
+        {
+          type: "text",
+          md: "The big difference from strings: lists are **mutable**. You can change an element in place with `L[i] = value`, change a whole slice with `L[a:b] = [...]`, and delete with `del L[i]`. The list object stays the same; only its contents change.",
+        },
+        {
+          type: "code",
+          lang: "python",
+          runnable: true,
+          caption: "Lists can be changed in place. Compare each output line with the comment.",
+          code: r`L = [10, 20, 30, 40, 50]
+print(L[1], L[-2], L[1:4])   # 20 40 [20, 30, 40]
+print(L[::-1])               # [50, 40, 30, 20, 10]
+L[0] = 15
+print(L)                     # [15, 20, 30, 40, 50]
+L[1:3] = [99]                # two elements replaced by one
+print(L)                     # [15, 99, 40, 50]
+del L[1]
+print(L)                     # [15, 40, 50]`,
+        },
+        {
+          type: "table",
+          headers: ["Operation", "Example", "Result"],
+          rows: [
+            ["Concatenation `+`", "`[1, 2] + [3]`", "`[1, 2, 3]` (a new list)"],
+            ["Repetition `*`", "`[0] * 3`", "`[0, 0, 0]`"],
+            ["Membership `in`", "`30 in [10, 20, 30]`", "`True`"],
+            ["Slicing", "`[12, 45, 7, 23, 56][1:3]`", "`[45, 7]`"],
+            ["Length", "`len([\"a\", [1, 2]])`", "`2` (the inner list counts as one element)"],
+          ],
+        },
+        {
+          type: "mistake",
+          wrong: "`L = [1, 2] + 3` adds 3 to the end of the list.",
+          right: "`+` joins two lists, so write `L = [1, 2] + [3]` or use `L.append(3)`. `[1, 2] + 3` raises TypeError.",
+          why: "Learners read + as \"add\". For lists, + means concatenation and both sides must be lists.",
+        },
+        {
+          type: "checkpoint",
+          questions: [
+            {
+              kind: "mcq",
+              q: "`L = [12, 45, 7, 23, 56, 89, 3]`. What is `L[5:1:-2]`?",
+              options: ["`[89, 23]`", "`[89, 23, 45]`", "`[56, 7]`", "`[]`"],
+              answer: 0,
+              explain: "Indices 5 and 3 (stop 1 excluded): 89 and 23.",
+              difficulty: 2,
+            },
+          ],
+        },
+        {
+          type: "text",
+          md: "**Traversing** a list means visiting every element. `for x in L:` gives the values, which is enough for summing, counting or searching. To **change** elements you need their positions, so use `for i in range(len(L)):` and assign `L[i] = …`.",
+        },
+        {
+          type: "example",
+          title: "Sum, mean and largest without built-ins",
+          problem: "For `L = [12, 45, 7, 23, 56, 89, 3]`, find the total, the mean and the largest element using loops only.",
+          steps: [
+            "`total = 0`; `for x in L: total += x` gives 235.",
+            "Mean = `total / len(L)` = 235 / 7 = 33.571… (true division gives a float).",
+            "Largest: start with `big = L[0]` (not 0, in case all are negative); for each x, `if x > big: big = x`.",
+            "big changes 12 → 45 → 56 → 89 and stays 89.",
+          ],
+          answer: "Total 235, mean about 33.57, largest 89.",
+        },
+        {
+          type: "code",
+          lang: "python",
+          runnable: true,
+          caption: "Linear search and doubling every element. Prints: Found at index 3, then [2, 4, 6, 8, 10]",
+          code: r`L = [12, 45, 7, 23, 56, 89, 3]
+key = 23
+pos = -1
+for i in range(len(L)):
+    if L[i] == key:
+        pos = i
+        break
+if pos == -1:
+    print("Not found")
+else:
+    print("Found at index", pos)
+
+N = [1, 2, 3, 4, 5]
+for i in range(len(N)):     # indices are needed to change elements
+    N[i] = N[i] * 2
+print(N)`,
+        },
+        {
+          type: "activity",
+          activity: {
+            kind: "sort",
+            prompt: "Works on a list, a string, or both?",
+            groups: ["Lists only", "Both lists and strings"],
+            items: [
+              { text: "x[0] = 5", group: 0, hint: "Item assignment needs a mutable sequence." },
+              { text: "x[1:3]", group: 1, hint: "Slicing works on every sequence." },
+              { text: "x + x", group: 1, hint: "Concatenation of two sequences of the same type." },
+              { text: "del x[2]", group: 0, hint: "Deleting an element changes the object." },
+              { text: "len(x)", group: 1, hint: "Every sequence has a length." },
+              { text: "x.append(4)", group: 0, hint: "append is a list method." },
+            ],
+            explain: "Read-only operations (index, slice, +, *, in, len) work on both. Anything that changes the object in place works only on mutable lists.",
+          },
+        },
+        {
+          type: "callout",
+          tone: "exam",
+          title: "Board tip",
+          md: "Show list outputs with square brackets and commas exactly as Python prints them, e.g. `[15, 99, 40, 50]`. Strings inside a printed list appear with single quotes: `['a', 'b']`. When a slice is assigned a list of a different length, the list grows or shrinks.",
+        },
+        {
+          type: "keypoints",
+          items: [
+            "A list is an ordered, mutable sequence in [ ]; elements may be of any type.",
+            "Indexing and slicing follow the same rules as strings.",
+            "`L[i] = v`, `L[a:b] = [...]` and `del L[i]` change the list in place.",
+            "`+` needs two lists; `*` needs a list and an integer.",
+            "Use `range(len(L))` when you must change elements during traversal.",
+          ],
+        },
+      ],
+      flashcards: [
+        { front: "List", back: "An ordered, mutable sequence of elements of any type, written in square brackets." },
+        { front: "Mutable", back: "Can be changed in place. Lists are mutable; strings and tuples are not." },
+        { front: "`list(\"abc\")`", back: "`['a', 'b', 'c']`" },
+        { front: "`[0] * 4`", back: "`[0, 0, 0, 0]`" },
+        { front: "`len([1, [2, 3], 4])`", back: "3: the inner list is one element." },
+        { front: "Starting value for \"largest\"", back: "`big = L[0]`, so the code also works when every element is negative." },
+        { front: "Delete the element at index i", back: "`del L[i]` (or `L.pop(i)`, which also returns it)." },
+      ],
+      quiz: [
+        {
+          kind: "mcq",
+          q: "`L = [5, 10, 15, 20]`. What is `L[-1] + L[0]`?",
+          options: ["25", "15", "`[20, 5]`", "Error"],
+          answer: 0,
+          explain: "L[−1] is 20 and L[0] is 5; both are integers, so 20 + 5 = 25.",
+        },
+        {
+          kind: "mcq",
+          q: "What is printed? `L = [1, 2, 3, 4]` / `L[1:3] = [7, 8, 9]` / `print(L)`",
+          options: ["`[1, 7, 8, 9, 4]`", "`[1, 7, 8, 4]`", "`[7, 8, 9, 3, 4]`", "Error"],
+          answer: 0,
+          explain: "Indices 1 and 2 (the 2 and 3) are replaced by three new elements, so the list grows to 5.",
+          difficulty: 2,
+        },
+        {
+          kind: "truefalse",
+          q: "A list can hold an integer, a string and another list at the same time.",
+          answer: true,
+          explain: "Lists are heterogeneous: elements may be of any type, including lists (nested lists).",
+        },
+        {
+          kind: "mcq",
+          q: "Which raises an error?",
+          options: ["`[1, 2] * 2`", "`[1, 2] + [3]`", "`[1, 2] + 3`", "`3 in [1, 2]`"],
+          answer: 2,
+          explain: "A list can only be concatenated with another list; `[1, 2] + 3` is a TypeError.",
+        },
+        {
+          kind: "numeric",
+          q: "`L = [3, 8, 2, 8, 5]`. After `for i in range(len(L)): L[i] = L[i] % 3`, what is `sum(L)`?",
+          answer: 8,
+          explain: "Remainders: 0, 2, 2, 2, 2. Sum = 8.",
+          difficulty: 2,
+        },
+        {
+          kind: "fill",
+          q: "To remove the element at index 2 of list L without using a method, write `___ L[2]`.",
+          answer: ["del"],
+          explain: "The del statement deletes an element (or a slice) in place.",
+        },
+        {
+          kind: "mcq",
+          q: "`L = [\"a\", \"b\", \"c\"]`. What does `print(L[1:])` show?",
+          options: ["`['b', 'c']`", "`bc`", "`[b, c]`", "`'b', 'c'`"],
+          answer: 0,
+          explain: "A slice of a list is a list, and Python prints the strings inside it with quotes.",
+        },
+      ],
+    },
+    {
+      slug: "list-methods",
+      title: "List Methods, Copying, Nested Lists and Functions",
+      summary: "append, extend, insert, count, index, remove, pop, reverse, sort, sorted, min, max, sum; aliasing versus copying; nested lists; and lists passed to functions.",
+      minutes: 25,
+      xp: 55,
+      blocks: [
+        {
+          type: "illustration",
+          emoji: "🧑‍🍳",
+          caption: "A cook adjusting a recipe list: add an item at the end, insert one in the middle, remove one, or sort them. List methods do these jobs.",
+        },
+        {
+          type: "table",
+          headers: ["Method / function", "What it does", "Returns"],
+          rows: [
+            ["`L.append(x)`", "Adds x as **one** element at the end", "None"],
+            ["`L.extend(seq)`", "Adds each element of seq at the end", "None"],
+            ["`L.insert(i, x)`", "Puts x at index i, shifting the rest right", "None"],
+            ["`L.count(x)`", "How many times x occurs", "int"],
+            ["`L.index(x)`", "Index of the first x (ValueError if absent)", "int"],
+            ["`L.remove(x)`", "Deletes the first x (ValueError if absent)", "None"],
+            ["`L.pop()` / `L.pop(i)`", "Deletes and **returns** the last element / the one at i", "the element"],
+            ["`L.reverse()`", "Reverses the list in place", "None"],
+            ["`L.sort()`", "Sorts in place; `sort(reverse=True)` for descending", "None"],
+            ["`sorted(L)`", "A **new** sorted list; L unchanged", "list"],
+            ["`len`, `min`, `max`, `sum`", "Built-in functions on the list", "a value"],
+          ],
+        },
+        {
+          type: "code",
+          lang: "python",
+          runnable: true,
+          caption: "Follow the list as each method acts on it. The comments show the printed lines.",
+          code: r`nums = [4, 7, 1]
+nums.append(9);        print(nums)    # [4, 7, 1, 9]
+nums.extend([2, 5]);   print(nums)    # [4, 7, 1, 9, 2, 5]
+nums.insert(1, 8);     print(nums)    # [4, 8, 7, 1, 9, 2, 5]
+print(nums.count(7), nums.index(1))   # 1 3
+nums.remove(7);        print(nums)    # [4, 8, 1, 9, 2, 5]
+x = nums.pop();        print(x, nums) # 5 [4, 8, 1, 9, 2]
+y = nums.pop(0);       print(y, nums) # 4 [8, 1, 9, 2]
+nums.sort();           print(nums)    # [1, 2, 8, 9]
+nums.sort(reverse=True); print(nums)  # [9, 8, 2, 1]
+print(min(nums), max(nums), sum(nums))  # 1 9 20`,
+        },
+        {
+          type: "mistake",
+          wrong: "`L = L.sort()` sorts L and keeps the sorted list.",
+          right: "`L.sort()` sorts in place and returns None, so `L = L.sort()` makes L None. Write `L.sort()` alone, or `L = sorted(L)`.",
+          why: "Most string methods return a new string, so learners expect list methods to do the same. List methods that change the list (append, sort, reverse…) return None.",
+        },
+        {
+          type: "checkpoint",
+          questions: [
+            {
+              kind: "mcq",
+              q: "`L = [1, 2]`. After `L.append([3, 4])`, what is `len(L)`?",
+              options: ["3", "4", "2", "Error"],
+              answer: 0,
+              explain: "append adds its argument as one element: `[1, 2, [3, 4]]`. extend would give `[1, 2, 3, 4]`, length 4.",
+            },
+          ],
+        },
+        {
+          type: "heading",
+          text: "Aliasing and copying",
+        },
+        {
+          type: "text",
+          md: "`b = a` does **not** copy a list. It makes `b` a second name (an **alias**) for the **same** list object, so a change through `b` shows through `a` as well. `a is b` is True. To get an independent copy use any of `a.copy()`, `a[:]` or `list(a)`.",
+        },
+        {
+          type: "code",
+          lang: "python",
+          runnable: true,
+          caption: "Alias versus copy.",
+          code: r`a = [1, 2, 3]
+b = a            # alias: same list
+b.append(4)
+print(a, b, a is b)    # [1, 2, 3, 4] [1, 2, 3, 4] True
+
+c = a.copy()     # also a[:] or list(a)
+c.append(5)
+print(a, c)            # [1, 2, 3, 4] [1, 2, 3, 4, 5]`,
+        },
+        {
+          type: "text",
+          md: "A **nested list** is a list inside a list, often used as a table: `m = [[1, 2, 3], [4, 5, 6]]`. `m[1]` is the row `[4, 5, 6]` and `m[1][2]` is 6. A nested loop visits every element.\n\nWhen a list is **passed to a function**, the function receives a reference to the same list. If the function changes the list's elements (with `lst[i] = …`, append, etc.), the caller sees the change. If the function instead assigns a brand-new list to its parameter, only the local name changes.",
+        },
+        {
+          type: "example",
+          title: "List passed to a function",
+          problem: "What is printed?\n\n`def increase(lst):` · `for i in range(len(lst)): lst[i] = lst[i] + 5` · then `marks = [60, 72, 88]` · `increase(marks)` · `print(marks)`",
+          steps: [
+            "`lst` inside the function refers to the same list object as `marks`.",
+            "Each element is changed in place: 60 → 65, 72 → 77, 88 → 93.",
+            "No new list was made, so `marks` shows the changes.",
+          ],
+          answer: "Output: `[65, 77, 93]`",
+        },
+        {
+          type: "activity",
+          activity: {
+            kind: "reveal",
+            prompt: "a = [1, 2]; b = a; b[0] = 9. What is a?",
+            emoji: "🔗",
+            options: ["[1, 2]", "[9, 2]", "Error"],
+            answer: 1,
+            trap: 0,
+            explain: "b = a makes an alias, not a copy. Both names point to one list, so changing b[0] changes what a shows. Use a.copy() for a separate list.",
+          },
+        },
+        {
+          type: "callout",
+          tone: "exam",
+          title: "Board tip",
+          md: "Pairs examiners ask you to differentiate: **append vs extend**, **remove vs pop** (remove deletes by value and returns None; pop deletes by index and returns the element), **sort vs sorted**, and **del vs remove**. Give one line of code for each.",
+        },
+        {
+          type: "keypoints",
+          items: [
+            "append adds one element; extend adds each element of a sequence.",
+            "remove works by value, pop by index (and returns the element).",
+            "sort() changes the list and returns None; sorted() returns a new list.",
+            "`b = a` is an alias; `a.copy()`, `a[:]`, `list(a)` make copies.",
+            "A function that changes a passed list's elements changes the caller's list.",
+          ],
+        },
+      ],
+      flashcards: [
+        { front: "append vs extend", back: "append(x) adds x as one element; extend(seq) adds each element of seq." },
+        { front: "remove vs pop", back: "remove(x) deletes the first x by value, returns None. pop(i) deletes by index (last by default) and returns it." },
+        { front: "sort() vs sorted()", back: "L.sort() sorts in place and returns None. sorted(L) returns a new sorted list; L is unchanged." },
+        { front: "insert(i, x)", back: "Puts x at index i and shifts later elements one place right." },
+        { front: "Three ways to copy a list", back: "`a.copy()`, `a[:]`, `list(a)`" },
+        { front: "Alias", back: "A second name for the same object, e.g. `b = a`. Changes through either name show in both." },
+        { front: "`m = [[1, 2, 3], [4, 5, 6]]`: m[1][2]", back: "6 (row 1, column 2)." },
+        { front: "Sort in descending order", back: "`L.sort(reverse=True)` or `sorted(L, reverse=True)`" },
+      ],
+      quiz: [
+        {
+          kind: "mcq",
+          q: "`L = [3, 1, 2]`. What does `print(L.sort())` show?",
+          options: ["`[1, 2, 3]`", "None", "`[3, 1, 2]`", "Error"],
+          answer: 1,
+          explain: "sort() works in place and returns None, which is what gets printed. L itself is now [1, 2, 3].",
+          difficulty: 2,
+        },
+        {
+          kind: "mcq",
+          q: "`L = [10, 20, 30]`. What does `L.pop(1)` return?",
+          options: ["10", "20", "30", "None"],
+          answer: 1,
+          explain: "pop(1) removes and returns the element at index 1, which is 20. L becomes [10, 30].",
+        },
+        {
+          kind: "mcq",
+          q: "`L = [5, 3, 5, 1]`. After `L.remove(5)`, L is…",
+          options: ["`[3, 5, 1]`", "`[3, 1]`", "`[5, 3, 1]`", "`[5, 3, 5]`"],
+          answer: 0,
+          explain: "remove deletes only the first 5.",
+        },
+        {
+          kind: "truefalse",
+          q: "After `a = [1, 2]; b = a[:]; b.append(3)`, a is still `[1, 2]`.",
+          answer: true,
+          explain: "a[:] makes a new list, so appending to b does not affect a.",
+        },
+        {
+          kind: "numeric",
+          q: "`m = [[2, 4], [6, 8, 10], [1]]`. What is `len(m) + m[1][-1]`?",
+          answer: 13,
+          explain: "len(m) is 3 rows; m[1][−1] is 10. 3 + 10 = 13.",
+          difficulty: 2,
+        },
+        {
+          kind: "mcq",
+          q: "Which inserts 0 at the beginning of L?",
+          options: ["`L.insert(0, 0)`", "`L.append(0)`", "`L.insert(0)`", "`L[0] = 0`"],
+          answer: 0,
+          explain: "insert(index, value). L[0] = 0 would replace the first element instead of adding one.",
+        },
+        {
+          kind: "multi",
+          q: "Which of these return None?",
+          options: ["`L.append(4)`", "`L.pop()`", "`L.reverse()`", "`sorted(L)`"],
+          answers: [0, 2],
+          explain: "append and reverse change the list in place and return None. pop returns the removed element; sorted returns a new list.",
+        },
+        {
+          kind: "mcq",
+          q: "What is printed? `def f(x):` / `    x = [0, 0]` / then `v = [1, 2]; f(v); print(v)`",
+          options: ["`[1, 2]`", "`[0, 0]`", "None", "Error"],
+          answer: 0,
+          explain: "Assigning a new list to x only changes the local name; the caller's list is untouched.",
+          difficulty: 3,
+        },
+      ],
+    },
+    {
+      slug: "board-practice",
+      title: "Board practice: Lists",
+      summary: "Mixed board-style list questions: method outputs, aliasing traps, and programs to search, shift, count frequencies and separate elements.",
+      minutes: 20,
+      xp: 50,
+      blocks: [
+        {
+          type: "text",
+          md: "List questions in board papers are usually \"find the output\" with several methods in a row, or 3-mark programs that process a list of numbers entered by the user. Track the list after **every** line.",
+        },
+        {
+          type: "example",
+          title: "Output question (3 marks)",
+          problem: "Find the output:\n\n`L = [2, 4, 6, 8, 10]` · `for i in range(1, len(L)):` · `L[i-1] = L[i]` · then `print(L)`",
+          steps: [
+            "i = 1: L[0] = L[1] → [4, 4, 6, 8, 10].",
+            "i = 2: L[1] = L[2] → [4, 6, 6, 8, 10]. i = 3: L[2] = 8 → [4, 6, 8, 8, 10].",
+            "i = 4: L[3] = 10 → [4, 6, 8, 10, 10].",
+          ],
+          answer: "Output: `[4, 6, 8, 10, 10]` — every element moves one place left and the last one is left as it was.",
+        },
+        {
+          type: "code",
+          lang: "python",
+          runnable: true,
+          caption: "Rotate left by one place: keep the first element, shift, put it at the end. Prints [4, 6, 8, 10, 2]",
+          code: r`P = [2, 4, 6, 8, 10]
+first = P[0]
+for i in range(len(P) - 1):
+    P[i] = P[i + 1]
+P[-1] = first
+print(P)`,
+        },
+        {
+          type: "example",
+          title: "Program: frequency of each element (3 marks)",
+          problem: "For `lst = [3, 5, 3, 8, 5, 3]`, print each distinct element with the number of times it occurs, in order of first appearance.",
+          steps: [
+            "Build a list `seen` of distinct elements: append x only if `x not in seen`.",
+            "Loop over `seen` and print `x, lst.count(x)`.",
+          ],
+          answer: "Output lines: `3 3`, `5 2`, `8 1`.",
+        },
+        {
+          type: "code",
+          lang: "python",
+          runnable: true,
+          caption: "Frequency of elements. Prints 3 3 / 5 2 / 8 1",
+          code: r`lst = [3, 5, 3, 8, 5, 3]
+seen = []
+for x in lst:
+    if x not in seen:
+        seen.append(x)
+for x in seen:
+    print(x, lst.count(x))`,
+        },
+        {
+          type: "mistake",
+          wrong: "To read n numbers into a list, `L = int(input())` inside the loop is enough.",
+          right: "Start with `L = []` before the loop and `L.append(int(input()))` inside it. Assigning to L each time keeps only the last number, and it is an int, not a list.",
+          why: "Reading and storing are two steps. The list must exist before the loop, and each value must be appended to it.",
+        },
+        {
+          type: "code",
+          lang: "python",
+          caption: "Run in IDLE. With n = 4 and the numbers 12, 7, 30, 5 it prints: Even: [12, 30] Odd: [7, 5]",
+          code: r`n = int(input("How many numbers? "))
+L = []
+for i in range(n):
+    L.append(int(input("Enter a number: ")))
+even, odd = [], []
+for x in L:
+    if x % 2 == 0:
+        even.append(x)
+    else:
+        odd.append(x)
+print("Even:", even, "Odd:", odd)`,
+        },
+        {
+          type: "checkpoint",
+          questions: [
+            {
+              kind: "mcq",
+              q: "What is printed? `L = [1, 2, 3]` / `L.append(L.pop(0))` / `print(L)`",
+              options: ["`[2, 3, 1]`", "`[1, 2, 3]`", "`[3, 1, 2]`", "`[2, 3]`"],
+              answer: 0,
+              explain: "pop(0) removes and returns 1; append puts it at the end: [2, 3, 1].",
+              difficulty: 2,
+            },
+          ],
+        },
+        {
+          type: "activity",
+          activity: {
+            kind: "order",
+            prompt: "Order the steps of a linear search.",
+            items: ["Read the list and the key", "Set pos = -1", "Loop over the indices of the list", "If L[i] == key, set pos = i and break", "After the loop, print pos or \"Not found\""],
+            explain: "pos = −1 means \"not found yet\". break stops at the first match, and the result is decided only after the loop ends.",
+          },
+        },
+        {
+          type: "callout",
+          tone: "exam",
+          title: "Board and practical tip",
+          md: "Practical-file programs on lists: largest/smallest, mean, linear search, count frequency, swap elements at even and odd positions, and remove duplicates. In the exam, read the list with a loop and `append`, or with `eval(input())` only if your teacher allows it.",
+        },
+        {
+          type: "keypoints",
+          items: [
+            "Track the list after every statement in output questions.",
+            "Create the list before the loop; append inside it.",
+            "Shifting left: `L[i] = L[i + 1]`; save the first element if you rotate.",
+            "`x not in seen` is the simplest way to collect distinct elements.",
+          ],
+        },
+      ],
+      flashcards: [
+        { front: "Read n numbers into a list", back: "`L = []` then `for i in range(n): L.append(int(input()))`" },
+        { front: "Rotate a list left by one", back: "`L.append(L.pop(0))`" },
+        { front: "Remove duplicates keeping order", back: "Loop and append x to a new list only if `x not in new`." },
+        { front: "Swap two elements", back: "`L[i], L[j] = L[j], L[i]`" },
+        { front: "Mean of a list", back: "`sum(L) / len(L)`" },
+        { front: "Linear search result when absent", back: "Keep pos = −1 (or a flag False) and report \"Not found\"." },
+      ],
+      quiz: [
+        {
+          kind: "mcq",
+          q: "What is the output? `L = [10, 20, 30, 40]` / `L.insert(2, 25)` / `L.remove(10)` / `print(L)`",
+          options: ["`[20, 25, 30, 40]`", "`[20, 30, 25, 40]`", "`[10, 20, 25, 30]`", "`[25, 20, 30, 40]`"],
+          answer: 0,
+          explain: "insert(2, 25) → [10, 20, 25, 30, 40]; remove(10) → [20, 25, 30, 40].",
+        },
+        {
+          kind: "mcq",
+          q: "What is printed? `X = [1, 2, 3, 4]` / `X[::2] = [0, 0]` / `print(X)`",
+          options: ["`[0, 2, 0, 4]`", "`[0, 0, 3, 4]`", "`[1, 0, 3, 0]`", "Error"],
+          answer: 0,
+          explain: "X[::2] selects indices 0 and 2; both are replaced by 0.",
+          difficulty: 3,
+        },
+        {
+          kind: "numeric",
+          q: "`L = [4, 9, 2, 9, 7]`. What is `L.index(9) + L.count(9)`?",
+          answer: 3,
+          explain: "The first 9 is at index 1 and 9 occurs twice: 1 + 2 = 3.",
+        },
+        {
+          kind: "truefalse",
+          q: "`max([\"pear\", \"apple\", \"mango\"])` returns \"pear\".",
+          answer: true,
+          explain: "Strings are compared alphabetically (by character codes); p comes after a and m.",
+          difficulty: 2,
+        },
+        {
+          kind: "mcq",
+          q: "Which program line swaps the first and last elements of L?",
+          options: ["`L[0], L[-1] = L[-1], L[0]`", "`L[0] = L[-1]; L[-1] = L[0]`", "`L.swap(0, -1)`", "`L[0], L[-1] = L[0], L[-1]`"],
+          answer: 0,
+          explain: "Tuple assignment evaluates the right side first, then assigns. Two separate assignments lose the first value; lists have no swap method.",
+        },
+        {
+          kind: "mcq",
+          q: "What is printed? `a = [5, 6]` / `b = a` / `a = a + [7]` / `print(b)`",
+          options: ["`[5, 6]`", "`[5, 6, 7]`", "`[7]`", "Error"],
+          answer: 0,
+          explain: "`a + [7]` builds a new list and a now names it. b still names the old list [5, 6]. (Compare a.append(7), which would change both.)",
+          difficulty: 3,
+          hint: "Does + change a list in place or create a new one?",
+        },
+        {
+          kind: "fill",
+          q: "`sorted([3, 1, 2], reverse=___)` returns `[3, 2, 1]`.",
+          answer: ["True"],
+          explain: "reverse=True sorts in descending order.",
+        },
+      ],
+    },
+  ],
+};
+
+/* ------------------------------------------------------------------ */
+/* Tuples and Dictionaries                                              */
+/* ------------------------------------------------------------------ */
+const tuplesDicts: Topic = {
+  slug: "c11-cs-tuples-dictionaries",
+  title: "Tuples and Dictionaries",
+  icon: "🗂️",
+  description: "Tuples as immutable sequences, tuple operations, methods and tuple assignment; dictionaries as mutable key–value mappings, their operations, methods and frequency-counting programs.",
+  lessons: [
+    {
+      slug: "tuples",
+      title: "Tuples: Immutable Sequences",
+      summary: "Creating tuples (including one-element tuples), indexing and slicing, immutability, operators, len, count, index, sorted, min, max, sum, tuple assignment and nested tuples.",
+      minutes: 20,
+      xp: 50,
+      blocks: [
+        {
+          type: "illustration",
+          emoji: "📅",
+          caption: "The seven days of the week never change order or number. Data that should stay fixed is a good fit for a tuple.",
+        },
+        {
+          type: "text",
+          md: "A **tuple** is an **ordered sequence** of elements, like a list, but **immutable**: once created, its elements cannot be changed, added or removed. Tuples are written with round brackets: `t = (10, 20, 30)`. The brackets are optional, so `t = 10, 20, 30` is also a tuple. Elements may be of any type, and `()` is the empty tuple.\n\nA tuple with **one** element needs a **trailing comma**: `(5,)`. Without the comma, `(5)` is just the integer 5 in brackets.",
+        },
+        {
+          type: "code",
+          lang: "python",
+          runnable: true,
+          caption: "Indexing and slicing work as for lists; changing an element does not.",
+          code: r`t = (10, 20, 30, 40)
+print(t[1], t[-1], t[1:3], len(t))   # 20 40 (20, 30) 4
+
+a = (5)
+b = (5,)
+print(type(a), type(b))     # <class 'int'> <class 'tuple'>
+
+print((1, 2) + (3,), (0,) * 3, 20 in t)   # (1, 2, 3) (0, 0, 0) True
+print(tuple("abc"), tuple([1, 2]))       # ('a', 'b', 'c') (1, 2)
+
+try:
+    t[0] = 1
+except TypeError:
+    print("TypeError: a tuple cannot be changed")`,
+        },
+        {
+          type: "mistake",
+          wrong: "`t = (\"Asha\")` makes a tuple with one name in it.",
+          right: "It makes the string \"Asha\". Write `t = (\"Asha\",)` with a trailing comma.",
+          why: "Round brackets are also used to group expressions, as in `(2 + 3) * 4`. It is the comma, not the brackets, that makes a tuple.",
+        },
+        {
+          type: "table",
+          headers: ["Function / method", "Example with T = (3, 1, 4, 1, 5)", "Result"],
+          rows: [
+            ["`len(T)`", "number of elements", "5"],
+            ["`T.count(x)`", "`T.count(1)`", "2"],
+            ["`T.index(x)`", "`T.index(4)`", "2 (ValueError if absent)"],
+            ["`sorted(T)`", "returns a **list**", "`[1, 1, 3, 4, 5]`"],
+            ["`min(T)`, `max(T)`, `sum(T)`", "smallest, largest, total", "1, 5, 14"],
+            ["`tuple(seq)`", "`tuple([1, 2])`", "`(1, 2)`"],
+          ],
+        },
+        {
+          type: "checkpoint",
+          questions: [
+            {
+              kind: "mcq",
+              q: "What type is `sorted((3, 1, 2))`?",
+              options: ["tuple", "list", "int", "set"],
+              answer: 1,
+              explain: "sorted() always returns a new list, whatever sequence it is given. Use tuple(sorted(t)) to get a tuple back.",
+            },
+          ],
+        },
+        {
+          type: "heading",
+          text: "Tuple assignment and nested tuples",
+        },
+        {
+          type: "text",
+          md: "**Tuple assignment** (unpacking) gives each variable on the left the matching value on the right: `(p, q, r) = (1, 2, 3)`. The right side is worked out completely **first**, so `x, y = y, x` swaps two values without a third variable. The number of variables must equal the number of values, or Python raises `ValueError`.\n\nA **nested tuple** is a tuple whose elements are tuples, for example a table of student records. Tuples are also used where a value should not change by accident, and they can be dictionary keys (lists cannot).",
+        },
+        {
+          type: "example",
+          title: "Swap and unpack",
+          problem: "Find the output:\n\n`x, y = 3, 7` · `x, y = y, x + y` · `print(x, y)`",
+          steps: [
+            "First line: x = 3, y = 7.",
+            "Right side of the second line is computed first, using the old values: (7, 3 + 7) = (7, 10).",
+            "Then x = 7 and y = 10.",
+          ],
+          answer: "Output: `7 10`",
+        },
+        {
+          type: "code",
+          lang: "python",
+          runnable: true,
+          caption: "A nested tuple of records, unpacked in the for loop.",
+          code: r`students = ((101, "Asha", 92), (102, "Ravi", 85), (103, "Meena", 78))
+total = 0
+for roll, name, marks in students:
+    print(roll, name, marks)
+    total += marks
+print("Class average:", total / len(students))   # 85.0
+print(students[1][1])                              # Ravi`,
+        },
+        {
+          type: "activity",
+          activity: {
+            kind: "reveal",
+            prompt: "Which of these is a tuple?",
+            emoji: "🔍",
+            options: ["(7)", "7,", "[7]"],
+            answer: 1,
+            trap: 0,
+            explain: "The comma makes a tuple: `7,` is the tuple (7,). `(7)` is just the number 7, and `[7]` is a list.",
+          },
+        },
+        {
+          type: "callout",
+          tone: "exam",
+          title: "Board tip",
+          md: "\"List vs tuple\": list is mutable, uses `[ ]`, has methods like append and sort; tuple is immutable, uses `( )`, has only count and index, and is slightly faster and safer for fixed data. Remember that a tuple **containing a list** can still have that inner list changed: `(1, [2, 3])[1].append(4)` works.",
+        },
+        {
+          type: "keypoints",
+          items: [
+            "A tuple is an ordered, immutable sequence; the comma makes it a tuple.",
+            "One-element tuple: `(5,)`.",
+            "Tuple methods: count and index only; sorted() returns a list.",
+            "Tuple assignment evaluates the right side first: `a, b = b, a` swaps.",
+            "Unpacking needs as many variables as values, else ValueError.",
+          ],
+        },
+      ],
+      flashcards: [
+        { front: "Tuple", back: "An ordered, immutable sequence of elements, usually written in round brackets." },
+        { front: "One-element tuple", back: "`(5,)` — the trailing comma is essential." },
+        { front: "Tuple methods", back: "Only `count()` and `index()`." },
+        { front: "`sorted((3, 1, 2))`", back: "`[1, 2, 3]` (a list)." },
+        { front: "Swap without a third variable", back: "`a, b = b, a`" },
+        { front: "`m, n = (1, 2, 3)`", back: "ValueError: too many values to unpack." },
+        { front: "Why use a tuple?", back: "For data that must not change; it can also be a dictionary key and is a little faster than a list." },
+      ],
+      quiz: [
+        {
+          kind: "mcq",
+          q: "Which creates a tuple with one element?",
+          options: ["`t = (9)`", "`t = (9,)`", "`t = [9]`", "`t = tuple(9)`"],
+          answer: 1,
+          explain: "The trailing comma makes a tuple. tuple(9) is a TypeError because 9 is not a sequence.",
+        },
+        {
+          kind: "mcq",
+          q: "`T = (2, 4, 6, 8)`. What is `T[1:3] + (10,)`?",
+          options: ["`(4, 6, 10)`", "`(4, 6, 8, 10)`", "`[4, 6, 10]`", "Error"],
+          answer: 0,
+          explain: "T[1:3] is (4, 6); concatenating (10,) gives (4, 6, 10).",
+        },
+        {
+          kind: "truefalse",
+          q: "`T.append(5)` adds 5 to the end of the tuple T.",
+          answer: false,
+          explain: "Tuples are immutable and have no append method; this raises AttributeError.",
+        },
+        {
+          kind: "numeric",
+          q: "`T = (5, 2, 5, 9, 5)`. What is `T.count(5) * T.index(9)`?",
+          answer: 9,
+          explain: "count(5) is 3 and 9 is at index 3: 3 × 3 = 9.",
+          difficulty: 2,
+        },
+        {
+          kind: "mcq",
+          q: "What is printed? `a, b, c = \"xyz\"` / `print(c, a)`",
+          options: ["z x", "x z", "Error", "xyz"],
+          answer: 0,
+          explain: "A string is a sequence of 3 characters, so it unpacks into a = x, b = y, c = z.",
+          difficulty: 2,
+        },
+        {
+          kind: "fill",
+          q: "Tuples are ___, which means their elements cannot be changed after creation.",
+          answer: ["immutable"],
+          explain: "Immutable objects (tuples, strings) cannot be changed in place.",
+        },
+        {
+          kind: "mcq",
+          q: "`t = (1, [2, 3])`. What happens on `t[1].append(4)`?",
+          options: ["TypeError", "t becomes `(1, [2, 3, 4])`", "t becomes `(1, 4)`", "AttributeError"],
+          answer: 1,
+          explain: "The tuple still holds the same list object; the list itself is mutable, so appending to it is allowed.",
+          difficulty: 3,
+          hint: "What exactly is immutable: the tuple's slots or the objects in them?",
+        },
+      ],
+    },
+    {
+      slug: "dictionaries",
+      title: "Dictionaries: Keys and Values",
+      summary: "Dictionaries as mutable key–value mappings: creating, accessing, adding and changing items, membership, traversal, the methods keys, values, items, get, update, pop, del and clear, and counting frequencies.",
+      minutes: 25,
+      xp: 55,
+      blocks: [
+        {
+          type: "illustration",
+          emoji: "📖",
+          caption: "A real dictionary: you look up a word (the key) to get its meaning (the value). You never ask for \"the 57th meaning\".",
+        },
+        {
+          type: "text",
+          md: "A **dictionary** is a **mutable** collection of **key: value** pairs written in curly brackets: `marks = {\"Asha\": 92, \"Ravi\": 85}`. Each **key** maps to one **value**. You reach a value by its key, `marks[\"Asha\"]`, not by a position number.\n\nRules for keys: keys must be **unique** (assigning to an existing key replaces its value) and **immutable** (numbers, strings, tuples; never a list). Values can be anything, and may repeat. `{}` is the empty dictionary; `dict()` can also build one, e.g. `dict([(\"a\", 1), (\"b\", 2)])`.",
+        },
+        {
+          type: "code",
+          lang: "python",
+          runnable: true,
+          caption: "Adding, changing and looking up items.",
+          code: r`d = {"Asha": 92, "Ravi": 85}
+d["Meena"] = 78        # new key: item added
+d["Ravi"] = 88         # existing key: value replaced
+print(d)               # {'Asha': 92, 'Ravi': 88, 'Meena': 78}
+print(len(d), d["Asha"])        # 3 92
+print("Ravi" in d, 92 in d)     # True False  (in checks KEYS)
+print(d.get("Kiran"), d.get("Kiran", 0))   # None 0`,
+        },
+        {
+          type: "mistake",
+          wrong: "`92 in d` checks whether 92 is one of the marks in the dictionary.",
+          right: "`in` checks **keys** only. To search the values write `92 in d.values()`.",
+          why: "For lists and strings, `in` searches the contents, so learners expect the same here. A dictionary is organised by keys, and membership looks only at them.",
+        },
+        {
+          type: "table",
+          headers: ["Method / statement", "What it does", "Example (d = {\"Asha\": 92, \"Ravi\": 88})"],
+          rows: [
+            ["`d.keys()`", "All keys", "`dict_keys(['Asha', 'Ravi'])`"],
+            ["`d.values()`", "All values", "`dict_values([92, 88])`"],
+            ["`d.items()`", "All (key, value) pairs as tuples", "`dict_items([('Asha', 92), ('Ravi', 88)])`"],
+            ["`d.get(k, default)`", "Value of k, or default (None) if k is missing — no error", "`d.get(\"Zoya\", 0)` → 0"],
+            ["`d[k]` for a missing k", "Raises KeyError", "`d[\"Zoya\"]` → KeyError"],
+            ["`d.update(d2)`", "Adds the pairs of d2; existing keys get d2's values", "`d.update({\"Asha\": 95})`"],
+            ["`del d[k]` / `d.pop(k)`", "Remove the item (pop also returns its value)", "`d.pop(\"Ravi\")` → 88"],
+            ["`d.clear()`", "Empties the dictionary", "`{}`"],
+          ],
+        },
+        {
+          type: "checkpoint",
+          questions: [
+            {
+              kind: "mcq",
+              q: "What is printed? `D = {1: \"a\", 2: \"b\", 1: \"c\"}` / `print(len(D), D[1])`",
+              options: ["2 c", "3 a", "2 a", "Error"],
+              answer: 0,
+              explain: "Keys are unique: the second `1:` replaces the first, so D is {1: 'c', 2: 'b'}.",
+              difficulty: 2,
+            },
+          ],
+        },
+        {
+          type: "text",
+          md: "**Traversing** a dictionary with `for k in d:` gives the **keys**; use `d[k]` for each value. `for k, v in d.items():` gives both at once. In Python 3.7 and later, a dictionary keeps its keys in the order they were inserted, but you still access items by key, never by index.",
+        },
+        {
+          type: "example",
+          title: "Character frequency",
+          problem: "Count how often each character occurs in `\"banana\"` using a dictionary.",
+          steps: [
+            "Start with `freq = {}`.",
+            "For each character: if it is already a key, add 1 to its value; otherwise create it with value 1.",
+            "b → {'b': 1}; a → {'b': 1, 'a': 1}; n → … 'n': 1; then a, n, a raise the counts.",
+            "Final counts: b once, a three times, n twice.",
+          ],
+          answer: "`{'b': 1, 'a': 3, 'n': 2}`",
+        },
+        {
+          type: "code",
+          lang: "python",
+          runnable: true,
+          caption: "Two ways to count. The get() version is shorter.",
+          code: r`freq = {}
+for ch in "banana":
+    if ch in freq:
+        freq[ch] += 1
+    else:
+        freq[ch] = 1
+print(freq)      # {'b': 1, 'a': 3, 'n': 2}
+
+f2 = {}
+for ch in "mississippi":
+    f2[ch] = f2.get(ch, 0) + 1
+for k, v in f2.items():
+    print(k, v)`,
+        },
+        {
+          type: "activity",
+          activity: {
+            kind: "sort",
+            prompt: "Can this be a dictionary key?",
+            groups: ["Valid key", "Not allowed as a key"],
+            items: [
+              { text: "\"Mysuru\"", group: 0, hint: "Strings are immutable." },
+              { text: "101", group: 0, hint: "Numbers are immutable." },
+              { text: "(12, 5)", group: 0, hint: "A tuple of numbers is immutable." },
+              { text: "[1, 2]", group: 1, hint: "Lists are mutable, so Python refuses them (TypeError: unhashable type)." },
+              { text: "3.14", group: 0, hint: "A float is immutable too." },
+              { text: "{\"a\": 1}", group: 1, hint: "A dictionary is mutable." },
+            ],
+            explain: "Keys must be immutable so that Python can find them reliably. Lists and dictionaries can change, so they cannot be keys; they can be values.",
+          },
+        },
+        {
+          type: "callout",
+          tone: "exam",
+          title: "Board tip",
+          md: "Classic 2-mark questions: \"difference between `d[k]` and `d.get(k)`\" (KeyError vs None), \"list vs dictionary\" (index vs key access), and \"why can't a list be a key?\" (keys must be immutable). For output questions, remember that printing `d.keys()` shows `dict_keys([...])`, not a plain list.",
+        },
+        {
+          type: "keypoints",
+          items: [
+            "A dictionary maps unique, immutable keys to values; it is mutable.",
+            "`d[k] = v` adds a new item or replaces an existing value.",
+            "`in` tests keys; use `d.values()` to search values.",
+            "`get()` avoids KeyError; `update()` merges another dictionary.",
+            "`d[ch] = d.get(ch, 0) + 1` is the standard frequency counter.",
+          ],
+        },
+      ],
+      flashcards: [
+        { front: "Dictionary", back: "A mutable collection of key: value pairs in { }, accessed by key." },
+        { front: "Rules for keys", back: "Unique and immutable (string, number, tuple). Values can be anything." },
+        { front: "`d[k]` vs `d.get(k)` for a missing key", back: "d[k] raises KeyError; get returns None (or the default given)." },
+        { front: "`for k in d:` gives…", back: "The keys." },
+        { front: "`d.items()`", back: "A view of (key, value) tuples, used as `for k, v in d.items():`." },
+        { front: "`d.update(d2)`", back: "Adds d2's pairs to d; for keys already in d, d2's values replace them." },
+        { front: "Frequency counter line", back: "`freq[x] = freq.get(x, 0) + 1`" },
+        { front: "Remove a key and get its value", back: "`d.pop(k)`" },
+      ],
+      quiz: [
+        {
+          kind: "mcq",
+          q: "`d = {\"a\": 1, \"b\": 2}`. What does `d[\"c\"] = 3` do?",
+          options: ["Adds the item 'c': 3", "Raises KeyError", "Replaces 'b'", "Nothing"],
+          answer: 0,
+          explain: "Assigning to a new key adds the item. Reading `d[\"c\"]` before it exists would raise KeyError.",
+        },
+        {
+          kind: "mcq",
+          q: "What is printed? `d = {\"x\": 10, \"y\": 20}` / `print(d.get(\"z\", -1) + d[\"y\"])`",
+          options: ["19", "20", "KeyError", "None"],
+          answer: 0,
+          explain: "get returns the default −1 for the missing key; −1 + 20 = 19.",
+          difficulty: 2,
+        },
+        {
+          kind: "truefalse",
+          q: "`{[1, 2]: \"pair\"}` is a valid dictionary.",
+          answer: false,
+          explain: "A list is mutable and cannot be a key: TypeError: unhashable type: 'list'. A tuple (1, 2) would work.",
+        },
+        {
+          kind: "numeric",
+          q: "`d = {}` / `for w in \"to be or not to be\".split(): d[w] = d.get(w, 0) + 1`. What is `len(d)`?",
+          answer: 4,
+          explain: "The distinct words are to, be, or, not: 4 keys.",
+          difficulty: 2,
+        },
+        {
+          kind: "mcq",
+          q: "Which gives all the values of d?",
+          options: ["`d.values()`", "`d.keys()`", "`d.items()`", "`d.get()`"],
+          answer: 0,
+          explain: "values() gives the values; keys() the keys; items() the pairs.",
+        },
+        {
+          kind: "mcq",
+          q: "`d = {\"A\": 1, \"B\": 2}` / `d.update({\"B\": 5, \"C\": 3})`. What is d?",
+          options: ["`{'A': 1, 'B': 5, 'C': 3}`", "`{'A': 1, 'B': 2, 'C': 3}`", "`{'A': 1, 'B': 7, 'C': 3}`", "`{'B': 5, 'C': 3}`"],
+          answer: 0,
+          explain: "update replaces B's value with 5 (it does not add) and inserts C.",
+        },
+        {
+          kind: "fill",
+          q: "`for k, v in d.___():` gives each key with its value.",
+          answer: ["items"],
+          explain: "items() returns (key, value) pairs that unpack into k and v.",
+        },
+        {
+          kind: "multi",
+          q: "Which remove the key \"Ravi\" from d?",
+          options: ["`del d[\"Ravi\"]`", "`d.pop(\"Ravi\")`", "`d.remove(\"Ravi\")`", "`d.clear(\"Ravi\")`"],
+          answers: [0, 1],
+          explain: "del and pop remove a key. Dictionaries have no remove(); clear() takes no argument and empties everything.",
+        },
+      ],
+    },
+    {
+      slug: "board-practice",
+      title: "Board practice: Tuples and Dictionaries",
+      summary: "Mixed board-style questions on tuples and dictionaries: outputs, error spotting, and programs on records, frequencies and look-ups.",
+      minutes: 20,
+      xp: 50,
+      blocks: [
+        {
+          type: "text",
+          md: "This chapter's board questions mix tuples and dictionaries: outputs of unpacking and dictionary methods, \"which line gives an error and why\", and programs that store records in a dictionary and search them.",
+        },
+        {
+          type: "example",
+          title: "Error spotting (2 marks)",
+          problem: "Which lines give errors? `t = (4, 5, 6)` · (1) `print(t[3])` · (2) `t = t + (7,)` · (3) `t[0] = 9` · (4) `print(t.index(5))`",
+          steps: [
+            "(1) Valid indices are 0 to 2: IndexError.",
+            "(2) Works: it builds a new tuple (4, 5, 6, 7) and rebinds the name t. The old tuple was not changed.",
+            "(3) Item assignment on a tuple: TypeError.",
+            "(4) Works and prints 1.",
+          ],
+          answer: "Lines (1) and (3) give errors. (Line 2 is the trap: rebinding a name is allowed.)",
+        },
+        {
+          type: "example",
+          title: "Output question (3 marks)",
+          problem: "Find the output: `stock = {\"pen\": 10, \"book\": 4, \"bag\": 2}` · `for item in stock:` · `if stock[item] < 5: stock[item] += 10` · then `print(stock)` and `print(sum(stock.values()))`",
+          steps: [
+            "pen: 10 is not < 5, unchanged.",
+            "book: 4 < 5 → 14. bag: 2 < 5 → 12.",
+            "Changing values while looping over keys is allowed (no keys are added or removed).",
+            "Sum of values = 10 + 14 + 12 = 36.",
+          ],
+          answer: "`{'pen': 10, 'book': 14, 'bag': 12}` then `36`",
+        },
+        {
+          type: "code",
+          lang: "python",
+          runnable: true,
+          caption: "Check the output example.",
+          code: r`stock = {"pen": 10, "book": 4, "bag": 2}
+for item in stock:
+    if stock[item] < 5:
+        stock[item] += 10
+print(stock)
+print(sum(stock.values()))`,
+        },
+        {
+          type: "text",
+          md: "**Program (3 marks):** store employee names with salaries, then print the names of those earning more than ₹50,000 and the name of the highest earner. `max(d, key=d.get)` is a shortcut, but at board level a loop is clearer.",
+        },
+        {
+          type: "code",
+          lang: "python",
+          runnable: true,
+          caption: "Prints Kavya and Imran (one per line), then: Highest: Imran 72000",
+          code: r`salary = {"Rohit": 45000, "Kavya": 58000, "Imran": 72000, "Divya": 39000}
+top_name, top_pay = "", 0
+for name, pay in salary.items():
+    if pay > 50000:
+        print(name)
+    if pay > top_pay:
+        top_name, top_pay = name, pay
+print("Highest:", top_name, top_pay)`,
+        },
+        {
+          type: "mistake",
+          wrong: "To search for a name in the dictionary I use `salary.index(\"Kavya\")`.",
+          right: "Dictionaries have no index(); test `\"Kavya\" in salary` and then read `salary[\"Kavya\"]`.",
+          why: "index() belongs to sequences (strings, lists, tuples), which have positions. A dictionary has keys instead of positions, so a key lookup does the job directly.",
+        },
+        {
+          type: "checkpoint",
+          questions: [
+            {
+              kind: "mcq",
+              q: "What is printed? `t = (1, 2, 3)` / `x = t * 2` / `print(len(x), x[-2])`",
+              options: ["6 2", "3 3", "6 3", "Error"],
+              answer: 0,
+              explain: "t * 2 is (1, 2, 3, 1, 2, 3): length 6 and the second-last element is 2.",
+            },
+          ],
+        },
+        {
+          type: "activity",
+          activity: {
+            kind: "match",
+            prompt: "Match the type to its brackets and nature.",
+            pairs: [
+              ["list", "[ ] mutable, ordered by index"],
+              ["tuple", "( ) immutable, ordered by index"],
+              ["dictionary", "{ } mutable, accessed by key"],
+              ["string", "quotes, immutable characters"],
+            ],
+            explain: "Lists and dictionaries can change; tuples and strings cannot. Sequences use positions; dictionaries use keys.",
+          },
+        },
+        {
+          type: "callout",
+          tone: "exam",
+          title: "Board tip",
+          md: "When a program reads records into a dictionary in the practical exam, read the key and value separately: `name = input(\"Name: \")`, `marks = int(input(\"Marks: \"))`, then `d[name] = marks`. Print the final dictionary to show the examiner it worked.",
+        },
+        {
+          type: "keypoints",
+          items: [
+            "`t = t + (7,)` makes a new tuple; `t[0] = 9` is an error.",
+            "Changing values while looping over a dictionary's keys is fine.",
+            "Dictionaries have no index(); use `in` and `d[key]`.",
+            "Use items() to loop over names and values together.",
+          ],
+        },
+      ],
+      flashcards: [
+        { front: "`t = (4, 5, 6); t = t + (7,)` — error?", back: "No. A new tuple is created and t is rebound to it." },
+        { front: "Highest value's key (loop method)", back: "Track the best value and its key while looping over d.items()." },
+        { front: "Search a dictionary for a key", back: "`if key in d:` then use `d[key]`." },
+        { front: "Search a dictionary for a value", back: "`if value in d.values():`" },
+        { front: "`(1, 2) * 2`", back: "`(1, 2, 1, 2)`" },
+        { front: "Read records into a dictionary", back: "Inside a loop: read name and marks, then `d[name] = marks`." },
+      ],
+      quiz: [
+        {
+          kind: "mcq",
+          q: "What is the output? `d = {1: 10, 2: 20, 3: 30}` / `s = 0` / `for k in d: s += k * d[k]` / `print(s)`",
+          options: ["140", "60", "6", "100"],
+          answer: 0,
+          explain: "1×10 + 2×20 + 3×30 = 10 + 40 + 90 = 140.",
+          difficulty: 2,
+        },
+        {
+          kind: "mcq",
+          q: "Which statement raises an error for `t = (3, 6, 9)`?",
+          options: ["`t.count(6)`", "`t + (12,)`", "`t.sort()`", "`sorted(t)`"],
+          answer: 2,
+          explain: "Tuples have no sort() method (AttributeError). sorted(t) returns a new list.",
+        },
+        {
+          kind: "truefalse",
+          q: "`d = {}` creates an empty dictionary, not an empty set or tuple.",
+          answer: true,
+          explain: "Empty curly brackets give an empty dictionary. An empty tuple is ().",
+        },
+        {
+          kind: "numeric",
+          q: "`marks = {\"A\": 40, \"B\": 75, \"C\": 90}`. After `marks[\"B\"] = marks[\"B\"] + 5` and `del marks[\"A\"]`, what is `sum(marks.values())`?",
+          answer: 170,
+          explain: "B becomes 80, A is removed: 80 + 90 = 170.",
+        },
+        {
+          kind: "mcq",
+          q: "What is printed? `t = ((1, 2), (3, 4))` / `print(t[1][0] + t[0][1])`",
+          options: ["5", "4", "3", "6"],
+          answer: 0,
+          explain: "t[1][0] is 3 and t[0][1] is 2: 3 + 2 = 5.",
+        },
+        {
+          kind: "fill",
+          q: "Reading `d[\"Zoya\"]` when \"Zoya\" is not a key raises ___.",
+          answer: ["KeyError"],
+          explain: "A missing key raises KeyError; d.get(\"Zoya\") would return None.",
+        },
+        {
+          kind: "mcq",
+          q: "What is printed? `x = 10` / `y = 20` / `x, y = y, x` / `print(x - y)`",
+          options: ["10", "−10", "0", "30"],
+          answer: 0,
+          explain: "After the swap x = 20 and y = 10, so x − y = 10.",
+        },
+      ],
+    },
+  ],
+};
+
+export const topics: Topic[] = [flowOfControl, strings, lists, tuplesDicts];
 
 /** Chapter title ("11:" / "12:" + exact title) → topic slug(s) that teach it. */
 export const links: Record<string, string | string[]> = {
   "11:Flow of Control": "c11-cs-flow-of-control",
   "11:Strings": "c11-cs-strings",
+  "11:Lists": "c11-cs-lists",
+  "11:Tuples and Dictionaries": "c11-cs-tuples-dictionaries",
 };

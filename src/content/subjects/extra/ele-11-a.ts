@@ -2890,6 +2890,563 @@ The resonant frequency is $f_r = \frac{1}{2\pi}\sqrt{\frac{1}{LC} - \frac{R^2}{L
       },
     ],
   },
+  /* ------------------------------------------------------------------ */
+  /* Semiconductor Physics                                               */
+  /* ------------------------------------------------------------------ */
+  {
+    slug: "c11-ele-semiconductor-physics",
+    title: "Semiconductor Physics",
+    icon: "🔬",
+    description: "Energy bands, conductors, insulators and semiconductors, intrinsic and extrinsic semiconductors, the mass action law, drift and diffusion, mobility and conductivity.",
+    lessons: [
+      {
+        slug: "c11-ele-energy-bands-intrinsic",
+        title: "Energy Bands and Intrinsic Semiconductors",
+        summary: "How energy levels become bands, the band picture of conductors, insulators and semiconductors, and electrons and holes in pure silicon and germanium.",
+        minutes: 20,
+        xp: 50,
+        blocks: [
+          {
+            type: "text",
+            md: "Copper conducts, glass does not, and silicon sits in between. Better still, silicon's conductivity can be changed a million-fold by adding a trace of another element. This one property is why every chip is built on silicon.",
+          },
+          {
+            type: "text",
+            md: "In a single atom, electrons occupy sharp **energy levels**. In a crystal, billions of atoms sit close together and their outer levels split and spread into **energy bands**. Two bands matter:\n\nThe **valence band** (VB) holds the valence electrons that form bonds. The **conduction band** (CB) holds free electrons that can move and carry current. Between them lies the **forbidden energy gap** $E_g$, where no electron energy states exist.",
+          },
+          {
+            type: "table",
+            headers: ["Material", "Band picture", "Typical resistivity (Ω m)"],
+            rows: [
+              ["Conductor (metal)", "VB and CB overlap, or CB partly filled; no gap", t`$10^{-8}$ to $10^{-2}$`],
+              ["Semiconductor", t`small gap, $E_g < 3$ eV: Si 1.1 eV, Ge about 0.7 eV`, t`$10^{-5}$ to $10^{6}$`],
+              ["Insulator", t`large gap, $E_g > 3$ eV: diamond about 5.5 eV`, t`$10^{11}$ to $10^{19}$`],
+            ],
+          },
+          {
+            type: "text",
+            md: "Silicon and germanium are in group 14: each atom has **four** valence electrons and forms four **covalent bonds** with its neighbours in a diamond-like lattice. At **0 K** every electron is locked in a bond, the CB is empty, and the crystal is an **insulator**.\n\nAt room temperature, thermal energy breaks a few bonds. Each broken bond frees an electron into the CB and leaves a vacancy in the VB called a **hole**. A hole behaves like a positive charge $+e$: a neighbouring bound electron can jump into it, so the hole moves the opposite way.",
+          },
+          {
+            type: "text",
+            md: t`A pure semiconductor is called **intrinsic**. Electrons and holes are always created in pairs, so $n_e = n_h = n_i$, the **intrinsic carrier concentration**. When a field is applied, the total current is the sum of the electron current and the hole current: $I = I_e + I_h$.
+
+As the temperature rises, more bonds break, $n_i$ rises sharply and resistance **falls**. Semiconductors have a **negative temperature coefficient** of resistance, opposite to metals.`,
+          },
+          {
+            type: "example",
+            title: "Light that can free an electron",
+            problem: t`What is the longest wavelength of light that can create an electron–hole pair in silicon ($E_g = 1.1$ eV)? Take $h = 6.63 \times 10^{-34}$ J s, $c = 3 \times 10^8$ m/s, $e = 1.6 \times 10^{-19}$ C.`,
+            steps: [
+              t`Energy gap in joules: $E_g = 1.1 \times 1.6 \times 10^{-19} = 1.76 \times 10^{-19}$ J.`,
+              t`The photon must have $hc/\lambda \ge E_g$, so $\lambda_{\max} = hc/E_g$.`,
+              t`$\lambda_{\max} = \frac{6.63 \times 10^{-34} \times 3 \times 10^8}{1.76 \times 10^{-19}} = 1.13 \times 10^{-6}$ m.`,
+            ],
+            answer: "About 1.13 µm (in the near infrared). Shorter wavelengths, including all visible light, can create pairs.",
+          },
+          {
+            type: "checkpoint",
+            questions: [
+              {
+                kind: "mcq",
+                q: "At absolute zero, a pure silicon crystal behaves as:",
+                options: ["A good conductor", "An insulator", "An n-type semiconductor", "A superconductor"],
+                answer: 1,
+                explain: "With no thermal energy, no bonds are broken, so there are no free electrons or holes.",
+              },
+            ],
+          },
+          {
+            type: "mistake",
+            wrong: "A hole is a particle like a positron that moves through the crystal by itself.",
+            right: "A hole is the **absence** of an electron in a covalent bond. It 'moves' when a nearby bound electron jumps into it, and it acts like a charge of +e.",
+            why: "Because we give holes a charge, a mobility and a current, they sound like real particles. The motion is really bound electrons hopping in the opposite direction, which is why holes are slower than free electrons.",
+          },
+          {
+            type: "activity",
+            activity: {
+              kind: "sort",
+              prompt: "Sort each material by its band gap.",
+              groups: ["Conductor (no gap)", "Semiconductor (Eg < 3 eV)", "Insulator (Eg > 3 eV)"],
+              items: [
+                { text: "Copper", group: 0, hint: "Its bands overlap; free electrons are always present." },
+                { text: "Silicon, 1.1 eV", group: 1, hint: "A small gap that heat can bridge." },
+                { text: "Germanium, about 0.7 eV", group: 1, hint: "An even smaller gap than silicon." },
+                { text: "Diamond, about 5.5 eV", group: 2, hint: "Far too wide for room-temperature heat to bridge." },
+                { text: "Aluminium", group: 0, hint: "A metal: no forbidden gap." },
+                { text: "Glass", group: 2, hint: "A very wide gap and huge resistivity." },
+              ],
+              explain: "The size of E_g decides it. No gap: conductor. A small gap that heat can partly bridge: semiconductor. A large gap: insulator.",
+            },
+          },
+          {
+            type: "callout",
+            tone: "fact",
+            title: "Why silicon, not germanium?",
+            md: "Germanium was used in the first transistors. Silicon replaced it because its larger band gap gives far fewer thermally generated carriers, so silicon devices leak less and work at higher temperatures. Silicon also forms a stable oxide layer, which makes IC manufacture possible.",
+          },
+          {
+            type: "callout",
+            tone: "exam",
+            title: "Board tip",
+            md: "When asked to 'distinguish between conductors, semiconductors and insulators on the basis of energy bands', draw three neat band diagrams side by side: overlapping bands; a narrow gap with a few electrons in the CB; a wide gap with an empty CB. Label VB, CB and E_g in each.",
+          },
+          {
+            type: "keypoints",
+            items: [
+              "Energy levels in a crystal spread into the valence band and conduction band, separated by the forbidden gap E_g.",
+              "Conductor: no gap. Semiconductor: E_g < 3 eV (Si 1.1 eV, Ge ≈ 0.7 eV). Insulator: E_g > 3 eV.",
+              "Intrinsic semiconductor: n_e = n_h = n_i; I = I_e + I_h.",
+              "A hole is a missing electron in a bond and behaves as a +e charge.",
+              "Semiconductor resistance falls as temperature rises.",
+            ],
+          },
+        ],
+        flashcards: [
+          { front: "Forbidden energy gap", back: "The energy range between the top of the valence band and the bottom of the conduction band, where no electron states exist." },
+          { front: "Band gap of Si and Ge", back: "Si ≈ 1.1 eV, Ge ≈ 0.7 eV." },
+          { front: "Intrinsic semiconductor", back: "A pure semiconductor in which n_e = n_h = n_i." },
+          { front: "Hole", back: "A vacancy left in a covalent bond when an electron is freed; it behaves as a charge +e." },
+          { front: "Temperature coefficient of resistance of a semiconductor", back: "Negative: resistance falls as temperature rises." },
+          { front: "Pure Si at 0 K", back: "An insulator: no broken bonds, empty conduction band." },
+          { front: "Why diamond is an insulator", back: "Its band gap (about 5.5 eV) is too wide for thermal energy to lift electrons into the CB." },
+        ],
+        quiz: [
+          {
+            kind: "mcq",
+            q: "Which material has the smallest forbidden energy gap?",
+            options: ["Diamond", "Silicon", "Germanium", "Glass"],
+            answer: 2,
+            explain: "Ge ≈ 0.7 eV, Si ≈ 1.1 eV; diamond and glass are insulators with much larger gaps.",
+          },
+          {
+            kind: "truefalse",
+            q: "In an intrinsic semiconductor, the number of free electrons equals the number of holes.",
+            answer: true,
+            explain: "Every broken bond creates one electron and one hole.",
+          },
+          {
+            kind: "fill",
+            q: "The band that holds the electrons forming covalent bonds is the ___ band.",
+            answer: ["valence"],
+            explain: "Freed electrons go up into the conduction band.",
+          },
+          {
+            kind: "numeric",
+            q: "The band gap of a semiconductor is 2 eV. What is the longest wavelength (in nm) that can create an electron–hole pair? Use hc = 1243 eV nm.",
+            answer: 621.5,
+            tolerance: 2,
+            unit: "nm",
+            explain: t`$\lambda = hc/E_g = 1243/2 \approx 622$ nm (orange-red light).`,
+            difficulty: 2,
+          },
+          {
+            kind: "mcq",
+            q: "When the temperature of a germanium crystal rises, its resistance:",
+            options: ["Rises, as in metals", "Falls", "Stays the same", "Becomes zero"],
+            answer: 1,
+            explain: "More covalent bonds break, so more carriers are available and resistance falls.",
+          },
+          {
+            kind: "multi",
+            q: "Which statements about holes are correct?",
+            options: [
+              "A hole behaves as a positive charge",
+              "Holes move in the valence band",
+              "A hole is a vacancy in a covalent bond",
+              "Holes move faster than free electrons",
+            ],
+            answers: [0, 1, 2],
+            explain: "Holes move by bound electrons hopping between bonds, which is slower, so hole mobility is less than electron mobility.",
+            difficulty: 2,
+          },
+          {
+            kind: "numeric",
+            q: "Express a band gap of 0.7 eV in joules, as a multiple of 10⁻¹⁹ J. (e = 1.6 × 10⁻¹⁹ C)",
+            answer: 1.12,
+            tolerance: 0.01,
+            explain: t`$0.7 \times 1.6 \times 10^{-19} = 1.12 \times 10^{-19}$ J.`,
+          },
+        ],
+      },
+      {
+        slug: "c11-ele-extrinsic-conductivity",
+        title: "Extrinsic Semiconductors, Drift, Diffusion and Conductivity",
+        summary: "Doping to make n-type and p-type semiconductors, donor and acceptor levels, majority and minority carriers, the mass action law, drift and diffusion currents, mobility and conductivity.",
+        minutes: 24,
+        xp: 60,
+        blocks: [
+          {
+            type: "text",
+            md: "Pure silicon conducts too little to be useful, and its few carriers depend on temperature. Engineers fix this by **doping**: adding a tiny, controlled amount of an impurity, typically about one atom in a million. The result is an **extrinsic** semiconductor.",
+          },
+          {
+            type: "text",
+            md: "**n-type**: dope with a **pentavalent** impurity (5 valence electrons) such as phosphorus, arsenic or antimony. Four electrons bond with the silicon neighbours; the fifth is loosely held and is freed easily. The impurity **donates** an electron, so it is a **donor**; after giving it up, it becomes a fixed positive ion. Electrons are the **majority carriers** and holes the **minority carriers**.\n\n**p-type**: dope with a **trivalent** impurity (3 valence electrons) such as boron, aluminium, gallium or indium. One bond is incomplete, leaving a hole. The impurity **accepts** an electron to complete the bond, so it is an **acceptor**, and becomes a fixed negative ion. Holes are the majority carriers and electrons the minority carriers.",
+          },
+          {
+            type: "table",
+            headers: ["", "n-type", "p-type"],
+            rows: [
+              ["Impurity", "pentavalent (P, As, Sb): donor", "trivalent (B, Al, Ga, In): acceptor"],
+              ["Majority carriers", "electrons", "holes"],
+              ["Minority carriers", "holes", "electrons"],
+              ["Extra energy level", "donor level just below the CB", "acceptor level just above the VB"],
+              ["Fixed ions", "positive donor ions", "negative acceptor ions"],
+              ["Net charge of the crystal", "neutral", "neutral"],
+            ],
+          },
+          {
+            type: "mistake",
+            wrong: "An n-type semiconductor is negatively charged because it has extra electrons.",
+            right: "An n-type semiconductor is **electrically neutral**. Each extra free electron is balanced by a positive donor ion fixed in the lattice.",
+            why: "The 'n' stands for negative *majority carriers*, not a negative charge on the crystal. Each donor atom was neutral to begin with; giving up an electron leaves a + ion, so the total charge is still zero.",
+          },
+          {
+            type: "activity",
+            activity: {
+              kind: "sort",
+              prompt: "Does each dopant in silicon make n-type or p-type?",
+              groups: ["n-type (donor)", "p-type (acceptor)"],
+              items: [
+                { text: "Phosphorus", group: 0, hint: "Group 15: five valence electrons." },
+                { text: "Boron", group: 1, hint: "Group 13: three valence electrons." },
+                { text: "Arsenic", group: 0, hint: "Group 15, pentavalent." },
+                { text: "Gallium", group: 1, hint: "Group 13, trivalent." },
+                { text: "Antimony", group: 0, hint: "Group 15, pentavalent." },
+                { text: "Indium", group: 1, hint: "Group 13, trivalent." },
+              ],
+              explain: "Group 15 (pentavalent) atoms give a spare electron: donors, n-type. Group 13 (trivalent) atoms leave a missing bond: acceptors, p-type.",
+            },
+          },
+          {
+            type: "text",
+            md: t`**Mass action law**: in thermal equilibrium, the product of electron and hole concentrations equals the square of the intrinsic concentration, whatever the doping:
+
+$n_e\,n_h = n_i^2$
+
+So adding donors raises $n_e$ and **lowers** $n_h$ below $n_i$: extra electrons fill many of the holes. In an n-type crystal with donor concentration $N_D \gg n_i$, $n_e \approx N_D$ and $n_h \approx n_i^2/N_D$.`,
+          },
+          {
+            type: "example",
+            title: "Carriers in doped silicon",
+            problem: t`Pure silicon has $5 \times 10^{28}$ atoms per m³ and $n_i = 1.5 \times 10^{16}$ m⁻³. It is doped with phosphorus at 2 parts per million. Find $n_e$ and $n_h$.`,
+            steps: [
+              t`Donor concentration: $N_D = 5 \times 10^{28} \times 2 \times 10^{-6} = 1 \times 10^{23}$ m⁻³.`,
+              t`$N_D \gg n_i$, so $n_e \approx N_D = 1 \times 10^{23}$ m⁻³.`,
+              t`Mass action law: $n_h = n_i^2/n_e = (1.5 \times 10^{16})^2/10^{23} = 2.25 \times 10^{32}/10^{23} = 2.25 \times 10^{9}$ m⁻³.`,
+            ],
+            answer: "n_e ≈ 1 × 10²³ m⁻³ (majority), n_h ≈ 2.25 × 10⁹ m⁻³ (minority).",
+          },
+          {
+            type: "heading",
+            text: "Drift, diffusion and conductivity",
+          },
+          {
+            type: "text",
+            md: t`**Drift current** flows when an electric field $E$ pushes carriers: electrons drift against the field and holes along it, and both give current in the direction of the field. The drift velocity is proportional to the field, $v_d = \mu E$, where $\mu$ is the **mobility** (m²/V s). Electrons are more mobile than holes.
+
+**Diffusion current** flows when carriers spread from a region of high concentration to low concentration, even with no field. It is what happens at a p-n junction, as you will see in the next chapter.`,
+          },
+          {
+            type: "formula",
+            tex: t`\sigma = e\,(n_e\mu_e + n_h\mu_h) \qquad \rho = \frac{1}{\sigma}`,
+            caption: t`For silicon at room temperature take $\mu_e \approx 0.135$ and $\mu_h \approx 0.048$ m²/V s.`,
+          },
+          {
+            type: "example",
+            title: "How much doping helps",
+            problem: t`Compare the conductivity of pure silicon ($n_i = 1.5 \times 10^{16}$ m⁻³) with the n-type sample above ($n_e = 10^{23}$ m⁻³). Use $\mu_e = 0.135$, $\mu_h = 0.048$ m²/V s, $e = 1.6 \times 10^{-19}$ C.`,
+            steps: [
+              t`Pure: $\sigma_i = e\,n_i(\mu_e + \mu_h) = 1.6 \times 10^{-19} \times 1.5 \times 10^{16} \times 0.183 = 4.39 \times 10^{-4}$ S/m, so $\rho \approx 2.3 \times 10^{3}\ \Omega$ m.`,
+              t`Doped: holes are negligible, so $\sigma \approx e\,n_e\mu_e = 1.6 \times 10^{-19} \times 10^{23} \times 0.135 = 2160$ S/m, so $\rho \approx 4.6 \times 10^{-4}\ \Omega$ m.`,
+              t`Ratio: $2160/(4.39 \times 10^{-4}) \approx 4.9 \times 10^{6}$.`,
+            ],
+            answer: "Doping at 2 ppm raises the conductivity about five million times.",
+          },
+          {
+            type: "checkpoint",
+            questions: [
+              {
+                kind: "numeric",
+                q: "In silicon, electrons have mobility 0.135 m²/V s. What is their drift velocity (in m/s) in a field of 100 V/m?",
+                answer: 13.5,
+                tolerance: 0.01,
+                unit: "m/s",
+                explain: t`$v_d = \mu E = 0.135 \times 100 = 13.5$ m/s.`,
+              },
+            ],
+          },
+          {
+            type: "callout",
+            tone: "exam",
+            title: "Board tip",
+            md: "Draw the energy band diagrams of n-type and p-type semiconductors with the donor level (E_D) just below the conduction band and the acceptor level (E_A) just above the valence band. For 'why is an n-type semiconductor neutral?', mention the fixed positive donor ions.",
+          },
+          {
+            type: "keypoints",
+            items: [
+              "Pentavalent donors (P, As, Sb) make n-type; trivalent acceptors (B, Al, Ga, In) make p-type.",
+              "Both n-type and p-type crystals are electrically neutral.",
+              "Mass action law: n_e n_h = n_i².",
+              "Drift current is due to a field (v_d = μE); diffusion current is due to a concentration gradient.",
+              "σ = e(n_e μ_e + n_h μ_h); μ_e > μ_h.",
+            ],
+          },
+        ],
+        flashcards: [
+          { front: "Doping", back: "Adding a small controlled amount of impurity to a pure semiconductor to raise its conductivity." },
+          { front: "Donor impurity", back: "A pentavalent atom (P, As, Sb) that gives a free electron; makes n-type." },
+          { front: "Acceptor impurity", back: "A trivalent atom (B, Al, Ga, In) that creates a hole; makes p-type." },
+          { front: "Majority carriers in p-type", back: "Holes; electrons are the minority carriers." },
+          { front: "Mass action law", back: "n_e n_h = n_i² in thermal equilibrium." },
+          { front: "Mobility", back: "Drift velocity per unit electric field, μ = v_d/E, in m²/V s." },
+          { front: "Drift versus diffusion current", back: "Drift: carriers pushed by an electric field. Diffusion: carriers spreading from high to low concentration." },
+          { front: "Conductivity of a semiconductor", back: "σ = e(n_e μ_e + n_h μ_h)." },
+        ],
+        quiz: [
+          {
+            kind: "mcq",
+            q: "Silicon doped with boron becomes:",
+            options: ["n-type, electrons majority", "p-type, holes majority", "Intrinsic", "A conductor"],
+            answer: 1,
+            explain: "Boron is trivalent, an acceptor, so the crystal is p-type.",
+          },
+          {
+            kind: "truefalse",
+            q: "Doping an intrinsic semiconductor with donors increases the hole concentration.",
+            answer: false,
+            explain: "By n_e n_h = n_i², raising n_e lowers n_h below n_i.",
+            difficulty: 2,
+          },
+          {
+            kind: "numeric",
+            q: t`Germanium has $n_i = 2.4 \times 10^{19}$ m⁻³. A p-type sample has $n_h = 4 \times 10^{22}$ m⁻³. Find $n_e$, as a multiple of $10^{16}$ m⁻³.`,
+            answer: 1.44,
+            tolerance: 0.01,
+            explain: t`$n_e = n_i^2/n_h = 5.76 \times 10^{38}/4 \times 10^{22} = 1.44 \times 10^{16}$ m⁻³.`,
+            difficulty: 2,
+          },
+          {
+            kind: "fill",
+            q: "In an n-type semiconductor, the donor energy level lies just below the ___ band.",
+            answer: ["conduction"],
+            explain: "Little energy is needed to lift the donor electron into the conduction band.",
+          },
+          {
+            kind: "numeric",
+            q: t`An n-type sample has $n_e = 5 \times 10^{21}$ m⁻³ and $\mu_e = 0.4$ m²/V s (holes negligible). What is its conductivity (in S/m)?`,
+            answer: 320,
+            unit: "S/m",
+            explain: t`$\sigma = e n_e \mu_e = 1.6 \times 10^{-19} \times 5 \times 10^{21} \times 0.4 = 320$ S/m.`,
+            difficulty: 2,
+          },
+          {
+            kind: "mcq",
+            q: "The current that flows because of a difference in carrier concentration, with no field applied, is:",
+            options: ["Drift current", "Diffusion current", "Leakage current", "Eddy current"],
+            answer: 1,
+            explain: "Diffusion moves carriers from high to low concentration.",
+          },
+          {
+            kind: "multi",
+            q: "Which of these are pentavalent (donor) impurities for silicon?",
+            options: ["Phosphorus", "Arsenic", "Aluminium", "Antimony"],
+            answers: [0, 1, 3],
+            explain: "Aluminium is trivalent, an acceptor.",
+          },
+          {
+            kind: "mcq",
+            q: "Why are electrons more mobile than holes?",
+            options: [
+              "Electrons carry a larger charge",
+              "Free electrons move in the conduction band, while hole motion needs bound electrons to hop between bonds",
+              "Holes are heavier atoms",
+              "Holes cannot move at all",
+            ],
+            answer: 1,
+            explain: "Hole movement is a chain of bound electrons jumping into vacancies, which is slower than free-electron motion.",
+          },
+        ],
+      },
+      {
+        slug: "c11-ele-semiconductor-practice",
+        title: "Board Practice: Semiconductor Physics",
+        summary: "Mixed board-style questions on energy bands, intrinsic and extrinsic semiconductors, the mass action law and conductivity.",
+        minutes: 18,
+        xp: 45,
+        blocks: [
+          {
+            type: "text",
+            md: "This chapter is mostly theory with a few short numericals. Learn the band diagrams and the n-type versus p-type table well, and practise the mass action law and conductivity formulas.",
+          },
+          {
+            type: "example",
+            title: "Conductivity of pure germanium",
+            problem: t`Pure germanium has $n_i = 2.4 \times 10^{19}$ m⁻³, $\mu_e = 0.39$ and $\mu_h = 0.19$ m²/V s. Find its conductivity and resistivity. ($e = 1.6 \times 10^{-19}$ C)`,
+            steps: [
+              t`$\sigma = e\,n_i(\mu_e + \mu_h) = 1.6 \times 10^{-19} \times 2.4 \times 10^{19} \times 0.58$.`,
+              t`$\sigma = 3.84 \times 0.58 = 2.23$ S/m.`,
+              t`$\rho = 1/\sigma = 0.45\ \Omega$ m.`,
+            ],
+            answer: "σ ≈ 2.23 S/m and ρ ≈ 0.45 Ω m.",
+          },
+          {
+            type: "example",
+            title: "Comparing Ge and Si",
+            problem: t`Pure silicon has $\rho \approx 2.3 \times 10^{3}\ \Omega$ m (from the previous lesson) and pure germanium about 0.45 Ω m. Explain the difference in two lines.`,
+            steps: [
+              "Germanium has a smaller band gap (≈ 0.7 eV) than silicon (1.1 eV), so far more bonds break at room temperature: n_i for Ge is about 10³ times larger.",
+              "Germanium carriers are also more mobile, so its conductivity is thousands of times higher.",
+            ],
+            answer: "Smaller band gap gives many more thermal carriers in Ge, and higher mobility adds to it.",
+          },
+          {
+            type: "checkpoint",
+            questions: [
+              {
+                kind: "numeric",
+                q: t`An n-type crystal has $n_e = 10^{22}$ m⁻³ and $n_h = 10^{10}$ m⁻³. What is $n_i$, as a multiple of $10^{16}$ m⁻³?`,
+                answer: 1,
+                tolerance: 0.01,
+                explain: t`$n_i = \sqrt{n_e n_h} = \sqrt{10^{32}} = 10^{16}$ m⁻³.`,
+              },
+            ],
+          },
+          {
+            type: "example",
+            title: "Will this light work?",
+            problem: "Can infrared light of wavelength 1.5 µm create electron–hole pairs in silicon (E_g = 1.1 eV)? Use hc = 1.243 eV µm.",
+            steps: [
+              t`Photon energy $= hc/\lambda = 1.243/1.5 = 0.83$ eV.`,
+              "0.83 eV is less than 1.1 eV, so one photon cannot lift an electron across the gap.",
+            ],
+            answer: "No. Silicon is transparent to 1.5 µm light; it needs λ below about 1.13 µm.",
+          },
+          {
+            type: "mistake",
+            wrong: "Adding more donors makes both electrons and holes increase, since doping 'adds carriers'.",
+            right: "Donors raise the electron concentration and **lower** the hole concentration, because $n_e n_h = n_i^2$ stays fixed at a given temperature.",
+            why: "'Doping adds carriers' is true for the majority carriers only. The extra electrons recombine with many of the existing holes, so the minority carriers become fewer.",
+          },
+          {
+            type: "activity",
+            activity: {
+              kind: "match",
+              prompt: "Match each term to its meaning.",
+              pairs: [
+                ["Intrinsic semiconductor", "Pure crystal with n_e = n_h"],
+                ["Donor", "Pentavalent impurity giving free electrons"],
+                ["Acceptor", "Trivalent impurity creating holes"],
+                ["Minority carrier", "The fewer type of carrier in a doped crystal"],
+                ["Mobility", "Drift velocity per unit field"],
+              ],
+              explain: "These five terms come up in almost every short answer on this chapter.",
+            },
+          },
+          {
+            type: "table",
+            headers: ["Question", "Key words for full marks"],
+            rows: [
+              ["What is a hole?", "vacancy in a covalent bond; behaves as +e; moves in the VB"],
+              ["Why does resistance of a semiconductor fall with temperature?", "more bonds break; more electron–hole pairs; n_i rises"],
+              ["Why is p-type neutral?", "each hole is balanced by a fixed negative acceptor ion"],
+              ["State the mass action law", "n_e n_h = n_i² at thermal equilibrium"],
+            ],
+          },
+          {
+            type: "callout",
+            tone: "exam",
+            title: "Board tip",
+            md: "Draw the covalent bond picture of silicon with a phosphorus atom (one spare electron) and with a boron atom (one missing bond). These two sketches with labels answer the 'explain the formation of n-type / p-type' question better than any paragraph.",
+          },
+          {
+            type: "checkpoint",
+            questions: [
+              {
+                kind: "mcq",
+                q: "Which of these is true for a p-type semiconductor?",
+                options: ["It is positively charged", "Holes are majority carriers", "It is doped with arsenic", "It has a donor level near the CB"],
+                answer: 1,
+                explain: "p-type is neutral, doped with trivalent atoms, and has an acceptor level just above the VB; holes are the majority carriers.",
+              },
+            ],
+          },
+          {
+            type: "text",
+            md: "A common 'reason' question: what happens to an extrinsic semiconductor at a very high temperature? So many covalent bonds break that the thermally generated electron–hole pairs far outnumber the carriers from the dopant. The material then behaves almost like an **intrinsic** semiconductor, and devices made from it stop working properly. This is why silicon devices have a maximum operating temperature.",
+          },
+          {
+            type: "keypoints",
+            items: [
+              "Smaller band gap gives more thermal carriers: Ge conducts better than Si at room temperature.",
+              "Use n_e n_h = n_i² for minority carriers and n_i = √(n_e n_h).",
+              "σ = e(n_e μ_e + n_h μ_h); in doped material keep only the majority term if the minority is tiny.",
+              "Photons need hc/λ ≥ E_g to create electron–hole pairs.",
+            ],
+          },
+        ],
+        flashcards: [
+          { front: "n_i from n_e and n_h", back: "n_i = √(n_e n_h)." },
+          { front: "Longest wavelength absorbed by a semiconductor", back: "λ_max = hc/E_g; about 1.13 µm for Si." },
+          { front: "Why Ge conducts better than Si at room temperature", back: "Its smaller band gap gives many more thermal electron–hole pairs, and its carriers are more mobile." },
+          { front: "Effect of donor doping on holes", back: "Hole concentration falls below n_i (mass action law)." },
+          { front: "Resistivity of pure Ge at room temperature", back: "About 0.45 Ω m." },
+          { front: "Covalent picture of n-type Si", back: "A phosphorus atom bonds with four Si neighbours and has one spare, loosely bound electron." },
+        ],
+        quiz: [
+          {
+            kind: "mcq",
+            q: "The forbidden energy gap of silicon is about:",
+            options: ["0.07 eV", "0.7 eV", "1.1 eV", "5.5 eV"],
+            answer: 2,
+            explain: "Si ≈ 1.1 eV; Ge ≈ 0.7 eV; diamond ≈ 5.5 eV.",
+          },
+          {
+            kind: "numeric",
+            q: t`A semiconductor has $n_i = 10^{16}$ m⁻³ and is doped so that $n_h = 10^{21}$ m⁻³. What is $n_e$, as a multiple of $10^{11}$ m⁻³?`,
+            answer: 1,
+            tolerance: 0.01,
+            explain: t`$n_e = 10^{32}/10^{21} = 10^{11}$ m⁻³.`,
+          },
+          {
+            kind: "truefalse",
+            q: "Germanium doped with indium is a p-type semiconductor.",
+            answer: true,
+            explain: "Indium is trivalent, an acceptor.",
+          },
+          {
+            kind: "numeric",
+            q: t`Pure silicon: $n_i = 1.5 \times 10^{16}$ m⁻³, $\mu_e + \mu_h = 0.183$ m²/V s. What is its conductivity, as a multiple of $10^{-4}$ S/m?`,
+            answer: 4.39,
+            tolerance: 0.02,
+            explain: t`$\sigma = 1.6 \times 10^{-19} \times 1.5 \times 10^{16} \times 0.183 = 4.39 \times 10^{-4}$ S/m.`,
+            difficulty: 2,
+          },
+          {
+            kind: "order",
+            q: "Order these by resistivity at room temperature, lowest first.",
+            items: ["Copper", "n-type silicon (heavily doped)", "Pure germanium", "Pure silicon", "Glass"],
+            explain: "Copper ~10⁻⁸ Ω m, doped Si ~10⁻⁴ Ω m, pure Ge ~0.45 Ω m, pure Si ~10³ Ω m, glass > 10¹¹ Ω m.",
+            difficulty: 3,
+          },
+          {
+            kind: "fill",
+            q: "Mobility is defined as drift velocity per unit electric ___.",
+            answer: ["field", "field strength"],
+            explain: "μ = v_d/E.",
+          },
+          {
+            kind: "mcq",
+            q: "In an intrinsic semiconductor, the total current is:",
+            options: ["Due to electrons only", "Due to holes only", "The sum of the electron and hole currents", "Zero at room temperature"],
+            answer: 2,
+            explain: "I = I_e + I_h; both carriers contribute, in the same direction of conventional current.",
+          },
+        ],
+      },
+    ],
+  },
 ];
 
 /** Chapter title ("11:" / "12:" + exact title) → topic slug(s) that teach it. */
@@ -2898,4 +3455,5 @@ export const links: Record<string, string | string[]> = {
   "11:Passive Components": "c11-ele-passive-components",
   "11:DC Circuits and Network Theorems": "c11-ele-dc-circuits-theorems",
   "11:AC Fundamentals": "c11-ele-ac-fundamentals",
+  "11:Semiconductor Physics": "c11-ele-semiconductor-physics",
 };

@@ -822,7 +822,7 @@ const arrays: Topic = {
         },
         {
           type: "text",
-          md: "Output:\n\n`Total = 370`\n`Average = 74.0`\n`Highest = 91, Lowest = 58`\n`0.0 false null`\n\nThe loop visits every element once: this is **traversal**. Starting `max` and `min` at `m[0]` (not at 0) makes the code correct even when all marks are negative or all are large. The last line shows **default values** of a new array: 0 for `int`, 0.0 for `double`, `false` for `boolean`, `'\u0000'` for `char`, and `null` for objects such as `String`.",
+          md: "Output:\n\n`Total = 370`\n`Average = 74.0`\n`Highest = 91, Lowest = 58`\n`0.0 false null`\n\nThe loop visits every element once: this is **traversal**. Starting `max` and `min` at `m[0]` (not at 0) makes the code correct even when all marks are negative or all are large. The last line shows **default values** of a new array: 0 for `int`, 0.0 for `double`, `false` for `boolean`, `'\\u0000'` for `char`, and `null` for objects such as `String`.",
         },
         {
           type: "mistake",
@@ -1193,9 +1193,10 @@ const arrays: Topic = {
         },
         {
           kind: "truefalse",
-          q: "Binary search on {40, 10, 30, 20} for the key 10 is guaranteed to find it.",
+          q: "Binary search (code as in BinarySearch.java) on the unsorted array {40, 10, 30, 20} finds the key 40.",
           answer: false,
-          explain: "The array is not sorted. mid = 1 holds 10 here by luck, but in general binary search on unsorted data can miss a key, so it is not guaranteed.",
+          explain: "mid = 1 (10 < 40) so lo = 2; mid = 2 (30 < 40) so lo = 3; mid = 3 (20 < 40) so lo = 4 > hi. It returns −1 although 40 is at index 0, because the data is not sorted.",
+          difficulty: 2,
         },
         {
           kind: "fill",
@@ -1631,10 +1632,672 @@ const arrays: Topic = {
   ],
 };
 
-export const topics: Topic[] = [methods, arrays];
+/* ------------------------------------------------------------------ */
+/* 3. Strings in Java                                                  */
+/* ------------------------------------------------------------------ */
+const strings: Topic = {
+  slug: "c11-isc-cs-strings",
+  title: "Strings in Java",
+  icon: "🔤",
+  description: "The String class and its methods, immutability, comparing strings, Character methods, processing strings character by character and word by word, and StringBuffer.",
+  lessons: [
+    {
+      slug: "c11-isc-strings-methods",
+      title: "The String Class and Its Methods",
+      summary: "Creating strings, immutability, length, charAt, indexOf, substring, case and replace methods, and comparing strings with equals and compareTo.",
+      minutes: 22,
+      xp: 55,
+      blocks: [
+        {
+          type: "illustration",
+          emoji: "🪪",
+          caption: "A railway ticket prints your name, PNR and station codes. Programs handle such text all day: checking a PNR, cutting out the station code, turning a name into capitals. In Java, text is a String.",
+        },
+        {
+          type: "text",
+          md: "A **String** is a sequence of characters. In Java it is an object of the class `String` in the package `java.lang`, which is imported automatically. A string literal is written in double quotes: `\"Quest Academy\"`.\n\nCharacters are numbered from **0**, like array elements. `s.length()` (a **method**, with brackets) gives the number of characters, and the last character is at `s.length() - 1`.\n\nStrings are **immutable**: once a String object is made, its characters can never change. Methods such as `toUpperCase()` or `replace()` do not change the original; they **return a new String**.",
+        },
+        {
+          type: "code",
+          lang: "java",
+          caption: "StrMethods.java",
+          code: java`public class StrMethods
+{
+    public static void main(String[] args)
+    {
+        String s = "  Quest Academy  ";
+        String t = s.trim();
+        System.out.println("[" + t + "] " + t.length());
+        System.out.println(t.charAt(0) + " " + t.charAt(t.length() - 1));
+        System.out.println(t.indexOf('e') + " " + t.lastIndexOf('e') + " " + t.indexOf("Acad"));
+        System.out.println(t.substring(6) + "|" + t.substring(0, 5));
+        System.out.println(t.toUpperCase() + " " + t.replace('a', '@'));
+        System.out.println(t.indexOf('z'));
+    }
+}`,
+        },
+        {
+          type: "example",
+          title: "Dry run of StrMethods",
+          problem: "Give the output of StrMethods.java.",
+          steps: [
+            "`trim()` removes the leading and trailing spaces: t = \"Quest Academy\", 13 characters. Positions: Q0 u1 e2 s3 t4, space 5, A6 c7 a8 d9 e10 m11 y12.",
+            "`charAt(0)` is Q and `charAt(12)` is y. The first 'e' is at 2, the last at 10, and \"Acad\" starts at 6.",
+            "`substring(6)` runs from 6 to the end: \"Academy\". `substring(0, 5)` takes positions 0 to **4** (the end index is not included): \"Quest\".",
+            "`replace('a', '@')` changes only lowercase a: \"Quest Ac@demy\". `indexOf('z')` returns −1 because z is absent.",
+          ],
+          answer: "[Quest Academy] 13\nQ y\n2 10 6\nAcademy|Quest\nQUEST ACADEMY Quest Ac@demy\n-1",
+        },
+        {
+          type: "table",
+          headers: ["Method", "Returns", "Example (s = \"Monsoon\")"],
+          rows: [
+            ["`length()`", "int: number of characters", "7"],
+            ["`charAt(i)`", "char at index i", "`charAt(3)` → 's'"],
+            ["`indexOf(x)` / `lastIndexOf(x)`", "int: first / last position of char or string x, −1 if absent", "`indexOf('o')` → 1, `lastIndexOf('o')` → 5"],
+            ["`substring(a)` / `substring(a, b)`", "String from a to the end / from a to b − 1", "`substring(3)` → \"soon\", `substring(0, 3)` → \"Mon\""],
+            ["`toUpperCase()` / `toLowerCase()`", "new String in upper / lower case", "\"MONSOON\""],
+            ["`replace(c1, c2)`", "new String with every c1 replaced by c2", "`replace('o', '0')` → \"M0ns00n\""],
+            ["`trim()`", "new String without leading and trailing spaces", "-"],
+            ["`concat(t)`", "new String: s followed by t", "`concat(\"!\")` → \"Monsoon!\""],
+            ["`startsWith(t)` / `endsWith(t)`", "boolean", "`endsWith(\"on\")` → true"],
+          ],
+        },
+        {
+          type: "checkpoint",
+          questions: [
+            {
+              kind: "fill",
+              q: "`\"Bengaluru\".substring(2, 5)` returns \"___\".",
+              answer: ["nga"],
+              explain: "Positions 2, 3, 4 are n, g, a. The end index 5 is not included.",
+            },
+          ],
+        },
+        {
+          type: "text",
+          md: "**Comparing strings.** `==` compares **references**: it asks whether two variables point to the very same object. To compare the **characters**, use `equals()` (case matters) or `equalsIgnoreCase()`.\n\n`a.compareTo(b)` compares in dictionary (lexicographic) order using character codes. It returns **0** if equal, a **negative** number if a comes first, a **positive** number if a comes later. At the first position where they differ, the result is the difference of the two character codes; if one string is a prefix of the other, it is the difference of the lengths.",
+        },
+        {
+          type: "code",
+          lang: "java",
+          caption: "StrCompare.java",
+          code: java`public class StrCompare
+{
+    public static void main(String[] args)
+    {
+        String a = "Delhi";
+        String b = "Delhi";
+        String c = new String("Delhi");
+        System.out.println(a == b);
+        System.out.println(a == c);
+        System.out.println(a.equals(c));
+        System.out.println("delhi".equalsIgnoreCase(a));
+        System.out.println("Apple".compareTo("Banana"));
+        System.out.println("cat".compareTo("car"));
+        System.out.println("pen".compareTo("pencil"));
+        System.out.println("Zebra".compareTo("apple"));
+        String s = "Hi";
+        s.concat(" there");
+        System.out.println(s);
+        s = s.concat(" there");
+        System.out.println(s);
+    }
+}`,
+        },
+        {
+          type: "text",
+          md: "Output: `true`, `false`, `true`, `true`, `-1`, `2`, `-3`, `-7`, `Hi`, `Hi there`.\n\nIdentical literals share one object in the **string pool**, so `a == b` is true, but `new String(...)` always makes a separate object, so `a == c` is false. 'A' − 'B' = −1; 't' − 'r' = 2; \"pen\" is a prefix of \"pencil\", so 3 − 6 = −3; 'Z' (90) − 'a' (97) = −7, so every capital letter comes before every small letter. The line `s.concat(\" there\");` makes a new String and throws it away; s changes only when the result is assigned back.",
+        },
+        {
+          type: "mistake",
+          wrong: "`if (name == \"Ravi\")` is the right way to check whether the user typed Ravi.",
+          right: "Use `name.equals(\"Ravi\")` (or `equalsIgnoreCase`). `==` checks whether both sides are the same object, and a String read from input is a different object from the literal even when the characters match.",
+          why: "With two literals `==` often happens to give true because of the string pool, so the bug hides in small tests and appears only with real input.",
+        },
+        {
+          type: "activity",
+          activity: {
+            kind: "reveal",
+            prompt: "What does `\"Mango\".compareTo(\"mango\")` return?",
+            emoji: "🥭",
+            options: ["0, because the words are the same", "-32", "32", "1"],
+            answer: 1,
+            trap: 0,
+            explain: "compareTo is case-sensitive. 'M' is 77 and 'm' is 109, so the result is 77 − 109 = −32. Use `compareToIgnoreCase` to ignore case.",
+          },
+        },
+        {
+          type: "callout",
+          tone: "exam",
+          title: "ISC tip",
+          md: "Output questions love `substring(a, b)` (end not included), `indexOf` returning −1, and `compareTo` values. Write the index of each character above the string before you answer. State the return type when asked about a method: `charAt` returns `char`, `indexOf` returns `int`, `equals` returns `boolean`.",
+        },
+        {
+          type: "keypoints",
+          items: [
+            "A String is an immutable object of `java.lang.String`; methods return new strings.",
+            "Indexes run 0 to `length() - 1`; `substring(a, b)` gives a to b − 1.",
+            "`indexOf` / `lastIndexOf` return −1 when not found.",
+            "Compare text with `equals` / `equalsIgnoreCase`, never `==`.",
+            "`compareTo` returns 0, negative or positive: code difference at the first mismatch, or length difference for a prefix.",
+          ],
+        },
+      ],
+      flashcards: [
+        { front: "Immutable String", back: "A String's characters can never change; methods like toUpperCase() return a new String." },
+        { front: "`substring(a, b)`", back: "Characters from index a to b − 1 (end index excluded)." },
+        { front: "`indexOf` when not found", back: "Returns −1." },
+        { front: "`==` vs `equals()` for Strings", back: "`==` compares references (same object?); `equals()` compares the characters." },
+        { front: "`compareTo` result", back: "0 if equal; negative if the caller comes first in dictionary order; positive if it comes later." },
+        { front: "`\"pen\".compareTo(\"pencil\")`", back: "−3: one is a prefix of the other, so the result is 3 − 6." },
+        { front: "String pool", back: "Area where identical string literals share one object." },
+        { front: "`trim()`", back: "Returns a copy without leading and trailing spaces." },
+      ],
+      quiz: [
+        {
+          kind: "mcq",
+          q: "What does `\"Kolkata\".indexOf('k')` return?",
+          options: ["3", "0", "-1", "4"],
+          answer: 0,
+          explain: "The capital K at 0 does not match lowercase 'k'. The first lowercase k is at index 3.",
+        },
+        {
+          kind: "numeric",
+          q: "What does `\"Ball\".compareTo(\"Bat\")` return?",
+          answer: -8,
+          explain: "First difference at index 2: 'l' (108) − 't' (116) = −8.",
+          difficulty: 2,
+        },
+        {
+          kind: "truefalse",
+          q: "After `String s = \"abc\"; s.toUpperCase();` the variable s holds \"ABC\".",
+          answer: false,
+          explain: "Strings are immutable and the new String was not assigned back, so s is still \"abc\".",
+        },
+        {
+          kind: "fill",
+          q: "`\"Programming\".lastIndexOf('m')` returns ___.",
+          answer: ["7"],
+          explain: "P0 r1 o2 g3 r4 a5 m6 m7 i8 n9 g10: the last m is at 7.",
+        },
+        {
+          kind: "mcq",
+          q: "Which expression correctly tests whether String x has the same characters as \"YES\", ignoring case?",
+          options: ["`x.equalsIgnoreCase(\"YES\")`", "`x == \"YES\"`", "`x.compareTo(\"YES\") == 1`", "`x.equals(\"yes\")`"],
+          answer: 0,
+          explain: "equalsIgnoreCase compares characters and ignores case. == compares references; compareTo == 1 is not equality; equals(\"yes\") is case-sensitive.",
+        },
+        {
+          kind: "mcq",
+          q: "What is the return type of `charAt()`?",
+          options: ["char", "String", "int", "boolean"],
+          answer: 0,
+          explain: "charAt returns a single character, of type char.",
+        },
+        {
+          kind: "multi",
+          q: "Which calls return a value of type boolean?",
+          options: ["`s.equals(t)`", "`s.endsWith(\"a\")`", "`s.compareTo(t)`", "`s.length()`"],
+          answers: [0, 1],
+          explain: "compareTo and length return int.",
+        },
+      ],
+    },
+    {
+      slug: "c11-isc-strings-processing",
+      title: "Character Methods, String Processing and StringBuffer",
+      summary: "Character class tests, counting and classifying characters, extracting words, palindromes, and the mutable StringBuffer class.",
+      minutes: 22,
+      xp: 55,
+      blocks: [
+        {
+          type: "illustration",
+          emoji: "🔍",
+          caption: "A proofreader at a newspaper in Chennai reads a line letter by letter: is this a capital, a digit, a space? Most string programs do exactly that with a loop and charAt().",
+        },
+        {
+          type: "text",
+          md: "The wrapper class **`Character`** (in `java.lang`) has static methods to test and convert one `char`:\n\n- `Character.isLetter(ch)`, `isDigit(ch)`, `isLetterOrDigit(ch)`, `isWhitespace(ch)`\n- `Character.isUpperCase(ch)`, `isLowerCase(ch)`\n- `Character.toUpperCase(ch)`, `toLowerCase(ch)` return a converted `char`\n\nThe usual pattern: loop `i` from 0 to `s.length() - 1`, take `char ch = s.charAt(i);`, test it, and count or build a result.",
+        },
+        {
+          type: "code",
+          lang: "java",
+          caption: "CharCount.java",
+          code: java`public class CharCount
+{
+    public static void main(String[] args)
+    {
+        String s = "Chandrayaan-3 landed in 2023!";
+        int up = 0, low = 0, dig = 0, sp = 0, other = 0, vow = 0;
+        for (int i = 0; i < s.length(); i++)
+        {
+            char ch = s.charAt(i);
+            if (Character.isUpperCase(ch))
+                up++;
+            else if (Character.isLowerCase(ch))
+                low++;
+            else if (Character.isDigit(ch))
+                dig++;
+            else if (Character.isWhitespace(ch))
+                sp++;
+            else
+                other++;
+            if ("AEIOUaeiou".indexOf(ch) >= 0)
+                vow++;
+        }
+        System.out.println("Upper " + up + ", Lower " + low + ", Digits " + dig);
+        System.out.println("Spaces " + sp + ", Others " + other + ", Vowels " + vow);
+    }
+}`,
+        },
+        {
+          type: "text",
+          md: "Output:\n\n`Upper 1, Lower 18, Digits 5`\n`Spaces 3, Others 2, Vowels 7`\n\nThe five counts add up to 29, the length of the string. The vowel test uses a neat trick: `\"AEIOUaeiou\".indexOf(ch)` is −1 only if ch is not a vowel.",
+        },
+        {
+          type: "checkpoint",
+          questions: [
+            {
+              kind: "mcq",
+              q: "What does `Character.toUpperCase('7')` return?",
+              options: ["'7'", "Compile-time error", "-1", "' '"],
+              answer: 0,
+              explain: "Characters that are not letters are returned unchanged.",
+            },
+          ],
+        },
+        {
+          type: "text",
+          md: "**Extracting words.** To work word by word, add a space to the end of the sentence, then build each word letter by letter. Every time a space is met, the word so far is complete: process it and start a new empty word. (The class `StringTokenizer`, covered in the input/output chapter, can also split a sentence into words.)\n\nA **palindrome** reads the same both ways: MADAM, LEVEL, 121. Compare the first and last characters, move inwards, and stop at the first mismatch.",
+        },
+        {
+          type: "code",
+          lang: "java",
+          caption: "WordWork.java",
+          code: java`public class WordWork
+{
+    static boolean isPalindrome(String w)
+    {
+        w = w.toUpperCase();
+        int i = 0, j = w.length() - 1;
+        while (i < j)
+        {
+            if (w.charAt(i) != w.charAt(j))
+                return false;
+            i++;
+            j--;
+        }
+        return true;
+    }
+
+    public static void main(String[] args)
+    {
+        String sen = "Madam Malayalam is a Level language";
+        sen = sen + " ";
+        String word = "";
+        for (int i = 0; i < sen.length(); i++)
+        {
+            char ch = sen.charAt(i);
+            if (ch != ' ')
+                word = word + ch;
+            else
+            {
+                if (isPalindrome(word))
+                    System.out.print(word + " ");
+                word = "";
+            }
+        }
+        System.out.println();
+    }
+}`,
+        },
+        {
+          type: "example",
+          title: "Tracing WordWork",
+          problem: "Which words does WordWork.java print, and why is a space added to `sen`?",
+          steps: [
+            "The words are Madam, Malayalam, is, a, Level, language. Each is changed to capitals inside `isPalindrome`, so case does not matter: MADAM, MALAYALAM, LEVEL read the same both ways.",
+            "\"is\" fails at the first comparison (I ≠ S); \"a\" has i = j = 0, the loop never runs, and it returns true; \"language\" fails (L ≠ E).",
+            "Without the extra space, the last word \"language\" would never be followed by a space and would not be checked.",
+          ],
+          answer: "Madam Malayalam a Level",
+        },
+        {
+          type: "mistake",
+          wrong: "Building a result with `r = r + ch;` changes the String r in place, so Strings are not really immutable.",
+          right: "Each `r + ch` creates a **new** String object and r is re-pointed to it; the old object is unchanged and later discarded. For heavy editing, **StringBuffer** (or StringBuilder) changes one object in place.",
+          why: "The variable name stays the same, so it looks like the same string grew. What changed is which object the variable refers to.",
+        },
+        {
+          type: "text",
+          md: "**StringBuffer** is a **mutable** sequence of characters: its methods change the same object. Useful methods: `append(x)` adds at the end, `insert(i, x)` inserts at index i, `reverse()`, `setCharAt(i, ch)`, `deleteCharAt(i)`, `length()`, and `toString()` to get a String back. Note that `equals` on two StringBuffers does **not** compare their contents; convert with `toString()` first.",
+        },
+        {
+          type: "code",
+          lang: "java",
+          caption: "BufferDemo.java",
+          code: java`public class BufferDemo
+{
+    public static void main(String[] args)
+    {
+        StringBuffer sb = new StringBuffer("India");
+        sb.append(" 2047");
+        System.out.println(sb);
+        sb.insert(0, "Viksit ");
+        System.out.println(sb);
+        sb.reverse();
+        System.out.println(sb);
+        sb.reverse();
+        sb.setCharAt(0, 'v');
+        sb.deleteCharAt(sb.length() - 1);
+        System.out.println(sb + " " + sb.length());
+    }
+}`,
+        },
+        {
+          type: "activity",
+          activity: {
+            kind: "sort",
+            prompt: "Does the call change the object it is called on?",
+            groups: ["Changes the object", "Returns a new object; original unchanged"],
+            items: [
+              { text: "sb.append(\"!\") on a StringBuffer", group: 0, hint: "StringBuffer is mutable." },
+              { text: "sb.reverse() on a StringBuffer", group: 0, hint: "It reverses the same buffer." },
+              { text: "sb.setCharAt(0, 'X')", group: 0, hint: "Changes one character in place." },
+              { text: "s.toUpperCase() on a String", group: 1, hint: "Strings are immutable." },
+              { text: "s.replace('a', 'b') on a String", group: 1, hint: "A new String is returned." },
+              { text: "s.concat(\"!\") on a String", group: 1, hint: "Assign it back to keep it." },
+            ],
+            explain: "StringBuffer methods edit the same object. String methods never change the original; they return a new String that you must store.",
+          },
+        },
+        {
+          type: "callout",
+          tone: "exam",
+          title: "ISC tip",
+          md: "BufferDemo prints `India 2047`, `Viksit India 2047`, `7402 aidnI tiskiV`, then `viksit India 204 16`. In string programs for the practical exam, convert the input to one case first when the question says case does not matter, and state in a comment that a space is appended to catch the last word.",
+        },
+        {
+          type: "keypoints",
+          items: [
+            "Character methods (isLetter, isDigit, isUpperCase, toUpperCase…) test and convert one char.",
+            "Loop with `charAt(i)` from 0 to `length() - 1` to count or build results.",
+            "Append a space to a sentence so the last word is processed too.",
+            "Palindrome check: compare from both ends towards the middle.",
+            "StringBuffer is mutable: append, insert, reverse, setCharAt, deleteCharAt change the same object.",
+          ],
+        },
+      ],
+      flashcards: [
+        { front: "`Character.isLetterOrDigit(ch)`", back: "true if ch is a letter or a digit." },
+        { front: "`Character.toUpperCase('b')`", back: "'B'; a non-letter is returned unchanged." },
+        { front: "Palindrome", back: "A word or number that reads the same forwards and backwards, e.g. MALAYALAM." },
+        { front: "Why append a space before extracting words?", back: "So that the last word is also followed by a space and gets processed." },
+        { front: "StringBuffer", back: "A mutable sequence of characters whose methods change the same object." },
+        { front: "`sb.insert(2, \"xy\")`", back: "Inserts \"xy\" at index 2 of the StringBuffer." },
+        { front: "How to test a vowel quickly", back: "`\"AEIOUaeiou\".indexOf(ch) >= 0`" },
+      ],
+      quiz: [
+        {
+          kind: "numeric",
+          q: "How many vowels are in \"ISRO Bengaluru\" (count both cases)?",
+          answer: 6,
+          explain: "I, O, e, a, u, u: 6 vowels.",
+        },
+        {
+          kind: "mcq",
+          q: "What is printed? `StringBuffer b = new StringBuffer(\"code\"); b.reverse(); b.append(1); System.out.println(b);`",
+          options: ["edoc1", "code1", "1edoc", "edoc"],
+          answer: 0,
+          explain: "reverse gives \"edoc\" in the same buffer; append(1) adds \"1\" at the end.",
+        },
+        {
+          kind: "truefalse",
+          q: "`Character.isLetter(' ')` returns true.",
+          answer: false,
+          explain: "A space is whitespace, not a letter.",
+        },
+        {
+          kind: "fill",
+          q: "To remove the character at index 3 of a StringBuffer sb, write sb.___(3).",
+          answer: ["deleteCharAt"],
+          explain: "`deleteCharAt(i)` removes the character at index i.",
+        },
+        {
+          kind: "multi",
+          q: "Using isPalindrome from WordWork.java, which return true?",
+          options: ["\"Noon\"", "\"Refer\"", "\"Kayaks\"", "\"x\""],
+          answers: [0, 1, 3],
+          explain: "NOON, REFER and X read the same both ways. KAYAKS does not (K ≠ S).",
+        },
+        {
+          kind: "mcq",
+          q: "Why does `sen = sen + \" \";` appear before the word loop in WordWork.java?",
+          options: ["So the last word is followed by a space and is checked", "To make the sentence a palindrome", "Because Strings must end with a space", "To count the spaces"],
+          answer: 0,
+          explain: "A word is processed only when a space is met; the extra space completes the last word.",
+        },
+        {
+          kind: "order",
+          q: "Order the steps of the palindrome check.",
+          items: ["Convert the word to one case", "Set i = 0 and j = length − 1", "While i < j compare charAt(i) and charAt(j)", "Return false at the first mismatch, else move i up and j down", "Return true after the loop"],
+          explain: "Normalise case, start at both ends, compare inwards, stop on a mismatch, and return true if none is found.",
+        },
+      ],
+    },
+    {
+      slug: "c11-isc-strings-board-practice",
+      title: "Board Practice: Strings in Java",
+      summary: "Mixed ISC-style questions: string method output, the char-plus-char trap, and a Caesar cipher program.",
+      minutes: 22,
+      xp: 55,
+      blocks: [
+        {
+          type: "text",
+          md: "Practise ISC string questions: predict the output of method chains, spot type traps, and write a complete string program.",
+        },
+        {
+          type: "code",
+          lang: "java",
+          caption: "StrTrace.java",
+          code: java`public class StrTrace
+{
+    public static void main(String[] args)
+    {
+        String s = "COMPUTER";
+        System.out.println(s.substring(2, 5).toLowerCase());
+        System.out.println(s.indexOf('T') + s.length());
+        System.out.println(s.charAt(3) + s.charAt(4));
+        System.out.println("" + s.charAt(3) + s.charAt(4));
+        System.out.println(s.replace("UTE", "ute").compareTo(s));
+    }
+}`,
+        },
+        {
+          type: "example",
+          title: "Output question",
+          problem: "Give the output of StrTrace.java.",
+          steps: [
+            "C0 O1 M2 P3 U4 T5 E6 R7. `substring(2, 5)` = \"MPU\", in lower case \"mpu\".",
+            "`indexOf('T')` = 5, length 8, so 5 + 8 = 13.",
+            "`charAt(3) + charAt(4)` adds two chars, which is **int** addition: 'P' (80) + 'U' (85) = 165.",
+            "Starting with `\"\" +` makes it string joining: \"PU\".",
+            "\"COMPuteR\" vs \"COMPUTER\": first difference at index 4, 'u' (117) − 'U' (85) = 32.",
+          ],
+          answer: "mpu\n13\n165\nPU\n32",
+        },
+        {
+          type: "mistake",
+          wrong: "`s.charAt(3) + s.charAt(4)` joins the two characters, so it prints PU.",
+          right: "Two `char` values are promoted to `int` and **added**. Only when one operand of `+` is a String does `+` join text. Write `\"\" + s.charAt(3) + s.charAt(4)` to get \"PU\".",
+          why: "With Strings, + always joins, so learners expect characters to behave the same. But char is a numeric type in Java, holding a character code.",
+        },
+        {
+          type: "checkpoint",
+          questions: [
+            {
+              kind: "numeric",
+              q: "What does `System.out.println('A' + 2);` print?",
+              answer: 67,
+              explain: "'A' is 65, and char + int is int: 67. To get the letter C, cast: `(char) ('A' + 2)`.",
+            },
+          ],
+        },
+        {
+          type: "text",
+          md: "**Program to write.** In a **Caesar cipher** each letter is shifted k places along the alphabet, wrapping from Z back to A. Case is kept and other characters are left as they are. Write a method `String encode(String s, int k)` and show that shifting by 3 and then by 23 (26 − 3) gives back the original.",
+        },
+        {
+          type: "code",
+          lang: "java",
+          caption: "Caesar.java",
+          code: java`public class Caesar
+{
+    // shifts every letter k places, wrapping round; other characters unchanged
+    static String encode(String s, int k)
+    {
+        String r = "";
+        for (int i = 0; i < s.length(); i++)
+        {
+            char ch = s.charAt(i);
+            if (Character.isUpperCase(ch))
+                ch = (char) ('A' + (ch - 'A' + k) % 26);
+            else if (Character.isLowerCase(ch))
+                ch = (char) ('a' + (ch - 'a' + k) % 26);
+            r = r + ch;
+        }
+        return r;
+    }
+
+    public static void main(String[] args)
+    {
+        String e = encode("Meet at Gateway, 5 PM!", 3);
+        System.out.println(e);
+        System.out.println(encode(e, 23));
+    }
+}`,
+        },
+        {
+          type: "example",
+          title: "How the wrap-around works",
+          problem: "Show how `encode` turns 'y' into 'b' for k = 3, and give the program's output.",
+          steps: [
+            "`ch - 'a'` gives the letter's position: 'y' − 'a' = 24.",
+            "Add the shift and wrap with % 26: (24 + 3) % 26 = 27 % 26 = 1.",
+            "Add back to 'a' and cast: (char) ('a' + 1) = 'b'.",
+            "Applying this to every letter of \"Meet at Gateway, 5 PM!\" gives the first line; shifting by 23 more brings each letter round a full 26 to the original.",
+          ],
+          answer: "Phhw dw Jdwhzdb, 5 SP!\nMeet at Gateway, 5 PM!",
+        },
+        {
+          type: "activity",
+          activity: {
+            kind: "match",
+            prompt: "Match each expression to what it prints.",
+            pairs: [
+              ["\"ab\".charAt(0) + 1", "98"],
+              ["(char) ('a' + 1)", "b"],
+              ["\"ab\" + 1", "ab1"],
+              ["\"ab\".length() + 1", "3"],
+            ],
+            explain: "char + int is int (97 + 1 = 98); casting back gives 'b'; String + anything joins; length() is an int.",
+          },
+        },
+        {
+          type: "callout",
+          tone: "exam",
+          title: "ISC tip",
+          md: "Practical-exam string problems often say \"the sentence is terminated by '.', '?' or '!'\". Check the last character first and print INVALID INPUT if it is wrong, then remove it before processing words. Show the sample output exactly in the format the question gives.",
+        },
+        {
+          type: "checkpoint",
+          questions: [
+            {
+              kind: "fill",
+              q: "Using Caesar.java, `encode(\"Zoo\", 1)` returns \"___\".",
+              answer: ["App"],
+              explain: "Z wraps to A, and each o becomes p.",
+            },
+          ],
+        },
+        {
+          type: "keypoints",
+          items: [
+            "Write index numbers above the string before tracing substring and indexOf.",
+            "char + char (or char + int) is integer addition; a String operand makes + join text.",
+            "Letter arithmetic: position = ch − 'a'; shift with % 26; cast back with (char).",
+            "Validate input and match the sample output format in practical programs.",
+          ],
+        },
+      ],
+      flashcards: [
+        { front: "`'A' + 'B'` in Java", back: "131 (65 + 66), an int." },
+        { front: "`\"\" + 'A' + 'B'`", back: "\"AB\": the empty String makes + join." },
+        { front: "Position of a lowercase letter ch in the alphabet (0-based)", back: "`ch - 'a'`" },
+        { front: "Caesar cipher", back: "Each letter is shifted k places, wrapping Z to A: new = (pos + k) % 26." },
+        { front: "Decode a Caesar shift of k", back: "Shift again by 26 − k (or subtract k with wrap-around)." },
+        { front: "`(char) 66`", back: "'B'." },
+      ],
+      quiz: [
+        {
+          kind: "mcq",
+          q: "What does `\"MANGO\".substring(1, 4).toLowerCase()` return?",
+          options: ["\"ang\"", "\"ango\"", "\"man\"", "\"angO\""],
+          answer: 0,
+          explain: "Indexes 1 to 3: A, N, G → \"ANG\" → \"ang\".",
+        },
+        {
+          kind: "numeric",
+          q: "What does `System.out.println('a' + 'b');` print?",
+          answer: 195,
+          explain: "97 + 98 = 195.",
+        },
+        {
+          kind: "fill",
+          q: "Using Caesar.java, `encode(\"cat\", 2)` returns \"___\".",
+          answer: ["ecv"],
+          explain: "c → e, a → c, t → v.",
+        },
+        {
+          kind: "truefalse",
+          q: "In Caesar.java, digits and punctuation are changed by the shift.",
+          answer: false,
+          explain: "Only upper- and lowercase letters are shifted; other characters are copied unchanged.",
+        },
+        {
+          kind: "numeric",
+          q: "What does `\"apple\".compareTo(\"apply\")` return?",
+          answer: -20,
+          explain: "First difference at index 4: 'e' (101) − 'y' (121) = −20.",
+          difficulty: 2,
+        },
+        {
+          kind: "mcq",
+          q: "What does `\"COMPUTER\".indexOf(\"PUT\") + \"COMPUTER\".indexOf('X')` print?",
+          options: ["2", "3", "-1", "4"],
+          answer: 0,
+          explain: "\"PUT\" starts at 3; 'X' is absent (−1); 3 + (−1) = 2.",
+          difficulty: 2,
+        },
+        {
+          kind: "mcq",
+          q: "Which statement prints the character two places after 'x' in the alphabet, wrapping round?",
+          options: ["`System.out.println((char) ('a' + ('x' - 'a' + 2) % 26));`", "`System.out.println('x' + 2);`", "`System.out.println((char) ('x' + 2));`", "`System.out.println(\"x\" + 2);`"],
+          answer: 0,
+          explain: "('x' − 'a' + 2) % 26 = 25 → 'z'. Option 2 prints 122; option 3 also gives 'z' here but would not wrap for 'y' or 'z'; option 4 prints x2.",
+          difficulty: 3,
+        },
+      ],
+    },
+  ],
+};
+
+export const topics: Topic[] = [methods, arrays, strings];
 
 /** Chapter title ("11:" / "12:" + exact title) → topic slug(s) that teach it. */
 export const links: Record<string, string | string[]> = {
   "11:Methods": "c11-isc-cs-methods",
   "11:Arrays": "c11-isc-cs-arrays",
+  "11:Strings in Java": "c11-isc-cs-strings",
 };

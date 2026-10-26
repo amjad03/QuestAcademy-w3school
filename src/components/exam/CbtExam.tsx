@@ -141,7 +141,7 @@ export function CbtExam({ test, pool, formulaChapters = [] }: { test: MockTest; 
   const remaining = !session
     ? (sectional ? blockLen : test.minutes * 60)
     : sectional
-      ? Math.max(0, blockLen - Math.floor((now - session.blockStartedAt) / 1000))
+      ? Math.min(blockLen, Math.max(0, blockLen - Math.floor((now - session.blockStartedAt) / 1000)))
       : Math.max(0, test.minutes * 60 - Math.floor((now - session.startedAt) / 1000));
   const activeSubject: ExamSubject | undefined = sectional && session ? blocks[session.block] : current?.subject;
 

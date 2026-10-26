@@ -1311,10 +1311,812 @@ const propLogic: Topic = {
   ],
 };
 
-export const topics: Topic[] = [numbers, propLogic];
+/* ------------------------------------------------------------------ */
+/* 3. Computer Hardware                                                */
+/* ------------------------------------------------------------------ */
+const hardware: Topic = {
+  slug: "c11-isc-computer-hardware",
+  title: "Computer Hardware",
+  icon: "🔌",
+  description: "Elementary logic gates and their truth tables, switching circuits, NAND and NOR as universal gates, and the combinational circuits built from gates: half adder, full adder, decoder, encoder and multiplexer.",
+  lessons: [
+    {
+      slug: "c11-isc-logic-gates",
+      title: "Logic Gates and Switching Circuits",
+      summary: "NOT, AND, OR, NAND, NOR, XOR and XNOR gates with their Boolean expressions and truth tables; how gates match propositional connectives and switches in series and parallel; simulating gates with Java's bitwise operators.",
+      minutes: 22,
+      xp: 50,
+      blocks: [
+        {
+          type: "illustration",
+          emoji: "🔦",
+          caption: "Two switches control one bulb in a corridor. If they are in series, both must be ON for light; if they are in parallel, either one will do. Every chip in your phone is built from millions of tiny switches combined in exactly these ways.",
+        },
+        {
+          type: "text",
+          md: "A **logic gate** is an electronic circuit with one or more inputs and one output, where every input and the output is a **binary signal**: 1 (high voltage, true) or 0 (low voltage, false). The output depends only on the present inputs, according to a fixed rule given by the gate's **truth table**.\n\nGates are the hardware form of propositional logic: AND matches ∧, OR matches ∨, NOT matches ~, 1 matches T and 0 matches F. In **Boolean algebra** we write A·B (or AB) for AND, A + B for OR and A' for NOT A.",
+        },
+        {
+          type: "table",
+          headers: ["Gate", "Expression", "Output is 1 when", "Symbol (in words)"],
+          rows: [
+            ["**NOT** (inverter)", "X = A'", "the input is 0", "triangle with a small circle (bubble) at the tip"],
+            ["**AND**", "X = A·B", "all inputs are 1", "D-shape: flat back, round front"],
+            ["**OR**", "X = A + B", "at least one input is 1", "curved back, pointed front"],
+            ["**NAND**", "X = (A·B)'", "at least one input is 0", "AND symbol with a bubble at the output"],
+            ["**NOR**", "X = (A + B)'", "all inputs are 0", "OR symbol with a bubble at the output"],
+            ["**XOR**", "X = A ⊕ B = A'B + AB'", "the inputs are different", "OR symbol with an extra curved line at the back"],
+            ["**XNOR**", "X = (A ⊕ B)' = A'B' + AB", "the inputs are the same", "XOR symbol with a bubble at the output"],
+          ],
+        },
+        {
+          type: "table",
+          headers: ["A", "B", "AND", "OR", "NAND", "NOR", "XOR", "XNOR"],
+          rows: [
+            ["0", "0", "0", "0", "1", "1", "0", "1"],
+            ["0", "1", "0", "1", "1", "0", "1", "0"],
+            ["1", "0", "0", "1", "1", "0", "1", "0"],
+            ["1", "1", "1", "1", "0", "0", "0", "1"],
+          ],
+        },
+        {
+          type: "text",
+          md: "**Switching circuits.** Think of a switch as a variable: closed = 1, open = 0, and the lamp glowing = output 1.\n\n- Two switches in **series**: the lamp glows only if both are closed. This is **AND** (A·B).\n- Two switches in **parallel**: the lamp glows if either is closed. This is **OR** (A + B).\n\nSo a Boolean expression can be drawn as a switching circuit, as a gate circuit, or written as a propositional formula; all three describe the same function.",
+        },
+        {
+          type: "example",
+          title: "Evaluating a gate circuit",
+          problem: "A circuit gives X = (A + B)' · (B ⊕ C). Find X for A = 0, B = 0, C = 1, and for A = 0, B = 1, C = 0.",
+          steps: [
+            "First input set: A + B = 0 + 0 = 0, so the NOR part (A + B)' = 1.",
+            "B ⊕ C = 0 ⊕ 1 = 1 (inputs differ). X = 1 · 1 = **1**.",
+            "Second input set: A + B = 0 + 1 = 1, so (A + B)' = 0.",
+            "Whatever B ⊕ C is, X = 0 · (anything) = **0**.",
+          ],
+          answer: "X = 1 for (0, 0, 1) and X = 0 for (0, 1, 0).",
+        },
+        {
+          type: "mistake",
+          wrong: "A NAND gate gives 1 only when all inputs are 0, the same as \"NOT of each input, then AND\".",
+          right: "NAND = NOT of (AND): (A·B)' is 1 whenever **at least one** input is 0, so it is 0 only for 1, 1. By De Morgan's law (A·B)' = A' + B', not A'·B'. The gate that is 1 only for all-0 inputs is **NOR**: (A + B)' = A'·B'.",
+          why: "The bubble seems to \"flip\" each input, so learners invert the inputs and keep the AND. But the bubble sits on the output. Pushing it to the inputs changes AND into OR, exactly as De Morgan's law says.",
+        },
+        {
+          type: "checkpoint",
+          questions: [
+            {
+              kind: "mcq",
+              q: "Which gate gives output 1 only when its two inputs are different?",
+              options: ["XOR", "XNOR", "NOR", "NAND"],
+              answer: 0,
+              explain: "XOR (exclusive OR) is 1 for 01 and 10. XNOR is the opposite: 1 when the inputs are the same.",
+            },
+          ],
+        },
+        {
+          type: "code",
+          lang: "java",
+          caption: "Gates.java: Java's bitwise operators & | ^ act as gates on 0 and 1",
+          code: `public class Gates
+{
+    public static void main(String[] args)
+    {
+        System.out.println("A B  AND OR XOR NAND NOR XNOR");
+        for (int a = 0; a <= 1; a++)
+        {
+            for (int b = 0; b <= 1; b++)
+            {
+                int and = a & b;
+                int or = a | b;
+                int xor = a ^ b;
+                System.out.println(a + " " + b + "   " + and + "   " + or + "   " + xor
+                        + "    " + (and ^ 1) + "    " + (or ^ 1) + "    " + (xor ^ 1));
+            }
+        }
+        System.out.println("~1 = " + (~1) + ", 1 ^ 1 = " + (1 ^ 1));
+    }
+}`,
+        },
+        {
+          type: "text",
+          md: "The program prints the same four rows as the truth table above (in the order 00, 01, 10, 11), then the line `~1 = -2, 1 ^ 1 = 0`.\n\nThat last line matters. `~` inverts **all 32 bits** of an `int`, so `~1` is −2, not 0. To invert a single bit that is 0 or 1, use `x ^ 1` (XOR with 1 flips the bit).",
+        },
+        {
+          type: "activity",
+          activity: {
+            kind: "match",
+            prompt: "Match each description to its gate.",
+            pairs: [
+              ["Output 0 only when all inputs are 1", "NAND"],
+              ["Output 1 only when all inputs are 0", "NOR"],
+              ["Output 1 when the inputs are equal", "XNOR"],
+              ["Two switches in series with a lamp", "AND"],
+              ["Two switches in parallel with a lamp", "OR"],
+            ],
+            explain: "NAND and NOR are AND and OR with the output inverted. Series switches need both closed (AND); parallel switches need either (OR).",
+          },
+        },
+        {
+          type: "callout",
+          tone: "exam",
+          title: "ISC tip",
+          md: "When you draw a gate circuit in the paper, label every intermediate output with its expression (for example \"A + B\" after the OR gate). If the final expression is wrong, the labels still earn part marks. Draw the bubble clearly on NAND, NOR and XNOR; without it the gate is a different one.",
+        },
+        {
+          type: "keypoints",
+          items: [
+            "AND: 1 if all inputs are 1. OR: 1 if any input is 1. NOT: inverts.",
+            "NAND = (AB)', 0 only for all 1s. NOR = (A + B)', 1 only for all 0s.",
+            "XOR = A'B + AB' (1 when inputs differ); XNOR = A'B' + AB (1 when equal).",
+            "Series switches = AND, parallel switches = OR.",
+            "In Java, `&`, `|`, `^` work as gates on 0/1; flip a bit with `^ 1`, not `~`.",
+          ],
+        },
+      ],
+      flashcards: [
+        { front: "Logic gate", back: "An electronic circuit that takes one or more binary inputs and gives one binary output according to a fixed logical rule." },
+        { front: "NAND gate", back: "X = (A·B)'. Output is 0 only when all inputs are 1." },
+        { front: "NOR gate", back: "X = (A + B)'. Output is 1 only when all inputs are 0." },
+        { front: "XOR gate", back: "X = A ⊕ B = A'B + AB'. Output is 1 when the two inputs are different." },
+        { front: "XNOR gate", back: "X = A'B' + AB. Output is 1 when the two inputs are the same (equality detector)." },
+        { front: "Switches in series", back: "Behave like AND: the lamp glows only if all switches are closed." },
+        { front: "Switches in parallel", back: "Behave like OR: the lamp glows if any switch is closed." },
+        { front: "Java: ~1 vs 1 ^ 1", back: "~1 = −2 (all 32 bits inverted); 1 ^ 1 = 0 (one bit flipped)." },
+      ],
+      quiz: [
+        {
+          kind: "mcq",
+          q: "A 3-input AND gate has inputs 1, 1, 0. Its output is:",
+          options: ["0", "1", "Undefined", "Same as the last input inverted"],
+          answer: 0,
+          explain: "AND needs every input to be 1.",
+        },
+        {
+          kind: "mcq",
+          q: "For A = 1, B = 0, which gate gives output 0?",
+          options: ["NOR", "OR", "NAND", "XOR"],
+          answer: 0,
+          explain: "A + B = 1, so (A + B)' = 0. OR, NAND and XOR all give 1 for these inputs.",
+        },
+        {
+          kind: "fill",
+          q: "The Boolean expression of an XNOR gate is A'B' + ___.",
+          answer: ["AB", "A.B", "A·B", "BA"],
+          explain: "XNOR is 1 when both are 0 (A'B') or both are 1 (AB).",
+        },
+        {
+          kind: "truefalse",
+          q: "Two switches connected in parallel with a lamp represent the AND operation.",
+          answer: false,
+          explain: "Parallel switches give OR: closing either one completes the circuit. Series switches give AND.",
+        },
+        {
+          kind: "numeric",
+          q: "What does `System.out.println(1 ^ 0 ^ 1);` print in Java?",
+          answer: 0,
+          explain: "1 ^ 0 = 1, then 1 ^ 1 = 0. A chain of XORs is 1 when the number of 1s is odd; here there are two 1s.",
+          difficulty: 2,
+        },
+        {
+          kind: "mcq",
+          q: "X = (A·B)' + C. For A = 1, B = 1, C = 0, X is:",
+          options: ["0", "1", "Depends on the gate type", "Undefined"],
+          answer: 0,
+          explain: "A·B = 1, so (A·B)' = 0, and 0 + 0 = 0.",
+          difficulty: 2,
+        },
+        {
+          kind: "multi",
+          q: "Which gates give output 1 when both inputs are 0? (Choose all that apply)",
+          options: ["NAND", "NOR", "XNOR", "XOR", "OR"],
+          answers: [0, 1, 2],
+          explain: "NAND: (0·0)' = 1. NOR: (0 + 0)' = 1. XNOR: inputs equal, so 1. XOR and OR give 0.",
+        },
+        {
+          kind: "mcq",
+          q: "Which propositional connective corresponds to the XNOR gate?",
+          options: ["⇔ (biconditional)", "⇒ (implication)", "∨ (disjunction)", "∧ (conjunction)"],
+          answer: 0,
+          explain: "Both are true exactly when the two inputs have the same value.",
+          difficulty: 2,
+        },
+      ],
+    },
+    {
+      slug: "c11-isc-universal-gates",
+      title: "NAND and NOR: the Universal Gates",
+      summary: "Why NAND and NOR are called universal, building NOT, AND, OR and XOR from NAND gates alone and from NOR gates alone, and converting an AND-OR circuit into a NAND-only or NOR-only circuit.",
+      minutes: 22,
+      xp: 50,
+      blocks: [
+        {
+          type: "text",
+          md: "Every Boolean function can be written using only AND, OR and NOT. So if one kind of gate can make all three, it can make **any** circuit. Such a gate is called a **universal gate**. NAND and NOR are both universal.\n\nThis is a practical advantage: a chip factory can make millions of identical NAND gates (they are also cheap and fast in silicon) and wire them into any circuit.",
+        },
+        {
+          type: "table",
+          headers: ["Build", "Using NAND only", "NAND gates", "Using NOR only", "NOR gates"],
+          rows: [
+            ["NOT A", "(A·A)' = A'", "1", "(A + A)' = A'", "1"],
+            ["A AND B", "((A·B)')' : NAND followed by a NAND-inverter", "2", "(A' + B')' : invert each input, then NOR", "3"],
+            ["A OR B", "(A'·B')' : invert each input, then NAND", "3", "((A + B)')' : NOR followed by a NOR-inverter", "2"],
+          ],
+        },
+        {
+          type: "example",
+          title: "Proving that NAND makes OR",
+          problem: "Show that the circuit \"NAND each input with itself, then NAND the two results\" gives A + B.",
+          steps: [
+            "The first gate gives (A·A)' = A' (idempotent law A·A = A). The second gives B'.",
+            "The third gate gives (A'·B')'.",
+            "De Morgan's law: (A'·B')' = (A')' + (B')'.",
+            "Double complement: (A')' = A, so the output is A + B. Three NAND gates in all.",
+          ],
+          answer: "(A'·B')' = A + B, so 3 NAND gates make an OR gate.",
+        },
+        {
+          type: "mistake",
+          wrong: "To build an AND gate from NOR gates I need 2 gates, just as I need 2 NAND gates.",
+          right: "AND from NOR needs **3** gates: invert A and invert B (2 NOR gates), then NOR them: (A' + B')' = A·B. It is OR that needs only 2 NOR gates. The two tables are mirror images: NAND makes AND cheaply, NOR makes OR cheaply.",
+          why: "Learners copy the NAND table without checking the logic. A NAND gate already contains an AND (just add an inverter); a NOR gate already contains an OR. The \"other\" operation needs De Morgan's law and two extra inverters.",
+        },
+        {
+          type: "text",
+          md: "**Converting a circuit to NAND only.** An expression in **sum-of-products** form (AND gates feeding an OR gate) converts directly: replace every AND and the final OR with NAND gates. Because F = AB + CD = ((AB)'·(CD)')' by De Morgan's law, three NAND gates do the job.\n\n**Converting to NOR only.** An expression in **product-of-sums** form (OR gates feeding an AND gate) converts the same way to NOR gates: F = (A + B)(C + D) = ((A + B)' + (C + D)')'.",
+        },
+        {
+          type: "checkpoint",
+          questions: [
+            {
+              kind: "numeric",
+              q: "How many NAND gates are needed to make a 2-input OR gate?",
+              answer: 3,
+              explain: "Two NAND gates act as inverters for A and B, then a third NAND gives (A'B')' = A + B.",
+            },
+          ],
+        },
+        {
+          type: "code",
+          lang: "java",
+          caption: "NandOnly.java: every gate built from one method, nand()",
+          code: `public class NandOnly
+{
+    static int nand(int a, int b)
+    {
+        return (a & b) ^ 1;
+    }
+
+    static int not(int a)
+    {
+        return nand(a, a);                     // 1 NAND gate
+    }
+
+    static int and(int a, int b)
+    {
+        return not(nand(a, b));                // 2 NAND gates
+    }
+
+    static int or(int a, int b)
+    {
+        return nand(not(a), not(b));           // 3 NAND gates
+    }
+
+    static int xor(int a, int b)
+    {
+        int m = nand(a, b);                    // 4 NAND gates
+        return nand(nand(a, m), nand(b, m));
+    }
+
+    public static void main(String[] args)
+    {
+        System.out.println("A B  NOT A  AND  OR  XOR");
+        for (int a = 0; a <= 1; a++)
+            for (int b = 0; b <= 1; b++)
+                System.out.println(a + " " + b + "    " + not(a) + "     " + and(a, b)
+                        + "    " + or(a, b) + "    " + xor(a, b));
+    }
+}`,
+        },
+        {
+          type: "table",
+          headers: ["A", "B", "NOT A", "AND", "OR", "XOR"],
+          rows: [
+            ["0", "0", "1", "0", "0", "0"],
+            ["0", "1", "1", "0", "1", "1"],
+            ["1", "0", "0", "0", "1", "1"],
+            ["1", "1", "0", "1", "1", "0"],
+          ],
+        },
+        {
+          type: "example",
+          title: "Why the 4-NAND XOR works",
+          problem: "In `xor()`, m = (AB)'. Show that nand(nand(a, m), nand(b, m)) equals A ⊕ B.",
+          steps: [
+            "nand(a, m) = (A·(AB)')'. nand(b, m) = (B·(AB)')'.",
+            "The last NAND of two NANDs gives an OR of the products: A·(AB)' + B·(AB)' (De Morgan and double complement).",
+            "Factor out (AB)': (A + B)·(AB)' = (A + B)(A' + B') by De Morgan.",
+            "Multiply out: AA' + AB' + A'B + BB' = 0 + AB' + A'B + 0 = A ⊕ B.",
+          ],
+          answer: "The four-NAND circuit gives AB' + A'B = A ⊕ B, matching the XOR column printed by the program.",
+        },
+        {
+          type: "activity",
+          activity: {
+            kind: "reveal",
+            prompt: "How many NOR gates make a 2-input AND gate?",
+            emoji: "🧮",
+            options: ["3", "2", "1", "4"],
+            answer: 0,
+            trap: 1,
+            explain: "Two NOR gates invert A and B; a third gives (A' + B')' = A·B. Two NOR gates are enough only for OR.",
+          },
+        },
+        {
+          type: "callout",
+          tone: "exam",
+          title: "ISC tip",
+          md: "\"Show that NAND (or NOR) is a universal gate\" is a frequent question. Draw all three circuits (NOT, AND, OR) and write the Boolean proof under each one. Give the gate count; it shows you understand the circuit.",
+        },
+        {
+          type: "keypoints",
+          items: [
+            "A universal gate can build NOT, AND and OR, so it can build any circuit.",
+            "NAND: NOT = 1, AND = 2, OR = 3 gates. NOR: NOT = 1, OR = 2, AND = 3 gates.",
+            "XOR needs 4 NAND gates.",
+            "Sum of products (AND-OR) → all NAND; product of sums (OR-AND) → all NOR.",
+            "Every conversion is justified by De Morgan's law and double complement.",
+          ],
+        },
+      ],
+      flashcards: [
+        { front: "Universal gate", back: "A gate from which every other gate (and so every Boolean function) can be built. NAND and NOR are universal." },
+        { front: "NOT from NAND", back: "Join both inputs: (A·A)' = A'." },
+        { front: "AND from NAND", back: "NAND followed by a NAND used as an inverter: ((AB)')' = AB. 2 gates." },
+        { front: "OR from NAND", back: "Invert each input with a NAND, then NAND them: (A'B')' = A + B. 3 gates." },
+        { front: "OR from NOR", back: "NOR followed by a NOR inverter: ((A + B)')' = A + B. 2 gates." },
+        { front: "AND from NOR", back: "Invert each input with a NOR, then NOR them: (A' + B')' = AB. 3 gates." },
+        { front: "AB + CD with NAND only", back: "((AB)'·(CD)')': two NANDs for the products and one NAND to combine them." },
+        { front: "XOR from NAND", back: "4 gates: m = (AB)', then ((A·m)'·(B·m)')'." },
+      ],
+      quiz: [
+        {
+          kind: "mcq",
+          q: "Why are NAND and NOR called universal gates?",
+          options: ["Any Boolean function can be built using only one of them", "They have the most inputs", "They are used in every computer's display", "They are the only gates with a bubble"],
+          answer: 0,
+          explain: "Each can make NOT, AND and OR, and those three can make any function.",
+        },
+        {
+          kind: "numeric",
+          q: "How many NOR gates are needed to make a 2-input OR gate?",
+          answer: 2,
+          explain: "A NOR followed by a NOR used as an inverter: ((A + B)')' = A + B.",
+        },
+        {
+          kind: "fill",
+          q: "By De Morgan's law, (A'·B')' = ___.",
+          answer: ["A+B", "A + B", "B+A", "B + A"],
+          explain: "(A'·B')' = (A')' + (B')' = A + B.",
+        },
+        {
+          kind: "truefalse",
+          q: "Connecting both inputs of a NOR gate together makes a NOT gate.",
+          answer: true,
+          explain: "(A + A)' = A' because A + A = A.",
+        },
+        {
+          kind: "mcq",
+          q: "F = AB + CD is to be built with NAND gates only. The circuit is:",
+          options: ["NAND(NAND(A, B), NAND(C, D))", "NAND(NAND(A, C), NAND(B, D))", "NOR(NAND(A, B), NAND(C, D))", "NAND(A, B, C, D)"],
+          answer: 0,
+          explain: "((AB)'·(CD)')' = AB + CD by De Morgan's law. This AND-OR to NAND-NAND swap works for any sum of products.",
+          difficulty: 2,
+        },
+        {
+          kind: "mcq",
+          q: "The output of NOR(NOR(A, A), NOR(B, B)) is:",
+          options: ["A·B", "A + B", "(A·B)'", "A ⊕ B"],
+          answer: 0,
+          explain: "The inner gates give A' and B'. NOR of them is (A' + B')' = A·B.",
+          difficulty: 2,
+        },
+        {
+          kind: "multi",
+          q: "Which statements are true? (Choose all that apply)",
+          options: ["A product-of-sums circuit converts directly to all NOR gates", "XOR needs 4 NAND gates", "AND needs 3 NAND gates", "NOT needs 1 NOR gate"],
+          answers: [0, 1, 3],
+          explain: "AND from NAND needs only 2 gates; it is OR that needs 3.",
+          difficulty: 2,
+        },
+      ],
+    },
+    {
+      slug: "c11-isc-adders-encoders-mux",
+      title: "Adders, Decoders, Encoders and Multiplexers",
+      summary: "Half adder and full adder with their expressions and truth tables, a full adder from two half adders, 2-to-4 and 3-to-8 decoders, the octal-to-binary encoder, and 2:1 and 4:1 multiplexers.",
+      minutes: 25,
+      xp: 60,
+      blocks: [
+        {
+          type: "text",
+          md: "A **combinational circuit** is a circuit of gates whose outputs depend only on the present inputs (it has no memory). The adders, decoders, encoders and multiplexers in this lesson are all combinational circuits, and each is a small part inside a processor.",
+        },
+        {
+          type: "text",
+          md: "**Half adder.** Adds two bits A and B and gives a **sum** S and a **carry** C.\n\nS = A ⊕ B = A'B + AB' and C = A·B. So a half adder is one XOR gate and one AND gate. It is called \"half\" because it cannot accept a carry coming in from a previous column.\n\n**Full adder.** Adds three bits: A, B and an incoming carry Cin.\n\nS = A ⊕ B ⊕ Cin and Cout = AB + BCin + ACin = AB + Cin(A ⊕ B).\n\nA full adder can be built from **two half adders and one OR gate**: the first adds A and B, the second adds that sum to Cin, and the OR joins the two carries.",
+        },
+        {
+          type: "table",
+          headers: ["A", "B", "Cin", "S", "Cout"],
+          rows: [
+            ["0", "0", "0", "0", "0"],
+            ["0", "0", "1", "1", "0"],
+            ["0", "1", "0", "1", "0"],
+            ["0", "1", "1", "0", "1"],
+            ["1", "0", "0", "1", "0"],
+            ["1", "0", "1", "0", "1"],
+            ["1", "1", "0", "0", "1"],
+            ["1", "1", "1", "1", "1"],
+          ],
+        },
+        {
+          type: "code",
+          lang: "java",
+          caption: "FullAdder.java: two half adders and an OR gate; prints exactly the table above",
+          code: `public class FullAdder
+{
+    public static void main(String[] args)
+    {
+        System.out.println("A B Cin | S Cout");
+        for (int a = 0; a <= 1; a++)
+            for (int b = 0; b <= 1; b++)
+                for (int c = 0; c <= 1; c++)
+                {
+                    int s1 = a ^ b;             // first half adder: sum
+                    int c1 = a & b;             // first half adder: carry
+                    int sum = s1 ^ c;           // second half adder: sum
+                    int c2 = s1 & c;            // second half adder: carry
+                    int cout = c1 | c2;         // OR gate joins the carries
+                    System.out.println(a + " " + b + "  " + c + "  | " + sum + "  " + cout);
+                }
+    }
+}`,
+        },
+        {
+          type: "example",
+          title: "Why Cout = AB + Cin(A ⊕ B)",
+          problem: "From the truth table, derive Cout and show it equals AB + BCin + ACin.",
+          steps: [
+            "Cout is 1 in rows 011, 101, 110 and 111. As minterms: A'BCin + AB'Cin + ABCin' + ABCin.",
+            "Group the last two: AB(Cin' + Cin) = AB.",
+            "Group the first two: Cin(A'B + AB') = Cin(A ⊕ B). So Cout = AB + Cin(A ⊕ B).",
+            "In words: a carry comes out if both A and B are 1, or if exactly one of them is 1 and a carry comes in. That is the same as \"at least two of the three inputs are 1\", i.e. AB + BCin + ACin.",
+          ],
+          answer: "Cout = AB + Cin(A ⊕ B) = AB + BCin + ACin (the majority function of A, B, Cin).",
+        },
+        {
+          type: "mistake",
+          wrong: "A full adder is just two half adders joined together; the two carries go into a second XOR (or AND) gate.",
+          right: "The two carries are joined by an **OR** gate. They can never both be 1 at once (if A = B = 1 then A ⊕ B = 0, so the second carry is 0), so OR gives the correct carry.",
+          why: "\"Adding\" the carries sounds like it needs another adder or XOR. Because the two carries are never 1 together, XOR and OR would give the same result here, but the standard circuit and the board answer use an OR gate.",
+        },
+        {
+          type: "checkpoint",
+          questions: [
+            {
+              kind: "mcq",
+              q: "For a full adder with A = 1, B = 1, Cin = 1, the outputs are:",
+              options: ["S = 1, Cout = 1", "S = 0, Cout = 1", "S = 1, Cout = 0", "S = 0, Cout = 0"],
+              answer: 0,
+              explain: "1 + 1 + 1 = 3 = binary 11: sum 1, carry 1.",
+            },
+          ],
+        },
+        {
+          type: "text",
+          md: "**Decoder.** Has n inputs and up to $2^n$ outputs; for each input code **exactly one** output is 1. A 2-to-4 decoder with inputs A (MSB) and B gives D0 = A'B', D1 = A'B, D2 = AB', D3 = AB, so it needs two NOT and four AND gates. A 3-to-8 decoder turns a 3-bit code into one of 8 lines. Decoders select a memory chip from an address.\n\n**Encoder.** The reverse: $2^n$ input lines (only one active at a time) and n outputs giving the code of the active line. In an **octal-to-binary (8-to-3) encoder**: A2 = D4 + D5 + D6 + D7, A1 = D2 + D3 + D6 + D7, A0 = D1 + D3 + D5 + D7. Each output is one OR gate. A **decimal-to-BCD encoder** turns a key press 0 to 9 into a 4-bit code.\n\n**Multiplexer (MUX).** A **data selector**: $2^n$ data inputs, n **select lines**, one output. The select lines choose which input goes to the output. 2:1 MUX: Y = S'I0 + SI1. 4:1 MUX: Y = S1'S0'I0 + S1'S0I1 + S1S0'I2 + S1S0I3.",
+        },
+        {
+          type: "example",
+          title: "Encoder output",
+          problem: "In an octal-to-binary encoder, input line D6 is 1 and all others are 0. Find A2 A1 A0.",
+          steps: [
+            "A2 = D4 + D5 + D6 + D7 = 0 + 0 + 1 + 0 = 1.",
+            "A1 = D2 + D3 + D6 + D7 = 1.",
+            "A0 = D1 + D3 + D5 + D7 = 0 (D6 is not in this sum).",
+          ],
+          answer: "A2 A1 A0 = 110, the binary code of 6.",
+        },
+        {
+          type: "activity",
+          activity: {
+            kind: "match",
+            prompt: "Match each circuit to what it does.",
+            pairs: [
+              ["Half adder", "adds 2 bits, gives sum and carry"],
+              ["Full adder", "adds 3 bits including a carry in"],
+              ["Decoder", "n-bit code in, one of 2ⁿ lines active"],
+              ["Encoder", "one active line in, its n-bit code out"],
+              ["Multiplexer", "select lines pick one of many inputs"],
+            ],
+            explain: "Decoders and encoders are reverses of each other. A multiplexer is many-to-one; its select lines work like a decoder inside it.",
+          },
+        },
+        {
+          type: "callout",
+          tone: "exam",
+          title: "ISC tip",
+          md: "For each circuit, the board expects three things: the **truth table**, the **Boolean expressions** and the **logic diagram**. For a full adder made of half adders, label the outputs of the first half adder (A ⊕ B and AB) on the diagram. Remember the number of lines: a 3-to-8 decoder has 3 inputs and 8 outputs; an 8:1 MUX has 8 data inputs and 3 select lines.",
+        },
+        {
+          type: "keypoints",
+          items: [
+            "Half adder: S = A ⊕ B, C = AB (one XOR, one AND).",
+            "Full adder: S = A ⊕ B ⊕ Cin, Cout = AB + Cin(A ⊕ B); two half adders + an OR gate.",
+            "Decoder: n inputs → 2ⁿ outputs, one active. Encoder: the reverse.",
+            "MUX: 2ⁿ inputs, n select lines, 1 output; 4:1 MUX Y = S1'S0'I0 + S1'S0I1 + S1S0'I2 + S1S0I3.",
+          ],
+        },
+      ],
+      flashcards: [
+        { front: "Combinational circuit", back: "A gate circuit whose outputs depend only on the present inputs; it has no memory." },
+        { front: "Half adder expressions", back: "Sum = A ⊕ B; Carry = A·B." },
+        { front: "Full adder expressions", back: "Sum = A ⊕ B ⊕ Cin; Cout = AB + BCin + ACin = AB + Cin(A ⊕ B)." },
+        { front: "Full adder from half adders", back: "Two half adders and one OR gate (the OR joins the two carries)." },
+        { front: "Decoder", back: "A circuit with n inputs and 2ⁿ outputs in which exactly one output is active for each input code." },
+        { front: "Encoder", back: "A circuit with 2ⁿ inputs (one active) and n outputs giving the binary code of the active input." },
+        { front: "Multiplexer", back: "A data selector: 2ⁿ data inputs, n select lines and one output." },
+        { front: "2:1 MUX expression", back: "Y = S'I0 + SI1." },
+        { front: "Octal-to-binary encoder, A0", back: "A0 = D1 + D3 + D5 + D7 (the odd-numbered lines)." },
+      ],
+      quiz: [
+        {
+          kind: "mcq",
+          q: "A half adder is made of:",
+          options: ["one XOR gate and one AND gate", "two XOR gates", "one OR gate and one AND gate", "two half adders and an OR gate"],
+          answer: 0,
+          explain: "Sum = A ⊕ B (XOR), carry = AB (AND). Two half adders and an OR gate make a full adder.",
+        },
+        {
+          kind: "fill",
+          q: "The sum output of a full adder is S = A ⊕ B ⊕ ___.",
+          answer: ["Cin", "C", "carry in", "Ci"],
+          explain: "The full adder adds the incoming carry as a third bit.",
+        },
+        {
+          kind: "numeric",
+          q: "How many select lines does a 16:1 multiplexer need?",
+          answer: 4,
+          explain: "$2^4$ = 16, so 4 select lines.",
+        },
+        {
+          kind: "mcq",
+          q: "In a 2-to-4 decoder (A is the MSB), which output is 1 when A = 1, B = 0?",
+          options: ["D2", "D1", "D3", "D0"],
+          answer: 0,
+          explain: "AB = 10 is binary 2, so D2 = AB' is active.",
+        },
+        {
+          kind: "truefalse",
+          q: "A decoder converts one active input line into a binary code.",
+          answer: false,
+          explain: "That is an encoder. A decoder converts a binary code into one active output line.",
+        },
+        {
+          kind: "mcq",
+          q: "A 4:1 MUX has I0 = 0, I1 = 1, I2 = 1, I3 = 0. If S1 = 1 and S0 = 0, the output Y is:",
+          options: ["1", "0", "Cannot be found", "Equal to S0"],
+          answer: 0,
+          explain: "S1S0 = 10 selects I2, which is 1.",
+          difficulty: 2,
+        },
+        {
+          kind: "multi",
+          q: "For which inputs is the carry out of a full adder 1? (Choose all that apply)",
+          options: ["A = 1, B = 1, Cin = 0", "A = 0, B = 1, Cin = 1", "A = 1, B = 0, Cin = 0", "A = 1, B = 1, Cin = 1"],
+          answers: [0, 1, 3],
+          explain: "Cout is 1 when at least two of the three inputs are 1.",
+          difficulty: 2,
+        },
+        {
+          kind: "mcq",
+          q: "In FullAdder.java, why is `c1 | c2` used rather than `c1 + c2`?",
+          options: ["The carries are bits and are joined by an OR gate; they are never both 1, so | gives 0 or 1", "+ does not compile for int", "| is faster to type", "c1 + c2 would always be 2"],
+          answer: 0,
+          explain: "c1 and c2 cannot both be 1, so here `c1 + c2` would give the same values, but `|` models the OR gate of the circuit.",
+          difficulty: 3,
+        },
+      ],
+    },
+    {
+      slug: "c11-isc-hardware-board-practice",
+      title: "Board Practice: Computer Hardware",
+      summary: "Mixed ISC-style questions on gate outputs, NAND/NOR conversion, adders, decoders, encoders and multiplexers, with a multiplexer program to trace and write.",
+      minutes: 22,
+      xp: 55,
+      blocks: [
+        {
+          type: "text",
+          md: "Board questions on hardware usually ask you to (1) find the output of a given circuit, (2) draw a circuit for an expression, often with NAND or NOR only, and (3) give the truth table, expressions and diagram of an adder, decoder, encoder or multiplexer.",
+        },
+        {
+          type: "example",
+          title: "Expression from a circuit description",
+          problem: "A and B feed a NAND gate. B and C feed a NOR gate. The two outputs feed an XOR gate giving X. Write X and find it for A = 1, B = 1, C = 0.",
+          steps: [
+            "NAND output: (AB)'. NOR output: (B + C)'.",
+            "X = (AB)' ⊕ (B + C)'.",
+            "A = 1, B = 1: (AB)' = 0. B + C = 1, so (B + C)' = 0.",
+            "X = 0 ⊕ 0 = 0.",
+          ],
+          answer: "X = (AB)' ⊕ (B + C)'; for (1, 1, 0), X = 0.",
+        },
+        {
+          type: "example",
+          title: "NOR-only circuit",
+          problem: "Draw (describe) F = (A + B)·(C + D) using NOR gates only, and give the gate count.",
+          steps: [
+            "Use NOR gates for the sums: P = (A + B)' and Q = (C + D)'.",
+            "NOR them: (P + Q)' = ((A + B)' + (C + D)')'.",
+            "De Morgan: ((A + B)')'·((C + D)')' = (A + B)·(C + D).",
+          ],
+          answer: "Two NOR gates for the sums feed one NOR gate: 3 NOR gates in all.",
+        },
+        {
+          type: "mistake",
+          wrong: "To convert AB + CD to NAND only, I replace the AND gates by NAND gates and keep the OR gate.",
+          right: "Replace the **OR gate as well**: F = NAND(NAND(A, B), NAND(C, D)). Keeping the OR would give (AB)' + (CD)', which is a different function.",
+          why: "Only the product gates seem to \"match\" NAND. But the bubbles at the outputs of the first-level NANDs must be cancelled; a NAND at the second level (an OR with bubbled inputs, by De Morgan) does exactly that.",
+        },
+        {
+          type: "checkpoint",
+          questions: [
+            {
+              kind: "mcq",
+              q: "A 3-to-8 decoder has inputs A B C = 101 (A is the MSB). Which output is active?",
+              options: ["D5", "D3", "D6", "D2"],
+              answer: 0,
+              explain: "101 in binary is 5, so D5 = AB'C is 1 and all other outputs are 0.",
+            },
+          ],
+        },
+        {
+          type: "code",
+          lang: "java",
+          caption: "Mux4.java: a 4:1 multiplexer with I0 = 1, I1 = 0, I2 = 0, I3 = 1",
+          code: `public class Mux4
+{
+    public static void main(String[] args)
+    {
+        int[] in = {1, 0, 0, 1};        // data inputs I0, I1, I2, I3
+        System.out.println("S1 S0 | Y");
+        for (int s1 = 0; s1 <= 1; s1++)
+        {
+            for (int s0 = 0; s0 <= 1; s0++)
+            {
+                int n1 = s1 ^ 1, n0 = s0 ^ 1;
+                int y = (n1 & n0 & in[0]) | (n1 & s0 & in[1])
+                      | (s1 & n0 & in[2]) | (s1 & s0 & in[3]);
+                System.out.println(" " + s1 + "  " + s0 + " | " + y);
+            }
+        }
+    }
+}`,
+        },
+        {
+          type: "example",
+          title: "Trace Mux4.java",
+          problem: "Give the output of Mux4.java and name the gate that this multiplexer is acting as.",
+          steps: [
+            "S1S0 = 00 selects I0 = 1; 01 selects I1 = 0; 10 selects I2 = 0; 11 selects I3 = 1.",
+            "Only one product term can be 1 at a time, because only one of n1·n0, n1·s0, s1·n0, s1·s0 is 1.",
+            "Y is 1 when S1 and S0 are equal, so the MUX behaves as an XNOR gate of S1 and S0.",
+          ],
+          answer: "S1 S0 | Y\n 0  0 | 1\n 0  1 | 0\n 1  0 | 0\n 1  1 | 1\nThe MUX acts as an XNOR gate.",
+        },
+        {
+          type: "activity",
+          activity: {
+            kind: "order",
+            prompt: "Order the steps to build a full adder from half adders.",
+            items: [
+              "Feed A and B into the first half adder",
+              "Get A ⊕ B and AB from it",
+              "Feed A ⊕ B and Cin into the second half adder",
+              "Its sum output is S = A ⊕ B ⊕ Cin",
+              "OR the two carries to get Cout",
+            ],
+            explain: "The second half adder adds the incoming carry; the OR gate combines the carry from each half adder.",
+          },
+        },
+        {
+          type: "callout",
+          tone: "tip",
+          title: "Practical-exam tip",
+          md: "To make a 2:1 MUX program, write it as `y = (s ^ 1) & i0 | s & i1`; `&` has higher precedence than `|` in Java, so this reads as (S'·I0) + (S·I1). A program that checks a circuit should loop over **every** input combination; 3 inputs need 8 rows.",
+        },
+        {
+          type: "callout",
+          tone: "exam",
+          title: "ISC tip",
+          md: "Write the select-line combinations of a multiplexer in binary order (00, 01, 10, 11) next to I0, I1, I2, I3; examiners check that S1 is the more significant bit. In a decoder or encoder, state which input is the MSB.",
+        },
+        {
+          type: "keypoints",
+          items: [
+            "Label each gate's output with its expression, then evaluate step by step.",
+            "AND-OR → all NAND; OR-AND → all NOR; replace every gate, including the last one.",
+            "A MUX passes the input whose number equals the select code.",
+            "A full adder = 2 half adders + 1 OR gate.",
+          ],
+        },
+      ],
+      flashcards: [
+        { front: "NAND-only form of AB + CD", back: "NAND(NAND(A, B), NAND(C, D))." },
+        { front: "NOR-only form of (A + B)(C + D)", back: "NOR(NOR(A, B), NOR(C, D))." },
+        { front: "3-to-8 decoder, input 101", back: "Output D5 = AB'C is active." },
+        { front: "4:1 MUX with I0..I3 = 1, 0, 0, 1", back: "It gives Y = S1'S0' + S1S0, the XNOR of the select lines." },
+        { front: "Java precedence of & and |", back: "& binds more tightly than |, so a & b | c & d means (a & b) | (c & d)." },
+        { front: "Number of rows for a 3-input circuit", back: "2³ = 8." },
+      ],
+      quiz: [
+        {
+          kind: "mcq",
+          q: "X = (A ⊕ B)·C. For A = 1, B = 1, C = 1, X is:",
+          options: ["0", "1", "Undefined", "Equal to A"],
+          answer: 0,
+          explain: "A ⊕ B = 0 because the inputs are equal, and 0·1 = 0.",
+        },
+        {
+          kind: "mcq",
+          q: "Which expression gives the output of a 2:1 MUX?",
+          options: ["Y = S'I0 + SI1", "Y = SI0 + S'I1", "Y = I0 ⊕ I1", "Y = S(I0 + I1)"],
+          answer: 0,
+          explain: "When S = 0 the output follows I0; when S = 1 it follows I1.",
+        },
+        {
+          kind: "numeric",
+          q: "How many NAND gates are needed for F = AB + CD in NAND-only form?",
+          answer: 3,
+          explain: "Two NANDs for the products and one to combine them.",
+        },
+        {
+          kind: "fill",
+          q: "In an octal-to-binary encoder, A1 = D2 + D3 + D6 + ___.",
+          answer: ["D7"],
+          explain: "A1 is the middle bit; it is 1 for 2 (010), 3 (011), 6 (110) and 7 (111).",
+        },
+        {
+          kind: "truefalse",
+          q: "A half adder can add the carry coming from a lower column.",
+          answer: false,
+          explain: "A half adder has only two inputs. A full adder has the third input, Cin.",
+        },
+        {
+          kind: "mcq",
+          q: "What does `System.out.println((1 ^ 1) & 1 | 1 & 0);` print?",
+          options: ["0", "1", "2", "It does not compile"],
+          answer: 0,
+          explain: "(1 ^ 1) = 0; then & before |: (0 & 1) | (1 & 0) = 0 | 0 = 0. This is a 2:1 MUX with S = 1, I0 = 1, I1 = 0.",
+          difficulty: 3,
+        },
+        {
+          kind: "multi",
+          q: "Which are combinational circuits? (Choose all that apply)",
+          options: ["Full adder", "Multiplexer", "Decoder", "Encoder"],
+          answers: [0, 1, 2, 3],
+          explain: "All four have outputs that depend only on the present inputs.",
+        },
+      ],
+    },
+  ],
+};
+
+export const topics: Topic[] = [numbers, propLogic, hardware];
 
 /** Chapter title ("11:" / "12:" + exact title) → topic slug(s) that teach it. */
 export const links: Record<string, string | string[]> = {
   "11:Numbers": "c11-isc-numbers",
   "11:Propositional Logic": "c11-isc-propositional-logic",
+  "11:Computer Hardware": "c11-isc-computer-hardware",
 };

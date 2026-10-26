@@ -1743,11 +1743,557 @@ for A in (0, 1):
   ],
 };
 
-export const topics: Topic[] = [computerSystems, numberSystems, booleanLogic];
+/* ------------------------------------------------------------------ */
+const problemSolving: Topic = {
+  slug: "c11-cs-problem-solving",
+  title: "Introduction to Problem Solving",
+  icon: "🧠",
+  description: "Steps of problem solving, algorithms and their characteristics, flowcharts, pseudocode, flow of control, verifying and comparing algorithms, coding and decomposition.",
+  lessons: [
+    {
+      slug: "c11-cs-algorithms-flowcharts",
+      title: "Problem Solving Steps, Algorithms and Flowcharts",
+      summary: "The four steps of problem solving, what an algorithm is and the qualities of a good one, and how to draw a flowchart with the standard symbols.",
+      minutes: 20,
+      xp: 50,
+      blocks: [
+        {
+          type: "illustration",
+          emoji: "🍳",
+          caption: "A recipe for upma lists the ingredients, then exact steps in order, and ends when the dish is ready. A computer needs instructions written in the same careful way, because it cannot guess what you meant.",
+        },
+        {
+          type: "text",
+          md: "A computer can solve a problem only when it is told exactly how. **Problem solving** is the process of finding the problem, designing a solution and writing it as a program. It has four steps:\n\n1. **Analysing the problem**: understand what is given (the **input**) and what is wanted (the **output**).\n2. **Developing an algorithm**: write the step-by-step method in plain language.\n3. **Coding**: turn the algorithm into a program in a programming language such as Python.\n4. **Testing and debugging**: run the program with different inputs, find errors (**bugs**) and correct them.",
+        },
+        {
+          type: "activity",
+          activity: {
+            kind: "order",
+            prompt: "Put the problem-solving steps in order.",
+            items: ["Analyse the problem", "Develop an algorithm", "Code the algorithm", "Test and debug the program"],
+            explain: "You cannot plan a method before you know the input and output, and you cannot test code you have not written. Writing code first, without an algorithm, is the most common cause of confused programs.",
+          },
+        },
+        {
+          type: "text",
+          md: "An **algorithm** is a finite sequence of clear steps that solves a problem. A good algorithm has these characteristics:\n\n- **Precision**: each step is stated exactly, with no doubt about what to do.\n- **Uniqueness**: the result of each step is uniquely defined and depends only on the input and the earlier steps.\n- **Finiteness**: it stops after a finite number of steps.\n- **Input**: it takes zero or more inputs.\n- **Output**: it produces at least one result.",
+        },
+        {
+          type: "example",
+          title: "Writing an algorithm",
+          problem: "Write an algorithm to find the sum of the first N natural numbers.",
+          steps: [
+            "Step 1: Input N.",
+            "Step 2: Set total = 0 and count = 1.",
+            "Step 3: While count ≤ N, repeat steps 4 and 5.",
+            "Step 4: total = total + count. Step 5: count = count + 1.",
+            "Step 6: Print total. Step 7: Stop.",
+          ],
+          answer: "For N = 5 the algorithm adds 1 + 2 + 3 + 4 + 5 and prints 15. It is finite because count grows by 1 each time and the loop ends when count becomes 6.",
+        },
+        {
+          type: "code",
+          lang: "python",
+          runnable: true,
+          caption: "The same algorithm in Python. Change N and run again.",
+          code: t`N = 5
+total = 0
+count = 1
+while count <= N:
+    total = total + count
+    count = count + 1
+print("Sum of first", N, "natural numbers =", total)`,
+        },
+        {
+          type: "checkpoint",
+          questions: [
+            {
+              kind: "mcq",
+              q: "A set of steps keeps repeating and never stops. Which characteristic of an algorithm does it break?",
+              options: ["Finiteness", "Precision", "Input", "Uniqueness"],
+              answer: 0,
+              explain: "An algorithm must end after a finite number of steps.",
+            },
+          ],
+        },
+        {
+          type: "heading",
+          text: "Flowcharts",
+        },
+        {
+          type: "text",
+          md: "A **flowchart** is a picture of an algorithm. Each kind of step has its own box shape, and **arrows** show the order in which steps are carried out. A flowchart is easy to follow and makes loops and decisions visible at a glance.",
+        },
+        {
+          type: "table",
+          headers: ["Symbol", "Name", "Used for"],
+          rows: [
+            ["Oval (rounded rectangle)", "Terminal", "Start and Stop (End)"],
+            ["Parallelogram", "Input / Output", "reading data (INPUT) or showing a result (PRINT)"],
+            ["Rectangle", "Process", "a calculation or assignment, e.g. total = total + count"],
+            ["Diamond", "Decision", "a yes/no question, e.g. Is A > B?, with two exit arrows"],
+            ["Arrow", "Flow line", "joins symbols and shows the direction of flow"],
+          ],
+        },
+        {
+          type: "text",
+          md: "**Flowchart for the larger of two numbers:** Start (oval) → Input A, B (parallelogram) → Is A > B? (diamond). The **Yes** arrow goes to Print A (parallelogram); the **No** arrow goes to Print B (parallelogram). Both arrows then join and go to Stop (oval).",
+        },
+        {
+          type: "mistake",
+          wrong: "A decision box is just like a process box: one arrow in, one arrow out.",
+          right: "A **decision** (diamond) asks a yes/no question and always has **two** exits, labelled Yes and No (or True and False). A process (rectangle) has one exit.",
+          why: "When students draw a decision with one exit, the flowchart cannot show what happens in the other case. Every question has two possible answers, so it needs two paths.",
+        },
+        {
+          type: "callout",
+          tone: "exam",
+          title: "Board tip",
+          md: "Use the correct shape for every step and label both arrows of each diamond. Start and Stop must both appear. Marks are lost for using a rectangle for input or output: input and output always go in a parallelogram.",
+        },
+        {
+          type: "keypoints",
+          items: [
+            "Problem solving: analyse → develop an algorithm → code → test and debug.",
+            "An algorithm is a finite sequence of precise steps; a good one has precision, uniqueness, finiteness, input and output.",
+            "Flowchart symbols: oval (start/stop), parallelogram (input/output), rectangle (process), diamond (decision), arrow (flow).",
+            "A decision box has two exits, Yes and No.",
+          ],
+        },
+      ],
+      flashcards: [
+        { front: "Algorithm", back: "A finite sequence of clear, precise steps for solving a problem." },
+        { front: "Four steps of problem solving", back: "Analyse the problem, develop an algorithm, code, test and debug." },
+        { front: "Finiteness", back: "An algorithm must stop after a finite number of steps." },
+        { front: "Precision (of an algorithm)", back: "Every step is stated clearly and exactly." },
+        { front: "Parallelogram in a flowchart", back: "Input or output step." },
+        { front: "Diamond in a flowchart", back: "Decision: a yes/no question with two exit arrows." },
+        { front: "Oval in a flowchart", back: "Terminal: Start or Stop." },
+        { front: "Debugging", back: "Finding and correcting errors (bugs) in a program." },
+      ],
+      quiz: [
+        {
+          kind: "mcq",
+          q: "Which flowchart symbol is used for `total = total + count`?",
+          options: ["Rectangle (process)", "Diamond (decision)", "Parallelogram (input/output)", "Oval (terminal)"],
+          answer: 0,
+          explain: "A calculation or assignment is a process step.",
+        },
+        {
+          kind: "mcq",
+          q: "Which symbol is used for `PRINT total`?",
+          options: ["Parallelogram", "Rectangle", "Diamond", "Oval"],
+          answer: 0,
+          explain: "Input and output both use the parallelogram.",
+        },
+        {
+          kind: "truefalse",
+          q: "An algorithm must always take at least one input.",
+          answer: false,
+          explain: "An algorithm takes **zero or more** inputs (for example, printing the first 10 even numbers needs no input), but it must give at least one output.",
+          difficulty: 2,
+        },
+        {
+          kind: "order",
+          q: "Order the flowchart symbols for: read a number and print its square.",
+          items: ["Oval: Start", "Parallelogram: Input N", "Rectangle: S = N × N", "Parallelogram: Print S", "Oval: Stop"],
+          explain: "Start → input → process → output → stop.",
+        },
+        {
+          kind: "fill",
+          q: "Finding and removing errors from a program is called ___.",
+          answer: ["debugging"],
+          explain: "Errors are bugs; removing them is **debugging**.",
+        },
+        {
+          kind: "numeric",
+          q: "The sum algorithm in this lesson is run with N = 10. What does it print?",
+          answer: 55,
+          explain: "1 + 2 + … + 10 = 10 × 11 ÷ 2 = 55.",
+        },
+        {
+          kind: "multi",
+          q: "Select all characteristics of a good algorithm.",
+          options: ["Precision", "Finiteness", "Uniqueness", "It must be written in Python"],
+          answers: [0, 1, 2],
+          explain: "An algorithm is language-independent; it is written in plain steps and coded later.",
+        },
+      ],
+    },
+    {
+      slug: "c11-cs-pseudocode-decomposition",
+      title: "Pseudocode, Flow of Control, Verifying and Comparing Algorithms, Decomposition",
+      summary: "Writing pseudocode, the three kinds of flow of control, dry-running an algorithm, comparing two algorithms for the same problem, and breaking a big problem into parts.",
+      minutes: 22,
+      xp: 55,
+      blocks: [
+        {
+          type: "text",
+          md: "**Pseudocode** is a way of writing an algorithm in plain English mixed with a few keywords, set out like a program but not in any real programming language. It is easy to read, easy to turn into code, and lets you ignore language rules while planning. Common keywords: **INPUT**, **COMPUTE**, **PRINT**, **INCREMENT**, **DECREMENT**, **IF / ELSE**, **WHILE**, **TRUE / FALSE**.",
+        },
+        {
+          type: "example",
+          title: "Pseudocode with a decision",
+          problem: "Write pseudocode that reads a student's marks and prints Pass if the marks are 33 or more, otherwise Fail. Then write it in Python.",
+          steps: [
+            "INPUT marks",
+            "IF marks >= 33 THEN PRINT \"Pass\"",
+            "ELSE PRINT \"Fail\"",
+            "In Python: `if marks >= 33:` followed by an indented `print(\"Pass\")`, then `else:` with an indented `print(\"Fail\")`. With marks = 78 it prints Pass.",
+          ],
+          answer: "Pseudocode is close enough to Python that each line turns into one or two lines of code.",
+        },
+        {
+          type: "text",
+          md: "The order in which steps run is the **flow of control**. There are three kinds:\n\n- **Sequence**: steps run one after another, in the order written.\n- **Selection** (decision): one of two or more paths is chosen depending on a condition (IF / ELSE).\n- **Repetition** (iteration, loop): a set of steps is repeated while a condition is true (WHILE).",
+        },
+        {
+          type: "code",
+          lang: "python",
+          runnable: true,
+          caption: "Repetition: the two indented lines run five times.",
+          code: t`num = 3
+i = 1
+while i <= 5:
+    print(num, "x", i, "=", num * i)
+    i = i + 1`,
+        },
+        {
+          type: "activity",
+          activity: {
+            kind: "sort",
+            prompt: "Which flow of control does each task need?",
+            groups: ["Sequence", "Selection", "Repetition"],
+            items: [
+              { text: "Read length and breadth, then print the area", group: 0, hint: "The steps simply follow one another." },
+              { text: "Print Adult if age is 18 or more, else Minor", group: 1, hint: "A choice depends on a condition." },
+              { text: "Find whether a number is odd or even", group: 1, hint: "Two possible outputs, one condition." },
+              { text: "Print the numbers 1 to 100", group: 2, hint: "The same step is done again and again." },
+              { text: "Keep asking for a password until it is correct", group: 2, hint: "Repeat while a condition holds." },
+              { text: "Convert a temperature from °C to °F once", group: 0, hint: "One formula, no choices, no repeats." },
+            ],
+            explain: "Real programs mix all three, but each task has one main shape. Look for words like \"if\" (selection) and \"until\" or \"each\" (repetition).",
+          },
+        },
+        {
+          type: "heading",
+          text: "Verifying and comparing algorithms",
+        },
+        {
+          type: "text",
+          md: "To **verify** an algorithm we **dry run** it: we act as the computer, take sample inputs, and write the value of each variable after every step in a table. If the final output matches the expected answer for several inputs (including edge cases like 0 or 1), the algorithm is likely correct. Here is the dry run of the sum algorithm for N = 3:",
+        },
+        {
+          type: "table",
+          headers: ["Step", "count", "count ≤ N?", "total"],
+          rows: [
+            ["start", "1", "", "0"],
+            ["loop 1", "1 → 2", "yes", "0 + 1 = 1"],
+            ["loop 2", "2 → 3", "yes", "1 + 2 = 3"],
+            ["loop 3", "3 → 4", "yes", "3 + 3 = 6"],
+            ["check", "4", "no, loop ends", "print 6"],
+          ],
+        },
+        {
+          type: "text",
+          md: "Two correct algorithms for the same problem can differ in how much **time** (number of steps) and **space** (memory) they need. To test whether 97 is prime, method A divides 97 by every number from 2 to 96 (95 divisions). Method B divides only by numbers d with $d \\times d \\le 97$, i.e. 2 to 9, because if 97 had a factor bigger than 9 it would also have one smaller than 9. Method B gives the same answer with only 8 divisions, so it is the better algorithm.",
+        },
+        {
+          type: "code",
+          lang: "python",
+          runnable: true,
+          caption: "Method B: stop at the square root. Try n = 91 (= 7 × 13).",
+          code: t`n = 97
+checks = 0
+is_prime = n > 1
+d = 2
+while d * d <= n:
+    checks = checks + 1
+    if n % d == 0:
+        is_prime = False
+        break
+    d = d + 1
+print(n, "is prime:", is_prime, "| divisions tried:", checks)`,
+        },
+        {
+          type: "mistake",
+          wrong: "If two algorithms give the correct answer, they are equally good.",
+          right: "Both are **correct**, but the one needing fewer steps (less time) or less memory is **more efficient**, and is preferred, especially for large inputs.",
+          why: "For small inputs the difference is invisible. For a 12-digit number, trying every divisor would take far longer than stopping at the square root.",
+        },
+        {
+          type: "text",
+          md: "**Decomposition** means breaking a complex problem into smaller sub-problems, solving each separately (often by different people) and then joining the parts. An online railway ticket system, for example, can be split into: searching trains, checking seat availability, collecting passenger details, payment, and printing the ticket. Each part is simpler to design, code and test.",
+        },
+        {
+          type: "checkpoint",
+          questions: [
+            {
+              kind: "mcq",
+              q: "Writing down each variable's value after every step, using sample input, is called:",
+              options: ["Dry run", "Decomposition", "Compiling", "Coding"],
+              answer: 0,
+              explain: "A **dry run** verifies an algorithm by hand, before or without running it on a computer.",
+            },
+          ],
+        },
+        {
+          type: "callout",
+          tone: "exam",
+          title: "Board tip",
+          md: "When you write pseudocode, indent the steps inside IF, ELSE and WHILE, and use the standard keywords in capitals. For \"why is decomposition useful?\", give two points: each part is easier to solve and test, and different people can work on different parts at the same time.",
+        },
+        {
+          type: "keypoints",
+          items: [
+            "Pseudocode: plain-English steps with keywords like INPUT, COMPUTE, PRINT, IF/ELSE, WHILE.",
+            "Flow of control: sequence, selection (IF/ELSE), repetition (WHILE).",
+            "Verify an algorithm by dry running it with sample inputs in a trace table.",
+            "Compare correct algorithms by time (steps) and space (memory).",
+            "Decomposition breaks a complex problem into simpler sub-problems.",
+          ],
+        },
+      ],
+      flashcards: [
+        { front: "Pseudocode", back: "An algorithm written in plain English with programming-like keywords, not in any real language." },
+        { front: "Three kinds of flow of control", back: "Sequence, selection, repetition." },
+        { front: "Selection", back: "Choosing one path from two or more depending on a condition (IF / ELSE)." },
+        { front: "Repetition", back: "Repeating a set of steps while a condition is true (a loop)." },
+        { front: "Dry run", back: "Tracing an algorithm by hand with sample input, recording variable values at each step." },
+        { front: "Comparing algorithms", back: "By the time (number of steps) and space (memory) they need for the same problem." },
+        { front: "Decomposition", back: "Breaking a complex problem into smaller, simpler sub-problems." },
+        { front: "Why check divisors only up to √n?", back: "If n has a factor larger than √n, it must also have one smaller than √n, so smaller checks are enough." },
+      ],
+      quiz: [
+        {
+          kind: "mcq",
+          q: "\"Print the multiplication table of 7 from 1 to 10\" mainly needs:",
+          options: ["Repetition", "Selection", "Sequence only", "Decomposition"],
+          answer: 0,
+          explain: "The same multiply-and-print step is repeated 10 times.",
+        },
+        {
+          kind: "truefalse",
+          q: "Pseudocode must follow the exact grammar of Python.",
+          answer: false,
+          explain: "Pseudocode is language-independent; it is meant for people to read, not for a computer to run.",
+        },
+        {
+          kind: "numeric",
+          q: "Method B in this lesson tests whether 101 is prime. How many divisions does it try?",
+          answer: 9,
+          explain: "It divides by 2, 3, …, 10 (since 10 × 10 = 100 ≤ 101 and 11 × 11 = 121 > 101). None divides 101, so 9 divisions.",
+          difficulty: 2,
+          hint: "Find the largest d with d × d ≤ 101.",
+        },
+        {
+          kind: "fill",
+          q: "Breaking a big problem into smaller sub-problems is called ___.",
+          answer: ["decomposition"],
+          explain: "That is **decomposition**.",
+        },
+        {
+          kind: "mcq",
+          q: "In the dry run of the sum algorithm with N = 3, what is the value of count when the loop stops?",
+          options: ["4", "3", "6", "0"],
+          answer: 0,
+          explain: "The loop stops only when count ≤ N becomes false, which first happens at count = 4.",
+          difficulty: 2,
+        },
+        {
+          kind: "multi",
+          q: "Which keywords are commonly used in pseudocode?",
+          options: ["INPUT", "WHILE", "PRINT", "def"],
+          answers: [0, 1, 2],
+          explain: "`def` is a Python keyword; pseudocode uses language-free words like INPUT, PRINT, IF, WHILE.",
+        },
+        {
+          kind: "order",
+          q: "Order the lines of pseudocode to print the larger of A and B.",
+          items: ["INPUT A, B", "IF A > B THEN", "PRINT A", "ELSE", "PRINT B"],
+          explain: "Input first, then the decision with its two branches.",
+        },
+      ],
+    },
+    {
+      slug: "c11-cs-problem-solving-practice",
+      title: "Board practice: Introduction to Problem Solving",
+      summary: "Board-style questions on algorithms, flowcharts, pseudocode and dry runs, with a Python program to find the largest of three numbers.",
+      minutes: 20,
+      xp: 55,
+      blocks: [
+        {
+          type: "text",
+          md: "This chapter's board questions ask you to write an algorithm, draw a flowchart, write pseudocode, or trace (dry run) given steps and write the output. Plan the input and output first every time.",
+        },
+        {
+          type: "example",
+          title: "Algorithm with selection",
+          problem: "An electricity board charges ₹5 per unit for the first 100 units and ₹7 per unit for every unit above 100. Write pseudocode to print the bill, and find the bill for 250 units.",
+          steps: [
+            "INPUT units",
+            "IF units <= 100 THEN COMPUTE bill = units × 5",
+            "ELSE COMPUTE bill = 100 × 5 + (units − 100) × 7",
+            "PRINT bill",
+            "For 250 units: 100 × 5 = 500 and 150 × 7 = 1050, so bill = 500 + 1050.",
+          ],
+          answer: "The bill for 250 units is ₹1550.",
+        },
+        {
+          type: "example",
+          title: "Dry run and output",
+          problem: "Trace these steps and give the output: n = 6, s = 0, i = 1; WHILE i <= n: IF i is even THEN s = s + i; i = i + 1. PRINT s.",
+          steps: [
+            "i = 1: odd, s stays 0. i = 2: even, s = 2. i = 3: odd.",
+            "i = 4: even, s = 2 + 4 = 6. i = 5: odd.",
+            "i = 6: even, s = 6 + 6 = 12. i becomes 7, 7 <= 6 is false, the loop ends.",
+          ],
+          answer: "Output: 12 (the sum of the even numbers 2, 4 and 6).",
+        },
+        {
+          type: "mistake",
+          wrong: "In a WHILE loop, I only need to write the work to repeat; the loop will stop by itself.",
+          right: "Something inside the loop must change the condition, e.g. **INCREMENT i**. Without it the condition stays true and the loop never ends (an **infinite loop**).",
+          why: "In a for-each style of thinking the counting seems automatic. In a WHILE loop the programmer must update the variable, or the algorithm breaks the finiteness rule.",
+        },
+        {
+          type: "activity",
+          activity: {
+            kind: "order",
+            prompt: "Order the steps to find the largest of three numbers.",
+            items: ["INPUT a, b, c", "SET largest = a", "IF b > largest THEN largest = b", "IF c > largest THEN largest = c", "PRINT largest"],
+            explain: "Start by assuming the first number is the largest, then let each other number replace it only if it is bigger. This idea works for any number of values.",
+          },
+        },
+        {
+          type: "checkpoint",
+          questions: [
+            {
+              kind: "numeric",
+              q: "Using the electricity rule above, what is the bill (in ₹) for 80 units?",
+              answer: 400,
+              explain: "80 ≤ 100, so bill = 80 × 5 = 400.",
+            },
+          ],
+        },
+        {
+          type: "heading",
+          text: "Write a small program",
+        },
+        {
+          type: "text",
+          md: "**Question (3 marks):** Write a Python program to find the largest of three numbers stored in a, b and c.",
+        },
+        {
+          type: "code",
+          lang: "python",
+          runnable: true,
+          caption: "The same steps as the pseudocode above. Try other values for a, b and c.",
+          code: t`a, b, c = 14, 31, 27
+largest = a
+if b > largest:
+    largest = b
+if c > largest:
+    largest = c
+print("Largest:", largest)`,
+        },
+        {
+          type: "text",
+          md: "Output: `Largest: 31`\n\nTest it with the largest value in each position (first, middle, last) and with two equal values. Testing different kinds of input is part of the fourth problem-solving step.",
+        },
+        {
+          type: "callout",
+          tone: "exam",
+          title: "Board tip",
+          md: "In \"write the output\" questions, write a small trace table even if it is not asked; it prevents off-by-one mistakes. In flowcharts, connect every path to Stop, and make loops visible with an arrow going back to the decision box.",
+        },
+        {
+          type: "checkpoint",
+          questions: [
+            {
+              kind: "numeric",
+              q: "Trace: x = 10, y = 3; WHILE x > 0: x = x − y. PRINT x. What is printed?",
+              answer: -2,
+              explain: "x goes 10 → 7 → 4 → 1 → −2. Now x > 0 is false, so −2 is printed.",
+              difficulty: 2,
+            },
+          ],
+        },
+        {
+          type: "keypoints",
+          items: [
+            "Write INPUT, process and PRINT clearly in every algorithm.",
+            "Selection problems (bills, grades) need IF / ELSE with the exact boundary (≤ or <).",
+            "Every WHILE loop must change its condition, or it never ends.",
+            "Dry run with a table to get output questions right.",
+          ],
+        },
+      ],
+      flashcards: [
+        { front: "Infinite loop", back: "A loop whose condition never becomes false, so it never ends." },
+        { front: "Trace table", back: "A table showing each variable's value after every step during a dry run." },
+        { front: "Largest-of-three idea", back: "Assume the first is largest, then replace it by any later value that is bigger." },
+        { front: "Bill for 250 units at ₹5 (first 100) and ₹7 (rest)", back: "100 × 5 + 150 × 7 = ₹1550" },
+        { front: "Sum of even numbers from 1 to 6", back: "2 + 4 + 6 = 12" },
+        { front: "Why test with several inputs?", back: "To check every path (each IF branch) and edge cases, such as equal values or 0." },
+      ],
+      quiz: [
+        {
+          kind: "mcq",
+          q: "Which step is missing from this loop? i = 1; WHILE i <= 5: PRINT i",
+          options: ["INCREMENT i inside the loop", "INPUT i", "PRINT i again", "DECREMENT 5"],
+          answer: 0,
+          explain: "Without increasing i, i <= 5 is always true and the loop never ends.",
+        },
+        {
+          kind: "numeric",
+          q: "Using the electricity rule (₹5 for the first 100 units, ₹7 for each unit above), what is the bill for 101 units?",
+          answer: 507,
+          explain: "100 × 5 + 1 × 7 = 500 + 7 = 507.",
+        },
+        {
+          kind: "mcq",
+          q: "With a = 9, b = 9, c = 4, what does the largest-of-three program print?",
+          options: ["Largest: 9", "Largest: 4", "Largest: 18", "An error"],
+          answer: 0,
+          explain: "largest starts at 9; b > largest is false (9 > 9 is false), c > largest is false. It prints 9.",
+        },
+        {
+          kind: "truefalse",
+          q: "A flowchart may have more than one arrow leading into the Stop symbol.",
+          answer: true,
+          explain: "Different paths (for example, the Yes and No branches) can all end at the same Stop.",
+        },
+        {
+          kind: "numeric",
+          q: "Trace: s = 0; FOR k from 1 to 4: s = s + k × k. PRINT s.",
+          answer: 30,
+          explain: "1 + 4 + 9 + 16 = 30.",
+        },
+        {
+          kind: "fill",
+          q: "A step-by-step hand trace of an algorithm with sample input is called a ___ run.",
+          answer: ["dry"],
+          explain: "A **dry run**.",
+        },
+        {
+          kind: "order",
+          q: "Put the problem-solving steps for the bill program in order.",
+          items: ["Identify input (units) and output (bill)", "Write the pseudocode with IF / ELSE", "Code it in Python", "Test with 80, 100 and 250 units"],
+          explain: "Analyse, design, code, test. Testing at the boundary (100) checks the ≤ condition.",
+        },
+      ],
+    },
+  ],
+};
+
+export const topics: Topic[] = [computerSystems, numberSystems, booleanLogic, problemSolving];
 
 /** Chapter title ("11:" / "12:" + exact title) → topic slug(s) that teach it. */
 export const links: Record<string, string | string[]> = {
   "11:Computer Systems and Organisation": "c11-cs-computer-systems",
   "11:Number Systems and Encoding": "c11-cs-number-systems",
   "11:Boolean Logic": "c11-cs-boolean-logic",
+  "11:Introduction to Problem Solving": "c11-cs-problem-solving",
 };

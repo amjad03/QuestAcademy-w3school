@@ -2316,6 +2316,1560 @@ Enter a number: 157
       },
     ],
   },
+  /* ------------------------------------------------------------------ */
+  /* ISC Class 12 · Arrays and Strings                                    */
+  /* ------------------------------------------------------------------ */
+  {
+    slug: "c12-cs-java-arrays-strings",
+    title: "Arrays and Strings",
+    icon: "🧮",
+    description: "One- and two-dimensional arrays inside classes, linear and binary search, selection and bubble sort, matrix operations, String and StringBuffer methods, and word-by-word sentence processing.",
+    lessons: [
+      {
+        slug: "c12-cs-arrays-search-sort",
+        title: "Arrays: Searching, Sorting and Matrices",
+        summary: "Arrays as data members, binary search, selection sort, two-dimensional arrays, diagonals and transpose, with traced ISC-style class programs.",
+        minutes: 24,
+        xp: 55,
+        blocks: [
+          {
+            type: "illustration",
+            emoji: "🗄️",
+            caption: "A school locker room has numbered lockers in a row: locker 0, locker 1, locker 2... An array is the same idea in memory: many values of one type, reached by their index.",
+          },
+          {
+            type: "text",
+            md: "An **array** is a collection of elements of the **same type**, stored in consecutive memory locations and reached by an **index** (subscript) starting from 0. `int arr[] = new int[n];` creates n elements, all 0 at first. `arr.length` gives the size.\n\nA **two-dimensional array** `int a[][] = new int[m][n];` is a table of m rows and n columns. `a.length` gives the number of rows and `a[0].length` the number of columns. A square matrix has m = n.",
+          },
+          {
+            type: "table",
+            headers: ["Technique", "Idea", "Needs sorted data?", "Comparisons (worst case, n items)"],
+            rows: [
+              ["Linear search", "check each element in turn", "no", "n"],
+              ["Binary search", "compare with the middle; discard half each time", "yes", t`about $\log_2 n$`],
+              ["Selection sort", "find the smallest of the unsorted part; swap it to the front", "-", t`$\frac{n(n-1)}{2}$`],
+              ["Bubble sort", "swap neighbours that are out of order; the largest sinks to the end each pass", "-", t`$\frac{n(n-1)}{2}$`],
+            ],
+          },
+          {
+            type: "code",
+            lang: "java",
+            caption: "SearchSort.java",
+            code: `public class SearchSort
+{
+    int arr[];
+    int n;
+
+    SearchSort(int a[])
+    {
+        n = a.length;
+        arr = new int[n];
+        for (int i = 0; i < n; i++)
+            arr[i] = a[i];
+    }
+
+    // selection sort, ascending
+    void sort()
+    {
+        for (int i = 0; i < n - 1; i++)
+        {
+            int min = i;
+            for (int j = i + 1; j < n; j++)
+                if (arr[j] < arr[min])
+                    min = j;
+            int t = arr[i];
+            arr[i] = arr[min];
+            arr[min] = t;
+        }
+    }
+
+    // binary search on the sorted array; returns index or -1
+    int binSearch(int key)
+    {
+        int lb = 0, ub = n - 1;
+        while (lb <= ub)
+        {
+            int mid = (lb + ub) / 2;
+            if (arr[mid] == key)
+                return mid;
+            else if (arr[mid] < key)
+                lb = mid + 1;
+            else
+                ub = mid - 1;
+        }
+        return -1;
+    }
+
+    void display()
+    {
+        for (int i = 0; i < n; i++)
+            System.out.print(arr[i] + " ");
+        System.out.println();
+    }
+
+    public static void main(String[] args)
+    {
+        int data[] = {42, 17, 8, 99, 23, 61};
+        SearchSort ob = new SearchSort(data);
+        ob.sort();
+        ob.display();
+        System.out.println("61 found at index " + ob.binSearch(61));
+        System.out.println("50 found at index " + ob.binSearch(50));
+    }
+}
+
+/* Output:
+8 17 23 42 61 99
+61 found at index 4
+50 found at index -1
+*/`,
+          },
+          {
+            type: "example",
+            title: "Tracing binSearch(50)",
+            problem: "The sorted array is 8 17 23 42 61 99 (indices 0 to 5). Trace binSearch(50).",
+            steps: [
+              "lb = 0, ub = 5, mid = 2: arr[2] = 23 < 50, so lb = 3.",
+              "lb = 3, ub = 5, mid = 4: arr[4] = 61 > 50, so ub = 3.",
+              "lb = 3, ub = 3, mid = 3: arr[3] = 42 < 50, so lb = 4.",
+              "Now lb = 4 > ub = 3, the loop ends and -1 is returned.",
+            ],
+            answer: "Three comparisons with the middle; 50 is not present, so -1.",
+          },
+          {
+            type: "mistake",
+            wrong: "Apply binary search to the array as entered (42, 17, 8, 99, 23, 61) to save the time spent sorting.",
+            right: "Binary search works only on **sorted** data. Sort first (or use linear search on unsorted data).",
+            why: "Binary search throws away half of the array after each comparison, assuming everything on that side is too small or too large. In unsorted data that assumption is false, so it can miss an element that is present: on the unsorted array, binSearch(17) checks 8, then 23, then 99, and returns -1 although 17 is at index 1.",
+          },
+          {
+            type: "checkpoint",
+            questions: [
+              {
+                kind: "numeric",
+                q: "Selection sort is applied to 6 elements. How many passes of the outer loop are made?",
+                answer: 5,
+                explain: "The outer loop runs for i = 0 to n − 2, which is n − 1 = 5 passes. The last element is then automatically in place.",
+              },
+            ],
+          },
+          {
+            type: "heading",
+            text: "Two-dimensional arrays",
+          },
+          {
+            type: "text",
+            md: "In a square matrix of size m, the **left (main) diagonal** has elements a[i][i], and the **right diagonal** has elements a[i][m − 1 − i]. The **transpose** swaps rows and columns: t[j][i] = a[i][j]. **Boundary elements** are those in row 0, row m − 1, column 0 or column m − 1.",
+          },
+          {
+            type: "code",
+            lang: "java",
+            caption: "Matrix.java",
+            code: t`public class Matrix
+{
+    int a[][];
+    int m;
+
+    Matrix(int x[][])
+    {
+        m = x.length;
+        a = new int[m][m];
+        for (int i = 0; i < m; i++)
+            for (int j = 0; j < m; j++)
+                a[i][j] = x[i][j];
+    }
+
+    int leftDiagonal()
+    {
+        int s = 0;
+        for (int i = 0; i < m; i++)
+            s += a[i][i];
+        return s;
+    }
+
+    int rightDiagonal()
+    {
+        int s = 0;
+        for (int i = 0; i < m; i++)
+            s += a[i][m - 1 - i];
+        return s;
+    }
+
+    Matrix transpose()
+    {
+        int t[][] = new int[m][m];
+        for (int i = 0; i < m; i++)
+            for (int j = 0; j < m; j++)
+                t[j][i] = a[i][j];
+        return new Matrix(t);
+    }
+
+    void display()
+    {
+        for (int i = 0; i < m; i++)
+        {
+            for (int j = 0; j < m; j++)
+                System.out.print(a[i][j] + "\t");
+            System.out.println();
+        }
+    }
+
+    public static void main(String[] args)
+    {
+        int x[][] = {{2, 7, 1}, {5, 3, 8}, {4, 6, 9}};
+        Matrix p = new Matrix(x);
+        System.out.println("Left diagonal sum = " + p.leftDiagonal());
+        System.out.println("Right diagonal sum = " + p.rightDiagonal());
+        p.transpose().display();
+    }
+}
+
+/* Output (columns separated by tabs):
+Left diagonal sum = 14
+Right diagonal sum = 8
+2   5   4
+7   3   6
+1   8   9
+*/`,
+          },
+          {
+            type: "activity",
+            activity: {
+              kind: "match",
+              prompt: "Match each 3 × 3 matrix part to its index rule.",
+              pairs: [
+                ["Left diagonal", "a[i][i]"],
+                ["Right diagonal", "a[i][2 - i]"],
+                ["Last row", "a[2][j]"],
+                ["First column", "a[i][0]"],
+                ["Transpose element", "t[j][i] = a[i][j]"],
+              ],
+              explain: "For size m, the right diagonal is a[i][m − 1 − i]; with m = 3 that is a[i][2 − i].",
+            },
+          },
+          {
+            type: "callout",
+            tone: "exam",
+            title: "ISC board tip",
+            md: "Matrix programs in the practical exam usually ask you to accept M and N, check that they are in range (for example 2 < M < 10), and print \"INVALID INPUT\" otherwise. Do the range check before creating the array, and display the original matrix before the result.",
+          },
+          {
+            type: "keypoints",
+            items: [
+              "Indices run from 0 to length − 1; a.length is rows, a[0].length is columns.",
+              "Binary search needs sorted data and halves the search range each step.",
+              "Selection sort: n − 1 passes, one swap per pass.",
+              "Diagonals of an m × m matrix: a[i][i] and a[i][m − 1 − i].",
+              "Copy an array element by element if the object must have its own copy.",
+            ],
+          },
+        ],
+        flashcards: [
+          { front: "Index of the last element of an array arr", back: "arr.length − 1." },
+          { front: "Condition for binary search", back: "The array must be sorted." },
+          { front: "mid in binary search", back: "(lb + ub) / 2, using integer division." },
+          { front: "Idea of selection sort", back: "In each pass, find the smallest element of the unsorted part and swap it into the first unsorted position." },
+          { front: "Idea of bubble sort", back: "Compare neighbours and swap if out of order; after each pass the largest remaining element is at the end." },
+          { front: "Right diagonal of an m × m matrix", back: "a[i][m − 1 − i] for i = 0 to m − 1." },
+          { front: "Number of columns of a[][]", back: "a[0].length." },
+        ],
+        quiz: [
+          {
+            kind: "mcq",
+            q: "int a[] = new int[5]; What is the value of a[4] before anything is stored?",
+            options: ["0", "null", "garbage", "an error"],
+            answer: 0,
+            explain: "Numeric array elements are given the default value 0.",
+          },
+          {
+            kind: "numeric",
+            q: "For a sorted array of 1000 elements, at most how many comparisons does binary search make? (Use the smallest k with 2^k > 1000.)",
+            answer: 10,
+            explain: t`$2^{10} = 1024 > 1000$, so at most 10 halvings are needed.`,
+            difficulty: 2,
+          },
+          {
+            kind: "mcq",
+            q: "After the first pass of selection sort (ascending) on 42, 17, 8, 99, 23, 61, the array is:",
+            options: ["8 17 42 99 23 61", "17 8 42 23 61 99", "8 17 23 42 61 99", "17 42 8 99 23 61"],
+            answer: 0,
+            explain: "The smallest, 8 at index 2, is swapped with 42 at index 0. Option 2 is what one bubble sort pass would give.",
+            difficulty: 2,
+          },
+          {
+            kind: "truefalse",
+            q: "In Java, a two-dimensional array is an array of one-dimensional arrays.",
+            answer: true,
+            explain: "a[i] is itself a 1D array (row i), which is why a[0].length gives the number of columns.",
+          },
+          {
+            kind: "mcq",
+            q: "For the matrix {{2, 7, 1}, {5, 3, 8}, {4, 6, 9}}, what is the sum of its boundary elements?",
+            options: ["42", "45", "14", "36"],
+            answer: 0,
+            explain: "Total of all elements is 45; the only non-boundary element is the centre, 3. So 45 − 3 = 42.",
+            difficulty: 2,
+          },
+          {
+            kind: "fill",
+            q: "In the transpose, element a[1][2] moves to position t[___][1].",
+            answer: ["2"],
+            explain: "t[j][i] = a[i][j], so a[1][2] goes to t[2][1].",
+          },
+          {
+            kind: "multi",
+            q: "Which of these must be true before binSearch(key) is called in SearchSort?",
+            options: ["sort() has been called", "key is inside the array", "n > 0 is not required", "arr has been created by the constructor"],
+            answers: [0, 3],
+            explain: "The array must exist and be sorted. The key may be absent (the method then returns -1), and n = 0 simply returns -1.",
+          },
+        ],
+      },
+      {
+        slug: "c12-cs-strings-methods",
+        title: "Strings, String Methods and Sentence Processing",
+        summary: "String immutability, the common String and Character methods, StringBuffer, splitting a sentence into words with StringTokenizer, and a full ISC-style word-processing class.",
+        minutes: 24,
+        xp: 55,
+        blocks: [
+          {
+            type: "text",
+            md: "A **String** is a sequence of characters, indexed from 0. Strings in Java are **immutable**: once made, a String object cannot be changed. Methods such as `toUpperCase()` or `replace()` return a **new** String; the original is untouched.\n\n**StringBuffer** is a mutable sequence of characters. Its methods `append()`, `insert()`, `reverse()`, `setCharAt()` and `deleteCharAt()` change the same object.",
+          },
+          {
+            type: "table",
+            headers: ["Method", "Returns", "Example (s = \"QUEST ACADEMY\")"],
+            rows: [
+              ["`length()`", "number of characters", "13"],
+              ["`charAt(i)`", "the char at index i", "`s.charAt(4)` → 'T'"],
+              ["`indexOf(ch)` / `lastIndexOf(ch)`", "first / last index of ch, or -1", "'A' → 6; last 'E' → 10"],
+              ["`substring(b, e)`", "chars from index b to e − 1", "`s.substring(6, 9)` → \"ACA\""],
+              ["`compareTo(t)`", "0 if equal; else difference of the first unequal chars (or of lengths)", "\"ant\".compareTo(\"apple\") → 'n' − 'p' = −2"],
+              ["`equals(t)` / `equalsIgnoreCase(t)`", "true/false", "\"Java\".equals(\"JAVA\") → false"],
+              ["`replace(a, b)`", "new String with every a replaced by b", "\"QUEST @C@DEMY\""],
+              ["`trim()`, `toUpperCase()`, `toLowerCase()`", "new String", "-"],
+            ],
+          },
+          {
+            type: "code",
+            lang: "java",
+            caption: "StrTrace.java: a typical output question",
+            code: `public class StrTrace
+{
+    public static void main(String[] args)
+    {
+        String s = "QUEST ACADEMY";
+        System.out.println(s.indexOf('A'));
+        System.out.println(s.substring(6, 9));
+        System.out.println(s.charAt(4) + s.length());
+        System.out.println("ant".compareTo("apple"));
+        System.out.println(s.lastIndexOf('E'));
+        System.out.println(s.replace('A', '@'));
+        System.out.println("" + s.charAt(0) + s.charAt(6));
+        System.out.println("Java".equals("JAVA") + " " + "Java".equalsIgnoreCase("JAVA"));
+    }
+}
+
+/* Output:
+6
+ACA
+97
+-2
+10
+QUEST @C@DEMY
+QA
+false true
+*/`,
+          },
+          {
+            type: "mistake",
+            wrong: "s.charAt(4) + s.length() prints T13.",
+            right: "It prints **97**. charAt() returns a **char**, and char + int is arithmetic: 'T' has code 84, and 84 + 13 = 97.",
+            why: "Strings join with +, so learners expect joining here too. But there is no String in this expression, only a char and an int. Compare the next line, \"\" + s.charAt(0) + s.charAt(6), where the empty String forces joining and gives QA.",
+          },
+          {
+            type: "checkpoint",
+            questions: [
+              {
+                kind: "mcq",
+                q: "What does \"MANGO\".compareTo(\"MAN\") return?",
+                options: ["2", "-2", "0", "71"],
+                answer: 0,
+                explain: "The first three characters match and then \"MAN\" ends, so the result is the difference in lengths: 5 − 3 = 2.",
+              },
+            ],
+          },
+          {
+            type: "heading",
+            text: "Processing a sentence word by word",
+          },
+          {
+            type: "text",
+            md: "ISC string programs usually give a sentence that ends with '.', '?' or '!' and ask for work on each word. A **StringTokenizer** (in java.util) splits a String at the delimiter characters you give it: `new StringTokenizer(sen, \" .?!\")` uses space and the three end marks. `countTokens()` gives the number of words and `nextToken()` returns them one by one. `sen.split(\" \")` is another way to get the words as an array.",
+          },
+          {
+            type: "code",
+            lang: "java",
+            caption: "Sentence.java (input: MADAM AND ARORA WENT TO NOON MEETING.)",
+            code: `import java.util.Scanner;
+import java.util.StringTokenizer;
+
+public class Sentence
+{
+    String sen;
+    String words[];
+    int count;
+
+    Sentence(String s)
+    {
+        sen = s.trim().toUpperCase();
+        count = 0;
+    }
+
+    // splits the sentence (ending in . ? or !) into words
+    void extract()
+    {
+        StringTokenizer st = new StringTokenizer(sen, " .?!");
+        count = st.countTokens();
+        words = new String[count];
+        for (int i = 0; i < count; i++)
+            words[i] = st.nextToken();
+    }
+
+    boolean isPalin(String w)
+    {
+        int i = 0, j = w.length() - 1;
+        while (i < j)
+        {
+            if (w.charAt(i) != w.charAt(j))
+                return false;
+            i++;
+            j--;
+        }
+        return true;
+    }
+
+    int palinCount()
+    {
+        int c = 0;
+        for (int i = 0; i < count; i++)
+            if (isPalin(words[i]))
+                c++;
+        return c;
+    }
+
+    // bubble sort of the words, alphabetical order
+    void sortWords()
+    {
+        for (int i = 0; i < count - 1; i++)
+            for (int j = 0; j < count - 1 - i; j++)
+                if (words[j].compareTo(words[j + 1]) > 0)
+                {
+                    String t = words[j];
+                    words[j] = words[j + 1];
+                    words[j + 1] = t;
+                }
+    }
+
+    void display()
+    {
+        for (int i = 0; i < count; i++)
+            System.out.print(words[i] + " ");
+        System.out.println();
+    }
+
+    public static void main(String[] args)
+    {
+        Scanner sc = new Scanner(System.in);
+        String s = sc.nextLine();
+        char last = s.charAt(s.length() - 1);
+        if (last != '.' && last != '?' && last != '!')
+        {
+            System.out.println("INVALID INPUT");
+            return;
+        }
+        Sentence ob = new Sentence(s);
+        ob.extract();
+        System.out.println("PALINDROMIC WORDS: " + ob.palinCount());
+        ob.sortWords();
+        ob.display();
+    }
+}
+
+/* Output:
+PALINDROMIC WORDS: 3
+AND ARORA MADAM MEETING NOON TO WENT
+
+With input "hello there" (no end mark):
+INVALID INPUT
+*/`,
+          },
+          {
+            type: "example",
+            title: "Why the words sort this way",
+            problem: "Explain the sorted order AND ARORA MADAM MEETING NOON TO WENT.",
+            steps: [
+              "compareTo() compares character codes from the left. AND and ARORA both start with A; at index 1, 'N' (78) < 'R' (82), so AND comes first.",
+              "MADAM and MEETING: 'A' < 'E' at index 1, so MADAM is first.",
+              "The palindromes counted were MADAM, ARORA and NOON, giving 3.",
+            ],
+            answer: "Dictionary order by character codes; 3 palindromic words.",
+          },
+          {
+            type: "activity",
+            activity: {
+              kind: "reveal",
+              prompt: "String s = \"rail\"; s.toUpperCase(); System.out.println(s); prints:",
+              emoji: "🔤",
+              options: ["rail", "RAIL", "Rail", "an error"],
+              answer: 0,
+              trap: 1,
+              explain: "Strings are immutable: toUpperCase() returns a new String, which is thrown away here. Write s = s.toUpperCase(); to keep it.",
+            },
+          },
+          {
+            type: "callout",
+            tone: "exam",
+            title: "ISC board tip",
+            md: "Check the input format first and print exactly the message the question asks for (\"INVALID INPUT\"). Convert the sentence to one case before comparing letters, and remember that the end mark is not part of the last word: remove it or use it as a delimiter.",
+          },
+          {
+            type: "keypoints",
+            items: [
+              "Strings are immutable; their methods return new Strings. StringBuffer is mutable.",
+              "char + int is arithmetic; start with \"\" to force joining.",
+              "compareTo() returns the difference of the first unequal characters, or of the lengths.",
+              "StringTokenizer(sen, \" .?!\") splits a sentence into words; countTokens() counts them.",
+              "substring(b, e) excludes index e.",
+            ],
+          },
+        ],
+        flashcards: [
+          { front: "Immutable String", back: "A String object cannot be changed after creation; methods return new String objects." },
+          { front: "StringBuffer", back: "A mutable sequence of characters with append(), insert(), reverse(), setCharAt(), deleteCharAt()." },
+          { front: "substring(2, 5) of \"KOLKATA\"", back: "\"LKA\" (indices 2, 3, 4)." },
+          { front: "\"ant\".compareTo(\"apple\")", back: "−2: first unequal characters 'n' (110) and 'p' (112)." },
+          { front: "StringTokenizer methods", back: "countTokens(), hasMoreTokens(), nextToken()." },
+          { front: "'A' + 1 in Java", back: "66: char + int gives an int." },
+          { front: "Check if a word is a palindrome", back: "Compare charAt(i) with charAt(j) from both ends, moving inwards until i ≥ j." },
+        ],
+        quiz: [
+          {
+            kind: "mcq",
+            q: "\"BENGALURU\".indexOf('U') returns:",
+            options: ["6", "8", "5", "-1"],
+            answer: 0,
+            explain: "B0 E1 N2 G3 A4 L5 U6 R7 U8: the first U is at index 6. lastIndexOf('U') would give 8.",
+          },
+          {
+            kind: "mcq",
+            q: "What does System.out.println('a' + 'b'); print?",
+            options: ["195", "ab", "a+b", "an error"],
+            answer: 0,
+            explain: "Two chars added give an int: 97 + 98 = 195.",
+            difficulty: 2,
+          },
+          {
+            kind: "truefalse",
+            q: "StringBuffer sb = new StringBuffer(\"ISC\"); sb.reverse(); changes sb itself to \"CSI\".",
+            answer: true,
+            explain: "StringBuffer is mutable; reverse() changes the same object.",
+          },
+          {
+            kind: "numeric",
+            q: "How many tokens does new StringTokenizer(\"IS IT RAINING?\", \" ?\") give?",
+            answer: 3,
+            explain: "IS, IT and RAINING; the space and ? are delimiters and are not returned.",
+          },
+          {
+            kind: "fill",
+            q: "\"COMPUTER\".substring(3) returns ___.",
+            answer: ["PUTER"],
+            explain: "From index 3 to the end: C0 O1 M2 P3 U4 T5 E6 R7.",
+          },
+          {
+            kind: "mcq",
+            q: "Which call returns true?",
+            options: ["\"Delhi\".equalsIgnoreCase(\"DELHI\")", "\"Delhi\".equals(\"DELHI\")", "\"Delhi\".compareTo(\"DELHI\") == 0", "\"Delhi\" == \"DELHI\""],
+            answer: 0,
+            explain: "Only equalsIgnoreCase() ignores the difference between capital and small letters.",
+          },
+          {
+            kind: "mcq",
+            q: "In Sentence.java, why is the sentence converted with toUpperCase() in the constructor?",
+            options: ["So that words such as \"Madam\" are compared letter-for-letter correctly", "Because StringTokenizer needs capitals", "Because compareTo() cannot handle small letters", "To remove the full stop"],
+            answer: 0,
+            explain: "'M' and 'm' have different codes, so mixed case would make \"Madam\" fail the palindrome test and upset the sorting.",
+          },
+        ],
+      },
+      {
+        slug: "c12-cs-arrays-strings-practice",
+        title: "Arrays and Strings: Board Practice",
+        summary: "Merging sorted arrays inside a class, output questions on String methods and array loops, and a sentence program to plan and write.",
+        minutes: 22,
+        xp: 55,
+        blocks: [
+          {
+            type: "text",
+            md: "Board questions on this chapter often ask for an object that holds an array, and a method that combines two such objects. The class below merges two sorted arrays into one sorted array in a single pass.",
+          },
+          {
+            type: "code",
+            lang: "java",
+            caption: "Merger.java",
+            code: `public class Merger
+{
+    int arr[];
+    int n;
+
+    Merger(int a[])
+    {
+        arr = a;
+        n = a.length;
+    }
+
+    // merges this sorted array with sorted array m into a new sorted Merger
+    Merger merge(Merger m)
+    {
+        int c[] = new int[n + m.n];
+        int i = 0, j = 0, k = 0;
+        while (i < n && j < m.n)
+        {
+            if (arr[i] <= m.arr[j])
+                c[k++] = arr[i++];
+            else
+                c[k++] = m.arr[j++];
+        }
+        while (i < n)
+            c[k++] = arr[i++];
+        while (j < m.n)
+            c[k++] = m.arr[j++];
+        return new Merger(c);
+    }
+
+    void display()
+    {
+        for (int i = 0; i < n; i++)
+            System.out.print(arr[i] + " ");
+        System.out.println();
+    }
+
+    public static void main(String[] args)
+    {
+        Merger p = new Merger(new int[] {3, 9, 14, 20});
+        Merger q = new Merger(new int[] {1, 9, 12});
+        p.merge(q).display();
+    }
+}
+
+/* Output:
+1 3 9 9 12 14 20
+*/`,
+          },
+          {
+            type: "example",
+            title: "Tracing merge()",
+            problem: "Trace p.merge(q) for p = 3 9 14 20 and q = 1 9 12.",
+            steps: [
+              "1 < 3 → take 1 from q. 3 < 9 → take 3 from p. 9 ≤ 9 → take p's 9 (the <= keeps equal items from p first).",
+              "q's 9 < 14 → take 9. 12 < 14 → take 12; q is now used up (j = 3).",
+              "The first while loop stops. The second copies the rest of p: 14, 20. The third does nothing.",
+            ],
+            answer: "1 3 9 9 12 14 20 (7 elements, one pass, no sorting needed)",
+          },
+          {
+            type: "mistake",
+            wrong: "After the main while loop, the merge is complete, so the leftover loops are not needed.",
+            right: "The main loop stops as soon as **one** array runs out. The other may still have elements, and the two leftover loops copy them.",
+            why: "With the sample data the last elements happen to come from p, so forgetting only the q loop still prints the right answer. Test with an input where the other array finishes last to catch the bug.",
+          },
+          {
+            type: "checkpoint",
+            questions: [
+              {
+                kind: "numeric",
+                q: "In p.merge(q) above, what is the value of k when the method returns?",
+                answer: 7,
+                explain: "k counts the elements copied into c: 4 + 3 = 7.",
+              },
+            ],
+          },
+          {
+            type: "example",
+            title: "Output question: strings",
+            problem: "Give the output: String w = \"MYSURU\"; String r = \"\"; for (int i = w.length() - 1; i >= 0; i -= 2) r = r + w.charAt(i); System.out.println(r + r.length());",
+            steps: [
+              "w has length 6: M0 Y1 S2 U3 R4 U5.",
+              "i = 5 → 'U', i = 3 → 'U', i = 1 → 'Y'. So r = \"UUY\".",
+              "r + r.length() joins the String with 3.",
+            ],
+            answer: "UUY3",
+          },
+          {
+            type: "example",
+            title: "Output question: arrays",
+            problem: "Give the output: int a[] = {4, 1, 3, 2}; for (int i = 0; i < 3; i++) if (a[i] > a[i + 1]) { int t = a[i]; a[i] = a[i + 1]; a[i + 1] = t; } then print the array.",
+            steps: [
+              "i = 0: 4 > 1, swap → 1 4 3 2.",
+              "i = 1: 4 > 3, swap → 1 3 4 2.",
+              "i = 2: 4 > 2, swap → 1 3 2 4.",
+            ],
+            answer: "1 3 2 4: one pass of bubble sort moves the largest element to the end.",
+          },
+          {
+            type: "activity",
+            activity: {
+              kind: "order",
+              prompt: "Plan: print each word of a sentence with its first letter last.",
+              items: [
+                "Accept the sentence and check its end mark",
+                "Split it into words with StringTokenizer",
+                "For each word, form substring(1) + charAt(0)",
+                "Join the new words with spaces",
+                "Print the original and the new sentence",
+              ],
+              explain: "Validate, split, change each word, rebuild, then display. \"RAIN IS COMING.\" would become \"AINR SI OMINGC\".",
+            },
+          },
+          {
+            type: "heading",
+            text: "Program to write",
+          },
+          {
+            type: "text",
+            md: "**Question.** Design a class **Shift** with data members String **sen** and String **res**. Methods: **Shift(String s)**: stores s in sen and \"\" in res; void **convert()**: forms res by moving the first letter of every word of sen to the end of that word; void **show()**: prints sen and res. Write main() to accept a sentence ending in '.', '?' or '!' and print \"INVALID INPUT\" for any other ending. Use the plan above, and test it with RAIN IS COMING. and with HELLO (no end mark).",
+          },
+          {
+            type: "checkpoint",
+            questions: [
+              {
+                kind: "fill",
+                q: "For the word \"PUNE\", the expression w.substring(1) + w.charAt(0) gives ___.",
+                answer: ["UNEP"],
+                explain: "substring(1) is \"UNE\"; adding 'P' at the end gives \"UNEP\".",
+              },
+            ],
+          },
+          {
+            type: "callout",
+            tone: "exam",
+            title: "ISC board tip",
+            md: "Practical-exam string questions expect the output in a fixed format (original sentence, then the result). Test with all the sample inputs given in the question, including the invalid one; the examiner checks each sample run.",
+          },
+          {
+            type: "keypoints",
+            items: [
+              "Merging two sorted arrays takes one pass plus leftover loops.",
+              "Use <= in merge so equal items keep their order (stable merge).",
+              "In output questions, write each loop variable's values in a column.",
+              "char + String joins; char + int adds.",
+              "One bubble-sort pass sends the largest element to the end.",
+            ],
+          },
+        ],
+        flashcards: [
+          { front: "Merging two sorted arrays of sizes p and q", back: "Takes p + q copy steps; compare front elements, take the smaller, then copy the leftovers." },
+          { front: "Why leftover loops in merge?", back: "The main loop stops when one array runs out; the rest of the other array must still be copied." },
+          { front: "w.charAt(w.length() - 1)", back: "The last character of w." },
+          { front: "Effect of one bubble sort pass (ascending)", back: "The largest element reaches the last position." },
+          { front: "Moving the first letter of a word to the end", back: "w.substring(1) + w.charAt(0)." },
+          { front: "Stable merge", back: "Equal elements keep the order they had, achieved by using <= when comparing." },
+        ],
+        quiz: [
+          {
+            kind: "mcq",
+            q: "What is printed? String s = \"PUNE\"; System.out.println(s.charAt(1) + \"\" + s.length() + s.charAt(3));",
+            options: ["U4E", "U4 E", "89E", "U+4+E"],
+            answer: 0,
+            explain: "s.charAt(1) + \"\" makes a String \"U\"; then 4 and 'E' are joined: \"U4E\".",
+          },
+          {
+            kind: "mcq",
+            q: "Merging 2 5 8 with 1 6 gives:",
+            options: ["1 2 5 6 8", "2 5 8 1 6", "1 6 2 5 8", "1 2 6 5 8"],
+            answer: 0,
+            explain: "Merging keeps the result sorted.",
+          },
+          {
+            kind: "numeric",
+            q: "int a[] = {5, 2, 7, 1}; int s = 0; for (int i = 0; i < a.length; i += 2) s += a[i]; What is s?",
+            answer: 12,
+            explain: "i = 0 and 2: 5 + 7 = 12.",
+          },
+          {
+            kind: "truefalse",
+            q: "\"RAIN\".substring(1) + \"RAIN\".charAt(0) gives \"AINR\".",
+            answer: true,
+            explain: "substring(1) is \"AIN\"; adding 'R' gives \"AINR\".",
+          },
+          {
+            kind: "fill",
+            q: "int m[][] = new int[3][4]; the value of m.length is ___.",
+            answer: ["3"],
+            explain: "m.length is the number of rows; m[0].length is 4.",
+          },
+          {
+            kind: "mcq",
+            q: "What is printed? String t = \"\"; for (char c = 'a'; c <= 'e'; c += 2) t = c + t; System.out.println(t);",
+            options: ["eca", "ace", "abcde", "edcba"],
+            answer: 0,
+            explain: "c takes 'a', 'c', 'e', and each is put in front of t: \"a\" → \"ca\" → \"eca\".",
+            difficulty: 2,
+          },
+          {
+            kind: "mcq",
+            q: "A practical question says words must be counted in a sentence terminated by '.', '?' or '!'. Which delimiter string suits StringTokenizer?",
+            options: ["\" .?!\"", "\".\"", "\" \"", "\"!?\""],
+            answer: 0,
+            explain: "Including the space and all three end marks keeps the end mark out of the last word.",
+          },
+        ],
+      },
+    ],
+  },
+  /* ------------------------------------------------------------------ */
+  /* ISC Class 12 · Recursion                                             */
+  /* ------------------------------------------------------------------ */
+  {
+    slug: "c12-cs-java-recursion",
+    title: "Recursion",
+    icon: "🪆",
+    description: "Recursive methods with a base case and a recursive case, the call stack, winding and unwinding, tracing output, and recursive methods inside ISC-style class programs on numbers and strings.",
+    lessons: [
+      {
+        slug: "c12-cs-recursion-basics",
+        title: "Recursion: Base Case, Call Stack and Tracing",
+        summary: "What a recursive method is, why it needs a base case, how the call stack winds and unwinds, and how to trace a recursive method's output step by step.",
+        minutes: 22,
+        xp: 50,
+        blocks: [
+          {
+            type: "illustration",
+            emoji: "🪆",
+            caption: "Open a set of nesting dolls and each one holds a smaller copy of itself, until the tiniest doll that does not open. A recursive method works the same way: it solves a smaller copy of the problem until it reaches a case it can answer directly.",
+          },
+          {
+            type: "text",
+            md: "A method that calls **itself** is **recursive**. Every correct recursive method has two parts:\n\n1. The **base case** (terminating condition): the simplest input, answered directly without another call.\n2. The **recursive case**: the method calls itself on a **smaller** problem, moving towards the base case.\n\nFor example, n! = n × (n − 1)! with the base case 1! = 1 (and 0! = 1).",
+          },
+          {
+            type: "code",
+            lang: "java",
+            caption: "RecBasic.java",
+            code: `public class RecBasic
+{
+    static int fact(int n)
+    {
+        if (n <= 1)              // base case
+            return 1;
+        return n * fact(n - 1);  // recursive case
+    }
+
+    static int sumDigits(int n)
+    {
+        if (n == 0)
+            return 0;
+        return n % 10 + sumDigits(n / 10);
+    }
+
+    static void show(int n)
+    {
+        if (n == 0)
+            return;
+        System.out.print(n + " ");
+        show(n - 1);
+        System.out.print(n + " ");
+    }
+
+    public static void main(String[] args)
+    {
+        System.out.println(fact(5));
+        System.out.println(sumDigits(4706));
+        show(3);
+        System.out.println();
+    }
+}
+
+/* Output:
+120
+17
+3 2 1 1 2 3
+*/`,
+          },
+          {
+            type: "text",
+            md: "Each call gets its own **activation record** (its own copy of n and its place to return to) on the **call stack**. Calls pile up while the method keeps calling itself: this is **winding**. When the base case returns, the records come off the stack one by one in reverse order, and each waiting call finishes its work: this is **unwinding**. The stack is last-in, first-out.",
+          },
+          {
+            type: "example",
+            title: "Tracing fact(5) on the stack",
+            problem: "Show how fact(5) is evaluated.",
+            steps: [
+              "Winding: fact(5) waits for fact(4), which waits for fact(3), then fact(2), then fact(1).",
+              "fact(1) is the base case and returns 1.",
+              "Unwinding: fact(2) = 2 × 1 = 2; fact(3) = 3 × 2 = 6; fact(4) = 4 × 6 = 24; fact(5) = 5 × 24 = 120.",
+              "Five activation records were on the stack at the deepest point.",
+            ],
+            answer: "fact(5) = 120",
+          },
+          {
+            type: "example",
+            title: "Statements before and after the call",
+            problem: "Explain why show(3) prints 3 2 1 1 2 3.",
+            steps: [
+              "The print before the recursive call runs during winding: show(3) prints 3, show(2) prints 2, show(1) prints 1.",
+              "show(0) is the base case and returns without printing.",
+              "The print after the call runs during unwinding, in reverse order: show(1) prints 1, then show(2) prints 2, then show(3) prints 3.",
+            ],
+            answer: "3 2 1 1 2 3",
+          },
+          {
+            type: "mistake",
+            wrong: "A base case is optional: the method will stop on its own when n becomes small.",
+            right: "Without a reachable base case the method calls itself for ever, until the call stack runs out of memory and Java throws a **StackOverflowError**.",
+            why: "In a loop, a wrong condition just repeats; it feels as if recursion should also \"run out\". But each new call needs more stack space, and n keeps going down past 0 into negative numbers, so nothing stops it except the error.",
+          },
+          {
+            type: "checkpoint",
+            questions: [
+              {
+                kind: "numeric",
+                q: "Trace sumDigits(4706). How many times is sumDigits called in total, including the first call?",
+                answer: 5,
+                explain: "Calls with 4706, 470, 47, 4 and 0. The last one is the base case. The result is 6 + 0 + 7 + 4 = 17.",
+              },
+              {
+                kind: "mcq",
+                q: "If show(n) had only the print statement after the recursive call, show(3) would print:",
+                options: ["1 2 3", "3 2 1", "3 2 1 1 2 3", "nothing"],
+                answer: 0,
+                explain: "All printing would happen during unwinding, which starts from the deepest call, show(1).",
+              },
+            ],
+          },
+          {
+            type: "table",
+            headers: ["Point", "Recursion", "Iteration (loop)"],
+            rows: [
+              ["How it repeats", "the method calls itself", "a loop repeats a block"],
+              ["How it stops", "base case", "loop condition becomes false"],
+              ["Memory", "a new stack frame per call", "the same variables reused"],
+              ["Speed", "slower (call overhead)", "usually faster"],
+              ["Good for", "naturally recursive problems: trees, Tower of Hanoi, divide and conquer", "simple counting and repetition"],
+            ],
+          },
+          {
+            type: "activity",
+            activity: {
+              kind: "order",
+              prompt: "Order what happens when fact(3) runs.",
+              items: [
+                "fact(3) calls fact(2)",
+                "fact(2) calls fact(1)",
+                "fact(1) returns 1 (base case)",
+                "fact(2) returns 2 × 1 = 2",
+                "fact(3) returns 3 × 2 = 6",
+              ],
+              explain: "Calls go down to the base case (winding), then results come back up in reverse order (unwinding).",
+            },
+          },
+          {
+            type: "callout",
+            tone: "exam",
+            title: "ISC board tip",
+            md: "For a recursion output question, draw a column of calls with their parameters going down, then write the return values coming back up. Show this working: it earns marks even if you slip at the final step. Mark clearly which statements run before the recursive call and which run after.",
+          },
+          {
+            type: "keypoints",
+            items: [
+              "A recursive method calls itself; it needs a base case and a recursive case that shrinks the problem.",
+              "Each call has its own activation record on the call stack.",
+              "Winding: calls pile up. Unwinding: they return in reverse order.",
+              "Statements before the call run in calling order; statements after it run in reverse order.",
+              "Missing or unreachable base case → StackOverflowError.",
+            ],
+          },
+        ],
+        flashcards: [
+          { front: "Recursion", back: "A technique in which a method calls itself to solve a smaller instance of the same problem." },
+          { front: "Base case", back: "The condition under which a recursive method returns a result directly, without calling itself." },
+          { front: "Winding and unwinding", back: "Winding: recursive calls pile up on the stack. Unwinding: they return one by one in reverse order." },
+          { front: "Error from endless recursion", back: "StackOverflowError." },
+          { front: "Data structure used by the JVM to manage method calls", back: "The call stack (LIFO)." },
+          { front: "fact(5)", back: "120." },
+          { front: "One drawback of recursion", back: "Extra memory and time for each call's stack frame." },
+        ],
+        quiz: [
+          {
+            kind: "mcq",
+            q: "int f(int n) { if (n == 0) return 0; return n + f(n - 1); } What is f(4)?",
+            options: ["10", "4", "24", "0"],
+            answer: 0,
+            explain: "4 + 3 + 2 + 1 + 0 = 10.",
+          },
+          {
+            kind: "mcq",
+            q: "What happens if f from the previous question is called as f(-2)?",
+            options: ["StackOverflowError", "It returns -3", "It returns 0", "It returns -2"],
+            answer: 0,
+            explain: "n goes −2, −3, −4, ... and never equals 0, so the base case is never reached.",
+            difficulty: 2,
+          },
+          {
+            kind: "truefalse",
+            q: "In a recursive method, the statements after the recursive call run in the reverse order of the calls.",
+            answer: true,
+            explain: "They run while the stack unwinds, from the deepest call back to the first.",
+          },
+          {
+            kind: "numeric",
+            q: "int p(int b, int e) { if (e == 0) return 1; return b * p(b, e - 1); } What is p(3, 4)?",
+            answer: 81,
+            explain: "3 × 3 × 3 × 3 × 1 = 81.",
+          },
+          {
+            kind: "fill",
+            q: "The condition that stops recursion is called the ___ case.",
+            answer: ["base"],
+            explain: "It is also called the terminating condition.",
+          },
+          {
+            kind: "mcq",
+            q: "void r(int n) { if (n > 0) { r(n / 10); System.out.print(n % 10); } } What does r(527) print?",
+            options: ["527", "725", "5", "7"],
+            answer: 0,
+            explain: "The print comes after the call, so digits are printed while unwinding, from the leading digit: 5, 2, 7.",
+            difficulty: 2,
+          },
+          {
+            kind: "multi",
+            q: "Which are true of recursion compared with a loop?",
+            options: ["It uses more memory per repetition", "It must have a terminating condition", "It is always faster", "Some problems, like tree traversal, are much simpler to write with it"],
+            answers: [0, 1, 3],
+            explain: "Recursion is usually slower than a loop because of call overhead.",
+          },
+        ],
+      },
+      {
+        slug: "c12-cs-recursion-programs",
+        title: "Recursive Methods in ISC Class Programs",
+        summary: "Writing recursive methods to a specification: reversing a number with a data member, HCF, binary conversion, reversing a string and counting vowels.",
+        minutes: 22,
+        xp: 55,
+        blocks: [
+          {
+            type: "text",
+            md: "ISC questions often say \"using the **recursive technique**\" for one method of a class. That method must call itself and must **not** use a loop. The other methods of the class can be ordinary.\n\nA useful way to design a recursive method is to ask two questions: *What is the smallest input, and what is the answer for it?* (base case) *If I already had the answer for a slightly smaller input, how would I build this answer?* (recursive case).",
+          },
+          {
+            type: "table",
+            headers: ["Task", "Base case", "Recursive case"],
+            rows: [
+              ["Sum of digits of n", "n == 0 → 0", "n % 10 + sum(n / 10)"],
+              ["HCF of a and b (Euclid)", "b == 0 → a", "gcd(b, a % b)"],
+              ["Binary of n as a String", "n == 0 → \"\"", "toBinary(n / 2) + (n % 2)"],
+              ["Reverse of string s", "length ≤ 1 → s", "reverse(s.substring(1)) + s.charAt(0)"],
+              ["Vowels in s from index i", "i == s.length() → 0", "(1 if charAt(i) is a vowel, else 0) + count(s, i + 1)"],
+            ],
+          },
+          {
+            type: "code",
+            lang: "java",
+            caption: "RecString.java",
+            code: `public class RecString
+{
+    static int gcd(int a, int b)
+    {
+        if (b == 0)
+            return a;
+        return gcd(b, a % b);
+    }
+
+    static String toBinary(int n)
+    {
+        if (n == 0)
+            return "";
+        return toBinary(n / 2) + (n % 2);
+    }
+
+    static String reverse(String s)
+    {
+        if (s.length() <= 1)
+            return s;
+        return reverse(s.substring(1)) + s.charAt(0);
+    }
+
+    static int countVowels(String s, int i)
+    {
+        if (i == s.length())
+            return 0;
+        char ch = Character.toUpperCase(s.charAt(i));
+        int v = ("AEIOU".indexOf(ch) >= 0) ? 1 : 0;
+        return v + countVowels(s, i + 1);
+    }
+
+    public static void main(String[] args)
+    {
+        System.out.println(gcd(84, 36));
+        System.out.println(toBinary(13));
+        System.out.println(reverse("KOCHI"));
+        System.out.println(countVowels("Education", 0));
+    }
+}
+
+/* Output:
+12
+1101
+IHCOK
+5
+*/`,
+          },
+          {
+            type: "example",
+            title: "Tracing toBinary(13)",
+            problem: "Show how toBinary(13) builds \"1101\".",
+            steps: [
+              "toBinary(13) = toBinary(6) + 1; toBinary(6) = toBinary(3) + 0; toBinary(3) = toBinary(1) + 1; toBinary(1) = toBinary(0) + 1; toBinary(0) = \"\".",
+              "Unwinding: \"\" + 1 = \"1\"; \"1\" + 1 = \"11\"; \"11\" + 0 = \"110\"; \"110\" + 1 = \"1101\".",
+              "The remainders are joined during unwinding, so they come out in the right order without reversing.",
+            ],
+            answer: "\"1101\" (13 in binary)",
+          },
+          {
+            type: "mistake",
+            wrong: "In toBinary, write return (n % 2) + toBinary(n / 2); the order of the two parts does not matter.",
+            right: "Write toBinary(n / 2) + (n % 2). The remainder for the last division is the **most** significant bit, so it must come first.",
+            why: "Addition of numbers is commutative, so swapping feels harmless. But + here joins Strings, and joining is not commutative: the swapped version gives \"1011\" for 13, the reverse of the correct answer.",
+          },
+          {
+            type: "checkpoint",
+            questions: [
+              {
+                kind: "mcq",
+                q: "gcd(84, 36) calls itself with which arguments next?",
+                options: ["gcd(36, 12)", "gcd(36, 48)", "gcd(12, 36)", "gcd(84, 12)"],
+                answer: 0,
+                explain: "gcd(b, a % b) = gcd(36, 84 % 36) = gcd(36, 12). Then gcd(12, 0) returns 12.",
+              },
+            ],
+          },
+          {
+            type: "heading",
+            text: "A recursive method that uses a data member",
+          },
+          {
+            type: "code",
+            lang: "java",
+            caption: "Palin.java (sample inputs 1221 and 1230)",
+            code: `import java.util.Scanner;
+
+public class Palin
+{
+    int num;
+    int revnum;
+
+    Palin()
+    {
+        num = 0;
+        revnum = 0;
+    }
+
+    void accept()
+    {
+        Scanner sc = new Scanner(System.in);
+        num = sc.nextInt();
+    }
+
+    // builds the reverse of y in revnum, using recursion
+    int reverse(int y)
+    {
+        if (y == 0)
+            return revnum;
+        revnum = revnum * 10 + y % 10;
+        return reverse(y / 10);
+    }
+
+    void check()
+    {
+        revnum = 0;
+        if (reverse(num) == num)
+            System.out.println(num + " IS A PALINDROME NUMBER");
+        else
+            System.out.println(num + " IS NOT A PALINDROME NUMBER");
+    }
+
+    public static void main(String[] args)
+    {
+        Palin ob = new Palin();
+        ob.accept();
+        ob.check();
+    }
+}
+
+/* Sample run 1: input 1221
+1221 IS A PALINDROME NUMBER
+
+Sample run 2: input 1230
+1230 IS NOT A PALINDROME NUMBER
+*/`,
+          },
+          {
+            type: "example",
+            title: "Tracing reverse(1230)",
+            problem: "Trace revnum through reverse(1230).",
+            steps: [
+              "y = 1230: revnum = 0 × 10 + 0 = 0, call reverse(123).",
+              "y = 123: revnum = 0 × 10 + 3 = 3; y = 12: revnum = 32; y = 1: revnum = 321.",
+              "y = 0: base case, return revnum = 321.",
+              "321 ≠ 1230, so the number is not a palindrome.",
+            ],
+            answer: "reverse(1230) returns 321",
+          },
+          {
+            type: "activity",
+            activity: {
+              kind: "match",
+              prompt: "Match each call to its result.",
+              pairs: [
+                ["gcd(48, 18)", "6"],
+                ["toBinary(10)", "\"1010\""],
+                ["reverse(\"GOA\")", "\"AOG\""],
+                ["countVowels(\"Agra\", 0)", "2"],
+              ],
+              explain: "gcd: (48, 18) → (18, 12) → (12, 6) → (6, 0). Binary of 10 is 1010. Agra has A and a.",
+            },
+          },
+          {
+            type: "callout",
+            tone: "exam",
+            title: "ISC board tip",
+            md: "If a method is to be written \"using recursion\", a loop inside it costs marks even when the output is right. Start the method with the base case written as an if statement; examiners look for it first. Reset any data member that the recursion builds (like revnum = 0) before calling it again.",
+          },
+          {
+            type: "keypoints",
+            items: [
+              "Design: smallest input → base case; build the answer from a smaller answer → recursive case.",
+              "Euclid's HCF: gcd(a, b) = gcd(b, a % b), base case b == 0.",
+              "The order of joining in String recursion decides the order of the output.",
+              "A recursive method may build its result in a data member, which must be reset before use.",
+              "\"Using recursion\" means no loops inside that method.",
+            ],
+          },
+        ],
+        flashcards: [
+          { front: "Recursive HCF (Euclid)", back: "gcd(a, b) = a if b == 0, else gcd(b, a % b)." },
+          { front: "Recursive binary conversion", back: "toBinary(n) = toBinary(n / 2) + (n % 2), base case n == 0 → \"\"." },
+          { front: "Recursive string reverse", back: "reverse(s) = reverse(s.substring(1)) + s.charAt(0), base case length ≤ 1." },
+          { front: "Recursive vowel count", back: "count(s, i) = (vowel at i ? 1 : 0) + count(s, i + 1), base case i == s.length()." },
+          { front: "Why reset revnum in check()?", back: "reverse() adds to whatever revnum already holds; an old value would give a wrong reverse." },
+          { front: "toBinary(13)", back: "\"1101\"." },
+        ],
+        quiz: [
+          {
+            kind: "mcq",
+            q: "What does reverse(\"ISC\") (from RecString) return?",
+            options: ["\"CSI\"", "\"ISC\"", "\"SCI\"", "\"C\""],
+            answer: 0,
+            explain: "reverse(\"SC\") + 'I' = (reverse(\"C\") + 'S') + 'I' = \"CSI\".",
+          },
+          {
+            kind: "numeric",
+            q: "What does gcd(105, 30) return?",
+            answer: 15,
+            explain: "(105, 30) → (30, 15) → (15, 0) → 15.",
+          },
+          {
+            kind: "mcq",
+            q: "How many times is countVowels called for countVowels(\"Pune\", 0)?",
+            options: ["5", "4", "2", "1"],
+            answer: 0,
+            explain: "With i = 0, 1, 2, 3 and finally 4 (the base case, i == length): 5 calls.",
+            difficulty: 2,
+          },
+          {
+            kind: "truefalse",
+            q: "In Palin, if check() did not set revnum = 0 and was called twice on the same object, the second check could give a wrong answer.",
+            answer: true,
+            explain: "revnum would start from the old reverse, so the digits would be added onto it.",
+          },
+          {
+            kind: "fill",
+            q: "toBinary(6) returns the String ___.",
+            answer: ["110"],
+            explain: "6 → 3 r0 → 1 r1 → 0 r1; joined during unwinding: \"110\".",
+          },
+          {
+            kind: "mcq",
+            q: "Which is the correct base case for a recursive method that counts the digits of a positive int n?",
+            options: ["if (n < 10) return 1;", "if (n == 1) return 0;", "if (n > 0) return 1;", "if (n % 10 == 0) return 0;"],
+            answer: 0,
+            explain: "A one-digit number has 1 digit; otherwise the answer is 1 + count(n / 10).",
+          },
+          {
+            kind: "mcq",
+            q: "Which statement about a method written \"using the recursive technique\" is correct?",
+            options: ["It must call itself and must not use a loop for the repetition", "It must be static", "It must return void", "It cannot use data members"],
+            answer: 0,
+            explain: "Palin.reverse() shows a recursive instance method that returns an int and uses a data member.",
+          },
+        ],
+      },
+      {
+        slug: "c12-cs-recursion-practice",
+        title: "Recursion: Board Practice",
+        summary: "Output and \"what does this method do\" questions on recursive methods, and a complete recursive class to write and test.",
+        minutes: 22,
+        xp: 55,
+        blocks: [
+          {
+            type: "text",
+            md: "Two question types appear again and again: (a) give the output of a recursive method for a given input, and (b) state in one line what the method computes. For (b), trace two or three small inputs and look for the pattern.",
+          },
+          {
+            type: "code",
+            lang: "java",
+            caption: "RecTrace.java",
+            code: `public class RecTrace
+{
+    static int fun(int a, int b)
+    {
+        if (b == 0)
+            return 0;
+        else if (b % 2 == 0)
+            return fun(a + a, b / 2);
+        else
+            return fun(a + a, b / 2) + a;
+    }
+
+    static int digitProduct(int n)
+    {
+        if (n < 10)
+            return n;
+        return (n % 10) * digitProduct(n / 10);
+    }
+
+    static void pattern(String s, int i)
+    {
+        if (i > s.length())
+            return;
+        pattern(s, i + 1);
+        System.out.println(s.substring(0, i));
+    }
+
+    public static void main(String[] args)
+    {
+        System.out.println(fun(5, 6));
+        System.out.println(digitProduct(3426));
+        pattern("ISC", 1);
+    }
+}
+
+/* Output:
+30
+144
+ISC
+IS
+I
+*/`,
+          },
+          {
+            type: "example",
+            title: "What does fun(a, b) compute?",
+            problem: "Trace fun(5, 6) and state what fun does.",
+            steps: [
+              "fun(5, 6): b even → fun(10, 3).",
+              "fun(10, 3): b odd → fun(20, 1) + 10.",
+              "fun(20, 1): b odd → fun(40, 0) + 20 = 0 + 20 = 20.",
+              "Unwinding: fun(10, 3) = 20 + 10 = 30, so fun(5, 6) = 30.",
+            ],
+            answer: "30. fun(a, b) returns a × b, by doubling a and halving b (the \"Russian peasant\" method).",
+          },
+          {
+            type: "example",
+            title: "Output order in pattern()",
+            problem: "Why does pattern(\"ISC\", 1) print ISC, then IS, then I?",
+            steps: [
+              "Calls go pattern(1) → pattern(2) → pattern(3) → pattern(4); pattern(4) returns because 4 > 3.",
+              "The print is after the call, so it runs during unwinding: i = 3 prints substring(0, 3) = ISC, then i = 2 prints IS, then i = 1 prints I.",
+            ],
+            answer: "ISC / IS / I",
+          },
+          {
+            type: "mistake",
+            wrong: "fun(5, 6) is just fun(10, 3), so the + a in the odd branch never matters for even b.",
+            right: "The first call has even b, but later calls can have odd b (here 3 and 1), and their + a values are added during unwinding.",
+            why: "Learners look only at the first call. A recursion trace must follow every level down to the base case, because each level can take a different branch.",
+          },
+          {
+            type: "checkpoint",
+            questions: [
+              {
+                kind: "numeric",
+                q: "What is digitProduct(705)?",
+                answer: 0,
+                explain: "5 × 0 × 7 = 0. Any zero digit makes the product 0.",
+              },
+              {
+                kind: "mcq",
+                q: "What is fun(3, 5)?",
+                options: ["15", "8", "12", "3"],
+                answer: 0,
+                explain: "fun(a, b) = a × b. Trace: fun(3,5) = fun(6,2) + 3; fun(6,2) = fun(12,1) = fun(24,0) + 12 = 12; so 12 + 3 = 15.",
+              },
+            ],
+          },
+          {
+            type: "heading",
+            text: "Program to write",
+          },
+          {
+            type: "text",
+            md: "**Question.** A **special number** is equal to the sum of the factorials of its digits (145 = 1! + 4! + 5! = 1 + 24 + 120). Design a class **Special** with data member int **n**. Methods: **Special(int num)**: stores num in n; int **factorial(int x)**: returns x! using recursion; int **sumFact(int m)**: returns the sum of the factorials of the digits of m using recursion; void **check()**: prints whether n is a special number. Write main().",
+          },
+          {
+            type: "code",
+            lang: "java",
+            caption: "Special.java (sample inputs 145 and 146)",
+            code: `import java.util.Scanner;
+
+public class Special
+{
+    int n;
+
+    Special(int num)
+    {
+        n = num;
+    }
+
+    int factorial(int x)
+    {
+        if (x <= 1)
+            return 1;
+        return x * factorial(x - 1);
+    }
+
+    // sum of factorials of the digits of m, by recursion
+    int sumFact(int m)
+    {
+        if (m == 0)
+            return 0;
+        return factorial(m % 10) + sumFact(m / 10);
+    }
+
+    void check()
+    {
+        if (n > 0 && sumFact(n) == n)
+            System.out.println(n + " IS A SPECIAL NUMBER");
+        else
+            System.out.println(n + " IS NOT A SPECIAL NUMBER");
+    }
+
+    public static void main(String[] args)
+    {
+        Scanner sc = new Scanner(System.in);
+        Special ob = new Special(sc.nextInt());
+        ob.check();
+    }
+}
+
+/* Sample run 1: input 145
+145 IS A SPECIAL NUMBER
+
+Sample run 2: input 146
+146 IS NOT A SPECIAL NUMBER
+*/`,
+          },
+          {
+            type: "activity",
+            activity: {
+              kind: "reveal",
+              prompt: "factorial(0) is called for the digit 0 in a number like 405. What does it return?",
+              emoji: "0️⃣",
+              options: ["1", "0", "StackOverflowError"],
+              answer: 0,
+              trap: 1,
+              explain: "The base case x <= 1 covers 0, and 0! = 1 by definition. So 405 gives 4! + 0! + 5! = 24 + 1 + 120 = 145, not 405.",
+            },
+          },
+          {
+            type: "callout",
+            tone: "exam",
+            title: "ISC board tip",
+            md: "In \"what does this method do\" questions, give the purpose in words (\"returns the product of a and b\"), not a repeat of the code. In the practical exam, write the algorithm for the recursive method as two clear steps: the base case and the recursive step.",
+          },
+          {
+            type: "keypoints",
+            items: [
+              "Follow every level of a recursive trace; branches can change from level to level.",
+              "Print statements after the call print in reverse order of the calls.",
+              "Find what a method does by tracing small inputs and spotting the pattern.",
+              "0! = 1: make sure the base case handles 0.",
+              "Two recursive methods can work together (sumFact calls factorial).",
+            ],
+          },
+        ],
+        flashcards: [
+          { front: "fun(a, b) that doubles a and halves b, adding a when b is odd", back: "Returns a × b." },
+          { front: "digitProduct(3426)", back: "144 (6 × 2 × 4 × 3)." },
+          { front: "Special (Krishnamurthy) number", back: "Equal to the sum of the factorials of its digits, e.g. 1, 2, 145, 40585." },
+          { front: "0!", back: "1." },
+          { front: "How to answer \"what does this method do?\"", back: "Trace small inputs, find the pattern, and state the purpose in words." },
+          { front: "pattern(\"ISC\", 1) output", back: "ISC, IS, I on separate lines (printing during unwinding)." },
+        ],
+        quiz: [
+          {
+            kind: "numeric",
+            q: "What is fun(7, 4)?",
+            answer: 28,
+            explain: "fun(a, b) returns a × b = 28. Trace: fun(7,4) → fun(14,2) → fun(28,1) = fun(56,0) + 28 = 28.",
+          },
+          {
+            kind: "mcq",
+            q: "What does sumFact(23) return?",
+            options: ["8", "5", "6", "120"],
+            answer: 0,
+            explain: "3! + 2! = 6 + 2 = 8.",
+          },
+          {
+            kind: "mcq",
+            q: "void p(int n) { if (n <= 0) return; p(n - 2); System.out.print(n + \" \"); } What does p(7) print?",
+            options: ["1 3 5 7", "7 5 3 1", "7 5 3 1 -1", "1 3 5 7 9"],
+            answer: 0,
+            explain: "Calls 7 → 5 → 3 → 1 → −1 (base case). Printing happens while unwinding: 1 3 5 7.",
+            difficulty: 2,
+          },
+          {
+            kind: "truefalse",
+            q: "If pattern() printed before its recursive call, pattern(\"ISC\", 1) would print I, IS, ISC.",
+            answer: true,
+            explain: "Printing would then happen during winding, with i = 1, 2, 3 in that order.",
+          },
+          {
+            kind: "fill",
+            q: "int q(int n) { if (n == 0) return 0; return 1 + q(n / 10); } q(50213) returns ___.",
+            answer: ["5"],
+            explain: "q counts the digits: 50213 has 5 digits.",
+          },
+          {
+            kind: "mcq",
+            q: "String m(String s) { if (s.length() == 0) return \"\"; return m(s.substring(1)) + s.charAt(0) + s.charAt(0); } m(\"AB\") returns:",
+            options: ["\"BBAA\"", "\"AABB\"", "\"ABAB\"", "\"BA\""],
+            answer: 0,
+            explain: "m(\"B\") = m(\"\") + \"BB\" = \"BB\"; then m(\"AB\") = \"BB\" + \"AA\" = \"BBAA\".",
+            difficulty: 2,
+          },
+          {
+            kind: "mcq",
+            q: "Which input is a special number by the definition in the question?",
+            options: ["2", "3", "10", "100"],
+            answer: 0,
+            explain: "2! = 2. 3! = 6; 10 gives 1 + 1 = 2; 100 gives 1 + 1 + 1 = 3.",
+          },
+        ],
+      },
+    ],
+  },
 ];
 
 /** Chapter title ("11:" / "12:" + exact title) → topic slug(s) that teach it. */
@@ -2323,4 +3877,6 @@ export const links: Record<string, string | string[]> = {
   "12:Boolean Algebra": "c12-cs-boolean-algebra",
   "12:Logic Circuits": "c12-cs-logic-circuits",
   "12:Objects and Classes": "c12-cs-java-classes",
+  "12:Arrays and Strings": "c12-cs-java-arrays-strings",
+  "12:Recursion": "c12-cs-java-recursion",
 };
