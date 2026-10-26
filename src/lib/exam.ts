@@ -64,6 +64,8 @@ export interface MockTest {
   pair?: string;
   /** "PCM" / "PCB" etc. */
   variant?: string;
+  /** Short paper name, used to title the half-length variant. */
+  name?: Txt;
 }
 
 export const SUBJECT_META: Record<ExamSubject, { name: string; emoji: string; color: string }> = {
@@ -140,6 +142,7 @@ const one = (subject: ExamSubject, count: number, marking: SectionMarking, kinds
 const FULL: MockTest[] = [
   {
     id: "jee-main-full",
+    name: { key: "exam.mock.name.jeeMain", en: "JEE Main" },
     title: { key: "exam.mock.jeeMainFull.title", en: "JEE Main · Full paper" },
     blurb: { key: "exam.mock.jeeMainFull.blurb", en: "Physics, Chemistry and Maths: 20 MCQs + 5 numerical answers each. 75 questions, 300 marks, +4 / −1." },
     exam: "JEE",
@@ -154,6 +157,7 @@ const FULL: MockTest[] = [
   },
   {
     id: "jee-adv-paper",
+    name: { key: "exam.mock.name.jeeAdv", en: "JEE Advanced" },
     title: { key: "exam.mock.jeeAdv.title", en: "JEE Advanced · Paper" },
     blurb: { key: "exam.mock.jeeAdv.blurb", en: "One 3-hour paper per the recent pattern: single-correct, one-or-more-correct with partial marking, and numerical answers in each subject." },
     exam: "JEE_ADV",
@@ -169,6 +173,7 @@ const FULL: MockTest[] = [
   },
   {
     id: "neet-ug-full",
+    name: { key: "exam.mock.name.neet", en: "NEET (UG)" },
     title: { key: "exam.mock.neetFull.title", en: "NEET (UG) · Full paper" },
     blurb: { key: "exam.mock.neetFull.blurb", en: "180 questions in 3 hours: Physics 45, Chemistry 45, Biology 90. 720 marks, +4 / −1." },
     exam: "NEET",
@@ -180,6 +185,7 @@ const FULL: MockTest[] = [
   },
   {
     id: "kcet-pcm",
+    name: { key: "exam.mock.name.kcetPcm", en: "KCET · PCM" },
     title: { key: "exam.mock.kcetPcm.title", en: "KCET · PCM" },
     blurb: { key: "exam.mock.kcetPcm.blurb", en: "60 questions per subject, 80 minutes each, taken one subject after another. 1 mark each, no negative marking." },
     exam: "KCET",
@@ -192,6 +198,7 @@ const FULL: MockTest[] = [
   },
   {
     id: "kcet-pcb",
+    name: { key: "exam.mock.name.kcetPcb", en: "KCET · PCB" },
     title: { key: "exam.mock.kcetPcb.title", en: "KCET · PCB" },
     blurb: { key: "exam.mock.kcetPcb.blurb", en: "Physics, Chemistry and Biology: 60 questions each, 80 minutes per subject. 1 mark each, no negative marking." },
     exam: "KCET",
@@ -204,6 +211,7 @@ const FULL: MockTest[] = [
   },
   {
     id: "comedk-full",
+    name: { key: "exam.mock.name.comedk", en: "COMEDK UGET" },
     title: { key: "exam.mock.comedk.title", en: "COMEDK UGET · Full paper" },
     blurb: { key: "exam.mock.comedk.blurb", en: "180 questions in 3 hours: Physics, Chemistry and Maths, 60 each. +1 per correct answer, no negative marking." },
     exam: "COMEDK",
@@ -222,7 +230,7 @@ function halfLength(m: MockTest): MockTest {
     id: `${m.id}-half`,
     kind: "half",
     pair: m.id,
-    title: { key: "exam.mock.halfTitle", en: "{title} · Half-length", vars: { title: m.title } },
+    title: { key: "exam.mock.halfTitle", en: "{title} · Half-length paper", vars: { title: m.name ?? m.title } },
     blurb: { key: "exam.mock.halfBlurb", en: "The same pattern and marking at half the length — good for a weekday evening." },
     minutes: Math.round(m.minutes / 2),
     timing: m.timing.mode === "sectional" ? { mode: "sectional", minutesPerSubject: m.timing.minutesPerSubject / 2 } : m.timing,

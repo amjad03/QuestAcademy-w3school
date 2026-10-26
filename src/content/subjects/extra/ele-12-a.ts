@@ -1156,10 +1156,576 @@ const feedback: Topic = {
   ],
 };
 
-export const topics: Topic[] = [amplifiers, feedback];
+/* ------------------------------------------------------------------ */
+/* 12: Field Effect Transistors                                        */
+/* ------------------------------------------------------------------ */
+const fet: Topic = {
+  slug: "c12-ele-field-effect-transistors",
+  title: "Field Effect Transistors",
+  icon: "🎛️",
+  description: "JFET construction, working and characteristics, Shockley's equation, FET parameters g_m, r_d and μ, depletion and enhancement MOSFETs, the CS amplifier, and FET versus BJT.",
+  lessons: [
+    {
+      slug: "c12-ele-jfet",
+      title: "The JFET: Construction, Characteristics and Parameters",
+      summary: "How a reverse-biased gate squeezes the channel of an n-channel JFET, the drain and transfer characteristics, Shockley's equation, and the parameters g_m, r_d and μ.",
+      minutes: 22,
+      xp: 50,
+      blocks: [
+        {
+          type: "illustration",
+          emoji: "🚰",
+          caption: "Squeezing a garden hose controls the flow of water without touching the water. A JFET's gate squeezes a channel of charge carriers in the same way.",
+        },
+        {
+          type: "text",
+          md: "A BJT is **current controlled**: a base current controls the collector current, and both electrons and holes take part (bipolar). A **field effect transistor (FET)** is **voltage controlled**: the electric field from a gate voltage controls the drain current, and only majority carriers carry it, so it is a **unipolar** device. Because its gate draws almost no current, a FET has a very high input resistance.",
+        },
+        {
+          type: "text",
+          md: "**Construction of an n-channel JFET (in words).** A bar of lightly doped n-type silicon forms the **channel**. Ohmic contacts at its two ends are the **source (S)**, where electrons enter, and the **drain (D)**, where they leave. Two heavily doped p-type regions are diffused into opposite sides of the bar and joined together to form the **gate (G)**. This makes two p-n junctions along the channel. In the circuit symbol the gate arrow points **into** the channel for n-channel and **out** for p-channel.",
+        },
+        {
+          type: "text",
+          md: "**Working.** A positive V_DS drives electrons from source to drain, giving drain current I_D. The gate is always **reverse biased** (V_GS ≤ 0 for n-channel), so the gate current is almost zero. Making V_GS more negative widens the depletion regions, which spread mostly into the lightly doped channel, so the channel narrows and I_D falls. At **V_GS = V_GS(off)** the depletion regions meet and I_D becomes zero. Its size equals the **pinch-off voltage V_P**.",
+        },
+        {
+          type: "table",
+          headers: ["Region of drain characteristic (I_D vs V_DS)", "What happens"],
+          rows: [
+            ["Ohmic region (small V_DS)", "I_D rises almost linearly with V_DS; the FET acts like a voltage-controlled resistor"],
+            ["Pinch-off point", "at V_GS = 0, when V_DS reaches |V_P| the channel near the drain is pinched; I_D reaches I_DSS"],
+            ["Saturation (constant-current) region", "I_D stays nearly constant as V_DS rises; used for amplification"],
+            ["Breakdown region", "at large V_DS the gate–drain junction breaks down and I_D rises sharply; avoid"],
+          ],
+        },
+        {
+          type: "formula",
+          tex: t`I_D = I_{DSS}\left(1 - \frac{V_{GS}}{V_P}\right)^2,\qquad g_m = \frac{2I_{DSS}}{|V_P|}\left(1 - \frac{V_{GS}}{V_P}\right) = g_{m0}\left(1 - \frac{V_{GS}}{V_P}\right)`,
+          caption: "Shockley's equation (transfer characteristic, valid in saturation). I_DSS = drain current with gate shorted to source; V_P is negative for an n-channel JFET; g_m0 = 2I_DSS/|V_P| is the transconductance at V_GS = 0.",
+        },
+        {
+          type: "example",
+          title: "Using Shockley's equation",
+          problem: "An n-channel JFET has I_DSS = 10 mA and V_P = −4 V. (a) Find I_D at V_GS = −2 V. (b) Find g_m0 and g_m at V_GS = −2 V. (c) What V_GS gives I_D = 6.4 mA?",
+          steps: [
+            t`(a) $I_D = 10\left(1 - \frac{-2}{-4}\right)^2 = 10(0.5)^2 = 2.5$ mA.`,
+            t`(b) $g_{m0} = \frac{2 \times 10\text{ mA}}{4\text{ V}} = 5$ mS; $g_m = 5(1 - 0.5) = 2.5$ mS.`,
+            t`(c) $\left(1 - \frac{V_{GS}}{V_P}\right)^2 = \frac{6.4}{10} = 0.64 \Rightarrow 1 - \frac{V_{GS}}{V_P} = 0.8$.`,
+            t`(c) $\frac{V_{GS}}{V_P} = 0.2 \Rightarrow V_{GS} = 0.2 \times (-4) = -0.8$ V.`,
+          ],
+          answer: "(a) 2.5 mA; (b) g_m0 = 5 mS, g_m = 2.5 mS; (c) V_GS = −0.8 V.",
+        },
+        {
+          type: "checkpoint",
+          questions: [
+            {
+              kind: "numeric",
+              q: "A JFET has I_DSS = 8 mA and V_P = −4 V. Find I_D (in mA) at V_GS = −1 V.",
+              answer: 4.5,
+              tolerance: 0.01,
+              unit: "mA",
+              explain: "I_D = 8(1 − 1/4)² = 8 × 0.5625 = 4.5 mA.",
+            },
+          ],
+        },
+        {
+          type: "table",
+          headers: ["Parameter", "Definition", "Typical unit"],
+          rows: [
+            ["Drain (AC) resistance r_d", "ΔV_DS / ΔI_D at constant V_GS", "kΩ (tens to hundreds)"],
+            ["Transconductance g_m", "ΔI_D / ΔV_GS at constant V_DS", "mS (millisiemens) or mA/V"],
+            ["Amplification factor μ", "ΔV_DS / ΔV_GS at constant I_D", "no unit"],
+          ],
+        },
+        {
+          type: "example",
+          title: "Finding r_d, g_m and μ from readings",
+          problem: "From the characteristics of a JFET: at constant V_GS, raising V_DS by 4 V raises I_D by 0.08 mA. At constant V_DS, changing V_GS by 0.5 V changes I_D by 1.2 mA. Find r_d, g_m and μ.",
+          steps: [
+            t`$r_d = \frac{\Delta V_{DS}}{\Delta I_D} = \frac{4}{0.08\times10^{-3}} = 50$ kΩ.`,
+            t`$g_m = \frac{\Delta I_D}{\Delta V_{GS}} = \frac{1.2\text{ mA}}{0.5\text{ V}} = 2.4$ mS.`,
+            t`$\mu = g_m \times r_d = 2.4\times10^{-3} \times 50\times10^{3} = 120$.`,
+          ],
+          answer: "r_d = 50 kΩ, g_m = 2.4 mS, μ = 120.",
+        },
+        {
+          type: "mistake",
+          wrong: "To get more drain current from an n-channel JFET, make the gate more positive, like forward biasing a BJT base.",
+          right: "The JFET gate must stay reverse biased. I_D is largest (I_DSS) at V_GS = 0 and falls as V_GS goes negative. Forward biasing the gate makes gate current flow and destroys the high input resistance.",
+          why: "Students carry over the BJT habit of forward biasing the input junction. A JFET is a depletion-mode device: the gate can only take carriers away from the channel.",
+        },
+        {
+          type: "activity",
+          activity: {
+            kind: "order",
+            prompt: "Order what happens as V_GS goes from 0 V towards V_GS(off).",
+            items: [
+              "V_GS = 0: channel widest, I_D = I_DSS",
+              "Gate reverse bias increases",
+              "Depletion regions widen into the channel",
+              "Channel narrows and I_D falls",
+              "At V_GS(off) the channel is closed and I_D = 0",
+            ],
+            explain: "The gate voltage controls the width of the channel through the depletion regions. Little gate current flows at any stage, because the junction is reverse biased.",
+          },
+        },
+        {
+          type: "callout",
+          tone: "exam",
+          title: "Board tip",
+          md: "In the JFET practical, plot drain characteristics for V_GS = 0, −1 V, −2 V and the transfer curve at a fixed V_DS in the saturation region. Mark I_DSS and V_P on the graphs, and find r_d and g_m from the slopes. Write the relation μ = g_m × r_d in the answer.",
+        },
+        {
+          type: "keypoints",
+          items: [
+            "FET: voltage controlled, unipolar, very high input resistance.",
+            "n-channel JFET: gate reverse biased; more negative V_GS → narrower channel → less I_D.",
+            "I_D = I_DSS(1 − V_GS/V_P)²; I_D = 0 at V_GS = V_P.",
+            "Drain characteristic regions: ohmic, saturation (used for amplifying), breakdown.",
+            "r_d = ΔV_DS/ΔI_D, g_m = ΔI_D/ΔV_GS, μ = g_m r_d.",
+          ],
+        },
+      ],
+      flashcards: [
+        { front: "Why is a FET called unipolar?", back: "Only majority carriers (electrons in n-channel) carry the current." },
+        { front: "Why is a FET called voltage controlled?", back: "The gate–source voltage, through its electric field, controls the drain current; gate current is almost zero." },
+        { front: "I_DSS", back: "Drain current in saturation with the gate shorted to the source (V_GS = 0); the largest drain current of a JFET." },
+        { front: "Pinch-off voltage V_P", back: "The V_DS at which I_D levels off when V_GS = 0; its magnitude equals V_GS(off), where I_D becomes zero." },
+        { front: "Shockley's equation", back: "I_D = I_DSS (1 − V_GS/V_P)²." },
+        { front: "Transconductance g_m", back: "ΔI_D / ΔV_GS at constant V_DS; unit siemens (mA/V)." },
+        { front: "Relation between μ, g_m and r_d", back: "μ = g_m × r_d." },
+      ],
+      quiz: [
+        {
+          kind: "mcq",
+          q: "In an n-channel JFET in normal operation, the gate–source junction is:",
+          options: ["forward biased", "reverse biased", "unbiased always", "alternately forward and reverse biased"],
+          answer: 1,
+          explain: "The gate is reverse biased so that it draws negligible current and controls the channel by depletion.",
+        },
+        {
+          kind: "numeric",
+          q: "A JFET has I_DSS = 12 mA and V_P = −6 V. Find I_D in mA at V_GS = −3 V.",
+          answer: 3,
+          unit: "mA",
+          explain: "I_D = 12(1 − 0.5)² = 3 mA.",
+        },
+        {
+          kind: "numeric",
+          q: "For the JFET above (I_DSS = 12 mA, V_P = −6 V), find g_m0 in mS.",
+          answer: 4,
+          unit: "mS",
+          explain: "g_m0 = 2I_DSS/|V_P| = 24/6 = 4 mS.",
+          difficulty: 2,
+        },
+        {
+          kind: "truefalse",
+          q: "A JFET is a bipolar device because current flows through two p-n junctions.",
+          answer: false,
+          explain: "Current in the channel is carried by majority carriers only, so the JFET is unipolar. The junctions only control the channel width.",
+        },
+        {
+          kind: "fill",
+          q: "The amplification factor of a FET is μ = g_m × ___.",
+          answer: ["r_d", "rd", "drain resistance"],
+          explain: "μ = g_m r_d.",
+        },
+        {
+          kind: "numeric",
+          q: "A JFET has g_m = 3 mS and r_d = 40 kΩ. Find μ.",
+          answer: 120,
+          explain: "μ = 3×10⁻³ × 40×10³ = 120.",
+        },
+        {
+          kind: "mcq",
+          q: "Which region of the drain characteristics is used when a JFET works as an amplifier?",
+          options: ["ohmic region", "saturation (constant-current) region", "breakdown region", "cut-off region"],
+          answer: 1,
+          explain: "In saturation I_D depends on V_GS but hardly on V_DS, which gives linear amplification.",
+        },
+      ],
+    },
+    {
+      slug: "c12-ele-mosfet-cs-amplifier",
+      title: "MOSFETs, the CS Amplifier and FET versus BJT",
+      summary: "Depletion and enhancement MOSFETs, threshold voltage, handling precautions, the self-biased common source amplifier and its gain, and a comparison of FETs with BJTs.",
+      minutes: 22,
+      xp: 50,
+      blocks: [
+        {
+          type: "text",
+          md: "In a **MOSFET** (metal oxide semiconductor FET, also called IGFET), the metal gate is separated from the channel by a very thin layer of **silicon dioxide (SiO₂)**, an insulator. So the gate current is practically zero and the input resistance is even higher than in a JFET. Unlike a JFET, the gate may be made positive or negative without any junction conducting.",
+        },
+        {
+          type: "table",
+          headers: ["Feature", "Depletion MOSFET (D-MOSFET)", "Enhancement MOSFET (E-MOSFET)"],
+          rows: [
+            ["Channel at V_GS = 0", "a physical n-channel is diffused between source and drain", "no channel; source and drain are separate n⁺ regions in a p-substrate"],
+            ["Drain current at V_GS = 0", "I_DSS flows", "practically zero"],
+            ["Modes", "depletion (V_GS negative) and enhancement (V_GS positive)", "enhancement only (V_GS above V_T)"],
+            ["Symbol", "solid line for the channel", "broken line for the channel (no channel until induced)"],
+          ],
+        },
+        {
+          type: "text",
+          md: "**How an E-MOSFET makes its channel.** Make the gate positive. Its field repels holes from the p-substrate just under the oxide and attracts electrons there. When V_GS exceeds the **threshold voltage V_T**, enough electrons gather to form a thin n-type **inversion layer** joining source and drain, and drain current flows. A larger V_GS gives a thicker channel and more I_D.",
+        },
+        {
+          type: "formula",
+          tex: t`I_D = k\,(V_{GS} - V_T)^2 \quad (V_{GS} > V_T),\qquad I_D = 0 \quad (V_{GS} \le V_T)`,
+          caption: "Transfer characteristic of an n-channel E-MOSFET in saturation; k is a device constant in mA/V².",
+        },
+        {
+          type: "example",
+          title: "E-MOSFET drain current",
+          problem: "An n-channel E-MOSFET has V_T = 2 V and k = 0.5 mA/V². Find I_D at V_GS = 5 V and at V_GS = 1.5 V.",
+          steps: [
+            t`At $V_{GS} = 5$ V: $I_D = 0.5(5 - 2)^2 = 0.5 \times 9 = 4.5$ mA.`,
+            t`At $V_{GS} = 1.5$ V: $V_{GS} < V_T$, so no channel forms and $I_D = 0$.`,
+          ],
+          answer: "4.5 mA at 5 V; zero at 1.5 V.",
+        },
+        {
+          type: "callout",
+          tone: "warning",
+          title: "Handling MOSFETs",
+          md: "The oxide layer is so thin that static charge from your fingers can puncture it. Keep MOSFETs in conductive foam or with leads shorted, wear a grounded wrist strap, switch off power before inserting them, and never leave the gate floating. Many MOSFETs have built-in protection diodes. **CMOS** chips (n- and p-channel E-MOSFETs in pairs) need the same care.",
+        },
+        {
+          type: "text",
+          md: "**Common source (CS) amplifier with self-bias (in words).** An n-channel JFET has its source connected to ground through R_S, bypassed by C_S. The gate goes to ground through a large R_G (about 1 MΩ), so V_G ≈ 0. Drain current through R_S makes the source positive, so V_GS = −I_D R_S: the gate is automatically reverse biased (**self-bias**). R_D is between the drain and +V_DD. Input enters the gate through a coupling capacitor; output is taken from the drain through another.",
+        },
+        {
+          type: "formula",
+          tex: t`A_v = -g_m\,(R_D \parallel r_d) \approx -g_m R_D \ \ (r_d \gg R_D),\qquad V_{GS} = -I_D R_S`,
+          caption: "Like the CE amplifier, the CS amplifier inverts the signal (180°). Its input resistance is very high (≈ R_G).",
+        },
+        {
+          type: "example",
+          title: "CS amplifier gain",
+          problem: "A JFET CS amplifier has g_m = 4 mS, r_d = 50 kΩ and R_D = 5 kΩ. Find the voltage gain and the output for an input of 50 mV. What is the gain if r_d is ignored?",
+          steps: [
+            t`$R_D \parallel r_d = \frac{5 \times 50}{5 + 50} = 4.55$ kΩ.`,
+            t`$A_v = -4\times10^{-3} \times 4.55\times10^{3} \approx -18.2$.`,
+            t`$V_o = 18.2 \times 50$ mV $\approx 0.91$ V, inverted.`,
+            t`Ignoring $r_d$: $A_v = -g_m R_D = -4 \times 5 = -20$.`,
+          ],
+          answer: "A_v ≈ −18.2 (≈ −20 if r_d is ignored); output ≈ 0.91 V, 180° out of phase.",
+        },
+        {
+          type: "checkpoint",
+          questions: [
+            {
+              kind: "numeric",
+              q: "In a self-biased JFET amplifier, I_D = 2 mA and V_GS must be −2 V. Find R_S in kΩ.",
+              answer: 1,
+              unit: "kΩ",
+              explain: "V_GS = −I_D R_S → R_S = 2 V / 2 mA = 1 kΩ.",
+            },
+          ],
+        },
+        {
+          type: "table",
+          headers: ["FET", "BJT"],
+          rows: [
+            ["voltage controlled", "current controlled"],
+            ["unipolar (majority carriers only)", "bipolar (electrons and holes)"],
+            ["very high input resistance (MΩ and above)", "low to moderate input resistance (kΩ in CE)"],
+            ["less noise, better thermal stability", "more noise; thermal runaway possible"],
+            ["smaller gain–bandwidth product", "larger gain–bandwidth product"],
+            ["takes less space on ICs (MOSFETs in VLSI)", "needs more chip area"],
+          ],
+        },
+        {
+          type: "mistake",
+          wrong: "An enhancement MOSFET conducts at V_GS = 0 just like a JFET, and a negative gate reduces the current.",
+          right: "An n-channel E-MOSFET is OFF at V_GS = 0. It conducts only when V_GS is positive and above V_T. Only JFETs and D-MOSFETs conduct I_DSS at V_GS = 0.",
+          why: "The word 'MOSFET' covers two different devices. Look at the symbol: a broken channel line means no channel until one is induced.",
+        },
+        {
+          type: "activity",
+          activity: {
+            kind: "sort",
+            prompt: "Which device does each statement describe?",
+            groups: ["JFET", "D-MOSFET", "E-MOSFET"],
+            items: [
+              { text: "Gate is a p-n junction that must stay reverse biased", group: 0, hint: "Only one of these has a junction gate." },
+              { text: "Works in both depletion and enhancement modes", group: 1, hint: "It has a built-in channel and an insulated gate." },
+              { text: "Needs V_GS > V_T to conduct", group: 2, hint: "The channel has to be induced." },
+              { text: "Symbol shows a broken channel line", group: 2, hint: "Broken line = no channel at V_GS = 0." },
+              { text: "Arrow on the gate lead points into the channel (n-channel)", group: 0, hint: "The arrow marks the p-n junction." },
+              { text: "Insulated gate with a diffused channel present at V_GS = 0", group: 1, hint: "Solid channel line plus oxide layer." },
+            ],
+            explain: "JFET: junction gate, depletion only. D-MOSFET: insulated gate, built-in channel, both modes. E-MOSFET: insulated gate, induced channel, enhancement only.",
+          },
+        },
+        {
+          type: "keypoints",
+          items: [
+            "MOSFET gate is insulated by SiO₂, giving extremely high input resistance.",
+            "D-MOSFET: channel present, depletion and enhancement modes. E-MOSFET: channel induced above V_T.",
+            "E-MOSFET: I_D = k(V_GS − V_T)².",
+            "Self-bias: V_GS = −I_D R_S. CS amplifier: A_v ≈ −g_m R_D, 180° phase shift.",
+            "Handle MOSFETs with anti-static precautions.",
+          ],
+        },
+      ],
+      flashcards: [
+        { front: "MOSFET", back: "Metal oxide semiconductor FET; gate insulated from the channel by a thin SiO₂ layer." },
+        { front: "Threshold voltage V_T", back: "The minimum V_GS at which an E-MOSFET forms an inversion layer channel and starts conducting." },
+        { front: "Inversion layer", back: "A thin layer of electrons induced under the gate oxide in a p-substrate, forming the n-channel of an E-MOSFET." },
+        { front: "E-MOSFET drain current", back: "I_D = k (V_GS − V_T)² for V_GS > V_T." },
+        { front: "Self-bias in a JFET amplifier", back: "R_S in the source lead makes V_GS = −I_D R_S, reverse biasing the gate automatically." },
+        { front: "Voltage gain of a CS amplifier", back: "A_v = −g_m (R_D ∥ r_d) ≈ −g_m R_D." },
+        { front: "Why handle MOSFETs carefully?", back: "Static charge can break down the very thin gate oxide." },
+      ],
+      quiz: [
+        {
+          kind: "mcq",
+          q: "An n-channel D-MOSFET with V_GS = +1 V operates in:",
+          options: ["depletion mode", "enhancement mode", "cut-off", "breakdown"],
+          answer: 1,
+          explain: "A positive gate attracts more electrons into the channel, so I_D rises above I_DSS: enhancement mode.",
+        },
+        {
+          kind: "numeric",
+          q: "An E-MOSFET has V_T = 3 V and k = 0.2 mA/V². Find I_D in mA at V_GS = 8 V.",
+          answer: 5,
+          unit: "mA",
+          explain: "I_D = 0.2(8 − 3)² = 0.2 × 25 = 5 mA.",
+        },
+        {
+          kind: "numeric",
+          q: "A CS amplifier has g_m = 2.5 mS and R_D = 8 kΩ (r_d very large). Find the magnitude of the voltage gain.",
+          answer: 20,
+          explain: "|A_v| = g_m R_D = 2.5 × 8 = 20.",
+        },
+        {
+          kind: "truefalse",
+          q: "A MOSFET has a higher input resistance than a JFET.",
+          answer: true,
+          explain: "The insulated (oxide) gate gives even less leakage than a reverse-biased junction.",
+        },
+        {
+          kind: "fill",
+          q: "The insulating layer under the gate of a MOSFET is made of ___.",
+          answer: ["silicon dioxide", "SiO2", "SiO₂", "silica"],
+          explain: "A thin SiO₂ layer insulates the gate.",
+        },
+        {
+          kind: "multi",
+          q: "Which are advantages of a FET over a BJT?",
+          options: ["Very high input resistance", "Lower noise", "Better thermal stability", "Higher gain–bandwidth product"],
+          answers: [0, 1, 2],
+          explain: "BJTs usually have the higher gain–bandwidth product.",
+          difficulty: 2,
+        },
+        {
+          kind: "mcq",
+          q: "In a self-biased n-channel JFET amplifier, the gate is reverse biased because:",
+          options: [
+            "a negative supply is connected to the gate",
+            "the voltage drop across R_S makes the source positive with respect to the gate",
+            "R_G carries a large gate current",
+            "the drain is positive",
+          ],
+          answer: 1,
+          explain: "V_G ≈ 0 and V_S = I_D R_S, so V_GS = −I_D R_S.",
+        },
+      ],
+    },
+    {
+      slug: "c12-ele-fet-board-practice",
+      title: "Board practice: Field Effect Transistors",
+      summary: "Mixed board-style questions on JFET working and characteristics, FET parameters, MOSFETs and the CS amplifier.",
+      minutes: 18,
+      xp: 45,
+      blocks: [
+        {
+          type: "text",
+          md: "This set covers the usual FET questions: construction and working of a JFET, characteristic curves, parameter definitions with their relation, MOSFET types, and numericals with Shockley's equation and the CS amplifier.",
+        },
+        {
+          type: "list",
+          ordered: true,
+          items: [
+            "Why is a FET called a unipolar, voltage-controlled device? (2 marks)",
+            "Explain the construction and working of an n-channel JFET with a neat diagram. (5 marks)",
+            "Draw the drain characteristics of a JFET and mark the different regions. (3 marks)",
+            "Define r_d, g_m and μ and obtain the relation between them. (3 marks)",
+            "Distinguish between D-MOSFET and E-MOSFET. (3 marks)",
+          ],
+        },
+        {
+          type: "example",
+          title: "Derivation: μ = g_m × r_d",
+          problem: "Show that the amplification factor of a FET equals the product of its transconductance and drain resistance.",
+          steps: [
+            t`By definition, $\mu = \frac{\Delta V_{DS}}{\Delta V_{GS}}$ (at constant $I_D$).`,
+            t`Multiply and divide by $\Delta I_D$: $\mu = \frac{\Delta V_{DS}}{\Delta I_D} \times \frac{\Delta I_D}{\Delta V_{GS}}$.`,
+            t`The first factor is $r_d$ and the second is $g_m$.`,
+            t`Hence $\mu = r_d \times g_m$.`,
+          ],
+          answer: "μ = g_m r_d.",
+        },
+        {
+          type: "example",
+          title: "Numerical 1: complete self-biased amplifier",
+          problem: "A JFET with I_DSS = 12 mA and V_P = −6 V is self-biased at V_GS = −3 V. V_DD = 20 V and R_D = 3.3 kΩ. Find I_D, R_S, V_DS, g_m and the voltage gain (r_d very large).",
+          steps: [
+            t`$I_D = 12(1 - 0.5)^2 = 3$ mA.`,
+            t`$R_S = |V_{GS}|/I_D = 3\text{ V}/3\text{ mA} = 1$ kΩ.`,
+            t`$V_{DS} = V_{DD} - I_D(R_D + R_S) = 20 - 3(3.3 + 1) = 20 - 12.9 = 7.1$ V.`,
+            t`$g_m = \frac{2 \times 12}{6}(1 - 0.5) = 2$ mS; $A_v = -g_m R_D = -2 \times 3.3 = -6.6$.`,
+          ],
+          answer: "I_D = 3 mA, R_S = 1 kΩ, V_DS = 7.1 V, g_m = 2 mS, A_v = −6.6.",
+        },
+        {
+          type: "example",
+          title: "Numerical 2: finding V_P",
+          problem: "A JFET has I_DSS = 9 mA. At V_GS = −1 V, I_D = 4 mA. Find V_P.",
+          steps: [
+            t`$\left(1 - \frac{V_{GS}}{V_P}\right)^2 = \frac{4}{9} \Rightarrow 1 - \frac{V_{GS}}{V_P} = \frac{2}{3}$.`,
+            t`$\frac{V_{GS}}{V_P} = \frac{1}{3} \Rightarrow V_P = 3 V_{GS} = 3(-1) = -3$ V.`,
+          ],
+          answer: "V_P = −3 V.",
+        },
+        {
+          type: "example",
+          title: "Numerical 3: E-MOSFET gate voltage",
+          problem: "An n-channel E-MOSFET has V_T = 2 V and k = 0.25 mA/V². What V_GS gives I_D = 4 mA?",
+          steps: [
+            t`$4 = 0.25(V_{GS} - 2)^2 \Rightarrow (V_{GS} - 2)^2 = 16$.`,
+            t`$V_{GS} - 2 = 4$ (take the positive root, since $V_{GS} > V_T$), so $V_{GS} = 6$ V.`,
+          ],
+          answer: "V_GS = 6 V.",
+        },
+        {
+          type: "table",
+          headers: ["Point", "JFET", "MOSFET"],
+          rows: [
+            ["Gate", "p-n junction, reverse biased", "metal insulated by SiO₂"],
+            ["Input resistance", "very high", "even higher"],
+            ["Gate voltage allowed (n-channel)", "zero or negative only", "D-type: either sign; E-type: positive above V_T"],
+            ["Static damage risk", "low", "high; needs careful handling"],
+          ],
+        },
+        {
+          type: "checkpoint",
+          questions: [
+            {
+              kind: "numeric",
+              q: "At constant V_DS, I_D changes from 4 mA to 5.5 mA when V_GS changes from −1.5 V to −1.0 V. Find g_m in mS.",
+              answer: 3,
+              unit: "mS",
+              explain: "g_m = ΔI_D/ΔV_GS = 1.5 mA / 0.5 V = 3 mS.",
+            },
+          ],
+        },
+        {
+          type: "mistake",
+          wrong: "In Shockley's equation, V_GS/V_P is negative because V_GS and V_P are both negative.",
+          right: "For an n-channel JFET both V_GS and V_P are negative, so V_GS/V_P is positive, between 0 and 1.",
+          why: "Dropping one minus sign gives (1 + 0.5)² instead of (1 − 0.5)², making I_D larger than I_DSS, which is impossible for a JFET. Check that your answer is below I_DSS.",
+        },
+        {
+          type: "activity",
+          activity: {
+            kind: "match",
+            prompt: "Match each FET term with its definition.",
+            pairs: [
+              ["r_d", "ΔV_DS / ΔI_D at constant V_GS"],
+              ["g_m", "ΔI_D / ΔV_GS at constant V_DS"],
+              ["μ", "ΔV_DS / ΔV_GS at constant I_D"],
+              ["I_DSS", "drain current at V_GS = 0 in saturation"],
+              ["V_T", "gate voltage at which an E-MOSFET starts conducting"],
+            ],
+            explain: "For each ratio, the quantity held constant is the one that does not appear in the ratio.",
+          },
+        },
+        {
+          type: "callout",
+          tone: "exam",
+          title: "Board tip",
+          md: "When drawing FET symbols, get the arrow right: n-channel arrow points in, p-channel points out. For MOSFETs show the gate as a separate line (insulated), with a solid channel for depletion type and a broken channel for enhancement type.",
+        },
+        {
+          type: "keypoints",
+          items: [
+            "Check every Shockley answer: 0 ≤ I_D ≤ I_DSS for a JFET.",
+            "μ = g_m r_d follows from multiplying and dividing by ΔI_D.",
+            "Self-bias: R_S = |V_GS| / I_D; V_DS = V_DD − I_D(R_D + R_S).",
+            "CS gain ≈ −g_m R_D; the output is inverted.",
+          ],
+        },
+      ],
+      flashcards: [
+        { front: "JFET drain current can never exceed…", back: "I_DSS (for a JFET, V_GS cannot be made positive)." },
+        { front: "Self-bias resistor formula", back: "R_S = |V_GS| / I_D." },
+        { front: "V_DS in a self-biased JFET stage", back: "V_DS = V_DD − I_D (R_D + R_S)." },
+        { front: "n-channel JFET symbol arrow", back: "Points into the channel." },
+        { front: "E-MOSFET symbol", back: "Broken channel line, insulated gate." },
+        { front: "Typical use of MOSFETs today", back: "Digital ICs (CMOS logic, microprocessors, memories) and power switching." },
+      ],
+      quiz: [
+        {
+          kind: "numeric",
+          q: "A JFET has I_DSS = 16 mA and V_P = −8 V. Find I_D in mA at V_GS = −6 V.",
+          answer: 1,
+          unit: "mA",
+          explain: "I_D = 16(1 − 0.75)² = 16 × 0.0625 = 1 mA.",
+        },
+        {
+          kind: "numeric",
+          q: "A self-biased JFET stage has V_DD = 18 V, I_D = 2 mA, R_D = 4.7 kΩ and R_S = 1.3 kΩ. Find V_DS in volts.",
+          answer: 6,
+          unit: "V",
+          explain: "V_DS = 18 − 2(4.7 + 1.3) = 18 − 12 = 6 V.",
+          difficulty: 2,
+        },
+        {
+          kind: "mcq",
+          q: "Which device has a broken channel line in its symbol?",
+          options: ["n-channel JFET", "D-MOSFET", "E-MOSFET", "BJT"],
+          answer: 2,
+          explain: "The E-MOSFET has no channel until V_GS exceeds V_T, shown by the broken line.",
+        },
+        {
+          kind: "truefalse",
+          q: "In the ohmic region, a JFET behaves like a resistor whose value is controlled by V_GS.",
+          answer: true,
+          explain: "At small V_DS, I_D is proportional to V_DS and the slope depends on V_GS: a voltage-variable resistor.",
+        },
+        {
+          kind: "fill",
+          q: "Transconductance is measured in ___ (or mA/V).",
+          answer: ["siemens", "S", "mS", "millisiemens", "mho"],
+          explain: "g_m = ΔI/ΔV, so its unit is the siemens (S), also called mho.",
+        },
+        {
+          kind: "order",
+          q: "Arrange the regions of a JFET drain characteristic in the order of increasing V_DS.",
+          items: ["Ohmic region", "Pinch-off", "Saturation region", "Breakdown region"],
+          explain: "I_D rises linearly, levels off at pinch-off, stays constant, then rises sharply at breakdown.",
+        },
+        {
+          kind: "mcq",
+          q: "If the gate of an n-channel JFET is forward biased, the main result is that:",
+          options: ["it amplifies better", "gate current flows and the input resistance falls sharply", "I_D becomes zero", "it becomes an E-MOSFET"],
+          answer: 1,
+          explain: "A forward-biased junction conducts, so the main advantage of the FET is lost.",
+        },
+      ],
+    },
+  ],
+};
+
+export const topics: Topic[] = [amplifiers, feedback, fet];
 
 /** Chapter title ("11:" / "12:" + exact title) → topic slug(s) that teach it. */
 export const links: Record<string, string | string[]> = {
   "12:Transistor Amplifiers": "c12-ele-transistor-amplifiers",
   "12:Feedback Amplifiers and Oscillators": "c12-ele-feedback-oscillators",
+  "12:Field Effect Transistors": "c12-ele-field-effect-transistors",
 };

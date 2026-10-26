@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { ArrowLeft, BookOpen, Check, ChevronRight, Clock, Layers, Sigma, Target, Trophy, Zap } from "lucide-react";
+import { ArrowLeft, BookOpen, Check, ChevronRight, Clock, Crosshair, Layers, Sigma, Target, Trophy, Zap } from "lucide-react";
 import clsx from "clsx";
 import { useT } from "@/i18n";
 import { useSharedText } from "@/i18n/content";
@@ -12,6 +12,7 @@ import type { MasteryLevel } from "@/lib/mastery";
 import type { ClassChapter, ClassSubject, MyClass } from "@/content/my-class";
 import type { ChapterProgress } from "@/content/syllabus";
 import { lessonHref } from "@/content/syllabus";
+import type { ExamChapterIndex } from "@/content/exam/chapter-index";
 import { CourseIcon } from "@/components/brand/CourseIcon";
 import { useMyClass, chapterHref, subjectHref } from "@/lib/useMyClass";
 import { MasteryBar, MasterySquare, useFmt, useMasteryName } from "@/experiences/khan/ui";
@@ -160,17 +161,38 @@ function ChapterRow({ subject, chapter, p }: { subject: ClassSubject; chapter: C
 /* Chapter page                                                         */
 /* ------------------------------------------------------------------ */
 
-export function ChapterView({ subjectId, chapterSlug }: { subjectId: string; chapterSlug: string }) {
+export function ChapterView({ subjectId, chapterSlug, examIndex }: { subjectId: string; chapterSlug: string; examIndex?: ExamChapterIndex }) {
   const hydrated = useHydrated();
   const mc = useMyClass();
   const subject = mc?.subjects.find((s) => s.id === subjectId) ?? null;
   const chapter = subject?.chapters.find((c) => c.slug === chapterSlug) ?? null;
   if (!hydrated) return <Loading />;
   if (!mc || !subject || !chapter) return <NotInClass />;
-  return <Chapter myClass={mc.myClass} subject={subject} chapter={chapter} />;
+  return <Chapter myClass={mc.myClass} subject={subject} chapter={chapter} examIndex={examIndex} />;
 }
 
-function Chapter({ myClass, subject, chapter }: { myClass: MyClass; subject: ClassSubject; chapter: ClassChapter }) {
+const EXAM_SUBJECTS = ["physics", "chemistry", "biology", "maths"];
+const ENTRANCE = ["NEET", "JEE", "JEE_ADV", "KCET", "COMEDK"];
+
+/** Exam-bank links for a class chapter: the chapter drill (when exam questions exist) and its formula sheet. */
+function chapterExamLinks(myClass: MyClass, subject: ClassSubject, chapter: ClassChapter, index?: ExamChapterIndex) {
+  if (!index || !EXAM_SUBJECTS.includes(subject.id)) return { drill: null as string | null, count: 0, formulas: null as string | null, sheet: null as string | null };
+  // NCERT class of the chapter: entrance-exam syllabi carry it per chapter; boards from the class.
+  const g = myClass.grade;
+  const grade = chapter.syllabus?.grade ?? (g === "12" || g === "PUC-2" ? "12" : g === "11" || g === "PUC-1" ? "11" : null);
+  const count = grade ? (index.questions[`${grade}|${subject.id}|${chapter.title}`] ?? 0) : 0;
+  let drill: string | null = null;
+  if (count && grade) {
+    const p = new URLSearchParams({ subject: subject.id, chapter: chapter.title, grade });
+    if (myClass.board === "exam" && ENTRANCE.includes(g)) p.set("exam", g);
+    drill = `/exam/practice?${p}`;
+  }
+  const sheet = [chapter.title, chapter.syllabus?.formulaChapter].find((c): c is string => Boolean(c && index.formulas.includes(c)));
+  const formulas = sheet ? `/exam/formulas?chapter=${encodeURIComponent(sheet)}` : chapter.syllabus?.formulaChapter ? "/exam/formulas" : null;
+  return { drill, count, formulas, sheet: sheet ?? chapter.syllabus?.formulaChapter ?? null };
+}
+
+function Chapter({ myClass, subject, chapter, examIndex }: { myClass: MyClass; subject: ClassSubject; chapter: ClassChapter; examIndex?: ExamChapterIndex }) {
   const t = useT();
   const f = useFmt();
   const className = useClassName();
@@ -189,6 +211,13 @@ function Chapter({ myClass, subject, chapter }: { myClass: MyClass; subject: Cla
   const nextCh = subject.chapters[idx + 1];
   const doneCount = chapter.lessonIds.filter((id) => lessonsDone[id]).length;
   const firstCards = lessons.find((l) => l.items.some((i) => i.kind === "cards"));
+  const examLinks = chapterExamLinks(myClass, subject, chapter, examIndex);
+  const examCards = (
+    <>
+      {examLinks.drill && <ActionCard href={examLinks.drill} icon={Crosshair} title={t("class.examQuestions", "Exam questions")} hint={t("class.examQuestionsHint", "{n} JEE · NEET · CET-style questions on this chapter", { n: f.n(examLinks.count) })} />}
+      {examLinks.formulas && <ActionCard href={examLinks.formulas} icon={Sigma} title={t("class.formulas", "Formula sheet")} hint={examLinks.sheet ?? undefined} />}
+    </>
+  );
 
   return (
     <div className="mx-auto max-w-[960px] px-4 py-6 sm:px-6 sm:py-8">
@@ -201,7 +230,17 @@ function Chapter({ myClass, subject, chapter }: { myClass: MyClass; subject: Cla
       </header>
 
       {chapter.lessonIds.length === 0 ? (
-        <p className="card mt-6 p-5 text-muted">{t("khan.focus.soon", "Lessons coming soon")}</p>
+        <>
+          <p className="card mt-6 p-5 text-muted">{t("khan.focus.soon", "Lessons coming soon")}</p>
+          {(examLinks.drill || examLinks.formulas) && (
+            <section aria-labelledby="ch-practise" className="mt-6">
+              <h2 id="ch-practise" className="mb-3 text-lg font-bold">
+                {t("class.practiseTitle", "Practise and test yourself")}
+              </h2>
+              <div className="grid gap-3 sm:grid-cols-2">{examCards}</div>
+            </section>
+          )}
+        </>
       ) : (
         <>
           <section aria-labelledby="ch-lessons" className="mt-6">
@@ -240,7 +279,7 @@ function Chapter({ myClass, subject, chapter }: { myClass: MyClass; subject: Cla
               <ActionCard href={sessions.practice} icon={Target} title={t("class.practise", "Practise this chapter")} hint={t("class.practiseHint", "Questions from every lesson, with explanations")} />
               <ActionCard href={sessions.test} icon={Trophy} title={t("class.test", "Chapter test")} hint={t("class.testHint", "A timed-feel test of the whole chapter")} />
               {firstCards && <ActionCard href={`${firstCards.href}?item=cards`} icon={Layers} title={t("class.flashcards", "Flashcards")} hint={t("class.flashcardsHint", "Quick revision of key terms")} />}
-              {chapter.syllabus?.formulaChapter && <ActionCard href="/exam/formulas" icon={Sigma} title={t("class.formulas", "Formula sheet")} hint={chapter.syllabus.formulaChapter} />}
+              {examCards}
             </div>
           </section>
         </>

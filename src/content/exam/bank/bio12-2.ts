@@ -1069,19 +1069,6 @@ const ch7: Row[] = [
     e: "Salmonella typhi causes typhoid; the pathogen enters the small intestine through contaminated food and water and migrates to other organs through blood. It is confirmed by the Widal test. ELISA is used to diagnose AIDS; S. pneumoniae and H. influenzae cause pneumonia.",
   },
   {
-    d: 2, t: 60,
-    q: "Mary Mallon, nicknamed 'Typhoid Mary', is a classic example in the history of medicine because she:",
-    o: [
-      "Discovered the Widal test",
-      "Was a cook and a carrier who continued to spread typhoid for years through the food she prepared",
-      "Was the first person cured of typhoid by antibiotics",
-      "Was immune to typhoid due to vaccination",
-    ],
-    a: 1,
-    h: "A healthy-looking person can still spread disease.",
-    e: "Mary Mallon was a cook and a typhoid carrier who continued to spread typhoid for several years through the food she prepared. It shows how carriers — people who harbour the pathogen without severe symptoms — spread infectious disease.",
-  },
-  {
     d: 1, t: 45,
     q: "In severe cases of pneumonia, the lips and finger nails may turn:",
     o: ["Yellow", "Gray to bluish", "Red", "White"],
@@ -1224,13 +1211,6 @@ const ch7: Row[] = [
     h: "Break the mosquito life cycle.",
     e: "Gambusia feeds on mosquito larvae, so introducing it in ponds reduces mosquito breeding. Other measures include removing stagnant water, regularly cleaning coolers, spraying insecticides in ditches and using doors/window screens and nets. Aedes mosquitoes transmit dengue and chikungunya; Anopheles transmits malaria.",
   },
-  {
-    d: 1, t: 45,
-    q: "Dengue and chikungunya are transmitted by:",
-    o: ["Anopheles mosquitoes", "Aedes mosquitoes", "Culex mosquitoes only", "Houseflies"],
-    a: 1,
-    e: "Vector-borne diseases like dengue and chikungunya are transmitted by Aedes mosquitoes. Malaria is transmitted by the female Anopheles mosquito. Controlling vectors and their breeding places is the key preventive measure.",
-  },
   // --- Innate immunity ---
   {
     d: 1, t: 45,
@@ -1251,19 +1231,6 @@ const ch7: Row[] = [
     a: 0,
     h: "Mucus traps microbes physically; tears contain secretions.",
     e: "Physical — skin and mucus coating of epithelia (A-iv); physiological — acid in stomach, saliva, tears (B-iii); cellular — PMNL-neutrophils, monocytes, NK cells, macrophages (C-ii); cytokine — interferons that protect non-infected cells from further viral infection (D-i).",
-  },
-  {
-    d: 2, t: 60,
-    q: "Virus-infected cells secrete proteins called interferons. Their role in innate immunity is to:",
-    o: [
-      "Kill bacteria by phagocytosis",
-      "Protect non-infected cells from further viral infection",
-      "Produce antibodies against the virus",
-      "Neutralise snake venom",
-    ],
-    a: 1,
-    h: "Cytokine barrier.",
-    e: "Interferons are cytokines secreted by virus-infected cells; they protect non-infected cells from further viral infection. Antibodies are made by B-lymphocytes in acquired immunity. α-interferon is also used as a biological response modifier in cancer therapy.",
   },
   // --- Acquired immunity ---
   {
@@ -1293,19 +1260,6 @@ const ch7: Row[] = [
     a: 0,
     h: "B cells → antibodies (humoral); T cells → CMI.",
     e: "Both are correct. Antibodies, produced by B-lymphocytes, are found in the blood; hence this response is the humoral immune response. The second type is cell-mediated immunity (CMI), mediated by T-lymphocytes; CMI is responsible for graft rejection, which is why tissue/blood group matching and lifelong immunosuppressants are needed after transplantation.",
-  },
-  {
-    d: 2, t: 60,
-    q: "Before organ transplantation, tissue matching and blood group matching are essential, and the patient has to take immunosuppressants all his/her life. This is because:",
-    o: [
-      "Humoral immunity attacks transplanted organs only",
-      "Cell-mediated immunity, mediated by T-lymphocytes, can recognise the graft as 'non-self' and reject it",
-      "Innate immunity destroys all transplanted tissue",
-      "The transplanted organ produces antibodies against the recipient",
-    ],
-    a: 1,
-    h: "The body can tell self from non-self.",
-    e: "The body is able to differentiate 'self' and 'non-self', and cell-mediated immune response (T-lymphocytes) is responsible for graft rejection. Matching minimises the difference, and immunosuppressants keep the CMI in check.",
   },
   {
     d: 2, t: 70,
@@ -1377,7 +1331,7 @@ const ch7: Row[] = [
     e: "The bone marrow and thymus are the primary lymphoid organs. Bone marrow is the main lymphoid organ where all blood cells including lymphocytes are produced; the thymus provides the microenvironment for development and maturation of T-lymphocytes. Spleen, lymph nodes, tonsils, Peyer's patches of the small intestine and appendix are secondary lymphoid organs.",
   },
   {
-    d: 2, t: 70,
+    d: 3, t: 70,
     q: "How many of the following are secondary lymphoid organs?\nSpleen, Thymus, Lymph nodes, Tonsils, Bone marrow, Peyer's patches, Appendix",
     o: ["Three", "Four", "Five", "Six"],
     a: 2,
@@ -1414,7 +1368,7 @@ const ch7: Row[] = [
     e: "AIDS (Acquired Immuno Deficiency Syndrome) was first reported in 1981. It is caused by the Human Immunodeficiency Virus (HIV), a member of the retroviruses, which have an envelope enclosing an RNA genome.",
   },
   {
-    d: 2, t: 75,
+    d: 3, t: 75,
     q: "After entering the body, HIV first enters macrophages. Why are macrophages called 'HIV factories'?",
     o: [
       "They destroy all HIV particles",
@@ -1477,7 +1431,7 @@ const ch7: Row[] = [
     e: "Benign tumours normally remain confined to their original location and do not spread; they cause little damage. Malignant tumours are masses of proliferating neoplastic or tumour cells that grow very rapidly, invade and damage surrounding normal tissues; cells sloughed from them reach distant sites through blood, and wherever they get lodged they start new tumours — metastasis, the most feared property of malignant tumours.",
   },
   {
-    d: 2, t: 70,
+    d: 3, t: 70,
     q: "Match the carcinogen/agent with its category.\nColumn I: (A) X-rays and gamma rays (B) UV rays (C) Tobacco smoke (D) Proto-oncogenes (c-onc)\nColumn II: (i) Non-ionising radiation causing DNA damage (ii) Chemical carcinogen, major cause of lung cancer (iii) Genes in normal cells which, when activated, lead to oncogenic transformation (iv) Ionising radiation",
     o: [
       "A-iv, B-i, C-ii, D-iii",
@@ -1502,19 +1456,6 @@ const ch7: Row[] = [
     h: "MRI is preferred partly because it avoids a certain kind of radiation.",
     e: "MRI uses strong magnetic fields and NON-ionising radiations to detect pathological and physiological changes in living tissue. The other statements are correct: biopsy and histopathology, CT (X-ray based 3D imaging), and α-interferon as a biological response modifier are all NCERT points. Most cancers are treated by a combination of surgery, radiotherapy and chemotherapy.",
   },
-  {
-    d: 2, t: 60,
-    q: "Tumour cells have been shown to avoid detection and destruction by the immune system. Therefore, to help patients destroy the tumour, they are given:",
-    o: [
-      "Antibiotics",
-      "Biological response modifiers such as α-interferon",
-      "Immunosuppressants",
-      "Antihistamines",
-    ],
-    a: 1,
-    h: "Activate, don't suppress, the immune system.",
-    e: "Since tumour cells avoid detection by the immune system, patients are given substances called biological response modifiers such as α-interferon, which activate their immune system and help in destroying the tumour. Immunosuppressants would do the opposite.",
-  },
   // --- Drugs and alcohol ---
   {
     d: 1, t: 45,
@@ -1524,7 +1465,7 @@ const ch7: Row[] = [
     e: "Heroin (smack) is chemically diacetylmorphine, a white, odourless, bitter crystalline compound obtained by acetylation of morphine, which is extracted from the latex of the poppy plant Papaver somniferum. It is a depressant and slows down body functions; it is generally taken by snorting and injection.",
   },
   {
-    d: 2, t: 70,
+    d: 3, t: 70,
     q: "Match the drug with its source plant.\nColumn I: (A) Heroin (B) Marijuana, hashish, charas, ganja (C) Cocaine (D) Hallucinogenic plants\nColumn II: (i) Erythroxylum coca (ii) Atropa belladonna and Datura (iii) Papaver somniferum (iv) Inflorescences of Cannabis sativa",
     o: [
       "A-iii, B-iv, C-i, D-ii",
@@ -1582,13 +1523,6 @@ const ch7: Row[] = [
     e: "Both statements are correct. NCERT notes that drugs such as barbiturates, amphetamines, benzodiazepines, LSD and others, normally used as medicines to help patients cope with mental illnesses like depression and insomnia, are often abused. Morphine is a very effective sedative and painkiller useful after surgery.",
   },
   {
-    d: 1, t: 45,
-    q: "Adolescence, the period during which a child becomes mature in terms of attitudes and beliefs for effective participation in society, is roughly the age period of:",
-    o: ["6–12 years", "12–18 years", "18–25 years", "3–6 years"],
-    a: 1,
-    e: "Adolescence means both 'a period' and 'a process' of becoming mature; the period between 12–18 years of age may be thought of as the adolescence period. Curiosity, need for adventure and excitement, and experimentation are common causes motivating youngsters towards drug and alcohol use.",
-  },
-  {
     d: 2, t: 70,
     q: "Which of the following is NOT listed in NCERT as an effect of chronic use of drugs and alcohol?",
     o: [
@@ -1604,9 +1538,492 @@ const ch7: Row[] = [
 ];
 
 /* ================================================================== */
+/* Chapter 8 — Microbes in Human Welfare                               */
+/* ================================================================== */
+
+const MHW = "Microbes in Human Welfare";
+
+const ch8: Row[] = [
+  // --- Household products ---
+  {
+    d: 1, t: 45,
+    q: "Besides converting milk into curd, Lactic Acid Bacteria (LAB) improve its nutritional quality by increasing the content of:",
+    o: ["Vitamin C", "Vitamin B₁₂", "Vitamin D", "Vitamin A"],
+    a: 1,
+    e: "Lactobacillus and other LAB grow in milk and convert it to curd; they produce acids that coagulate and partially digest milk proteins. LAB also improve nutritional quality by increasing vitamin B₁₂. In our stomach, LAB play a very beneficial role in checking disease-causing microbes.",
+  },
+  {
+    d: 1, t: 45,
+    q: "The dough used for making bread is fermented using:",
+    o: [
+      "Lactobacillus",
+      "Baker's yeast (Saccharomyces cerevisiae)",
+      "Propionibacterium sharmanii",
+      "Aspergillus niger",
+    ],
+    a: 1,
+    e: "Dough for bread is fermented by baker's yeast, Saccharomyces cerevisiae. Dough for dosa and idli is fermented by bacteria; the puffed-up appearance is due to production of CO₂ gas. Propionibacterium makes the holes in Swiss cheese; Aspergillus niger produces citric acid.",
+  },
+  {
+    d: 1, t: 45,
+    q: "The large holes in Swiss cheese are due to the production of a large amount of CO₂ by:",
+    o: ["Penicillium roquefortii", "Propionibacterium sharmanii", "Lactobacillus", "Saccharomyces cerevisiae"],
+    a: 1,
+    e: "The large holes in Swiss cheese are due to production of a large amount of CO₂ by the bacterium Propionibacterium sharmanii. Roquefort cheese is ripened by growing a specific fungus on it, which gives it a particular flavour.",
+  },
+  {
+    d: 2, t: 60,
+    q: "A small amount of curd added to fresh milk as an inoculum or starter converts it into curd. This is because the starter:",
+    o: [
+      "Contains rennin enzyme that coagulates milk",
+      "Contains millions of LAB which, under suitable temperature, multiply and convert milk to curd",
+      "Contains yeast that ferments lactose to ethanol",
+      "Lowers the temperature of milk",
+    ],
+    a: 1,
+    h: "Inoculum = a source of the microbe.",
+    e: "Curd added as an inoculum/starter contains millions of LAB, which at suitable temperature multiply and convert milk to curd by producing acids that coagulate and partially digest milk proteins. Yeast is not involved.",
+  },
+  {
+    d: 1, t: 45,
+    q: "'Toddy', a traditional drink of some parts of southern India, is made by fermenting:",
+    o: ["Rice", "Sap from palms", "Sugarcane juice", "Milk"],
+    a: 1,
+    e: "Toddy is made by fermenting the sap from palms. Microbes are also used to ferment fish, soyabean and bamboo shoots to make foods.",
+  },
+  {
+    d: 2, t: 70,
+    q: "Statement I: The puffed-up appearance of dough used for making idli and dosa is due to production of CO₂ gas by bacteria.\nStatement II: Roquefort cheese is ripened by growing a specific bacterium, Propionibacterium sharmanii, on it.",
+    o: SI,
+    a: 2,
+    h: "Two different cheeses, two different microbes.",
+    e: "Statement I is correct — idli/dosa dough is fermented by bacteria producing CO₂. Statement II is wrong — Roquefort cheese is ripened by growing specific FUNGI on it; Propionibacterium sharmanii produces the large holes in Swiss cheese.",
+  },
+  // --- Industrial products ---
+  {
+    d: 2, t: 60,
+    q: "Which of the following alcoholic beverages are produced WITHOUT distillation of the fermented broth?",
+    o: ["Whisky and brandy", "Wine and beer", "Rum and whisky", "Brandy and rum"],
+    a: 1,
+    h: "Some drinks are simply the fermented broth itself.",
+    e: "Brewer's yeast (Saccharomyces cerevisiae) ferments malted cereals and fruit juices to produce ethanol. Wine and beer are produced without distillation, whereas whisky, brandy and rum are produced by distillation of the fermented broth.",
+  },
+  {
+    d: 1, t: 45,
+    q: "Penicillin, the first antibiotic to be discovered, was found by Alexander Fleming while working on:",
+    o: ["Streptococcus", "Staphylococci", "Escherichia coli", "Clostridium"],
+    a: 1,
+    e: "Alexander Fleming, while working on Staphylococci bacteria, observed a mould growing in one of his unwashed culture plates around which Staphylococci could not grow. The chemical was produced by the mould Penicillium notatum; he named it penicillin.",
+  },
+  {
+    d: 2, t: 70,
+    q: "The full potential of penicillin as an effective antibiotic was established much later than its discovery by:",
+    o: [
+      "Louis Pasteur and Robert Koch",
+      "Ernest Chain and Howard Florey",
+      "Selman Waksman and Alexander Fleming",
+      "Hugo de Vries and Ernest Chain",
+    ],
+    a: 1,
+    h: "They shared the 1945 Nobel Prize with Fleming.",
+    e: "Ernest Chain and Howard Florey established the full potential of penicillin. It was extensively used to treat American soldiers wounded in World War II. Fleming, Chain and Florey were awarded the Nobel Prize in 1945.",
+  },
+  {
+    d: 2, t: 75,
+    q: "Match the organic acid with the microbe used for its commercial production.\nColumn I: (A) Citric acid (B) Acetic acid (C) Butyric acid (D) Lactic acid\nColumn II: (i) Clostridium butylicum (ii) Lactobacillus (iii) Aspergillus niger (iv) Acetobacter aceti",
+    o: [
+      "A-iii, B-iv, C-i, D-ii",
+      "A-iv, B-iii, C-i, D-ii",
+      "A-iii, B-iv, C-ii, D-i",
+      "A-i, B-iv, C-iii, D-ii",
+    ],
+    a: 0,
+    h: "Acetobacter → acetic; Clostridium butylicum → butyric.",
+    e: "Aspergillus niger (a fungus) → citric acid (A-iii); Acetobacter aceti (a bacterium) → acetic acid (B-iv); Clostridium butylicum (a bacterium) → butyric acid (C-i); Lactobacillus (a bacterium) → lactic acid (D-ii). Yeast (Saccharomyces cerevisiae) is used for commercial ethanol.",
+  },
+  {
+    d: 3, t: 85,
+    q: "How many of the following microbe–product pairs are correctly matched?\n(a) Aspergillus niger — citric acid\n(b) Saccharomyces cerevisiae — ethanol\n(c) Trichoderma polysporum — cyclosporin A\n(d) Monascus purpureus — streptokinase\n(e) Acetobacter aceti — butyric acid",
+    o: ["Two", "Three", "Four", "Five"],
+    a: 1,
+    h: "Check the statin producer and the acetic-acid producer.",
+    e: "(a), (b) and (c) are correct — three. (d) is wrong: Monascus purpureus (a yeast) produces statins; streptokinase comes from Streptococcus. (e) is wrong: Acetobacter aceti produces acetic acid; butyric acid comes from Clostridium butylicum.",
+  },
+  {
+    d: 2, t: 60,
+    q: "Bottled fruit juices bought from the market are clearer than those made at home because they are clarified using:",
+    o: ["Lipases", "Pectinases and proteases", "Streptokinase", "Amylases only"],
+    a: 1,
+    h: "Break down the substances that make the juice cloudy.",
+    e: "Bottled juices are clarified by the use of pectinases and proteases. Lipases are used in detergent formulations to help remove oily stains from laundry. Streptokinase is a clot buster.",
+  },
+  {
+    d: 1, t: 45,
+    q: "Lipases are used in detergent formulations because they:",
+    o: [
+      "Remove oily stains from laundry",
+      "Clarify fruit juices",
+      "Dissolve blood clots",
+      "Kill bacteria in clothes",
+    ],
+    a: 0,
+    e: "Lipases digest fats/oils, so they are used in detergent formulations and are helpful in removing oily stains from laundry.",
+  },
+  {
+    d: 2, t: 70,
+    q: "Streptokinase, produced by the bacterium Streptococcus and modified by genetic engineering, is used as a 'clot buster' for:",
+    o: [
+      "Lowering blood cholesterol",
+      "Removing clots from blood vessels of patients who have undergone myocardial infarction leading to heart attack",
+      "Suppressing immunity in organ-transplant patients",
+      "Treating diabetes",
+    ],
+    a: 1,
+    h: "Clots in coronary vessels.",
+    e: "Streptokinase is used as a clot buster for removing clots from the blood vessels of patients who have undergone myocardial infarction leading to heart attack. Statins lower cholesterol; cyclosporin A is an immunosuppressant.",
+  },
+  {
+    d: 3, t: 85,
+    q: "Assertion (A): Statins produced by the yeast Monascus purpureus are commercialised as blood-cholesterol-lowering agents.\nReason (R): Statins act by competitively inhibiting the enzyme responsible for synthesis of cholesterol.",
+    o: AR,
+    a: 0,
+    h: "Recall the mechanism NCERT gives for statins.",
+    e: "Both true and R explains A. Statins act by competitively inhibiting the enzyme responsible for the synthesis of cholesterol, so blood cholesterol falls. They are produced by the yeast Monascus purpureus.",
+  },
+  {
+    d: 2, t: 60,
+    q: "Cyclosporin A, used as an immunosuppressive agent in organ-transplant patients, is produced by:",
+    o: ["Monascus purpureus", "Trichoderma polysporum", "Penicillium notatum", "Streptococcus"],
+    a: 1,
+    h: "A fungus also known for biocontrol.",
+    e: "Cyclosporin A is produced by the fungus Trichoderma polysporum and is used as an immunosuppressive agent in organ-transplant patients (to prevent graft rejection by CMI). Monascus purpureus produces statins.",
+  },
+  // --- Sewage treatment ---
+  {
+    d: 1, t: 50,
+    q: "Primary treatment of sewage basically involves:",
+    o: [
+      "Physical removal of particles — large and small — from sewage through filtration and sedimentation",
+      "Biological degradation of organic matter by aerobic microbes",
+      "Anaerobic digestion of sludge to produce biogas",
+      "Chemical disinfection with chlorine only",
+    ],
+    a: 0,
+    e: "Primary treatment involves physical removal of particles from sewage through filtration and sedimentation, in stages: floating debris is removed by sequential filtration, then grit (soil and small pebbles) by sedimentation. The settled solids form the primary sludge; the supernatant forms the effluent, which goes for secondary treatment.",
+  },
+  {
+    d: 2, t: 70,
+    q: "In secondary (biological) treatment of sewage, 'flocs' formed in the aeration tanks are:",
+    o: [
+      "Masses of bacteria associated with fungal filaments forming mesh-like structures",
+      "Particles of grit and pebbles",
+      "Clumps of algae floating on the surface",
+      "Dead protozoa settled at the bottom",
+    ],
+    a: 0,
+    h: "Aerobic microbial communities.",
+    e: "Primary effluent is passed into large aeration tanks, agitated mechanically with air pumped in. This allows vigorous growth of useful aerobic microbes into flocs — masses of bacteria associated with fungal filaments forming mesh-like structures. While growing, these microbes consume the major part of the organic matter, significantly reducing BOD.",
+  },
+  {
+    d: 1, t: 45,
+    q: "BOD (Biochemical Oxygen Demand) refers to:",
+    o: [
+      "The amount of oxygen dissolved in one litre of water",
+      "The amount of oxygen that would be consumed if all the organic matter in one litre of water were oxidised by bacteria",
+      "The oxygen produced by algae in one litre of water",
+      "The oxygen required by fish to survive",
+    ],
+    a: 1,
+    e: "BOD is the amount of oxygen that would be consumed if all the organic matter in one litre of water were oxidised by bacteria. Sewage water is treated till the BOD is reduced; the greater the BOD of waste water, the greater its polluting potential.",
+  },
+  {
+    d: 3, t: 85,
+    q: "Assertion (A): The greater the BOD of waste water, the more is its polluting potential.\nReason (R): BOD is a measure of the organic matter present in water, since it measures the oxygen consumed when this organic matter is oxidised by microorganisms.",
+    o: AR,
+    a: 0,
+    h: "High BOD means more organic matter to be oxidised.",
+    e: "Both true and R explains A. BOD measures the oxygen consumed by bacteria in oxidising organic matter, so it is an indirect measure of organic matter content. High organic content means high BOD and high polluting potential; secondary treatment reduces BOD by letting flocs consume organic matter.",
+  },
+  {
+    d: 3, t: 75,
+    q: "After the BOD of sewage has been reduced significantly in the aeration tank, the effluent is passed into a settling tank. What happens to the 'activated sludge' that settles there?",
+    o: [
+      "All of it is released into rivers",
+      "A small part is pumped back into the aeration tank as inoculum, and the major part is pumped into anaerobic sludge digesters",
+      "All of it is pumped back into the aeration tank",
+      "It is burnt to produce electricity directly",
+    ],
+    a: 1,
+    h: "Some is reused as a 'starter'.",
+    e: "In the settling tank the bacterial flocs sediment as activated sludge. A small part is pumped back into the aeration tank to serve as the inoculum; the remaining major part is pumped into large tanks called anaerobic sludge digesters. There, other kinds of bacteria, which grow anaerobically, digest the bacteria and fungi in the sludge.",
+  },
+  {
+    d: 2, t: 70,
+    q: "During digestion in anaerobic sludge digesters, the bacteria produce a mixture of gases (biogas) containing:",
+    o: [
+      "Methane, hydrogen sulphide and carbon dioxide",
+      "Oxygen, nitrogen and carbon dioxide",
+      "Methane, oxygen and ammonia",
+      "Hydrogen, oxygen and nitrogen",
+    ],
+    a: 0,
+    h: "Anaerobic conditions — no oxygen produced.",
+    e: "In anaerobic sludge digesters, bacteria produce a mixture of gases such as methane, hydrogen sulphide and carbon dioxide. These gases form biogas, which can be used as a source of energy because it is inflammable. Oxygen is not a product of anaerobic digestion.",
+  },
+  {
+    d: 3, t: 90,
+    q: "Arrange the steps of sewage treatment in the correct order:\n(i) Removal of grit by sedimentation\n(ii) Passing primary effluent into aeration tanks where flocs form\n(iii) Sequential filtration to remove floating debris\n(iv) Sedimentation of flocs as activated sludge in a settling tank\n(v) Anaerobic digestion of sludge producing biogas",
+    o: [
+      "iii → i → ii → iv → v",
+      "i → iii → ii → iv → v",
+      "iii → i → iv → ii → v",
+      "ii → iii → i → iv → v",
+    ],
+    a: 0,
+    h: "Primary (physical) steps come first, starting with the largest debris.",
+    e: "Primary treatment: floating debris removed by sequential filtration (iii), then grit by sedimentation (i). Secondary treatment: primary effluent into aeration tanks where flocs form and reduce BOD (ii), then flocs sediment in a settling tank as activated sludge (iv), most of which goes to anaerobic sludge digesters, producing biogas (v).",
+  },
+  {
+    d: 2, t: 60,
+    q: "To save major rivers of India from water pollution, the Ministry of Environment and Forests initiated the:",
+    o: [
+      "Ganga Action Plan and Yamuna Action Plan",
+      "Chipko Movement and Narmada Bachao Andolan",
+      "Green Revolution and Blue Revolution",
+      "Project Tiger and Project Elephant",
+    ],
+    a: 0,
+    h: "Named after rivers.",
+    e: "Due to increasing urbanisation, sewage is produced in larger quantities than ever before, and the number of sewage treatment plants has not kept pace. The Ministry of Environment and Forests therefore initiated the Ganga Action Plan and Yamuna Action Plan, under which many sewage treatment plants are proposed to be built so that only treated sewage is discharged into rivers.",
+  },
+  // --- Biogas ---
+  {
+    d: 1, t: 45,
+    q: "Bacteria that grow anaerobically on cellulosic material and produce large amounts of methane along with CO₂ and H₂ are collectively called methanogens. A common example is:",
+    o: ["Methanobacterium", "Azotobacter", "Rhizobium", "Lactobacillus"],
+    a: 0,
+    e: "Methanogens such as Methanobacterium grow anaerobically on cellulosic material and produce methane along with CO₂ and H₂. They are found in anaerobic sludge during sewage treatment and in the rumen of cattle.",
+  },
+  {
+    d: 2, t: 70,
+    q: "Cattle dung (gobar) is rich in methanogens and is used for producing gobar gas because:",
+    o: [
+      "Methanogens enter cattle dung from the air after excretion",
+      "Methanogens present in the rumen of cattle help break down cellulose and are excreted in large numbers in the dung",
+      "Cattle feed contains methane, which is excreted in the dung",
+      "Methanogens are added to cattle feed by farmers",
+    ],
+    a: 1,
+    h: "Where in the cow do these bacteria live?",
+    e: "A lot of cellulosic material in cattle food is present in the rumen, where methanogens help break down cellulose and play an important role in cattle nutrition. Thus the excreta (dung) of cattle, commonly called gobar, is rich in these bacteria, and can be used to generate biogas (gobar gas).",
+  },
+  {
+    d: 2, t: 70,
+    q: "Statement I: In a biogas plant, a concrete tank 10–15 feet deep is filled with a slurry of dung, and a floating cover over the slurry keeps rising as gas is produced.\nStatement II: The technology of biogas production was developed in India mainly due to the efforts of IARI and KVIC.",
+    o: SI,
+    a: 0,
+    h: "Both are NCERT facts.",
+    e: "Both are correct. The biogas plant has a concrete tank (10–15 feet deep) in which bio-wastes are collected and a slurry of dung is fed; a floating cover keeps rising as gas is produced by microbial activity, and an outlet connects to a pipe supplying biogas. The spent slurry is used as fertiliser. The technology was developed in India mainly due to the efforts of the Indian Agricultural Research Institute (IARI) and Khadi and Village Industries Commission (KVIC).",
+  },
+  // --- Biocontrol ---
+  {
+    d: 1, t: 45,
+    q: "The ladybird beetle (with red and black markings) and the dragonfly are useful biocontrol agents to get rid of, respectively:",
+    o: ["Mosquitoes and aphids", "Aphids and mosquitoes", "Caterpillars and aphids", "Weeds and mosquitoes"],
+    a: 1,
+    e: "Ladybird and dragonflies are useful to get rid of aphids and mosquitoes, respectively. Biological control relies on natural predation rather than introduced chemicals.",
+  },
+  {
+    d: 2, t: 70,
+    q: "Spores of Bacillus thuringiensis are mixed with water and sprayed onto vulnerable plants such as brassicas and fruit trees. The toxin is released and kills larvae in the:",
+    o: [
+      "Soil around the roots",
+      "Gut of the insect larvae (caterpillars) that eat the spores",
+      "Leaves of the plant before the larvae feed",
+      "Blood of birds that eat the caterpillars",
+    ],
+    a: 1,
+    h: "The toxin needs the larval gut to be activated.",
+    e: "Bt spores are eaten by insect larvae; in the gut of the larvae the toxin is released and the larvae are killed. The bacterial disease kills the caterpillars but leaves other insects unharmed. Through genetic engineering, B. thuringiensis toxin genes have been introduced into plants (e.g. Bt cotton), making them resistant to attack by insect pests.",
+  },
+  {
+    d: 3, t: 90,
+    q: "Which of the following statements about baculoviruses is INCORRECT?",
+    o: [
+      "They are pathogens that attack insects and other arthropods",
+      "The majority of baculoviruses used as biological control agents are in the genus Nucleopolyhedrovirus",
+      "They are broad-spectrum insecticides that kill both pests and beneficial insects",
+      "They are especially desirable in Integrated Pest Management (IPM) programmes where an ecologically sensitive area is being treated",
+    ],
+    a: 2,
+    h: "What makes them safe for non-target organisms?",
+    e: "Baculoviruses are excellent candidates for species-specific, NARROW-spectrum insecticidal applications. They have no negative impacts on plants, mammals, birds, fish or even other non-target insects, which is why they are desirable in IPM programmes and help conserve beneficial insects. The other statements are correct.",
+  },
+  {
+    d: 2, t: 60,
+    q: "Trichoderma species, free-living fungi very common in root ecosystems, are useful in agriculture as:",
+    o: [
+      "Nitrogen-fixing biofertilisers",
+      "Effective biocontrol agents of several plant pathogens",
+      "Producers of methane",
+      "Phosphorus-absorbing mycorrhizal fungi of the genus Glomus",
+    ],
+    a: 1,
+    h: "Biocontrol, not biofertiliser.",
+    e: "Trichoderma species are free-living fungi very common in root ecosystems and are effective biocontrol agents of several plant pathogens. Glomus forms mycorrhizae; methanogens produce methane; Rhizobium/Azotobacter fix nitrogen.",
+  },
+  {
+    d: 3, t: 85,
+    q: "Assertion (A): An organic farmer does not aim to eradicate all 'pests' but keeps them at manageable levels by a complex system of checks and balances.\nReason (R): Eradication of pests is undesirable because without them the beneficial predatory and parasitic insects that depend upon them as food or hosts would not be able to survive.",
+    o: AR,
+    a: 0,
+    h: "Think of the food web on a farm.",
+    e: "Both true and R explains A. The organic farmer holds that eradicating 'pests' is not only impossible but also undesirable, for without them beneficial predatory and parasitic insects that depend on them as food or hosts would not survive. Biocontrol measures greatly reduce dependence on toxic chemicals and pesticides.",
+  },
+  // --- Biofertilisers ---
+  {
+    d: 1, t: 45,
+    q: "Which of the following are free-living bacteria in the soil that fix atmospheric nitrogen?",
+    o: ["Rhizobium and Glomus", "Azospirillum and Azotobacter", "Anabaena and Rhizobium", "Lactobacillus and Acetobacter"],
+    a: 1,
+    e: "Azospirillum and Azotobacter are free-living bacteria in the soil that fix atmospheric nitrogen, enriching the nitrogen content of the soil. Rhizobium fixes nitrogen in symbiotic association in root nodules of leguminous plants; Glomus is a mycorrhizal fungus; Anabaena is a cyanobacterium.",
+  },
+  {
+    d: 2, t: 75,
+    q: "Many members of the genus Glomus form mycorrhiza. Which of the following is NOT a benefit of mycorrhiza to the plant?",
+    o: [
+      "Absorption of phosphorus from the soil, passed to the plant",
+      "Resistance to root-borne pathogens",
+      "Tolerance to salinity and drought",
+      "Fixation of atmospheric nitrogen in root nodules",
+    ],
+    a: 3,
+    h: "Glomus is a fungus, not a nodule-forming bacterium.",
+    e: "The fungal symbiont of mycorrhiza absorbs phosphorus from the soil and passes it to the plant; plants with such associations also show resistance to root-borne pathogens, tolerance to salinity and drought, and an overall increase in plant growth and development. Nitrogen fixation in root nodules is done by Rhizobium in legumes, not by mycorrhizal fungi.",
+  },
+  {
+    d: 3, t: 90,
+    q: "How many of the following statements about biofertilisers are correct?\n(a) Cyanobacteria are autotrophic microbes widely distributed in aquatic and terrestrial environments, many of which fix atmospheric nitrogen\n(b) Anabaena, Nostoc and Oscillatoria are examples of nitrogen-fixing cyanobacteria\n(c) In paddy fields, cyanobacteria serve as an important biofertiliser\n(d) Blue-green algae also add organic matter to the soil and increase its fertility\n(e) Rhizobium fixes nitrogen as a free-living bacterium in the soil",
+    o: ["Two", "Three", "Four", "Five"],
+    a: 2,
+    h: "Where does Rhizobium fix nitrogen?",
+    e: "(a)–(d) are correct NCERT statements — four. (e) is wrong: Rhizobium fixes nitrogen in symbiotic association within the root nodules of leguminous plants; the free-living soil nitrogen fixers are Azospirillum and Azotobacter.",
+  },
+  {
+    d: 2, t: 70,
+    q: "Match the microbe with its role.\nColumn I: (A) Rhizobium (B) Glomus (C) Anabaena (D) Nucleopolyhedrovirus\nColumn II: (i) Nitrogen-fixing cyanobacterium in paddy fields (ii) Species-specific biological control of insects (iii) Symbiotic nitrogen fixation in root nodules of legumes (iv) Mycorrhizal fungus that absorbs phosphorus",
+    o: [
+      "A-iii, B-iv, C-i, D-ii",
+      "A-iv, B-iii, C-i, D-ii",
+      "A-iii, B-i, C-iv, D-ii",
+      "A-i, B-iv, C-iii, D-ii",
+    ],
+    a: 0,
+    h: "One of these is a virus used against insects.",
+    e: "Rhizobium — symbiotic N₂ fixation in legume root nodules (A-iii); Glomus — mycorrhizal fungus absorbing phosphorus (B-iv); Anabaena — N₂-fixing cyanobacterium, important biofertiliser in paddy fields (C-i); Nucleopolyhedrovirus — baculovirus used for species-specific biocontrol of insects (D-ii).",
+  },
+];
+
+/* ================================================================== */
 /* Exports                                                             */
 /* ================================================================== */
 
-export const questions: ExamQuestion[] = [...mk(MOL, "05", ch5), ...mk(EVO, "06", ch6), ...mk(HHD, "07", ch7)];
+export const questions: ExamQuestion[] = [...mk(MOL, "05", ch5), ...mk(EVO, "06", ch6), ...mk(HHD, "07", ch7), ...mk(MHW, "08", ch8)];
 
-export const formulas: FormulaSheet[] = [];
+export const formulas: FormulaSheet[] = [
+  {
+    subject: "biology",
+    chapter: MOL,
+    items: [
+      { name: "Nucleoside vs nucleotide", tex: t`\text{base} + \text{pentose} \xrightarrow{\text{N-glycosidic}} \text{nucleoside} \xrightarrow{+\,\text{PO}_4\ (\text{phosphoester, 5}'\text{-OH})} \text{nucleotide}`, note: "Nucleotides join by 3′–5′ phosphodiester bonds." },
+      { name: "Chargaff's rules (dsDNA)", tex: t`A = T,\quad G = C,\quad \dfrac{A+G}{T+C} = 1`, note: "Purine always pairs with pyrimidine." },
+      { name: "Hydrogen bonds", tex: t`A{=}T\ (2\ \text{H-bonds}),\qquad G{\equiv}C\ (3\ \text{H-bonds})`, note: "Total H-bonds = 2(A–T pairs) + 3(G–C pairs)." },
+      { name: "B-DNA dimensions", tex: t`\text{pitch} = 3.4\ \text{nm},\ \ 10\ \text{bp/turn},\ \ \text{rise} = 0.34\ \text{nm/bp}`, note: "Right-handed helix; antiparallel strands." },
+      { name: "Length of DNA", tex: t`L = (\text{no. of bp}) \times 0.34 \times 10^{-9}\ \text{m}`, note: "Human diploid: 6.6 × 10⁹ bp ≈ 2.2 m; E. coli: 4.6 × 10⁶ bp." },
+      { name: "Nucleosome", tex: t`\text{histone octamer} + \sim 200\ \text{bp DNA};\ \ \text{H1 = linker}`, note: "Histones rich in Lys, Arg (+ve). Euchromatin active/light; heterochromatin inactive/dark." },
+      { name: "Genetic-material experiments", tex: t`\text{Griffith (1928)} \to \text{Avery–MacLeod–McCarty} \to \text{Hershey–Chase (1952)}`, note: "DNase blocks transformation; ³²P (DNA) enters bacteria, ³⁵S (protein) does not." },
+      { name: "Meselson–Stahl (semiconservative)", tex: t`\text{after } n \text{ generations: } \dfrac{\text{hybrid}}{\text{total}} = \dfrac{2}{2^{n}}\ \ (n \ge 1)`, note: "¹⁵NH₄Cl → ¹⁴NH₄Cl, CsCl gradient; Taylor used ³H-thymidine on Vicia faba." },
+      { name: "Replication rate (E. coli)", tex: t`4.6\times10^{6}\ \text{bp in } 38\ \text{min} \approx 2000\ \text{bp s}^{-1}`, note: "DNA pol works 5′→3′ only; leading continuous, lagging as Okazaki fragments joined by ligase." },
+      { name: "Template vs coding strand", tex: t`\text{mRNA} = \text{coding strand (5}'\to3') \text{ with } T \to U`, note: "Template strand is 3′→5′. Promoter upstream (5′), terminator downstream (3′)." },
+      { name: "RNA polymerases", tex: t`\text{Prokaryote: one pol } (\sigma \text{ init}, \rho \text{ term});\ \text{Eukaryote: I} \to \text{28S,18S,5.8S; II} \to \text{hnRNA; III} \to \text{tRNA, 5S, snRNA}` },
+      { name: "hnRNA processing", tex: t`\text{splicing (remove introns)} + \text{5}'\text{ cap (m}^7\text{GTP)} + \text{3}'\text{ poly-A tail (200–300 A)}`, note: "Tailing is template-independent." },
+      { name: "Genetic code", tex: t`4^{3} = 64 \text{ codons} = 61 \text{ sense} + 3 \text{ stop (UAA, UAG, UGA)}`, note: "Triplet, degenerate, unambiguous, nearly universal, comma-less, non-overlapping; AUG = Met + start; Met & Trp have one codon each." },
+      { name: "Polypeptide length", tex: t`\text{amino acids} = \dfrac{\text{coding nucleotides (start to stop)}}{3} - 1`, note: "The stop codon adds no amino acid." },
+      { name: "Frame-shift", tex: t`\pm 1, 2 \text{ bases} \Rightarrow \text{frame shift};\quad \pm 3 \text{ bases} \Rightarrow \pm 1 \text{ amino acid}` },
+      { name: "Translation", tex: t`\text{aa} + \text{tRNA} + \text{ATP} \to \text{aa-tRNA};\ \ \text{peptide bond: 23S rRNA (ribozyme)}`, note: "tRNA: clover-leaf (2D), inverted L (3D). UTRs at 5′ and 3′ ends aid efficient translation." },
+      { name: "lac operon", tex: t`i \to \text{repressor (constitutive)};\ z \to \beta\text{-galactosidase},\ y \to \text{permease},\ a \to \text{transacetylase}`, note: "Inducer: lactose (allolactose) inactivates repressor — negative regulation." },
+      { name: "Human genome facts", tex: t`3164.7\times10^{6}\ \text{bp};\ \sim 30{,}000 \text{ genes};\ 99.9\%\ \text{identical};\ <2\%\ \text{coding}`, note: "Avg gene 3000 bases; dystrophin 2.4 Mb; Chr 1 most genes (2968), Y fewest (231); 1.4 million SNPs. HGP 1990–2003; BAC/YAC; Sanger sequencing." },
+      { name: "DNA fingerprinting", tex: t`\text{VNTR (mini-satellite, 0.1–20 kb)} \xrightarrow{\text{Southern blot}} \text{band pattern}`, note: "Alec Jeffreys. Isolation → restriction digest → electrophoresis → blotting → hybridise probe → autoradiography. Polymorphism = heritable variant at frequency > 0.01." },
+    ],
+  },
+  {
+    subject: "biology",
+    chapter: EVO,
+    items: [
+      { name: "Time scale", tex: t`\text{Universe} \approx 20\ \text{bya};\ \text{Earth} \approx 4.5\ \text{bya};\ \text{life} \approx 4\ \text{bya}`, note: "First cellular forms ~2000 mya." },
+      { name: "Origin-of-life theories", tex: t`\text{spontaneous generation (Pasteur disproved)};\ \text{panspermia};\ \text{chemical evolution (Oparin–Haldane)}` },
+      { name: "Miller (1953)", tex: t`\text{CH}_4 + \text{H}_2 + \text{NH}_3 + \text{H}_2\text{O} \xrightarrow[800^\circ\text{C}]{\text{electric discharge}} \text{amino acids}`, note: "Reducing atmosphere, no free O₂." },
+      { name: "Homologous (divergent)", tex: t`\text{same structure, different function}`, note: "Forelimbs of whale, bat, cheetah, human; vertebrate heart/brain; thorn of Bougainvillea & tendril of Cucurbita." },
+      { name: "Analogous (convergent)", tex: t`\text{different structure, same function}`, note: "Wings of butterfly & bird; eye of Octopus & mammal; flippers of penguin & dolphin; sweet potato (root) & potato (stem)." },
+      { name: "Industrial melanism", tex: t`\text{1850: white} > \text{dark};\quad \text{1920: dark} > \text{white}`, note: "Biston betularia, England; soot + loss of lichens. Lichens = pollution indicators." },
+      { name: "Anthropogenic evolution", tex: t`\text{herbicide/pesticide-resistant pests},\ \text{antibiotic-resistant microbes}` },
+      { name: "Adaptive radiation", tex: t`\text{one ancestor} \to \text{many forms in different habitats}`, note: "Darwin's finches (Galapagos); Australian marsupials. Placental–marsupial look-alikes (wolf–Tasmanian wolf, anteater–numbat) = convergence." },
+      { name: "Darwinism", tex: t`\text{branching descent} + \text{natural selection};\ \text{fitness} = \text{reproductive fitness}`, note: "HMS Beagle; Wallace — Malay Archipelago." },
+      { name: "Lamarck vs de Vries", tex: t`\text{Lamarck: use/disuse, acquired characters};\ \text{de Vries: mutation, saltation}`, note: "De Vries worked on Oenothera lamarckiana; mutations random & directionless; Darwin's variations small & directional." },
+      { name: "Hardy–Weinberg", tex: t`p + q = 1,\qquad p^2 + 2pq + q^2 = 1`, note: "AA = p², Aa = 2pq, aa = q²." },
+      { name: "Carriers among dominant phenotype", tex: t`\dfrac{2pq}{p^2 + 2pq}` },
+      { name: "Factors disturbing H–W", tex: t`\text{gene flow, genetic drift, mutation, recombination, natural selection}`, note: "Drastic drift in a new sample → founder effect." },
+      { name: "Types of selection", tex: t`\text{stabilising (mean)},\ \text{directional (one end)},\ \text{disruptive (both ends)}` },
+      { name: "History of life (mya)", tex: t`\text{cells } 2000 \to \text{invertebrates } 500 \to \text{jawless fish } 350 \to \text{seaweeds } 320 \to \text{Ichthyosaurs } 200 \to \text{dinosaurs extinct } 65`, note: "Coelacanth (lobefin) caught 1938, South Africa; reptiles lay thick-shelled eggs; T. rex ~20 ft." },
+      { name: "Hominid brain sizes", tex: t`\textit{H. habilis } 650\text{–}800\ \text{cc} < \textit{H. erectus } 900\ \text{cc} < \text{Neanderthal } 1400\ \text{cc}`, note: "H. habilis: no meat; H. erectus (Java 1891, 1.5 mya): ate meat; Neanderthal: buried dead, 1,00,000–40,000 yr ago." },
+      { name: "Human evolution timeline", tex: t`\text{Dryopithecus/Ramapithecus } 15\ \text{mya} \to \text{Australopithecines } 2\ \text{mya} \to \textit{H. sapiens}\ 75{,}000\text{–}10{,}000\ \text{yr}`, note: "Ramapithecus more man-like. Cave art ~18,000 yr; agriculture ~10,000 yr ago." },
+    ],
+  },
+  {
+    subject: "biology",
+    chapter: HHD,
+    items: [
+      { name: "Typhoid", tex: t`\textit{Salmonella typhi} \to \text{small intestine};\ \text{Widal test}`, note: "Fever 39–40°C; intestinal perforation; Mary Mallon (carrier)." },
+      { name: "Pneumonia", tex: t`\textit{Streptococcus pneumoniae},\ \textit{Haemophilus influenzae} \to \text{alveoli}`, note: "Lips and nails grey to bluish in severe cases." },
+      { name: "Common cold", tex: t`\text{Rhinoviruses} \to \text{nose \& respiratory passage, not lungs}`, note: "Lasts 3–7 days." },
+      { name: "Malaria", tex: t`\textit{Plasmodium} \text{ (vivax, malariae, falciparum)};\ \text{vector: female } \textit{Anopheles}`, note: "Sporozoites → liver → RBC; haemozoin → chill & fever every 3–4 days; P. falciparum = malignant. Fertilisation in mosquito stomach; sporozoites in salivary glands." },
+      { name: "Amoebiasis", tex: t`\textit{Entamoeba histolytica} \to \text{large intestine}`, note: "Houseflies = mechanical carriers; mucus and blood clots in stool." },
+      { name: "Ascariasis & filariasis", tex: t`\textit{Ascaris} \to \text{intestine};\ \ \textit{Wuchereria bancrofti, W. malayi} \to \text{lymphatics (elephantiasis)}` },
+      { name: "Ringworm (fungal)", tex: t`\textit{Microsporum},\ \textit{Trichophyton},\ \textit{Epidermophyton}`, note: "Dry scaly itchy lesions; heat and moisture favour." },
+      { name: "Vector control", tex: t`\textit{Aedes} \to \text{dengue, chikungunya};\ \ \textit{Gambusia} \text{ eats larvae}` },
+      { name: "Innate immunity barriers", tex: t`\text{physical, physiological, cellular, cytokine}`, note: "Skin/mucus; acid, saliva, tears; neutrophils, monocytes, NK cells, macrophages; interferons." },
+      { name: "Antibody structure", tex: t`\text{H}_2\text{L}_2;\ \ \text{IgA, IgM, IgE, IgG}`, note: "IgE in allergy; IgA in colostrum." },
+      { name: "Acquired immunity", tex: t`\text{primary (weak)} \to \text{secondary/anamnestic (intense, memory)}`, note: "B cells → humoral; T cells → cell-mediated (graft rejection)." },
+      { name: "Active vs passive", tex: t`\text{active: own antibodies (slow)};\ \text{passive: ready-made antibodies (fast)}`, note: "Passive: colostrum, placenta, anti-tetanus, snake antivenom. Hepatitis B vaccine from yeast (rDNA)." },
+      { name: "Allergy & autoimmunity", tex: t`\text{allergen} \to \text{IgE} \to \text{mast cells release histamine, serotonin}`, note: "Treat with antihistamine, adrenaline, steroids. Autoimmune: rheumatoid arthritis." },
+      { name: "Lymphoid organs", tex: t`\text{primary: bone marrow, thymus};\ \text{secondary: spleen, lymph nodes, tonsils, Peyer's patches, appendix}`, note: "MALT ≈ 50% of lymphoid tissue; thymus shrinks by puberty; spleen = blood filter & RBC reservoir." },
+      { name: "HIV cycle", tex: t`\text{RNA} \xrightarrow{\text{reverse transcriptase}} \text{DNA} \to \text{host genome};\ \text{macrophage} = \text{HIV factory}`, note: "Attacks helper T cells (T_H); AIDS reported 1981; ELISA; lag 5–10 years; antiretrovirals only partially effective." },
+      { name: "Cancer", tex: t`\text{loss of contact inhibition} \to \text{tumour (benign / malignant)} \to \text{metastasis}`, note: "Carcinogens: ionising (X, γ), non-ionising (UV), chemicals (tobacco), oncogenic viruses, c-onc." },
+      { name: "Cancer detection & therapy", tex: t`\text{biopsy, CT (X-rays), MRI (magnetic + non-ionising)};\ \alpha\text{-interferon}`, note: "Surgery, radiotherapy, chemotherapy, immunotherapy." },
+      { name: "Opioids", tex: t`\textit{Papaver somniferum} \to \text{morphine} \xrightarrow{\text{acetylation}} \text{heroin (diacetylmorphine)}`, note: "Depressant; opioid receptors in CNS and GI tract." },
+      { name: "Cannabinoids & cocaine", tex: t`\textit{Cannabis sativa} \to \text{marijuana, hashish, charas, ganja};\ \textit{Erythroxylum coca} \to \text{cocaine (dopamine)}`, note: "Hallucinogens: Atropa belladonna, Datura." },
+      { name: "Tobacco", tex: t`\text{nicotine} \to \text{adrenal} \to \text{adrenaline, noradrenaline} \uparrow \text{BP, heart rate}`, note: "CO ↑, haem-bound O₂ ↓." },
+      { name: "Anabolic steroids", tex: t`\text{♀: masculinisation, deep voice, clitoris} \uparrow;\ \text{♂: testes} \downarrow,\ \text{breast} \uparrow,\ \text{baldness}` },
+      { name: "Adolescence & dependence", tex: t`12\text{–}18\ \text{years};\ \text{withdrawal syndrome on stopping}` },
+    ],
+  },
+  {
+    subject: "biology",
+    chapter: MHW,
+    items: [
+      { name: "Curd", tex: t`\textit{Lactobacillus} \text{ (LAB)}:\ \text{milk} \to \text{curd},\ \text{vitamin B}_{12} \uparrow`, note: "Starter = inoculum of LAB." },
+      { name: "Dough & toddy", tex: t`\text{idli/dosa: bacteria (CO}_2);\ \text{bread: } \textit{S. cerevisiae};\ \text{toddy: palm sap}` },
+      { name: "Cheese", tex: t`\text{Swiss: } \textit{Propionibacterium sharmanii}\ (\text{CO}_2 \text{ holes});\ \text{Roquefort: fungi}` },
+      { name: "Beverages", tex: t`\textit{S. cerevisiae}:\ \text{wine, beer (no distillation)};\ \text{whisky, brandy, rum (distilled)}` },
+      { name: "Penicillin", tex: t`\textit{Penicillium notatum} \text{ vs } \textit{Staphylococci}`, note: "Fleming; Chain & Florey; Nobel 1945." },
+      { name: "Organic acids", tex: t`\textit{Aspergillus niger} \to \text{citric};\ \textit{Acetobacter aceti} \to \text{acetic};\ \textit{Clostridium butylicum} \to \text{butyric};\ \textit{Lactobacillus} \to \text{lactic}` },
+      { name: "Enzymes", tex: t`\text{lipase (detergents)};\ \text{pectinase + protease (clear juice)};\ \text{streptokinase (clot buster)}` },
+      { name: "Bioactive molecules", tex: t`\text{cyclosporin A: } \textit{Trichoderma polysporum};\ \text{statins: } \textit{Monascus purpureus}`, note: "Cyclosporin A immunosuppressant; statins competitively inhibit cholesterol synthesis." },
+      { name: "Sewage treatment", tex: t`\text{primary (filtration, sedimentation)} \to \text{secondary (aeration, flocs, BOD} \downarrow)`, note: "Activated sludge: small part back as inoculum, rest to anaerobic sludge digesters." },
+      { name: "BOD", tex: t`\text{BOD} = \text{O}_2 \text{ consumed to oxidise organic matter in 1 L water}`, note: "Higher BOD → higher polluting potential." },
+      { name: "Biogas", tex: t`\text{CH}_4 + \text{CO}_2 + \text{H}_2\text{S (+ H}_2)\ \text{by methanogens (}\textit{Methanobacterium}\text{)}`, note: "Rumen, gobar; IARI & KVIC; Ganga & Yamuna Action Plans (MoEF)." },
+      { name: "Biocontrol", tex: t`\text{ladybird} \to \text{aphids};\ \text{dragonfly} \to \text{mosquitoes};\ \textit{Bt} \to \text{caterpillars}`, note: "Trichoderma vs plant pathogens; baculoviruses (Nucleopolyhedrovirus) species-specific, narrow spectrum — IPM." },
+      { name: "Biofertilisers", tex: t`\textit{Rhizobium} \text{ (nodules)};\ \textit{Azotobacter, Azospirillum} \text{ (free-living)};\ \textit{Glomus} \text{ (mycorrhiza, P)}`, note: "Cyanobacteria Anabaena, Nostoc, Oscillatoria in paddy fields." },
+    ],
+  },
+];

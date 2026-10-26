@@ -11,6 +11,7 @@ import { useHydrated } from "@/components/providers";
 import { ProgressBar } from "@/components/ui/Progress";
 import { useT } from "@/i18n";
 import { PlanSetup } from "./PlanSetup";
+import { useTxt } from "@/components/exam/labels";
 import { usePlan, type LivePlan } from "./usePlan";
 
 const fmt = (d: string, opts: Intl.DateTimeFormatOptions = { weekday: "short", day: "numeric", month: "short" }) => new Date(d + "T00:00:00").toLocaleDateString(undefined, opts);
@@ -180,6 +181,7 @@ function DayRow({ day, today, doneIds, manualIds }: { day: PlanDay; today: strin
 
 export function TaskRow({ task, done, manual }: { task: PlanTask; done?: boolean; manual: boolean }) {
   const t = useT();
+  const tx = useTxt();
   const planDone = useLearner((s) => s.planDone);
   const toggle = useLearner((s) => s.togglePlanTask);
   const ticked = done || Boolean(planDone[task.id]);
@@ -190,7 +192,7 @@ export function TaskRow({ task, done, manual }: { task: PlanTask; done?: boolean
         <button
           onClick={() => toggle(task.id)}
           aria-pressed={ticked}
-          aria-label={ticked ? t("plan.task.markNotDone", "Mark “{title}” not done", { title: task.title }) : t("plan.task.markDone", "Mark “{title}” done", { title: task.title })}
+          aria-label={ticked ? t("plan.task.markNotDone", "Mark “{title}” not done", { title: task.label ? tx(task.label) : task.title }) : t("plan.task.markDone", "Mark “{title}” done", { title: task.label ? tx(task.label) : task.title })}
           className={clsx("grid h-6 w-6 shrink-0 place-items-center rounded-md border-2 transition", ticked ? "border-good bg-good text-white" : "border-line hover:border-good")}
         >
           {ticked && <Check className="h-4 w-4" strokeWidth={3.5} />}
@@ -200,8 +202,8 @@ export function TaskRow({ task, done, manual }: { task: PlanTask; done?: boolean
           {ticked ? <Check className="h-4 w-4" strokeWidth={3.5} /> : <Icon className="h-3.5 w-3.5" strokeWidth={2.5} />}
         </span>
       )}
-      <Link href={task.href} className={clsx("min-w-0 flex-1 truncate text-sm font-bold hover:text-accent", ticked && "text-muted line-through")}>
-        {task.title}
+      <Link href={task.href} className={clsx("min-w-0 flex-1 truncate text-sm font-bold hover:text-accent", ticked && "text-muted line-through")} data-kind={task.kind}>
+        {task.label ? tx(task.label) : task.title}
       </Link>
       {task.group && <span className="hidden shrink-0 text-xs font-semibold text-muted sm:inline">{task.group}</span>}
       <span className="shrink-0 text-xs font-bold text-muted">{t("plan.task.minutes", "{n}m", { n: task.minutes })}</span>

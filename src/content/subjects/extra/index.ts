@@ -90,12 +90,34 @@ import * as cs11CbseA from "./cs-11-cbse-a";
 import * as cs11CbseB from "./cs-11-cbse-b";
 import * as cs11IscA from "./cs-11-isc-a";
 import * as cs11IscB from "./cs-11-isc-b";
+import * as phy11A from "./phy-11-a";
+import * as phy11B from "./phy-11-b";
+import * as phy11C from "./phy-11-c";
+import * as phy11D from "./phy-11-d";
+import * as phy11E from "./phy-11-e";
+import * as phy11F from "./phy-11-f";
+import * as che11A from "./che-11-a";
+import * as che11B from "./che-11-b";
+import * as che11C from "./che-11-c";
+import * as che11D from "./che-11-d";
+import * as che11E from "./che-11-e";
+import * as mat11A from "./mat-11-a";
+import * as mat11B from "./mat-11-b";
+import * as mat11C from "./mat-11-c";
+import * as mat11D from "./mat-11-d";
+import * as mat11E from "./mat-11-e";
+import * as bio11A from "./bio-11-a";
+import * as bio11B from "./bio-11-b";
+import * as bio11C from "./bio-11-c";
+import * as bio11D from "./bio-11-d";
+import * as bio11E from "./bio-11-e";
+import * as bio11F from "./bio-11-f";
 
 /**
  * Chapters written to close syllabus gaps. Each batch file adds topics to one
  * course and maps syllabus chapter titles to them.
  */
-const BATCHES: Batch[] = [phyMech, phyHeat, phyMagnet, phyModern, phyIcse10, chePhys, cheInorg, cheOrg, cheIcse, bioDiversity, bioStructure, bioRepro, bioApplied, bioIcse10, bioBody, bioIcse9, matAlgebra, matCalcGeo, matIcse10A, matIcse10B, mat9Geo, mat9Num, socIndia, socWorld, socGeo, socCivics, socEcon, engGrammar, engWriting, hin10, kan10, cmp10, gk10, matAp10, phyCalorimetry, soc9World, soc9Ancient, soc9Medieval, soc9Econ, soc9IndiaGeo, soc9KaGeo, soc9Earth, soc9Atmos, soc9Democracy, soc9Govt, eng9, hin9, cmp9It, cmp9Java, mat9Alg, mat9Eq, mat9Tri, mat9Mens, mat9Data, che9Ncert, che9Icse, phy9Ncert, phy9Icse, bio9Ncert, bio9Icse, phy12A, phy12B, phy12C, phy12D, phy12E, phy12F, che12A, che12B, che12C, che12D, mat12A, mat12B, mat12C, mat12D, mat12E, mat12F, bio12A, bio12B, bio12C, bio12D, bio12E, ele12A, ele12B, cs12Cbse, cs12Isc, ele11A, ele11B, cs11CbseA, cs11CbseB, cs11IscA, cs11IscB];
+const BATCHES: Batch[] = [phyMech, phyHeat, phyMagnet, phyModern, phyIcse10, chePhys, cheInorg, cheOrg, cheIcse, bioDiversity, bioStructure, bioRepro, bioApplied, bioIcse10, bioBody, bioIcse9, matAlgebra, matCalcGeo, matIcse10A, matIcse10B, mat9Geo, mat9Num, socIndia, socWorld, socGeo, socCivics, socEcon, engGrammar, engWriting, hin10, kan10, cmp10, gk10, matAp10, phyCalorimetry, soc9World, soc9Ancient, soc9Medieval, soc9Econ, soc9IndiaGeo, soc9KaGeo, soc9Earth, soc9Atmos, soc9Democracy, soc9Govt, eng9, hin9, cmp9It, cmp9Java, mat9Alg, mat9Eq, mat9Tri, mat9Mens, mat9Data, che9Ncert, che9Icse, phy9Ncert, phy9Icse, bio9Ncert, bio9Icse, phy12A, phy12B, phy12C, phy12D, phy12E, phy12F, che12A, che12B, che12C, che12D, mat12A, mat12B, mat12C, mat12D, mat12E, mat12F, bio12A, bio12B, bio12C, bio12D, bio12E, ele12A, ele12B, cs12Cbse, cs12Isc, ele11A, ele11B, cs11CbseA, cs11CbseB, cs11IscA, cs11IscB, phy11A, phy11B, phy11C, phy11D, phy11E, phy11F, che11A, che11B, che11C, che11D, che11E, mat11A, mat11B, mat11C, mat11D, mat11E, bio11A, bio11B, bio11C, bio11D, bio11E, bio11F];
 
 /** Extra topics per course slug, in batch order. */
 export function extraTopics(course: string): Topic[] {

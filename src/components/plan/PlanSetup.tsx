@@ -29,8 +29,9 @@ function defaultTarget(scope: Scope) {
     const grade = SYLLABI[b] && getGrade(b, g);
     const date = grade && examDateFor(grade);
     if (date) {
-      // Finish two weeks before the exam so the last stretch is revision.
-      date.setDate(date.getDate() - 14);
+      // Entrance exams: plan right up to the exam (the planner keeps the final weeks for revision rounds and mocks).
+      // Board exams: finish two weeks before so the last stretch is revision.
+      date.setDate(date.getDate() - (b === "exam" ? 1 : 14));
       const k = dayKey(date);
       if (k > addDays(14)) return k;
     }
@@ -78,6 +79,14 @@ export function PlanSetup({ initial, onDone }: { initial?: StudyPlan | null; onD
     setScope(s);
     if (!initial) setTarget(defaultTarget(s));
   };
+
+  const examDay = (() => {
+    if (scope.type !== "syllabus") return null;
+    const [b, g] = scope.id.split(":") as [Board, string];
+    const grade = SYLLABI[b] && getGrade(b, g);
+    const date = grade && examDateFor(grade);
+    return grade && grade.exam && date ? { name: tx(grade.exam.name), date, entrance: b === "exam" } : null;
+  })();
 
   const valid = Boolean(scope.id) && target > dayKey() && hours > 0 && days.length > 0;
 
@@ -134,6 +143,12 @@ export function PlanSetup({ initial, onDone }: { initial?: StudyPlan | null; onD
           <label className="grid gap-1.5">
             <span className="eyebrow">{t("plan.setup.finishBy", "Finish by")}</span>
             <input type="date" className="input" min={addDays(1)} value={target} onChange={(e) => setTarget(e.target.value)} />
+            {examDay && (
+              <span className="text-xs font-semibold text-muted">
+                {t("plan.setup.examDay", "{exam}: around {date} (approximate — check the official schedule).", { exam: examDay.name, date: examDay.date.toLocaleDateString(undefined, { day: "numeric", month: "long", year: "numeric" }) })}
+                {examDay.entrance && <> {t("plan.setup.examTail", "The final weeks are kept for revision rounds and full mock tests.")}</>}
+              </span>
+            )}
           </label>
           <label className="grid gap-1.5">
             <span className="eyebrow">{t("plan.setup.hoursValue", "Hours per week · {n} h", { n: hours })}</span>

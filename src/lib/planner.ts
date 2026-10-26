@@ -10,6 +10,7 @@
  * re-plans automatically when the learner falls behind or races ahead.
  */
 import { dayKey } from "./gamification";
+import type { Txt } from "./exam";
 
 export interface PlanItem {
   id: string;
@@ -22,15 +23,27 @@ export interface PlanItem {
   priority?: number;
   /** Group label shown in the UI (subject, module…). */
   group?: string;
+  /** Where revision of this item happens (defaults to href). */
+  reviseHref?: string;
 }
 
 export interface PlanTask {
   id: string;
   title: string;
+  /** Translatable title (preferred over `title` in the UI). */
+  label?: Txt;
   minutes: number;
   href: string;
   kind: "learn" | "revise" | "mock";
   group?: string;
+}
+
+/** A practice paper for the final weeks. */
+export interface PlanMock {
+  href: string;
+  label: Txt;
+  /** Paper length; the task adds time to analyse mistakes. */
+  minutes: number;
 }
 
 export interface PlanDay {
@@ -63,6 +76,14 @@ export interface PlanInput {
   /** Href for revision / mock tasks. */
   reviseHref?: string;
   mockHref?: string;
+  /** Share of study days kept at the end for revision and mocks (default 0.15). */
+  tailShare?: number;
+  /**
+   * Exam plans: revision rounds over these items (highest priority first) fill
+   * the final stretch, with full mocks getting more frequent towards the date.
+   */
+  revision?: { items: PlanItem[]; rounds: number };
+  mocks?: { full: PlanMock; half?: PlanMock };
 }
 
 function addDays(d: string, n: number) {
@@ -87,7 +108,7 @@ export function buildPlan(input: PlanInput): PlanResult {
   const queue = remaining.map((it, idx) => ({ it, idx })).sort((a, b) => (b.it.priority ?? 0) - (a.it.priority ?? 0) || a.idx - b.idx).map((x) => x.it);
 
   const remainingMinutes = remaining.reduce((a, i) => a + i.minutes, 0);
-  const reviseShare = 0.15;
+  const reviseShare = Math.min(0.5, Math.max(0.05, input.tailShare ?? 0.15));
   const learnDates = dates.length ? dates.slice(0, Math.max(1, Math.ceil(dates.length * (1 - reviseShare)))) : [];
   const tailDates = dates.slice(learnDates.length);
   const availableMinutes = dates.length * perDay;
@@ -142,6 +163,11 @@ export function buildPlan(input: PlanInput): PlanResult {
     if (studyDays.includes(new Date(overflow + "T00:00:00").getDay())) pushLearn(overflow);
   }
   const lastLearn = [...days].reverse().find((d) => d.tasks.some((t) => t.kind === "learn"));
+  if (input.revision || input.mocks) {
+    days.push(...examTail(tailDates.slice(ti), perDay, input));
+    days.sort((a, b) => a.date.localeCompare(b.date));
+    return finish(days, lastLearn, learnDates, tailDates, perDay, studyDays, remainingMinutes, availableMinutes, input, remaining.length);
+  }
   // Remaining tail days: revision + mock tests.
   for (let i = ti; i < tailDates.length; i++) {
     const date = tailDates[i];
@@ -157,11 +183,15 @@ export function buildPlan(input: PlanInput): PlanResult {
     });
   }
   days.sort((a, b) => a.date.localeCompare(b.date));
+  return finish(days, lastLearn, learnDates, tailDates, perDay, studyDays, remainingMinutes, availableMinutes, input, remaining.length);
+}
 
+function finish(days: PlanDay[], lastLearn: PlanDay | undefined, learnDates: string[], tailDates: string[], perDay: number, studyDays: number[], remainingMinutes: number, availableMinutes: number, input: PlanInput, remainingCount: number): PlanResult {
+  const dates = learnDates.length + tailDates.length;
   const finishDate = lastLearn?.date ?? null;
   const onTrack = !finishDate || finishDate <= input.targetDate;
   const learnCapacity = learnDates.length * perDay + tailDates.length * perDay;
-  const weeksLeft = Math.max(1, dates.length / studyDays.length);
+  const weeksLeft = Math.max(1, dates / studyDays.length);
   const shortfall = Math.max(0, remainingMinutes - learnCapacity);
   return {
     days,
@@ -171,8 +201,66 @@ export function buildPlan(input: PlanInput): PlanResult {
     availableMinutes,
     extraHoursNeeded: onTrack ? 0 : Math.ceil(shortfall / 60 / weeksLeft),
     totalItems: input.items.length,
-    doneItems: input.items.length - remaining.length,
+    doneItems: input.items.length - remainingCount,
   };
+}
+
+/**
+ * The final stretch of an exam plan: revision rounds (highest-weightage chapters
+ * first, shorter each round) with full mocks — every third study day at first,
+ * every other day in the last two weeks — and a light exam-eve day.
+ */
+function examTail(dates: string[], perDay: number, input: PlanInput): PlanDay[] {
+  const out: PlanDay[] = [];
+  const items = [...(input.revision?.items ?? [])].sort((a, b) => (b.priority ?? 0) - (a.priority ?? 0));
+  const rounds = Math.max(1, input.revision?.rounds ?? 1);
+  const queue: PlanTask[] = [];
+  for (let r = 1; r <= rounds; r++)
+    for (const it of items)
+      queue.push({
+        id: `rev${r}:${it.id}`,
+        title: `Revision round ${r}: ${it.title}`,
+        label: { key: "plan.task.revisionRound", en: "Revision round {n}: {title}", vars: { n: r, title: it.title } },
+        // Shorter every round: half the learning time, then a third, then a quarter…
+        minutes: Math.max(15, Math.round(Math.min(it.minutes, 180) / (r + 1) / 5) * 5),
+        href: it.reviseHref ?? it.href,
+        kind: "revise",
+        group: it.group,
+      });
+  const mock = input.mocks && (input.mocks.half && perDay < input.mocks.full.minutes * 0.75 ? input.mocks.half : input.mocks.full);
+  dates.forEach((date, i) => {
+    const fromEnd = dates.length - 1 - i;
+    const day: PlanDay = { date, tasks: [], minutes: 0 };
+    if (fromEnd === 0 && dates.length > 3) {
+      const m = Math.min(perDay, 45);
+      day.tasks.push({ id: `eve:${date}`, title: "Exam eve: light formula revision, early night", label: { key: "plan.task.examEve", en: "Exam eve: light formula revision, early night" }, minutes: m, href: input.reviseHref ?? "/exam/formulas", kind: "revise" });
+      day.minutes = m;
+      out.push(day);
+      return;
+    }
+    const mockDay = mock && (fromEnd <= 14 ? fromEnd % 2 === 1 : fromEnd % 3 === 1);
+    if (mock && mockDay) {
+      const analyse = Math.max(30, Math.round(mock.minutes / 3 / 5) * 5);
+      day.tasks.push({ id: `mock:${date}`, title: mock.label.en, label: mock.label, minutes: mock.minutes, href: mock.href, kind: "mock" });
+      day.tasks.push({ id: `analyse:${date}`, title: "Analyse the mock: redo every mistake", label: { key: "plan.task.analyse", en: "Analyse the mock: redo every mistake" }, minutes: analyse, href: input.reviseHref ?? "/exam/practice", kind: "revise" });
+      day.minutes = mock.minutes + analyse;
+      out.push(day);
+      return;
+    }
+    while (queue.length && day.minutes + Math.min(queue[0].minutes, 30) <= perDay) {
+      const task = queue.shift()!;
+      const take = Math.min(task.minutes, perDay - day.minutes);
+      day.tasks.push({ ...task, minutes: take });
+      day.minutes += take;
+    }
+    if (!day.tasks.length) {
+      const m = perDay;
+      day.tasks.push({ id: `revise:${date}`, title: "Revision: weakest chapters, formula sheets & flashcards", label: { key: "plan.task.reviseWeak", en: "Revision: weakest chapters, formula sheets & flashcards" }, minutes: m, href: input.reviseHref ?? "/practice", kind: "revise" });
+      day.minutes = m;
+    }
+    out.push(day);
+  });
+  return out;
 }
 
 /** iCalendar export of the plan (all-day events with the day's tasks). */

@@ -51,6 +51,9 @@ export function usePlan(override?: StudyPlan | null): { live: LivePlan | null; l
       studyDays: plan.studyDays,
       reviseHref: source.value.reviseHref,
       mockHref: source.value.mockHref,
+      tailShare: source.value.tailShare,
+      revision: source.value.revision,
+      mocks: source.value.mocks,
     });
     return { plan, source: source.value, result };
   }, [plan, source, key]);
