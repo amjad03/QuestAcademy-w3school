@@ -1932,7 +1932,7 @@ For gases, $p\Delta V = \Delta n_g RT$, where $\Delta n_g$ is moles of gaseous p
             title: "JEE Main level: reversible versus irreversible work",
             problem: "1.0 mol of an ideal gas at 300 K expands isothermally from 10 bar to 1 bar (a) reversibly and (b) in one step against a constant external pressure of 1 bar. Find w in each case.",
             steps: [
-              t`(a) $w = -2.303\,nRT\log(p_i/p_f) = -2.303 \times 1 \times 8.314 \times 300 \times \log 10 = -5743$ J.`,
+              t`(a) $w = -2.303\,nRT\log(p_i/p_f) = -2.303 \times 1 \times 8.314 \times 300 \times \log 10 = -5744$ J.`,
               t`(b) $V_i = RT/10$ and $V_f = RT/1$ (with $p$ in bar). $w = -p_{\text{ex}}(V_f - V_i) = -1 \times RT(1 - 0.1) = -0.9RT$.`,
               t`$-0.9 \times 8.314 \times 300 = -2245$ J.`,
               "In both cases ΔU = 0, so q = −w: the reversible path absorbs more heat and does more work.",

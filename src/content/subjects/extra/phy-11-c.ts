@@ -1734,7 +1734,7 @@ With $g = 9.8$ m/s² and $R_E = 6.4 \times 10^6$ m, $v_e = \sqrt{1.254 \times 10
             type: "callout",
             tone: "note",
             title: "Board note: geostationary and polar satellites",
-            md: "The rationalised NCERT book (CBSE, Karnataka PUC) leaves out these two; **ISC** includes them and KCET / NEET sometimes ask them. A **geostationary** satellite orbits above the equator, west to east, with a period of 24 h, so it stays over one spot. Its orbit radius is about 42,200 km (height about 35,800 km). India's INSAT and GSAT communication satellites use such orbits. A **polar** satellite orbits low (roughly 500–800 km) from pole to pole; as the Earth turns beneath it, it scans the whole globe, which suits remote sensing and weather watching.",
+            md: "The rationalised NCERT book (CBSE, Karnataka PUC) leaves out these two; **ISC** includes them. The current NEET, KCET and JEE Main syllabi do not name them, but older entrance papers often asked them. A **geostationary** satellite orbits above the equator, west to east, with a period of 24 h, so it stays over one spot. Its orbit radius is about 42,200 km (height about 35,800 km). India's INSAT and GSAT communication satellites use such orbits. A **polar** satellite orbits low (roughly 500–800 km) from pole to pole; as the Earth turns beneath it, it scans the whole globe, which suits remote sensing and weather watching.",
           },
           {
             type: "checkpoint",

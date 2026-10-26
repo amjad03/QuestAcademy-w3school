@@ -404,11 +404,11 @@ State variables are of two kinds. **Extensive** variables scale with the size of
           {
             kind: "numeric",
             q: "3 mol of an ideal gas at 350 K doubles its volume isothermally. Find the work done by the gas in joules. (R = 8.314 J mol⁻¹ K⁻¹, ln 2 = 0.693)",
-            answer: 6051,
+            answer: 6050,
             tolerance: 15,
             unit: "J",
             difficulty: 2,
-            explain: t`$W = 3 \times 8.314 \times 350 \times 0.693 \approx 6051$ J.`,
+            explain: t`$W = 3 \times 8.314 \times 350 \times 0.693 \approx 6050$ J.`,
           },
           {
             kind: "numeric",
