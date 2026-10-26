@@ -1171,6 +1171,23 @@ print(longest)`,
           ],
         },
         {
+          type: "code",
+          lang: "python",
+          runnable: true,
+          caption: "Replace every vowel with * and count the replacements. Prints: B*ng*l*r* *s s*nny then 6 (y is not a vowel)",
+          code: r`city = "Bengaluru is sunny"
+result = ""
+changed = 0
+for ch in city:
+    if ch.lower() in "aeiou":
+        result += "*"
+        changed += 1
+    else:
+        result += ch
+print(result)
+print(changed)`,
+        },
+        {
           type: "callout",
           tone: "exam",
           title: "Board tip",
@@ -1758,6 +1775,22 @@ print("Even:", even, "Odd:", odd)`,
           },
         },
         {
+          type: "code",
+          lang: "python",
+          runnable: true,
+          caption: "Largest and smallest without max() and min(), and their positions. Prints: Largest 91 at index 2 / Smallest 18 at index 4",
+          code: r`L = [34, 67, 91, 25, 18, 56]
+big, small = L[0], L[0]
+bpos, spos = 0, 0
+for i in range(1, len(L)):
+    if L[i] > big:
+        big, bpos = L[i], i
+    if L[i] < small:
+        small, spos = L[i], i
+print("Largest", big, "at index", bpos)
+print("Smallest", small, "at index", spos)`,
+        },
+        {
           type: "callout",
           tone: "exam",
           title: "Board and practical tip",
@@ -2332,6 +2365,17 @@ print("Highest:", top_name, top_pay)`,
           },
         },
         {
+          type: "code",
+          lang: "python",
+          runnable: true,
+          caption: "Word frequency in a sentence. Prints: {'the': 3, 'cat': 2, 'sat': 1, 'on': 1, 'mat': 1, 'saw': 1}",
+          code: r`sentence = "the cat sat on the mat the cat saw"
+count = {}
+for word in sentence.split():
+    count[word] = count.get(word, 0) + 1
+print(count)`,
+        },
+        {
           type: "callout",
           tone: "exam",
           title: "Board tip",
@@ -2884,6 +2928,18 @@ print("Rolls:", rolls, "Sixes:", rolls.count(6))`,
             ],
             explain: "math holds constants, rounding, powers and trigonometry; random holds random number tools; statistics holds mean, median and mode.",
           },
+        },
+        {
+          type: "table",
+          headers: ["Call", "Prints", "Type"],
+          rows: [
+            ["`math.sqrt(25)`", "5.0", "float"],
+            ["`math.pow(10, 2)`", "100.0", "float"],
+            ["`math.fabs(-4)`", "4.0", "float"],
+            ["`math.ceil(4.01)` / `math.floor(4.99)`", "5 / 4", "int"],
+            ["`statistics.mean([1, 2, 3, 4])`", "2.5", "float"],
+            ["`statistics.median([3, 1, 2])`", "2", "int (a value from the data)"],
+          ],
         },
         {
           type: "callout",
@@ -3473,6 +3529,11 @@ const society: Topic = {
       xp: 45,
       blocks: [
         {
+          type: "illustration",
+          emoji: "🕵️",
+          caption: "Case-based questions turn you into a detective: read the story, name the issue, then give the remedy.",
+        },
+        {
           type: "text",
           md: "This chapter is mostly 1- and 2-mark theory plus 3- or 4-mark **case-based** questions. In a case, first name the issue (e.g. \"this is phishing\"), then say why, then give the remedy or the law.",
         },
@@ -3548,6 +3609,27 @@ const society: Topic = {
             ["Purposes of the IT Act", "Legal status of e-records and digital signatures; penalties for cyber crimes."],
             ["E-waste management", "Reduce, reuse, recycle via authorised recyclers; EPR."],
             ["Health tips", "Posture, breaks, 20-20-20 rule, screen-time limits."],
+          ],
+        },
+        {
+          type: "example",
+          title: "Choosing a licence (3 marks)",
+          problem: "Priya writes a free app for her school and wants (a) anyone to improve it, but (b) every improved version to stay free and open. Her friend Ali wants companies to be able to use his code library inside their paid products. Which licence suits each, and why?",
+          steps: [
+            "Priya needs a **copyleft** licence: modified versions must be released under the same terms. That is the **GPL**.",
+            "Ali needs a **permissive** licence that allows use in closed-source products while keeping the notices: the **Apache License**.",
+            "Creative Commons is mainly for creative content (pictures, text, music), not for program code.",
+          ],
+          answer: "Priya: GPL (copyleft). Ali: Apache (permissive).",
+        },
+        {
+          type: "list",
+          items: [
+            "**Netizen**: a responsible user of the digital society.",
+            "**Cyber troll**: a person who posts provocative comments to upset others.",
+            "**E-waste**: discarded electronic equipment; recycle it through authorised recyclers.",
+            "**CERT-In**: India's national agency for cyber security incidents.",
+            "**FOSS**: free and open source software, e.g. Linux.",
           ],
         },
         {

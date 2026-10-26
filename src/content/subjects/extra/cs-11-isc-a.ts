@@ -2797,7 +2797,622 @@ const objectsClasses: Topic = {
   ],
 };
 
-export const topics: Topic[] = [numbers, propLogic, hardware, objectsClasses];
+/* ------------------------------------------------------------------ */
+/* 5. Primitive Values, Wrapper Classes and Types                      */
+/* ------------------------------------------------------------------ */
+const primitives: Topic = {
+  slug: "c11-isc-primitive-wrapper-types",
+  title: "Primitive Values, Wrapper Classes and Types",
+  icon: "🧮",
+  description: "Java's eight primitive types with their sizes and ranges, literals of every kind, primitive and reference types, wrapper classes with autoboxing and unboxing, parse and Character methods, and type conversion: widening, casting and promotion.",
+  lessons: [
+    {
+      slug: "c11-isc-primitive-types-literals",
+      title: "Primitive Types and Literals",
+      summary: "The eight primitive data types with sizes, ranges and default values; integer, floating, character, boolean and string literals; escape sequences and Unicode; primitive versus reference types.",
+      minutes: 22,
+      xp: 50,
+      blocks: [
+        {
+          type: "text",
+          md: "A **data type** tells Java two things about a value: how much memory it needs and which operations are allowed on it. Java is **strongly typed**: every variable has a type fixed when it is declared, and the compiler checks every use.\n\nJava's types are of two kinds. **Primitive types** are the eight built-in types that hold a single simple value directly. **Reference (non-primitive) types** are classes, arrays and interfaces; their variables hold a reference to an object. `String` is a class, so it is a reference type.",
+        },
+        {
+          type: "table",
+          headers: ["Type", "Size", "Range / values", "Default"],
+          rows: [
+            ["`byte`", "8 bits", "−128 to 127", "0"],
+            ["`short`", "16 bits", "−32768 to 32767", "0"],
+            ["`int`", "32 bits", "−2147483648 to 2147483647 ($-2^{31}$ to $2^{31}-1$)", "0"],
+            ["`long`", "64 bits", "$-2^{63}$ to $2^{63}-1$", "0L"],
+            ["`float`", "32 bits", "about ±3.4 × 10³⁸, 6 to 7 significant digits", "0.0f"],
+            ["`double`", "64 bits", "about ±1.7 × 10³⁰⁸, about 15 significant digits", "0.0"],
+            ["`char`", "16 bits", "Unicode characters, codes 0 to 65535", "the null character (code 0)"],
+            ["`boolean`", "not fixed by Java", "only `true` or `false`", "false"],
+          ],
+        },
+        {
+          type: "text",
+          md: "A **literal** is a fixed value written directly in the program.\n\n- **Integer literals**: decimal `25`, octal with a leading 0 (`025` = 21), hexadecimal with `0x` (`0x25` = 37), binary with `0b` (`0b101` = 5). They are `int` by default; add `L` for `long` (`9000000000L`).\n- **Floating-point literals**: `2.5`, `1.5e3` (= 1500.0). They are `double` by default; add `f` for `float` (`2.5f`).\n- **Character literals**: one character in single quotes, `'A'`, `'7'`, or an escape sequence such as `'\\n'` (new line), `'\\t'` (tab), `'\\\\'` (backslash), `'\\''` (single quote), or a Unicode escape `'\\u0041'` (A).\n- **Boolean literals**: `true` and `false`. **String literals**: text in double quotes, `\"Java\"`. The **null literal**: `null`.",
+        },
+        {
+          type: "code",
+          lang: "java",
+          caption: "Literals.java",
+          code: `public class Literals
+{
+    public static void main(String[] args)
+    {
+        int dec = 25, oct = 025, hex = 0x25, bin = 0b101;
+        System.out.println(dec + " " + oct + " " + hex + " " + bin);
+        long big = 9000000000L;
+        float f = 2.5f;
+        double d = 1.5e3;
+        System.out.println(big + " " + f + " " + d);
+        char c = 'A';
+        System.out.println(c + 1);
+        System.out.println((char) (c + 1));
+        System.out.println('A' + 'B');
+        System.out.println("A" + 'B');
+        System.out.println(Integer.MAX_VALUE + " " + Long.MAX_VALUE);
+        System.out.println(Character.SIZE + " bits per char");
+    }
+}`,
+        },
+        {
+          type: "example",
+          title: "Trace Literals.java",
+          problem: "Give the exact output of Literals.java and explain lines 3 to 6.",
+          steps: [
+            "Line 1: 025 is octal (2×8 + 5 = 21), 0x25 is hex (2×16 + 5 = 37), 0b101 is binary (5).",
+            "Line 2: the long prints in full; 2.5f prints as 2.5; 1.5e3 is the double 1500.0.",
+            "`c + 1`: a char in arithmetic becomes its code, 'A' = 65, so it prints 66. `(char) (c + 1)` turns 66 back into 'B'.",
+            "`'A' + 'B'` is char + char, which is int addition: 65 + 66 = 131. But `\"A\" + 'B'` starts with a String, so + joins them: AB.",
+            "Integer.MAX_VALUE is $2^{31}-1$; Long.MAX_VALUE is $2^{63}-1$; a char is 16 bits.",
+          ],
+          answer: "25 21 37 5\n9000000000 2.5 1500.0\n66\nB\n131\nAB\n2147483647 9223372036854775807\n16 bits per char",
+        },
+        {
+          type: "mistake",
+          wrong: "`'A' + 'B'` prints AB, because + joins characters together.",
+          right: "+ joins only when one operand is a **String**. Two chars are numbers to Java (Unicode codes), so `'A' + 'B'` = 65 + 66 = **131**. Use `\"\" + 'A' + 'B'` or `\"A\" + 'B'` to get AB.",
+          why: "Single and double quotes look almost the same, and in everyday writing letters \"join\". In Java a char is an integral type, so arithmetic wins unless a String is involved.",
+        },
+        {
+          type: "checkpoint",
+          questions: [
+            {
+              kind: "numeric",
+              q: "What does `System.out.println(012 + 0x12);` print?",
+              answer: 28,
+              explain: "012 is octal = 10 and 0x12 is hex = 18; 10 + 18 = 28.",
+              difficulty: 2,
+            },
+          ],
+        },
+        {
+          type: "text",
+          md: "Java uses **Unicode** for `char`, so one char can hold a letter of any script: English, Devanagari, Kannada and more. That is why a char takes **16 bits** in Java, not 8 bits as in ASCII. The first 128 Unicode codes are the same as ASCII: '0' to '9' are 48 to 57, 'A' to 'Z' are 65 to 90, 'a' to 'z' are 97 to 122.",
+        },
+        {
+          type: "activity",
+          activity: {
+            kind: "match",
+            prompt: "Match each literal to its type.",
+            pairs: [
+              ["`45L`", "long"],
+              ["`3.14`", "double"],
+              ["`3.14f`", "float"],
+              ["`'9'`", "char"],
+              ["`\"9\"`", "String"],
+              ["`0x1F`", "int"],
+            ],
+            explain: "Whole-number literals are int unless they end in L; decimal literals are double unless they end in f; single quotes give a char and double quotes a String.",
+          },
+        },
+        {
+          type: "callout",
+          tone: "exam",
+          title: "ISC tip",
+          md: "Learn the sizes in **bits and bytes**: byte 1, short 2, int 4, long 8, float 4, double 8, char 2 bytes. \"Name the type of the literal\" questions often hide a suffix (`L`, `f`) or a leading 0 (octal). Write `'\\u0000'` for the default char value.",
+        },
+        {
+          type: "keypoints",
+          items: [
+            "Eight primitive types: byte, short, int, long, float, double, char, boolean.",
+            "Whole-number literals are int, decimal literals are double, by default; use L and f suffixes.",
+            "0 prefix = octal, 0x = hex, 0b = binary.",
+            "char is 16-bit Unicode; in arithmetic it acts as its code number.",
+            "Reference types (classes such as String, arrays) hold references to objects.",
+          ],
+        },
+      ],
+      flashcards: [
+        { front: "Primitive data type", back: "One of Java's 8 built-in types that holds a single value directly: byte, short, int, long, float, double, char, boolean." },
+        { front: "Reference data type", back: "A class, array or interface type; its variables store a reference to an object (e.g. String)." },
+        { front: "Size of char in Java", back: "16 bits (2 bytes), because Java uses Unicode." },
+        { front: "Range of byte", back: "−128 to 127 (8 bits, 2's complement)." },
+        { front: "Literal", back: "A constant value written directly in the code, e.g. 25, 2.5f, 'A', \"Hi\", true, null." },
+        { front: "Default type of 3.5", back: "double. Write 3.5f for a float." },
+        { front: "Octal and hex literals", back: "Leading 0 for octal (025 = 21); 0x for hex (0x25 = 37)." },
+        { front: "Codes of '0', 'A', 'a'", back: "48, 65 and 97." },
+      ],
+      quiz: [
+        {
+          kind: "mcq",
+          q: "How many bytes does a `double` occupy?",
+          options: ["8", "4", "2", "16"],
+          answer: 0,
+          explain: "double is 64 bits = 8 bytes; float is 4 bytes.",
+        },
+        {
+          kind: "mcq",
+          q: "Which declaration does NOT compile?",
+          options: ["float f = 3.5;", "long n = 35;", "double d = 3;", "char c = 65;"],
+          answer: 0,
+          explain: "3.5 is a double literal, and double cannot go into float without a cast. Write 3.5f. The others are widening or a constant char code in range.",
+          difficulty: 2,
+        },
+        {
+          kind: "numeric",
+          q: "What does `System.out.println('a' + 2);` print?",
+          answer: 99,
+          explain: "'a' is 97, and char + int is int arithmetic: 99.",
+        },
+        {
+          kind: "fill",
+          q: "The default value of a boolean instance variable is ___.",
+          answer: ["false"],
+          explain: "Numeric types default to 0, boolean to false, references to null.",
+        },
+        {
+          kind: "truefalse",
+          q: "String is one of Java's primitive data types.",
+          answer: false,
+          explain: "String is a class, so it is a reference type.",
+        },
+        {
+          kind: "mcq",
+          q: "Which is a valid character literal?",
+          options: ["'\\n'", "'AB'", "\"A\"", "'\\q'"],
+          answer: 0,
+          explain: "'\\n' is the newline escape. A char literal holds exactly one character; \"A\" is a String; \\q is not a valid escape.",
+        },
+        {
+          kind: "numeric",
+          q: "What is the decimal value of the Java literal `0b1101`?",
+          answer: 13,
+          explain: "8 + 4 + 1 = 13.",
+        },
+        {
+          kind: "multi",
+          q: "Which types can store the value 200 without a cast? (Choose all that apply)",
+          options: ["short", "int", "byte", "double"],
+          answers: [0, 1, 3],
+          explain: "byte stops at 127. short, int and double all hold 200.",
+          difficulty: 2,
+        },
+      ],
+    },
+    {
+      slug: "c11-isc-wrapper-classes-casting",
+      title: "Wrapper Classes and Type Conversion",
+      summary: "Why wrapper classes exist; autoboxing and unboxing; parseInt, parseDouble, valueOf and toString; Character class methods; implicit widening, explicit casting and promotion in expressions; overflow.",
+      minutes: 24,
+      xp: 55,
+      blocks: [
+        {
+          type: "text",
+          md: "Primitives are fast, but they are not objects. Some parts of Java (for example collections like ArrayList) can store only objects. So for every primitive type there is a **wrapper class** in `java.lang` whose object \"wraps\" one primitive value and also offers useful methods.\n\n**Autoboxing** is Java automatically converting a primitive to its wrapper object (`Integer a = 45;`). **Unboxing** is the reverse (`int b = a;`).",
+        },
+        {
+          type: "table",
+          headers: ["Primitive", "Wrapper class", "Useful methods"],
+          rows: [
+            ["byte, short", "Byte, Short", "`Byte.parseByte(s)`, `Short.parseShort(s)`"],
+            ["int", "**Integer**", "`Integer.parseInt(s)`, `Integer.valueOf(s)`, `Integer.toString(n)`, `Integer.MAX_VALUE`"],
+            ["long", "Long", "`Long.parseLong(s)`"],
+            ["float, double", "Float, **Double**", "`Float.parseFloat(s)`, `Double.parseDouble(s)`"],
+            ["char", "**Character**", "`isDigit`, `isLetter`, `isLetterOrDigit`, `isUpperCase`, `isLowerCase`, `isWhitespace`, `toUpperCase`, `toLowerCase`"],
+            ["boolean", "Boolean", "`Boolean.parseBoolean(s)`"],
+          ],
+        },
+        {
+          type: "code",
+          lang: "java",
+          caption: "Wrap.java",
+          code: `public class Wrap
+{
+    public static void main(String[] args)
+    {
+        Integer a = 45;                     // autoboxing: int -> Integer
+        int b = a + 5;                      // unboxing: Integer -> int
+        System.out.println(b);
+
+        int n = Integer.parseInt("372");
+        double x = Double.parseDouble("12.5");
+        System.out.println(n + x);
+        System.out.println("372" + "12.5");
+
+        String s = Integer.toString(98) + Double.toString(1.0);
+        System.out.println(s);
+
+        char ch = '7';
+        System.out.println(Character.isDigit(ch) + " " + Character.isLetter(ch));
+        System.out.println(Character.toUpperCase('g') + " " + Character.isUpperCase('g'));
+        System.out.println(Character.getNumericValue('7') + 1);
+        System.out.println(ch + 1);
+    }
+}`,
+        },
+        {
+          type: "example",
+          title: "Trace Wrap.java",
+          problem: "Give the output of Wrap.java.",
+          steps: [
+            "a holds 45 (boxed); `a + 5` unboxes it: 50.",
+            "parseInt and parseDouble turn the strings into numbers, so n + x = 372 + 12.5 = 384.5. Joining the two strings instead gives 37212.5.",
+            "Integer.toString(98) is \"98\" and Double.toString(1.0) is \"1.0\"; joined: 981.0.",
+            "'7' is a digit, not a letter: true false. toUpperCase('g') is 'G'; 'g' is not upper case.",
+            "getNumericValue('7') is the number 7, so 7 + 1 = 8. But `ch + 1` uses the code of '7' (55): 56.",
+          ],
+          answer: "50\n384.5\n37212.5\n981.0\ntrue false\nG false\n8\n56",
+        },
+        {
+          type: "text",
+          md: "**Type conversion.** When a value of one type is used where another is expected:\n\n- **Implicit (widening) conversion**: Java converts automatically to a type that can hold every value of the old one. The order is byte → short → int → long → float → double, and char → int. No data is lost (except that a very large long may lose precision as a float).\n- **Explicit conversion (type casting / narrowing)**: the programmer writes the target type in brackets, `(int) 9.99`. Java **truncates** the fractional part (9, not 10), and out-of-range values wrap around.\n- **Promotion in expressions**: in arithmetic, byte, short and char are first promoted to **int**; then the whole expression takes the widest type present. So `byte + byte` is an int, and `int / double` is a double.",
+        },
+        {
+          type: "code",
+          lang: "java",
+          caption: "Cast.java",
+          code: `public class Cast
+{
+    public static void main(String[] args)
+    {
+        int i = 7;
+        double d = i;                       // implicit widening
+        System.out.println(d);
+
+        double p = 9.99;
+        int q = (int) p;                    // explicit narrowing: truncates
+        System.out.println(q);
+
+        System.out.println(7 / 2);
+        System.out.println(7 / 2.0);
+        System.out.println((double) 7 / 2);
+        System.out.println((double) (7 / 2));
+
+        byte b1 = 10, b2 = 20;
+        int sum = b1 + b2;                  // byte + byte is an int
+        System.out.println(sum);
+
+        int big = Integer.MAX_VALUE;
+        System.out.println(big + 1);
+
+        char c = (char) 98;
+        System.out.println(c);
+        System.out.println((int) 'z' - (int) 'a');
+        long L = 5;
+        float F = L;
+        System.out.println(F);
+    }
+}`,
+        },
+        {
+          type: "text",
+          md: "Output, one value per line: `7.0`, `9`, `3`, `3.5`, `3.5`, `3.0`, `30`, `-2147483648`, `b`, `25`, `5.0`.\n\n`7 / 2` is int division (3). `(double) 7 / 2` casts 7 first, so the division is in double (3.5); `(double) (7 / 2)` divides first (3) and then widens it (3.0). `big + 1` goes past the int range and **overflows** to the most negative int, with no error message.",
+        },
+        {
+          type: "mistake",
+          wrong: "`(int) 9.99` rounds to 10, and `byte b = b1 + b2;` is fine because the sum 30 fits in a byte.",
+          right: "A cast to int **truncates** toward zero: `(int) 9.99` is 9 (use `Math.round` to round). And `b1 + b2` is promoted to **int**, so `byte b = b1 + b2;` is a compile-time error (\"possible lossy conversion\"); write `byte b = (byte) (b1 + b2);`.",
+          why: "In maths class, converting 9.99 to a whole number means rounding. Java instead throws away the fraction. And the compiler checks types, not values: an int expression may not go into a byte without a cast, even if this particular value happens to fit.",
+        },
+        {
+          type: "checkpoint",
+          questions: [
+            {
+              kind: "mcq",
+              q: "What is the type of `'a' + 2L * 3.0f`?",
+              options: ["float", "long", "double", "char"],
+              answer: 0,
+              explain: "char → int, then with long and float present the widest is float. No double is involved.",
+              difficulty: 2,
+            },
+          ],
+        },
+        {
+          type: "activity",
+          activity: {
+            kind: "sort",
+            prompt: "Does each statement compile without a cast?",
+            groups: ["Compiles", "Needs a cast"],
+            items: [
+              { text: "double d = 15;", group: 0, hint: "int to double is widening." },
+              { text: "long n = 'A';", group: 0, hint: "char to long is widening." },
+              { text: "int k = 4.0;", group: 1, hint: "double to int loses the fraction: narrowing." },
+              { text: "float f = 2.5;", group: 1, hint: "2.5 is a double literal; double to float is narrowing." },
+              { text: "short s = 10; s = s + 1;", group: 1, hint: "s + 1 is promoted to int." },
+              { text: "Integer w = 8;", group: 0, hint: "Autoboxing of an int literal." },
+            ],
+            explain: "Widening (to a bigger type) is automatic; narrowing needs a cast. Remember that arithmetic on byte, short and char gives an int.",
+          },
+        },
+        {
+          type: "callout",
+          tone: "exam",
+          title: "ISC tip",
+          md: "Define the terms exactly: **implicit conversion** (done by the compiler, also called coercion or widening), **explicit conversion** (type casting, done by the programmer). For \"give the output\" questions with casts, check whether the cast applies to one operand or to the whole bracket: `(double) 7 / 2` and `(double) (7 / 2)` differ.",
+        },
+        {
+          type: "keypoints",
+          items: [
+            "Each primitive has a wrapper class in java.lang (Integer, Double, Character...).",
+            "Autoboxing: primitive → object; unboxing: object → primitive.",
+            "`Integer.parseInt(\"372\")` converts a String to an int; `Integer.toString(98)` the reverse.",
+            "Widening is automatic; narrowing needs a cast, and casting to int truncates.",
+            "In expressions, byte/short/char become int, then the widest type wins.",
+          ],
+        },
+      ],
+      flashcards: [
+        { front: "Wrapper class", back: "A class in java.lang that wraps a primitive value in an object, e.g. Integer for int, Character for char." },
+        { front: "Autoboxing", back: "Automatic conversion of a primitive into its wrapper object, e.g. Integer a = 45;" },
+        { front: "Unboxing", back: "Automatic conversion of a wrapper object back to its primitive, e.g. int b = a;" },
+        { front: "Integer.parseInt(\"42\")", back: "Returns the int 42. A non-numeric string causes a NumberFormatException." },
+        { front: "Implicit type conversion", back: "Automatic widening by the compiler to a type that can hold all values: byte → short → int → long → float → double." },
+        { front: "Explicit type conversion", back: "Type casting written by the programmer, e.g. (int) 9.99, which gives 9." },
+        { front: "Type promotion", back: "In an expression, byte, short and char are converted to int, and then to the widest type present." },
+        { front: "Integer overflow", back: "Integer.MAX_VALUE + 1 wraps to Integer.MIN_VALUE (−2147483648) without any error." },
+        { front: "Character.getNumericValue('7') vs '7' + 0", back: "7 versus 55 (the Unicode code of '7')." },
+      ],
+      quiz: [
+        {
+          kind: "mcq",
+          q: "Which is the wrapper class for `char`?",
+          options: ["Character", "Char", "String", "Integer"],
+          answer: 0,
+          explain: "The wrappers are Byte, Short, Integer, Long, Float, Double, Character and Boolean.",
+        },
+        {
+          kind: "numeric",
+          q: "What does `System.out.println((int) 7.8 + (int) 2.6);` print?",
+          answer: 9,
+          explain: "Each cast truncates: 7 + 2 = 9.",
+        },
+        {
+          kind: "fill",
+          q: "Converting an int into an Integer object automatically is called ___.",
+          answer: ["autoboxing", "boxing", "auto-boxing"],
+          explain: "The reverse is unboxing.",
+        },
+        {
+          kind: "mcq",
+          q: "Output of `System.out.println(Integer.parseInt(\"12\") + \"3\");`?",
+          options: ["123", "15", "12 3", "Error"],
+          answer: 0,
+          explain: "parseInt gives the int 12, but + with the String \"3\" joins: 123.",
+          difficulty: 2,
+        },
+        {
+          kind: "truefalse",
+          q: "`Character.isLetterOrDigit('_')` returns true.",
+          answer: false,
+          explain: "An underscore is neither a letter nor a digit.",
+        },
+        {
+          kind: "numeric",
+          q: "What does `System.out.println(5 / 2 * 2.0);` print? (Give the number.)",
+          answer: 4,
+          explain: "Left to right: 5 / 2 is int division = 2; then 2 * 2.0 = 4.0.",
+          difficulty: 2,
+        },
+        {
+          kind: "mcq",
+          q: "What is printed by `byte b = (byte) 130; System.out.println(b);`?",
+          options: ["-126", "130", "127", "2"],
+          answer: 0,
+          explain: "130 does not fit in a byte, so it wraps: 130 − 256 = −126.",
+          difficulty: 3,
+        },
+        {
+          kind: "multi",
+          q: "Which are widening conversions (no cast needed)? (Choose all that apply)",
+          options: ["int → long", "char → int", "float → double", "double → int"],
+          answers: [0, 1, 2],
+          explain: "double → int is narrowing and needs a cast.",
+        },
+      ],
+    },
+    {
+      slug: "c11-isc-primitive-types-board-practice",
+      title: "Board Practice: Primitive Values, Wrapper Classes and Types",
+      summary: "Mixed ISC-style questions on types, literals, wrapper methods and casting, with an output question and a program that sorts the characters of a vehicle number.",
+      minutes: 20,
+      xp: 55,
+      blocks: [
+        {
+          type: "text",
+          md: "This chapter is a favourite for short answers: \"name the type\", \"give the output\", \"what is the value after the cast\", and \"state the difference\". Practise each kind below.",
+        },
+        {
+          type: "example",
+          title: "Output question with mixed types",
+          problem: "Give the output: `char ch = 'D'; int k = ch + 3; System.out.println(k); System.out.println((char) k); System.out.println(ch + \"\" + 3); System.out.println(Character.toLowerCase(ch));`",
+          steps: [
+            "'D' is 68, so k = 71.",
+            "(char) 71 is 'G'.",
+            "`ch + \"\"` is the String \"D\", then + 3 joins: \"D3\".",
+            "toLowerCase('D') is 'd'.",
+          ],
+          answer: "71\nG\nD3\nd",
+        },
+        {
+          type: "example",
+          title: "Difference questions",
+          problem: "State two differences between primitive types and wrapper classes.",
+          steps: [
+            "A primitive variable holds the value itself; a wrapper variable holds a reference to an object that contains the value.",
+            "Primitives have no methods; wrapper classes provide methods and constants such as parseInt() and MAX_VALUE.",
+            "A wrapper reference can be null; a primitive cannot (an int field defaults to 0).",
+          ],
+          answer: "Value vs object reference; no methods vs useful methods (any two, with an example each).",
+        },
+        {
+          type: "mistake",
+          wrong: "To change the digit character '7' into the number 7, I write `(int) '7'`.",
+          right: "`(int) '7'` gives **55**, the Unicode code. Use `'7' - '0'` (55 − 48 = 7) or `Character.getNumericValue('7')`.",
+          why: "Casting \"looks\" like converting to a number, and for a digit you expect its face value. But a char is stored as its code, and the cast just shows that code.",
+        },
+        {
+          type: "checkpoint",
+          questions: [
+            {
+              kind: "numeric",
+              q: "Value of `'9' - '0' + 1`?",
+              answer: 10,
+              explain: "57 − 48 = 9, plus 1 = 10.",
+            },
+          ],
+        },
+        {
+          type: "code",
+          lang: "java",
+          caption: "Convert.java: write a program to count the letters and digits in a vehicle number and add its digits",
+          code: `public class Convert
+{
+    public static void main(String[] args)
+    {
+        String code = "KA05MX2025";
+        int letters = 0, digits = 0, sum = 0;
+        for (int i = 0; i < code.length(); i++)
+        {
+            char ch = code.charAt(i);
+            if (Character.isLetter(ch))
+                letters++;
+            else if (Character.isDigit(ch))
+            {
+                digits++;
+                sum = sum + (ch - '0');
+            }
+        }
+        System.out.println("Letters = " + letters);
+        System.out.println("Digits = " + digits);
+        System.out.println("Sum of digits = " + sum);
+        int year = Integer.parseInt(code.substring(6));
+        System.out.println("Year + 1 = " + (year + 1));
+    }
+}`,
+        },
+        {
+          type: "example",
+          title: "Trace Convert.java",
+          problem: "Give the output of Convert.java.",
+          steps: [
+            "Letters: K, A, M, X = 4. Digits: 0, 5, 2, 0, 2, 5 = 6.",
+            "`ch - '0'` turns each digit character into its value: 0 + 5 + 2 + 0 + 2 + 5 = 14.",
+            "`code.substring(6)` is \"2025\" (positions start at 0). parseInt makes it the int 2025, and + 1 gives 2026.",
+          ],
+          answer: "Letters = 4\nDigits = 6\nSum of digits = 14\nYear + 1 = 2026",
+        },
+        {
+          type: "activity",
+          activity: {
+            kind: "reveal",
+            prompt: "What does `System.out.println(\"Sum: \" + 2 + 3);` print?",
+            emoji: "➕",
+            options: ["Sum: 23", "Sum: 5", "Sum: 2 3", "Error"],
+            answer: 0,
+            trap: 1,
+            explain: "+ works left to right. \"Sum: \" + 2 is a String, so + 3 joins again. Write \"Sum: \" + (2 + 3) to get Sum: 5.",
+          },
+        },
+        {
+          type: "callout",
+          tone: "tip",
+          title: "Practical-exam tip",
+          md: "When you read numbers from the user as text, convert them with `Integer.parseInt` or `Double.parseDouble`. If the text is not a number, Java throws a NumberFormatException, so test with sensible input. Use `Character` methods rather than comparing with codes; they are clearer to the examiner.",
+        },
+        {
+          type: "callout",
+          tone: "exam",
+          title: "ISC tip",
+          md: "In output questions, underline every place where a String meets + : from that point on, + joins. Before it, + adds. Write the type of each intermediate result in rough work.",
+        },
+        {
+          type: "keypoints",
+          items: [
+            "char arithmetic uses codes: '0' = 48, 'A' = 65, 'a' = 97.",
+            "Digit character to number: `ch - '0'` or Character.getNumericValue(ch).",
+            "String to number: Integer.parseInt / Double.parseDouble.",
+            "Once a String appears in a + chain, everything after it is joined.",
+          ],
+        },
+      ],
+      flashcards: [
+        { front: "'D' + 3", back: "71 (an int). (char) 71 is 'G'." },
+        { front: "ch - '0' for ch = '6'", back: "6: the face value of a digit character." },
+        { front: "\"Sum: \" + 2 + 3", back: "Sum: 23 (joined left to right)." },
+        { front: "substring(6) of \"KA05MX2025\"", back: "\"2025\" (from index 6 to the end)." },
+        { front: "Primitive vs wrapper", back: "Primitive holds a value and has no methods; a wrapper object holds the value and offers methods; a wrapper reference can be null." },
+        { front: "NumberFormatException", back: "Thrown by parseInt / parseDouble when the String is not a valid number." },
+      ],
+      quiz: [
+        {
+          kind: "mcq",
+          q: "Output of `System.out.println(1 + 2 + \"3\" + 4 + 5);`?",
+          options: ["3345", "12345", "339", "15"],
+          answer: 0,
+          explain: "1 + 2 = 3 (both ints), then \"3\" joins: \"33\", then \"334\", then \"3345\".",
+          difficulty: 2,
+        },
+        {
+          kind: "numeric",
+          q: "What does `System.out.println((int) 'C' + 1);` print?",
+          answer: 68,
+          explain: "'C' is 67; 67 + 1 = 68.",
+        },
+        {
+          kind: "truefalse",
+          q: "`Integer.parseInt(\"12.5\")` returns 12.",
+          answer: false,
+          explain: "\"12.5\" is not a valid int, so it throws a NumberFormatException. Use Double.parseDouble.",
+          difficulty: 2,
+        },
+        {
+          kind: "fill",
+          q: "The wrapper class method that converts the String \"3.75\" into a double is Double.___(\"3.75\").",
+          answer: ["parseDouble", "valueOf"],
+          explain: "parseDouble returns a double; valueOf returns a Double object (which unboxes automatically).",
+        },
+        {
+          kind: "mcq",
+          q: "What is the value of `Character.isUpperCase(Character.toUpperCase('k'))`?",
+          options: ["true", "false", "'K'", "75"],
+          answer: 0,
+          explain: "toUpperCase('k') is 'K', which is upper case.",
+        },
+        {
+          kind: "mcq",
+          q: "Which statement correctly stores the sum of two shorts a and b in a short c?",
+          options: ["c = (short) (a + b);", "c = a + b;", "c = (short) a + b;", "c = short(a + b);"],
+          answer: 0,
+          explain: "a + b is an int, so the whole sum must be cast. In option 3 only a is cast, and the sum is still int.",
+          difficulty: 2,
+        },
+        {
+          kind: "numeric",
+          q: "For the string \"MH12AB3456\", what is the sum of its digits?",
+          answer: 21,
+          explain: "1 + 2 + 3 + 4 + 5 + 6 = 21.",
+        },
+      ],
+    },
+  ],
+};
+
+export const topics: Topic[] = [numbers, propLogic, hardware, objectsClasses, primitives];
 
 /** Chapter title ("11:" / "12:" + exact title) → topic slug(s) that teach it. */
 export const links: Record<string, string | string[]> = {
@@ -2805,4 +3420,5 @@ export const links: Record<string, string | string[]> = {
   "11:Propositional Logic": "c11-isc-propositional-logic",
   "11:Computer Hardware": "c11-isc-computer-hardware",
   "11:Objects and Classes": "c11-isc-objects-classes",
+  "11:Primitive Values, Wrapper Classes and Types": "c11-isc-primitive-wrapper-types",
 };

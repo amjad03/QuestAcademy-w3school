@@ -1736,9 +1736,835 @@ const bioClass: Topic = {
   ],
 };
 
-export const topics: Topic[] = [livingWorld, bioClass];
+/* ------------------------------------------------------------------ */
+/* Plant Kingdom                                                       */
+/* ------------------------------------------------------------------ */
+const plantKingdom: Topic = {
+  slug: "c11-plant-kingdom",
+  title: "Plant Kingdom",
+  icon: "🌱",
+  description:
+    "Systems of classification, algae and their three classes, bryophytes, pteridophytes, gymnosperms and angiosperms, and the haplontic, diplontic and haplo-diplontic life cycles.",
+  lessons: [
+    /* ---------------- Lesson 1: classification systems and algae ---------------- */
+    {
+      slug: "c11-classification-systems-algae",
+      title: "Systems of Classification and Algae",
+      summary:
+        "Artificial, natural and phylogenetic systems, numerical, cyto- and chemotaxonomy, the general features and uses of algae, and Chlorophyceae, Phaeophyceae and Rhodophyceae.",
+      minutes: 22,
+      xp: 55,
+      blocks: [
+        {
+          type: "text",
+          md: "The jelly in a dessert is set with **agar** from a red seaweed. Ice-cream stays smooth thanks to algal gums. Astronauts have tested *Chlorella* tablets as a protein supplement. Seaweeds are collected along the coasts of Tamil Nadu and Gujarat. These useful plants are **algae**, the simplest members of kingdom Plantae.",
+        },
+        {
+          type: "table",
+          headers: ["System", "Based on", "Note"],
+          rows: [
+            ["Artificial (e.g. Linnaeus)", "A few superficial characters: habit, colour, number and shape of leaves, or mainly the **androecium**", "Gave equal weight to vegetative and sexual characters; vegetative characters are easily affected by environment"],
+            ["Natural (e.g. Bentham and Hooker, for flowering plants)", "Natural affinities: external features plus **ultrastructure, anatomy, embryology and phytochemistry**", "Groups plants that are really similar"],
+            ["Phylogenetic", "**Evolutionary relationships**; assumes members of a taxon share a common ancestor", "Current systems"],
+          ],
+        },
+        {
+          type: "text",
+          md: "Newer tools help resolve difficulties:\n\n- **Numerical taxonomy**: computers handle all observable characters, each given a number and code and **equal importance**; hundreds of characters can be compared at a time.\n- **Cytotaxonomy**: cytological information such as **chromosome number, structure and behaviour**.\n- **Chemotaxonomy**: the **chemical constituents** of the plant.",
+        },
+        {
+          type: "heading",
+          text: "Algae: general features",
+        },
+        {
+          type: "text",
+          md: "Algae are **chlorophyll-bearing, simple, thalloid, autotrophic** and **largely aquatic** (fresh water and marine). They also grow on moist stones, soil and wood, with fungi in lichens, and on animals (e.g. on the sloth bear). They range from **colonial** *Volvox* and **filamentous** *Ulothrix* and *Spirogyra* to massive marine **kelps**.\n\nReproduction: **vegetative** by fragmentation; **asexual** by spores, most often flagellated **zoospores**; **sexual** by fusion of gametes.",
+        },
+        {
+          type: "table",
+          headers: ["Type of sexual reproduction", "Gametes", "Example"],
+          rows: [
+            ["Isogamous (flagellated)", "Similar in size, both flagellated", "*Ulothrix*"],
+            ["Isogamous (non-flagellated)", "Similar in size, both non-motile", "*Spirogyra*"],
+            ["Anisogamous", "Dissimilar in size", "*Eudorina*"],
+            ["Oogamous", "Large non-motile female + small motile male", "*Volvox*, *Fucus*"],
+          ],
+        },
+        {
+          type: "text",
+          md: "**Uses**: algae do at least **half of all CO2 fixation** on Earth, raise dissolved oxygen and are **primary producers**. About 70 marine species, including *Porphyra*, *Laminaria* and *Sargassum*, are eaten. Brown algae give **algin** and red algae give **carrageen** (hydrocolloids). **Agar** from *Gelidium* and *Gracilaria* is used to grow microbes and in ice-creams and jellies. Protein-rich *Chlorella* is a food supplement.",
+        },
+        {
+          type: "table",
+          headers: ["Class", "Common name", "Major pigments", "Stored food", "Cell wall", "Flagella", "Habitat"],
+          rows: [
+            ["Chlorophyceae", "Green algae", "Chlorophyll a, b", "Starch", "Cellulose", "2–8, equal, apical", "Fresh, brackish and salt water"],
+            ["Phaeophyceae", "Brown algae", "Chlorophyll a, c, fucoxanthin", "Mannitol, laminarin", "Cellulose and algin", "2, unequal, lateral", "Fresh water (rare), brackish, salt water"],
+            ["Rhodophyceae", "Red algae", "Chlorophyll a, d, phycoerythrin", "Floridean starch", "Cellulose, pectin and polysulphate esters", "Absent", "Fresh water (some), brackish, salt water (most)"],
+          ],
+        },
+        {
+          type: "text",
+          md: "**Green algae**: chloroplasts may be discoid, plate-like, reticulate, cup-shaped, spiral or ribbon-shaped; most have **pyrenoids** (protein + starch); wall has inner cellulose and outer pectose. *Chlamydomonas, Volvox, Ulothrix, Spirogyra, Chara*.\n\n**Brown algae**: mostly marine; from filamentous *Ectocarpus* to kelps up to **100 m**; olive green to brown by the amount of **fucoxanthin**; body has a **holdfast**, a stalk (**stipe**) and leaf-like **frond**; zoospores **pear-shaped with two unequal lateral flagella**. *Ectocarpus, Dictyota, Laminaria, Sargassum, Fucus*.\n\n**Red algae**: **r-phycoerythrin**; mostly marine in warm areas, both near the surface and at great depths; **floridean starch** (like amylopectin and glycogen); non-motile spores and gametes; oogamous with complex post-fertilisation development. *Polysiphonia, Porphyra, Gracilaria, Gelidium*.",
+        },
+        {
+          type: "example",
+          title: "Identify the class",
+          problem: "A marine alga is olive-brown, stores mannitol, has a holdfast, stipe and frond, and its zoospores bear two unequal lateral flagella. Name its class and give two examples.",
+          steps: [
+            "Brown colour from fucoxanthin; food stored as mannitol or laminarin → Phaeophyceae.",
+            "Holdfast, stipe and frond are typical of large brown algae (kelps).",
+            "Two unequal lateral flagella on pear-shaped zoospores confirm brown algae.",
+          ],
+          answer: "Phaeophyceae (brown algae), e.g. *Laminaria*, *Sargassum*, *Fucus*.",
+        },
+        {
+          type: "activity",
+          activity: {
+            kind: "sort",
+            prompt: "Sort each alga into its class.",
+            groups: ["Chlorophyceae", "Phaeophyceae", "Rhodophyceae"],
+            items: [
+              { text: "Chlamydomonas", group: 0, hint: "Unicellular green alga." },
+              { text: "Spirogyra", group: 0, hint: "Ribbon-shaped spiral chloroplasts." },
+              { text: "Chara", group: 0, hint: "A green alga." },
+              { text: "Ectocarpus", group: 1, hint: "Simple branched filamentous brown alga." },
+              { text: "Laminaria", group: 1, hint: "A kelp." },
+              { text: "Polysiphonia", group: 2, hint: "Red alga." },
+              { text: "Gelidium", group: 2, hint: "Source of agar." },
+              { text: "Porphyra", group: 2, hint: "Edible red alga." },
+            ],
+            explain: "Green: Chlamydomonas, Volvox, Ulothrix, Spirogyra, Chara. Brown: Ectocarpus, Dictyota, Laminaria, Sargassum, Fucus. Red: Polysiphonia, Porphyra, Gracilaria, Gelidium.",
+          },
+        },
+        {
+          type: "checkpoint",
+          questions: [
+            {
+              kind: "mcq",
+              q: "Floridean starch is the stored food of:",
+              options: ["Green algae", "Brown algae", "Red algae", "Blue-green algae"],
+              answer: 2,
+              explain: "Red algae store floridean starch, similar to amylopectin and glycogen.",
+            },
+          ],
+        },
+        {
+          type: "mistake",
+          wrong: "Spirogyra is anisogamous because only one gamete moves to the other.",
+          right: "Spirogyra is isogamous: its gametes are non-flagellated and similar in size.",
+          why: "In Spirogyra one gamete crawls through a tube to the other, which looks like 'male and female'. But isogamy and anisogamy are about size, and both gametes are the same size.",
+        },
+        {
+          type: "callout",
+          tone: "exam",
+          title: "Board tip",
+          md: "Reproduce Table 3.1 (pigments, food, wall, flagella, habitat) for a 5-mark comparison. For 'economic importance of algae' write any four: CO2 fixation, food (Porphyra, Laminaria, Sargassum), algin / carrageen, agar (Gelidium, Gracilaria), Chlorella.",
+        },
+        {
+          type: "keypoints",
+          items: [
+            "Artificial (few characters, Linnaeus) → natural (Bentham and Hooker) → phylogenetic (evolution). Numerical, cyto- and chemotaxonomy help.",
+            "Algal sex: isogamous (Ulothrix flagellated, Spirogyra non-flagellated), anisogamous (Eudorina), oogamous (Volvox, Fucus).",
+            "Green: chl a, b, starch, pyrenoids. Brown: chl a, c, fucoxanthin, mannitol/laminarin, algin. Red: chl a, d, phycoerythrin, floridean starch.",
+            "Agar from Gelidium and Gracilaria; algin from brown, carrageen from red algae.",
+          ],
+        },
+      ],
+      flashcards: [
+        { front: "Basis of Linnaeus's artificial system", back: "A few characters, mainly the androecium." },
+        { front: "Numerical taxonomy", back: "Computer-based; all observable characters given numbers and codes, each of equal importance." },
+        { front: "Chemotaxonomy", back: "Uses chemical constituents of plants to resolve classification." },
+        { front: "Oogamous algae in NCERT", back: "*Volvox* and *Fucus*." },
+        { front: "Anisogamous alga", back: "*Eudorina*." },
+        { front: "Pyrenoids", back: "Storage bodies in chloroplasts of green algae, containing protein and starch." },
+        { front: "Sources of agar", back: "*Gelidium* and *Gracilaria* (red algae)." },
+        { front: "Parts of a large brown alga", back: "Holdfast, stipe and frond." },
+      ],
+      quiz: [
+        {
+          kind: "mcq",
+          q: "Chlorophyll d is found in:",
+          options: ["Chlorophyceae", "Phaeophyceae", "Rhodophyceae", "All three classes"],
+          answer: 2,
+          explain: "Red algae have chlorophyll a and d plus phycoerythrin.",
+        },
+        {
+          kind: "mcq",
+          q: "Brown algae vary in colour from olive green to brown depending on the amount of:",
+          options: ["Phycoerythrin", "Fucoxanthin", "Chlorophyll b", "Carrageen"],
+          answer: 1,
+          explain: "The xanthophyll fucoxanthin gives the brown colour.",
+        },
+        {
+          kind: "truefalse",
+          q: "Red algae have no flagellated stages.",
+          answer: true,
+          explain: "Rhodophyceae have non-motile spores and gametes; flagella are absent.",
+        },
+        {
+          kind: "fill",
+          q: "The natural system of classification for flowering plants was given by George Bentham and Joseph Dalton ___.",
+          answer: ["Hooker"],
+          explain: "Bentham and Hooker's system used natural affinities.",
+        },
+        {
+          kind: "multi",
+          q: "Which are uses of algae given in NCERT?",
+          options: ["Agar for culturing microbes", "Algin from brown algae", "Chlorella as a protein supplement", "Penicillin production"],
+          answers: [0, 1, 2],
+          explain: "Penicillin comes from the fungus *Penicillium*.",
+        },
+        {
+          kind: "mcq",
+          q: "The flagella of Chlorophyceae are:",
+          options: ["2, unequal, lateral", "2–8, equal, apical", "Absent", "1, posterior"],
+          answer: 1,
+          explain: "Green algae have 2–8 equal apical flagella; brown algae have 2 unequal lateral flagella.",
+        },
+        {
+          kind: "mcq",
+          q: "Classification using chromosome number, structure and behaviour is:",
+          options: ["Numerical taxonomy", "Cytotaxonomy", "Chemotaxonomy", "Artificial system"],
+          answer: 1,
+          explain: "Cytotaxonomy uses cytological information.",
+        },
+        {
+          kind: "mcq",
+          q: "Why are red algae able to live at great depths?",
+          options: [
+            "They store floridean starch",
+            "Phycoerythrin lets them use the little light that reaches deep water",
+            "They have no cell wall",
+            "They are heterotrophic",
+          ],
+          answer: 1,
+          explain: "Red pigments absorb the blue-green light that penetrates deepest, so red algae can photosynthesise where little light reaches.",
+          difficulty: 2,
+        },
+      ],
+    },
+
+    /* ---------------- Lesson 2: bryophytes and pteridophytes ---------------- */
+    {
+      slug: "c11-bryophytes-pteridophytes",
+      title: "Bryophytes and Pteridophytes",
+      summary:
+        "Amphibians of the plant kingdom: liverworts and mosses; the first vascular plants: the four classes of pteridophytes, homospory and heterospory.",
+      minutes: 22,
+      xp: 55,
+      blocks: [
+        {
+          type: "text",
+          md: "During the monsoon in Kodagu, old walls and tree trunks turn green and velvety with **mosses**. A little higher up, on shaded slopes, **ferns** unroll their curled young leaves. Both need water to complete sexual reproduction, but they are built very differently.",
+        },
+        {
+          type: "text",
+          md: "**Bryophytes** are called the **amphibians of the plant kingdom**: they live on land but need water for sexual reproduction. They grow in damp, humid, shaded places. The plant body is a thallus, prostrate or erect, attached by **rhizoids**; it has **no true roots, stems or leaves**.\n\nThe main plant body is **haploid** and makes gametes, so it is the **gametophyte**. Sex organs are **multicellular**: the **antheridium** makes **biflagellate antherozoids**; the flask-shaped **archegonium** makes a single egg. Antherozoids swim in water to the archegonium. The **zygote does not undergo meiosis at once**: it grows into a multicellular **sporophyte** that stays **attached to the gametophyte** and depends on it for food. Some sporophyte cells undergo **meiosis** to form haploid **spores**, which germinate into new gametophytes.",
+        },
+        {
+          type: "list",
+          items: [
+            "Some mosses are food for herbaceous mammals and birds.",
+            "*Sphagnum* gives **peat**, used as fuel and as packing material for living material because it **holds water**.",
+            "Mosses, with **lichens**, are the **first organisms to colonise rocks**; they help break rocks into soil (plant succession).",
+            "Moss mats reduce the impact of falling rain and **prevent soil erosion**.",
+          ],
+        },
+        {
+          type: "table",
+          headers: ["Feature", "Liverworts", "Mosses"],
+          rows: [
+            ["Plant body", "Thalloid, dorsiventral, pressed to the substrate (e.g. *Marchantia*); leafy members have leaf-like appendages in two rows", "Gametophyte in two stages: **protonema** (creeping, green, branched, filamentous, from the spore) and **leafy stage** (upright axes with spirally arranged leaves, from a lateral bud on the secondary protonema)"],
+            ["Rhizoids", "Present", "Multicellular and branched"],
+            ["Asexual / vegetative", "Fragmentation; **gemmae** (green, multicellular buds in **gemma cups**)", "Fragmentation and budding in the secondary protonema"],
+            ["Sex organs", "On the same or different thalli", "At the apex of the leafy shoots"],
+            ["Sporophyte", "Foot, seta, capsule", "Foot, seta, capsule; more elaborate; elaborate spore dispersal"],
+            ["Examples", "*Marchantia*", "*Funaria*, *Polytrichum*, *Sphagnum*"],
+          ],
+        },
+        {
+          type: "heading",
+          text: "Pteridophytes: the first vascular plants",
+        },
+        {
+          type: "text",
+          md: "Pteridophytes (horsetails and ferns) are the **first terrestrial plants with vascular tissues, xylem and phloem**. They are used as medicines, soil-binders and ornamentals. They grow in cool, damp, shady places, though some live in sandy soil.\n\nThe main plant is the **sporophyte**, with **true roots, stem and leaves**. Leaves may be small **microphylls** (*Selaginella*) or large **macrophylls** (ferns). **Sporangia** are borne on leaf-like **sporophylls**, which may form compact **strobili** or cones (*Selaginella*, *Equisetum*). Spores (formed by meiosis) grow into a small, multicellular, free-living, mostly photosynthetic thalloid gametophyte, the **prothallus**, which bears antheridia and archegonia. **Water** carries the antherozoids to the archegonium. The zygote grows into the dominant sporophyte.",
+        },
+        {
+          type: "table",
+          headers: ["Class", "Examples"],
+          rows: [
+            ["Psilopsida", "*Psilotum*"],
+            ["Lycopsida", "*Selaginella*, *Lycopodium*"],
+            ["Sphenopsida", "*Equisetum* (horsetail)"],
+            ["Pteropsida", "*Dryopteris*, *Pteris*, *Adiantum* (ferns)"],
+          ],
+        },
+        {
+          type: "text",
+          md: "Most pteridophytes are **homosporous** (one kind of spore). *Selaginella* and *Salvinia* are **heterosporous**: they form large **megaspores** and small **microspores**, which grow into female and male gametophytes. The female gametophyte is retained on the parent sporophyte for a while, and the zygote develops into a young embryo inside it. This is a **precursor to the seed habit**, an important step in evolution.\n\nBecause the prothallus needs cool, damp, shady places and fertilisation needs water, living pteridophytes are restricted to narrow geographical regions.",
+        },
+        {
+          type: "example",
+          title: "Ploidy across a life cycle",
+          problem: "Give the ploidy of: (a) moss protonema, (b) moss capsule wall, (c) fern prothallus, (d) fern leaf, (e) spore of either plant.",
+          steps: [
+            "Gametophyte structures are haploid: protonema (moss) and prothallus (fern) → n.",
+            "Sporophyte structures are diploid: moss capsule (part of foot–seta–capsule) and fern leaf → 2n.",
+            "Spores are formed by meiosis in the sporophyte → n.",
+          ],
+          answer: "(a) n, (b) 2n, (c) n, (d) 2n, (e) n.",
+        },
+        {
+          type: "activity",
+          activity: {
+            kind: "order",
+            prompt: "Put the moss life cycle in order, starting from the spore.",
+            items: ["Spore", "Protonema", "Leafy gametophyte", "Antheridia and archegonia", "Zygote", "Sporophyte (foot, seta, capsule)"],
+            explain: "Spore → protonema → leafy stage with sex organs → fertilisation → zygote → sporophyte on the gametophyte → meiosis in capsule → spores again.",
+          },
+        },
+        {
+          type: "checkpoint",
+          questions: [
+            {
+              kind: "mcq",
+              q: "Which pteridophyte is heterosporous?",
+              options: ["*Dryopteris*", "*Selaginella*", "*Pteris*", "*Adiantum*"],
+              answer: 1,
+              explain: "*Selaginella* and *Salvinia* are the heterosporous examples in NCERT.",
+            },
+            {
+              kind: "truefalse",
+              q: "In bryophytes the sporophyte is free-living.",
+              answer: false,
+              explain: "The bryophyte sporophyte stays attached to the gametophyte and depends on it for nourishment.",
+            },
+          ],
+        },
+        {
+          type: "mistake",
+          wrong: "The green leafy moss plant is the sporophyte, as in ferns.",
+          right: "The leafy moss plant is the haploid gametophyte; the sporophyte is only the foot, seta and capsule on top.",
+          why: "In ferns and flowering plants the visible plant is the sporophyte, so students assume the same for mosses. In bryophytes the gametophyte is dominant; in pteridophytes the sporophyte is.",
+        },
+        {
+          type: "callout",
+          tone: "exam",
+          title: "Board tip",
+          md: "Distinguish bryophytes and pteridophytes on: dominant phase (gametophyte vs sporophyte), vascular tissue (absent vs present), true roots (absent vs present), sporophyte (dependent vs independent). Always name *Sphagnum* for peat and *Selaginella* / *Salvinia* for heterospory.",
+        },
+        {
+          type: "keypoints",
+          items: [
+            "Bryophytes: amphibians of the plant kingdom; haploid gametophyte dominant; sporophyte dependent; biflagellate antherozoids need water.",
+            "Liverworts: Marchantia, gemmae in gemma cups. Mosses: protonema + leafy stage; Funaria, Polytrichum, Sphagnum (peat).",
+            "Pteridophytes: first vascular land plants; sporophyte dominant; gametophyte = prothallus.",
+            "Classes: Psilopsida, Lycopsida, Sphenopsida, Pteropsida. Heterospory in Selaginella and Salvinia → precursor to seed habit.",
+          ],
+        },
+      ],
+      flashcards: [
+        { front: "Why are bryophytes called amphibians of the plant kingdom?", back: "They live on land but need water for sexual reproduction." },
+        { front: "Gemmae", back: "Green multicellular asexual buds in gemma cups of liverworts like *Marchantia*." },
+        { front: "Two stages of the moss gametophyte", back: "Protonema (from spore) and leafy stage (from secondary protonema bud)." },
+        { front: "Parts of a bryophyte sporophyte", back: "Foot, seta and capsule." },
+        { front: "Use of *Sphagnum*", back: "Peat for fuel; packing material for living things as it holds water." },
+        { front: "Prothallus", back: "Small, free-living, mostly photosynthetic gametophyte of pteridophytes." },
+        { front: "Heterosporous pteridophytes", back: "*Selaginella* and *Salvinia*." },
+        { front: "Class of *Equisetum*", back: "Sphenopsida (horsetails)." },
+      ],
+      quiz: [
+        {
+          kind: "mcq",
+          q: "The first terrestrial plants to possess vascular tissues were:",
+          options: ["Bryophytes", "Pteridophytes", "Gymnosperms", "Algae"],
+          answer: 1,
+          explain: "Pteridophytes are the first land plants with xylem and phloem.",
+        },
+        {
+          kind: "mcq",
+          q: "In mosses, the leafy stage develops from:",
+          options: ["The spore directly", "The secondary protonema as a lateral bud", "The capsule", "The gemma cup"],
+          answer: 1,
+          explain: "The spore gives the protonema; the leafy stage arises as a lateral bud on the secondary protonema.",
+        },
+        {
+          kind: "fill",
+          q: "The male sex organ of bryophytes is the ___.",
+          answer: ["antheridium", "antheridia"],
+          explain: "The antheridium produces biflagellate antherozoids; the archegonium produces one egg.",
+        },
+        {
+          kind: "mcq",
+          q: "*Lycopodium* belongs to:",
+          options: ["Psilopsida", "Lycopsida", "Sphenopsida", "Pteropsida"],
+          answer: 1,
+          explain: "Lycopsida includes *Selaginella* and *Lycopodium*.",
+        },
+        {
+          kind: "truefalse",
+          q: "In pteridophytes, spores are produced by meiosis in spore mother cells.",
+          answer: true,
+          explain: "Sporangia produce haploid spores by meiosis.",
+        },
+        {
+          kind: "multi",
+          q: "Which are features of bryophytes?",
+          options: ["Rhizoids", "Multicellular sex organs", "True roots", "Dependent sporophyte", "Xylem and phloem"],
+          answers: [0, 1, 3],
+          explain: "Bryophytes lack true roots and vascular tissue.",
+        },
+        {
+          kind: "mcq",
+          q: "Which feature of heterosporous pteridophytes is called a precursor to the seed habit?",
+          options: [
+            "Formation of microphylls",
+            "Retention of the female gametophyte on the sporophyte and early embryo development inside it",
+            "Presence of strobili",
+            "Free-living prothallus",
+          ],
+          answer: 1,
+          explain: "Keeping the female gametophyte and developing the embryo on the parent foreshadows the seed.",
+          difficulty: 2,
+        },
+        {
+          kind: "mcq",
+          q: "Why are living pteridophytes restricted to narrow geographical regions?",
+          options: [
+            "They lack vascular tissue",
+            "The gametophyte needs cool, damp, shady places and fertilisation needs water",
+            "They produce no spores",
+            "They are all parasitic",
+          ],
+          answer: 1,
+          explain: "These two needs restrict their spread.",
+          difficulty: 2,
+        },
+      ],
+    },
+
+    /* ---------------- Lesson 3: gymnosperms, angiosperms, life cycles ---------------- */
+    {
+      slug: "c11-gymnosperms-angiosperms-life-cycles",
+      title: "Gymnosperms, Angiosperms and Plant Life Cycles",
+      summary:
+        "Naked-seeded gymnosperms (Cycas, Pinus), flowering plants, and the haplontic, diplontic and haplo-diplontic patterns of alternation of generations.",
+      minutes: 22,
+      xp: 55,
+      blocks: [
+        {
+          type: "text",
+          md: "A *Cycas* in a park looks like a small palm. Pine cones litter the paths of Shimla. On a pond, tiny green dots of *Wolffia* float, while a *Eucalyptus* tree towers over the road. All are **seed plants**, but only some hide their seeds inside fruits.",
+        },
+        {
+          type: "text",
+          md: "**Gymnosperms** (*gymnos*: naked, *sperma*: seed) have **ovules not enclosed by an ovary wall**, both before and after fertilisation, so the seeds are **naked**. They are medium or tall trees and shrubs; the giant redwood ***Sequoia*** is one of the tallest tree species.",
+        },
+        {
+          type: "list",
+          items: [
+            "**Roots**: generally tap roots. *Pinus* roots have **mycorrhiza** (fungal association); *Cycas* has **coralloid roots** with **nitrogen-fixing cyanobacteria**.",
+            "**Stems**: unbranched (*Cycas*) or branched (*Pinus*, *Cedrus*).",
+            "**Leaves**: simple or compound; *Cycas* pinnate leaves last a few years. Conifers have **needle-like leaves** with less surface area, a **thick cuticle** and **sunken stomata** to cut water loss.",
+          ],
+        },
+        {
+          type: "text",
+          md: "Gymnosperms are **heterosporous**. Sporophylls are arranged spirally in **strobili (cones)**. **Male strobili** bear microsporophylls; microspores grow into a highly reduced male gametophyte, the **pollen grain**. **Female strobili** bear megasporophylls with **ovules**. A megaspore mother cell from the **nucellus** undergoes meiosis to give four megaspores; one grows into a multicellular **female gametophyte** with **two or more archegonia**, retained inside the ovule.\n\nUnlike bryophytes and pteridophytes, **neither gametophyte is free-living**. Pollen is carried by **air** to the ovule; a **pollen tube** takes the male gametes to the archegonia. The zygote forms the embryo and the ovule becomes an uncovered seed.",
+        },
+        {
+          type: "table",
+          headers: ["Feature", "*Pinus*", "*Cycas*"],
+          rows: [
+            ["Male and female cones", "On the **same** tree", "On **different** trees (male cones and megasporophylls)"],
+            ["Stem", "Branched", "Unbranched"],
+            ["Special root association", "Mycorrhiza", "Coralloid roots with cyanobacteria"],
+          ],
+        },
+        {
+          type: "heading",
+          text: "Angiosperms",
+        },
+        {
+          type: "text",
+          md: "In **angiosperms** (flowering plants) the pollen grains and ovules develop in **flowers**, and the **seeds are enclosed in fruits**. They are the largest plant group and live in a wide range of habitats, from the almost microscopic ***Wolffia*** to ***Eucalyptus*** trees **over 100 m** tall. They give food, fodder, fuel, medicines and many commercial products. They are divided into **dicotyledons** and **monocotyledons**. Their reproduction (double fertilisation) is studied in Class 12.",
+        },
+        {
+          type: "example",
+          title: "Explaining 'naked seeds'",
+          problem: "A student says, 'Pine seeds are inside a cone, so they are covered; pine cannot be a gymnosperm.' Explain why she is wrong.",
+          steps: [
+            "Being 'covered' in botany means being inside an **ovary wall** (fruit).",
+            "Pine ovules sit exposed on the surface of megasporophylls (cone scales); no ovary forms.",
+            "The cone scales only shelter the seeds; they are not a fruit wall.",
+          ],
+          answer: "The seeds are not enclosed in an ovary or fruit, so they are naked even though cone scales shelter them. Pine is a gymnosperm.",
+        },
+        {
+          type: "heading",
+          text: "Plant life cycles and alternation of generations",
+        },
+        {
+          type: "callout",
+          tone: "note",
+          title: "Board note",
+          md: "This section was **removed from the rationalised NCERT book**. ISC teaches alternation of generations, and NEET and KCET questions on examples like *Fucus* and *Ectocarpus* still appear, so learn the table.",
+        },
+        {
+          type: "table",
+          headers: ["Pattern", "Dominant phase", "Where meiosis happens", "Examples"],
+          rows: [
+            ["Haplontic", "Haploid gametophyte; the sporophyte is only the one-celled zygote", "In the zygote", "*Volvox*, *Spirogyra*, some *Chlamydomonas*"],
+            ["Diplontic", "Diploid sporophyte, independent and photosynthetic; gametophyte single to few-celled", "In spore mother cells of the sporophyte", "Gymnosperms, angiosperms; the alga *Fucus*"],
+            ["Haplo-diplontic", "Both phases multicellular; gametophyte dominant in bryophytes, sporophyte dominant in pteridophytes", "In the sporophyte", "Bryophytes, pteridophytes; algae *Ectocarpus*, *Polysiphonia*, kelps"],
+          ],
+        },
+        {
+          type: "activity",
+          activity: {
+            kind: "sort",
+            prompt: "Sort by life cycle pattern.",
+            groups: ["Haplontic", "Diplontic", "Haplo-diplontic"],
+            items: [
+              { text: "Volvox", group: 0, hint: "Only the zygote is diploid." },
+              { text: "Spirogyra", group: 0, hint: "Meiosis in the zygote." },
+              { text: "Fucus", group: 1, hint: "The alga that behaves like seed plants." },
+              { text: "Pinus", group: 1, hint: "Seed plant." },
+              { text: "Mango", group: 1, hint: "Angiosperm." },
+              { text: "Funaria", group: 2, hint: "A moss: both phases multicellular." },
+              { text: "Dryopteris", group: 2, hint: "A fern." },
+              { text: "Ectocarpus", group: 2, hint: "A brown alga with both phases multicellular." },
+            ],
+            explain: "Most algae are haplontic, but Fucus is diplontic and Ectocarpus, Polysiphonia and kelps are haplo-diplontic.",
+          },
+        },
+        {
+          type: "checkpoint",
+          questions: [
+            {
+              kind: "mcq",
+              q: "Coralloid roots with nitrogen-fixing cyanobacteria are found in:",
+              options: ["*Pinus*", "*Cycas*", "*Cedrus*", "*Sequoia*"],
+              answer: 1,
+              explain: "*Pinus* roots have mycorrhiza; *Cycas* has coralloid roots.",
+            },
+          ],
+        },
+        {
+          type: "mistake",
+          wrong: "All algae are haplontic because they are simple plants.",
+          right: "Most algae are haplontic, but *Fucus* is diplontic and *Ectocarpus*, *Polysiphonia* and kelps are haplo-diplontic.",
+          why: "'Simple plant = simple life cycle' is a tempting rule. Exams test exactly these exceptions.",
+        },
+        {
+          type: "callout",
+          tone: "exam",
+          title: "Board tip",
+          md: "For gymnosperm features, mention: naked ovules, heterospory, cones, reduced gametophytes not free-living, pollen by wind, roots (mycorrhiza / coralloid) and xerophytic leaves. Name *Cycas* (dioecious) and *Pinus* (monoecious) as contrasting examples.",
+        },
+        {
+          type: "keypoints",
+          items: [
+            "Gymnosperms: naked ovules and seeds; heterosporous; male and female cones; gametophytes not free-living; wind pollination.",
+            "Pinus: mycorrhiza, branched, both cones on one tree. Cycas: coralloid roots, unbranched, separate male and female plants.",
+            "Angiosperms: seeds in fruits; Wolffia smallest, Eucalyptus over 100 m.",
+            "Haplontic (Volvox, Spirogyra), diplontic (seed plants, Fucus), haplo-diplontic (bryophytes, pteridophytes, Ectocarpus, Polysiphonia, kelps).",
+          ],
+        },
+      ],
+      flashcards: [
+        { front: "Meaning of gymnosperm", back: "Naked seed: ovules not enclosed by an ovary wall." },
+        { front: "One of the tallest tree species", back: "*Sequoia* (giant redwood), a gymnosperm." },
+        { front: "Coralloid roots", back: "Specialised roots of *Cycas* with nitrogen-fixing cyanobacteria." },
+        { front: "Xerophytic leaf features of conifers", back: "Needle shape, thick cuticle, sunken stomata." },
+        { front: "Male gametophyte of gymnosperms", back: "The pollen grain, highly reduced." },
+        { front: "Smallest and tallest angiosperms in NCERT", back: "*Wolffia*; *Eucalyptus* (over 100 m)." },
+        { front: "Diplontic alga", back: "*Fucus*." },
+        { front: "Haplo-diplontic algae", back: "*Ectocarpus*, *Polysiphonia*, kelps." },
+      ],
+      quiz: [
+        {
+          kind: "mcq",
+          q: "In which gymnosperm are male cones and megasporophylls borne on different trees?",
+          options: ["*Pinus*", "*Cycas*", "*Cedrus*", "All gymnosperms"],
+          answer: 1,
+          explain: "*Cycas* is dioecious; *Pinus* bears both on the same tree.",
+        },
+        {
+          kind: "truefalse",
+          q: "In gymnosperms, the female gametophyte is free-living.",
+          answer: false,
+          explain: "Both gametophytes remain within sporangia on the sporophyte.",
+        },
+        {
+          kind: "mcq",
+          q: "In gymnosperms, pollen grains are carried to the ovules mainly by:",
+          options: ["Water", "Insects", "Air currents", "Birds"],
+          answer: 2,
+          explain: "Pollen is carried by air currents to the ovule opening.",
+        },
+        {
+          kind: "mcq",
+          q: "The haplontic life cycle is shown by:",
+          options: ["*Fucus*", "*Spirogyra*", "*Polysiphonia*", "*Funaria*"],
+          answer: 1,
+          explain: "*Spirogyra* and *Volvox* are haplontic.",
+        },
+        {
+          kind: "multi",
+          q: "Which features reduce water loss in conifer leaves?",
+          options: ["Needle shape", "Thick cuticle", "Sunken stomata", "Large thin leaf blade"],
+          answers: [0, 1, 2],
+          explain: "Large thin blades would increase water loss.",
+        },
+        {
+          kind: "fill",
+          q: "The female gametophyte of gymnosperms bears two or more ___.",
+          answer: ["archegonia", "archegonium"],
+          explain: "Archegonia are retained inside the ovule.",
+        },
+        {
+          kind: "mcq",
+          q: "In a haplo-diplontic cycle of a pteridophyte, the dominant phase is:",
+          options: ["Gametophyte", "Sporophyte", "Zygote only", "Protonema"],
+          answer: 1,
+          explain: "In pteridophytes the sporophyte dominates; in bryophytes the gametophyte does.",
+          difficulty: 2,
+        },
+        {
+          kind: "mcq",
+          q: "The megaspore mother cell of a gymnosperm differentiates from a cell of the:",
+          options: ["Integument", "Nucellus", "Pollen tube", "Archegonium"],
+          answer: 1,
+          explain: "One cell of the nucellus becomes the megaspore mother cell.",
+          difficulty: 2,
+        },
+      ],
+    },
+
+    /* ---------------- Exam edge ---------------- */
+    {
+      slug: "c11-plant-kingdom-exam-edge",
+      title: "Exam edge: Plant Kingdom",
+      summary:
+        "How NEET and KCET test the plant groups: example lists, algal pigments and food, life-cycle exceptions, ploidy of gymnosperm tissues and the classic traps.",
+      minutes: 24,
+      xp: 60,
+      track: "exam",
+      blocks: [
+        {
+          type: "text",
+          md: "**NEET** typically asks 3–4 questions from Plant Kingdom. The highest-yield areas are: the algae comparison table, examples for each group and class, bryophyte and pteridophyte life cycles, heterospory, gymnosperm features and life-cycle patterns. **KCET** asks direct one-liners like 'agar is obtained from' or 'coralloid roots occur in'.",
+        },
+        {
+          type: "list",
+          items: [
+            "NCERT line: at least **half of the total CO2 fixation** on Earth is carried out by algae.",
+            "NCERT line: brown algae may reach a height of **100 m**.",
+            "NCERT line: red algae food is **floridean starch**, very similar to amylopectin and glycogen.",
+            "NCERT line: mosses along with lichens are the **first organisms to colonise rocks**.",
+            "NCERT line: zygotes of bryophytes **do not undergo reduction division immediately**.",
+            "NCERT line: heterospory with retained female gametophyte is a **precursor to the seed habit**.",
+            "NCERT line: unlike bryophytes and pteridophytes, gymnosperm gametophytes **do not have an independent free-living existence**.",
+          ],
+        },
+        {
+          type: "table",
+          headers: ["Plant tissue", "Ploidy", "Why"],
+          rows: [
+            ["Moss protonema, leafy shoot; fern prothallus", "n", "Gametophyte"],
+            ["Moss capsule, seta, foot; fern frond", "2n", "Sporophyte"],
+            ["Gymnosperm endosperm (female gametophyte)", "n", "Formed from the megaspore before fertilisation"],
+            ["Gymnosperm embryo, nucellus, integument, leaf", "2n", "Sporophytic"],
+            ["Angiosperm endosperm", "3n", "Triple fusion (Class 12)"],
+          ],
+        },
+        {
+          type: "example",
+          title: "NEET level: example matching",
+          problem: "Match: (a) *Marchantia* (b) *Salvinia* (c) *Gracilaria* (d) *Equisetum* with (i) Sphenopsida (ii) agar (iii) gemma cups (iv) heterospory.",
+          steps: [
+            "*Marchantia* is a liverwort with gemma cups: (a)–(iii).",
+            "*Salvinia* is a heterosporous fern: (b)–(iv).",
+            "*Gracilaria* is a red alga giving agar: (c)–(ii).",
+            "*Equisetum* is a horsetail in Sphenopsida: (d)–(i).",
+          ],
+          answer: "(a)–(iii), (b)–(iv), (c)–(ii), (d)–(i).",
+        },
+        {
+          type: "example",
+          title: "Assertion–reason reasoning",
+          problem: "A: Bryophytes are called amphibians of the plant kingdom. R: Bryophytes need water for the antherozoids to reach the egg.",
+          steps: [
+            "A is true.",
+            "R is true: biflagellate antherozoids swim in water to the archegonium.",
+            "R explains A: they live on land but depend on water for sexual reproduction, just as amphibians return to water to breed.",
+          ],
+          answer: "Both A and R are true, and R is the correct explanation of A.",
+        },
+        {
+          type: "example",
+          title: "Statement analysis",
+          problem: "How many are correct? (i) Phaeophyceae store mannitol and laminarin. (ii) Rhodophyceae have flagellated gametes. (iii) Chlorophyceae have pyrenoids with protein and starch. (iv) *Eudorina* is oogamous.",
+          steps: [
+            "(i) Correct.",
+            "(ii) Wrong: red algae have no flagellated stage.",
+            "(iii) Correct.",
+            "(iv) Wrong: *Eudorina* is anisogamous; *Volvox* and *Fucus* are oogamous.",
+          ],
+          answer: "Two statements, (i) and (iii), are correct.",
+        },
+        {
+          type: "example",
+          title: "Harder: chromosome counting in a gymnosperm",
+          problem: "A pine has 2n = 24 chromosomes. Find the number of chromosomes in one cell each of: the megaspore mother cell, a functional megaspore, the endosperm, the embryo and the leaf. Give the total.",
+          steps: [
+            "Megaspore mother cell is sporophytic: 24.",
+            "Functional megaspore (after meiosis): 12.",
+            "Endosperm of gymnosperms is the female gametophyte tissue: 12.",
+            "Embryo (from zygote) = 24; leaf = 24.",
+            "Total = 24 + 12 + 12 + 24 + 24 = 96.",
+          ],
+          answer: "24, 12, 12, 24 and 24; total 96.",
+        },
+        {
+          type: "mistake",
+          wrong: "Gymnosperm endosperm is triploid, as in angiosperms.",
+          right: "Gymnosperm endosperm is haploid; it is the female gametophyte formed before fertilisation.",
+          why: "Students learn 'endosperm = 3n' from angiosperms. Gymnosperms have no triple fusion, so their stored tissue is simply gametophyte tissue.",
+        },
+        {
+          type: "mistake",
+          wrong: "Pteridophytes have seeds because some are heterosporous.",
+          right: "Heterospory is only a precursor to the seed habit; pteridophytes do not form seeds.",
+          why: "The NCERT line about the 'seed habit' is read as 'have seeds'. A seed needs an integumented ovule, which pteridophytes lack.",
+        },
+        {
+          type: "activity",
+          activity: {
+            kind: "reveal",
+            prompt: "Which alga is diplontic?",
+            emoji: "🌊",
+            options: ["Spirogyra", "Ectocarpus", "Fucus", "Volvox"],
+            answer: 2,
+            trap: 1,
+            explain: "Fucus is diplontic. Ectocarpus is haplo-diplontic, and Spirogyra and Volvox are haplontic.",
+          },
+        },
+        {
+          type: "checkpoint",
+          questions: [
+            {
+              kind: "mcq",
+              q: "A: Conifers can survive in cold, dry climates. R: Their needle-like leaves with thick cuticle and sunken stomata reduce water loss.",
+              options: AR,
+              answer: 0,
+              explain: "These leaf features directly explain survival where water is scarce or frozen.",
+            },
+          ],
+        },
+        {
+          type: "keypoints",
+          items: [
+            "Algae: memorise pigments, food, wall, flagella and examples for all three classes.",
+            "Gametophyte dominant: bryophytes; sporophyte dominant: pteridophytes and seed plants.",
+            "Heterospory: Selaginella, Salvinia (also all gymnosperms). It is a precursor, not seeds.",
+            "Gymnosperm endosperm = n; angiosperm endosperm = 3n.",
+          ],
+        },
+      ],
+      flashcards: [
+        { front: "Agar-yielding algae", back: "*Gelidium* and *Gracilaria*." },
+        { front: "Hydrocolloids from brown and red algae", back: "Algin (brown) and carrageen (red)." },
+        { front: "Ploidy of gymnosperm endosperm", back: "Haploid (n)." },
+        { front: "Pigment that gives red algae their colour", back: "r-phycoerythrin." },
+        { front: "Moss used as fuel and packing material", back: "*Sphagnum* (peat)." },
+        { front: "Pteridophyte class of *Psilotum*", back: "Psilopsida." },
+        { front: "Monoecious gymnosperm example", back: "*Pinus* (male and female cones on one tree)." },
+      ],
+      quiz: [
+        {
+          kind: "mcq",
+          q: "Which pair is incorrectly matched?",
+          options: ["*Volvox* – oogamous", "*Ulothrix* – isogamous", "*Eudorina* – anisogamous", "*Spirogyra* – oogamous"],
+          answer: 3,
+          explain: "*Spirogyra* is isogamous with non-flagellated gametes.",
+        },
+        {
+          kind: "numeric",
+          q: "How many of the following are brown algae? Ectocarpus, Dictyota, Porphyra, Laminaria, Volvox, Sargassum, Gelidium, Fucus.",
+          answer: 5,
+          explain: "Ectocarpus, Dictyota, Laminaria, Sargassum, Fucus. Porphyra and Gelidium are red; Volvox is green.",
+          difficulty: 2,
+        },
+        {
+          kind: "mcq",
+          q: "A: The sporophyte of a moss cannot live independently. R: It is attached to the photosynthetic gametophyte and derives nourishment from it.",
+          options: AR,
+          answer: 0,
+          explain: "Dependence on the gametophyte for food is why the sporophyte is not free-living.",
+        },
+        {
+          kind: "multi",
+          q: "Which are correct about gymnosperms?",
+          options: [
+            "They are heterosporous",
+            "The male gametophyte is the pollen grain",
+            "Ovules are enclosed in an ovary",
+            "Pinus has mycorrhizal roots",
+          ],
+          answers: [0, 1, 3],
+          explain: "Gymnosperm ovules are naked, not in an ovary.",
+          difficulty: 2,
+        },
+        {
+          kind: "numeric",
+          q: "A fern has 2n = 40. How many chromosomes are in one cell of its prothallus?",
+          answer: 20,
+          explain: "The prothallus is the haploid gametophyte: n = 20.",
+          difficulty: 2,
+        },
+        {
+          kind: "mcq",
+          q: "Which statement is correct?",
+          options: [
+            "Liverworts reproduce asexually by protonema",
+            "Mosses reproduce asexually by gemmae",
+            "Liverworts form gemmae in gemma cups",
+            "Mosses lack rhizoids",
+          ],
+          answer: 2,
+          explain: "Gemmae occur in liverworts (Marchantia); protonema is a moss stage; moss rhizoids are multicellular and branched.",
+          difficulty: 2,
+        },
+        {
+          kind: "numeric",
+          q: "In *Cycas* with 2n = 22, what is the total number of chromosomes in one cell each of the coralloid root, the endosperm and a male gamete?",
+          answer: 44,
+          explain: "Root 2n = 22; endosperm (female gametophyte) n = 11; male gamete n = 11. Total = 44.",
+          difficulty: 3,
+          hint: "Gymnosperm endosperm is not triploid.",
+        },
+        {
+          kind: "mcq",
+          q: "An alga has chlorophyll a and c, stores laminarin, and its life cycle has multicellular haploid and diploid phases. It is most likely:",
+          options: ["*Fucus*", "*Ectocarpus*", "*Polysiphonia*", "*Chara*"],
+          answer: 1,
+          explain: "Chl a, c and laminarin → brown alga; haplo-diplontic brown alga → *Ectocarpus* (or kelps). *Fucus* is diplontic; *Polysiphonia* is red.",
+          difficulty: 3,
+          hint: "First find the class, then the life-cycle pattern.",
+        },
+      ],
+    },
+  ],
+};
+
+export const topics: Topic[] = [livingWorld, bioClass, plantKingdom];
 
 export const links: Record<string, string | string[]> = {
   "11:The Living World": "c11-the-living-world",
   "11:Biological Classification": "c11-biological-classification",
+  "11:Plant Kingdom": "c11-plant-kingdom",
 };

@@ -1260,6 +1260,812 @@ Then the top point moves at $v_{cm} + R\omega = 2v_{cm}$, and the contact point 
       },
     ],
   },
+  /* ------------------------------------------------------------------ */
+  /* Gravitation (NCERT / Karnataka PUC and ISC)                          */
+  /* ------------------------------------------------------------------ */
+  {
+    slug: "c11-gravitation",
+    title: "Gravitation",
+    icon: "🪐",
+    description:
+      "Kepler's laws, Newton's universal law of gravitation, the constant G, acceleration due to gravity and its variation, gravitational potential energy, escape speed and Earth satellites.",
+    lessons: [
+      /* ---------------- Lesson 1 ---------------- */
+      {
+        slug: "c11-kepler-universal-law",
+        title: "Kepler's Laws and the Universal Law of Gravitation",
+        summary:
+          "Kepler's three laws, the law of areas from conservation of angular momentum, Newton's law of gravitation, the shell theorem and the measurement of G.",
+        minutes: 20,
+        xp: 50,
+        blocks: [
+          {
+            type: "illustration",
+            emoji: "🔭",
+            caption:
+              "In the 5th century CE Aryabhata wrote that the Earth spins on its axis. About a thousand years later, Kepler found the exact rules by which planets move round the Sun.",
+          },
+          {
+            type: "text",
+            md: t`Ptolemy's **geocentric** model put the Earth at the centre with everything circling it. Copernicus proposed the **heliocentric** model with the Sun at the centre. Johannes Kepler, using careful naked-eye observations made by Tycho Brahe, found three laws that describe planetary orbits exactly.`,
+          },
+          {
+            type: "list",
+            ordered: true,
+            items: [
+              "**Law of orbits:** every planet moves in an ellipse with the Sun at one of the two foci. The nearest point is the **perihelion**, the farthest the **aphelion**.",
+              "**Law of areas:** the line joining the Sun to a planet sweeps out equal areas in equal intervals of time.",
+              t`**Law of periods:** the square of the period of revolution is proportional to the cube of the semi-major axis of the ellipse: $T^2 \propto a^3$.`,
+            ],
+          },
+          {
+            type: "text",
+            md: t`**Why the law of areas holds.** The gravitational force on a planet points towards the Sun, so it is a **central force**; its torque about the Sun is $\vec r \times \vec F = 0$. Hence the planet's angular momentum $\vec L$ about the Sun is constant. In a short time $dt$ the radius vector sweeps a thin triangle of area $dA = \tfrac12|\vec r \times \vec v\,dt|$, so
+
+$\dfrac{dA}{dt} = \dfrac{|\vec r \times \vec p|}{2m} = \dfrac{L}{2m} = $ constant.
+
+A consequence: at perihelion and aphelion the velocity is perpendicular to the radius, so $v_p r_p = v_a r_a$. The planet moves fastest when nearest the Sun.`,
+          },
+          {
+            type: "formula",
+            tex: t`\frac{dA}{dt} = \frac{L}{2m} \qquad v_p r_p = v_a r_a \qquad T^2 \propto a^3`,
+          },
+          {
+            type: "heading",
+            text: "Newton's universal law of gravitation",
+          },
+          {
+            type: "text",
+            md: t`Every particle in the universe attracts every other particle with a force proportional to the product of their masses and inversely proportional to the square of the distance between them, acting along the line joining them. In vector form, the force on $m_2$ due to $m_1$ is $\vec F_{21} = -\dfrac{Gm_1m_2}{r^2}\hat r_{12}$, where $\hat r_{12}$ points from $m_1$ to $m_2$; the minus sign shows attraction. For several masses, the forces add as vectors (**superposition**).
+
+Newton tested the law with the Moon: the Moon is about 60 Earth radii away, so its centripetal acceleration should be $g/60^2 \approx g/3600$, which matches its observed orbit. Two results for extended bodies (the **shell theorem**): a uniform spherical shell attracts an outside particle as if all its mass were at its centre, and exerts **zero** net force on a particle anywhere inside it.`,
+          },
+          {
+            type: "formula",
+            tex: t`F = \frac{G m_1 m_2}{r^2} \qquad G = 6.67 \times 10^{-11}\ \text{N m}^2\,\text{kg}^{-2}`,
+            caption: t`$G$ is a universal constant with dimensions $[M^{-1}L^3T^{-2}]$. Gravity is always attractive, central and conservative, and does not depend on the medium in between.`,
+          },
+          {
+            type: "text",
+            md: "**Measuring G.** Henry Cavendish (1798) hung a light rod carrying two small lead spheres from a fine wire. Two large lead spheres placed near them, on opposite sides, pulled the small spheres and twisted the wire. Balancing the gravitational torque against the known restoring torque of the twisted wire gave the value of G. This is why the experiment is called 'weighing the Earth': once G is known, the Earth's mass follows from g.",
+          },
+          {
+            type: "example",
+            title: "Kepler's third law for a circular orbit",
+            problem: "Derive T² ∝ r³ for a planet in a circular orbit of radius r about the Sun (mass M). Then find the period of Mars, whose orbit radius is 1.52 times Earth's.",
+            steps: [
+              t`Gravity provides the centripetal force: $\dfrac{GMm}{r^2} = m\omega^2 r = m\left(\dfrac{2\pi}{T}\right)^2 r$.`,
+              t`Rearrange: $T^2 = \dfrac{4\pi^2}{GM}\,r^3$, so $T^2 \propto r^3$, the constant depending only on the Sun's mass.`,
+              t`For Mars: $\dfrac{T_M}{T_E} = \left(\dfrac{r_M}{r_E}\right)^{3/2} = 1.52^{1.5} \approx 1.87$.`,
+            ],
+            answer: t`$T^2 = (4\pi^2/GM)r^3$. Mars takes about 1.87 Earth years (roughly 685 days) to go round the Sun.`,
+          },
+          {
+            type: "checkpoint",
+            questions: [
+              {
+                kind: "numeric",
+                q: "The distance between two masses is tripled. By what factor does the gravitational force between them change? Give a decimal.",
+                answer: 0.111,
+                tolerance: 0.002,
+                explain: t`$F \propto 1/r^2$, so $F' = F/9 \approx 0.111F$.`,
+              },
+            ],
+          },
+          {
+            type: "activity",
+            activity: {
+              kind: "reveal",
+              prompt: "When is the Earth's orbital speed greatest?",
+              emoji: "🌍",
+              options: [
+                "Early January, when the Earth is nearest the Sun",
+                "Early July, during the Indian summer monsoon",
+                "It is the same all year",
+              ],
+              answer: 0,
+              trap: 1,
+              explain: t`Perihelion falls in early January. By the law of areas, $v_p r_p = v_a r_a$, so the Earth is fastest at perihelion. Seasons come from the tilt of the Earth's axis, not from its distance from the Sun.`,
+            },
+          },
+          {
+            type: "mistake",
+            wrong: "Inside a hollow spherical shell, you would be pulled towards the nearer wall.",
+            right: "A uniform spherical shell exerts zero net gravitational force on a mass anywhere inside it.",
+            why: "The nearer wall is closer, but the far side has more mass in any cone you draw. Because the force falls off exactly as 1/r² and the area of each patch grows as r², the two pulls cancel at every point inside.",
+          },
+          {
+            type: "callout",
+            tone: "exam",
+            title: "Board tip",
+            md: "Proving Kepler's second law from conservation of angular momentum is a favourite board derivation. Write three points: the force is central, so torque about the Sun is zero; L is constant; dA/dt = L/2m. Also learn the difference between G (universal constant) and g (depends on place).",
+          },
+          {
+            type: "keypoints",
+            items: [
+              "Kepler: elliptical orbits with the Sun at a focus; equal areas in equal times; T² ∝ a³.",
+              t`Law of areas = conservation of angular momentum (central force): $dA/dt = L/2m$.`,
+              t`$F = Gm_1m_2/r^2$, attractive, along the line of centres; forces add by superposition.`,
+              "Shell theorem: outside, the shell acts as a point mass at its centre; inside, the net force is zero.",
+              t`$G = 6.67 \times 10^{-11}$ N m² kg⁻², first measured by Cavendish.`,
+            ],
+          },
+        ],
+        flashcards: [
+          { front: "Kepler's first law", back: "Planets move in ellipses with the Sun at one focus." },
+          { front: "Kepler's second law", back: "The Sun–planet line sweeps equal areas in equal times; it follows from conservation of angular momentum." },
+          { front: "Kepler's third law", back: t`$T^2 \propto a^3$, a = semi-major axis.` },
+          { front: "Areal velocity", back: t`$dA/dt = L/2m$, constant for a central force.` },
+          { front: "Newton's law of gravitation", back: t`$F = Gm_1m_2/r^2$ along the line joining the masses, always attractive.` },
+          { front: "Value and unit of G", back: t`$6.67 \times 10^{-11}$ N m² kg⁻²; dimensions $[M^{-1}L^3T^{-2}]$.` },
+          { front: "Force inside a uniform spherical shell", back: "Zero, at every point inside." },
+        ],
+        quiz: [
+          {
+            kind: "mcq",
+            q: "Kepler's second law is a consequence of the conservation of:",
+            options: ["angular momentum", "linear momentum", "energy", "mass"],
+            answer: 0,
+            explain: "Gravity is a central force, so its torque about the Sun is zero and L is conserved; this makes the areal velocity constant.",
+          },
+          {
+            kind: "numeric",
+            q: "A planet's orbit radius is 4 times the Earth's. What is its period in Earth years?",
+            answer: 8,
+            unit: "years",
+            explain: t`$T \propto r^{3/2}$: $4^{3/2} = 8$ years.`,
+          },
+          {
+            kind: "numeric",
+            q: "A comet moves at 60 km/s at perihelion, 0.5 AU from the Sun. Its aphelion is 30 AU from the Sun. Find its speed at aphelion.",
+            answer: 1,
+            unit: "km/s",
+            difficulty: 2,
+            explain: t`$v_a = v_p r_p / r_a = 60 \times 0.5/30 = 1$ km/s.`,
+          },
+          {
+            kind: "truefalse",
+            q: "The value of G is smaller on the Moon than on the Earth.",
+            answer: false,
+            explain: "G is a universal constant, the same everywhere. It is g, the acceleration due to gravity, that is smaller on the Moon.",
+          },
+          {
+            kind: "mcq",
+            q: "The dimensional formula of G is:",
+            options: [t`$[M^{-1}L^3T^{-2}]$`, t`$[ML^2T^{-2}]$`, t`$[M^{-1}L^2T^{-2}]$`, t`$[MLT^{-2}]$`],
+            answer: 0,
+            explain: t`$G = Fr^2/m^2$: $[MLT^{-2}][L^2]/[M^2] = [M^{-1}L^3T^{-2}]$.`,
+          },
+          {
+            kind: "numeric",
+            q: "Two 10 kg lead spheres have their centres 0.5 m apart. Find the gravitational force between them, in units of 10⁻⁸ N (G = 6.67 × 10⁻¹¹ N m² kg⁻²).",
+            answer: 2.67,
+            tolerance: 0.02,
+            explain: t`$F = \dfrac{6.67 \times 10^{-11} \times 100}{0.25} = 2.67 \times 10^{-8}$ N, far too small to notice.`,
+          },
+          {
+            kind: "fill",
+            q: "In Kepler's third law, T² is proportional to the cube of the ___ axis of the orbit.",
+            answer: ["semi-major", "semimajor", "semi major"],
+            explain: t`$T^2 \propto a^3$ with $a$ the semi-major axis; for a circle it is the radius.`,
+          },
+          {
+            kind: "multi",
+            q: "Which statements about the gravitational force are true?",
+            options: [
+              "It is always attractive",
+              "It is a central force",
+              "It is conservative",
+              "It becomes weaker if a sheet of glass is placed between the masses",
+            ],
+            answers: [0, 1, 2],
+            explain: "Gravity is attractive, central and conservative, and it does not depend on the medium between the bodies.",
+          },
+        ],
+      },
+      /* ---------------- Lesson 2 ---------------- */
+      {
+        slug: "c11-acceleration-due-to-gravity",
+        title: "Acceleration Due to Gravity and Its Variation",
+        summary:
+          "g at the Earth's surface, the mass of the Earth, variation of g with height and with depth, gravitational field intensity, and (for ISC and JEE) the effect of the Earth's rotation.",
+        minutes: 20,
+        xp: 50,
+        blocks: [
+          {
+            type: "illustration",
+            emoji: "🏔️",
+            caption:
+              "A climber at the top of Kangchenjunga is about 8.6 km higher than a swimmer at Marina Beach in Chennai, so the climber feels a very slightly smaller pull of gravity.",
+          },
+          {
+            type: "text",
+            md: t`By the shell theorem, a uniform spherical Earth of mass $M_E$ and radius $R_E$ pulls a mass $m$ on its surface as if all its mass were at its centre: $F = GM_Em/R_E^2$. Since $F = mg$,
+
+$g = \dfrac{GM_E}{R_E^2}$
+
+$g$ does not depend on the mass of the falling body. Its value at the surface is about 9.8 m/s². Knowing $g$, $R_E$ and $G$, we can find the mass of the Earth.`,
+          },
+          {
+            type: "example",
+            title: "Weighing the Earth",
+            problem: "Taking g = 9.8 m/s², R_E = 6.4 × 10⁶ m and G = 6.67 × 10⁻¹¹ N m² kg⁻², find the mass of the Earth.",
+            steps: [
+              t`$M_E = \dfrac{gR_E^2}{G}$.`,
+              t`$R_E^2 = (6.4 \times 10^6)^2 = 4.096 \times 10^{13}$ m².`,
+              t`$M_E = \dfrac{9.8 \times 4.096 \times 10^{13}}{6.67 \times 10^{-11}} = \dfrac{4.01 \times 10^{14}}{6.67 \times 10^{-11}} \approx 6.0 \times 10^{24}$ kg.`,
+            ],
+            answer: t`$M_E \approx 6.0 \times 10^{24}$ kg.`,
+          },
+          {
+            type: "heading",
+            text: "Variation with height and depth",
+          },
+          {
+            type: "list",
+            ordered: true,
+            items: [
+              t`**Height h above the surface:** the distance from the centre is $R_E + h$, so $g(h) = \dfrac{GM_E}{(R_E + h)^2} = g\left(1 + \dfrac{h}{R_E}\right)^{-2}$.`,
+              t`For $h \ll R_E$, the binomial approximation gives $g(h) \approx g\left(1 - \dfrac{2h}{R_E}\right)$.`,
+              t`**Depth d below the surface:** the outer shell of thickness d exerts no net force (shell theorem). Only the inner sphere of radius $R_E - d$ pulls.`,
+              t`For uniform density its mass is $M_s = M_E\dfrac{(R_E - d)^3}{R_E^3}$, so $g(d) = \dfrac{GM_s}{(R_E - d)^2} = g\left(1 - \dfrac{d}{R_E}\right)$.`,
+              t`At the centre ($d = R_E$), $g = 0$.`,
+            ],
+          },
+          {
+            type: "formula",
+            tex: t`g(h) = \frac{g}{(1 + h/R_E)^2} \approx g\left(1 - \frac{2h}{R_E}\right) \qquad g(d) = g\left(1 - \frac{d}{R_E}\right)`,
+            caption: "The approximate height formula needs h ≪ R_E; the depth formula is exact for a uniform Earth.",
+          },
+          {
+            type: "table",
+            headers: ["Position (r = distance from centre)", "g(r) for a uniform Earth", "Shape of graph"],
+            rows: [
+              [t`inside, $r < R_E$`, t`$g\,\dfrac{r}{R_E}$`, "straight line from 0 at the centre"],
+              [t`surface, $r = R_E$`, t`$g$`, "maximum value"],
+              [t`outside, $r > R_E$`, t`$g\,\dfrac{R_E^2}{r^2}$`, "falls off as 1/r²"],
+            ],
+          },
+          {
+            type: "example",
+            title: "Height and depth for a 1% drop",
+            problem: "At what height, and at what depth, does g fall by 1% of its surface value? Take R_E = 6400 km.",
+            steps: [
+              t`Height: $\dfrac{2h}{R_E} = 0.01 \Rightarrow h = 0.005R_E = 32$ km. (h is small compared to R_E, so the approximation is fine.)`,
+              t`Depth: $\dfrac{d}{R_E} = 0.01 \Rightarrow d = 0.01R_E = 64$ km.`,
+            ],
+            answer: "About 32 km up, or 64 km down. For small distances, g falls twice as fast going up as going down.",
+          },
+          {
+            type: "text",
+            md: t`**Gravitational field intensity** at a point is the gravitational force per unit mass placed there: $\vec E = \vec F/m$. Outside the Earth its size is $GM_E/r^2$, the same as $g$; its unit is N/kg (= m/s²).
+
+**ISC / JEE extra: effect of the Earth's rotation.** A body at latitude $\lambda$ moves in a circle of radius $R_E\cos\lambda$, and part of gravity supplies that centripetal force. The effective value is $g' = g - \omega^2R_E\cos^2\lambda$. At the poles $g' = g$; at the equator $g' = g - \omega^2R_E$, where $\omega^2R_E \approx 0.034$ m/s². The Earth's bulge at the equator lowers $g$ there a little more.`,
+          },
+          {
+            type: "checkpoint",
+            questions: [
+              {
+                kind: "numeric",
+                q: "What is g at a height equal to the Earth's radius? (surface g = 9.8 m/s²)",
+                answer: 2.45,
+                tolerance: 0.01,
+                unit: "m/s²",
+                explain: t`$g(h) = g/(1 + 1)^2 = g/4 = 2.45$ m/s². Here h is not small, so use the exact formula.`,
+              },
+            ],
+          },
+          {
+            type: "mistake",
+            wrong: "At any height, g(h) = g(1 − 2h/R).",
+            right: t`That form is an approximation for $h \ll R$. In general use $g(h) = g/(1 + h/R)^2$.`,
+            why: "The short formula is quick and correct near the surface, so learners use it everywhere. At h = R it predicts g(1 − 2) = −g, which is nonsense; the exact answer is g/4.",
+          },
+          {
+            type: "activity",
+            activity: {
+              kind: "sort",
+              prompt: "What happens to the true value of g in each case?",
+              groups: ["g increases", "g decreases", "g unchanged"],
+              items: [
+                { text: "Climbing a mountain", group: 1, hint: "You move further from the centre." },
+                { text: "Going down a deep mine", group: 1, hint: "Less mass lies inside your radius." },
+                { text: "Travelling from the equator to a pole", group: 0, hint: "Rotation and the bulge both reduce g at the equator." },
+                { text: "Doubling the mass of the falling body", group: 2, hint: t`$g = GM_E/R_E^2$ has no m in it.` },
+                { text: "Moving from the pole to the equator", group: 1, hint: "The reverse of the pole trip." },
+                { text: "Riding a lift moving up at constant velocity", group: 2, hint: "Constant velocity changes neither g nor your apparent weight." },
+              ],
+              explain: "g falls going up or down from the surface, and from pole to equator. It never depends on the body's own mass.",
+            },
+          },
+          {
+            type: "callout",
+            tone: "exam",
+            title: "Board tip",
+            md: "Board papers often ask you to derive g(h) and g(d) and to sketch g against r. In the depth derivation, say clearly that the outer shell exerts no force and that you assume uniform density.",
+          },
+          {
+            type: "keypoints",
+            items: [
+              t`$g = GM_E/R_E^2 \approx 9.8$ m/s²; $M_E = gR_E^2/G \approx 6 \times 10^{24}$ kg.`,
+              t`Height: $g/(1 + h/R)^2 \approx g(1 - 2h/R)$ for $h \ll R$.`,
+              t`Depth: $g(1 - d/R)$; zero at the centre; g is greatest at the surface (uniform Earth).`,
+              t`Field intensity $E = F/m$; rotation gives $g' = g - \omega^2R\cos^2\lambda$ (ISC / JEE).`,
+            ],
+          },
+        ],
+        flashcards: [
+          { front: "g in terms of G", back: t`$g = GM_E/R_E^2$.` },
+          { front: "g at height h (exact and approximate)", back: t`$g/(1 + h/R)^2$; $\approx g(1 - 2h/R)$ when $h \ll R$.` },
+          { front: "g at depth d", back: t`$g(1 - d/R)$ for a uniform Earth.` },
+          { front: "g at the centre of the Earth", back: "Zero." },
+          { front: "Where is g greatest (uniform Earth)?", back: "At the surface." },
+          { front: "Gravitational field intensity", back: "Gravitational force per unit mass; unit N/kg; outside the Earth equals GM/r²." },
+          { front: "Effect of rotation on g", back: t`$g' = g - \omega^2R\cos^2\lambda$: no change at the poles, least at the equator.` },
+        ],
+        quiz: [
+          {
+            kind: "numeric",
+            q: "What is g at a depth of R_E/2 below the surface? (surface g = 9.8 m/s²)",
+            answer: 4.9,
+            unit: "m/s²",
+            explain: t`$g(d) = g(1 - \tfrac12) = 4.9$ m/s².`,
+          },
+          {
+            kind: "numeric",
+            q: "At what height (in km) above the surface does g fall by 2%? Take R_E = 6400 km and use the approximate formula.",
+            answer: 64,
+            unit: "km",
+            explain: t`$2h/R = 0.02 \Rightarrow h = 0.01R = 64$ km.`,
+          },
+          {
+            kind: "mcq",
+            q: "Treating the Earth as a uniform sphere, g is greatest:",
+            options: ["at the surface", "at the centre", "halfway to the centre", "very far away"],
+            answer: 0,
+            explain: t`Inside, $g \propto r$; outside, $g \propto 1/r^2$. Both rise towards the surface.`,
+          },
+          {
+            kind: "numeric",
+            q: "A planet has the same density as the Earth but twice its radius. What is g on its surface? (g on Earth = 9.8 m/s²)",
+            answer: 19.6,
+            unit: "m/s²",
+            difficulty: 2,
+            hint: t`Write $M = \tfrac43\pi R^3\rho$.`,
+            explain: t`$g = GM/R^2 = \tfrac43\pi G\rho R$, so $g \propto R$ at fixed density: $2 \times 9.8 = 19.6$ m/s².`,
+          },
+          {
+            kind: "truefalse",
+            q: "A body has zero weight at the centre of the Earth.",
+            answer: true,
+            explain: "g = 0 at the centre, so the weight mg is zero; the mass is unchanged.",
+          },
+          {
+            kind: "numeric",
+            q: "A planet has one-tenth the mass of the Earth and half its radius. Find g on it (g on Earth = 9.8 m/s²).",
+            answer: 3.92,
+            tolerance: 0.01,
+            unit: "m/s²",
+            explain: t`$g' = g\dfrac{M'/M}{(R'/R)^2} = 9.8 \times \dfrac{0.1}{0.25} = 3.92$ m/s².`,
+          },
+          {
+            kind: "multi",
+            q: "The value of g decreases when you:",
+            options: ["go up from the surface", "go down a deep well", "move from the pole to the equator", "carry a heavier load"],
+            answers: [0, 1, 2],
+            explain: "g falls with height, with depth, and from pole to equator. It does not depend on the mass of the body.",
+          },
+          {
+            kind: "fill",
+            q: "Gravitational field intensity at a point is the gravitational ___ per unit mass placed at that point.",
+            answer: ["force"],
+            explain: t`$\vec E = \vec F/m$, unit N/kg.`,
+          },
+        ],
+      },
+      /* ---------------- Lesson 3 ---------------- */
+      {
+        slug: "c11-gravitational-energy-satellites",
+        title: "Gravitational Potential Energy, Escape Speed and Satellites",
+        summary:
+          "Gravitational potential energy and potential, escape speed, orbital speed and period of Earth satellites, and the energy of an orbiting satellite; geostationary and polar satellites for ISC.",
+        minutes: 22,
+        xp: 55,
+        blocks: [
+          {
+            type: "illustration",
+            emoji: "🚀",
+            caption:
+              "Chandrayaan-3 left Sriharikota on an LVM3 rocket in July 2023. It first circled the Earth, then raised its orbit step by step before heading for the Moon.",
+          },
+          {
+            type: "text",
+            md: t`Near the ground we use $U = mgh$, but this assumes $g$ is constant, which fails for large heights. Gravity is a conservative force, so we can define potential energy everywhere. We choose $U = 0$ when the masses are infinitely far apart. When a mass $m$ is brought in from infinity to a distance $r$ from the Earth's centre ($r \ge R_E$), gravity does positive work $GM_Em/r$, so the potential energy falls by that amount. The **gravitational potential energy** is therefore
+
+$U(r) = -\dfrac{GM_Em}{r}$
+
+It is negative because we must do work to pull the masses apart to infinity. The **gravitational potential** is the potential energy per unit mass, $V = U/m = -GM_E/r$ (unit J/kg).`,
+          },
+          {
+            type: "formula",
+            tex: t`U = -\frac{GMm}{r} \qquad V = -\frac{GM}{r} \qquad U(R+h) - U(R) = \frac{GMmh}{R(R+h)} \approx mgh \;\;(h \ll R)`,
+            caption: t`The last result uses $GM = gR^2$ and $R + h \approx R$: it shows that mgh is the near-surface special case.`,
+          },
+          {
+            type: "heading",
+            text: "Escape speed",
+          },
+          {
+            type: "text",
+            md: t`Throw a stone up fast enough and it never comes back. The **escape speed** is the least launch speed that lets a body just reach infinity (where its KE becomes zero). By energy conservation:
+
+$\tfrac12 mv_e^2 - \dfrac{GM_Em}{R_E} = 0 \;\Rightarrow\; v_e = \sqrt{\dfrac{2GM_E}{R_E}} = \sqrt{2gR_E}$
+
+With $g = 9.8$ m/s² and $R_E = 6.4 \times 10^6$ m, $v_e = \sqrt{1.254 \times 10^8} \approx 11.2$ km/s. It does not depend on the mass of the body or the direction of launch (ignoring air). On the Moon $v_e$ is only about 2.3 km/s, which is why the Moon has kept no atmosphere: gas molecules there easily move fast enough to escape.`,
+          },
+          {
+            type: "heading",
+            text: "Earth satellites",
+          },
+          {
+            type: "text",
+            md: t`A **satellite** of mass $m$ in a circular orbit of radius $r = R_E + h$ is held by gravity, which supplies the centripetal force: $\dfrac{mv^2}{r} = \dfrac{GM_Em}{r^2}$. This gives the **orbital speed** and the **period**. Close to the surface ($h \ll R_E$), $v_o = \sqrt{gR_E} \approx 7.9$ km/s and $T = 2\pi\sqrt{R_E/g} \approx 84.6$ minutes.
+
+**Energy:** kinetic energy $K = \tfrac12 mv^2 = \dfrac{GM_Em}{2r}$, potential energy $U = -\dfrac{GM_Em}{r}$, so the total is $E = -\dfrac{GM_Em}{2r}$. The total energy is negative: the satellite is **bound** to the Earth. To free it, we must supply the **binding energy** $GM_Em/2r$.`,
+          },
+          {
+            type: "formula",
+            tex: t`v_o = \sqrt{\frac{GM}{r}} \qquad T = 2\pi\sqrt{\frac{r^3}{GM}} \qquad K = \frac{GMm}{2r},\;\; U = -\frac{GMm}{r},\;\; E = -\frac{GMm}{2r}`,
+            caption: t`$r = R_E + h$ is measured from the Earth's centre. Near the surface $v_e = \sqrt2\,v_o$.`,
+          },
+          {
+            type: "example",
+            title: "A remote-sensing satellite",
+            problem: "A 1000 kg satellite orbits 600 km above the Earth. Find its orbital speed, period and total energy. Take R_E = 6400 km and GM_E = gR_E² with g = 9.8 m/s².",
+            steps: [
+              t`$r = 6400 + 600 = 7000$ km $= 7.0 \times 10^6$ m; $GM_E = 9.8 \times (6.4 \times 10^6)^2 \approx 4.01 \times 10^{14}$ m³ s⁻².`,
+              t`$v_o = \sqrt{GM_E/r} = \sqrt{4.01 \times 10^{14}/7.0 \times 10^6} = \sqrt{5.73 \times 10^7} \approx 7.57$ km/s.`,
+              t`$T = 2\pi r/v_o = \dfrac{2\pi \times 7.0 \times 10^6}{7570} \approx 5810$ s $\approx 97$ min.`,
+              t`$E = -\dfrac{GM_Em}{2r} = -\dfrac{4.01 \times 10^{14} \times 1000}{1.4 \times 10^7} \approx -2.87 \times 10^{10}$ J.`,
+            ],
+            answer: t`$v_o \approx 7.57$ km/s, $T \approx 97$ min, $E \approx -2.87 \times 10^{10}$ J.`,
+          },
+          {
+            type: "callout",
+            tone: "note",
+            title: "Board note: geostationary and polar satellites",
+            md: "The rationalised NCERT book (CBSE, Karnataka PUC) leaves out these two; **ISC** includes them and KCET / NEET sometimes ask them. A **geostationary** satellite orbits above the equator, west to east, with a period of 24 h, so it stays over one spot. Its orbit radius is about 42,200 km (height about 35,800 km). India's INSAT and GSAT communication satellites use such orbits. A **polar** satellite orbits low (roughly 500–800 km) from pole to pole; as the Earth turns beneath it, it scans the whole globe, which suits remote sensing and weather watching.",
+          },
+          {
+            type: "checkpoint",
+            questions: [
+              {
+                kind: "numeric",
+                q: "A planet has the same density as the Earth but twice its radius. What is its escape speed? (Earth's = 11.2 km/s)",
+                answer: 22.4,
+                unit: "km/s",
+                explain: t`$v_e = \sqrt{2GM/R}$ with $M \propto \rho R^3$, so $v_e \propto R\sqrt\rho$: $2 \times 11.2 = 22.4$ km/s.`,
+              },
+            ],
+          },
+          {
+            type: "mistake",
+            wrong: "Astronauts in the International Space Station float because there is no gravity up there.",
+            right: "At the station's height (about 400 km) g is still about 8.7 m/s². Astronauts feel weightless because they and the station are both in free fall around the Earth.",
+            why: "We link 'floating' with 'no gravity'. In fact gravity is exactly what keeps the station in orbit; since everything falls with the same acceleration, nothing presses on the floor, so there is no feeling of weight.",
+          },
+          {
+            type: "activity",
+            activity: {
+              kind: "match",
+              prompt: "Match each quantity to its value or formula.",
+              pairs: [
+                ["Escape speed from the surface", t`$\sqrt{2gR}$`],
+                ["Orbital speed close to the surface", t`$\sqrt{gR}$`],
+                ["Kinetic energy of a satellite", t`$GMm/2r$`],
+                ["Potential energy of a satellite", t`$-GMm/r$`],
+                ["Total energy of a satellite", t`$-GMm/2r$`],
+              ],
+              explain: t`For a circular orbit $E = -K$ and $U = 2E$. Escape needs $\sqrt2$ times the low-orbit speed.`,
+            },
+          },
+          {
+            type: "keypoints",
+            items: [
+              t`$U = -GMm/r$ (zero at infinity); $V = -GM/r$; mgh is the near-surface form.`,
+              t`$v_e = \sqrt{2GM/R} = \sqrt{2gR} \approx 11.2$ km/s, independent of mass and direction.`,
+              t`Orbit: $v_o = \sqrt{GM/r}$, $T = 2\pi\sqrt{r^3/GM}$; near the surface 7.9 km/s and about 84.6 min.`,
+              t`$K = GMm/2r$, $U = -GMm/r$, $E = -GMm/2r$: the satellite is bound.`,
+            ],
+          },
+        ],
+        flashcards: [
+          { front: "Gravitational potential energy at distance r", back: t`$U = -GMm/r$, zero at infinity.` },
+          { front: "Gravitational potential", back: t`$V = -GM/r$; potential energy per unit mass, unit J/kg.` },
+          { front: "Escape speed", back: t`$\sqrt{2GM/R} = \sqrt{2gR} \approx 11.2$ km/s for the Earth.` },
+          { front: "Orbital speed", back: t`$\sqrt{GM/r}$; about 7.9 km/s near the Earth's surface.` },
+          { front: "Period of a satellite", back: t`$T = 2\pi\sqrt{r^3/GM}$; about 84.6 min just above the surface.` },
+          { front: "Energy of a satellite in a circular orbit", back: t`$E = -GMm/2r = -K$, and $U = 2E$.` },
+          { front: "Geostationary satellite", back: "Period 24 h, equatorial orbit, west to east, height about 35,800 km." },
+          { front: "Why does the Moon have no atmosphere?", back: "Its escape speed (about 2.3 km/s) is so low that gas molecules escape easily." },
+        ],
+        quiz: [
+          {
+            kind: "mcq",
+            q: "Close to the Earth's surface, the ratio of escape speed to orbital speed is:",
+            options: [t`$\sqrt2$`, t`$2$`, t`$1/\sqrt2$`, t`$1$`],
+            answer: 0,
+            explain: t`$v_e/v_o = \sqrt{2gR}/\sqrt{gR} = \sqrt2$.`,
+          },
+          {
+            kind: "numeric",
+            q: "A satellite in a circular orbit has a kinetic energy of 5 × 10⁹ J. What is its total energy, in units of 10⁹ J?",
+            answer: -5,
+            explain: t`For a circular orbit $E = -K = -5 \times 10^9$ J.`,
+          },
+          {
+            kind: "numeric",
+            q: "A planet has the same mass as the Earth but one-quarter of its radius. Find its escape speed (Earth's = 11.2 km/s).",
+            answer: 22.4,
+            unit: "km/s",
+            explain: t`$v_e \propto 1/\sqrt R$ at fixed M: $11.2 \times \sqrt4 = 22.4$ km/s.`,
+          },
+          {
+            kind: "truefalse",
+            q: "The escape speed of a body depends on the angle at which it is launched.",
+            answer: false,
+            explain: "Escape depends only on energy: the KE needed is the same in any direction (ignoring air resistance).",
+          },
+          {
+            kind: "numeric",
+            q: "The radius of a satellite's circular orbit is made 4 times larger. By what factor does its period change?",
+            answer: 8,
+            explain: t`$T \propto r^{3/2}$: $4^{3/2} = 8$.`,
+          },
+          {
+            kind: "multi",
+            q: "As a satellite is moved to a larger circular orbit, which of these happen?",
+            options: [
+              "Its orbital speed decreases",
+              "Its period increases",
+              "Its total energy increases (becomes less negative)",
+              "Its kinetic energy increases",
+            ],
+            answers: [0, 1, 2],
+            difficulty: 2,
+            explain: t`$v \propto 1/\sqrt r$, $T \propto r^{3/2}$, $E = -GMm/2r$ rises towards zero, while $K = GMm/2r$ falls.`,
+          },
+          {
+            kind: "mcq",
+            q: "How much work is needed to raise a mass m from the Earth's surface to a height equal to R (the Earth's radius)?",
+            options: [t`$\tfrac12 mgR$`, t`$mgR$`, t`$2mgR$`, t`$\tfrac14 mgR$`],
+            answer: 0,
+            difficulty: 2,
+            explain: t`$W = GMm\left(\dfrac1R - \dfrac1{2R}\right) = \dfrac{GMm}{2R} = \tfrac12 mgR$. Using mgh would wrongly give mgR.`,
+          },
+          {
+            kind: "numeric",
+            q: "Find the minimum energy needed to make a 100 kg body escape from the Earth's surface, in units of 10⁹ J (g = 9.8 m/s², R = 6.4 × 10⁶ m).",
+            answer: 6.27,
+            tolerance: 0.02,
+            explain: t`$E = \tfrac12 mv_e^2 = mgR = 100 \times 9.8 \times 6.4 \times 10^6 \approx 6.27 \times 10^9$ J.`,
+          },
+        ],
+      },
+      /* ---------------- Exam edge ---------------- */
+      {
+        slug: "c11-gravitation-exam-edge",
+        title: "Exam edge: Gravitation",
+        summary:
+          "What JEE, NEET, KCET and COMEDK ask from gravitation: ratio tricks, potential inside a sphere, maximum height for large launch speeds, shifting orbits, rotation and weightlessness, and the tunnel through the Earth.",
+        minutes: 25,
+        xp: 60,
+        track: "exam",
+        blocks: [
+          {
+            type: "callout",
+            tone: "exam",
+            title: "What the exams ask",
+            md: "**NEET and KCET** usually ask 1–2 direct questions: g with height and depth, escape and orbital speed ratios, satellite energy and Kepler's laws. **JEE Main** adds field and potential of shells and spheres, orbit transfers and energy problems. **JEE Advanced** mixes gravitation with SHM (tunnel through the Earth), angular momentum (elliptical orbits) or rotation of the Earth. COMEDK follows the JEE Main pattern.",
+          },
+          {
+            type: "table",
+            headers: ["Shortcut", "Result", "Safe when"],
+            rows: [
+              ["g in terms of density", t`$g = \tfrac43\pi G\rho R$`, "comparing planets of known density"],
+              ["Escape speed in terms of density", t`$v_e = R\sqrt{\tfrac83\pi G\rho}$`, "uniform spherical planet"],
+              ["Satellite energies", t`$K = -E$, $U = 2E$`, "circular orbits only"],
+              ["Potential inside a solid sphere", t`$V = -\dfrac{GM(3R^2 - r^2)}{2R^3}$; at the centre $-\tfrac32 GM/R$`, "uniform solid sphere"],
+              ["Potential of a thin shell", t`$-GM/R$ everywhere inside; $-GM/r$ outside`, "uniform thin shell"],
+              ["Maximum height for launch speed v", t`$h = \dfrac{R v^2}{2gR - v^2}$`, t`$v < v_e$, launched vertically, no air`],
+              ["Two bodies orbiting each other", t`$T^2 = \dfrac{4\pi^2 d^3}{G(m_1 + m_2)}$`, "binary stars, both masses comparable"],
+            ],
+          },
+          {
+            type: "example",
+            title: "Launch at half the escape speed (KCET / NEET level)",
+            problem: "A body is fired vertically upward from the Earth's surface with half the escape speed. How high does it rise? Ignore air resistance.",
+            steps: [
+              t`Energy: $\tfrac12 mv^2 - \dfrac{GMm}{R} = -\dfrac{GMm}{R + h}$, which gives $v^2 = 2gR\,\dfrac{h}{R + h}$ (using $GM = gR^2$).`,
+              t`$v = v_e/2 \Rightarrow v^2 = \dfrac{2gR}{4}$.`,
+              t`So $\dfrac{h}{R + h} = \dfrac14 \Rightarrow 4h = R + h \Rightarrow h = R/3$.`,
+              t`Using $v^2 = 2gh$ would give $h = R/4$, which is wrong because g falls with height.`,
+            ],
+            answer: t`$h = R/3 \approx 2130$ km for $R = 6400$ km.`,
+          },
+          {
+            type: "example",
+            title: "Moving a satellite to a higher orbit (JEE Main level)",
+            problem: "How much energy is needed to shift a 600 kg satellite from a circular orbit of radius 2R to one of radius 3R? (R = 6.4 × 10⁶ m, g = 9.8 m/s²)",
+            steps: [
+              t`$E(r) = -\dfrac{GMm}{2r}$, so $\Delta E = \dfrac{GMm}{2}\left(\dfrac{1}{2R} - \dfrac{1}{3R}\right) = \dfrac{GMm}{12R}$.`,
+              t`With $GM = gR^2$: $\Delta E = \dfrac{mgR}{12}$.`,
+              t`$\Delta E = \dfrac{600 \times 9.8 \times 6.4 \times 10^6}{12} \approx 3.14 \times 10^9$ J.`,
+            ],
+            answer: t`About $3.1 \times 10^9$ J (that is, $mgR/12$).`,
+          },
+          {
+            type: "example",
+            title: "Spin the Earth faster (JEE Main level)",
+            problem: "How fast would the Earth have to spin for a body at the equator to feel weightless? How long would a day be then? (g = 9.8 m/s², R = 6.4 × 10⁶ m)",
+            steps: [
+              t`At the equator $g' = g - \omega^2R$. Weightless means $g' = 0$, so $\omega = \sqrt{g/R}$.`,
+              t`$\omega = \sqrt{9.8/6.4 \times 10^6} \approx 1.24 \times 10^{-3}$ rad/s.`,
+              t`Day $= 2\pi/\omega \approx 5080$ s $\approx 1.4$ h, about 17 times shorter than now.`,
+            ],
+            answer: t`$\omega \approx 1.24 \times 10^{-3}$ rad/s; a day of about 1.4 hours.`,
+          },
+          {
+            type: "example",
+            title: "A tunnel through the Earth (JEE Advanced level)",
+            problem: "A straight tunnel is dug along a diameter of a uniform Earth. A ball is dropped into it from the surface. Show that it moves in SHM, and find the period and its speed at the centre.",
+            steps: [
+              t`At distance $x$ from the centre, only the mass inside radius $x$ pulls: $F = -\dfrac{GM}{R^3}\,m\,x = -\dfrac{mg}{R}\,x$.`,
+              t`Restoring force ∝ displacement, so the motion is SHM with $\omega^2 = g/R$.`,
+              t`$T = 2\pi\sqrt{R/g} = 2\pi\sqrt{6.4 \times 10^6/9.8} \approx 5080$ s $\approx 84.6$ min.`,
+              t`Speed at the centre $= \omega R = \sqrt{gR} \approx 7.9$ km/s.`,
+              t`For a smooth tunnel along any chord, the component of force along the tunnel is still $-(mg/R)x'$ ($x'$ measured from the chord's midpoint), so the period is the same.`,
+            ],
+            answer: t`SHM with $T \approx 84.6$ min (the same as a satellite skimming the surface); speed at the centre $\sqrt{gR} \approx 7.9$ km/s.`,
+          },
+          {
+            type: "mistake",
+            wrong: "To lift a body to large heights, the work needed is mgh.",
+            right: t`Use $\Delta U = GMm\left(\dfrac1R - \dfrac1{R+h}\right)$. mgh is valid only for $h \ll R$.`,
+            why: "mgh is drilled from Class 9, and it overestimates the work at large heights because it assumes g stays at its surface value.",
+          },
+          {
+            type: "mistake",
+            wrong: "A satellite in a higher orbit moves faster because it has more energy.",
+            right: "A higher orbit has more total energy but a lower speed and less kinetic energy.",
+            why: t`Total energy $-GMm/2r$ rises with r, which feels like 'more of everything'. But $K = GMm/2r$ falls with r; the extra energy is all in the less negative potential energy.`,
+          },
+          {
+            type: "activity",
+            activity: {
+              kind: "reveal",
+              prompt: "Thin air drag slowly lowers a satellite's orbit. Its speed?",
+              emoji: "🛰️",
+              options: ["Increases", "Decreases", "Stays the same"],
+              answer: 0,
+              trap: 1,
+              explain: t`Air drag removes total energy, so $E = -GMm/2r$ becomes more negative and r shrinks. Then $K = -E$ grows: drag makes a satellite **speed up** as it spirals down.`,
+            },
+          },
+          {
+            type: "checkpoint",
+            questions: [
+              {
+                kind: "numeric",
+                q: "Find the gravitational potential at the centre of a uniform solid sphere, as a multiple of GM/R (give the signed number).",
+                answer: -1.5,
+                explain: t`$V = -GM(3R^2 - 0)/(2R^3) = -\tfrac32\,GM/R$.`,
+              },
+            ],
+          },
+          {
+            type: "keypoints",
+            items: [
+              t`At fixed density: $g \propto R$ and $v_e \propto R$. At fixed mass: $g \propto 1/R^2$, $v_e \propto 1/\sqrt R$.`,
+              t`Circular orbit: $K = -E$, $U = 2E$; drag lowers the orbit and raises the speed.`,
+              t`Large launch speed: $h = Rv^2/(2gR - v^2)$; at $v_e/2$, $h = R/3$.`,
+              t`Tunnel through a uniform Earth: SHM with $T = 2\pi\sqrt{R/g} \approx 84.6$ min.`,
+              t`Equator weightless if $\omega = \sqrt{g/R}$.`,
+            ],
+          },
+        ],
+        flashcards: [
+          { front: "g and v_e in terms of density", back: t`$g = \tfrac43\pi G\rho R$; $v_e = R\sqrt{8\pi G\rho/3}$.` },
+          { front: "Potential at the centre of a uniform solid sphere", back: t`$-\tfrac32\,GM/R$.` },
+          { front: "Potential inside a thin shell", back: t`Constant, $-GM/R$ (so the field inside is zero).` },
+          { front: "Height reached for launch speed v (vertical)", back: t`$h = Rv^2/(2gR - v^2)$.` },
+          { front: "Energy to shift a satellite from r₁ to r₂", back: t`$\tfrac{GMm}{2}\left(\tfrac1{r_1} - \tfrac1{r_2}\right)$.` },
+          { front: "Effect of air drag on a satellite", back: "It sinks to a lower orbit and its speed increases." },
+          { front: "Period of a ball in a tunnel through the Earth", back: t`$2\pi\sqrt{R/g} \approx 84.6$ min, for any smooth straight tunnel.` },
+        ],
+        quiz: [
+          {
+            kind: "numeric",
+            q: "A body is fired vertically upward from the Earth's surface at 0.6 times the escape speed. Find the height reached as a fraction of R. (Give a decimal.)",
+            answer: 0.5625,
+            tolerance: 0.005,
+            difficulty: 2,
+            hint: t`$h/(R + h) = (v/v_e)^2$.`,
+            explain: t`$\dfrac{h}{R + h} = 0.36 \Rightarrow h = 0.36R + 0.36h \Rightarrow 0.64h = 0.36R \Rightarrow h = 0.5625R$.`,
+          },
+          {
+            kind: "mcq",
+            q: "Satellites A and B orbit the Earth in circles of radius R₁ and R₂ = 4R₁. The ratio of their orbital speeds v_A : v_B is:",
+            options: ["2 : 1", "1 : 2", "4 : 1", "1 : 4"],
+            answer: 0,
+            explain: t`$v \propto 1/\sqrt r$: $v_A/v_B = \sqrt{4} = 2$.`,
+          },
+          {
+            kind: "numeric",
+            q: "How much work is needed to take a 2 kg mass from the surface of a uniform shell of mass 10²⁰ kg and radius 10⁵ m to infinity? Give the answer in units of 10⁵ J (G = 6.67 × 10⁻¹¹ N m² kg⁻²).",
+            answer: 1.334,
+            tolerance: 0.005,
+            difficulty: 2,
+            explain: t`$W = GMm/R = 6.67 \times 10^{-11} \times 10^{20} \times 2/10^5 = 1.334 \times 10^5$ J.`,
+          },
+          {
+            kind: "multi",
+            q: "Which statements about a satellite in a circular orbit are correct?",
+            options: [
+              "Its kinetic energy equals the magnitude of its total energy",
+              "Its potential energy is twice its total energy",
+              "Air drag makes it slow down and fall",
+              "Its period does not depend on its own mass",
+            ],
+            answers: [0, 1, 3],
+            difficulty: 2,
+            explain: t`$K = -E$ and $U = 2E$. Drag makes it fall but **speed up**. $T = 2\pi\sqrt{r^3/GM}$ has no satellite mass in it.`,
+          },
+          {
+            kind: "numeric",
+            q: "A planet has twice the Earth's radius and half its density. Find its escape speed (Earth's = 11.2 km/s).",
+            answer: 15.84,
+            tolerance: 0.1,
+            unit: "km/s",
+            difficulty: 2,
+            explain: t`$v_e \propto R\sqrt\rho$: $11.2 \times 2 \times \sqrt{0.5} = 11.2 \times 1.414 \approx 15.8$ km/s.`,
+          },
+          {
+            kind: "numeric",
+            q: "A ball is dropped into a smooth tunnel dug along a diameter of the Earth. How long (in minutes) does it take to reach the far end? (g = 9.8 m/s², R = 6.4 × 10⁶ m)",
+            answer: 42.3,
+            tolerance: 0.3,
+            unit: "min",
+            difficulty: 3,
+            hint: "End to end is half an SHM period.",
+            explain: t`$T = 2\pi\sqrt{R/g} \approx 84.6$ min; one side to the other is $T/2 \approx 42.3$ min.`,
+          },
+          {
+            kind: "mcq",
+            q: "Two stars of masses m and 2m, a distance d apart, revolve about their common centre of mass. Their period is:",
+            options: [
+              t`$2\pi\sqrt{\dfrac{d^3}{3Gm}}$`,
+              t`$2\pi\sqrt{\dfrac{d^3}{2Gm}}$`,
+              t`$2\pi\sqrt{\dfrac{d^3}{Gm}}$`,
+              t`$2\pi\sqrt{\dfrac{3d^3}{Gm}}$`,
+            ],
+            answer: 0,
+            difficulty: 3,
+            hint: "Each star orbits the common CM with the same ω.",
+            explain: t`The lighter star orbits at $r = 2d/3$ from the CM: $\dfrac{G(m)(2m)}{d^2} = m\omega^2\dfrac{2d}{3} \Rightarrow \omega^2 = \dfrac{3Gm}{d^3}$, so $T = 2\pi\sqrt{d^3/3Gm}$, i.e. $T^2 = 4\pi^2d^3/G(m_1 + m_2)$.`,
+          },
+          {
+            kind: "numeric",
+            q: "At what height above the surface (as a fraction of R) is g reduced to the same value it has at a depth of R/2? Give a decimal.",
+            answer: 0.414,
+            tolerance: 0.005,
+            difficulty: 3,
+            explain: t`At depth $R/2$: $g/2$. Height: $g/(1 + h/R)^2 = g/2 \Rightarrow 1 + h/R = \sqrt2 \Rightarrow h = 0.414R$. (The approximate formula would give 0.25R, which is wrong here.)`,
+          },
+        ],
+      },
+    ],
+  },
 ];
 
 export const links: Record<string, string | string[]> = {

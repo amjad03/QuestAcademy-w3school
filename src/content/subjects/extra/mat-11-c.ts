@@ -977,7 +977,7 @@ The **arithmetic mean (AM)** of $a$ and $b$ is $A = \frac{a + b}{2}$; then $a, A
           },
           {
             type: "mistake",
-            wrong: t`If $S_n = 3n^2 + 2n$ then the nth term is $3n^2 + 2n$, or $a_1 = S_1 - S_0$ is a separate rule.`,
+            wrong: t`If $S_n = 3n^2 + 2n$, then the nth term is also $3n^2 + 2n$.`,
             right: t`$S_n$ is the total of $n$ terms, not the $n$th term. Use $a_n = S_n - S_{n-1}$ for $n \ge 2$ and $a_1 = S_1$.`,
             why: t`Both are written with a subscript $n$, so they look alike. Mixing them up gives a wrong common difference straight away.`,
           },
@@ -1080,6 +1080,424 @@ The **arithmetic mean (AM)** of $a$ and $b$ is $A = \frac{a + b}{2}$; then $a, A
             options: ["₹15,860", "₹13,260", "₹2,600", "₹16,120"],
             answer: 0,
             explain: t`$S_{52} = \frac{52}{2}[2(50) + 51(10)] = 26 \times 610 = 15\,860$, so ₹15,860.`,
+          },
+        ],
+      },
+      {
+        slug: "c11-geometric-progressions",
+        title: "Geometric Progressions and the AM–GM Inequality",
+        summary: "The nth term and sum of a GP, the sum to infinity, geometric means, and the proof that AM ≥ GM for two positive numbers.",
+        minutes: 22,
+        xp: 55,
+        blocks: [
+          {
+            type: "illustration",
+            emoji: "🦠",
+            caption: "A bacterial culture doubles every hour: 1000, 2000, 4000, 8000, … Each term is the previous one multiplied by the same number. That is a geometric progression.",
+          },
+          {
+            type: "text",
+            md: t`A sequence of non-zero numbers is a **geometric progression (GP)** if the ratio of each term to the one before it is a constant $r$, the **common ratio**: $\frac{a_{k+1}}{a_k} = r$. With first term $a$, the GP is $a, ar, ar^2, ar^3, \ldots$ and its nth term is $a_n = ar^{n-1}$.
+
+**Sum of n terms.** Let $S_n = a + ar + \cdots + ar^{n-1}$. Multiply by $r$: $rS_n = ar + ar^2 + \cdots + ar^n$. Subtracting, every middle term cancels: $S_n - rS_n = a - ar^n$, so $S_n(1 - r) = a(1 - r^n)$.`,
+          },
+          {
+            type: "formula",
+            tex: t`a_n = ar^{n-1} \qquad S_n = \frac{a(r^n - 1)}{r - 1} = \frac{a(1 - r^n)}{1 - r} \;\; (r \ne 1), \qquad S_n = na \;\; (r = 1)`,
+            caption: "Use the (r^n − 1)/(r − 1) form when r > 1 to avoid negative signs.",
+          },
+          {
+            type: "example",
+            title: "Term and sum",
+            problem: "For the GP 3, 6, 12, …, find the 10th term and the sum of the first 10 terms.",
+            steps: [
+              t`$a = 3$, $r = 2$. $a_{10} = 3 \cdot 2^9 = 3 \times 512 = 1536$.`,
+              t`$S_{10} = \frac{3(2^{10} - 1)}{2 - 1} = 3 \times 1023 = 3069$.`,
+            ],
+            answer: t`$a_{10} = 1536$, $S_{10} = 3069$`,
+          },
+          {
+            type: "example",
+            title: "How many terms?",
+            problem: "How many terms of the GP 2 + 6 + 18 + … add up to 728?",
+            steps: [
+              t`$a = 2$, $r = 3$: $S_n = \frac{2(3^n - 1)}{3 - 1} = 3^n - 1$.`,
+              t`$3^n - 1 = 728$ gives $3^n = 729 = 3^6$.`,
+            ],
+            answer: t`$n = 6$ (check: $2 + 6 + 18 + 54 + 162 + 486 = 728$).`,
+          },
+          {
+            type: "text",
+            md: t`**Sum to infinity.** If $|r| < 1$, then $r^n \to 0$ as $n$ grows, so $S_n = \frac{a(1 - r^n)}{1 - r}$ gets as close as we like to $\frac{a}{1 - r}$. This value is the **sum to infinity** $S_\infty$. If $|r| \ge 1$ the terms do not shrink and the infinite GP has no finite sum.
+
+(NCERT places infinite series in an appendix rather than the main chapter; ISC, KCET, COMEDK and JEE use $S_\infty$ freely.)`,
+          },
+          {
+            type: "formula",
+            tex: t`S_\infty = \frac{a}{1 - r}, \qquad |r| < 1`,
+          },
+          {
+            type: "example",
+            title: "A recurring decimal as a fraction",
+            problem: t`Write $0.\overline{45} = 0.454545\ldots$ as a fraction.`,
+            steps: [
+              t`$0.4545\ldots = \frac{45}{100} + \frac{45}{100^2} + \frac{45}{100^3} + \cdots$, a GP with $a = \frac{45}{100}$, $r = \frac{1}{100}$.`,
+              t`$S_\infty = \frac{45/100}{1 - 1/100} = \frac{45/100}{99/100} = \frac{45}{99}$.`,
+            ],
+            answer: t`$\frac{5}{11}$`,
+          },
+          {
+            type: "text",
+            md: t`**Geometric mean (GM).** For positive $a$ and $b$, $G = \sqrt{ab}$ makes $a, G, b$ a GP. To insert $n$ GMs between $a$ and $b$, note that $b$ is term $n + 2$: $b = ar^{n+1}$, so $r = \left(\frac{b}{a}\right)^{\frac{1}{n+1}}$. Three numbers $a, b, c$ are in GP exactly when $b^2 = ac$.
+
+**Example.** Inserting 3 GMs between 2 and 162: $r^4 = 81$, so $r = 3$ and the means are 6, 18, 54.`,
+          },
+          {
+            type: "formula",
+            tex: t`A - G = \frac{a + b}{2} - \sqrt{ab} = \frac{(\sqrt{a} - \sqrt{b})^2}{2} \ge 0 \quad\Longrightarrow\quad \frac{a+b}{2} \ge \sqrt{ab}`,
+            caption: "AM ≥ GM for positive a, b, with equality only when a = b.",
+          },
+          {
+            type: "example",
+            title: "Numbers from their AM and GM",
+            problem: "The AM and GM of two positive numbers are 10 and 8. Find the numbers.",
+            steps: [
+              t`$\frac{a + b}{2} = 10$ gives $a + b = 20$; $\sqrt{ab} = 8$ gives $ab = 64$.`,
+              t`$a$ and $b$ are the roots of $x^2 - 20x + 64 = 0$, i.e. $(x - 16)(x - 4) = 0$.`,
+              t`Check: AM $= 10$ ✓, GM $= \sqrt{64} = 8$ ✓, and $10 \ge 8$ as AM–GM says.`,
+            ],
+            answer: "16 and 4",
+          },
+          {
+            type: "checkpoint",
+            questions: [
+              {
+                kind: "numeric",
+                q: "Find the geometric mean of 4 and 25.",
+                answer: 10,
+                explain: t`$G = \sqrt{4 \times 25} = \sqrt{100} = 10$.`,
+              },
+              {
+                kind: "mcq",
+                q: t`The sum to infinity of $6 - 3 + \frac{3}{2} - \frac{3}{4} + \cdots$ is`,
+                options: ["4", "12", "2", "It does not exist"],
+                answer: 0,
+                explain: t`$a = 6$, $r = -\frac{1}{2}$: $S_\infty = \frac{6}{1 + \frac{1}{2}} = 4$. 12 comes from forgetting the minus sign in $r$.`,
+              },
+            ],
+          },
+          {
+            type: "mistake",
+            wrong: t`The nth term of a GP is $ar^n$, so the 10th term of 3, 6, 12, … is $3 \cdot 2^{10} = 3072$.`,
+            right: t`The first term already is $ar^0$, so $a_n = ar^{n-1}$: $a_{10} = 3 \cdot 2^9 = 1536$.`,
+            why: "Counting the multiplications instead of the terms: to reach the 10th term you multiply by r only 9 times. The same off-by-one error hits the AP formula.",
+          },
+          {
+            type: "activity",
+            activity: {
+              kind: "sort",
+              prompt: "Is each sequence an AP, a GP or neither?",
+              groups: ["AP", "GP", "Neither"],
+              items: [
+                { text: "2, 6, 18, 54", group: 1, hint: "Each term is 3 times the one before." },
+                { text: "5, 8, 11, 14", group: 0, hint: "The difference is always 3." },
+                { text: "1, 4, 9, 16", group: 2, hint: "Differences 3, 5, 7 and ratios 4, 2.25, 1.78 both change." },
+                { text: "3, −3, 3, −3", group: 1, hint: "The common ratio is −1." },
+                { text: "1/2, 1/4, 1/8, 1/16", group: 1, hint: "The ratio is 1/2." },
+                { text: "10, 6, 2, −2", group: 0, hint: "The difference is −4; a negative d is fine." },
+                { text: "1, 1/2, 1/3, 1/4", group: 2, hint: "The reciprocals form an AP (this is a harmonic progression), but the terms do not." },
+              ],
+              explain: "Test the differences for an AP and the ratios for a GP. Squares and reciprocals of an AP are usually neither.",
+            },
+          },
+          {
+            type: "callout",
+            tone: "exam",
+            title: "Board-exam tips",
+            md: t`The derivation of $S_n$ (multiply by $r$ and subtract) and the proof of AM ≥ GM are standard 3–4 mark questions. For three numbers in GP take $\frac{a}{r}, a, ar$, so their product is $a^3$. Before using $S_\infty$, write "$|r| < 1$" to show the sum exists.`,
+          },
+          {
+            type: "keypoints",
+            items: [
+              t`GP: $a_n = ar^{n-1}$, $S_n = \frac{a(r^n - 1)}{r - 1}$ ($r \ne 1$), $S_n = na$ ($r = 1$).`,
+              t`If $|r| < 1$, $S_\infty = \frac{a}{1 - r}$; otherwise no finite sum.`,
+              t`GM of positive $a$, $b$: $\sqrt{ab}$; $n$ GMs need $r = (b/a)^{1/(n+1)}$; $a, b, c$ in GP $\iff b^2 = ac$.`,
+              t`AM ≥ GM for positive numbers, because $A - G = \frac{(\sqrt a - \sqrt b)^2}{2}$; equality iff $a = b$.`,
+            ],
+          },
+        ],
+        flashcards: [
+          { front: "nth term of a GP", back: t`$ar^{n-1}$` },
+          { front: "Sum of n terms of a GP", back: t`$\frac{a(r^n - 1)}{r - 1}$, $r \ne 1$; $na$ if $r = 1$.` },
+          { front: "Sum to infinity of a GP", back: t`$\frac{a}{1 - r}$, only when $|r| < 1$.` },
+          { front: "Geometric mean of a and b (positive)", back: t`$\sqrt{ab}$` },
+          { front: t`Condition for $a, b, c$ in GP`, back: t`$b^2 = ac$` },
+          { front: "AM–GM inequality", back: t`$\frac{a+b}{2} \ge \sqrt{ab}$ for $a, b > 0$; equality iff $a = b$.` },
+          { front: "Three numbers in GP: how to choose them", back: t`$\frac{a}{r}, a, ar$ (product $a^3$).` },
+        ],
+        quiz: [
+          {
+            kind: "numeric",
+            q: "Find the 8th term of the GP 5, 10, 20, …",
+            answer: 640,
+            explain: t`$5 \cdot 2^7 = 5 \times 128 = 640$.`,
+          },
+          {
+            kind: "numeric",
+            q: "Find the sum of the first 6 terms of 1 + 3 + 9 + …",
+            answer: 364,
+            explain: t`$\frac{3^6 - 1}{3 - 1} = \frac{728}{2} = 364$.`,
+          },
+          {
+            kind: "truefalse",
+            q: t`If $a, b, c$ are in GP then $b^2 = ac$.`,
+            answer: true,
+            explain: t`$\frac{b}{a} = \frac{c}{b}$ gives $b^2 = ac$.`,
+          },
+          {
+            kind: "mcq",
+            q: t`For $x > 0$, the least value of $x + \frac{9}{x}$ is`,
+            options: ["6", "9", "3", "10"],
+            answer: 0,
+            explain: t`AM ≥ GM: $\frac{x + 9/x}{2} \ge \sqrt{9} = 3$, so $x + \frac{9}{x} \ge 6$, with equality at $x = 3$.`,
+          },
+          {
+            kind: "numeric",
+            q: "The 4th term of a GP is 24 and the 7th term is 192. Find the first term.",
+            answer: 3,
+            explain: t`$\frac{ar^6}{ar^3} = r^3 = 8$, so $r = 2$ and $a = \frac{24}{8} = 3$.`,
+          },
+          {
+            kind: "multi",
+            q: "Which infinite series have a finite sum?",
+            options: [
+              t`$1 + \frac{1}{3} + \frac{1}{9} + \cdots$`,
+              t`$4 - 2 + 1 - \cdots$`,
+              t`$1 + 1 + 1 + \cdots$`,
+              t`$2 - 3 + 4.5 - \cdots$`,
+            ],
+            answers: [0, 1],
+            explain: t`The ratios are $\frac{1}{3}$, $-\frac{1}{2}$, $1$ and $-\frac{3}{2}$. Only $|r| < 1$ gives a sum to infinity: $\frac{3}{2}$ and $\frac{8}{3}$.`,
+          },
+          {
+            kind: "mcq",
+            q: "Three geometric means are inserted between 1 and 256. The middle one is",
+            options: ["16", "64", "4", "128"],
+            answer: 0,
+            difficulty: 2,
+            hint: "The middle mean is the GM of 1 and 256.",
+            explain: t`$r^4 = 256$ gives $r = 4$: means 4, 16, 64. The middle one is $\sqrt{1 \times 256} = 16$.`,
+          },
+          {
+            kind: "numeric",
+            q: t`Write $0.\overline{36}$ as a fraction $\frac{p}{q}$ in lowest terms and give $p + q$.`,
+            answer: 15,
+            difficulty: 2,
+            explain: t`$\frac{36/100}{1 - 1/100} = \frac{36}{99} = \frac{4}{11}$, so $p + q = 15$.`,
+          },
+        ],
+      },
+      {
+        slug: "c11-special-series",
+        title: "Sum to n Terms of Special Series",
+        summary: "Sigma rules, the sums of the first n natural numbers, their squares and their cubes, with the derivation boards ask for, and how to sum any series whose nth term is a polynomial in n.",
+        minutes: 20,
+        xp: 50,
+        blocks: [
+          {
+            type: "illustration",
+            emoji: "🍊",
+            caption: "A fruit seller stacks oranges in a square pyramid: 1 on top, then 4, 9, 16, … How many oranges are in a stack 10 layers high? You need 1² + 2² + … + 10².",
+          },
+          {
+            type: "text",
+            md: t`Sigma notation follows three simple rules, all because a finite sum can be regrouped:
+
+$\sum_{k=1}^{n}(a_k \pm b_k) = \sum_{k=1}^{n}a_k \pm \sum_{k=1}^{n}b_k$, $\quad\sum_{k=1}^{n}c\,a_k = c\sum_{k=1}^{n}a_k$, $\quad\sum_{k=1}^{n}c = nc$.
+
+So once we know $\sum k$, $\sum k^2$ and $\sum k^3$, we can add up any series whose $k$th term is a polynomial of degree at most 3 in $k$. The first one is an AP sum.`,
+          },
+          {
+            type: "formula",
+            tex: t`\sum_{k=1}^{n} k = 1 + 2 + \cdots + n = \frac{n(n+1)}{2}`,
+          },
+          {
+            type: "list",
+            ordered: true,
+            items: [
+              t`Start from the identity $(k+1)^3 - k^3 = 3k^2 + 3k + 1$.`,
+              t`Write it for $k = 1, 2, \ldots, n$: $2^3 - 1^3$, $3^3 - 2^3$, …, $(n+1)^3 - n^3$.`,
+              t`Add all $n$ lines. On the left everything cancels except $(n+1)^3 - 1$.`,
+              t`On the right: $3\sum k^2 + 3\cdot\frac{n(n+1)}{2} + n$.`,
+              t`So $3\sum k^2 = (n+1)^3 - 1 - \frac{3n(n+1)}{2} - n = \frac{n(n+1)(2n+1)}{2}$, which gives the formula below.`,
+            ],
+          },
+          {
+            type: "formula",
+            tex: t`\sum_{k=1}^{n} k^2 = \frac{n(n+1)(2n+1)}{6}`,
+            caption: "Derived above. The same method with (k + 1)^4 − k^4 gives the sum of cubes.",
+          },
+          {
+            type: "formula",
+            tex: t`\sum_{k=1}^{n} k^3 = \left[\frac{n(n+1)}{2}\right]^2 = \left(\sum_{k=1}^{n} k\right)^2`,
+            caption: "The sum of the first n cubes is the square of the sum of the first n natural numbers.",
+          },
+          {
+            type: "example",
+            title: "The orange pyramid",
+            problem: t`Find $1^2 + 2^2 + \cdots + 10^2$, and then $11^2 + 12^2 + \cdots + 20^2$.`,
+            steps: [
+              t`$\sum_{k=1}^{10}k^2 = \frac{10 \cdot 11 \cdot 21}{6} = 385$ oranges.`,
+              t`$\sum_{k=1}^{20}k^2 = \frac{20 \cdot 21 \cdot 41}{6} = 2870$.`,
+              t`A block that does not start at 1: subtract. $\sum_{11}^{20}k^2 = 2870 - 385$.`,
+            ],
+            answer: "385 oranges; and 2485.",
+          },
+          {
+            type: "example",
+            title: "A product series",
+            problem: t`Find the sum to $n$ terms of $1\cdot2 + 2\cdot3 + 3\cdot4 + \cdots$.`,
+            steps: [
+              t`The $k$th term is $a_k = k(k+1) = k^2 + k$.`,
+              t`$S_n = \sum k^2 + \sum k = \frac{n(n+1)(2n+1)}{6} + \frac{n(n+1)}{2}$.`,
+              t`Take out $\frac{n(n+1)}{6}$: $S_n = \frac{n(n+1)}{6}[(2n+1) + 3] = \frac{n(n+1)(2n+4)}{6}$.`,
+              t`Check $n = 2$: $2 + 6 = 8$ and $\frac{2\cdot3\cdot4}{3} = 8$. ✓`,
+            ],
+            answer: t`$S_n = \frac{n(n+1)(n+2)}{3}$`,
+          },
+          {
+            type: "example",
+            title: "Squares of odd numbers",
+            problem: t`Find $1^2 + 3^2 + 5^2 + \cdots$ to $n$ terms.`,
+            steps: [
+              t`$a_k = (2k - 1)^2 = 4k^2 - 4k + 1$.`,
+              t`$S_n = 4\cdot\frac{n(n+1)(2n+1)}{6} - 4\cdot\frac{n(n+1)}{2} + n$.`,
+              t`$= \frac{n}{3}\left[2(n+1)(2n+1) - 6(n+1) + 3\right] = \frac{n}{3}(4n^2 + 6n + 2 - 6n - 6 + 3) = \frac{n(4n^2 - 1)}{3}$.`,
+              t`Check $n = 3$: $1 + 9 + 25 = 35$ and $\frac{3 \cdot 35}{3} = 35$. ✓`,
+            ],
+            answer: t`$S_n = \frac{n(2n-1)(2n+1)}{3}$`,
+          },
+          {
+            type: "checkpoint",
+            questions: [
+              {
+                kind: "numeric",
+                q: t`Find $1^3 + 2^3 + \cdots + 10^3$.`,
+                answer: 3025,
+                explain: t`$\left(\frac{10 \cdot 11}{2}\right)^2 = 55^2 = 3025$.`,
+              },
+              {
+                kind: "numeric",
+                q: t`Find $\sum_{k=1}^{20} k$.`,
+                answer: 210,
+                explain: t`$\frac{20 \cdot 21}{2} = 210$.`,
+              },
+            ],
+          },
+          {
+            type: "mistake",
+            wrong: t`$\sum k^2 = \left(\sum k\right)^2$, so $1^2 + 2^2 + 3^2 = 6^2 = 36$.`,
+            right: t`$1^2 + 2^2 + 3^2 = 14 = \frac{3 \cdot 4 \cdot 7}{6}$. It is the sum of **cubes** that equals $(\sum k)^2$: $1 + 8 + 27 = 36$.`,
+            why: t`The cube formula is so neat that students carry it over to squares. Squaring a sum also adds cross terms like $2 \cdot 1 \cdot 2$, so it cannot equal the sum of squares.`,
+          },
+          {
+            type: "activity",
+            activity: {
+              kind: "match",
+              prompt: "Match each sum (k = 1 to n) with its formula.",
+              pairs: [
+                [t`$\sum k$`, t`$\frac{n(n+1)}{2}$`],
+                [t`$\sum k^2$`, t`$\frac{n(n+1)(2n+1)}{6}$`],
+                [t`$\sum k^3$`, t`$\left[\frac{n(n+1)}{2}\right]^2$`],
+                [t`$\sum 1$`, t`$n$`],
+                [t`$\sum (2k - 1)$`, t`$n^2$`],
+              ],
+              explain: t`$\sum(2k-1) = 2\cdot\frac{n(n+1)}{2} - n = n^2$: the first $n$ odd numbers add up to a perfect square.`,
+            },
+          },
+          {
+            type: "callout",
+            tone: "note",
+            title: "Board note",
+            md: t`The section on sums of special series ($\sum n$, $\sum n^2$, $\sum n^3$) has been dropped from the rationalised NCERT chapter used by **CBSE** and **Karnataka I PUC**; check your current syllabus. **ISC** Class 11 lists these sums explicitly, and **JEE Main, KCET and COMEDK** use them all the time (and in Class 12 integration as limits of sums).`,
+          },
+          {
+            type: "callout",
+            tone: "exam",
+            title: "Exam tips",
+            md: t`Find the $k$th term first and write it as a polynomial in $k$; then split the sum with the sigma rules. Factor out common pieces like $\frac{n(n+1)}{6}$ early. Always check your final formula with $n = 1$ and $n = 2$.`,
+          },
+          {
+            type: "keypoints",
+            items: [
+              t`$\sum k = \frac{n(n+1)}{2}$, $\sum k^2 = \frac{n(n+1)(2n+1)}{6}$, $\sum k^3 = \left[\frac{n(n+1)}{2}\right]^2$.`,
+              t`$\sum k^2$ comes from adding $(k+1)^3 - k^3 = 3k^2 + 3k + 1$ for $k = 1$ to $n$.`,
+              t`For a series, find $a_k$ as a polynomial in $k$, then use $\sum(a_k \pm b_k)$ and $\sum c\,a_k$.`,
+              t`For a block from $m$ to $n$, compute $S_n - S_{m-1}$.`,
+            ],
+          },
+        ],
+        flashcards: [
+          { front: t`$\sum_{k=1}^{n} k$`, back: t`$\frac{n(n+1)}{2}$` },
+          { front: t`$\sum_{k=1}^{n} k^2$`, back: t`$\frac{n(n+1)(2n+1)}{6}$` },
+          { front: t`$\sum_{k=1}^{n} k^3$`, back: t`$\left[\frac{n(n+1)}{2}\right]^2$` },
+          { front: t`Identity used to derive $\sum k^2$`, back: t`$(k+1)^3 - k^3 = 3k^2 + 3k + 1$, summed for $k = 1$ to $n$.` },
+          { front: t`$\sum_{k=1}^{n} k(k+1)$`, back: t`$\frac{n(n+1)(n+2)}{3}$` },
+          { front: t`Sum from $k = m$ to $n$`, back: t`$S_n - S_{m-1}$` },
+        ],
+        quiz: [
+          {
+            kind: "numeric",
+            q: t`Find $1^2 + 2^2 + \cdots + 12^2$.`,
+            answer: 650,
+            explain: t`$\frac{12 \cdot 13 \cdot 25}{6} = 650$.`,
+          },
+          {
+            kind: "numeric",
+            q: t`Find $1^3 + 2^3 + \cdots + 15^3$.`,
+            answer: 14400,
+            explain: t`$\left(\frac{15 \cdot 16}{2}\right)^2 = 120^2 = 14\,400$.`,
+          },
+          {
+            kind: "numeric",
+            q: "Find 2 + 4 + 6 + … + 100.",
+            answer: 2550,
+            explain: t`$2(1 + 2 + \cdots + 50) = 2 \cdot \frac{50 \cdot 51}{2} = 2550$.`,
+          },
+          {
+            kind: "truefalse",
+            q: t`$1^3 + 2^3 + \cdots + n^3 = (1 + 2 + \cdots + n)^2$ for every natural number $n$.`,
+            answer: true,
+            explain: t`Both equal $\left[\frac{n(n+1)}{2}\right]^2$.`,
+          },
+          {
+            kind: "mcq",
+            q: t`$1^2 + 3^2 + 5^2 + \cdots$ to $n$ terms equals`,
+            options: [t`$\frac{n(2n-1)(2n+1)}{3}$`, t`$\frac{n(n+1)(2n+1)}{6}$`, t`$n^2$`, t`$\frac{n(2n+1)(4n+1)}{6}$`],
+            answer: 0,
+            explain: t`$\sum(2k-1)^2 = \sum(4k^2 - 4k + 1) = \frac{n(4n^2 - 1)}{3}$. Check $n = 2$: $1 + 9 = 10 = \frac{2 \cdot 3 \cdot 5}{3}$.`,
+          },
+          {
+            kind: "numeric",
+            q: "Find the sum of the first 10 terms of the series whose nth term is n(n + 1).",
+            answer: 440,
+            difficulty: 2,
+            explain: t`$\frac{n(n+1)(n+2)}{3}$ at $n = 10$: $\frac{10 \cdot 11 \cdot 12}{3} = 440$.`,
+          },
+          {
+            kind: "numeric",
+            q: t`Find $11^2 + 12^2 + \cdots + 20^2$.`,
+            answer: 2485,
+            difficulty: 2,
+            hint: "Subtract the sum up to 10 from the sum up to 20.",
+            explain: t`$2870 - 385 = 2485$.`,
+          },
+          {
+            kind: "mcq",
+            q: t`$\sum_{k=1}^{n}(k^2 + 1)$ equals`,
+            options: [t`$\frac{n(n+1)(2n+1)}{6} + n$`, t`$\frac{n(n+1)(2n+1)}{6} + 1$`, t`$\frac{n(n+1)(2n+1)}{6}$`, t`$\frac{n(n+1)}{2} + n$`],
+            answer: 0,
+            explain: t`$\sum 1 = n$, not 1: the constant is added once for each of the $n$ terms.`,
           },
         ],
       },

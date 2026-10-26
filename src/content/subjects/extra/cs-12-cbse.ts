@@ -2938,7 +2938,7 @@ POP_ALL(ST)`,
               ["Twisted pair cable", "pairs of insulated copper wires twisted together to reduce interference (UTP / STP)", "cheap, flexible; telephone lines and Ethernet LANs with RJ45; limited to about 100 m per segment"],
               ["Coaxial cable", "a copper core, insulation, a braided metal shield and an outer jacket", "better shielding and higher bandwidth than twisted pair; cable TV"],
               ["Optical fibre", "light pulses travel through a thin glass or plastic core by total internal reflection", "very high bandwidth, immune to electrical noise, long distances; costly and hard to join; backbones and undersea cables"],
-              ["Radio waves (3 kHz – 1 GHz)", "travel in all directions and pass through walls", "FM/AM radio, cordless phones, mobile phones, Wi-Fi uses nearby bands"],
+              ["Radio waves (3 kHz – 1 GHz)", "travel in all directions and pass through walls", "FM/AM radio, cordless phones, mobile phones"],
               ["Microwaves (1 GHz – 300 GHz)", "travel in straight lines; need line of sight between towers or dishes", "long-distance links, satellite communication"],
               ["Infrared (300 GHz – 400 THz)", "short range, line of sight, cannot pass through walls", "TV remotes, short-range data between nearby devices"],
             ],
@@ -3007,7 +3007,7 @@ POP_ALL(ST)`,
           },
         ],
         flashcards: [
-          { front: "What was ARPANET?", back: "The first packet-switched network (1969), funded by the US Department of Defense, linking universities and research centres." },
+          { front: "What was ARPANET?", back: "An early packet-switched network (1969), funded by the US Department of Defense, linking universities and research centres." },
           { front: "What was NSFNET?", back: "A faster network built in 1986 by the US National Science Foundation for academic research." },
           { front: "Five components of data communication?", back: "Sender, receiver, message, communication medium, protocol." },
           { front: "Unit of bandwidth? Of data transfer rate?", back: "Hertz (Hz); bits per second (bps)." },
@@ -3810,7 +3810,7 @@ POP_ALL(ST)`,
         blocks: [
           {
             type: "text",
-            md: "**SQL (Structured Query Language)** is the standard language for working with relational databases. It is used in MySQL, Oracle, PostgreSQL and SQLite. SQL keywords are **not case-sensitive** (`select` = `SELECT`), and each statement ends with a semicolon.\n\nSQL commands fall into groups. **DDL (Data Definition Language)** defines and changes the **structure**: `CREATE`, `ALTER`, `DROP`. **DML (Data Manipulation Language)** works with the **data** in the tables: `INSERT`, `UPDATE`, `DELETE` and (in the NCERT grouping) the query command `SELECT`.",
+            md: "**SQL (Structured Query Language)** is the standard language for working with relational databases. It is used in MySQL, Oracle, PostgreSQL and SQLite. SQL keywords are **not case-sensitive** (`select` = `SELECT`), and each statement ends with a semicolon.\n\nSQL commands fall into groups. **DDL (Data Definition Language)** defines and changes the **structure**: `CREATE`, `ALTER`, `DROP`. **DML (Data Manipulation Language)** works with the **data** in the tables: `INSERT`, `UPDATE`, `DELETE`. The query command `SELECT` retrieves data; most school books group it with DML, some call it a separate query language (DQL).",
           },
           {
             type: "table",
@@ -3857,10 +3857,11 @@ DESCRIBE STUDENT;`,
             caption: "Changing and removing structure (display only)",
             code: r`ALTER TABLE STUDENT ADD Phone CHAR(10);      -- add an attribute
 ALTER TABLE STUDENT DROP Phone;               -- remove an attribute
+ALTER TABLE STUDENT MODIFY Name VARCHAR(40);  -- change a column's type
+DROP TABLE FEES;                              -- delete a table itself
+-- with FEES gone, no foreign key depends on STUDENT's primary key:
 ALTER TABLE STUDENT DROP PRIMARY KEY;         -- remove the primary key
 ALTER TABLE STUDENT ADD PRIMARY KEY (AdmNo);  -- add a primary key
-ALTER TABLE STUDENT MODIFY Name VARCHAR(40);  -- change a column's type
-DROP TABLE FEES;                              -- delete the table itself
 DROP DATABASE school;                         -- delete the whole database`,
           },
           {

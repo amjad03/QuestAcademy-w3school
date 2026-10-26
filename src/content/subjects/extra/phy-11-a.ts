@@ -1544,10 +1544,860 @@ Acceleration has a sign too. A body **speeds up** when $v$ and $a$ have the same
       },
     ],
   },
+  /* ------------------------------------------------------------------ */
+  /* Motion in a Plane (NCERT) = Kinematics, part 2 (ISC)                */
+  /* ------------------------------------------------------------------ */
+  {
+    slug: "c11-motion-in-a-plane",
+    title: "Motion in a Plane",
+    icon: "🎯",
+    description: "Scalars and vectors, vector addition and resolution, motion with constant acceleration in a plane, projectile motion, relative velocity in two dimensions and uniform circular motion.",
+    lessons: [
+      {
+        slug: "c11-scalars-vectors",
+        title: "Scalars, Vectors and Vector Algebra",
+        summary: "Scalars and vectors, equality and multiplication by a number, triangle and parallelogram laws, subtraction, unit vectors, resolution into components and analytical addition.",
+        minutes: 22,
+        xp: 50,
+        blocks: [
+          {
+            type: "illustration",
+            emoji: "🧭",
+            caption: "\"Walk 300 m\" is not enough to reach a friend's house in a new colony. You also need to know: which way? That extra piece of information is what makes a vector.",
+          },
+          {
+            type: "text",
+            md: t`A **scalar** has only magnitude: mass, time, temperature, speed, work, energy. Scalars add by ordinary arithmetic.
+
+A **vector** has magnitude and direction **and** adds by the triangle (or parallelogram) law: displacement, velocity, acceleration, force, momentum. Electric current has a direction along a wire, but currents meeting at a junction add as plain numbers, so current is a scalar.
+
+We write a vector in bold or with an arrow, $\vec{A}$, and its magnitude as $|\vec{A}|$ or $A$.`,
+          },
+          {
+            type: "text",
+            md: t`The **position vector** $\vec{r}$ of a point joins the origin to it. The **displacement vector** joins the initial position to the final one, whatever path was taken.
+
+Two vectors are **equal** if they have the same magnitude and the same direction; they can sit anywhere in space. Multiplying $\vec{A}$ by a real number $\lambda$ gives a vector of magnitude $|\lambda| A$, in the same direction if $\lambda > 0$ and opposite if $\lambda < 0$. The **null (zero) vector** $\vec{0}$ has zero magnitude and no fixed direction; $\vec{A} + (-\vec{A}) = \vec{0}$.`,
+          },
+          {
+            type: "formula",
+            tex: t`R = \sqrt{A^2 + B^2 + 2AB\cos\theta} \qquad \tan\alpha = \frac{B\sin\theta}{A + B\cos\theta}`,
+            caption: "Parallelogram (or triangle) law: θ is the angle between A and B placed tail to tail; α is the angle the resultant R makes with A.",
+          },
+          {
+            type: "text",
+            md: t`Vector addition is **commutative**, $\vec{A} + \vec{B} = \vec{B} + \vec{A}$, and **associative**, $(\vec{A} + \vec{B}) + \vec{C} = \vec{A} + (\vec{B} + \vec{C})$. **Subtraction** is addition of the negative: $\vec{A} - \vec{B} = \vec{A} + (-\vec{B})$, so its magnitude is $\sqrt{A^2 + B^2 - 2AB\cos\theta}$.
+
+The resultant of two vectors lies between $|A - B|$ (when $\theta = 180°$) and $A + B$ (when $\theta = 0°$). At $\theta = 90°$, $R = \sqrt{A^2 + B^2}$.`,
+          },
+          {
+            type: "example",
+            title: "Resultant of two forces",
+            problem: "Two forces of 3 N and 4 N act on a ring with an angle of 60° between them. Find the magnitude and direction of the resultant.",
+            steps: [
+              t`$R^2 = 3^2 + 4^2 + 2(3)(4)\cos 60° = 9 + 16 + 12 = 37$, so $R = \sqrt{37} \approx 6.08$ N.`,
+              t`$\tan\alpha = \dfrac{4\sin 60°}{3 + 4\cos 60°} = \dfrac{3.464}{5} = 0.693$.`,
+              t`$\alpha \approx 34.7°$ from the 3 N force.`,
+            ],
+            answer: "About 6.08 N at 34.7° to the 3 N force.",
+          },
+          {
+            type: "text",
+            md: t`**Unit vectors** have magnitude 1 and only show direction. Along the axes we use $\hat{i}$, $\hat{j}$, $\hat{k}$. For any vector, $\hat{A} = \vec{A}/A$.
+
+**Resolution** means splitting a vector into components along chosen directions. In a plane, if $\vec{A}$ makes angle $\theta$ with the $x$-axis:
+$\vec{A} = A_x\hat{i} + A_y\hat{j}$, with $A_x = A\cos\theta$, $A_y = A\sin\theta$, $A = \sqrt{A_x^2 + A_y^2}$ and $\tan\theta = A_y/A_x$. In 3D, $A = \sqrt{A_x^2 + A_y^2 + A_z^2}$.
+
+To add vectors **analytically**, add their components: $\vec{R} = (A_x + B_x)\hat{i} + (A_y + B_y)\hat{j}$.`,
+          },
+          {
+            type: "example",
+            title: "Adding by components",
+            problem: "A drone flies 10 m at 30° north of east, then 4 m due west. Find its net displacement.",
+            steps: [
+              t`Take east as $\hat{i}$ and north as $\hat{j}$. First leg: $10\cos 30° = 8.66$ m east, $10\sin 30° = 5.00$ m north.`,
+              t`Second leg: $-4\hat{i}$.`,
+              t`$\vec{R} = (8.66 - 4)\hat{i} + 5.00\hat{j} = 4.66\hat{i} + 5.00\hat{j}$ m.`,
+              t`$R = \sqrt{4.66^2 + 5.00^2} = \sqrt{46.7} \approx 6.83$ m; $\tan\theta = 5.00/4.66 = 1.073$, $\theta \approx 47°$ north of east.`,
+            ],
+            answer: "About 6.83 m at 47° north of east.",
+          },
+          {
+            type: "checkpoint",
+            questions: [
+              {
+                kind: "numeric",
+                q: "A rope pulls a cart with a force of 20 N at 60° above the horizontal. What is the horizontal component of the force (in N)?",
+                answer: 10,
+                unit: "N",
+                explain: t`$F_x = 20\cos 60° = 20 \times 0.5 = 10$ N.`,
+              },
+              {
+                kind: "mcq",
+                q: "Two forces of 3 N and 4 N act on a body. Which of these can NOT be their resultant?",
+                options: ["1 N", "5 N", "7 N", "8 N"],
+                answer: 3,
+                explain: "The resultant lies between 4 − 3 = 1 N and 4 + 3 = 7 N. 8 N is impossible.",
+              },
+            ],
+          },
+          {
+            type: "callout",
+            tone: "note",
+            title: "Board note: scalar and vector products",
+            md: t`The CBSE syllabus lists the scalar and vector products in this unit; NCERT develops them in later chapters (work and rotation), and ISC teaches them here.
+
+**Scalar (dot) product:** $\vec{A}\cdot\vec{B} = AB\cos\theta = A_xB_x + A_yB_y + A_zB_z$; $\hat{i}\cdot\hat{i} = 1$, $\hat{i}\cdot\hat{j} = 0$. Example: work $W = \vec{F}\cdot\vec{s}$.
+
+**Vector (cross) product:** $\vec{A}\times\vec{B} = AB\sin\theta\,\hat{n}$, with $\hat{n}$ given by the right-hand rule; $\hat{i}\times\hat{j} = \hat{k}$ and $\vec{B}\times\vec{A} = -\vec{A}\times\vec{B}$. Its magnitude is the area of the parallelogram formed by the two vectors. Example: torque $\vec{\tau} = \vec{r}\times\vec{F}$.`,
+          },
+          {
+            type: "mistake",
+            wrong: t`The magnitude of $\vec{A} + \vec{B}$ is always $A + B$, and of $\vec{A} - \vec{B}$ is $A - B$.`,
+            right: t`That is true only when the vectors are parallel. In general $|\vec{A} + \vec{B}| = \sqrt{A^2 + B^2 + 2AB\cos\theta}$, which is at most $A + B$.`,
+            why: "With scalars we always add the numbers, so the habit carries over. But vectors pointing in different directions partly cancel. Two 5 km walks, one east and one north, leave you only about 7.07 km from home.",
+          },
+          {
+            type: "activity",
+            activity: {
+              kind: "reveal",
+              prompt: "Two vectors of equal size A have a resultant also of size A. The angle between them is:",
+              emoji: "📐",
+              options: ["60°", "90°", "120°", "0°"],
+              answer: 2,
+              trap: 0,
+              explain: t`$A^2 = A^2 + A^2 + 2A^2\cos\theta$ gives $\cos\theta = -\tfrac12$, so $\theta = 120°$. (At 60° the resultant is $\sqrt{3}A$.) Three equal forces at 120° to each other balance.`,
+            },
+          },
+          {
+            type: "callout",
+            tone: "exam",
+            title: "Board tip",
+            md: "For a 3-mark question on the resultant of two vectors, draw the parallelogram, drop a perpendicular from the tip of R, and derive both the magnitude and direction formulas. State the special cases θ = 0°, 90° and 180° at the end.",
+          },
+          {
+            type: "keypoints",
+            items: [
+              "A vector has magnitude and direction and obeys the triangle law; current has direction but is a scalar.",
+              "R = √(A² + B² + 2AB cos θ); |A − B| ≤ R ≤ A + B.",
+              "Unit vector Â = A/A; components A_x = A cos θ, A_y = A sin θ.",
+              "Add vectors analytically by adding components.",
+              "Dot product gives a scalar (AB cos θ); cross product gives a vector (AB sin θ n̂).",
+            ],
+          },
+        ],
+        flashcards: [
+          { front: "Scalar vs vector", back: "A scalar has only magnitude. A vector has magnitude and direction and adds by the triangle law." },
+          { front: "Is electric current a vector?", back: "No. It has a direction but currents add as numbers, not by the triangle law." },
+          { front: "Resultant of A and B at angle θ", back: "R = √(A² + B² + 2AB cos θ); tan α = B sin θ/(A + B cos θ)." },
+          { front: "Range of the resultant of A and B", back: "From |A − B| (θ = 180°) to A + B (θ = 0°)." },
+          { front: "Unit vector along A", back: "Â = A/|A|, magnitude 1." },
+          { front: "Components of A at angle θ to x-axis", back: "A_x = A cos θ, A_y = A sin θ." },
+          { front: "Dot product", back: "A·B = AB cos θ = A_xB_x + A_yB_y + A_zB_z (a scalar)." },
+          { front: "î × ĵ", back: "k̂. And ĵ × î = −k̂." },
+        ],
+        quiz: [
+          {
+            kind: "mcq",
+            q: "Which of these is a vector quantity?",
+            options: ["Work", "Electric current", "Displacement", "Speed"],
+            answer: 2,
+            explain: "Displacement has magnitude, direction and adds by the triangle law. Work and speed are scalars; current is a scalar despite having a direction.",
+          },
+          {
+            kind: "numeric",
+            q: t`What is the magnitude of $3\hat{i} + 4\hat{j}$?`,
+            answer: 5,
+            explain: t`$\sqrt{3^2 + 4^2} = 5$.`,
+          },
+          {
+            kind: "numeric",
+            q: "Two forces of 5 N and 12 N act at right angles. Find the magnitude of the resultant (in N).",
+            answer: 13,
+            unit: "N",
+            explain: t`$R = \sqrt{25 + 144} = 13$ N.`,
+          },
+          {
+            kind: "truefalse",
+            q: t`$\vec{A} + \vec{B} = \vec{B} + \vec{A}$ for any two vectors.`,
+            answer: true,
+            explain: "Vector addition is commutative: both orders give the same diagonal of the parallelogram.",
+          },
+          {
+            kind: "fill",
+            q: "A vector whose magnitude is ___ is called a unit vector.",
+            answer: ["1", "one", "unity"],
+            explain: "A unit vector has magnitude 1 and only shows a direction.",
+          },
+          {
+            kind: "numeric",
+            q: t`Find $(2\hat{i} + 3\hat{j})\cdot(4\hat{i} - \hat{j})$.`,
+            answer: 5,
+            explain: t`$2(4) + 3(-1) = 8 - 3 = 5$.`,
+            difficulty: 2,
+          },
+          {
+            kind: "multi",
+            q: "Which of these could be the resultant of forces of 6 N and 8 N?",
+            options: ["1 N", "2 N", "10 N", "15 N"],
+            answers: [1, 2],
+            explain: "The resultant must lie between 8 − 6 = 2 N and 8 + 6 = 14 N. 2 N (opposite) and 10 N (at right angles) are possible.",
+            difficulty: 2,
+          },
+          {
+            kind: "mcq",
+            q: t`The angle between $\vec{A} = \hat{i} + \hat{j}$ and $\vec{B} = \hat{i} - \hat{j}$ is:`,
+            options: ["0°", "45°", "90°", "180°"],
+            answer: 2,
+            explain: t`$\vec{A}\cdot\vec{B} = 1 - 1 = 0$, so $\cos\theta = 0$ and $\theta = 90°$.`,
+            difficulty: 2,
+          },
+        ],
+      },
+      /* ---------------- Motion in a plane and projectiles ---------------- */
+      {
+        slug: "c11-plane-motion-projectile",
+        title: "Motion in a Plane and Projectile Motion",
+        summary: "Position, velocity and acceleration vectors, motion with constant acceleration in a plane, and the full analysis of projectile motion: trajectory, time of flight, maximum height and range.",
+        minutes: 24,
+        xp: 55,
+        blocks: [
+          {
+            type: "illustration",
+            emoji: "🏏",
+            caption: "A lofted cricket shot, a javelin throw, water from a garden hose: each follows the same curve, a parabola, once it leaves the hand.",
+          },
+          {
+            type: "text",
+            md: t`In a plane, position is $\vec{r} = x\hat{i} + y\hat{j}$. If the body moves from $\vec{r}$ to $\vec{r}\,'$ in time $\Delta t$, its displacement is $\Delta\vec{r} = \vec{r}\,' - \vec{r}$ and its average velocity is $\Delta\vec{r}/\Delta t$.
+
+The **instantaneous velocity** is the limit of this as $\Delta t \to 0$. Its direction is along the **tangent** to the path at that point, in the direction of motion. The acceleration is the rate of change of velocity, which can change in size, in direction, or both.`,
+          },
+          {
+            type: "formula",
+            tex: t`\vec{v} = \frac{d\vec{r}}{dt} = v_x\hat{i} + v_y\hat{j}, \quad v_x = \frac{dx}{dt},\ v_y = \frac{dy}{dt} \qquad \vec{a} = \frac{d\vec{v}}{dt}`,
+            caption: t`Speed $v = \sqrt{v_x^2 + v_y^2}$ and the direction is $\tan\theta = v_y/v_x$.`,
+          },
+          {
+            type: "text",
+            md: t`If the acceleration $\vec{a}$ is constant, the vector forms of the equations of motion hold: $\vec{v} = \vec{v}_0 + \vec{a}t$ and $\vec{r} = \vec{r}_0 + \vec{v}_0t + \tfrac12\vec{a}t^2$.
+
+The key idea is that **motion along x and motion along y are independent**. Each component obeys its own one-dimensional equations with $a_x$ and $a_y$; time is the only thing they share.`,
+          },
+          {
+            type: "example",
+            title: "Constant acceleration in a plane",
+            problem: t`A particle starts at the origin with velocity $6\hat{i}$ m/s and has a constant acceleration $(-2\hat{i} + 4\hat{j})\ \text{m s}^{-2}$. Find its position and speed at $t = 2$ s.`,
+            steps: [
+              t`$x = 6t - t^2$ and $y = 2t^2$. At $t = 2$ s: $x = 12 - 4 = 8$ m, $y = 8$ m.`,
+              t`$v_x = 6 - 2t = 2$ m/s and $v_y = 4t = 8$ m/s.`,
+              t`Speed $= \sqrt{2^2 + 8^2} = \sqrt{68} \approx 8.25$ m/s.`,
+            ],
+            answer: t`$\vec{r} = 8\hat{i} + 8\hat{j}$ m; speed about 8.25 m/s.`,
+          },
+          {
+            type: "text",
+            md: t`A **projectile** is a body thrown into the air that then moves only under gravity. We ignore air resistance and take $g$ as constant. Launch it with speed $u$ at angle $\theta$ above the horizontal, with $x$ horizontal and $y$ vertically up:
+
+$u_x = u\cos\theta$ stays constant, because $a_x = 0$. The vertical part has $u_y = u\sin\theta$ and $a_y = -g$. So $x = (u\cos\theta)t$ and $y = (u\sin\theta)t - \tfrac12 g t^2$.`,
+          },
+          {
+            type: "formula",
+            tex: t`y = x\tan\theta - \frac{g\,x^2}{2u^2\cos^2\theta}`,
+            caption: "Eliminating t gives the equation of the trajectory: y = bx − cx², a parabola.",
+          },
+          {
+            type: "list",
+            ordered: true,
+            items: [
+              t`**Time to reach the top:** $v_y = 0$ gives $t_m = \dfrac{u\sin\theta}{g}$.`,
+              t`**Time of flight:** $y = 0$ again at $T = \dfrac{2u\sin\theta}{g} = 2t_m$.`,
+              t`**Maximum height:** $v_y^2 = u^2\sin^2\theta - 2gH = 0$ gives $H = \dfrac{u^2\sin^2\theta}{2g}$.`,
+              t`**Horizontal range:** $R = u\cos\theta \cdot T = \dfrac{2u^2\sin\theta\cos\theta}{g} = \dfrac{u^2\sin 2\theta}{g}$.`,
+              t`**Maximum range:** $\sin 2\theta = 1$ at $\theta = 45°$, so $R_{\max} = u^2/g$. Angles $\theta$ and $90° - \theta$ give the same range.`,
+            ],
+          },
+          {
+            type: "example",
+            title: "A football kick",
+            problem: "A footballer in Kolkata kicks a ball at 20 m/s at 30° above the ground. Find the time of flight, maximum height and range. (g = 10 m/s²)",
+            steps: [
+              t`$u\sin\theta = 20 \times 0.5 = 10$ m/s; $u\cos\theta = 20 \times 0.866 = 17.32$ m/s.`,
+              t`$T = \dfrac{2(10)}{10} = 2$ s.`,
+              t`$H = \dfrac{(10)^2}{2(10)} = 5$ m.`,
+              t`$R = \dfrac{(20)^2\sin 60°}{10} = 40 \times 0.866 \approx 34.6$ m (or $17.32 \times 2 = 34.6$ m).`,
+            ],
+            answer: "T = 2 s, H = 5 m, R ≈ 34.6 m.",
+          },
+          {
+            type: "widget",
+            widget: "projectile",
+            caption: "Change the launch angle and speed. Check that 30° and 60° give the same range, and that 45° gives the largest.",
+          },
+          {
+            type: "checkpoint",
+            questions: [
+              {
+                kind: "mcq",
+                q: "At the highest point of a projectile's path, its velocity is:",
+                options: ["zero", t`$u\cos\theta$, horizontal`, t`$u\sin\theta$, vertical`, t`$u$, along the launch direction`],
+                answer: 1,
+                explain: "Only the vertical component becomes zero at the top. The horizontal component u cos θ never changes.",
+              },
+            ],
+          },
+          {
+            type: "example",
+            title: "Thrown horizontally from a height",
+            problem: "A stone is thrown horizontally at 15 m/s from the top of a 45 m high cliff. Find the time to land, how far from the foot of the cliff it lands, and its speed on landing. (g = 10 m/s²)",
+            steps: [
+              t`Vertical: $u_y = 0$, so $45 = \tfrac12(10)t^2$ and $t = 3$ s.`,
+              t`Horizontal: $x = 15 \times 3 = 45$ m.`,
+              t`On landing $v_x = 15$ m/s and $v_y = 10 \times 3 = 30$ m/s downward.`,
+              t`Speed $= \sqrt{15^2 + 30^2} = \sqrt{1125} \approx 33.5$ m/s, at $\tan^{-1}(30/15) \approx 63.4°$ below the horizontal.`,
+            ],
+            answer: "3 s; 45 m from the foot; about 33.5 m/s.",
+          },
+          {
+            type: "mistake",
+            wrong: "At the top of its path a projectile is momentarily at rest, and its acceleration there is zero.",
+            right: "At the top only the vertical velocity is zero; it still moves horizontally at u cos θ. The acceleration is g downward everywhere on the path.",
+            why: "For a ball thrown straight up, the top really is a point of rest, so the idea gets carried over. For an angled throw the horizontal motion carries on unchanged, and gravity never switches off.",
+          },
+          {
+            type: "activity",
+            activity: {
+              kind: "match",
+              prompt: "Match each projectile quantity with its formula.",
+              pairs: [
+                ["Time of flight", "2u sin θ / g"],
+                ["Maximum height", "u² sin² θ / 2g"],
+                ["Horizontal range", "u² sin 2θ / g"],
+                ["Velocity at the top", "u cos θ"],
+                ["Maximum range (θ = 45°)", "u² / g"],
+              ],
+              explain: "Every result comes from treating the horizontal motion (constant velocity) and vertical motion (acceleration −g) separately, linked only by time.",
+            },
+          },
+          {
+            type: "callout",
+            tone: "exam",
+            title: "Board tip",
+            md: "\"Show that the path of a projectile is a parabola\" and the derivations of T, H and R are frequent 3–5 mark questions. Write the x and y equations, eliminate t, and compare with y = bx − cx². State your assumptions: no air resistance and constant g.",
+          },
+          {
+            type: "keypoints",
+            items: [
+              "Velocity is tangent to the path; with constant a, the x and y motions are independent.",
+              "Projectile: u_x = u cos θ constant, a_y = −g.",
+              "Trajectory y = x tan θ − gx²/(2u² cos² θ) is a parabola.",
+              "T = 2u sin θ/g, H = u² sin² θ/2g, R = u² sin 2θ/g; R is maximum (u²/g) at 45°.",
+              "Complementary angles (θ and 90° − θ) give the same range.",
+            ],
+          },
+        ],
+        flashcards: [
+          { front: "Direction of instantaneous velocity in a plane", back: "Along the tangent to the path, in the direction of motion." },
+          { front: "Projectile: horizontal acceleration", back: "Zero (no air resistance), so u cos θ stays constant." },
+          { front: "Time of flight", back: "T = 2u sin θ / g." },
+          { front: "Maximum height", back: "H = u² sin² θ / 2g." },
+          { front: "Horizontal range", back: "R = u² sin 2θ / g; maximum u²/g at θ = 45°." },
+          { front: "Equation of trajectory", back: "y = x tan θ − g x² / (2u² cos² θ): a parabola." },
+          { front: "Which angles give equal ranges?", back: "θ and 90° − θ (for the same speed, on level ground)." },
+          { front: "Velocity at the top of the path", back: "u cos θ, horizontal. The vertical part is zero." },
+        ],
+        quiz: [
+          {
+            kind: "numeric",
+            q: "A ball is thrown at 10 m/s at 45° to the horizontal. What is its range on level ground (in m)? (g = 10 m/s²)",
+            answer: 10,
+            unit: "m",
+            explain: t`$R = \dfrac{u^2\sin 90°}{g} = \dfrac{100}{10} = 10$ m.`,
+          },
+          {
+            kind: "numeric",
+            q: "A projectile is fired at 30 m/s at 30° above the horizontal. What is its time of flight (in s)? (g = 10 m/s²)",
+            answer: 3,
+            unit: "s",
+            explain: t`$T = \dfrac{2u\sin\theta}{g} = \dfrac{2(30)(0.5)}{10} = 3$ s.`,
+          },
+          {
+            kind: "truefalse",
+            q: "Two balls thrown with the same speed at 25° and 65° land at the same distance on level ground.",
+            answer: true,
+            explain: "25° + 65° = 90°, and sin 50° = sin 130°, so their ranges are equal.",
+          },
+          {
+            kind: "numeric",
+            q: "A ball is thrown at 20 m/s at 60° above the horizontal. What is its maximum height (in m)? (g = 10 m/s²)",
+            answer: 15,
+            unit: "m",
+            explain: t`$H = \dfrac{u^2\sin^2\theta}{2g} = \dfrac{400 \times 0.75}{20} = 15$ m.`,
+          },
+          {
+            kind: "mcq",
+            q: "Neglecting air resistance, the path of a projectile launched at an angle is:",
+            options: ["a straight line", "a circle", "a parabola", "a hyperbola"],
+            answer: 2,
+            explain: "The trajectory equation has the form y = bx − cx², which is a parabola.",
+          },
+          {
+            kind: "numeric",
+            q: "A marble rolls off a table 1.25 m high at 2 m/s. How far from the table edge (horizontally) does it land (in m)? (g = 10 m/s²)",
+            answer: 1,
+            unit: "m",
+            explain: t`Fall time: $1.25 = 5t^2$, $t = 0.5$ s. Horizontal distance $= 2 \times 0.5 = 1$ m.`,
+            difficulty: 2,
+          },
+          {
+            kind: "multi",
+            q: "For a projectile launched at an angle (no air resistance), which statements are true?",
+            options: ["The horizontal velocity stays constant", "The acceleration is zero at the top", "The speed is least at the top", "The vertical velocity changes by g every second"],
+            answers: [0, 2, 3],
+            explain: "a = g downward throughout, so v_y changes by g each second while v_x is fixed. At the top v_y = 0, so the speed is least (u cos θ).",
+            difficulty: 2,
+          },
+          {
+            kind: "mcq",
+            q: "A stone is dropped from a plane flying horizontally. Seen from the ground, its path is:",
+            options: ["a vertical straight line", "a parabola", "a slanting straight line", "a circle"],
+            answer: 1,
+            explain: "The stone keeps the plane's horizontal velocity and falls under gravity, so from the ground it traces a parabola. From the plane it seems to fall straight down.",
+            difficulty: 2,
+          },
+        ],
+      },
+      /* ---------------- Relative velocity in 2D and circular motion ---------------- */
+      {
+        slug: "c11-relative-velocity-circular-motion",
+        title: "Relative Velocity in Two Dimensions and Uniform Circular Motion",
+        summary: "Relative velocity as vector subtraction (rain and umbrella, crossing a river), and uniform circular motion: angular speed, period, frequency and centripetal acceleration.",
+        minutes: 22,
+        xp: 55,
+        blocks: [
+          {
+            type: "text",
+            md: t`In two dimensions, the velocity of A relative to B is the vector difference $\vec{v}_{AB} = \vec{v}_A - \vec{v}_B$. To find it, add $-\vec{v}_B$ to $\vec{v}_A$ by the triangle law. Note $\vec{v}_{BA} = -\vec{v}_{AB}$.
+
+Two everyday cases: rain seen by a moving person (where to hold the umbrella), and a boat crossing a flowing river.`,
+          },
+          {
+            type: "example",
+            title: "Rain and umbrella",
+            problem: "Rain falls vertically at 12 m/s. A girl cycles east at 5 m/s. At what angle should she tilt her umbrella?",
+            steps: [
+              t`Velocity of rain relative to her: $\vec{v}_{rg} = \vec{v}_r - \vec{v}_g = (-12\hat{j}) - (5\hat{i}) = -5\hat{i} - 12\hat{j}$ m/s.`,
+              t`Magnitude $= \sqrt{25 + 144} = 13$ m/s.`,
+              t`The rain seems to come from the east (from in front of her), at $\tan\alpha = 5/12$ to the vertical, $\alpha \approx 22.6°$.`,
+            ],
+            answer: "Tilt the umbrella forward (towards the east) by about 22.6° from the vertical.",
+          },
+          {
+            type: "example",
+            title: "Crossing a river",
+            problem: "A river 120 m wide flows at 3 m/s. A boat moves at 5 m/s relative to the water. (a) Heading straight across, how long does it take and how far downstream does it land? (b) Which way should it head to land directly opposite, and how long does that take?",
+            steps: [
+              t`(a) Heading across, the across-component is 5 m/s: $t = 120/5 = 24$ s. The river carries it $3 \times 24 = 72$ m downstream.`,
+              t`(b) To land opposite, the upstream component of the boat must cancel the river: $5\sin\theta = 3$, $\sin\theta = 0.6$, $\theta \approx 36.9°$ upstream from the straight-across line.`,
+              t`Across-speed $= 5\cos\theta = \sqrt{25 - 9} = 4$ m/s, so $t = 120/4 = 30$ s.`,
+            ],
+            answer: "(a) 24 s, 72 m downstream (the shortest time). (b) Head 36.9° upstream; 30 s (the shortest path).",
+          },
+          {
+            type: "checkpoint",
+            questions: [
+              {
+                kind: "numeric",
+                q: "A swimmer swims at 4 m/s relative to water, heading straight across a 200 m wide river flowing at 3 m/s. How far downstream (in m) does she reach the other bank?",
+                answer: 150,
+                unit: "m",
+                explain: t`Time $= 200/4 = 50$ s; drift $= 3 \times 50 = 150$ m.`,
+              },
+            ],
+          },
+          {
+            type: "text",
+            md: t`**Uniform circular motion (UCM)** is motion in a circle at constant speed. In time $\Delta t$ the radius turns through an **angular displacement** $\Delta\theta$ (in radians). The **angular speed** is $\omega = \dfrac{d\theta}{dt}$.
+
+The **period** $T$ is the time for one revolution and the **frequency** $\nu$ is revolutions per second. The arc covered is $\Delta s = r\Delta\theta$, so the linear speed is $v = r\omega$.`,
+          },
+          {
+            type: "formula",
+            tex: t`\omega = \frac{2\pi}{T} = 2\pi\nu \qquad v = \omega r`,
+          },
+          {
+            type: "text",
+            md: t`In UCM the speed is constant, but the **direction** of velocity changes all the time, so the body **is accelerating**. This acceleration always points towards the centre: the **centripetal acceleration**.
+
+It is derived by comparing two triangles: the one made by the position vectors at two nearby instants, and the one made by the velocity vectors at those instants.`,
+          },
+          {
+            type: "activity",
+            activity: {
+              kind: "order",
+              prompt: "Put the steps of the centripetal acceleration derivation in order.",
+              items: [
+                "Draw position vectors r and r′ at t and t + Δt; velocities v and v′ are perpendicular to them.",
+                "Both triangles (r, r′, Δr) and (v, v′, Δv) are isosceles with the same angle Δθ, so they are similar.",
+                "Hence |Δv| / v = |Δr| / r.",
+                "Divide by Δt and let Δt → 0: |Δr|/Δt → v, so a = v²/r.",
+                "As Δt → 0, Δv becomes perpendicular to v and points to the centre.",
+              ],
+              explain: "Similar triangles turn a change in direction into a size: the velocity rotates by the same angle the radius does, so the acceleration has magnitude v²/r, directed to the centre.",
+            },
+          },
+          {
+            type: "formula",
+            tex: t`a_c = \frac{v^2}{r} = \omega^2 r = 4\pi^2\nu^2 r`,
+            caption: "Centripetal acceleration: constant in magnitude, always directed towards the centre, so its direction keeps changing.",
+          },
+          {
+            type: "example",
+            title: "A stone on a string",
+            problem: "A stone tied to a 0.5 m string is whirled in a horizontal circle at 2 revolutions per second. Find its angular speed, linear speed and centripetal acceleration.",
+            steps: [
+              t`$\omega = 2\pi\nu = 2\pi \times 2 = 4\pi \approx 12.57$ rad/s.`,
+              t`$v = \omega r = 4\pi \times 0.5 = 2\pi \approx 6.28$ m/s.`,
+              t`$a_c = \omega^2 r = 16\pi^2 \times 0.5 = 8\pi^2 \approx 79\ \text{m s}^{-2}$, towards the centre.`,
+            ],
+            answer: t`$\omega \approx 12.6$ rad/s, $v \approx 6.28$ m/s, $a_c \approx 79\ \text{m s}^{-2}$ (about 8g).`,
+          },
+          {
+            type: "mistake",
+            wrong: "In uniform circular motion the speed is constant, so the acceleration is zero.",
+            right: "The velocity changes direction at every instant, so there is an acceleration v²/r towards the centre.",
+            why: "In a straight line, constant speed does mean zero acceleration, so the idea feels safe. But acceleration is the rate of change of the velocity **vector**; turning is a change too.",
+          },
+          {
+            type: "table",
+            headers: ["In UCM", "Constant?"],
+            rows: [
+              ["Speed v, angular speed ω, period T", "yes"],
+              ["Magnitude of centripetal acceleration", "yes"],
+              ["Velocity vector", "no: direction changes"],
+              ["Acceleration vector", "no: always turns to point at the centre"],
+            ],
+          },
+          {
+            type: "callout",
+            tone: "exam",
+            title: "Board tip",
+            md: "The derivation of a = v²/r is a standard 3-mark question: draw the circle with r, r′ and the velocity triangle, state that the triangles are similar, and take the limit. Always state the direction (towards the centre). ISC also expects you to know that a body speeding up on a circle has an extra tangential acceleration.",
+          },
+          {
+            type: "keypoints",
+            items: [
+              "Relative velocity in 2D: v_AB = v_A − v_B (vector subtraction).",
+              "Hold the umbrella along the rain's velocity relative to you.",
+              "River: heading straight across gives the least time d/v_b; heading upstream at sin θ = v_r/v_b gives the shortest path.",
+              "UCM: ω = 2π/T = 2πν, v = ωr.",
+              "Centripetal acceleration a = v²/r = ω²r, always towards the centre.",
+            ],
+          },
+        ],
+        flashcards: [
+          { front: "Relative velocity of A with respect to B", back: "v_AB = v_A − v_B (vector subtraction)." },
+          { front: "Shortest time to cross a river of width d", back: "Head straight across: t = d/v_b. Drift = v_r d/v_b." },
+          { front: "Shortest path across a river", back: "Head upstream at sin θ = v_r/v_b; time = d/√(v_b² − v_r²). Possible only if v_b > v_r." },
+          { front: "Angular speed", back: "ω = dθ/dt = 2π/T = 2πν, in rad/s." },
+          { front: "Relation between v and ω", back: "v = ωr." },
+          { front: "Centripetal acceleration", back: "a = v²/r = ω²r, towards the centre." },
+          { front: "Is UCM accelerated motion?", back: "Yes. Speed is constant but the direction of velocity changes." },
+        ],
+        quiz: [
+          {
+            kind: "mcq",
+            q: "In uniform circular motion the acceleration is directed:",
+            options: ["along the tangent", "towards the centre", "away from the centre", "it is zero"],
+            answer: 1,
+            explain: "Centripetal means \"centre-seeking\": a = v²/r towards the centre.",
+          },
+          {
+            kind: "numeric",
+            q: "A car takes a circular turn of radius 100 m at a steady 20 m/s. What is its centripetal acceleration (in m/s²)?",
+            answer: 4,
+            unit: "m/s²",
+            explain: t`$a = v^2/r = 400/100 = 4\ \text{m s}^{-2}$.`,
+          },
+          {
+            kind: "numeric",
+            q: "What is the angular speed of the seconds hand of a clock (in rad/s, to 3 decimal places)?",
+            answer: 0.105,
+            tolerance: 0.001,
+            unit: "rad/s",
+            explain: t`$T = 60$ s, so $\omega = 2\pi/60 \approx 0.105$ rad/s.`,
+          },
+          {
+            kind: "truefalse",
+            q: "In uniform circular motion, the velocity of the body is constant.",
+            answer: false,
+            explain: "The speed is constant, but the direction keeps changing, so the velocity vector is not constant.",
+          },
+          {
+            kind: "mcq",
+            q: "Rain falls vertically at 4 m/s. A man runs at 3 m/s. The rain appears to him to fall at:",
+            options: ["5 m/s, tilted towards him from the front", "7 m/s vertically", "1 m/s, tilted from behind", "5 m/s vertically"],
+            answer: 0,
+            explain: t`$\vec{v}_{rain,man} = \vec{v}_{rain} - \vec{v}_{man}$ has a backward component 3 m/s and downward component 4 m/s: magnitude 5 m/s, at $\tan^{-1}(3/4) \approx 37°$ to the vertical, coming from in front.`,
+            difficulty: 2,
+          },
+          {
+            kind: "numeric",
+            q: "A boat moves at 5 m/s in still water. It must cross a 100 m wide river flowing at 3 m/s and land directly opposite. How long (in s) does it take?",
+            answer: 25,
+            unit: "s",
+            explain: t`Across-speed $= \sqrt{5^2 - 3^2} = 4$ m/s, so $t = 100/4 = 25$ s.`,
+            difficulty: 2,
+          },
+          {
+            kind: "multi",
+            q: "Which of these stay constant in uniform circular motion?",
+            options: ["Speed", "Angular speed", "Velocity", "Magnitude of acceleration"],
+            answers: [0, 1, 3],
+            explain: "Speed, ω and |a| = v²/r are constant. The velocity vector changes direction continuously.",
+          },
+          {
+            kind: "numeric",
+            q: "A particle moves in a circle of radius 2 m with a period of π seconds. What is its centripetal acceleration (in m/s²)?",
+            answer: 8,
+            unit: "m/s²",
+            explain: t`$\omega = 2\pi/T = 2$ rad/s, so $a = \omega^2 r = 4 \times 2 = 8\ \text{m s}^{-2}$.`,
+            difficulty: 2,
+          },
+        ],
+      },
+      /* ---------------- Exam edge ---------------- */
+      {
+        slug: "c11-plane-exam-edge",
+        title: "Exam edge: Motion in a Plane",
+        summary: "Projectile shortcuts, trajectory equations, closest approach, non-uniform circular motion and projectiles on an incline, from KCET to JEE Advanced level.",
+        minutes: 25,
+        xp: 60,
+        track: "exam",
+        blocks: [
+          {
+            type: "text",
+            md: "Projectile motion is one of the most asked topics in Class 11 kinematics. NEET and KCET test the T, H, R formulas and the trajectory equation; JEE Main adds relative motion (rain, river, closest approach) and circular motion with tangential acceleration; JEE Advanced asks projectiles on inclines, from moving platforms, and two-body problems. The same vector ideas return in laws of motion, rotation and electromagnetism.",
+          },
+          {
+            type: "table",
+            headers: ["Shortcut", "Result", "Safe when"],
+            rows: [
+              ["Range and height", t`$R = 4H\cot\theta$`, "level ground, same launch and landing height"],
+              ["Time and height", t`$T^2 = 8H/g$`, "level ground"],
+              ["Complementary angles θ and 90° − θ", t`same R; $H_1 + H_2 = \dfrac{u^2}{2g}$; $R = 4\sqrt{H_1H_2}$`, "same speed, level ground"],
+              ["At maximum range (45°)", t`$H = R_{\max}/4$`, "level ground"],
+              ["Non-uniform circular motion", t`$a = \sqrt{a_t^2 + (v^2/r)^2}$`, "any circular path; a_t = dv/dt"],
+            ],
+          },
+          {
+            type: "formula",
+            tex: t`y = x\tan\theta\left(1 - \frac{x}{R}\right)`,
+            caption: "Trajectory in terms of the range. Useful when a question gives the range or asks where the ball clears a wall.",
+          },
+          {
+            type: "example",
+            title: "KCET level: complementary angles",
+            problem: "Two balls are thrown with the same speed at 30° and 60° to the horizontal. Compare their ranges, maximum heights and times of flight.",
+            steps: [
+              "Ranges: sin 60° = sin 120°, so they are equal.",
+              t`Heights: $H \propto \sin^2\theta$, so $H_1 : H_2 = \tfrac14 : \tfrac34 = 1 : 3$.`,
+              t`Times: $T \propto \sin\theta$, so $T_1 : T_2 = \tfrac12 : \tfrac{\sqrt{3}}{2} = 1 : \sqrt{3}$.`,
+            ],
+            answer: t`$R_1 = R_2$; $H_1 : H_2 = 1 : 3$; $T_1 : T_2 = 1 : \sqrt{3}$.`,
+          },
+          {
+            type: "example",
+            title: "NEET level: reading a trajectory equation",
+            problem: t`A projectile follows $y = \sqrt{3}\,x - 0.2x^2$ (SI units, $g = 10\ \text{m s}^{-2}$). Find the launch angle, launch speed and range.`,
+            steps: [
+              t`Compare with $y = x\tan\theta - \dfrac{g x^2}{2u^2\cos^2\theta}$: $\tan\theta = \sqrt{3}$, so $\theta = 60°$.`,
+              t`$\dfrac{g}{2u^2\cos^2\theta} = 0.2$: $\dfrac{10}{2u^2(0.25)} = 0.2$, so $u^2 = 100$, $u = 10$ m/s.`,
+              t`Range: $y = 0$ at $x = \sqrt{3}/0.2 \approx 8.66$ m. Check: $\dfrac{u^2\sin 120°}{g} = \dfrac{100 \times 0.866}{10} = 8.66$ m. ✓`,
+            ],
+            answer: "θ = 60°, u = 10 m/s, R ≈ 8.66 m.",
+          },
+          {
+            type: "mistake",
+            wrong: "The range is always greatest at 45°.",
+            right: "45° gives the greatest range only when the ball lands at the same height it was launched from. From a height (a shot put) the best angle is below 45°; up an incline it is 45° + α/2 measured from the horizontal.",
+            why: "The 45° result comes from R = u² sin 2θ / g, which assumes level ground. Change the landing height and the formula, and the best angle, change.",
+          },
+          {
+            type: "example",
+            title: "JEE Main level: speeding up on a circle",
+            problem: "A car moves on a circular track of radius 2 m. At one instant its speed is 4 m/s and increasing at 3 m/s². Find its total acceleration.",
+            steps: [
+              t`Centripetal part: $a_c = v^2/r = 16/2 = 8\ \text{m s}^{-2}$, towards the centre.`,
+              t`Tangential part: $a_t = 3\ \text{m s}^{-2}$, along the velocity.`,
+              t`They are perpendicular: $a = \sqrt{8^2 + 3^2} = \sqrt{73} \approx 8.54\ \text{m s}^{-2}$, at $\tan^{-1}(3/8) \approx 20.6°$ to the radius.`,
+            ],
+            answer: t`About $8.54\ \text{m s}^{-2}$.`,
+          },
+          {
+            type: "checkpoint",
+            questions: [
+              {
+                kind: "numeric",
+                q: "For a projectile on level ground, the range equals 4 times the maximum height. What is the launch angle (in degrees)?",
+                answer: 45,
+                unit: "°",
+                explain: t`$R = 4H\cot\theta$, so $R = 4H$ means $\cot\theta = 1$, $\theta = 45°$.`,
+                difficulty: 2,
+              },
+            ],
+          },
+          {
+            type: "example",
+            title: "JEE Main level: closest approach",
+            problem: "Ship A is at the origin moving east at 4 m/s. Ship B is 100 m north of A, moving south at 3 m/s. Find the closest distance between them and when it occurs.",
+            steps: [
+              t`Work in A's frame. B's position relative to A at $t = 0$: $\vec{r} = 100\hat{j}$. Relative velocity: $\vec{v}_{BA} = -3\hat{j} - 4\hat{i}$, magnitude 5 m/s.`,
+              t`B moves in a straight line in A's frame. The closest distance is the perpendicular from A to that line: $d = \dfrac{|\vec{r}\times\vec{v}_{BA}|}{|\vec{v}_{BA}|} = \dfrac{100 \times 4}{5} = 80$ m.`,
+              t`Time: $t = \dfrac{-\vec{r}\cdot\vec{v}_{BA}}{|\vec{v}_{BA}|^2} = \dfrac{300}{25} = 12$ s.`,
+              t`Check: at 12 s, A is at $(48, 0)$ and B at $(0, 64)$; distance $\sqrt{48^2 + 64^2} = 80$ m. ✓`,
+            ],
+            answer: "80 m, after 12 s.",
+          },
+          {
+            type: "example",
+            title: "JEE Advanced level: projectile up an incline",
+            problem: "A ball is projected at 20 m/s from the foot of a 30° incline, at 60° above the horizontal (so 30° above the incline). Find its time of flight and range along the incline. (g = 10 m/s²)",
+            steps: [
+              t`Take axes along and perpendicular to the incline. Perpendicular: $u_\perp = u\sin 30° = 10$ m/s, $a_\perp = -g\cos 30° = -8.66\ \text{m s}^{-2}$.`,
+              t`It lands when the perpendicular displacement is zero: $T = \dfrac{2u_\perp}{g\cos 30°} = \dfrac{20}{8.66} \approx 2.31$ s.`,
+              t`Horizontal distance $= u\cos 60° \times T = 10 \times 2.31 = 23.1$ m.`,
+              t`Range along the incline $= \dfrac{23.1}{\cos 30°} \approx 26.7$ m. Formula check: $\dfrac{2u^2\sin(\theta - \alpha)\cos\theta}{g\cos^2\alpha} = \dfrac{2(400)(0.5)(0.5)}{10(0.75)} = 26.7$ m. ✓`,
+            ],
+            answer: "T ≈ 2.31 s; range up the incline ≈ 26.7 m.",
+          },
+          {
+            type: "mistake",
+            wrong: "Hold the umbrella along the direction the rain actually falls.",
+            right: "Hold it along the rain's velocity **relative to you**, v_rain − v_you. If you move, tilt it forward, into the direction you walk.",
+            why: "Standing still the two are the same, so the habit is formed there. Once you move, the rain you meet has an extra velocity −v_you, which tilts it towards you from the front.",
+          },
+          {
+            type: "activity",
+            activity: {
+              kind: "reveal",
+              prompt: "On a train moving steadily, you toss a ball straight up. It lands:",
+              emoji: "🚄",
+              options: ["back in your hand", "behind you", "in front of you"],
+              answer: 0,
+              trap: 1,
+              explain: "The ball keeps the train's horizontal velocity, just as you do, so in the train's frame it goes straight up and down. From the platform its path is a parabola, but it still lands in your hand.",
+            },
+          },
+          {
+            type: "callout",
+            tone: "tip",
+            title: "When the shortcuts are safe",
+            md: "R = 4H cot θ, T² = 8H/g and the complementary-angle results all assume level ground and no air resistance. For an incline, rotate the axes along the slope (g has components g sin α and g cos α). For two moving bodies, always move to one body's frame first; both feel the same g, so relative motion is a straight line at constant velocity.",
+          },
+          {
+            type: "keypoints",
+            items: [
+              "R = 4H cot θ; T² = 8H/g; complementary angles give equal R and H₁ + H₂ = u²/2g.",
+              "Read u and θ from a trajectory by comparing with y = x tan θ − gx²/(2u² cos² θ).",
+              "In non-uniform circular motion, a = √(a_t² + a_c²).",
+              "Closest approach: in one body's frame, drop a perpendicular from it to the other's straight-line path.",
+              "On an incline, take axes along and perpendicular to the slope.",
+            ],
+          },
+        ],
+        flashcards: [
+          { front: "Range in terms of H and θ", back: "R = 4H cot θ." },
+          { front: "Time of flight in terms of H", back: "T² = 8H/g." },
+          { front: "Complementary angles: sum of heights", back: "H₁ + H₂ = u²/2g, and R = 4√(H₁H₂)." },
+          { front: "Trajectory using range", back: "y = x tan θ (1 − x/R)." },
+          { front: "Total acceleration on a circle with changing speed", back: "a = √(a_t² + (v²/r)²)." },
+          { front: "Time of flight up an incline of angle α", back: "T = 2u sin(θ − α) / (g cos α), θ measured from the horizontal." },
+          { front: "Change in momentum of a projectile over its whole flight", back: "2mu sin θ, vertically downward." },
+          { front: "Range up an incline", back: "R = 2u² sin(θ − α) cos θ / (g cos² α)." },
+        ],
+        quiz: [
+          {
+            kind: "mcq",
+            q: "For a projectile on level ground, the maximum height equals the range. The angle of projection is:",
+            options: [t`$\tan^{-1}(4)$`, t`$\tan^{-1}(1/4)$`, "45°", "60°"],
+            answer: 0,
+            explain: t`$R = 4H\cot\theta$ with $R = H$ gives $\cot\theta = \tfrac14$, so $\tan\theta = 4$ (about 76°).`,
+            difficulty: 2,
+          },
+          {
+            kind: "numeric",
+            q: "A ball is projected at 20 m/s at 60° above the horizontal. After how many seconds is its velocity perpendicular to its initial velocity? (g = 10 m/s², 2 decimal places)",
+            answer: 2.31,
+            tolerance: 0.02,
+            unit: "s",
+            explain: t`$\vec{u}\cdot\vec{v} = 0$: $u_x^2 + u_y(u_y - gt) = 0$, so $u^2 = g t\,u\sin\theta$ and $t = \dfrac{u}{g\sin\theta} = \dfrac{20}{8.66} \approx 2.31$ s. This is less than $T = 3.46$ s, so it happens in flight.`,
+            difficulty: 3,
+            hint: "Set the dot product of the initial and current velocity to zero.",
+          },
+          {
+            kind: "numeric",
+            q: "A 0.2 kg ball is thrown at 10 m/s at 30° above the horizontal. What is the magnitude of its change in momentum (in kg m/s) between launch and landing on level ground?",
+            answer: 2,
+            unit: "kg m/s",
+            explain: t`Horizontal momentum is unchanged; the vertical component reverses: $\Delta p = 2mu\sin\theta = 2(0.2)(10)(0.5) = 2$ kg m/s, downward.`,
+            difficulty: 2,
+          },
+          {
+            kind: "multi",
+            q: "Two balls are thrown with the same speed at 30° and 60°. Which statements are true?",
+            options: ["Their ranges are equal", "Their times of flight are equal", "Their maximum heights are in the ratio 1 : 3", "Their times of flight are in the ratio 1 : √3"],
+            answers: [0, 2, 3],
+            explain: "R depends on sin 2θ (equal), H on sin² θ (1 : 3) and T on sin θ (1 : √3).",
+            difficulty: 2,
+          },
+          {
+            kind: "numeric",
+            q: t`A particle moves on a circle of radius 1 m with speed $v = 2t$ (SI units). What is the magnitude of its total acceleration at $t = 1$ s (in m/s², 2 decimal places)?`,
+            answer: 4.47,
+            tolerance: 0.02,
+            unit: "m/s²",
+            explain: t`$a_t = dv/dt = 2$; at $t = 1$, $v = 2$ so $a_c = 4/1 = 4$. $a = \sqrt{4 + 16} = \sqrt{20} \approx 4.47\ \text{m s}^{-2}$.`,
+            difficulty: 2,
+          },
+          {
+            kind: "mcq",
+            q: "A boat moves at 5 m/s relative to water in a river 60 m wide flowing at 4 m/s. The minimum time to cross is:",
+            options: ["12 s", "20 s", "15 s", "60 s"],
+            answer: 0,
+            explain: "Head straight across: t = 60/5 = 12 s. The river's flow does not affect the across-component. (20 s would be the shortest-path time, 60/√(25 − 16) = 60/3.)",
+            difficulty: 2,
+          },
+          {
+            kind: "numeric",
+            q: "To a man walking east at 4 m/s, rain appears to fall vertically at 3 m/s. What is the actual speed of the rain (in m/s)?",
+            answer: 5,
+            unit: "m/s",
+            explain: t`$\vec{v}_{rain} = \vec{v}_{rain,man} + \vec{v}_{man} = -3\hat{j} + 4\hat{i}$, so its speed is $\sqrt{9 + 16} = 5$ m/s.`,
+            difficulty: 2,
+            hint: "Actual velocity = relative velocity + velocity of the observer.",
+          },
+          {
+            kind: "numeric",
+            q: "A ball is projected at 10 m/s from the foot of a 30° incline, at 60° above the horizontal. What is its time of flight before it lands on the incline (in s, 2 decimal places)? (g = 10 m/s²)",
+            answer: 1.15,
+            tolerance: 0.02,
+            unit: "s",
+            explain: t`$T = \dfrac{2u\sin(\theta - \alpha)}{g\cos\alpha} = \dfrac{2(10)(0.5)}{10(0.866)} \approx 1.15$ s.`,
+            difficulty: 3,
+            hint: "Use axes along and perpendicular to the incline.",
+          },
+        ],
+      },
+    ],
+  },
 ];
 
 /** Class 11 chapter title ("11:<exact title>") → topic slug(s) that teach it. */
 export const links: Record<string, string | string[]> = {
   "11:Units and Measurements": "c11-units-measurements",
   "11:Motion in a Straight Line": "c11-motion-straight-line",
+  "11:Motion in a Plane": "c11-motion-in-a-plane",
+  "11:Physical World and Measurement": "c11-units-measurements",
+  "11:Kinematics": ["c11-motion-straight-line", "c11-motion-in-a-plane"],
 };

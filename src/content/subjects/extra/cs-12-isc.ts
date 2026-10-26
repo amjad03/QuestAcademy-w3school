@@ -4719,6 +4719,1214 @@ Total: 2360.0
       },
     ],
   },
+  /* ------------------------------------------------------------------ */
+  /* ISC Class 12 · Data Structures                                       */
+  /* ------------------------------------------------------------------ */
+  {
+    slug: "c12-cs-java-data-structures",
+    title: "Data Structures",
+    icon: "🧺",
+    description: "Stacks and queues in arrays, infix to postfix conversion, circular queues and deques, a data structure defined through an interface, singly linked lists, and binary tree terms and traversals in Java.",
+    lessons: [
+      {
+        slug: "c12-cs-stack-queue",
+        title: "Stack and Queue",
+        summary: "LIFO and FIFO, array implementations with top, front and rear, overflow and underflow, and the stack applications ISC asks about: infix to postfix and postfix evaluation.",
+        minutes: 25,
+        xp: 60,
+        blocks: [
+          {
+            type: "illustration",
+            emoji: "🍽️",
+            caption: "At a wedding buffet, plates are taken from the top of the pile and washed plates are put back on top: a stack. At the ticket counter of a railway station, the first person in line is served first: a queue.",
+          },
+          {
+            type: "text",
+            md: "A **data structure** is a way of organising data so that it can be used efficiently. A **linear** data structure arranges elements in a sequence (array, stack, queue, linked list); a **non-linear** one does not (tree, graph).\n\nA **stack** is a linear structure in which insertion (**push**) and deletion (**pop**) happen at one end only, the **top**. It works on **LIFO**: last in, first out. Pushing onto a full stack is **overflow**; popping from an empty stack is **underflow**.",
+          },
+          {
+            type: "code",
+            lang: "java",
+            caption: "Stack.java: an array stack with capacity 3",
+            code: `public class Stack
+{
+    int arr[];
+    int cap;
+    int top;
+
+    Stack(int n)
+    {
+        cap = n;
+        arr = new int[cap];
+        top = -1;
+    }
+
+    void push(int v)
+    {
+        if (top == cap - 1)
+            System.out.println("STACK OVERFLOW");
+        else
+            arr[++top] = v;
+    }
+
+    int pop()
+    {
+        if (top == -1)
+            return -9999;     // underflow signal
+        return arr[top--];
+    }
+
+    void display()
+    {
+        if (top == -1)
+        {
+            System.out.println("STACK EMPTY");
+            return;
+        }
+        for (int i = top; i >= 0; i--)
+            System.out.print(arr[i] + " ");
+        System.out.println();
+    }
+
+    public static void main(String[] args)
+    {
+        Stack s = new Stack(3);
+        s.push(10);
+        s.push(20);
+        s.push(30);
+        s.push(40);
+        s.display();
+        System.out.println("Popped " + s.pop());
+        System.out.println("Popped " + s.pop());
+        s.display();
+    }
+}
+
+/* Output:
+STACK OVERFLOW
+30 20 10
+Popped 30
+Popped 20
+10
+*/`,
+          },
+          {
+            type: "text",
+            md: "A **queue** is a linear structure in which elements are inserted at the **rear** and deleted from the **front**. It works on **FIFO**: first in, first out. In the array version below, front and rear start at −1 (empty queue).",
+          },
+          {
+            type: "code",
+            lang: "java",
+            caption: "Queue.java: a simple (linear) array queue",
+            code: `public class Queue
+{
+    int q[];
+    int cap;
+    int front, rear;
+
+    Queue(int n)
+    {
+        cap = n;
+        q = new int[cap];
+        front = -1;
+        rear = -1;
+    }
+
+    void insert(int v)
+    {
+        if (rear == cap - 1)
+        {
+            System.out.println("QUEUE OVERFLOW");
+            return;
+        }
+        if (front == -1)
+            front = 0;
+        q[++rear] = v;
+    }
+
+    int delete()
+    {
+        if (front == -1 || front > rear)
+            return -9999;     // underflow signal
+        return q[front++];
+    }
+
+    void display()
+    {
+        if (front == -1 || front > rear)
+        {
+            System.out.println("QUEUE EMPTY");
+            return;
+        }
+        for (int i = front; i <= rear; i++)
+            System.out.print(q[i] + " ");
+        System.out.println();
+    }
+
+    public static void main(String[] args)
+    {
+        Queue t = new Queue(3);
+        t.insert(5);
+        t.insert(8);
+        t.insert(2);
+        System.out.println("Removed " + t.delete());
+        t.display();
+        t.insert(7);
+    }
+}
+
+/* Output:
+Removed 5
+8 2
+QUEUE OVERFLOW
+*/`,
+          },
+          {
+            type: "mistake",
+            wrong: "After one element is deleted, a linear queue of capacity 3 always has room for one more element.",
+            right: "In a linear array queue, rear only moves forward. Once rear reaches cap − 1, insert() reports overflow even if front has moved and cells at the start are free. A **circular queue** fixes this.",
+            why: "We picture a real queue moving up as people leave. The array does not shift its elements, so the freed cell at index 0 is never reused, as the last line of the output shows.",
+          },
+          {
+            type: "checkpoint",
+            questions: [
+              {
+                kind: "mcq",
+                q: "An empty stack receives push(4), push(9), pop(), push(6), push(1), pop(). What is now on top?",
+                options: ["6", "1", "9", "4"],
+                answer: 0,
+                explain: "4 → 4 9 → 4 → 4 6 → 4 6 1 → 4 6. The top is 6.",
+              },
+            ],
+          },
+          {
+            type: "heading",
+            text: "Stack application: infix to postfix",
+          },
+          {
+            type: "text",
+            md: "In **infix** notation the operator is between its operands (A + B). In **postfix** (Reverse Polish) it comes after (A B +), and in **prefix** (Polish) before (+ A B). Postfix and prefix need no brackets, so a computer can evaluate them with one stack.\n\nPrecedence, highest first: ^ (exponent), then * and /, then + and −. Operators of equal precedence are taken left to right (except ^, which is right to left). To convert by hand, bracket each operation in order of precedence, then move each operator to the end (postfix) or the front (prefix) of its bracket.",
+          },
+          {
+            type: "example",
+            title: "Converting and evaluating",
+            problem: "Convert (A + B) * C − D / E to postfix and prefix. Then evaluate the postfix expression 6 2 3 + * 4 − with a stack.",
+            steps: [
+              "Fully bracket: (((A + B) * C) − (D / E)).",
+              "Postfix: A + B → AB+; times C → AB+C*; D / E → DE/; subtract → AB+C*DE/−.",
+              "Prefix: +AB; *+ABC; /DE; −*+ABC/DE.",
+              "Evaluate 6 2 3 + * 4 −: push 6, 2, 3; + pops 3 and 2, pushes 5; * pops 5 and 6, pushes 30; push 4; − pops 4 and 30, pushes 30 − 4 = 26.",
+            ],
+            answer: "Postfix AB+C*DE/−, prefix −*+ABC/DE; the postfix value is 26.",
+          },
+          {
+            type: "activity",
+            activity: {
+              kind: "sort",
+              prompt: "Stack (LIFO) or queue (FIFO)?",
+              groups: ["Stack", "Queue"],
+              items: [
+                { text: "Undo in a text editor", group: 0, hint: "The last change is undone first." },
+                { text: "Printer jobs waiting to print", group: 1, hint: "The first job sent prints first." },
+                { text: "Method calls during recursion", group: 0, hint: "The latest call returns first." },
+                { text: "Customers at a bank counter", group: 1, hint: "First come, first served." },
+                { text: "Evaluating a postfix expression", group: 0, hint: "Operands are pushed and the latest two are popped." },
+                { text: "Keyboard buffer of typed characters", group: 1, hint: "Characters are processed in the order typed." },
+              ],
+              explain: "Anything that must be reversed or nested uses a stack; anything served in arrival order uses a queue.",
+            },
+          },
+          {
+            type: "callout",
+            tone: "exam",
+            title: "ISC board tip",
+            md: "ISC papers often ask for the postfix (or prefix) form of an infix expression with brackets: show the bracketing steps. In stack and queue programs, the underflow value to return (such as −9999) and the overflow message are given in the question; use exactly those.",
+          },
+          {
+            type: "keypoints",
+            items: [
+              "Stack: LIFO, one end (top); push and pop; top = −1 means empty, top = cap − 1 means full.",
+              "Queue: FIFO, insert at rear, delete from front.",
+              "Overflow: inserting into a full structure; underflow: deleting from an empty one.",
+              "A linear array queue cannot reuse freed cells at the front.",
+              "Postfix puts the operator after the operands and is evaluated with one stack.",
+            ],
+          },
+        ],
+        flashcards: [
+          { front: "LIFO", back: "Last In, First Out: the rule of a stack." },
+          { front: "FIFO", back: "First In, First Out: the rule of a queue." },
+          { front: "Stack overflow (array stack)", back: "push() when top == capacity − 1." },
+          { front: "Stack underflow", back: "pop() when top == −1 (stack empty)." },
+          { front: "Postfix of A + B * C", back: "A B C * +." },
+          { front: "Prefix of (A + B) * C", back: "* + A B C." },
+          { front: "Applications of a stack", back: "Recursion (call stack), undo, reversing data, expression conversion and evaluation." },
+          { front: "Applications of a queue", back: "Printer spooling, CPU scheduling, keyboard buffers, serving requests in order." },
+        ],
+        quiz: [
+          {
+            kind: "mcq",
+            q: "The postfix form of A * (B + C) − D is:",
+            options: ["A B C + * D −", "A B + C * D −", "A B C * + D −", "− * A + B C D"],
+            answer: 0,
+            explain: "B + C → BC+; A * that → ABC+*; minus D → ABC+*D−. The last option is the prefix form.",
+            difficulty: 2,
+          },
+          {
+            kind: "numeric",
+            q: "Evaluate the postfix expression 8 2 / 3 4 * +.",
+            answer: 16,
+            explain: "8 / 2 = 4; 3 * 4 = 12; 4 + 12 = 16.",
+          },
+          {
+            kind: "truefalse",
+            q: "In the array stack, pop() returns arr[top--], which returns the top element and then lowers top.",
+            answer: true,
+            explain: "Post-decrement uses the current top as the index, then decreases it.",
+          },
+          {
+            kind: "mcq",
+            q: "A queue of capacity 4 (front = rear = −1) receives insert(3), insert(7), delete(), insert(1). The values of front and rear are:",
+            options: ["1 and 2", "0 and 2", "1 and 1", "0 and 1"],
+            answer: 0,
+            explain: "insert(3): front 0, rear 0. insert(7): rear 1. delete(): front 1. insert(1): rear 2.",
+          },
+          {
+            kind: "fill",
+            q: "Deleting from an empty stack or queue is called ___.",
+            answer: ["underflow"],
+            explain: "Inserting into a full one is overflow.",
+          },
+          {
+            kind: "mcq",
+            q: "The prefix form of A − B / C is:",
+            options: ["− A / B C", "/ − A B C", "A B C / −", "− / A B C"],
+            answer: 0,
+            explain: "B / C → /BC; A − that → −A/BC.",
+          },
+          {
+            kind: "multi",
+            q: "Which are linear data structures?",
+            options: ["Stack", "Queue", "Binary tree", "Linked list"],
+            answers: [0, 1, 3],
+            explain: "A tree branches, so it is non-linear.",
+          },
+        ],
+      },
+      {
+        slug: "c12-cs-circular-queue-deque",
+        title: "Circular Queue, Deque and Interfaces",
+        summary: "Reusing array cells with a circular queue, the double-ended queue, and defining a stack through an interface so it can have more than one implementation.",
+        minutes: 24,
+        xp: 55,
+        blocks: [
+          {
+            type: "text",
+            md: "In a **circular queue** the last cell of the array is followed by the first. The indices move forward with the **modulus** operator: rear = (rear + 1) % cap. Cells freed at the front can then be reused.\n\nWith front and rear starting at −1, the queue is **empty** when front == −1, and **full** when (rear + 1) % cap == front.",
+          },
+          {
+            type: "code",
+            lang: "java",
+            caption: "CQueue.java: a circular queue of capacity 3",
+            code: `public class CQueue
+{
+    int q[];
+    int cap;
+    int front, rear;
+
+    CQueue(int n)
+    {
+        cap = n;
+        q = new int[cap];
+        front = -1;
+        rear = -1;
+    }
+
+    void enqueue(int v)
+    {
+        if ((rear + 1) % cap == front)
+        {
+            System.out.println("OVERFLOW");
+            return;
+        }
+        if (front == -1)
+            front = 0;
+        rear = (rear + 1) % cap;
+        q[rear] = v;
+    }
+
+    int dequeue()
+    {
+        if (front == -1)
+            return -9999;
+        int v = q[front];
+        if (front == rear)          // last element removed
+            front = rear = -1;
+        else
+            front = (front + 1) % cap;
+        return v;
+    }
+
+    void display()
+    {
+        if (front == -1)
+        {
+            System.out.println("EMPTY");
+            return;
+        }
+        int i = front;
+        while (true)
+        {
+            System.out.print(q[i] + " ");
+            if (i == rear)
+                break;
+            i = (i + 1) % cap;
+        }
+        System.out.println("(front=" + front + ", rear=" + rear + ")");
+    }
+
+    public static void main(String[] args)
+    {
+        CQueue c = new CQueue(3);
+        c.enqueue(11);
+        c.enqueue(22);
+        c.enqueue(33);
+        c.enqueue(44);
+        System.out.println("Out: " + c.dequeue());
+        c.enqueue(44);
+        c.display();
+    }
+}
+
+/* Output:
+OVERFLOW
+Out: 11
+22 33 44 (front=1, rear=0)
+*/`,
+          },
+          {
+            type: "example",
+            title: "Tracing the circular queue",
+            problem: "Trace front and rear through the main() of CQueue.java.",
+            steps: [
+              "enqueue 11, 22, 33: front = 0, rear = 0 → 1 → 2. The array is 11 22 33.",
+              "enqueue(44): (2 + 1) % 3 = 0 = front, so OVERFLOW.",
+              "dequeue(): returns 11, front = 1.",
+              "enqueue(44): (2 + 1) % 3 = 0 ≠ 1, so rear = 0 and q[0] = 44. The freed cell is reused.",
+              "display() starts at front = 1: 22, 33, then wraps to index 0: 44.",
+            ],
+            answer: "OVERFLOW / Out: 11 / 22 33 44 (front=1, rear=0)",
+          },
+          {
+            type: "mistake",
+            wrong: "A circular queue is full when rear == cap − 1, as in a linear queue.",
+            right: "A circular queue is full when (rear + 1) % cap == front. rear can be at any index, including below front.",
+            why: "The linear-queue test is learned first and looks the same. But after wrapping, rear = cap − 1 can happen with free cells at the front, and rear = 0 can happen in a full queue, as in the trace above.",
+          },
+          {
+            type: "checkpoint",
+            questions: [
+              {
+                kind: "numeric",
+                q: "In a circular queue of capacity 5, rear = 4. After one successful enqueue, what is rear?",
+                answer: 0,
+                explain: "(4 + 1) % 5 = 0: rear wraps to the first cell.",
+              },
+            ],
+          },
+          {
+            type: "text",
+            md: "A **deque** (double-ended queue, also written *dequeue* in ISC papers) allows insertion and deletion at **both** ends. An **input-restricted** deque allows insertion at one end only; an **output-restricted** deque allows deletion at one end only. A deque can act as a stack (use one end) or as a queue (insert at one end, delete at the other).",
+          },
+          {
+            type: "code",
+            lang: "java",
+            caption: "Dequeue.java: a deque in an array of size 4",
+            code: `public class Dequeue
+{
+    int dq[];
+    int cap;
+    int front, rear;
+
+    Dequeue(int n)
+    {
+        cap = n;
+        dq = new int[cap];
+        front = 0;
+        rear = -1;         // empty when rear < front
+    }
+
+    void addRear(int v)
+    {
+        if (rear == cap - 1)
+            System.out.println("NO SPACE AT REAR");
+        else
+            dq[++rear] = v;
+    }
+
+    void addFront(int v)
+    {
+        if (front == 0)
+            System.out.println("NO SPACE AT FRONT");
+        else
+            dq[--front] = v;
+    }
+
+    int removeFront()
+    {
+        if (rear < front)
+            return -9999;
+        return dq[front++];
+    }
+
+    int removeRear()
+    {
+        if (rear < front)
+            return -9999;
+        return dq[rear--];
+    }
+
+    void display()
+    {
+        for (int i = front; i <= rear; i++)
+            System.out.print(dq[i] + " ");
+        System.out.println();
+    }
+
+    public static void main(String[] args)
+    {
+        Dequeue d = new Dequeue(4);
+        d.addRear(1);
+        d.addRear(2);
+        d.addRear(3);
+        d.addFront(9);
+        System.out.println(d.removeFront());
+        d.addFront(9);
+        System.out.println(d.removeRear());
+        d.display();
+    }
+}
+
+/* Output:
+NO SPACE AT FRONT
+1
+3
+9 2
+*/`,
+          },
+          {
+            type: "text",
+            md: "**Defining a data structure through an interface.** An interface states *what* a structure can do, and different classes decide *how*. Code written against the interface works with any implementation: an array stack today, a linked-list stack tomorrow.",
+          },
+          {
+            type: "code",
+            lang: "java",
+            caption: "StackDemo.java: a stack defined by an interface",
+            code: `interface IntStack
+{
+    void push(int v);
+    int pop();
+    boolean isEmpty();
+}
+
+class ArrayStack implements IntStack
+{
+    private int a[] = new int[10];
+    private int top = -1;
+
+    public void push(int v)
+    {
+        a[++top] = v;
+    }
+
+    public int pop()
+    {
+        return a[top--];
+    }
+
+    public boolean isEmpty()
+    {
+        return top == -1;
+    }
+}
+
+public class StackDemo
+{
+    // reverses a number's digits using any IntStack
+    static int reverseDigits(int n, IntStack s)
+    {
+        while (n > 0)
+        {
+            s.push(n % 10);
+            n /= 10;
+        }
+        int r = 0, place = 1;
+        while (!s.isEmpty())
+        {
+            r = r + s.pop() * place;
+            place *= 10;
+        }
+        return r;
+    }
+
+    public static void main(String[] args)
+    {
+        System.out.println(reverseDigits(5823, new ArrayStack()));
+    }
+}
+
+/* Output:
+3285
+*/`,
+          },
+          {
+            type: "activity",
+            activity: {
+              kind: "reveal",
+              prompt: "In reverseDigits(5823), which digit is popped first?",
+              emoji: "🔄",
+              options: ["5", "3", "8", "2"],
+              answer: 0,
+              trap: 1,
+              explain: "Digits are pushed from the right: 3, 2, 8, 5. The last pushed, 5, is popped first and gets place value 1, giving 5 + 80 + 200 + 3000 = 3285.",
+            },
+          },
+          {
+            type: "callout",
+            tone: "exam",
+            title: "ISC board tip",
+            md: "For circular queue programs, write the full and empty conditions as comments at the top of the class; examiners look for the % operator in both enqueue and dequeue. For a deque, the question tells you which end each method works on (for example addFront and popRear): follow those names exactly.",
+          },
+          {
+            type: "keypoints",
+            items: [
+              "Circular queue: rear = (rear + 1) % cap; full when (rear + 1) % cap == front.",
+              "When the last element leaves a circular queue, reset front = rear = −1.",
+              "Deque: insert and delete at both ends; input- and output-restricted forms exist.",
+              "An interface defines a structure's operations; classes give implementations.",
+              "Code written against an interface works with any implementing class.",
+            ],
+          },
+        ],
+        flashcards: [
+          { front: "Advance an index in a circular queue", back: "i = (i + 1) % capacity." },
+          { front: "Circular queue full (front = rear = −1 convention)", back: "(rear + 1) % cap == front." },
+          { front: "Advantage of a circular queue", back: "Cells freed at the front are reused, so no space is wasted." },
+          { front: "Deque", back: "Double-ended queue: insertion and deletion at both ends." },
+          { front: "Input-restricted deque", back: "Insertion at only one end; deletion at both ends." },
+          { front: "Output-restricted deque", back: "Deletion at only one end; insertion at both ends." },
+          { front: "Why define a stack with an interface?", back: "The same operations can have several implementations (array, linked list) without changing the code that uses them." },
+        ],
+        quiz: [
+          {
+            kind: "mcq",
+            q: "A circular queue of capacity 4 has front = 2 and rear = 1. It is:",
+            options: ["full", "empty", "holding one element", "in an invalid state"],
+            answer: 0,
+            explain: "(1 + 1) % 4 = 2 = front, so it is full: the elements are at indices 2, 3, 0, 1.",
+            difficulty: 2,
+          },
+          {
+            kind: "numeric",
+            q: "A circular queue has capacity 6, front = 4 and rear = 1. How many elements does it hold?",
+            answer: 4,
+            explain: "Indices 4, 5, 0, 1: four elements. Formula: (rear − front + cap) % cap + 1 = (1 − 4 + 6) % 6 + 1 = 4.",
+            difficulty: 2,
+          },
+          {
+            kind: "truefalse",
+            q: "A deque in which insertion and deletion are both done at the same single end behaves as a stack.",
+            answer: true,
+            explain: "Using one end for both operations gives LIFO behaviour.",
+          },
+          {
+            kind: "mcq",
+            q: "In Dequeue.java, why does the first addFront(9) fail?",
+            options: ["front is 0, so there is no cell before it", "the deque is full", "rear < front", "addFront works only after addRear"],
+            answer: 0,
+            explain: "In this simple array deque, addFront needs a free cell before front. It succeeds later, after removeFront() has moved front to 1.",
+          },
+          {
+            kind: "fill",
+            q: "The methods of a Java interface are implemented in a class with the access specifier ___.",
+            answer: ["public"],
+            explain: "Interface methods are public, and an implementation cannot reduce their visibility.",
+          },
+          {
+            kind: "mcq",
+            q: "What does reverseDigits(470, new ArrayStack()) return?",
+            options: ["74", "740", "47", "0"],
+            answer: 0,
+            explain: "Pushes 0, 7, 4; pops 4 (×1), 7 (×10), 0 (×100): 4 + 70 + 0 = 74.",
+            difficulty: 2,
+          },
+          {
+            kind: "mcq",
+            q: "In CQueue, dequeue() on a queue holding exactly one element sets:",
+            options: ["front = rear = −1", "front = rear + 1", "front = 0, rear = 0", "nothing"],
+            answer: 0,
+            explain: "When front == rear, the last element is leaving, so the queue is reset to empty.",
+          },
+        ],
+      },
+      {
+        slug: "c12-cs-linked-list-tree",
+        title: "Linked Lists and Binary Trees",
+        summary: "Self-referential Node classes, inserting, counting and deleting in a singly linked list, binary tree terms, and preorder, inorder and postorder traversals of a binary search tree.",
+        minutes: 25,
+        xp: 60,
+        blocks: [
+          {
+            type: "text",
+            md: "A **linked list** is a linear collection of **nodes**. Each node holds data and a **reference** (link) to the next node. The first node is reached through a reference called **start** (or head); the last node's link is **null**. A Node class that contains a reference to its own type is a **self-referential** (recursive) data structure.\n\nUnlike an array, a linked list grows and shrinks at run time, and inserting or deleting needs only a change of links, not shifting of elements. The cost is that there is no direct access by index: you must walk the list from start.",
+          },
+          {
+            type: "code",
+            lang: "java",
+            caption: "LinkList.java",
+            code: `class Node
+{
+    int data;
+    Node next;
+
+    Node(int d)
+    {
+        data = d;
+        next = null;
+    }
+}
+
+public class LinkList
+{
+    Node start;
+
+    LinkList()
+    {
+        start = null;
+    }
+
+    void insertEnd(int v)
+    {
+        Node n = new Node(v);
+        if (start == null)
+        {
+            start = n;
+            return;
+        }
+        Node p = start;
+        while (p.next != null)
+            p = p.next;
+        p.next = n;
+    }
+
+    void insertBeg(int v)
+    {
+        Node n = new Node(v);
+        n.next = start;
+        start = n;
+    }
+
+    int count()
+    {
+        int c = 0;
+        for (Node p = start; p != null; p = p.next)
+            c++;
+        return c;
+    }
+
+    // deletes the first node holding v
+    void delete(int v)
+    {
+        if (start == null)
+            return;
+        if (start.data == v)
+        {
+            start = start.next;
+            return;
+        }
+        Node p = start;
+        while (p.next != null && p.next.data != v)
+            p = p.next;
+        if (p.next != null)
+            p.next = p.next.next;
+    }
+
+    void display()
+    {
+        for (Node p = start; p != null; p = p.next)
+            System.out.print(p.data + " -> ");
+        System.out.println("null");
+    }
+
+    public static void main(String[] args)
+    {
+        LinkList L = new LinkList();
+        L.insertEnd(20);
+        L.insertEnd(30);
+        L.insertBeg(10);
+        L.insertEnd(40);
+        L.display();
+        L.delete(30);
+        L.display();
+        System.out.println("Nodes: " + L.count());
+    }
+}
+
+/* Output:
+10 -> 20 -> 30 -> 40 -> null
+10 -> 20 -> 40 -> null
+Nodes: 3
+*/`,
+          },
+          {
+            type: "mistake",
+            wrong: "To insert at the beginning, write start = n; and then n.next = start;",
+            right: "Link first, then move start: n.next = start; start = n;",
+            why: "Both lines are needed, so the order looks unimportant. But after start = n, the old first node has no reference left, and n.next = start makes n point to itself: the rest of the list is lost.",
+          },
+          {
+            type: "checkpoint",
+            questions: [
+              {
+                kind: "mcq",
+                q: "In delete(v), why does the loop test p.next.data rather than p.data?",
+                options: ["To stop at the node before the one to delete, so its link can be changed", "Because p.data is private", "To skip the first node", "To make the loop faster"],
+                answer: 0,
+                explain: "In a singly linked list you cannot go back, so you stop one node early and set p.next = p.next.next.",
+              },
+            ],
+          },
+          {
+            type: "heading",
+            text: "Binary trees",
+          },
+          {
+            type: "text",
+            md: "A **tree** is a non-linear structure of nodes joined by edges, with one special node, the **root**. In a **binary tree** every node has at most two children, the **left child** and the **right child**. Each child is the root of a smaller binary tree (its **subtree**), so a binary tree is also a recursive data structure.\n\nIn a **binary search tree (BST)**, every value in a node's left subtree is smaller than the node, and every value in its right subtree is larger (or equal, in the code below).",
+          },
+          {
+            type: "table",
+            headers: ["Term", "Meaning", "In the BST built from 50, 30, 70, 20, 40, 60, 80"],
+            rows: [
+              ["Root", "the top node, with no parent", "50"],
+              ["Leaf (external node)", "a node with no children", "20, 40, 60, 80"],
+              ["Internal node", "a node with at least one child", "50, 30, 70"],
+              ["Siblings", "nodes with the same parent", "30 and 70; 20 and 40; 60 and 80"],
+              ["Level / depth of a node", "number of edges from the root (root at level 0)", "40 is at level 2"],
+              ["Height of the tree", "edges on the longest root-to-leaf path", "2"],
+              ["Size", "number of nodes", "7"],
+              ["Degree of a node", "number of its children", "2 for 50, 0 for 80"],
+            ],
+          },
+          {
+            type: "code",
+            lang: "java",
+            caption: "BST.java: building a binary search tree and traversing it",
+            code: `class TNode
+{
+    int data;
+    TNode left, right;
+
+    TNode(int d)
+    {
+        data = d;
+        left = right = null;
+    }
+}
+
+public class BST
+{
+    TNode root;
+
+    TNode insert(TNode r, int v)
+    {
+        if (r == null)
+            return new TNode(v);
+        if (v < r.data)
+            r.left = insert(r.left, v);
+        else
+            r.right = insert(r.right, v);
+        return r;
+    }
+
+    void preorder(TNode r)
+    {
+        if (r == null)
+            return;
+        System.out.print(r.data + " ");
+        preorder(r.left);
+        preorder(r.right);
+    }
+
+    void inorder(TNode r)
+    {
+        if (r == null)
+            return;
+        inorder(r.left);
+        System.out.print(r.data + " ");
+        inorder(r.right);
+    }
+
+    void postorder(TNode r)
+    {
+        if (r == null)
+            return;
+        postorder(r.left);
+        postorder(r.right);
+        System.out.print(r.data + " ");
+    }
+
+    public static void main(String[] args)
+    {
+        BST t = new BST();
+        int keys[] = {50, 30, 70, 20, 40, 60, 80};
+        for (int k : keys)
+            t.root = t.insert(t.root, k);
+        t.preorder(t.root);
+        System.out.println();
+        t.inorder(t.root);
+        System.out.println();
+        t.postorder(t.root);
+        System.out.println();
+    }
+}
+
+/* Output:
+50 30 20 40 70 60 80
+20 30 40 50 60 70 80
+20 40 30 60 80 70 50
+*/`,
+          },
+          {
+            type: "example",
+            title: "Reading the three traversals",
+            problem: "Explain the three output lines of BST.java.",
+            steps: [
+              "Preorder (Root, Left, Right): visit 50, then all of the left subtree (30, 20, 40), then the right subtree (70, 60, 80).",
+              "Inorder (Left, Root, Right): left subtree 20 30 40, then 50, then 60 70 80. For a BST, inorder always gives ascending order.",
+              "Postorder (Left, Right, Root): 20 40 30, then 60 80 70, and the root 50 comes last.",
+            ],
+            answer: "Pre: 50 30 20 40 70 60 80; In: 20 30 40 50 60 70 80; Post: 20 40 30 60 80 70 50",
+          },
+          {
+            type: "activity",
+            activity: {
+              kind: "match",
+              prompt: "Match each traversal to its visiting order.",
+              pairs: [
+                ["Preorder", "Root, Left, Right"],
+                ["Inorder", "Left, Root, Right"],
+                ["Postorder", "Left, Right, Root"],
+                ["Inorder of a BST", "values in ascending order"],
+              ],
+              explain: "The name tells you where the root goes: pre = first, in = middle, post = last.",
+            },
+          },
+          {
+            type: "callout",
+            tone: "exam",
+            title: "ISC board tip",
+            md: "Linked list questions in ISC ask for an **algorithm or a method** using a given Node class (for example, count the nodes holding even numbers, or insert after a given node). Always handle the empty list (start == null) first. Tree questions give a diagram and ask for terms and traversals: write each traversal by visiting subtrees completely before moving on.",
+          },
+          {
+            type: "keypoints",
+            items: [
+              "A linked list node holds data and a reference to the next node; the last link is null.",
+              "Insert at the beginning: n.next = start; start = n.",
+              "To delete, stop at the node before the target and bypass it.",
+              "Binary tree: each node has at most two children; root at level 0; leaves have no children.",
+              "Preorder: N L R; inorder: L N R (sorted for a BST); postorder: L R N.",
+            ],
+          },
+        ],
+        flashcards: [
+          { front: "Self-referential class", back: "A class with a data member that refers to an object of the same class, e.g. Node next." },
+          { front: "Advantage of a linked list over an array", back: "Its size changes at run time, and insertion or deletion needs only link changes." },
+          { front: "Disadvantage of a linked list", back: "No direct access by index; extra memory for the links." },
+          { front: "Leaf node", back: "A node with no children." },
+          { front: "Binary search tree rule", back: "Left subtree values < node < right subtree values." },
+          { front: "Inorder traversal of a BST", back: "Gives the values in ascending order." },
+          { front: "Postorder visiting order", back: "Left subtree, right subtree, then the root." },
+          { front: "Level of the root (ISC convention)", back: "0." },
+        ],
+        quiz: [
+          {
+            kind: "mcq",
+            q: "Starting with an empty LinkList: insertBeg(5); insertBeg(8); insertEnd(2); display() prints:",
+            options: ["8 -> 5 -> 2 -> null", "5 -> 8 -> 2 -> null", "2 -> 5 -> 8 -> null", "8 -> 2 -> 5 -> null"],
+            answer: 0,
+            explain: "insertBeg(8) puts 8 in front of 5; insertEnd(2) adds 2 at the end.",
+          },
+          {
+            kind: "mcq",
+            q: "Keys 40, 25, 60, 10, 30 are inserted into an empty BST. The preorder traversal is:",
+            options: ["40 25 10 30 60", "10 25 30 40 60", "10 30 25 60 40", "40 25 60 10 30"],
+            answer: 0,
+            explain: "40 is the root; 25 left with children 10, 30; 60 right. Preorder: 40, 25, 10, 30, 60. Option 2 is inorder and option 3 is postorder.",
+            difficulty: 2,
+          },
+          {
+            kind: "numeric",
+            q: "How many leaf nodes are in the BST built from 40, 25, 60, 10, 30?",
+            answer: 3,
+            explain: "10, 30 and 60 have no children.",
+          },
+          {
+            kind: "truefalse",
+            q: "In a singly linked list, the last node's next field is null.",
+            answer: true,
+            explain: "null marks the end of the list; loops stop when p becomes null.",
+          },
+          {
+            kind: "fill",
+            q: "The traversal Left, Right, Root is called ___ traversal.",
+            answer: ["postorder", "post-order", "post order"],
+            explain: "The root is visited last (post).",
+          },
+          {
+            kind: "mcq",
+            q: "Which code correctly counts the nodes of a list whose first node is start?",
+            options: ["for (Node p = start; p != null; p = p.next) c++;", "for (Node p = start; p.next != null; p = p.next) c++;", "while (start != null) c++;", "for (Node p = start; p != null; p++) c++;"],
+            answer: 0,
+            explain: "Option 2 misses the last node (and fails on an empty list); option 3 never moves; option 4 does not compile.",
+          },
+          {
+            kind: "multi",
+            q: "For the BST from 50, 30, 70, 20, 40, 60, 80, which statements are true?",
+            options: ["Its height is 2 (counting edges)", "70 and 30 are siblings", "40 is a leaf", "50 has degree 1"],
+            answers: [0, 1, 2],
+            explain: "50 has two children (30 and 70), so its degree is 2.",
+          },
+        ],
+      },
+      {
+        slug: "c12-cs-data-structures-practice",
+        title: "Data Structures: Board Practice",
+        summary: "Mixed ISC-style questions: stack and queue traces, infix to postfix and prefix, circular-queue conditions, a linked-list method to write and binary tree traversals.",
+        minutes: 24,
+        xp: 60,
+        blocks: [
+          {
+            type: "text",
+            md: "These questions mix the forms used in the ISC theory paper: a short trace, a conversion, a method to write for a given Node class, and a tree to read. Write the working each time.",
+          },
+          {
+            type: "example",
+            title: "Q1: Postfix and prefix",
+            problem: "Convert (P + Q) / (R − S) * T to postfix and to prefix.",
+            steps: [
+              "/ and * have equal precedence and are taken left to right: (((P + Q) / (R − S)) * T).",
+              "Postfix: PQ+ and RS− → PQ+RS−/ → PQ+RS−/T*.",
+              "Prefix: +PQ and −RS → /+PQ−RS → */+PQ−RST.",
+            ],
+            answer: "Postfix PQ+RS−/T*; prefix */+PQ−RST",
+          },
+          {
+            type: "example",
+            title: "Q2: Write a method for a given Node class",
+            problem: "Using class Node { int data; Node next; }, write a method int sumEven(Node start) that returns the sum of the even values in the list.",
+            steps: [
+              "Set s = 0 and a reference p = start.",
+              "While p != null: if p.data % 2 == 0, add p.data to s; then p = p.next.",
+              "Return s. An empty list (start == null) correctly gives 0.",
+              "Code: int sumEven(Node start) { int s = 0; for (Node p = start; p != null; p = p.next) if (p.data % 2 == 0) s += p.data; return s; }",
+            ],
+            answer: "For the list 10 → 15 → 22 → 7 → null, sumEven returns 32.",
+          },
+          {
+            type: "code",
+            lang: "java",
+            caption: "ListSum.java: the method from Q2, tested, with a recursive version",
+            code: `class Node
+{
+    int data;
+    Node next;
+
+    Node(int d, Node n)
+    {
+        data = d;
+        next = n;
+    }
+}
+
+public class ListSum
+{
+    static int sumEven(Node start)
+    {
+        int s = 0;
+        for (Node p = start; p != null; p = p.next)
+            if (p.data % 2 == 0)
+                s += p.data;
+        return s;
+    }
+
+    // recursive version: same result
+    static int sumEvenRec(Node p)
+    {
+        if (p == null)
+            return 0;
+        return (p.data % 2 == 0 ? p.data : 0) + sumEvenRec(p.next);
+    }
+
+    public static void main(String[] args)
+    {
+        // builds 10 -> 15 -> 22 -> 7 -> null from the end
+        Node start = new Node(10, new Node(15, new Node(22, new Node(7, null))));
+        System.out.println(sumEven(start) + " " + sumEvenRec(start));
+        System.out.println(sumEven(null));
+    }
+}
+
+/* Output:
+32 32
+0
+*/`,
+          },
+          {
+            type: "checkpoint",
+            questions: [
+              {
+                kind: "mcq",
+                q: "In ListSum.java, what would sumEvenRec return for the list 3 → 8 → 4 → null?",
+                options: ["12", "15", "8", "0"],
+                answer: 0,
+                explain: "3 is odd (adds 0), then 8 + 4 = 12, and null returns 0.",
+              },
+            ],
+          },
+          {
+            type: "mistake",
+            wrong: "To evaluate A B − in postfix, pop A, then pop B, and compute A − B, taking the values in the order they come off the stack.",
+            right: "The first value popped is the **right** operand. Pop B, then pop A, and compute A − B (second popped − first popped).",
+            why: "Learners expect the stack to give the operands in reading order, but LIFO reverses them. For 9 3 −, the wrong order gives 3 − 9 = −6 instead of 6; for + and * the order does not matter, which hides the error.",
+          },
+          {
+            type: "checkpoint",
+            questions: [
+              {
+                kind: "numeric",
+                q: "Evaluate the postfix expression 5 1 2 + 4 * + 3 −.",
+                answer: 14,
+                explain: "1 + 2 = 3; 3 * 4 = 12; 5 + 12 = 17; 17 − 3 = 14.",
+                difficulty: 2,
+              },
+            ],
+          },
+          {
+            type: "example",
+            title: "Q3: Binary tree terms",
+            problem: "A binary tree has root K. K's children are F (left) and P (right). F's children are B (left) and H (right). P has only a right child, T. Give the leaves, the height, the level of H, and the three traversals.",
+            steps: [
+              "Leaves: B, H, T (no children). Internal nodes: K, F, P.",
+              "Height: the longest path K → F → B (or K → P → T) has 2 edges, so the height is 2. H is at level 2.",
+              "Preorder (N L R): K F B H P T.",
+              "Inorder (L N R): B F H K P T. Postorder (L R N): B H F T P K.",
+            ],
+            answer: "Leaves B, H, T; height 2; H at level 2; pre K F B H P T; in B F H K P T; post B H F T P K",
+          },
+          {
+            type: "activity",
+            activity: {
+              kind: "order",
+              prompt: "Order the steps to delete a node holding v from a linked list.",
+              items: [
+                "If start is null, stop",
+                "If start.data == v, set start = start.next and stop",
+                "Set p = start",
+                "Move p forward while p.next is not null and p.next.data != v",
+                "If p.next is not null, set p.next = p.next.next",
+              ],
+              explain: "Handle the empty list and the first node separately, then stop one node before the target and bypass it.",
+            },
+          },
+          {
+            type: "example",
+            title: "Q4: Circular queue conditions",
+            problem: "A circular queue in an array of size 5 has front = 3 and rear = 1. (a) Which indices hold elements? (b) Where will the next element go? (c) How many more can be inserted?",
+            steps: [
+              "Elements run from front to rear, wrapping: indices 3, 4, 0, 1 (four elements).",
+              "Next position: (1 + 1) % 5 = 2.",
+              "After that, (2 + 1) % 5 = 3 = front, so the queue is full. Only 1 more element fits.",
+            ],
+            answer: "(a) 3, 4, 0, 1 (b) index 2 (c) one",
+          },
+          {
+            type: "callout",
+            tone: "exam",
+            title: "ISC board tip",
+            md: "When asked for a linked-list method, the Node class is given: use its field names exactly (often num and next, or data and link). Algorithms may be written as numbered steps in English; either an algorithm or a method is usually accepted, but read the question.",
+          },
+          {
+            type: "keypoints",
+            items: [
+              "Bracket fully before converting infix; equal precedence goes left to right.",
+              "Walk a linked list with a separate reference p; handle start == null first.",
+              "Traversals: visit each subtree completely before moving to the next part.",
+              "Circular queue elements run from front to rear with wrap-around.",
+              "Postfix evaluation: the second popped value is the left operand.",
+            ],
+          },
+        ],
+        flashcards: [
+          { front: "Postfix of (P + Q) / (R − S) * T", back: "PQ+RS−/T*." },
+          { front: "Prefix of (P + Q) / (R − S) * T", back: "*/+PQ−RST." },
+          { front: "In postfix evaluation, for A B −", back: "Pop B first, then A; compute A − B." },
+          { front: "Sum of even values in a linked list", back: "Walk with p from start to null; add p.data when p.data % 2 == 0." },
+          { front: "Elements in a circular queue (size 5, front 3, rear 1)", back: "Four, at indices 3, 4, 0, 1." },
+          { front: "Inorder of the tree K(F(B, H), P(-, T))", back: "B F H K P T." },
+        ],
+        quiz: [
+          {
+            kind: "mcq",
+            q: "The postfix form of A + B * C − D / E is:",
+            options: ["A B C * + D E / −", "A B + C * D E / −", "A B C * D E / + −", "A B C + * D − E /"],
+            answer: 0,
+            explain: "B * C first → ABC*+; then D / E → DE/; then subtract: ABC*+DE/−.",
+            difficulty: 2,
+          },
+          {
+            kind: "numeric",
+            q: "Evaluate the postfix expression 9 3 − 2 ^ (where ^ is exponent).",
+            answer: 36,
+            explain: "9 − 3 = 6; 6 ^ 2 = 36.",
+          },
+          {
+            kind: "mcq",
+            q: "For the tree with root K (children F, P), F (children B, H) and P (right child T), the postorder traversal is:",
+            options: ["B H F T P K", "K F B H P T", "B F H K P T", "B H T F P K"],
+            answer: 0,
+            explain: "Left subtree B H F, right subtree T P, then root K.",
+          },
+          {
+            kind: "truefalse",
+            q: "In an array stack, pop() on an empty stack should check top == −1 before reading arr[top].",
+            answer: true,
+            explain: "Otherwise arr[−1] throws an ArrayIndexOutOfBoundsException.",
+          },
+          {
+            kind: "fill",
+            q: "A tree in which every node has at most two children is called a ___ tree.",
+            answer: ["binary"],
+            explain: "Each node has a left and a right child reference, either of which can be null.",
+          },
+          {
+            kind: "mcq",
+            q: "An empty queue receives insert(4), insert(6), insert(9), delete(), insert(2), delete(). What is now at the front?",
+            options: ["9", "6", "2", "4"],
+            answer: 0,
+            explain: "After the inserts: 4 6 9. delete removes 4; insert gives 6 9 2; delete removes 6. Front is 9.",
+          },
+          {
+            kind: "mcq",
+            q: "The method int f(Node p) { if (p == null) return 0; return 1 + f(p.next); } returns:",
+            options: ["the number of nodes from p to the end", "the sum of the data values", "the last node's data", "always 1"],
+            answer: 0,
+            explain: "Each node adds 1 and the recursion stops at null: a recursive node count.",
+          },
+        ],
+      },
+    ],
+  },
 ];
 
 /** Chapter title ("11:" / "12:" + exact title) → topic slug(s) that teach it. */
@@ -4729,4 +5937,5 @@ export const links: Record<string, string | string[]> = {
   "12:Arrays and Strings": "c12-cs-java-arrays-strings",
   "12:Recursion": "c12-cs-java-recursion",
   "12:Inheritance, Interfaces and Polymorphism": "c12-cs-java-inheritance",
+  "12:Data Structures": "c12-cs-java-data-structures",
 };
