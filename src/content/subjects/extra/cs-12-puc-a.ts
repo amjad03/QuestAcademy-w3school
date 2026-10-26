@@ -1080,7 +1080,7 @@ for n in [5, 10, 100, 1000]:
           { front: "Time complexity of an algorithm with no loops?", back: "Constant time, O(1)." },
           { front: "Time complexity of a single loop over n elements?", back: "Linear time, O(n)." },
           { front: "Time complexity of bubble, selection and insertion sort?", back: "Quadratic, O(n²), because of nested loops." },
-          { front: "Which of the three sorts is fastest on an already sorted list?", back: "Insertion sort: n − 1 comparisons and no shifts." },
+          { front: "Which of the three sorts is fastest on an already sorted list?", back: "Insertion sort: n − 1 comparisons and no shifts. (A bubble sort with a `swapped` flag ties with it; the plain versions of bubble and selection sort do not.)" },
         ],
         quiz: [
           {

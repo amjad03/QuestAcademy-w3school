@@ -393,7 +393,7 @@ export const topics: Topic[] = [
             kind: "fill",
             q: "The maximum efficiency of a half-wave rectifier is ___ %.",
             answer: ["40.6", "40.5", "40.53"],
-            explain: t`$\eta_{max} = \dfrac{(I_m/\pi)^2}{(I_m/2)^2} = \dfrac{4}{\pi^2} = 0.406$.`,
+            explain: t`$\eta_{max} = \dfrac{(I_m/\pi)^2}{(I_m/2)^2} = \dfrac{4}{\pi^2} \approx 0.405$, which most textbooks quote as 40.6%.`,
           },
         ],
       },

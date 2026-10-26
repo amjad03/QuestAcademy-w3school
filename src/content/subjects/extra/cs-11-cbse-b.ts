@@ -1217,7 +1217,7 @@ print(changed)`,
           q: "What is the output? `s = \"KARNATAKA\"` / `print(s.count(\"A\"), s.find(\"A\"), s.rfind(\"A\"))`",
           options: ["4 1 8", "4 1 7", "3 1 8", "4 0 8"],
           answer: 0,
-          explain: "A appears at indices 1, 5, 7 and 8: count 4, first at 1, last (rfind) at 8.",
+          explain: "A appears at indices 1, 4, 6 and 8 (K-A-R-N-A-T-A-K-A): count 4, first at 1, last (rfind) at 8.",
           difficulty: 2,
         },
         {
@@ -3088,7 +3088,7 @@ const society: Topic = {
             "A CC BY image may be reused if the creator is credited. She credited the photographer, so this use is **allowed**.",
             "Using a company's logo without permission is **trademark infringement**.",
           ],
-          answer: "Paragraph: plagiarism. Photo: fair use under its CC BY licence. Logo: trademark infringement.",
+          answer: "Paragraph: plagiarism. Photo: allowed under its CC BY licence (credit given). Logo: trademark infringement.",
         },
         {
           type: "checkpoint",

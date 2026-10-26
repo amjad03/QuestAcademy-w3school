@@ -458,7 +458,7 @@ print("SD:", round(st.pstdev(runs), 2))`,
           },
           {
             type: "example",
-            title: "Numerical: all five measures",
+            title: "Numerical: mean, median, mode and range",
             problem: "Daily rainfall (mm) in Madikeri for 7 days: 12, 30, 0, 18, 30, 6, 23. Find the mean, median, mode and range.",
             steps: [
               "Sum = 12 + 30 + 0 + 18 + 30 + 6 + 23 = 119, mean = 119 / 7 = **17 mm**.",
