@@ -28,7 +28,6 @@ const build = (no: string, chapter: string, qs: Q[]): ExamQuestion[] =>
 
 /* exam tag sets */
 const ALL: ExamId[] = ["NEET", "JEE", "KCET", "COMEDK"];
-const MAIN: ExamId[] = ["NEET", "JEE", "COMEDK"];
 const JM: ExamId[] = ["JEE", "COMEDK"];
 const ADV: ExamId[] = ["JEE_ADV"];
 const JA: ExamId[] = ["JEE", "JEE_ADV"];
@@ -204,7 +203,7 @@ const ch1: Q[] = [
   {
     kind: "mcq",
     difficulty: 2,
-    exams: MAIN,
+    exams: ALL,
     idealTime: 90,
     q: t`A point charge $q$ is placed at one corner of a cube. The flux through each of the three faces of the cube that do NOT touch that corner is:`,
     options: [t`$q/8\varepsilon_0$`, t`$q/24\varepsilon_0$`, t`$q/6\varepsilon_0$`, "zero"],
@@ -279,7 +278,7 @@ const ch1: Q[] = [
   {
     kind: "mcq",
     difficulty: 2,
-    exams: MAIN,
+    exams: ALL,
     idealTime: 60,
     q: t`**Assertion (A):** An electric dipole placed in a uniform electric field experiences no net force, though it may experience a torque.<br>**Reason (R):** The forces on the two charges of the dipole are equal in magnitude and opposite in direction, but in general do not act along the same line.`,
     options: AR,
@@ -361,7 +360,7 @@ const ch1: Q[] = [
   {
     kind: "mcq",
     difficulty: 2,
-    exams: MAIN,
+    exams: ALL,
     idealTime: 60,
     q: t`**Statement I:** The net electric flux through a closed surface does not depend on charges located outside the surface.<br>**Statement II:** The electric field at a point on a Gaussian surface is produced only by the charges enclosed by that surface.`,
     options: S12,
@@ -588,7 +587,7 @@ const ch1: Q[] = [
   {
     kind: "numeric",
     difficulty: 1,
-    exams: ["JEE", "KCET", "COMEDK"],
+    exams: JM,
     idealTime: 50,
     q: t`A flat disc of area $0.05$ m$^2$ is placed in a uniform field of $200$ N C$^{-1}$ with its normal at $60^\circ$ to the field. Find the electric flux through it in N m$^2$ C$^{-1}$.`,
     answer: 5,
@@ -847,7 +846,7 @@ const ch2: Q[] = [
   {
     kind: "numeric",
     difficulty: 1,
-    exams: ["JEE", "KCET", "COMEDK"],
+    exams: JM,
     idealTime: 50,
     q: t`Capacitors of $2\ \mu$F, $3\ \mu$F and $6\ \mu$F are connected in series across a $12$ V battery. Find the charge (in $\mu$C) on the $3\ \mu$F capacitor.`,
     answer: 12,
@@ -939,7 +938,7 @@ const ch2: Q[] = [
   {
     kind: "mcq",
     difficulty: 2,
-    exams: MAIN,
+    exams: ALL,
     idealTime: 60,
     q: t`**Statement I:** The electric potential can be zero at a point where the electric field is not zero.<br>**Statement II:** The electric field can be zero at a point where the electric potential is not zero.`,
     options: S12,
@@ -1499,7 +1498,7 @@ const ch3: Q[] = [
   {
     kind: "mcq",
     difficulty: 2,
-    exams: MAIN,
+    exams: ALL,
     idealTime: 50,
     q: t`**Statement I:** The drift speed of free electrons in a current-carrying copper wire is typically of the order of a fraction of a mm s$^{-1}$.<br>**Statement II:** A lamp lights almost instantly when switched on because the electric field is set up throughout the circuit at nearly the speed of light.`,
     options: S12,
@@ -1540,7 +1539,7 @@ const ch3: Q[] = [
   {
     kind: "numeric",
     difficulty: 1,
-    exams: ["JEE", "KCET", "COMEDK"],
+    exams: JM,
     idealTime: 45,
     q: t`A $2$ kW geyser is used for $3$ hours every day. How many units (kWh) of electrical energy does it consume in a 30-day month?`,
     answer: 180,
