@@ -10,7 +10,7 @@
  * re-plans automatically when the learner falls behind or races ahead.
  */
 import { dayKey } from "./gamification";
-import type { Txt } from "./exam";
+import { txtEn, type Txt } from "./exam";
 
 export interface PlanItem {
   id: string;
@@ -164,7 +164,11 @@ export function buildPlan(input: PlanInput): PlanResult {
   }
   const lastLearn = [...days].reverse().find((d) => d.tasks.some((t) => t.kind === "learn"));
   if (input.revision || input.mocks) {
-    days.push(...examTail(tailDates.slice(ti), perDay, input));
+    // Exam plans: study days left over once every chapter is learnt join the final stretch.
+    const spare = days.filter((d) => (!lastLearn || d.date > lastLearn.date) && !d.tasks.some((t) => t.kind === "learn"));
+    const kept = days.filter((d) => !spare.includes(d));
+    days.length = 0;
+    days.push(...kept, ...examTail([...spare.map((d) => d.date), ...tailDates.slice(ti)], perDay, input));
     days.sort((a, b) => a.date.localeCompare(b.date));
     return finish(days, lastLearn, learnDates, tailDates, perDay, studyDays, remainingMinutes, availableMinutes, input, remaining.length);
   }
@@ -207,26 +211,32 @@ function finish(days: PlanDay[], lastLearn: PlanDay | undefined, learnDates: str
 
 /**
  * The final stretch of an exam plan: revision rounds (highest-weightage chapters
- * first, shorter each round) with full mocks — every third study day at first,
- * every other day in the last two weeks — and a light exam-eve day.
+ * first; each round shorter and narrower) with full mocks — about weekly at first, every
+ * third study day in the last six weeks, every other day in the last two — and a light exam-eve day.
  */
 function examTail(dates: string[], perDay: number, input: PlanInput): PlanDay[] {
   const out: PlanDay[] = [];
   const items = [...(input.revision?.items ?? [])].sort((a, b) => (b.priority ?? 0) - (a.priority ?? 0));
+  /** Rounds planned up front (more are added when time is left over). */
   const rounds = Math.max(1, input.revision?.rounds ?? 1);
   const queue: PlanTask[] = [];
-  for (let r = 1; r <= rounds; r++)
-    for (const it of items)
+  let round = 0;
+  // Round 1 covers every chapter; later rounds only the heavier half, quarter…
+  const addRound = () => {
+    round++;
+    for (const it of items.slice(0, Math.max(1, Math.ceil(items.length / 2 ** (round - 1)))))
       queue.push({
-        id: `rev${r}:${it.id}`,
-        title: `Revision round ${r}: ${it.title}`,
-        label: { key: "plan.task.revisionRound", en: "Revision round {n}: {title}", vars: { n: r, title: it.title } },
-        // Shorter every round: half the learning time, then a third, then a quarter…
-        minutes: Math.max(15, Math.round(Math.min(it.minutes, 180) / (r + 1) / 5) * 5),
+        id: `rev${round}:${it.id}`,
+        title: `Revision round ${round}: ${it.title}`,
+        label: { key: "plan.task.revisionRound", en: "Revision round {n}: {title}", vars: { n: round, title: it.title } },
+        // A third of the learning time (20–60 min), shorter every round.
+        minutes: Math.max(15, Math.round(Math.min(60, Math.max(20, it.minutes / 3)) / round / 5) * 5),
         href: it.reviseHref ?? it.href,
         kind: "revise",
         group: it.group,
       });
+  };
+  for (let r = 0; r < rounds; r++) addRound();
   const mock = input.mocks && (input.mocks.half && perDay < input.mocks.full.minutes * 0.75 ? input.mocks.half : input.mocks.full);
   dates.forEach((date, i) => {
     const fromEnd = dates.length - 1 - i;
@@ -238,15 +248,18 @@ function examTail(dates: string[], perDay: number, input: PlanInput): PlanDay[] 
       out.push(day);
       return;
     }
-    const mockDay = mock && (fromEnd <= 14 ? fromEnd % 2 === 1 : fromEnd % 3 === 1);
+    // Mocks get more frequent: weekly-ish, then every third study day in the last ~6 weeks, every other day in the last two.
+    const mockDay = mock && (fromEnd <= 12 ? fromEnd % 2 === 1 : fromEnd <= 36 ? fromEnd % 3 === 1 : fromEnd % 6 === 1);
     if (mock && mockDay) {
       const analyse = Math.max(30, Math.round(mock.minutes / 3 / 5) * 5);
-      day.tasks.push({ id: `mock:${date}`, title: mock.label.en, label: mock.label, minutes: mock.minutes, href: mock.href, kind: "mock" });
+      day.tasks.push({ id: `mock:${date}`, title: txtEn(mock.label), label: mock.label, minutes: mock.minutes, href: mock.href, kind: "mock" });
       day.tasks.push({ id: `analyse:${date}`, title: "Analyse the mock: redo every mistake", label: { key: "plan.task.analyse", en: "Analyse the mock: redo every mistake" }, minutes: analyse, href: input.reviseHref ?? "/exam/practice", kind: "revise" });
       day.minutes = mock.minutes + analyse;
       out.push(day);
       return;
     }
+    // Spare time left after the planned rounds: keep going, up to four rounds.
+    if (!queue.length && items.length && round < 4) addRound();
     while (queue.length && day.minutes + Math.min(queue[0].minutes, 30) <= perDay) {
       const task = queue.shift()!;
       const take = Math.min(task.minutes, perDay - day.minutes);

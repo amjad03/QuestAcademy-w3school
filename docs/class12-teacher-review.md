@@ -377,7 +377,6 @@ What each reviewer fixed, and what they left for a teacher ("Open").
 - **bank che12-2** — Gd distractor explanation (64 e⁻, not 65); KCET off 15 numerics; hydrate colours grey-green/dark green.
 - **bank mat12-2** — Rolle/MVT, tangents/normals, approximations → JEE_ADV only (17 items); KCET +12 MCQs, −8 numerics.
 - **bank phy12-2** — FACT FIX: bismuth χ −1.7×10⁻⁵ (was ×10⁻⁴); KCET −10 numerics, +15 MCQs; cyclotron/toroid −KCET; Earth's magnetism → COMEDK only; d3 share 19.5%. Open: cyclotron/toroid/LC/Q-factor/eddy for NEET/JEE Main.
-- **GLOBAL (me): bank/index.ts strips NEET/KCET/COMEDK from numeric & multi items at load (MCQ-only exams).
 - **bank bio12-1** — germ-layer statement per NCERT (mesoderm appears later); MTP 2021 Act note added.
 - **bank che12-3** — KCET +68 d2 MCQs. Open: industrial methanol item (commercial alcohols dropped?); CH₃OH vs H₂O acidity.
 - **bank phy12-3** — KCET −16 numerics; scattering/rainbow/eye → COMEDK only; dispersive power/achromat/resolving power/Fresnel/Doppler → JEE_ADV; Brewster −KCET; microwave range wording.
@@ -390,7 +389,6 @@ What each reviewer fixed, and what they left for a teacher ("Open").
 - **che-11-a** — 6 fixes: limiting-reagent counterexample; Ge m.p. NCERT note; "group 12"; Na/Ca diagonal explanation; successive-IE group shortcut (p-block = 10 + n) ×2.
 - **phy-11-a** — 2 fixes: "Système International"; relative velocity CBSE claim hedged. GAP (optional): ISC "Physical World" intro lesson.
 - **bank bio12-3** — 4 fixes: deer distractors; prickly pear 1920s; PCR and exponential distractor explanations.
-CLASS 12 REVIEW COMPLETE (except cs-12-cbse, cs-12-isc running).
 - **phy-11-e** — 1 fix: work 6051 → 6050 J.
 - **phy-11-c** — 3 fixes: theorems of axes/rolling/geostationary exam claims (KCET, NEET) hedged.
 - **che-11-b** — 1 fix: −5744 J.
@@ -406,7 +404,6 @@ CLASS 12 REVIEW COMPLETE (except cs-12-cbse, cs-12-isc running).
 - **mat-11-d** — 2 fixes: ISC Class 11 Section B has 3D (me: added row to ISC MATHS_11); circle sort label.
 - **bio-11-a** — 5 fixes: "asexual reproduction"; housefly/mango checkpoint wording; taxonomical aids / plant life cycles marked as older-paper content ×3.
 - **cs-12-isc** — 3 fixes: ambiguous binSearch multi option; hybrid inheritance row; Java 2D arrays aren't row-major blocks.
-CLASS 12 REVIEW COMPLETE.
 - **bio-11-c** — 7 wording fixes (mesosome; primary wall; activation energy; acrocentric shape; exam claims ×2; honeybee exception).
 - **bank che11-1** — CH₄/CO distractor explanation; KCET +7 MCQs.
 - **bank che11-2** — 3 distractor/explanation fixes (K without entropy 9.2×10⁶; AgCl 2Ksp; conjugate wording); KCET +44.
@@ -433,5 +430,5 @@ CLASS 12 REVIEW COMPLETE.
 - **cs-12-puc-a/b** — 2 fixes: flagged bubble sort ties insertion sort on sorted list; numerical title.
 - **bank bio11-1** — 29 questions on dropped content (What is living?, cockroach) replaced with on-syllabus items (classification, frog); sheets updated.
 - **cs-11-isc-a** — 6 fixes: ambiguous base match pair; Gates.java column order; widening precision; board-practice summary; boolean size hedge.
-- **cs-11-isc-b** — 1 wording fix (RecPal). ALL REVIEWS DONE except bio-12-f.
-- **bio-12-f** — 5 wording fixes. ALL REVIEWS DONE.
+- **cs-11-isc-b** — 1 wording fix (RecPal).
+- **bio-12-f** — 5 wording fixes.

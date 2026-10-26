@@ -90,12 +90,14 @@ export function MockReport({ test, result, questions, formulaChapters = [], onRe
 
   /* per chapter */
   const chapters = useMemo(() => {
-    const m = new Map<string, { subject: ExamSubject; chapter: string; grade: string | null; correct: number; total: number; earned: number; max: number; negative: number }>();
+    const m = new Map<string, { subject: ExamSubject; chapter: string; grade: string | null; correct: number; total: number; earned: number; max: number; negative: number; mistakes: number; attemptedMax: number }>();
     for (const r of rows) {
       const k = `${r.q.subject}|${r.q.chapter}`;
-      const c = m.get(k) ?? { subject: r.q.subject, chapter: r.q.chapter, grade: gradeOf(r.q), correct: 0, total: 0, earned: 0, max: 0, negative: 0 };
+      const c = m.get(k) ?? { subject: r.q.subject, chapter: r.q.chapter, grade: gradeOf(r.q), correct: 0, total: 0, earned: 0, max: 0, negative: 0, mistakes: 0, attemptedMax: 0 };
       c.total++;
       if (r.status === "correct") c.correct++;
+      if (r.status === "wrong" || r.status === "partial") c.mistakes++;
+      if (r.status !== "skipped") c.attemptedMax += r.max;
       c.earned += r.marks;
       c.max += r.max;
       if (r.marks < 0) c.negative -= r.marks;
@@ -104,7 +106,9 @@ export function MockReport({ test, result, questions, formulaChapters = [], onRe
     return [...m.values()].map((c) => ({ ...c, ratio: c.max ? Math.max(0, c.earned) / c.max : 0, lost: c.max - c.earned })).sort((a, b) => a.ratio - b.ratio || b.lost - a.lost);
   }, [rows]);
 
-  const revise = chapters.filter((c) => c.ratio < 0.6 || c.negative > 0).sort((a, b) => b.lost - a.lost).slice(0, 6);
+  // Mistakes first (marks lost on attempted questions, negative marks), then chapters left untouched.
+  const mistaken = chapters.filter((c) => c.mistakes > 0).sort((a, b) => b.attemptedMax - b.earned - (a.attemptedMax - a.earned) || b.negative - a.negative);
+  const revise = (mistaken.length ? mistaken : chapters.filter((c) => c.ratio < 0.6)).slice(0, 6);
 
   /** The learner's class chapter page for an exam chapter title, when their class has it. */
   const classLink = (subject: ExamSubject, chapter: string, grade: string | null) => {

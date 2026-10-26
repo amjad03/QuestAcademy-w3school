@@ -750,16 +750,19 @@ export function CbtExam({ test, pool, formulaChapters = [] }: { test: MockTest; 
       </div>
 
       {/* section strip + marking */}
-      <div className="flex flex-wrap items-center gap-2 border-b-2 border-line bg-surface-2 px-3 py-2 sm:px-4">
-        {subjSections.length > 1 &&
-          subjSections.map((sec) => {
+      <div className="flex flex-col gap-1.5 border-b-2 border-line bg-surface-2 px-3 py-2 sm:flex-row sm:flex-wrap sm:items-center sm:gap-2 sm:px-4">
+        {subjSections.length > 1 && (
+          <div className="-mx-3 flex gap-2 overflow-x-auto px-3 sm:mx-0 sm:px-0">
+          {subjSections.map((sec) => {
             const idx = session.sec.indexOf(sec.id);
             return (
-              <button key={sec.id} onClick={() => go(idx)} aria-pressed={sec.id === currentSection.id} className={clsx("rounded-lg border-2 px-2.5 py-1 text-xs font-extrabold transition", sec.id === currentSection.id ? "border-accent bg-accent text-white" : "border-line bg-surface text-muted hover:text-ink")}>
+              <button key={sec.id} onClick={() => go(idx)} aria-pressed={sec.id === currentSection.id} className={clsx("shrink-0 whitespace-nowrap rounded-lg border-2 px-2.5 py-1 text-xs font-extrabold transition", sec.id === currentSection.id ? "border-accent bg-accent text-white" : "border-line bg-surface text-muted hover:text-ink")}>
                 {sec.label ? tx(sec.label) : subjectName[sec.subject]} · {sec.kinds.map((k) => kindName[k]).join(" / ")}
               </button>
             );
           })}
+          </div>
+        )}
         <span className="flex min-w-0 items-center gap-1.5 text-xs font-bold text-muted">
           <InfoIcon className="h-3.5 w-3.5 shrink-0" aria-hidden /> <span>{markingText(marking)}</span>
         </span>
@@ -820,7 +823,7 @@ export function CbtExam({ test, pool, formulaChapters = [] }: { test: MockTest; 
                   <div>
                     <label className="eyebrow" htmlFor="num-answer">
                       {t("exam.cbt.numericLabel", "Enter your numerical answer")}
-                      {current.unit ? ` (${current.unit})` : ""}
+                      {current.unit && <span className="normal-case"> ({current.unit})</span>}
                     </label>
                     <input
                       id="num-answer"
