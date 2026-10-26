@@ -1379,10 +1379,741 @@ Inductors in series with no coupling add: $L = L_1 + L_2$. With coupling, **seri
       },
     ],
   },
+  /* ------------------------------------------------------------------ */
+  /* DC Circuits and Network Theorems                                    */
+  /* ------------------------------------------------------------------ */
+  {
+    slug: "c11-ele-dc-circuits-theorems",
+    title: "DC Circuits and Network Theorems",
+    icon: "🔋",
+    description: "Ohm's law, series and parallel circuits, voltage and current dividers, Kirchhoff's laws, and the Thevenin, Norton, superposition and maximum power transfer theorems.",
+    lessons: [
+      {
+        slug: "c11-ele-ohm-kirchhoff",
+        title: "Ohm's Law, Series–Parallel Circuits and Kirchhoff's Laws",
+        summary: "Ohm's law, series and parallel resistors, voltage and current dividers, and solving two-loop circuits with KCL and KVL.",
+        minutes: 22,
+        xp: 55,
+        blocks: [
+          {
+            type: "text",
+            md: "Every network theorem in this chapter rests on two simple facts: Ohm's law for each resistor, and Kirchhoff's two laws for the whole circuit. Get these right and the theorems become shortcuts, not new physics.",
+          },
+          {
+            type: "formula",
+            tex: t`V = IR \qquad R_{\text{series}} = R_1 + R_2 + \cdots \qquad \frac{1}{R_{\text{parallel}}} = \frac{1}{R_1} + \frac{1}{R_2} + \cdots`,
+            caption: t`**Ohm's law**: at constant temperature, the current through a conductor is proportional to the voltage across it. For two resistors in parallel, $R = \frac{R_1R_2}{R_1 + R_2}$.`,
+          },
+          {
+            type: "text",
+            md: t`In **series**, the same current flows through every resistor and the voltages add. In **parallel**, every resistor has the same voltage and the currents add. Two results follow at once:
+
+**Voltage divider** (series): $V_1 = V\dfrac{R_1}{R_1 + R_2}$. **Current divider** (two in parallel): $I_1 = I\dfrac{R_2}{R_1 + R_2}$. Note that the current divider uses the **other** resistor on top.`,
+          },
+          {
+            type: "example",
+            title: "Series–parallel circuit",
+            problem: "A 6 Ω resistor is in series with a parallel pair of 4 Ω and 12 Ω, across an 18 V supply. Find the total current and the current in each branch.",
+            steps: [
+              t`Parallel pair: $\frac{4 \times 12}{4 + 12} = 3\ \Omega$. Total $= 6 + 3 = 9\ \Omega$.`,
+              t`Total current $I = 18/9 = 2$ A.`,
+              t`Voltage across the pair $= 2 \times 3 = 6$ V (and across the 6 Ω, 12 V; $6 + 12 = 18$ V).`,
+              t`$I_4 = 6/4 = 1.5$ A and $I_{12} = 6/12 = 0.5$ A. Check by current divider: $2 \times \frac{12}{16} = 1.5$ A.`,
+            ],
+            answer: "2 A total; 1.5 A in the 4 Ω and 0.5 A in the 12 Ω.",
+          },
+          {
+            type: "heading",
+            text: "Kirchhoff's laws",
+          },
+          {
+            type: "text",
+            md: t`**Kirchhoff's current law (KCL)**: the algebraic sum of currents at a junction is zero; current in = current out. It follows from **conservation of charge**.
+
+**Kirchhoff's voltage law (KVL)**: around any closed loop, the algebraic sum of the EMFs equals the algebraic sum of the $IR$ drops ($\sum E = \sum IR$). It follows from **conservation of energy**.`,
+          },
+          {
+            type: "example",
+            title: "Two-loop circuit (we will use it again)",
+            problem: "Left branch: a 9 V source with R₁ = 2 Ω. Right branch: an 8 V source with R₂ = 4 Ω. Both sources have + at the top and feed a common top node; the middle branch R₃ = 3 Ω joins the top node to the bottom line. Find the current in each branch.",
+            steps: [
+              t`Let $I_1$ flow up through the 9 V branch into the top node and $I_2$ up through the 8 V branch. By KCL the current down R₃ is $I_1 + I_2$.`,
+              t`KVL, left loop: $9 = 2I_1 + 3(I_1 + I_2)$, so $5I_1 + 3I_2 = 9$.`,
+              t`KVL, right loop: $8 = 4I_2 + 3(I_1 + I_2)$, so $3I_1 + 7I_2 = 8$.`,
+              t`Multiply the first by 7 and the second by 3 and subtract: $35I_1 - 9I_1 = 63 - 24$, so $26I_1 = 39$ and $I_1 = 1.5$ A. Then $I_2 = (9 - 7.5)/3 = 0.5$ A.`,
+              t`Current in R₃ $= 2$ A, and the top node is at $2 \times 3 = 6$ V. Check: $9 - 1.5 \times 2 = 6$ V and $8 - 0.5 \times 4 = 6$ V.`,
+            ],
+            answer: "1.5 A in the 9 V branch, 0.5 A in the 8 V branch, 2 A through R₃.",
+          },
+          {
+            type: "checkpoint",
+            questions: [
+              {
+                kind: "numeric",
+                q: "At a junction, 5 A flows in and currents of 2 A and 1.5 A flow out along two wires. What current (in A) flows out along the third wire?",
+                answer: 1.5,
+                tolerance: 0.01,
+                unit: "A",
+                explain: "KCL: 5 = 2 + 1.5 + I, so I = 1.5 A.",
+              },
+            ],
+          },
+          {
+            type: "mistake",
+            wrong: "In a current divider, the larger resistor takes the larger current, so I₁ = I × R₁/(R₁ + R₂).",
+            right: t`The **smaller** resistor takes the larger current: $I_1 = I \times \frac{R_2}{R_1 + R_2}$.`,
+            why: "The voltage divider formula has the resistor's own value on top, so learners copy that pattern. In parallel the voltage is shared, so I = V/R is larger where R is smaller; the other resistor goes on top.",
+          },
+          {
+            type: "activity",
+            activity: {
+              kind: "reveal",
+              prompt: "If a KVL solution gives a current of −0.5 A, what does it mean?",
+              emoji: "➖",
+              options: ["The working is wrong", "The current is 0.5 A in the opposite direction to the one assumed", "No current flows", "The source is faulty"],
+              answer: 1,
+              trap: 0,
+              explain: "You may choose any direction for each unknown current. A negative answer just says the real current flows the other way; the size is still right.",
+            },
+          },
+          {
+            type: "callout",
+            tone: "tip",
+            title: "Sign rule for KVL",
+            md: "Go round the loop in one direction. Count an EMF as positive if you pass through it from − to +. Count an IR drop as positive if you travel in the same direction as the assumed current. Keep every equation in the same style.",
+          },
+          {
+            type: "callout",
+            tone: "exam",
+            title: "Board tip",
+            md: "State both laws in words before using them, and draw the assumed current directions on your diagram. Examiners award marks for the statements and for the loop equations even when an arithmetic slip spoils the final answer.",
+          },
+          {
+            type: "keypoints",
+            items: [
+              "Series: same current, voltages add. Parallel: same voltage, currents add.",
+              "Voltage divider: own R on top. Current divider: other R on top.",
+              "KCL (charge conservation): current in = current out at a junction.",
+              "KVL (energy conservation): ΣE = ΣIR around any closed loop.",
+              "A negative answer means the current flows opposite to the assumed direction.",
+            ],
+          },
+        ],
+        flashcards: [
+          { front: "Ohm's law", back: "At constant temperature, V ∝ I, so V = IR." },
+          { front: "KCL", back: "The algebraic sum of currents meeting at a junction is zero. Based on conservation of charge." },
+          { front: "KVL", back: "In a closed loop, the algebraic sum of EMFs equals the algebraic sum of IR drops. Based on conservation of energy." },
+          { front: "Voltage divider rule", back: "V₁ = V × R₁/(R₁ + R₂)." },
+          { front: "Current divider rule", back: "I₁ = I × R₂/(R₁ + R₂)." },
+          { front: "Two resistors in parallel", back: "R = R₁R₂/(R₁ + R₂); the result is smaller than either." },
+          { front: "n equal resistors R in parallel", back: "R/n." },
+        ],
+        quiz: [
+          {
+            kind: "numeric",
+            q: "A 10 kΩ and a 5 kΩ resistor are in series across 15 V. What is the voltage (in V) across the 5 kΩ?",
+            answer: 5,
+            unit: "V",
+            explain: t`$15 \times \frac{5}{15} = 5$ V.`,
+          },
+          {
+            kind: "numeric",
+            q: "A current of 3 A divides between 2 Ω and 4 Ω in parallel. What current (in A) flows in the 2 Ω?",
+            answer: 2,
+            unit: "A",
+            explain: t`$I_2 = 3 \times \frac{4}{2 + 4} = 2$ A.`,
+          },
+          {
+            kind: "mcq",
+            q: "Kirchhoff's voltage law is a consequence of the conservation of:",
+            options: ["Charge", "Energy", "Momentum", "Mass"],
+            answer: 1,
+            explain: "The work done on a charge round a closed loop is zero, which is energy conservation. KCL comes from charge conservation.",
+          },
+          {
+            kind: "numeric",
+            q: "Three 6 Ω resistors are in parallel, and the group is in series with a 4 Ω resistor. What is the total resistance (in Ω)?",
+            answer: 6,
+            unit: "Ω",
+            explain: t`$6/3 = 2\ \Omega$, then $2 + 4 = 6\ \Omega$.`,
+          },
+          {
+            kind: "truefalse",
+            q: "In a parallel circuit, the equivalent resistance is always less than the smallest branch resistance.",
+            answer: true,
+            explain: "Each extra branch is another path for current, so the total resistance falls below every branch.",
+          },
+          {
+            kind: "fill",
+            q: "Kirchhoff's current law is based on the conservation of ___.",
+            answer: ["charge", "electric charge"],
+            explain: "Charge cannot pile up at a junction.",
+          },
+          {
+            kind: "numeric",
+            q: "In the two-loop example (9 V with 2 Ω, 8 V with 4 Ω, 3 Ω in the middle), what is the power (in W) dissipated in the 3 Ω resistor?",
+            answer: 12,
+            unit: "W",
+            explain: t`$P = I^2R = 2^2 \times 3 = 12$ W.`,
+            difficulty: 2,
+          },
+          {
+            kind: "numeric",
+            q: "Two resistors in series take 2 A from a 24 V supply. When joined in parallel across the same supply they take 9 A. One resistor is 4 Ω. What is the other (in Ω)?",
+            answer: 8,
+            unit: "Ω",
+            explain: t`Series: $R_1 + R_2 = 12$, so $R_2 = 8\ \Omega$. Check parallel: $\frac{4 \times 8}{12} = 2.67\ \Omega$, and $24/2.67 = 9$ A.`,
+            difficulty: 3,
+          },
+        ],
+      },
+      {
+        slug: "c11-ele-thevenin-norton",
+        title: "Thevenin's and Norton's Theorems",
+        summary: "Replacing a network by one source and one resistance: finding V_Th, R_Th and I_N, converting between the two, and using them for a changing load.",
+        minutes: 22,
+        xp: 55,
+        blocks: [
+          {
+            type: "text",
+            md: "Suppose you want the current in a load resistor for five different load values. Solving the whole network five times is slow. Thevenin's theorem lets you simplify the rest of the network **once**, then reuse it for every load.",
+          },
+          {
+            type: "text",
+            md: t`**Thevenin's theorem**: any linear, bilateral network seen from two terminals A and B can be replaced by a single voltage source $V_{Th}$ in series with a single resistance $R_{Th}$.
+
+$V_{Th}$ is the **open-circuit voltage** across A–B (load removed). $R_{Th}$ is the resistance seen from A–B with all independent sources replaced by their internal resistances: **voltage sources shorted**, **current sources opened**.`,
+          },
+          {
+            type: "formula",
+            tex: t`I_L = \frac{V_{Th}}{R_{Th} + R_L}`,
+            caption: "Once V_Th and R_Th are known, the load current for any R_L is one line of working.",
+          },
+          {
+            type: "activity",
+            activity: {
+              kind: "order",
+              prompt: "Put the steps of Thevenin's method in order.",
+              items: [
+                "Remove the load and mark the terminals A and B",
+                "Find the open-circuit voltage across A–B: this is V_Th",
+                "Short voltage sources and open current sources",
+                "Find the resistance seen from A–B: this is R_Th",
+                "Reconnect the load to V_Th in series with R_Th and find I_L",
+              ],
+              explain: "V_Th and R_Th can be found in either order, but sources are 'killed' only for R_Th. Finding V_Th needs the sources switched on.",
+            },
+          },
+          {
+            type: "example",
+            title: "A divider with a changing load",
+            problem: "A 24 V source feeds R₁ = 6 Ω in series with R₂ = 12 Ω. A load R_L is connected across R₂. Find the Thevenin equivalent seen by the load, then I_L for R_L = 4 Ω and R_L = 12 Ω.",
+            steps: [
+              t`Open-circuit voltage across R₂: $V_{Th} = 24 \times \frac{12}{6 + 12} = 16$ V.`,
+              t`Short the source; R₁ and R₂ are then in parallel as seen from the load: $R_{Th} = \frac{6 \times 12}{18} = 4\ \Omega$.`,
+              t`$R_L = 4\ \Omega$: $I_L = 16/(4 + 4) = 2$ A.`,
+              t`$R_L = 12\ \Omega$: $I_L = 16/(4 + 12) = 1$ A.`,
+            ],
+            answer: "V_Th = 16 V, R_Th = 4 Ω; I_L = 2 A for 4 Ω and 1 A for 12 Ω.",
+          },
+          {
+            type: "mistake",
+            wrong: "To find R_Th, remove the voltage source and leave its terminals open.",
+            right: "Replace an ideal voltage source by a **short circuit** (or by its internal resistance) and an ideal current source by an **open circuit**.",
+            why: "'Removing' a source sounds like taking it out, which leaves a gap. But an ideal voltage source has zero internal resistance, so switched off it behaves like a plain wire. Leaving a gap gives a wrong, larger R_Th.",
+          },
+          {
+            type: "heading",
+            text: "Norton's theorem",
+          },
+          {
+            type: "text",
+            md: t`**Norton's theorem**: the same network can be replaced by a single current source $I_N$ in **parallel** with $R_N$. $I_N$ is the **short-circuit current** that flows when A and B are joined by a wire. $R_N$ is found exactly like $R_{Th}$, so $R_N = R_{Th}$.
+
+The two equivalents are linked by source transformation: $V_{Th} = I_N R_N$, or $I_N = V_{Th}/R_{Th}$.`,
+          },
+          {
+            type: "formula",
+            tex: t`I_N = \frac{V_{Th}}{R_{Th}} \qquad R_N = R_{Th} \qquad I_L = I_N\,\frac{R_N}{R_N + R_L}`,
+          },
+          {
+            type: "example",
+            title: "Norton equivalent of the same divider",
+            problem: "Find the Norton equivalent of the 24 V, 6 Ω, 12 Ω network above, and use it to find I_L for R_L = 4 Ω.",
+            steps: [
+              t`Short A–B: the short is across R₂, so R₂ carries no current. $I_N = 24/6 = 4$ A.`,
+              t`$R_N = R_{Th} = 4\ \Omega$. Check: $I_N = V_{Th}/R_{Th} = 16/4 = 4$ A.`,
+              t`Current divider: $I_L = 4 \times \frac{4}{4 + 4} = 2$ A, the same as the Thevenin result.`,
+            ],
+            answer: "I_N = 4 A in parallel with 4 Ω; I_L = 2 A.",
+          },
+          {
+            type: "example",
+            title: "Thevenin with two sources",
+            problem: "Use Thevenin's theorem to find the current in R₃ = 3 Ω of the two-loop circuit (9 V with 2 Ω on the left, 8 V with 4 Ω on the right).",
+            steps: [
+              t`Remove R₃. One loop remains with net EMF $9 - 8 = 1$ V and resistance $2 + 4 = 6\ \Omega$, so a current of $1/6$ A circulates.`,
+              t`$V_{Th}$ = voltage at the top node $= 9 - 2 \times \frac{1}{6} = \frac{26}{3} \approx 8.67$ V.`,
+              t`Short both sources: $R_{Th} = 2 \parallel 4 = \frac{8}{6} = \frac{4}{3}\ \Omega$.`,
+              t`$I_3 = \frac{26/3}{4/3 + 3} = \frac{26/3}{13/3} = 2$ A, matching the Kirchhoff result.`,
+            ],
+            answer: "I₃ = 2 A.",
+          },
+          {
+            type: "checkpoint",
+            questions: [
+              {
+                kind: "numeric",
+                q: "A network has V_Th = 10 V and R_Th = 2 Ω. What is its Norton current (in A)?",
+                answer: 5,
+                unit: "A",
+                explain: t`$I_N = V_{Th}/R_{Th} = 10/2 = 5$ A, with $R_N = 2\ \Omega$ in parallel.`,
+              },
+            ],
+          },
+          {
+            type: "callout",
+            tone: "exam",
+            title: "Board tip",
+            md: "Draw three diagrams: the circuit with the load removed (for V_Th), the circuit with sources killed (for R_Th), and the final equivalent with the load. The statement of the theorem plus these diagrams usually carries more marks than the arithmetic.",
+          },
+          {
+            type: "keypoints",
+            items: [
+              "Thevenin: V_Th (open-circuit voltage) in series with R_Th.",
+              "Norton: I_N (short-circuit current) in parallel with R_N = R_Th.",
+              "For R_Th: short voltage sources, open current sources.",
+              "I_N = V_Th/R_Th; I_L = V_Th/(R_Th + R_L).",
+              "Both theorems apply only to linear, bilateral networks.",
+            ],
+          },
+        ],
+        flashcards: [
+          { front: "Thevenin's theorem", back: "A linear bilateral network across two terminals is equivalent to a voltage source V_Th in series with a resistance R_Th." },
+          { front: "Norton's theorem", back: "A linear bilateral network across two terminals is equivalent to a current source I_N in parallel with R_N." },
+          { front: "How is V_Th found?", back: "As the open-circuit voltage across the terminals, with the load removed." },
+          { front: "How is I_N found?", back: "As the current through a short circuit placed across the terminals." },
+          { front: "How are sources treated when finding R_Th?", back: "Ideal voltage sources are shorted; ideal current sources are opened." },
+          { front: "Link between Thevenin and Norton", back: "R_N = R_Th and V_Th = I_N R_N." },
+          { front: "Linear bilateral network", back: "One whose elements have constant values (linear) and behave the same for current in either direction (bilateral)." },
+        ],
+        quiz: [
+          {
+            kind: "numeric",
+            q: "A 12 V source with R₁ = 4 Ω in series feeds R₂ = 4 Ω; the load is across R₂. What is V_Th (in V)?",
+            answer: 6,
+            unit: "V",
+            explain: t`$V_{Th} = 12 \times \frac{4}{8} = 6$ V.`,
+          },
+          {
+            kind: "numeric",
+            q: "For the same network (12 V, 4 Ω, 4 Ω), what is R_Th (in Ω)?",
+            answer: 2,
+            unit: "Ω",
+            explain: t`Short the source: $4 \parallel 4 = 2\ \Omega$.`,
+          },
+          {
+            kind: "numeric",
+            q: "With V_Th = 6 V and R_Th = 2 Ω, what current (in A) flows in a 1 Ω load?",
+            answer: 2,
+            unit: "A",
+            explain: t`$I_L = 6/(2 + 1) = 2$ A.`,
+          },
+          {
+            kind: "mcq",
+            q: "While finding the Norton resistance, an ideal current source is replaced by:",
+            options: ["A short circuit", "An open circuit", "A 1 Ω resistor", "A voltage source"],
+            answer: 1,
+            explain: "An ideal current source has infinite internal resistance, so switched off it is an open circuit.",
+          },
+          {
+            kind: "truefalse",
+            q: "The Norton resistance of a network is always equal to its Thevenin resistance.",
+            answer: true,
+            explain: "Both are the resistance seen from the terminals with sources killed.",
+          },
+          {
+            kind: "numeric",
+            q: "A network has I_N = 3 A and R_N = 6 Ω. What current (in A) flows in a 12 Ω load?",
+            answer: 1,
+            unit: "A",
+            explain: t`$I_L = 3 \times \frac{6}{6 + 12} = 1$ A. Or $V_{Th} = 18$ V and $18/18 = 1$ A.`,
+            difficulty: 2,
+          },
+          {
+            kind: "fill",
+            q: "V_Th is the ___-circuit voltage across the load terminals.",
+            answer: ["open"],
+            explain: "It is measured with the load removed.",
+          },
+          {
+            kind: "multi",
+            q: "Thevenin's theorem can be applied to networks containing which of these?",
+            options: ["Resistors", "Ideal DC voltage sources", "Ideal DC current sources", "A diode in the network being replaced"],
+            answers: [0, 1, 2],
+            explain: "A diode is non-linear and unilateral, so a network containing it cannot be replaced by a fixed Thevenin equivalent.",
+            difficulty: 2,
+          },
+        ],
+      },
+      {
+        slug: "c11-ele-superposition-mpt",
+        title: "Superposition and Maximum Power Transfer",
+        summary: "Solving multi-source circuits one source at a time, why superposition does not apply to power, and the condition and value of maximum power transfer.",
+        minutes: 22,
+        xp: 55,
+        blocks: [
+          {
+            type: "text",
+            md: "When a circuit has two or more sources, it can be hard to see what each one is doing. Superposition answers that question, and maximum power transfer tells us which load gets the most power from a source.",
+          },
+          {
+            type: "text",
+            md: "**Superposition theorem**: in a linear, bilateral network with several independent sources, the current in (or voltage across) any element is the **algebraic sum** of the currents (or voltages) produced by each source acting **alone**, with all the other sources replaced by their internal resistances (voltage sources shorted, current sources opened).",
+          },
+          {
+            type: "example",
+            title: "Superposition on the two-loop circuit",
+            problem: "Find the current in R₃ = 3 Ω by superposition (left: 9 V with R₁ = 2 Ω; right: 8 V with R₂ = 4 Ω).",
+            steps: [
+              t`**9 V alone** (short the 8 V): R₂ ∥ R₃ $= \frac{4 \times 3}{7} = \frac{12}{7}\ \Omega$. Total $= 2 + \frac{12}{7} = \frac{26}{7}\ \Omega$, so the source current is $9 \times \frac{7}{26} = \frac{63}{26}$ A.`,
+              t`Share in R₃: $\frac{63}{26} \times \frac{4}{4 + 3} = \frac{18}{13} \approx 1.385$ A, downward.`,
+              t`**8 V alone** (short the 9 V): R₁ ∥ R₃ $= \frac{2 \times 3}{5} = 1.2\ \Omega$. Total $= 4 + 1.2 = 5.2\ \Omega$, so the source current is $8/5.2 = \frac{20}{13}$ A.`,
+              t`Share in R₃: $\frac{20}{13} \times \frac{2}{2 + 3} = \frac{8}{13} \approx 0.615$ A, also downward.`,
+              t`Both act in the same direction: $I_3 = \frac{18}{13} + \frac{8}{13} = \frac{26}{13} = 2$ A.`,
+            ],
+            answer: "I₃ = 2 A, the same as with Kirchhoff's laws and Thevenin's theorem.",
+          },
+          {
+            type: "mistake",
+            wrong: "Power can be found by superposition: find the power in R₃ from each source and add the two powers.",
+            right: "Add the **currents** (or voltages) first, then find power from the total: $P = I^2R$.",
+            why: t`Power depends on $I^2$, so it is not linear. In the example, $3 \times 1.385^2 + 3 \times 0.615^2 \approx 6.9$ W, but the true power is $3 \times 2^2 = 12$ W. $(a + b)^2$ is not $a^2 + b^2$.`,
+          },
+          {
+            type: "checkpoint",
+            questions: [
+              {
+                kind: "numeric",
+                q: "In a circuit, source A alone sends 1.2 A up through a resistor and source B alone sends 0.5 A down through it. What is the actual current (in A), taking 'up' as positive?",
+                answer: 0.7,
+                tolerance: 0.01,
+                unit: "A",
+                explain: "Algebraic sum: 1.2 − 0.5 = 0.7 A, upward.",
+              },
+            ],
+          },
+          {
+            type: "heading",
+            text: "Maximum power transfer",
+          },
+          {
+            type: "text",
+            md: t`Reduce the network to its Thevenin equivalent. The load power is $P_L = I^2R_L = \frac{V_{Th}^2 R_L}{(R_{Th} + R_L)^2}$. A very small $R_L$ takes a big current but has almost no voltage; a very large $R_L$ has the voltage but almost no current. In between there is a best value.
+
+**Maximum power transfer theorem**: a DC network delivers maximum power to a load when the load resistance equals the Thevenin resistance of the network, $R_L = R_{Th}$.`,
+          },
+          {
+            type: "formula",
+            tex: t`R_L = R_{Th} \quad \Rightarrow \quad P_{\max} = \frac{V_{Th}^2}{4R_{Th}} \qquad \eta = 50\%`,
+            caption: "At maximum power transfer, the same power is wasted in R_Th as is delivered to the load, so the efficiency is only 50%.",
+          },
+          {
+            type: "example",
+            title: "Testing the theorem",
+            problem: "A network has V_Th = 16 V and R_Th = 4 Ω. Find the load power for R_L = 2 Ω, 4 Ω and 8 Ω.",
+            steps: [
+              t`$R_L = 2\ \Omega$: $I = 16/6 = 2.67$ A, $P = 2.67^2 \times 2 \approx 14.2$ W.`,
+              t`$R_L = 4\ \Omega$: $I = 16/8 = 2$ A, $P = 4 \times 4 = 16$ W. Also $V_{Th}^2/4R_{Th} = 256/16 = 16$ W.`,
+              t`$R_L = 8\ \Omega$: $I = 16/12 = 1.33$ A, $P = 1.33^2 \times 8 \approx 14.2$ W.`,
+            ],
+            answer: "14.2 W, 16 W and 14.2 W: the maximum, 16 W, is at R_L = R_Th = 4 Ω.",
+          },
+          {
+            type: "activity",
+            activity: {
+              kind: "sort",
+              prompt: "Do we want maximum power transfer or high efficiency here?",
+              groups: ["Match R_L to R_Th (maximum power)", "Keep R_L much larger than R_Th (efficiency)"],
+              items: [
+                { text: "Amplifier output feeding a loudspeaker", group: 0, hint: "We want the loudest sound from a small signal stage." },
+                { text: "Receiving antenna feeding a radio's first stage", group: 0, hint: "The signal is tiny; every bit of power matters." },
+                { text: "Power station feeding the city grid", group: 1, hint: "Wasting 50% of the energy in the generator is not acceptable." },
+                { text: "Battery running a torch bulb", group: 1, hint: "We want the battery to last, so little power should be lost inside it." },
+                { text: "Transmitter feeding its antenna cable", group: 0, hint: "Impedance matching is used in communication circuits." },
+              ],
+              explain: "Matching gives the most power but only 50% efficiency. That suits weak signals in electronics and communication, but never power systems, where efficiency matters most.",
+            },
+          },
+          {
+            type: "callout",
+            tone: "exam",
+            title: "Board tip",
+            md: "For superposition, draw one diagram per source and mark the direction of each partial current in the element you want. For maximum power transfer, always state the condition (R_L = R_Th) and write the efficiency at that condition (50%); both are asked often as one-mark questions.",
+          },
+          {
+            type: "keypoints",
+            items: [
+              "Superposition: take one source at a time, kill the others, then add the partial currents algebraically.",
+              "Superposition works for currents and voltages, not for power.",
+              "Maximum power transfer: R_L = R_Th; P_max = V_Th²/(4R_Th).",
+              "Efficiency at maximum power transfer is 50%.",
+            ],
+          },
+        ],
+        flashcards: [
+          { front: "Superposition theorem", back: "In a linear bilateral network, the response in any element is the algebraic sum of the responses to each source acting alone, others replaced by their internal resistances." },
+          { front: "Why can't superposition give power directly?", back: "Power ∝ I² is not linear; add currents first, then find power." },
+          { front: "Maximum power transfer theorem", back: "Maximum power reaches the load when R_L = R_Th." },
+          { front: "Maximum power", back: "P_max = V_Th²/(4R_Th)." },
+          { front: "Efficiency at maximum power transfer", back: "50%." },
+          { front: "Where is maximum power transfer used?", back: "Matching amplifiers to loudspeakers, antennas to receivers: weak-signal electronics and communication." },
+        ],
+        quiz: [
+          {
+            kind: "numeric",
+            q: "A 12 V battery has internal resistance 3 Ω. What is the maximum power (in W) it can deliver to a load?",
+            answer: 12,
+            unit: "W",
+            explain: t`$P_{\max} = \frac{12^2}{4 \times 3} = \frac{144}{12} = 12$ W, when $R_L = 3\ \Omega$.`,
+          },
+          {
+            kind: "mcq",
+            q: "At maximum power transfer, the efficiency of the circuit is:",
+            options: ["25%", "50%", "75%", "100%"],
+            answer: 1,
+            explain: "R_L = R_Th, so the same current flows through equal resistances and equal powers are dissipated in each.",
+          },
+          {
+            kind: "truefalse",
+            q: "When applying superposition, the sources not being considered are removed and their terminals left open.",
+            answer: false,
+            explain: "Voltage sources are shorted (replaced by their internal resistance); only current sources are opened.",
+          },
+          {
+            kind: "numeric",
+            q: "A network has V_Th = 20 V and R_Th = 5 Ω. What is the power (in W) delivered to a 5 Ω load?",
+            answer: 20,
+            unit: "W",
+            explain: t`$I = 20/10 = 2$ A, $P = 4 \times 5 = 20$ W $= V_{Th}^2/4R_{Th} = 400/20$.`,
+          },
+          {
+            kind: "numeric",
+            q: "Two sources acting alone send 3 A and 1 A in the same direction through a 2 Ω resistor. What is the true power (in W) in the resistor?",
+            answer: 32,
+            unit: "W",
+            explain: t`Total current $= 4$ A, so $P = 16 \times 2 = 32$ W. Adding separate powers ($18 + 2 = 20$ W) is wrong.`,
+            difficulty: 2,
+          },
+          {
+            kind: "fill",
+            q: "Superposition applies only to ___ bilateral networks.",
+            answer: ["linear"],
+            explain: "Linearity is what lets separate responses be added.",
+          },
+          {
+            kind: "mcq",
+            q: "A network with R_Th = 8 Ω drives loads of 2 Ω, 8 Ω and 32 Ω in turn. Which gets the most power?",
+            options: ["2 Ω", "8 Ω", "32 Ω", "All get equal power"],
+            answer: 1,
+            explain: "Maximum power transfer happens at R_L = R_Th = 8 Ω. (2 Ω and 32 Ω, a factor of 4 either side, get equal but smaller power.)",
+            difficulty: 2,
+          },
+        ],
+      },
+      {
+        slug: "c11-ele-dc-theorems-practice",
+        title: "Board Practice: DC Circuits and Network Theorems",
+        summary: "Mixed board-style problems: series–parallel reduction, the Wheatstone bridge, Kirchhoff's laws, Thevenin, Norton, superposition and maximum power transfer.",
+        minutes: 22,
+        xp: 55,
+        blocks: [
+          {
+            type: "text",
+            md: "Board papers usually ask for one theorem statement with a diagram, and one or two numericals where you must choose a method. Before you start a problem, decide which tool is quickest: plain series–parallel reduction, Kirchhoff's laws, or a theorem.",
+          },
+          {
+            type: "table",
+            headers: ["The question asks for…", "Quickest method"],
+            rows: [
+              ["Current in one load, for several load values", "Thevenin or Norton"],
+              ["Contribution of each source", "Superposition"],
+              ["Best load, or largest power", "Thevenin, then maximum power transfer"],
+              ["All branch currents of a two-loop circuit", "Kirchhoff's laws"],
+              ["Single source, resistors only", "Series–parallel reduction"],
+            ],
+          },
+          {
+            type: "example",
+            title: "Wheatstone bridge",
+            problem: "A Wheatstone bridge has P = 10 Ω, Q = 20 Ω and R = 15 Ω. What value of S balances it, and what then is the galvanometer current?",
+            steps: [
+              t`At balance $\frac{P}{Q} = \frac{R}{S}$, so $S = \frac{RQ}{P} = \frac{15 \times 20}{10} = 30\ \Omega$.`,
+              "At balance the two ends of the galvanometer are at the same potential, so no current flows through it.",
+            ],
+            answer: "S = 30 Ω; the galvanometer current is zero.",
+          },
+          {
+            type: "example",
+            title: "Norton to maximum power",
+            problem: "A 6 A current source has 3 Ω in parallel. A 3 Ω resistor then connects it in series to the load terminals. Find the load resistance for maximum power and the maximum power.",
+            steps: [
+              t`Convert the current source: $E = 6 \times 3 = 18$ V with 3 Ω in series.`,
+              t`Add the series 3 Ω: $V_{Th} = 18$ V, $R_{Th} = 3 + 3 = 6\ \Omega$.`,
+              t`Maximum power at $R_L = 6\ \Omega$: $P_{\max} = \frac{18^2}{4 \times 6} = \frac{324}{24} = 13.5$ W.`,
+            ],
+            answer: "R_L = 6 Ω and P_max = 13.5 W.",
+          },
+          {
+            type: "checkpoint",
+            questions: [
+              {
+                kind: "numeric",
+                q: "In a bridge, P = 100 Ω, Q = 10 Ω and S = 5 Ω. What value of R (in Ω) balances it?",
+                answer: 50,
+                unit: "Ω",
+                explain: t`$R = \frac{PS}{Q} = \frac{100 \times 5}{10} = 50\ \Omega$.`,
+              },
+            ],
+          },
+          {
+            type: "example",
+            title: "Thevenin with a fixed load",
+            problem: "A 30 V source drives R₁ = 10 Ω in series with R₂ = 15 Ω. A load R_L = 6 Ω is across R₂. Find the load current by Thevenin's theorem and check it directly.",
+            steps: [
+              t`$V_{Th} = 30 \times \frac{15}{25} = 18$ V; $R_{Th} = 10 \parallel 15 = 6\ \Omega$.`,
+              t`$I_L = \frac{18}{6 + 6} = 1.5$ A.`,
+              t`Check: $15 \parallel 6 = \frac{90}{21} = 4.29\ \Omega$; total $14.29\ \Omega$; source current $= 2.1$ A; voltage across the pair $= 2.1 \times 4.29 = 9$ V; $I_L = 9/6 = 1.5$ A.`,
+            ],
+            answer: "I_L = 1.5 A. Here R_L = R_Th, so this load also receives maximum power (13.5 W).",
+          },
+          {
+            type: "mistake",
+            wrong: "R_Th is the resistance of the load, or the total resistance of the circuit including the load.",
+            right: "R_Th is the resistance of the **network without the load**, looking back into terminals A–B with the sources killed.",
+            why: "The load is in the picture, so it gets added in by habit. The whole point of the theorem is to describe the network independently of the load, so the load must be removed first.",
+          },
+          {
+            type: "activity",
+            activity: {
+              kind: "match",
+              prompt: "Match each theorem to its key idea.",
+              pairs: [
+                ["Thevenin", "Open-circuit voltage in series with a resistance"],
+                ["Norton", "Short-circuit current in parallel with a resistance"],
+                ["Superposition", "One source at a time, then add"],
+                ["Maximum power transfer", "Load resistance equals source resistance"],
+              ],
+              explain: "All four apply to linear networks. Thevenin and Norton are two forms of the same equivalent, linked by I_N = V_Th/R_Th.",
+            },
+          },
+          {
+            type: "callout",
+            tone: "exam",
+            title: "Practical exam tip",
+            md: "To verify Thevenin's theorem in the lab: measure V_Th with a voltmeter across the open load terminals; measure R_Th with a multimeter after replacing the source by a wire; then compare V_Th/(R_Th + R_L) with the ammeter reading in the load. Record the results in a table and state whether they agree within error.",
+          },
+          {
+            type: "checkpoint",
+            questions: [
+              {
+                kind: "mcq",
+                q: "Which theorem would you use to find the load that draws the most power from an amplifier output stage?",
+                options: ["Superposition", "Maximum power transfer", "Kirchhoff's current law", "Ohm's law alone"],
+                answer: 1,
+                explain: "Find R_Th of the output stage; the best load equals R_Th.",
+              },
+            ],
+          },
+          {
+            type: "callout",
+            tone: "tip",
+            title: "Check with a second method",
+            md: "If time allows, check a theorem answer with a quick second method, as in the examples above: the two-loop circuit gave 2 A in R₃ by Kirchhoff's laws, by Thevenin's theorem and by superposition. Two methods agreeing is the best proof that no sign or arithmetic slip has crept in.",
+          },
+          {
+            type: "keypoints",
+            items: [
+              "Choose the method from what the question asks for.",
+              "Wheatstone bridge balance: P/Q = R/S, with zero galvanometer current.",
+              "Convert current sources to voltage sources to combine series resistances quickly.",
+              "Always remove the load before finding V_Th or R_Th.",
+            ],
+          },
+        ],
+        flashcards: [
+          { front: "Wheatstone bridge balance condition", back: "P/Q = R/S; no current through the galvanometer." },
+          { front: "First step of every theorem problem", back: "Mark the load terminals and remove the load." },
+          { front: "Best method for 'current in R for R = 2, 4, 6 Ω'", back: "Thevenin (or Norton): simplify once, then reuse." },
+          { front: "Best method for 'effect of each source'", back: "Superposition." },
+          { front: "Lab check of Thevenin's theorem", back: "Measure V_Th (open circuit), R_Th (sources shorted), then compare V_Th/(R_Th + R_L) with the measured load current." },
+          { front: "P_max for V_Th = 18 V, R_Th = 6 Ω", back: "18²/24 = 13.5 W." },
+        ],
+        quiz: [
+          {
+            kind: "numeric",
+            q: "A 24 V source with R₁ = 8 Ω feeds R₂ = 8 Ω; the load is across R₂. What load resistance (in Ω) gets maximum power?",
+            answer: 4,
+            unit: "Ω",
+            explain: t`$R_{Th} = 8 \parallel 8 = 4\ \Omega$, so $R_L = 4\ \Omega$.`,
+          },
+          {
+            kind: "numeric",
+            q: "For that network (24 V, 8 Ω, 8 Ω), what is the maximum load power (in W)?",
+            answer: 9,
+            unit: "W",
+            explain: t`$V_{Th} = 12$ V, $P_{\max} = 144/16 = 9$ W.`,
+            difficulty: 2,
+          },
+          {
+            kind: "mcq",
+            q: "The Norton current of a network is measured by:",
+            options: ["Connecting a voltmeter across the open terminals", "Connecting an ammeter directly across the terminals", "Shorting the sources and using an ohmmeter", "Connecting the load and reading its voltage"],
+            answer: 1,
+            explain: "An ideal ammeter has zero resistance, so it acts as the short circuit and reads I_N. The voltmeter gives V_Th and the ohmmeter gives R_Th.",
+          },
+          {
+            kind: "truefalse",
+            q: "A balanced Wheatstone bridge stays balanced if the supply voltage is doubled.",
+            answer: true,
+            explain: "Balance depends only on P/Q = R/S, not on the supply voltage.",
+          },
+          {
+            kind: "numeric",
+            q: "Two 12 V batteries, each with 2 Ω internal resistance, are joined in parallel (+ to +) and feed a 5 Ω load. What is the load current (in A)?",
+            answer: 2,
+            unit: "A",
+            explain: t`Thevenin of the pair: $V_{Th} = 12$ V, $R_{Th} = 2 \parallel 2 = 1\ \Omega$. $I = 12/(1 + 5) = 2$ A.`,
+            difficulty: 2,
+          },
+          {
+            kind: "order",
+            q: "Put the steps of the superposition method in order.",
+            items: [
+              "Keep one source and replace the others by their internal resistances",
+              "Find the current in the chosen element due to that source",
+              "Repeat for every other source",
+              "Add the partial currents with their signs",
+            ],
+            explain: "One source at a time, then add algebraically.",
+          },
+          {
+            kind: "numeric",
+            q: "In the two-loop example (9 V with 2 Ω, 8 V with 4 Ω, 3 Ω middle), what is the current (in A) in the 8 V branch?",
+            answer: 0.5,
+            tolerance: 0.01,
+            unit: "A",
+            explain: "From the Kirchhoff solution: I₂ = 0.5 A, flowing out of the + terminal of the 8 V source.",
+          },
+        ],
+      },
+    ],
+  },
 ];
 
 /** Chapter title ("11:" / "12:" + exact title) → topic slug(s) that teach it. */
 export const links: Record<string, string | string[]> = {
   "11:Introduction to Electronics": "c11-ele-introduction",
   "11:Passive Components": "c11-ele-passive-components",
+  "11:DC Circuits and Network Theorems": "c11-ele-dc-circuits-theorems",
 };

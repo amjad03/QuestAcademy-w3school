@@ -562,9 +562,604 @@ print("Bits:", b * 8)`,
   ],
 };
 
-export const topics: Topic[] = [computerSystems];
+/* ------------------------------------------------------------------ */
+const numberSystems: Topic = {
+  slug: "c11-cs-number-systems",
+  title: "Number Systems and Encoding",
+  icon: "🔢",
+  description: "Decimal, binary, octal and hexadecimal number systems, conversions between them (including fractions), and the encoding schemes ASCII, ISCII and Unicode (UTF-8, UTF-32).",
+  lessons: [
+    {
+      slug: "c11-cs-number-conversions",
+      title: "Number Systems and Conversions",
+      summary: "Base and positional value; converting between decimal, binary, octal and hexadecimal, including fractional parts, and the 3-bit and 4-bit grouping shortcuts.",
+      minutes: 25,
+      xp: 55,
+      blocks: [
+        {
+          type: "illustration",
+          emoji: "🧮",
+          caption: "On a cricket scoreboard, 156 means 1 hundred, 5 tens and 6 ones. Inside a computer the same score is stored as 10011100, using only two digits. Both are positional number systems, just with different bases.",
+        },
+        {
+          type: "text",
+          md: "A **number system** is a way of writing numbers using a fixed set of digits (symbols). The number of digits it uses is its **base** or **radix**. In a **positional** system the value of a digit depends on its position: each position is worth a power of the base.\n\nWe write the base as a subscript: $(156)_{10}$ is decimal, $(10011100)_2$ is binary. Hexadecimal uses the letters A to F for the values 10 to 15.",
+        },
+        {
+          type: "table",
+          headers: ["System", "Base", "Digits used", "Example"],
+          rows: [
+            ["Decimal", "10", "0–9", "$(156)_{10}$"],
+            ["Binary", "2", "0, 1", "$(10011100)_2$"],
+            ["Octal", "8", "0–7", "$(234)_8$"],
+            ["Hexadecimal", "16", "0–9 and A(10), B(11), C(12), D(13), E(14), F(15)", "$(9C)_{16}$"],
+          ],
+        },
+        {
+          type: "formula",
+          tex: t`(d_{n-1}\dots d_1 d_0 . d_{-1} d_{-2})_b = d_{n-1}\,b^{n-1} + \dots + d_1\,b^{1} + d_0\,b^{0} + d_{-1}\,b^{-1} + d_{-2}\,b^{-2}`,
+          caption: "Any base to decimal: multiply each digit by its positional value (a power of the base) and add.",
+        },
+        {
+          type: "example",
+          title: "Decimal to binary: repeated division",
+          problem: "Convert $(156)_{10}$ to binary.",
+          steps: [
+            "Divide by 2 again and again, writing each remainder: 156 ÷ 2 = 78 r 0; 78 ÷ 2 = 39 r 0; 39 ÷ 2 = 19 r 1; 19 ÷ 2 = 9 r 1.",
+            "Continue: 9 ÷ 2 = 4 r 1; 4 ÷ 2 = 2 r 0; 2 ÷ 2 = 1 r 0; 1 ÷ 2 = 0 r 1. Stop when the quotient is 0.",
+            "Read the remainders from the **last to the first** (bottom to top): 1 0 0 1 1 1 0 0.",
+            "Check: 128 + 16 + 8 + 4 = 156. ✓",
+          ],
+          answer: "$(156)_{10} = (10011100)_2$",
+        },
+        {
+          type: "example",
+          title: "Binary with a fraction to decimal",
+          problem: "Convert $(10110.101)_2$ to decimal.",
+          steps: [
+            t`Integer part: $1\times2^4 + 0\times2^3 + 1\times2^2 + 1\times2^1 + 0\times2^0 = 16 + 0 + 4 + 2 + 0 = 22$.`,
+            t`Fractional part: $1\times2^{-1} + 0\times2^{-2} + 1\times2^{-3} = 0.5 + 0 + 0.125 = 0.625$.`,
+            "Add the two parts: 22 + 0.625.",
+          ],
+          answer: "$(10110.101)_2 = (22.625)_{10}$",
+        },
+        {
+          type: "text",
+          md: "The same two methods work for octal and hexadecimal. **Decimal → base 8 or 16:** divide repeatedly by 8 or 16 and read the remainders bottom to top (write remainders 10–15 as A–F). **Base 8 or 16 → decimal:** multiply by powers of 8 or 16 and add. For example $(725)_8 = 7\\times64 + 2\\times8 + 5 = 469$ and $(3A7)_{16} = 3\\times256 + 10\\times16 + 7 = 935$.\n\nFor a **decimal fraction**, multiply the fraction by the new base again and again; each time the whole-number part is the next digit, read **top to bottom**. For 0.375 to binary: 0.375 × 2 = 0.75 → 0; 0.75 × 2 = 1.5 → 1; 0.5 × 2 = 1.0 → 1. So $(0.375)_{10} = (0.011)_2$. Some fractions, like 0.6, never end in binary; stop after the number of places asked.",
+        },
+        {
+          type: "checkpoint",
+          questions: [
+            {
+              kind: "numeric",
+              q: "Convert $(725)_8$ to decimal.",
+              answer: 469,
+              explain: "7 × 64 + 2 × 8 + 5 × 1 = 448 + 16 + 5 = 469.",
+            },
+          ],
+        },
+        {
+          type: "heading",
+          text: "Shortcuts through binary",
+        },
+        {
+          type: "text",
+          md: "Since $8 = 2^3$ and $16 = 2^4$, every octal digit is exactly **3 bits** and every hexadecimal digit is exactly **4 bits**.\n\n**Binary → octal:** group bits in threes starting from the binary point (from the right for the integer part, from the left for the fraction), pad with 0s, and write each group as one digit. **Binary → hex:** the same with groups of four. Reverse the steps to go from octal or hex to binary. To go from octal to hex (or back), go through binary.",
+        },
+        {
+          type: "example",
+          title: "Grouping bits",
+          problem: "Convert $(1101011010)_2$ to octal and to hexadecimal. Then convert $(3576)_8$ to hexadecimal.",
+          steps: [
+            "Octal: groups of 3 from the right: 1 | 101 | 011 | 010 → pad to 001 | 101 | 011 | 010 → 1 5 3 2.",
+            "Hex: groups of 4 from the right: 11 | 0101 | 1010 → 0011 | 0101 | 1010 → 3 5 A.",
+            "Check: $(1532)_8 = 512 + 320 + 24 + 2 = 858$ and $(35A)_{16} = 768 + 80 + 10 = 858$. ✓",
+            "$(3576)_8$: write each digit as 3 bits: 011 101 111 110. Regroup in fours from the right: 0111 | 0111 | 1110 → 7 7 E.",
+          ],
+          answer: "$(1101011010)_2 = (1532)_8 = (35A)_{16}$, and $(3576)_8 = (77E)_{16}$",
+        },
+        {
+          type: "mistake",
+          wrong: "To change 156 to binary, I read the remainders from top to bottom: 00111001.",
+          right: "The **first** remainder is the **least significant** (rightmost) bit, so read the remainders from bottom to top: 10011100.",
+          why: "We usually write in the order we work. But the first division by 2 finds the units place. For fractions it is the other way: the first digit from multiplying sits just after the point, so read those top to bottom.",
+        },
+        {
+          type: "activity",
+          activity: {
+            kind: "match",
+            prompt: "Match each number with its decimal value.",
+            pairs: [
+              ["$(101101)_2$", "45"],
+              ["$(310)_8$", "200"],
+              ["$(FF)_{16}$", "255"],
+              ["$(7EA)_{16}$", "2026"],
+              ["$(0.1101)_2$", "0.8125"],
+            ],
+            explain: "Each one is a sum of digit × place value: e.g. $(310)_8 = 3\\times64 + 1\\times8 + 0 = 200$ and $(0.1101)_2 = 0.5 + 0.25 + 0.0625 = 0.8125$.",
+          },
+        },
+        {
+          type: "callout",
+          tone: "exam",
+          title: "Board tip",
+          md: "Always show the division table or the place-value working; the answer alone gets at most 1 mark. Write the base as a subscript in the final answer, and check it by converting back.",
+        },
+        {
+          type: "checkpoint",
+          questions: [
+            {
+              kind: "fill",
+              q: "$(10101010)_2$ in hexadecimal is ___.",
+              answer: ["AA", "aa", "(AA)16"],
+              explain: "1010 | 1010 → A A. (Check: 170 = 10 × 16 + 10.)",
+            },
+          ],
+        },
+        {
+          type: "keypoints",
+          items: [
+            "Base = number of digits: binary 2, octal 8, decimal 10, hexadecimal 16 (A–F = 10–15).",
+            "Decimal integer → base b: divide by b, read remainders bottom to top.",
+            "Decimal fraction → base b: multiply by b, read whole parts top to bottom.",
+            "Base b → decimal: sum of digit × power of b (negative powers after the point).",
+            "1 octal digit = 3 bits, 1 hex digit = 4 bits; use binary to go between octal and hex.",
+          ],
+        },
+      ],
+      flashcards: [
+        { front: "Base (radix)", back: "The number of distinct digits used in a number system." },
+        { front: "Hexadecimal digits for 10 to 15", back: "A, B, C, D, E, F." },
+        { front: "Decimal integer to binary", back: "Divide repeatedly by 2; read the remainders from bottom (last) to top (first)." },
+        { front: "Decimal fraction to binary", back: "Multiply the fraction by 2 repeatedly; the integer parts, read top to bottom, are the bits after the point." },
+        { front: "Bits per octal digit / hex digit", back: "3 bits / 4 bits." },
+        { front: "$(156)_{10}$ in binary, octal, hex", back: "$(10011100)_2 = (234)_8 = (9C)_{16}$" },
+        { front: "$(0.375)_{10}$ in binary", back: "$(0.011)_2$" },
+        { front: "Octal to hexadecimal", back: "Convert each octal digit to 3 bits, regroup into 4 bits from the point, write each group as a hex digit." },
+      ],
+      quiz: [
+        {
+          kind: "numeric",
+          q: "Convert $(3A7)_{16}$ to decimal.",
+          answer: 935,
+          explain: "3 × 256 + 10 × 16 + 7 = 768 + 160 + 7 = 935.",
+        },
+        {
+          kind: "mcq",
+          q: "$(45)_{10}$ in binary is:",
+          options: ["101101", "110101", "101011", "100101"],
+          answer: 0,
+          explain: "45 = 32 + 8 + 4 + 1 → 101101. (110101 is 53: it comes from not reversing the order.)",
+        },
+        {
+          kind: "fill",
+          q: "$(200)_{10}$ in octal is ___.",
+          answer: ["310", "(310)8"],
+          explain: "200 ÷ 8 = 25 r 0; 25 ÷ 8 = 3 r 1; 3 ÷ 8 = 0 r 3 → 310.",
+        },
+        {
+          kind: "mcq",
+          q: "$(77E)_{16}$ in octal is:",
+          options: ["3576", "3756", "1918", "7716"],
+          answer: 0,
+          explain: "7 7 E → 0111 0111 1110 → regroup in threes: 011 101 111 110 → 3576.",
+          difficulty: 2,
+        },
+        {
+          kind: "truefalse",
+          q: "$(128)_8$ is a valid octal number.",
+          answer: false,
+          explain: "Octal digits go only from 0 to 7, so the digit 8 cannot appear.",
+        },
+        {
+          kind: "fill",
+          q: "$(0.3125)_{10}$ in binary is 0.___ (write only the bits after the point).",
+          answer: ["0101"],
+          explain: "0.3125 × 2 = 0.625 → 0; × 2 = 1.25 → 1; 0.25 × 2 = 0.5 → 0; × 2 = 1.0 → 1. Read top to bottom: 0.0101.",
+          difficulty: 2,
+          hint: "Multiply by 2 and keep the whole-number parts, top to bottom.",
+        },
+        {
+          kind: "numeric",
+          q: "Convert $(11001.101)_2$ to decimal.",
+          answer: 25.625,
+          explain: "16 + 8 + 1 = 25 and 0.5 + 0.125 = 0.625, so 25.625.",
+        },
+        {
+          kind: "mcq",
+          q: "Why are octal and hexadecimal used as short forms of binary?",
+          options: ["Each of their digits stands for exactly 3 or 4 bits", "They use fewer symbols than binary", "The CPU stores data in hexadecimal", "They are faster for the ALU"],
+          answer: 0,
+          explain: "Because $8 = 2^3$ and $16 = 2^4$, long bit strings can be written and read in groups. The CPU still works in binary.",
+        },
+      ],
+    },
+    {
+      slug: "c11-cs-encoding-schemes",
+      title: "Encoding Schemes: ASCII, ISCII and Unicode",
+      summary: "Why characters need codes; 7-bit ASCII, 8-bit ISCII for Indian scripts, and Unicode with its UTF-8, UTF-16 and UTF-32 encodings, explored with Python's ord() and chr().",
+      minutes: 20,
+      xp: 50,
+      blocks: [
+        {
+          type: "illustration",
+          emoji: "⌨️",
+          caption: "When Arjun presses the key A, the computer does not store a picture of A. It stores the number 65, in binary 1000001. When Priya types क in a Hindi message, a different, bigger number is stored.",
+        },
+        {
+          type: "text",
+          md: "A computer stores only binary numbers, so every letter, digit and symbol is given a unique number called its **code**. The rule that links characters to codes is an **encoding scheme**. **Encoding** means changing a character into its code; **decoding** means changing a code back into the character. The same scheme must be used at both ends, or the text turns into rubbish.",
+        },
+        {
+          type: "heading",
+          text: "ASCII",
+        },
+        {
+          type: "text",
+          md: "**ASCII** (American Standard Code for Information Interchange) was developed in the 1960s. It is a **7-bit** code, so it has $2^7 = 128$ codes (0 to 127). They cover the English capital and small letters, the digits 0–9, punctuation, space and some control characters (such as Enter). It cannot represent letters of Indian or most other languages.\n\nThe letters and digits are in order, so one code lets you find the others.",
+        },
+        {
+          type: "table",
+          headers: ["Characters", "ASCII codes (decimal)", "First code in binary (7 bits)"],
+          rows: [
+            ["space", "32", "0100000"],
+            ["'0' to '9'", "48 to 57", "0110000"],
+            ["'A' to 'Z'", "65 to 90", "1000001"],
+            ["'a' to 'z'", "97 to 122", "1100001"],
+          ],
+        },
+        {
+          type: "example",
+          title: "Encoding and decoding with ASCII",
+          problem: "(a) Write the word CAB in 7-bit ASCII. (b) Decode 1001000 1101001.",
+          steps: [
+            "(a) C = 67, A = 65, B = 66 (A is 65, and the letters follow in order).",
+            "In 7-bit binary: 67 = 1000011, 65 = 1000001, 66 = 1000010.",
+            "(b) 1001000 = 64 + 8 = 72 → 'H'; 1101001 = 64 + 32 + 8 + 1 = 105 → 'i' (since 'a' = 97, 105 is the 9th letter).",
+          ],
+          answer: "(a) 1000011 1000001 1000010; (b) \"Hi\"",
+        },
+        {
+          type: "checkpoint",
+          questions: [
+            {
+              kind: "numeric",
+              q: "The ASCII code of 'a' is 97. What is the ASCII code of 'e'?",
+              answer: 101,
+              explain: "a, b, c, d, e: 'e' is 4 places after 'a', so 97 + 4 = 101.",
+            },
+          ],
+        },
+        {
+          type: "text",
+          md: "**ISCII** (Indian Script Code for Information Interchange) is an **8-bit** code made for Indian scripts, and was standardised by the Bureau of Indian Standards in 1991. Its first 128 codes are the same as ASCII; the upper codes hold the letters of Indian scripts such as Devanagari, Bengali, Tamil, Telugu and Kannada. Because these scripts share a similar structure, one ISCII table serves all of them.\n\n**Unicode** gives a unique number, called a **code point**, to every character of every major script in the world, plus symbols and emoji. Code points are written U+ followed by hexadecimal: 'A' is U+0041, 'क' is U+0915, the Kannada 'ಕ' is U+0C95 and '₹' is U+20B9. The first 128 code points match ASCII. Unicode code points are stored using an encoding: **UTF-8**, **UTF-16** or **UTF-32**.",
+        },
+        {
+          type: "table",
+          headers: ["Encoding", "Bytes per character", "Notes"],
+          rows: [
+            ["UTF-8", "1 to 4 (variable)", "ASCII characters take 1 byte; most Indian letters take 3; used by most web pages"],
+            ["UTF-16", "2 or 4", "most common characters take 2 bytes"],
+            ["UTF-32", "4 (fixed)", "every character takes 4 bytes: simple but uses more space"],
+          ],
+        },
+        {
+          type: "code",
+          lang: "python",
+          runnable: true,
+          caption: "ord() gives a character's code point; encode() shows how many bytes an encoding uses.",
+          code: t`for ch in ["A", "क", "ಕ", "₹"]:
+    code = ord(ch)
+    print(ch, "U+" + format(code, "04X"),
+          len(ch.encode("utf-8")), "bytes in UTF-8,",
+          len(ch.encode("utf-32-be")), "bytes in UTF-32")`,
+        },
+        {
+          type: "text",
+          md: "Output:\n\n`A U+0041 1 bytes in UTF-8, 4 bytes in UTF-32`\n\n`क U+0915 3 bytes in UTF-8, 4 bytes in UTF-32`\n\n`ಕ U+0C95 3 bytes in UTF-8, 4 bytes in UTF-32`\n\n`₹ U+20B9 3 bytes in UTF-8, 4 bytes in UTF-32`\n\n`chr()` works the other way: `chr(72) + chr(105)` gives `'Hi'`.",
+        },
+        {
+          type: "mistake",
+          wrong: "Unicode is a 16-bit code, so every character takes exactly 2 bytes.",
+          right: "Unicode is a **character set** that gives each character a code point; the number of bytes depends on the **encoding**: UTF-8 uses 1–4 bytes, UTF-16 uses 2 or 4, UTF-32 always uses 4.",
+          why: "Early Unicode did fit in 16 bits, and UTF-16 is common, so the idea stuck. Today Unicode has far more than 65,536 code points (up to U+10FFFF).",
+        },
+        {
+          type: "activity",
+          activity: {
+            kind: "reveal",
+            prompt: "How many bytes does \"India\" take in UTF-32?",
+            emoji: "🇮🇳",
+            options: ["5 bytes", "20 bytes", "10 bytes", "35 bits"],
+            answer: 1,
+            trap: 0,
+            explain: "UTF-32 is fixed-width: 5 characters × 4 bytes = 20 bytes. In UTF-8 (or ASCII stored one per byte) the same word takes only 5 bytes.",
+          },
+        },
+        {
+          type: "callout",
+          tone: "exam",
+          title: "Board tip",
+          md: "Remember the bit sizes: ASCII 7 bits (128 characters), ISCII 8 bits (256 codes), UTF-32 fixed 32 bits. For \"why was Unicode needed?\", say that ASCII and ISCII could not represent all the world's scripts together, and different code pages gave the same code different meanings.",
+        },
+        {
+          type: "checkpoint",
+          questions: [
+            {
+              kind: "mcq",
+              q: "Which encoding uses a fixed 4 bytes for every character?",
+              options: ["UTF-32", "UTF-8", "ASCII", "ISCII"],
+              answer: 0,
+              explain: "UTF-32 always uses 32 bits = 4 bytes. UTF-8 is variable; ASCII and ISCII use one byte or less.",
+            },
+          ],
+        },
+        {
+          type: "keypoints",
+          items: [
+            "An encoding scheme gives each character a unique binary code; encoding and decoding must use the same scheme.",
+            "ASCII: 7-bit, 128 characters; A = 65, a = 97, '0' = 48, space = 32.",
+            "ISCII: 8-bit code for Indian scripts; first 128 codes are the same as ASCII.",
+            "Unicode: a code point for every character of every script (U+0915 = क); first 128 match ASCII.",
+            "UTF-8 is 1–4 bytes, UTF-16 is 2 or 4 bytes, UTF-32 is fixed 4 bytes.",
+          ],
+        },
+      ],
+      flashcards: [
+        { front: "Encoding scheme", back: "A rule that gives every character a unique code (number) so it can be stored in binary." },
+        { front: "ASCII", back: "American Standard Code for Information Interchange: 7-bit, 128 characters (English letters, digits, symbols, control codes)." },
+        { front: "ASCII codes of 'A', 'a', '0'", back: "65, 97, 48." },
+        { front: "ISCII", back: "Indian Script Code for Information Interchange: an 8-bit code for Indian scripts; lower 128 codes = ASCII." },
+        { front: "Unicode code point", back: "The unique number Unicode gives a character, written U+hex, e.g. U+0915 for क." },
+        { front: "UTF-8", back: "Variable-length Unicode encoding using 1 to 4 bytes; ASCII characters take 1 byte." },
+        { front: "UTF-32", back: "Fixed-length Unicode encoding: every character takes 4 bytes." },
+        { front: "ord() and chr() in Python", back: "ord('A') gives 65; chr(65) gives 'A'." },
+      ],
+      quiz: [
+        {
+          kind: "numeric",
+          q: "How many different characters can 7-bit ASCII represent?",
+          answer: 128,
+          explain: "$2^7 = 128$ codes, numbered 0 to 127.",
+        },
+        {
+          kind: "mcq",
+          q: "The ASCII code of 'Z' is:",
+          options: ["90", "91", "122", "26"],
+          answer: 0,
+          explain: "'A' = 65 and Z is the 26th letter, so 65 + 25 = 90. (122 is 'z'.)",
+        },
+        {
+          kind: "fill",
+          q: "In Python, `ord(\"0\")` gives ___.",
+          answer: ["48"],
+          explain: "The digit characters start at 48, so '0' is 48 (not 0).",
+          difficulty: 2,
+        },
+        {
+          kind: "truefalse",
+          q: "ISCII is an 8-bit code whose first 128 codes are the same as ASCII.",
+          answer: true,
+          explain: "ISCII keeps ASCII in the lower half and uses the upper codes for Indian scripts.",
+        },
+        {
+          kind: "mcq",
+          q: "Decode the 7-bit ASCII codes 1000010 1000001 1010100.",
+          options: ["BAT", "CAT", "BAR", "bat"],
+          answer: 0,
+          explain: "1000010 = 66 = B, 1000001 = 65 = A, 1010100 = 84 = T.",
+          difficulty: 2,
+          hint: "Change each group to decimal; A = 65.",
+        },
+        {
+          kind: "numeric",
+          q: "How many bytes does the word \"Namaste\" (7 English letters) take in UTF-32?",
+          answer: 28,
+          explain: "UTF-32 is 4 bytes per character: 7 × 4 = 28 bytes.",
+        },
+        {
+          kind: "multi",
+          q: "Select all **true** statements about UTF-8.",
+          options: ["It is a variable-length encoding", "An English letter takes 1 byte", "A Devanagari letter such as क takes 3 bytes", "Every character takes 2 bytes"],
+          answers: [0, 1, 2],
+          explain: "UTF-8 uses 1–4 bytes: ASCII characters 1 byte, most Indian-script letters 3 bytes. Fixed 2 bytes is wrong.",
+        },
+        {
+          kind: "mcq",
+          q: "What does `chr(ord(\"a\") - 32)` give in Python?",
+          options: ["'A'", "'a'", "65", "'@'"],
+          answer: 0,
+          explain: "ord('a') = 97; 97 − 32 = 65; chr(65) = 'A'. Capital and small letters are 32 apart in ASCII.",
+          difficulty: 2,
+        },
+      ],
+    },
+    {
+      slug: "c11-cs-number-systems-practice",
+      title: "Board practice: Number Systems and Encoding",
+      summary: "Mixed board-style conversions, ASCII decoding, fraction conversions and a Python program that converts decimal to binary by repeated division.",
+      minutes: 20,
+      xp: 55,
+      blocks: [
+        {
+          type: "text",
+          md: "Board papers ask 1- and 2-mark conversions, \"convert and verify\" questions and short notes on encoding. Work each problem on paper first; then compare with the steps.",
+        },
+        {
+          type: "example",
+          title: "One number in four systems",
+          problem: "Convert $(1F4)_{16}$ to decimal, binary and octal.",
+          steps: [
+            "Decimal: 1 × 256 + 15 × 16 + 4 = 256 + 240 + 4 = 500.",
+            "Binary: each hex digit as 4 bits: 1 → 0001, F → 1111, 4 → 0100, giving 000111110100 = 111110100.",
+            "Octal: group 111110100 in threes from the right: 111 | 110 | 100 → 7 6 4.",
+            "Verify: 7 × 64 + 6 × 8 + 4 = 448 + 48 + 4 = 500. ✓",
+          ],
+          answer: "$(1F4)_{16} = (500)_{10} = (111110100)_2 = (764)_8$",
+        },
+        {
+          type: "example",
+          title: "Decimal with a fraction to binary",
+          problem: "Convert $(25.625)_{10}$ to binary.",
+          steps: [
+            "Integer part 25: 25 → 12 r 1 → 6 r 0 → 3 r 0 → 1 r 1 → 0 r 1. Bottom to top: 11001.",
+            "Fraction 0.625: × 2 = 1.25 → 1; 0.25 × 2 = 0.5 → 0; 0.5 × 2 = 1.0 → 1. Top to bottom: .101.",
+            "Join the parts with the binary point.",
+          ],
+          answer: "$(25.625)_{10} = (11001.101)_2$",
+        },
+        {
+          type: "mistake",
+          wrong: "In hexadecimal, 205 decimal is written C13 because 205 = 12 × 16 + 13.",
+          right: "Each hex digit must be a **single** symbol: 12 is C and 13 is D, so 205 = $(CD)_{16}$.",
+          why: "The remainders are right, but writing 13 as two digits makes it look like three hex places (C, 1, 3). Always change 10–15 into A–F.",
+        },
+        {
+          type: "activity",
+          activity: {
+            kind: "sort",
+            prompt: "Is the number valid in the base shown?",
+            groups: ["Valid", "Not valid"],
+            items: [
+              { text: "(1011)₂", group: 0, hint: "Only 0s and 1s." },
+              { text: "(1021)₂", group: 1, hint: "Binary has no digit 2." },
+              { text: "(764)₈", group: 0, hint: "All digits are 7 or less." },
+              { text: "(198)₈", group: 1, hint: "Octal has no 8 or 9." },
+              { text: "(2AF)₁₆", group: 0, hint: "A and F are hex digits." },
+              { text: "(4G2)₁₆", group: 1, hint: "Hex letters stop at F." },
+            ],
+            explain: "A base-b number may only use digits from 0 to b − 1. Check this first in any conversion question.",
+          },
+        },
+        {
+          type: "checkpoint",
+          questions: [
+            {
+              kind: "mcq",
+              q: "Which is the largest?",
+              options: ["$(11111111)_2$", "$(376)_8$", "$(FD)_{16}$", "$(250)_{10}$"],
+              answer: 0,
+              explain: "Change all to decimal: $(11111111)_2 = 255$, $(376)_8 = 192 + 56 + 6 = 254$, $(FD)_{16} = 240 + 13 = 253$, and 250. The binary number is the largest.",
+            },
+          ],
+        },
+        {
+          type: "heading",
+          text: "Write a small program",
+        },
+        {
+          type: "text",
+          md: "**Question (3 marks):** Write a Python program that converts a decimal number to binary by repeated division by 2, without using `bin()`, and then checks the answer with `bin()`.",
+        },
+        {
+          type: "code",
+          lang: "python",
+          runnable: true,
+          caption: "Each remainder is put in front of the bits found so far, so the last remainder ends up on the left.",
+          code: t`n = 156
+num = n
+bits = ""
+while num > 0:
+    bits = str(num % 2) + bits
+    num = num // 2
+print("Decimal", n, "= binary", bits)
+print("Check with bin():", bin(n))`,
+        },
+        {
+          type: "text",
+          md: "Output:\n\n`Decimal 156 = binary 10011100`\n\n`Check with bin(): 0b10011100`\n\nPython also reads numbers in other bases: `int(\"9C\", 16)` and `int(\"234\", 8)` both give 156, and the literals `0b1011 + 0o17 + 0x1F` give 11 + 15 + 31 = 57.",
+        },
+        {
+          type: "callout",
+          tone: "exam",
+          title: "Board tip",
+          md: "In a \"short note on ISCII / Unicode\" answer, give the full form, the number of bits, what it covers, and one advantage. In conversions, never drop leading zeros while grouping bits; pad them, then remove them only from the final answer.",
+        },
+        {
+          type: "checkpoint",
+          questions: [
+            {
+              kind: "fill",
+              q: "$(11001101)_2$ in hexadecimal is ___.",
+              answer: ["CD", "cd"],
+              explain: "1100 | 1101 → C D (= 205).",
+            },
+          ],
+        },
+        {
+          type: "keypoints",
+          items: [
+            "Verify every conversion by converting back to decimal.",
+            "Pad groups with leading 0s (integer part) or trailing 0s (fraction part).",
+            "Hex remainders 10–15 are written as A–F.",
+            "A base-b number uses only digits 0 to b − 1.",
+          ],
+        },
+      ],
+      flashcards: [
+        { front: "$(1F4)_{16}$ in decimal", back: "500" },
+        { front: "$(25.625)_{10}$ in binary", back: "$(11001.101)_2$" },
+        { front: "Python: binary text to decimal", back: "int(\"10011100\", 2) gives 156." },
+        { front: "Python literals for binary, octal, hex", back: "0b1011, 0o17, 0x1F" },
+        { front: "Largest digit in base b", back: "b − 1 (1 in binary, 7 in octal, F = 15 in hex)." },
+        { front: "Why pad with zeros when grouping?", back: "So every group has exactly 3 (octal) or 4 (hex) bits; padding on the far left of the integer part does not change the value." },
+      ],
+      quiz: [
+        {
+          kind: "fill",
+          q: "$(B6)_{16}$ in octal is ___.",
+          answer: ["266", "(266)8"],
+          explain: "B6 → 1011 0110 → 10 110 110 → 010 110 110 → 2 6 6 (= 182).",
+          difficulty: 2,
+        },
+        {
+          kind: "numeric",
+          q: "Convert $(777)_8$ to decimal.",
+          answer: 511,
+          explain: "7 × 64 + 7 × 8 + 7 = 448 + 56 + 7 = 511.",
+        },
+        {
+          kind: "mcq",
+          q: "What does `print(int(\"101\", 2) + int(\"11\", 8))` show?",
+          options: ["14", "112", "10111", "8"],
+          answer: 0,
+          explain: "\"101\" in base 2 is 5; \"11\" in base 8 is 9; 5 + 9 = 14.",
+          difficulty: 2,
+        },
+        {
+          kind: "mcq",
+          q: "$(2026)_{10}$ in hexadecimal is:",
+          options: ["7EA", "7AE", "3752", "11111101010"],
+          answer: 0,
+          explain: "2026 ÷ 16 = 126 r 10 (A); 126 ÷ 16 = 7 r 14 (E); 7 ÷ 16 = 0 r 7 → 7EA. (3752 is the octal form and 11111101010 the binary form.)",
+        },
+        {
+          kind: "truefalse",
+          q: "$(0.6)_{10}$ has an exact, finite binary form.",
+          answer: false,
+          explain: "0.6 × 2 gives the bits 1, 0, 0, 1, 1, 0, 0, 1, … which repeat for ever, so it is written to a fixed number of places.",
+        },
+        {
+          kind: "numeric",
+          q: "In ASCII, what is the decimal code of the character '7'?",
+          answer: 55,
+          explain: "'0' is 48, so '7' is 48 + 7 = 55.",
+        },
+        {
+          kind: "order",
+          q: "Put the steps to convert octal to hexadecimal in order.",
+          items: ["Write each octal digit as 3 bits", "Join the bits into one binary number", "Regroup the bits in fours from the right", "Write each group of 4 as one hex digit"],
+          explain: "Octal → binary (3 bits each) → regroup in 4s → hex.",
+        },
+      ],
+    },
+  ],
+};
+
+export const topics: Topic[] = [computerSystems, numberSystems];
 
 /** Chapter title ("11:" / "12:" + exact title) → topic slug(s) that teach it. */
 export const links: Record<string, string | string[]> = {
   "11:Computer Systems and Organisation": "c11-cs-computer-systems",
+  "11:Number Systems and Encoding": "c11-cs-number-systems",
 };

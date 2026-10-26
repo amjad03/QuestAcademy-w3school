@@ -2054,6 +2054,17 @@ The **modulation index** of FM is $m_f = \Delta f / f_m$. Unlike AM, $m_f$ can b
             answer: "3 flip-flops, NAND(Q2, Q0) → CLEAR; counts 0 to 4.",
           },
           {
+            type: "example",
+            title: "Johnson counter sequence",
+            problem: "A 3-bit Johnson counter (Q2′ fed back to D0, shifting Q0 → Q1 → Q2) starts at Q0 Q1 Q2 = 000. List its states and give its modulus.",
+            steps: [
+              "Each clock, D0 takes Q2′ and the other bits shift right.",
+              "000 → 100 → 110 → 111 → 011 → 001 → back to 000.",
+              "That is 6 different states.",
+            ],
+            answer: "Six states, so it is a mod-6 counter (2n = 2 × 3).",
+          },
+          {
             type: "checkpoint",
             questions: [
               {
