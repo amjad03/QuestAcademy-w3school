@@ -1438,7 +1438,7 @@ The distribution with the **greater C.V.** is **more variable** (less consistent
           {
             kind: "mcq",
             q: t`$\sigma_x = 2$ and $y = 3x - 4$. Then $\sigma_y$ is`,
-            options: ["2", "6", "2 (unchanged)", "−6"],
+            options: ["2", "6", "12", "−6"],
             answer: 1,
             explain: t`$\sigma_y = |3| \times 2 = 6$; the $-4$ has no effect.`,
           },
@@ -1686,9 +1686,647 @@ The distribution with the **greater C.V.** is **more variable** (less consistent
       },
     ],
   },
+  /* ------------------------------------------------------------------ */
+  /* Class 11: Probability (NCERT, Karnataka I PUC, ISC)                  */
+  /* ------------------------------------------------------------------ */
+  {
+    slug: "c11-mat-probability",
+    title: "Probability (Class 11)",
+    icon: "🎲",
+    description: "Random experiments, sample spaces, events and the algebra of events, mutually exclusive and exhaustive events, and the axiomatic approach to probability with the addition rule.",
+    lessons: [
+      {
+        slug: "c11-mat-sample-space-events",
+        title: "Random Experiments, Sample Spaces and Events",
+        summary: "Random experiments and their outcomes, sample spaces, events and their occurrence, types of events, the algebra of events, and mutually exclusive and exhaustive events.",
+        minutes: 20,
+        xp: 50,
+        blocks: [
+          {
+            type: "illustration",
+            emoji: "🪙",
+            caption: "Before a cricket match, the umpire tosses a coin. Everyone knows it will land heads or tails, but nobody can say which. That is a random experiment.",
+          },
+          {
+            type: "text",
+            md: t`An **experiment** is an action with an observable result. It is a **random experiment** if (i) it has **more than one possible outcome**, and (ii) the outcome **cannot be predicted** in advance. Tossing a coin, rolling a die and drawing a card from a shuffled pack are random experiments.
+
+Each possible result is an **outcome**. The set of all possible outcomes is the **sample space**, written $S$; each element of $S$ is a **sample point**. Write $S$ carefully: everything else in probability is counted from it.`,
+          },
+          {
+            type: "table",
+            headers: ["Random experiment", "Sample space S", "n(S)"],
+            rows: [
+              ["Toss a coin twice", "{HH, HT, TH, TT}", "4"],
+              ["Roll a die", "{1, 2, 3, 4, 5, 6}", "6"],
+              ["Roll two dice", t`$\{(i, j) : i, j = 1, 2, \ldots, 6\}$`, "36"],
+              ["Toss three coins", "{HHH, HHT, HTH, THH, HTT, THT, TTH, TTT}", "8"],
+              ["Toss a coin until a head appears", "{H, TH, TTH, TTTH, …}", "infinite"],
+            ],
+          },
+          {
+            type: "example",
+            title: "A two-stage experiment",
+            problem: "A die is rolled. If it shows an even number, a coin is tossed. If it shows an odd number, the die is rolled again. Write the sample space and count its points.",
+            steps: [
+              "Even first roll (2, 4 or 6), then a coin: 2H, 2T, 4H, 4T, 6H, 6T. That is 3 × 2 = 6 points.",
+              "Odd first roll (1, 3 or 5), then a second roll: 11, 12, …, 16, 31, …, 36, 51, …, 56. That is 3 × 6 = 18 points.",
+              "S is the union of these two lists.",
+            ],
+            answer: "S has 6 + 18 = 24 sample points.",
+          },
+          {
+            type: "text",
+            md: t`An **event** is any **subset** of the sample space. We say an event $E$ **has occurred** if the outcome of the experiment belongs to $E$. For a die, "an even number" is $E = \{2, 4, 6\}$; if a 4 shows up, $E$ has occurred.
+
+**Types of events.** The **impossible event** is $\phi$ (no outcome is in it). The **sure event** is $S$ itself. A **simple event** has exactly one sample point; a **compound event** has more than one.`,
+          },
+          {
+            type: "table",
+            headers: ["In words", "Set notation", "Meaning"],
+            rows: [
+              ["not A (complement)", t`$A'$ or $S - A$`, "the outcome is not in A"],
+              ["A or B", t`$A \cup B$`, "the outcome is in A, in B, or in both"],
+              ["A and B", t`$A \cap B$`, "the outcome is in both A and B"],
+              ["A but not B", t`$A - B = A \cap B'$`, "the outcome is in A and not in B"],
+            ],
+          },
+          {
+            type: "example",
+            title: "Algebra of events with a die",
+            problem: t`A die is rolled. $A$: a prime number; $B$: an odd number; $C$: a number greater than 4. Find $A \cup B$, $A \cap B$, $A - C$, $B'$ and $A \cap B \cap C$.`,
+            steps: [
+              t`$S = \{1, 2, 3, 4, 5, 6\}$, $A = \{2, 3, 5\}$, $B = \{1, 3, 5\}$, $C = \{5, 6\}$.`,
+              t`$A \cup B = \{1, 2, 3, 5\}$ and $A \cap B = \{3, 5\}$.`,
+              t`$A - C = \{2, 3\}$ (remove 5) and $B' = \{2, 4, 6\}$.`,
+              t`$A \cap B \cap C = \{5\}$.`,
+            ],
+            answer: t`$\{1, 2, 3, 5\}$, $\{3, 5\}$, $\{2, 3\}$, $\{2, 4, 6\}$, $\{5\}$.`,
+          },
+          {
+            type: "checkpoint",
+            questions: [
+              {
+                kind: "numeric",
+                q: "How many sample points are there when three coins are tossed?",
+                answer: 8,
+                explain: t`Each coin has 2 outcomes: $2^3 = 8$.`,
+              },
+              {
+                kind: "mcq",
+                q: "A die is rolled. The event 'a number less than 7' is",
+                options: ["impossible", "simple", "sure", "empty"],
+                answer: 2,
+                explain: "Every outcome 1–6 is less than 7, so the event is S itself: a sure event.",
+              },
+            ],
+          },
+          {
+            type: "text",
+            md: t`Events $A$ and $B$ are **mutually exclusive** if they cannot happen together: $A \cap B = \phi$. Events $E_1, E_2, \ldots, E_n$ are **exhaustive** if between them they cover the whole sample space: $E_1 \cup E_2 \cup \cdots \cup E_n = S$, so at least one of them must occur. Events that are both are called **mutually exclusive and exhaustive**: exactly one of them occurs. The simple events of a sample space are mutually exclusive and exhaustive, and so are $A$ and $A'$.`,
+          },
+          {
+            type: "example",
+            title: "Two dice: which events overlap?",
+            problem: "Two dice are rolled. E: the sum is 7. F: both dice show the same number. G: the sum is at least 10. Which pairs are mutually exclusive?",
+            steps: [
+              "E = {(1,6), (2,5), (3,4), (4,3), (5,2), (6,1)}; F = {(1,1), (2,2), …, (6,6)}.",
+              "A double always has an even sum, never 7. So E ∩ F = φ: E and F are mutually exclusive.",
+              "G = {(4,6), (5,5), (6,4), (5,6), (6,5), (6,6)}. E and G: the sums 7 and ≥ 10 never match, so E ∩ G = φ.",
+              "F ∩ G = {(5,5), (6,6)} ≠ φ, so F and G are not mutually exclusive.",
+            ],
+            answer: "E, F mutually exclusive; E, G mutually exclusive; F, G not.",
+          },
+          {
+            type: "mistake",
+            wrong: "If A and B are mutually exclusive, then B must be 'not A'.",
+            right: "Complementary events are mutually exclusive, but mutually exclusive events need not be complements. For a die, {1, 2} and {5, 6} never happen together, yet neither is the complement of the other (3 and 4 are left out).",
+            why: "Complements must be both mutually exclusive and exhaustive. Mutually exclusive alone says only that the events do not overlap.",
+          },
+          {
+            type: "activity",
+            activity: {
+              kind: "sort",
+              prompt: "A die is rolled. Sort each event by type.",
+              groups: ["Impossible", "Simple", "Compound"],
+              items: [
+                { text: "A 7 appears", group: 0, hint: "No face shows 7: the event is φ." },
+                { text: "A 4 appears", group: 1, hint: "Exactly one sample point: {4}." },
+                { text: "An even number appears", group: 2, hint: "{2, 4, 6} has three points." },
+                { text: "A number both even and odd appears", group: 0, hint: "No number is both." },
+                { text: "An even prime appears", group: 1, hint: "Only 2 is an even prime." },
+                { text: "A multiple of 3 appears", group: 2, hint: "{3, 6} has two points." },
+                { text: "A number at most 6 appears", group: 2, hint: "This is S itself: a sure event with six points." },
+              ],
+              explain: "Write the event as a set first. Its number of sample points (0, 1 or more) decides the type. The sure event S is also a compound event.",
+            },
+          },
+          {
+            type: "callout",
+            tone: "exam",
+            title: "Board exam tips",
+            md: "Always write the sample space as a set, and say n(S). In two-stage experiments, draw a tree (first stage, then the second) so that no outcome is missed. When asked 'are A and B mutually exclusive?', compute A ∩ B and state the conclusion; when asked about exhaustive events, show the union is S.",
+          },
+          {
+            type: "keypoints",
+            items: [
+              "A random experiment has more than one outcome, and the outcome cannot be predicted.",
+              "Sample space S = set of all outcomes; an event is any subset of S.",
+              "Impossible event φ, sure event S, simple (one point), compound (more than one).",
+              t`not A $= A'$, A or B $= A \cup B$, A and B $= A \cap B$, A but not B $= A \cap B'$.`,
+              t`Mutually exclusive: $A \cap B = \phi$. Exhaustive: union is S.`,
+            ],
+          },
+        ],
+        flashcards: [
+          { front: "Random experiment", back: "An experiment with more than one possible outcome whose outcome cannot be predicted in advance." },
+          { front: "Sample space", back: "The set S of all possible outcomes of a random experiment." },
+          { front: "Event", back: "Any subset of the sample space." },
+          { front: "When has event E occurred?", back: "When the outcome of the experiment is an element of E." },
+          { front: "Simple vs compound event", back: "Simple: exactly one sample point. Compound: more than one." },
+          { front: "A but not B", back: t`$A - B = A \cap B'$` },
+          { front: "Mutually exclusive events", back: t`$A \cap B = \phi$: they cannot occur together.` },
+          { front: "Exhaustive events", back: "Their union is S: at least one of them must occur." },
+        ],
+        quiz: [
+          {
+            kind: "numeric",
+            q: "A die is rolled twice. How many sample points does the sample space have?",
+            answer: 36,
+            explain: t`$6 \times 6 = 36$ ordered pairs.`,
+          },
+          {
+            kind: "numeric",
+            q: "A coin is tossed 4 times. How many outcomes are there?",
+            answer: 16,
+            explain: t`$2^4 = 16$.`,
+          },
+          {
+            kind: "mcq",
+            q: "A die is rolled. A = {1, 2} and B = {3, 4}. A and B are",
+            options: ["mutually exclusive and exhaustive", "mutually exclusive but not exhaustive", "exhaustive but not mutually exclusive", "neither"],
+            answer: 1,
+            explain: "A ∩ B = φ, but A ∪ B = {1, 2, 3, 4} ≠ S.",
+          },
+          {
+            kind: "truefalse",
+            q: "The simple events of a sample space are mutually exclusive.",
+            answer: true,
+            explain: "Two different single outcomes can never happen in the same trial.",
+          },
+          {
+            kind: "mcq",
+            q: "The event 'A but not B' is",
+            options: [t`$A \cap B$`, t`$A \cup B'$`, t`$A \cap B'$`, t`$A' \cap B$`],
+            answer: 2,
+            explain: t`Outcomes in A and not in B: $A \cap B'$, also written $A - B$.`,
+          },
+          {
+            kind: "numeric",
+            q: "Three coins are tossed. How many outcomes have at least two heads?",
+            answer: 4,
+            explain: "HHH, HHT, HTH, THH.",
+          },
+          {
+            kind: "multi",
+            q: "A die is rolled. A = {1, 3, 5}, B = {2, 4, 6}, C = {1, 2, 3}. Which statements are true?",
+            options: ["A and B are mutually exclusive", "A and B are exhaustive", "A and C are mutually exclusive", "B ∩ C = {2}"],
+            answers: [0, 1, 3],
+            difficulty: 2,
+            explain: "A ∩ B = φ and A ∪ B = S; A ∩ C = {1, 3} ≠ φ; B ∩ C = {2}.",
+          },
+          {
+            kind: "mcq",
+            q: "A coin is tossed until a head appears, but at most three times. How many sample points are there?",
+            options: ["3", "4", "8", "Infinitely many"],
+            answer: 1,
+            difficulty: 2,
+            hint: "Stop as soon as a head appears.",
+            explain: "S = {H, TH, TTH, TTT}: 4 points.",
+          },
+        ],
+      },
+      {
+        slug: "c11-mat-axiomatic-probability",
+        title: "Axiomatic Approach to Probability",
+        summary: "The three axioms of probability, assigning probabilities to outcomes, equally likely outcomes, the addition rule, the probability of 'not A', and counting with combinations.",
+        minutes: 22,
+        xp: 55,
+        blocks: [
+          {
+            type: "text",
+            md: t`In Class 9 and 10 you met probability as $\frac{\text{favourable outcomes}}{\text{total outcomes}}$. That works only when all outcomes are equally likely. The **axiomatic approach** (due to A. N. Kolmogorov) works for every sample space. It says: probability is a rule $P$ that gives each event $E$ a number $P(E)$, obeying three axioms.`,
+          },
+          {
+            type: "formula",
+            tex: t`\text{(i) } P(E) \ge 0 \qquad \text{(ii) } P(S) = 1 \qquad \text{(iii) } E \cap F = \phi \Rightarrow P(E \cup F) = P(E) + P(F)`,
+            caption: "The axioms of probability. They imply P(φ) = 0 and 0 ≤ P(E) ≤ 1.",
+          },
+          {
+            type: "text",
+            md: t`For a finite sample space $S = \{\omega_1, \omega_2, \ldots, \omega_n\}$, it is enough to assign each outcome a number $P(\omega_i)$ with $0 \le P(\omega_i) \le 1$ and $\sum P(\omega_i) = 1$. Then for any event $E$, $P(E)$ is the **sum of the probabilities of the sample points in $E$**.
+
+If all $n$ outcomes are **equally likely**, each has probability $\frac{1}{n}$, and $P(E) = \frac{n(E)}{n(S)}$. This is the classical formula, now a consequence of the axioms.`,
+          },
+          {
+            type: "example",
+            title: "Is this a valid assignment?",
+            problem: t`$S = \{\omega_1, \omega_2, \omega_3, \omega_4\}$. Which assignments are valid? (a) 0.1, 0.2, 0.3, 0.4 (b) 0.5, 0.6, −0.2, 0.1 (c) 0.3, 0.3, 0.3, 0.3.`,
+            steps: [
+              "(a) Every value is between 0 and 1, and 0.1 + 0.2 + 0.3 + 0.4 = 1. Valid.",
+              "(b) The sum is 1, but −0.2 is negative. Not valid (breaks axiom (i)).",
+              "(c) Every value is between 0 and 1, but the sum is 1.2 ≠ 1. Not valid.",
+            ],
+            answer: "Only (a) is valid.",
+          },
+          {
+            type: "formula",
+            tex: t`P(A \cup B) = P(A) + P(B) - P(A \cap B), \qquad P(A') = 1 - P(A), \qquad P(A \cap B') = P(A) - P(A \cap B)`,
+            caption: "Addition rule ('A or B'), complement rule ('not A') and 'A but not B'. For mutually exclusive A, B: P(A ∪ B) = P(A) + P(B).",
+          },
+          {
+            type: "example",
+            title: "Cards: king or heart",
+            problem: "One card is drawn at random from a well-shuffled pack of 52. Find the probability that it is a king or a heart.",
+            steps: [
+              t`$P(K) = \frac{4}{52}$, $P(H) = \frac{13}{52}$. The king of hearts is in both: $P(K \cap H) = \frac{1}{52}$.`,
+              t`$P(K \cup H) = \frac{4}{52} + \frac{13}{52} - \frac{1}{52} = \frac{16}{52}$.`,
+            ],
+            answer: t`$\frac{16}{52} = \frac{4}{13}$`,
+          },
+          {
+            type: "checkpoint",
+            questions: [
+              {
+                kind: "numeric",
+                q: t`$P(A) = 0.5$, $P(B) = 0.4$ and $P(A \cap B) = 0.2$. Find $P(A \cup B)$.`,
+                answer: 0.7,
+                tolerance: 0.001,
+                explain: t`$0.5 + 0.4 - 0.2 = 0.7$.`,
+              },
+              {
+                kind: "numeric",
+                q: t`With the same data, find $P(\text{not } A)$.`,
+                answer: 0.5,
+                tolerance: 0.001,
+                explain: t`$1 - 0.5 = 0.5$.`,
+              },
+            ],
+          },
+          {
+            type: "example",
+            title: "Choosing a group",
+            problem: "A team of 3 is chosen at random from 5 boys and 4 girls. Find the probability that it has exactly 2 girls, and the probability that it has at least one girl.",
+            steps: [
+              t`$n(S) = \binom{9}{3} = 84$.`,
+              t`Exactly 2 girls: $\binom{4}{2}\binom{5}{1} = 6 \times 5 = 30$, so $P = \frac{30}{84} = \frac{5}{14}$.`,
+              t`No girl: $\binom{5}{3} = 10$, so $P(\text{no girl}) = \frac{10}{84}$.`,
+              t`At least one girl $= 1 - \frac{10}{84} = \frac{74}{84} = \frac{37}{42}$.`,
+            ],
+            answer: t`$\frac{5}{14}$ and $\frac{37}{42}$.`,
+          },
+          {
+            type: "example",
+            title: "Two dice: or",
+            problem: "Two dice are rolled. Find the probability that the sum is at least 10 or the dice show a double.",
+            steps: [
+              t`G (sum $\ge 10$) has 6 outcomes and F (double) has 6. $F \cap G = \{(5,5), (6,6)\}$ has 2.`,
+              t`$P(F \cup G) = \frac{6}{36} + \frac{6}{36} - \frac{2}{36} = \frac{10}{36}$.`,
+            ],
+            answer: t`$\frac{5}{18}$`,
+          },
+          {
+            type: "mistake",
+            wrong: "P(king or heart) = 4/52 + 13/52 = 17/52.",
+            right: "The king of hearts was counted twice. Subtract the overlap: 4/52 + 13/52 − 1/52 = 16/52 = 4/13.",
+            why: t`$P(A \cup B) = P(A) + P(B)$ only for **mutually exclusive** events. Always ask: can both happen at once?`,
+          },
+          {
+            type: "activity",
+            activity: {
+              kind: "reveal",
+              prompt: "P(A) = 0.6 and P(B) = 0.7. Can A and B be mutually exclusive?",
+              emoji: "🤔",
+              options: ["Yes", "No", "Only if A ∪ B = S"],
+              answer: 1,
+              trap: 0,
+              explain: t`If they were, $P(A \cup B) = 0.6 + 0.7 = 1.3 > 1$, which breaks the axioms. In fact $P(A \cap B) \ge 0.6 + 0.7 - 1 = 0.3$.`,
+            },
+          },
+          {
+            type: "callout",
+            tone: "exam",
+            title: "Board exam tips",
+            md: "Name the events with letters, write n(S), then n(E), then P(E) in lowest terms. For 'at least one', use 1 − P(none). Any answer above 1 or below 0 is a sure sign of an error. Card questions assume a standard pack: 4 suits of 13, with 12 face cards (J, Q, K) and 4 aces.",
+          },
+          {
+            type: "keypoints",
+            items: [
+              "Axioms: P(E) ≥ 0, P(S) = 1, and P(E ∪ F) = P(E) + P(F) for mutually exclusive E, F.",
+              "Finite S: assign each outcome a value in [0, 1] with total 1; P(E) = sum over E.",
+              "Equally likely outcomes: P(E) = n(E) / n(S).",
+              t`$P(A \cup B) = P(A) + P(B) - P(A \cap B)$; $P(A') = 1 - P(A)$.`,
+              "Use combinations to count n(S) and n(E) when choosing groups.",
+            ],
+          },
+        ],
+        flashcards: [
+          { front: "Axioms of probability", back: "P(E) ≥ 0; P(S) = 1; P(E ∪ F) = P(E) + P(F) if E ∩ F = φ." },
+          { front: "P(φ)", back: "0" },
+          { front: "Valid assignment on a finite S", back: "Each P(ωᵢ) in [0, 1] and the values add to 1." },
+          { front: "Equally likely outcomes", back: t`$P(E) = \frac{n(E)}{n(S)}$` },
+          { front: "Addition rule", back: t`$P(A \cup B) = P(A) + P(B) - P(A \cap B)$` },
+          { front: "P(not A)", back: t`$1 - P(A)$` },
+          { front: "P(A but not B)", back: t`$P(A) - P(A \cap B)$` },
+          { front: "P(at least one)", back: "1 − P(none)" },
+        ],
+        quiz: [
+          {
+            kind: "numeric",
+            q: t`$P(A) = 0.42$, $P(B) = 0.48$, $P(A \cap B) = 0.16$. Find $P(A \cup B)$.`,
+            answer: 0.74,
+            tolerance: 0.001,
+            explain: t`$0.42 + 0.48 - 0.16 = 0.74$.`,
+          },
+          {
+            kind: "numeric",
+            q: t`With the same data, find $P(\text{neither A nor B})$.`,
+            answer: 0.26,
+            tolerance: 0.001,
+            difficulty: 2,
+            explain: t`$P(A' \cap B') = 1 - P(A \cup B) = 1 - 0.74 = 0.26$.`,
+          },
+          {
+            kind: "mcq",
+            q: "A card is drawn from a pack of 52. The probability that it is red or a queen is",
+            options: [t`$\frac{15}{26}$`, t`$\frac{7}{13}$`, t`$\frac{1}{2}$`, t`$\frac{8}{13}$`],
+            answer: 1,
+            explain: t`$\frac{26 + 4 - 2}{52} = \frac{28}{52} = \frac{7}{13}$ (two red queens counted twice).`,
+          },
+          {
+            kind: "mcq",
+            q: "Three coins are tossed. The probability of at least one head is",
+            options: [t`$\frac{1}{8}$`, t`$\frac{3}{8}$`, t`$\frac{7}{8}$`, t`$\frac{1}{2}$`],
+            answer: 2,
+            explain: t`$1 - P(\text{TTT}) = 1 - \frac{1}{8} = \frac{7}{8}$.`,
+          },
+          {
+            kind: "truefalse",
+            q: t`It is possible to have $P(A) = 0.5$, $P(B) = 0.3$ and $P(A \cap B) = 0.4$.`,
+            answer: false,
+            explain: t`$A \cap B \subset B$, so $P(A \cap B) \le P(B) = 0.3$.`,
+          },
+          {
+            kind: "numeric",
+            q: "Two dice are rolled. Find the probability that the sum is 8 (to 3 decimal places).",
+            answer: 0.139,
+            tolerance: 0.001,
+            explain: t`(2,6), (3,5), (4,4), (5,3), (6,2): $\frac{5}{36} \approx 0.139$.`,
+          },
+          {
+            kind: "mcq",
+            q: t`$P(E) = \frac{2}{7}$. Then $P(\text{not } E)$ is`,
+            options: [t`$\frac{2}{7}$`, t`$\frac{5}{7}$`, t`$\frac{7}{2}$`, t`$-\frac{2}{7}$`],
+            answer: 1,
+            explain: t`$1 - \frac{2}{7} = \frac{5}{7}$.`,
+          },
+          {
+            kind: "numeric",
+            q: "A letter is chosen at random from the word KARNATAKA. Find the probability that it is a vowel (to 3 decimal places).",
+            answer: 0.444,
+            tolerance: 0.002,
+            explain: t`9 letters, and the only vowel is A, which occurs 4 times: $\frac{4}{9} \approx 0.444$.`,
+          },
+          {
+            kind: "multi",
+            q: t`$S = \{a, b, c\}$. Which are valid probability assignments $(P(a), P(b), P(c))$?`,
+            options: ["(0.2, 0.3, 0.5)", "(1/3, 1/3, 1/3)", "(0.6, 0.6, −0.2)", "(0.5, 0.4, 0.2)"],
+            answers: [0, 1],
+            difficulty: 2,
+            explain: "The third has a negative value; the fourth adds to 1.1.",
+          },
+        ],
+      },
+      {
+        slug: "c11-mat-probability-exam-edge",
+        title: "Exam edge: Probability",
+        summary: "What JEE Main, KCET and COMEDK ask from Class 11 probability: counting with permutations and combinations, 'exactly one' and 'at least one', bounds on P(A ∩ B), three-event addition and selections from 1 to n.",
+        minutes: 22,
+        xp: 55,
+        track: "exam",
+        blocks: [
+          {
+            type: "text",
+            md: t`**What the exams ask.** **KCET** and **COMEDK** ask direct questions on dice, coins, cards and letters, and the addition rule. **JEE Main** usually combines probability with *Permutations and Combinations* (arrangements, selections, numbers from 1 to n). Class 12 probability (conditional probability, independence, Bayes' theorem, distributions) builds directly on this chapter, so JEE Advanced questions use these ideas inside harder problems. There is no NEET Maths.`,
+          },
+          {
+            type: "text",
+            md: t`**Results worth remembering.**
+
+1. $P(\text{exactly one of } A, B) = P(A) + P(B) - 2P(A \cap B)$.
+
+2. $P(\text{neither}) = 1 - P(A \cup B)$; $P(\text{at least one}) = 1 - P(\text{none})$.
+
+3. Bounds: $\max\{0,\ P(A) + P(B) - 1\} \le P(A \cap B) \le \min\{P(A), P(B)\}$ and $\max\{P(A), P(B)\} \le P(A \cup B) \le \min\{1,\ P(A) + P(B)\}$.
+
+4. Two numbers chosen from $1, \ldots, n$ without replacement: compare $\binom{n}{2}$ with the count of pairs having the property (both even, both odd, one of each …).`,
+          },
+          {
+            type: "formula",
+            tex: t`P(A \cup B \cup C) = \sum P(A) - \sum P(A \cap B) + P(A \cap B \cap C)`,
+            caption: "Addition rule for three events: P(A) + P(B) + P(C) − P(A∩B) − P(B∩C) − P(A∩C) + P(A∩B∩C).",
+          },
+          {
+            type: "example",
+            title: "KCET level: product of two dice",
+            problem: "Two dice are rolled. Find the probability that the product of the numbers is a prime.",
+            steps: [
+              "A product of two whole numbers is prime only if one factor is 1 and the other is prime.",
+              "Favourable: (1,2), (1,3), (1,5), (2,1), (3,1), (5,1): 6 outcomes.",
+              t`$P = \frac{6}{36}$.`,
+            ],
+            answer: t`$\frac{1}{6}$`,
+          },
+          {
+            type: "example",
+            title: "JEE Main level: arrangements",
+            problem: "Five people, including Asha and Bilal, sit in a row in random order. Find the probability that Asha and Bilal sit next to each other.",
+            steps: [
+              t`$n(S) = 5! = 120$.`,
+              t`Tie Asha and Bilal into one unit: 4 units in $4!$ ways, and the pair inside in $2!$ ways: $48$.`,
+              t`$P = \frac{48}{120}$.`,
+            ],
+            answer: t`$\frac{2}{5}$`,
+          },
+          {
+            type: "checkpoint",
+            questions: [
+              {
+                kind: "numeric",
+                q: t`$P(A) = 0.5$, $P(B) = 0.4$, $P(A \cap B) = 0.1$. Find the probability that exactly one of A, B occurs.`,
+                answer: 0.7,
+                tolerance: 0.001,
+                explain: t`$0.5 + 0.4 - 2(0.1) = 0.7$.`,
+              },
+            ],
+          },
+          {
+            type: "example",
+            title: "JEE Main level: bounds on an overlap",
+            problem: t`$P(A) = 0.7$ and $P(B) = 0.6$. Find the least and greatest possible values of $P(A \cap B)$.`,
+            steps: [
+              t`$P(A \cup B) \le 1$, so $P(A \cap B) = 0.7 + 0.6 - P(A \cup B) \ge 0.3$.`,
+              t`$A \cap B \subset B$, so $P(A \cap B) \le 0.6$, reached when $B \subset A$.`,
+            ],
+            answer: t`$0.3 \le P(A \cap B) \le 0.6$.`,
+          },
+          {
+            type: "example",
+            title: "JEE Main level: three events",
+            problem: t`$P(A) = 0.5$, $P(B) = 0.4$, $P(C) = 0.3$, $P(A \cap B) = 0.2$, $P(B \cap C) = 0.1$, $P(A \cap C) = 0.15$, $P(A \cap B \cap C) = 0.05$. Find the probability that none of A, B, C occurs.`,
+            steps: [
+              t`$\sum P(A) = 1.2$ and $\sum P(A \cap B) = 0.2 + 0.1 + 0.15 = 0.45$.`,
+              t`$P(A \cup B \cup C) = 1.2 - 0.45 + 0.05 = 0.8$.`,
+              t`$P(\text{none}) = 1 - 0.8 = 0.2$.`,
+            ],
+            answer: "0.2",
+          },
+          {
+            type: "example",
+            title: "JEE Advanced style: two numbers from 1 to 20",
+            problem: "Two different numbers are chosen at random from 1, 2, …, 20. Find the probability that (a) their sum is even, (b) their product is even.",
+            steps: [
+              t`$n(S) = \binom{20}{2} = 190$. There are 10 odd and 10 even numbers.`,
+              t`(a) The sum is even when both are even or both are odd: $\binom{10}{2} + \binom{10}{2} = 45 + 45 = 90$. $P = \frac{90}{190} = \frac{9}{19}$.`,
+              t`(b) The product is odd only when both are odd: $\binom{10}{2} = 45$. So $P(\text{even product}) = 1 - \frac{45}{190} = \frac{145}{190} = \frac{29}{38}$.`,
+            ],
+            answer: t`(a) $\frac{9}{19}$. (b) $\frac{29}{38}$.`,
+          },
+          {
+            type: "mistake",
+            wrong: "P(at least one head in 3 tosses) = P(head on 1st) + P(head on 2nd) + P(head on 3rd) = 3/2.",
+            right: "Use the complement: 1 − P(no head) = 1 − 1/8 = 7/8.",
+            why: "'Head on 1st' and 'head on 2nd' can happen together, so their probabilities cannot simply be added. An answer above 1 is the warning sign.",
+          },
+          {
+            type: "mistake",
+            wrong: "Two dice give sums 2, 3, …, 12: eleven outcomes, so P(sum = 7) = 1/11.",
+            right: "The 11 sums are not equally likely. Count ordered pairs: 6 of the 36 give 7, so P = 1/6, while P(sum = 2) = 1/36.",
+            why: t`$P(E) = \frac{n(E)}{n(S)}$ needs a sample space of **equally likely** outcomes. The 36 ordered pairs are equally likely; the 11 sums are not.`,
+          },
+          {
+            type: "activity",
+            activity: {
+              kind: "match",
+              prompt: "Match each phrase with its event.",
+              pairs: [
+                ["At least one of A, B", t`$A \cup B$`],
+                ["Neither A nor B", t`$A' \cap B'$`],
+                ["A only", t`$A \cap B'$`],
+                ["Exactly one of A, B", t`$(A \cap B') \cup (A' \cap B)$`],
+                ["Not both A and B", t`$(A \cap B)'$`],
+              ],
+              explain: t`Translate words into sets before using any formula. "Neither" is $(A \cup B)'$, and "not both" is $(A \cap B)' = A' \cup B'$; they are different events.`,
+            },
+          },
+          {
+            type: "callout",
+            tone: "exam",
+            title: "When are the shortcuts safe?",
+            md: t`$P(A \cup B) = P(A) + P(B)$ only for mutually exclusive events. The formula $\frac{n(E)}{n(S)}$ only for equally likely outcomes: use ordered pairs for dice and count selections with $\binom{n}{r}$ consistently (both $n(S)$ and $n(E)$ as selections, or both as arrangements, never mixed). For bounds questions, the answer must also lie in $[0, 1]$.`,
+          },
+          {
+            type: "keypoints",
+            items: [
+              t`Exactly one: $P(A) + P(B) - 2P(A \cap B)$. At least one: $1 - P(\text{none})$.`,
+              t`$\max\{0, P(A) + P(B) - 1\} \le P(A \cap B) \le \min\{P(A), P(B)\}$.`,
+              t`Three events: $\sum P(A) - \sum P(A \cap B) + P(A \cap B \cap C)$.`,
+              "Count both n(S) and n(E) the same way (selections or arrangements).",
+              "Use a sample space of equally likely outcomes.",
+            ],
+          },
+        ],
+        flashcards: [
+          { front: "P(exactly one of A, B)", back: t`$P(A) + P(B) - 2P(A \cap B)$` },
+          { front: "Least possible P(A ∩ B)", back: t`$\max\{0,\ P(A) + P(B) - 1\}$` },
+          { front: "Greatest possible P(A ∩ B)", back: t`$\min\{P(A), P(B)\}$` },
+          { front: "Three-event addition rule", back: t`$\sum P(A) - \sum P(A \cap B) + P(A \cap B \cap C)$` },
+          { front: "Neither A nor B", back: t`$A' \cap B' = (A \cup B)'$` },
+          { front: "Not both A and B", back: t`$(A \cap B)' = A' \cup B'$` },
+          { front: "P(two chosen persons sit together, n in a row)", back: t`$\frac{2(n - 1)!}{n!} = \frac{2}{n}$` },
+        ],
+        quiz: [
+          {
+            kind: "numeric",
+            q: t`A and B are mutually exclusive with $P(A) = 0.3$ and $P(B) = 0.5$. Find $P(\text{neither})$.`,
+            answer: 0.2,
+            tolerance: 0.001,
+            explain: t`$P(A \cup B) = 0.8$, so $P(\text{neither}) = 0.2$.`,
+          },
+          {
+            kind: "mcq",
+            q: "Six people sit in a row at random. The probability that two particular people do not sit together is",
+            options: [t`$\frac{1}{3}$`, t`$\frac{2}{3}$`, t`$\frac{1}{6}$`, t`$\frac{5}{6}$`],
+            answer: 1,
+            difficulty: 2,
+            explain: t`Together: $\frac{2 \cdot 5!}{6!} = \frac{1}{3}$. Not together: $1 - \frac{1}{3} = \frac{2}{3}$.`,
+          },
+          {
+            kind: "numeric",
+            q: "Two different numbers are chosen from 1, 2, …, 10. Find the probability that their sum is odd (to 3 decimal places).",
+            answer: 0.556,
+            tolerance: 0.002,
+            difficulty: 2,
+            hint: "An odd sum needs one odd and one even number.",
+            explain: t`$\frac{5 \times 5}{\binom{10}{2}} = \frac{25}{45} = \frac{5}{9} \approx 0.556$.`,
+          },
+          {
+            kind: "mcq",
+            q: t`$P(A) = 0.4$ and $P(B) = 0.7$. The least possible value of $P(A \cap B)$ is`,
+            options: ["0", "0.1", "0.3", "0.4"],
+            answer: 1,
+            explain: t`$0.4 + 0.7 - 1 = 0.1$.`,
+          },
+          {
+            kind: "multi",
+            q: t`$P(A) = 0.6$ and $P(B) = 0.5$. Which values are possible?`,
+            options: [t`$P(A \cup B) = 0.9$`, t`$P(A \cap B) = 0.05$`, t`$P(A \cap B) = 0.5$`, t`$P(A \cup B) = 0.5$`],
+            answers: [0, 2],
+            difficulty: 3,
+            hint: t`Find the range of $P(A \cap B)$ and of $P(A \cup B)$.`,
+            explain: t`$0.1 \le P(A \cap B) \le 0.5$ and $0.6 \le P(A \cup B) \le 1$. So 0.9 (with $P(A \cap B) = 0.2$) and 0.5 (with $B \subset A$) are possible; 0.05 and a union of 0.5 are not.`,
+          },
+          {
+            kind: "numeric",
+            q: t`$P(A) = 0.4$, $P(B) = 0.3$, $P(C) = 0.2$, $P(A \cap B) = 0.1$, $P(B \cap C) = 0.05$, $P(A \cap C) = 0.08$, $P(A \cap B \cap C) = 0.02$. Find $P(A \cup B \cup C)$.`,
+            answer: 0.69,
+            tolerance: 0.001,
+            difficulty: 2,
+            explain: t`$0.9 - 0.23 + 0.02 = 0.69$.`,
+          },
+          {
+            kind: "mcq",
+            q: "The probability that a leap year chosen at random has 53 Sundays is",
+            options: [t`$\frac{1}{7}$`, t`$\frac{2}{7}$`, t`$\frac{3}{7}$`, t`$\frac{53}{366}$`],
+            answer: 1,
+            difficulty: 2,
+            explain: "366 days = 52 weeks + 2 days. The 2 extra days are one of 7 equally likely pairs (Sun–Mon, Mon–Tue, …, Sat–Sun); 2 of these pairs contain a Sunday.",
+          },
+          {
+            kind: "numeric",
+            q: "A number is chosen at random from 1 to 100. Find the probability that it is divisible by 2 or 3.",
+            answer: 0.67,
+            tolerance: 0.001,
+            explain: t`$\frac{50 + 33 - 16}{100} = \frac{67}{100}$ (16 multiples of 6 counted twice).`,
+          },
+        ],
+      },
+    ],
+  },
 ];
 
 export const links: Record<string, string | string[]> = {
   "11:Limits and Derivatives": "c11-mat-limits-derivatives",
   "11:Statistics": "c11-mat-statistics",
+  "11:Probability": "c11-mat-probability",
 };
