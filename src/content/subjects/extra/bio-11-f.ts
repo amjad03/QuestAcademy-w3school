@@ -1079,7 +1079,7 @@ const neural: Topic = {
         },
         {
           kind: "numeric",
-          q: "If a pump completes 500 cycles, how many more positive charges does it move out of the cell than into it?",
+          q: "If a Na⁺–K⁺ pump completes 500 cycles, how many more positive charges does it move out of the cell than into it?",
           answer: 500,
           explain: "Each cycle moves 3 Na⁺ out and 2 K⁺ in, a net of 1 positive charge out. 500 cycles × 1 = 500.",
           difficulty: 2,
