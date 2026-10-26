@@ -2468,9 +2468,604 @@ ISC Class 11 includes the condition for $y = mx + c$ to touch a conic and the ta
       },
     ],
   },
-  /* @@NEXT@@ */
+  /* ------------------------------------------------------------------ */
+  /* Class 11: Introduction to Three Dimensional Geometry (NCERT,        */
+  /* Karnataka I PUC; ISC has no Class 11 3D chapter)                    */
+  /* ------------------------------------------------------------------ */
+  {
+    slug: "c11-mat-3d-geometry",
+    title: "Introduction to Three Dimensional Geometry",
+    icon: "🧊",
+    description: "Coordinate axes and planes in space, octants, coordinates of a point, the distance formula, and the section formula with exam applications.",
+    lessons: [
+      {
+        slug: "c11-mat-3d-coordinates",
+        title: "Coordinate Axes, Coordinate Planes and Octants",
+        summary: "Three mutually perpendicular axes, the three coordinate planes, the eight octants and their signs, and how to read and place a point (x, y, z).",
+        minutes: 16,
+        xp: 40,
+        blocks: [
+          {
+            type: "illustration",
+            emoji: "🚁",
+            caption: "To tell a friend where a drone is hovering, two numbers are not enough. You need how far east, how far north, and how high: three coordinates.",
+          },
+          {
+            type: "text",
+            md: t`A point on a line needs one number and a point in a plane needs two. A point in **space** needs three.
+
+Take a point $O$ (the **origin**) and three mutually perpendicular lines through it: the **x-axis** $XOX'$, **y-axis** $YOY'$ and **z-axis** $ZOZ'$. We use a **right-handed** system: curl the fingers of the right hand from the positive x-axis towards the positive y-axis, and the thumb points along the positive z-axis.
+
+Each pair of axes fixes a **coordinate plane**: the **XY-plane**, the **YZ-plane** and the **ZX-plane**. The three planes divide space into **eight octants**.`,
+          },
+          {
+            type: "text",
+            md: t`**Coordinates of a point.** Through a point $P$, draw planes parallel to the coordinate planes. They cut the x-, y- and z-axes at distances $x$, $y$, $z$ from $O$ (with signs). Then $P$ is $(x, y, z)$. Equivalently:
+
+- $x$ = the (signed) distance of $P$ from the **YZ-plane**,
+- $y$ = the distance from the **ZX-plane**,
+- $z$ = the distance from the **XY-plane**.
+
+Points on the coordinate planes and axes have zeros: on the XY-plane $z = 0$, so points look like $(x, y, 0)$; on the x-axis $y = z = 0$, so points look like $(x, 0, 0)$. The origin is $(0, 0, 0)$.`,
+          },
+          {
+            type: "table",
+            headers: ["Octant", "I", "II", "III", "IV", "V", "VI", "VII", "VIII"],
+            rows: [
+              ["x", "+", "−", "−", "+", "+", "−", "−", "+"],
+              ["y", "+", "+", "−", "−", "+", "+", "−", "−"],
+              ["z", "+", "+", "+", "+", "−", "−", "−", "−"],
+            ],
+          },
+          {
+            type: "example",
+            title: "Naming octants",
+            problem: t`Name the octants in which $(-3, 1, -2)$, $(4, -2, -5)$ and $(-1, -6, 7)$ lie.`,
+            steps: [
+              t`$(-3, 1, -2)$: signs $(-, +, -)$. With $z$ negative we are in V–VIII, and $(-, +)$ in the xy-pattern is the second, so **VI**.`,
+              t`$(4, -2, -5)$: signs $(+, -, -)$: **VIII**.`,
+              t`$(-1, -6, 7)$: signs $(-, -, +)$: **III**.`,
+            ],
+            answer: "VI, VIII and III",
+          },
+          {
+            type: "checkpoint",
+            questions: [
+              {
+                kind: "mcq",
+                q: "The point (2, −3, −4) lies in octant",
+                options: ["IV", "V", "VII", "VIII"],
+                answer: 3,
+                explain: t`Signs $(+, -, -)$: octant VIII. Octant IV is $(+, -, +)$.`,
+              },
+              {
+                kind: "fill",
+                q: "The x-coordinate of every point in the YZ-plane is ___.",
+                answer: ["0", "zero"],
+                explain: "The YZ-plane is the plane x = 0; x measures the distance from it.",
+              },
+            ],
+          },
+          {
+            type: "text",
+            md: t`**Feet of perpendiculars and mirror images.** From $P(a, b, c)$:
+
+- the foot of the perpendicular on the XY-plane is $(a, b, 0)$, on the YZ-plane $(0, b, c)$, on the ZX-plane $(a, 0, c)$;
+- the foot on the x-axis is $(a, 0, 0)$, on the y-axis $(0, b, 0)$, on the z-axis $(0, 0, c)$;
+- the mirror image in the XY-plane is $(a, b, -c)$: only the coordinate measured *from* that plane changes sign.`,
+          },
+          {
+            type: "example",
+            title: "Feet and images",
+            problem: t`For $P(3, -4, 12)$, find the foot of the perpendicular on the YZ-plane, the foot on the z-axis, and the image of $P$ in the XY-plane.`,
+            steps: [
+              t`On the YZ-plane, $x$ becomes 0: $(0, -4, 12)$.`,
+              t`On the z-axis, $x$ and $y$ become 0: $(0, 0, 12)$.`,
+              t`Image in the XY-plane: change the sign of $z$: $(3, -4, -12)$.`,
+            ],
+            answer: t`$(0, -4, 12)$, $(0, 0, 12)$ and $(3, -4, -12)$`,
+          },
+          {
+            type: "mistake",
+            wrong: "The point (2, 0, −3) lies on the x-axis, because its y-coordinate is 0.",
+            right: "y = 0 puts the point on the ZX-plane. To lie on the x-axis, both y and z must be 0, as in (2, 0, 0).",
+            why: "In two dimensions, one zero coordinate puts a point on an axis. In space, one zero only puts it on a coordinate plane; you need two zeros for an axis.",
+          },
+          {
+            type: "activity",
+            activity: {
+              kind: "sort",
+              prompt: "Where does each point lie?",
+              groups: ["On an axis", "On a coordinate plane (not an axis)", "Inside an octant"],
+              items: [
+                { text: "(0, 0, −7)", group: 0, hint: "Two zeros: the z-axis." },
+                { text: "(0, 4, 0)", group: 0, hint: "Two zeros: the y-axis." },
+                { text: "(3, 0, −1)", group: 1, hint: "One zero: y = 0, the ZX-plane." },
+                { text: "(0, −2, 5)", group: 1, hint: "x = 0: the YZ-plane." },
+                { text: "(5, −6, 0)", group: 1, hint: "z = 0: the XY-plane." },
+                { text: "(1, 2, 3)", group: 2, hint: "No zeros: octant I." },
+                { text: "(−1, −1, 4)", group: 2, hint: "No zeros: octant III." },
+              ],
+              explain: "Count the zeros: three zeros is the origin, two zeros an axis, one zero a coordinate plane, none an octant.",
+            },
+          },
+          {
+            type: "callout",
+            tone: "note",
+            title: "Board note",
+            md: "This chapter is in the NCERT book for CBSE and Karnataka I PUC. ISC teaches three-dimensional geometry only in Class 12 (with vectors), and JEE and KCET use all of it there, so ISC students aiming for JEE or KCET should still learn this topic.",
+          },
+          {
+            type: "callout",
+            tone: "exam",
+            title: "Board exam tips",
+            md: "Short questions ask for the octant of a point, or the coordinates of a point on an axis or plane. Learn the sign table for the octants by the pattern: I to IV go anticlockwise in the xy-signs with z positive, and V to VIII repeat them with z negative.",
+          },
+          {
+            type: "keypoints",
+            items: [
+              "Three mutually perpendicular axes (right-handed) through O fix every point as (x, y, z).",
+              "The coordinate planes are XY (z = 0), YZ (x = 0) and ZX (y = 0); they split space into eight octants.",
+              "x, y, z are the signed distances of the point from the YZ-, ZX- and XY-planes.",
+              "One zero coordinate: on a plane; two zeros: on an axis.",
+            ],
+          },
+        ],
+        flashcards: [
+          { front: "Equation of the XY-plane", back: "z = 0" },
+          { front: "Form of a point on the y-axis", back: "(0, y, 0)" },
+          { front: "Octant with signs (−, +, −)", back: "VI" },
+          { front: "Octant with signs (+, −, +)", back: "IV" },
+          { front: "What does z measure?", back: "The signed distance of the point from the XY-plane." },
+          { front: "Image of (a, b, c) in the ZX-plane", back: "(a, −b, c)" },
+        ],
+        quiz: [
+          {
+            kind: "mcq",
+            q: "All points with x = 0 lie on",
+            options: ["the x-axis", "the YZ-plane", "the XY-plane", "the ZX-plane"],
+            answer: 1,
+            explain: "x is the distance from the YZ-plane, so x = 0 is that plane. (Points on the x-axis have y = z = 0.)",
+          },
+          {
+            kind: "truefalse",
+            q: "The point (0, 0, 5) lies on both the XZ-plane and the YZ-plane.",
+            answer: true,
+            explain: "It is on the z-axis, which is the line where the XZ- and YZ-planes meet.",
+          },
+          {
+            kind: "mcq",
+            q: "The foot of the perpendicular from (4, −1, 6) on the ZX-plane is",
+            options: ["(4, 0, 6)", "(0, −1, 6)", "(4, −1, 0)", "(4, 1, 6)"],
+            answer: 0,
+            explain: "The ZX-plane is y = 0, so only y becomes 0.",
+          },
+          {
+            kind: "numeric",
+            q: "Into how many octants do the coordinate planes divide space?",
+            answer: 8,
+            explain: "Each coordinate can be positive or negative: 2 × 2 × 2 = 8.",
+          },
+          {
+            kind: "multi",
+            q: "In which octants is z negative?",
+            options: ["IV", "V", "VI", "VII", "VIII"],
+            answers: [1, 2, 3, 4],
+            explain: "Octants V, VI, VII and VIII lie below the XY-plane. Octant IV has z positive.",
+          },
+          {
+            kind: "mcq",
+            q: "The image of (2, 3, 4) in the XY-plane is",
+            options: ["(−2, −3, 4)", "(2, 3, −4)", "(2, −3, 4)", "(−2, 3, 4)"],
+            answer: 1,
+            explain: "Reflecting in the XY-plane changes only the coordinate measured from it, z.",
+          },
+          {
+            kind: "mcq",
+            q: "The point (−5, 0, 0) lies",
+            options: ["in octant II", "on the x-axis", "on the YZ-plane", "on the y-axis"],
+            answer: 1,
+            explain: "Two zero coordinates (y and z): it is on the negative x-axis.",
+          },
+        ],
+      },
+      {
+        slug: "c11-mat-3d-distance",
+        title: "Distance Formula in Space and the Section Formula",
+        summary: "Derive the distance between two points in space, use it for collinearity, triangle types and loci, and divide a segment internally or externally in a given ratio.",
+        minutes: 22,
+        xp: 50,
+        blocks: [
+          {
+            type: "text",
+            md: t`How long a pole can you fit in a room 4 m long, 3 m wide and 12 m high? The longest straight line is the diagonal from one floor corner to the opposite ceiling corner. Pythagoras on the floor gives $\sqrt{16 + 9} = 5$ m, and Pythagoras again with the height gives $\sqrt{25 + 144} = 13$ m. That two-step idea is the distance formula in space.`,
+          },
+          {
+            type: "list",
+            ordered: true,
+            items: [
+              t`Let $P(x_1, y_1, z_1)$ and $Q(x_2, y_2, z_2)$. Through $P$ and $Q$ draw planes parallel to the coordinate planes, forming a rectangular box with $PQ$ as a diagonal.`,
+              t`The edges of the box have lengths $|x_2 - x_1|$, $|y_2 - y_1|$ and $|z_2 - z_1|$.`,
+              t`On the bottom face, $PN$ (from $P$ to the corner $N$ below $Q$) satisfies $PN^2 = (x_2 - x_1)^2 + (y_2 - y_1)^2$.`,
+              t`$\triangle PNQ$ is right-angled at $N$, with $NQ = |z_2 - z_1|$, so $PQ^2 = PN^2 + NQ^2$.`,
+              t`Hence $PQ^2 = (x_2 - x_1)^2 + (y_2 - y_1)^2 + (z_2 - z_1)^2$.`,
+            ],
+          },
+          {
+            type: "formula",
+            tex: t`PQ = \sqrt{(x_2 - x_1)^2 + (y_2 - y_1)^2 + (z_2 - z_1)^2}, \qquad OP = \sqrt{x^2 + y^2 + z^2}`,
+            caption: "Distance between two points, and from the origin",
+          },
+          {
+            type: "example",
+            title: "Distance between two points",
+            problem: t`Find the distance between $(2, -1, 3)$ and $(-4, 1, 0)$.`,
+            steps: [
+              t`Differences: $-4 - 2 = -6$, $1 - (-1) = 2$, $0 - 3 = -3$.`,
+              t`$PQ = \sqrt{36 + 4 + 9} = \sqrt{49}$.`,
+            ],
+            answer: "7 units",
+          },
+          {
+            type: "example",
+            title: "Collinearity",
+            problem: t`Show that $A(1, 2, 3)$, $B(3, 4, 7)$ and $C(-1, 0, -1)$ are collinear.`,
+            steps: [
+              t`$AB = \sqrt{4 + 4 + 16} = \sqrt{24} = 2\sqrt{6}$.`,
+              t`$AC = \sqrt{4 + 4 + 16} = 2\sqrt{6}$.`,
+              t`$BC = \sqrt{16 + 16 + 64} = \sqrt{96} = 4\sqrt{6}$.`,
+              t`$AB + AC = 4\sqrt{6} = BC$, so $A$ lies on segment $BC$ (in fact it is the midpoint).`,
+            ],
+            answer: "Collinear, with A between B and C",
+          },
+          {
+            type: "checkpoint",
+            questions: [
+              {
+                kind: "numeric",
+                q: "Find the distance of (6, −2, 3) from the origin.",
+                answer: 7,
+                explain: t`$\sqrt{36 + 4 + 9} = \sqrt{49} = 7$.`,
+              },
+            ],
+          },
+          {
+            type: "example",
+            title: "Type of triangle",
+            problem: t`Show that $A(1, 1, 1)$, $B(3, 1, 1)$, $C(1, 4, 5)$ form a right-angled triangle.`,
+            steps: [
+              t`$AB^2 = 4 + 0 + 0 = 4$.`,
+              t`$AC^2 = 0 + 9 + 16 = 25$.`,
+              t`$BC^2 = 4 + 9 + 16 = 29$.`,
+              t`$AB^2 + AC^2 = 29 = BC^2$, so by the converse of Pythagoras the angle at $A$ is $90^\circ$.`,
+            ],
+            answer: "Right-angled at A",
+          },
+          {
+            type: "example",
+            title: "A locus in space",
+            problem: t`Find the equation of the set of points equidistant from $A(1, 2, 3)$ and $B(3, 2, -1)$.`,
+            steps: [
+              t`$PA^2 = PB^2$: $(x - 1)^2 + (y - 2)^2 + (z - 3)^2 = (x - 3)^2 + (y - 2)^2 + (z + 1)^2$.`,
+              t`The $x^2, y^2, z^2$ and $(y - 2)^2$ terms cancel: $-2x + 1 - 6z + 9 = -6x + 9 + 2z + 1$.`,
+              t`$4x - 8z = 0$, i.e. $x - 2z = 0$. Check: the midpoint $(2, 2, 1)$ satisfies it. ✓`,
+            ],
+            answer: t`$x - 2z = 0$ (a plane, the perpendicular bisector plane of AB)`,
+          },
+          {
+            type: "text",
+            md: t`**Section formula.** The point $R$ dividing the join of $P(x_1, y_1, z_1)$ and $Q(x_2, y_2, z_2)$ **internally** in the ratio $m : n$ is found exactly as in two dimensions, coordinate by coordinate. For **external** division, replace $n$ by $-n$.
+
+Special cases: the **midpoint** ($m = n$) is $\left(\frac{x_1 + x_2}{2}, \frac{y_1 + y_2}{2}, \frac{z_1 + z_2}{2}\right)$, and the **centroid** of a triangle is the average of the three vertices.
+
+**Board note:** the section formula was removed from the rationalised NCERT chapter (CBSE and Karnataka I PUC now stop at the distance formula), but it is used throughout Class 12 vectors and 3D, and in JEE, KCET and COMEDK.`,
+          },
+          {
+            type: "formula",
+            tex: t`R = \left(\frac{mx_2 + nx_1}{m + n},\ \frac{my_2 + ny_1}{m + n},\ \frac{mz_2 + nz_1}{m + n}\right)`,
+            caption: "Internal division of PQ in the ratio m : n (m goes with Q, the far end)",
+          },
+          {
+            type: "example",
+            title: "Internal division",
+            problem: t`Find the point dividing the join of $P(2, -3, 4)$ and $Q(8, 0, 10)$ internally in the ratio $1 : 2$.`,
+            steps: [
+              t`$m = 1$, $n = 2$, $m + n = 3$.`,
+              t`$x = \frac{1(8) + 2(2)}{3} = 4$; $y = \frac{1(0) + 2(-3)}{3} = -2$; $z = \frac{1(10) + 2(4)}{3} = 6$.`,
+              t`Check: $PR = \sqrt{4 + 1 + 4} = 3$ and $RQ = \sqrt{16 + 4 + 16} = 6$, ratio $1 : 2$. ✓`,
+            ],
+            answer: t`$(4, -2, 6)$`,
+          },
+          {
+            type: "mistake",
+            wrong: "For P and Q divided in the ratio m : n, the x-coordinate is (m x₁ + n x₂)/(m + n).",
+            right: "It is (m x₂ + n x₁)/(m + n): m multiplies the coordinates of the far end Q. The point is nearer the end whose part of the ratio is smaller.",
+            why: "It seems natural to pair m with the first point. But the point dividing in 1 : 2 is closer to P, so P must get the bigger weight, 2.",
+          },
+          {
+            type: "activity",
+            activity: {
+              kind: "order",
+              prompt: "Put the steps of the distance derivation in order.",
+              items: [
+                "Draw a box with faces parallel to the coordinate planes and PQ as a diagonal.",
+                "Write the edge lengths |x₂ − x₁|, |y₂ − y₁|, |z₂ − z₁|.",
+                "Apply Pythagoras on the base face to get PN².",
+                "Apply Pythagoras in the right triangle PNQ.",
+                "Add to get PQ² as the sum of three squared differences.",
+              ],
+              explain: "Two uses of Pythagoras: first in the base face, then in the vertical triangle containing the diagonal.",
+            },
+          },
+          {
+            type: "callout",
+            tone: "exam",
+            title: "Board exam tips",
+            md: "For collinearity, show that the sum of two distances equals the third, and name which point is in the middle. For a triangle type, compute all three squared sides before deciding (equal sides, Pythagoras, or both). In locus questions, expand carefully and cancel the square terms; the answer is a single equation in x, y, z.",
+          },
+          {
+            type: "keypoints",
+            items: [
+              t`Distance: $\sqrt{(x_2 - x_1)^2 + (y_2 - y_1)^2 + (z_2 - z_1)^2}$; from the origin, $\sqrt{x^2 + y^2 + z^2}$.`,
+              "Collinear points: the largest distance is the sum of the other two.",
+              t`Internal division $m : n$: $\left(\frac{mx_2 + nx_1}{m + n}, \ldots\right)$; external: replace $n$ by $-n$.`,
+              "Midpoint and centroid are averages of the coordinates.",
+            ],
+          },
+        ],
+        flashcards: [
+          { front: "Distance between two points in space", back: t`$\sqrt{(x_2 - x_1)^2 + (y_2 - y_1)^2 + (z_2 - z_1)^2}$` },
+          { front: "Distance of (x, y, z) from the origin", back: t`$\sqrt{x^2 + y^2 + z^2}$` },
+          { front: "Section formula (internal, m : n)", back: t`$\left(\frac{mx_2 + nx_1}{m + n}, \frac{my_2 + ny_1}{m + n}, \frac{mz_2 + nz_1}{m + n}\right)$` },
+          { front: "External division", back: t`Replace $n$ by $-n$: $\left(\frac{mx_2 - nx_1}{m - n}, \ldots\right)$` },
+          { front: "Centroid of a triangle in space", back: t`$\left(\frac{x_1 + x_2 + x_3}{3}, \frac{y_1 + y_2 + y_3}{3}, \frac{z_1 + z_2 + z_3}{3}\right)$` },
+          { front: "Test for collinearity using distances", back: "One distance equals the sum of the other two." },
+        ],
+        quiz: [
+          {
+            kind: "numeric",
+            q: "Find the distance between (1, −2, 3) and (3, −4, 4).",
+            answer: 3,
+            explain: t`$\sqrt{4 + 4 + 1} = 3$.`,
+          },
+          {
+            kind: "mcq",
+            q: "The distance of (3, 4, 5) from the x-axis is",
+            options: ["3", "5", t`$\sqrt{41}$`, t`$5\sqrt{2}$`],
+            answer: 2,
+            explain: t`The foot on the x-axis is $(3, 0, 0)$, so the distance is $\sqrt{16 + 25} = \sqrt{41}$.`,
+            difficulty: 2,
+          },
+          {
+            kind: "mcq",
+            q: "The midpoint of (2, −4, 6) and (−6, 2, 0) is",
+            options: ["(−2, −1, 3)", "(−4, −2, 6)", "(4, −3, 3)", "(−2, 1, 3)"],
+            answer: 0,
+            explain: t`$\left(\frac{2 - 6}{2}, \frac{-4 + 2}{2}, \frac{6 + 0}{2}\right) = (-2, -1, 3)$.`,
+          },
+          {
+            kind: "numeric",
+            q: "The distance between (1, 2, k) and (1, −2, 0) is 5 and k > 0. Find k.",
+            answer: 3,
+            explain: t`$\sqrt{0 + 16 + k^2} = 5 \Rightarrow k^2 = 9 \Rightarrow k = 3$.`,
+          },
+          {
+            kind: "truefalse",
+            q: "The points (0, 0, 0), (1, 1, 1) and (2, 2, 2) are collinear.",
+            answer: true,
+            explain: t`Distances $\sqrt{3}$, $\sqrt{3}$ and $2\sqrt{3}$: the largest is the sum of the other two.`,
+          },
+          {
+            kind: "mcq",
+            q: "The centroid of the triangle with vertices (1, 2, 3), (4, −1, 0) and (1, 5, 6) is",
+            options: ["(2, 2, 3)", "(6, 6, 9)", "(3, 3, 4.5)", "(2, 3, 3)"],
+            answer: 0,
+            explain: t`$\left(\frac{6}{3}, \frac{6}{3}, \frac{9}{3}\right) = (2, 2, 3)$.`,
+          },
+          {
+            kind: "mcq",
+            q: "The YZ-plane divides the join of (−2, 4, 7) and (3, −5, 8) in the ratio",
+            options: ["2 : 3 internally", "3 : 2 internally", "2 : 3 externally", "1 : 1"],
+            answer: 0,
+            explain: t`On the YZ-plane $x = 0$: $\frac{3m - 2n}{m + n} = 0 \Rightarrow m : n = 2 : 3$. The ratio is positive, so the division is internal.`,
+            difficulty: 2,
+            hint: "Set the x-coordinate of the dividing point to zero.",
+          },
+        ],
+      },
+      {
+        slug: "c11-mat-3d-exam",
+        title: "Exam edge: 3D Coordinates for JEE, KCET and COMEDK",
+        summary: "Distances from axes and planes, the ratio in which a coordinate plane cuts a segment, external division, parallelogram vertices and loci in space.",
+        minutes: 20,
+        xp: 55,
+        track: "exam",
+        blocks: [
+          {
+            type: "text",
+            md: t`**What the exams ask.** The Class 11 chapter is short, but it is the base of Class 12 vectors, lines and planes, which carry heavy weight in JEE Main and Advanced. Direct questions from this chapter (KCET, COMEDK, sometimes JEE Main) test: distance from an axis or plane, the ratio in which a coordinate plane divides a segment, section formula (internal and external), centroid, fourth vertex of a parallelogram, and simple loci.`,
+          },
+          {
+            type: "table",
+            headers: ["Result", "Formula", "When it is safe"],
+            rows: [
+              ["Distance of (x, y, z) from x-axis", t`$\sqrt{y^2 + z^2}$`, "always (similarly for the other axes)"],
+              ["Distance from the XY-plane", t`$|z|$`, "always"],
+              ["Ratio in which the YZ-plane divides PQ", t`$m : n = -x_1 : x_2$`, "positive ratio: internal; negative: external"],
+              ["Fourth vertex of parallelogram ABCD", t`$D = A + C - B$`, "vertices taken in order A, B, C, D"],
+              ["Centroid of tetrahedron", t`$\left(\frac{\sum x_i}{4}, \frac{\sum y_i}{4}, \frac{\sum z_i}{4}\right)$`, "four vertices"],
+              ["External division m : n", t`$\left(\frac{mx_2 - nx_1}{m - n}, \ldots\right)$`, t`$m \neq n$`],
+            ],
+          },
+          {
+            type: "example",
+            title: "KCET level: ratio cut by a coordinate plane",
+            problem: t`Find the ratio in which the XY-plane divides the join of $(1, -2, 3)$ and $(4, 2, -1)$, and the point of division.`,
+            steps: [
+              t`On the XY-plane $z = 0$: $\frac{m(-1) + n(3)}{m + n} = 0 \Rightarrow m : n = 3 : 1$ (shortcut: $-z_1 : z_2 = -3 : -1 = 3 : 1$).`,
+              t`The ratio is positive, so the division is internal.`,
+              t`Point: $\left(\frac{3(4) + 1(1)}{4}, \frac{3(2) + 1(-2)}{4}, 0\right) = \left(\frac{13}{4}, 1, 0\right)$.`,
+            ],
+            answer: t`$3 : 1$ internally, at $\left(\frac{13}{4}, 1, 0\right)$`,
+          },
+          {
+            type: "example",
+            title: "JEE Main level: fourth vertex of a parallelogram",
+            problem: t`$A(1, 0, 2)$, $B(3, 1, -1)$ and $C(2, 4, 5)$ are three consecutive vertices of parallelogram $ABCD$. Find $D$.`,
+            steps: [
+              t`The diagonals $AC$ and $BD$ bisect each other, so the midpoint of $AC$ equals the midpoint of $BD$.`,
+              t`$A + C = B + D \Rightarrow D = A + C - B$.`,
+              t`$D = (1 + 2 - 3, 0 + 4 - 1, 2 + 5 + 1) = (0, 3, 8)$.`,
+            ],
+            answer: t`$D(0, 3, 8)$`,
+          },
+          {
+            type: "example",
+            title: "JEE Main level: a locus",
+            problem: t`A point moves so that its distance from the z-axis equals its distance from the XY-plane. Find its locus.`,
+            steps: [
+              t`Distance from the z-axis: $\sqrt{x^2 + y^2}$. Distance from the XY-plane: $|z|$.`,
+              t`$\sqrt{x^2 + y^2} = |z| \Rightarrow x^2 + y^2 = z^2$.`,
+              t`This is a double cone with vertex at the origin and axis along the z-axis, with semi-vertical angle $45^\circ$.`,
+            ],
+            answer: t`$x^2 + y^2 - z^2 = 0$`,
+          },
+          {
+            type: "example",
+            title: "JEE Advanced flavour: external division",
+            problem: t`Find the point $R$ dividing the join of $A(1, -2, 3)$ and $B(3, 0, -1)$ externally in the ratio $3 : 1$, and verify $AR : BR = 3 : 1$.`,
+            steps: [
+              t`$R = \left(\frac{3(3) - 1(1)}{3 - 1}, \frac{3(0) - 1(-2)}{2}, \frac{3(-1) - 1(3)}{2}\right) = (4, 1, -3)$.`,
+              t`$\vec{AB}$ direction: $(2, 2, -4)$; $R - A = (3, 3, -6) = 1.5(2, 2, -4)$, so $R$ is on line $AB$, beyond $B$.`,
+              t`$AR = 1.5\,|AB|$ and $BR = 0.5\,|AB|$, so $AR : BR = 3 : 1$. ✓`,
+            ],
+            answer: t`$R(4, 1, -3)$`,
+          },
+          {
+            type: "checkpoint",
+            questions: [
+              {
+                kind: "mcq",
+                q: "The distance of (−3, 4, 12) from the z-axis is",
+                options: ["12", "5", "13", t`$\sqrt{153}$`],
+                answer: 1,
+                explain: t`$\sqrt{x^2 + y^2} = \sqrt{9 + 16} = 5$. (13 is the distance from the origin; $\sqrt{153}$ from the y-axis.)`,
+              },
+            ],
+          },
+          {
+            type: "mistake",
+            wrong: "The distance of (x, y, z) from the x-axis is |x|.",
+            right: "|x| is the distance from the YZ-plane. The distance from the x-axis is √(y² + z²), measured to the foot (x, 0, 0).",
+            why: "In the plane, the distance from the y-axis is |x|, so learners pair an axis with one coordinate. In space, the distance from a line involves the two coordinates that are not along it.",
+          },
+          {
+            type: "mistake",
+            wrong: "If the ratio from the formula comes out as −2 : 3, the problem has no answer.",
+            right: "A negative ratio means the plane divides the segment externally in the ratio 2 : 3; both points lie on the same side of the plane.",
+            why: "Ratios of lengths are positive, so a negative value looks impossible. The sign simply records whether the dividing point is between the two points or outside them.",
+          },
+          {
+            type: "activity",
+            activity: {
+              kind: "match",
+              prompt: "Match each distance for the point (x, y, z).",
+              pairs: [
+                ["From the x-axis", "√(y² + z²)"],
+                ["From the y-axis", "√(z² + x²)"],
+                ["From the z-axis", "√(x² + y²)"],
+                ["From the XY-plane", "|z|"],
+                ["From the origin", "√(x² + y² + z²)"],
+              ],
+              explain: "To find the distance from an axis, drop the coordinate along that axis and use the other two. A plane leaves only the coordinate perpendicular to it.",
+            },
+          },
+          {
+            type: "callout",
+            tone: "tip",
+            title: "Shortcuts worth knowing",
+            md: "Coordinate plane ratio: the YZ-plane divides PQ in the ratio −x₁ : x₂ (similarly −y₁ : y₂ for ZX, −z₁ : z₂ for XY). Parallelogram: D = A + C − B only when the vertices are in the order A, B, C, D around the figure. Collinearity in JEE is faster with direction ratios (proportional differences) than with three square roots.",
+          },
+          {
+            type: "keypoints",
+            items: [
+              "Distance from an axis uses the other two coordinates; from a coordinate plane, the one coordinate perpendicular to it.",
+              "A coordinate plane divides PQ in the ratio −(that coordinate of P) : (that coordinate of Q); a negative ratio means external division.",
+              "D = A + C − B for parallelogram ABCD.",
+              "Loci in space give a single equation in x, y and z (a plane, sphere, cone and so on).",
+            ],
+          },
+        ],
+        flashcards: [
+          { front: "Distance of (x, y, z) from the y-axis", back: t`$\sqrt{z^2 + x^2}$` },
+          { front: "Ratio in which the ZX-plane divides PQ", back: t`$-y_1 : y_2$` },
+          { front: "Fourth vertex D of parallelogram ABCD", back: "D = A + C − B" },
+          { front: "Negative ratio from the section formula", back: "External division in the corresponding positive ratio." },
+          { front: "Centroid of a tetrahedron", back: "Average of the four vertices." },
+          { front: "Locus of points equidistant from two points", back: "The plane perpendicular to the segment through its midpoint." },
+        ],
+        quiz: [
+          {
+            kind: "numeric",
+            q: "The ZX-plane divides the join of (2, −3, 1) and (−4, 6, 5) in the ratio m : n. Find m/n.",
+            answer: 0.5,
+            explain: t`$m : n = -y_1 : y_2 = 3 : 6 = 1 : 2$, so $\frac{m}{n} = 0.5$ (internal).`,
+            difficulty: 2,
+          },
+          {
+            kind: "mcq",
+            q: "The triangle with vertices (a, 1, 3), (−2, b, −5) and (4, 7, c) has centroid at the origin. Then (a, b, c) =",
+            options: ["(−2, −8, 2)", "(2, 8, −2)", "(−2, 8, 2)", "(0, 0, 0)"],
+            answer: 0,
+            explain: t`$a - 2 + 4 = 0 \Rightarrow a = -2$; $1 + b + 7 = 0 \Rightarrow b = -8$; $3 - 5 + c = 0 \Rightarrow c = 2$.`,
+          },
+          {
+            kind: "numeric",
+            q: "Points equidistant from (0, 0, 0) and (2, 0, 0) lie on the plane x = k. Find k.",
+            answer: 1,
+            explain: t`$x^2 + y^2 + z^2 = (x - 2)^2 + y^2 + z^2 \Rightarrow 0 = -4x + 4 \Rightarrow x = 1$.`,
+          },
+          {
+            kind: "multi",
+            q: "Which sets of points are collinear?",
+            options: ["(1, 2, 3), (2, 3, 4), (4, 5, 6)", "(0, 0, 0), (1, −1, 2), (−2, 2, −4)", "(1, 0, 0), (0, 1, 0), (0, 0, 1)", "(2, 1, 0), (3, 2, 1), (5, 3, 1)"],
+            answers: [0, 1],
+            explain: t`Compare differences: $(1, 1, 1)$ and $(3, 3, 3)$ are proportional; $(1, -1, 2)$ and $(-2, 2, -4)$ are proportional. In the third set, $(-1, 1, 0)$ and $(-1, 0, 1)$ are not; in the fourth, $(1, 1, 1)$ and $(3, 2, 1)$ are not.`,
+            difficulty: 2,
+          },
+          {
+            kind: "mcq",
+            q: "The point dividing the join of A(2, 1, −3) and B(5, −8, 3) externally in the ratio 2 : 1 is",
+            options: ["(8, −17, 9)", "(4, −5, 1)", "(3, −2, −1)", "(−1, 10, −9)"],
+            answer: 0,
+            explain: t`$\left(\frac{2(5) - 1(2)}{1}, \frac{2(-8) - 1(1)}{1}, \frac{2(3) - 1(-3)}{1}\right) = (8, -17, 9)$. Check: $R - A = (6, -18, 12) = 2(B - A)$, so $AR = 2AB$ and $BR = AB$. (4, −5, 1) is the internal point.`,
+            difficulty: 3,
+            hint: "External: (m x₂ − n x₁)/(m − n).",
+          },
+          {
+            kind: "numeric",
+            q: "A(2, −1, 3), B(0, 4, 1) and C(−1, 2, 5) are consecutive vertices of parallelogram ABCD. Find the sum of the coordinates of D.",
+            answer: 5,
+            explain: t`$D = A + C - B = (2 - 1 - 0, -1 + 2 - 4, 3 + 5 - 1) = (1, -3, 7)$; sum $= 5$.`,
+            difficulty: 2,
+          },
+          {
+            kind: "mcq",
+            q: "The locus of a point whose distance from the x-axis is 3 is",
+            options: ["y² + z² = 9", "x² = 9", "x² + y² + z² = 9", "y + z = 3"],
+            answer: 0,
+            explain: t`$\sqrt{y^2 + z^2} = 3$: a circular cylinder of radius 3 around the x-axis.`,
+            difficulty: 2,
+          },
+        ],
+      },
+    ],
+  },
 ];
 
 export const links: Record<string, string | string[]> = {
   "11:Straight Lines": "c11-mat-straight-lines",
+  "11:Circles": "c11-mat-circles",
+  "11:Conic Sections": "c11-mat-conic-sections",
+  "11:Introduction to Three Dimensional Geometry": "c11-mat-3d-geometry",
 };

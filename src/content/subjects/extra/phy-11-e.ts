@@ -1796,4 +1796,6 @@ A molecule of diameter d collides with every molecule whose centre lies within a
 export const links: Record<string, string | string[]> = {
   "11:Thermodynamics": "c11-phy-thermodynamics",
   "11:Heat and Thermodynamics": ["c11-phy-thermodynamics"],
+  "11:Kinetic Theory": "c11-phy-kinetic-theory",
+  "11:Behaviour of Perfect Gases and Kinetic Theory of Gases": ["c11-phy-kinetic-theory"],
 };
