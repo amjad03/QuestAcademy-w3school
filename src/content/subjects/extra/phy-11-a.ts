@@ -908,9 +908,646 @@ The **principle of homogeneity** says: every term in a correct physical equation
       },
     ],
   },
+  /* ------------------------------------------------------------------ */
+  /* Motion in a Straight Line (NCERT) = Kinematics, part 1 (ISC)        */
+  /* ------------------------------------------------------------------ */
+  {
+    slug: "c11-motion-straight-line",
+    title: "Motion in a Straight Line",
+    icon: "🚆",
+    description: "Position, displacement, speed and velocity, acceleration, motion graphs, the kinematic equations, free fall and relative velocity in one dimension.",
+    lessons: [
+      {
+        slug: "c11-position-velocity",
+        title: "Position, Displacement and Velocity",
+        summary: "Frame of reference, path length versus displacement, average and instantaneous velocity and speed, and reading position–time graphs.",
+        minutes: 18,
+        xp: 45,
+        blocks: [
+          {
+            type: "illustration",
+            emoji: "🚆",
+            caption: "A passenger sits still in a train leaving Mysuru. To the person beside her she is at rest; to someone on the platform she is moving at 60 km/h. Motion depends on who is watching.",
+          },
+          {
+            type: "text",
+            md: t`To describe motion we first fix a **frame of reference**: an origin, a set of axes and a clock. Motion along a single line is called **rectilinear motion**. We treat the moving body as a **point object** when its size is small compared with the distance it covers.
+
+On a straight line we take the $x$-axis along the path. The **position** of the body is its coordinate $x$: positive on one side of the origin, negative on the other.`,
+          },
+          {
+            type: "text",
+            md: t`**Path length** is the total length of the path actually covered. It is a scalar and is never negative.
+
+**Displacement** is the change in position, $\Delta x = x_2 - x_1$. It has a sign: positive means it points along $+x$. If a body goes and comes back to where it started, its displacement is zero but its path length is not. The magnitude of displacement can equal the path length (one-way motion) but can never be larger.`,
+          },
+          {
+            type: "formula",
+            tex: t`\bar{v} = \frac{\Delta x}{\Delta t} = \frac{x_2 - x_1}{t_2 - t_1} \qquad \text{average speed} = \frac{\text{total path length}}{\text{total time}}`,
+            caption: "Average velocity uses displacement and has a sign; average speed uses path length and is always positive.",
+          },
+          {
+            type: "example",
+            title: "Average speed and average velocity",
+            problem: "A cyclist in Chandigarh rides 600 m east in 2 min, then turns and rides 200 m west in 1 min. Find the path length, displacement, average speed and average velocity.",
+            steps: [
+              "Path length = 600 + 200 = 800 m.",
+              "Take east as +x. Displacement = +600 − 200 = +400 m, i.e. 400 m east.",
+              "Total time = 3 min = 180 s. Average speed = 800 ÷ 180 ≈ 4.44 m/s.",
+              "Average velocity = 400 ÷ 180 ≈ 2.22 m/s, directed east.",
+            ],
+            answer: "800 m; 400 m east; 4.44 m/s; 2.22 m/s east. Average speed is bigger because the cyclist turned back.",
+          },
+          {
+            type: "text",
+            md: t`Average velocity hides what happened in between. The **instantaneous velocity** is the velocity at one instant: the limit of the average velocity as the time interval shrinks to zero.
+
+On a position–time ($x$–$t$) graph, average velocity is the slope of the chord joining two points, and instantaneous velocity is the **slope of the tangent** at a point. **Instantaneous speed** is the magnitude of instantaneous velocity. (For a finite interval, average speed and the magnitude of average velocity can differ; at an instant they are equal.)`,
+          },
+          {
+            type: "formula",
+            tex: t`v = \lim_{\Delta t \to 0} \frac{\Delta x}{\Delta t} = \frac{dx}{dt}`,
+            caption: "Instantaneous velocity is the time derivative of position.",
+          },
+          {
+            type: "example",
+            title: "Velocity from a position formula",
+            problem: t`A toy car moves along a straight track with $x = 5 + 12t - 2t^2$ (x in m, t in s). Find its velocity at $t = 4$ s, and its displacement, path length and average speed from $t = 0$ to $t = 4$ s.`,
+            steps: [
+              t`$v = \dfrac{dx}{dt} = 12 - 4t$. At $t = 4$ s, $v = 12 - 16 = -4$ m/s (moving towards $-x$).`,
+              t`The car turns back when $v = 0$: $t = 3$ s. Positions: $x(0) = 5$ m, $x(3) = 5 + 36 - 18 = 23$ m, $x(4) = 5 + 48 - 32 = 21$ m.`,
+              t`Displacement $= x(4) - x(0) = 16$ m, so average velocity $= 16/4 = 4$ m/s.`,
+              t`Path length $= (23 - 5) + (23 - 21) = 18 + 2 = 20$ m, so average speed $= 20/4 = 5$ m/s.`,
+            ],
+            answer: t`$v(4) = -4$ m/s; displacement 16 m; path length 20 m; average speed 5 m/s.`,
+          },
+          {
+            type: "checkpoint",
+            questions: [
+              {
+                kind: "numeric",
+                q: "Ravi walks 50 m east along a corridor, then 70 m west. What is his path length (in m)?",
+                answer: 120,
+                unit: "m",
+                explain: "Path length adds the distances: 50 + 70 = 120 m.",
+              },
+              {
+                kind: "mcq",
+                q: "For the same walk (50 m east, then 70 m west), his displacement is:",
+                options: ["120 m east", "20 m east", "20 m west", "zero"],
+                answer: 2,
+                explain: "Taking east as +x: +50 − 70 = −20 m, i.e. 20 m west of the starting point.",
+              },
+            ],
+          },
+          {
+            type: "table",
+            headers: ["Shape of x–t graph", "What the motion is"],
+            rows: [
+              ["Horizontal line", "at rest (velocity zero)"],
+              ["Straight line sloping up", "uniform velocity in +x direction"],
+              ["Straight line sloping down", "uniform velocity in −x direction"],
+              ["Curve getting steeper", "speeding up (accelerating)"],
+              ["Curve getting flatter", "slowing down"],
+            ],
+          },
+          {
+            type: "mistake",
+            wrong: "Average speed is just the magnitude of average velocity.",
+            right: "Average speed = path length ÷ time; average velocity = displacement ÷ time. They are equal only if the body never turns back.",
+            why: "At a single instant, speed does equal the magnitude of velocity, so it is tempting to extend that to averages. But over an interval with a reversal, the path length is longer than the displacement, so average speed is larger.",
+          },
+          {
+            type: "activity",
+            activity: {
+              kind: "match",
+              prompt: "Match each position–time graph to the motion.",
+              pairs: [
+                ["Line parallel to the time axis", "Body at rest"],
+                ["Straight line with positive slope", "Uniform motion along +x"],
+                ["Curve whose slope keeps increasing", "Speeding up along +x"],
+                ["Curve that rises, flattens, then falls", "Moves forward, stops, comes back"],
+              ],
+              explain: "The slope of an x–t graph is the velocity. Zero slope means rest; a growing slope means growing velocity; a slope that changes sign means the body turned around.",
+            },
+          },
+          {
+            type: "callout",
+            tone: "exam",
+            title: "Board tip",
+            md: "Always state the positive direction before writing a displacement or velocity. In graph questions, examiners check that you use the **slope** of the x–t graph for velocity. An x–t graph can never be a vertical line (infinite speed) and can never show two positions at one time.",
+          },
+          {
+            type: "keypoints",
+            items: [
+              "Displacement Δx = x₂ − x₁ has a sign; path length is the total distance and is never less than |Δx|.",
+              "Average velocity = Δx/Δt; average speed = path length/time.",
+              "Instantaneous velocity v = dx/dt = slope of the tangent to the x–t graph.",
+              "Instantaneous speed is the magnitude of instantaneous velocity.",
+            ],
+          },
+        ],
+        flashcards: [
+          { front: "Frame of reference", back: "An origin, a set of axes and a clock, used to give the position of a body at each time." },
+          { front: "Displacement vs path length", back: "Displacement is change in position (with direction). Path length is the total distance covered." },
+          { front: "Average velocity", back: "Displacement ÷ time interval. It can be zero even if the body moved." },
+          { front: "Average speed", back: "Total path length ÷ total time. Always ≥ magnitude of average velocity." },
+          { front: "Instantaneous velocity", back: "v = dx/dt, the slope of the tangent to the x–t graph at that instant." },
+          { front: "x–t graph is a horizontal line", back: "The body is at rest." },
+          { front: "Why can't an x–t graph be vertical?", back: "That would mean a change of position in zero time: infinite speed." },
+        ],
+        quiz: [
+          {
+            kind: "mcq",
+            q: "An athlete runs one full lap of a 400 m track in 80 s. Her average velocity for the lap is:",
+            options: ["5 m/s", "0 m/s", "2.5 m/s", "10 m/s"],
+            answer: 1,
+            explain: "She ends where she started, so displacement is zero and average velocity is zero. Her average speed is 400/80 = 5 m/s.",
+          },
+          {
+            kind: "numeric",
+            q: t`A particle's position is $x = 3t^2 + 2t + 1$ (x in m, t in s). What is its velocity at $t = 2$ s?`,
+            answer: 14,
+            unit: "m/s",
+            explain: t`$v = dx/dt = 6t + 2 = 6(2) + 2 = 14$ m/s.`,
+          },
+          {
+            kind: "truefalse",
+            q: "The magnitude of displacement can be greater than the path length.",
+            answer: false,
+            explain: "The straight line between two points is the shortest path, so |displacement| ≤ path length.",
+          },
+          {
+            kind: "fill",
+            q: "The slope of the tangent to a position–time graph gives the instantaneous ___.",
+            answer: ["velocity"],
+            explain: "v = dx/dt, which is the slope of the x–t curve.",
+          },
+          {
+            kind: "numeric",
+            q: "A car goes 30 km east in 30 min, then 10 km west in 10 min. What is its average velocity in km/h (eastward positive)?",
+            answer: 30,
+            unit: "km/h",
+            explain: "Displacement = 30 − 10 = 20 km east; time = 40 min = 2/3 h. Average velocity = 20 ÷ (2/3) = 30 km/h east. (Average speed = 40 ÷ (2/3) = 60 km/h.)",
+            difficulty: 2,
+          },
+          {
+            kind: "mcq",
+            q: "The x–t graph of a body is a straight line sloping downward. The body is:",
+            options: ["slowing down", "moving with uniform velocity in the −x direction", "at rest", "speeding up"],
+            answer: 1,
+            explain: "A straight line has constant slope, so the velocity is constant. A negative slope means the velocity points along −x.",
+          },
+          {
+            kind: "multi",
+            q: "Which of these x–t graphs are impossible for a real body?",
+            options: ["A vertical straight line", "A curve showing two different positions at the same time", "A horizontal straight line", "A curve whose slope keeps decreasing"],
+            answers: [0, 1],
+            explain: "A vertical line means infinite speed; two positions at one time means the body is in two places at once. The other two are rest and slowing down.",
+            difficulty: 2,
+          },
+          {
+            kind: "numeric",
+            q: t`For $x = 5 + 12t - 2t^2$ (SI units), at what time (in s) does the body momentarily stop?`,
+            answer: 3,
+            unit: "s",
+            explain: t`$v = 12 - 4t = 0$ gives $t = 3$ s. After that the velocity becomes negative and the body moves back.`,
+          },
+        ],
+      },
+      /* ---------------- Acceleration and kinematic equations ---------------- */
+      {
+        slug: "c11-acceleration-kinematic-equations",
+        title: "Acceleration, Kinematic Equations and Relative Velocity",
+        summary: "Acceleration and velocity–time graphs, the three equations of uniformly accelerated motion by graph and by calculus, free fall, stopping distance and relative velocity in one dimension.",
+        minutes: 24,
+        xp: 55,
+        blocks: [
+          {
+            type: "text",
+            md: t`**Acceleration** is the rate of change of velocity. Average acceleration $\bar{a} = \dfrac{v_2 - v_1}{t_2 - t_1}$; instantaneous acceleration is its limit as $\Delta t \to 0$. Its SI unit is $\text{m s}^{-2}$.
+
+Acceleration has a sign too. A body **speeds up** when $v$ and $a$ have the same sign, and **slows down** when they have opposite signs. So a negative acceleration does not always mean slowing down.`,
+          },
+          {
+            type: "formula",
+            tex: t`a = \frac{dv}{dt} = \frac{d^2x}{dt^2}`,
+            caption: "On a velocity–time graph, acceleration is the slope, and the area under the graph is the displacement.",
+          },
+          {
+            type: "table",
+            headers: ["v–t graph", "Acceleration", "Motion"],
+            rows: [
+              ["Horizontal line above the t-axis", "zero", "uniform velocity along +x"],
+              ["Straight line rising, v > 0", "constant, positive", "speeding up along +x"],
+              ["Straight line falling, v > 0", "constant, negative", "slowing down along +x"],
+              ["Straight line falling, v < 0", "constant, negative", "speeding up along −x"],
+              ["Line crossing the t-axis", "nonzero", "body stops and reverses at the crossing"],
+            ],
+          },
+          {
+            type: "formula",
+            tex: t`v = u + at \qquad s = ut + \tfrac{1}{2}at^2 \qquad v^2 = u^2 + 2as`,
+            caption: "The kinematic equations, valid only when acceleration a is constant. Here u is the velocity at t = 0 and s is the displacement in time t.",
+          },
+          {
+            type: "activity",
+            activity: {
+              kind: "order",
+              prompt: "Put the graphical derivation of s = ut + ½at² in order.",
+              items: [
+                "Draw the v–t graph: a straight line from v = u at t = 0 to v = u + at at time t.",
+                "Displacement = area under the graph between 0 and t.",
+                "Split the area into a rectangle of height u and a triangle of height (v − u).",
+                "Rectangle = ut and triangle = ½ t (v − u) = ½ t (at).",
+                "Add the two areas: s = ut + ½at².",
+              ],
+              explain: "The area under a v–t graph is the displacement. For constant acceleration the graph is a straight line, so the area is a rectangle plus a triangle.",
+            },
+          },
+          {
+            type: "list",
+            ordered: true,
+            items: [
+              t`**By calculus.** Start from $\dfrac{dv}{dt} = a$ with $a$ constant: $\displaystyle\int_u^v dv = \int_0^t a\,dt$ gives $v = u + at$.`,
+              t`Then $\dfrac{dx}{dt} = u + at$: $\displaystyle\int_{x_0}^{x} dx = \int_0^t (u + at)\,dt$ gives $x - x_0 = ut + \tfrac12 at^2$.`,
+              t`Write $a = \dfrac{dv}{dt} = \dfrac{dv}{dx}\dfrac{dx}{dt} = v\dfrac{dv}{dx}$: $\displaystyle\int_u^v v\,dv = \int_{x_0}^{x} a\,dx$ gives $v^2 = u^2 + 2a(x - x_0)$.`,
+            ],
+          },
+          {
+            type: "example",
+            title: "A ball thrown straight up",
+            problem: t`A ball is thrown vertically upward at 20 m/s from the ground. Take $g = 10\ \text{m s}^{-2}$ and ignore air resistance. Find (a) the maximum height, (b) the time to return, (c) its velocity and height at $t = 3$ s.`,
+            steps: [
+              t`Take up as positive: $u = +20$ m/s, $a = -g = -10\ \text{m s}^{-2}$.`,
+              t`(a) At the top $v = 0$: $0 = 20^2 - 2(10)h$, so $h = 20$ m.`,
+              t`(b) It returns when $s = 0$: $0 = 20t - 5t^2$, so $t = 4$ s (rise 2 s, fall 2 s).`,
+              t`(c) $v = 20 - 10(3) = -10$ m/s, i.e. 10 m/s downward. Height $s = 20(3) - 5(9) = 15$ m.`,
+            ],
+            answer: "(a) 20 m; (b) 4 s; (c) 10 m/s downward, 15 m above the ground.",
+          },
+          {
+            type: "checkpoint",
+            questions: [
+              {
+                kind: "numeric",
+                q: "A stone is thrown straight up at 15 m/s. Taking g = 10 m/s², how high does it rise (in m)?",
+                answer: 11.25,
+                tolerance: 0.01,
+                unit: "m",
+                explain: t`$h = \dfrac{u^2}{2g} = \dfrac{225}{20} = 11.25$ m.`,
+              },
+              {
+                kind: "mcq",
+                q: "At the highest point of its flight, a ball thrown straight up has:",
+                options: ["zero velocity and zero acceleration", "zero velocity and acceleration g downward", "maximum velocity", "acceleration g upward"],
+                answer: 1,
+                explain: "Velocity is zero for an instant, but gravity still acts, so the acceleration is g downward. That is why it starts falling back.",
+              },
+            ],
+          },
+          {
+            type: "example",
+            title: "Reaction time and stopping distance",
+            problem: "A driver on the Mumbai–Pune expressway moving at 72 km/h sees a stalled truck. Her reaction time is 0.5 s, then the brakes give a deceleration of 5 m/s². How far does the car travel before stopping?",
+            steps: [
+              "72 km/h = 20 m/s.",
+              "During the reaction time the car does not slow: 20 × 0.5 = 10 m.",
+              t`Braking distance from $v^2 = u^2 + 2as$: $0 = 400 - 2(5)s$, so $s = 40$ m.`,
+              "Total = 10 + 40 = 50 m.",
+            ],
+            answer: t`50 m. Note that braking distance $u^2/2a$ grows as the **square** of speed: at 144 km/h it would be 160 m.`,
+          },
+          {
+            type: "text",
+            md: t`**Relative velocity in one dimension.** If bodies A and B move along the same line with velocities $v_A$ and $v_B$, the velocity of B as seen from A is $v_{BA} = v_B - v_A$. Bodies moving the same way seem slow to each other; bodies moving opposite ways seem to rush past. If $v_A = v_B$, the gap between them stays fixed.`,
+          },
+          {
+            type: "example",
+            title: "Trains passing",
+            problem: "Train A runs north at 54 km/h. Train B, 200 m long, runs on the next track at 90 km/h. How long does B take to pass a passenger sitting in A if B runs (a) south, (b) north?",
+            steps: [
+              "54 km/h = 15 m/s and 90 km/h = 25 m/s. Take north as positive.",
+              t`(a) $v_{BA} = (-25) - (+15) = -40$ m/s. Time $= 200/40 = 5$ s.`,
+              t`(b) $v_{BA} = 25 - 15 = 10$ m/s. Time $= 200/10 = 20$ s.`,
+            ],
+            answer: "(a) 5 s; (b) 20 s.",
+          },
+          {
+            type: "mistake",
+            wrong: "A negative acceleration always means the body is slowing down.",
+            right: "A body slows down only when acceleration and velocity have opposite signs. A body moving in −x with negative acceleration is speeding up.",
+            why: "In daily speech \"deceleration\" and \"negative acceleration\" mean the same. In physics the sign only tells the direction of a relative to the chosen +x axis, so you must compare it with the sign of v.",
+          },
+          {
+            type: "callout",
+            tone: "exam",
+            title: "Board tip",
+            md: "Derivations of the three equations (by the graphical method and, for full marks in some schools, by calculus) are standard 3–5 mark questions; draw and label the v–t graph. Fix the sign convention in the first line of every free-fall numerical. Relative velocity is in the CBSE and ISC syllabi and in every entrance exam.",
+          },
+          {
+            type: "keypoints",
+            items: [
+              "a = dv/dt; on a v–t graph, slope = acceleration and area = displacement.",
+              "v = u + at, s = ut + ½at², v² = u² + 2as hold only for constant acceleration.",
+              "In free fall a = g downward at every point, including the top.",
+              "Stopping distance = reaction distance + u²/2a; braking distance grows as speed squared.",
+              "Relative velocity in 1D: v_BA = v_B − v_A.",
+            ],
+          },
+        ],
+        flashcards: [
+          { front: "Acceleration", back: "Rate of change of velocity, a = dv/dt. Unit m s⁻²." },
+          { front: "Area under a v–t graph", back: "Displacement in that time." },
+          { front: "Slope of a v–t graph", back: "Acceleration." },
+          { front: "Three equations of motion", back: "v = u + at; s = ut + ½at²; v² = u² + 2as (constant a only)." },
+          { front: "When does a body speed up?", back: "When its velocity and acceleration have the same sign (same direction)." },
+          { front: "Maximum height for a ball thrown up at u", back: "H = u²/2g, reached in time u/g." },
+          { front: "Braking distance", back: "u²/2a. Doubling speed makes it four times as long." },
+          { front: "Relative velocity of B with respect to A", back: "v_BA = v_B − v_A." },
+        ],
+        quiz: [
+          {
+            kind: "mcq",
+            q: "The slope of a velocity–time graph gives:",
+            options: ["displacement", "acceleration", "speed", "jerk"],
+            answer: 1,
+            explain: "Slope = Δv/Δt = acceleration. The area under it gives displacement.",
+          },
+          {
+            kind: "numeric",
+            q: "A scooter starts from rest and accelerates uniformly at 2 m/s² for 10 s. How far does it travel (in m)?",
+            answer: 100,
+            unit: "m",
+            explain: t`$s = \tfrac12 at^2 = \tfrac12 (2)(100) = 100$ m.`,
+          },
+          {
+            kind: "numeric",
+            q: "A stone dropped from a cliff reaches the ground in 3 s. Taking g = 9.8 m/s², find the height of the cliff (in m).",
+            answer: 44.1,
+            tolerance: 0.05,
+            unit: "m",
+            explain: t`$h = \tfrac12 g t^2 = \tfrac12 (9.8)(9) = 44.1$ m.`,
+          },
+          {
+            kind: "truefalse",
+            q: "A body can have zero velocity and non-zero acceleration at the same instant.",
+            answer: true,
+            explain: "A ball at the top of its flight has v = 0 but a = g downward.",
+          },
+          {
+            kind: "mcq",
+            q: "A train moving at 20 m/s stops uniformly in 400 m. Its acceleration is:",
+            options: [t`$-0.5\ \text{m s}^{-2}$`, t`$-1\ \text{m s}^{-2}$`, t`$-0.05\ \text{m s}^{-2}$`, t`$-2\ \text{m s}^{-2}$`],
+            answer: 0,
+            explain: t`$0 = 20^2 + 2a(400)$ gives $a = -400/800 = -0.5\ \text{m s}^{-2}$.`,
+          },
+          {
+            kind: "numeric",
+            q: "A bike's velocity rises uniformly from 0 to 10 m/s in 4 s and then stays at 10 m/s for 6 s. What is the total displacement (in m)?",
+            answer: 80,
+            unit: "m",
+            explain: "Area under the v–t graph: triangle ½ × 4 × 10 = 20 m, plus rectangle 6 × 10 = 60 m. Total 80 m.",
+            difficulty: 2,
+          },
+          {
+            kind: "multi",
+            q: "In which cases is the body speeding up?",
+            options: ["v > 0, a > 0", "v < 0, a < 0", "v > 0, a < 0", "v < 0, a > 0"],
+            answers: [0, 1],
+            explain: "Speed increases when v and a point the same way, whatever the sign convention.",
+            difficulty: 2,
+          },
+          {
+            kind: "numeric",
+            q: "A car at 60 km/h is 300 m behind a bus at 45 km/h on the same road, both moving the same way. How long (in s) does the car take to catch the bus?",
+            answer: 72,
+            unit: "s",
+            explain: "Relative velocity = 60 − 45 = 15 km/h = 15 × 5/18 ≈ 4.167 m/s. Time = 300 ÷ 4.167 = 72 s.",
+            difficulty: 2,
+            hint: "Work in the bus's frame: the car closes the 300 m gap at the relative speed.",
+          },
+        ],
+      },
+      /* ---------------- Exam edge ---------------- */
+      {
+        slug: "c11-straight-line-exam-edge",
+        title: "Exam edge: Motion in a Straight Line",
+        summary: "Graphs, variable acceleration, distance in the nth second, free-fall meeting problems and accelerate–decelerate motion, from KCET to JEE Advanced level.",
+        minutes: 24,
+        xp: 60,
+        track: "exam",
+        blocks: [
+          {
+            type: "text",
+            md: "Kinematics is the base of all of mechanics, so JEE Main, NEET, KCET and COMEDK each set questions on it every year, and JEE Advanced hides it inside harder mechanics problems. Exams love: **reading graphs** (x–t, v–t, a–t), **variable acceleration** given as a function of t, x or v, **free fall** and two-body meeting problems, **average speed** traps and **distance vs displacement** when the body reverses.",
+          },
+          {
+            type: "table",
+            headers: ["Result", "Formula", "Safe when"],
+            rows: [
+              [t`Displacement in the $n$th second`, t`$s_n = u + \tfrac{a}{2}(2n - 1)$`, "a is constant (it has units of metres, the 1 s is hidden)"],
+              ["Distances in equal successive seconds from rest", "1 : 3 : 5 : 7 …", "starting from rest with constant a"],
+              ["Average speed, equal distances at v₁ and v₂", t`$\dfrac{2v_1v_2}{v_1 + v_2}$`, "the two parts cover equal distances"],
+              ["Average speed, equal times at v₁ and v₂", t`$\dfrac{v_1 + v_2}{2}$`, "the two parts last equal times"],
+              ["Accelerate at α, then decelerate at β, total time t", t`$v_{\max} = \dfrac{\alpha\beta t}{\alpha + \beta}$, $s = \dfrac{\alpha\beta t^2}{2(\alpha + \beta)}$`, "starts and ends at rest"],
+            ],
+          },
+          {
+            type: "formula",
+            tex: t`a = \frac{dv}{dt} = v\frac{dv}{dx} \qquad v = \int a\,dt \qquad x = \int v\,dt`,
+            caption: "When a depends on time, integrate in t. When a (or v) is given as a function of x, use a = v dv/dx. The three equations of motion are NOT valid here.",
+          },
+          {
+            type: "example",
+            title: "KCET level: average speed",
+            problem: "A bus covers the first half of the distance from Hubballi to Dharwad at 30 km/h and the second half at 60 km/h. Find its average speed.",
+            steps: [
+              t`Let each half be $d$. Time $= \dfrac{d}{30} + \dfrac{d}{60} = \dfrac{3d}{60} = \dfrac{d}{20}$ h.`,
+              t`Average speed $= \dfrac{2d}{d/20} = 40$ km/h.`,
+              t`Check with the shortcut: $\dfrac{2(30)(60)}{30 + 60} = \dfrac{3600}{90} = 40$ km/h.`,
+            ],
+            answer: "40 km/h (not 45 km/h).",
+          },
+          {
+            type: "example",
+            title: "NEET level: the nth second",
+            problem: "A body starts with velocity 10 m/s and has a constant acceleration of 2 m/s² in the same direction. How far does it travel in the 5th second?",
+            steps: [
+              t`$s_n = u + \tfrac{a}{2}(2n - 1) = 10 + 1 \times (10 - 1) = 19$ m.`,
+              t`Check: $s(5) = 50 + 25 = 75$ m and $s(4) = 40 + 16 = 56$ m; $75 - 56 = 19$ m. ✓`,
+            ],
+            answer: "19 m.",
+          },
+          {
+            type: "mistake",
+            wrong: "Average speed is always the average of the two speeds: (30 + 60)/2 = 45 km/h.",
+            right: "That holds only for equal **times**. For equal **distances** use the harmonic mean, 2v₁v₂/(v₁ + v₂), which is always smaller.",
+            why: "The body spends more time at the lower speed when the distances are equal, so the lower speed pulls the average down. Always go back to total distance ÷ total time if unsure.",
+          },
+          {
+            type: "example",
+            title: "JEE Main level: velocity given as a function of position",
+            problem: t`A particle moves along $x$ with $v = 4\sqrt{x}$ (SI units), starting from $x = 0$. Find its acceleration and its position at $t = 2$ s.`,
+            steps: [
+              t`$a = v\dfrac{dv}{dx} = 4\sqrt{x} \cdot \dfrac{4}{2\sqrt{x}} = 8\ \text{m s}^{-2}$, a constant.`,
+              t`At $x = 0$, $v = 0$, so it starts from rest with constant acceleration 8 m/s².`,
+              t`$x = \tfrac12 (8)(2)^2 = 16$ m. Check: $v = at = 16$ m/s and $4\sqrt{16} = 16$ m/s. ✓`,
+            ],
+            answer: t`$a = 8\ \text{m s}^{-2}$; $x = 16$ m at $t = 2$ s.`,
+          },
+          {
+            type: "checkpoint",
+            questions: [
+              {
+                kind: "numeric",
+                q: "A body starts from rest with constant acceleration and covers 27 m in the 5th second. What is its acceleration (in m/s²)?",
+                answer: 6,
+                unit: "m/s²",
+                explain: t`$s_5 = 0 + \tfrac{a}{2}(2 \cdot 5 - 1) = 4.5a = 27$, so $a = 6\ \text{m s}^{-2}$.`,
+                difficulty: 2,
+              },
+            ],
+          },
+          {
+            type: "example",
+            title: "JEE Main level: two balls meet",
+            problem: "A ball is dropped from the top of a 40 m tower. At the same instant another ball is thrown straight up from the foot of the tower at 20 m/s. When and where do they meet? (g = 10 m/s²)",
+            steps: [
+              "Work in the frame of the falling ball. Both balls have the same acceleration g, so their relative acceleration is zero.",
+              "The relative velocity is 20 m/s (towards each other) and the gap is 40 m. Time = 40/20 = 2 s.",
+              t`The dropped ball has fallen $\tfrac12(10)(2)^2 = 20$ m, so they meet 20 m above the ground.`,
+              t`Check with the second ball: $20(2) - \tfrac12(10)(4) = 40 - 20 = 20$ m. ✓`,
+            ],
+            answer: "After 2 s, at a height of 20 m.",
+          },
+          {
+            type: "example",
+            title: "JEE Advanced level: accelerate, then brake",
+            problem: "A metro train starts from rest, accelerates uniformly at 2 m/s², then immediately brakes uniformly at 3 m/s² until it stops. The whole trip takes 10 s. Find the maximum speed and the distance between the stations.",
+            steps: [
+              t`Let it accelerate for $t_1$ and brake for $t_2$. Top speed $v = 2t_1 = 3t_2$, and $t_1 + t_2 = 10$.`,
+              t`$t_1 = 3t_2/2$, so $\tfrac{5}{2}t_2 = 10$, $t_2 = 4$ s, $t_1 = 6$ s, and $v = 12$ m/s.`,
+              t`Shortcut check: $v = \dfrac{\alpha\beta t}{\alpha + \beta} = \dfrac{2 \cdot 3 \cdot 10}{5} = 12$ m/s. ✓`,
+              t`Distance = area of the v–t triangle $= \tfrac12 (10)(12) = 60$ m.`,
+            ],
+            answer: "Maximum speed 12 m/s; distance 60 m.",
+          },
+          {
+            type: "mistake",
+            wrong: t`For $x = t^3 - 6t^2 + 9t$, the distance in the first 4 s is just $x(4) - x(0)$.`,
+            right: t`Find when $v = 0$ first. Here $v = 3(t - 1)(t - 3)$, so the body turns at $t = 1$ s and $t = 3$ s. Add the distances of each leg.`,
+            why: t`$x(4) - x(0)$ is the displacement (4 m). The distance is $|4 - 0| + |0 - 4| + |4 - 0| = 12$ m. Whenever the velocity changes sign, displacement and distance differ.`,
+          },
+          {
+            type: "activity",
+            activity: {
+              kind: "reveal",
+              prompt: "A balloon rises at 5 m/s. A stone is let go from it. Just after release, the stone:",
+              emoji: "🎈",
+              options: ["starts falling from rest", "moves up at 5 m/s, slowing down", "falls at 5 m/s", "stays still for a moment"],
+              answer: 1,
+              trap: 0,
+              explain: "The stone shares the balloon's velocity, so it starts with 5 m/s **upward** and only then slows under gravity. Use u = +5 m/s, a = −g in the equations.",
+            },
+          },
+          {
+            type: "callout",
+            tone: "tip",
+            title: "Graph shortcuts",
+            md: "x–t slope → v. v–t slope → a, v–t area → displacement (signed); add |areas| for distance. a–t area → change in velocity. A body starting from rest that falls through h reaches speed √(2gh) whatever path the formula takes; time to fall is √(2h/g). Thrown up at u, it returns with the same speed u after 2u/g (no air resistance).",
+          },
+          {
+            type: "keypoints",
+            items: [
+              "Equations of motion need constant a; otherwise integrate, using a = v dv/dx when a depends on x.",
+              "s_n = u + a(2n − 1)/2; from rest, successive-second distances are in the ratio 1 : 3 : 5 …",
+              "Equal distances → harmonic mean speed; equal times → arithmetic mean.",
+              "Two bodies under the same gravity have zero relative acceleration: solve meeting problems with relative velocity.",
+              "When v changes sign, distance ≠ |displacement|: split the motion at the turning points.",
+            ],
+          },
+        ],
+        flashcards: [
+          { front: "Displacement in the nth second", back: "s_n = u + (a/2)(2n − 1)." },
+          { front: "Ratio of distances in 1st, 2nd, 3rd second from rest", back: "1 : 3 : 5 (Galileo's law of odd numbers)." },
+          { front: "Average speed for equal distances at v₁, v₂", back: "2v₁v₂/(v₁ + v₂)." },
+          { front: "a when v is given as a function of x", back: "a = v dv/dx." },
+          { front: "Accelerate α then decelerate β, total time t, from rest to rest", back: "v_max = αβt/(α + β); distance = αβt²/[2(α + β)]." },
+          { front: "Relative acceleration of two freely falling bodies", back: "Zero, so their relative velocity is constant." },
+          { front: "Area under an a–t graph", back: "Change in velocity." },
+        ],
+        quiz: [
+          {
+            kind: "mcq",
+            q: "A car covers the first half of a distance at 40 km/h and the second half at 60 km/h. Its average speed is:",
+            options: ["50 km/h", "48 km/h", "45 km/h", "52 km/h"],
+            answer: 1,
+            explain: t`Equal distances: $\dfrac{2(40)(60)}{100} = 48$ km/h. 50 km/h would be right only for equal times.`,
+          },
+          {
+            kind: "numeric",
+            q: "A stone is dropped from a height of 80 m. How far does it fall in the last second of its fall? (g = 10 m/s²)",
+            answer: 35,
+            unit: "m",
+            explain: t`Total time: $80 = 5t^2$ gives $t = 4$ s. In the first 3 s it falls $5 \times 9 = 45$ m, so in the last second it falls $80 - 45 = 35$ m. (Or $s_4 = 5(2 \cdot 4 - 1) = 35$ m.)`,
+            difficulty: 2,
+          },
+          {
+            kind: "mcq",
+            q: t`A particle moves so that $v^2 = 25 - 4x$ (SI units). Its acceleration is:`,
+            options: [t`$-4\ \text{m s}^{-2}$`, t`$-2\ \text{m s}^{-2}$`, t`$+2\ \text{m s}^{-2}$`, "it varies with x"],
+            answer: 1,
+            explain: t`Compare with $v^2 = u^2 + 2ax$: $2a = -4$, so $a = -2\ \text{m s}^{-2}$. Or $a = \tfrac12 \dfrac{d(v^2)}{dx} = -2$.`,
+            difficulty: 2,
+          },
+          {
+            kind: "multi",
+            q: "A ball is thrown vertically up and air resistance is negligible. Which statements are true?",
+            options: ["Its acceleration is g downward throughout", "Its velocity is zero at the top", "Time of rise equals time of fall to the launch point", "It returns with a smaller speed than it was thrown"],
+            answers: [0, 1, 2],
+            explain: "With no air resistance, motion is symmetric: rise time = fall time and it returns with the same speed. Acceleration is g downward all the time.",
+          },
+          {
+            kind: "numeric",
+            q: t`A particle moves with $x = t^3 - 6t^2 + 9t$ (x in m, t in s). Find the distance it travels from $t = 0$ to $t = 4$ s.`,
+            answer: 12,
+            unit: "m",
+            explain: t`$v = 3(t-1)(t-3)$, zero at 1 s and 3 s. $x(0) = 0$, $x(1) = 4$, $x(3) = 0$, $x(4) = 4$. Distance $= 4 + 4 + 4 = 12$ m (displacement only 4 m).`,
+            difficulty: 3,
+            hint: "Find the times when v = 0 and add the distance of each leg.",
+          },
+          {
+            kind: "numeric",
+            q: "A car moving at 36 km/h stops in 20 m with the brakes fully on. With the same deceleration, in what distance (in m) will it stop from 72 km/h?",
+            answer: 80,
+            unit: "m",
+            explain: t`Braking distance $= u^2/2a \propto u^2$. Doubling the speed gives $4 \times 20 = 80$ m.`,
+          },
+          {
+            kind: "mcq",
+            q: t`A boat's engine is cut off when it moves at $v_0$; water then gives it an acceleration $a = -kv$. The total distance it moves after the engine stops is:`,
+            options: [t`$v_0/k$`, t`$v_0^2/2k$`, t`$v_0 k$`, "infinite, since it never stops"],
+            answer: 0,
+            explain: t`$a = v\dfrac{dv}{dx} = -kv$ gives $dv = -k\,dx$, so $v = v_0 - kx$. It stops when $x = v_0/k$. (Velocity falls as $v_0 e^{-kt}$, so it needs infinite time, but the distance is finite.)`,
+            difficulty: 3,
+            hint: "Use a = v dv/dx and cancel v.",
+          },
+          {
+            kind: "numeric",
+            q: "A body starts from rest and accelerates uniformly. The ratio of the distance covered in the 3rd second to the distance covered in the first 3 seconds is p/9. Find p.",
+            answer: 5,
+            explain: t`From rest: $s_3 = \tfrac{a}{2}(5)$ and $s(3) = \tfrac{a}{2}(9)$. Ratio $= 5/9$, so $p = 5$.`,
+            difficulty: 2,
+          },
+        ],
+      },
+    ],
+  },
 ];
 
 /** Class 11 chapter title ("11:<exact title>") → topic slug(s) that teach it. */
 export const links: Record<string, string | string[]> = {
   "11:Units and Measurements": "c11-units-measurements",
+  "11:Motion in a Straight Line": "c11-motion-straight-line",
 };

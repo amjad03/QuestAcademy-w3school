@@ -3870,6 +3870,768 @@ Sample run 2: input 146
       },
     ],
   },
+  /* ------------------------------------------------------------------ */
+  /* ISC Class 12 · Inheritance, Interfaces and Polymorphism              */
+  /* ------------------------------------------------------------------ */
+  {
+    slug: "c12-cs-java-inheritance",
+    title: "Inheritance, Interfaces and Polymorphism",
+    icon: "🧬",
+    description: "Superclasses and subclasses, protected members, super and constructor chaining, method overriding and dynamic method dispatch, abstract classes, interfaces, and the ISC inheritance question.",
+    lessons: [
+      {
+        slug: "c12-cs-inheritance-super",
+        title: "Inheritance, super and Constructor Chaining",
+        summary: "extends, superclass and subclass, types of inheritance, protected access, calling the superclass constructor with super(...), constructor chaining order and super.method().",
+        minutes: 22,
+        xp: 50,
+        blocks: [
+          {
+            type: "illustration",
+            emoji: "👨‍👩‍👧",
+            caption: "A school keeps a name and roll number for every student. The exam cell needs all of that plus marks. Instead of rewriting the student details, the exam cell's class can inherit them.",
+          },
+          {
+            type: "text",
+            md: "**Inheritance** lets a new class acquire the data members and methods of an existing class. The existing class is the **superclass** (base or parent class); the new one is the **subclass** (derived or child class), declared with `extends`. The subclass can add new members and can **override** inherited methods. Inheritance models an **is-a** relationship: a Marks record *is a* Student record with more detail.\n\nThe main benefit is **reusability**: tested code is used again without being copied.",
+          },
+          {
+            type: "table",
+            headers: ["Type", "Shape", "Allowed with classes in Java?"],
+            rows: [
+              ["Single", "B extends A", "yes"],
+              ["Multilevel", "C extends B, B extends A", "yes"],
+              ["Hierarchical", "B extends A and C extends A", "yes"],
+              ["Multiple", "C extends A and B together", "no (a class can extend only one class); achieved with interfaces"],
+              ["Hybrid", "a mix of the above", "only through interfaces"],
+            ],
+          },
+          {
+            type: "text",
+            md: "**private** members of the superclass are inherited into the object but **cannot be used by name** in the subclass. Members declared **protected** can be used in the subclass (and in the same package), so ISC questions declare superclass data members `protected`.\n\nConstructors are **not** inherited. A subclass constructor calls the superclass constructor with `super(arguments)`, which must be the **first statement**. If it is left out, Java inserts `super()` automatically, so the superclass must then have a no-argument constructor. Inside an overriding method, `super.methodName()` calls the superclass version.",
+          },
+          {
+            type: "code",
+            lang: "java",
+            caption: "Chain.java: the order of constructors",
+            code: `class A
+{
+    A()
+    {
+        System.out.println("A()");
+    }
+}
+
+class B extends A
+{
+    B()
+    {
+        System.out.println("B()");
+    }
+}
+
+class C extends B
+{
+    C(int x)
+    {
+        super();
+        System.out.println("C(" + x + ")");
+    }
+}
+
+public class Chain
+{
+    public static void main(String[] args)
+    {
+        C obj = new C(5);
+    }
+}
+
+/* Output:
+A()
+B()
+C(5)
+*/`,
+          },
+          {
+            type: "example",
+            title: "Why A() prints first",
+            problem: "new C(5) is called first, yet A() is printed first. Explain.",
+            steps: [
+              "C(5) begins with super(), which calls B() before C's own print statement.",
+              "B() has no explicit super(), so Java inserts super() at its start, calling A().",
+              "A() prints, returns to B(), which prints, then returns to C(5), which prints.",
+            ],
+            answer: "Constructors run from the top of the hierarchy down: A(), B(), C(5). This is constructor chaining.",
+          },
+          {
+            type: "code",
+            lang: "java",
+            caption: "Result.java: a subclass that reuses and extends its superclass",
+            code: `class Student
+{
+    protected String name;
+    protected int roll;
+
+    Student(String n, int r)
+    {
+        name = n;
+        roll = r;
+    }
+
+    void show()
+    {
+        System.out.println("Roll " + roll + ": " + name);
+    }
+}
+
+class Marks extends Student
+{
+    int m[];
+
+    Marks(String n, int r, int x[])
+    {
+        super(n, r);          // must be the first statement
+        m = x;
+    }
+
+    double percent()
+    {
+        int total = 0;
+        for (int i = 0; i < m.length; i++)
+            total += m[i];
+        return total * 100.0 / (m.length * 100);
+    }
+
+    void show()               // overrides Student's show()
+    {
+        super.show();
+        System.out.println("Percentage = " + percent());
+    }
+}
+
+public class Result
+{
+    public static void main(String[] args)
+    {
+        int marks[] = {78, 92, 85, 69, 96};
+        Marks s = new Marks("Kavya", 12, marks);
+        s.show();
+    }
+}
+
+/* Output:
+Roll 12: Kavya
+Percentage = 84.0
+*/`,
+          },
+          {
+            type: "mistake",
+            wrong: "In the subclass constructor, set the inherited fields first and call super(n, r) afterwards.",
+            right: "super(...) must be the **first statement** of the subclass constructor; anything before it is a compile-time error.",
+            why: "It seems natural to do the subclass's own work first. But the superclass part of the object must be built before the subclass part, so Java requires the call to super at the very top.",
+          },
+          {
+            type: "checkpoint",
+            questions: [
+              {
+                kind: "mcq",
+                q: "In Marks.show(), what would happen if super.show(); were replaced by show();?",
+                options: ["Endless recursion, ending in StackOverflowError", "The same output", "A compile-time error", "Only the percentage is printed"],
+                answer: 0,
+                explain: "Without super, show() calls Marks.show() itself again and again.",
+                difficulty: 2,
+              },
+              {
+                kind: "truefalse",
+                q: "A Java class can extend two classes at the same time.",
+                answer: false,
+                explain: "Java allows only one superclass per class. Multiple inheritance is done through interfaces.",
+              },
+            ],
+          },
+          {
+            type: "activity",
+            activity: {
+              kind: "match",
+              prompt: "Match each term to its meaning.",
+              pairs: [
+                ["extends", "declares the superclass of a class"],
+                ["super(...)", "calls the superclass constructor"],
+                ["super.show()", "calls the superclass version of a method"],
+                ["protected", "visible in subclasses and the same package"],
+                ["is-a relationship", "what inheritance models"],
+              ],
+              explain: "These five ideas appear in almost every ISC inheritance answer.",
+            },
+          },
+          {
+            type: "callout",
+            tone: "exam",
+            title: "ISC board tip",
+            md: "The ISC inheritance question gives a superclass (already written, or to be assumed) and asks you to write only the **subclass**. Use `extends`, call `super(...)` with the right arguments as the first line, and reuse the superclass's display method with `super.show()`. Do not rewrite the superclass, and write main() only if asked.",
+          },
+          {
+            type: "keypoints",
+            items: [
+              "class B extends A: B inherits A's accessible members and can add or override.",
+              "Java supports single, multilevel and hierarchical inheritance with classes; multiple only through interfaces.",
+              "protected members are usable in subclasses; private members are not usable by name.",
+              "super(...) must be the first statement in a subclass constructor; constructors run top-down.",
+              "super.method() calls the superclass version from an overriding method.",
+            ],
+          },
+        ],
+        flashcards: [
+          { front: "Inheritance", back: "The mechanism by which a subclass acquires the members of a superclass, using extends; it gives reusability." },
+          { front: "Superclass and subclass", back: "Superclass: the existing (base, parent) class. Subclass: the new (derived, child) class that extends it." },
+          { front: "Rule for super(...)", back: "It must be the first statement in the subclass constructor." },
+          { front: "Constructor chaining order", back: "From the topmost superclass down to the subclass." },
+          { front: "Why multiple inheritance is not allowed with classes in Java", back: "To avoid ambiguity when two superclasses have members with the same name; interfaces are used instead." },
+          { front: "protected", back: "Access specifier that makes a member visible in the same package and in all subclasses." },
+          { front: "Are constructors inherited?", back: "No. A subclass constructor calls one with super(...)." },
+        ],
+        quiz: [
+          {
+            kind: "mcq",
+            q: "class C extends B, and class B extends A. This is:",
+            options: ["Multilevel inheritance", "Multiple inheritance", "Hierarchical inheritance", "Hybrid inheritance"],
+            answer: 0,
+            explain: "A chain of single inheritance steps is multilevel.",
+          },
+          {
+            kind: "mcq",
+            q: "If class A has only the constructor A(int x), which subclass constructor compiles?",
+            options: ["B() { super(0); }", "B() { }", "B() { System.out.println(); super(0); }", "B() { A(0); }"],
+            answer: 0,
+            explain: "Without an explicit super(...), Java inserts super(), but A has no no-argument constructor. The super call must also come first.",
+            difficulty: 2,
+          },
+          {
+            kind: "truefalse",
+            q: "A subclass can use the protected data members of its superclass by name.",
+            answer: true,
+            explain: "That is the purpose of protected in ISC inheritance questions.",
+          },
+          {
+            kind: "numeric",
+            q: "In Result.java, if the marks were {80, 70, 90, 60} (out of 100 each), what would percent() return?",
+            answer: 75,
+            explain: "Total 300 out of 400, so 300 × 100.0 / 400 = 75.0.",
+          },
+          {
+            kind: "fill",
+            q: "The keyword used to declare that one class inherits from another is ___.",
+            answer: ["extends"],
+            explain: "class Marks extends Student.",
+          },
+          {
+            kind: "mcq",
+            q: "class P { P() { System.out.print(\"P\"); } } class Q extends P { Q() { System.out.print(\"Q\"); } } What does new Q(); print?",
+            options: ["PQ", "QP", "Q", "P"],
+            answer: 0,
+            explain: "Q() starts with an automatic super(), so P's constructor prints first.",
+          },
+          {
+            kind: "multi",
+            q: "Which are benefits of inheritance?",
+            options: ["Reuse of tested code", "Less duplication", "Faster execution of every method", "A natural model of is-a relationships"],
+            answers: [0, 1, 3],
+            explain: "Inheritance is about design and reuse, not speed.",
+          },
+        ],
+      },
+      {
+        slug: "c12-cs-polymorphism-interfaces",
+        title: "Polymorphism, Abstract Classes and Interfaces",
+        summary: "Overloading and overriding, dynamic method dispatch through a superclass reference, abstract classes and methods, interfaces and implements, and the traps with fields and static methods.",
+        minutes: 24,
+        xp: 55,
+        blocks: [
+          {
+            type: "text",
+            md: "**Polymorphism** means \"one name, many forms\". Java has two kinds:\n\n**Compile-time (static) polymorphism** is **method overloading**: methods in the same class with the same name but different parameter lists. The compiler chooses one from the arguments.\n\n**Run-time (dynamic) polymorphism** is **method overriding**: a subclass gives its own version of an inherited method with the **same signature**. When a superclass reference points to a subclass object, the **object's** version runs. This is **dynamic method dispatch**.",
+          },
+          {
+            type: "table",
+            headers: ["Point", "Overloading", "Overriding"],
+            rows: [
+              ["Where", "same class (or inherited)", "subclass over superclass"],
+              ["Parameters", "must differ", "must be the same"],
+              ["Decided", "at compile time", "at run time"],
+              ["Example", "area(int), area(double, double)", "Marks.show() replacing Student.show()"],
+            ],
+          },
+          {
+            type: "text",
+            md: "An **abstract class** is declared `abstract` and cannot be instantiated with new. It can have **abstract methods** (a header with no body) that every concrete subclass must override, as well as normal methods and data members.\n\nAn **interface** is a fully abstract type. Its methods are `public` and `abstract` by default (newer Java versions also allow default methods), and its variables are automatically `public static final` constants. A class **implements** an interface and must define all its methods as `public`. A class can implement **many** interfaces, which is how Java provides multiple inheritance of type.",
+          },
+          {
+            type: "code",
+            lang: "java",
+            caption: "Shapes.java: one interface, several implementations",
+            code: `interface Shape
+{
+    double area();
+    String name();
+}
+
+class Circle implements Shape
+{
+    double r;
+
+    Circle(double r)
+    {
+        this.r = r;
+    }
+
+    public double area()
+    {
+        return Math.PI * r * r;
+    }
+
+    public String name()
+    {
+        return "Circle";
+    }
+}
+
+class Rectangle implements Shape
+{
+    double l, b;
+
+    Rectangle(double l, double b)
+    {
+        this.l = l;
+        this.b = b;
+    }
+
+    public double area()
+    {
+        return l * b;
+    }
+
+    public String name()
+    {
+        return "Rectangle";
+    }
+}
+
+class Square extends Rectangle
+{
+    Square(double s)
+    {
+        super(s, s);
+    }
+
+    public String name()
+    {
+        return "Square";
+    }
+}
+
+public class Shapes
+{
+    public static void main(String[] args)
+    {
+        Shape list[] = {new Circle(7), new Rectangle(4, 2.5), new Square(3)};
+        for (int i = 0; i < list.length; i++)
+            System.out.println(list[i].name() + " " + String.format("%.2f", list[i].area()));
+    }
+}
+
+/* Output:
+Circle 153.94
+Rectangle 10.00
+Square 9.00
+*/`,
+          },
+          {
+            type: "example",
+            title: "Dynamic dispatch in Shapes",
+            problem: "list[i] is of type Shape. How does Java know which area() and name() to run?",
+            steps: [
+              "The reference type (Shape) only decides which methods may be called: area() and name().",
+              "At run time Java looks at the actual object: for list[0] it is a Circle, so Circle.area() gives π × 49 ≈ 153.94.",
+              "list[2] is a Square: name() is Square's override, but area() is inherited from Rectangle: 3 × 3 = 9.00.",
+            ],
+            answer: "The object's class decides at run time (dynamic method dispatch).",
+          },
+          {
+            type: "mistake",
+            wrong: "With P r = new Q();, r.v gives Q's field and r.hello() calls Q's static method, just as r.show() calls Q's show().",
+            right: "Only **instance methods** are dispatched dynamically. **Fields** and **static methods** are chosen by the **reference type**, so r.v and r.hello() use P's versions.",
+            why: "Dynamic dispatch works so neatly for show() that learners extend it to everything. But a field in a subclass with the same name only hides the superclass field, and static methods belong to classes, not objects.",
+          },
+          {
+            type: "code",
+            lang: "java",
+            caption: "FieldTrace.java: what is dispatched and what is not",
+            code: `class P
+{
+    int v = 10;
+
+    void show()
+    {
+        System.out.println("P " + v);
+    }
+
+    static void hello()
+    {
+        System.out.println("hello from P");
+    }
+}
+
+class Q extends P
+{
+    int v = 20;
+
+    void show()
+    {
+        System.out.println("Q " + v + " " + super.v);
+    }
+
+    static void hello()
+    {
+        System.out.println("hello from Q");
+    }
+}
+
+public class FieldTrace
+{
+    public static void main(String[] args)
+    {
+        P r = new Q();
+        r.show();
+        System.out.println(r.v);
+        r.hello();
+    }
+}
+
+/* Output:
+Q 20 10
+10
+hello from P
+*/`,
+          },
+          {
+            type: "checkpoint",
+            questions: [
+              {
+                kind: "mcq",
+                q: "Which line will NOT compile?",
+                options: ["Shape s = new Shape();", "Shape s = new Circle(2);", "Rectangle q = new Square(5);", "Shape t = new Square(1);"],
+                answer: 0,
+                explain: "An interface (like an abstract class) cannot be instantiated. A reference of its type may point to any implementing object.",
+              },
+            ],
+          },
+          {
+            type: "activity",
+            activity: {
+              kind: "sort",
+              prompt: "Overloading or overriding?",
+              groups: ["Overloading", "Overriding"],
+              items: [
+                { text: "area(int s) and area(int l, int b) in one class", group: 0, hint: "Same name, different parameters." },
+                { text: "Square.name() replacing Rectangle.name()", group: 1, hint: "Same signature in a subclass." },
+                { text: "Resolved at compile time", group: 0, hint: "The compiler picks by argument types." },
+                { text: "Resolved at run time", group: 1, hint: "Depends on the actual object." },
+                { text: "Constructors Time() and Time(int, int)", group: 0, hint: "Constructors can be overloaded but never overridden." },
+                { text: "Circle defining area() from interface Shape", group: 1, hint: "Implementing an interface method is overriding an abstract method." },
+              ],
+              explain: "Overloading: same class, different parameters, compile time. Overriding: subclass, same signature, run time.",
+            },
+          },
+          {
+            type: "callout",
+            tone: "exam",
+            title: "ISC board tip",
+            md: "Frequent short questions: difference between an abstract class and an interface (an abstract class may have constructors, instance variables and concrete methods; a class can extend one abstract class but implement many interfaces), and between overloading and overriding. Methods that implement an interface must be declared public, or the code will not compile.",
+          },
+          {
+            type: "keypoints",
+            items: [
+              "Overloading: same name, different parameters, chosen at compile time.",
+              "Overriding: same signature in a subclass; the object's version runs (dynamic method dispatch).",
+              "Fields and static methods are chosen by the reference type, not the object.",
+              "An abstract class cannot be instantiated; its abstract methods must be overridden.",
+              "An interface's methods are public and abstract; a class can implement many interfaces.",
+            ],
+          },
+        ],
+        flashcards: [
+          { front: "Polymorphism", back: "One name, many forms: overloading (compile time) and overriding (run time)." },
+          { front: "Dynamic method dispatch", back: "When a superclass reference refers to a subclass object, the overridden method of the object's class runs, decided at run time." },
+          { front: "Abstract method", back: "A method declared with abstract and no body; a concrete subclass must override it." },
+          { front: "Interface", back: "A type with abstract public methods and public static final constants; a class uses implements to provide the methods." },
+          { front: "Abstract class vs interface", back: "Abstract class: may have constructors, fields and concrete methods; one per class. Interface: constants and abstract methods; a class can implement many." },
+          { front: "Are fields polymorphic?", back: "No. A field is chosen by the reference type; a subclass field with the same name hides the superclass one." },
+          { front: "Can a constructor be overridden?", back: "No. Constructors are not inherited, so they can be overloaded but not overridden." },
+        ],
+        quiz: [
+          {
+            kind: "mcq",
+            q: "Run-time polymorphism in Java is achieved through:",
+            options: ["method overriding", "method overloading", "constructor overloading", "static methods"],
+            answer: 0,
+            explain: "Overridden instance methods are chosen at run time from the object's class.",
+          },
+          {
+            kind: "mcq",
+            q: "From FieldTrace.java, what does new Q().show() print?",
+            options: ["Q 20 10", "P 10", "Q 10 20", "P 20"],
+            answer: 0,
+            explain: "Q's show() prints Q's v (20) and super.v (10).",
+          },
+          {
+            kind: "truefalse",
+            q: "A variable declared in an interface can be changed by a class that implements it.",
+            answer: false,
+            explain: "Interface variables are public static final constants.",
+          },
+          {
+            kind: "fill",
+            q: "A class uses the keyword ___ to promise that it provides the methods of an interface.",
+            answer: ["implements"],
+            explain: "class Circle implements Shape.",
+          },
+          {
+            kind: "mcq",
+            q: "abstract class Bird { abstract void sound(); void fly() { System.out.println(\"flies\"); } } Which statement is true?",
+            options: ["A subclass must define sound() unless it is also abstract", "new Bird() is allowed", "fly() must also be abstract", "Bird cannot have a constructor"],
+            answer: 0,
+            explain: "An abstract class may contain concrete methods and constructors, but cannot be instantiated.",
+          },
+          {
+            kind: "numeric",
+            q: "In Shapes.java, what area would a Square(4.5) report?",
+            answer: 20.25,
+            tolerance: 0.001,
+            explain: "Square calls super(4.5, 4.5), and Rectangle's area() gives 4.5 × 4.5 = 20.25.",
+          },
+          {
+            kind: "multi",
+            q: "P r = new Q(); (from FieldTrace). Which use Q's version?",
+            options: ["r.show()", "r.v", "r.hello()", "((Q) r).v"],
+            answers: [0, 3],
+            explain: "Only the instance method is dispatched dynamically; the cast to Q makes the reference type Q, so ((Q) r).v is 20.",
+            difficulty: 3,
+          },
+        ],
+      },
+      {
+        slug: "c12-cs-inheritance-practice",
+        title: "Inheritance: Board Practice",
+        summary: "An ISC-style superclass and subclass question with a model answer, output questions on chaining and dispatch, and short-answer comparisons.",
+        minutes: 22,
+        xp: 55,
+        blocks: [
+          {
+            type: "text",
+            md: "**Question.** A superclass **Item** has protected data members String **name** and double **cost**, a constructor **Item(String n, double c)** and a method void **show()** that prints the name and cost.\n\nA subclass **Taxed** has data members double **gstRate** (GST percentage) and double **total**. Methods: **Taxed(String n, double c, double g)**: parameterised constructor that also sets total to 0.0; void **compute()**: total = cost + GST on cost; void **show()**: prints all details using the superclass show(). Write the subclass. (A main() is added here only to test it.)",
+          },
+          {
+            type: "code",
+            lang: "java",
+            caption: "Taxed.java (Item is the given superclass)",
+            code: `class Item
+{
+    protected String name;
+    protected double cost;
+
+    Item(String n, double c)
+    {
+        name = n;
+        cost = c;
+    }
+
+    void show()
+    {
+        System.out.println("Item: " + name);
+        System.out.println("Cost: " + cost);
+    }
+}
+
+class Taxed extends Item
+{
+    double gstRate;
+    double total;
+
+    Taxed(String n, double c, double g)
+    {
+        super(n, c);
+        gstRate = g;
+        total = 0.0;
+    }
+
+    void compute()
+    {
+        total = cost + cost * gstRate / 100;
+    }
+
+    void show()
+    {
+        super.show();
+        System.out.println("GST %: " + gstRate);
+        System.out.println("Total: " + total);
+    }
+
+    public static void main(String[] args)
+    {
+        Taxed t = new Taxed("Mixer", 2000, 18);
+        t.compute();
+        t.show();
+    }
+}
+
+/* Output:
+Item: Mixer
+Cost: 2000.0
+GST %: 18.0
+Total: 2360.0
+*/`,
+          },
+          {
+            type: "example",
+            title: "Checking the answer",
+            problem: "Verify the output for a mixer of cost ₹2000 with 18% GST.",
+            steps: [
+              "super(n, c) stores \"Mixer\" and 2000.0 (the int 2000 is widened to double, which is why 2000.0 is printed).",
+              "compute(): total = 2000 + 2000 × 18 / 100 = 2000 + 360 = 2360.0.",
+              "show() first runs Item's show() through super.show(), then prints the subclass's own data.",
+            ],
+            answer: "Total: 2360.0",
+          },
+          {
+            type: "mistake",
+            wrong: "In Taxed, redeclare protected String name; protected double cost; so that compute() can use them.",
+            right: "Do not redeclare inherited members. Taxed already has name and cost from Item and can use them because they are protected.",
+            why: "Redeclaring creates new fields that **hide** the inherited ones. super(n, c) fills Item's copies, while compute() would read the new, still-zero copies, and the total would be 0.0.",
+          },
+          {
+            type: "checkpoint",
+            questions: [
+              {
+                kind: "numeric",
+                q: "What would Taxed(\"Fan\", 1500, 12) print as Total after compute()?",
+                answer: 1680,
+                unit: "₹",
+                explain: "1500 + 1500 × 12 / 100 = 1500 + 180 = 1680.0.",
+              },
+            ],
+          },
+          {
+            type: "example",
+            title: "Output question: an overridden method called from the superclass",
+            problem: "class X { void m() { System.out.print(\"X\"); } void call() { m(); } } class Y extends X { void m() { System.out.print(\"Y\"); } } What does new Y().call(); print, and what does new X().call(); print?",
+            steps: [
+              "call() is inherited by Y. Inside it, m() means this.m().",
+              "For a Y object, this is a Y, so Y's m() runs and prints Y.",
+              "For an X object, X's m() runs and prints X.",
+            ],
+            answer: "Y, then X: overriding works even when the call comes from an inherited method.",
+          },
+          {
+            type: "activity",
+            activity: {
+              kind: "reveal",
+              prompt: "Item i = new Taxed(\"Lamp\", 500, 5); i.show(); Which show() runs?",
+              emoji: "🏷️",
+              options: ["Taxed's show()", "Item's show()", "A compile-time error"],
+              answer: 0,
+              trap: 1,
+              explain: "show() is overridden, so the object's class (Taxed) decides at run time. Calling i.compute() would not compile, because Item has no compute(): the reference type limits which methods can be named.",
+            },
+          },
+          {
+            type: "table",
+            headers: ["Short question", "Model answer (one line)"],
+            rows: [
+              ["Why is super(...) the first statement?", "The superclass part of the object must be initialised before the subclass part."],
+              ["What is method overriding?", "Redefining an inherited method in a subclass with the same signature."],
+              ["How does Java support multiple inheritance?", "A class can implement more than one interface."],
+              ["What does final do to a method?", "It cannot be overridden in a subclass."],
+              ["What does final do to a class?", "It cannot be extended."],
+            ],
+          },
+          {
+            type: "callout",
+            tone: "exam",
+            title: "ISC board tip",
+            md: "Read the specification for the access specifier: if the superclass members are protected, use them directly in the subclass. Keep method names and parameters exactly as given, and in show() call super.show() rather than reprinting the superclass's data yourself.",
+          },
+          {
+            type: "keypoints",
+            items: [
+              "Write only the subclass unless told otherwise; use extends and super(...).",
+              "Never redeclare inherited data members in the subclass.",
+              "An overridden method called through a superclass reference runs the object's version.",
+              "The reference type decides which methods can be named; the object decides which version runs.",
+              "final method: cannot be overridden; final class: cannot be extended.",
+            ],
+          },
+        ],
+        flashcards: [
+          { front: "Total with GST", back: "total = cost + cost × rate / 100." },
+          { front: "Effect of redeclaring an inherited field", back: "The new field hides the inherited one; the superclass constructor fills the hidden copy." },
+          { front: "Item i = new Taxed(...); i.compute();", back: "Compile-time error: Item has no compute() method." },
+          { front: "final method", back: "A method that cannot be overridden." },
+          { front: "final class", back: "A class that cannot be extended (e.g. String)." },
+          { front: "Calling an overridden method from an inherited method", back: "this.m() still dispatches to the object's class version." },
+        ],
+        quiz: [
+          {
+            kind: "mcq",
+            q: "class A { int f() { return 1; } } class B extends A { int f() { return 2; } } A a = new B(); System.out.println(a.f() + new A().f());",
+            options: ["3", "2", "4", "21"],
+            answer: 0,
+            explain: "a.f() is B's version (2) and new A().f() is 1; both are ints, so 2 + 1 = 3.",
+          },
+          {
+            kind: "mcq",
+            q: "Which line in a subclass constructor of Taxed is correct?",
+            options: ["super(n, c);", "Item(n, c);", "this.Item(n, c);", "super.Item(n, c);"],
+            answer: 0,
+            explain: "The superclass constructor is called only through super(arguments).",
+          },
+          {
+            kind: "truefalse",
+            q: "A final class can be used as a superclass.",
+            answer: false,
+            explain: "final on a class forbids extending it.",
+          },
+          {
+            kind: "numeric",
+            q: "Taxed t = new Taxed(\"TV\", 30000, 28); after t.compute(), what is t.total?",
+            answer: 38400,
+            explain: "30000 × 28 / 100 = 8400, so total = 38400.0.",
+          },
+          {
+            kind: "fill",
+            q: "Inside Taxed.show(), the call ___.show() runs the version written in Item.",
+            answer: ["super"],
+            explain: "super.show() reaches the superclass method that Taxed overrides.",
+          },
+          {
+            kind: "mcq",
+            q: "class M { M() { System.out.print(\"1\"); } M(int x) { this(); System.out.print(\"2\"); } } class N extends M { N() { super(5); System.out.print(\"3\"); } } new N(); prints:",
+            options: ["123", "23", "321", "13"],
+            answer: 0,
+            explain: "N() calls M(5), which first calls M() through this() (printing 1), then prints 2; finally N prints 3.",
+            difficulty: 3,
+          },
+          {
+            kind: "mcq",
+            q: "Which pair correctly names the polymorphism types?",
+            options: ["Overloading: compile time; overriding: run time", "Overloading: run time; overriding: compile time", "Both are compile time", "Both are run time"],
+            answer: 0,
+            explain: "Overloads are fixed by the compiler from the argument list; overrides are chosen from the object at run time.",
+          },
+        ],
+      },
+    ],
+  },
 ];
 
 /** Chapter title ("11:" / "12:" + exact title) → topic slug(s) that teach it. */
@@ -3879,4 +4641,5 @@ export const links: Record<string, string | string[]> = {
   "12:Objects and Classes": "c12-cs-java-classes",
   "12:Arrays and Strings": "c12-cs-java-arrays-strings",
   "12:Recursion": "c12-cs-java-recursion",
+  "12:Inheritance, Interfaces and Polymorphism": "c12-cs-java-inheritance",
 };

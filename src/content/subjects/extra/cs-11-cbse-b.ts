@@ -2408,7 +2408,562 @@ print("Highest:", top_name, top_pay)`,
   ],
 };
 
-export const topics: Topic[] = [flowOfControl, strings, lists, tuplesDicts];
+/* ------------------------------------------------------------------ */
+/* Python Modules                                                       */
+/* ------------------------------------------------------------------ */
+const modules: Topic = {
+  slug: "c11-cs-python-modules",
+  title: "Python Modules",
+  icon: "📦",
+  description: "What a module is, import, import … as and from … import, the math module (pi, e, sqrt, ceil, floor, pow, fabs, sin, cos, tan), the random module (random, randint, randrange) and the statistics module (mean, median, mode).",
+  lessons: [
+    {
+      slug: "importing-math",
+      title: "Modules, import and the math Module",
+      summary: "Modules and the standard library, the three ways to import, and the math module's constants and functions with their return types.",
+      minutes: 20,
+      xp: 50,
+      blocks: [
+        {
+          type: "illustration",
+          emoji: "🧮",
+          caption: "You do not build a calculator every time you need a square root; you pick one up. Python modules are ready-made tools you pick up with import.",
+        },
+        {
+          type: "text",
+          md: "A **module** is a Python file (`.py`) containing ready-made definitions: functions, constants and more. Python comes with a large **standard library** of modules, such as `math`, `random` and `statistics`. Built-in functions like `print()`, `len()` and `abs()` are always available; a module's functions become available only after you **import** the module.",
+        },
+        {
+          type: "table",
+          headers: ["Form", "How you then call it", "Note"],
+          rows: [
+            ["`import math`", "`math.sqrt(16)`", "The whole module; names are used with the **module name and a dot**."],
+            ["`import math as m`", "`m.sqrt(16)`", "Same, with a short **alias**."],
+            ["`from math import sqrt, pi`", "`sqrt(16)`, `pi`", "Only the named items, used **without** the prefix."],
+            ["`from math import *`", "`sqrt(16)`", "Everything, without the prefix. Can clash with your own names, so use with care."],
+          ],
+        },
+        {
+          type: "mistake",
+          wrong: "After `import math`, I can write `sqrt(25)`.",
+          right: "With `import math`, write `math.sqrt(25)`. Plain `sqrt(25)` works only after `from math import sqrt` (or `*`); otherwise it is a NameError.",
+          why: "`import math` brings in only the name `math`. The functions live inside it and are reached with the dot. The `from` form copies the chosen names into your program directly.",
+        },
+        {
+          type: "table",
+          headers: ["Item", "Meaning", "Example → result"],
+          rows: [
+            ["`math.pi`, `math.e`", "The constants π and e", "3.141592653589793, 2.718281828459045"],
+            ["`math.sqrt(x)`", "Square root (a float)", "`math.sqrt(49)` → 7.0"],
+            ["`math.ceil(x)`", "Smallest integer **≥ x** (rounds up)", "`math.ceil(4.2)` → 5; `math.ceil(-4.2)` → −4"],
+            ["`math.floor(x)`", "Largest integer **≤ x** (rounds down)", "`math.floor(4.8)` → 4; `math.floor(-4.2)` → −5"],
+            ["`math.pow(x, y)`", "x to the power y, always a float", "`math.pow(2, 5)` → 32.0 (but `2 ** 5` → 32)"],
+            ["`math.fabs(x)`", "Absolute value as a float", "`math.fabs(-7)` → 7.0 (but `abs(-7)` → 7)"],
+            ["`math.sin(x)`, `cos(x)`, `tan(x)`", "Trigonometric ratios; x in **radians**", "`math.cos(0)` → 1.0"],
+          ],
+        },
+        {
+          type: "code",
+          lang: "python",
+          runnable: true,
+          caption: "Run it and compare with the table. Note which results are floats.",
+          code: r`import math
+print(math.sqrt(49), math.ceil(4.2), math.floor(4.8))   # 7.0 5 4
+print(math.ceil(-4.2), math.floor(-4.2))               # -4 -5
+print(math.pow(2, 5), math.fabs(-7))                   # 32.0 7.0
+print(math.sin(math.pi / 2), math.cos(0))              # 1.0 1.0
+
+angle = math.radians(30)          # degrees -> radians
+print(round(math.sin(angle), 2))  # 0.5
+
+from math import sqrt, pi
+print(sqrt(16), round(pi * 7 ** 2, 2))   # 4.0 153.94`,
+        },
+        {
+          type: "text",
+          md: "The trigonometric functions expect the angle in **radians** ($\\pi$ radians = 180°). Convert with `math.radians(deg)` first. Because computers store decimals approximately, `math.sin(math.radians(30))` prints `0.49999999999999994`, not exactly 0.5; `round()` tidies such results.",
+        },
+        {
+          type: "example",
+          title: "Area and hypotenuse",
+          problem: "Use the math module to find (a) the area of a circle of radius 7 cm and (b) the hypotenuse of a right triangle with legs 3 and 4.",
+          steps: [
+            "(a) Area = $\\pi r^2$: `math.pi * 7 ** 2` = 153.938…; `round(…, 2)` gives 153.94.",
+            "(b) Hypotenuse = $\\sqrt{3^2 + 4^2}$: `math.sqrt(math.pow(3, 2) + math.pow(4, 2))`.",
+            "pow returns floats 9.0 and 16.0; the sum is 25.0; sqrt gives 5.0.",
+          ],
+          answer: "(a) 153.94 cm² (b) 5.0",
+        },
+        {
+          type: "checkpoint",
+          questions: [
+            {
+              kind: "mcq",
+              q: "What is `math.ceil(-2.5) + math.floor(2.5)`?",
+              options: ["0", "−1", "1", "5"],
+              answer: 0,
+              explain: "ceil(−2.5) rounds up to −2; floor(2.5) rounds down to 2. −2 + 2 = 0.",
+              difficulty: 2,
+            },
+          ],
+        },
+        {
+          type: "activity",
+          activity: {
+            kind: "match",
+            prompt: "Match each call to its value.",
+            pairs: [
+              ["math.floor(-3.7)", "-4"],
+              ["math.ceil(3.1)", "4"],
+              ["math.pow(3, 2)", "9.0"],
+              ["math.fabs(-2)", "2.0"],
+              ["math.sqrt(81)", "9.0 (not 9)"],
+            ],
+            explain: "floor rounds towards minus infinity and ceil towards plus infinity, giving ints. pow, fabs and sqrt always return floats.",
+          },
+        },
+        {
+          type: "callout",
+          tone: "exam",
+          title: "Board tip",
+          md: "Output questions often test the **type** of the result: `math.sqrt(16)` prints `4.0`, `math.pow(2, 3)` prints `8.0`, `math.fabs(-5)` prints `5.0`, but `math.ceil` and `math.floor` print integers. For negative numbers, draw a number line: floor moves left, ceil moves right.",
+        },
+        {
+          type: "keypoints",
+          items: [
+            "A module is a .py file of ready-made code; import it before use.",
+            "`import math` → `math.f()`; `from math import f` → `f()`.",
+            "ceil rounds up, floor rounds down (towards −∞ for negatives).",
+            "sqrt, pow and fabs return floats; ceil and floor return ints.",
+            "sin, cos and tan take radians: use `math.radians()` first.",
+          ],
+        },
+      ],
+      flashcards: [
+        { front: "Module", back: "A Python file containing definitions (functions, constants) that other programs can import." },
+        { front: "`import math` vs `from math import sqrt`", back: "First: call as math.sqrt(). Second: call as sqrt() directly." },
+        { front: "`import math as m`", back: "Imports math under the alias m: m.sqrt(9)." },
+        { front: "math.ceil(-4.2) / math.floor(-4.2)", back: "−4 / −5" },
+        { front: "math.pow(2, 3) vs 2 ** 3", back: "8.0 (float) vs 8 (int)." },
+        { front: "math.fabs(-7) vs abs(-7)", back: "7.0 (float) vs 7 (int)." },
+        { front: "Unit of angle for math.sin()", back: "Radians. Convert degrees with math.radians()." },
+      ],
+      quiz: [
+        {
+          kind: "mcq",
+          q: "Which statement lets you write `sqrt(36)` directly?",
+          options: ["`import math`", "`from math import sqrt`", "`import sqrt`", "`include math`"],
+          answer: 1,
+          explain: "from … import puts the name sqrt into your program. import math needs math.sqrt.",
+        },
+        {
+          kind: "mcq",
+          q: "What does `print(math.sqrt(64))` show?",
+          options: ["8", "8.0", "64", "Error"],
+          answer: 1,
+          explain: "sqrt always returns a float, so 8.0.",
+        },
+        {
+          kind: "numeric",
+          q: "What is `math.floor(-7 / 2)`?",
+          answer: -4,
+          explain: "−7 / 2 = −3.5; the largest integer not above −3.5 is −4.",
+          difficulty: 2,
+        },
+        {
+          kind: "truefalse",
+          q: "`math.sin(90)` gives 1.0.",
+          answer: false,
+          explain: "90 is taken as 90 radians. Use math.sin(math.radians(90)) or math.sin(math.pi / 2) for 1.0.",
+          difficulty: 2,
+        },
+        {
+          kind: "fill",
+          q: "The constant π is available as `math.___`.",
+          answer: ["pi"],
+          explain: "math.pi is 3.141592653589793.",
+        },
+        {
+          kind: "mcq",
+          q: "What is printed? `import math as m` / `print(m.ceil(9.01), m.fabs(-0.5))`",
+          options: ["10 0.5", "9 0.5", "10 -0.5", "Error: math is not defined"],
+          answer: 0,
+          explain: "The alias m works like math. ceil(9.01) is 10; fabs(−0.5) is 0.5.",
+        },
+        {
+          kind: "mcq",
+          q: "Which error occurs? `import math` / `print(pow(2, 3), sqrt(4))`",
+          options: ["NameError for sqrt", "NameError for pow", "No error", "TypeError"],
+          answer: 0,
+          explain: "pow is also a built-in function, so pow(2, 3) works (gives 8). sqrt is not built in, so plain sqrt is a NameError.",
+          difficulty: 3,
+          hint: "Which of the two names exists without any import?",
+        },
+      ],
+    },
+    {
+      slug: "random-statistics",
+      title: "The random and statistics Modules",
+      summary: "random(), randint() and randrange() with their exact ranges, the classic \"possible outputs\" board question, and mean, median and mode from the statistics module.",
+      minutes: 25,
+      xp: 55,
+      blocks: [
+        {
+          type: "illustration",
+          emoji: "🎲",
+          caption: "A ludo die gives 1 to 6, and you cannot know which in advance. The random module lets programs roll dice, shuffle quiz questions or pick OTP digits.",
+        },
+        {
+          type: "text",
+          md: "The **random** module produces **pseudo-random** numbers: they look random but come from a formula, so each run usually gives different output. The three functions in the syllabus differ in what they return and whether the end value is included.",
+        },
+        {
+          type: "table",
+          headers: ["Function", "Returns", "End value included?", "Example"],
+          rows: [
+            ["`random.random()`", "a float in **[0.0, 1.0)**", "0.0 possible, 1.0 never", "e.g. 0.6394…"],
+            ["`random.randint(a, b)`", "an int from a to b", "**Yes, both a and b**", "`randint(1, 6)` → 1 … 6"],
+            ["`random.randrange(stop)`", "an int from 0 to stop − 1", "No", "`randrange(10)` → 0 … 9"],
+            ["`random.randrange(start, stop, step)`", "an int from range(start, stop, step)", "No", "`randrange(5, 20, 5)` → 5, 10 or 15"],
+          ],
+        },
+        {
+          type: "code",
+          lang: "python",
+          runnable: true,
+          caption: "Run it several times: the numbers change, but always stay in their ranges.",
+          code: r`import random
+print(random.random())             # 0.0 <= x < 1.0
+print(random.randint(1, 6))        # a die: 1 to 6
+print(random.randrange(5, 20, 5))  # 5, 10 or 15
+otp = ""
+for i in range(4):
+    otp += str(random.randint(0, 9))
+print("OTP:", otp)`,
+        },
+        {
+          type: "mistake",
+          wrong: "`random.randint(1, 10)` gives 1 to 9, like range().",
+          right: "randint includes **both** ends: 1 to 10. It is randrange (and range) that leaves out the stop value.",
+          why: "Learners carry over the range() rule. randint was designed to mean \"an integer between a and b, inclusive\"; randrange follows range().",
+        },
+        {
+          type: "example",
+          title: "The \"possible outputs\" question",
+          problem: "`colours = [\"RED\", \"BLUE\", \"GREEN\", \"PINK\", \"GOLD\"]` · `start = random.randint(1, 2)` · `stop = random.randint(3, 4)` · `for i in range(start, stop): print(colours[i], end=\"-\")`\n\nWhich are possible: (i) RED-BLUE- (ii) BLUE-GREEN-PINK- (iii) GREEN- (iv) GREEN-PINK-GOLD-?",
+          steps: [
+            "start is 1 or 2, so the first word is BLUE or GREEN, never RED. (i) is impossible.",
+            "stop is 3 or 4 and range excludes it, so the last index is 2 or 3: GREEN or PINK, never GOLD. (iv) is impossible.",
+            "(ii) is start 1, stop 4 → indices 1, 2, 3. (iii) is start 2, stop 3 → index 2 only.",
+            "All four possible outputs: BLUE-GREEN-, BLUE-GREEN-PINK-, GREEN-, GREEN-PINK-.",
+          ],
+          answer: "(ii) and (iii) are possible. Minimum start 1, maximum stop 4.",
+        },
+        {
+          type: "checkpoint",
+          questions: [
+            {
+              kind: "mcq",
+              q: "What are the smallest and largest possible values of `random.randint(3, 8) + 2`?",
+              options: ["5 and 10", "5 and 9", "3 and 8", "2 and 10"],
+              answer: 0,
+              explain: "randint(3, 8) gives 3 … 8 inclusive; adding 2 gives 5 … 10.",
+            },
+          ],
+        },
+        {
+          type: "heading",
+          text: "The statistics module",
+        },
+        {
+          type: "text",
+          md: "The **statistics** module gives the three measures of central tendency:\n\n- `statistics.mean(data)`: the arithmetic average, sum ÷ count.\n- `statistics.median(data)`: the middle value **after sorting**; for an even count, the average of the two middle values.\n- `statistics.mode(data)`: the most frequent value (it also works for strings). If several values tie, Python 3.8+ returns the one that appears **first**.",
+        },
+        {
+          type: "code",
+          lang: "python",
+          runnable: true,
+          caption: "Prints: 80 85 85, then 25 25.0, then b",
+          code: r`import statistics
+marks = [72, 85, 68, 85, 90]
+print(statistics.mean(marks), statistics.median(marks), statistics.mode(marks))
+
+ages = [10, 40, 20, 30]           # even count
+print(statistics.mean(ages), statistics.median(ages))   # median = (20 + 30) / 2
+
+print(statistics.mode(["a", "b", "b", "c"]))`,
+        },
+        {
+          type: "activity",
+          activity: {
+            kind: "reveal",
+            prompt: "What is statistics.median([7, 1, 5])?",
+            emoji: "📊",
+            options: ["1", "5", "4.33"],
+            answer: 1,
+            trap: 0,
+            explain: "The median is the middle value of the sorted data [1, 5, 7], which is 5. Picking the middle position of the unsorted list gives 1, the trap. 4.33 is the mean.",
+          },
+        },
+        {
+          type: "callout",
+          tone: "exam",
+          title: "Board tip",
+          md: "For \"possible output\" questions, write the range of every random variable first, then test each option against the smallest and largest values. Also state the min and max values when asked. For statistics, remember median sorts first, and the median of an even count can be a float (e.g. 25.0).",
+        },
+        {
+          type: "keypoints",
+          items: [
+            "random() → float in [0, 1); randint(a, b) includes a and b.",
+            "randrange(start, stop, step) follows range(): stop excluded.",
+            "In possible-output questions, find each variable's range first.",
+            "mean = sum/count; median = middle of sorted data; mode = most frequent.",
+            "Import first: `import random`, `import statistics`.",
+          ],
+        },
+      ],
+      flashcards: [
+        { front: "random.random()", back: "A float from 0.0 up to but not including 1.0." },
+        { front: "random.randint(a, b)", back: "An integer from a to b, both included." },
+        { front: "random.randrange(2, 11, 2)", back: "One of 2, 4, 6, 8, 10 (stop 11 excluded)." },
+        { front: "A die roll in Python", back: "`random.randint(1, 6)` or `random.randrange(1, 7)`." },
+        { front: "statistics.median of an even count", back: "Average of the two middle values of the sorted data." },
+        { front: "statistics.mode on a tie (Python 3.8+)", back: "Returns the tied value that appears first in the data." },
+        { front: "Pseudo-random", back: "Numbers produced by a formula that only look random." },
+      ],
+      quiz: [
+        {
+          kind: "mcq",
+          q: "Which can `random.randrange(1, 10, 3)` return?",
+          options: ["10", "7", "3", "9"],
+          answer: 1,
+          explain: "range(1, 10, 3) is 1, 4, 7. 3, 9 and 10 are not in it.",
+          difficulty: 2,
+        },
+        {
+          kind: "truefalse",
+          q: "`random.random()` can return 1.0.",
+          answer: false,
+          explain: "It returns values from 0.0 up to, but not including, 1.0.",
+        },
+        {
+          kind: "numeric",
+          q: "What is `statistics.mean([4, 8, 6, 2])`?",
+          answer: 5,
+          explain: "(4 + 8 + 6 + 2) / 4 = 20 / 4 = 5.",
+        },
+        {
+          kind: "numeric",
+          q: "What is `statistics.median([9, 3, 7, 1, 5, 11])`?",
+          answer: 6,
+          explain: "Sorted: 1, 3, 5, 7, 9, 11. The two middle values 5 and 7 average to 6 (printed as 6.0).",
+          difficulty: 2,
+        },
+        {
+          kind: "mcq",
+          q: "What is `statistics.mode([4, 1, 4, 2, 1, 4])`?",
+          options: ["4", "1", "2", "2.67"],
+          answer: 0,
+          explain: "4 occurs three times, more than any other value.",
+        },
+        {
+          kind: "multi",
+          q: "`L = [10, 20, 30, 40]` · `k = random.randint(0, 2)` · `print(L[k] + L[k + 1])`. Which outputs are possible?",
+          options: ["30", "50", "70", "90"],
+          answers: [0, 1, 2],
+          explain: "k is 0, 1 or 2, giving 10 + 20 = 30, 20 + 30 = 50 or 30 + 40 = 70. 90 would need k = 3.",
+          difficulty: 2,
+        },
+        {
+          kind: "mcq",
+          q: "Which expression simulates a die roll (1 to 6)?",
+          options: ["`int(random.random() * 6) + 1`", "`int(random.random() * 6)`", "`random.randrange(1, 6)`", "`random.randint(0, 6)`"],
+          answer: 0,
+          explain: "random() × 6 is 0 to just under 6; int() gives 0 … 5; +1 gives 1 … 6. randrange(1, 6) never gives 6.",
+          difficulty: 3,
+        },
+        {
+          kind: "fill",
+          q: "The middle value of sorted data is found with `statistics.___()`.",
+          answer: ["median"],
+          explain: "median sorts the data and takes the middle value (or the average of the middle two).",
+        },
+      ],
+    },
+    {
+      slug: "board-practice",
+      title: "Board practice: Python Modules",
+      summary: "Mixed board-style questions on modules: import forms, math outputs and types, random possible-output questions and statistics programs.",
+      minutes: 20,
+      xp: 50,
+      blocks: [
+        {
+          type: "text",
+          md: "Module questions in board papers are short but exact: which import statement is needed, what a math call prints (with or without `.0`), which outputs a random program can give, and simple programs using mean, median and mode.",
+        },
+        {
+          type: "example",
+          title: "Which module? (1 mark each)",
+          problem: "Name the module needed for: (a) `ceil()` (b) `randint()` (c) `mode()` (d) `len()`.",
+          steps: [
+            "(a) ceil belongs to math.",
+            "(b) randint belongs to random.",
+            "(c) mode belongs to statistics.",
+            "(d) len is a built-in function: no module is needed.",
+          ],
+          answer: "(a) math (b) random (c) statistics (d) none — built-in",
+        },
+        {
+          type: "example",
+          title: "Output with types (2 marks)",
+          problem: "Find the output: `import math` · `print(math.fabs(-3) + math.pow(2, 2))` · `print(math.ceil(7 / 2), math.floor(-7 / 2), -7 // 2)`",
+          steps: [
+            "fabs(−3) = 3.0 and pow(2, 2) = 4.0, so the sum is 7.0.",
+            "7 / 2 = 3.5 → ceil 4. −7 / 2 = −3.5 → floor −4.",
+            "`-7 // 2` is floor division, also −4.",
+          ],
+          answer: "`7.0` then `4 -4 -4`",
+        },
+        {
+          type: "code",
+          lang: "python",
+          runnable: true,
+          caption: "Statistics of a data set. Prints: Mean: 24.86 Median: 23 Mode: 23",
+          code: r`import statistics as st
+data = [23, 17, 23, 31, 17, 23, 40]
+print("Mean:", round(st.mean(data), 2), "Median:", st.median(data), "Mode:", st.mode(data))`,
+        },
+        {
+          type: "mistake",
+          wrong: "`from random import randint` then calling `random.randint(1, 6)` works.",
+          right: "With `from random import randint`, call `randint(1, 6)`. The name `random` itself was never imported, so `random.randint` is a NameError.",
+          why: "The from form brings in only the listed names. Mixing the two styles is a very common error-spotting question.",
+        },
+        {
+          type: "checkpoint",
+          questions: [
+            {
+              kind: "multi",
+              q: "`n = random.randint(2, 4)` · `for i in range(1, n): print(i * 10, end=\" \")`. Which outputs are possible?",
+              options: ["10", "10 20", "10 20 30", "10 20 30 40"],
+              answers: [0, 1, 2],
+              explain: "n is 2, 3 or 4, so the loop runs up to n − 1: one, two or three numbers. Four numbers would need n = 5.",
+              difficulty: 2,
+            },
+          ],
+        },
+        {
+          type: "text",
+          md: "**Program (3 marks):** simulate 10 rolls of a die and report how many sixes came up. The answer changes on every run, which is expected for random programs; in the practical exam, show two runs.",
+        },
+        {
+          type: "code",
+          lang: "python",
+          runnable: true,
+          caption: "Output varies each run, e.g. Rolls: [3, 6, 1, 4, 6, 2, 5, 5, 1, 6] Sixes: 3",
+          code: r`import random
+rolls = []
+for i in range(10):
+    rolls.append(random.randint(1, 6))
+print("Rolls:", rolls, "Sixes:", rolls.count(6))`,
+        },
+        {
+          type: "activity",
+          activity: {
+            kind: "sort",
+            prompt: "Which module does each name come from?",
+            groups: ["math", "random", "statistics"],
+            items: [
+              { text: "floor", group: 0, hint: "Rounding down is a maths job." },
+              { text: "randrange", group: 1, hint: "The name says random." },
+              { text: "median", group: 2, hint: "A measure of central tendency." },
+              { text: "fabs", group: 0, hint: "Float absolute value." },
+              { text: "randint", group: 1, hint: "Random integer." },
+              { text: "mode", group: 2, hint: "Most frequent value." },
+              { text: "tan", group: 0, hint: "A trigonometric ratio." },
+            ],
+            explain: "math holds constants, rounding, powers and trigonometry; random holds random number tools; statistics holds mean, median and mode.",
+          },
+        },
+        {
+          type: "callout",
+          tone: "exam",
+          title: "Board tip",
+          md: "In random questions you may be asked for the **minimum and maximum** value a variable can take, or to **choose all correct options**. Write the range of each variable, and remember randint(a, b) includes b but randrange and range exclude the stop.",
+        },
+        {
+          type: "keypoints",
+          items: [
+            "Built-in functions (len, abs, round, pow) need no import.",
+            "`from m import f` → call `f()`, not `m.f()`.",
+            "fabs, pow and sqrt give floats; ceil and floor give ints.",
+            "Random programs give different outputs; reason with ranges.",
+          ],
+        },
+      ],
+      flashcards: [
+        { front: "Module for mean, median, mode", back: "statistics" },
+        { front: "Module for ceil, floor, sqrt, pow, fabs, sin, cos, tan, pi, e", back: "math" },
+        { front: "Module for random, randint, randrange", back: "random" },
+        { front: "`-7 // 2`", back: "−4 (floor division rounds down)." },
+        { front: "`from random import randint` — how to call?", back: "`randint(1, 6)` (no `random.` prefix)." },
+        { front: "Max value of `random.randrange(10) * 2`", back: "18 (randrange(10) gives at most 9)." },
+      ],
+      quiz: [
+        {
+          kind: "mcq",
+          q: "Which import is needed for `print(mean([2, 4]))` to work?",
+          options: ["`from statistics import mean`", "`import statistics`", "`import math`", "`from math import mean`"],
+          answer: 0,
+          explain: "mean is in statistics, and calling it without a prefix needs the from form.",
+        },
+        {
+          kind: "numeric",
+          q: "What is the maximum possible value of `random.randint(1, 5) * 2 + 1`?",
+          answer: 11,
+          explain: "randint(1, 5) is at most 5: 5 × 2 + 1 = 11.",
+        },
+        {
+          kind: "mcq",
+          q: "What is printed? `import math` / `print(math.sqrt(math.pow(3, 2) + math.pow(4, 2)))`",
+          options: ["5.0", "5", "25.0", "7.0"],
+          answer: 0,
+          explain: "9.0 + 16.0 = 25.0 and sqrt gives 5.0.",
+        },
+        {
+          kind: "truefalse",
+          q: "`random.randrange(0, 10, 2)` can return 10.",
+          answer: false,
+          explain: "Like range(0, 10, 2), it can return 0, 2, 4, 6 or 8; the stop value 10 is excluded.",
+        },
+        {
+          kind: "mcq",
+          q: "What is `statistics.median([10, 40, 20, 30])`?",
+          options: ["25.0", "30", "20", "25 exactly as an int"],
+          answer: 0,
+          explain: "Sorted: 10, 20, 30, 40. The middle two average to 25.0 (a float, from dividing by 2).",
+          difficulty: 2,
+        },
+        {
+          kind: "mcq",
+          q: "`AR = [5, 15, 25, 35, 45]` · `a = random.randint(0, 2)` · `print(AR[a], AR[a + 2])`. Which output is NOT possible?",
+          options: ["5 25", "15 35", "25 45", "35 45"],
+          answer: 3,
+          explain: "a is 0, 1 or 2, giving pairs (5, 25), (15, 35), (25, 45). The two numbers printed are always two places apart.",
+          difficulty: 2,
+        },
+        {
+          kind: "fill",
+          q: "To use `m.floor(2.7)`, the import statement is `import math ___ m`.",
+          answer: ["as"],
+          explain: "import … as gives the module an alias.",
+        },
+      ],
+    },
+  ],
+};
+
+export const topics: Topic[] = [flowOfControl, strings, lists, tuplesDicts, modules];
 
 /** Chapter title ("11:" / "12:" + exact title) → topic slug(s) that teach it. */
 export const links: Record<string, string | string[]> = {
@@ -2416,4 +2971,5 @@ export const links: Record<string, string | string[]> = {
   "11:Strings": "c11-cs-strings",
   "11:Lists": "c11-cs-lists",
   "11:Tuples and Dictionaries": "c11-cs-tuples-dictionaries",
+  "11:Python Modules": "c11-cs-python-modules",
 };

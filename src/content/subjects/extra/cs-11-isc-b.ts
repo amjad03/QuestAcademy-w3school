@@ -2293,11 +2293,651 @@ const strings: Topic = {
   ],
 };
 
-export const topics: Topic[] = [methods, arrays, strings];
+/* ------------------------------------------------------------------ */
+/* 4. Recursion                                                        */
+/* ------------------------------------------------------------------ */
+const recursion: Topic = {
+  slug: "c11-isc-cs-recursion",
+  title: "Recursion",
+  icon: "🪆",
+  description: "Recursive methods, base and recursive cases, the call stack, factorial and Fibonacci, recursion on numbers and strings, GCD, base conversion and recursive binary search.",
+  lessons: [
+    {
+      slug: "c11-isc-recursion-basics",
+      title: "What Recursion Is: Base Case, Recursive Case and the Call Stack",
+      summary: "How a method can call itself, why it needs a base case, how calls wind onto the stack and unwind, with factorial and Fibonacci.",
+      minutes: 20,
+      xp: 50,
+      blocks: [
+        {
+          type: "illustration",
+          emoji: "🪆",
+          caption: "Open a set of wooden nesting dolls from Channapatna: inside each doll is a smaller doll of the same kind, until you reach the tiny solid one that does not open. Recursion solves a problem by solving a smaller copy of the same problem, until a smallest case that is answered directly.",
+        },
+        {
+          type: "text",
+          md: "A method is **recursive** if it **calls itself**. Every correct recursive method has two parts:\n\n- a **base case** (terminating condition): a simple input whose answer is given directly, with no further call;\n- a **recursive case**: the method calls itself on a **smaller** input that moves closer to the base case.\n\nFactorial fits this naturally: 0! = 1! = 1 (base case), and n! = n × (n − 1)! for n > 1 (recursive case).",
+        },
+        {
+          type: "code",
+          lang: "java",
+          caption: "Fact.java",
+          code: java`public class Fact
+{
+    static long fact(int n)
+    {
+        if (n <= 1)                 // base case
+            return 1;
+        return n * fact(n - 1);     // recursive case
+    }
+
+    static int fib(int n)
+    {
+        if (n <= 1)                 // fib(0) = 0, fib(1) = 1
+            return n;
+        return fib(n - 1) + fib(n - 2);
+    }
+
+    public static void main(String[] args)
+    {
+        System.out.println(fact(5));
+        System.out.println(fact(20));
+        for (int i = 0; i < 10; i++)
+            System.out.print(fib(i) + " ");
+        System.out.println();
+    }
+}`,
+        },
+        {
+          type: "text",
+          md: "Output:\n\n`120`\n`2432902008176640000`\n`0 1 1 2 3 5 8 13 21 34`\n\n`fact` returns `long` because 20! is far larger than the biggest `int` (about 2.1 × 10⁹).",
+        },
+        {
+          type: "example",
+          title: "Tracing fact(4)",
+          problem: "Show how `fact(4)` is evaluated.",
+          steps: [
+            "**Winding:** fact(4) needs 4 × fact(3); fact(3) needs 3 × fact(2); fact(2) needs 2 × fact(1). Each call waits, unfinished, on the **call stack**.",
+            "fact(1) hits the base case and returns 1 without calling again.",
+            "**Unwinding:** fact(2) = 2 × 1 = 2; fact(3) = 3 × 2 = 6; fact(4) = 4 × 6 = 24. The calls finish in the reverse order in which they started.",
+          ],
+          answer: "fact(4) = 24, after 4 calls in total.",
+        },
+        {
+          type: "text",
+          md: "**The call stack.** Each call gets its own **stack frame** holding its own copy of the parameters and local variables. A new call is **pushed** on top; when it returns, it is **popped** and the caller continues from where it left off. This is last-in, first-out (LIFO).\n\nStatements written **after** the recursive call therefore run during unwinding, in reverse order. The next program shows this.",
+        },
+        {
+          type: "code",
+          lang: "java",
+          caption: "Wind.java",
+          code: java`public class Wind
+{
+    static void show(int n)
+    {
+        if (n == 0)
+            return;
+        System.out.println("down " + n);
+        show(n - 1);
+        System.out.println("up " + n);
+    }
+
+    public static void main(String[] args)
+    {
+        show(3);
+    }
+}`,
+        },
+        {
+          type: "activity",
+          activity: {
+            kind: "order",
+            prompt: "Put the output lines of Wind.java in order.",
+            items: ["down 3", "down 2", "down 1", "up 1", "up 2", "up 3"],
+            explain: "Lines before the call print while winding (3, 2, 1). Lines after it print while unwinding, newest call first (1, 2, 3).",
+          },
+        },
+        {
+          type: "checkpoint",
+          questions: [
+            {
+              kind: "mcq",
+              q: "What is the base case in `fib`?",
+              options: ["n <= 1, returning n", "n == 10", "fib(n - 1) + fib(n - 2)", "There is none"],
+              answer: 0,
+              explain: "For n = 0 or 1 the method returns n directly without calling itself.",
+            },
+          ],
+        },
+        {
+          type: "mistake",
+          wrong: "If I forget the base case, the method just returns 0 at the end.",
+          right: "Without a base case (or if the input never reaches it, like calling `fact(n + 1)`), the method keeps calling itself until the call stack is full and Java throws a **StackOverflowError** at run time.",
+          why: "Loops without an end simply run forever, so learners expect a similar harmless stop. Each recursive call uses new stack memory, and that memory runs out.",
+        },
+        {
+          type: "table",
+          headers: ["Point", "Recursion", "Iteration (loop)"],
+          rows: [
+            ["How it repeats", "the method calls itself", "a for / while loop"],
+            ["Stops when", "the base case is reached", "the loop condition becomes false"],
+            ["Memory", "a stack frame for every pending call", "the same few variables"],
+            ["Code", "often shorter and closer to the definition", "often longer but faster"],
+            ["Error if it never stops", "StackOverflowError", "infinite loop"],
+          ],
+        },
+        {
+          type: "callout",
+          tone: "exam",
+          title: "ISC tip",
+          md: "When asked \"what is the base case\" write the exact condition and what it returns. When tracing, draw a column of calls going down (winding) and write each return value going back up (unwinding). Note that the recursive `fib` repeats work: fib(5) computes fib(2) three times.",
+        },
+        {
+          type: "keypoints",
+          items: [
+            "A recursive method calls itself on a smaller input.",
+            "Base case: answered directly, stops the recursion. Recursive case: moves towards the base case.",
+            "Calls wind onto the call stack and unwind in reverse (LIFO) order.",
+            "Code after the recursive call runs during unwinding.",
+            "A missing or unreachable base case causes StackOverflowError.",
+          ],
+        },
+      ],
+      flashcards: [
+        { front: "Recursion", back: "A technique in which a method calls itself to solve a smaller instance of the same problem." },
+        { front: "Base case", back: "The condition under which a recursive method returns a value directly, without calling itself." },
+        { front: "Recursive case", back: "The part where the method calls itself with an input closer to the base case." },
+        { front: "Call stack", back: "The memory area where each pending method call keeps its frame of parameters and local variables; LIFO." },
+        { front: "Winding and unwinding", back: "Winding: calls pile up until the base case. Unwinding: calls return one by one in reverse order." },
+        { front: "StackOverflowError", back: "Run-time error when recursion goes too deep, usually because the base case is missing or never reached." },
+        { front: "fact(n) definition", back: "1 if n ≤ 1; otherwise n × fact(n − 1)." },
+      ],
+      quiz: [
+        {
+          kind: "numeric",
+          q: "How many times is `fact` called in total when evaluating `fact(6)`?",
+          answer: 6,
+          explain: "fact(6), fact(5), fact(4), fact(3), fact(2), fact(1): six calls.",
+        },
+        {
+          kind: "numeric",
+          q: "What is fib(11) using the definition in Fact.java?",
+          answer: 89,
+          explain: "Continue 0 1 1 2 3 5 8 13 21 34 55 89: fib(10) = 55 and fib(11) = 89.",
+        },
+        {
+          kind: "truefalse",
+          q: "Each recursive call has its own copy of the method's parameters and local variables.",
+          answer: true,
+          explain: "Every call gets its own stack frame.",
+        },
+        {
+          kind: "mcq",
+          q: "What happens when `static int f(int n) { return n + f(n - 1); }` is called as f(3)?",
+          options: ["StackOverflowError at run time", "It returns 6", "Compile-time error", "It returns 0"],
+          answer: 0,
+          explain: "There is no base case, so it calls f(2), f(1), f(0), f(−1)… until the stack overflows. The code itself compiles.",
+          difficulty: 2,
+        },
+        {
+          kind: "fill",
+          q: "The call stack works on the ___ principle (write the four-letter short form).",
+          answer: ["LIFO"],
+          explain: "Last in, first out: the newest call finishes first.",
+        },
+        {
+          kind: "mcq",
+          q: "If Wind.java printed only the line after the call (\"up n\"), what would `show(3)` print?",
+          options: ["up 1, up 2, up 3", "up 3, up 2, up 1", "up 3 only", "nothing"],
+          answer: 0,
+          explain: "Statements after the recursive call run during unwinding, so the deepest call (n = 1) prints first.",
+        },
+        {
+          kind: "multi",
+          q: "Which are true of a correct recursive method?",
+          options: ["It has at least one base case", "Each recursive call moves closer to a base case", "It must return an int", "It always runs faster than a loop"],
+          answers: [0, 1],
+          explain: "Any return type is allowed, and recursion is usually slower than a loop because of the call overhead.",
+        },
+      ],
+    },
+    {
+      slug: "c11-isc-recursion-numbers-strings",
+      title: "Recursion on Numbers and Strings",
+      summary: "Recursive sum of digits, power, GCD by Euclid's method, conversion to another base, reversing a string, and recursive binary search.",
+      minutes: 22,
+      xp: 55,
+      blocks: [
+        {
+          type: "illustration",
+          emoji: "🔢",
+          caption: "To add the digits of 4729, add the last digit 9 to the digit-sum of 472. That smaller problem is the same kind of problem, so the method can hand it to itself.",
+        },
+        {
+          type: "text",
+          md: "To write a recursive method, ask two questions:\n\n1. **What is the smallest input**, whose answer I know at once? That is the base case (n == 0, an empty string, b == 0…).\n2. **How does the answer for n use the answer for a smaller input?** That is the recursive case.\n\nFor numbers, the smaller input is usually `n / 10` (drop the last digit) or `n - 1`. For strings, it is usually `s.substring(1)` (drop the first character).",
+        },
+        {
+          type: "code",
+          lang: "java",
+          caption: "RecNum.java",
+          code: java`public class RecNum
+{
+    static int sumDigits(int n)
+    {
+        if (n == 0)
+            return 0;
+        return n % 10 + sumDigits(n / 10);
+    }
+
+    static int gcd(int a, int b)
+    {
+        if (b == 0)
+            return a;
+        return gcd(b, a % b);
+    }
+
+    static long power(int x, int p)
+    {
+        if (p == 0)
+            return 1;
+        return x * power(x, p - 1);
+    }
+
+    // n > 0; b from 2 to 16
+    static String toBase(int n, int b)
+    {
+        if (n == 0)
+            return "";
+        return toBase(n / b, b) + "0123456789ABCDEF".charAt(n % b);
+    }
+
+    static String rev(String s)
+    {
+        if (s.length() <= 1)
+            return s;
+        return rev(s.substring(1)) + s.charAt(0);
+    }
+
+    public static void main(String[] args)
+    {
+        System.out.println(sumDigits(4729));
+        System.out.println(gcd(84, 36));
+        System.out.println(power(2, 10));
+        System.out.println(toBase(45, 2) + " " + toBase(100, 8) + " " + toBase(255, 16));
+        System.out.println(rev("ISRO"));
+    }
+}`,
+        },
+        {
+          type: "text",
+          md: "Output:\n\n`22`\n`12`\n`1024`\n`101101 144 FF`\n`ORSI`\n\n**Euclid's GCD** uses the fact that gcd(a, b) = gcd(b, a % b), and gcd(a, 0) = a: gcd(84, 36) → gcd(36, 12) → gcd(12, 0) = 12.",
+        },
+        {
+          type: "example",
+          title: "Tracing toBase(45, 2)",
+          problem: "Show how `toBase(45, 2)` builds \"101101\".",
+          steps: [
+            "Winding: toBase(45) calls toBase(22), which calls toBase(11), then toBase(5), toBase(2), toBase(1), toBase(0).",
+            "toBase(0) is the base case and returns \"\".",
+            "Unwinding, each call adds its remainder **after** the deeper result: toBase(1) = \"\" + 1, toBase(2) = \"1\" + 0, toBase(5) = \"10\" + 1, toBase(11) = \"101\" + 1, toBase(22) = \"1011\" + 0, toBase(45) = \"10110\" + 1.",
+            "The remainders come out in reverse order of calculation, which is exactly the order in which binary digits are written. Check: 32 + 8 + 4 + 1 = 45.",
+          ],
+          answer: "\"101101\"",
+        },
+        {
+          type: "mistake",
+          wrong: "In `toBase`, it does not matter whether I write `toBase(n / b, b) + digit` or `digit + toBase(n / b, b)`.",
+          right: "The order decides the result. Putting the digit **after** the recursive call writes the last remainder last, giving 101101. Putting it **before** gives the digits reversed: 101101 happens to be a palindrome, but toBase(6, 2) would give \"011\" instead of \"110\".",
+          why: "In maths, + on numbers is commutative, so order feels unimportant. On Strings, + joins text, and the position of the join decides whether a digit is written before or after the rest.",
+        },
+        {
+          type: "checkpoint",
+          questions: [
+            {
+              kind: "fill",
+              q: "Using RecNum.java, `toBase(10, 2)` returns \"___\".",
+              answer: ["1010"],
+              explain: "10 = 8 + 2, binary 1010.",
+            },
+          ],
+        },
+        {
+          type: "text",
+          md: "**Recursive binary search.** The halving idea is itself recursive: search the half that can contain the key. The range [lo, hi] is passed as parameters. The base cases are \"range empty\" (lo > hi, return −1) and \"found\" (a[mid] == key).",
+        },
+        {
+          type: "code",
+          lang: "java",
+          caption: "RecSearch.java",
+          code: java`public class RecSearch
+{
+    static int bsearch(int[] a, int key, int lo, int hi)
+    {
+        if (lo > hi)
+            return -1;                         // not found
+        int mid = (lo + hi) / 2;
+        if (a[mid] == key)
+            return mid;                        // found
+        if (key < a[mid])
+            return bsearch(a, key, lo, mid - 1);
+        return bsearch(a, key, mid + 1, hi);
+    }
+
+    public static void main(String[] args)
+    {
+        int[] pin = {110001, 226001, 400001, 560001, 600001, 700001};
+        System.out.println(bsearch(pin, 560001, 0, pin.length - 1));
+        System.out.println(bsearch(pin, 500001, 0, pin.length - 1));
+    }
+}`,
+        },
+        {
+          type: "text",
+          md: "Output: `3` then `-1`. The array holds PIN codes of six cities in ascending order. For 560001: mid = 2 (400001 is smaller) → search [3, 5], mid = 4 (600001 is larger) → search [3, 3], mid = 3, found.",
+        },
+        {
+          type: "activity",
+          activity: {
+            kind: "match",
+            prompt: "Match each recursive method to its base case.",
+            pairs: [
+              ["sumDigits(n)", "n == 0 returns 0"],
+              ["gcd(a, b)", "b == 0 returns a"],
+              ["power(x, p)", "p == 0 returns 1"],
+              ["rev(s)", "length ≤ 1 returns s"],
+              ["bsearch(a, key, lo, hi)", "lo > hi returns −1"],
+            ],
+            explain: "Each base case is the smallest input whose answer is known without any more calls.",
+          },
+        },
+        {
+          type: "callout",
+          tone: "exam",
+          title: "ISC tip",
+          md: "ISC questions often give a recursive method with blanks to fill. Fill the base case first (what stops it), then the recursive call (what gets smaller), then the combining step (how the results join). Check your answer with the smallest input by hand.",
+        },
+        {
+          type: "keypoints",
+          items: [
+            "Base case = smallest input; recursive case = combine the answer of a smaller input.",
+            "Numbers shrink with n / 10 or n − 1; strings shrink with substring(1).",
+            "gcd(a, b) = gcd(b, a % b), gcd(a, 0) = a.",
+            "In base conversion, adding the digit after the recursive call writes digits in the right order.",
+            "Recursive binary search passes lo and hi as parameters; lo > hi means not found.",
+          ],
+        },
+      ],
+      flashcards: [
+        { front: "Recursive sum of digits", back: "0 if n == 0; else n % 10 + sumDigits(n / 10)." },
+        { front: "Euclid's GCD (recursive)", back: "gcd(a, 0) = a; gcd(a, b) = gcd(b, a % b)." },
+        { front: "Recursive power", back: "power(x, 0) = 1; power(x, p) = x × power(x, p − 1)." },
+        { front: "Recursive string reverse", back: "rev(s) = rev(s.substring(1)) + s.charAt(0); base: length ≤ 1." },
+        { front: "Decimal to base b (recursive)", back: "toBase(n / b) + digit(n % b); base case n == 0 returns \"\"." },
+        { front: "Base cases of recursive binary search", back: "lo > hi (not found, −1) and a[mid] == key (found)." },
+        { front: "45 in binary", back: "101101." },
+      ],
+      quiz: [
+        {
+          kind: "numeric",
+          q: "What does `gcd(48, 18)` return using RecNum.java?",
+          answer: 6,
+          explain: "gcd(48, 18) → gcd(18, 12) → gcd(12, 6) → gcd(6, 0) = 6.",
+        },
+        {
+          kind: "numeric",
+          q: "How many calls to gcd are made in total for `gcd(48, 18)`?",
+          answer: 4,
+          explain: "gcd(48,18), gcd(18,12), gcd(12,6), gcd(6,0): four calls.",
+          difficulty: 2,
+        },
+        {
+          kind: "fill",
+          q: "`toBase(26, 16)` returns \"___\".",
+          answer: ["1A"],
+          explain: "26 = 1 × 16 + 10, and digit 10 is A.",
+        },
+        {
+          kind: "mcq",
+          q: "What does `rev(\"abc\")` return?",
+          options: ["\"cba\"", "\"abc\"", "\"bca\"", "\"cab\""],
+          answer: 0,
+          explain: "rev(\"abc\") = rev(\"bc\") + 'a' = (rev(\"c\") + 'b') + 'a' = \"cba\".",
+        },
+        {
+          kind: "truefalse",
+          q: "`toBase(0, 2)` from RecNum.java returns \"0\".",
+          answer: false,
+          explain: "n == 0 is the base case and returns the empty string \"\". That is why the method is meant for n > 0.",
+          difficulty: 2,
+        },
+        {
+          kind: "mcq",
+          q: "In RecSearch.java, which call follows `bsearch(pin, 110001, 0, 5)`?",
+          options: ["bsearch(pin, 110001, 0, 1)", "bsearch(pin, 110001, 3, 5)", "bsearch(pin, 110001, 0, 2)", "It returns 0 at once"],
+          answer: 0,
+          explain: "mid = 2 holds 400001, which is larger than the key, so the left half [0, mid − 1] = [0, 1] is searched.",
+        },
+        {
+          kind: "numeric",
+          q: "What does `sumDigits(90817)` return?",
+          answer: 25,
+          explain: "9 + 0 + 8 + 1 + 7 = 25.",
+        },
+      ],
+    },
+    {
+      slug: "c11-isc-recursion-board-practice",
+      title: "Board Practice: Recursion",
+      summary: "Mixed ISC-style questions: tracing mystery recursive methods, the binary printer and Russian peasant multiplication, and writing a recursive palindrome check.",
+      minutes: 22,
+      xp: 55,
+      blocks: [
+        {
+          type: "text",
+          md: "ISC papers usually give a short recursive method and ask what it returns for a given input, and what it does in general. Trace carefully on paper, one call per line.",
+        },
+        {
+          type: "code",
+          lang: "java",
+          caption: "Mystery.java",
+          code: java`public class Mystery
+{
+    static void print(int n)
+    {
+        if (n > 0)
+        {
+            print(n / 2);
+            System.out.print(n % 2);
+        }
+    }
+
+    static int f(int a, int b)
+    {
+        if (b == 0)
+            return 0;
+        if (b % 2 == 0)
+            return f(a + a, b / 2);
+        return f(a + a, b / 2) + a;
+    }
+
+    public static void main(String[] args)
+    {
+        print(13);
+        System.out.println();
+        System.out.println(f(5, 6));
+        System.out.println(f(7, 9));
+    }
+}`,
+        },
+        {
+          type: "example",
+          title: "Tracing print(13)",
+          problem: "What does `print(13)` print, and what does `print` do in general?",
+          steps: [
+            "print(13) calls print(6) before printing; print(6) calls print(3); print(3) calls print(1); print(1) calls print(0), which does nothing.",
+            "Unwinding: print(1) prints 1 % 2 = 1; print(3) prints 1; print(6) prints 0; print(13) prints 1.",
+            "In general, it prints the binary form of a positive n.",
+          ],
+          answer: "1101 (13 in binary).",
+        },
+        {
+          type: "example",
+          title: "Tracing f(5, 6)",
+          problem: "Find `f(5, 6)` and `f(7, 9)`, and say what f computes.",
+          steps: [
+            "f(5, 6): b even → f(10, 3). b = 3 odd → f(20, 1) + 10. b = 1 odd → f(40, 0) + 20 = 0 + 20 = 20.",
+            "Unwinding: f(20, 1) = 20, f(10, 3) = 20 + 10 = 30, f(5, 6) = 30.",
+            "f(7, 9): odd → f(14, 4) + 7; f(14, 4) → f(28, 2) → f(56, 1) = f(112, 0) + 56 = 56. So f(7, 9) = 56 + 7 = 63.",
+            "f doubles a and halves b, adding a whenever b is odd: this is the **Russian peasant method** of multiplication, f(a, b) = a × b for b ≥ 0.",
+          ],
+          answer: "f(5, 6) = 30 and f(7, 9) = 63; f returns a × b.",
+        },
+        {
+          type: "checkpoint",
+          questions: [
+            {
+              kind: "fill",
+              q: "Using Mystery.java, `print(10)` prints ___.",
+              answer: ["1010"],
+              explain: "10 in binary is 1010.",
+            },
+          ],
+        },
+        {
+          type: "mistake",
+          wrong: "In `print`, the digits come out in the order the remainders are calculated, so print(13) prints 1011.",
+          right: "The remainders of 13, 6, 3 and 1 are 1, 0, 1, 1, but each is **printed** only after the deeper call finishes, so they appear deepest first: 1, 1, 0, 1, giving **1101**.",
+          why: "The print statement is written after the call, so every call waits until all the deeper calls have printed. The order is reversed by the call stack.",
+        },
+        {
+          type: "text",
+          md: "**Program to write.** Write a recursive method `boolean isPal(String s, int i, int j)` that checks whether s reads the same between positions i and j, and use it to test words. Base case: if i ≥ j the part is empty or one character, so it is a palindrome. Recursive case: the ends must match and the inner part must be a palindrome.",
+        },
+        {
+          type: "code",
+          lang: "java",
+          caption: "RecPal.java",
+          code: java`public class RecPal
+{
+    // true if s reads the same from index i to index j
+    static boolean isPal(String s, int i, int j)
+    {
+        if (i >= j)
+            return true;
+        if (s.charAt(i) != s.charAt(j))
+            return false;
+        return isPal(s, i + 1, j - 1);
+    }
+
+    public static void main(String[] args)
+    {
+        String[] words = {"RACECAR", "ROTOR", "ROBOT", "NOON", "Q"};
+        for (int k = 0; k < words.length; k++)
+        {
+            String w = words[k];
+            System.out.println(w + " : " + isPal(w, 0, w.length() - 1));
+        }
+    }
+}`,
+        },
+        {
+          type: "text",
+          md: "Output:\n\n`RACECAR : true`\n`ROTOR : true`\n`ROBOT : false`\n`NOON : true`\n`Q : true`\n\nFor ROBOT, R = T fails at once (index 0 and 4), so only one call is made.",
+        },
+        {
+          type: "activity",
+          activity: {
+            kind: "reveal",
+            prompt: "How many calls does `isPal(\"RACECAR\", 0, 6)` make in total?",
+            emoji: "🏎️",
+            options: ["3", "4", "7", "6"],
+            answer: 1,
+            trap: 2,
+            explain: "Calls with (0,6), (1,5), (2,4), (3,3). The fourth has i ≥ j and returns true. Each call checks two characters, so a 7-letter word needs only 4 calls.",
+          },
+        },
+        {
+          type: "callout",
+          tone: "exam",
+          title: "ISC tip",
+          md: "When asked \"what does the method do\", give one sentence in general terms (\"prints n in binary\", \"returns a × b\"), not just the answer for the given input. Full marks need both the traced value and the general purpose.",
+        },
+        {
+          type: "keypoints",
+          items: [
+            "Trace recursion one call per line: parameters going down, return values coming up.",
+            "Output written after the call appears in reverse (unwinding) order.",
+            "Doubling one argument and halving the other is the Russian peasant method of multiplication.",
+            "A recursive palindrome check compares the two ends and recurses on the inside.",
+          ],
+        },
+      ],
+      flashcards: [
+        { front: "What does `print(n)` with print(n/2) then print n%2 do?", back: "Prints n in binary." },
+        { front: "Russian peasant multiplication", back: "Double a, halve b (integer division), add a when b is odd; the total is a × b." },
+        { front: "Base case of recursive palindrome check", back: "i ≥ j: an empty or one-character part is a palindrome." },
+        { front: "Recursive case of palindrome check", back: "s.charAt(i) == s.charAt(j) and isPal(s, i + 1, j − 1)." },
+        { front: "What two things should an answer to \"what does this method do\" contain?", back: "The traced value for the given input and the general purpose of the method." },
+        { front: "13 in binary", back: "1101." },
+      ],
+      quiz: [
+        {
+          kind: "numeric",
+          q: "Using Mystery.java, what is f(6, 8)?",
+          answer: 48,
+          explain: "f returns a × b: 6 × 8 = 48. (f(12,4) → f(24,2) → f(48,1) = f(96,0) + 48 = 48.)",
+        },
+        {
+          kind: "fill",
+          q: "Using Mystery.java, `print(18)` prints ___.",
+          answer: ["10010"],
+          explain: "18 = 16 + 2, binary 10010.",
+        },
+        {
+          kind: "truefalse",
+          q: "`isPal(\"LEVEL\", 0, 4)` returns true.",
+          answer: true,
+          explain: "L = L, E = E, and the middle V alone is a palindrome.",
+        },
+        {
+          kind: "numeric",
+          q: "What does this return for m(5)? `static int m(int n) { if (n == 1) return 1; return n + m(n - 1); }`",
+          answer: 15,
+          explain: "5 + 4 + 3 + 2 + 1 = 15. It returns the sum of 1 to n.",
+        },
+        {
+          kind: "mcq",
+          q: "What does `static int c(int n) { if (n < 10) return 1; return 1 + c(n / 10); }` compute?",
+          options: ["The number of digits of n", "The sum of digits of n", "The last digit of n", "n divided by 10"],
+          answer: 0,
+          explain: "Each call drops one digit and adds 1, until a single digit remains (counted as 1).",
+        },
+        {
+          kind: "mcq",
+          q: "What is printed by `static void p(int n) { if (n > 0) { System.out.print(n); p(n - 2); } }` for p(7)?",
+          options: ["7531", "1357", "75310", "7531-1"],
+          answer: 0,
+          explain: "The print is before the call, so it prints while winding: 7, 5, 3, 1; p(-1) does nothing.",
+          difficulty: 2,
+        },
+        {
+          kind: "numeric",
+          q: "How many calls does `isPal(\"ABCDCBA\", 0, 6)` make?",
+          answer: 4,
+          explain: "(0,6), (1,5), (2,4), (3,3): four calls.",
+        },
+      ],
+    },
+  ],
+};
+
+export const topics: Topic[] = [methods, arrays, strings, recursion];
 
 /** Chapter title ("11:" / "12:" + exact title) → topic slug(s) that teach it. */
 export const links: Record<string, string | string[]> = {
   "11:Methods": "c11-isc-cs-methods",
   "11:Arrays": "c11-isc-cs-arrays",
   "11:Strings in Java": "c11-isc-cs-strings",
+  "11:Recursion": "c11-isc-cs-recursion",
 };

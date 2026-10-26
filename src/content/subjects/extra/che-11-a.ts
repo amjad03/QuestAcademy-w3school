@@ -856,9 +856,963 @@ For $\text{CH}_4(g) + 2\text{O}_2(g) \rightarrow \text{CO}_2(g) + 2\text{H}_2\te
       },
     ],
   },
+  /* ------------------------------------------------------------------ */
+  /* Structure of Atom (NCERT Class 11 Unit 2; same title in ISC)        */
+  /* ------------------------------------------------------------------ */
+  {
+    slug: "c11-structure-of-atom",
+    title: "Structure of Atom",
+    icon: "⚛️",
+    description: "Subatomic particles, the Thomson and Rutherford models, electromagnetic radiation, Planck's quantum theory, the photoelectric effect, the Bohr model and hydrogen spectrum, de Broglie and Heisenberg, quantum numbers, orbitals and electronic configuration.",
+    lessons: [
+      /* ---------------- Lesson 1 ---------------- */
+      {
+        slug: "c11-atom-particles-models",
+        title: "Subatomic Particles and Early Atomic Models",
+        summary: "Cathode rays and the electron, e/m and Millikan's charge, protons and neutrons, Thomson's and Rutherford's models, atomic number, mass number, isotopes and isobars, and why Rutherford's model failed.",
+        minutes: 18,
+        xp: 45,
+        blocks: [
+          {
+            type: "illustration",
+            emoji: "📺",
+            caption: "Old television sets and neon signs both work with discharge tubes: the same kind of tube that revealed the electron.",
+          },
+          {
+            type: "text",
+            md: t`Dalton thought atoms could not be divided. Experiments with **discharge tubes** (gas at very low pressure, a high voltage between two electrodes) showed otherwise. A stream of particles called **cathode rays** flows from the cathode (−) to the anode (+). They travel in straight lines, are invisible but make a fluorescent coating glow, are deflected towards the **positive** plate in an electric field, and their behaviour does **not depend** on the gas or the metal of the electrode. So these negative particles, the **electrons**, are part of every atom.`,
+          },
+          {
+            type: "table",
+            headers: ["Particle", "Found by", "Charge (C)", "Mass (kg)"],
+            rows: [
+              ["Electron", "J. J. Thomson (e/m, 1897); charge by R. A. Millikan (oil-drop)", t`$-1.602 \times 10^{-19}$`, t`$9.109 \times 10^{-31}$`],
+              ["Proton", "positive canal rays (E. Goldstein); characterised from hydrogen gas", t`$+1.602 \times 10^{-19}$`, t`$1.673 \times 10^{-27}$`],
+              ["Neutron", "James Chadwick (1932), by bombarding beryllium with α-particles", "0", t`$1.675 \times 10^{-27}$`],
+            ],
+          },
+          {
+            type: "text",
+            md: t`Thomson measured the **charge-to-mass ratio** of the electron by balancing electric and magnetic deflections: $e/m_e = 1.758820 \times 10^{11}$ C kg$^{-1}$. Millikan's oil-drop experiment found the charge $e = 1.6 \times 10^{-19}$ C, which gives $m_e = e \div (e/m_e) = 9.1 \times 10^{-31}$ kg. Unlike cathode rays, **canal rays** (positive rays) depend on the gas in the tube; the lightest, from hydrogen, is the **proton**.`,
+          },
+          {
+            type: "heading",
+            text: "Thomson's and Rutherford's models",
+          },
+          {
+            type: "text",
+            md: t`**Thomson's model** (plum pudding or watermelon model): positive charge spread uniformly through a sphere of radius about $10^{-10}$ m, with electrons embedded in it so that the atom is neutral. It explained neutrality but not Rutherford's results.
+
+**Rutherford's α-particle scattering**: a beam of α-particles (He$^{2+}$) struck a very thin gold foil, with a zinc sulphide screen around it.`,
+          },
+          {
+            type: "table",
+            headers: ["Observation", "Conclusion"],
+            rows: [
+              ["Most α-particles passed straight through", "most of the atom is empty space"],
+              ["A small fraction was deflected by small angles", "the positive charge is concentrated in a tiny region"],
+              ["Very few (about 1 in 20 000) bounced back almost 180°", t`a tiny, dense, positive **nucleus** holds nearly all the mass; nuclear radius $\sim 10^{-15}$ m versus atomic radius $\sim 10^{-10}$ m`],
+            ],
+          },
+          {
+            type: "text",
+            md: t`In Rutherford's **nuclear model**, electrons move round the nucleus in circular paths (like planets round the Sun), held by electrostatic attraction.
+
+**Atomic number** $Z$ = number of protons (= number of electrons in a neutral atom). **Mass number** $A$ = protons + neutrons (the **nucleons**). A nucleus is written $^{A}_{Z}\text{X}$; neutrons $= A - Z$. **Isotopes** have the same $Z$ but different $A$ (protium $^1_1$H, deuterium $^2_1$H, tritium $^3_1$H); they have almost the same chemistry because chemistry depends on electrons. **Isobars** have the same $A$ but different $Z$ ($^{14}_{6}$C and $^{14}_{7}$N).`,
+          },
+          {
+            type: "example",
+            title: "Counting particles",
+            problem: t`Find the numbers of protons, neutrons and electrons in (a) $^{80}_{35}$Br and (b) $^{56}_{26}$Fe$^{3+}$.`,
+            steps: [
+              t`(a) Protons $= Z = 35$; neutrons $= 80 - 35 = 45$; neutral atom, so electrons $= 35$.`,
+              t`(b) Protons $= 26$; neutrons $= 56 - 26 = 30$.`,
+              t`A charge of 3+ means 3 electrons lost: electrons $= 26 - 3 = 23$.`,
+            ],
+            answer: "(a) 35 p, 45 n, 35 e; (b) 26 p, 30 n, 23 e",
+          },
+          {
+            type: "checkpoint",
+            questions: [
+              {
+                kind: "mcq",
+                q: "Which pair are isobars?",
+                options: ["¹²C and ¹⁴C", "⁴⁰Ar and ⁴⁰Ca", "¹H and ²H", "¹⁶O and ¹⁸O"],
+                answer: 1,
+                explain: "⁴⁰Ar (Z = 18) and ⁴⁰Ca (Z = 20) share mass number 40 but differ in atomic number. The others are isotope pairs.",
+              },
+            ],
+          },
+          {
+            type: "mistake",
+            wrong: "Rutherford's model is complete: electrons simply orbit the nucleus like planets, so the atom is stable.",
+            right: "By classical electromagnetic theory, an electron moving in a circle is accelerating and must radiate energy, so it would spiral into the nucleus. Rutherford's model cannot explain the stability of atoms, nor the energies and arrangement of electrons.",
+            why: "Planets are neutral and do not radiate, so the analogy feels safe. Charged particles do radiate when accelerated, and that is the weakness that led to Bohr's model.",
+          },
+          {
+            type: "activity",
+            activity: {
+              kind: "match",
+              prompt: "Match each discovery with the scientist.",
+              pairs: [
+                ["Charge-to-mass ratio of the electron", "J. J. Thomson"],
+                ["Charge on the electron (oil drops)", "R. A. Millikan"],
+                ["Atomic nucleus (gold foil)", "Ernest Rutherford"],
+                ["Neutron", "James Chadwick"],
+                ["Canal (anode) rays", "Eugen Goldstein"],
+              ],
+              explain: "Each experiment added one piece: Thomson's e/m and Millikan's e together gave the electron's mass; Rutherford found the nucleus; Chadwick explained the extra mass of nuclei with the neutron.",
+            },
+          },
+          {
+            type: "callout",
+            tone: "exam",
+            title: "Board exam tip",
+            md: "For Rutherford's experiment, examiners expect three observations each paired with its conclusion, and then the two drawbacks of the model (stability, electron arrangement and energies). A neat table answer scores full marks.",
+          },
+          {
+            type: "keypoints",
+            items: [
+              "Cathode rays are electrons: negative, travel straight, independent of gas and electrode material.",
+              "e/m = 1.758820 × 10¹¹ C kg⁻¹ (Thomson); e = 1.602 × 10⁻¹⁹ C (Millikan); mₑ = 9.109 × 10⁻³¹ kg.",
+              "Rutherford: atom mostly empty, tiny dense positive nucleus (~10⁻¹⁵ m).",
+              "Z = protons; A = protons + neutrons. Isotopes: same Z; isobars: same A.",
+              "Rutherford's model fails to explain atomic stability and electron energies.",
+            ],
+          },
+        ],
+        flashcards: [
+          { front: "Cathode rays are deflected towards which plate?", back: "The positive plate: they are negatively charged electrons." },
+          { front: "e/m of the electron", back: "1.758820 × 10¹¹ C kg⁻¹ (J. J. Thomson)." },
+          { front: "Who discovered the neutron and how?", back: "James Chadwick, 1932: bombarding beryllium with α-particles." },
+          { front: "Most α-particles passed undeflected through gold foil. Conclusion?", back: "Most of the atom is empty space." },
+          { front: "Isotopes", back: "Atoms of the same element (same Z) with different mass numbers, e.g. ¹H, ²H, ³H." },
+          { front: "Isobars", back: "Atoms of different elements with the same mass number, e.g. ¹⁴C and ¹⁴N." },
+          { front: "Main drawback of Rutherford's model", back: "An orbiting (accelerating) electron should radiate energy and fall into the nucleus, so the model cannot explain stability." },
+        ],
+        quiz: [
+          {
+            kind: "mcq",
+            q: "The e/m value of canal rays depends on the gas in the tube, but that of cathode rays does not. This shows that:",
+            options: ["Electrons are heavier than protons", "Electrons are the same in all atoms", "Canal rays are electromagnetic waves", "Cathode rays are made of protons"],
+            answer: 1,
+            explain: "Cathode rays (electrons) behave identically whatever the gas or electrode, so electrons are a universal constituent. Canal rays are positive ions of the gas, so they change.",
+          },
+          {
+            kind: "numeric",
+            q: "How many neutrons are present in ²³⁵₉₂U?",
+            answer: 143,
+            explain: "Neutrons = A − Z = 235 − 92 = 143.",
+          },
+          {
+            kind: "numeric",
+            q: "How many electrons are in the sulphide ion ³²₁₆S²⁻?",
+            answer: 18,
+            explain: "Z = 16; a 2− charge means 2 extra electrons: 16 + 2 = 18.",
+          },
+          {
+            kind: "truefalse",
+            q: "Isotopes of an element have nearly identical chemical properties.",
+            answer: true,
+            explain: "Chemical properties depend on the number of electrons, which is the same for isotopes. Only properties that depend on mass (like rate of diffusion) differ.",
+          },
+          {
+            kind: "mcq",
+            q: "In Rutherford's experiment, the very few α-particles that bounced back showed that:",
+            options: ["Electrons are spread through the atom", "The positive charge and mass are concentrated in a tiny nucleus", "The atom is mostly solid", "α-particles are negatively charged"],
+            answer: 1,
+            explain: "Only a very small, dense, positively charged centre can repel a fast, heavy α-particle straight back.",
+          },
+          {
+            kind: "mcq",
+            q: "Which species has the same number of electrons as Ne?",
+            options: ["Na", "Mg²⁺", "Cl⁻", "K⁺"],
+            answer: 1,
+            explain: "Ne has 10 electrons. Mg²⁺ has 12 − 2 = 10. Na has 11, Cl⁻ 18, K⁺ 18.",
+            difficulty: 2,
+          },
+          {
+            kind: "fill",
+            q: "The total number of protons and neutrons in a nucleus is called the ___ number.",
+            answer: ["mass"],
+            explain: "Mass number A = protons + neutrons (nucleons).",
+          },
+        ],
+      },
+
+      /* ---------------- Lesson 2 ---------------- */
+      {
+        slug: "c11-atom-radiation-quantum",
+        title: "Electromagnetic Radiation, Planck's Quanta and the Photoelectric Effect",
+        summary: "Wave description of light, the electromagnetic spectrum, Planck's quantum theory, the photoelectric effect and dual behaviour of radiation, and emission and absorption line spectra.",
+        minutes: 20,
+        xp: 50,
+        blocks: [
+          {
+            type: "illustration",
+            emoji: "🎆",
+            caption: "Diwali fireworks glow red with strontium salts, green with barium and yellow with sodium. Each element gives out only certain colours.",
+          },
+          {
+            type: "text",
+            md: t`James Maxwell described light as **electromagnetic radiation**: oscillating electric and magnetic fields, perpendicular to each other and to the direction of travel, needing no medium. All such radiation moves through vacuum at $c = 3.0 \times 10^{8}$ m s$^{-1}$. It is described by **frequency** $\nu$ (Hz $=$ s$^{-1}$), **wavelength** $\lambda$ (m) and **wavenumber** $\bar{\nu} = 1/\lambda$ (m$^{-1}$, often cm$^{-1}$).`,
+          },
+          {
+            type: "formula",
+            tex: t`c = \nu\lambda \qquad\qquad \bar{\nu} = \frac{1}{\lambda} \qquad\qquad E = h\nu = \frac{hc}{\lambda}`,
+            caption: "h = 6.626 × 10⁻³⁴ J s (Planck's constant). Energy rises with frequency and falls with wavelength.",
+          },
+          {
+            type: "text",
+            md: t`In order of **increasing wavelength** the electromagnetic spectrum runs: cosmic and γ-rays, X-rays, ultraviolet, **visible** (about 400 nm violet to 750 nm red), infrared, microwaves, radio waves.
+
+The wave picture could not explain three things: **black-body radiation** (how the colour of a hot body changes with temperature), the **photoelectric effect**, and the **line spectra** of atoms. In 1900 Max **Planck** proposed that atoms emit or absorb energy only in small packets called **quanta**; a quantum of light is a **photon**, with energy $E = h\nu$.`,
+          },
+          {
+            type: "example",
+            title: "Energy of a photon",
+            problem: t`Find the frequency and energy of a photon of wavelength 500 nm, and the energy of one mole of such photons. ($h = 6.626 \times 10^{-34}$ J s, $c = 3.0 \times 10^{8}$ m s$^{-1}$, $N_A = 6.022 \times 10^{23}$ mol$^{-1}$)`,
+            steps: [
+              t`$\nu = c/\lambda = (3.0 \times 10^{8})/(500 \times 10^{-9}) = 6.0 \times 10^{14}$ Hz.`,
+              t`$E = h\nu = 6.626 \times 10^{-34} \times 6.0 \times 10^{14} = 3.98 \times 10^{-19}$ J.`,
+              t`Per mole: $3.98 \times 10^{-19} \times 6.022 \times 10^{23} = 2.39 \times 10^{5}$ J $= 239$ kJ mol$^{-1}$.`,
+            ],
+            answer: t`$\nu = 6.0 \times 10^{14}$ Hz; $E = 3.98 \times 10^{-19}$ J; 239 kJ mol$^{-1}$`,
+          },
+          {
+            type: "heading",
+            text: "The photoelectric effect",
+          },
+          {
+            type: "list",
+            items: [
+              "When light of suitable frequency falls on a clean metal surface (e.g. K, Rb, Cs), electrons are ejected at once: there is no time lag.",
+              t`Below a **threshold frequency** $\nu_0$ no electron is ejected, however bright the light.`,
+              "Above ν₀, the number of electrons ejected is proportional to the **intensity** (brightness) of the light.",
+              "The kinetic energy of the ejected electrons increases with the **frequency** of the light, not with its intensity.",
+            ],
+          },
+          {
+            type: "formula",
+            tex: t`h\nu = h\nu_0 + \tfrac{1}{2}m_e v^2 \qquad (W_0 = h\nu_0 \text{ is the work function})`,
+            caption: "Einstein (1905): one photon gives all its energy to one electron. Part pulls the electron free (W₀); the rest becomes kinetic energy.",
+          },
+          {
+            type: "example",
+            title: "Kinetic energy of a photoelectron",
+            problem: t`Light of wavelength 400 nm falls on a metal with work function 2.25 eV. Find the kinetic energy and speed of the ejected electrons. ($1\ \text{eV} = 1.602 \times 10^{-19}$ J, $m_e = 9.109 \times 10^{-31}$ kg)`,
+            steps: [
+              t`$E = hc/\lambda = (6.626 \times 10^{-34} \times 3.0 \times 10^{8})/(4.00 \times 10^{-7}) = 4.97 \times 10^{-19}$ J (3.10 eV).`,
+              t`$W_0 = 2.25 \times 1.602 \times 10^{-19} = 3.60 \times 10^{-19}$ J.`,
+              t`KE $= 4.97 \times 10^{-19} - 3.60 \times 10^{-19} = 1.37 \times 10^{-19}$ J (0.85 eV).`,
+              t`$v = \sqrt{2\,\text{KE}/m_e} = \sqrt{2 \times 1.37 \times 10^{-19}/9.109 \times 10^{-31}} = 5.5 \times 10^{5}$ m s$^{-1}$.`,
+            ],
+            answer: t`KE $\approx 1.37 \times 10^{-19}$ J; $v \approx 5.5 \times 10^{5}$ m s$^{-1}$`,
+          },
+          {
+            type: "activity",
+            activity: {
+              kind: "reveal",
+              prompt: "Red light ejects no electrons from a metal. What if we make it twice as bright?",
+              emoji: "💡",
+              options: ["Electrons are ejected, but slowly", "Still no electrons are ejected", "Electrons are ejected after a delay", "Twice as many electrons are ejected"],
+              answer: 1,
+              trap: 3,
+              explain: "Each photon of red light has too little energy (ν < ν₀). Brighter light means more such photons, but no single photon can free an electron, so nothing happens.",
+            },
+          },
+          {
+            type: "checkpoint",
+            questions: [
+              {
+                kind: "mcq",
+                q: "In the photoelectric effect, the kinetic energy of ejected electrons depends on:",
+                options: ["Intensity of light", "Frequency of light", "Duration of exposure", "Area of the metal"],
+                answer: 1,
+                explain: "KE = hν − hν₀ depends only on frequency (and the metal). Intensity changes the number of electrons, not their energy.",
+              },
+            ],
+          },
+          {
+            type: "text",
+            md: t`So light behaves as a **wave** (interference, diffraction) and as a stream of **particles** (photoelectric effect, black-body radiation): this is the **dual behaviour** of electromagnetic radiation.
+
+When an element's vapour or its salt in a flame is excited, it emits light of only certain wavelengths: an **emission spectrum** of bright lines on a dark background. When white light passes through the cool vapour, the same wavelengths are absorbed: an **absorption spectrum** of dark lines. These **line (atomic) spectra** are fingerprints of elements; rubidium, caesium, thallium, indium, gallium and scandium were discovered this way, and helium was found in the Sun's spectrum.`,
+          },
+          {
+            type: "mistake",
+            wrong: "A continuous spectrum and a line spectrum are the same thing, just seen with different prisms.",
+            right: "White light from a hot solid gives a continuous spectrum (all colours merge). Excited gaseous atoms give a line spectrum: only certain sharp wavelengths, different for each element.",
+            why: "Both are spread out by a prism, so they look similar at first. But the lines appear only because an atom's electrons can have only certain energies, which is the clue Bohr used.",
+          },
+          {
+            type: "keypoints",
+            items: [
+              "c = νλ; ν̄ = 1/λ; E = hν = hc/λ, h = 6.626 × 10⁻³⁴ J s.",
+              "Planck: energy is emitted or absorbed in quanta; a light quantum is a photon.",
+              "Photoelectric effect: threshold frequency, no time lag, number ∝ intensity, KE ∝ (ν − ν₀).",
+              "hν = W₀ + ½mv². Radiation has dual (wave and particle) nature.",
+              "Atoms give line spectra (emission or absorption), unique to each element.",
+            ],
+          },
+        ],
+        flashcards: [
+          { front: "Planck's quantum theory", back: "Energy is emitted or absorbed only in discrete packets (quanta), each of energy E = hν." },
+          { front: "Value of Planck's constant", back: "6.626 × 10⁻³⁴ J s." },
+          { front: "Threshold frequency", back: "The minimum frequency of light that can eject an electron from a given metal (ν₀ = W₀/h)." },
+          { front: "Effect of intensity in the photoelectric effect", back: "More intense light (above ν₀) ejects more electrons, but each has the same maximum KE." },
+          { front: "Wavenumber", back: "ν̄ = 1/λ, the number of wavelengths per unit length (m⁻¹ or cm⁻¹)." },
+          { front: "Emission vs absorption spectrum", back: "Emission: bright lines on a dark background from excited atoms. Absorption: dark lines in a continuous spectrum at the same wavelengths." },
+          { front: "Visible range", back: "About 400 nm (violet) to 750 nm (red)." },
+        ],
+        quiz: [
+          {
+            kind: "numeric",
+            q: t`A radio station broadcasts at 100 MHz. What is the wavelength in metres? ($c = 3.0 \times 10^{8}$ m s$^{-1}$)`,
+            answer: 3,
+            unit: "m",
+            explain: "λ = c/ν = 3.0 × 10⁸ / 1.0 × 10⁸ = 3.0 m.",
+          },
+          {
+            kind: "mcq",
+            q: "Arrange in increasing energy of photons: X-rays, visible, microwave, ultraviolet.",
+            options: ["microwave < visible < ultraviolet < X-rays", "X-rays < ultraviolet < visible < microwave", "visible < microwave < ultraviolet < X-rays", "microwave < ultraviolet < visible < X-rays"],
+            answer: 0,
+            explain: "Energy rises with frequency, i.e. falls with wavelength. Microwaves have the longest wavelength, X-rays the shortest.",
+          },
+          {
+            kind: "numeric",
+            q: "What is the energy (in kJ mol⁻¹, to the nearest whole number) of one mole of photons of wavelength 600 nm? (h = 6.626 × 10⁻³⁴ J s, c = 3.0 × 10⁸ m s⁻¹, N_A = 6.022 × 10²³)",
+            answer: 200,
+            tolerance: 1,
+            unit: "kJ/mol",
+            explain: "E per photon = hc/λ = 3.313 × 10⁻¹⁹ J. Per mole × 6.022 × 10²³ = 1.995 × 10⁵ J ≈ 200 kJ mol⁻¹.",
+            difficulty: 2,
+          },
+          {
+            kind: "truefalse",
+            q: "If the frequency of incident light is doubled, the kinetic energy of photoelectrons is exactly doubled.",
+            answer: false,
+            explain: "KE = hν − W₀. Doubling ν gives 2hν − W₀, which is more than double the old KE (hν − W₀) whenever W₀ > 0.",
+            difficulty: 2,
+            hint: "Write KE before and after using hν − W₀.",
+          },
+          {
+            kind: "mcq",
+            q: "Which observation can the wave theory of light explain?",
+            options: ["Photoelectric effect", "Black-body radiation", "Interference and diffraction", "Line spectra of atoms"],
+            answer: 2,
+            explain: "Interference and diffraction are wave effects. The other three needed the idea of quanta.",
+          },
+          {
+            kind: "numeric",
+            q: "The threshold frequency of a metal is 5.0 × 10¹⁴ Hz. What is its work function in units of 10⁻¹⁹ J? (h = 6.626 × 10⁻³⁴ J s) Give two decimal places.",
+            answer: 3.31,
+            tolerance: 0.01,
+            explain: "W₀ = hν₀ = 6.626 × 10⁻³⁴ × 5.0 × 10¹⁴ = 3.313 × 10⁻¹⁹ J.",
+          },
+          {
+            kind: "fill",
+            q: "A quantum of light energy is called a ___.",
+            answer: ["photon"],
+            explain: "Each photon carries energy E = hν.",
+          },
+        ],
+      },
+
+      /* ---------------- Lesson 3 ---------------- */
+      {
+        slug: "c11-atom-bohr-dual",
+        title: "Bohr's Model, Hydrogen Spectrum, de Broglie and Heisenberg",
+        summary: "Bohr's postulates, radii and energies of hydrogen-like orbits, the spectral series of hydrogen and the Rydberg equation, limitations of Bohr's model, the de Broglie wavelength and Heisenberg's uncertainty principle.",
+        minutes: 22,
+        xp: 50,
+        blocks: [
+          {
+            type: "text",
+            md: t`In 1913 Niels **Bohr** combined Planck's quanta with Rutherford's nucleus to explain the hydrogen spectrum. His postulates:
+
+1. The electron moves round the nucleus in circular paths of fixed radius and energy, called **orbits** or **stationary states** (energy levels). While in one, it does not radiate.
+2. Energy is absorbed or emitted only when the electron jumps between orbits: $\Delta E = E_2 - E_1 = h\nu$ (the **Bohr frequency rule**).
+3. The **angular momentum** of the electron is quantised: $m_e v r = n\dfrac{h}{2\pi}$, $n = 1, 2, 3, \ldots$`,
+          },
+          {
+            type: "formula",
+            tex: t`r_n = 52.9\,\frac{n^2}{Z}\ \text{pm} \qquad E_n = -2.18 \times 10^{-18}\,\frac{Z^2}{n^2}\ \text{J} = -13.6\,\frac{Z^2}{n^2}\ \text{eV} \qquad v_n = 2.18 \times 10^{6}\,\frac{Z}{n}\ \text{m s}^{-1}`,
+            caption: "For hydrogen (Z = 1) and hydrogen-like ions such as He⁺ (Z = 2) and Li²⁺ (Z = 3). r₁ = 52.9 pm is the Bohr radius.",
+          },
+          {
+            type: "text",
+            md: t`The energy is **negative** because the zero of energy is chosen as the electron completely free from the nucleus ($n = \infty$). A bound electron is more stable than a free one, so its energy is below zero. As $n$ increases the orbits get larger, the energy gets less negative and the levels crowd together. The energy needed to remove the electron from $n = 1$ of a hydrogen atom, $2.18 \times 10^{-18}$ J (13.6 eV), is its **ionisation energy**.`,
+          },
+          {
+            type: "example",
+            title: "The red line of hydrogen",
+            problem: t`Calculate the wavelength of light emitted when the electron of a hydrogen atom falls from $n = 3$ to $n = 2$. ($h = 6.626 \times 10^{-34}$ J s, $c = 3.0 \times 10^{8}$ m s$^{-1}$)`,
+            steps: [
+              t`$\Delta E = 2.18 \times 10^{-18}\left(\dfrac{1}{2^2} - \dfrac{1}{3^2}\right) = 2.18 \times 10^{-18} \times \dfrac{5}{36} = 3.03 \times 10^{-19}$ J.`,
+              t`$\lambda = \dfrac{hc}{\Delta E} = \dfrac{6.626 \times 10^{-34} \times 3.0 \times 10^{8}}{3.03 \times 10^{-19}} = 6.56 \times 10^{-7}$ m.`,
+            ],
+            answer: "About 656 nm: the red line of the Balmer series.",
+          },
+          {
+            type: "heading",
+            text: "Spectral series of hydrogen",
+          },
+          {
+            type: "formula",
+            tex: t`\bar{\nu} = 109\,677\left(\frac{1}{n_1^2} - \frac{1}{n_2^2}\right)\ \text{cm}^{-1}, \qquad n_2 > n_1`,
+            caption: "109 677 cm⁻¹ is the Rydberg constant for hydrogen. For hydrogen-like ions multiply by Z².",
+          },
+          {
+            type: "table",
+            headers: ["Series", "n₁ (lower level)", "n₂", "Region"],
+            rows: [
+              ["Lyman", "1", "2, 3, 4, …", "ultraviolet"],
+              ["Balmer", "2", "3, 4, 5, …", "visible"],
+              ["Paschen", "3", "4, 5, 6, …", "infrared"],
+              ["Brackett", "4", "5, 6, 7, …", "infrared"],
+              ["Pfund", "5", "6, 7, 8, …", "infrared"],
+            ],
+          },
+          {
+            type: "activity",
+            activity: {
+              kind: "sort",
+              prompt: "In which region does each hydrogen transition appear?",
+              groups: ["Ultraviolet", "Visible", "Infrared"],
+              items: [
+                { text: "n = 2 → n = 1", group: 0, hint: "Ending at n = 1 is the Lyman series." },
+                { text: "n = 3 → n = 2", group: 1, hint: "Ending at n = 2 is the Balmer series." },
+                { text: "n = 4 → n = 3", group: 2, hint: "Ending at n = 3 is the Paschen series." },
+                { text: "n = 5 → n = 1", group: 0, hint: "Any jump down to n = 1 is Lyman." },
+                { text: "n = 4 → n = 2", group: 1, hint: "Balmer: the blue-green line near 486 nm." },
+                { text: "n = 6 → n = 5", group: 2, hint: "Ending at n = 5 is the Pfund series." },
+              ],
+              explain: "The lower level decides the series. Jumps to n = 1 are the largest, so they give UV; jumps to n = 2 give visible light; jumps to n ≥ 3 give infrared.",
+            },
+          },
+          {
+            type: "text",
+            md: t`**Limitations of Bohr's model**: it fails for atoms with more than one electron; it cannot explain the fine structure (doublets) of lines seen in better spectroscopes, nor the splitting of lines in a magnetic field (**Zeeman effect**) or an electric field (**Stark effect**); it cannot explain the shapes of molecules; and it treats the electron as a particle with an exact orbit, which the next two ideas forbid.`,
+          },
+          {
+            type: "heading",
+            text: "Towards the quantum mechanical model",
+          },
+          {
+            type: "formula",
+            tex: t`\lambda = \frac{h}{mv} = \frac{h}{p} \qquad\qquad \Delta x \cdot \Delta p_x \ge \frac{h}{4\pi}`,
+            caption: "De Broglie (1924): matter has wave character too. Heisenberg (1927): position and momentum cannot both be known exactly at the same time.",
+          },
+          {
+            type: "example",
+            title: "Why only tiny particles show wave and uncertainty effects",
+            problem: t`(a) Find the de Broglie wavelength of an electron moving at $2.19 \times 10^{6}$ m s$^{-1}$ and of a 0.10 kg ball at 10 m s$^{-1}$. (b) An electron's position is known to within $1.0 \times 10^{-10}$ m. Find the least uncertainty in its velocity. ($h = 6.626 \times 10^{-34}$ J s, $m_e = 9.109 \times 10^{-31}$ kg)`,
+            steps: [
+              t`(a) Electron: $\lambda = \dfrac{6.626 \times 10^{-34}}{9.109 \times 10^{-31} \times 2.19 \times 10^{6}} = 3.32 \times 10^{-10}$ m, comparable to the size of an atom.`,
+              t`Ball: $\lambda = \dfrac{6.626 \times 10^{-34}}{0.10 \times 10} = 6.6 \times 10^{-34}$ m, far too small to detect.`,
+              t`(b) $\Delta v \ge \dfrac{h}{4\pi m_e \Delta x} = \dfrac{6.626 \times 10^{-34}}{4\pi \times 9.109 \times 10^{-31} \times 1.0 \times 10^{-10}} = 5.8 \times 10^{5}$ m s$^{-1}$.`,
+            ],
+            answer: t`(a) 332 pm for the electron, $6.6 \times 10^{-34}$ m for the ball; (b) $\Delta v \ge 5.8 \times 10^{5}$ m s$^{-1}$, so the idea of an exact orbit is meaningless for an electron.`,
+          },
+          {
+            type: "mistake",
+            wrong: "Heisenberg's principle means our instruments are not good enough yet; better instruments will fix the electron's exact orbit.",
+            right: "The uncertainty is built into nature. Any measurement of an electron's position (using light) disturbs its momentum, so Δx·Δp ≥ h/4π for every possible experiment.",
+            why: "For everyday objects the limit is far below what we can measure, so it never shows. For an electron the uncertainty in velocity is as large as the velocity itself, so definite Bohr orbits cannot exist.",
+          },
+          {
+            type: "checkpoint",
+            questions: [
+              {
+                kind: "numeric",
+                q: "What is the radius (in pm) of the second Bohr orbit of He⁺?",
+                answer: 105.8,
+                tolerance: 0.2,
+                unit: "pm",
+                explain: "r = 52.9 n²/Z = 52.9 × 2²/2 = 52.9 × 2 = 105.8 pm.",
+                difficulty: 2,
+              },
+            ],
+          },
+          {
+            type: "keypoints",
+            items: [
+              "Bohr: stationary orbits, ΔE = hν, mvr = nh/2π.",
+              "rₙ = 52.9 n²/Z pm; Eₙ = −2.18 × 10⁻¹⁸ Z²/n² J; vₙ = 2.18 × 10⁶ Z/n m s⁻¹.",
+              "Lyman (UV, n₁ = 1), Balmer (visible, n₁ = 2), Paschen, Brackett, Pfund (IR).",
+              "Bohr fails for many-electron atoms, fine structure, Zeeman and Stark effects.",
+              "λ = h/mv; Δx·Δp ≥ h/4π: exact orbits are impossible for electrons.",
+            ],
+          },
+        ],
+        flashcards: [
+          { front: "Bohr's quantisation condition", back: "mₑvr = nh/2π (angular momentum is a whole-number multiple of h/2π)." },
+          { front: "Energy of the nth orbit (hydrogen-like)", back: "Eₙ = −2.18 × 10⁻¹⁸ Z²/n² J = −13.6 Z²/n² eV." },
+          { front: "Radius of the first Bohr orbit of H", back: "52.9 pm (0.529 Å)." },
+          { front: "Why is Eₙ negative?", back: "Zero energy is set for the free electron (n = ∞); a bound electron is more stable, so lower than zero." },
+          { front: "Balmer series", back: "Transitions ending at n = 2; lines in the visible region." },
+          { front: "De Broglie relation", back: "λ = h/mv = h/p." },
+          { front: "Heisenberg's uncertainty principle", back: "Δx · Δp ≥ h/4π: exact position and momentum cannot be known together." },
+          { front: "Zeeman and Stark effects", back: "Splitting of spectral lines in magnetic and electric fields respectively; Bohr's model cannot explain them." },
+        ],
+        quiz: [
+          {
+            kind: "numeric",
+            q: "What is the energy (in eV) of the electron in the n = 2 orbit of a hydrogen atom?",
+            answer: -3.4,
+            tolerance: 0.01,
+            unit: "eV",
+            explain: "Eₙ = −13.6/n² = −13.6/4 = −3.4 eV.",
+          },
+          {
+            kind: "mcq",
+            q: "The ratio of the radius of the third Bohr orbit to that of the first in a hydrogen atom is:",
+            options: ["3 : 1", "9 : 1", "1 : 9", "1 : 3"],
+            answer: 1,
+            explain: "r ∝ n², so r₃ : r₁ = 9 : 1.",
+          },
+          {
+            kind: "numeric",
+            q: "What is the ionisation energy of He⁺ in eV?",
+            answer: 54.4,
+            tolerance: 0.1,
+            unit: "eV",
+            explain: "IE = 13.6 Z²/1² = 13.6 × 4 = 54.4 eV.",
+            difficulty: 2,
+          },
+          {
+            kind: "mcq",
+            q: "Which series of the hydrogen spectrum lies in the visible region?",
+            options: ["Lyman", "Balmer", "Paschen", "Pfund"],
+            answer: 1,
+            explain: "The Balmer series (ending at n = 2) lies in the visible region; Lyman is UV, Paschen and Pfund are IR.",
+          },
+          {
+            kind: "truefalse",
+            q: "Bohr's model can explain the spectrum of the helium atom.",
+            answer: false,
+            explain: "Bohr's model works only for one-electron species (H, He⁺, Li²⁺). Neutral He has two electrons.",
+          },
+          {
+            kind: "numeric",
+            q: "Wavenumber (in cm⁻¹, nearest whole number) of the line for n = 4 → n = 2 in hydrogen? (R = 109 677 cm⁻¹)",
+            answer: 20564,
+            tolerance: 2,
+            unit: "cm⁻¹",
+            explain: "ν̄ = 109 677 (1/4 − 1/16) = 109 677 × 3/16 = 20 564 cm⁻¹ (λ ≈ 486 nm).",
+            difficulty: 2,
+          },
+          {
+            kind: "mcq",
+            q: "If the velocity of a particle is halved, its de Broglie wavelength:",
+            options: ["Halves", "Doubles", "Stays the same", "Becomes four times"],
+            answer: 1,
+            explain: "λ = h/mv, so λ ∝ 1/v. Halving v doubles λ.",
+          },
+          {
+            kind: "multi",
+            q: "Which of these are limitations of Bohr's model?",
+            options: ["It cannot explain the Zeeman effect", "It cannot explain spectra of multi-electron atoms", "It cannot explain the hydrogen line spectrum", "It ignores the dual nature of the electron"],
+            answers: [0, 1, 3],
+            explain: "Bohr's model does explain the hydrogen line spectrum (its great success). It fails for multi-electron atoms, the Zeeman and Stark effects, and treats the electron purely as a particle on a fixed path.",
+            difficulty: 2,
+          },
+        ],
+      },
+
+      /* ---------------- Lesson 4 ---------------- */
+      {
+        slug: "c11-atom-quantum-model",
+        title: "Quantum Numbers, Orbitals and Electronic Configuration",
+        summary: "The quantum mechanical model, the four quantum numbers, shapes and nodes of s, p and d orbitals, orbital energies, the Aufbau principle, Pauli exclusion principle and Hund's rule, and the extra stability of half-filled and filled subshells.",
+        minutes: 25,
+        xp: 55,
+        blocks: [
+          {
+            type: "text",
+            md: t`**Quantum mechanics** (Erwin Schrödinger and Werner Heisenberg, 1926) treats the electron as a wave. The **Schrödinger equation** $\hat{H}\psi = E\psi$ gives allowed energies and **wave functions** $\psi$. $\psi$ itself has no physical meaning, but $|\psi|^2$ gives the **probability density** of finding the electron at a point. An **atomic orbital** is a one-electron wave function; it describes the region where the electron is most likely to be found. It is not a fixed path like Bohr's orbit.`,
+          },
+          {
+            type: "table",
+            headers: ["Quantum number", "Symbol and values", "What it tells us"],
+            rows: [
+              ["Principal", t`$n = 1, 2, 3, \ldots$`, t`shell (K, L, M, N…), size and main energy; $n^2$ orbitals and at most $2n^2$ electrons in a shell`],
+              ["Azimuthal (subsidiary)", t`$l = 0, 1, \ldots, (n - 1)$`, t`subshell and **shape**: $l = 0$ s, 1 p, 2 d, 3 f; $2l + 1$ orbitals per subshell`],
+              ["Magnetic", t`$m_l = -l, \ldots, 0, \ldots, +l$`, "orientation of the orbital in space"],
+              ["Spin", t`$m_s = +\tfrac{1}{2}$ or $-\tfrac{1}{2}$`, "spin of the electron on its own axis (clockwise or anticlockwise)"],
+            ],
+          },
+          {
+            type: "example",
+            title: "Allowed sets of quantum numbers",
+            problem: t`(a) Which subshell has $n = 4$, $l = 2$, and how many orbitals does it have? (b) Is $n = 2$, $l = 2$, $m_l = 0$ allowed? (c) How many electrons in an atom can have $n = 3$?`,
+            steps: [
+              t`(a) $l = 2$ is a d subshell: **4d**. $m_l = -2, -1, 0, +1, +2$: 5 orbitals.`,
+              t`(b) For $n = 2$, $l$ can only be 0 or 1. $l = 2$ is **not allowed**.`,
+              t`(c) $2n^2 = 2 \times 9 = 18$ electrons (3s: 2, 3p: 6, 3d: 10).`,
+            ],
+            answer: "(a) 4d, 5 orbitals; (b) not allowed; (c) 18",
+          },
+          {
+            type: "heading",
+            text: "Shapes and nodes",
+          },
+          {
+            type: "text",
+            md: t`**s orbitals** are spherical; there is one in every shell. **p orbitals** ($n \ge 2$) are dumb-bell shaped, three per shell, along the x, y and z axes ($p_x, p_y, p_z$), equal in energy (**degenerate**). **d orbitals** ($n \ge 3$) come five per shell: $d_{xy}, d_{yz}, d_{xz}$ (lobes between axes), $d_{x^2-y^2}$ (lobes on the x and y axes) and $d_{z^2}$ (two lobes on z with a ring round the middle). All five are equal in energy in a free atom.
+
+A **node** is a region where the probability density is zero. **Radial (spherical) nodes** $= n - l - 1$; **angular (planar) nodes** $= l$; **total nodes** $= n - 1$. A 3p orbital has 1 radial and 1 angular node. Size and energy of an orbital of a given type grow with $n$ (1s < 2s < 3s).`,
+          },
+          {
+            type: "checkpoint",
+            questions: [
+              {
+                kind: "numeric",
+                q: "How many radial nodes does a 4s orbital have?",
+                answer: 3,
+                explain: "Radial nodes = n − l − 1 = 4 − 0 − 1 = 3. An s orbital has no angular node.",
+              },
+            ],
+          },
+          {
+            type: "heading",
+            text: "Energies and filling order",
+          },
+          {
+            type: "text",
+            md: t`In **hydrogen**, orbital energy depends only on $n$: 2s and 2p are equal. In **multi-electron atoms** electrons repel each other and inner electrons **shield** outer ones from the nucleus, so the **effective nuclear charge** felt differs. An s electron penetrates closer to the nucleus than a p electron of the same shell, so energy depends on both $n$ and $l$: $\text{s} < \text{p} < \text{d} < \text{f}$ within a shell. The **(n + l) rule**: lower $n + l$ means lower energy; for equal $n + l$, lower $n$ is lower in energy. So 4s ($4 + 0 = 4$) fills before 3d ($3 + 2 = 5$).`,
+          },
+          {
+            type: "list",
+            ordered: true,
+            items: [
+              "**Aufbau principle**: orbitals are filled in order of increasing energy: 1s, 2s, 2p, 3s, 3p, 4s, 3d, 4p, 5s, 4d, 5p, 6s, 4f, 5d, 6p, 7s, …",
+              t`**Pauli exclusion principle**: no two electrons in an atom can have all four quantum numbers the same, so an orbital holds at most two electrons, with opposite spins.`,
+              "**Hund's rule of maximum multiplicity**: in orbitals of equal energy (p, d, f), electrons occupy separate orbitals with parallel spins before any pairing begins.",
+            ],
+          },
+          {
+            type: "activity",
+            activity: {
+              kind: "order",
+              prompt: "Tap these subshells in the order they are filled.",
+              items: ["3p", "4s", "3d", "4p", "5s", "4d"],
+              explain: "Use n + l: 3p (4), 4s (4, but n = 4 > 3, so after 3p), 3d (5), 4p (5), 5s (5, highest n of the three), 4d (6).",
+            },
+          },
+          {
+            type: "example",
+            title: "Writing configurations",
+            problem: "Write the electronic configurations of N (Z = 7), Fe (Z = 26), Cr (Z = 24) and Cu (Z = 29), and state the unpaired electrons in N.",
+            steps: [
+              t`N: 1s$^2$ 2s$^2$ 2p$^3$. By Hund's rule the three 2p electrons occupy $2p_x$, $2p_y$, $2p_z$ singly with parallel spins: **3 unpaired**.`,
+              t`Fe: 1s$^2$ 2s$^2$ 2p$^6$ 3s$^2$ 3p$^6$ 3d$^6$ 4s$^2$, or [Ar] 3d$^6$ 4s$^2$.`,
+              t`Cr: expected [Ar] 3d$^4$ 4s$^2$, actual **[Ar] 3d$^5$ 4s$^1$** (half-filled d).`,
+              t`Cu: expected [Ar] 3d$^9$ 4s$^2$, actual **[Ar] 3d$^{10}$ 4s$^1$** (completely filled d).`,
+            ],
+            answer: "Half-filled (d⁵) and completely filled (d¹⁰) subshells are extra stable, which explains Cr and Cu.",
+          },
+          {
+            type: "text",
+            md: t`**Why half-filled and filled subshells are extra stable**: (1) their electron distribution is **symmetrical**, and (2) they have the largest **exchange energy**: electrons with parallel spin in degenerate orbitals can exchange positions, and each exchange releases energy. In 3d$^5$ there are 10 possible exchanges; in 3d$^4$ only 6. The electrons that decide chemistry are the **valence electrons** in the outermost shell; the filled inner shells are the **core**.`,
+          },
+          {
+            type: "mistake",
+            wrong: "4s fills before 3d, so 3d electrons are removed first when Fe forms Fe²⁺: Fe²⁺ is [Ar] 3d⁴ 4s².",
+            right: "Electrons leave from the outermost shell (highest n) first. Fe²⁺ is [Ar] 3d⁶ and Fe³⁺ is [Ar] 3d⁵.",
+            why: "The filling order describes how a neutral atom is built up. Once 3d is occupied, 4s lies higher in energy and is farther out, so it loses its electrons first on ionisation.",
+          },
+          {
+            type: "keypoints",
+            items: [
+              "Orbital = region of high probability (|ψ|²), not a fixed path.",
+              "n, l (0 to n − 1), mₗ (−l to +l), mₛ (±½). A shell has n² orbitals and 2n² electrons.",
+              "Radial nodes n − l − 1, angular nodes l, total n − 1.",
+              "Fill by Aufbau (n + l rule), Pauli (2 per orbital, opposite spins), Hund (singly first, parallel).",
+              "Cr [Ar]3d⁵4s¹ and Cu [Ar]3d¹⁰4s¹: symmetry and exchange energy stabilise d⁵ and d¹⁰.",
+            ],
+          },
+        ],
+        flashcards: [
+          { front: "Physical meaning of |ψ|²", back: "Probability density of finding the electron at a point." },
+          { front: "Values of l for n = 3", back: "0, 1, 2 (3s, 3p, 3d)." },
+          { front: "Number of orbitals in a subshell", back: "2l + 1 (s 1, p 3, d 5, f 7)." },
+          { front: "Radial and angular nodes", back: "Radial = n − l − 1; angular = l; total = n − 1." },
+          { front: "Pauli exclusion principle", back: "No two electrons in an atom have all four quantum numbers identical; at most 2 electrons per orbital." },
+          { front: "Hund's rule", back: "Degenerate orbitals are singly occupied with parallel spins before pairing." },
+          { front: "Configuration of Cu", back: "[Ar] 3d¹⁰ 4s¹." },
+          { front: "Which is lower in energy in a multi-electron atom: 4s or 3d?", back: "4s (n + l = 4 vs 5) while filling; but 4s electrons are removed first on ionisation." },
+        ],
+        quiz: [
+          {
+            kind: "mcq",
+            q: "Which set of quantum numbers is NOT allowed?",
+            options: ["n = 3, l = 2, mₗ = −2", "n = 2, l = 1, mₗ = 0", "n = 3, l = 3, mₗ = +1", "n = 1, l = 0, mₗ = 0"],
+            answer: 2,
+            explain: "l can be at most n − 1. For n = 3, l = 3 is impossible.",
+          },
+          {
+            kind: "numeric",
+            q: "How many orbitals are there in the shell with n = 4?",
+            answer: 16,
+            explain: "n² = 16 (4s 1 + 4p 3 + 4d 5 + 4f 7).",
+          },
+          {
+            kind: "numeric",
+            q: "How many unpaired electrons are there in an Fe³⁺ ion (Z of Fe = 26)?",
+            answer: 5,
+            explain: "Fe³⁺ = [Ar] 3d⁵. Five d orbitals each with one electron: 5 unpaired.",
+            difficulty: 2,
+            hint: "Remove the 4s electrons first.",
+          },
+          {
+            kind: "mcq",
+            q: "Which orbital has the highest energy in a multi-electron atom?",
+            options: ["4s", "3d", "4p", "5s"],
+            answer: 3,
+            explain: "n + l: 4s = 4, 3d = 5, 4p = 5, 5s = 5. Among the three with 5, the one with highest n (5s) is highest.",
+            difficulty: 2,
+            hint: "Tie in n + l? The larger n wins.",
+          },
+          {
+            kind: "truefalse",
+            q: "In a hydrogen atom, the 2s and 2p orbitals have the same energy.",
+            answer: true,
+            explain: "With only one electron there is no shielding, so energy depends only on n.",
+          },
+          {
+            kind: "numeric",
+            q: "How many angular nodes does a 3d orbital have?",
+            answer: 2,
+            explain: "Angular nodes = l = 2 for any d orbital. Radial nodes = 3 − 2 − 1 = 0.",
+          },
+          {
+            kind: "mcq",
+            q: "The electronic configuration 1s² 2s² 2p⁶ 3s² 3p⁶ 3d⁵ 4s¹ belongs to:",
+            options: ["Mn", "Cr", "Fe", "V"],
+            answer: 1,
+            explain: "Total electrons = 24, so Cr. Its half-filled 3d⁵ 4s¹ is more stable than 3d⁴ 4s².",
+          },
+          {
+            kind: "fill",
+            q: "The rule that degenerate orbitals are first filled singly with parallel spins is called ___ rule.",
+            answer: ["Hund's", "Hund", "Hunds"],
+            explain: "Hund's rule of maximum multiplicity.",
+          },
+        ],
+      },
+
+      /* ---------------- Exam edge ---------------- */
+      {
+        slug: "c11-atom-exam-edge",
+        title: "Exam edge: Structure of Atom for JEE, NEET, KCET and COMEDK",
+        summary: "Bohr-model ratios, spectral-line counting, photoelectric and de Broglie shortcuts, matching lines of H and He⁺, nodes and quantum-number counting, with the traps examiners set.",
+        minutes: 25,
+        xp: 60,
+        track: "exam",
+        blocks: [
+          {
+            type: "text",
+            md: t`Structure of Atom is a scoring chapter. **NEET** usually has one or two questions (quantum numbers, Bohr ratios, de Broglie, configurations). **JEE Main** has one or two, often numerical: photoelectric effect, hydrogen spectrum, nodes. **KCET / COMEDK** ask direct formula questions. **JEE Advanced** links ideas: He$^+$ lines that match H lines, radial-node positions from a given $\psi$, and multi-step photon problems. The quantum-number and configuration ideas also run through the whole of inorganic chemistry.`,
+          },
+          {
+            type: "table",
+            headers: ["Quantity (hydrogen-like)", "Depends on", "Use"],
+            rows: [
+              ["radius r", t`$n^2/Z$`, "ratio problems"],
+              ["velocity v", t`$Z/n$`, "ratio problems"],
+              ["energy E, KE, PE", t`$Z^2/n^2$; KE $= -E$, PE $= 2E$`, "energy bookkeeping"],
+              ["number of lines from level n to ground (many atoms)", t`$\dfrac{n(n-1)}{2}$`, "counting lines"],
+              ["de Broglie λ of electron accelerated through V volts", t`$\lambda = \dfrac{1.227}{\sqrt{V}}$ nm`, "fast λ"],
+              ["photon energy", t`$E\,(\text{eV}) = \dfrac{1240}{\lambda\,(\text{nm})}$`, "photoelectric problems"],
+            ],
+          },
+          {
+            type: "callout",
+            tone: "tip",
+            title: "Shortcuts and when they are safe",
+            md: t`Use $1240/\lambda$ only with λ in nm and energy in eV. The line-count formula $n(n-1)/2$ assumes many atoms; a **single** atom falling from level $n$ can emit at most $n - 1$ photons. Between levels $n_2 \to n_1$ (many atoms) the count is $\frac{(n_2 - n_1)(n_2 - n_1 + 1)}{2}$. The $Z^2$ factor works only for **one-electron** species. Orbital angular momentum $= \sqrt{l(l+1)}\,\frac{h}{2\pi}$ is the quantum-mechanical value, not Bohr's $n\frac{h}{2\pi}$.`,
+          },
+          {
+            type: "example",
+            title: "KCET / NEET level: counting lines",
+            problem: "Electrons in a sample of hydrogen atoms are excited to n = 5. How many different spectral lines can appear when they return to the ground state? How many of these are in the Balmer series?",
+            steps: [
+              t`Total lines $= n(n-1)/2 = 5 \times 4/2 = 10$.`,
+              "Balmer lines end at n = 2 and start from n = 3, 4 or 5: 3 lines.",
+            ],
+            answer: "10 lines in all; 3 in the Balmer series",
+          },
+          {
+            type: "example",
+            title: "JEE Main level: stopping potential",
+            problem: "Ultraviolet light of wavelength 248 nm falls on a metal with work function 3.0 eV. Find the maximum kinetic energy of the photoelectrons and the stopping potential.",
+            steps: [
+              t`$E = 1240/248 = 5.0$ eV.`,
+              t`KE$_{\max} = 5.0 - 3.0 = 2.0$ eV.`,
+              t`The stopping potential $V_0$ satisfies $eV_0 = \text{KE}_{\max}$, so $V_0 = 2.0$ V.`,
+            ],
+            answer: "KE_max = 2.0 eV (3.2 × 10⁻¹⁹ J); stopping potential 2.0 V",
+          },
+          {
+            type: "example",
+            title: "JEE Main level: de Broglie wavelength from accelerating voltage",
+            problem: "An electron starting from rest is accelerated through 150 V. Find its de Broglie wavelength.",
+            steps: [
+              t`KE $= eV$, and $p = \sqrt{2m_e eV}$, so $\lambda = h/\sqrt{2m_e eV}$.`,
+              t`Putting in the constants gives $\lambda = 1.227/\sqrt{V}$ nm.`,
+              t`$\lambda = 1.227/\sqrt{150} = 1.227/12.25 = 0.100$ nm.`,
+            ],
+            answer: "λ ≈ 0.100 nm = 100 pm (about the size of an atom)",
+          },
+          {
+            type: "example",
+            title: "JEE Advanced level: matching He⁺ and H lines",
+            problem: t`Which transition in He$^+$ gives a line of the same wavelength as the first line of the Balmer series of hydrogen ($n = 3 \to 2$)?`,
+            steps: [
+              t`Same wavelength means same $\bar{\nu}$: $Z^2\left(\frac{1}{n_1^2} - \frac{1}{n_2^2}\right)$ must be equal.`,
+              t`Hydrogen: $1 \times \left(\frac{1}{4} - \frac{1}{9}\right) = \frac{5}{36}$.`,
+              t`He$^+$ ($Z = 2$): $4\left(\frac{1}{n_1^2} - \frac{1}{n_2^2}\right) = \frac{5}{36}$, so $\frac{1}{n_1^2} - \frac{1}{n_2^2} = \frac{5}{144}$.`,
+              t`Shortcut: doubling both $n$ values divides the bracket by 4, which cancels $Z^2 = 4$. Try $n_1 = 4$, $n_2 = 6$: $\frac{1}{16} - \frac{1}{36} = \frac{9 - 4}{144} = \frac{5}{144}$. ✔`,
+            ],
+            answer: "n = 6 → n = 4 in He⁺",
+          },
+          {
+            type: "mistake",
+            wrong: "A single hydrogen atom excited to n = 4 can emit 6 different lines.",
+            right: "One atom follows one path down and can emit at most 3 photons (4 → 3 → 2 → 1). The 6 lines from n(n − 1)/2 appear only from a large sample of atoms taking different paths.",
+            why: "The formula counts all possible pairs of levels, which is right for a gas of many atoms. The question's wording (\"an atom\" or \"a sample\") decides which count is asked.",
+          },
+          {
+            type: "mistake",
+            wrong: "Spin multiplicity and number of unpaired electrons are the same thing.",
+            right: "Spin multiplicity = 2S + 1, where S = (number of unpaired electrons) × ½. For N (3 unpaired), S = 3/2 and multiplicity = 4.",
+            why: "Both grow with unpaired electrons, so students merge them. Hund's rule of maximum multiplicity is really about maximising S.",
+          },
+          {
+            type: "activity",
+            activity: {
+              kind: "reveal",
+              prompt: "Which is removed first when Mn (3d⁵ 4s²) forms Mn²⁺?",
+              emoji: "🧲",
+              options: ["Two 3d electrons", "Two 4s electrons", "One 3d and one 4s electron", "Electrons from 3p"],
+              answer: 1,
+              trap: 0,
+              explain: "Electrons leave the highest-n shell first: Mn²⁺ is [Ar] 3d⁵ with 5 unpaired electrons, spin-only magnetic moment √(5 × 7) = 5.92 BM.",
+            },
+          },
+          {
+            type: "checkpoint",
+            questions: [
+              {
+                kind: "numeric",
+                q: "What is the ratio of the velocity of an electron in the first orbit of He⁺ to that in the first orbit of H?",
+                answer: 2,
+                explain: "v ∝ Z/n. He⁺ (Z = 2, n = 1) : H (Z = 1, n = 1) = 2 : 1.",
+              },
+            ],
+          },
+          {
+            type: "keypoints",
+            items: [
+              "r ∝ n²/Z, v ∝ Z/n, E ∝ Z²/n²; KE = −E, PE = 2E.",
+              "Lines from n to ground: n(n − 1)/2 for many atoms, at most n − 1 for one atom.",
+              "E(eV) = 1240/λ(nm); λ(electron) = 1.227/√V nm.",
+              "Matching lines: equal Z²(1/n₁² − 1/n₂²); for He⁺ double the H levels.",
+              "Ionise from the highest n first; magnetic moment √(n(n + 2)) BM for n unpaired electrons.",
+            ],
+          },
+        ],
+        flashcards: [
+          { front: "Ratio KE : PE : total E in a Bohr orbit", back: "KE = −E, PE = 2E, so KE : PE : E = 1 : −2 : −1." },
+          { front: "Number of spectral lines from level n (many atoms)", back: "n(n − 1)/2." },
+          { front: "Photon energy shortcut", back: "E (eV) = 1240 / λ (nm)." },
+          { front: "Electron de Broglie wavelength after V volts", back: "λ = 1.227/√V nm." },
+          { front: "Spin-only magnetic moment", back: "μ = √(n(n + 2)) BM, n = number of unpaired electrons." },
+          { front: "Orbital angular momentum (quantum mechanics)", back: "√(l(l + 1)) · h/2π. Zero for s orbitals." },
+          { front: "Shortest wavelength of Lyman series of H", back: "n = ∞ → 1: λ = 1/R ≈ 91.2 nm." },
+          { front: "Spin multiplicity", back: "2S + 1, with S = ½ × (number of unpaired electrons)." },
+        ],
+        quiz: [
+          {
+            kind: "numeric",
+            q: "What is the ratio of the radius of the 2nd orbit of Li²⁺ to the radius of the 1st orbit of H? Give two decimal places.",
+            answer: 1.33,
+            tolerance: 0.01,
+            explain: "r ∝ n²/Z. Li²⁺, n = 2: 4/3. H, n = 1: 1. Ratio = 4/3 = 1.33.",
+            difficulty: 2,
+          },
+          {
+            kind: "numeric",
+            q: "Light of 310 nm ejects electrons with maximum KE 1.5 eV from a metal. What is the work function in eV?",
+            answer: 2.5,
+            tolerance: 0.05,
+            unit: "eV",
+            explain: "E = 1240/310 = 4.0 eV. W₀ = 4.0 − 1.5 = 2.5 eV.",
+            difficulty: 2,
+          },
+          {
+            kind: "mcq",
+            q: "The orbital angular momentum of an electron in a 2s orbital is:",
+            options: ["h/2π", "zero", "√2 · h/2π", "h/π"],
+            answer: 1,
+            explain: "For s orbitals l = 0, so √(l(l + 1)) · h/2π = 0. Bohr's value (nh/2π) is a trap here.",
+            difficulty: 2,
+            hint: "Use l, not n.",
+          },
+          {
+            kind: "numeric",
+            q: "How many electrons in a Fe atom (Z = 26) have l = 2?",
+            answer: 6,
+            explain: "l = 2 means d electrons. Fe = [Ar] 3d⁶ 4s²: 6 d electrons.",
+          },
+          {
+            kind: "numeric",
+            q: "How many electrons in an atom can have n = 3 and mₛ = −½?",
+            answer: 9,
+            explain: "The n = 3 shell has 9 orbitals; each can hold one electron with mₛ = −½. So 9.",
+            difficulty: 2,
+          },
+          {
+            kind: "mcq",
+            q: "Which has the largest number of unpaired electrons?",
+            options: ["Fe²⁺", "Mn²⁺", "Cr³⁺", "Cu²⁺"],
+            answer: 1,
+            explain: "Fe²⁺ 3d⁶ (4), Mn²⁺ 3d⁵ (5), Cr³⁺ 3d³ (3), Cu²⁺ 3d⁹ (1). Mn²⁺ has the most.",
+            difficulty: 2,
+          },
+          {
+            kind: "multi",
+            q: "For a 3p orbital, which statements are correct?",
+            options: ["It has 1 radial node", "It has 1 angular node", "It has 2 nodes in total", "Its l value is 2"],
+            answers: [0, 1, 2],
+            explain: "n = 3, l = 1: radial = 3 − 1 − 1 = 1, angular = l = 1, total = n − 1 = 2. l = 2 would be a d orbital.",
+            difficulty: 2,
+          },
+          {
+            kind: "numeric",
+            q: "Electrons of He⁺ ions fall from n = 4 to the ground state in a large sample. How many distinct lines can appear in the spectrum?",
+            answer: 6,
+            explain: "n(n − 1)/2 = 4 × 3/2 = 6. Z does not change the count, only the wavelengths.",
+          },
+          {
+            kind: "numeric",
+            q: "Which level n₂ in Li²⁺ (Z = 3) gives, on falling to n₁ = 3, a line of the same wavelength as the hydrogen transition 2 → 1?",
+            answer: 6,
+            explain: "H: 1 × (1 − 1/4) = 3/4. Li²⁺: 9(1/9 − 1/n₂²) = 1 − 9/n₂² = 3/4, so 9/n₂² = 1/4 and n₂ = 6. (Multiplying both H levels by Z = 3: 1 → 3 and 2 → 6.)",
+            difficulty: 3,
+            hint: "Multiply both hydrogen levels by Z.",
+          },
+        ],
+      },
+    ],
+  },
 ];
 
 /** Class 11 chapter title ("11:<exact title>") → topic slug(s) that teach it. */
 export const links: Record<string, string | string[]> = {
   "11:Some Basic Concepts of Chemistry": "c11-basic-concepts",
+  "11:Structure of Atom": "c11-structure-of-atom",
 };

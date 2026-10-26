@@ -2288,7 +2288,794 @@ print("Largest:", largest)`,
   ],
 };
 
-export const topics: Topic[] = [computerSystems, numberSystems, booleanLogic, problemSolving];
+/* ------------------------------------------------------------------ */
+const pythonStart: Topic = {
+  slug: "c11-cs-getting-started-python",
+  title: "Getting Started with Python",
+  icon: "🐍",
+  description: "Features of Python, execution modes, tokens, identifiers, variables and comments, objects and data types, mutable and immutable types, operators and precedence, input and output, type conversion and debugging.",
+  lessons: [
+    {
+      slug: "c11-cs-python-basics",
+      title: "Python Basics: Features, Modes, Tokens and Variables",
+      summary: "Why Python, interactive and script mode, the five kinds of tokens, rules for identifiers, variables and comments.",
+      minutes: 20,
+      xp: 50,
+      blocks: [
+        {
+          type: "illustration",
+          emoji: "🐍",
+          caption: "The same few lines of Python can add marks for a class in Hubballi, run a weather model, or sort lakhs of train bookings. It is one of the most used programming languages in the world, and the language of the CBSE and Karnataka PUC Computer Science syllabus.",
+        },
+        {
+          type: "text",
+          md: "**Python** is a high-level, general-purpose programming language created by **Guido van Rossum** and first released in **1991**. Its main features:\n\n- **Free and open source**: anyone can download, use and share it.\n- **Interpreted**: the Python interpreter executes the program one statement at a time.\n- **Easy to read**: simple, English-like syntax, with **indentation** (spaces at the start of a line) used to mark blocks of code instead of brackets.\n- **Case-sensitive**: `Marks` and `marks` are different names.\n- **Portable and platform independent**: the same program runs on Windows, Linux and macOS.\n- **Rich library** of ready-made modules, used in web development, data science, AI and more.",
+        },
+        {
+          type: "text",
+          md: "Python can be used in two **execution modes**.\n\n**Interactive mode**: type a statement at the **>>>** prompt of the Python shell and press Enter; the result appears at once. Typing `5 + 3` shows `8`. It is good for testing small pieces, but the statements are not saved.\n\n**Script mode**: write the program in a file with the extension **.py**, save it, and run it (in IDLE: Run → Run Module, or press **F5**). The program can be saved, edited and run again. In script mode you must use `print()` to see a value.",
+        },
+        {
+          type: "code",
+          lang: "python",
+          runnable: true,
+          caption: "Output: Welcome to Hubballi, then Total fee: 52521.0 (42 × 1250.50).",
+          code: t`# A first program in script mode
+city = "Hubballi"
+students = 42
+fee = 1250.50
+print("Welcome to", city)
+print("Total fee:", students * fee)`,
+        },
+        {
+          type: "heading",
+          text: "Tokens",
+        },
+        {
+          type: "text",
+          md: "The smallest meaningful unit of a program is a **token**. Python has five kinds:\n\n- **Keywords**: reserved words with a fixed meaning, such as `if`, `else`, `while`, `for`, `def`, `import`, `True`, `False`, `None`, `and`, `or`, `not`. Python 3 has **35** keywords; they cannot be used as names.\n- **Identifiers**: names given to variables, functions and so on, like `city` or `fee`.\n- **Literals**: fixed values written directly: `42`, `1250.50`, `\"Hubballi\"`, `True`.\n- **Operators**: symbols that act on values: `+`, `*`, `==`, `and`.\n- **Punctuators** (delimiters): symbols that organise code: `( ) [ ] { } , : . = #` and quotes.",
+        },
+        {
+          type: "example",
+          title: "Identifying tokens",
+          problem: "List the tokens in the statement `if total >= 100: print(\"Bonus\")`, by kind.",
+          steps: [
+            "Keyword: `if` (and nothing else is reserved here, as `print` is a built-in function name, not a keyword).",
+            "Identifiers: `total` and `print`.",
+            "Operator: `>=`. Literals: `100` and `\"Bonus\"`.",
+            "Punctuators: `:` `(` `)`.",
+          ],
+          answer: "Keyword if; identifiers total, print; operator >=; literals 100, \"Bonus\"; punctuators : ( ).",
+        },
+        {
+          type: "text",
+          md: "**Rules for identifiers:** they may contain letters (a–z, A–Z), digits (0–9) and the underscore `_`; they **must not start with a digit**; they **cannot contain spaces or special symbols** such as `@ $ % -`; and they **cannot be a keyword**. Python is case-sensitive, so `Total` and `total` are different identifiers. Choose meaningful names like `marks_maths`, not `mm`.\n\nA **variable** is an identifier that refers to a value stored in memory. In Python a variable is created the moment a value is **assigned** to it with `=`; no separate declaration is needed: `students = 42`.\n\nA **comment** starts with `#`; the interpreter ignores everything after it on that line. Comments explain the code to people.",
+        },
+        {
+          type: "activity",
+          activity: {
+            kind: "sort",
+            prompt: "Is it a valid Python identifier?",
+            groups: ["Valid", "Not valid"],
+            items: [
+              { text: "roll_no", group: 0, hint: "Letters and an underscore are allowed." },
+              { text: "_total2", group: 0, hint: "An identifier may start with an underscore." },
+              { text: "Marks", group: 0, hint: "Capital letters are allowed; it differs from marks." },
+              { text: "2ndTerm", group: 1, hint: "An identifier cannot start with a digit." },
+              { text: "first name", group: 1, hint: "Spaces are not allowed." },
+              { text: "while", group: 1, hint: "It is a keyword." },
+              { text: "net-pay", group: 1, hint: "The hyphen is the minus operator." },
+              { text: "True", group: 1, hint: "True is a keyword (a Boolean literal)." },
+            ],
+            explain: "Check three things in order: only letters, digits and _; does not start with a digit; is not a keyword.",
+          },
+        },
+        {
+          type: "mistake",
+          wrong: "Python does not care about capital letters, so `Print(\"Hi\")` works like `print(\"Hi\")`.",
+          right: "Python is **case-sensitive**. `Print` is an unknown name, so the program stops with **NameError: name 'Print' is not defined**.",
+          why: "Some other software (like many search boxes) ignores case, so learners expect the same. In Python every identifier and keyword must match its exact spelling and case.",
+        },
+        {
+          type: "checkpoint",
+          questions: [
+            {
+              kind: "mcq",
+              q: "In which mode can a program be saved and run again later?",
+              options: ["Script mode", "Interactive mode", "Both equally", "Neither"],
+              answer: 0,
+              explain: "Script mode saves the program as a .py file. Statements typed at the >>> prompt are lost when the shell is closed.",
+            },
+          ],
+        },
+        {
+          type: "callout",
+          tone: "exam",
+          title: "Board tip",
+          md: "\"Identify valid and invalid identifiers, giving reasons\" is a very common 2-mark question. Give the exact rule each invalid one breaks: *starts with a digit*, *contains a space*, *contains a special character*, or *is a keyword*.",
+        },
+        {
+          type: "checkpoint",
+          questions: [
+            {
+              kind: "numeric",
+              q: "How many keywords does Python 3 have (as listed by the keyword module in current versions)?",
+              answer: 35,
+              explain: "`import keyword; print(len(keyword.kwlist))` prints 35.",
+            },
+          ],
+        },
+        {
+          type: "keypoints",
+          items: [
+            "Python: high-level, interpreted, free and open source, case-sensitive, portable, uses indentation; by Guido van Rossum, 1991.",
+            "Interactive mode (>>> prompt, not saved) and script mode (.py file, saved, run with F5).",
+            "Five tokens: keywords, identifiers, literals, operators, punctuators.",
+            "Identifiers: letters, digits, _; not starting with a digit; no spaces or symbols; not a keyword.",
+            "A variable is created by assignment; # starts a comment.",
+          ],
+        },
+      ],
+      flashcards: [
+        { front: "Who created Python, and when was it first released?", back: "Guido van Rossum; 1991." },
+        { front: "Interactive mode", back: "Statements typed at the >>> prompt run immediately; they are not saved." },
+        { front: "Script mode", back: "The program is written and saved in a .py file and then run as a whole." },
+        { front: "Token", back: "The smallest meaningful unit of a program: keyword, identifier, literal, operator or punctuator." },
+        { front: "Keyword", back: "A reserved word with a special meaning in Python (if, while, True, None…); it cannot be used as an identifier." },
+        { front: "Literal", back: "A fixed value written directly in code, e.g. 42, 3.5, \"Delhi\", True." },
+        { front: "Rules for identifiers", back: "Letters, digits and _ only; cannot start with a digit; no spaces or special symbols; not a keyword." },
+        { front: "Comment", back: "Text after # that the interpreter ignores; it explains the code to people." },
+      ],
+      quiz: [
+        {
+          kind: "mcq",
+          q: "Which of these is a valid identifier?",
+          options: ["total_marks", "total marks", "1total", "total@marks"],
+          answer: 0,
+          explain: "Only total_marks follows the rules: no space, does not start with a digit, no special symbol.",
+        },
+        {
+          kind: "multi",
+          q: "Select all Python keywords.",
+          options: ["None", "elif", "print", "pass", "main"],
+          answers: [0, 1, 3],
+          explain: "None, elif and pass are keywords. print is a built-in function and main is an ordinary name.",
+          difficulty: 2,
+        },
+        {
+          kind: "truefalse",
+          q: "In Python, a variable must be declared with its type before it is used.",
+          answer: false,
+          explain: "A Python variable is created when a value is first assigned to it; its type comes from the value.",
+        },
+        {
+          kind: "mcq",
+          q: "In the statement `area = 3.14 * r * r`, what kind of token is `3.14`?",
+          options: ["Literal", "Identifier", "Keyword", "Punctuator"],
+          answer: 0,
+          explain: "3.14 is a fixed value written in the code: a (floating-point) literal.",
+        },
+        {
+          kind: "fill",
+          q: "Python files are saved with the extension ___.",
+          answer: [".py", "py"],
+          explain: "Python script files end in **.py**.",
+        },
+        {
+          kind: "mcq",
+          q: "What does Python do with the line `# total of marks`?",
+          options: ["Ignores it", "Prints it", "Stores it in a variable", "Gives a syntax error"],
+          answer: 0,
+          explain: "A line starting with # is a comment and is ignored by the interpreter.",
+        },
+        {
+          kind: "truefalse",
+          q: "`Name` and `name` refer to the same variable in Python.",
+          answer: false,
+          explain: "Python is case-sensitive, so they are two different identifiers.",
+        },
+      ],
+    },
+    {
+      slug: "c11-cs-python-data-types",
+      title: "Objects and Data Types; Mutable and Immutable",
+      summary: "Everything in Python is an object with an identity, type and value; the built-in data types (numbers, sequences, sets, None, dictionaries); and which of them can be changed in place.",
+      minutes: 22,
+      xp: 55,
+      blocks: [
+        {
+          type: "text",
+          md: "In Python **every value is an object**. Each object has an **identity** (a unique number, like its address in memory, shown by `id()`), a **type** (shown by `type()`) and a **value**. A variable does not hold the value inside itself; it is a **name that refers to an object**. Two names can refer to the same object.",
+        },
+        {
+          type: "code",
+          lang: "python",
+          runnable: true,
+          caption: "Output: True, then 10 15, then False.",
+          code: t`num1 = 10
+num2 = num1
+print(id(num1) == id(num2))
+num2 = num2 + 5
+print(num1, num2)
+print(id(num1) == id(num2))`,
+        },
+        {
+          type: "text",
+          md: "After `num2 = num1`, both names refer to the same object 10, so their ids are equal. `num2 + 5` makes a **new** object 15, and `num2` now refers to it. The object 10 did not change; `num1` still refers to it.",
+        },
+        {
+          type: "table",
+          headers: ["Category", "Type", "Example literals"],
+          rows: [
+            ["Number", "`int` (integer)", "`25`, `-7`, `0`"],
+            ["Number", "`float` (real number)", "`3.75`, `-0.5`, `2.0`"],
+            ["Number", "`complex`", "`2 + 3j` (j is the imaginary unit)"],
+            ["Number", "`bool` (a sub-type of int)", "`True` (behaves as 1), `False` (behaves as 0)"],
+            ["Sequence", "`str`, `list`, `tuple`", "`\"CBSE\"`, `[1, 2]`, `(1, 2)`"],
+            ["Set", "`set`", "`{1, 2}`: unordered, no duplicates"],
+            ["None", "`NoneType`", "`None`: means no value"],
+            ["Mapping", "`dict` (dictionary)", "`{\"roll\": 7}`: key–value pairs"],
+          ],
+        },
+        {
+          type: "code",
+          lang: "python",
+          runnable: true,
+          caption: "type() of each value. The output shows <class 'int'>, <class 'float'>, <class 'complex'>, <class 'bool'>, <class 'str'>, <class 'list'>, <class 'tuple'>, <class 'set'>, <class 'dict'> and <class 'NoneType'>.",
+          code: t`values = [25, 3.75, 2 + 3j, True, "CBSE", [1, 2], (1, 2), {1, 2}, {"roll": 7}, None]
+for v in values:
+    print(repr(v), type(v))`,
+        },
+        {
+          type: "example",
+          title: "Finding the data type",
+          problem: "Give the type of each: (a) `7 / 2` (b) `\"7\"` (c) `7.0` (d) `7 > 2` (e) `10 / 5`.",
+          steps: [
+            "(a) `/` always gives a float: 3.5 → `float`.",
+            "(b) anything in quotes is text → `str`.",
+            "(c) a decimal point makes it a float, even with .0 → `float`.",
+            "(d) a comparison gives True or False → `bool`.",
+            "(e) `/` gives a float even when the division is exact: 2.0 → `float`.",
+          ],
+          answer: "(a) float (b) str (c) float (d) bool (e) float",
+        },
+        {
+          type: "checkpoint",
+          questions: [
+            {
+              kind: "mcq",
+              q: "What is `type(True + True)`, and what is the value?",
+              options: ["int, 2", "bool, True", "bool, 2", "str, TrueTrue"],
+              answer: 0,
+              explain: "bool is a sub-type of int, with True = 1. Adding them gives the int 2.",
+              difficulty: 2,
+            },
+          ],
+        },
+        {
+          type: "text",
+          md: "**Mutable** objects can be changed **in place** after they are created (their value changes, their identity stays the same): **list**, **dictionary** and **set**.\n\n**Immutable** objects cannot be changed once created: **int**, **float**, **complex**, **bool**, **str** and **tuple**. To \"change\" them, Python makes a new object and the name is pointed at it.",
+        },
+        {
+          type: "code",
+          lang: "python",
+          runnable: true,
+          caption: "A list changes in place; a string method returns a new string. Output: [72, 85, 90], then RAVI ravi.",
+          code: t`marks = [72, 85]
+marks.append(90)
+print(marks)
+name = "ravi"
+print(name.upper(), name)`,
+        },
+        {
+          type: "code",
+          lang: "python",
+          caption: "This stops with TypeError: 'str' object does not support item assignment.",
+          code: t`name = "ravi"
+name[0] = "R"`,
+        },
+        {
+          type: "mistake",
+          wrong: "A string is a sequence like a list, so `name[0] = \"R\"` changes its first letter.",
+          right: "Strings are **immutable**. Make a new string instead: `name = \"R\" + name[1:]`, or use `name.capitalize()`.",
+          why: "Strings and lists can both be indexed with `[ ]`, so they look alike. Reading `name[0]` is fine; only assigning to it fails.",
+        },
+        {
+          type: "activity",
+          activity: {
+            kind: "sort",
+            prompt: "Mutable or immutable?",
+            groups: ["Mutable", "Immutable"],
+            items: [
+              { text: "list", group: 0, hint: "append() changes it in place." },
+              { text: "dict", group: 0, hint: "You can add or change a key's value." },
+              { text: "set", group: 0, hint: "add() changes it in place." },
+              { text: "tuple", group: 1, hint: "A tuple cannot be changed after creation." },
+              { text: "str", group: 1, hint: "String methods return new strings." },
+              { text: "int", group: 1, hint: "x = x + 1 creates a new int object." },
+              { text: "float", group: 1, hint: "Numbers are immutable." },
+            ],
+            explain: "Only list, dict and set are mutable among the basic types. Everything numeric, plus str and tuple, is immutable.",
+          },
+        },
+        {
+          type: "callout",
+          tone: "exam",
+          title: "Board tip",
+          md: "Learn the two lists exactly: mutable = list, dictionary, set; immutable = int, float, complex, bool, string, tuple. For \"what will be the output?\" questions, remember that `/` always returns a float.",
+        },
+        {
+          type: "checkpoint",
+          questions: [
+            {
+              kind: "truefalse",
+              q: "A tuple is a mutable sequence.",
+              answer: false,
+              explain: "A tuple is **immutable**: its elements cannot be replaced after it is made. A list is the mutable sequence.",
+            },
+          ],
+        },
+        {
+          type: "keypoints",
+          items: [
+            "Every value is an object with identity (id()), type (type()) and value; a variable is a name referring to an object.",
+            "Numbers: int, float, complex, bool; sequences: str, list, tuple; also set, None and dict.",
+            "`/` always gives a float; True and False behave as 1 and 0.",
+            "Mutable: list, dict, set. Immutable: int, float, complex, bool, str, tuple.",
+          ],
+        },
+      ],
+      flashcards: [
+        { front: "id()", back: "Returns the identity of an object, a unique number for it while it exists." },
+        { front: "type()", back: "Returns the data type (class) of a value, e.g. <class 'float'>." },
+        { front: "Numeric types in Python", back: "int, float, complex (and bool, a sub-type of int)." },
+        { front: "Sequence types", back: "str, list, tuple." },
+        { front: "Mutable types", back: "list, dictionary, set: they can be changed in place." },
+        { front: "Immutable types", back: "int, float, complex, bool, str, tuple." },
+        { front: "None", back: "A special value of type NoneType meaning no value / nothing." },
+        { front: "Dictionary", back: "A mapping type that stores key–value pairs, e.g. {\"roll\": 7}." },
+      ],
+      quiz: [
+        {
+          kind: "mcq",
+          q: "What does `print(type(10 / 5))` show?",
+          options: ["<class 'float'>", "<class 'int'>", "2.0", "<class 'str'>"],
+          answer: 0,
+          explain: "The `/` operator always gives a float (here 2.0), so its type is float.",
+        },
+        {
+          kind: "multi",
+          q: "Select all mutable types.",
+          options: ["list", "tuple", "dict", "str", "set"],
+          answers: [0, 2, 4],
+          explain: "list, dict and set can be changed in place. tuple and str cannot.",
+        },
+        {
+          kind: "fill",
+          q: "The data type of `3 + 4j` is ___.",
+          answer: ["complex"],
+          explain: "A number with a j part is a **complex** number.",
+        },
+        {
+          kind: "mcq",
+          q: "a = 5 and b = a. Then b = b + 1. What are a and b?",
+          options: ["5 and 6", "6 and 6", "5 and 5", "6 and 5"],
+          answer: 0,
+          explain: "b + 1 creates a new object 6 and b refers to it. a still refers to 5, because ints are immutable.",
+          difficulty: 2,
+        },
+        {
+          kind: "truefalse",
+          q: "`{1, 2, 2, 3}` is a set with 3 elements.",
+          answer: true,
+          explain: "A set keeps no duplicates, so it is {1, 2, 3}.",
+        },
+        {
+          kind: "mcq",
+          q: "Which built-in function tells you whether two names refer to the same object?",
+          options: ["id()", "type()", "print()", "len()"],
+          answer: 0,
+          explain: "If `id(x) == id(y)`, both names refer to the same object.",
+        },
+        {
+          kind: "mcq",
+          q: "What happens when `t = (4, 5); t[0] = 9` runs?",
+          options: ["TypeError: tuples cannot be changed", "t becomes (9, 5)", "t becomes [9, 5]", "Nothing happens"],
+          answer: 0,
+          explain: "A tuple is immutable, so item assignment raises a TypeError.",
+        },
+      ],
+    },
+    {
+      slug: "c11-cs-python-operators-io",
+      title: "Operators, Expressions, Input/Output, Type Conversion and Errors",
+      summary: "Arithmetic, relational, assignment, logical, identity and membership operators; precedence; input() and print(); explicit and implicit type conversion; syntax, logical and runtime errors.",
+      minutes: 25,
+      xp: 60,
+      blocks: [
+        {
+          type: "text",
+          md: "An **operator** acts on values called **operands**. An **expression** combines operands and operators and has a value, like `5 + 3 * 2`. A **statement** is a complete instruction that Python executes, like `x = 5 + 3 * 2` or `print(x)`.",
+        },
+        {
+          type: "table",
+          headers: ["Operator", "Meaning", "Example", "Result"],
+          rows: [
+            ["`+` `-` `*`", "add, subtract, multiply", "`7 * 2`", "`14`"],
+            ["`/`", "division (always a float)", "`7 / 2`", "`3.5`"],
+            ["`//`", "floor division (rounds down)", "`7 // 2`, `-7 // 2`", "`3`, `-4`"],
+            ["`%`", "remainder (modulus)", "`7 % 2`, `-7 % 2`", "`1`, `1`"],
+            ["`**`", "exponent (power)", "`2 ** 3`", "`8`"],
+            ["`==` `!=` `<` `>` `<=` `>=`", "relational: compare, give True/False", "`10 > 5`", "`True`"],
+            ["`=` `+=` `-=` `*=` `/=` `//=` `%=` `**=`", "assignment; `x += 5` means `x = x + 5`", "`x = 10; x += 5`", "x is `15`"],
+            ["`and` `or` `not`", "logical", "`10 > 5 and 3 > 4`", "`False`"],
+            ["`is`, `is not`", "identity: same object?", "`a is b`", "True/False"],
+            ["`in`, `not in`", "membership: present in a sequence?", "`3 in [1, 2, 3]`", "`True`"],
+          ],
+        },
+        {
+          type: "text",
+          md: "When an expression has several operators, **precedence** decides which is done first. From highest to lowest: brackets `( )`; `**`; unary `+` and `-`; then `*`, `/`, `//`, `%`; then binary `+`, `-`; then relational, identity and membership operators; then `not`; then `and`; then `or`.\n\nOperators of the same level are worked **left to right**, except `**`, which works **right to left**. Note that `**` is stronger than a minus sign written before it, so `-2 ** 2` is `-(2 ** 2) = -4`.",
+        },
+        {
+          type: "example",
+          title: "Evaluating expressions",
+          problem: "Find the value of (a) `5 + 3 * 2 ** 2` (b) `2 ** 3 ** 2` (c) `15 // 4 * 2` (d) `not 3 > 5 or 2 == 2`.",
+          steps: [
+            "(a) `**` first: 2 ** 2 = 4; then 3 * 4 = 12; then 5 + 12 = 17.",
+            "(b) `**` is right to left: 3 ** 2 = 9, then 2 ** 9 = 512 (not 8 ** 2 = 64).",
+            "(c) `//` and `*` are at the same level, so left to right: 15 // 4 = 3, then 3 * 2 = 6.",
+            "(d) relational first: 3 > 5 is False, 2 == 2 is True; then not False = True; True or True = True.",
+          ],
+          answer: "(a) 17 (b) 512 (c) 6 (d) True",
+        },
+        {
+          type: "code",
+          lang: "python",
+          runnable: true,
+          caption: "Predict each line before you run it.",
+          code: t`print(7 / 2, 7 // 2, 7 % 2, 2 ** 3)
+print(-7 // 2, -7 % 2)
+print(5 + 3 * 2 ** 2, 2 ** 3 ** 2, -2 ** 2)
+x = 10
+x += 5
+x *= 2
+print(x)
+print(3 in [1, 2, 3], "a" not in "cat")
+print(10 > 5 and 3 > 4, not 3 > 5)`,
+        },
+        {
+          type: "checkpoint",
+          questions: [
+            {
+              kind: "numeric",
+              q: "What is the value of `2 + 3 * 4 // 5 - 1`?",
+              answer: 3,
+              explain: "3 * 4 = 12; 12 // 5 = 2 (left to right at the same level); 2 + 2 − 1 = 3.",
+              difficulty: 2,
+            },
+          ],
+        },
+        {
+          type: "text",
+          md: "**Input and output.** `input(\"prompt\")` shows the prompt, waits for the user to type and press Enter, and returns what was typed **as a string**. `print()` shows values separated by a space and then moves to a new line; `sep=` changes the separator and `end=` changes what is printed at the end. `print(\"CS\", \"IP\", sep=\"-\", end=\"!\")` prints `CS-IP!`.\n\n**Type conversion.** **Explicit** conversion (type casting) is done by the programmer with `int()`, `float()`, `str()`: `int(\"25\")` is 25, `int(9.99)` is 9 (the decimal part is cut off, not rounded), `str(12) + \"3\"` is `\"123\"`. **Implicit** conversion is done by Python itself: in `3 + 4.5`, the int 3 is turned into a float and the result is 7.5.",
+        },
+        {
+          type: "code",
+          lang: "python",
+          caption: "Run this in IDLE (it waits for typing). Sample run: type Asha, then 16; it prints Hello Asha - next year you will be 17.",
+          code: t`name = input("Enter your name: ")
+age = int(input("Enter your age: "))
+print("Hello", name, "- next year you will be", age + 1)`,
+        },
+        {
+          type: "mistake",
+          wrong: "`age = input(\"Age: \")` stores a number, so `age + 1` gives next year's age.",
+          right: "`input()` always returns a **string**. `\"16\" + 1` raises **TypeError**; convert first: `age = int(input(\"Age: \"))`.",
+          why: "The user types digits, so it feels like a number. But input() cannot know what you meant, so it keeps the characters as text; and `\"25\" + \"4\"` would join them into `\"254\"`.",
+        },
+        {
+          type: "text",
+          md: "**Debugging** means finding and fixing errors. There are three kinds:\n\n- **Syntax error**: the code breaks Python's grammar rules (a missing `:` or bracket, a misspelt keyword). Python will not run the program at all.\n- **Logical error**: the program runs but gives the wrong result because the logic is wrong, e.g. `avg = a + b / 2` instead of `(a + b) / 2`. No error message appears, so it is the hardest to find.\n- **Runtime error**: the program starts but stops while running because of an impossible operation, e.g. dividing by zero (**ZeroDivisionError**) or `int(\"abc\")` (**ValueError**).",
+        },
+        {
+          type: "activity",
+          activity: {
+            kind: "sort",
+            prompt: "Which kind of error is it?",
+            groups: ["Syntax error", "Logical error", "Runtime error"],
+            items: [
+              { text: "if marks > 33 print(\"Pass\")", group: 0, hint: "The colon after the condition is missing." },
+              { text: "print(\"Hello\"", group: 0, hint: "A closing bracket is missing." },
+              { text: "area = 2 * l * b for a rectangle", group: 1, hint: "It runs but gives the wrong area." },
+              { text: "avg = a + b / 2", group: 1, hint: "Precedence makes it a + (b / 2)." },
+              { text: "x = 10 / 0", group: 2, hint: "ZeroDivisionError while running." },
+              { text: "n = int(\"twelve\")", group: 2, hint: "ValueError while running." },
+            ],
+            explain: "Syntax errors stop the program before it starts; runtime errors stop it midway; logical errors never stop it but give wrong answers.",
+          },
+        },
+        {
+          type: "callout",
+          tone: "exam",
+          title: "Board tip",
+          md: "In output questions, watch three traps: `/` gives a float (`10 / 5` is `2.0`), `//` rounds **down** (so `-7 // 2` is `-4`), and `**` is right to left. In \"find the errors\" questions, underline each error and write the corrected line next to it.",
+        },
+        {
+          type: "checkpoint",
+          questions: [
+            {
+              kind: "mcq",
+              q: "What does `print(\"25\" + \"4\", int(\"25\") + int(\"4\"))` show?",
+              options: ["254 29", "29 29", "254 254", "TypeError"],
+              answer: 0,
+              explain: "Two strings are joined: \"254\". After conversion, 25 + 4 = 29.",
+            },
+          ],
+        },
+        {
+          type: "keypoints",
+          items: [
+            "Arithmetic: + - * / // % **; / always gives float; // rounds down; % gives remainder.",
+            "Also relational, assignment (+= etc.), logical, identity (is) and membership (in) operators.",
+            "Precedence: ( ), **, unary −, * / // %, + −, comparisons, not, and, or; ** works right to left.",
+            "input() returns a string; convert with int() or float(). Implicit conversion: int + float gives float.",
+            "Errors: syntax (grammar), logical (wrong result), runtime (stops while running).",
+          ],
+        },
+      ],
+      flashcards: [
+        { front: "Expression vs statement", back: "An expression has a value (5 + 3); a statement is a complete instruction Python executes (x = 5 + 3)." },
+        { front: "// operator", back: "Floor division: divides and rounds down to the nearest whole number. 7 // 2 = 3, −7 // 2 = −4." },
+        { front: "% operator", back: "Gives the remainder: 17 % 5 = 2." },
+        { front: "Associativity of **", back: "Right to left: 2 ** 3 ** 2 = 2 ** 9 = 512." },
+        { front: "What type does input() return?", back: "Always a string (str)." },
+        { front: "Explicit vs implicit conversion", back: "Explicit: done by the programmer with int(), float(), str(). Implicit: done by Python, e.g. int + float → float." },
+        { front: "int(9.99)", back: "9: int() cuts off the decimal part; it does not round." },
+        { front: "Three kinds of errors", back: "Syntax error, logical error, runtime error." },
+      ],
+      quiz: [
+        {
+          kind: "mcq",
+          q: "What is the output of `print(17 // 5, 17 % 5)`?",
+          options: ["3 2", "3.4 2", "3 3", "2 3"],
+          answer: 0,
+          explain: "17 = 5 × 3 + 2, so the quotient is 3 and the remainder is 2.",
+        },
+        {
+          kind: "numeric",
+          q: "What is the value of `-2 ** 2`?",
+          answer: -4,
+          explain: "`**` has higher precedence than the unary minus, so it is −(2 ** 2) = −4.",
+          difficulty: 2,
+        },
+        {
+          kind: "mcq",
+          q: "Which error does `print(10 / 0)` cause?",
+          options: ["ZeroDivisionError (runtime)", "SyntaxError", "A logical error with output 0", "No error; prints inf"],
+          answer: 0,
+          explain: "The code is grammatically correct but division by zero is impossible, so it stops at run time with ZeroDivisionError.",
+        },
+        {
+          kind: "fill",
+          q: "After `x = 4` and `x **= 2`, the value of x is ___.",
+          answer: ["16"],
+          explain: "`x **= 2` means x = x ** 2 = 16.",
+        },
+        {
+          kind: "truefalse",
+          q: "`int(-3.7)` gives −4.",
+          answer: false,
+          explain: "int() cuts off the decimal part (it truncates towards zero), so int(−3.7) is −3. Floor division `//` is the one that rounds down.",
+          difficulty: 2,
+        },
+        {
+          kind: "mcq",
+          q: "What does `print(5 > 3 and 2 > 4 or 1 == 1)` show?",
+          options: ["True", "False", "1", "Error"],
+          answer: 0,
+          explain: "and comes before or: (True and False) = False; then False or True = True.",
+          difficulty: 2,
+          hint: "`and` is done before `or`.",
+        },
+        {
+          kind: "multi",
+          q: "Which of these are **membership** or **identity** operators?",
+          options: ["in", "is not", "not in", "==", "and"],
+          answers: [0, 1, 2],
+          explain: "in / not in are membership operators; is / is not are identity operators. == is relational and `and` is logical.",
+        },
+        {
+          kind: "mcq",
+          q: "The program `avg = a + b / 2` runs but gives a wrong average. This is a:",
+          options: ["Logical error", "Syntax error", "Runtime error", "Not an error"],
+          answer: 0,
+          explain: "It runs without any message but the logic is wrong: it should be (a + b) / 2.",
+        },
+      ],
+    },
+    {
+      slug: "c11-cs-getting-started-python-practice",
+      title: "Board practice: Getting Started with Python",
+      summary: "Board-style output questions, error finding, identifiers and data types, and a Python program that converts seconds into hours, minutes and seconds.",
+      minutes: 22,
+      xp: 60,
+      blocks: [
+        {
+          type: "text",
+          md: "The Python part of the Class 11 paper has many short output questions and \"find and correct the errors\" questions, plus programs of 2–3 marks. Write your answer first, then check it against the steps below.",
+        },
+        {
+          type: "example",
+          title: "Output question",
+          problem: "Find the output:\n\n`a = 5`; `b = 2`; `print(a // b * b + a % b, a ** b % 7, a / b * 2)`",
+          steps: [
+            "a // b = 2; 2 * b = 4; a % b = 1; 4 + 1 = 5.",
+            "a ** b = 25; 25 % 7 = 4.",
+            "a / b = 2.5; 2.5 * 2 = 5.0 (a float, because / gives a float).",
+          ],
+          answer: "`5 4 5.0`",
+        },
+        {
+          type: "example",
+          title: "Find and correct the errors",
+          problem: "Rewrite after correcting the errors: `Print(\"Total\" , marks1 + marks2` where marks1 = \"45\" and marks2 = 38.",
+          steps: [
+            "`Print` must be `print` (Python is case-sensitive).",
+            "The closing bracket is missing (syntax error).",
+            "marks1 is the string \"45\"; adding it to 38 gives a TypeError, so convert it: `int(marks1)`.",
+          ],
+          answer: "`print(\"Total\", int(marks1) + marks2)` prints `Total 83`.",
+        },
+        {
+          type: "mistake",
+          wrong: "`print(7 // 2)` and `print(7 / 2)` both show 3.5.",
+          right: "`7 / 2` is true division and gives 3.5; `7 // 2` is floor division and gives 3.",
+          why: "The two symbols look nearly the same. Read every `/` in an output question twice and ask: one slash or two?",
+        },
+        {
+          type: "activity",
+          activity: {
+            kind: "match",
+            prompt: "Match each expression with its output.",
+            pairs: [
+              ["print(17 // -5)", "-4"],
+              ["print(17 % -5)", "-3"],
+              ["print(10 % 3 ** 2)", "1"],
+              ["print(round(7.456, 2))", "7.46"],
+              ["print(type(5 / 5))", "<class 'float'>"],
+            ],
+            explain: "Floor division rounds down (towards −∞), and the remainder takes the sign of the divisor: 17 = (−5)(−4) + (−3). ** comes before %, so 10 % 9 = 1.",
+          },
+        },
+        {
+          type: "checkpoint",
+          questions: [
+            {
+              kind: "mcq",
+              q: "x = y = 4; x = x + y; y = x − y. What does `print(x, y)` show?",
+              options: ["8 4", "8 0", "4 4", "4 8"],
+              answer: 0,
+              explain: "x = 4 + 4 = 8; then y = 8 − 4 = 4.",
+            },
+          ],
+        },
+        {
+          type: "heading",
+          text: "Write a small program",
+        },
+        {
+          type: "text",
+          md: "**Question (3 marks):** Write a Python program that converts a number of seconds into hours, minutes and seconds, and also prints the time in the form h:m:s.",
+        },
+        {
+          type: "code",
+          lang: "python",
+          runnable: true,
+          caption: "// gives the whole hours or minutes; % gives what is left over.",
+          code: t`total_seconds = 5000
+hours = total_seconds // 3600
+remaining = total_seconds % 3600
+minutes = remaining // 60
+seconds = remaining % 60
+print(total_seconds, "seconds =", hours, "h", minutes, "min", seconds, "s")
+print(hours, minutes, seconds, sep=":")`,
+        },
+        {
+          type: "text",
+          md: "Output:\n\n`5000 seconds = 1 h 23 min 20 s`\n\n`1:23:20`\n\nCheck: 1 × 3600 + 23 × 60 + 20 = 3600 + 1380 + 20 = 5000. ✓ In the exam you would usually read the value with `total_seconds = int(input(\"Enter seconds: \"))`.",
+        },
+        {
+          type: "callout",
+          tone: "exam",
+          title: "Board tip",
+          md: "For programs, use meaningful variable names, convert input with int() or float(), and print a label with each result. Indent consistently (4 spaces). A short comment on the main step can earn the benefit of the doubt if a small slip is made.",
+        },
+        {
+          type: "checkpoint",
+          questions: [
+            {
+              kind: "fill",
+              q: "`a, b = 8, 3` and then `a, b = b, a`. Now `print(a, b)` shows ___.",
+              answer: ["3 8"],
+              explain: "The right side (3, 8) is made first and then assigned, so the values are swapped.",
+            },
+          ],
+        },
+        {
+          type: "keypoints",
+          items: [
+            "Work output questions step by step, following precedence and left-to-right order.",
+            "Check for case errors, missing brackets or colons, and string-number mixing.",
+            "// and % together split a total into units (hours, minutes, seconds; rupees and paise).",
+            "print(..., sep=\":\") changes the separator between values.",
+          ],
+        },
+      ],
+      flashcards: [
+        { front: "a = 5, b = 2: a // b * b + a % b", back: "5 (always gives back a, for positive a and b)." },
+        { front: "17 // −5 and 17 % −5", back: "−4 and −3." },
+        { front: "Swapping two variables in Python", back: "a, b = b, a" },
+        { front: "5000 seconds in h:m:s", back: "1:23:20" },
+        { front: "print(1, 2, 3, sep=\"-\")", back: "1-2-3" },
+        { front: "round(7.456, 2)", back: "7.46" },
+      ],
+      quiz: [
+        {
+          kind: "mcq",
+          q: "What is the output of `print(\"CS\", \"IP\", sep=\"-\", end=\"!\")` followed by `print(\"Done\")`?",
+          options: ["CS-IP!Done", "CS IP!Done", "CS-IP! Done", "CS-IP!\nDone on two lines"],
+          answer: 0,
+          explain: "sep=\"-\" joins CS and IP with a hyphen; end=\"!\" replaces the newline, so the next print continues on the same line.",
+          difficulty: 2,
+        },
+        {
+          kind: "numeric",
+          q: "How many minutes are left over after taking whole hours from 7384 seconds? (Use `7384 % 3600 // 60`.)",
+          answer: 3,
+          explain: "7384 % 3600 = 184 (since 2 × 3600 = 7200); 184 // 60 = 3.",
+        },
+        {
+          kind: "mcq",
+          q: "What does `t = 15; print(t > 10 or 1 / 0)` show?",
+          options: ["True", "ZeroDivisionError", "False", "15"],
+          answer: 0,
+          explain: "`or` stops as soon as the left side is True (short-circuit), so 1 / 0 is never evaluated.",
+          difficulty: 3,
+          hint: "Does Python need to look at the right side of or here?",
+        },
+        {
+          kind: "fill",
+          q: "The output of `print(str(12) + \"3\")` is ___.",
+          answer: ["123"],
+          explain: "str(12) is \"12\"; joining with \"3\" gives \"123\".",
+        },
+        {
+          kind: "truefalse",
+          q: "`print(float(\"3.5\") * 2)` shows 7.0.",
+          answer: true,
+          explain: "float(\"3.5\") is 3.5, and 3.5 × 2 = 7.0, a float.",
+        },
+        {
+          kind: "mcq",
+          q: "Which line has a **syntax** error?",
+          options: ["if x > 5 print(x)", "x = 10 / 0", "y = int(\"7\") + 1", "z = 2 ** 3 ** 2"],
+          answer: 0,
+          explain: "The colon after the if condition is missing. 10 / 0 is a runtime error; the other two are correct.",
+        },
+        {
+          kind: "numeric",
+          q: "What is the value of `3 + 4.5 * 2 // 3`?",
+          answer: 6,
+          explain: "4.5 * 2 = 9.0; 9.0 // 3 = 3.0; 3 + 3.0 = 6.0 (a float, which equals 6).",
+          difficulty: 2,
+        },
+      ],
+    },
+  ],
+};
+
+export const topics: Topic[] = [computerSystems, numberSystems, booleanLogic, problemSolving, pythonStart];
 
 /** Chapter title ("11:" / "12:" + exact title) → topic slug(s) that teach it. */
 export const links: Record<string, string | string[]> = {
@@ -2296,4 +3083,5 @@ export const links: Record<string, string | string[]> = {
   "11:Number Systems and Encoding": "c11-cs-number-systems",
   "11:Boolean Logic": "c11-cs-boolean-logic",
   "11:Introduction to Problem Solving": "c11-cs-problem-solving",
+  "11:Getting Started with Python": "c11-cs-getting-started-python",
 };
