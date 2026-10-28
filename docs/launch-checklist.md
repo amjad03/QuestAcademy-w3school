@@ -95,3 +95,62 @@ Redeploy after changing environment variables.
 4. Sign out, then sign in. You should land on `/learn` (onboarding is skipped once it's done).
 5. Ask the tutor a question while signed in.
 6. In Supabase **Authentication → Users**, check that the test users appear. Delete them afterwards.
+
+## Monitoring, AI cost, payments and compliance (owner steps)
+
+Everything below is optional and switched off until its keys are set. Without them the site builds and runs as before.
+
+### 1. Run the migration
+
+In **Supabase → SQL Editor**, run `supabase/migrations/20261028100000_ops_payments_compliance.sql` (after the school migrations, since it adds a column to `schools`). It creates `ai_usage`, `payments`, `tutor_passes`, `consent_records`, the `grant_tutor_pass` function and the usage report functions. It's safe to run again.
+
+Also check **Project Settings → General → Region** is **Mumbai (ap-south-1)**. The privacy page says data is hosted in India. If your project is somewhere else, either move it or change the "Where your data is stored" section in `src/app/(marketing)/privacy/page.tsx`. In Vercel, set **Settings → Functions → Region** to **Mumbai (bom1)** as well.
+
+### 2. Environment variables (Vercel)
+
+| Variable | What it does |
+| --- | --- |
+| `NEXT_PUBLIC_SENTRY_DSN` | Turns on Sentry error reporting (browser, server, edge). |
+| `SENTRY_AUTH_TOKEN`, `SENTRY_ORG`, `SENTRY_PROJECT` | Optional. Upload source maps at build time so stack traces are readable. Without the token the build skips the upload. |
+| `SENTRY_TRACES_SAMPLE_RATE`, `NEXT_PUBLIC_SENTRY_TRACES_SAMPLE_RATE` | Optional. Performance sampling (defaults 0.05 server, 0.02 browser). |
+| `NEXT_PUBLIC_POSTHOG_KEY` | Turns on PostHog analytics **and** the consent banner. Nothing is sent until a visitor taps Allow. |
+| `NEXT_PUBLIC_POSTHOG_HOST` | Optional. Default `https://eu.i.posthog.com`. Use `https://us.i.posthog.com` for a US project. |
+| `ADMIN_EMAILS` | Comma-separated operator emails (must be confirmed) that can open `/admin/usage`. |
+| `USD_INR` | Optional. Exchange rate for cost estimates (default 88). |
+| `AI_PRICE_CLAUDE_HAIKU_5_5` | Optional. `input,output,cacheRead,cacheWrite` in US$ per million tokens, if list prices change (default `0.1,0.5,0.01,0.125`). |
+| `RAZORPAY_KEY_ID`, `RAZORPAY_KEY_SECRET` | Razorpay API keys (already used for checkout). |
+| `RAZORPAY_WEBHOOK_SECRET` | Secret you choose when creating the webhook (below). |
+| `NEXT_PUBLIC_TUTOR_PREMIUM` | `1` puts the live tutor behind the pass. Leave unset to keep it open to everyone. |
+| `TUTOR_PRICE_INR`, `TUTOR_PASS_DAYS` | Optional. Price (default 299) and length (default 30 days) of the pass. |
+| `RESEND_API_KEY`, `CONSENT_EMAIL_FROM` | Optional. Sends the parent a "please confirm" email after parental consent (e.g. `Quest Academy <consent@your-domain>`; the domain must be verified in Resend). Without them, consent is still recorded, just not email-verified. |
+| `NEXT_PUBLIC_GRIEVANCE_OFFICER_NAME`, `NEXT_PUBLIC_GRIEVANCE_EMAIL`, `NEXT_PUBLIC_GRIEVANCE_ADDRESS` | **Must set before launch.** Shown on the privacy page; it shows placeholders until they are set. |
+
+Redeploy after changing them.
+
+### 3. Razorpay webhook
+
+**Razorpay Dashboard → Account & Settings → Webhooks → Add new webhook**
+
+- **URL:** `https://<your-domain>/api/pay/webhook`
+- **Secret:** a long random string. Put the same value in `RAZORPAY_WEBHOOK_SECRET`.
+- **Active events:** `payment.captured`
+
+The checkout handler and the webhook both grant the pass, and whichever arrives second does nothing, so a learner who closes the tab mid-payment still gets the pass. With Supabase configured, buyers must be signed in. The pass is stored in `tutor_passes` and the live tutor checks it on the server. Test in Razorpay **Test mode** first and confirm a row appears in `payments` with `pass_granted = true`.
+
+### 4. Sentry
+
+Create a **Next.js** project at sentry.io and copy its DSN into `NEXT_PUBLIC_SENTRY_DSN`. For readable stack traces, create an **Organization auth token** (scope: project releases) and set `SENTRY_AUTH_TOKEN`, `SENTRY_ORG` and `SENTRY_PROJECT`. In **Project Settings → Security & Privacy**, keep **Data Scrubber** on and turn on **Prevent Storing of IP Addresses**.
+
+### 5. PostHog
+
+Create a project (EU cloud recommended) and copy the **Project API key** into `NEXT_PUBLIC_POSTHOG_KEY`. In **Project settings**, turn on **Discard client IP data** and keep session replay **off**. Events sent: `signup`, `onboarding_done`, `lesson_start`, `lesson_complete`, `practice_done`, `mock_submit`, `tutor_session_start`, `tutor_session_end`, `voice_engine`, `assignment_done`. Each carries the account id only.
+
+### 6. AI usage page
+
+Open `/admin/usage` signed in with an `ADMIN_EMAILS` account. It shows daily totals, the estimated cost in rupees, the top users and a per-school breakdown. `schools.tutor_daily_cap` is reserved for per-school limits and isn't enforced yet.
+
+### 7. DPDP Act checks
+
+- Fill in the grievance officer variables, and read the privacy and terms pages once. They promise a reply within 7 days and a refund window for unused passes, so change those if they don't match how you work.
+- Students aged 18 or under go through a required parental consent step in onboarding (parent email or phone, a consent checkbox, and a timestamp). It is saved to `consent_records` when the student is signed in. Guests' consent is uploaded the first time they sign in.
+- Settings → Account offers **Download** (JSON export of everything in the account) and **Delete account**. Delete removes the auth user, and every table cascades. Payments and AI usage rows keep only the amounts.
