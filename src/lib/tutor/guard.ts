@@ -76,7 +76,7 @@ export async function takeDaily(req: Request, ip: string, known?: User | null): 
   const user = known !== undefined ? known : await cachedUser(req);
   const key = user ? `u:${user.id}` : `ip:${hashIp(ip)}`;
   const limit = user ? envInt("TUTOR_DAILY_LIMIT_USER", 60) : envInt("TUTOR_DAILY_LIMIT_GUEST", 15);
-  const budget = envInt("TUTOR_DAILY_BUDGET", 3000);
+  const budget = envInt("TUTOR_DAILY_BUDGET", 50000);
   const { data, error } = await sb.rpc("tutor_take", { p_key: key, p_limit: limit, p_global_limit: budget });
   if (error) {
     // Fail open on a database hiccup; the per-instance limiter still applies.
