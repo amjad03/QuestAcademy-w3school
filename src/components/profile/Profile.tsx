@@ -16,12 +16,15 @@ import { ProgressBar } from "@/components/ui/Progress";
 import { stageById } from "@/content/worlds";
 import { useT } from "@/i18n";
 import { badgeProgress } from "./badgeProgress";
+import { useMyClass, subjectHref } from "@/lib/useMyClass";
+import { useClassProgress, useSubjectName } from "@/components/class/data";
 
 export function Profile() {
   const t = useT();
   const hydrated = useHydrated();
   const s = useLearner();
   const catalog = useCatalog();
+  const mc = useMyClass();
 
   const rail = (
     <>
@@ -69,11 +72,11 @@ export function Profile() {
           )}
         </div>
         <div className="flex gap-2">
-          <Link href="/shop" className="btn-ghost !px-3" title={t("profile.editAvatar", "Edit avatar")}>
-            <PencilLine className="h-5 w-5" />
+          <Link href="/shop" className="btn-ghost !px-3" title={t("profile.editAvatar", "Edit avatar")} aria-label={t("profile.editAvatar", "Edit avatar")}>
+            <PencilLine className="h-5 w-5" aria-hidden />
           </Link>
-          <Link href="/settings" className="btn-ghost !px-3" title={t("profile.settings", "Settings")}>
-            <Settings className="h-5 w-5" />
+          <Link href="/settings" className="btn-ghost !px-3" title={t("profile.settings", "Settings")} aria-label={t("profile.settings", "Settings")}>
+            <Settings className="h-5 w-5" aria-hidden />
           </Link>
         </div>
       </section>
@@ -91,7 +94,10 @@ export function Profile() {
         </div>
       </section>
 
+      {mc && mc.subjects.length > 0 && <ProfileSubjects subjects={mc.subjects} />}
+
       {/* courses */}
+      {(!mc || myCourses.length > 0) && (
       <section className="mt-10">
         <div className="flex items-baseline justify-between">
           <h2 className="text-2xl font-black">{t("profile.courses.title", "My courses")}</h2>
@@ -124,6 +130,7 @@ export function Profile() {
           </div>
         )}
       </section>
+      )}
 
       {/* achievements */}
       <section className="mt-10">
@@ -172,5 +179,44 @@ function Stat({ icon, value, label }: { icon: React.ReactNode; value: string; la
         <div className="text-sm font-bold leading-tight text-muted">{label}</div>
       </div>
     </div>
+  );
+}
+
+/** The learner's class subjects with chapter progress (school students follow a class, not catalog courses). */
+function ProfileSubjects({ subjects }: { subjects: NonNullable<ReturnType<typeof useMyClass>>["subjects"] }) {
+  const t = useT();
+  const subjectName = useSubjectName();
+  const progress = useClassProgress(subjects);
+  return (
+    <section className="mt-10" aria-labelledby="profile-subjects">
+      <div className="flex items-baseline justify-between gap-3">
+        <h2 id="profile-subjects" className="text-2xl font-black">
+          {t("profile.subjects.title", "My subjects")}
+        </h2>
+        <Link href="/settings#my-class" className="text-sm font-extrabold text-accent">
+          {t("class.changeSubjects", "Change class or subjects")}
+        </Link>
+      </div>
+      <div className="card mt-4 divide-y-2 divide-line">
+        {subjects.map((sub) => {
+          const done = sub.chapters.filter((ch) => progress.get(`${sub.id}/${ch.slug}`)?.done).length;
+          const pct = sub.chapters.length ? done / sub.chapters.length : 0;
+          return (
+            <Link key={sub.id} href={subjectHref(sub)} className="flex items-center gap-4 p-4 transition hover:bg-surface-2">
+              <CourseIcon slug={sub.icon} size={44} />
+              <div className="min-w-0 flex-1">
+                <div className="flex items-baseline justify-between gap-2">
+                  <span className="truncate font-extrabold">{subjectName(sub)}</span>
+                  <span className="shrink-0 text-xs font-semibold text-muted">{t("class.chaptersDone", "{done} of {total} chapters done", { done, total: sub.chapters.length })}</span>
+                </div>
+                <div className="mt-2">
+                  <ProgressBar value={pct} height={10} label={subjectName(sub)} />
+                </div>
+              </div>
+            </Link>
+          );
+        })}
+      </div>
+    </section>
   );
 }

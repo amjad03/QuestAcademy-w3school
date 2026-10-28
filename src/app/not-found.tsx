@@ -12,12 +12,12 @@ export default function NotFound() {
         </div>
         <h1 className="mt-6 text-3xl font-black">We couldn’t find that page</h1>
         <p className="mt-2 font-semibold text-muted">It may have moved. Let’s get you back to learning.</p>
-        <div className="mt-8 flex justify-center gap-3">
+        <div className="mt-8 flex flex-wrap justify-center gap-3">
           <Link href="/learn" className="btn-primary">
-            Go to Learn
+            Back to my class
           </Link>
-          <Link href="/courses" className="btn-ghost">
-            Courses
+          <Link href="/practice" className="btn-ghost">
+            Practice &amp; tests
           </Link>
         </div>
       </div>
