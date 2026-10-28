@@ -16,7 +16,7 @@ import type { ExamQuestion } from "@/content/types";
 import { useLocale, useT } from "@/i18n";
 import { askTutor } from "@/lib/tutor/client";
 import { correctAnswerText } from "@/components/learn/QuestionCard";
-import { cleanOp, type BoardOp } from "@/components/board/ops";
+import { cleanOp, type BoardColor, type BoardOp } from "@/components/board/ops";
 import type { BoardScript, BoardStep } from "@/components/board/script";
 
 const BoardLessonPlayer = dynamic(() => import("@/components/board/BoardLessonPlayer").then((m) => m.BoardLessonPlayer), {
@@ -52,11 +52,11 @@ const store = {
 };
 
 /** One board op for a line of working: maths when it looks like LaTeX or an equation, else handwriting. */
-function boardOp(line: string, i: number): BoardOp | null {
+function boardOp(line: string, i: number, color?: BoardColor): BoardOp | null {
   const s = line.trim().replace(/^\$+|\$+$/g, "");
   if (!s) return null;
   const mathy = /\\[a-z]+|[=^_]|\d\s*[+\-×*/]\s*\d/i.test(s) && !/[ऀ-෿]/.test(s);
-  return cleanOp(mathy ? { op: "math", id: `w${i}`, tex: s, size: 28 } : { op: "text", id: `w${i}`, text: s.slice(0, 120), size: 24 });
+  return cleanOp(mathy ? { op: "math", id: `w${i}`, tex: s, size: 28, color } : { op: "text", id: `w${i}`, text: s.slice(0, 120), size: 24, color });
 }
 
 /** Spoken text from Md: drop LaTeX commands, markdown and $ signs. */
@@ -71,8 +71,8 @@ const spoken = (s: string) =>
 export function stepsFromExplain(q: ExamQuestion, answer: string): BoardStep[] {
   const text = q.explain?.trim() || "";
   const parts = text ? text.split(/(?<=[.?!])\s+(?=[A-Z$(])/).filter((p) => p.trim()) : [];
-  const ansOp = boardOp(answer.replace(/\$/g, ""), 99);
-  const steps: BoardStep[] = [{ say: `The answer is ${spoken(answer)}.`, ops: [cleanOp({ op: "text", id: "ans", text: "Answer:", color: "green", size: 28 })!, ...(ansOp ? [{ ...ansOp, color: "green" as const }] : [])] }];
+  const ansOp = boardOp(answer.replace(/\$/g, ""), 99, "green");
+  const steps: BoardStep[] = [{ say: `The answer is ${spoken(answer)}.`, ops: [cleanOp({ op: "text", id: "ans", text: "Answer:", color: "green", size: 28 })!, ...(ansOp ? [ansOp] : [])] }];
   parts.forEach((p, i) => {
     const maths = [...p.matchAll(/\$([^$]+)\$/g)].map((m) => m[1]);
     const ops = (maths.length ? maths.slice(0, 2) : [p.replace(/\$/g, "")]).map((m, j) => boardOp(m, i * 3 + j)).filter((o): o is BoardOp => Boolean(o));
