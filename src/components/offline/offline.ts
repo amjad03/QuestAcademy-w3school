@@ -65,7 +65,7 @@ export async function listOfflinePages(): Promise<OfflinePage[]> {
   const read = async (name: string, saved: boolean) => {
     const c = await caches.open(name);
     const reqs = await c.keys();
-    for (const r of reqs.reverse()) {
+    for (const r of [...reqs].reverse()) {
       const path = new URL(r.url).pathname;
       if (out.has(path) || path === "/offline") continue;
       const res = await c.match(r);

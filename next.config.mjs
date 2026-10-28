@@ -9,6 +9,8 @@ const nextConfig = {
   experimental: { serverMinification: false },
   async headers() {
     return [
+      // The service worker must be revalidated on every load so updates reach learners.
+      { source: "/sw.js", headers: [{ key: "Cache-Control", value: "no-cache" }, { key: "Service-Worker-Allowed", value: "/" }] },
       {
         source: "/:path*",
         headers: [
