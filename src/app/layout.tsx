@@ -6,6 +6,7 @@ import "@/experiences/sprout/theme.css";
 import "@/experiences/explore/theme.css";
 import "@/experiences/khan/theme.css";
 import { Providers } from "@/components/providers";
+import { OfflineSupport } from "@/components/offline/OfflineSupport";
 import { Overlays } from "@/components/shell/Overlays";
 import { CommandPalette } from "@/components/shell/CommandPalette";
 import { NavProgress } from "@/components/shell/NavProgress";
@@ -62,6 +63,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           <Overlays />
           <CommandPalette />
           <Monitoring />
+          <OfflineSupport />
         </Providers>
       </body>
     </html>

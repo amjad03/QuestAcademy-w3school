@@ -2,6 +2,7 @@
 
 import { ModeSettings } from "@/components/modes/ModeSettings";
 import { isSeniorClass } from "@/lib/classScope";
+import { browserSaveData } from "@/lib/dataSaver";
 import { SkinPicker } from "@/components/settings/SkinPicker";
 import { LanguagePicker } from "@/components/i18n/LanguagePicker";
 import { TutorToggle } from "@/components/tutor/TutorToggle";
@@ -213,6 +214,12 @@ export function Settings() {
         </Row>
         <Row label={t("settings.sound.label", "Sound effects")}>
           <Toggle on={s.settings.sound} onChange={(v) => s.setSettings({ sound: v })} label={t("settings.sound.label", "Sound effects")} />
+        </Row>
+        <Row label={t("settings.dataSaver.label", "Data saver")} hint={t("settings.dataSaver.hint", "Videos load only when you tap play, no voice-model download in the background, lighter media. Good for mobile data.")}>
+          <Toggle on={s.settings.dataSaver ?? browserSaveData()} onChange={(v) => s.setSettings({ dataSaver: v })} label={t("settings.dataSaver.label", "Data saver")} />
+        </Row>
+        <Row label={t("settings.offline.label", "Saved for offline")} hint={t("settings.offline.hint", "Lessons you save, and the ones you opened recently, open without internet.")}>
+          <Link href="/offline" className="btn-ghost !py-2 text-sm">{t("settings.offline.open", "Open saved lessons")}</Link>
         </Row>
       </Section>
 

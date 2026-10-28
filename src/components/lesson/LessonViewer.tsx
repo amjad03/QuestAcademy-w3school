@@ -24,6 +24,7 @@ import { currentMode, useMode } from "@/lib/useMode";
 import { useUi } from "@/lib/ui";
 import { awardExploreSticker } from "@/components/modes/explore/stickers";
 import { VideoPlayer } from "./VideoPlayer";
+import { SaveOffline } from "@/components/offline/SaveOffline";
 import { BoardLessonCard } from "@/components/board/BoardLessonCard";
 import { boardLessonForLesson } from "@/content/board-lessons";
 import { NotebookDock } from "@/components/notebook/NotebookDock";
@@ -194,11 +195,14 @@ function Article({ lesson, id, world, done, onComplete, endCard }: { lesson: Les
   const playful = rewards === "celebrate" || rewards === "playful";
   return (
     <div>
-      {narration.supported && (
-        <button onClick={() => (narration.playing ? narration.stop() : narration.play())} className="btn-ghost mb-6 !py-2 text-xs">
-          {narration.playing ? <Pause className="h-4 w-4" /> : <Headphones className="h-4 w-4" />} {narration.playing ? t("lesson.narration.stop", "Stop reading") : t("lesson.narration.listen", "Listen to this lesson")}
-        </button>
-      )}
+      <div className="mb-6 flex flex-wrap gap-2 empty:hidden">
+        {narration.supported && (
+          <button onClick={() => (narration.playing ? narration.stop() : narration.play())} className="btn-ghost !py-2 text-xs">
+            {narration.playing ? <Pause className="h-4 w-4" /> : <Headphones className="h-4 w-4" />} {narration.playing ? t("lesson.narration.stop", "Stop reading") : t("lesson.narration.listen", "Listen to this lesson")}
+          </button>
+        )}
+        <SaveOffline />
+      </div>
       <div className="space-y-7">
         {lesson.blocks.map((b, i) => (
           <div key={i} className={clsx("rounded-2xl transition", narration.current === i && "bg-accent-soft ring-8 ring-accent-soft")}>

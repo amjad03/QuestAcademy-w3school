@@ -7,3 +7,6 @@ next-env.d.ts
 .env
 .DS_Store
 .next-dev
+
+# Extra Next.js build folders (NEXT_DIST_DIR)
+/.next-*
