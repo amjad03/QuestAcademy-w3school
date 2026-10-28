@@ -5,7 +5,12 @@ import { UnitOverview } from "@/components/course/UnitOverview";
 
 type Params = { subject: string; unit: string };
 
+// Rendered on first visit and then cached: prebuilding every page made the build exceed the host time limit.
 export function generateStaticParams(): Params[] {
+  return [];
+}
+
+function allParams(): Params[] {
   return subjects.flatMap((s) => s.topics.map((t) => ({ subject: s.slug, unit: t.slug })));
 }
 

@@ -14,7 +14,12 @@ import { WorksheetToolbar } from "@/components/worksheets/WorksheetToolbar";
 type Params = { subject: string; topic: string };
 type Search = Record<string, string | string[] | undefined>;
 
+// Rendered on first visit and then cached: prebuilding every page made the build exceed the host time limit.
 export function generateStaticParams(): Params[] {
+  return [];
+}
+
+function allParams(): Params[] {
   return printableTopics.map((t) => ({ subject: t.subject.slug, topic: t.topic.slug }));
 }
 

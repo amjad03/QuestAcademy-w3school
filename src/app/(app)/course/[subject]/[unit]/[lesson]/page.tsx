@@ -8,7 +8,12 @@ import { LessonViewer, type LessonViewerPayload } from "@/components/lesson/Less
 
 type Params = { subject: string; unit: string; lesson: string };
 
+// Rendered on first visit and then cached: prebuilding every page made the build exceed the host time limit.
 export function generateStaticParams(): Params[] {
+  return [];
+}
+
+function allParams(): Params[] {
   return subjects.flatMap((s) => flatLessons(s).map((l) => ({ subject: s.slug, unit: l.topic.slug, lesson: l.lesson.slug })));
 }
 

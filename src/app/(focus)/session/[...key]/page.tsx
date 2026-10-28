@@ -5,7 +5,12 @@ import { Session, type SessionPayload } from "@/components/session/Session";
 
 type Params = { key: string[] };
 
+// Rendered on first visit and then cached: prebuilding every page made the build exceed the host time limit.
 export function generateStaticParams(): Params[] {
+  return [];
+}
+
+function allParams(): Params[] {
   const out: Params[] = [];
   for (const s of subjects) {
     const o = courseOutline(s.slug)!;
