@@ -67,10 +67,10 @@ export default function Page() {
                         {v ? (
                           <div className="flex items-start gap-3">
                             {/* eslint-disable-next-line @next/next/no-img-element */}
-                            <img src={`https://i.ytimg.com/vi/${v.id}/mqdefault.jpg`} alt="" className="h-12 w-20 shrink-0 rounded-lg bg-surface-2 object-cover" />
+                            <img src={v.thumbnail} alt="" className="h-12 w-20 shrink-0 rounded-lg bg-surface-2 object-cover" />
                             <div>
                               <div className="font-semibold">{v.title || v.id}</div>
-                              <div className="text-xs font-bold text-muted">{overridden ? "Pinned override" : `Auto · confidence ${(v.score * 100).toFixed(0)}%`}</div>
+                              <div className="text-xs font-bold text-muted">{v.source === "drive" ? `Google Drive · ${v.playlist?.length ?? 1} episode(s)` : overridden ? "Pinned override" : `Auto · confidence ${(v.score * 100).toFixed(0)}%`}</div>
                             </div>
                           </div>
                         ) : (

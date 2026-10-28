@@ -129,7 +129,7 @@ export function LessonViewer(raw: LessonViewerPayload) {
       <TranslationNote course={p.course.slug} />
       {item.kind === "video" && p.video && (
         <div>
-          <VideoPlayer id={p.video.id} title={p.video.title || p.lesson.title} watched={itemDone(st, p.id, item)} onWatched={() => markItem(item.id, item.xp)} />
+          <VideoPlayer id={p.video.id} provider={p.video.provider} playlist={p.video.playlist} title={p.video.title || p.lesson.title} watched={itemDone(st, p.id, item)} onWatched={() => markItem(item.id, item.xp)} />
           <h2 className="mt-4 text-xl font-black">{p.video.title || p.lesson.title}</h2>
           {p.channel && (
             <a href={p.channel.url} target="_blank" rel="noreferrer" className="mt-1 inline-block text-sm font-bold text-muted hover:text-accent">

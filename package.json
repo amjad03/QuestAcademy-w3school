@@ -11,6 +11,7 @@
     "lint": "next lint",
     "typecheck": "tsc --noEmit",
     "sync-videos": "tsx --tsconfig tsconfig.json scripts/sync-videos.ts",
+    "sync-drive-videos": "tsx --tsconfig tsconfig.json scripts/sync-drive-videos.ts",
     "generate-voice": "tsx --tsconfig tsconfig.json scripts/generate-voice.ts",
     "i18n:extract": "tsx --tsconfig tsconfig.json scripts/i18n-extract.ts",
     "i18n:content": "tsx --tsconfig scripts/tsconfig.json scripts/i18n-content.ts"

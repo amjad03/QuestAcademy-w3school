@@ -1,0 +1,414 @@
+{
+ "generatedAt": "2026-10-28T19:19:07.096Z",
+ "rootFolder": "1EnP3DKFFtdE4Nz7XW6SxDw9kwXjgCy_C",
+ "files": [
+  {
+   "path": "Biology",
+   "name": "Ep01-introduction-to-puc-biology.mp4",
+   "id": "1j1WM_1xvSMn1ABTTy2VgD-zVMdXz2gFz",
+   "mimeType": "video/mp4"
+  },
+  {
+   "path": "Biology",
+   "name": "Ep02-characteristics-of-living-organisms.mp4",
+   "id": "1Wti-aQ86SYtu8E-dy0CFeED9A6wWOiqN",
+   "mimeType": "video/mp4"
+  },
+  {
+   "path": "Biology",
+   "name": "Ep03-growth-reproduction-metabolism-and-cellular-organisation.mp4",
+   "id": "1GpP-KxhZ3nlgfX1eumrP4nuwGFQfPhv1",
+   "mimeType": "video/mp4"
+  },
+  {
+   "path": "Biology",
+   "name": "Ep04-biodiversity-and-the-need-for-classification.mp4",
+   "id": "1lAxkuOWqq3IbWu43KLkj0KrX8AuDUC69",
+   "mimeType": "video/mp4"
+  },
+  {
+   "path": "Biology",
+   "name": "Ep05-taxonomy-and-systematics.mp4",
+   "id": "1cO6lE4mW2_9uee1zFYZYW4gQrP8bYl4H",
+   "mimeType": "video/mp4"
+  },
+  {
+   "path": "Biology",
+   "name": "Ep06-taxonomic-categories-and-hierarchy.mp4",
+   "id": "1iMMchVHN2QTSAGvTqwYqpHvRTDYRjRRr",
+   "mimeType": "video/mp4"
+  },
+  {
+   "path": "Biology",
+   "name": "Ep07-species-genus-family-order-class-phylum-and-kingdom.mp4",
+   "id": "1ryGSNPuU0tDXQhuxZwMfsVSpUY09ymzu",
+   "mimeType": "video/mp4"
+  },
+  {
+   "path": "Biology",
+   "name": "Ep08-binomial-nomenclature-and-scientific-naming-rules.mp4",
+   "id": "15t8ef7hs-h9f-H9PlPowovHiW369UJq_",
+   "mimeType": "video/mp4"
+  },
+  {
+   "path": "Biology",
+   "name": "Ep09-taxonomic-aids-herbaria-museums-botanical-gardens-and-keys.mp4",
+   "id": "1LmCzZm47nHH7oJqUHuQF8-kCAjthisKW",
+   "mimeType": "video/mp4"
+  },
+  {
+   "path": "Biology",
+   "name": "Ep10-three-domain-system-of-classification.mp4",
+   "id": "1YwcuzmVrFdyxSJ8zS-0aUJpL6ihjyjyv",
+   "mimeType": "video/mp4"
+  },
+  {
+   "path": "Biology",
+   "name": "Ep11-basis-of-biological-classification.mp4",
+   "id": "15tMtXykAazHUxmbM9emKD9Sg8eAyueiA",
+   "mimeType": "video/mp4"
+  },
+  {
+   "path": "Biology",
+   "name": "Ep12-five-kingdom-classification.mp4",
+   "id": "1D4g5mFU62bOs1GjAZQIqO9cYPLiJWyHi",
+   "mimeType": "video/mp4"
+  },
+  {
+   "path": "Biology",
+   "name": "Ep13-kingdom-monera-bacteria-and-cyanobacteria.mp4",
+   "id": "19h_hZ7KcAV9Mtt0O_6qNMwOp9IiC03dm",
+   "mimeType": "video/mp4"
+  },
+  {
+   "path": "Chemistry",
+   "name": "ep01-introduction-to-chemistry.mp4",
+   "id": "1_cY3xmxzIXDf49ehTMpFU7t_b29-EXnN",
+   "mimeType": "video/mp4"
+  },
+  {
+   "path": "Chemistry",
+   "name": "ep02-importance-and-scope-of-chemistry.mp4",
+   "id": "1eWdDRuclumjOX_mrJmUaJBRAuOJTaXuB",
+   "mimeType": "video/mp4"
+  },
+  {
+   "path": "Chemistry",
+   "name": "ep03-nature-and-classification-of-matter.mp4",
+   "id": "1AvhR9e_djGQmLxqAIuhkFC947WucFbPt",
+   "mimeType": "video/mp4"
+  },
+  {
+   "path": "Chemistry",
+   "name": "ep04-physical-and-chemical-properties.mp4",
+   "id": "1u1kPvzQu6D8cvhbkx_SaZLdMWExBADz5",
+   "mimeType": "video/mp4"
+  },
+  {
+   "path": "Chemistry",
+   "name": "ep05-measurement-si-units-and-uncertainty.mp4",
+   "id": "15AgSMT1hZj_yRR4gL-oiEKqZ73ZMxUsG",
+   "mimeType": "video/mp4"
+  },
+  {
+   "path": "Chemistry",
+   "name": "ep06-laws-of-chemical-combination.mp4",
+   "id": "1Q44A9brNRxL0S7X-pY3hJeH3mZcYSTpP",
+   "mimeType": "video/mp4"
+  },
+  {
+   "path": "Chemistry",
+   "name": "ep07-dalton-s-atomic-theory.mp4",
+   "id": "1xRa5g41pCas05XJ2LhnDcQghMox9YS5c",
+   "mimeType": "video/mp4"
+  },
+  {
+   "path": "Chemistry",
+   "name": "ep08-atomic-mass-and-molecular-mass.mp4",
+   "id": "17cMd1hcH9rAdwKG0OzeeX2rH4tNfC79i",
+   "mimeType": "video/mp4"
+  },
+  {
+   "path": "Chemistry",
+   "name": "ep09-mole-concept-and-molar-mass.mp4",
+   "id": "1Vi-tgKKx26fc5wqtL9I9vjJ7wyPQIC0J",
+   "mimeType": "video/mp4"
+  },
+  {
+   "path": "Chemistry",
+   "name": "ep10-percentage-composition.mp4",
+   "id": "1zLWXdTL3oJ5HcgzBQB9Djc2Is0Yg5mau",
+   "mimeType": "video/mp4"
+  },
+  {
+   "path": "Chemistry",
+   "name": "ep11-empirical-and-molecular-formulae.mp4",
+   "id": "1-wtOp2xX916WpTsZ1nJ91azmYwakw8m5",
+   "mimeType": "video/mp4"
+  },
+  {
+   "path": "Chemistry",
+   "name": "ep12-chemical-equations-and-stoichiometry.mp4",
+   "id": "1TecPGUsAirQXume5JN99SaGDLcasRuIX",
+   "mimeType": "video/mp4"
+  },
+  {
+   "path": "Chemistry",
+   "name": "ep13-limiting-reagent-and-numerical-calculations.mp4",
+   "id": "17andbF9MaR2px_6nwKU8IdWAz8I-bL7g",
+   "mimeType": "video/mp4"
+  },
+  {
+   "path": "Electronics",
+   "name": "EP01-video.mp4",
+   "id": "1bT4DxcZmtOAOj0ZxMEnK5hwH72F4V3AE",
+   "mimeType": "video/mp4"
+  },
+  {
+   "path": "Electronics",
+   "name": "EP02-video.mp4",
+   "id": "1af0kAiNyG7nLCPuJifIDUwY8r0hfumT4",
+   "mimeType": "video/mp4"
+  },
+  {
+   "path": "Electronics",
+   "name": "EP03-video.mp4",
+   "id": "1_4uJhL0aXssP8pWHeymSKr1XrroJnVZW",
+   "mimeType": "video/mp4"
+  },
+  {
+   "path": "Electronics",
+   "name": "EP04-video.mp4",
+   "id": "1RKnZcREeugwNzEjMliRoFcRIam1F6ka3",
+   "mimeType": "video/mp4"
+  },
+  {
+   "path": "Electronics",
+   "name": "EP05-video.mp4",
+   "id": "1TelYni2t_sA2NsSbEHyDNL-4qiiY0dYH",
+   "mimeType": "video/mp4"
+  },
+  {
+   "path": "Electronics",
+   "name": "EP06-video.mp4",
+   "id": "1xHGA9G7GW68X5mI9S78F4UA68kKYJ3zL",
+   "mimeType": "video/mp4"
+  },
+  {
+   "path": "Electronics",
+   "name": "EP07-video.mp4",
+   "id": "1P0HTU77jDX6yEZ7UNjHnyi4OhRWSvOB3",
+   "mimeType": "video/mp4"
+  },
+  {
+   "path": "Electronics",
+   "name": "EP08-video.mp4",
+   "id": "1cDuItqqytFxNK5grYT5hkP8vznJmldpi",
+   "mimeType": "video/mp4"
+  },
+  {
+   "path": "Electronics",
+   "name": "EP09-video.mp4",
+   "id": "1oqm1mGVtdsmIp7r_23M7Ejnq5wsHmEam",
+   "mimeType": "video/mp4"
+  },
+  {
+   "path": "Electronics",
+   "name": "EP10-video.mp4",
+   "id": "1pyA2hEpt7ML4fc5fhl43JrgnUCgalTit",
+   "mimeType": "video/mp4"
+  },
+  {
+   "path": "Electronics",
+   "name": "EP11-video.mp4",
+   "id": "10WnVP0iow0HCkldlWQsOdFbxQXjVUans",
+   "mimeType": "video/mp4"
+  },
+  {
+   "path": "Electronics",
+   "name": "EP12-video.mp4",
+   "id": "1y29hUcUh7V1khQ5QmsmmWQqfuWI_yQyd",
+   "mimeType": "video/mp4"
+  },
+  {
+   "path": "Electronics",
+   "name": "EP13-video.mp4",
+   "id": "1Umbh8_6k-JaQ6zHzJiRtIR0fl-qm1skj",
+   "mimeType": "video/mp4"
+  },
+  {
+   "path": "Electronics",
+   "name": "EP14-video.mp4",
+   "id": "1UQIMhWB1bvg35l62i-hg0IDtBjndeYAe",
+   "mimeType": "video/mp4"
+  },
+  {
+   "path": "Electronics",
+   "name": "EP15-video.mp4",
+   "id": "1GoJ-eY-x8_chaMQlR5nAlWT8QvGuvB8i",
+   "mimeType": "video/mp4"
+  },
+  {
+   "path": "Electronics",
+   "name": "EP16-video.mp4",
+   "id": "1lzJ1qMqStnhWZ0tgFyyhConmUH-X-c5b",
+   "mimeType": "video/mp4"
+  },
+  {
+   "path": "Electronics",
+   "name": "EP17-video.mp4",
+   "id": "1XlJaSn07qQg9ZxzM6fJoSwuXZZ6tsO41",
+   "mimeType": "video/mp4"
+  },
+  {
+   "path": "Mathematics",
+   "name": "Ep01-introduction-to-puc-maths.mp4",
+   "id": "1BJ1waVGgY3PCkIiXP9TPbY7KH0ebDFPB",
+   "mimeType": "video/mp4"
+  },
+  {
+   "path": "Mathematics",
+   "name": "Ep02-definition-and-representation-of-sets.mp4",
+   "id": "1LxMunZTS9k8hqGmSjac2d1N0t9nvt3kr",
+   "mimeType": "video/mp4"
+  },
+  {
+   "path": "Mathematics",
+   "name": "Ep03-roster-and-set-builder-forms.mp4",
+   "id": "1Vx5aiCYU0VOBxQDLudfjCxggOuAv2R9u",
+   "mimeType": "video/mp4"
+  },
+  {
+   "path": "Mathematics",
+   "name": "Ep04-empty-finite-infinite-and-universal-sets.mp4",
+   "id": "1VmxxVVA3d-FZ64LAQNwydoAYhGcIrO0K",
+   "mimeType": "video/mp4"
+  },
+  {
+   "path": "Mathematics",
+   "name": "Ep05-subsets-and-equal-sets.mp4",
+   "id": "1T4BAp35mYLLFaUT5xA4O0MZJbX29Npn_",
+   "mimeType": "video/mp4"
+  },
+  {
+   "path": "Mathematics",
+   "name": "Ep06-power-sets.mp4",
+   "id": "1rT6YS82FQ-d6sbVH2QeUdukSOolsQjaI",
+   "mimeType": "video/mp4"
+  },
+  {
+   "path": "Mathematics",
+   "name": "Ep07-intervals-on-the-real-number-line.mp4",
+   "id": "1y_ozJs7JVLGhU7-ePz1ASj2eKODx8U2C",
+   "mimeType": "video/mp4"
+  },
+  {
+   "path": "Mathematics",
+   "name": "Ep08-union-intersection-and-difference.mp4",
+   "id": "1_3mj7kFtncZV5SjPNGC4-f6wj4D_BJOy",
+   "mimeType": "video/mp4"
+  },
+  {
+   "path": "Mathematics",
+   "name": "Ep09-complement-of-a-set.mp4",
+   "id": "1C78n05rbEkJs5UcXhWDxUQ52qEidj3ed",
+   "mimeType": "video/mp4"
+  },
+  {
+   "path": "Mathematics",
+   "name": "Ep10-venn-diagrams.mp4",
+   "id": "1bmboUbnQZYCBBtVyxDOkDPHEhPq189wo",
+   "mimeType": "video/mp4"
+  },
+  {
+   "path": "Mathematics",
+   "name": "Ep11-properties-of-set-operations.mp4",
+   "id": "1_vYYgKOYkNZsh-CBe2IyZ4N1cBBas2hD",
+   "mimeType": "video/mp4"
+  },
+  {
+   "path": "Mathematics",
+   "name": "Ep12-applications-of-sets-to-real-world-problems.mp4",
+   "id": "1WEsXumUO0g8W5wB7sTAR6tFdySOl-QVM",
+   "mimeType": "video/mp4"
+  },
+  {
+   "path": "Physics",
+   "name": "ep01-physical-quantities-and-their-classification.mp4",
+   "id": "1D3Yt_Q_KOPlAuSLySW4UNTydCQO8Q25b",
+   "mimeType": "video/mp4"
+  },
+  {
+   "path": "Physics",
+   "name": "ep02-fundamental-and-derived-quantities.mp4",
+   "id": "1nSa__3SSkeyLZK0DYVP74fcXTAYBw98D",
+   "mimeType": "video/mp4"
+  },
+  {
+   "path": "Physics",
+   "name": "ep03-si-base-units-and-derived-units.mp4",
+   "id": "15b2x07OgH8YKa0CAN6R9zt7UqAbInBJH",
+   "mimeType": "video/mp4"
+  },
+  {
+   "path": "Physics",
+   "name": "ep04-systems-of-units.mp4",
+   "id": "12mYSLpu3AKVySuhah0npXmMbwmVV3vnq",
+   "mimeType": "video/mp4"
+  },
+  {
+   "path": "Physics",
+   "name": "ep05-unit-conversions.mp4",
+   "id": "13uqHOW_S4Bxilwon5LLFxjUxod-rmj3q",
+   "mimeType": "video/mp4"
+  },
+  {
+   "path": "Physics",
+   "name": "ep06-dimensions-of-physical-quantities.mp4",
+   "id": "1vtBk5jTv30RM_CsmZfPSPxj6Hbzos0VC",
+   "mimeType": "video/mp4"
+  },
+  {
+   "path": "Physics",
+   "name": "ep07-dimensional-formulae.mp4",
+   "id": "1b_ao3Yt9tKGCiLr7YIeoYxnS_zvZlprB",
+   "mimeType": "video/mp4"
+  },
+  {
+   "path": "Physics",
+   "name": "ep08-principle-of-dimensional-homogeneity.mp4",
+   "id": "1NOaf4sHds_Ok8hZV7RVzR-2iZuQCFU6-",
+   "mimeType": "video/mp4"
+  },
+  {
+   "path": "Physics",
+   "name": "ep09-applications-of-dimensional-analysis.mp4",
+   "id": "1MiFmSGZaCI-0EWs1gD-TsDOEwSEg7hPE",
+   "mimeType": "video/mp4"
+  },
+  {
+   "path": "Physics",
+   "name": "ep10-limitations-of-dimensional-analysis.mp4",
+   "id": "1vRGeMf4l1FX9AAJ2qhTFWUNC9TH-7lHT",
+   "mimeType": "video/mp4"
+  },
+  {
+   "path": "Physics",
+   "name": "ep11-significant-figures.mp4",
+   "id": "1qKbWCo_1eUCldGjJXOexc5EjXcULoH72",
+   "mimeType": "video/mp4"
+  },
+  {
+   "path": "Physics",
+   "name": "ep12-scientific-notation.mp4",
+   "id": "1xrstLt_V9ayEkUuRCjWmdZazhPAY_tvE",
+   "mimeType": "video/mp4"
+  },
+  {
+   "path": "Physics",
+   "name": "ep13-accuracy-and-precision.mp4",
+   "id": "1YwB8gDScHECOv18jEAYIQvTEMiNCpSht",
+   "mimeType": "video/mp4"
+  }
+ ]
+}
