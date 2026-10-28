@@ -29,7 +29,7 @@ function loadCheckout(): Promise<RazorpayCtor | null> {
   });
 }
 
-/** Premium gate for the live tutor: a valid pass, or NEXT_PUBLIC_TUTOR_OPEN=1 for testing. */
+/** Premium gate for the live tutor: open to everyone until NEXT_PUBLIC_TUTOR_PREMIUM=1, then a valid pass. */
 export function PlanGate() {
   const t = useT();
   const hydrated = useHydrated();
@@ -43,11 +43,11 @@ export function PlanGate() {
     fetch("/api/pay")
       .then((r) => r.json())
       .then(setCfg)
-      .catch(() => setCfg({ payments: false, open: process.env.NEXT_PUBLIC_TUTOR_OPEN === "1", keyId: null, priceInr: 299, days: 30 }));
+      .catch(() => setCfg({ payments: false, open: process.env.NEXT_PUBLIC_TUTOR_PREMIUM !== "1", keyId: null, priceInr: 299, days: 30 }));
   }, []);
 
   const pass = profile.tutorPass && profile.tutorPass.until > new Date().toISOString() ? profile.tutorPass.pass : null;
-  const open = process.env.NEXT_PUBLIC_TUTOR_OPEN === "1" || cfg?.open;
+  const open = process.env.NEXT_PUBLIC_TUTOR_PREMIUM !== "1" || cfg?.open;
   if (!hydrated || (!cfg && !open && !pass)) return <Loader2 className="mx-auto h-6 w-6 animate-spin text-muted" />;
   if (open || pass) return <TutorRoom pass={pass} />;
 

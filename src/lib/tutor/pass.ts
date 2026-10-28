@@ -9,7 +9,7 @@ import { createHmac, timingSafeEqual } from "node:crypto";
 
 export const paymentsEnabled = () => Boolean(process.env.RAZORPAY_KEY_ID && process.env.RAZORPAY_KEY_SECRET);
 /** Testing switch: everyone gets the tutor. */
-export const tutorOpen = () => process.env.NEXT_PUBLIC_TUTOR_OPEN === "1";
+export const tutorOpen = () => process.env.NEXT_PUBLIC_TUTOR_PREMIUM !== "1";
 
 export const PRICE_INR = () => {
   const n = Number(process.env.TUTOR_PRICE_INR);
