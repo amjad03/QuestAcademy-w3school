@@ -71,13 +71,7 @@ export interface CourseOutline {
   stats: { lessons: number; videos: number; questions: number; minutes: number; skills: number };
 }
 
-export const ITEM_LABEL: Record<ItemKind, string> = {
-  video: "Video",
-  article: "Article",
-  practice: "Practice",
-  cards: "Flashcards",
-  challenge: "Coding challenge",
-};
+export { ITEM_LABEL } from "./item-label";
 
 /** All questions that belong to a lesson: end quiz + inline checkpoints. */
 export function lessonQuestions(subjectSlug: string, unitSlug: string, lessonSlug: string): Question[] {

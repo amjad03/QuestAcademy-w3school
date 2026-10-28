@@ -5,6 +5,7 @@
   "description": "Quest Academy — learn anything, anytime, your way. Interactive lessons, quizzes and gamification from pre-primary to PG.",
   "scripts": {
     "dev": "next dev",
+    "prebuild": "tsx --tsconfig tsconfig.json scripts/gen-chapter-links.ts",
     "build": "next build",
     "start": "next start",
     "lint": "next lint",

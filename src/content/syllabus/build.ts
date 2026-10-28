@@ -1,5 +1,7 @@
 import { TOPICS, type TopicKey } from "./topics";
-import { CHAPTER_LESSONS } from "@/content/subjects/extra";
+import links from "./chapter-links.json";
+
+const CHAPTER_LESSONS: Record<string, string[]> = links.chapterLessons;
 import type { SyllabusChapter, SyllabusSubject } from "./types";
 
 /** [chapter title, topic key, approx weightage %] */

@@ -4,12 +4,12 @@ import Link from "next/link";
 import { useEffect, useMemo, useState } from "react";
 import { ArrowRight, Bookmark, CheckCircle2, CircleHelp, Download, NotebookPen, RotateCcw, Search, Trash2 } from "lucide-react";
 import clsx from "clsx";
-import { getLessonById, getSubject } from "@/content";
 import { courseOf, notebookToMarkdown, titleCase, useNotebook, type Doubt } from "@/lib/notebook-store";
 import { useHydrated } from "@/components/providers";
 import { CourseIcon } from "@/components/brand/CourseIcon";
 import { useT } from "@/i18n";
 import { DoubtItem } from "./DoubtItem";
+import { useCatalog } from "@/components/shell/CatalogContext";
 
 type Tab = "notes" | "bookmarks" | "doubts";
 const TABS: { id: Tab; label: string; icon: typeof NotebookPen }[] = [
@@ -18,12 +18,20 @@ const TABS: { id: Tab; label: string; icon: typeof NotebookPen }[] = [
   { id: "doubts", label: "Doubts", icon: CircleHelp },
 ];
 
-const lessonTitle = (id: string) => getLessonById(id)?.lesson.title ?? titleCase(id.split("/").pop() ?? id);
-const lessonHref = (id: string) => getLessonById(id)?.href ?? `/course/${id}`;
-const courseTitle = (slug: string) => getSubject(slug)?.title ?? titleCase(slug);
+// Titles come from /lessons.json so the notebook does not bundle every lesson.
+let idx: Record<string, { title: string; href: string }> = {};
+const lessonTitle = (id: string) => idx[id]?.title ?? titleCase(id.split("/").pop() ?? id);
+const lessonHref = (id: string) => idx[id]?.href ?? `/course/${id}`;
+let courseNames: Record<string, string> = {};
+const courseTitle = (slug: string) => courseNames[slug] ?? titleCase(slug);
 const when = (iso: string) => new Date(iso).toLocaleDateString(undefined, { day: "numeric", month: "short", year: "numeric" });
 
 export function NotebookView() {
+  courseNames = Object.fromEntries(useCatalog().map((c) => [c.slug, c.title]));
+  const [, setIdxReady] = useState(false);
+  useEffect(() => {
+    fetch("/lessons.json").then((r) => r.json()).then((d) => { idx = d; setIdxReady(true); }).catch(() => {});
+  }, []);
   const t = useT();
   const tabLabel: Record<Tab, string> = {
     notes: t("notebook.tab.notes", "Notes"),

@@ -5,7 +5,7 @@ import { useMemo } from "react";
 import { BookOpenCheck, Check, ChevronLeft, ChevronRight, Trophy } from "lucide-react";
 import clsx from "clsx";
 import type { CourseOutline } from "@/content/course";
-import { ITEM_LABEL } from "@/content/course";
+import { ITEM_LABEL } from "@/content/item-label";
 import { useLearner } from "@/lib/store";
 import { EMPTY_PROGRESS, itemDone, lessonProgress, unitProgress } from "@/lib/progress";
 import { MASTERY } from "@/lib/mastery";

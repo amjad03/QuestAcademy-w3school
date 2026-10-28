@@ -6,7 +6,9 @@ import { useCatalog } from "@/components/shell/CatalogContext";
 import type { CourseCard } from "@/content/course";
 import type { Stage } from "@/content/types";
 import type { Board } from "@/lib/modes";
-import { EXTRA_TOPICS } from "@/content/subjects/extra";
+import links from "@/content/syllabus/chapter-links.json";
+
+const EXTRA_TOPICS = new Set(links.extraTopics);
 import { boardClassOf, chosenSubjects, classFromSyllabus, type ClassChapter, type ClassSubject, type MyClass } from "@/content/my-class";
 
 /** Grade of a learner without a board syllabus: the one they picked, else a guess from their age. */
