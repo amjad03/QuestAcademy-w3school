@@ -3,7 +3,7 @@
 import Link from "next/link";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useLessonClassContext } from "@/components/class/ClassViews";
-import { useEffect, useMemo } from "react";
+import { useEffect, useMemo, useRef } from "react";
 import { BookOpenCheck, Check, Headphones, Pause, Presentation, Trophy } from "lucide-react";
 import clsx from "clsx";
 import type { Assessment, CourseItem, CourseLesson, ItemKind } from "@/content/course";
@@ -95,8 +95,12 @@ export function LessonViewer(raw: LessonViewerPayload) {
     }
   }, [p.id]); // eslint-disable-line react-hooks/exhaustive-deps
 
+  // Back to the top when switching item or lesson, but not on first load: the page already
+  // opens at the top, and scrolling here forces a synchronous layout of the whole article.
+  const scrolled = useRef(false);
   useEffect(() => {
-    window.scrollTo({ top: 0 });
+    if (scrolled.current) window.scrollTo({ top: 0 });
+    scrolled.current = true;
   }, [item.kind, p.id]);
 
   // Next step after the current item: the next unfinished item in this lesson, else the next lesson.
@@ -198,7 +202,10 @@ function Article({ lesson, id, world, done, onComplete, endCard }: { lesson: Les
       <div className="space-y-7">
         {lesson.blocks.map((b, i) => (
           <div key={i} className={clsx("rounded-2xl transition", narration.current === i && "bg-accent-soft ring-8 ring-accent-soft")}>
-            <BlockView block={b} world={world} id={`${id}-${i}`} />
+            {/* Off-screen blocks skip layout and paint until scrolled near (long lessons have hundreds of formulas). */}
+            <div className={i > 2 ? "cv-auto" : undefined}>
+              <BlockView block={b} world={world} id={`${id}-${i}`} />
+            </div>
           </div>
         ))}
       </div>

@@ -4,7 +4,7 @@ import Link from "next/link";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { useEffect, useMemo, useState } from "react";
 import { motion } from "framer-motion";
-import { ChevronLeft, Crosshair, Gauge, RotateCcw, SlidersHorizontal } from "lucide-react";
+import { CalendarClock, ChevronLeft, Crosshair, Gauge, History, RotateCcw, SlidersHorizontal } from "lucide-react";
 import clsx from "clsx";
 import type { ExamId, ExamQuestion, ExamSubject } from "@/content/types";
 import { EXAM_IDS, EXAM_META, MARK, SUBJECT_META, gradeOf } from "@/lib/exam";
@@ -16,6 +16,7 @@ import { burst } from "@/lib/confetti";
 import { useT } from "@/i18n";
 import { SUBJECT_ICON } from "./icons";
 import { signed, useExamNames, useSubjectNames } from "./labels";
+import { VoiceExplain } from "./VoiceExplain";
 
 const LENGTH = 8;
 const SUBJECTS: ExamSubject[] = ["physics", "chemistry", "maths", "biology"];
@@ -37,7 +38,10 @@ export function ChapterDrill({ pool }: { pool: ExamQuestion[] }) {
   const params = useSearchParams();
   const router = useRouter();
   const pathname = usePathname();
-  const exam = asExam(params.get("exam"));
+  /** "Previous-year pattern" mode: questions in the chosen exam's paper pattern, genuine imported PYQs first. */
+  const pyqMode = params.get("mode") === "pyq";
+  const exam = asExam(params.get("exam")) ?? (pyqMode ? "JEE" : null);
+  const year = pyqMode && /^\d{4}$/.test(params.get("year") ?? "") ? Number(params.get("year")) : null;
   const subject = asSubject(params.get("subject"));
   const chapter = params.get("chapter");
   const grade = asGrade(params.get("grade"));
@@ -78,7 +82,10 @@ export function ChapterDrill({ pool }: { pool: ExamQuestion[] }) {
     return order.filter((s) => m.has(s)).map((s) => [s, [...m.get(s)!.entries()].sort((a, b) => (a[1].grade ?? "z").localeCompare(b[1].grade ?? "z") || a[0].localeCompare(b[0]))] as const);
   }, [filtered, exam]);
 
-  const set = useMemo(() => filtered.filter((q) => (!subject || q.subject === subject) && (!chapter || q.chapter === chapter) && (!fixedLevel || (q.difficulty ?? 2) === fixedLevel)), [filtered, subject, chapter, fixedLevel]);
+  const chapterSet = useMemo(() => filtered.filter((q) => (!subject || q.subject === subject) && (!chapter || q.chapter === chapter) && (!fixedLevel || (q.difficulty ?? 2) === fixedLevel)), [filtered, subject, chapter, fixedLevel]);
+  /** Years of genuine imported papers for this exam and chapter (empty until the owner imports some). */
+  const years = useMemo(() => (pyqMode ? [...new Set(chapterSet.filter((q) => q.pyq?.exam === exam).map((q) => q.pyq!.year))].sort((a, b) => b - a) : []), [pyqMode, chapterSet, exam]);
+  const set = useMemo(() => (year ? chapterSet.filter((q) => q.pyq?.year === year && q.pyq.exam === exam) : chapterSet), [chapterSet, year, exam]);
   const [run, setRun] = useState(0);
   const [asked, setAsked] = useState<string[]>([]);
   const [results, setResults] = useState<boolean[]>([]);
@@ -101,9 +108,14 @@ export function ChapterDrill({ pool }: { pool: ExamQuestion[] }) {
     if (done || !chapter) return undefined;
     const remaining = set.filter((q) => !asked.includes(q.id));
     if (!remaining.length) return undefined;
+    if (pyqMode && exam) {
+      // Paper order: genuine past-paper questions (newest first), then PYQ-pattern questions at the exam's level.
+      const target = EXAM_META[exam].target;
+      return [...remaining].sort((a, b) => (b.pyq?.year ?? 0) - (a.pyq?.year ?? 0) || Math.abs((a.difficulty ?? 2) - target) - Math.abs((b.difficulty ?? 2) - target) || a.id.localeCompare(b.id))[0];
+    }
     // closest difficulty to the current level
     return [...remaining].sort((a, b) => Math.abs((a.difficulty ?? 2) - level) - Math.abs((b.difficulty ?? 2) - level) || a.id.localeCompare(b.id))[0];
-  }, [set, asked, level, done, chapter]);
+  }, [set, asked, level, done, chapter, pyqMode, exam]);
 
   const answer = (ok: boolean) => {
     if (!current) return;
@@ -111,7 +123,7 @@ export function ChapterDrill({ pool }: { pool: ExamQuestion[] }) {
     const next = [...results, ok];
     setResults(next);
     setAsked((a) => [...a, current.id]);
-    if (!fixedLevel) setLevel((l) => Math.max(1, Math.min(3, l + (ok ? 1 : -1))));
+    if (!fixedLevel && !pyqMode) setLevel((l) => Math.max(1, Math.min(3, l + (ok ? 1 : -1))));
     if (next.length >= length) {
       const c = next.filter(Boolean).length;
       recordQuiz(c, length);
@@ -121,7 +133,7 @@ export function ChapterDrill({ pool }: { pool: ExamQuestion[] }) {
 
   const correct = results.filter(Boolean).length;
   const marking = exam === "KCET" || exam === "COMEDK" ? MARK.one : MARK.nta;
-  const filtersOn = Boolean(exam || grade || fixedLevel);
+  const filtersOn = Boolean((exam && !pyqMode) || grade || fixedLevel || year);
 
   const chip = (active: boolean) => clsx("rounded-lg border-2 px-2.5 py-1 text-xs font-extrabold transition", active ? "border-accent bg-accent text-white" : "border-line bg-surface text-muted hover:bg-surface-2 hover:text-ink");
 
@@ -178,17 +190,36 @@ export function ChapterDrill({ pool }: { pool: ExamQuestion[] }) {
           <div className="flex items-center gap-2 text-xs font-extrabold uppercase tracking-wider text-muted">
             <SlidersHorizontal className="h-4 w-4" aria-hidden /> {t("exam.drill.filters", "Filters")}
             {filtersOn && (
-              <button className="ml-auto text-accent hover:underline" onClick={() => setParams({ exam: null, grade: null, level: null })}>
+              <button className="ml-auto text-accent hover:underline" onClick={() => setParams({ exam: null, grade: null, level: null, year: null })}>
                 {t("exam.drill.clearFilters", "Clear filters")}
               </button>
             )}
           </div>
-          <div className="flex flex-wrap items-center gap-1.5" role="group" aria-label={t("exam.drill.examFilter", "Exam")}>
-            <button className={chip(!exam)} aria-pressed={!exam} onClick={() => setParams({ exam: null })}>
-              {examName.Mixed}
+          <div className="flex flex-wrap items-center gap-1.5" role="group" aria-label={t("exam.drill.modeFilter", "Mode")}>
+            <button className={chip(!pyqMode)} aria-pressed={!pyqMode} onClick={() => setParams({ mode: null, year: null })}>
+              <Gauge className="mr-1 inline h-3.5 w-3.5" aria-hidden />
+              {t("exam.drill.mode.adaptive", "Adaptive drill")}
             </button>
+            <button className={chip(pyqMode)} aria-pressed={pyqMode} onClick={() => setParams({ mode: "pyq", exam: exam ?? "JEE" })} data-testid="pyq-mode">
+              <History className="mr-1 inline h-3.5 w-3.5" aria-hidden />
+              {t("exam.drill.mode.pyq", "Previous-year pattern")}
+            </button>
+          </div>
+          {pyqMode && (
+            <p className="text-xs font-semibold text-muted" data-testid="pyq-note">
+              {years.length
+                ? t("exam.drill.pyq.noteYears", "Past-paper questions are tagged with their year; the rest are original questions in the same pattern.")
+                : t("exam.drill.pyq.note", "Original questions in the pattern, level and marking of {exam} past papers (not copied from a specific year's paper).", { exam: exam ? examName[exam] : "" })}
+            </p>
+          )}
+          <div className="flex flex-wrap items-center gap-1.5" role="group" aria-label={t("exam.drill.examFilter", "Exam")}>
+            {!pyqMode && (
+              <button className={chip(!exam)} aria-pressed={!exam} onClick={() => setParams({ exam: null })}>
+                {examName.Mixed}
+              </button>
+            )}
             {EXAM_IDS.map((e) => (
-              <button key={e} className={chip(exam === e)} aria-pressed={exam === e} onClick={() => setParams({ exam: e })}>
+              <button key={e} className={chip(exam === e)} aria-pressed={exam === e} onClick={() => setParams({ exam: e, year: null })}>
                 {examName[e]}
               </button>
             ))}
@@ -203,7 +234,19 @@ export function ChapterDrill({ pool }: { pool: ExamQuestion[] }) {
               </button>
             ))}
           </div>
-          <div className="flex flex-wrap items-center gap-1.5" role="group" aria-label={t("exam.drill.levelFilter", "Difficulty")}>
+          {years.length > 0 && (
+            <div className="flex flex-wrap items-center gap-1.5" role="group" aria-label={t("exam.drill.yearFilter", "Year")}>
+              <button className={chip(!year)} aria-pressed={!year} onClick={() => setParams({ year: null })}>
+                {t("exam.drill.allYears", "All years + pattern")}
+              </button>
+              {years.map((y) => (
+                <button key={y} className={chip(year === y)} aria-pressed={year === y} onClick={() => setParams({ year: String(y) })}>
+                  {y}
+                </button>
+              ))}
+            </div>
+          )}
+          <div className={clsx("flex flex-wrap items-center gap-1.5", pyqMode && "hidden")} role="group" aria-label={t("exam.drill.levelFilter", "Difficulty")}>
             <button className={chip(!fixedLevel)} aria-pressed={!fixedLevel} onClick={() => setParams({ level: null })}>
               {t("exam.drill.level.adaptive", "Adaptive")}
             </button>
@@ -240,8 +283,16 @@ export function ChapterDrill({ pool }: { pool: ExamQuestion[] }) {
                 <h1 className="text-2xl font-black sm:text-3xl">{chapter}</h1>
               </div>
               <span className="chip !px-3 !py-1">
-                <Gauge className="h-3.5 w-3.5" /> {LEVELS.find((l) => l.id === level)?.label}
-                {!fixedLevel && ` · ${t("exam.drill.level.adaptive", "Adaptive")}`}
+                {pyqMode ? (
+                  <>
+                    <History className="h-3.5 w-3.5" /> {t("exam.drill.mode.pyq", "Previous-year pattern")}
+                  </>
+                ) : (
+                  <>
+                    <Gauge className="h-3.5 w-3.5" /> {LEVELS.find((l) => l.id === level)?.label}
+                    {!fixedLevel && ` · ${t("exam.drill.level.adaptive", "Adaptive")}`}
+                  </>
+                )}
               </span>
             </div>
             {length > 0 && (
@@ -275,7 +326,15 @@ export function ChapterDrill({ pool }: { pool: ExamQuestion[] }) {
                 </div>
               ) : current ? (
                 <motion.div key={`${run}-${current.id}`} initial={{ opacity: 0, x: 20 }} animate={{ opacity: 1, x: 0 }}>
-                  <QuestionCard question={current} onDone={answer} index={results.length} total={length} continueLabel={results.length + 1 < length ? t("exam.drill.nextQuestion", "Next question") : t("exam.drill.seeResults", "See results")} />
+                  {pyqMode && <PyqBadge q={current} />}
+                  <QuestionCard
+                    question={current}
+                    onDone={answer}
+                    index={results.length}
+                    total={length}
+                    continueLabel={results.length + 1 < length ? t("exam.drill.nextQuestion", "Next question") : t("exam.drill.seeResults", "See results")}
+                    afterFeedback={<VoiceExplain question={current} examName={exam ? examName[exam] : undefined} />}
+                  />
                 </motion.div>
               ) : (
                 <div className="text-center">
@@ -292,5 +351,23 @@ export function ChapterDrill({ pool }: { pool: ExamQuestion[] }) {
         )}
       </main>
     </div>
+  );
+}
+
+/** Where a question comes from: a genuine past paper (imported, with year) or an original PYQ-pattern question. */
+function PyqBadge({ q }: { q: ExamQuestion }) {
+  const t = useT();
+  const examName = useExamNames();
+  if (q.pyq)
+    return (
+      <p className="mb-3 inline-flex items-center gap-1.5 rounded-lg bg-accent-soft px-2.5 py-1 text-xs font-extrabold text-accent" data-testid="pyq-badge" title={q.pyq.source}>
+        <CalendarClock className="h-3.5 w-3.5" aria-hidden /> {examName[q.pyq.exam]} {q.pyq.year}
+        {q.pyq.shift ? ` · ${q.pyq.shift}` : ""}
+      </p>
+    );
+  return (
+    <p className="mb-3 inline-flex items-center gap-1.5 rounded-lg bg-surface-2 px-2.5 py-1 text-xs font-extrabold text-muted" data-testid="pyq-badge" title={t("exam.drill.pyq.patternHint", "An original question written in the style of past papers. It is not from a specific year's paper.")}>
+      <History className="h-3.5 w-3.5" aria-hidden /> {t("exam.drill.pyq.pattern", "PYQ pattern")}
+    </p>
   );
 }

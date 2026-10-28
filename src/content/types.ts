@@ -223,6 +223,11 @@ export type ExamQuestion = Extract<Question, { kind: "mcq" | "numeric" | "multi"
   grade?: "11" | "12";
   /** Rough "time to solve" in seconds; used for pacing analytics. */
   idealTime?: number;
+  /**
+   * Set ONLY for genuine past-paper questions added with scripts/import-pyq.ts (docs/pyq-import.md).
+   * Questions without it are original PYQ-pattern questions and must never be labelled with a year.
+   */
+  pyq?: { exam: ExamId; year: number; shift?: string; source: string };
 };
 
 export interface FormulaSheet {

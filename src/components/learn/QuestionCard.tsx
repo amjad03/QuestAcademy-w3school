@@ -2,7 +2,7 @@
 
 import { AnimatePresence, motion } from "framer-motion";
 import { ArrowDown, ArrowUp, CheckCircle2, Lightbulb, Volume2, XCircle } from "lucide-react";
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useState, type ReactNode } from "react";
 import clsx from "clsx";
 import type { Question } from "@/content/types";
 import { Md, MdInline, plain } from "@/components/Md";
@@ -319,6 +319,7 @@ export function QuestionCard({
   index,
   total,
   continueLabel,
+  afterFeedback,
 }: {
   question: Question;
   onDone?: (correct: boolean) => void;
@@ -326,6 +327,8 @@ export function QuestionCard({
   index?: number;
   total?: number;
   continueLabel?: string;
+  /** Extra content under the explanation once the answer is checked (e.g. "Explain by voice"). */
+  afterFeedback?: ReactNode;
 }) {
   const t = useT();
   const initial = useMemo(() => emptyAnswer(q), [q]);
@@ -380,6 +383,7 @@ export function QuestionCard({
                   </div>
                 )}
                 {q.explain && <Md text={q.explain} className="prose-quest mt-2 space-y-2 !text-[0.98rem] !leading-7" />}
+                {afterFeedback}
               </div>
             </div>
             {onDone && (

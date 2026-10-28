@@ -5,6 +5,7 @@
  * signed-in user's session, so row-level security decides what comes back.
  * Without Supabase (or in preview mode) the same calls answer from demo data.
  */
+import { useMemo } from "react";
 import { create } from "zustand";
 import { persist, createJSONStorage } from "zustand/middleware";
 import { supabase, supabaseEnabled } from "@/lib/supabase";
@@ -27,7 +28,7 @@ export const useSchool = create<SchoolStore>()(
       demo: false,
       memberships: [],
       loadedFor: null,
-      setDemo: (demo) => set(demo ? { demo, memberships: demoSchool().memberships.filter((m) => m.user_id === DEMO_USER), loadedFor: DEMO_USER } : { demo, memberships: [], loadedFor: null }),
+      setDemo: (demo) => set(demo ? { demo, memberships: demoMemberships(), loadedFor: DEMO_USER } : { demo, memberships: [], loadedFor: null }),
       setMemberships: (loadedFor, memberships) => set({ memberships, loadedFor }),
     }),
     { name: "qa-school", storage: createJSONStorage(() => localStorage), partialize: (s) => ({ demo: s.demo, memberships: s.memberships, loadedFor: s.loadedFor }) },
@@ -47,9 +48,12 @@ export function rolesOf(ms: Membership[]) {
   };
 }
 
+const demoMemberships = () => demoSchool().memberships.filter((m) => m.user_id === DEMO_USER);
+
 export function useRoles() {
+  const demo = useSchool((s) => s.demo);
   const ms = useSchool((s) => s.memberships);
-  return rolesOf(ms);
+  return useMemo(() => rolesOf(demo ? demoMemberships() : ms), [demo, ms]);
 }
 
 const MEMBERSHIP_SELECT = "id, user_id, school_id, class_id, role, student_id, display_name, nickname, leaderboard_hidden, roll_no, last_seen_at, schools(id, name, city, board), classes(id, school_id, name, section, grade, board)";

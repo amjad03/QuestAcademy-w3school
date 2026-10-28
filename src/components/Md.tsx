@@ -9,12 +9,22 @@ import { Fragment, type ReactNode } from "react";
 
 const TOKEN = /(`[^`]+`|\$[^$\n]+\$|\*\*[^*]+\*\*|\*[^*\s][^*]*\*|\[[^\]]+\]\([^)]+\))/g;
 
+// KaTeX is the most expensive part of rendering a lesson; every formula is laid out once per page load.
+const TEX_CACHE = new Map<string, string>();
+
 export function tex(src: string, display = false) {
+  const key = (display ? "D" : "I") + src;
+  const hit = TEX_CACHE.get(key);
+  if (hit !== undefined) return hit;
+  let html: string;
   try {
-    return katex.renderToString(src, { displayMode: display, throwOnError: false, strict: "ignore" });
+    html = katex.renderToString(src, { displayMode: display, throwOnError: false, strict: "ignore" });
   } catch {
-    return src;
+    html = src;
   }
+  if (TEX_CACHE.size > 4000) TEX_CACHE.clear();
+  TEX_CACHE.set(key, html);
+  return html;
 }
 
 function inline(text: string, keyBase: string): ReactNode[] {

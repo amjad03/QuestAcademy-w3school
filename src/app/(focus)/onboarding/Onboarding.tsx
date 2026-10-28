@@ -23,6 +23,8 @@ import { classForProfile } from "@/lib/useMyClass";
 import { goalXpForMinutes, hasExamStep, isYoungLevel, type PersonalProfile, type StudyStyle } from "@/lib/personalise";
 import { AboutFields, ExamFields, GoalFields, HabitsFields, LevelsFields, ParentFields, WeakFields, parentContactValid } from "@/components/personal/PersonalFields";
 import { Diagnostic } from "@/components/personal/Diagnostic";
+import { ParentConsent, parentConsentReady } from "@/components/compliance/ParentConsent";
+import { needsParentalConsent } from "@/lib/compliance";
 import { ClassPicker, boardsFor, choiceFromProfile, choiceForLevel, levelForAge, stageForLevel, type ClassChoice } from "@/components/class/ClassPicker";
 
 const STEPS = ["age", "mode", "category", "course", "goal", "name", "done"] as const;
@@ -162,6 +164,8 @@ function OnboardingFlow() {
   const patch = (p: Partial<PersonalProfile>) => setPersonal((x) => ({ ...x, ...p }));
   const t = useT();
   const young = isYoungLevel(classChoice.level);
+  // Under-18s need a guardian's consent before we keep their data (DPDP Act 2023).
+  const minor = needsParentalConsent(age) && !(profile.stage && ["ug", "pg", "lifelong"].includes(profile.stage));
 
   const PROMPT: Record<StepId, string> = {
     about: young ? t("onboard.prompt.aboutParent", "Hello! Tell me a little about your child.") : t("onboard.prompt.about", "Nice to meet you! Tell me a little about yourself."),
@@ -171,7 +175,13 @@ function OnboardingFlow() {
     habits: young ? t("onboard.prompt.habitsParent", "When does your child usually study, and for how long?") : t("onboard.prompt.habits", "How do you like to study?"),
     weak: t("onboard.prompt.weak", "Which subjects or chapters feel hard? I’ll give them extra time."),
     diagnostic: t("onboard.prompt.diagnostic", "A few quick questions so I know where to start. No pressure!"),
-    parent: young ? t("onboard.prompt.parentParent", "Want progress updates? Add your contact (optional).") : t("onboard.prompt.parent", "Add a parent’s contact for progress updates (optional)."),
+    parent: minor
+      ? young
+        ? t("onboard.prompt.parentConsentParent", "Last step: add your contact and give your consent as the parent.")
+        : t("onboard.prompt.parentConsent", "Last step: a parent or guardian needs to agree. Ask them to add their contact and tick the box.")
+      : young
+        ? t("onboard.prompt.parentParent", "Want progress updates? Add your contact (optional).")
+        : t("onboard.prompt.parent", "Add a parent’s contact for progress updates (optional)."),
     class: t("onboard.prompt.class", "Which class are you in? I’ll show you only what you need."),
     age: t("onboard.prompt.age", "Hi there! I’m Questy. How old are you — or where are you in your studies?"),
     mode: t("onboard.prompt.mode", "Here’s the experience I picked for you. You can choose another any time."),
@@ -218,7 +228,7 @@ function OnboardingFlow() {
   const at = Math.min(step, steps.length - 1);
   const id = steps[at];
   const recommended = age !== null ? (choice?.mode ?? modeForAge(age)) : undefined;
-  const canNext = id === "about" ? name.trim().length > 0 : id === "age" ? age !== null : id === "mode" ? Boolean(mode) : id === "category" ? Boolean(category) : id === "course" ? Boolean(course) : id === "class" ? Boolean(classChoice.level && classChoice.grade && (!boardsFor(classChoice.level).length || classChoice.board)) : id === "parent" ? parentContactValid(personal) : true;
+  const canNext = id === "about" ? name.trim().length > 0 : id === "age" ? age !== null : id === "mode" ? Boolean(mode) : id === "category" ? Boolean(category) : id === "course" ? Boolean(course) : id === "class" ? Boolean(classChoice.level && classChoice.grade && (!boardsFor(classChoice.level).length || classChoice.board)) : id === "parent" ? parentContactValid(personal) && (!minor || parentConsentReady(personal)) : true;
   const courses = catalog.filter((c) => c.world === category);
 
   const next = () => {
@@ -248,6 +258,8 @@ function OnboardingFlow() {
         personal: { ...personal, targetExam: personal.targetExam ?? (classChoice.level === "exam" ? classChoice.grade : null), completedAt: new Date().toISOString() },
       });
       if (!completing) useLearner.getState().setSettings({ sound: MODES[m].sound });
+      // Lets the session record the guardian's consent server-side if signed in.
+      if (personal.parentConsent) window.dispatchEvent(new Event("qa-consent"));
       sfx("fanfare");
     }
     if (id === "name") {
@@ -351,6 +363,7 @@ function OnboardingFlow() {
               />
             )}
             {id === "parent" && <ParentFields value={personal} onChange={patch} young={young} />}
+            {id === "parent" && minor && <ParentConsent value={personal} onChange={patch} young={young} />}
 
             {id === "category" && (
               <div className="grid gap-3">
@@ -435,7 +448,7 @@ function OnboardingFlow() {
             </button>
           )}
           <button type="button" onClick={next} disabled={!canNext} className={clsx(id === "diagnostic" || id === "parent" ? "btn-ghost" : "btn-primary", "w-full sm:w-auto sm:min-w-[160px]")}>
-            {id === "done" ? t("onboard.start", "Start learning") : id === "diagnostic" ? t("onboard.skipDiagnostic", "Skip the quiz") : id === "parent" ? (personal.parentEmail || personal.parentPhone ? t("onboard.continue", "Continue") : t("onboard.skip", "Skip")) : t("onboard.continue", "Continue")}
+            {id === "done" ? t("onboard.start", "Start learning") : id === "diagnostic" ? t("onboard.skipDiagnostic", "Skip the quiz") : id === "parent" ? (minor || personal.parentEmail || personal.parentPhone ? t("onboard.continue", "Continue") : t("onboard.skip", "Skip")) : t("onboard.continue", "Continue")}
           </button>
         </div>
       </div>

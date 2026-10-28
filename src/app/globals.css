@@ -462,3 +462,9 @@ html[data-skin="site"] :is(.card, .tile) {
     inset: 0 0 auto 0;
   }
 }
+
+/* Long lesson pages: off-screen blocks skip style, layout and paint until they near the viewport. */
+.cv-auto {
+  content-visibility: auto;
+  contain-intrinsic-size: auto 280px;
+}

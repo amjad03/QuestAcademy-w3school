@@ -20,11 +20,19 @@ export default function TermsPage() {
             </div>
             <div>
               <h2>Accounts and guest mode</h2>
-              <p>You do not need an account. In guest mode your data stays on your device and you are responsible for it. If you sign in, keep your login details to yourself and tell us if you think someone else has used your account. A parent or guardian should manage any account for a child under 13.</p>
+              <p>You do not need an account. In guest mode your data stays on your device and you are responsible for it. If you sign in, keep your login details to yourself and tell us if you think someone else has used your account. Students under 18 need a parent or guardian&apos;s consent to create an account, given during sign-up; for younger children the parent should set up and manage the account. You can download or delete your account data at any time from Settings.</p>
             </div>
             <div>
               <h2>Content and accuracy</h2>
               <p>We work to keep lessons, syllabus mappings and exam information correct, but mistakes happen and syllabi change. Always check against your board&apos;s or examination body&apos;s official documents. Quest Academy is a study aid, not a guarantee of any exam result.</p>
+            </div>
+            <div>
+              <h2>The AI tutor</h2>
+              <p>The AI tutor (Questy) is a computer program, not a teacher. It can make mistakes, so check important answers against your textbook or ask your teacher. Use it to learn, not to copy answers into graded work your school says you must do yourself. Do not share personal details such as your address or phone number in the chat. There are daily limits so that everyone gets a fair share.</p>
+            </div>
+            <div>
+              <h2>Payments</h2>
+              <p>Most of Quest Academy is free. If you buy a tutor pass, the price and number of days are shown before you pay, and payment is handled by Razorpay. The pass is linked to your account and starts as soon as payment is confirmed. If a payment goes through but the pass does not appear, write to us with your payment id and we will fix it or refund you. Refunds for passes that have not been used can be requested within 7 days.</p>
             </div>
             <div>
               <h2>Certificates</h2>
@@ -40,7 +48,11 @@ export default function TermsPage() {
             </div>
             <div>
               <h2>Privacy</h2>
-              <p>How we handle data is described on the <Link href="/privacy" className="font-bold text-accent">privacy page</Link>, which forms part of these terms. This version applies from October 2026.</p>
+              <p>How we handle data is described on the <Link href="/privacy" className="font-bold text-accent">privacy page</Link>, which forms part of these terms. Questions or complaints go to our Grievance Officer, listed there.</p>
+            </div>
+            <div>
+              <h2>Law</h2>
+              <p>These terms are governed by the laws of India. This version applies from 28 October 2026.</p>
             </div>
           </Prose>
         </div>

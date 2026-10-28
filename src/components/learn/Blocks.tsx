@@ -1,7 +1,7 @@
 "use client";
 
 import { AlertTriangle, Info, Lightbulb, Sparkles, Swords, Target } from "lucide-react";
-import { useState } from "react";
+import { memo, useState } from "react";
 import clsx from "clsx";
 import type { Block, WorldId } from "@/content/types";
 import { Md, MdInline, tex } from "@/components/Md";
@@ -20,7 +20,8 @@ const CALLOUT = {
   exam: { icon: Swords, label: "Exam insight", cls: "border-bad/30 bg-bad-soft", ic: "text-bad-shade" },
 } as const;
 
-export function BlockView({ block, world, id }: { block: Block; world: WorldId; id: string }) {
+/** Memoised: lesson pages re-render on every store change, and blocks (KaTeX, widgets) are the heavy part. */
+export const BlockView = memo(function BlockView({ block, world, id }: { block: Block; world: WorldId; id: string }) {
   const t = useT();
   const calloutLabel = {
     tip: t("learn.callout.tip", "Pro tip"),
@@ -167,7 +168,7 @@ export function BlockView({ block, world, id }: { block: Block; world: WorldId; 
     case "activity":
       return <ActivityView activity={block.activity} kids={kids} />;
   }
-}
+});
 
 function Checkpoint({ questions, kids, id }: { questions: import("@/content/types").Question[]; kids: boolean; id: string }) {
   const t = useT();

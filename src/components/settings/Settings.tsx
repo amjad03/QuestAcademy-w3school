@@ -10,7 +10,8 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useMode } from "@/lib/useMode";
 import { GrownUpGate } from "@/components/modes/ModeSettings";
-import { deleteAccount, pushAccount } from "@/lib/supabase";
+import { deleteAccount, pushAccount, supabase } from "@/lib/supabase";
+import { analyticsChoice, analyticsConfigured, setAnalyticsConsent } from "@/lib/analytics";
 import { mergeNotebooks, notebookSnapshot, useNotebook, type NotebookData } from "@/lib/notebook-store";
 import { useEffect, useRef, useState } from "react";
 import { Download, LogOut, Upload } from "lucide-react";
@@ -36,6 +37,7 @@ export function Settings() {
   const [gatePassed, setGatePassed] = useState(false);
   const toast = useUi((u) => u.toast);
   const fileRef = useRef<HTMLInputElement>(null);
+  const [analyticsOn, setAnalyticsOn] = useState(() => (typeof window === "undefined" ? false : analyticsChoice() === true));
   const [name, setName] = useState<string | null>(null);
   const t = useT();
   useSavedToast();
@@ -103,6 +105,16 @@ export function Settings() {
         <GrownUpGate message={t("settings.gate", "Settings are for grown-ups. Please answer:")} onPass={() => setGatePassed(true)} onCancel={() => router.push("/learn")} />
       </PageColumns>
     );
+
+  const exportAccount = async () => {
+    const token = (await supabase()?.auth.getSession())?.data.session?.access_token;
+    const res = token ? await fetch("/api/account/export", { headers: { Authorization: `Bearer ${token}` }, cache: "no-store" }).catch(() => null) : null;
+    if (!res?.ok) return toast({ text: t("settings.account.exportFailed", "Couldn’t download your account data. Please try again.") });
+    const a = document.createElement("a");
+    a.href = URL.createObjectURL(await res.blob());
+    a.download = "quest-academy-account.json";
+    a.click();
+  };
 
   const exportData = () => {
     const a = document.createElement("a");
@@ -242,6 +254,11 @@ export function Settings() {
                 {t("settings.account.changePassword", "Change password")}
               </Link>
             </Row>
+            <Row label={t("settings.account.exportAccount", "Your account data")} hint={t("settings.account.exportAccountHint", "Download everything stored in your account as a JSON file")}>
+              <button className="btn-ghost" onClick={() => void exportAccount()}>
+                <Download className="h-4 w-4" /> {t("settings.account.exportAccountButton", "Download")}
+              </button>
+            </Row>
             <Row label={t("settings.account.delete", "Delete account")} hint={t("settings.account.deleteHint", "Permanently removes your account and the progress saved in it")}>
               <button
                 className="btn-bad"
@@ -271,6 +288,11 @@ export function Settings() {
             <input ref={fileRef} type="file" accept="application/json" className="hidden" onChange={(e) => e.target.files?.[0] && void importData(e.target.files[0])} />
           </div>
         </Row>
+        {analyticsConfigured && (
+          <Row label={t("settings.data.analytics", "Usage analytics")} hint={t("settings.data.analyticsHint", "Share which lessons are opened and finished, without names or answers, to help improve Quest Academy")}>
+            <Toggle on={analyticsOn} onChange={(v) => (setAnalyticsConsent(v), setAnalyticsOn(v))} label={t("settings.data.analytics", "Usage analytics")} />
+          </Row>
+        )}
         <Row label={t("settings.data.reset", "Reset progress")} hint={t("settings.data.resetHint", "Deletes XP, mastery, streaks, coins and badges on this device")}>
           <button
             className="btn-bad"

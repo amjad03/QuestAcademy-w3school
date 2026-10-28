@@ -4,6 +4,7 @@ import { chemistryQuestions } from "./questions-chemistry";
 import { biologyQuestions } from "./questions-biology";
 import { mathsQuestions } from "./questions-maths";
 import { bankQuestions } from "./bank";
+import { pyqQuestions } from "./pyq";
 
 export { physicsQuestions, chemistryQuestions, biologyQuestions, mathsQuestions };
 
@@ -14,4 +15,5 @@ export const examQuestions: ExamQuestion[] = [
   ...biologyQuestions,
   ...mathsQuestions,
   ...bankQuestions,
+  ...pyqQuestions,
 ];
