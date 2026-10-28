@@ -24,7 +24,9 @@ export type BoardOp =
   | { op: "plot"; id: string; axes: string; fn: string; color?: BoardColor; label?: string }
   | { op: "point"; id: string; axes: string; at: Pt; label?: string; color?: BoardColor }
   | { op: "highlight" | "underline"; target: string; color?: BoardColor }
-  | { op: "ink"; id: string; points: Pt[]; color?: BoardColor; width?: number; by?: "student" | "tutor" }
+  | { op: "ink"; id: string; points: Pt[]; color?: BoardColor; width?: number; by?: "student" | "tutor"; /** Translucent highlighter stroke. */ hl?: boolean }
+  /** Move the tutor's laser pointer to an element (or a point) while talking about it. */
+  | { op: "laser"; target?: string; at?: Pt }
   | { op: "explainer"; explainer: string }
   | { op: "page" }
   | { op: "clear" };
@@ -100,11 +102,16 @@ export function cleanOp(raw: unknown): BoardOp | null {
     case "ink": {
       if (!Array.isArray(r.points)) return null;
       const points = r.points.slice(0, 2000).map(pt).filter((p): p is Pt => Boolean(p));
-      return points.length > 1 ? { op: "ink", id: id(r.id), points, color: color(r.color), width: num(r.width, 1, 20), by: r.by === "student" ? "student" : "tutor" } : null;
+      return points.length > 1 ? { op: "ink", id: id(r.id), points, color: color(r.color), width: num(r.width, 1, 20), by: r.by === "student" ? "student" : "tutor", hl: r.hl === true || undefined } : null;
     }
     case "explainer": {
       const ex = s(r.explainer ?? r.id, 60);
       return ex ? { op: "explainer", explainer: ex } : null;
+    }
+    case "laser": {
+      const target = s(r.target, 40);
+      const at = pt(r.at);
+      return target || at ? { op: "laser", target, at } : null;
     }
     case "page":
       return { op: "page" };

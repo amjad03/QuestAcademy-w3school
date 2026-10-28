@@ -1,6 +1,7 @@
 "use client";
 
 import { usePathname } from "next/navigation";
+import { TutorFab } from "@/components/tutor/QuickTutor";
 import { useEffect, useMemo } from "react";
 import clsx from "clsx";
 import { useMode } from "@/lib/useMode";
@@ -40,9 +41,12 @@ export function AppShell({ children }: { children: React.ReactNode }) {
 
   const Shell = exp.Shell;
   return (
-    <Shell pathname={pathname} nav={nav} more={more} isActive={(href) => isActivePath(pathname, href)} openSearch={() => setPalette(true)}>
-      {children}
-    </Shell>
+    <>
+      <Shell pathname={pathname} nav={nav} more={more} isActive={(href) => isActivePath(pathname, href)} openSearch={() => setPalette(true)}>
+        {children}
+      </Shell>
+      <TutorFab />
+    </>
   );
 }
 

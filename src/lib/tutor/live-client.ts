@@ -26,7 +26,7 @@ export function parseStep(line: string): LiveStep | null {
     const c = r.check as Record<string, unknown> | undefined;
     const check =
       c && typeof c.q === "string" && c.q.trim()
-        ? { q: c.q.slice(0, 500), options: Array.isArray(c.options) ? c.options.filter((o): o is string => typeof o === "string").slice(0, 5) : undefined }
+        ? { q: c.q.slice(0, 500), options: Array.isArray(c.options) ? c.options.filter((o): o is string => typeof o === "string").slice(0, 5) : undefined, board: c.board === true || undefined }
         : undefined;
     return {
       say: typeof r.say === "string" ? r.say.slice(0, 600) : "",
@@ -118,54 +118,6 @@ export function studentInfo(p: Profile): StudentInfo {
 
 export const languageForLocale = (locale: string): TutorLanguage => (locale === "hi" ? "Hindi" : locale === "kn" ? "Kannada" : "English");
 export const speechLang = (l: TutorLanguage) => (l === "Hindi" ? "hi-IN" : l === "Kannada" ? "kn-IN" : "en-IN");
-
-/* ---------------- speech recognition (where the browser has it) ---------------- */
-
-interface Recognition {
-  lang: string;
-  interimResults: boolean;
-  continuous: boolean;
-  start(): void;
-  stop(): void;
-  onresult: ((e: { results: ArrayLike<ArrayLike<{ transcript: string }> & { isFinal: boolean }> }) => void) | null;
-  onend: (() => void) | null;
-  onerror: (() => void) | null;
-}
-
-export function recognitionSupported() {
-  if (typeof window === "undefined") return false;
-  const w = window as unknown as Record<string, unknown>;
-  return Boolean(w.SpeechRecognition || w.webkitSpeechRecognition);
-}
-
-/** Listen once; calls onText with the running transcript and onDone at the end. Returns a stop function. */
-export function listen(lang: string, onText: (t: string) => void, onDone: (t: string) => void): () => void {
-  const w = window as unknown as Record<string, new () => Recognition>;
-  const Ctor = w.SpeechRecognition || w.webkitSpeechRecognition;
-  if (!Ctor) {
-    onDone("");
-    return () => {};
-  }
-  const rec = new Ctor();
-  rec.lang = lang;
-  rec.interimResults = true;
-  rec.continuous = false;
-  let text = "";
-  rec.onresult = (e) => {
-    text = Array.from(e.results)
-      .map((r) => r[0]?.transcript ?? "")
-      .join(" ");
-    onText(text);
-  };
-  rec.onerror = () => {};
-  rec.onend = () => onDone(text.trim());
-  try {
-    rec.start();
-  } catch {
-    onDone("");
-  }
-  return () => rec.stop();
-}
 
 /** Shrink a photo to ≤1280 px JPEG (base64, no prefix) so uploads stay small on phones. */
 export async function photoToBase64(file: File): Promise<{ mediaType: "image/jpeg"; data: string; preview: string }> {

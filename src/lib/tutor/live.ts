@@ -2,8 +2,25 @@
 
 import type { BoardOp } from "@/components/board/ops";
 
-export type LiveMode = "learn" | "doubt" | "explainback";
-export const LIVE_MODES: LiveMode[] = ["learn", "doubt", "explainback"];
+/** "ask" is the quick doubt chat that floats over every page (short answers, mini board). */
+export type LiveMode = "learn" | "doubt" | "explainback" | "ask";
+export const LIVE_MODES: LiveMode[] = ["learn", "doubt", "explainback", "ask"];
+
+/** What is on the student's screen when they ask (all optional, all short). */
+export interface PageContext {
+  path?: string;
+  course?: string;
+  lesson?: string;
+  summary?: string;
+  /** Practice question on screen, options included. */
+  question?: string;
+  answered?: boolean;
+  correct?: boolean;
+  /** Only sent once the student has answered. */
+  answer?: string;
+  /** Age stage of the app (explore/adventure… — younger stages need simpler words). */
+  stage?: string;
+}
 
 export type TutorLanguage = "English" | "Hindi" | "Kannada" | "Hinglish";
 export const TUTOR_LANGUAGES: TutorLanguage[] = ["English", "Hindi", "Kannada", "Hinglish"];
@@ -34,11 +51,16 @@ export interface LiveRequest {
   messages: { role: "user" | "assistant"; content: string }[];
   /** A photo of a problem, sent with the first turn of a doubt only. */
   image?: { mediaType: "image/jpeg" | "image/png" | "image/webp"; data: string };
+  /** A snapshot of the smartboard (with the student's marks), attached to the latest student turn. */
+  boardImage?: { mediaType: "image/png" | "image/jpeg"; data: string };
+  page?: PageContext;
 }
 
 export interface CheckPoint {
   q: string;
   options?: string[];
+  /** The tutor wants the student to work it out ON THE BOARD, then send it to be checked. */
+  board?: boolean;
 }
 
 /** One small step of a lesson: what to say, what to draw, and maybe a pause. */

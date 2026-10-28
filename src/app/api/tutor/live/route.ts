@@ -3,7 +3,7 @@ import { rateLimit } from "@/lib/tutor/rateLimit";
 import { TUTOR_MODEL, clientIp, fail, hasCredential, mapError, takeDaily } from "@/lib/tutor/guard";
 import { paymentsEnabled, tutorOpen, verifyPass } from "@/lib/tutor/pass";
 import { LIVE_SYSTEM_PROMPT, RECAP_SCHEMA, RECAP_SYSTEM_PROMPT, liveContext } from "@/lib/tutor/live-prompt";
-import { LIVE_LIMITS, LIVE_MODES, TUTOR_LANGUAGES, TUTOR_PASS_HEADER, type LiveRequest, type Recap, type StudentInfo } from "@/lib/tutor/live";
+import { LIVE_LIMITS, LIVE_MODES, TUTOR_LANGUAGES, TUTOR_PASS_HEADER, type LiveRequest, type PageContext, type Recap, type StudentInfo } from "@/lib/tutor/live";
 import { STREAM_MARK } from "@/lib/tutor/types";
 
 export const runtime = "nodejs";
@@ -59,7 +59,30 @@ function parse(raw: unknown): LiveRequest | null {
     if (!mediaType || !data || data.length > LIVE_LIMITS.maxImageBytes || !/^[A-Za-z0-9+/=]+$/.test(data)) return null;
     image = { mediaType, data };
   }
-  return { kind, mode, language, topic, student, explainers, messages, image };
+  let boardImage: LiveRequest["boardImage"];
+  if (r.boardImage && typeof r.boardImage === "object") {
+    const im = r.boardImage as Record<string, unknown>;
+    const mediaType = (["image/png", "image/jpeg"] as const).find((t) => t === im.mediaType);
+    const data = typeof im.data === "string" ? im.data : "";
+    if (!mediaType || !data || data.length > LIVE_LIMITS.maxImageBytes || !/^[A-Za-z0-9+/=]+$/.test(data)) return null;
+    boardImage = { mediaType, data };
+  }
+  let page: PageContext | undefined;
+  if (r.page && typeof r.page === "object") {
+    const pg = r.page as Record<string, unknown>;
+    page = {
+      path: str(pg.path, 200) || undefined,
+      course: str(pg.course, 120) || undefined,
+      lesson: str(pg.lesson, 160) || undefined,
+      summary: str(pg.summary, 1500) || undefined,
+      question: str(pg.question, 2500) || undefined,
+      answered: pg.answered === true || undefined,
+      correct: typeof pg.correct === "boolean" ? pg.correct : undefined,
+      answer: pg.answered === true ? str(pg.answer, 600) || undefined : undefined,
+      stage: str(pg.stage, 20) || undefined,
+    };
+  }
+  return { kind, mode, language, topic, student, explainers, messages, image, boardImage, page };
 }
 
 export async function POST(req: Request) {
@@ -79,10 +102,13 @@ export async function POST(req: Request) {
   if (daily !== "ok") return fail(429, daily === "budget" ? "upstream_busy" : "daily_limit");
 
   const ctx = liveContext(lr);
+  const last = lr.messages.length - 1;
   const apiMessages: Anthropic.MessageParam[] = lr.messages.map((m, i) => {
-    if (i !== 0) return { role: m.role, content: m.content };
-    const parts: Anthropic.ContentBlockParam[] = [{ type: "text", text: ctx }];
-    if (lr.image) parts.push({ type: "image", source: { type: "base64", media_type: lr.image.mediaType, data: lr.image.data } });
+    const board = i === last && lr.boardImage;
+    if (i !== 0 && !board) return { role: m.role, content: m.content };
+    const parts: Anthropic.ContentBlockParam[] = i === 0 ? [{ type: "text", text: ctx }] : [];
+    if (i === 0 && lr.image) parts.push({ type: "image", source: { type: "base64", media_type: lr.image.mediaType, data: lr.image.data } });
+    if (board) parts.push({ type: "text", text: "Snapshot of the smartboard right now (the student's own marks are on it):" }, { type: "image", source: { type: "base64", media_type: board.mediaType, data: board.data } });
     parts.push({ type: "text", text: m.content });
     return { role: "user", content: parts };
   });
