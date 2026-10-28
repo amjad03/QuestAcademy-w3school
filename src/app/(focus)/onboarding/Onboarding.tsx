@@ -14,7 +14,7 @@ import { CourseIcon } from "@/components/brand/CourseIcon";
 import { Mascot } from "@/components/brand/Mascot";
 import { ProgressBar } from "@/components/ui/Progress";
 import { sfx } from "@/lib/sound";
-import { MODES, modeForAge, modeForStage, type ModeId } from "@/lib/modes";
+import { BOARDS, MODES, modeForAge, modeForStage, type ModeId } from "@/lib/modes";
 import { ModePicker } from "@/components/modes/ModePicker";
 import { useT } from "@/i18n";
 import { SYLLABI } from "@/content/syllabus";
@@ -406,6 +406,10 @@ function OnboardingFlow() {
                   school2
                     ? [t("onboard.summary.class", "Your class"), classChoice.level === "pre" ? t("class.pre", "Pre-primary") : classChoice.level === "exam" ? (SYLLABI.exam.grades.find((g) => g.id === classChoice.grade)?.name ?? "—") : t("class.gradeN", "Class {n}", { n: classChoice.level ?? "—" })]
                     : [t("onboard.summary.course", "Your course"), catalog.find((c) => c.slug === course)?.title ?? "—"],
+                  ...(school2 && classChoice.board && classChoice.level !== "exam" ? [[t("onboard.summary.board", "Board"), BOARDS.find((b) => b.id === classChoice.board)?.name ?? "—"]] : []),
+                  ...(school2 && (personal.targetExam || classChoice.level === "exam")
+                    ? [[t("onboard.summary.exam", "Exam"), examName(personal.targetExam ?? classChoice.grade) + (personal.examDate ? ` · ${new Date(personal.examDate).toLocaleDateString(undefined, { day: "numeric", month: "short", year: "numeric" })}` : "")]]
+                    : []),
                   [t("onboard.summary.experience", "Experience"), mode ? t("onboard.summary.modeName", "{name} mode", { name: modeName[mode] ?? MODES[mode].name }) : "—"],
                   school2
                     ? [t("onboard.summary.daily", "Daily study"), t("personal.habits.min", "{n} min", { n: personal.dailyMinutes ?? 20 })]
@@ -437,6 +441,12 @@ function OnboardingFlow() {
       </div>
     </div>
   );
+}
+
+const EXAM_NAMES: Record<string, string> = { BOARD: "Board exam", JEE: "JEE Main", JEE_ADV: "JEE Advanced", NEET: "NEET", KCET: "KCET", COMEDK: "COMEDK" };
+function examName(id: string | null | undefined) {
+  if (!id) return "—";
+  return EXAM_NAMES[id] ?? SYLLABI.exam.grades.find((g) => g.id === id)?.name ?? id;
 }
 
 function Option({ active, onClick, children }: { active: boolean; onClick: () => void; children: React.ReactNode }) {

@@ -73,19 +73,20 @@ function Sidebar({ pathname, nav, more, isActive, openSearch }: Omit<ShellProps,
                 active ? "border-accent/40 bg-accent-soft text-accent" : "border-transparent text-muted hover:bg-surface-2",
               )}
               title={n.label}
+              aria-label={n.label}
             >
-              <n.icon className="h-7 w-7 shrink-0" style={{ color: n.color }} strokeWidth={2.4} />
+              <n.icon className="h-7 w-7 shrink-0" style={{ color: n.color }} strokeWidth={2.4} aria-hidden />
               <span className="hidden lg:inline">{n.label}</span>
             </Link>
           );
         })}
-        <button onClick={openSearch} className="flex items-center gap-4 rounded-xl border-2 border-transparent px-3 py-2.5 text-[15px] font-extrabold uppercase tracking-wide text-muted transition hover:bg-surface-2" title="Search (⌘K)">
-          <Search className="h-7 w-7 shrink-0 text-muted" strokeWidth={2.4} />
+        <button onClick={openSearch} className="flex items-center gap-4 rounded-xl border-2 border-transparent px-3 py-2.5 text-[15px] font-extrabold uppercase tracking-wide text-muted transition hover:bg-surface-2" title="Search (⌘K)" aria-label="Search">
+          <Search className="h-7 w-7 shrink-0 text-muted" strokeWidth={2.4} aria-hidden />
           <span className="hidden lg:inline">Search</span>
         </button>
         <div className="relative mt-auto" ref={ref}>
-          <button onClick={() => setOpen((m) => !m)} className="flex w-full items-center gap-4 rounded-xl border-2 border-transparent px-3 py-2.5 text-[15px] font-extrabold uppercase tracking-wide text-muted transition hover:bg-surface-2" aria-expanded={open}>
-            <Ellipsis className="h-7 w-7 shrink-0" strokeWidth={2.4} />
+          <button onClick={() => setOpen((m) => !m)} className="flex w-full items-center gap-4 rounded-xl border-2 border-transparent px-3 py-2.5 text-[15px] font-extrabold uppercase tracking-wide text-muted transition hover:bg-surface-2" aria-expanded={open} aria-label="More">
+            <Ellipsis className="h-7 w-7 shrink-0" strokeWidth={2.4} aria-hidden />
             <span className="hidden lg:inline">More</span>
           </button>
           {open && (
