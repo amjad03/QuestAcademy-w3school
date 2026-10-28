@@ -327,7 +327,7 @@ export function WeeklyActivity({ energy }: { energy?: boolean }) {
         </div>
       </div>
       <p className="mt-3 text-[0.8125rem] text-muted">
-        {todayXp >= goal ? t("khan.goalMet", "Daily goal met — nice work.") : t("khan.goalLeft", "{n} more today to reach your daily goal of {goal}.", { n: f.n(goal - todayXp), goal: f.n(goal) })}
+        {todayXp >= goal ? t("khan.goalMet", "Daily goal met — nice work.") : t("khan.goalLeftXp", "{n} XP to go to reach today’s goal of {goal} XP.", { n: f.n(goal - todayXp), goal: f.n(goal) })}
       </p>
     </section>
   );
@@ -359,10 +359,16 @@ export function SeeItCard({ minAge = 12, compact, chapterLessons }: { minAge?: n
     const older = index.all.filter((e) => explainerMaxAge(e.ages) >= minAge);
     return older.length >= 3 ? older : index.all;
   }, [index, ctx, minAge, chapterLessons]);
+  // Feature explainers tied to the learner's own class lessons first, so a Class 11 home doesn't lead with middle-school ideas.
+  const featured = useMemo(() => {
+    if (!ctx) return pool;
+    const linked = pool.filter((e) => e.lessons.some((l) => ctx.lessonIds.has(l)));
+    return linked.length >= 3 ? linked : pool;
+  }, [pool, ctx]);
   const picks = useMemo(() => {
-    const start = pool.length ? seed % pool.length : 0;
-    return [0, 1, 2].map((i) => pool[(start + i) % pool.length]).filter((e, i, a) => e && a.indexOf(e) === i);
-  }, [pool, seed]);
+    const start = featured.length ? seed % featured.length : 0;
+    return [0, 1, 2].map((i) => featured[(start + i) % featured.length]).filter((e, i, a) => e && a.indexOf(e) === i);
+  }, [featured, seed]);
   if (index && !pool.length) return null;
 
   return (
