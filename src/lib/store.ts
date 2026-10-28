@@ -53,6 +53,19 @@ export interface Profile {
   socialOptIn: boolean;
   /** Onboarding answers that drive the personal plan (absent on older saves). */
   personal?: PersonalProfile | null;
+  /** Plan flag: "premium" unlocks the live AI tutor (absent = free). */
+  tier?: "free" | "premium";
+  /** Signed tutor pass from a verified payment, and when it runs out (ISO). */
+  tutorPass?: { pass: string; until: string } | null;
+  /** The live tutor's memory of this student and the parent-facing notes. */
+  tutor?: TutorMemory | null;
+}
+
+export interface TutorMemory {
+  /** Short per-session summaries for the tutor, newest first (max 10). */
+  sessions: { at: string; topic: string; summary: string }[];
+  /** Parent-facing summaries kept for later reports, newest first (max 30). */
+  parentNotes: { at: string; topic: string; text: string }[];
 }
 
 /** Study plan used by Focus (syllabus) and Professional (pathway) modes. */
@@ -563,7 +576,7 @@ export function mergeStates(a: LearnerState, b: LearnerState): LearnerState {
   const streakNewer = (a.streak.lastDay ?? "") >= (b.streak.lastDay ?? "") ? a.streak : b.streak;
   return {
     ...newer,
-    profile: newer.profile.onboarded ? newer.profile : older.profile.onboarded ? older.profile : newer.profile,
+    profile: mergeTutor(newer.profile.onboarded ? newer.profile : older.profile.onboarded ? older.profile : newer.profile, a.profile, b.profile),
     xp: Math.max(a.xp, b.xp),
     coins: Math.max(a.coins, b.coins),
     streak: { ...streakNewer, best: Math.max(a.streak.best, b.streak.best) },
@@ -597,6 +610,22 @@ export function mergeStates(a: LearnerState, b: LearnerState): LearnerState {
       Array.from(new Set([...Object.keys(a.assessments ?? {}), ...Object.keys(b.assessments ?? {})])).map((k) => [k, Math.max(a.assessments?.[k] ?? 0, b.assessments?.[k] ?? 0)]),
     ),
     updatedAt: Date.now(),
+  };
+}
+
+/** Keep tutor memory, parent notes and the longest-lived pass from both devices. */
+function mergeTutor(base: Profile, a: Profile, b: Profile): Profile {
+  if (!a.tutor && !b.tutor && !a.tutorPass && !b.tutorPass) return base;
+  const uniq = <T extends { at: string }>(xs: T[], max: number) => Array.from(new Map(xs.map((x) => [x.at, x])).values()).sort((x, y) => y.at.localeCompare(x.at)).slice(0, max);
+  const pass = [a.tutorPass, b.tutorPass].filter((p): p is NonNullable<Profile["tutorPass"]> => Boolean(p)).sort((x, y) => y.until.localeCompare(x.until))[0] ?? null;
+  return {
+    ...base,
+    tier: pass && pass.until > new Date().toISOString() ? "premium" : base.tier,
+    tutorPass: pass,
+    tutor: {
+      sessions: uniq([...(a.tutor?.sessions ?? []), ...(b.tutor?.sessions ?? [])], 10),
+      parentNotes: uniq([...(a.tutor?.parentNotes ?? []), ...(b.tutor?.parentNotes ?? [])], 30),
+    },
   };
 }
 

@@ -1,0 +1,77 @@
+/** Shared (client + server) types for the live smartboard tutor. */
+
+import type { BoardOp } from "@/components/board/ops";
+
+export type LiveMode = "learn" | "doubt" | "explainback";
+export const LIVE_MODES: LiveMode[] = ["learn", "doubt", "explainback"];
+
+export type TutorLanguage = "English" | "Hindi" | "Kannada" | "Hinglish";
+export const TUTOR_LANGUAGES: TutorLanguage[] = ["English", "Hindi", "Kannada", "Hinglish"];
+
+/** What the client tells the tutor about the student (all optional, all short). */
+export interface StudentInfo {
+  name?: string;
+  grade?: string;
+  board?: string;
+  goal?: string;
+  targetExam?: string;
+  /** "physics: Laws of Motion, Gravitation; maths: Integrals" */
+  weakChapters?: string;
+  /** "physics 2/5, maths 4/5" */
+  levels?: string;
+  /** Short notes from past sessions, newest first. */
+  memory?: string[];
+}
+
+export interface LiveRequest {
+  kind: "turn" | "recap";
+  mode: LiveMode;
+  language: TutorLanguage;
+  topic: string;
+  student: StudentInfo;
+  /** Explainers the tutor may embed: id + title. */
+  explainers?: { id: string; title: string }[];
+  messages: { role: "user" | "assistant"; content: string }[];
+  /** A photo of a problem, sent with the first turn of a doubt only. */
+  image?: { mediaType: "image/jpeg" | "image/png" | "image/webp"; data: string };
+}
+
+export interface CheckPoint {
+  q: string;
+  options?: string[];
+}
+
+/** One small step of a lesson: what to say, what to draw, and maybe a pause. */
+export interface LiveStep {
+  say: string;
+  ops: BoardOp[];
+  check?: CheckPoint;
+  /** Named when a check-point answer was wrong. */
+  misconception?: string;
+  /** Doubt mode: the tutor stopped after a hint and waits for "next hint" / "full solution". */
+  hint?: boolean;
+  end?: boolean;
+}
+
+export interface Recap {
+  title: string;
+  keyPoints: string[];
+  formulas: string[];
+  practice: { q: string; answer: string }[];
+  parentSummary: string;
+  /** One or two lines for the tutor's memory of this student. */
+  memory: string;
+}
+
+export const LIVE_LIMITS = {
+  maxMessages: 41,
+  maxChars: 12000,
+  maxImageBytes: 4_500_000,
+} as const;
+
+export const TUTOR_PASS_HEADER = "x-tutor-pass";
+
+/** The live tutor is for Class 8 and up (incl. PUC, entrance exams and beyond); null grade = adult/other tracks. */
+export const tutorEligible = (grade: string | null | undefined) => !grade || !/^(pre|[1-7])$/.test(grade);
+
+export const tutorHref = (topic: string, mode?: LiveMode) => `/tutor?${new URLSearchParams({ topic, ...(mode ? { mode } : {}) })}`;

@@ -1,12 +1,13 @@
 "use client";
 
 import Link from "next/link";
-import { ArrowLeft, BookOpen, Check, ChevronRight, Clock, Crosshair, Layers, Sigma, Target, Trophy, Zap } from "lucide-react";
+import { ArrowLeft, BookOpen, Presentation, Check, ChevronRight, Clock, Crosshair, Layers, Sigma, Target, Trophy, Zap } from "lucide-react";
 import clsx from "clsx";
 import { useT } from "@/i18n";
 import { useSharedText } from "@/i18n/content";
 import { useContentDict } from "@/i18n/content";
 import { useLearner } from "@/lib/store";
+import { tutorEligible, tutorHref } from "@/lib/tutor/live";
 import { useHydrated } from "@/components/providers";
 import type { MasteryLevel } from "@/lib/mastery";
 import type { ClassChapter, ClassSubject, MyClass } from "@/content/my-class";
@@ -227,6 +228,11 @@ function Chapter({ myClass, subject, chapter, examIndex }: { myClass: MyClass; s
         <h1 className="mt-1 text-[1.75rem] font-bold leading-tight">{title}</h1>
         <p className="mt-1 text-sm text-muted">{t("class.lessonsDone", "{done} of {total} lessons done", { done: f.n(doneCount), total: f.n(chapter.lessonIds.length) })}</p>
         <MasteryBar levels={chapter.lessonIds.map((id) => (mastery[id] ?? 0) as MasteryLevel)} height={8} className="mt-3 max-w-md" />
+        {tutorEligible(myClass.grade) && (
+          <Link href={tutorHref(`${subjectName(subject)}: ${title}`)} className="btn-ghost mt-3 inline-flex items-center gap-1.5 rounded-xl border-2 border-line px-3 py-1.5 text-sm font-extrabold hover:border-accent">
+            <Presentation className="h-4 w-4 text-accent" /> {t("tutor.live.entry", "Learn this with the AI tutor")}
+          </Link>
+        )}
       </header>
 
       {chapter.lessonIds.length === 0 ? (

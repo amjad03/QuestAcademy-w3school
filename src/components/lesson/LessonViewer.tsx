@@ -4,7 +4,7 @@ import Link from "next/link";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useLessonClassContext } from "@/components/class/ClassViews";
 import { useEffect, useMemo } from "react";
-import { BookOpenCheck, Check, Headphones, Pause, Trophy } from "lucide-react";
+import { BookOpenCheck, Check, Headphones, Pause, Presentation, Trophy } from "lucide-react";
 import clsx from "clsx";
 import type { Assessment, CourseItem, CourseLesson, ItemKind } from "@/content/course";
 import type { Lesson, WorldId } from "@/content/types";
@@ -29,6 +29,7 @@ import { useExperience } from "@/experiences";
 import type { LessonTab } from "@/experiences/types";
 import dynamic from "next/dynamic";
 import { AskQuesty } from "@/components/tutor/AskQuesty";
+import { tutorEligible, tutorHref } from "@/lib/tutor/live";
 import { localize, useContentDict } from "@/i18n/content";
 import { TranslationNote } from "@/components/i18n/TranslationNote";
 import { useT } from "@/i18n";
@@ -81,6 +82,7 @@ export function LessonViewer(raw: LessonViewerPayload) {
   const requested = params.get("item") as ItemKind | null;
   const item = viewable.find((i) => i.kind === requested) ?? viewable[0];
   const st = hydrated ? s : EMPTY_PROGRESS;
+  const grade = useLearner((x) => x.profile.grade);
 
   useEffect(() => {
     visitLesson({ id: p.id, subject: p.course.slug, world: p.world });
@@ -137,6 +139,11 @@ export function LessonViewer(raw: LessonViewerPayload) {
         </div>
       )}
       {item.kind === "article" && <LessonExplainers lessonId={p.id} />}
+      {item.kind === "article" && p.world !== "kids" && hydrated && tutorEligible(grade) && (
+        <Link href={tutorHref(p.lesson.title)} className="btn-ghost mb-4 inline-flex items-center gap-1.5 rounded-xl border-2 border-line px-3 py-1.5 text-sm font-extrabold hover:border-accent">
+          <Presentation className="h-4 w-4 text-accent" /> {t("tutor.live.entry", "Learn this with the AI tutor")}
+        </Link>
+      )}
       {item.kind === "article" &&
         (p.world === "kids" ? (
           <KidsStory lesson={p.lesson} id={p.id} onComplete={finishArticle} done={Boolean(st.lessons[p.id])} />
