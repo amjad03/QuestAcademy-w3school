@@ -88,6 +88,7 @@ export interface ExplainerMeta {
   area: string;
   color: string;
   ages: string;
+  lessons: string[];
 }
 
 let explainerCache: { all: ExplainerMeta[]; byLesson: Record<string, string[]> } | null = null;
@@ -106,7 +107,7 @@ export function useExplainerIndex() {
         const byLesson: Record<string, string[]> = {};
         const all = m.EXPLAINERS.map((e) => {
           e.lessons.forEach((l) => (byLesson[l] ??= []).push(e.id));
-          return { id: e.id, title: e.title, tagline: e.tagline, area: e.area, color: e.color, ages: e.ages };
+          return { id: e.id, title: e.title, tagline: e.tagline, area: e.area, color: e.color, ages: e.ages, lessons: e.lessons };
         });
         explainerCache = { all, byLesson };
         if (live) setData(explainerCache);

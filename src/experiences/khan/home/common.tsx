@@ -15,6 +15,7 @@ import type { ModeId } from "@/lib/modes";
 import { useCatalog } from "@/components/shell/CatalogContext";
 import { useOutline } from "@/components/learn/LearnHome";
 import { CourseIcon } from "@/components/brand/CourseIcon";
+import { isRelevant, useExplainerContext } from "@/explainers/relevance";
 import { CourseCard, MasteryLegend, SectionHeader, SkillSquares, explainerMaxAge, useCourseState, useExplainerIndex, useFmt, useGreeting, useMyCourses, type Skill } from "../ui";
 
 /** Lesson item kind in the learner's language. */
@@ -337,21 +338,32 @@ export function WeeklyActivity({ energy }: { energy?: boolean }) {
 /* ------------------------------------------------------------------ */
 
 /** The visual-explainer showcase — our differentiator, given real estate. */
-export function SeeItCard({ minAge = 12, compact }: { minAge?: number; compact?: boolean }) {
+export function SeeItCard({ minAge = 12, compact, chapterLessons }: { minAge?: number; compact?: boolean; chapterLessons?: string[] }) {
   const t = useT();
   const f = useFmt();
   const index = useExplainerIndex();
+  const ctx = useExplainerContext();
   const [seed, setSeed] = useState(0);
   useEffect(() => {
     setSeed(Math.floor(Date.now() / 86_400_000));
   }, []);
-  const picks = useMemo(() => {
+  // For a learner with a class: only explainers pitched at their age and subjects (and this chapter, when given).
+  const pool = useMemo(() => {
     if (!index) return [];
-    const pool = index.all.filter((e) => explainerMaxAge(e.ages) >= minAge);
-    const list = pool.length >= 3 ? pool : index.all;
-    const start = list.length ? seed % list.length : 0;
-    return [0, 1, 2].map((i) => list[(start + i * 3) % list.length]).filter((e, i, a) => e && a.indexOf(e) === i);
-  }, [index, minAge, seed]);
+    if (ctx) {
+      const mine = index.all.filter((e) => isRelevant(e, ctx));
+      if (!chapterLessons) return mine;
+      const set = new Set(chapterLessons);
+      return mine.filter((e) => e.lessons.some((l) => set.has(l)));
+    }
+    const older = index.all.filter((e) => explainerMaxAge(e.ages) >= minAge);
+    return older.length >= 3 ? older : index.all;
+  }, [index, ctx, minAge, chapterLessons]);
+  const picks = useMemo(() => {
+    const start = pool.length ? seed % pool.length : 0;
+    return [0, 1, 2].map((i) => pool[(start + i) % pool.length]).filter((e, i, a) => e && a.indexOf(e) === i);
+  }, [pool, seed]);
+  if (index && !pool.length) return null;
 
   return (
     <section className={clsx("card overflow-hidden", !compact && "md:grid md:grid-cols-[minmax(0,5fr)_minmax(0,7fr)]")} aria-labelledby="kh-seeit">
@@ -383,7 +395,7 @@ export function SeeItCard({ minAge = 12, compact }: { minAge?: number; compact?:
           </ul>
         )}
         <Link href="/explain" className="btn-primary mt-5">
-          {index ? t("khan.seeItAll", "Explore all {n} explainers", { n: f.n(index.all.length) }) : t("khan.seeItOpen", "Open visual explainers")} <ArrowRight className="h-4 w-4" aria-hidden />
+          {!index ? t("khan.seeItOpen", "Open visual explainers") : ctx ? t("khan.seeItMine", "Explore {n} explainers for your class", { n: f.n(pool.length) }) : t("khan.seeItAll", "Explore all {n} explainers", { n: f.n(index.all.length) })} <ArrowRight className="h-4 w-4" aria-hidden />
         </Link>
       </div>
     </section>

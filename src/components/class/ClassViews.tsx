@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { ArrowLeft, BookOpen, Presentation, Check, ChevronRight, Clock, Crosshair, Layers, Sigma, Target, Trophy, Zap } from "lucide-react";
+import { ArrowLeft, BookOpen, Eye, Presentation, Check, ChevronRight, Clock, Crosshair, Layers, Sigma, Target, Trophy, Zap } from "lucide-react";
 import clsx from "clsx";
 import { useT } from "@/i18n";
 import { useSharedText } from "@/i18n/content";
@@ -16,7 +16,8 @@ import { lessonHref } from "@/content/syllabus";
 import type { ExamChapterIndex } from "@/content/exam/chapter-index";
 import { CourseIcon } from "@/components/brand/CourseIcon";
 import { useMyClass, chapterHref, subjectHref } from "@/lib/useMyClass";
-import { MasteryBar, MasterySquare, useFmt, useMasteryName } from "@/experiences/khan/ui";
+import { MasteryBar, MasterySquare, useExplainerIndex, useFmt, useMasteryName } from "@/experiences/khan/ui";
+import { isRelevant, useExplainerContext } from "@/explainers/relevance";
 import { chapterSessionHrefs, useChapterTitle, useClassProgress, useLessonOutlines, useSubjectName, type OutlineLesson } from "./data";
 
 /* ------------------------------------------------------------------ */
@@ -291,11 +292,43 @@ function Chapter({ myClass, subject, chapter, examIndex }: { myClass: MyClass; s
         </>
       )}
 
+      <ChapterExplainers lessonIds={chapter.lessonIds} />
+
       <nav className="mt-10 flex flex-wrap justify-between gap-3 border-t border-line pt-5" aria-label={t("class.chapterNav", "Chapters")}>
         {prevCh ? <ChapterLink subject={subject} chapter={prevCh} dir="prev" /> : <span />}
         {nextCh ? <ChapterLink subject={subject} chapter={nextCh} dir="next" /> : <span />}
       </nav>
     </div>
+  );
+}
+
+/** Visual explainers tied to this chapter's lessons and pitched at the learner (hidden when none). */
+function ChapterExplainers({ lessonIds }: { lessonIds: string[] }) {
+  const t = useT();
+  const index = useExplainerIndex();
+  const ctx = useExplainerContext();
+  const dict = useContentDict("explainers");
+  if (!index) return null;
+  const set = new Set(lessonIds);
+  const list = index.all.filter((e) => e.lessons.some((l) => set.has(l)) && (!ctx || isRelevant(e, ctx)));
+  if (!list.length) return null;
+  return (
+    <section aria-labelledby="ch-seeit" className="mt-6">
+      <h2 id="ch-seeit" className="mb-3 flex items-center gap-2 text-lg font-bold">
+        <Eye className="h-5 w-5 text-accent" aria-hidden /> {t("class.seeIt", "See it: visual explainers")}
+      </h2>
+      <div className="grid gap-3 sm:grid-cols-2">
+        {list.map((e) => (
+          <Link key={e.id} href={`/explain/${e.id}`} className="card flex min-w-0 items-center gap-3 p-4 transition hover:border-accent">
+            <span className="h-3 w-3 shrink-0 rounded-full" style={{ background: e.color }} aria-hidden />
+            <span className="min-w-0">
+              <span className="block truncate font-semibold">{dict?.[e.title] ?? e.title}</span>
+              <span className="block truncate text-xs text-muted">{dict?.[e.tagline] ?? e.tagline}</span>
+            </span>
+          </Link>
+        ))}
+      </div>
+    </section>
   );
 }
 

@@ -8,23 +8,49 @@ import { PageColumns } from "@/components/shell/AppShell";
 import { EXPLAINERS, explainerById } from "./index";
 import { ExplainerView } from "./ExplainerView";
 import { useT } from "@/i18n";
+import { isRelevant, useExplainerContext } from "./relevance";
 import { localize, useContentDict } from "@/i18n/content";
 
 /** /explain — every visual explainer, filterable by area. */
 export function ExplainGallery() {
   const t = useT();
   const dict = useContentDict("explainers");
-  const areas = useMemo(() => ["All", ...Array.from(new Set(EXPLAINERS.map((e) => e.area)))], []);
+  const ctx = useExplainerContext();
+  // Learners with a class see the explainers pitched at their age and subjects first; "All" shows everything.
+  const [scope, setScope] = useState<"mine" | "all">("mine");
+  const mine = useMemo(() => (ctx ? EXPLAINERS.filter((e) => isRelevant(e, ctx)) : null), [ctx]);
+  const forMe = Boolean(mine && mine.length && scope === "mine");
+  const base = forMe ? mine! : EXPLAINERS;
+  const areas = useMemo(() => ["All", ...Array.from(new Set(base.map((e) => e.area)))], [base]);
   const [area, setArea] = useState("All");
   // Filter on the English area; show titles, taglines and areas in the learner's language.
-  const list = EXPLAINERS.filter((e) => area === "All" || e.area === area).map((e) => localize(e, dict));
+  const list = base.filter((e) => area === "All" || e.area === area).map((e) => localize(e, dict));
   return (
     <PageColumns>
       <p className="eyebrow">{t("explain.seeIt", "See it")}</p>
       <h1 className="mt-1 text-3xl font-black">{t("explain.gallery.title", "Big ideas, made visible")}</h1>
       <p className="mt-2 max-w-2xl font-semibold text-muted">{t("explain.gallery.intro", "Each idea is explained four ways: an animation to watch, something to try with your hands, a short comic, and an everyday comparison.")}</p>
-      <div className="mt-6 flex flex-wrap gap-2">
-        {areas.map((a) => (
+      {mine && mine.length > 0 && (
+        <div role="tablist" aria-label={t("explain.gallery.scope", "Which explainers")} className="mt-6 inline-flex rounded-xl border-2 border-line bg-surface p-1">
+          {(["mine", "all"] as const).map((k) => (
+            <button
+              key={k}
+              type="button"
+              role="tab"
+              aria-selected={scope === k}
+              onClick={() => {
+                setScope(k);
+                setArea("All");
+              }}
+              className={clsx("rounded-lg px-3.5 py-1.5 text-sm font-extrabold transition", scope === k ? "bg-accent text-white" : "text-muted hover:text-ink")}
+            >
+              {k === "mine" ? t("explain.gallery.mine", "For your class · {n}", { n: mine.length }) : t("explain.gallery.everything", "All · {n}", { n: EXPLAINERS.length })}
+            </button>
+          ))}
+        </div>
+      )}
+      <div className="mt-4 flex flex-wrap gap-2">
+        {areas.length > 2 && areas.map((a) => (
           <button key={a} onClick={() => setArea(a)} className={clsx("rounded-xl border-2 px-3 py-1.5 text-sm font-extrabold", area === a ? "border-accent bg-accent-soft text-accent" : "border-line text-muted hover:bg-surface-2")}>
             {a === "All" ? t("explain.gallery.all", "All") : (dict?.[a] ?? a)}
           </button>
@@ -34,7 +60,7 @@ export function ExplainGallery() {
         {list.map((e) => (
           <li key={e.id}>
             <Link href={`/explain/${e.id}`} className="tile flex h-full items-start gap-4 p-4">
-              <span className="grid h-14 w-14 shrink-0 place-items-center rounded-2xl text-3xl" style={{ background: `color-mix(in srgb, ${e.color} 18%, white)` }} aria-hidden>
+              <span className="grid h-14 w-14 shrink-0 place-items-center rounded-2xl text-3xl" style={{ background: `color-mix(in srgb, ${e.color} 18%, rgb(var(--surface)))` }} aria-hidden>
                 {e.icon}
               </span>
               <span className="min-w-0">

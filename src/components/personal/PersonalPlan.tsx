@@ -28,7 +28,7 @@ export function usePersonalPlan() {
   return { mc, personal, todayItems, plan, done, allDone: todayItems.length > 0 && done === todayItems.length, today };
 }
 
-function itemHref(item: TodayItem, subjects: NonNullable<ReturnType<typeof useMyClass>>["subjects"]) {
+export function itemHref(item: TodayItem, subjects: NonNullable<ReturnType<typeof useMyClass>>["subjects"]) {
   if (item.lessonId) return lessonHref(item.lessonId);
   const ch = subjects.find((s) => s.id === item.subjectId)?.chapters.find((c) => c.slug === item.chapterSlug);
   return ch ? chapterSessionHrefs(ch).practice : "/practice";
@@ -98,7 +98,7 @@ export function WeekPlanCard() {
   };
   const kindLabel = { learn: t("personal.week.learn", "Learn"), revise: t("personal.week.revise", "Revision"), mock: t("personal.week.mock", "Mock tests") };
   return (
-    <section aria-labelledby="week-plan" className="card p-5">
+    <section aria-labelledby="week-plan" className="card min-w-0 overflow-hidden p-5">
       <div className="mb-3 flex flex-wrap items-baseline justify-between gap-2">
         <h2 id="week-plan" className="kh-h2 inline-flex items-center gap-2">
           <CalendarRange className="h-5 w-5 text-accent" aria-hidden /> {t("personal.week.title", "Week plan")}
@@ -109,19 +109,19 @@ export function WeekPlanCard() {
             : t("personal.week.term", "{n}-week term plan", { n: plan.weeks.length })}
         </span>
       </div>
-      <ol className="grid gap-3">
+      <ol className="space-y-3">
         {shown.map((w) => (
-          <li key={w.index} className={clsx("rounded-xl border-2 p-3", w === now ? "border-accent" : "border-line")}>
-            <div className="flex items-baseline justify-between gap-2 text-sm font-bold">
-              <span>
+          <li key={w.index} className={clsx("min-w-0 rounded-xl border-2 p-3", w === now ? "border-accent bg-accent-soft/40" : "border-line")}>
+            <div className="flex min-w-0 items-baseline justify-between gap-2 text-sm font-bold">
+              <span className="min-w-0 truncate">
                 {t("personal.week.n", "Week {n}", { n: w.index + 1 })} · {kindLabel[w.kind]}
               </span>
-              <span className="text-xs font-semibold text-muted">{new Date(`${w.start}T00:00:00`).toLocaleDateString(undefined, { day: "numeric", month: "short" })}</span>
+              <span className="shrink-0 text-xs font-semibold text-muted">{new Date(`${w.start}T00:00:00`).toLocaleDateString(undefined, { day: "numeric", month: "short" })}</span>
             </div>
             {w.kind === "mock" ? (
               <p className="mt-1 text-sm text-muted">{t("personal.week.mockHint", "Full-length mock tests, then review your mistakes.")}</p>
             ) : (
-              <ul className="mt-1 space-y-0.5 text-sm">
+              <ul className="mt-1 min-w-0 space-y-0.5 text-sm">
                 {w.chapters.map((c) => (
                   <li key={`${c.subjectId}/${c.slug}`} className="truncate">
                     <span className="text-muted">{name(c.subjectId)}:</span> {tx(c.title)}
