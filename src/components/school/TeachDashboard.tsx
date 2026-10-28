@@ -80,7 +80,7 @@ export function TeachDashboard() {
       />
       {error && <p className="mb-4 rounded-2xl bg-bad-soft px-4 py-3 font-bold text-bad">{error}</p>}
       {!data ? (
-        <div className="grid gap-4 sm:grid-cols-3">
+        <div className="grid grid-cols-1 gap-4 sm:grid-cols-3">
           {[0, 1, 2].map((i) => (
             <div key={i} className="h-28 animate-pulse rounded-2xl bg-surface-2" />
           ))}
@@ -146,7 +146,7 @@ function Overview({ data, openStudent }: { data: ClassData; openStudent: (id: st
         <Stat label={t("teach.stat.mock", "Mock average")} value={pct(avg(s.map((x) => x.mock_avg)))} />
       </div>
 
-      <div className="grid gap-5 lg:grid-cols-2">
+      <div className="grid grid-cols-1 gap-5 lg:grid-cols-2">
         <Section title={t("teach.atRisk", "Students who need attention")} action={<span className="chip">{risk.length}</span>}>
           {risk.length === 0 ? (
             <p className="font-semibold text-muted">{t("teach.atRiskNone", "Everyone is on track this week.")}</p>
@@ -195,7 +195,7 @@ function Overview({ data, openStudent }: { data: ClassData; openStudent: (id: st
       </div>
 
       <Section title={t("teach.topWeek", "Top of the class this week")} action={<Link className="btn-flat" href="/compete">{t("teach.leagueLink", "Class league")}</Link>}>
-        <ol className="grid gap-2 sm:grid-cols-5">
+        <ol className="grid grid-cols-1 gap-2 sm:grid-cols-5">
           {top.map((x, i) => (
             <li key={x.user_id} className="rounded-2xl bg-surface-2 p-3">
               <p className="text-xs font-extrabold text-muted">#{i + 1}</p>
@@ -286,7 +286,7 @@ function Heatmap({ data, openStudent }: { data: ClassData; openStudent: (id: str
           </tbody>
         </table>
       </div>
-      <ol className="mt-4 grid gap-x-6 gap-y-1 text-xs font-semibold text-muted sm:grid-cols-2 lg:grid-cols-3">
+      <ol className="mt-4 grid grid-cols-1 gap-x-6 gap-y-1 text-xs font-semibold text-muted sm:grid-cols-2 lg:grid-cols-3">
         {subj.chapters.map((c) => (
           <li key={c.id} className="truncate">
             <span className="font-extrabold">{c.n}.</span> {c.title}
@@ -350,7 +350,7 @@ function Assignments({ data, reload }: { data: ClassData; reload: () => Promise<
   const names = new Map(data.students.map((m) => [m.user_id, m.display_name]));
 
   return (
-    <div className="grid gap-5 lg:grid-cols-[minmax(0,380px)_minmax(0,1fr)]">
+    <div className="grid grid-cols-1 gap-5 lg:grid-cols-[minmax(0,380px)_minmax(0,1fr)]">
       <Section title={t("teach.assign.title", "Assign work")}>
         <div className="space-y-3">
           <div className="grid grid-cols-3 gap-1 rounded-2xl bg-surface-2 p-1" role="radiogroup" aria-label={t("teach.assign.kind", "Type")}>
@@ -597,7 +597,7 @@ function StudentDrawer({ data, userId, onClose, reload }: { data: ClassData; use
             </ul>
           </div>
 
-          <div className="grid gap-4 sm:grid-cols-2">
+          <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
             <TopicList title={t("teach.d.weak", "Weak topics")} items={s?.summary?.weak ?? []} empty={t("teach.d.weakNone", "None flagged")} />
             <TopicList title={t("teach.d.strong", "Strengths")} items={s?.summary?.strong ?? []} empty={t("teach.d.strongNone", "Building up")} />
           </div>

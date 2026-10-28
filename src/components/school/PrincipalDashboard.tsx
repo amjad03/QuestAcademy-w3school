@@ -58,7 +58,7 @@ export function PrincipalDashboard() {
       />
       {error && <p className="mb-4 rounded-2xl bg-bad-soft px-4 py-3 font-bold text-bad">{error}</p>}
       {!data ? (
-        <div className="grid gap-4 sm:grid-cols-3">
+        <div className="grid grid-cols-1 gap-4 sm:grid-cols-3">
           {[0, 1, 2].map((i) => (
             <div key={i} className="h-28 animate-pulse rounded-2xl bg-surface-2" />
           ))}
@@ -208,7 +208,7 @@ function Overview({ data, detailed }: { data: SchoolData; detailed: boolean }) {
           {weak.length === 0 ? (
             <p className="font-semibold text-muted">{t("school.weakNone", "Weak areas show up once students practise.")}</p>
           ) : (
-            <ul className="grid gap-x-6 gap-y-3 md:grid-cols-2">
+            <ul className="grid grid-cols-1 gap-x-6 gap-y-3 md:grid-cols-2">
               {weak.map((w) => (
                 <li key={w.id} className="flex items-center gap-3">
                   <span className="h-3 w-3 shrink-0 rounded-full" style={{ background: heat(w.avgLevel) }} aria-hidden />
@@ -288,9 +288,9 @@ function Setup({ data, reload }: { data: SchoolData; reload: () => Promise<void>
   const copy = (s: string) => copyText(s).then(() => toast({ text: t("school.copied", "Copied") }));
 
   return (
-    <div className="grid gap-5 lg:grid-cols-2">
+    <div className="grid grid-cols-1 gap-5 lg:grid-cols-2">
       <Section title={t("school.setup.classes", "Classes and join codes")} className="lg:col-span-2">
-        <ul className="grid gap-2 sm:grid-cols-2 lg:grid-cols-3">
+        <ul className="grid grid-cols-1 gap-2 sm:grid-cols-2 lg:grid-cols-3">
           {data.classes.map((c) => (
             <li key={c.id} className="rounded-2xl bg-surface-2 p-3">
               <p className="font-extrabold">
@@ -308,7 +308,7 @@ function Setup({ data, reload }: { data: SchoolData; reload: () => Promise<void>
           ))}
         </ul>
         <form
-          className="mt-4 grid gap-2 sm:grid-cols-[1fr_90px_110px_150px_auto]"
+          className="mt-4 grid grid-cols-1 gap-2 sm:grid-cols-[1fr_90px_110px_150px_auto]"
           onSubmit={async (e) => {
             e.preventDefault();
             if (!name.trim()) return;

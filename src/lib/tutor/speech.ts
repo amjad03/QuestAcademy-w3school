@@ -1,5 +1,7 @@
 "use client";
 
+import { dataSaverOn } from "@/lib/dataSaver";
+
 /**
  * The live tutor's voice.
  *
@@ -230,6 +232,8 @@ class Speaker {
   /** Start downloading/compiling the model in the background (safe to call repeatedly). */
   preload() {
     if (this.worker || this.status === "unavailable") return;
+    // Data saver: don't fetch the ~92 MB model just in case; it loads when the voice is actually used.
+    if (dataSaverOn() && !this.cached) return;
     const why = this.incapable();
     if (why) return this.fail(why);
     if (!this.spawn()) return;

@@ -1,7 +1,9 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
-import { Check } from "lucide-react";
+import { Check, Play } from "lucide-react";
+import { useHydrated } from "@/components/providers";
+import { useDataSaver } from "@/lib/dataSaver";
 import { useT } from "@/i18n";
 
 interface YTPlayer {
@@ -50,8 +52,30 @@ export function VideoPlayer(p: {
   provider?: "youtube" | "drive";
   playlist?: Episode[];
 }) {
+  const saver = useDataSaver(useHydrated());
+  const [tapped, setTapped] = useState(false);
+  // Data saver: nothing (player script, iframe, thumbnail) loads until the learner taps play.
+  if (saver && !tapped) return <TapToLoad title={p.title} onStart={() => setTapped(true)} watched={p.watched} onWatched={p.onWatched} />;
   if (p.provider === "drive") return <DrivePlayer {...p} />;
   return <YouTubePlayer {...p} />;
+}
+
+function TapToLoad({ title, onStart, watched, onWatched }: { title: string; onStart: () => void; watched: boolean; onWatched: () => void }) {
+  const t = useT();
+  return (
+    <div>
+      <button type="button" onClick={onStart} className="relative grid aspect-video w-full place-items-center overflow-hidden rounded-2xl bg-[#0F1420] text-white">
+        <span className="flex flex-col items-center gap-3 px-6 text-center">
+          <span className="grid h-16 w-16 place-items-center rounded-full bg-white/15" aria-hidden>
+            <Play className="h-8 w-8" />
+          </span>
+          <span className="font-extrabold">{t("lesson.video.tapToLoad", "Play video: {title}", { title })}</span>
+          <span className="text-sm font-semibold text-white/70">{t("lesson.video.dataSaver", "Data saver is on. The video loads only when you tap.")}</span>
+        </span>
+      </button>
+      <WatchedBar watched={watched} onWatched={onWatched} />
+    </div>
+  );
 }
 
 function WatchedBar({ watched, onWatched }: { watched: boolean; onWatched: () => void }) {

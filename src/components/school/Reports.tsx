@@ -74,7 +74,7 @@ function ReportCard({ row, open, onToggle }: { row: WeeklyReportRow; open: boole
             <Fact icon={Flame} label={t("reports.streak", "Streak")} value={t("reports.days", "{n} days", { n: r.streak })} />
             <Fact icon={Target} label={t("reports.xp", "XP this week")} value={r.xp} />
           </div>
-          <div className="grid gap-4 sm:grid-cols-2">
+          <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
             <List icon={ThumbsUp} tone="good" title={t("reports.strengths", "Strengths")} items={r.strengths} empty={t("reports.strengthsNone", "Building up")} />
             <List icon={TriangleAlert} tone="bad" title={t("reports.weak", "Needs practice")} items={r.weak} empty={t("reports.weakNone", "Nothing flagged")} />
           </div>

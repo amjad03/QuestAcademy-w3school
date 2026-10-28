@@ -139,7 +139,7 @@ export function LoginSlips({ slips, onBack }: { slips: SlipResult[]; onBack: () 
         </ul>
       )}
       <p className="mb-3 text-sm font-semibold text-muted print:hidden">{t("slips.warn", "Passwords are shown only now. Print or save the slips before leaving this page.")}</p>
-      <div className="slips grid gap-3 sm:grid-cols-2 print:grid-cols-2 print:gap-0">
+      <div className="slips grid grid-cols-1 gap-3 sm:grid-cols-2 print:grid-cols-2 print:gap-0">
         {ok.map((s, i) => (
           <div key={i} className="break-inside-avoid rounded-2xl border-2 border-dashed border-line p-4 print:rounded-none print:border-black">
             <p className="text-xs font-extrabold uppercase tracking-wide text-muted">Quest Academy · {t("slips.login", "Your login")}</p>

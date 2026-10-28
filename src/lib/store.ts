@@ -135,7 +135,7 @@ export interface LearnerState {
   challengesPassed: string[];
   mockResults: MockResult[];
   owned: string[];
-  settings: { theme: "system" | "light" | "dark"; sound: boolean; /** Visual design: "modes" (default — one design per age group), "classic" (the original) or "studio". */ skin?: "modes" | "classic" | "studio"; /** Interface and lesson language (see src/i18n/locales.ts). */ locale?: Locale; /** Show lessons in their original English even when a translation exists. */ contentOriginal?: boolean };
+  settings: { theme: "system" | "light" | "dark"; sound: boolean; /** Visual design: "modes" (default — one design per age group), "classic" (the original) or "studio". */ skin?: "modes" | "classic" | "studio"; /** Interface and lesson language (see src/i18n/locales.ts). */ locale?: Locale; /** Show lessons in their original English even when a translation exists. */ contentOriginal?: boolean; /** Data saver: videos load on tap, no voice-model preload, lighter media. Unset = follow the browser's Save-Data hint. */ dataSaver?: boolean };
   /** lessonId → mastery level (0–4). */
   mastery: Record<string, MasteryLevel>;
   /** Completed learning items (videos, articles, practice, cards…), keyed by item id. */

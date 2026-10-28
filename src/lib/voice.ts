@@ -1,5 +1,7 @@
 "use client";
 
+import { dataSaverOn } from "@/lib/dataSaver";
+
 /**
  * Questy's voice (Kokoro, af_heart).
  *
@@ -141,6 +143,7 @@ function live(text: string): Promise<string> {
 
 /** Warm up the live model in the background (call when entering Explore). */
 export function preloadLiveVoice() {
+  if (dataSaverOn()) return;
   void loadManifest();
   if (liveVoiceSupported()) live("Hi!").catch(() => {});
 }
