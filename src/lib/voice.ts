@@ -76,22 +76,30 @@ const workerSource = (origin: string) => `
 const { KokoroTTS, env } = await import("${origin}/kokoro/kokoro-1.2.1.web.js");
 env.wasmPaths = "${origin}/kokoro/";
 let tts = null;
-self.onmessage = async (e) => {
+let chain = Promise.resolve();
+// One generate() at a time: concurrent calls into one ONNX session fail.
+self.onmessage = (e) => {
   const { id, text, voice } = e.data;
-  try {
-    tts ??= await KokoroTTS.from_pretrained("onnx-community/Kokoro-82M-v1.0-ONNX", { dtype: "q8", device: "wasm" });
-    const audio = await tts.generate(text, { voice });
-    self.postMessage({ id, ok: true, wav: audio.toWav() });
-  } catch (err) {
-    self.postMessage({ id, ok: false, error: String(err && err.message || err) });
-  }
+  chain = chain.then(async () => {
+    const t0 = performance.now();
+    try {
+      tts ??= await KokoroTTS.from_pretrained("onnx-community/Kokoro-82M-v1.0-ONNX", { dtype: "q8", device: "wasm" });
+      const audio = await tts.generate(text, { voice });
+      self.postMessage({ id, ok: true, wav: audio.toWav(), ms: Math.round(performance.now() - t0) });
+    } catch (err) {
+      self.postMessage({ id, ok: false, error: String(err && err.message || err) });
+    }
+  });
 };
 `;
 
 let worker: Worker | null = null;
 let liveBroken = false;
+/** The model has produced audio at least once (no more first-download timeout after that). */
+let liveReady = false;
+let liveFails = 0;
 let seq = 0;
-const liveCache = new Map<string, string>();
+const liveCache = new Map<string, Promise<string>>();
 
 export function liveVoiceSupported() {
   if (typeof window === "undefined" || liveBroken || typeof Worker === "undefined") return false;
@@ -104,25 +112,31 @@ export function liveVoiceSupported() {
 function live(text: string): Promise<string> {
   const k = voiceKey(text);
   const hit = liveCache.get(k);
-  if (hit) return Promise.resolve(hit);
+  if (hit) return hit;
   worker ??= new Worker(URL.createObjectURL(new Blob([workerSource(location.origin)], { type: "text/javascript" })), { type: "module" });
   const id = ++seq;
-  return new Promise((resolve, reject) => {
+  const p = new Promise<string>((resolve, reject) => {
     const onMsg = (e: MessageEvent) => {
       if (e.data?.id !== id) return;
       worker!.removeEventListener("message", onMsg);
       if (!e.data.ok) {
-        console.warn("[Questy voice] Kokoro unavailable, using device voice:", e.data.error);
-        liveBroken = true;
+        liveCache.delete(k);
+        // One bad sentence must not silence Kokoro for the visit: give up only after two failures in a row.
+        if (++liveFails >= 2) liveBroken = true;
+        console.warn(`[voice] Kokoro error #${liveFails}${liveBroken ? " (using device voice from now on)" : ""}:`, e.data.error);
         return reject(new Error(e.data.error));
       }
-      const url = URL.createObjectURL(new Blob([e.data.wav], { type: "audio/wav" }));
-      liveCache.set(k, url);
-      resolve(url);
+      liveReady = true;
+      liveFails = 0;
+      console.info(`[voice] engine=kokoro synth=${e.data.ms}ms "${text.slice(0, 60)}"`);
+      resolve(URL.createObjectURL(new Blob([e.data.wav], { type: "audio/wav" })));
     };
     worker!.addEventListener("message", onMsg);
     worker!.postMessage({ id, text, voice: VOICE_ID });
   });
+  liveCache.set(k, p);
+  if (liveCache.size > 80) liveCache.delete(liveCache.keys().next().value as string);
+  return p;
 }
 
 /** Warm up the live model in the background (call when entering Explore). */
@@ -170,14 +184,17 @@ export function say(text: string, opts: SayOptions = {}) {
     const k = voiceKey(text);
     if (m.has(k)) return playUrl(`/voice/${k}.mp3`, my, opts, () => device(text, opts));
     if (opts.allowLive !== false && liveVoiceSupported()) {
-      // Don't make the learner wait for a first-time model download: use the
-      // device voice if live synthesis takes longer than a few seconds.
-      const timer = setTimeout(() => {
-        if (my === token) {
-          token++;
-          device(text, opts);
-        }
-      }, 3500);
+      // Don't make the learner wait for a first-time model download: until the model has spoken once,
+      // use the device voice if live synthesis takes longer than a few seconds. Once it is ready, always wait for it.
+      const timer = liveReady
+        ? undefined
+        : setTimeout(() => {
+            if (my === token) {
+              token++;
+              console.info("[voice] engine=device (Kokoro still loading)");
+              device(text, opts);
+            }
+          }, 3500);
       try {
         const url = await live(text);
         clearTimeout(timer);
@@ -199,6 +216,10 @@ export function sayQueue(texts: string[], opts: Omit<SayOptions, "onEnd"> & { on
   const step = (i: number) => {
     if (i >= list.length) return opts.onEnd?.();
     opts.onEach?.(i);
+    // Synthesise the next sentence while this one plays.
+    const next = list[i + 1];
+    if (next && opts.allowLive !== false && liveReady && liveVoiceSupported() && !scriptLang(next))
+      void loadManifest().then((m) => void (!m.has(voiceKey(next)) && live(next).catch(() => {})));
     const my = token + 1; // say() increments token via stopVoice
     say(list[i], { ...opts, onEnd: () => my === token && step(i + 1) });
   };

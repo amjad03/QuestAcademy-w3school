@@ -8,7 +8,8 @@ let KokoroTTS = null;
 let tts = null;
 let loading = null;
 let cancelled = 0;
-let chain = Promise.resolve();
+const queue = [];
+let running = false;
 
 const post = (m, t) => self.postMessage(m, t || []);
 const msg = (e) => String((e && e.message) || e);
@@ -73,17 +74,34 @@ self.onmessage = (e) => {
     return;
   }
   if (d.type === "say") {
-    chain = chain.then(async () => {
-      if (d.gen <= cancelled) return post({ type: "audio", id: d.id, skipped: true });
-      try {
-        if (!tts) await loading;
-        if (!tts) throw new Error("not loaded");
-        const a = await tts.generate(d.text, { voice: d.voice, speed: d.speed || 1 });
-        const pcm = a.audio;
-        post({ type: "audio", id: d.id, pcm, rate: a.sampling_rate }, [pcm.buffer]);
-      } catch (err) {
-        post({ type: "audio", id: d.id, error: msg(err) });
-      }
-    });
+    // A retry jumps the queue so the sentence being waited for comes next.
+    if (d.urgent) queue.unshift(d);
+    else queue.push(d);
+    void pump();
   }
 };
+
+// One generate() at a time: ONNX Runtime sessions must not run concurrently.
+async function pump() {
+  if (running) return;
+  running = true;
+  while (queue.length) await speak(queue.shift());
+  running = false;
+}
+
+async function speak(d) {
+  if (d.gen <= cancelled) return post({ type: "audio", id: d.id, skipped: true });
+  const t0 = performance.now();
+  try {
+    if (!tts) await loading;
+    if (!tts) throw new Error("not loaded");
+    if (!/[\p{L}\p{N}]/u.test(d.text || "")) throw new Error("nothing speakable");
+    const a = await tts.generate(d.text, { voice: d.voice, speed: d.speed || 1 });
+    // Copy into a fresh buffer we own, so transferring it can never detach memory kokoro-js still uses.
+    const pcm = new Float32Array(a.audio);
+    if (!pcm.length) throw new Error("empty audio");
+    post({ type: "audio", id: d.id, pcm, rate: a.sampling_rate, ms: Math.round(performance.now() - t0) }, [pcm.buffer]);
+  } catch (err) {
+    post({ type: "audio", id: d.id, error: msg(err), ms: Math.round(performance.now() - t0) });
+  }
+}

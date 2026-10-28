@@ -126,6 +126,12 @@ export function VoiceDock({ s, placeholder, actions, compact, disabled }: { s: T
         </div>
       </div>
 
+      {s.voice.lost && (
+        <p role="status" className="rounded-xl bg-amber-50 px-3 py-2 text-xs font-bold text-amber-800 dark:bg-amber-950 dark:text-amber-200">
+          {t("tutor.voice.lost", "The natural voice stopped working, so Questy is using this device's voice for the rest of this session.")}
+        </p>
+      )}
+
       {s.misconception && <p className="rounded-xl bg-red-50 px-3 py-2 text-sm font-bold text-red-700 dark:bg-red-950 dark:text-red-200">{t("tutor.live.misconception", "Common mix-up: {m}", { m: s.misconception })}</p>}
 
       <div className={clsx("rounded-2xl bg-surface-2 px-3 py-2.5", compact ? "min-h-[3rem]" : "min-h-[4.5rem]")}>

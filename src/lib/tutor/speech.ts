@@ -38,35 +38,104 @@ export interface VoiceSnapshot {
   cached: boolean | null;
   /** Why the device voice is being used, if it is. */
   reason: string | null;
+  /** Kokoro worked earlier this session and then failed (show a notice). */
+  lost: boolean;
 }
 
 const INDIC = /[ऀ-෿]/;
 
-/** Split narration into sentences (keeps each Kokoro call short so audio starts quickly). */
+/** Longest chunk sent to Kokoro in one call (short chunks start sooner and stay far below its 510-token limit). */
+const MAX_CHARS = 200;
+
+/** Split one over-long sentence at clause boundaries, then at word boundaries, into chunks of at most MAX_CHARS. */
+function clauses(p: string): string[] {
+  if (p.length <= MAX_CHARS && p.split(" ").length <= 24) return [p];
+  const out: string[] = [];
+  let cur = "";
+  const push = () => {
+    if (cur.trim()) out.push(cur.trim());
+    cur = "";
+  };
+  for (const part of p.split(/(?<=[,;:\u2014)])\s+/)) {
+    if (part.length > MAX_CHARS) {
+      push();
+      for (const w of part.split(" ")) {
+        if (cur && cur.length + w.length + 1 > MAX_CHARS) push();
+        cur = cur ? `${cur} ${w}` : w;
+      }
+      push();
+    } else if (cur && (cur.length + part.length + 1 > MAX_CHARS || cur.split(" ").length >= 12)) {
+      push();
+      cur = part;
+    } else cur = cur ? `${cur} ${part}` : part;
+  }
+  push();
+  return out;
+}
+
+/** Split narration into speakable chunks: sentences, and long sentences at clause boundaries (each at most 200 chars). */
 export function sentences(text: string): string[] {
   const parts = text
     .replace(/\s+/g, " ")
     .trim()
-    .split(/(?<=[.!?।॥])\s+(?=\S)/);
-  const out: string[] = [];
-  for (const p of parts) {
-    // Very long sentences: break at a comma/semicolon so the first audio is ready sooner.
-    if (p.split(" ").length > 20) out.push(...p.split(/(?<=[,;:])\s+/));
-    else out.push(p);
-  }
-  return out.filter((s) => /[\p{L}\p{N}]/u.test(s));
+    .split(/(?<=[.!?\u0964\u0965])\s+(?=\S)/);
+  return parts.flatMap(clauses).filter((s) => /[\p{L}\p{N}]/u.test(s));
 }
 
-/** Words → speakable text: drop markdown/LaTeX leftovers the model may slip in. */
-function speakable(s: string) {
+/** Text → what Kokoro's phonemiser can read: markdown, LaTeX, math symbols and emoji become plain spoken words. */
+export function speakable(s: string) {
   return s
-    .replace(/[*_`#$\\]/g, "")
-    .replace(/\^2\b/g, " squared")
-    .replace(/\^3\b/g, " cubed")
+    .replace(/\\[()[\]]/g, " ")
+    .replace(/\\(left|right)\b/g, "")
+    .replace(/\\d?frac\s*\{([^{}]*)\}\s*\{([^{}]*)\}/g, " $1 over $2 ")
+    .replace(/\\sqrt\s*\{([^{}]*)\}/g, " the square root of $1 ")
+    .replace(/\\(times|cdot)\b/g, " times ")
+    .replace(/\\div\b/g, " divided by ")
+    .replace(/\\pm\b/g, " plus or minus ")
+    .replace(/\\leq?\b/g, " less than or equal to ")
+    .replace(/\\geq?\b/g, " greater than or equal to ")
+    .replace(/\\neq?\b/g, " not equal to ")
+    .replace(/\\approx\b/g, " approximately ")
+    .replace(/\\(rightarrow|to|implies|Rightarrow)\b/g, " gives ")
+    .replace(/\\(text|mathrm|mathbf|operatorname)\s*\{([^{}]*)\}/g, " $2 ")
+    .replace(/\\([a-zA-Z]+)/g, " $1 ")
+    .replace(/\u00d7/g, " times ")
+    .replace(/\u00f7/g, " divided by ")
+    .replace(/\u00b1/g, " plus or minus ")
+    .replace(/\u2264/g, " less than or equal to ")
+    .replace(/\u2265/g, " greater than or equal to ")
+    .replace(/\u2260/g, " not equal to ")
+    .replace(/\u2248/g, " approximately ")
+    .replace(/[\u2192\u21d2]/g, " gives ")
+    .replace(/\u221a\s*\(?([\w.]+)\)?/g, " the square root of $1 ")
+    .replace(/\u03c0/g, " pi ")
+    .replace(/\u03b8/g, " theta ")
+    .replace(/\u00b0/g, " degrees ")
+    .replace(/%/g, " percent ")
+    .replace(/\u00b2/g, " squared ")
+    .replace(/\u00b3/g, " cubed ")
+    .replace(/\^\s*\{?2\}?(?!\d)/g, " squared ")
+    .replace(/\^\s*\{?3\}?(?!\d)/g, " cubed ")
+    .replace(/\^\s*\{?(-?[\w.]+)\}?/g, " to the power $1 ")
+    .replace(/(\d)\s*\/\s*(?=\d)/g, "$1 over ")
+    .replace(/(\w)\s*\u2212\s*(?=\w)/g, "$1 minus ")
+    .replace(/(\w)\s+-\s+(?=\w)/g, "$1 minus ")
+    .replace(/(\w)\s*\+\s*(?=\w)/g, "$1 plus ")
+    .replace(/\s+<\s+/g, " is less than ")
+    .replace(/\s+>\s+/g, " is greater than ")
     .replace(/\s*=\s*/g, " equals ")
+    .replace(/[{}[\]_*`#$\\|~^<>]/g, " ")
+    .replace(/[\p{Extended_Pictographic}\u{1F1E6}-\u{1F1FF}\u{1F3FB}-\u{1F3FF}\uFE0F\u200D\u20E3]/gu, "")
+    .replace(/\s+([,.!?;:])/g, "$1")
     .replace(/\s+/g, " ")
     .trim();
 }
+
+/** Worker reply for one chunk. */
+type Reply = { pcm?: Float32Array; rate?: number; error?: string; skipped?: boolean; ms?: number };
+type Synth = { buf: AudioBuffer; ms: number } | { error: string; stuck?: boolean } | { skipped: true };
+/** No reply from a busy worker for this long = it is stuck (a normal 200-char chunk takes a few seconds). */
+const STUCK_MS = 60000;
 
 type Listener = (v: VoiceSnapshot) => void;
 
@@ -78,25 +147,31 @@ class Speaker {
   total = 0;
   cached: boolean | null = null;
   reason: string | null = null;
+  /** Kokoro was working this session and then hard-failed (the UI shows a notice). */
+  lost = false;
   speaking = false;
   /** While true, the tutor waits for the model before it starts a lesson (set by the full-screen loader). */
   hold = false;
   private worker: Worker | null = null;
   private seq = 0;
   private gen = 1;
-  private pending = new Map<number, (r: { pcm?: Float32Array; rate?: number } | null) => void>();
-  private cache = new Map<string, Promise<AudioBuffer | null>>();
+  private pending = new Map<number, (r: Reply) => void>();
+  private cache = new Map<string, Promise<Synth>>();
   private ctx: AudioContext | null = null;
   private analyser: AnalyserNode | null = null;
   private source: AudioBufferSourceNode | null = null;
   private deviceOn = false;
   private listeners = new Set<Listener>();
   private buf: Uint8Array<ArrayBuffer> | null = null;
+  /** Kokoro hard failures in a row (any success resets it); 2 → device voice for the rest of the session. */
   private failures = 0;
+  /** Last time the worker answered (or was handed work while idle): detects a stuck worker. */
+  private lastProgress = 0;
+  private respawns = 0;
   private waiters: (() => void)[] = [];
 
   snapshot(): VoiceSnapshot {
-    return { status: this.status, stage: this.stage, progress: this.progress, loaded: this.loaded, total: this.total, cached: this.cached, reason: this.reason };
+    return { status: this.status, stage: this.stage, progress: this.progress, loaded: this.loaded, total: this.total, cached: this.cached, reason: this.reason, lost: this.lost };
   }
   subscribe(fn: Listener) {
     this.listeners.add(fn);
@@ -155,17 +230,33 @@ class Speaker {
     if (this.worker || this.status === "unavailable") return;
     const why = this.incapable();
     if (why) return this.fail(why);
+    if (!this.spawn()) return;
+    this.stage = "download";
+    this.set("loading", 0);
+    void this.checkCache();
+  }
+
+  /** One Kokoro worker; every generate() goes through its single serial queue. */
+  private spawn(): boolean {
+    let w: Worker;
     try {
-      this.worker = new Worker("/kokoro/tts-worker.js", { type: "module" });
+      w = new Worker("/kokoro/tts-worker.js", { type: "module" });
     } catch (e) {
-      return this.fail(`could not start the voice worker: ${String(e)}`);
+      this.fail(`could not start the voice worker: ${String(e)}`);
+      return false;
     }
-    this.worker.onerror = (e) => {
+    this.worker = w;
+    w.onerror = (e) => {
       e.preventDefault();
-      this.fail(`voice worker crashed: ${e.message || "script error"}`);
+      if (this.worker !== w) return;
+      const why = `voice worker crashed: ${e.message || "script error"}`;
+      // Mid-session: restart it once (the model loads from Cache Storage) instead of dropping to the device voice.
+      if (this.status === "ready" && this.respawns < 2) this.respawn(why);
+      else this.fail(why);
     };
-    this.worker.onmessage = (e: MessageEvent) => {
-      const d = e.data as { type: string; id?: number; stage?: VoiceStage; loaded?: number; total?: number; pcm?: Float32Array; rate?: number; error?: string; text?: string; skipped?: boolean };
+    w.onmessage = (e: MessageEvent) => {
+      if (this.worker !== w) return;
+      const d = e.data as Reply & { type: string; id?: number; stage?: VoiceStage; loaded?: number; total?: number; text?: string };
       if (d.type === "progress" && this.status === "loading") {
         this.loaded = d.loaded ?? 0;
         this.total = d.total ?? 0;
@@ -175,25 +266,35 @@ class Speaker {
         this.stage = d.stage ?? this.stage;
         if (this.stage === "warmup") this.progress = 100;
         this.emit();
-      } else if (d.type === "log") console.info("[Questy voice]", d.text);
+      } else if (d.type === "log") console.info("[voice]", d.text);
       else if (d.type === "ready") {
-        console.info("[Questy voice] Kokoro ready (voice %s)", KOKORO_VOICE);
-        this.set("ready", 100);
+        this.lastProgress = performance.now();
+        if (this.status !== "ready") {
+          console.info("[voice] Kokoro ready (voice %s)", KOKORO_VOICE);
+          this.set("ready", 100);
+        }
       } else if (d.type === "failed") this.fail(`Kokoro failed to load: ${d.error}`);
       else if (d.type === "audio" && d.id) {
+        this.lastProgress = performance.now();
         const res = this.pending.get(d.id);
         this.pending.delete(d.id);
-        if (d.error) {
-          console.warn("[Questy voice] Kokoro could not speak a sentence:", d.error);
-          if (++this.failures >= 3) this.fail(`Kokoro failed 3 times: ${d.error}`);
-        }
-        res?.(d.pcm ? { pcm: d.pcm, rate: d.rate } : null);
+        res?.(d);
       }
     };
-    this.stage = "download";
-    this.set("loading", 0);
-    void this.checkCache();
-    this.worker.postMessage({ type: "load", model: MODEL, voice: KOKORO_VOICE });
+    w.postMessage({ type: "load", model: MODEL, voice: KOKORO_VOICE });
+    return true;
+  }
+
+  /** Replace a crashed/stuck worker; queued chunks are failed so the speaker retries them on the new one. */
+  private respawn(why: string) {
+    console.warn("[voice] restarting the Kokoro worker:", why);
+    this.respawns++;
+    this.worker?.terminate();
+    this.worker = null;
+    this.pending.forEach((r) => r({ error: why }));
+    this.pending.clear();
+    this.cache.clear();
+    this.spawn();
   }
 
   /** Give up on Kokoro for this visit and use the device voice ("Continue with device voice"). */
@@ -203,13 +304,14 @@ class Speaker {
   }
 
   private fail(reason: string, chosen = false) {
-    if (chosen) console.info("[Questy voice] Using device voice:", reason);
-    else console.warn("[Questy voice] Using device voice:", reason);
+    if (chosen) console.info("[voice] Using device voice:", reason);
+    else console.warn("[voice] Using device voice:", reason);
+    if (this.status === "ready" && !chosen) this.lost = true;
     this.reason = reason;
     this.stage = "device";
     this.worker?.terminate();
     this.worker = null;
-    this.pending.forEach((r) => r(null));
+    this.pending.forEach((r) => r({ error: reason }));
     this.pending.clear();
     this.cache.clear();
     this.set("unavailable");
@@ -241,57 +343,103 @@ class Speaker {
     return this.status === "ready" && lang.startsWith("en") && !INDIC.test(text) && Boolean(this.ctx);
   }
 
-  private synth(text: string): Promise<AudioBuffer | null> {
+  /** Queue one chunk on the worker (cached by text, so prefetch + speak share one generate() call). */
+  private synth(text: string, urgent = false): Promise<Synth> {
     const hit = this.cache.get(text);
     if (hit) return hit;
     const w = this.worker;
     const ctx = this.ctx;
-    if (!w || !ctx) return Promise.resolve(null);
+    if (!w || !ctx) return Promise.resolve({ error: "voice worker not running" });
     const id = ++this.seq;
-    const p = new Promise<AudioBuffer | null>((resolve) => {
+    if (!this.pending.size) this.lastProgress = performance.now();
+    const p = new Promise<Synth>((resolve) => {
       this.pending.set(id, (r) => {
-        if (!r?.pcm || !r.rate) return resolve(null);
+        if (r.skipped) return resolve({ skipped: true });
+        if (!r.pcm?.length || !r.rate) return resolve({ error: r.error || "no audio" });
         try {
           const b = ctx.createBuffer(1, r.pcm.length, r.rate);
           b.copyToChannel(r.pcm as Float32Array<ArrayBuffer>, 0);
-          resolve(b);
-        } catch {
-          resolve(null);
+          resolve({ buf: b, ms: r.ms ?? 0 });
+        } catch (e) {
+          resolve({ error: `bad audio: ${String(e)}` });
         }
       });
-      w.postMessage({ type: "say", id, text, voice: KOKORO_VOICE, gen: this.gen });
+      w.postMessage({ type: "say", id, text, voice: KOKORO_VOICE, gen: this.gen, urgent });
     });
     this.cache.set(text, p);
-    if (this.cache.size > 60) this.cache.delete(this.cache.keys().next().value as string);
+    // Never keep a failed/skipped result: the next request must really retry.
+    void p.then((r) => !("buf" in r) && this.cache.get(text) === p && this.cache.delete(text));
+    if (this.cache.size > 80) this.cache.delete(this.cache.keys().next().value as string);
     return p;
+  }
+
+  /** Wait for a chunk however long it takes, unless the turn is stopped or the worker is stuck. */
+  private waitFor(p: Promise<Synth>, my: number): Promise<Synth> {
+    let iv: ReturnType<typeof setInterval> | undefined;
+    const watch = new Promise<Synth>((resolve) => {
+      iv = setInterval(() => {
+        if (my !== this.gen) resolve({ skipped: true });
+        else if (this.pending.size && performance.now() - this.lastProgress > STUCK_MS) resolve({ error: `no reply from Kokoro for ${STUCK_MS / 1000}s`, stuck: true });
+      }, 500);
+    });
+    return Promise.race([p, watch]).finally(() => clearInterval(iv));
   }
 
   /** Synthesise ahead of time (call as soon as a step arrives from the stream). */
   prefetch(text: string, lang: string) {
     if (!this.useKokoro(text, lang)) return;
-    for (const s of sentences(text)) void this.synth(speakable(s));
+    for (const s of sentences(text)) {
+      const t = speakable(s);
+      if (/[\p{L}\p{N}]/u.test(t)) void this.synth(t);
+    }
   }
 
-  /** Speak text; resolves when finished or stopped. */
+  /**
+   * Speak text; resolves when finished or stopped. Once Kokoro is ready every chunk is spoken by Kokoro:
+   * all chunks are queued at once (the worker runs them one by one), so chunk N+1 is synthesised while N
+   * plays; a slow chunk is simply waited for. Only two hard failures in a row switch to the device voice,
+   * and then for the rest of the session.
+   */
   async speak(text: string, lang: string, onSentence?: (s: string) => void): Promise<void> {
     const my = this.gen;
     const list = sentences(text);
-    if (this.useKokoro(text, lang)) list.forEach((s) => void this.synth(speakable(s)));
-    for (const s of list) {
+    if (this.useKokoro(text, lang)) this.prefetch(text, lang);
+    for (let i = 0; i < list.length; i++) {
+      const s = list[i];
       if (my !== this.gen) return;
       onSentence?.(s);
-      let done = false;
+      const tag = `chunk ${i + 1}/${list.length}`;
       if (this.useKokoro(s, lang)) {
-        // Single-threaded WASM can take a few seconds for a long sentence; don't jump to the robotic voice too soon.
-        const buf = await Promise.race([this.synth(speakable(s)), new Promise<null>((r) => setTimeout(() => r(null), 20000))]);
-        if (my !== this.gen) return;
-        if (!buf) console.warn("[Questy voice] Kokoro gave no audio for a sentence; using the device voice for it.");
-        if (buf) {
-          await this.play(buf);
-          done = true;
+        const t = speakable(s);
+        if (!/[\p{L}\p{N}]/u.test(t)) continue;
+        const t0 = performance.now();
+        let r = await this.waitFor(this.synth(t), my);
+        while ("error" in r && this.status === "ready") {
+          if (my !== this.gen) return;
+          this.failures++;
+          console.warn(`[voice] ${tag} kokoro error #${this.failures}: ${r.error}`);
+          if (this.failures >= 2) {
+            this.fail(`Kokoro failed twice in a row (${r.error})`);
+            break;
+          }
+          if (r.stuck) this.respawn(r.error);
+          this.cache.delete(t);
+          r = await this.waitFor(this.synth(t, true), my);
         }
+        if (my !== this.gen) return;
+        if ("buf" in r) {
+          this.failures = 0;
+          console.info(`[voice] ${tag} engine=kokoro synth=${r.ms}ms wait=${Math.round(performance.now() - t0)}ms audio=${Math.round(r.buf.duration * 1000)}ms "${t.slice(0, 60)}"`);
+          await this.play(r.buf);
+          continue;
+        }
+        // Stopped mid-wait (barge-in) or Kokoro has just been given up on: fall through.
+        if ("skipped" in r) return;
       }
-      if (!done) await this.device(s, lang, my);
+      if (my !== this.gen) return;
+      const t0 = performance.now();
+      await this.device(s, lang, my);
+      console.info(`[voice] ${tag} engine=device ms=${Math.round(performance.now() - t0)} reason=${this.status === "ready" ? `lang ${lang}` : this.reason ?? this.status}`);
     }
   }
 
@@ -308,6 +456,7 @@ class Speaker {
       const end = () => {
         if (settled) return;
         settled = true;
+        clearTimeout(timer);
         if (this.source === src) {
           this.source = null;
           this.speaking = false;
@@ -316,7 +465,7 @@ class Speaker {
       };
       src.onended = end;
       // Safety net in case `ended` never fires (suspended context on some phones).
-      setTimeout(end, buf.duration * 1000 + 1500);
+      const timer = setTimeout(end, buf.duration * 1000 + 1500);
       try {
         src.start();
       } catch {
@@ -357,7 +506,7 @@ class Speaker {
     });
   }
 
-  /** Stop talking now (barge-in). Queued synthesis is cancelled too. */
+  /** Stop talking now (barge-in). Queued synthesis is cancelled too; Kokoro stays loaded for the next turn. */
   stop() {
     this.gen++;
     this.worker?.postMessage({ type: "cancel", gen: this.gen - 1 });
