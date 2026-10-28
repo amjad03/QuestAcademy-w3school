@@ -1,5 +1,6 @@
 "use client";
 
+import { KudosShelf } from "@/components/school/StudentSchool";
 import Link from "next/link";
 import { BookOpenCheck, CalendarDays, Flame, PencilLine, Settings, ShieldHalf, Target, Zap } from "lucide-react";
 import { useLearner } from "@/lib/store";
@@ -80,6 +81,10 @@ export function Profile() {
           </Link>
         </div>
       </section>
+
+      <div className="mt-8 empty:hidden">
+        <KudosShelf />
+      </div>
 
       {/* statistics */}
       <section className="mt-8">
