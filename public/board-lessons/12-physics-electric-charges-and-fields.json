@@ -1,0 +1,162 @@
+{
+  "v": 1,
+  "id": "12-physics-electric-charges-and-fields",
+  "title": "Electric Charges and Fields",
+  "subject": "physics",
+  "grade": "12",
+  "chapter": "Electric Charges and Fields",
+  "lang": "en",
+  "steps": [
+    {
+      "mark": "Electric charge",
+      "say": "Welcome to Electric Charges and Fields, the opening chapter of Class 12 Physics. Rub a plastic comb in dry hair and it picks up bits of paper. That simple trick is electric charge at work, and this chapter builds the whole theory behind it.",
+      "ops": [
+        { "op": "text", "id": "t1", "text": "Electric Charges and Fields", "size": 40, "color": "blue" },
+        { "op": "text", "id": "t2", "text": "Charge → force → field → flux → Gauss's law" }
+      ]
+    },
+    {
+      "say": "There are two kinds of charge, positive and negative. Like charges repel and unlike charges attract. Charging by rubbing does not create charge, it transfers electrons from one body to the other. The body that gains electrons becomes negative.",
+      "ops": [
+        { "op": "circle", "id": "p1", "x": 160, "y": 260, "r": 30, "color": "red", "label": "+" },
+        { "op": "circle", "id": "p2", "x": 360, "y": 260, "r": 30, "color": "red", "label": "+" },
+        { "op": "arrow", "id": "r1", "from": [130, 260], "to": [60, 260], "color": "red" },
+        { "op": "arrow", "id": "r2", "from": [390, 260], "to": [460, 260], "color": "red", "label": "repel" },
+        { "op": "circle", "id": "q1", "x": 600, "y": 260, "r": 30, "color": "red", "label": "+" },
+        { "op": "circle", "id": "q2", "x": 860, "y": 260, "r": 30, "color": "blue", "label": "−" },
+        { "op": "arrow", "id": "a1", "from": [635, 260], "to": [700, 260], "color": "green" },
+        { "op": "arrow", "id": "a2", "from": [825, 260], "to": [760, 260], "color": "green", "label": "attract" }
+      ]
+    },
+    {
+      "say": "Charge has three key properties. It is additive, so the total charge is just the algebraic sum. It is conserved, so it can be transferred but never created or destroyed in an isolated system. And it is quantised: every charge is a whole number multiple of the electron charge, e, which is one point six times ten to the minus nineteen coulomb.",
+      "ops": [
+        { "op": "math", "id": "c1", "tex": "q = ne, \\quad n \\in \\mathbb{Z}, \\quad e = 1.6\\times10^{-19}\\,\\text{C}", "y": 360, "size": 32, "color": "purple" },
+        { "op": "text", "id": "c2", "text": "additive · conserved · quantised", "color": "green" },
+        { "op": "highlight", "target": "c1" }
+      ]
+    },
+    {
+      "mark": "Coulomb's law",
+      "say": "Coulomb measured the force between two point charges. It is proportional to the product of the charges and inversely proportional to the square of the distance between them. The constant k is one over four pi epsilon nought, about nine times ten to the nine in S I units.",
+      "ops": [
+        { "op": "page" },
+        { "op": "text", "id": "k0", "text": "Coulomb's law", "size": 34, "color": "blue" },
+        { "op": "math", "id": "k1", "tex": "F = \\frac{1}{4\\pi\\varepsilon_0}\\,\\frac{q_1 q_2}{r^2}", "size": 42 },
+        { "op": "math", "id": "k2", "tex": "\\frac{1}{4\\pi\\varepsilon_0} = 9\\times10^{9}\\ \\text{N m}^2\\text{C}^{-2}", "color": "green" },
+        { "op": "highlight", "target": "k1" }
+      ]
+    },
+    {
+      "say": "Look at how quickly it falls with distance. Double the distance and the force drops to a quarter. Triple it and the force is one ninth. That inverse square shape is exactly like gravity, but electric forces are enormously stronger.",
+      "ops": [
+        { "op": "axes", "id": "ax", "x": 520, "y": 150, "w": 420, "h": 280, "xmin": 0, "xmax": 4, "ymin": 0, "ymax": 4, "xlabel": "r", "ylabel": "F" },
+        { "op": "plot", "id": "inv", "axes": "ax", "fn": "1/x^2", "color": "red", "label": "F ∝ 1/r²" },
+        { "op": "point", "id": "pt1", "axes": "ax", "at": [1, 1], "label": "F" },
+        { "op": "point", "id": "pt2", "axes": "ax", "at": [2, 0.25], "label": "F/4" }
+      ]
+    },
+    {
+      "say": "When there are many charges, the superposition principle applies. The force on one charge is the vector sum of the forces from every other charge, each calculated as if the others were not there. Add them as vectors, not just as numbers.",
+      "ops": [
+        { "op": "math", "id": "k3", "tex": "\\vec F_1 = \\vec F_{12} + \\vec F_{13} + \\dots + \\vec F_{1n}", "color": "purple" },
+        { "op": "underline", "target": "k3", "color": "orange" }
+      ]
+    },
+    {
+      "mark": "Electric field",
+      "say": "Instead of asking about forces on every charge, we describe the space around a charge using the electric field. The field at a point is the force a small positive test charge would feel there, divided by that charge. For a point charge, the field is k q over r squared, pointing away from a positive charge.",
+      "ops": [
+        { "op": "page" },
+        { "op": "text", "id": "e0", "text": "Electric field", "size": 34, "color": "blue" },
+        { "op": "math", "id": "e1", "tex": "\\vec E = \\frac{\\vec F}{q_0} \\qquad E = \\frac{kq}{r^2}", "size": 36 },
+        { "op": "circle", "id": "src", "x": 700, "y": 330, "r": 26, "color": "red", "label": "+q" },
+        { "op": "arrow", "id": "fl1", "from": [730, 330], "to": [900, 330], "color": "red" },
+        { "op": "arrow", "id": "fl2", "from": [670, 330], "to": [500, 330], "color": "red" },
+        { "op": "arrow", "id": "fl3", "from": [700, 300], "to": [700, 160], "color": "red" },
+        { "op": "arrow", "id": "fl4", "from": [700, 360], "to": [700, 500], "color": "red" },
+        { "op": "arrow", "id": "fl5", "from": [720, 310], "to": [840, 200], "color": "red" },
+        { "op": "arrow", "id": "fl6", "from": [680, 350], "to": [560, 460], "color": "red" }
+      ]
+    },
+    {
+      "say": "Field lines make this visible. They start on positive charges and end on negative ones. The tangent at any point gives the direction of the field, and where the lines are crowded, the field is strong. Two field lines never cross, because the field cannot point in two directions at once.",
+      "ops": [
+        { "op": "text", "id": "e2", "text": "Field lines:", "x": 40, "y": 200, "color": "green" },
+        { "op": "text", "id": "e3", "text": "• start on +, end on −", "x": 40, "y": 245, "size": 22 },
+        { "op": "text", "id": "e4", "text": "• dense lines = strong field", "x": 40, "y": 285, "size": 22 },
+        { "op": "text", "id": "e5", "text": "• never cross; no closed loops", "x": 40, "y": 325, "size": 22, "color": "red" },
+        { "op": "highlight", "target": "e5" }
+      ]
+    },
+    {
+      "mark": "Electric dipole",
+      "say": "A pair of equal and opposite charges, minus q and plus q, separated by a small distance two a, is an electric dipole. Its dipole moment p has magnitude q times two a, and points from the negative charge to the positive charge.",
+      "ops": [
+        { "op": "page" },
+        { "op": "text", "id": "d0", "text": "Electric dipole", "size": 34, "color": "blue" },
+        { "op": "circle", "id": "dn", "x": 300, "y": 220, "r": 24, "color": "blue", "label": "−q" },
+        { "op": "circle", "id": "dp", "x": 600, "y": 220, "r": 24, "color": "red", "label": "+q" },
+        { "op": "arrow", "id": "pv", "from": [330, 280], "to": [570, 280], "color": "purple", "label": "p = q(2a)" }
+      ]
+    },
+    {
+      "say": "Far from the dipole, its field falls off as one over r cubed, faster than a single charge, because the two charges nearly cancel. On the axis, the field is two k p over r cubed. On the perpendicular bisector, called the equatorial line, it is half that, k p over r cubed, and points opposite to p.",
+      "ops": [
+        { "op": "math", "id": "d1", "tex": "E_{\\text{axial}} = \\frac{2kp}{r^3} \\qquad E_{\\text{equatorial}} = \\frac{kp}{r^3}", "y": 340, "size": 34 },
+        { "op": "text", "id": "d2", "text": "dipole field ∝ 1/r³", "color": "red" },
+        { "op": "highlight", "target": "d1" }
+      ]
+    },
+    {
+      "say": "In a uniform external field, the net force on a dipole is zero, because the forces on the two charges cancel. But they form a couple, giving a torque p E sine theta that tries to line the dipole up with the field.",
+      "ops": [
+        { "op": "math", "id": "d3", "tex": "\\vec\\tau = \\vec p \\times \\vec E, \\quad \\tau = pE\\sin\\theta", "color": "purple" },
+        { "op": "underline", "target": "d3", "color": "orange" }
+      ]
+    },
+    {
+      "mark": "Flux and Gauss's law",
+      "say": "Electric flux measures how much field passes through a surface. For a flat area in a uniform field, it is E times A times cos theta, where theta is the angle between the field and the normal to the surface.",
+      "ops": [
+        { "op": "page" },
+        { "op": "text", "id": "g0", "text": "Electric flux", "size": 34, "color": "blue" },
+        { "op": "math", "id": "g1", "tex": "\\Phi = \\vec E\\cdot\\vec A = EA\\cos\\theta", "size": 38 },
+        { "op": "rect", "id": "area", "x": 640, "y": 140, "w": 40, "h": 200, "color": "green", "label": "A" },
+        { "op": "arrow", "id": "ef1", "from": [500, 180], "to": [800, 180], "color": "red" },
+        { "op": "arrow", "id": "ef2", "from": [500, 240], "to": [800, 240], "color": "red", "label": "E" },
+        { "op": "arrow", "id": "ef3", "from": [500, 300], "to": [800, 300], "color": "red" }
+      ]
+    },
+    {
+      "say": "Gauss's law is the crown of this chapter. The total flux through any closed surface equals the charge enclosed divided by epsilon nought. Charges outside the surface contribute zero net flux, because every line that enters also leaves.",
+      "ops": [
+        { "op": "math", "id": "g2", "tex": "\\oint \\vec E\\cdot d\\vec A = \\frac{q_{\\text{enc}}}{\\varepsilon_0}", "y": 380, "size": 44, "color": "purple" },
+        { "op": "highlight", "target": "g2" }
+      ]
+    },
+    {
+      "say": "With a clever Gaussian surface, hard problems become one line. For an infinite line of charge, the field is lambda over two pi epsilon nought r. For an infinite plane sheet, it is sigma over two epsilon nought, the same at every distance. And outside a charged spherical shell, the field is as if all the charge were at the centre, while inside it is zero.",
+      "ops": [
+        { "op": "page" },
+        { "op": "text", "id": "s0", "text": "Gauss's law at work", "size": 34, "color": "blue" },
+        { "op": "math", "id": "s1", "tex": "\\text{line: } E = \\frac{\\lambda}{2\\pi\\varepsilon_0 r}" },
+        { "op": "math", "id": "s2", "tex": "\\text{sheet: } E = \\frac{\\sigma}{2\\varepsilon_0}" },
+        { "op": "math", "id": "s3", "tex": "\\text{shell: } E = \\frac{kq}{r^2}\\ (r > R), \\quad E = 0\\ (r < R)", "color": "green" }
+      ]
+    },
+    {
+      "mark": "Summary",
+      "say": "Let's recap. Charge is additive, conserved and quantised. Coulomb's force follows an inverse square law and adds by superposition. The field is force per unit charge, drawn with field lines that never cross. A dipole's field falls as one over r cubed, and it feels a torque in a uniform field. And Gauss's law links flux through a closed surface to the charge inside. Now try the practice questions, and ask me if any step needs another look.",
+      "ops": [
+        { "op": "page" },
+        { "op": "text", "id": "r0", "text": "Recap", "size": 36, "color": "blue" },
+        { "op": "text", "id": "r1", "text": "1. q = ne; charge is conserved" },
+        { "op": "text", "id": "r2", "text": "2. F = kq₁q₂/r²; forces add as vectors" },
+        { "op": "text", "id": "r3", "text": "3. E = F/q₀; field lines never cross" },
+        { "op": "text", "id": "r4", "text": "4. Dipole: p = q·2a, E ∝ 1/r³, τ = pE sin θ" },
+        { "op": "text", "id": "r5", "text": "5. Gauss: ∮E·dA = q_enc/ε₀", "color": "purple" }
+      ]
+    }
+  ]
+}

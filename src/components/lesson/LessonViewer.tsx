@@ -24,6 +24,8 @@ import { currentMode, useMode } from "@/lib/useMode";
 import { useUi } from "@/lib/ui";
 import { awardExploreSticker } from "@/components/modes/explore/stickers";
 import { VideoPlayer } from "./VideoPlayer";
+import { BoardLessonCard } from "@/components/board/BoardLessonCard";
+import { boardLessonForLesson } from "@/content/board-lessons";
 import { NotebookDock } from "@/components/notebook/NotebookDock";
 import { useExperience } from "@/experiences";
 import type { LessonTab } from "@/experiences/types";
@@ -124,9 +126,11 @@ export function LessonViewer(raw: LessonViewerPayload) {
     ...(it.kind === "practice" ? { href: it.href } : { onSelect: () => router.replace(`?item=${it.kind}`, { scroll: false }) }),
   }));
 
+  const boardLesson = boardLessonForLesson(p.id);
   const content = (
     <>
       <TranslationNote course={p.course.slug} />
+      {boardLesson && item.kind === "article" && !p.video && <BoardLessonCard meta={boardLesson} className="mb-6" />}
       {item.kind === "video" && p.video && (
         <div>
           <VideoPlayer id={p.video.id} provider={p.video.provider} playlist={p.video.playlist} title={p.video.title || p.lesson.title} watched={itemDone(st, p.id, item)} onWatched={() => markItem(item.id, item.xp)} />
@@ -136,6 +140,7 @@ export function LessonViewer(raw: LessonViewerPayload) {
               {t("lesson.video.channelOnYoutube", "{channel} on YouTube", { channel: p.channel.title })}
             </a>
           )}
+          {boardLesson && <BoardLessonCard meta={boardLesson} className="mt-6" />}
         </div>
       )}
       {item.kind === "article" && <LessonExplainers lessonId={p.id} />}

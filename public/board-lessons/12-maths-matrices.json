@@ -1,0 +1,135 @@
+{
+  "v": 1,
+  "id": "12-maths-matrices",
+  "title": "Matrices",
+  "subject": "maths",
+  "grade": "12",
+  "chapter": "Matrices",
+  "lang": "en",
+  "steps": [
+    {
+      "mark": "What is a matrix?",
+      "say": "Welcome to Matrices, the first chapter of Class 12 maths. A matrix is a rectangular arrangement of numbers in rows and columns. Matrices let us store data compactly and solve many linear equations at once, and computers use them for everything from graphics to machine learning.",
+      "ops": [
+        { "op": "text", "id": "t1", "text": "Matrices", "size": 44, "color": "blue" },
+        { "op": "math", "id": "m1", "tex": "A = \\begin{bmatrix} 2 & 5 & 1 \\\\ 0 & 3 & 4 \\end{bmatrix}", "size": 40 }
+      ]
+    },
+    {
+      "say": "This matrix has two rows and three columns, so its order is two by three. Always say rows first, then columns. The element in row i and column j is called a i j. Here a one two is five, and a two three is four.",
+      "ops": [
+        { "op": "text", "id": "t2", "text": "order = rows × columns = 2 × 3", "color": "green" },
+        { "op": "math", "id": "m2", "tex": "a_{ij}: \\quad a_{12} = 5, \\quad a_{23} = 4", "color": "purple" },
+        { "op": "highlight", "target": "t2" }
+      ]
+    },
+    {
+      "mark": "Types of matrices",
+      "say": "Some shapes have names. A row matrix has one row, a column matrix one column. A square matrix has as many rows as columns. In a square matrix, the entries from top left to bottom right form the main diagonal.",
+      "ops": [
+        { "op": "page" },
+        { "op": "text", "id": "y0", "text": "Types of matrices", "size": 34, "color": "blue" },
+        { "op": "math", "id": "y1", "tex": "\\text{row } [1\\ 2\\ 3] \\qquad \\text{column } \\begin{bmatrix}1\\\\2\\end{bmatrix} \\qquad \\text{square } \\begin{bmatrix}1&2\\\\3&4\\end{bmatrix}" }
+      ]
+    },
+    {
+      "say": "A diagonal matrix has zeros everywhere off the diagonal. If all diagonal entries are equal, it is a scalar matrix. If they are all one, it is the identity matrix I, which acts like the number one in multiplication. And the zero matrix has every entry zero.",
+      "ops": [
+        { "op": "math", "id": "y2", "tex": "\\text{diagonal } \\begin{bmatrix}3&0\\\\0&7\\end{bmatrix} \\quad \\text{scalar } \\begin{bmatrix}5&0\\\\0&5\\end{bmatrix} \\quad I = \\begin{bmatrix}1&0\\\\0&1\\end{bmatrix}", "color": "green" },
+        { "op": "math", "id": "y3", "tex": "AI = IA = A", "size": 36, "color": "purple" },
+        { "op": "highlight", "target": "y3" }
+      ]
+    },
+    {
+      "mark": "Adding and scaling",
+      "say": "Two matrices are equal only if they have the same order and every corresponding entry matches. To add matrices, they must have the same order, and we simply add entry by entry. Multiplying by a number k multiplies every entry by k.",
+      "ops": [
+        { "op": "page" },
+        { "op": "text", "id": "a0", "text": "Addition and scalar multiplication", "size": 32, "color": "blue" },
+        { "op": "math", "id": "a1", "tex": "\\begin{bmatrix}1&2\\\\3&4\\end{bmatrix} + \\begin{bmatrix}5&0\\\\1&2\\end{bmatrix} = \\begin{bmatrix}6&2\\\\4&6\\end{bmatrix}" },
+        { "op": "math", "id": "a2", "tex": "3\\begin{bmatrix}1&2\\\\3&4\\end{bmatrix} = \\begin{bmatrix}3&6\\\\9&12\\end{bmatrix}", "color": "green" }
+      ]
+    },
+    {
+      "say": "Addition behaves just like numbers. It is commutative, A plus B equals B plus A, and associative. The zero matrix is the additive identity, and minus A is the additive inverse.",
+      "ops": [
+        { "op": "math", "id": "a3", "tex": "A + B = B + A \\qquad (A+B)+C = A+(B+C)", "color": "purple" }
+      ]
+    },
+    {
+      "mark": "Multiplication",
+      "say": "Matrix multiplication is different. A B is defined only when the number of columns of A equals the number of rows of B. If A is m by n and B is n by p, the product is m by p. The inner numbers must match, and the outer numbers give the order of the answer.",
+      "ops": [
+        { "op": "page" },
+        { "op": "text", "id": "x0", "text": "Multiplying matrices", "size": 34, "color": "blue" },
+        { "op": "math", "id": "x1", "tex": "(m \\times \\underline{n})\\,(\\underline{n} \\times p) \\;\\rightarrow\\; m \\times p", "size": 38, "color": "purple" },
+        { "op": "highlight", "target": "x1" }
+      ]
+    },
+    {
+      "say": "Each entry of the product is a row times a column. Take row i of A and column j of B, multiply matching entries, and add. Row one, one two, times column one, five seven, gives five plus fourteen, nineteen.",
+      "ops": [
+        { "op": "math", "id": "x2", "tex": "\\begin{bmatrix}1&2\\\\3&4\\end{bmatrix}\\begin{bmatrix}5&6\\\\7&8\\end{bmatrix} = \\begin{bmatrix}1\\cdot5+2\\cdot7 & 1\\cdot6+2\\cdot8\\\\ 3\\cdot5+4\\cdot7 & 3\\cdot6+4\\cdot8\\end{bmatrix} = \\begin{bmatrix}19&22\\\\43&50\\end{bmatrix}", "size": 26 },
+        { "op": "underline", "target": "x2", "color": "orange" }
+      ]
+    },
+    {
+      "say": "Here is the big surprise. In general, A B is not equal to B A. Order matters. Also, a product can be the zero matrix even when neither matrix is zero. But multiplication is still associative, and it distributes over addition.",
+      "ops": [
+        { "op": "math", "id": "x3", "tex": "AB \\ne BA \\ \\text{(in general)}", "size": 36, "color": "red" },
+        { "op": "math", "id": "x4", "tex": "A(BC) = (AB)C \\qquad A(B+C) = AB + AC", "color": "green" },
+        { "op": "highlight", "target": "x3", "color": "red" }
+      ]
+    },
+    {
+      "mark": "Transpose and symmetry",
+      "say": "The transpose of A, written A prime or A T, swaps rows and columns. The first row becomes the first column. A useful rule: the transpose of a product reverses the order, A B transpose equals B transpose A transpose.",
+      "ops": [
+        { "op": "page" },
+        { "op": "text", "id": "p0", "text": "Transpose", "size": 34, "color": "blue" },
+        { "op": "math", "id": "p1", "tex": "A = \\begin{bmatrix}1&2&3\\\\4&5&6\\end{bmatrix} \\Rightarrow A' = \\begin{bmatrix}1&4\\\\2&5\\\\3&6\\end{bmatrix}" },
+        { "op": "math", "id": "p2", "tex": "(AB)' = B'A'", "size": 38, "color": "purple" },
+        { "op": "highlight", "target": "p2" }
+      ]
+    },
+    {
+      "say": "A square matrix is symmetric if it equals its transpose, and skew symmetric if its transpose is its negative. In a skew symmetric matrix the diagonal must be all zeros. And every square matrix can be written as a symmetric part plus a skew symmetric part.",
+      "ops": [
+        { "op": "math", "id": "p3", "tex": "A' = A \\ (\\text{symmetric}) \\qquad A' = -A \\ (\\text{skew-symmetric})", "color": "green" },
+        { "op": "math", "id": "p4", "tex": "A = \\tfrac12(A + A') + \\tfrac12(A - A')", "color": "purple" },
+        { "op": "underline", "target": "p4", "color": "orange" }
+      ]
+    },
+    {
+      "mark": "Invertible matrices",
+      "say": "Finally, a square matrix A is invertible if there is a matrix B with A B equals B A equals I. Then B is the inverse, A inverse. If an inverse exists it is unique, and the inverse of a product again reverses the order.",
+      "ops": [
+        { "op": "page" },
+        { "op": "text", "id": "v0", "text": "Inverse of a matrix", "size": 34, "color": "blue" },
+        { "op": "math", "id": "v1", "tex": "AA^{-1} = A^{-1}A = I", "size": 40 },
+        { "op": "math", "id": "v2", "tex": "(AB)^{-1} = B^{-1}A^{-1}", "color": "purple" }
+      ]
+    },
+    {
+      "say": "For a two by two matrix there is a quick formula. Swap the diagonal entries, change the signs of the other two, and divide by a d minus b c. If a d minus b c is zero, there is no inverse. You will learn why in the next chapter, Determinants.",
+      "ops": [
+        { "op": "math", "id": "v3", "tex": "\\begin{bmatrix}a&b\\\\c&d\\end{bmatrix}^{-1} = \\frac{1}{ad - bc}\\begin{bmatrix}d&-b\\\\-c&a\\end{bmatrix}", "size": 34, "color": "green" },
+        { "op": "highlight", "target": "v3" },
+        { "op": "text", "id": "v4", "text": "ad − bc = 0  →  no inverse", "color": "red" }
+      ]
+    },
+    {
+      "mark": "Summary",
+      "say": "Let's recap. A matrix has an order, rows by columns. Add matrices of the same order entry by entry. Multiply only when the inner orders match, row times column, and remember A B is usually not B A. The transpose swaps rows and columns and reverses products. And an invertible matrix has a unique inverse. Practise a few products now; speed with row times column wins marks in boards and JEE.",
+      "ops": [
+        { "op": "page" },
+        { "op": "text", "id": "r0", "text": "Recap", "size": 36, "color": "blue" },
+        { "op": "text", "id": "r1", "text": "1. Order m × n; element aᵢⱼ" },
+        { "op": "text", "id": "r2", "text": "2. Add same orders entry-wise; kA scales every entry" },
+        { "op": "text", "id": "r3", "text": "3. (m×n)(n×p) = m×p; AB ≠ BA" },
+        { "op": "text", "id": "r4", "text": "4. (AB)′ = B′A′; symmetric A′ = A, skew A′ = −A" },
+        { "op": "text", "id": "r5", "text": "5. AA⁻¹ = I; (AB)⁻¹ = B⁻¹A⁻¹", "color": "purple" }
+      ]
+    }
+  ]
+}

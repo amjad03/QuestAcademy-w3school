@@ -1,0 +1,171 @@
+{
+  "v": 1,
+  "id": "11-physics-units-and-measurements",
+  "title": "Units and Measurements",
+  "subject": "physics",
+  "grade": "11",
+  "chapter": "Units and Measurements",
+  "lang": "en",
+  "steps": [
+    {
+      "mark": "Why we measure",
+      "say": "Welcome to Units and Measurements, the very first chapter of Class 11 Physics. Every law you will meet this year, from Newton's laws to Ohm's law, is a statement about measured numbers. So before we do any physics, we need to agree on how to measure.",
+      "ops": [
+        { "op": "text", "id": "t1", "text": "Units and Measurements", "size": 40, "color": "blue" },
+        { "op": "text", "id": "t2", "text": "Physics = laws about measured quantities", "color": "ink" }
+      ]
+    },
+    {
+      "say": "A measurement always has two parts: a number and a unit. If I say the length of this table is two, you learn nothing. Two metres? Two feet? The unit is the standard we compare against, and the number says how many of that standard fit.",
+      "ops": [
+        { "op": "math", "id": "m1", "tex": "\\text{Quantity} = n \\times u", "size": 36 },
+        { "op": "text", "id": "t3", "text": "n = numerical value,   u = unit", "color": "green" },
+        { "op": "math", "id": "m2", "tex": "L = 2\\,\\text{m} = 200\\,\\text{cm}", "color": "purple" },
+        { "op": "underline", "target": "m2", "color": "orange" }
+      ]
+    },
+    {
+      "say": "Notice something neat. When the unit gets smaller, the number gets bigger. Two metres equals two hundred centimetres. The product of number and unit stays the same, because the length itself has not changed.",
+      "ops": [
+        { "op": "text", "id": "t4", "text": "smaller unit  →  bigger number", "color": "red" },
+        { "op": "math", "id": "m3", "tex": "n_1 u_1 = n_2 u_2" },
+        { "op": "highlight", "target": "m3" }
+      ]
+    },
+    {
+      "mark": "SI base units",
+      "say": "Scientists worldwide use the International System of Units, called S I. It has seven base units. Length in metres, mass in kilograms, time in seconds, electric current in amperes, temperature in kelvin, amount of substance in moles, and luminous intensity in candela.",
+      "ops": [
+        { "op": "page" },
+        { "op": "text", "id": "s1", "text": "The 7 SI base units", "size": 34, "color": "blue" },
+        { "op": "rect", "id": "box", "x": 40, "y": 90, "w": 920, "h": 300, "color": "blue" },
+        { "op": "text", "id": "s2", "text": "length — metre (m)        mass — kilogram (kg)", "x": 70, "y": 110 },
+        { "op": "text", "id": "s3", "text": "time — second (s)          current — ampere (A)", "x": 70, "y": 170 },
+        { "op": "text", "id": "s4", "text": "temperature — kelvin (K)   amount — mole (mol)", "x": 70, "y": 230 },
+        { "op": "text", "id": "s5", "text": "luminous intensity — candela (cd)", "x": 70, "y": 290 }
+      ]
+    },
+    {
+      "say": "A handy way to remember them is the phrase: My King Sees All Kingdoms Mostly Calm. Metre, kilogram, second, ampere, kelvin, mole, candela. Every other unit, like the newton or the joule, is built out of these seven.",
+      "ops": [
+        { "op": "text", "id": "s6", "text": "M K S A K M C — \"My King Sees All Kingdoms Mostly Calm\"", "x": 40, "y": 420, "color": "purple", "size": 24 },
+        { "op": "laser", "target": "s2" }
+      ]
+    },
+    {
+      "mark": "Derived units and dimensions",
+      "say": "Units made by combining base units are called derived units. Take force. Newton's second law says force equals mass times acceleration. Acceleration is metres per second squared, so a newton is a kilogram metre per second squared.",
+      "ops": [
+        { "op": "page" },
+        { "op": "text", "id": "d1", "text": "Derived units", "size": 34, "color": "blue" },
+        { "op": "math", "id": "d2", "tex": "F = ma" },
+        { "op": "math", "id": "d3", "tex": "1\\,\\text{N} = 1\\,\\text{kg}\\,\\text{m}\\,\\text{s}^{-2}", "color": "green" }
+      ]
+    },
+    {
+      "say": "Physicists write this in a cleaner, unit free way using dimensions. We use capital M for mass, capital L for length and capital T for time. Force then has the dimensional formula M L T to the minus two. Square brackets mean, the dimensions of.",
+      "ops": [
+        { "op": "math", "id": "d4", "tex": "[F] = [M^1 L^1 T^{-2}]", "size": 38, "color": "purple" },
+        { "op": "highlight", "target": "d4" },
+        { "op": "text", "id": "d5", "text": "[M] mass   [L] length   [T] time", "color": "ink" }
+      ]
+    },
+    {
+      "say": "Let's build two more. Work is force times distance, so its dimensions are M L squared T to the minus two. Pressure is force per area, so divide by L squared, and you get M L to the minus one T to the minus two.",
+      "ops": [
+        { "op": "math", "id": "d6", "tex": "[W] = [F][L] = [ML^2T^{-2}]" },
+        { "op": "math", "id": "d7", "tex": "[P] = \\frac{[F]}{[L^2]} = [ML^{-1}T^{-2}]" },
+        { "op": "underline", "target": "d7", "color": "orange" }
+      ]
+    },
+    {
+      "mark": "Dimensional analysis",
+      "say": "Dimensions give us a powerful checking tool, called the principle of homogeneity. You can only add or equate quantities with the same dimensions. You can't add a length to a time, just like you can't add apples to minutes.",
+      "ops": [
+        { "op": "page" },
+        { "op": "text", "id": "h1", "text": "Principle of homogeneity", "size": 34, "color": "blue" },
+        { "op": "text", "id": "h2", "text": "Every term in a correct equation has the same dimensions.", "color": "ink" }
+      ]
+    },
+    {
+      "say": "Check the equation s equals u t plus half a t squared. The left side is a length. u t is metres per second times seconds, which is a length. a t squared is metres per second squared times seconds squared, again a length. Every term matches, so the equation is dimensionally correct.",
+      "ops": [
+        { "op": "math", "id": "h3", "tex": "s = ut + \\tfrac{1}{2}at^2", "size": 36 },
+        { "op": "math", "id": "h4", "tex": "[L] \\;=\\; [LT^{-1}][T] + [LT^{-2}][T^2] = [L]", "color": "green" },
+        { "op": "highlight", "target": "h4", "color": "green" }
+      ]
+    },
+    {
+      "say": "But be careful. A dimensionally correct equation can still be wrong, because dimensions cannot see pure numbers like the one half. Dimensional analysis can catch a wrong equation, but it can never prove a right one.",
+      "ops": [
+        { "op": "text", "id": "h5", "text": "✓ can catch mistakes     ✗ cannot find number constants like ½", "color": "red" }
+      ]
+    },
+    {
+      "say": "We can even derive formulas. Suppose the period of a pendulum depends on its length l and on g. Write T as l to the a times g to the b. Matching powers of L and T gives a equals one half and b equals minus one half. So T is proportional to the square root of l over g, which is exactly right, apart from the two pi.",
+      "ops": [
+        { "op": "page" },
+        { "op": "text", "id": "p1", "text": "Deriving a formula: pendulum", "size": 32, "color": "blue" },
+        { "op": "math", "id": "p2", "tex": "T \\propto l^a g^b \\;\\Rightarrow\\; [T] = [L]^a[LT^{-2}]^b" },
+        { "op": "math", "id": "p3", "tex": "L:\\; a + b = 0 \\qquad T:\\; -2b = 1" },
+        { "op": "math", "id": "p4", "tex": "T = k\\sqrt{\\frac{l}{g}} \\quad (k = 2\\pi)", "size": 36, "color": "purple" },
+        { "op": "highlight", "target": "p4" }
+      ]
+    },
+    {
+      "mark": "Significant figures",
+      "say": "Now, no measurement is perfectly exact. The digits we report honestly, all the certain ones plus the first uncertain one, are called significant figures. A ruler with millimetre marks might read 12.3 centimetres, which has three significant figures.",
+      "ops": [
+        { "op": "page" },
+        { "op": "text", "id": "g1", "text": "Significant figures", "size": 34, "color": "blue" },
+        { "op": "line", "id": "ruler", "from": [80, 140], "to": [880, 140], "color": "ink" },
+        { "op": "line", "id": "tick1", "from": [80, 120], "to": [80, 160] },
+        { "op": "line", "id": "tick2", "from": [480, 120], "to": [480, 160] },
+        { "op": "line", "id": "tick3", "from": [880, 120], "to": [880, 160] },
+        { "op": "arrow", "id": "read", "from": [560, 220], "to": [560, 150], "color": "red", "label": "12.3 cm" }
+      ]
+    },
+    {
+      "say": "The rules are simple. All non zero digits count. Zeros between digits count. Leading zeros never count, so 0.0045 has just two. Trailing zeros after a decimal point do count, so 2.50 has three. And in multiplying or dividing, keep as many significant figures as the least precise number.",
+      "ops": [
+        { "op": "text", "id": "g2", "text": "• 1205 → 4 s.f.   (zeros between digits count)", "x": 40, "y": 270 },
+        { "op": "text", "id": "g3", "text": "• 0.0045 → 2 s.f.  (leading zeros don't)", "x": 40, "y": 320 },
+        { "op": "text", "id": "g4", "text": "• 2.50 → 3 s.f.  (trailing zeros after the point do)", "x": 40, "y": 370 },
+        { "op": "text", "id": "g5", "text": "× or ÷ : answer keeps the fewest s.f.", "x": 40, "y": 440, "color": "purple" },
+        { "op": "highlight", "target": "g5" }
+      ]
+    },
+    {
+      "mark": "Errors",
+      "say": "The gap between a measured value and the true value is the error. If we take several readings, the mean is our best estimate. The absolute error of each reading is how far it is from the mean, and dividing the mean absolute error by the mean gives the relative error. Multiply by a hundred for the percentage error.",
+      "ops": [
+        { "op": "page" },
+        { "op": "text", "id": "e1", "text": "Errors in measurement", "size": 34, "color": "blue" },
+        { "op": "math", "id": "e2", "tex": "\\Delta a_i = |a_i - \\bar a| \\qquad \\overline{\\Delta a} = \\frac{1}{n}\\sum |\\Delta a_i|" },
+        { "op": "math", "id": "e3", "tex": "\\text{relative error} = \\frac{\\overline{\\Delta a}}{\\bar a} \\qquad \\% = \\frac{\\overline{\\Delta a}}{\\bar a}\\times 100", "color": "green" }
+      ]
+    },
+    {
+      "say": "Errors combine in a predictable way. In a sum or a difference, absolute errors add. In a product or a quotient, relative errors add. And for a power, the relative error gets multiplied by the power. That is why, in a formula like Z equals A squared B cubed, the B measurement matters most.",
+      "ops": [
+        { "op": "math", "id": "e4", "tex": "Z = A \\pm B:\\quad \\Delta Z = \\Delta A + \\Delta B" },
+        { "op": "math", "id": "e5", "tex": "Z = AB \\text{ or } \\tfrac{A}{B}:\\quad \\frac{\\Delta Z}{Z} = \\frac{\\Delta A}{A} + \\frac{\\Delta B}{B}" },
+        { "op": "math", "id": "e6", "tex": "Z = A^2B^3:\\quad \\frac{\\Delta Z}{Z} = 2\\frac{\\Delta A}{A} + 3\\frac{\\Delta B}{B}", "color": "purple" },
+        { "op": "highlight", "target": "e6" }
+      ]
+    },
+    {
+      "mark": "Summary",
+      "say": "Let's recap. Every measurement is a number times a unit. S I has seven base units, and everything else is derived. Dimensions let us check equations and even derive them, up to a constant. Significant figures tell us how precise a number is, and errors add up in predictable ways. Try the practice questions next, and ask me about any step you want to see again.",
+      "ops": [
+        { "op": "page" },
+        { "op": "text", "id": "r0", "text": "Recap", "size": 36, "color": "blue" },
+        { "op": "text", "id": "r1", "text": "1. Quantity = number × unit" },
+        { "op": "text", "id": "r2", "text": "2. 7 SI base units; the rest are derived" },
+        { "op": "text", "id": "r3", "text": "3. Dimensions: check equations, derive formulas (not constants)" },
+        { "op": "text", "id": "r4", "text": "4. Significant figures show precision" },
+        { "op": "text", "id": "r5", "text": "5. ± → absolute errors add;  × ÷ → relative errors add", "color": "purple" }
+      ]
+    }
+  ]
+}

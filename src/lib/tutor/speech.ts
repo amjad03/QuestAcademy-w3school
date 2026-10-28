@@ -152,6 +152,8 @@ class Speaker {
   speaking = false;
   /** While true, the tutor waits for the model before it starts a lesson (set by the full-screen loader). */
   hold = false;
+  /** Device-voice speaking rate multiplier (board lesson speed control); Kokoro always speaks at its natural pace. */
+  rate = 1;
   private worker: Worker | null = null;
   private seq = 0;
   private gen = 1;
@@ -480,7 +482,7 @@ class Speaker {
       const synth = window.speechSynthesis;
       const u = new SpeechSynthesisUtterance(text);
       u.lang = lang;
-      u.rate = lang.startsWith("en") ? 1 : 0.95;
+      u.rate = (lang.startsWith("en") ? 1 : 0.95) * this.rate;
       u.voice = pickVoice(synth.getVoices(), lang);
       this.deviceOn = true;
       this.speaking = true;
@@ -495,7 +497,7 @@ class Speaker {
         }
         resolve();
       };
-      const timer = setTimeout(end, Math.max(2500, text.split(/\s+/).length * 520 + 2500));
+      const timer = setTimeout(end, Math.max(2500, (text.split(/\s+/).length * 520) / this.rate + 2500));
       u.onend = end;
       u.onerror = end;
       try {

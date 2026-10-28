@@ -1,0 +1,143 @@
+{
+  "v": 1,
+  "id": "11-biology-the-living-world",
+  "title": "The Living World",
+  "subject": "biology",
+  "grade": "11",
+  "chapter": "The Living World",
+  "lang": "en",
+  "steps": [
+    {
+      "mark": "What is living?",
+      "say": "Welcome to The Living World, the first chapter of Class 11 Biology. It asks a deceptively simple question: what does it mean to be alive? And then: with millions of living things on Earth, how do we name and organise them all?",
+      "ops": [
+        { "op": "text", "id": "t1", "text": "The Living World", "size": 42, "color": "green" },
+        { "op": "text", "id": "t2", "text": "1. What is \"living\"?    2. How do we name and classify life?" }
+      ]
+    },
+    {
+      "say": "Growth, reproduction, metabolism and response to stimuli are the features we usually list. But look closely. A crystal grows too, by adding material on its surface, while living things grow from inside. And mules, worker bees, and infertile couples do not reproduce, yet they are clearly alive. So growth and reproduction are not defining properties.",
+      "ops": [
+        { "op": "text", "id": "f1", "text": "Growth — but crystals and mountains 'grow' too (from outside)", "color": "ink" },
+        { "op": "text", "id": "f2", "text": "Reproduction — but mules and worker bees don't reproduce", "color": "ink" },
+        { "op": "text", "id": "f3", "text": "→ not defining features", "color": "red" },
+        { "op": "underline", "target": "f3", "color": "red" }
+      ]
+    },
+    {
+      "say": "The defining features are metabolism, the sum of all chemical reactions in the body, which no non living thing shows, and consciousness, the ability to sense and respond to the environment. Even a plant responds to light, and a bacterium to chemicals. Above all, life is cellular organisation that shows these properties.",
+      "ops": [
+        { "op": "text", "id": "f4", "text": "Defining features:", "color": "green", "size": 30 },
+        { "op": "text", "id": "f5", "text": "✓ Metabolism (all chemical reactions)   ✓ Consciousness / response", "color": "green" },
+        { "op": "text", "id": "f6", "text": "✓ Cellular organisation", "color": "green" },
+        { "op": "highlight", "target": "f5" }
+      ]
+    },
+    {
+      "mark": "Biodiversity and naming",
+      "say": "The variety of living organisms is called biodiversity. About one point seven to one point eight million species are already described, and many more are waiting to be found. Local names differ from place to place. The same plant may have five different names in five states. Science needs one name that everyone understands.",
+      "ops": [
+        { "op": "page" },
+        { "op": "text", "id": "b1", "text": "Biodiversity", "size": 34, "color": "green" },
+        { "op": "text", "id": "b2", "text": "~1.7–1.8 million species described" },
+        { "op": "text", "id": "b3", "text": "Local names vary → we need ONE scientific name", "color": "purple" }
+      ]
+    },
+    {
+      "say": "That system is binomial nomenclature, given by Carolus Linnaeus. Each organism gets two names in Latin form. The first is the genus, the second is the specific epithet. Mango is Mangifera indica. Humans are Homo sapiens.",
+      "ops": [
+        { "op": "text", "id": "b4", "text": "Binomial nomenclature — Carolus Linnaeus", "color": "blue" },
+        { "op": "text", "id": "b5", "text": "Mangifera indica      Homo sapiens", "size": 34, "color": "green" },
+        { "op": "arrow", "id": "ga", "from": [130, 400], "to": [130, 350], "color": "orange", "label": "genus" },
+        { "op": "arrow", "id": "sa", "from": [330, 400], "to": [330, 350], "color": "orange", "label": "species" }
+      ]
+    },
+    {
+      "say": "The rules matter in exams. Names are in Latin or Latinised. The genus starts with a capital letter, the species with a small letter. When printed, the name is in italics. When handwritten, each word is underlined separately. And the author's name may follow, abbreviated, like Mangifera indica Linn.",
+      "ops": [
+        { "op": "text", "id": "b6", "text": "Rules:", "x": 520, "y": 330, "color": "red" },
+        { "op": "text", "id": "b7", "text": "• Latin; Genus capital, species small", "x": 520, "y": 370, "size": 22 },
+        { "op": "text", "id": "b8", "text": "• italics in print; underline each word by hand", "x": 520, "y": 410, "size": 22 },
+        { "op": "text", "id": "b9", "text": "• author abbreviated: Mangifera indica Linn.", "x": 520, "y": 450, "size": 22 },
+        { "op": "underline", "target": "b5", "color": "blue" }
+      ]
+    },
+    {
+      "mark": "Taxonomy",
+      "say": "Classification is grouping organisms into convenient categories based on easily observable characters. Taxonomy is the whole process: characterisation, identification, nomenclature and classification. Systematics goes further and includes evolutionary relationships between organisms.",
+      "ops": [
+        { "op": "page" },
+        { "op": "text", "id": "x1", "text": "Taxonomy", "size": 34, "color": "green" },
+        { "op": "text", "id": "x2", "text": "characterisation → identification → nomenclature → classification" },
+        { "op": "text", "id": "x3", "text": "Systematics = taxonomy + evolutionary relationships", "color": "purple" }
+      ]
+    },
+    {
+      "mark": "Taxonomic hierarchy",
+      "say": "Each level of classification is a taxonomic category, or rank, and together they form the taxonomic hierarchy. From the top: kingdom, phylum or division, class, order, family, genus, species. A good way to remember is: King Philip Came Over For Good Soup.",
+      "ops": [
+        { "op": "page" },
+        { "op": "text", "id": "h0", "text": "Taxonomic hierarchy", "size": 34, "color": "green" },
+        { "op": "rect", "id": "k", "x": 100, "y": 90, "w": 420, "h": 46, "color": "blue", "label": "Kingdom" },
+        { "op": "rect", "id": "p", "x": 130, "y": 146, "w": 360, "h": 46, "color": "blue", "label": "Phylum / Division" },
+        { "op": "rect", "id": "c", "x": 160, "y": 202, "w": 300, "h": 46, "color": "blue", "label": "Class" },
+        { "op": "rect", "id": "o", "x": 190, "y": 258, "w": 240, "h": 46, "color": "blue", "label": "Order" },
+        { "op": "rect", "id": "f", "x": 220, "y": 314, "w": 180, "h": 46, "color": "blue", "label": "Family" },
+        { "op": "rect", "id": "g", "x": 245, "y": 370, "w": 130, "h": 46, "color": "blue", "label": "Genus" },
+        { "op": "rect", "id": "s", "x": 265, "y": 426, "w": 90, "h": 46, "color": "red", "label": "Species" },
+        { "op": "text", "id": "h1", "text": "King Philip Came Over For Good Soup", "x": 560, "y": 120, "size": 22, "color": "purple" }
+      ]
+    },
+    {
+      "say": "As you go down, the number of common characters increases and the number of organisms decreases. A kingdom contains a huge variety. A species is a group of individuals so similar that they can interbreed. Phylum is used for animals, and division for plants. And the higher the category, the harder it becomes to work out its relationships with other groups at the same level.",
+      "ops": [
+        { "op": "arrow", "id": "h2", "from": [600, 200], "to": [600, 450], "color": "green", "label": "more shared characters" },
+        { "op": "arrow", "id": "h3", "from": [820, 450], "to": [820, 200], "color": "orange", "label": "more organisms" },
+        { "op": "laser", "target": "s" }
+      ]
+    },
+    {
+      "say": "Here is a worked example for humans. Kingdom Animalia, phylum Chordata, class Mammalia, order Primata, family Hominidae, genus Homo, species sapiens. And for mango: kingdom Plantae, division Angiospermae, class Dicotyledonae, order Sapindales, family Anacardiaceae, genus Mangifera, species indica.",
+      "ops": [
+        { "op": "page" },
+        { "op": "text", "id": "e0", "text": "Classifying two organisms", "size": 32, "color": "green" },
+        { "op": "text", "id": "e1", "text": "Human: Animalia · Chordata · Mammalia · Primata · Hominidae · Homo · sapiens", "size": 22 },
+        { "op": "text", "id": "e2", "text": "Mango: Plantae · Angiospermae · Dicotyledonae · Sapindales · Anacardiaceae · Mangifera · indica", "size": 22 },
+        { "op": "highlight", "target": "e1" }
+      ]
+    },
+    {
+      "mark": "Taxonomic aids",
+      "say": "To study and identify organisms, taxonomists use taxonomic aids. Herbaria store pressed, dried plant specimens on sheets. Botanical gardens grow living plants, like the one at Kew in England or the Indian Botanical Garden in Howrah. Museums preserve specimens in jars, or as stuffed animals and skeletons.",
+      "ops": [
+        { "op": "page" },
+        { "op": "text", "id": "a0", "text": "Taxonomic aids", "size": 34, "color": "green" },
+        { "op": "text", "id": "a1", "text": "• Herbarium — pressed, dried plants on sheets" },
+        { "op": "text", "id": "a2", "text": "• Botanical garden — living plants (Kew, Howrah)" },
+        { "op": "text", "id": "a3", "text": "• Museum — preserved specimens, skeletons" }
+      ]
+    },
+    {
+      "say": "Zoological parks keep wild animals in protected, near natural surroundings. And keys help identify an organism using pairs of contrasting characters, called couplets. Each choice leads you down one branch, until only one name is left. Flora, manuals, monographs and catalogues are written aids.",
+      "ops": [
+        { "op": "text", "id": "a4", "text": "• Zoological park — live animals, near-natural habitat" },
+        { "op": "text", "id": "a5", "text": "• Key — couplets of contrasting characters (lead)", "color": "purple" },
+        { "op": "text", "id": "a6", "text": "• Flora, manuals, monographs, catalogues" },
+        { "op": "highlight", "target": "a5" }
+      ]
+    },
+    {
+      "mark": "Summary",
+      "say": "Let's recap. Metabolism, consciousness and cellular organisation define life. Binomial names have a genus and a species, follow strict rules, and come from Linnaeus. The hierarchy runs from kingdom down to species, with more shared features at each step down. And herbaria, gardens, museums, zoos and keys help us identify organisms. Try the practice questions now; NEET loves the naming rules.",
+      "ops": [
+        { "op": "page" },
+        { "op": "text", "id": "r0", "text": "Recap", "size": 36, "color": "green" },
+        { "op": "text", "id": "r1", "text": "1. Defining: metabolism, consciousness, cellular organisation" },
+        { "op": "text", "id": "r2", "text": "2. Binomial: Genus species (italics / underline separately)" },
+        { "op": "text", "id": "r3", "text": "3. K → P → C → O → F → G → S" },
+        { "op": "text", "id": "r4", "text": "4. Lower rank = more common characters, fewer organisms" },
+        { "op": "text", "id": "r5", "text": "5. Aids: herbarium, garden, museum, zoo, key", "color": "purple" }
+      ]
+    }
+  ]
+}

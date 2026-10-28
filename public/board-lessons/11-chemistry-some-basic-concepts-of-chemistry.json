@@ -1,0 +1,153 @@
+{
+  "v": 1,
+  "id": "11-chemistry-some-basic-concepts-of-chemistry",
+  "title": "Some Basic Concepts of Chemistry",
+  "subject": "chemistry",
+  "grade": "11",
+  "chapter": "Some Basic Concepts of Chemistry",
+  "lang": "en",
+  "steps": [
+    {
+      "mark": "Matter",
+      "say": "Welcome to Some Basic Concepts of Chemistry. This chapter gives you the counting tools that every later chapter uses: the mole, molar mass, and stoichiometry. Let's start with what chemistry studies, which is matter, anything that has mass and occupies space.",
+      "ops": [
+        { "op": "text", "id": "t1", "text": "Some Basic Concepts of Chemistry", "size": 38, "color": "blue" },
+        { "op": "text", "id": "t2", "text": "Matter: has mass, occupies space" }
+      ]
+    },
+    {
+      "say": "Matter can be a pure substance or a mixture. Pure substances are either elements, made of one kind of atom, like copper, or compounds, where elements are combined in a fixed ratio, like water. Mixtures can be homogeneous, like salt solution, or heterogeneous, like sand in water.",
+      "ops": [
+        { "op": "rect", "id": "matter", "x": 420, "y": 130, "w": 160, "h": 50, "color": "blue", "label": "Matter" },
+        { "op": "arrow", "id": "a1", "from": [460, 180], "to": [250, 250] },
+        { "op": "arrow", "id": "a2", "from": [540, 180], "to": [750, 250] },
+        { "op": "rect", "id": "pure", "x": 140, "y": 250, "w": 220, "h": 50, "color": "green", "label": "Pure substance" },
+        { "op": "rect", "id": "mix", "x": 650, "y": 250, "w": 200, "h": 50, "color": "orange", "label": "Mixture" },
+        { "op": "text", "id": "pd", "text": "element (Cu) · compound (H₂O)", "x": 90, "y": 330, "size": 22, "color": "green" },
+        { "op": "text", "id": "md", "text": "homogeneous · heterogeneous", "x": 610, "y": 330, "size": 22, "color": "orange" }
+      ]
+    },
+    {
+      "mark": "Laws of combination",
+      "say": "Early chemists discovered that elements combine by simple rules. The law of conservation of mass says mass is neither created nor destroyed in a reaction. The law of definite proportions says a compound always has the same elements in the same ratio by mass. Water is always one part hydrogen to eight parts oxygen.",
+      "ops": [
+        { "op": "page" },
+        { "op": "text", "id": "l1", "text": "Laws of chemical combination", "size": 34, "color": "blue" },
+        { "op": "text", "id": "l2", "text": "1. Conservation of mass: mass(reactants) = mass(products)" },
+        { "op": "text", "id": "l3", "text": "2. Definite proportions: H : O in water = 1 : 8 by mass" }
+      ]
+    },
+    {
+      "say": "The law of multiple proportions says that when two elements form more than one compound, the masses of one that combine with a fixed mass of the other are in a small whole number ratio. In water and hydrogen peroxide, the oxygen per two grams of hydrogen is sixteen and thirty two grams, a ratio of one to two. Gay Lussac found the same simple ratios for gas volumes, and Avogadro explained them: equal volumes of gases, at the same temperature and pressure, contain equal numbers of molecules.",
+      "ops": [
+        { "op": "text", "id": "l4", "text": "3. Multiple proportions: H₂O vs H₂O₂ → O = 16 g : 32 g = 1 : 2" },
+        { "op": "text", "id": "l5", "text": "4. Gay-Lussac: gas volumes in simple ratios" },
+        { "op": "text", "id": "l6", "text": "5. Avogadro: equal volumes (same T, P) → equal number of molecules", "color": "purple" },
+        { "op": "highlight", "target": "l6" }
+      ]
+    },
+    {
+      "mark": "Atomic and molar mass",
+      "say": "Atoms are far too light to weigh in grams, so we use the atomic mass unit, defined as one twelfth of the mass of a carbon twelve atom. On this scale hydrogen is about one, carbon twelve, and oxygen sixteen. The molecular mass is just the sum of the atomic masses. Water is two plus sixteen, eighteen u.",
+      "ops": [
+        { "op": "page" },
+        { "op": "text", "id": "u1", "text": "Atomic mass unit", "size": 34, "color": "blue" },
+        { "op": "math", "id": "u2", "tex": "1\\,\\text{u} = \\tfrac{1}{12}\\, m(^{12}\\text{C}) = 1.66\\times10^{-24}\\,\\text{g}" },
+        { "op": "math", "id": "u3", "tex": "M(\\text{H}_2\\text{O}) = 2(1) + 16 = 18\\,\\text{u}", "color": "green" }
+      ]
+    },
+    {
+      "say": "Most elements exist as a mix of isotopes, so the atomic mass in your periodic table is an average weighted by natural abundance. Chlorine is about seventy five percent chlorine thirty five and twenty five percent chlorine thirty seven, which is why its atomic mass is about thirty five point five.",
+      "ops": [
+        { "op": "math", "id": "u4", "tex": "\\bar A(\\text{Cl}) = 0.75(35) + 0.25(37) = 35.5\\,\\text{u}", "color": "purple" },
+        { "op": "underline", "target": "u4", "color": "orange" }
+      ]
+    },
+    {
+      "mark": "The mole",
+      "say": "Now the big idea of this chapter: the mole. A mole is simply a count, like a dozen, but enormous. One mole contains six point zero two two times ten to the twenty three particles. This is Avogadro's number.",
+      "ops": [
+        { "op": "page" },
+        { "op": "text", "id": "n1", "text": "The mole: a chemist's dozen", "size": 34, "color": "blue" },
+        { "op": "math", "id": "n2", "tex": "N_A = 6.022 \\times 10^{23}\\ \\text{mol}^{-1}", "size": 40, "color": "purple" },
+        { "op": "highlight", "target": "n2" }
+      ]
+    },
+    {
+      "say": "The beauty of the mole is that one mole of any substance has a mass in grams equal to its formula mass in u. So eighteen grams of water is one mole of water, and contains Avogadro's number of molecules. This gives three conversions you will use constantly.",
+      "ops": [
+        { "op": "math", "id": "n3", "tex": "n = \\frac{m}{M} = \\frac{N}{N_A} = \\frac{V_{\\text{gas}}}{22.7\\,\\text{L}}\\ (\\text{STP})", "size": 34 },
+        { "op": "text", "id": "n4", "text": "mass ⇄ moles ⇄ particles ⇄ gas volume", "color": "green" }
+      ]
+    },
+    {
+      "say": "Quick example. How many molecules are in nine grams of water? Moles equal nine divided by eighteen, which is one half. Multiply by Avogadro's number, and you get three point zero one times ten to the twenty three molecules.",
+      "ops": [
+        { "op": "math", "id": "n5", "tex": "n = \\frac{9}{18} = 0.5\\,\\text{mol}", "color": "orange" },
+        { "op": "math", "id": "n6", "tex": "N = 0.5 \\times 6.022\\times10^{23} = 3.01\\times10^{23}", "color": "orange" },
+        { "op": "underline", "target": "n6", "color": "red" }
+      ]
+    },
+    {
+      "mark": "Formulas from composition",
+      "say": "Chemists often know only the percentage composition of a compound. To find its empirical formula, the simplest whole number ratio of atoms, assume a hundred grams, convert each mass to moles, and divide by the smallest. For example, forty percent carbon, six point seven percent hydrogen, and fifty three point three percent oxygen gives moles of about three point three, six point seven and three point three. That's a one to two to one ratio, so the empirical formula is C H two O.",
+      "ops": [
+        { "op": "page" },
+        { "op": "text", "id": "f1", "text": "Empirical formula from % composition", "size": 32, "color": "blue" },
+        { "op": "text", "id": "f2", "text": "C 40%   H 6.7%   O 53.3%   (take 100 g)" },
+        { "op": "math", "id": "f3", "tex": "\\frac{40}{12} : \\frac{6.7}{1} : \\frac{53.3}{16} = 3.33 : 6.7 : 3.33 = 1:2:1" },
+        { "op": "math", "id": "f4", "tex": "\\text{Empirical formula} = \\text{CH}_2\\text{O}", "color": "green" }
+      ]
+    },
+    {
+      "say": "The molecular formula is a whole number multiple of the empirical one. If the molar mass is one hundred and eighty, divide by thirty, the empirical formula mass, and you get six. So the compound is C six H twelve O six, which is glucose.",
+      "ops": [
+        { "op": "math", "id": "f5", "tex": "n = \\frac{180}{30} = 6 \\;\\Rightarrow\\; \\text{C}_6\\text{H}_{12}\\text{O}_6", "color": "purple" },
+        { "op": "highlight", "target": "f5" }
+      ]
+    },
+    {
+      "mark": "Stoichiometry",
+      "say": "Stoichiometry is the arithmetic of balanced equations. The coefficients are mole ratios. Methane burns as C H four plus two O two giving C O two plus two H two O. So one mole of methane needs two moles of oxygen.",
+      "ops": [
+        { "op": "page" },
+        { "op": "text", "id": "q1", "text": "Stoichiometry: coefficients = mole ratios", "size": 32, "color": "blue" },
+        { "op": "math", "id": "q2", "tex": "\\text{CH}_4 + 2\\,\\text{O}_2 \\rightarrow \\text{CO}_2 + 2\\,\\text{H}_2\\text{O}", "size": 36 },
+        { "op": "text", "id": "q3", "text": "1 mol      2 mol           1 mol      2 mol", "x": 300, "color": "green" }
+      ]
+    },
+    {
+      "say": "If reactants are not in that exact ratio, one runs out first. That is the limiting reagent, and it decides how much product forms. With sixteen grams of methane, one mole, and only thirty two grams of oxygen, also one mole, oxygen is limiting: it can burn only half a mole of methane, giving half a mole of carbon dioxide, twenty two grams.",
+      "ops": [
+        { "op": "text", "id": "q4", "text": "16 g CH₄ = 1 mol,  32 g O₂ = 1 mol  (needs 2!)" },
+        { "op": "text", "id": "q5", "text": "O₂ is the limiting reagent → 0.5 mol CO₂ = 22 g", "color": "red" },
+        { "op": "highlight", "target": "q5" }
+      ]
+    },
+    {
+      "mark": "Concentration",
+      "say": "Finally, for solutions we describe concentration. Mass percent compares masses. Mole fraction compares moles. Molarity is moles of solute per litre of solution, and it changes with temperature because volume does. Molality is moles per kilogram of solvent, and it does not depend on temperature.",
+      "ops": [
+        { "op": "page" },
+        { "op": "text", "id": "c1", "text": "Concentration of solutions", "size": 34, "color": "blue" },
+        { "op": "math", "id": "c2", "tex": "M = \\frac{n_{\\text{solute}}}{V_{\\text{solution}}\\,(\\text{L})} \\qquad m = \\frac{n_{\\text{solute}}}{\\text{mass}_{\\text{solvent}}\\,(\\text{kg})}" },
+        { "op": "math", "id": "c3", "tex": "x_A = \\frac{n_A}{n_A + n_B}" },
+        { "op": "text", "id": "c4", "text": "Molarity changes with temperature; molality does not.", "color": "purple" },
+        { "op": "highlight", "target": "c4" }
+      ]
+    },
+    {
+      "mark": "Summary",
+      "say": "Let's recap. Matter is pure or mixed. The laws of combination led to atoms and molecules. The mole links grams, particles and gas volumes. Percentage composition gives empirical and molecular formulas. Balanced equations give mole ratios, and the limiting reagent sets the yield. Practice a few mole problems now, they appear in every exam.",
+      "ops": [
+        { "op": "page" },
+        { "op": "text", "id": "r0", "text": "Recap", "size": 36, "color": "blue" },
+        { "op": "text", "id": "r1", "text": "1. Five laws of chemical combination" },
+        { "op": "text", "id": "r2", "text": "2. n = m/M = N/N_A" },
+        { "op": "text", "id": "r3", "text": "3. % composition → empirical → molecular formula" },
+        { "op": "text", "id": "r4", "text": "4. Coefficients are mole ratios; find the limiting reagent" },
+        { "op": "text", "id": "r5", "text": "5. Molarity (per L solution) vs molality (per kg solvent)", "color": "purple" }
+      ]
+    }
+  ]
+}

@@ -19,6 +19,8 @@ import { useMyClass, chapterHref, subjectHref } from "@/lib/useMyClass";
 import { MasteryBar, MasterySquare, useExplainerIndex, useFmt, useMasteryName } from "@/experiences/khan/ui";
 import { isRelevant, useExplainerContext } from "@/explainers/relevance";
 import { chapterSessionHrefs, useChapterTitle, useClassProgress, useLessonOutlines, useSubjectName, type OutlineLesson } from "./data";
+import { BoardLessonCard } from "@/components/board/BoardLessonCard";
+import { boardLessonForChapter } from "@/content/board-lessons";
 
 /* ------------------------------------------------------------------ */
 /* Shared bits                                                          */
@@ -281,6 +283,8 @@ function Chapter({ myClass, subject, chapter, examIndex }: { myClass: MyClass; s
   const doneCount = chapter.lessonIds.filter((id) => lessonsDone[id]).length;
   const firstCards = lessons.find((l) => l.items.some((i) => i.kind === "cards"));
   const examLinks = chapterExamLinks(myClass, subject, chapter, examIndex);
+  const g = myClass.grade;
+  const boardLesson = boardLessonForChapter(chapter.syllabus?.grade ?? (g === "12" || g === "PUC-2" ? "12" : g === "11" || g === "PUC-1" ? "11" : null), subject.id, chapter.title);
   const examCards = (
     <>
       {examLinks.drill && <ActionCard href={examLinks.drill} icon={Crosshair} title={t("class.examQuestions", "Exam questions")} hint={t("class.examQuestionsHint", "{n} JEE · NEET · CET-style questions on this chapter", { n: f.n(examLinks.count) })} />}
@@ -302,6 +306,8 @@ function Chapter({ myClass, subject, chapter, examIndex }: { myClass: MyClass; s
           </Link>
         )}
       </header>
+
+      {boardLesson && <BoardLessonCard meta={boardLesson} className="mt-6" />}
 
       {chapter.lessonIds.length === 0 ? (
         <>

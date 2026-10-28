@@ -1,0 +1,146 @@
+{
+  "v": 1,
+  "id": "11-maths-sets",
+  "title": "Sets",
+  "subject": "maths",
+  "grade": "11",
+  "chapter": "Sets",
+  "lang": "en",
+  "steps": [
+    {
+      "mark": "What is a set?",
+      "say": "Welcome to Sets, the language that the rest of Class 11 maths is written in. Relations, functions, probability, all of them use sets. A set is a well defined collection of distinct objects. Well defined means that for any object, we can say clearly whether it belongs or not.",
+      "ops": [
+        { "op": "text", "id": "t1", "text": "Sets", "size": 44, "color": "blue" },
+        { "op": "text", "id": "t2", "text": "A set = a well-defined collection of distinct objects" },
+        { "op": "text", "id": "t3", "text": "✓ vowels of English     ✗ \"the tall students in class\"", "color": "green" }
+      ]
+    },
+    {
+      "say": "The vowels of English form a set, because everyone agrees on the members. The tall students in your class do not, because tall is a matter of opinion. The objects in a set are its elements, and we write a belongs to A with this curly symbol.",
+      "ops": [
+        { "op": "math", "id": "m1", "tex": "a \\in A \\qquad b \\notin A", "size": 38, "color": "purple" },
+        { "op": "highlight", "target": "m1" }
+      ]
+    },
+    {
+      "mark": "Writing sets",
+      "say": "There are two ways to write a set. In roster form we simply list the elements in curly brackets. In set builder form we describe the rule that every element follows. For example, the set of natural numbers less than six can be written either way.",
+      "ops": [
+        { "op": "page" },
+        { "op": "text", "id": "w1", "text": "Two ways to write a set", "size": 34, "color": "blue" },
+        { "op": "math", "id": "w2", "tex": "\\text{Roster: } A = \\{1, 2, 3, 4, 5\\}" },
+        { "op": "math", "id": "w3", "tex": "\\text{Set-builder: } A = \\{x : x \\in \\mathbb{N},\\ x < 6\\}", "color": "green" }
+      ]
+    },
+    {
+      "say": "In roster form, order does not matter and repeats are ignored. The set one, two, three is the same as three, one, two, and the letters of the word school give just s, c, h, o, l. The empty set has no elements at all, and we write it as this symbol, phi.",
+      "ops": [
+        { "op": "math", "id": "w4", "tex": "\\{1,2,3\\} = \\{3,1,2\\}" },
+        { "op": "math", "id": "w5", "tex": "\\text{SCHOOL} \\to \\{s, c, h, o, l\\}" },
+        { "op": "math", "id": "w6", "tex": "\\varnothing = \\{\\ \\} \\quad (\\text{empty set})", "color": "red" }
+      ]
+    },
+    {
+      "mark": "Subsets and power set",
+      "say": "A is a subset of B when every element of A is also in B. The set of even numbers is a subset of the integers. Every set is a subset of itself, and the empty set is a subset of every set.",
+      "ops": [
+        { "op": "page" },
+        { "op": "text", "id": "s1", "text": "Subsets", "size": 34, "color": "blue" },
+        { "op": "circle", "id": "big", "x": 300, "y": 300, "r": 170, "color": "blue", "label": "B" },
+        { "op": "circle", "id": "small", "x": 300, "y": 320, "r": 80, "color": "green", "label": "A" },
+        { "op": "math", "id": "s2", "tex": "A \\subseteq B", "x": 560, "y": 200, "size": 40, "color": "purple" }
+      ]
+    },
+    {
+      "say": "Now count subsets. A set with n elements has two to the power n subsets, because each element is either in or out. The set of all subsets is called the power set. For A equals one, two, there are four subsets: empty, one, two, and the whole set.",
+      "ops": [
+        { "op": "math", "id": "s3", "tex": "n(A) = n \\Rightarrow n(P(A)) = 2^n", "x": 560, "y": 290, "color": "red" },
+        { "op": "math", "id": "s4", "tex": "P(\\{1,2\\}) = \\{\\varnothing, \\{1\\}, \\{2\\}, \\{1,2\\}\\}", "x": 500, "y": 380, "size": 24 },
+        { "op": "highlight", "target": "s3" }
+      ]
+    },
+    {
+      "say": "Intervals are special subsets of the real numbers. Round brackets leave the end point out, square brackets include it. So the open interval from two to five excludes both ends, while the closed interval includes both.",
+      "ops": [
+        { "op": "page" },
+        { "op": "text", "id": "i1", "text": "Intervals on the real line", "size": 34, "color": "blue" },
+        { "op": "arrow", "id": "line", "from": [80, 220], "to": [920, 220] },
+        { "op": "circle", "id": "o1", "x": 300, "y": 220, "r": 10, "color": "red", "label": "2" },
+        { "op": "circle", "id": "o2", "x": 650, "y": 220, "r": 10, "color": "red", "label": "5" },
+        { "op": "line", "id": "seg", "from": [310, 220], "to": [640, 220], "color": "red" },
+        { "op": "math", "id": "i2", "tex": "(2, 5) = \\{x : 2 < x < 5\\} \\qquad [2, 5] = \\{x : 2 \\le x \\le 5\\}", "x": 60, "y": 300 }
+      ]
+    },
+    {
+      "mark": "Operations on sets",
+      "say": "Now the operations, and Venn diagrams make them visual. The rectangle is the universal set U, everything under discussion. The union of A and B is everything in A, or in B, or in both.",
+      "ops": [
+        { "op": "page" },
+        { "op": "text", "id": "o0", "text": "Venn diagrams", "size": 34, "color": "blue" },
+        { "op": "rect", "id": "U", "x": 60, "y": 90, "w": 560, "h": 380, "color": "ink", "label": "U" },
+        { "op": "circle", "id": "A", "x": 260, "y": 280, "r": 130, "color": "blue", "label": "A" },
+        { "op": "circle", "id": "B", "x": 420, "y": 280, "r": 130, "color": "green", "label": "B" },
+        { "op": "math", "id": "un", "tex": "A \\cup B = \\{x : x \\in A \\text{ or } x \\in B\\}", "x": 640, "y": 120, "size": 22 }
+      ]
+    },
+    {
+      "say": "The intersection is only the overlap, elements in both A and B. If the intersection is empty, the sets are disjoint. The difference, A minus B, is what is in A but not in B. And the complement of A is everything in U that is not in A.",
+      "ops": [
+        { "op": "math", "id": "in", "tex": "A \\cap B = \\{x : x \\in A,\\ x \\in B\\}", "x": 640, "y": 200, "size": 22, "color": "purple" },
+        { "op": "ink", "id": "lens", "points": [[340, 175], [365, 230], [372, 280], [365, 330], [340, 385], [315, 330], [308, 280], [315, 230], [340, 175]], "color": "purple", "width": 14, "hl": true },
+        { "op": "math", "id": "df", "tex": "A - B = \\{x : x \\in A,\\ x \\notin B\\}", "x": 640, "y": 280, "size": 22 },
+        { "op": "math", "id": "cp", "tex": "A' = U - A", "x": 640, "y": 360, "size": 26, "color": "red" }
+      ]
+    },
+    {
+      "say": "Two identities are worth knowing by heart, De Morgan's laws. The complement of a union is the intersection of the complements. And the complement of an intersection is the union of the complements. Swap the symbol, and complement each set.",
+      "ops": [
+        { "op": "page" },
+        { "op": "text", "id": "dm", "text": "De Morgan's laws", "size": 34, "color": "blue" },
+        { "op": "math", "id": "dm1", "tex": "(A \\cup B)' = A' \\cap B'", "size": 40 },
+        { "op": "math", "id": "dm2", "tex": "(A \\cap B)' = A' \\cup B'", "size": 40 },
+        { "op": "highlight", "target": "dm1" },
+        { "op": "highlight", "target": "dm2" }
+      ]
+    },
+    {
+      "mark": "Counting with sets",
+      "say": "Finally, counting. If you simply add the sizes of A and B, the overlap gets counted twice. So subtract it once. n of A union B equals n of A plus n of B minus n of A intersection B.",
+      "ops": [
+        { "op": "page" },
+        { "op": "text", "id": "c1", "text": "Counting elements", "size": 34, "color": "blue" },
+        { "op": "math", "id": "c2", "tex": "n(A \\cup B) = n(A) + n(B) - n(A \\cap B)", "size": 36, "color": "purple" },
+        { "op": "highlight", "target": "c2" }
+      ]
+    },
+    {
+      "say": "Let's use it. In a class of forty, twenty five students like cricket, twenty like football, and ten like both. How many like at least one? Twenty five plus twenty minus ten is thirty five. So five students like neither.",
+      "ops": [
+        { "op": "text", "id": "c3", "text": "40 students: C = 25, F = 20, both = 10" },
+        { "op": "math", "id": "c4", "tex": "n(C \\cup F) = 25 + 20 - 10 = 35", "color": "green" },
+        { "op": "math", "id": "c5", "tex": "\\text{neither} = 40 - 35 = 5", "color": "red" },
+        { "op": "underline", "target": "c5" }
+      ]
+    },
+    {
+      "say": "For three sets the same idea extends. Add the three sizes, subtract the three pairwise overlaps, then add back the triple overlap, because it was removed one time too many. This inclusion exclusion pattern shows up again in probability.",
+      "ops": [
+        { "op": "math", "id": "c6", "tex": "n(A\\cup B\\cup C) = \\sum n(A) - \\sum n(A\\cap B) + n(A\\cap B\\cap C)", "size": 26 }
+      ]
+    },
+    {
+      "mark": "Summary",
+      "say": "Let's recap. A set is a well defined collection, written in roster or set builder form. A set with n elements has two to the n subsets. Union, intersection, difference and complement are easiest to see on a Venn diagram, and De Morgan's laws swap union and intersection under a complement. Use the counting formula, and never count the overlap twice. Now try the practice questions.",
+      "ops": [
+        { "op": "page" },
+        { "op": "text", "id": "r0", "text": "Recap", "size": 36, "color": "blue" },
+        { "op": "text", "id": "r1", "text": "1. Roster {1,2,3}  vs  set-builder {x : …}" },
+        { "op": "text", "id": "r2", "text": "2. n(P(A)) = 2ⁿ;  ∅ ⊆ every set" },
+        { "op": "text", "id": "r3", "text": "3. ∪  ∩  −  ′  on a Venn diagram" },
+        { "op": "text", "id": "r4", "text": "4. De Morgan: (A ∪ B)′ = A′ ∩ B′" },
+        { "op": "text", "id": "r5", "text": "5. n(A ∪ B) = n(A) + n(B) − n(A ∩ B)", "color": "purple" }
+      ]
+    }
+  ]
+}

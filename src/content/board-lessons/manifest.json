@@ -1,0 +1,91 @@
+[
+  {
+    "id": "11-biology-the-living-world",
+    "title": "The Living World",
+    "subject": "biology",
+    "grade": "11",
+    "chapter": "The Living World",
+    "minutes": 4,
+    "steps": 13,
+    "lessons": [
+      "biology-senior/c11-the-living-world/c11-diversity-nomenclature",
+      "biology-senior/c11-the-living-world/c11-taxonomic-categories",
+      "biology-senior/c11-the-living-world/c11-living-characteristics-taxonomic-aids",
+      "biology-senior/c11-the-living-world/c11-living-world-exam-edge"
+    ]
+  },
+  {
+    "id": "11-chemistry-some-basic-concepts-of-chemistry",
+    "title": "Some Basic Concepts of Chemistry",
+    "subject": "chemistry",
+    "grade": "11",
+    "chapter": "Some Basic Concepts of Chemistry",
+    "minutes": 5,
+    "steps": 15,
+    "lessons": [
+      "chemistry-senior/c11-basic-concepts/c11-bc-matter-measurement",
+      "chemistry-senior/c11-basic-concepts/c11-bc-laws-mole",
+      "chemistry-senior/c11-basic-concepts/c11-bc-stoichiometry-solutions",
+      "chemistry-senior/c11-basic-concepts/c11-bc-exam-edge"
+    ]
+  },
+  {
+    "id": "11-maths-sets",
+    "title": "Sets",
+    "subject": "maths",
+    "grade": "11",
+    "chapter": "Sets",
+    "minutes": 4,
+    "steps": 14,
+    "lessons": [
+      "maths-senior/c11-sets/c11-sets-representation",
+      "maths-senior/c11-sets/c11-set-operations",
+      "maths-senior/c11-sets/c11-sets-exam-edge"
+    ]
+  },
+  {
+    "id": "11-physics-units-and-measurements",
+    "title": "Units and Measurements",
+    "subject": "physics",
+    "grade": "11",
+    "chapter": "Units and Measurements",
+    "minutes": 5,
+    "steps": 17,
+    "lessons": [
+      "physics-senior/c11-units-measurements/c11-si-units",
+      "physics-senior/c11-units-measurements/c11-errors-significant-figures",
+      "physics-senior/c11-units-measurements/c11-dimensional-analysis",
+      "physics-senior/c11-units-measurements/c11-units-exam-edge"
+    ]
+  },
+  {
+    "id": "12-maths-matrices",
+    "title": "Matrices",
+    "subject": "maths",
+    "grade": "12",
+    "chapter": "Matrices",
+    "minutes": 4,
+    "steps": 14,
+    "lessons": [
+      "maths-senior/c12-matrices/c12-matrix-basics",
+      "maths-senior/c12-matrices/c12-matrix-operations",
+      "maths-senior/c12-matrices/c12-transpose-symmetric-invertible",
+      "maths-senior/c12-matrices/c12-matrices-exam-edge"
+    ]
+  },
+  {
+    "id": "12-physics-electric-charges-and-fields",
+    "title": "Electric Charges and Fields",
+    "subject": "physics",
+    "grade": "12",
+    "chapter": "Electric Charges and Fields",
+    "minutes": 5,
+    "steps": 15,
+    "lessons": [
+      "physics-senior/c12-electric-charges-fields/c12-charge-coulombs-law",
+      "physics-senior/c12-electric-charges-fields/c12-electric-field-dipole",
+      "physics-senior/c12-electric-charges-fields/c12-flux-gauss-law",
+      "physics-senior/c12-electric-charges-fields/c12-charges-fields-exam-edge"
+    ]
+  }
+]
