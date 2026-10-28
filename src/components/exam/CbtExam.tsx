@@ -91,6 +91,11 @@ export function CbtExam({ test, pool, formulaChapters = [] }: { test: MockTest; 
   const [draft, setDraft] = useState("");
   const [notice, setNotice] = useState<string | null>(null);
   const [scope, setScope] = useState<MockScope>({ kind: "all" });
+  // A Class 11 student hasn't met Class 12 chapters yet: start them on Class 11 questions (they can still pick the full syllabus).
+  const grade = useLearner((s) => s.profile.grade);
+  useEffect(() => {
+    if (grade === "11" || grade === "PUC-1") setScope((sc) => (sc.kind === "all" ? { kind: "11" } : sc));
+  }, [grade]);
   const [strict, setStrict] = useState(false);
 
   const byId = useMemo(() => new Map(pool.map((q) => [q.id, q])), [pool]);
