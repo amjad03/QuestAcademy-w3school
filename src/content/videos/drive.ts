@@ -26,7 +26,7 @@ const files = (listing as { files: DriveFile[] }).files;
 /** "ep05-dalton-s-atomic-theory.mp4" → "Ep 5 · Dalton's atomic theory" */
 function episodeTitle(name: string): string {
   const m = /^ep0*(\d+)[-_ ]?(.*?)(\.[a-z0-9]+)?$/i.exec(name);
-  if (!m) return name.replace(/\.[a-z0-9]+$/i, "");
+  if (!m) return name.replace(/\.[a-z0-9]+$/i, "").split(" | ")[0].trim();
   const words = m[2].replace(/-s-/g, "'s ").replace(/[-_]+/g, " ").trim();
   const rest = words && words.toLowerCase() !== "video" ? words[0].toUpperCase() + words.slice(1) : "";
   return rest ? `Ep ${m[1]} · ${rest}` : `Episode ${m[1]}`;
@@ -37,14 +37,25 @@ function episodeNo(name: string): number | undefined {
   return m ? Number(m[1]) : undefined;
 }
 
-const byFolder = new Map<string, Map<number, DriveEpisode>>();
+/** Folder → episode number (from "EpNN-" prefixes) and lower-cased file name → episode. */
+const byFolder = new Map<string, Map<number | string, DriveEpisode>>();
 for (const f of files) {
   if (!f.mimeType.startsWith("video/")) continue;
+  const folder = byFolder.get(f.path) ?? new Map<number | string, DriveEpisode>();
+  const ep = { id: f.id, title: episodeTitle(f.name) };
   const n = episodeNo(f.name);
-  if (n === undefined) continue;
-  const folder = byFolder.get(f.path) ?? new Map<number, DriveEpisode>();
-  folder.set(n, { id: f.id, title: episodeTitle(f.name) });
+  if (n !== undefined) folder.set(n, ep);
+  folder.set(f.name.toLowerCase(), ep);
   byFolder.set(f.path, folder);
+}
+
+/** An episode is referenced by its number, or by the start of its file name (case-insensitive). */
+type EpRef = number | string;
+function resolve(folder: Map<number | string, DriveEpisode>, ref: EpRef): DriveEpisode | undefined {
+  if (typeof ref === "number") return folder.get(ref);
+  const prefix = ref.toLowerCase();
+  for (const [k, ep] of folder) if (typeof k === "string" && k.startsWith(prefix)) return ep;
+  return undefined;
 }
 
 const range = (a: number, b: number) => Array.from({ length: b - a + 1 }, (_, i) => a + i);
@@ -52,9 +63,9 @@ const range = (a: number, b: number) => Array.from({ length: b - a + 1 }, (_, i)
 interface ChapterMap {
   folder: string;
   /** Every episode of the chapter, in playing order. */
-  episodes: number[];
+  episodes: EpRef[];
   /** lessonId → episodes that fit that lesson best (played first). Missing lessons get the chapter in order. */
-  lessons: Record<string, number[]>;
+  lessons: Record<string, EpRef[]>;
 }
 
 const CHAPTERS: ChapterMap[] = [
@@ -151,6 +162,58 @@ const CHAPTERS: ChapterMap[] = [
       "maths-senior/sets/sets-counting": [12, 8, 10],
     },
   },
+  // Electronics · Introduction to Electronics
+  {
+    folder: "Electronics",
+    episodes: [
+      "What Is Electronics",
+      "Vacuum Tubes vs Silicon",
+      "A Computer on One Chip",
+      "Real Uses of Electronics",
+      "Electronics in Your Home",
+      "Volts vs Amps",
+      "DC vs AC",
+      "Why Batteries Sag",
+    ],
+    lessons: {
+      "electronics/c11-ele-introduction/c11-ele-what-is-electronics": [],
+      "electronics/c11-ele-introduction/c11-ele-quantities-sources": ["Volts vs Amps", "DC vs AC", "Why Batteries Sag"],
+      "electronics/c11-ele-introduction/c11-ele-introduction-practice": [],
+    },
+  },
+  // Electronics · Passive Components (only the transformer has a video)
+  {
+    folder: "Electronics",
+    episodes: ["How a Transformer Works"],
+    lessons: {
+      "electronics/c11-ele-passive-components/c11-ele-resistors-colour-code": [],
+      "electronics/c11-ele-passive-components/c11-ele-capacitors": [],
+      "electronics/c11-ele-passive-components/c11-ele-inductors-transformers": [],
+      "electronics/c11-ele-passive-components/c11-ele-passive-practice": [],
+    },
+  },
+  // Electronics · DC Circuits and Network Theorems
+  {
+    folder: "Electronics",
+    episodes: ["Ohm's Law", "Series vs Parallel", "Kirchhoff's Laws", "Thevenin's Theorem"],
+    lessons: {
+      "electronics/c11-ele-dc-circuits-theorems/c11-ele-ohm-kirchhoff": [],
+      "electronics/c11-ele-dc-circuits-theorems/c11-ele-thevenin-norton": ["Thevenin's Theorem"],
+      "electronics/c11-ele-dc-circuits-theorems/c11-ele-superposition-mpt": ["Thevenin's Theorem"],
+      "electronics/c11-ele-dc-circuits-theorems/c11-ele-dc-theorems-practice": [],
+    },
+  },
+  // Electronics · AC Fundamentals
+  {
+    folder: "Electronics",
+    episodes: ["DC vs AC", "AC Waveform", "RMS and Average Values", "Reactance of L and C", "Impedance and Resonance"],
+    lessons: {
+      "electronics/c11-ele-ac-fundamentals/c11-ele-ac-waveform-rms": ["AC Waveform", "RMS and Average Values"],
+      "electronics/c11-ele-ac-fundamentals/c11-ele-reactance-impedance": ["Reactance of L and C", "Impedance and Resonance"],
+      "electronics/c11-ele-ac-fundamentals/c11-ele-resonance": ["Impedance and Resonance"],
+      "electronics/c11-ele-ac-fundamentals/c11-ele-ac-practice": [],
+    },
+  },
 ];
 
 const lessonPlaylists = new Map<string, DriveEpisode[]>();
@@ -159,7 +222,7 @@ for (const ch of CHAPTERS) {
   if (!folder) continue;
   for (const [lessonId, first] of Object.entries(ch.lessons)) {
     const order = [...first, ...ch.episodes.filter((n) => !first.includes(n))];
-    const list = order.map((n) => folder.get(n)).filter((e): e is DriveEpisode => Boolean(e));
+    const list = order.map((n) => resolve(folder, n)).filter((e): e is DriveEpisode => Boolean(e));
     if (list.length) lessonPlaylists.set(lessonId, list);
   }
 }

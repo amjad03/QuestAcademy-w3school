@@ -1,5 +1,5 @@
 {
- "generatedAt": "2026-10-28T19:19:07.096Z",
+ "generatedAt": "2026-10-28T19:26:25.580Z",
  "rootFolder": "1EnP3DKFFtdE4Nz7XW6SxDw9kwXjgCy_C",
  "files": [
   {
@@ -160,104 +160,104 @@
   },
   {
    "path": "Electronics",
-   "name": "EP01-video.mp4",
-   "id": "1bT4DxcZmtOAOj0ZxMEnK5hwH72F4V3AE",
-   "mimeType": "video/mp4"
-  },
-  {
-   "path": "Electronics",
-   "name": "EP02-video.mp4",
-   "id": "1af0kAiNyG7nLCPuJifIDUwY8r0hfumT4",
-   "mimeType": "video/mp4"
-  },
-  {
-   "path": "Electronics",
-   "name": "EP03-video.mp4",
+   "name": "A Computer on One Chip Explained Simply | PUC Electronics Class 11.mp4",
    "id": "1_4uJhL0aXssP8pWHeymSKr1XrroJnVZW",
    "mimeType": "video/mp4"
   },
   {
    "path": "Electronics",
-   "name": "EP04-video.mp4",
-   "id": "1RKnZcREeugwNzEjMliRoFcRIam1F6ka3",
-   "mimeType": "video/mp4"
-  },
-  {
-   "path": "Electronics",
-   "name": "EP05-video.mp4",
-   "id": "1TelYni2t_sA2NsSbEHyDNL-4qiiY0dYH",
-   "mimeType": "video/mp4"
-  },
-  {
-   "path": "Electronics",
-   "name": "EP06-video.mp4",
-   "id": "1xHGA9G7GW68X5mI9S78F4UA68kKYJ3zL",
-   "mimeType": "video/mp4"
-  },
-  {
-   "path": "Electronics",
-   "name": "EP07-video.mp4",
-   "id": "1P0HTU77jDX6yEZ7UNjHnyi4OhRWSvOB3",
-   "mimeType": "video/mp4"
-  },
-  {
-   "path": "Electronics",
-   "name": "EP08-video.mp4",
-   "id": "1cDuItqqytFxNK5grYT5hkP8vznJmldpi",
-   "mimeType": "video/mp4"
-  },
-  {
-   "path": "Electronics",
-   "name": "EP09-video.mp4",
-   "id": "1oqm1mGVtdsmIp7r_23M7Ejnq5wsHmEam",
-   "mimeType": "video/mp4"
-  },
-  {
-   "path": "Electronics",
-   "name": "EP10-video.mp4",
-   "id": "1pyA2hEpt7ML4fc5fhl43JrgnUCgalTit",
-   "mimeType": "video/mp4"
-  },
-  {
-   "path": "Electronics",
-   "name": "EP11-video.mp4",
-   "id": "10WnVP0iow0HCkldlWQsOdFbxQXjVUans",
-   "mimeType": "video/mp4"
-  },
-  {
-   "path": "Electronics",
-   "name": "EP12-video.mp4",
-   "id": "1y29hUcUh7V1khQ5QmsmmWQqfuWI_yQyd",
-   "mimeType": "video/mp4"
-  },
-  {
-   "path": "Electronics",
-   "name": "EP13-video.mp4",
+   "name": "AC Waveform Explained Simply | PUC Electronics Class 11.mp4",
    "id": "1Umbh8_6k-JaQ6zHzJiRtIR0fl-qm1skj",
    "mimeType": "video/mp4"
   },
   {
    "path": "Electronics",
-   "name": "EP14-video.mp4",
-   "id": "1UQIMhWB1bvg35l62i-hg0IDtBjndeYAe",
+   "name": "DC vs AC Explained Simply | PUC Electronics Class 11.mp4",
+   "id": "1P0HTU77jDX6yEZ7UNjHnyi4OhRWSvOB3",
    "mimeType": "video/mp4"
   },
   {
    "path": "Electronics",
-   "name": "EP15-video.mp4",
-   "id": "1GoJ-eY-x8_chaMQlR5nAlWT8QvGuvB8i",
+   "name": "Electronics in Your Home Explained Simply | PUC Electronics Class 11.mp4",
+   "id": "1TelYni2t_sA2NsSbEHyDNL-4qiiY0dYH",
    "mimeType": "video/mp4"
   },
   {
    "path": "Electronics",
-   "name": "EP16-video.mp4",
+   "name": "How a Transformer Works Explained Simply | PUC Electronics Class 11.mp4",
+   "id": "1XlJaSn07qQg9ZxzM6fJoSwuXZZ6tsO41",
+   "mimeType": "video/mp4"
+  },
+  {
+   "path": "Electronics",
+   "name": "Impedance and Resonance Explained Simply | PUC Electronics Class 11.mp4",
    "id": "1lzJ1qMqStnhWZ0tgFyyhConmUH-X-c5b",
    "mimeType": "video/mp4"
   },
   {
    "path": "Electronics",
-   "name": "EP17-video.mp4",
-   "id": "1XlJaSn07qQg9ZxzM6fJoSwuXZZ6tsO41",
+   "name": "Kirchhoff's Laws Explained Simply | PUC Electronics Class 11.mp4",
+   "id": "1pyA2hEpt7ML4fc5fhl43JrgnUCgalTit",
+   "mimeType": "video/mp4"
+  },
+  {
+   "path": "Electronics",
+   "name": "Ohm's Law Explained Simply | PUC Electronics Class 11.mp4",
+   "id": "1cDuItqqytFxNK5grYT5hkP8vznJmldpi",
+   "mimeType": "video/mp4"
+  },
+  {
+   "path": "Electronics",
+   "name": "Reactance of L and C Explained Simply | PUC Electronics Class 11.mp4",
+   "id": "1GoJ-eY-x8_chaMQlR5nAlWT8QvGuvB8i",
+   "mimeType": "video/mp4"
+  },
+  {
+   "path": "Electronics",
+   "name": "Real Uses of Electronics Explained Simply | PUC Electronics Class 11.mp4",
+   "id": "1RKnZcREeugwNzEjMliRoFcRIam1F6ka3",
+   "mimeType": "video/mp4"
+  },
+  {
+   "path": "Electronics",
+   "name": "RMS and Average Values Explained Simply | PUC Electronics Class 11.mp4",
+   "id": "1UQIMhWB1bvg35l62i-hg0IDtBjndeYAe",
+   "mimeType": "video/mp4"
+  },
+  {
+   "path": "Electronics",
+   "name": "Series vs Parallel Explained Simply | PUC Electronics Class 11.mp4",
+   "id": "1oqm1mGVtdsmIp7r_23M7Ejnq5wsHmEam",
+   "mimeType": "video/mp4"
+  },
+  {
+   "path": "Electronics",
+   "name": "Thevenin's Theorem Explained Simply | PUC Electronics Class 11.mp4",
+   "id": "1y29hUcUh7V1khQ5QmsmmWQqfuWI_yQyd",
+   "mimeType": "video/mp4"
+  },
+  {
+   "path": "Electronics",
+   "name": "Vacuum Tubes vs Silicon Explained Simply | PUC Electronics Class 11.mp4",
+   "id": "1af0kAiNyG7nLCPuJifIDUwY8r0hfumT4",
+   "mimeType": "video/mp4"
+  },
+  {
+   "path": "Electronics",
+   "name": "Volts vs Amps Explained Simply | PUC Electronics Class 11.mp4",
+   "id": "1xHGA9G7GW68X5mI9S78F4UA68kKYJ3zL",
+   "mimeType": "video/mp4"
+  },
+  {
+   "path": "Electronics",
+   "name": "What Is Electronics? Explained Simply | PUC Electronics Class 11.mp4",
+   "id": "1bT4DxcZmtOAOj0ZxMEnK5hwH72F4V3AE",
+   "mimeType": "video/mp4"
+  },
+  {
+   "path": "Electronics",
+   "name": "Why Batteries Sag Explained Simply | PUC Electronics Class 11.mp4",
+   "id": "10WnVP0iow0HCkldlWQsOdFbxQXjVUans",
    "mimeType": "video/mp4"
   },
   {
