@@ -22,6 +22,7 @@ import { PageColumns } from "@/components/shell/AppShell";
 import { RailCard, RailFooter } from "@/components/shell/RailCards";
 import { useT } from "@/i18n";
 
+import { PersonalSettings } from "@/components/personal/PersonalSettings";
 import { ClassPicker, choiceFromProfile, stageForLevel } from "@/components/class/ClassPicker";
 
 export function Settings() {
@@ -74,6 +75,7 @@ export function Settings() {
         <nav className="space-y-1 text-[15px] font-extrabold">
           {[
             ["#my-class", t("settings.section.myClass", "My class")],
+            ["#my-plan", t("settings.section.myPlan", "My plan")],
             ["#preferences", t("settings.section.preferences", "Preferences")],
             ["#learning", t("settings.section.learning", "Learning")],
             ["#account", t("settings.section.account", "Account")],
@@ -136,6 +138,13 @@ export function Settings() {
               compact
             />
           </div>
+        </Section>
+      )}
+
+      {!["ug", "pg", "lifelong"].includes(s.profile.stage ?? "") && (
+        <Section id="my-plan" title={t("settings.section.myPlan", "My plan")} bare>
+          <p className="mb-4 text-sm text-muted">{t("settings.myPlan.intro", "Your answers from setup. Change any of them and your daily and weekly plan rebuilds.")}</p>
+          <PersonalSettings />
         </Section>
       )}
 

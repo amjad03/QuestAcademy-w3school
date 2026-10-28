@@ -15,6 +15,8 @@ import { Greeting, HomeFrame, LanguageNudge, QuickLinks, SeeItCard, UpNextHero, 
 import { TodayPlan } from "@/experiences/khan/home/Focus";
 import { MasteryBar, useExamCountdown, useFmt } from "@/experiences/khan/ui";
 import { useClassProgress, useSubjectName } from "./data";
+import { orderChapters, orderSubjects } from "@/lib/personalise";
+import { CompleteProfileBanner, PlanReminder, TodayPlanCard, WeekPlanCard } from "@/components/personal/PersonalPlan";
 
 /** "My class" home for school learners: continue, then their subjects, then plan and practice. */
 export function ClassHome() {
@@ -23,7 +25,10 @@ export function ClassHome() {
   const tx = useSharedText();
   const mode = useMode();
   const mc = useMyClass()!;
-  const { myClass, subjects } = mc;
+  const { myClass } = mc;
+  const personal = useLearner((s) => s.profile.personal ?? null);
+  // Weak / low-level subjects and chapters first, so "continue" and the subject list follow the learner's needs.
+  const subjects = useMemo(() => orderSubjects(mc.subjects, personal).map((s) => ({ ...s, chapters: orderChapters(s.id, s.chapters, personal) })), [mc.subjects, personal]);
   const progress = useClassProgress(subjects);
   const lastLesson = useLearner((s) => s.lastLesson);
   const lessons = useLearner((s) => s.lessons);
@@ -75,6 +80,7 @@ export function ClassHome() {
       }
       rail={
         <>
+          <WeekPlanCard />
           {mode.id === "focus" && <TodayPlan />}
           <WeeklyActivity energy={playful} />
           <LanguageNudge />
@@ -93,6 +99,8 @@ export function ClassHome() {
         </>
       }
     >
+      <PlanReminder />
+      <CompleteProfileBanner />
       {next ? (
         <UpNextHero
           lessonId={next.lessonId}
@@ -104,6 +112,8 @@ export function ClassHome() {
       ) : (
         <UpNextHero />
       )}
+
+      <TodayPlanCard />
 
       <section aria-labelledby="class-subjects">
         <div className="mb-3 flex flex-wrap items-baseline justify-between gap-2">

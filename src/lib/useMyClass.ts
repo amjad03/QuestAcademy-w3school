@@ -5,6 +5,7 @@ import { useLearner } from "@/lib/store";
 import { useCatalog } from "@/components/shell/CatalogContext";
 import type { CourseCard } from "@/content/course";
 import type { Stage } from "@/content/types";
+import type { Board } from "@/lib/modes";
 import { EXTRA_TOPICS } from "@/content/subjects/extra";
 import { boardClassOf, chosenSubjects, classFromSyllabus, type ClassChapter, type ClassSubject, type MyClass } from "@/content/my-class";
 
@@ -37,6 +38,18 @@ export function classFromCourses(grade: string, catalog: CourseCard[]): MyClass 
   return { key: `grade:${grade}`, board: null, grade, name, boardName: null, subjects };
 }
 
+/** The class and chosen subjects for a profile-like object (also used before the profile is saved, e.g. onboarding). */
+export function classForProfile(profile: { stage?: Stage | null; board?: Board | null; grade?: string | null; age?: number | null; subjects?: string[] | null }, catalog: CourseCard[]): { myClass: MyClass; subjects: ClassSubject[] } | null {
+  const bg = boardClassOf(profile);
+  let c: MyClass | null = bg ? classFromSyllabus(bg.board, bg.grade) : null;
+  if (!c) {
+    const g = gradeOf(profile);
+    if (g) c = classFromCourses(g, catalog);
+  }
+  if (!c) return null;
+  return { myClass: c, subjects: chosenSubjects(c, profile.subjects) };
+}
+
 /**
  * The learner's class and their chosen subjects, or null for learners without a class
  * (college, postgraduate, lifelong: they browse the full catalogue).
@@ -44,16 +57,7 @@ export function classFromCourses(grade: string, catalog: CourseCard[]): MyClass 
 export function useMyClass(): { myClass: MyClass; subjects: ClassSubject[] } | null {
   const profile = useLearner((s) => s.profile);
   const catalog = useCatalog();
-  return useMemo(() => {
-    const bg = boardClassOf(profile);
-    let c: MyClass | null = bg ? classFromSyllabus(bg.board, bg.grade) : null;
-    if (!c) {
-      const g = gradeOf(profile);
-      if (g) c = classFromCourses(g, catalog);
-    }
-    if (!c) return null;
-    return { myClass: c, subjects: chosenSubjects(c, profile.subjects) };
-  }, [profile, catalog]);
+  return useMemo(() => classForProfile(profile, catalog), [profile, catalog]);
 }
 
 /** Where a lesson sits in the learner's class: subject, chapter and its neighbours. */

@@ -22,6 +22,7 @@ import {
 import { useUi } from "./ui";
 import { MODES, resolveMode, type Board, type ModeId } from "./modes";
 import type { Locale } from "@/i18n/locales";
+import type { PersonalProfile } from "./personalise";
 import { afterAssessmentAnswer, afterPractice, type AssessmentKind, type MasteryLevel } from "./mastery";
 
 export interface Profile {
@@ -50,6 +51,8 @@ export interface Profile {
   nickname: string;
   /** Opted in to leagues / challenges (Adventure is opt-in; Explore never). */
   socialOptIn: boolean;
+  /** Onboarding answers that drive the personal plan (absent on older saves). */
+  personal?: PersonalProfile | null;
 }
 
 /** Study plan used by Focus (syllabus) and Professional (pathway) modes. */

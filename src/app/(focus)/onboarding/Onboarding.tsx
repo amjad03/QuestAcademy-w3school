@@ -17,12 +17,32 @@ import { MODES, modeForAge, modeForStage, type ModeId } from "@/lib/modes";
 import { ModePicker } from "@/components/modes/ModePicker";
 import { useT } from "@/i18n";
 import { SYLLABI } from "@/content/syllabus";
-import { ClassPicker, boardsFor, choiceForLevel, levelForAge, stageForLevel, type ClassChoice } from "@/components/class/ClassPicker";
+import type { LearningStyle } from "@/content/worlds";
+import { classForProfile } from "@/lib/useMyClass";
+import { goalXpForMinutes, hasExamStep, isYoungLevel, type PersonalProfile, type StudyStyle } from "@/lib/personalise";
+import { AboutFields, ExamFields, GoalFields, HabitsFields, LevelsFields, ParentFields, WeakFields } from "@/components/personal/PersonalFields";
+import { Diagnostic } from "@/components/personal/Diagnostic";
+import { ClassPicker, boardsFor, choiceFromProfile, choiceForLevel, levelForAge, stageForLevel, type ClassChoice } from "@/components/class/ClassPicker";
 
 const STEPS = ["age", "mode", "category", "course", "goal", "name", "done"] as const;
 /** School-age learners pick their class (board and subjects) instead of a category and a course. */
-const SCHOOL_STEPS = ["age", "mode", "class", "goal", "name", "done"] as const;
-type StepId = (typeof STEPS)[number] | "class";
+const SCHOOL_STEPS = ["age", "mode", "class", "about", "exam", "target", "levels", "habits", "weak", "diagnostic", "parent", "done"] as const;
+type StepId = (typeof STEPS)[number] | (typeof SCHOOL_STEPS)[number];
+
+/** The school flow adapts: LKG–5 is short and parent-facing; the exam step is for Classes 9–12; the diagnostic follows weak subjects. */
+function schoolSteps(level: string | null, weak: number, completing: boolean): StepId[] {
+  const young = isYoungLevel(level);
+  return SCHOOL_STEPS.filter((s) => {
+    if (completing && (s === "age" || s === "mode")) return false;
+    if (young) return !["exam", "target", "levels", "weak", "diagnostic"].includes(s);
+    if (s === "exam") return hasExamStep(level);
+    if (s === "diagnostic") return weak > 0;
+    return true;
+  });
+}
+
+const STYLE_FROM: Record<string, StudyStyle> = { visual: "video", listening: "video", reading: "reading", doing: "practice" };
+const STYLE_TO: Record<StudyStyle, LearningStyle> = { video: "visual", reading: "reading", practice: "doing" };
 
 /** Ages for children; stages for adults (age alone can't tell college from postgraduate). */
 const AGES: { label: string; age: number; mode?: ModeId; stage?: Stage }[] = [
@@ -67,10 +87,23 @@ export function Onboarding() {
   const [mode, setMode] = useState<ModeId | null>(stageParam && stageById[stageParam] ? modeForStage(stageParam) : null);
   const [goal, setGoal] = useState(profile.dailyGoal || 50);
   const [name, setName] = useState(profile.name);
-  const [classChoice, setClassChoice] = useState<ClassChoice>(() => choiceForLevel(levelForAge(profile.age ?? null)));
+  // "Complete your profile" for learners who onboarded before these questions existed.
+  const completing = params.get("complete") === "1" && profile.onboarded;
+  const [classChoice, setClassChoice] = useState<ClassChoice>(() => (completing ? choiceFromProfile(profile) : choiceForLevel(levelForAge(profile.age ?? null))));
+  const [personal, setPersonal] = useState<PersonalProfile>(() => ({ goal: "80", dailyMinutes: 20, timeOfDay: "evening", studyStyle: STYLE_FROM[profile.style] ?? "video", ...(profile.personal ?? {}) }));
+  const patch = (p: Partial<PersonalProfile>) => setPersonal((x) => ({ ...x, ...p }));
   const t = useT();
+  const young = isYoungLevel(classChoice.level);
 
   const PROMPT: Record<StepId, string> = {
+    about: young ? t("onboard.prompt.aboutParent", "Hello! Tell me a little about your child.") : t("onboard.prompt.about", "Nice to meet you! Tell me a little about yourself."),
+    exam: t("onboard.prompt.exam", "Are you preparing for a big exam? I’ll plan the weeks up to it."),
+    target: t("onboard.prompt.target", "What are you aiming for this year?"),
+    levels: t("onboard.prompt.levels", "How are you doing in each subject right now? Recent marks help too."),
+    habits: young ? t("onboard.prompt.habitsParent", "When does your child usually study, and for how long?") : t("onboard.prompt.habits", "How do you like to study?"),
+    weak: t("onboard.prompt.weak", "Which subjects or chapters feel hard? I’ll give them extra time."),
+    diagnostic: t("onboard.prompt.diagnostic", "A few quick questions so I know where to start. No pressure!"),
+    parent: young ? t("onboard.prompt.parentParent", "Want progress updates? Add your contact (optional).") : t("onboard.prompt.parent", "Add a parent’s contact for progress updates (optional)."),
     class: t("onboard.prompt.class", "Which class are you in? I’ll show you only what you need."),
     age: t("onboard.prompt.age", "Hi there! I’m Questy. How old are you — or where are you in your studies?"),
     mode: t("onboard.prompt.mode", "Here’s the experience I picked for you. You can choose another any time."),
@@ -110,10 +143,12 @@ export function Onboarding() {
 
   const choice = AGES.find((a) => a.age === age);
   const school = age !== null && age <= 18 && !choice?.stage;
-  const steps: readonly StepId[] = school ? SCHOOL_STEPS : STEPS;
+  const school2 = school || completing;
+  const steps: readonly StepId[] = school2 ? schoolSteps(classChoice.level, (personal.weakSubjects ?? []).length, completing) : STEPS;
+  const classSubjects = classChoice.level ? (classForProfile({ stage: stageForLevel(classChoice.level), board: classChoice.board, grade: classChoice.grade, age, subjects: classChoice.subjects }, catalog)?.subjects ?? []) : [];
   const id = steps[step];
   const recommended = age !== null ? (choice?.mode ?? modeForAge(age)) : undefined;
-  const canNext = id === "age" ? age !== null : id === "mode" ? Boolean(mode) : id === "category" ? Boolean(category) : id === "course" ? Boolean(course) : id === "class" ? Boolean(classChoice.level && classChoice.grade && (!boardsFor(classChoice.level).length || classChoice.board)) : true;
+  const canNext = id === "about" ? name.trim().length > 0 : id === "age" ? age !== null : id === "mode" ? Boolean(mode) : id === "category" ? Boolean(category) : id === "course" ? Boolean(course) : id === "class" ? Boolean(classChoice.level && classChoice.grade && (!boardsFor(classChoice.level).length || classChoice.board)) : true;
   const courses = catalog.filter((c) => c.world === category);
 
   const next = () => {
@@ -121,6 +156,30 @@ export function Onboarding() {
     sfx("tap");
     if (id === "age" && age !== null && !mode) setMode(recommended ?? modeForAge(age));
     if (id === "mode" && mode && !category) setCategory(MODE_CATEGORY[mode]);
+    if (id === "parent" && classChoice.level) {
+      // Save everything collected in the school flow.
+      const m = completing ? (profile.mode ?? recommended ?? modeForAge(age ?? 12)) : (mode ?? recommended ?? modeForAge(age ?? 12));
+      const stage = stageForLevel(classChoice.level);
+      const world: WorldId = stage === "preprimary" || stage === "primary" ? "kids" : stage === "aspirant" ? "exam" : "school";
+      const minutes = personal.dailyMinutes ?? 20;
+      setProfile({
+        name: name.trim() || t("settings.name.default", "Learner"),
+        age,
+        stage,
+        mode: m,
+        worlds: completing ? profile.worlds : [world],
+        course: completing ? profile.course : null,
+        board: classChoice.board,
+        grade: classChoice.grade,
+        subjects: classChoice.subjects,
+        dailyGoal: goalXpForMinutes(minutes),
+        onboarded: true,
+        style: young ? profile.style : STYLE_TO[personal.studyStyle ?? "video"],
+        personal: { ...personal, targetExam: personal.targetExam ?? (classChoice.level === "exam" ? classChoice.grade : null), completedAt: new Date().toISOString() },
+      });
+      if (!completing) useLearner.getState().setSettings({ sound: MODES[m].sound });
+      sfx("fanfare");
+    }
     if (id === "name") {
       const m = mode ?? recommended ?? modeForAge(age ?? 12);
       if (school && classChoice.level) {
@@ -142,7 +201,7 @@ export function Onboarding() {
     <div className="flex min-h-screen flex-col bg-bg">
       {/* top bar */}
       <div className="mx-auto flex w-full max-w-[1000px] items-center gap-4 px-5 pt-6">
-        <button onClick={() => (step ? setStep(step - 1) : router.push("/"))} className="grid h-10 w-10 place-items-center rounded-xl text-muted hover:bg-surface-2" aria-label={t("onboard.back", "Back")}>
+        <button onClick={() => (step ? setStep(step - 1) : router.push(completing ? "/learn" : "/"))} className="grid h-10 w-10 place-items-center rounded-xl text-muted hover:bg-surface-2" aria-label={t("onboard.back", "Back")}>
           <ArrowLeft className="h-6 w-6" strokeWidth={2.6} />
         </button>
         <ProgressBar value={step / (steps.length - 1)} height={16} />
@@ -177,6 +236,23 @@ export function Onboarding() {
             {id === "mode" && <ModePicker value={mode} recommended={recommended} onChange={(m) => { setMode(m); if (MODE_CATEGORY[m] !== category) { setCategory(MODE_CATEGORY[m]); setCourse(null); } sfx("tap"); }} />}
 
             {id === "class" && <ClassPicker value={classChoice} onChange={setClassChoice} />}
+            {id === "about" && <AboutFields value={personal} onChange={patch} young={young} name={name} onName={setName} />}
+            {id === "exam" && <ExamFields value={personal} onChange={patch} level={classChoice.level} />}
+            {id === "target" && <GoalFields value={personal} onChange={patch} young={young} />}
+            {id === "levels" && <LevelsFields value={personal} onChange={patch} subjects={classSubjects} />}
+            {id === "habits" && <HabitsFields value={personal} onChange={patch} young={young} />}
+            {id === "weak" && <WeakFields value={personal} onChange={patch} subjects={classSubjects} />}
+            {id === "diagnostic" && (
+              <Diagnostic
+                subjects={classSubjects.filter((x) => personal.weakSubjects?.includes(x.id))}
+                personal={personal}
+                onDone={(r) => {
+                  patch({ diagnostic: { ...(personal.diagnostic ?? {}), ...r } });
+                  setStep((x) => x + 1);
+                }}
+              />
+            )}
+            {id === "parent" && <ParentFields value={personal} onChange={patch} young={young} />}
 
             {id === "category" && (
               <div className="grid gap-3">
@@ -229,11 +305,13 @@ export function Onboarding() {
             {id === "done" && (
               <div className="grid gap-3 sm:grid-cols-3">
                 {[
-                  school
+                  school2
                     ? [t("onboard.summary.class", "Your class"), classChoice.level === "pre" ? t("class.pre", "Pre-primary") : classChoice.level === "exam" ? (SYLLABI.exam.grades.find((g) => g.id === classChoice.grade)?.name ?? "—") : t("class.gradeN", "Class {n}", { n: classChoice.level ?? "—" })]
                     : [t("onboard.summary.course", "Your course"), catalog.find((c) => c.slug === course)?.title ?? "—"],
                   [t("onboard.summary.experience", "Experience"), mode ? t("onboard.summary.modeName", "{name} mode", { name: modeName[mode] ?? MODES[mode].name }) : "—"],
-                  [t("onboard.summary.goal", "Daily goal"), goalText[goal] ? `${goalText[goal].label} · ${goalText[goal].hint}` : t("onboard.summary.goalXp", "{n} XP", { n: goal })],
+                  school2
+                    ? [t("onboard.summary.daily", "Daily study"), t("personal.habits.min", "{n} min", { n: personal.dailyMinutes ?? 20 })]
+                    : [t("onboard.summary.goal", "Daily goal"), goalText[goal] ? `${goalText[goal].label} · ${goalText[goal].hint}` : t("onboard.summary.goalXp", "{n} XP", { n: goal })],
                 ].map(([a, b]) => (
                   <div key={a} className="card p-4">
                     <div className="eyebrow">{a}</div>
@@ -249,8 +327,8 @@ export function Onboarding() {
       {/* bottom bar */}
       <div className="border-t-2 border-line">
         <div className="mx-auto flex w-full max-w-[1000px] justify-end px-5 py-5">
-          <button onClick={next} disabled={!canNext} className="btn-primary w-full sm:w-auto sm:min-w-[160px]">
-            {id === "done" ? t("onboard.start", "Start learning") : t("onboard.continue", "Continue")}
+          <button onClick={next} disabled={!canNext} className={clsx(id === "diagnostic" || id === "parent" ? "btn-ghost" : "btn-primary", "w-full sm:w-auto sm:min-w-[160px]")}>
+            {id === "done" ? t("onboard.start", "Start learning") : id === "diagnostic" ? t("onboard.skipDiagnostic", "Skip the quiz") : id === "parent" ? (personal.parentEmail || personal.parentPhone ? t("onboard.continue", "Continue") : t("onboard.skip", "Skip")) : t("onboard.continue", "Continue")}
           </button>
         </div>
       </div>
