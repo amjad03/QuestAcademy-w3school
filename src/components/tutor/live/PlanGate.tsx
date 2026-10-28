@@ -4,7 +4,9 @@ import { useEffect, useState } from "react";
 import { Loader2, Lock, Sparkles } from "lucide-react";
 import { useT } from "@/i18n";
 import { useLearner } from "@/lib/store";
-import { useHydrated } from "@/components/providers";
+import { useAuth, useHydrated } from "@/components/providers";
+import { supabase } from "@/lib/supabase";
+import Link from "next/link";
 import { TutorRoom } from "./TutorRoom";
 
 interface PayConfig {
@@ -13,6 +15,18 @@ interface PayConfig {
   keyId: string | null;
   priceInr: number;
   days: number;
+}
+
+/** The pass as the server sees it (`server: false` = no database, signed passes on the profile apply). */
+interface PassState {
+  server: boolean;
+  signedIn?: boolean;
+  until: string | null;
+}
+
+async function authHeaders(): Promise<Record<string, string>> {
+  const token = (await supabase()?.auth.getSession())?.data.session?.access_token;
+  return token ? { Authorization: `Bearer ${token}` } : {};
 }
 
 type RazorpayCtor = new (o: Record<string, unknown>) => { open: () => void };
@@ -38,6 +52,8 @@ export function PlanGate() {
   const [cfg, setCfg] = useState<PayConfig | null>(null);
   const [busy, setBusy] = useState(false);
   const [msg, setMsg] = useState<string | null>(null);
+  const [server, setServer] = useState<PassState | null>(null);
+  const { user, loading } = useAuth();
 
   useEffect(() => {
     fetch("/api/pay")
@@ -46,16 +62,36 @@ export function PlanGate() {
       .catch(() => setCfg({ payments: false, open: process.env.NEXT_PUBLIC_TUTOR_PREMIUM !== "1", keyId: null, priceInr: 299, days: 30 }));
   }, []);
 
-  const pass = profile.tutorPass && profile.tutorPass.until > new Date().toISOString() ? profile.tutorPass.pass : null;
+  // Ask the server whether this account has a pass (re-checked when the account changes).
+  useEffect(() => {
+    if (loading) return;
+    let off = false;
+    authHeaders()
+      .then((headers) => fetch("/api/pay/pass", { headers, cache: "no-store" }))
+      .then((r) => r.json() as Promise<PassState>)
+      .then((j) => !off && setServer(j))
+      .catch(() => !off && setServer({ server: false, until: null }));
+    return () => {
+      off = true;
+    };
+  }, [user?.id, loading]);
+
+  const localPass = profile.tutorPass && profile.tutorPass.until > new Date().toISOString() ? profile.tutorPass.pass : null;
+  // With a database the server is the source of truth; the signed pass on the profile is only for database-less deployments.
+  const pass = server?.server ? null : localPass;
+  const hasPass = server?.server ? Boolean(server.until) : Boolean(localPass);
   const open = process.env.NEXT_PUBLIC_TUTOR_PREMIUM !== "1" || cfg?.open;
-  if (!hydrated || (!cfg && !open && !pass)) return <Loader2 className="mx-auto h-6 w-6 animate-spin text-muted" />;
-  if (open || pass) return <TutorRoom pass={pass} />;
+  if (open) return <TutorRoom pass={null} />;
+  if (!hydrated || !cfg || !server) return <Loader2 className="mx-auto h-6 w-6 animate-spin text-muted" />;
+  if (hasPass) return <TutorRoom pass={pass} />;
+  const needSignIn = server.server && !server.signedIn;
 
   const buy = async () => {
     setBusy(true);
     setMsg(null);
     try {
-      const order = (await fetch("/api/pay/order", { method: "POST" }).then((r) => r.json())) as { orderId?: string; amount?: number; currency?: string; keyId?: string };
+      const headers = await authHeaders();
+      const order = (await fetch("/api/pay/order", { method: "POST", headers }).then((r) => r.json())) as { orderId?: string; amount?: number; currency?: string; keyId?: string };
       const Rzp = order.orderId ? await loadCheckout() : null;
       if (!Rzp || !order.orderId) throw new Error("order");
       new Rzp({
@@ -68,8 +104,11 @@ export function PlanGate() {
         prefill: { name: profile.name },
         theme: { color: "#6366f1" },
         handler: async (resp: Record<string, string>) => {
-          const v = (await fetch("/api/pay/verify", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify(resp) }).then((r) => r.json())) as { pass?: string; until?: string };
-          if (v.pass && v.until) setProfile({ tier: "premium", tutorPass: { pass: v.pass, until: v.until } });
+          const v = (await fetch("/api/pay/verify", { method: "POST", headers: { ...headers, "Content-Type": "application/json" }, body: JSON.stringify(resp) }).then((r) => r.json())) as { pass?: string; until?: string };
+          if (v.until && !v.pass) {
+            setProfile({ tier: "premium" });
+            setServer((st) => ({ server: true, signedIn: true, ...st, until: v.until! }));
+          } else if (v.pass && v.until) setProfile({ tier: "premium", tutorPass: { pass: v.pass, until: v.until } });
           else setMsg(t("tutor.pay.verifyFailed", "We couldn't confirm the payment. If money was taken, contact us with your payment id."));
         },
       }).open();
@@ -92,7 +131,11 @@ export function PlanGate() {
         <li>✓ {t("tutor.pay.f3", "Finds your mistakes and fixes the idea behind them")}</li>
         <li>✓ {t("tutor.pay.f4", "English, हिन्दी, ಕನ್ನಡ and Hinglish")}</li>
       </ul>
-      {cfg?.payments ? (
+      {needSignIn ? (
+        <Link href="/auth" className="btn btn-primary inline-flex items-center gap-2">
+          {t("tutor.pay.signIn", "Sign in to unlock")}
+        </Link>
+      ) : cfg?.payments ? (
         <button type="button" onClick={buy} disabled={busy} className="btn btn-primary inline-flex items-center gap-2 disabled:opacity-60">
           {busy ? <Loader2 className="h-4 w-4 animate-spin" /> : <Sparkles className="h-4 w-4" />}
           {t("tutor.pay.cta", "Unlock for ₹{price} / {days} days", { price: cfg.priceInr, days: cfg.days })}

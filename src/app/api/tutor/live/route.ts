@@ -1,8 +1,9 @@
 import Anthropic from "@anthropic-ai/sdk";
 import { TUTOR_MODEL, burstGuard, fail, hasCredential, mapError, takeDaily } from "@/lib/tutor/guard";
-import { paymentsEnabled, tutorOpen, verifyPass } from "@/lib/tutor/pass";
+import { hasTutorAccess, paymentsEnabled, tutorOpen } from "@/lib/tutor/pass";
 import { LIVE_SYSTEM_PROMPT, RECAP_SCHEMA, RECAP_SYSTEM_PROMPT, liveContext } from "@/lib/tutor/live-prompt";
 import { LIVE_LIMITS, LIVE_MODES, TUTOR_LANGUAGES, TUTOR_PASS_HEADER, type LiveRequest, type PageContext, type Recap, type StudentInfo } from "@/lib/tutor/live";
+import { logAiUsage } from "@/lib/ai-usage";
 import { STREAM_MARK } from "@/lib/tutor/types";
 
 export const runtime = "nodejs";
@@ -87,12 +88,12 @@ function parse(raw: unknown): LiveRequest | null {
 export async function POST(req: Request) {
   if (!hasCredential()) return fail(503, "tutor_unavailable");
 
-  // Premium gate: open for testing, or a valid signed pass.
-  if (!tutorOpen() && !verifyPass(req.headers.get(TUTOR_PASS_HEADER))) return fail(402, "premium_required", { payments: paymentsEnabled() });
-
   const caller = await burstGuard(req);
   if (caller instanceof Response) return caller;
   const { ip, user } = caller;
+
+  // Premium gate: open for testing, else a pass checked on the server.
+  if (!(await hasTutorAccess(user, req.headers.get(TUTOR_PASS_HEADER)))) return fail(402, "premium_required", { payments: paymentsEnabled() });
 
   const lr = parse(await req.json().catch(() => null));
   if (!lr) return fail(400, "bad_request", { detail: "Send {kind, mode, language, topic, student, messages} with alternating messages ending with the student." });
@@ -125,6 +126,7 @@ export async function POST(req: Request) {
         system: RECAP_SYSTEM_PROMPT,
         messages: [{ role: "user", content: `${ctx}\n\n<transcript>\n${transcript}\n</transcript>\n\nWrite the recap.` }],
       });
+      await logAiUsage({ route: "tutor/recap", model: TUTOR_MODEL, user, ip, usage: msg.usage });
       const text = msg.content.map((b) => (b.type === "text" ? b.text : "")).join("");
       const recap = JSON.parse(text) as Recap;
       recap.practice = recap.practice.slice(0, 3);
@@ -164,6 +166,7 @@ export async function POST(req: Request) {
         }
         const final = await stream.finalMessage();
         if (final.stop_reason === "refusal") controller.enqueue(enc.encode(STREAM_MARK.refusal));
+        await logAiUsage({ route: "tutor/live", model: TUTOR_MODEL, user, ip, usage: final.usage });
       } catch (err) {
         console.error("[tutor/live] stream error", err instanceof Error ? err.message : err);
         controller.enqueue(enc.encode(STREAM_MARK.error));

@@ -1,6 +1,7 @@
 import Anthropic from "@anthropic-ai/sdk";
 import { SYSTEM_PROMPT, contextTurn } from "@/lib/tutor/prompt";
 import { TUTOR_MODEL, burstGuard, fail, hasCredential, mapError, takeDaily } from "@/lib/tutor/guard";
+import { logAiUsage } from "@/lib/ai-usage";
 import { STREAM_MARK, TUTOR_LIMITS, TUTOR_STAGES, type TutorContext, type TutorMessage } from "@/lib/tutor/types";
 
 export const runtime = "nodejs";
@@ -108,6 +109,7 @@ export async function POST(req: Request) {
         }
         const final = await stream.finalMessage();
         if (final.stop_reason === "refusal") controller.enqueue(enc.encode(STREAM_MARK.refusal));
+        await logAiUsage({ route: "tutor", model: MODEL, user, ip, usage: final.usage });
       } catch (err) {
         console.error("[tutor] stream error", err instanceof Error ? err.message : err);
         controller.enqueue(enc.encode(STREAM_MARK.error));
