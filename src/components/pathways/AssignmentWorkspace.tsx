@@ -1,5 +1,6 @@
 "use client";
 
+import { track } from "@/lib/analytics";
 import clsx from "clsx";
 import { Check, ChevronDown, Clock, Lightbulb, Link2, Play } from "lucide-react";
 import dynamic from "next/dynamic";
@@ -81,6 +82,7 @@ export function AssignmentWorkspace({ pathway: p, assignment: a, moduleIndex, me
   const submit = () => {
     if (!canSubmit) return;
     if (!s.pathways.enrolled.includes(p.slug)) enroll(p.slug);
+    track("assignment_done", { kind: "pathway", assignment_id: a.id });
     submitAssignment(a.id, { text: draft.text, link: a.submission === "link" ? draft.link.trim() : undefined, checklist: [...draft.checklist].sort((x, y) => x - y) });
     try {
       localStorage.removeItem(draftKey(a.id));

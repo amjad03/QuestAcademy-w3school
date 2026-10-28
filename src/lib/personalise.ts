@@ -41,6 +41,8 @@ export interface PersonalProfile {
   diagnostic?: Record<string, DiagnosticResult>;
   parentEmail?: string;
   parentPhone?: string;
+  /** Under-18s: the parent or guardian's consent (DPDP Act 2023), ticked during onboarding. */
+  parentConsent?: { at: string; policyVersion: string } | null;
   /** "HH:MM" local time for the daily nudge; empty = no reminder. */
   reminderTime?: string;
   /** Set when the learner has gone through the full flow once. */

@@ -8,6 +8,7 @@
  * the full /tutor room and the quick "Ask Questy" panel.
  */
 
+import { track } from "@/lib/analytics";
 import { useCallback, useEffect, useRef, useState, type RefObject } from "react";
 import type { SmartboardHandle } from "@/components/board/Smartboard";
 import type { CheckPoint, LiveRequest, LiveStep } from "./live";
@@ -74,6 +75,19 @@ export function useTutorSession(o: { board: RefObject<SmartboardHandle | null>; 
 
   const sp = speaker();
   useEffect(() => sp.subscribe(setVoice), [sp]);
+
+  // Analytics: one session per mounted tutor room, and which voice engine it settled on.
+  useEffect(() => {
+    track("tutor_session_start", { mode: opts.current.base().mode });
+    const t0 = Date.now();
+    return () => track("tutor_session_end", { seconds: Math.round((Date.now() - t0) / 1000), turns: Math.floor(history.current.length / 2) });
+  }, []);
+  const reportedEngine = useRef(false);
+  useEffect(() => {
+    if (reportedEngine.current || (voice.status !== "ready" && voice.status !== "unavailable")) return;
+    reportedEngine.current = true;
+    track("voice_engine", { engine: voice.status === "ready" ? "kokoro" : "device", cached: voice.cached ?? null });
+  }, [voice.status, voice.cached]);
 
   // Is the tutor configured on this server? (No key → explain instead of failing on the first question.)
   useEffect(() => {

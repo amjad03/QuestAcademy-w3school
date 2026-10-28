@@ -1,5 +1,6 @@
 "use client";
 
+import { track } from "@/lib/analytics";
 import Link from "next/link";
 import { useCallback, useEffect, useMemo, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
@@ -267,6 +268,7 @@ export function CbtExam({ test, pool, formulaChapters = [] }: { test: MockTest; 
       scope: scopeName(s.scope),
     };
     recordMock(res);
+    track("mock_submit", { test_id: test.id, score_pct: res.max ? Math.round((res.score / res.max) * 100) : 0, seconds, answered: res.correct + res.wrong, skipped: res.skipped });
     try {
       localStorage.removeItem(KEY(test.id));
     } catch {

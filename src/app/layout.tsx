@@ -9,6 +9,7 @@ import { Providers } from "@/components/providers";
 import { Overlays } from "@/components/shell/Overlays";
 import { CommandPalette } from "@/components/shell/CommandPalette";
 import { NavProgress } from "@/components/shell/NavProgress";
+import { Monitoring } from "@/components/shell/Monitoring";
 import { SITE_URL } from "@/lib/site";
 
 const sans = Nunito({ subsets: ["latin"], variable: "--font-sans", weight: ["500", "600", "700", "800", "900"], display: "swap" });
@@ -60,6 +61,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           {children}
           <Overlays />
           <CommandPalette />
+          <Monitoring />
         </Providers>
       </body>
     </html>

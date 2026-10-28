@@ -4,6 +4,7 @@ import Link from "next/link";
 import { useEffect, useState } from "react";
 import { RefreshCw } from "lucide-react";
 import { useT } from "@/i18n";
+import { reportError } from "@/lib/monitoring";
 
 /** A chunk from an older build can't be found (the app was updated while this tab was open). */
 function isStaleBuild(error: Error) {
@@ -21,6 +22,7 @@ export function ErrorScreen({ error, reset }: { error: Error & { digest?: string
 
   useEffect(() => {
     console.error(error);
+    if (!isStaleBuild(error)) reportError(error, { digest: error.digest, boundary: "route" });
     if (isStaleBuild(error)) {
       const key = "qa-reloaded-after-update";
       try {

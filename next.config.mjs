@@ -28,7 +28,6 @@ const nextConfig = {
       { source: "/review", destination: "/practice", permanent: false },
       { source: "/explore", destination: "/courses", permanent: false },
       { source: "/kids", destination: "/courses?c=kids", permanent: false },
-      { source: "/school", destination: "/courses?c=school", permanent: false },
       { source: "/campus", destination: "/courses?c=campus", permanent: false },
       { source: "/code", destination: "/courses?c=code", permanent: false },
       { source: "/learn/:subject/:topic/:lesson", destination: "/course/:subject/:topic/:lesson", permanent: true },
@@ -36,4 +35,19 @@ const nextConfig = {
     ];
   },
 };
-export default nextConfig;
+// Sentry's build step (source map upload) runs only when a DSN is configured, and uploads
+// only with SENTRY_AUTH_TOKEN; without them the build is untouched.
+let config = nextConfig;
+if (process.env.NEXT_PUBLIC_SENTRY_DSN || process.env.SENTRY_DSN) {
+  const { withSentryConfig } = await import("@sentry/nextjs");
+  config = withSentryConfig(nextConfig, {
+    org: process.env.SENTRY_ORG,
+    project: process.env.SENTRY_PROJECT,
+    authToken: process.env.SENTRY_AUTH_TOKEN,
+    silent: !process.env.CI,
+    sourcemaps: { disable: !process.env.SENTRY_AUTH_TOKEN, deleteSourcemapsAfterUpload: true },
+    telemetry: false,
+    disableLogger: true,
+  });
+}
+export default config;

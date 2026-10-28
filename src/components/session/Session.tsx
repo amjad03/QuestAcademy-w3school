@@ -1,5 +1,6 @@
 "use client";
 
+import { track } from "@/lib/analytics";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { AnimatePresence, motion } from "framer-motion";
@@ -159,6 +160,7 @@ export function Session({ payload: raw }: { payload: SessionPayload }) {
     if (assessment) (applyAssessment(p.key, p.kind as "quiz" | "test" | "challenge", answers), markItem(p.key));
     else {
       applyPractice(p.key, correct, answers.length);
+      track("practice_done", { lesson_id: p.key, correct, total: answers.length });
       // Finishing the set completes the practice item; the score sets the mastery level.
       markItem(`${p.key}:practice`);
     }
