@@ -178,7 +178,7 @@ export function PlanSetup({ initial, onDone }: { initial?: StudyPlan | null; onD
       </div>
 
       <div className="mt-6 flex flex-wrap justify-end gap-3">
-        {onDone && initial && (
+        {onDone && (
           <button type="button" className="btn-ghost" onClick={onDone}>
             {t("plan.setup.cancel", "Cancel")}
           </button>

@@ -134,7 +134,16 @@ export function WeekPlanCard() {
         ))}
       </ol>
       <div className="mt-3 flex flex-wrap items-center justify-between gap-2 text-sm">
-        {plan.overflow > 0 ? <span className="text-muted">{t("personal.week.overflow", "{n} chapters don’t fit yet. Add study minutes in Settings.", { n: plan.overflow })}</span> : <span />}
+        {plan.overflow > 0 ? (
+          <span className="text-muted">
+            {t("personal.week.overflowShort", "{n} more chapters need extra study time.", { n: plan.overflow })}{" "}
+            <Link href="/settings#my-plan" className="kh-link">
+              {t("personal.week.addTime", "Add daily minutes")}
+            </Link>
+          </span>
+        ) : (
+          <span />
+        )}
         {plan.weeks.length - from > 3 && (
           <button type="button" className="kh-link" onClick={() => setAll(!all)}>
             {all ? t("personal.week.less", "Show less") : t("personal.week.all", "Show all weeks")}

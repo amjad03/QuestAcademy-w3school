@@ -13,6 +13,7 @@ import { useT } from "@/i18n";
 import { PlanSetup } from "./PlanSetup";
 import { useTxt } from "@/components/exam/labels";
 import { usePlan, type LivePlan } from "./usePlan";
+import { TodayPlanCard, WeekPlanCard, usePersonalPlan } from "@/components/personal/PersonalPlan";
 
 const fmt = (d: string, opts: Intl.DateTimeFormatOptions = { weekday: "short", day: "numeric", month: "short" }) => new Date(d + "T00:00:00").toLocaleDateString(undefined, opts);
 
@@ -29,8 +30,32 @@ export function PlanView() {
   const plan = useLearner((s) => s.plan);
   const [editing, setEditing] = useState(false);
   const { live, loading } = usePlan();
+  const personal = usePersonalPlan();
 
   if (!hydrated) return <div className="card h-64 animate-pulse" />;
+  if (!plan && !editing && personal.mc && personal.plan.weeks.length)
+    return (
+      <div className="space-y-6">
+        <header>
+          <h1 className="text-[1.75rem] font-bold leading-tight">{t("plan.view.yourPlan", "Your study plan")}</h1>
+          <p className="mt-1 text-muted">{t("plan.view.yourPlanSub", "Built from your class, subjects and daily study time. It updates as you finish lessons.")}</p>
+        </header>
+        <TodayPlanCard />
+        <WeekPlanCard />
+        <section aria-labelledby="plan-custom" className="card flex flex-col items-start gap-3 p-5 sm:flex-row sm:items-center sm:gap-4">
+          <CalendarPlus className="h-6 w-6 shrink-0 text-accent" aria-hidden />
+          <div className="min-w-0 flex-1">
+            <h2 id="plan-custom" className="font-bold">
+              {t("plan.view.customTitle", "Need a day-by-day calendar?")}
+            </h2>
+            <p className="text-sm text-muted">{t("plan.view.customHint", "Pick a finish date and study days, and we’ll schedule every lesson. You can add it to your phone’s calendar.")}</p>
+          </div>
+          <button type="button" className="btn-ghost w-full sm:w-auto" onClick={() => setEditing(true)}>
+            {t("plan.view.customCta", "Make a calendar")}
+          </button>
+        </section>
+      </div>
+    );
   if (!plan || editing) return <PlanSetup initial={editing ? plan : null} onDone={editing ? () => setEditing(false) : undefined} />;
   if (loading) return <div className="card h-64 animate-pulse" />;
   if (!live)
