@@ -11,7 +11,7 @@ import { useMode } from "@/lib/useMode";
 import { GrownUpGate } from "@/components/modes/ModeSettings";
 import { deleteAccount, pushAccount } from "@/lib/supabase";
 import { mergeNotebooks, notebookSnapshot, useNotebook, type NotebookData } from "@/lib/notebook-store";
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Download, LogOut, Upload } from "lucide-react";
 import clsx from "clsx";
 import { learnerSnapshot, mergeStates, useLearner, type LearnerState } from "@/lib/store";
@@ -36,6 +36,7 @@ export function Settings() {
   const fileRef = useRef<HTMLInputElement>(null);
   const [name, setName] = useState<string | null>(null);
   const t = useT();
+  useSavedToast();
   const stageLabel: Record<string, string> = {
     preprimary: t("onboard.stage.preprimary", "Pre-primary"),
     primary: t("onboard.stage.primary", "Primary"),
@@ -313,4 +314,25 @@ function Toggle({ on, onChange, label }: { on: boolean; onChange: (v: boolean) =
       <span className={clsx("absolute top-1 h-6 w-6 rounded-full bg-white transition-all", on ? "left-7" : "left-1")} />
     </button>
   );
+}
+
+/** Settings save as you change them: confirm it with a quiet "Saved" toast (debounced, so typing doesn't spam it). */
+function useSavedToast() {
+  const t = useT();
+  const label = useRef("");
+  label.current = t("settings.saved", "Saved");
+  const hydrated = useHydrated();
+  useEffect(() => {
+    if (!hydrated) return;
+    let timer: ReturnType<typeof setTimeout> | undefined;
+    const unsub = useLearner.subscribe((now, prev) => {
+      if (now.profile === prev.profile && now.settings === prev.settings) return;
+      clearTimeout(timer);
+      timer = setTimeout(() => useUi.getState().toast({ text: label.current }), 900);
+    });
+    return () => {
+      clearTimeout(timer);
+      unsub();
+    };
+  }, [hydrated]);
 }
