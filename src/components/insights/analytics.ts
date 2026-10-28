@@ -1,6 +1,6 @@
 import { BADGES } from "@/lib/gamification";
 import { MASTERY, type MasteryLevel } from "@/lib/mastery";
-import { getLessonById, getSubject } from "@/content/index";
+import { getLessonById, getSubject } from "@/lib/lesson-lite";
 import type { LearnerState } from "@/lib/store";
 
 export type InsightState = Pick<LearnerState, "items" | "lessons" | "assessments" | "mastery" | "badges" | "streak" | "totals" | "xp" | "pathways" | "profile">;

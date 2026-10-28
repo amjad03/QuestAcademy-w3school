@@ -8,6 +8,7 @@ import "@/experiences/khan/theme.css";
 import { Providers } from "@/components/providers";
 import { Overlays } from "@/components/shell/Overlays";
 import { CommandPalette } from "@/components/shell/CommandPalette";
+import { NavProgress } from "@/components/shell/NavProgress";
 import { SITE_URL } from "@/lib/site";
 
 const sans = Nunito({ subsets: ["latin"], variable: "--font-sans", weight: ["500", "600", "700", "800", "900"], display: "swap" });
@@ -54,6 +55,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <script dangerouslySetInnerHTML={{ __html: themeScript }} />
       </head>
       <body className="min-h-screen font-sans">
+        <NavProgress />
         <Providers>
           {children}
           <Overlays />

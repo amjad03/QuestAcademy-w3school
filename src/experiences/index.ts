@@ -1,17 +1,21 @@
 "use client";
 
+import dynamic from "next/dynamic";
 import type { ModeId } from "@/lib/modes";
 import { useLearner } from "@/lib/store";
 import { useMode } from "@/lib/useMode";
 import { useHydrated } from "@/components/providers";
 import type { Experience } from "./types";
 import { ClassicShell } from "./shared/ClassicShell";
-import { ClassicHome } from "./shared/ClassicHome";
-import { ClassicLessonLayout } from "./shared/ClassicLessonLayout";
-import { ClassicSessionLayout, ClassicSessionResults } from "./shared/ClassicSession";
 import { experience as sprout } from "./sprout";
 import { experience as explore } from "./explore";
 import { khanExperience } from "./khan";
+
+// The Classic/Studio screens load only for learners who pick that skin.
+const ClassicHome = dynamic(() => import("./shared/ClassicHome").then((m) => m.ClassicHome));
+const ClassicLessonLayout = dynamic(() => import("./shared/ClassicLessonLayout").then((m) => m.ClassicLessonLayout));
+const ClassicSessionLayout = dynamic(() => import("./shared/ClassicSession").then((m) => m.ClassicSessionLayout));
+const ClassicSessionResults = dynamic(() => import("./shared/ClassicSession").then((m) => m.ClassicSessionResults));
 
 export type * from "./types";
 

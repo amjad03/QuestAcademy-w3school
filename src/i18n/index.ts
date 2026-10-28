@@ -1,19 +1,62 @@
 "use client";
 
-import { useCallback } from "react";
+import { useCallback, useEffect, useSyncExternalStore } from "react";
 import { useHydrated } from "@/components/providers";
 import { useLearner } from "@/lib/store";
 import { localeInfo, type Locale } from "./locales";
-import hi from "./messages/hi";
-import kn from "./messages/kn";
-import ta from "./messages/ta";
-import te from "./messages/te";
-import mr from "./messages/mr";
-import bn from "./messages/bn";
 
 export { LOCALES, localeInfo, type Locale } from "./locales";
 
-const DICTS: Partial<Record<Locale, Record<string, string>>> = { hi, kn, ta, te, mr, bn };
+type Dict = Record<string, string>;
+
+/** Each language's interface strings load on demand (about 250 KB each), so English pages don't download all six. */
+const LOADERS: Partial<Record<Locale, () => Promise<{ default: Dict }>>> = {
+  hi: () => import("./messages/hi"),
+  kn: () => import("./messages/kn"),
+  ta: () => import("./messages/ta"),
+  te: () => import("./messages/te"),
+  mr: () => import("./messages/mr"),
+  bn: () => import("./messages/bn"),
+};
+
+const DICTS: Partial<Record<Locale, Dict>> = {};
+const pending = new Set<Locale>();
+const listeners = new Set<() => void>();
+let version = 0;
+
+/** Starts loading a language's strings (no-op for English or once loaded). */
+export function loadLocale(locale: Locale): void {
+  const loader = LOADERS[locale];
+  if (!loader || DICTS[locale] || pending.has(locale)) return;
+  pending.add(locale);
+  loader()
+    .then((m) => {
+      DICTS[locale] = m.default;
+      version++;
+      listeners.forEach((f) => f());
+    })
+    .catch(() => {})
+    .finally(() => pending.delete(locale));
+}
+
+// Begin fetching the saved language straight away, in parallel with hydration.
+if (typeof window !== "undefined") {
+  try {
+    const saved = JSON.parse(localStorage.getItem("quest-academy") || "{}")?.state?.settings?.locale as Locale | undefined;
+    if (saved) loadLocale(saved);
+  } catch {
+    /* ignore */
+  }
+}
+
+const subscribe = (f: () => void) => {
+  listeners.add(f);
+  return () => {
+    listeners.delete(f);
+  };
+};
+const getVersion = () => version;
+const getServerVersion = () => 0;
 
 type Vars = Record<string, string | number>;
 
@@ -30,7 +73,11 @@ export function translate(locale: Locale, key: string, english: string, vars?: V
 export function useLocale(): Locale {
   const hydrated = useHydrated();
   const locale = useLearner((s) => s.settings.locale ?? "en");
-  return hydrated ? locale : "en";
+  // Re-render once the language's strings arrive.
+  useSyncExternalStore(subscribe, getVersion, getServerVersion);
+  const active = hydrated ? locale : "en";
+  useEffect(() => loadLocale(active), [active]);
+  return active;
 }
 
 /**
@@ -46,7 +93,9 @@ export function useLocale(): Locale {
  */
 export function useT() {
   const locale = useLocale();
-  return useCallback((key: string, english: string, vars?: Vars) => translate(locale, key, english, vars), [locale]);
+  const v = useSyncExternalStore(subscribe, getVersion, getServerVersion);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  return useCallback((key: string, english: string, vars?: Vars) => translate(locale, key, english, vars), [locale, v]);
 }
 
 /** BCP-47 tag of the current language, for speech and Intl formatting. */

@@ -3,6 +3,11 @@ import { Session, type SessionPayload } from "@/components/session/Session";
 import { courseOutline, lessonQuestions } from "@/content/course";
 import { syllabusChapterById } from "@/content/my-class";
 
+// Rendered on first visit, then served from the cache (no per-request server render).
+export function generateStaticParams() {
+  return [];
+}
+
 type Params = { id: string; kind: string };
 
 /**

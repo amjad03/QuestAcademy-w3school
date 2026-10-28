@@ -1,4 +1,4 @@
-import { getSubject, getLessonById, flatLessons, type LessonRef } from "@/content";
+import { getSubject, getLessonById, flatLessons, type LiteLessonRef as LessonRef } from "@/lib/lesson-lite";
 import type { LearnerState } from "@/lib/store";
 import { translate } from "@/i18n";
 
