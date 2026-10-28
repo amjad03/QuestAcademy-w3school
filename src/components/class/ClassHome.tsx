@@ -185,7 +185,7 @@ function DailyHeader({ sub }: { sub: string }) {
               <CalendarClock className="h-5 w-5 shrink-0 text-accent" aria-hidden />
               <span className="truncate text-lg font-bold tabular-nums leading-tight">{f.n(exam.days)}</span>
             </dt>
-            <dd className="mt-0.5 truncate text-xs text-muted">
+            <dd className="mt-0.5 line-clamp-2 text-xs leading-snug text-muted">
               {t("class.daysTo", "days to {exam}", { exam: exam.name })}
               {exam.approx ? ` · ${t("khan.approx", "approx.")}` : ""}
             </dd>
@@ -205,7 +205,7 @@ function Stat({ icon, value, label, href }: { icon: ReactNode; value: string; la
         {icon}
         <span className="truncate text-lg font-bold tabular-nums leading-tight">{value}</span>
       </dt>
-      <dd className="mt-0.5 truncate text-xs text-muted">{label}</dd>
+      <dd className="mt-0.5 line-clamp-2 text-xs leading-snug text-muted">{label}</dd>
     </>
   );
   const cls = "min-w-0 rounded-xl border border-line bg-surface px-3 py-2.5";

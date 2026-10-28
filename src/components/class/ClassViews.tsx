@@ -54,19 +54,36 @@ export function ClassCrumbs({ items }: { items: { href?: string; label: string }
   );
 }
 
-function NotInClass() {
+function NotInClass({ subject }: { subject?: ClassSubject | null }) {
   const t = useT();
+  const subjectName = useSubjectName();
   return (
     <div className="mx-auto max-w-xl px-5 py-16 text-center">
-      <h1 className="text-2xl font-bold">{t("class.notFound.title", "This isn’t in your class")}</h1>
-      <p className="mt-2 text-muted">{t("class.notFound.body", "It may be a subject you haven’t chosen. You can change your class and subjects in Settings.")}</p>
+      <h1 className="text-2xl font-bold">{subject ? t("class.notFound.chapterTitle", "We couldn’t find that chapter") : t("class.notFound.title", "This isn’t in your class")}</h1>
+      <p className="mt-2 text-muted">
+        {subject
+          ? t("class.notFound.chapterBody", "The link may be out of date. Pick the chapter from your {subject} list.", { subject: subjectName(subject) })
+          : t("class.notFound.body", "It may be a subject you haven’t chosen. You can change your class and subjects in Settings.")}
+      </p>
       <div className="mt-6 flex flex-wrap justify-center gap-3">
-        <Link href="/learn" className="btn-primary">
-          {t("class.backHome", "Back to my class")}
-        </Link>
-        <Link href="/settings#my-class" className="btn-ghost">
-          {t("class.changeSubjects", "Change class or subjects")}
-        </Link>
+        {subject ? (
+          <Link href={subjectHref(subject)} className="btn-primary">
+            {t("class.notFound.allChapters", "See all {subject} chapters", { subject: subjectName(subject) })}
+          </Link>
+        ) : (
+          <Link href="/learn" className="btn-primary">
+            {t("class.backHome", "Back to my class")}
+          </Link>
+        )}
+        {subject ? (
+          <Link href="/learn" className="btn-ghost">
+            {t("class.backHome", "Back to my class")}
+          </Link>
+        ) : (
+          <Link href="/settings#my-class" className="btn-ghost">
+            {t("class.changeSubjects", "Change class or subjects")}
+          </Link>
+        )}
       </div>
     </div>
   );
@@ -106,6 +123,8 @@ export function SubjectView({ subjectId }: { subjectId: string }) {
       </header>
       <MasteryBar levels={ps.map((p) => p.level as MasteryLevel)} height={10} className="mt-5" />
 
+      {subject.chapters.length > 0 && <SubjectUpNext subject={subject} ps={ps} />}
+
       <div className="mt-8 space-y-8">
         {subject.parts.map((part, pi) => (
           <section key={pi} aria-labelledby={part.name ? `part-${pi}` : undefined}>
@@ -126,6 +145,54 @@ export function SubjectView({ subjectId }: { subjectId: string }) {
         ))}
       </div>
     </div>
+  );
+}
+
+/** "Continue with Chapter 3" — the first unfinished chapter (a started one wins), with its lesson, practice and test. */
+function SubjectUpNext({ subject, ps }: { subject: ClassSubject; ps: ChapterProgress[] }) {
+  const t = useT();
+  const f = useFmt();
+  const i = (() => {
+    const started = ps.findIndex((p) => p.completed > 0 && !p.done);
+    return started >= 0 ? started : ps.findIndex((p) => !p.done);
+  })();
+  const chapter = i >= 0 ? subject.chapters[i] : null;
+  const title = useChapterTitle(chapter ?? subject.chapters[0]);
+  if (!chapter)
+    return (
+      <div className="card mt-6 flex flex-wrap items-center gap-3 p-5">
+        <Check className="h-6 w-6 shrink-0 text-good" strokeWidth={3} aria-hidden />
+        <p className="min-w-0 flex-1 font-semibold">{t("class.subjectDone", "Every chapter is done. Keep it fresh with practice and mock tests.")}</p>
+        <Link href="/exam/mock" className="btn-ghost">
+          {t("class.mockTests", "Mock tests")}
+        </Link>
+      </div>
+    );
+  const p = ps[i];
+  const started = p.completed > 0;
+  const sessions = chapterSessionHrefs(chapter);
+  return (
+    <section aria-labelledby="subject-next" className="card mt-6 p-5">
+      <p className="eyebrow">{started ? t("class.continueChapter", "Continue where you left off") : t("class.upNextChapter", "Up next")}</p>
+      <h2 id="subject-next" className="mt-1 text-lg font-bold leading-snug">
+        {t("class.chapterTitleN", "Chapter {n}: {title}", { n: f.n(chapter.n), title })}
+      </h2>
+      <div className="mt-4 flex flex-wrap gap-2">
+        <Link href={p.nextLesson ? lessonHref(p.nextLesson) : chapterHref(subject, chapter)} className="btn-primary">
+          <BookOpen className="h-4 w-4" aria-hidden /> {started ? t("class.continueLesson", "Continue lesson") : t("class.startChapter", "Start chapter")}
+        </Link>
+        {chapter.lessonIds.length > 0 && (
+          <>
+            <Link href={sessions.practice} className="btn-ghost">
+              <Target className="h-4 w-4" aria-hidden /> {t("class.practiseShort", "Practise")}
+            </Link>
+            <Link href={sessions.test} className="btn-ghost">
+              <Trophy className="h-4 w-4" aria-hidden /> {t("class.test", "Chapter test")}
+            </Link>
+          </>
+        )}
+      </div>
+    </section>
   );
 }
 
@@ -169,7 +236,7 @@ export function ChapterView({ subjectId, chapterSlug, examIndex }: { subjectId: 
   const subject = mc?.subjects.find((s) => s.id === subjectId) ?? null;
   const chapter = subject?.chapters.find((c) => c.slug === chapterSlug) ?? null;
   if (!hydrated) return <Loading />;
-  if (!mc || !subject || !chapter) return <NotInClass />;
+  if (!mc || !subject || !chapter) return <NotInClass subject={subject} />;
   return <Chapter myClass={mc.myClass} subject={subject} chapter={chapter} examIndex={examIndex} />;
 }
 
