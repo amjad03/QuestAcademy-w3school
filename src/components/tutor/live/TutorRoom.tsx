@@ -14,7 +14,9 @@ import { TUTOR_LANGUAGES, type LiveMode, type Recap, type TutorLanguage } from "
 import { fetchRecap, languageForLocale, photoToBase64, speechLang, studentInfo } from "@/lib/tutor/live-client";
 import { useBoards } from "@/lib/tutor/board-store";
 import { trimHistory, useTutorSession } from "@/lib/tutor/useTutorSession";
+import { speaker } from "@/lib/tutor/speech";
 import { VoiceChip, VoiceDock, liveErrorText } from "./VoiceDock";
+import { TutorLoader } from "./TutorLoader";
 
 type Phase = "setup" | "live" | "recap" | "replay";
 
@@ -54,6 +56,15 @@ export function TutorRoom({ pass }: { pass: string | null }) {
     const id = setTimeout(preloadVoice, 600);
     return () => clearTimeout(id);
   }, [preloadVoice]);
+
+  // Hold the first lesson until Kokoro is ready (the full-screen loader shows progress).
+  useEffect(() => {
+    const sp = speaker();
+    sp.hold = !muted;
+    return () => void (sp.hold = false);
+  }, [muted]);
+  const voiceSettled = muted || (s.voice.status !== "loading" && s.voice.status !== "off") || !speaker().capable();
+  const loading = phase === "live" && !(voiceSettled && (s.lessonReady || Boolean(s.error)));
 
   // A failed first turn: back to the setup card (with the error shown there).
   useEffect(() => {
@@ -144,6 +155,7 @@ export function TutorRoom({ pass }: { pass: string | null }) {
 
   return (
     <div className="space-y-4">
+      {loading && <TutorLoader s={s} onCancel={() => (s.stopAll(), setPhase("setup"))} />}
       <header className="flex flex-wrap items-center gap-2">
         <h1 className="text-2xl font-black">{t("tutor.live.title", "Live AI tutor")}</h1>
         <span className="rounded-full bg-accent-soft px-2 py-0.5 text-xs font-extrabold text-accent">{t("tutor.live.premium", "Premium")}</span>

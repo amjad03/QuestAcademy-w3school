@@ -3,9 +3,9 @@
 /**
  * The live tutor's voice.
  *
- * 1. Kokoro-82M running in the browser (kokoro-js in a module worker; WebGPU on
- *    capable desktops, WASM elsewhere; the model is cached by the browser after
- *    the first load). Voice "hf_alpha" — Kokoro's Hindi female voice — speaking
+ * 1. Kokoro-82M running in the browser (kokoro-js + ONNX Runtime WASM, self-hosted
+ *    in /public/kokoro, in a module worker; the ~92 MB q8 model is kept in Cache
+ *    Storage after the first load). Voice "hf_alpha" — Kokoro's Hindi female voice — speaking
  *    English gives a natural Indian-English accent. Text is spoken sentence by
  *    sentence and the next sentences are synthesised while one plays, so speech
  *    starts fast.
@@ -20,47 +20,25 @@ export type VoiceEngineStatus = "off" | "loading" | "ready" | "unavailable";
 
 const MODEL = "onnx-community/Kokoro-82M-v1.0-ONNX";
 export const KOKORO_VOICE = "hf_alpha";
+/** The big file; transformers.js keeps it in Cache Storage under this URL. */
+const MODEL_URL = `https://huggingface.co/${MODEL}/resolve/main/onnx/model_quantized.onnx`;
+/** Rough size of a first download (model + tokenizer + voice), for the loader before real totals arrive. */
+export const MODEL_MB = 92;
 
-const WORKER = `
-import { KokoroTTS } from "https://cdn.jsdelivr.net/npm/kokoro-js@1.2.1/+esm";
-let tts = null, loading = null, cancelled = 0, chain = Promise.resolve();
-const HINDI = { hf_alpha: "Female", hf_beta: "Female", hm_omega: "Male", hm_psi: "Male" };
-async function load(gpu) {
-  const progress = (p) => { if (p && p.status === "progress" && /onnx$/.test(p.file || "")) self.postMessage({ type: "progress", value: Math.round(p.progress || 0) }); };
-  let m = null;
-  if (gpu) { try { m = await KokoroTTS.from_pretrained(${JSON.stringify(MODEL)}, { dtype: "fp32", device: "webgpu", progress_callback: progress }); } catch (e) { m = null; } }
-  if (!m) m = await KokoroTTS.from_pretrained(${JSON.stringify(MODEL)}, { dtype: "q8", device: "wasm", progress_callback: progress });
-  // kokoro-js lists only the English voices; Kokoro's Hindi voices live in the same model repo.
-  const v = m.voices;
-  for (const [id, gender] of Object.entries(HINDI)) if (!v[id]) v[id] = { name: id, language: "en-gb", gender };
-  // Warm up (first inference compiles kernels).
-  await m.generate("Hello.", { voice: ${JSON.stringify(KOKORO_VOICE)} });
-  tts = m;
-  self.postMessage({ type: "ready" });
+export type VoiceStage = "idle" | "download" | "warmup" | "ready" | "device";
+
+export interface VoiceSnapshot {
+  status: VoiceEngineStatus;
+  stage: VoiceStage;
+  /** 0..100 */
+  progress: number;
+  loaded: number;
+  total: number;
+  /** Model already in Cache Storage (second visit: no download). */
+  cached: boolean | null;
+  /** Why the device voice is being used, if it is. */
+  reason: string | null;
 }
-self.onmessage = (e) => {
-  const d = e.data || {};
-  if (d.type === "load") {
-    loading ??= load(d.gpu).catch((err) => self.postMessage({ type: "failed", error: String((err && err.message) || err) }));
-    return;
-  }
-  if (d.type === "cancel") { cancelled = Math.max(cancelled, d.gen); return; }
-  if (d.type === "say") {
-    chain = chain.then(async () => {
-      if (d.gen <= cancelled) return self.postMessage({ type: "audio", id: d.id, skipped: true });
-      try {
-        if (!tts) await loading;
-        if (!tts) throw new Error("not loaded");
-        const a = await tts.generate(d.text, { voice: d.voice, speed: d.speed || 1 });
-        const pcm = a.audio;
-        self.postMessage({ type: "audio", id: d.id, pcm, rate: a.sampling_rate }, [pcm.buffer]);
-      } catch (err) {
-        self.postMessage({ type: "audio", id: d.id, error: String((err && err.message) || err) });
-      }
-    });
-  }
-};
-`;
 
 const INDIC = /[ऀ-෿]/;
 
@@ -73,7 +51,7 @@ export function sentences(text: string): string[] {
   const out: string[] = [];
   for (const p of parts) {
     // Very long sentences: break at a comma/semicolon so the first audio is ready sooner.
-    if (p.split(" ").length > 28) out.push(...p.split(/(?<=[,;:])\s+/));
+    if (p.split(" ").length > 20) out.push(...p.split(/(?<=[,;:])\s+/));
     else out.push(p);
   }
   return out.filter((s) => /[\p{L}\p{N}]/u.test(s));
@@ -90,12 +68,19 @@ function speakable(s: string) {
     .trim();
 }
 
-type Listener = (s: VoiceEngineStatus, progress: number) => void;
+type Listener = (v: VoiceSnapshot) => void;
 
 class Speaker {
   status: VoiceEngineStatus = "off";
+  stage: VoiceStage = "idle";
   progress = 0;
+  loaded = 0;
+  total = 0;
+  cached: boolean | null = null;
+  reason: string | null = null;
   speaking = false;
+  /** While true, the tutor waits for the model before it starts a lesson (set by the full-screen loader). */
+  hold = false;
   private worker: Worker | null = null;
   private seq = 0;
   private gen = 1;
@@ -108,61 +93,120 @@ class Speaker {
   private listeners = new Set<Listener>();
   private buf: Uint8Array<ArrayBuffer> | null = null;
   private failures = 0;
+  private waiters: (() => void)[] = [];
 
+  snapshot(): VoiceSnapshot {
+    return { status: this.status, stage: this.stage, progress: this.progress, loaded: this.loaded, total: this.total, cached: this.cached, reason: this.reason };
+  }
   subscribe(fn: Listener) {
     this.listeners.add(fn);
-    fn(this.status, this.progress);
+    fn(this.snapshot());
     return () => void this.listeners.delete(fn);
+  }
+  private emit() {
+    const v = this.snapshot();
+    this.listeners.forEach((l) => l(v));
+    if (this.status !== "loading") this.waiters.splice(0).forEach((w) => w());
   }
   private set(s: VoiceEngineStatus, progress = this.progress) {
     this.status = s;
     this.progress = progress;
-    this.listeners.forEach((l) => l(s, progress));
+    if (s === "ready") this.stage = "ready";
+    this.emit();
   }
 
-  /** Whether this device should try the in-browser model at all. */
-  capable() {
-    if (typeof window === "undefined" || typeof Worker === "undefined" || typeof AudioContext === "undefined") return false;
+  /** Resolves once the model is ready or the device voice has been chosen. */
+  settled(): Promise<void> {
+    if (this.status !== "loading") return Promise.resolve();
+    return new Promise((r) => this.waiters.push(r));
+  }
+
+  /** Whether this device should try the in-browser model at all (null = yes, else the reason). */
+  private incapable(): string | null {
+    if (typeof window === "undefined") return "server";
+    if (typeof Worker === "undefined") return "Web Workers are not available";
+    if (typeof AudioContext === "undefined") return "Web Audio is not available";
+    if (typeof WebAssembly === "undefined") return "WebAssembly is not available";
     const nav = navigator as Navigator & { deviceMemory?: number; connection?: { saveData?: boolean } };
-    if (nav.connection?.saveData) return false;
-    if (nav.deviceMemory !== undefined && nav.deviceMemory < 4) return false;
-    return true;
+    if (nav.connection?.saveData) return "Data Saver is on";
+    if (nav.deviceMemory !== undefined && nav.deviceMemory < 4) return `low-memory device (${nav.deviceMemory} GB)`;
+    return null;
+  }
+  capable() {
+    return this.incapable() === null;
+  }
+
+  /** Is the model already saved in this browser? */
+  private async checkCache() {
+    try {
+      if (typeof caches === "undefined") return (this.cached = false);
+      const c = await caches.open("transformers-cache");
+      this.cached = Boolean(await c.match(MODEL_URL));
+    } catch {
+      this.cached = false;
+    }
+    this.emit();
+    // Ask the browser not to evict the ~92 MB model under storage pressure.
+    if (!this.cached) void navigator.storage?.persist?.().catch(() => false);
   }
 
   /** Start downloading/compiling the model in the background (safe to call repeatedly). */
   preload() {
     if (this.worker || this.status === "unavailable") return;
-    if (!this.capable()) return this.set("unavailable");
+    const why = this.incapable();
+    if (why) return this.fail(why);
     try {
-      this.worker = new Worker(URL.createObjectURL(new Blob([WORKER], { type: "text/javascript" })), { type: "module" });
-    } catch {
-      return this.set("unavailable");
+      this.worker = new Worker("/kokoro/tts-worker.js", { type: "module" });
+    } catch (e) {
+      return this.fail(`could not start the voice worker: ${String(e)}`);
     }
     this.worker.onerror = (e) => {
       e.preventDefault();
-      this.fail();
+      this.fail(`voice worker crashed: ${e.message || "script error"}`);
     };
     this.worker.onmessage = (e: MessageEvent) => {
-      const d = e.data as { type: string; id?: number; value?: number; pcm?: Float32Array; rate?: number; error?: string; skipped?: boolean };
-      if (d.type === "progress") this.status === "loading" && this.set("loading", d.value ?? 0);
-      else if (d.type === "ready") this.set("ready", 100);
-      else if (d.type === "failed") this.fail();
+      const d = e.data as { type: string; id?: number; stage?: VoiceStage; loaded?: number; total?: number; pcm?: Float32Array; rate?: number; error?: string; text?: string; skipped?: boolean };
+      if (d.type === "progress" && this.status === "loading") {
+        this.loaded = d.loaded ?? 0;
+        this.total = d.total ?? 0;
+        this.progress = this.total ? Math.min(100, Math.round((this.loaded / this.total) * 100)) : 0;
+        this.emit();
+      } else if (d.type === "stage" && this.status === "loading") {
+        this.stage = d.stage ?? this.stage;
+        if (this.stage === "warmup") this.progress = 100;
+        this.emit();
+      } else if (d.type === "log") console.info("[Questy voice]", d.text);
+      else if (d.type === "ready") {
+        console.info("[Questy voice] Kokoro ready (voice %s)", KOKORO_VOICE);
+        this.set("ready", 100);
+      } else if (d.type === "failed") this.fail(`Kokoro failed to load: ${d.error}`);
       else if (d.type === "audio" && d.id) {
         const res = this.pending.get(d.id);
         this.pending.delete(d.id);
-        if (d.error && ++this.failures >= 3) this.fail();
+        if (d.error) {
+          console.warn("[Questy voice] Kokoro could not speak a sentence:", d.error);
+          if (++this.failures >= 3) this.fail(`Kokoro failed 3 times: ${d.error}`);
+        }
         res?.(d.pcm ? { pcm: d.pcm, rate: d.rate } : null);
       }
     };
-    const nav = navigator as Navigator & { gpu?: unknown; deviceMemory?: number; userAgentData?: { mobile?: boolean } };
-    const mobile = nav.userAgentData?.mobile ?? /Android|iPhone|iPad|Mobile/i.test(navigator.userAgent);
-    // WebGPU needs the larger fp32 model: only on desktops with memory to spare.
-    const gpu = Boolean(nav.gpu) && !mobile && (nav.deviceMemory ?? 8) >= 8;
+    this.stage = "download";
     this.set("loading", 0);
-    this.worker.postMessage({ type: "load", gpu });
+    void this.checkCache();
+    this.worker.postMessage({ type: "load", model: MODEL, voice: KOKORO_VOICE });
   }
 
-  private fail() {
+  /** Give up on Kokoro for this visit and use the device voice ("Continue with device voice"). */
+  useDevice() {
+    if (this.status === "unavailable") return;
+    this.fail("you chose the device voice", true);
+  }
+
+  private fail(reason: string, chosen = false) {
+    if (chosen) console.info("[Questy voice] Using device voice:", reason);
+    else console.warn("[Questy voice] Using device voice:", reason);
+    this.reason = reason;
+    this.stage = "device";
     this.worker?.terminate();
     this.worker = null;
     this.pending.forEach((r) => r(null));
@@ -238,8 +282,10 @@ class Speaker {
       onSentence?.(s);
       let done = false;
       if (this.useKokoro(s, lang)) {
-        const buf = await Promise.race([this.synth(speakable(s)), new Promise<null>((r) => setTimeout(() => r(null), 6000))]);
+        // Single-threaded WASM can take a few seconds for a long sentence; don't jump to the robotic voice too soon.
+        const buf = await Promise.race([this.synth(speakable(s)), new Promise<null>((r) => setTimeout(() => r(null), 20000))]);
         if (my !== this.gen) return;
+        if (!buf) console.warn("[Questy voice] Kokoro gave no audio for a sentence; using the device voice for it.");
         if (buf) {
           await this.play(buf);
           done = true;
@@ -252,6 +298,7 @@ class Speaker {
   private play(buf: AudioBuffer) {
     return new Promise<void>((resolve) => {
       const ctx = this.ctx!;
+      if (ctx.state === "suspended") void ctx.resume().catch(() => {});
       const src = ctx.createBufferSource();
       src.buffer = buf;
       src.connect(this.analyser!);

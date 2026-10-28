@@ -80,9 +80,10 @@ export function VoiceChip({ s }: { s: TutorSession }) {
       ? t("tutor.voice.ready", "Natural Indian voice")
       : v.status === "loading"
         ? t("tutor.voice.loading", "Loading natural voice… {p}%", { p: v.progress })
-        : t("tutor.voice.device", "Device voice");
+        : t("tutor.voice.device", "Using device voice");
+  const tip = v.status === "unavailable" && v.reason ? t("tutor.voice.why", "Natural voice unavailable: {r}", { r: v.reason }) : t("tutor.voice.tip", "Kokoro open-source voice, running on this device");
   return (
-    <span className={clsx("inline-flex items-center gap-1 rounded-full px-2 py-0.5 text-[11px] font-extrabold", v.status === "ready" ? "bg-emerald-100 text-emerald-800 dark:bg-emerald-950 dark:text-emerald-200" : "bg-surface-2 text-muted")} title={t("tutor.voice.tip", "Kokoro open-source voice, running on this device")}>
+    <span className={clsx("inline-flex items-center gap-1 rounded-full px-2 py-0.5 text-[11px] font-extrabold", v.status === "ready" ? "bg-emerald-100 text-emerald-800 dark:bg-emerald-950 dark:text-emerald-200" : "bg-surface-2 text-muted")} title={tip}>
       {v.status === "loading" ? <Loader2 className="h-3 w-3 animate-spin" /> : <AudioLines className="h-3 w-3" />} {text}
     </span>
   );

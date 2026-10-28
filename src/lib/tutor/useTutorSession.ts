@@ -12,7 +12,7 @@ import { useCallback, useEffect, useRef, useState, type RefObject } from "react"
 import type { SmartboardHandle } from "@/components/board/Smartboard";
 import type { CheckPoint, LiveRequest, LiveStep } from "./live";
 import { streamTurn, type LiveError } from "./live-client";
-import { speaker, type VoiceEngineStatus } from "./speech";
+import { speaker, type VoiceSnapshot } from "./speech";
 import { VoiceListener, recognitionSupported, type MicError } from "./listen";
 
 export type Msg = { role: "user" | "assistant"; content: string };
@@ -47,7 +47,8 @@ export function useTutorSession(o: { board: RefObject<SmartboardHandle | null>; 
   const [ptt, setPtt] = useState(false);
   const [interim, setInterim] = useState("");
   const [micError, setMicError] = useState<MicError | null>(null);
-  const [voice, setVoice] = useState<{ status: VoiceEngineStatus; progress: number }>({ status: "off", progress: 0 });
+  const [voice, setVoice] = useState<VoiceSnapshot>(() => speaker().snapshot());
+  const [lessonReady, setLessonReady] = useState(false);
   const [log, setLog] = useState<LogLine[]>([]);
   const [available, setAvailable] = useState<boolean | null>(null);
   const availableRef = useRef(available);
@@ -72,7 +73,7 @@ export function useTutorSession(o: { board: RefObject<SmartboardHandle | null>; 
   live.current = { check, busy: streaming || playing, mode: o.base().mode };
 
   const sp = speaker();
-  useEffect(() => sp.subscribe((status, progress) => setVoice({ status, progress })), [sp]);
+  useEffect(() => sp.subscribe(setVoice), [sp]);
 
   // Is the tutor configured on this server? (No key → explain instead of failing on the first question.)
   useEffect(() => {
@@ -168,6 +169,9 @@ export function useTutorSession(o: { board: RefObject<SmartboardHandle | null>; 
       setStreaming(true);
       setPlaying(true);
       played.current = [];
+      // The full-screen loader holds playback (board + voice) until Kokoro is ready, so the
+      // first lesson isn't narrated by the device voice; the lesson streams in meanwhile.
+      if (sp.hold && sp.status === "loading") play.current = play.current.then(() => sp.settled());
       inFlight.current = true;
       history.current = trimHistory([...history.current, { role: "user", content }]);
       const ctrl = new AbortController();
@@ -179,6 +183,7 @@ export function useTutorSession(o: { board: RefObject<SmartboardHandle | null>; 
         opts.current.pass,
         (step) => {
           if (step.check || step.hint || step.end) gotPause = true;
+          setLessonReady(true);
           if (!opts.current.muted) sp.prefetch(step.say, lang);
           play.current = play.current.then(() => playStep(step, my));
         },
@@ -349,6 +354,7 @@ export function useTutorSession(o: { board: RefObject<SmartboardHandle | null>; 
     says.current = [];
     recent.current = [];
     played.current = [];
+    setLessonReady(false);
     started.current = performance.now();
     play.current = Promise.resolve();
     setCaption("");
@@ -401,6 +407,7 @@ export function useTutorSession(o: { board: RefObject<SmartboardHandle | null>; 
     micError,
     micSupported: recognitionSupported(),
     voice,
+    lessonReady,
     log,
     available,
     history,
@@ -415,6 +422,7 @@ export function useTutorSession(o: { board: RefObject<SmartboardHandle | null>; 
     pushToTalk,
     unlock: () => sp.unlock(),
     preloadVoice: () => sp.preload(),
+    useDeviceVoice: () => sp.useDevice(),
     level: () => sp.level(),
   };
 }

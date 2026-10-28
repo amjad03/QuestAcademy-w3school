@@ -71,8 +71,10 @@ function playUrl(url: string, my: number, opts: SayOptions, onFail: () => void) 
 
 /* ---------------- live Kokoro (lazy, in a module worker) ---------------- */
 
-const WORKER = `
-import { KokoroTTS } from "https://cdn.jsdelivr.net/npm/kokoro-js@1.2.1/+esm";
+// kokoro-js + ONNX Runtime wasm are self-hosted in /public/kokoro (see tts-worker.js there).
+const workerSource = (origin: string) => `
+const { KokoroTTS, env } = await import("${origin}/kokoro/kokoro-1.2.1.web.js");
+env.wasmPaths = "${origin}/kokoro/";
 let tts = null;
 self.onmessage = async (e) => {
   const { id, text, voice } = e.data;
@@ -103,13 +105,14 @@ function live(text: string): Promise<string> {
   const k = voiceKey(text);
   const hit = liveCache.get(k);
   if (hit) return Promise.resolve(hit);
-  worker ??= new Worker(URL.createObjectURL(new Blob([WORKER], { type: "text/javascript" })), { type: "module" });
+  worker ??= new Worker(URL.createObjectURL(new Blob([workerSource(location.origin)], { type: "text/javascript" })), { type: "module" });
   const id = ++seq;
   return new Promise((resolve, reject) => {
     const onMsg = (e: MessageEvent) => {
       if (e.data?.id !== id) return;
       worker!.removeEventListener("message", onMsg);
       if (!e.data.ok) {
+        console.warn("[Questy voice] Kokoro unavailable, using device voice:", e.data.error);
         liveBroken = true;
         return reject(new Error(e.data.error));
       }
