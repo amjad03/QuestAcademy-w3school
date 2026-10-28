@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import { KinetixButton } from "@/components/school/KinetixButton";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
 import { Eye, EyeOff, Loader2, X } from "lucide-react";
@@ -230,6 +231,7 @@ export function AuthForm() {
           </div>
         ) : (
           <>
+            <KinetixButton />
             <form onSubmit={submit} noValidate className="mt-8 space-y-3" aria-busy={busy}>
               <div>
                 <input

@@ -4,6 +4,7 @@ import { KudosShelf } from "@/components/school/StudentSchool";
 import Link from "next/link";
 import { BookOpenCheck, CalendarDays, Flame, PencilLine, Settings, ShieldHalf, Target, Zap } from "lucide-react";
 import { useLearner } from "@/lib/store";
+import { badgeVisible } from "@/lib/classScope";
 import { BADGES, leagueFor, levelInfo, weekKey } from "@/lib/gamification";
 import { masteryPoints } from "@/lib/mastery";
 import { useHydrated } from "@/components/providers";
@@ -45,8 +46,9 @@ export function Profile() {
   const mp = masteryPoints(allIds.map((id) => s.mastery[id]));
   const joined = new Date(s.profile.createdAt);
 
-  const earned = BADGES.filter((b) => s.badges[b.id]);
-  const inProgress = BADGES.filter((b) => !s.badges[b.id]);
+  const shown = BADGES.filter((b) => badgeVisible(s.profile, b.id));
+  const earned = shown.filter((b) => s.badges[b.id]);
+  const inProgress = shown.filter((b) => !s.badges[b.id]);
 
   return (
     <PageColumns rail={rail}>
@@ -142,7 +144,7 @@ export function Profile() {
         <div className="flex items-baseline justify-between">
           <h2 className="text-2xl font-black">{t("profile.badges.title", "Achievements")}</h2>
           <span className="text-sm font-bold text-muted">
-            {t("profile.badges.count", "{n} of {total}", { n: earned.length, total: BADGES.length })}
+            {t("profile.badges.count", "{n} of {total}", { n: earned.length, total: shown.length })}
           </span>
         </div>
         <div className="card mt-4 divide-y-2 divide-line">

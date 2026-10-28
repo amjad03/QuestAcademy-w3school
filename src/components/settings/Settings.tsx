@@ -1,6 +1,7 @@
 "use client";
 
 import { ModeSettings } from "@/components/modes/ModeSettings";
+import { isSeniorClass } from "@/lib/classScope";
 import { SkinPicker } from "@/components/settings/SkinPicker";
 import { LanguagePicker } from "@/components/i18n/LanguagePicker";
 import { TutorToggle } from "@/components/tutor/TutorToggle";
@@ -28,6 +29,7 @@ import { ClassPicker, choiceFromProfile, stageForLevel } from "@/components/clas
 export function Settings() {
   const hydrated = useHydrated();
   const s = useLearner();
+  const senior = isSeniorClass(s.profile);
   const { enabled, user, signOut } = useAuth();
   const router = useRouter();
   const young = useMode().young;
@@ -149,14 +151,32 @@ export function Settings() {
         </Section>
       )}
 
-      <Section id="design" title={t("settings.section.design", "Design")} bare>
-        <SkinPicker />
-      </Section>
+      {senior ? (
+        // Class 8–12: one focused design; the other looks and age modes stay one click away.
+        <section id="design" className="mt-8 scroll-mt-6">
+          <details className="card p-5">
+            <summary className="cursor-pointer font-extrabold">{t("settings.otherLooks", "Other looks and age designs")}</summary>
+            <p className="mt-2 text-sm text-muted">{t("settings.otherLooksHint", "Your class already uses the design made for Classes 8–12. Switch only if you prefer another look.")}</p>
+            <div id="experience" className="mt-4">
+              <SkinPicker />
+              <div className="mt-6">
+                <ModeSettings />
+              </div>
+            </div>
+          </details>
+        </section>
+      ) : (
+        <>
+          <Section id="design" title={t("settings.section.design", "Design")} bare>
+            <SkinPicker />
+          </Section>
 
-      <Section id="experience" title={t("settings.section.experience", "Experience")} bare>
-        <p className="mb-4 text-sm text-muted">{t("settings.experience.intro", "Quest Academy adapts its look, pace and rewards to you. Every course works in every mode.")}</p>
-        <ModeSettings />
-      </Section>
+          <Section id="experience" title={t("settings.section.experience", "Experience")} bare>
+            <p className="mb-4 text-sm text-muted">{t("settings.experience.intro", "Quest Academy adapts its look, pace and rewards to you. Every course works in every mode.")}</p>
+            <ModeSettings />
+          </Section>
+        </>
+      )}
 
       <Section id="tutor" title={t("settings.section.tutor", "Ask Questy (AI tutor)")}>
         <TutorToggle className="flex cursor-pointer items-start justify-between gap-4 p-5" />

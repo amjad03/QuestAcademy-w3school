@@ -15,6 +15,8 @@ import { CLASS_GROUPS, GOALS, classById, classForStage, type ClassGroupId, type 
 import { LibrarySearch, type LibrarySearchItem } from "./LibrarySearch";
 import { useLibrary } from "./libraryStore";
 import { useT } from "@/i18n";
+import { NAV_ITEMS } from "@/experiences/shared/nav";
+import { hiddenDestinations } from "@/lib/classScope";
 import { useSharedText } from "@/i18n/content";
 
 export const CLASS_ICON: Record<ClassIcon, LucideIcon> = {
@@ -187,7 +189,35 @@ export function LibraryHome({ data }: { data: LibraryHomeData }) {
           })}
         </div>
       </section>
+
+      <MoreOnQuest />
     </PageColumns>
+  );
+}
+
+/** Pages kept out of this learner's navigation (games, shop, leagues, code lab…), still one tap away here. */
+function MoreOnQuest() {
+  const t = useT();
+  const hydrated = useHydrated();
+  const profile = useLearner((s) => s.profile);
+  const hidden = hydrated ? hiddenDestinations(profile) : new Set<string>();
+  const items = NAV_ITEMS.filter((n) => hidden.has(n.href));
+  if (!items.length) return null;
+  return (
+    <section className="mt-8" aria-labelledby="more-on-quest">
+      <h2 id="more-on-quest" className="mb-1 text-lg font-black">
+        {t("library.moreOnQuest", "More on Quest Academy")}
+      </h2>
+      <p className="mb-3 text-sm font-semibold text-muted">{t("library.moreOnQuestHint", "Kept out of your class menu so it stays focused. Open any of them here.")}</p>
+      <div className="grid gap-2 sm:grid-cols-3">
+        {items.map((n) => (
+          <Link key={n.href} href={n.href} className="tile flex items-center gap-3 p-3 font-bold transition hover:border-accent">
+            <n.icon className="h-5 w-5 shrink-0" style={{ color: n.color }} aria-hidden />
+            {n.label}
+          </Link>
+        ))}
+      </div>
+    </section>
   );
 }
 

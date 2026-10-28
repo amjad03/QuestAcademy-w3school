@@ -18,6 +18,7 @@ import { HomeFrame, LanguageNudge, QuickLinks, SeeItCard, WeeklyActivity } from 
 import { MasteryBar, useExamCountdown, useFmt, useGreeting } from "@/experiences/khan/ui";
 import { chapterSessionHrefs, useClassProgress, useLessonOutlines, useSubjectName } from "./data";
 import { orderChapters, orderSubjects, itemDone, type TodayItem } from "@/lib/personalise";
+import { AssignedByTeacher } from "@/components/school/StudentSchool";
 import { CompleteProfileBanner, PlanReminder, WeekPlanCard, itemHref, usePersonalPlan } from "@/components/personal/PersonalPlan";
 
 /** "My class" home for school learners: a daily routine dashboard built around today's plan. */
@@ -86,6 +87,8 @@ export function ClassHome() {
         <PlanReminder />
         <CompleteProfileBanner />
       </div>
+
+      <AssignedByTeacher />
 
       <TodayHero fallback={next} />
 

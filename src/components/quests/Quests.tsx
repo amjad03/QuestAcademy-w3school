@@ -6,6 +6,7 @@ import { ChevronLeft, ChevronRight, Coins, Flame, Snowflake } from "lucide-react
 import { useState } from "react";
 import clsx from "clsx";
 import { liveStreak, useLearner } from "@/lib/store";
+import { badgeVisible } from "@/lib/classScope";
 import { BADGES, dayKey, questsForDay } from "@/lib/gamification";
 import { useHydrated } from "@/components/providers";
 import { PageColumns } from "@/components/shell/AppShell";
@@ -54,7 +55,7 @@ export function Quests() {
   const cells = [...Array(lead).fill(null), ...Array.from({ length: daysIn }, (_, i) => new Date(month.getFullYear(), month.getMonth(), i + 1))];
   const activeDays = cells.filter((d) => d && (s.daily[dayKey(d)]?.xp ?? 0) > 0).length;
 
-  const nextBadges = BADGES.filter((b) => !s.badges[b.id])
+  const nextBadges = BADGES.filter((b) => !s.badges[b.id] && badgeVisible(s.profile, b.id))
     .map((b) => ({ b, p: badgeProgress(b.id, s) }))
     .filter((x) => x.p)
     .sort((a, b) => b.p!.value / b.p!.target - a.p!.value / a.p!.target)

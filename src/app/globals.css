@@ -443,3 +443,22 @@ html[data-skin="site"] :is(.card, .tile) {
 @media (prefers-reduced-motion: reduce) {
   .skeleton { animation: none; }
 }
+
+/* School layer: print only the login slips / the dashboard report area. */
+@media print {
+  body:has(.slips) *,
+  body:has(.print-area) * {
+    visibility: hidden;
+  }
+  body:has(.slips) .slips,
+  body:has(.slips) .slips *,
+  body:has(.print-area):not(:has(.slips)) .print-area,
+  body:has(.print-area):not(:has(.slips)) .print-area * {
+    visibility: visible;
+  }
+  .slips,
+  body:not(:has(.slips)) .print-area {
+    position: absolute;
+    inset: 0 0 auto 0;
+  }
+}

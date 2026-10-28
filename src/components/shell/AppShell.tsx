@@ -12,6 +12,8 @@ import { useExperience } from "@/experiences";
 import { isActivePath, moreFor, navFor } from "@/experiences/shared/nav";
 import { useTranslatedNav } from "@/experiences/shared/useNavLabels";
 import { StatsBar } from "./StatsBar";
+import { SchoolSync } from "@/components/school/SchoolSync";
+import { useSchoolNav } from "@/components/school/nav";
 
 /** Picks the app frame for the learner's experience profile. */
 export function AppShell({ children }: { children: React.ReactNode }) {
@@ -34,7 +36,9 @@ export function AppShell({ children }: { children: React.ReactNode }) {
 
   const baseNav = useMemo(() => navFor(mode), [mode]);
   const baseMore = useMemo(() => moreFor(mode), [mode]);
-  const { nav, more } = useTranslatedNav(mode, baseNav, baseMore);
+  const translated = useTranslatedNav(mode, baseNav, baseMore);
+  // School roles add their own destinations (Teach, School, Class league, Reports).
+  const { nav, more } = useSchoolNav(translated);
 
   // Before the learner's profile loads we don't know which frame to draw.
   if (!hydrated) return <main className="min-h-screen bg-bg">{children}</main>;
@@ -46,6 +50,7 @@ export function AppShell({ children }: { children: React.ReactNode }) {
         {children}
       </Shell>
       <TutorFab />
+      <SchoolSync />
     </>
   );
 }

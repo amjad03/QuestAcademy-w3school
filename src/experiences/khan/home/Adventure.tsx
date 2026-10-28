@@ -5,7 +5,8 @@ import { Flame, Zap } from "lucide-react";
 import { useT } from "@/i18n";
 import { dayKey } from "@/lib/gamification";
 import { useLearner, liveStreak } from "@/lib/store";
-import { BADGES, levelInfo } from "@/lib/gamification";
+import { badgeVisible } from "@/lib/classScope";
+import { BADGES as ALL_BADGES, levelInfo } from "@/lib/gamification";
 import { BadgeMedal } from "@/components/ui/GameIcon";
 import { LeagueCard, QuestsCard } from "@/components/shell/RailCards";
 import { useFmt } from "../ui";
@@ -43,6 +44,8 @@ function Motivation() {
   const best = useLearner((s) => s.streak.best);
   const doneToday = useLearner((s) => s.streak.lastDay === dayKey());
   const earned = useLearner((s) => s.badges);
+  const profile = useLearner((s) => s.profile);
+  const BADGES = ALL_BADGES.filter((b) => badgeVisible(profile, b.id));
   const lvl = levelInfo(xp);
   const badges = BADGES.filter((b) => earned[b.id]).sort((a, b) => earned[b.id].localeCompare(earned[a.id]));
   const nextBadge = BADGES.find((b) => !earned[b.id]);
