@@ -1,7 +1,6 @@
 import Anthropic from "@anthropic-ai/sdk";
 import { SYSTEM_PROMPT, contextTurn } from "@/lib/tutor/prompt";
-import { rateLimit } from "@/lib/tutor/rateLimit";
-import { TUTOR_MODEL, clientIp, fail, hasCredential, mapError, takeDaily } from "@/lib/tutor/guard";
+import { TUTOR_MODEL, burstGuard, fail, hasCredential, mapError, takeDaily } from "@/lib/tutor/guard";
 import { STREAM_MARK, TUTOR_LIMITS, TUTOR_STAGES, type TutorContext, type TutorMessage } from "@/lib/tutor/types";
 
 export const runtime = "nodejs";
@@ -50,9 +49,9 @@ function parseMessages(raw: unknown): TutorMessage[] | null {
 export async function POST(req: Request) {
   if (!hasCredential()) return fail(503, "tutor_unavailable");
 
-  const ip = clientIp(req);
-  const limited = rateLimit(ip);
-  if (!limited.ok) return fail(429, "rate_limited", { retryAfter: limited.retryAfter }, { "Retry-After": String(limited.retryAfter) });
+  const caller = await burstGuard(req);
+  if (caller instanceof Response) return caller;
+  const { ip, user } = caller;
 
   let body: unknown;
   try {
@@ -66,7 +65,7 @@ export async function POST(req: Request) {
   if (!context || !messages) return fail(400, "bad_request", { detail: `Send context {stage, lessonTitle…} and 1–${TUTOR_LIMITS.maxMessages} alternating messages of at most ${TUTOR_LIMITS.maxChars} characters, ending with the learner.` });
 
   // Count only well-formed requests against the daily allowance.
-  const daily = await takeDaily(req, ip);
+  const daily = await takeDaily(req, ip, user);
   if (daily !== "ok") return fail(429, daily === "budget" ? "upstream_busy" : "daily_limit");
 
   // Per-request context rides in the first user turn so the system prompt stays cacheable.

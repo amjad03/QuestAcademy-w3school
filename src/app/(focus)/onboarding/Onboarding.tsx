@@ -3,12 +3,13 @@
 import { AnimatePresence, motion } from "framer-motion";
 import { ArrowLeft, Check, GraduationCap, Laptop, Sparkles, Target, Baby } from "lucide-react";
 import { useRouter, useSearchParams } from "next/navigation";
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import clsx from "clsx";
 import type { Stage, WorldId } from "@/content/types";
 import { dailyGoals, stageById, worlds } from "@/content/worlds";
 import { useLearner } from "@/lib/store";
 import { useCatalog } from "@/components/shell/CatalogContext";
+import { useHydrated } from "@/components/providers";
 import { CourseIcon } from "@/components/brand/CourseIcon";
 import { Mascot } from "@/components/brand/Mascot";
 import { ProgressBar } from "@/components/ui/Progress";
@@ -20,7 +21,7 @@ import { SYLLABI } from "@/content/syllabus";
 import type { LearningStyle } from "@/content/worlds";
 import { classForProfile } from "@/lib/useMyClass";
 import { goalXpForMinutes, hasExamStep, isYoungLevel, type PersonalProfile, type StudyStyle } from "@/lib/personalise";
-import { AboutFields, ExamFields, GoalFields, HabitsFields, LevelsFields, ParentFields, WeakFields } from "@/components/personal/PersonalFields";
+import { AboutFields, ExamFields, GoalFields, HabitsFields, LevelsFields, ParentFields, WeakFields, parentContactValid } from "@/components/personal/PersonalFields";
 import { Diagnostic } from "@/components/personal/Diagnostic";
 import { ClassPicker, boardsFor, choiceFromProfile, choiceForLevel, levelForAge, stageForLevel, type ClassChoice } from "@/components/class/ClassPicker";
 
@@ -72,7 +73,61 @@ const MODE_CATEGORY: Record<ModeId, WorldId> = { sprout: "kids", research: "camp
 const CATEGORY_ICON: Record<WorldId, typeof Baby> = { kids: Baby, school: GraduationCap, exam: Target, code: Laptop, campus: Sparkles };
 const CATEGORY_COLOR: Record<WorldId, string> = { kids: "#EC4899", school: "#2F6BFF", exam: "#FF4B4B", code: "#334155", campus: "#7C4DFF" };
 
+/** Answers so far, kept on this device so a refresh (or a flaky school Wi-Fi reload) resumes where the learner was. */
+const DRAFT_KEY = "qa-onboarding-draft";
+const DRAFT_TTL = 24 * 60 * 60 * 1000;
+type Draft = {
+  v: 1;
+  at: number;
+  completing: boolean;
+  step: number;
+  age: number | null;
+  mode: ModeId | null;
+  category: WorldId | null;
+  course: string | null;
+  goal: number;
+  name: string;
+  classChoice: ClassChoice;
+  personal: PersonalProfile;
+};
+
+function readDraft(completing: boolean): Draft | null {
+  try {
+    const d = JSON.parse(localStorage.getItem(DRAFT_KEY) || "null") as Draft | null;
+    if (!d || d.v !== 1 || d.completing !== completing || Date.now() - d.at > DRAFT_TTL) return null;
+    return d;
+  } catch {
+    return null;
+  }
+}
+
+function clearDraft() {
+  try {
+    localStorage.removeItem(DRAFT_KEY);
+  } catch {
+    /* storage unavailable */
+  }
+}
+
+/**
+ * Answers come from this device (saved profile, resumable draft), so the flow renders
+ * after hydration; the server sends a light placeholder.
+ */
 export function Onboarding() {
+  const hydrated = useHydrated();
+  if (!hydrated)
+    return (
+      <div className="flex min-h-screen flex-col bg-bg" aria-busy="true">
+        <div className="mx-auto flex w-full max-w-[1000px] items-center gap-4 px-5 pt-6">
+          <div className="h-10 w-10 shrink-0" />
+          <div className="h-4 flex-1 rounded-full bg-surface-2" />
+        </div>
+      </div>
+    );
+  return <OnboardingFlow />;
+}
+
+function OnboardingFlow() {
   const params = useSearchParams();
   const router = useRouter();
   const catalog = useCatalog();
@@ -80,17 +135,30 @@ export function Onboarding() {
   const setProfile = useLearner((s) => s.setProfile);
 
   const stageParam = params.get("stage") as Stage | null;
-  const [step, setStep] = useState(0);
-  const [category, setCategory] = useState<WorldId | null>(stageParam && stageById[stageParam] ? stageById[stageParam].world : null);
-  const [course, setCourse] = useState<string | null>(null);
-  const [age, setAge] = useState<number | null>(profile.age ?? null);
-  const [mode, setMode] = useState<ModeId | null>(stageParam && stageById[stageParam] ? modeForStage(stageParam) : null);
-  const [goal, setGoal] = useState(profile.dailyGoal || 50);
-  const [name, setName] = useState(profile.name);
   // "Complete your profile" for learners who onboarded before these questions existed.
   const completing = params.get("complete") === "1" && profile.onboarded;
-  const [classChoice, setClassChoice] = useState<ClassChoice>(() => (completing ? choiceFromProfile(profile) : choiceForLevel(levelForAge(profile.age ?? null))));
-  const [personal, setPersonal] = useState<PersonalProfile>(() => ({ goal: "80", dailyMinutes: 20, timeOfDay: "evening", studyStyle: STYLE_FROM[profile.style] ?? "video", ...(profile.personal ?? {}) }));
+  // Rendered after hydration (see Onboarding), so reading storage here is safe.
+  const [draft] = useState(() => (stageParam ? null : readDraft(completing)));
+  const [step, setStep] = useState(draft?.step ?? 0);
+  const [category, setCategory] = useState<WorldId | null>(draft ? draft.category : stageParam && stageById[stageParam] ? stageById[stageParam].world : null);
+  const [course, setCourse] = useState<string | null>(draft?.course ?? null);
+  const [age, setAge] = useState<number | null>(draft ? draft.age : (profile.age ?? null));
+  const [mode, setMode] = useState<ModeId | null>(draft ? draft.mode : stageParam && stageById[stageParam] ? modeForStage(stageParam) : null);
+  const [goal, setGoal] = useState(draft?.goal ?? (profile.dailyGoal || 50));
+  const [name, setName] = useState(draft?.name ?? profile.name);
+  const [classChoice, setClassChoice] = useState<ClassChoice>(() => draft?.classChoice ?? (completing ? choiceFromProfile(profile) : choiceForLevel(levelForAge(profile.age ?? null))));
+  const [personal, setPersonal] = useState<PersonalProfile>(() => draft?.personal ?? { goal: "80", dailyMinutes: 20, timeOfDay: "evening", studyStyle: STYLE_FROM[profile.style] ?? "video", ...(profile.personal ?? {}) });
+  const leaving = useRef(false);
+
+  useEffect(() => {
+    if (leaving.current) return;
+    const d: Draft = { v: 1, at: Date.now(), completing, step, age, mode, category, course, goal, name, classChoice, personal };
+    try {
+      localStorage.setItem(DRAFT_KEY, JSON.stringify(d));
+    } catch {
+      /* storage full or blocked: the flow still works, it just won't resume */
+    }
+  }, [completing, step, age, mode, category, course, goal, name, classChoice, personal]);
   const patch = (p: Partial<PersonalProfile>) => setPersonal((x) => ({ ...x, ...p }));
   const t = useT();
   const young = isYoungLevel(classChoice.level);
@@ -146,9 +214,11 @@ export function Onboarding() {
   const school2 = school || completing;
   const steps: readonly StepId[] = school2 ? schoolSteps(classChoice.level, (personal.weakSubjects ?? []).length, completing) : STEPS;
   const classSubjects = classChoice.level ? (classForProfile({ stage: stageForLevel(classChoice.level), board: classChoice.board, grade: classChoice.grade, age, subjects: classChoice.subjects }, catalog)?.subjects ?? []) : [];
-  const id = steps[step];
+  // A restored step can point past a shorter flow (e.g. a different class was picked).
+  const at = Math.min(step, steps.length - 1);
+  const id = steps[at];
   const recommended = age !== null ? (choice?.mode ?? modeForAge(age)) : undefined;
-  const canNext = id === "about" ? name.trim().length > 0 : id === "age" ? age !== null : id === "mode" ? Boolean(mode) : id === "category" ? Boolean(category) : id === "course" ? Boolean(course) : id === "class" ? Boolean(classChoice.level && classChoice.grade && (!boardsFor(classChoice.level).length || classChoice.board)) : true;
+  const canNext = id === "about" ? name.trim().length > 0 : id === "age" ? age !== null : id === "mode" ? Boolean(mode) : id === "category" ? Boolean(category) : id === "course" ? Boolean(course) : id === "class" ? Boolean(classChoice.level && classChoice.grade && (!boardsFor(classChoice.level).length || classChoice.board)) : id === "parent" ? parentContactValid(personal) : true;
   const courses = catalog.filter((c) => c.world === category);
 
   const next = () => {
@@ -193,25 +263,53 @@ export function Onboarding() {
       useLearner.getState().setSettings({ sound: MODES[m].sound });
       sfx("fanfare");
     }
-    if (id === "done") return router.push("/learn");
-    setStep((s) => s + 1);
+    if (id === "done") {
+      if (leaving.current) return;
+      leaving.current = true;
+      clearDraft();
+      return router.push("/learn");
+    }
+    setStep(Math.min(at + 1, steps.length - 1));
   };
+  const back = () => (at ? setStep(at - 1) : router.push(completing ? "/learn" : "/"));
+
+  // Enter continues (except inside the quiz, buttons and links, which handle it themselves).
+  const nextRef = useRef(next);
+  nextRef.current = next;
+  useEffect(() => {
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key !== "Enter" || e.defaultPrevented || e.isComposing || e.shiftKey || id === "diagnostic") return;
+      const el = e.target as HTMLElement | null;
+      if (el?.closest("button, a, textarea, select, [contenteditable='true']")) return;
+      e.preventDefault();
+      nextRef.current();
+    };
+    window.addEventListener("keydown", onKey);
+    return () => window.removeEventListener("keydown", onKey);
+  }, [id]);
 
   return (
     <div className="flex min-h-screen flex-col bg-bg">
       {/* top bar */}
       <div className="mx-auto flex w-full max-w-[1000px] items-center gap-4 px-5 pt-6">
-        <button onClick={() => (step ? setStep(step - 1) : router.push(completing ? "/learn" : "/"))} className="grid h-10 w-10 place-items-center rounded-xl text-muted hover:bg-surface-2" aria-label={t("onboard.back", "Back")}>
+        <button type="button" onClick={back} className="grid h-10 w-10 shrink-0 place-items-center rounded-xl text-muted hover:bg-surface-2" aria-label={t("onboard.back", "Back")}>
           <ArrowLeft className="h-6 w-6" strokeWidth={2.6} />
         </button>
-        <ProgressBar value={step / (steps.length - 1)} height={16} />
+        <div className="min-w-0 flex-1" role="progressbar" aria-valuemin={1} aria-valuemax={steps.length} aria-valuenow={at + 1} aria-label={t("onboard.stepOf", "Step {n} of {total}", { n: at + 1, total: steps.length })}>
+          <ProgressBar value={at / (steps.length - 1)} height={16} />
+        </div>
+        <span className="shrink-0 text-sm font-bold tabular-nums text-muted" aria-hidden>
+          {at + 1}/{steps.length}
+        </span>
       </div>
 
-      <div className="mx-auto flex w-full max-w-[640px] flex-1 flex-col px-5 py-10">
+      <div className="mx-auto flex w-full min-w-0 max-w-[640px] flex-1 flex-col px-4 py-8 sm:px-5 sm:py-10">
         {/* mascot prompt */}
         <div className="flex items-end gap-4">
-          <Mascot pose={id === "done" ? "cheer" : id === "goal" ? "think" : "wave"} size={id === "done" ? 120 : 96} />
-          <motion.div key={id} initial={{ opacity: 0, x: -8 }} animate={{ opacity: 1, x: 0 }} className="relative mb-6 rounded-2xl border-2 border-line bg-surface px-5 py-3.5 text-lg font-bold">
+          <div className="shrink-0">
+            <Mascot pose={id === "done" ? "cheer" : id === "goal" ? "think" : "wave"} size={id === "done" ? 104 : 72} />
+          </div>
+          <motion.div key={id} initial={{ opacity: 0, x: -8 }} animate={{ opacity: 1, x: 0 }} className="relative mb-6 min-w-0 rounded-2xl border-2 border-line bg-surface px-4 py-3 text-lg font-bold sm:px-5 sm:py-3.5" aria-live="polite">
             <span className="absolute -left-[9px] bottom-4 h-4 w-4 rotate-45 border-b-2 border-l-2 border-line bg-surface" />
             <h1 className="text-lg font-bold">{PROMPT[id]}</h1>
           </motion.div>
@@ -248,7 +346,7 @@ export function Onboarding() {
                 personal={personal}
                 onDone={(r) => {
                   patch({ diagnostic: { ...(personal.diagnostic ?? {}), ...r } });
-                  setStep((x) => x + 1);
+                  setStep(Math.min(at + 1, steps.length - 1));
                 }}
               />
             )}
@@ -299,7 +397,7 @@ export function Onboarding() {
             )}
 
             {id === "name" && (
-              <input autoFocus value={name} onChange={(e) => setName(e.target.value)} onKeyDown={(e) => e.key === "Enter" && next()} placeholder={t("onboard.namePlaceholder", "Your name")} maxLength={30} className="input py-4 text-xl" />
+              <input autoFocus value={name} onChange={(e) => setName(e.target.value)} placeholder={t("onboard.namePlaceholder", "Your name")} maxLength={30} className="input py-4 text-xl" />
             )}
 
             {id === "done" && (
@@ -326,8 +424,13 @@ export function Onboarding() {
 
       {/* bottom bar */}
       <div className="border-t-2 border-line">
-        <div className="mx-auto flex w-full max-w-[1000px] justify-end px-5 py-5">
-          <button onClick={next} disabled={!canNext} className={clsx(id === "diagnostic" || id === "parent" ? "btn-ghost" : "btn-primary", "w-full sm:w-auto sm:min-w-[160px]")}>
+        <div className="mx-auto flex w-full max-w-[1000px] items-center justify-end gap-3 px-4 py-4 sm:px-5 sm:py-5">
+          {at > 0 && id !== "done" && (
+            <button type="button" onClick={back} className="btn-ghost hidden sm:inline-flex sm:min-w-[120px]">
+              {t("onboard.back", "Back")}
+            </button>
+          )}
+          <button type="button" onClick={next} disabled={!canNext} className={clsx(id === "diagnostic" || id === "parent" ? "btn-ghost" : "btn-primary", "w-full sm:w-auto sm:min-w-[160px]")}>
             {id === "done" ? t("onboard.start", "Start learning") : id === "diagnostic" ? t("onboard.skipDiagnostic", "Skip the quiz") : id === "parent" ? (personal.parentEmail || personal.parentPhone ? t("onboard.continue", "Continue") : t("onboard.skip", "Skip")) : t("onboard.continue", "Continue")}
           </button>
         </div>

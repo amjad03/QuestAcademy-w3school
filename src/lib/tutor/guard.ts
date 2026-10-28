@@ -1,7 +1,9 @@
 import "server-only";
 import Anthropic from "@anthropic-ai/sdk";
 import { hashIp, supabaseAdmin, userFromRequest } from "@/lib/supabase-server";
-import type { TutorErrorCode } from "./types";
+import type { User } from "@supabase/supabase-js";
+import { rateLimit } from "./rateLimit";
+import { TUTOR_LIMITS, type TutorErrorCode } from "./types";
 
 /** Shared guards for the tutor routes (Ask Questy and the live tutor): errors, IP, daily allowance. */
 
@@ -36,10 +38,42 @@ const envInt = (name: string, fallback: number) => {
  * learners get a larger allowance than guests; TUTOR_DAILY_BUDGET caps the
  * whole site (0 = no cap). Without Supabase only the per-instance limiter applies.
  */
-export async function takeDaily(req: Request, ip: string): Promise<"ok" | "limited" | "budget"> {
+/**
+ * Verified token -> user, cached briefly per instance so a chatty learner doesn't cost
+ * an Auth API round trip on every message (500 learners at once would otherwise
+ * hammer Supabase Auth). Tokens expire within the hour, so 5 minutes is safe.
+ */
+const userCache = new Map<string, { user: User | null; at: number }>();
+const USER_TTL = 5 * 60 * 1000;
+
+export async function cachedUser(req: Request): Promise<User | null> {
+  const token = req.headers.get("authorization")?.match(/^Bearer\s+(.+)$/i)?.[1];
+  if (!token) return null;
+  const now = Date.now();
+  const hit = userCache.get(token);
+  if (hit && now - hit.at < USER_TTL) return hit.user;
+  const user = await userFromRequest(req).catch(() => null);
+  userCache.set(token, { user, at: now });
+  if (userCache.size > 2000) for (const [k, v] of userCache) if (now - v.at >= USER_TTL) userCache.delete(k);
+  return user;
+}
+
+/**
+ * Burst limit for a tutor request: per signed-in learner, else per guest IP.
+ * Returns the caller, or a 429 response.
+ */
+export async function burstGuard(req: Request): Promise<{ ip: string; user: User | null } | Response> {
+  const ip = clientIp(req);
+  const user = await cachedUser(req);
+  const limited = user ? rateLimit(`u:${user.id}`) : rateLimit(`ip:${ip}`, TUTOR_LIMITS.rateLimitGuestIp);
+  if (!limited.ok) return fail(429, "rate_limited", { retryAfter: limited.retryAfter }, { "Retry-After": String(limited.retryAfter) });
+  return { ip, user };
+}
+
+export async function takeDaily(req: Request, ip: string, known?: User | null): Promise<"ok" | "limited" | "budget"> {
   const sb = supabaseAdmin();
   if (!sb) return "ok";
-  const user = await userFromRequest(req);
+  const user = known !== undefined ? known : await cachedUser(req);
   const key = user ? `u:${user.id}` : `ip:${hashIp(ip)}`;
   const limit = user ? envInt("TUTOR_DAILY_LIMIT_USER", 60) : envInt("TUTOR_DAILY_LIMIT_GUEST", 15);
   const budget = envInt("TUTOR_DAILY_BUDGET", 3000);

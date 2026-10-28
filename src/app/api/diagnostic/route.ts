@@ -25,5 +25,6 @@ export async function GET(req: Request) {
     const q = lists[k % lists.length].shift();
     if (q) out.push(q);
   }
-  return Response.json({ questions: out });
+  // Shared briefly at the edge: a class starting onboarding together hits the CDN, not a cold function.
+  return Response.json({ questions: out }, { headers: { "Cache-Control": "public, s-maxage=300, stale-while-revalidate=3600" } });
 }

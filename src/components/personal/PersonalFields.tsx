@@ -251,15 +251,28 @@ export function WeakFields({ value, onChange, subjects }: FieldsProps & { subjec
   );
 }
 
+const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
+const emailOk = (v?: string | null) => !v?.trim() || EMAIL_RE.test(v.trim());
+const phoneOk = (v?: string | null) => {
+  const digits = (v ?? "").replace(/\D/g, "").length;
+  return digits === 0 || (digits >= 7 && digits <= 15);
+};
+/** Both parent contacts are optional, but if given they must look real. */
+export const parentContactValid = (p: PersonalProfile) => emailOk(p.parentEmail) && phoneOk(p.parentPhone);
+
 export function ParentFields({ value, onChange, young }: FieldsProps) {
   const t = useT();
+  const badEmail = !emailOk(value.parentEmail);
+  const badPhone = !phoneOk(value.parentPhone);
   return (
     <div className="grid gap-4 sm:grid-cols-2">
-      <Field label={young ? t("personal.parent.email", "Your email") : t("personal.parent.emailStudent", "Parent’s email")} hint={t("personal.optional", "Optional")}>
-        <input type="email" value={value.parentEmail ?? ""} onChange={(e) => onChange({ parentEmail: e.target.value })} maxLength={120} className="input" autoComplete="email" />
+      <Field label={young ? t("personal.parent.email", "Your email") : t("personal.parent.emailStudent", "Parent’s email")} hint={badEmail ? undefined : t("personal.optional", "Optional")}>
+        <input type="email" inputMode="email" autoCapitalize="none" value={value.parentEmail ?? ""} onChange={(e) => onChange({ parentEmail: e.target.value })} maxLength={120} className={clsx("input", badEmail && "!border-bad")} autoComplete="email" aria-invalid={badEmail} />
+        {badEmail && <span className="mt-1 block text-xs font-bold text-bad-shade">{t("personal.parent.badEmail", "That email doesn’t look right. Fix it or leave it empty.")}</span>}
       </Field>
-      <Field label={young ? t("personal.parent.phone", "Your phone (WhatsApp)") : t("personal.parent.phoneStudent", "Parent’s phone (WhatsApp)")} hint={t("personal.parent.hint", "Optional. Used only for progress updates once they’re available.")}>
-        <input type="tel" value={value.parentPhone ?? ""} onChange={(e) => onChange({ parentPhone: e.target.value.replace(/[^\d+ -]/g, "") })} maxLength={20} className="input" autoComplete="tel" />
+      <Field label={young ? t("personal.parent.phone", "Your phone (WhatsApp)") : t("personal.parent.phoneStudent", "Parent’s phone (WhatsApp)")} hint={badPhone ? undefined : t("personal.parent.hint", "Optional. Used only for progress updates once they’re available.")}>
+        <input type="tel" value={value.parentPhone ?? ""} onChange={(e) => onChange({ parentPhone: e.target.value.replace(/[^\d+ -]/g, "") })} maxLength={20} className={clsx("input", badPhone && "!border-bad")} autoComplete="tel" aria-invalid={badPhone} />
+        {badPhone && <span className="mt-1 block text-xs font-bold text-bad-shade">{t("personal.parent.badPhone", "Enter 7–15 digits, or leave it empty.")}</span>}
       </Field>
     </div>
   );

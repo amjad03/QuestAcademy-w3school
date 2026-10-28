@@ -1,7 +1,7 @@
 "use client";
 
 import type { User } from "@supabase/supabase-js";
-import { createContext, useContext, useEffect, useState, useSyncExternalStore, type ReactNode } from "react";
+import { createContext, useContext, useEffect, useRef, useState, useSyncExternalStore, type ReactNode } from "react";
 import { usePathname, useRouter } from "next/navigation";
 import { useLearner } from "@/lib/store";
 import { localeInfo } from "@/i18n/locales";
@@ -86,8 +86,14 @@ function AuthProvider({ children }: { children: ReactNode }) {
     return () => sub.subscription.unsubscribe();
   }, [router]);
 
+  // Token refreshes hand us a new user object; only a different account should restart sync.
+  const userRef = useRef(user);
+  userRef.current = user;
+  const uid = user?.id;
+
   useEffect(() => {
-    if (!user) return;
+    const user = userRef.current;
+    if (!uid || !user) return;
     let t: ReturnType<typeof setTimeout> | undefined;
     const schedule = () => {
       clearTimeout(t);
@@ -109,11 +115,16 @@ function AuthProvider({ children }: { children: ReactNode }) {
       }),
     ];
     // Pick up work done on another device.
+    // Throttled (tab switching shouldn't trigger a full sync each time) and jittered, so a
+    // classroom that signs in together doesn't sync in lockstep.
+    let last = Date.now();
     const pull = () => {
-      if (document.visibilityState === "visible") void syncAccount(user);
+      if (document.visibilityState !== "visible" || Date.now() - last < 60_000) return;
+      last = Date.now();
+      void syncAccount(userRef.current ?? user);
     };
     document.addEventListener("visibilitychange", pull);
-    const every = setInterval(pull, 3 * 60 * 1000);
+    const every = setInterval(pull, 3 * 60 * 1000 + Math.floor(Math.random() * 60_000));
     // Don't lose the last change when the tab closes.
     const flush = () => {
       if (t) void pushAccount(user.id);
@@ -126,7 +137,7 @@ function AuthProvider({ children }: { children: ReactNode }) {
       document.removeEventListener("visibilitychange", pull);
       window.removeEventListener("pagehide", flush);
     };
-  }, [user]);
+  }, [uid]);
 
   const signOut = async () => {
     const sb = supabase();

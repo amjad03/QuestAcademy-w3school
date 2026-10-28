@@ -1,6 +1,5 @@
 import Anthropic from "@anthropic-ai/sdk";
-import { rateLimit } from "@/lib/tutor/rateLimit";
-import { TUTOR_MODEL, clientIp, fail, hasCredential, mapError, takeDaily } from "@/lib/tutor/guard";
+import { TUTOR_MODEL, burstGuard, fail, hasCredential, mapError, takeDaily } from "@/lib/tutor/guard";
 import { paymentsEnabled, tutorOpen, verifyPass } from "@/lib/tutor/pass";
 import { LIVE_SYSTEM_PROMPT, RECAP_SCHEMA, RECAP_SYSTEM_PROMPT, liveContext } from "@/lib/tutor/live-prompt";
 import { LIVE_LIMITS, LIVE_MODES, TUTOR_LANGUAGES, TUTOR_PASS_HEADER, type LiveRequest, type PageContext, type Recap, type StudentInfo } from "@/lib/tutor/live";
@@ -91,14 +90,14 @@ export async function POST(req: Request) {
   // Premium gate: open for testing, or a valid signed pass.
   if (!tutorOpen() && !verifyPass(req.headers.get(TUTOR_PASS_HEADER))) return fail(402, "premium_required", { payments: paymentsEnabled() });
 
-  const ip = clientIp(req);
-  const limited = rateLimit(ip);
-  if (!limited.ok) return fail(429, "rate_limited", { retryAfter: limited.retryAfter }, { "Retry-After": String(limited.retryAfter) });
+  const caller = await burstGuard(req);
+  if (caller instanceof Response) return caller;
+  const { ip, user } = caller;
 
   const lr = parse(await req.json().catch(() => null));
   if (!lr) return fail(400, "bad_request", { detail: "Send {kind, mode, language, topic, student, messages} with alternating messages ending with the student." });
 
-  const daily = await takeDaily(req, ip);
+  const daily = await takeDaily(req, ip, user);
   if (daily !== "ok") return fail(429, daily === "budget" ? "upstream_busy" : "daily_limit");
 
   const ctx = liveContext(lr);

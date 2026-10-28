@@ -37,17 +37,33 @@ export function Diagnostic({ subjects, personal, count = 6, onDone }: { subjects
   const subject = subjects[si];
   const dict = useContentDict(items?.[qi]?.lessonId.split("/")[0] ?? "");
 
+  // Nothing to ask (e.g. the weak subjects aren't in this class): don't hold up onboarding.
+  useEffect(() => {
+    if (!subjects.length) onDone({});
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [subjects.length]);
+
   useEffect(() => {
     if (!subject) return;
     let live = true;
     setItems(null);
     const lessons = diagnosticLessons(subject, personal);
-    fetch(`/api/diagnostic?n=${count}&lessons=${encodeURIComponent(lessons.join(","))}`)
+    if (!lessons.length) {
+      setItems([]);
+      return;
+    }
+    // A slow or failed request skips the subject instead of blocking the flow.
+    const ctrl = new AbortController();
+    const timer = setTimeout(() => ctrl.abort(), 10000);
+    fetch(`/api/diagnostic?n=${count}&lessons=${encodeURIComponent(lessons.join(","))}`, { signal: ctrl.signal })
       .then((r) => (r.ok ? r.json() : { questions: [] }))
-      .then((d: { questions: Item[] }) => live && setItems(d.questions))
-      .catch(() => live && setItems([]));
+      .then((d: { questions?: Item[] }) => live && setItems(Array.isArray(d?.questions) ? d.questions.filter((x) => x?.question) : []))
+      .catch(() => live && setItems([]))
+      .finally(() => clearTimeout(timer));
     return () => {
       live = false;
+      clearTimeout(timer);
+      ctrl.abort();
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [subject?.id]);
@@ -93,11 +109,11 @@ export function Diagnostic({ subjects, personal, count = 6, onDone }: { subjects
 
   return (
     <div className="grid gap-4">
-      <div className="flex items-center justify-between gap-3 text-sm font-bold text-muted">
-        <span>
+      <div className="flex flex-wrap items-center justify-between gap-x-3 gap-y-1 text-sm font-bold text-muted">
+        <span className="min-w-0">
           {subjectName(subject)} · {t("personal.diag.qOf", "Question {n} of {total}", { n: qi + 1, total: items.length })}
         </span>
-        <button type="button" className="kh-link" onClick={() => finishSubject(correct, qi)}>
+        <button type="button" className="kh-link shrink-0" onClick={() => finishSubject(correct, qi + (result !== null ? 1 : 0))}>
           {t("personal.diag.skip", "Skip this subject")}
         </button>
       </div>

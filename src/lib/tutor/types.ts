@@ -36,8 +36,13 @@ export const TUTOR_LIMITS = {
   maxChars: 4000,
   /** Per field cap for context strings (lesson summary, question…). */
   maxContextChars: 3000,
-  /** Requests per IP per window (in-memory, per server instance). */
+  /** Burst limit per signed-in learner per window (in-memory, per server instance). */
   rateLimit: 30,
+  /**
+   * Burst limit per guest IP per window. Generous because a school or home network
+   * shares one address; the daily guest allowance in Supabase is the real cap.
+   */
+  rateLimitGuestIp: 120,
   rateWindowMs: 10 * 60 * 1000,
 } as const;
 
