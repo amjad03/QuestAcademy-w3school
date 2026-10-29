@@ -4,6 +4,8 @@ import { logVoiceUsage } from "@/lib/ai-usage";
 
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
+/** Run next to the students and Sarvam (India): saves an ocean round trip on every voice call. */
+export const preferredRegion = "bom1";
 
 /** 30 s of 16 kHz mono 16-bit WAV is ~960 KB. */
 const MAX_BYTES = 1_200_000;

@@ -17,7 +17,8 @@ import { streamTurn, type LiveError } from "./live-client";
 import { isPause, type Branch, type LiveEvent, type PlanConcept, type Stage, type Verdict } from "./protocol";
 import { detectIntent, type Intent } from "./intents";
 import { speaker, type VoiceSnapshot } from "./speech";
-import { VoiceListener, recognitionSupported, type MicError } from "./listen";
+import { VoiceListener, recognitionSupported, type ListenStatus, type MicError } from "./listen";
+import { latBegin } from "./latency";
 
 export type Msg = { role: "user" | "assistant"; content: string };
 export type VoiceState = "idle" | "listening" | "thinking" | "speaking";
@@ -31,6 +32,22 @@ const words = (s: string) => s.trim().split(/\s+/).length;
 const norm = (s: string) => s.toLowerCase().replace(/[^\p{L}\p{N}\s]/gu, " ").split(/\s+/).filter(Boolean);
 /** Deictic doubts about the board ("what is this?", "yeh kya hai", "ಇದು ಏನು"). */
 const POINTING = /\b(this|that|these|those|here|there|marked|circled|highlighted|drew|drawn|my working|check my)\b|yeh|ye kya|isko|iska|idhar|yahan|ಇದು|ಇಲ್ಲಿ|यह|इसे|यहाँ/i;
+/** Where to cut streaming text for speech: the first clause boundary at or after `min` chars (or the last one when `last`). */
+export function clauseCut(text: string, min: number, last = false): number {
+  let at = 0;
+  const re = /[,;:.?!\u0964\u0965](?=\s)/g;
+  for (let m = re.exec(text); m; m = re.exec(text)) {
+    if (m.index + 1 < min) continue;
+    at = m.index + 1;
+    if (!last) break;
+  }
+  return at;
+}
+/** Board ops never hold the lesson up for long. */
+const within = <T,>(p: Promise<T> | T, ms: number) => Promise.race([Promise.resolve(p), new Promise<void>((r) => setTimeout(r, ms))]);
+type AskHow = { forceBoard?: boolean; tag?: string; merged?: boolean; note?: string };
+type Early = { s: ReturnType<ReturnType<typeof speaker>["stream"]>; taken: string };
+const FILLER = new Set("the and are was were you your this that what with have has for not but its it's can how why who yes okay then there here they them his her our out all any one two".split(" "));
 const STOP_WORDS = /\b(wait|stop|sorry|excuse me|one minute|question|doubt|ruko|ek minute|sir|ma'?am|miss)\b/i;
 
 /** Keep the first exchange (it carries the context/photo transcription) and the most recent turns. */
@@ -54,6 +71,7 @@ export function useTutorSession(o: { board: RefObject<SmartboardHandle | null>; 
   const [ptt, setPtt] = useState(false);
   const [interim, setInterim] = useState("");
   const [micError, setMicError] = useState<MicError | null>(null);
+  const [sttStatus, setSttStatus] = useState<ListenStatus>(null);
   const [voice, setVoice] = useState<VoiceSnapshot>(() => speaker().snapshot());
   const [lessonReady, setLessonReady] = useState(false);
   const [log, setLog] = useState<LogLine[]>([]);
@@ -89,6 +107,12 @@ export function useTutorSession(o: { board: RefObject<SmartboardHandle | null>; 
   const interrupted = useRef(false);
   /** Until when mic input may be the tutor's own voice (speaking now, or just finished). */
   const echoUntil = useRef(0);
+  /** What the tutor has actually started saying in the current turn (for barge-in notes and echo checks). */
+  const said = useRef<string[]>([]);
+  /** Speech started from the streaming text before its event was complete (first spoken event only). */
+  const early = useRef<Early | null>(null);
+  const lastAsk = useRef<{ text: string; how: AskHow; at: number; tag: string; note: string } | null>(null);
+  const lastSend = useRef<{ content: string; extra: { image?: LiveRequest["image"]; boardImage?: LiveRequest["boardImage"] } } | null>(null);
   const live = useRef({ check, busy: false, mode: "learn" as Base["mode"] });
   const opts = useRef(o);
   opts.current = o;
@@ -124,25 +148,45 @@ export function useTutorSession(o: { board: RefObject<SmartboardHandle | null>; 
 
   /* ---------------- playing steps ---------------- */
 
+  const onSaid = useCallback((chunk: string) => {
+    said.current = [...said.current.slice(-5), chunk];
+    echoUntil.current = Infinity;
+    setTalking(true);
+  }, []);
+
   const speak = useCallback(
-    async (text: string, my: number) => {
+    async (text: string, my: number, pre?: Early | null) => {
+      if (pre) {
+        // Part of this text is already being spoken: queue the rest behind it.
+        const head = pre.taken.trim();
+        const rest = text.startsWith(head) ? text.slice(head.length) : text.slice(Math.min(text.length, head.length));
+        if (rest.trim()) pre.s.push(rest);
+        pre.s.end();
+        try {
+          await pre.s.done;
+        } finally {
+          echoUntil.current = performance.now() + 1000;
+          if (my === token.current) setTalking(false);
+        }
+        return;
+      }
       if (!text.trim()) return;
       if (opts.current.muted) return new Promise<void>((r) => setTimeout(r, Math.max(900, words(text) * 260)));
       setTalking(true);
       echoUntil.current = Infinity;
       try {
-        await sp.speak(text, opts.current.speechLang);
+        await sp.speak(text, opts.current.speechLang, onSaid);
       } finally {
-        echoUntil.current = performance.now() + 1500;
+        echoUntil.current = performance.now() + 1000;
         if (my === token.current) setTalking(false);
       }
     },
-    [sp],
+    [sp, onSaid],
   );
 
   /** Spoken text + its board ops, drawn across the narration like a teacher writing while talking. */
   const sayAndDraw = useCallback(
-    async (text: string, ops: BoardOp[], my: number, caption = true) => {
+    async (text: string, ops: BoardOp[], my: number, caption = true, pre?: Early | null) => {
       // A question is shown in the question card, so it isn't repeated in the caption.
       if (caption) setCaption(text);
       if (text) {
@@ -150,12 +194,12 @@ export function useTutorSession(o: { board: RefObject<SmartboardHandle | null>; 
         setLog((l) => [...l.slice(-80), { who: "tutor", text }]);
         says.current.push({ at: Math.round(performance.now() - started.current), text });
       }
-      const talk = speak(text, my);
+      const talk = speak(text, my, pre);
       const k = tuning.current.pace === "slower" ? 1.5 : tuning.current.pace === "faster" ? 0.6 : 1;
       const gap = (Math.min(900, (Math.max(1200, words(text) * 430) * 0.7) / Math.max(1, ops.length))) * k;
       for (const op of ops) {
         if (my !== token.current) return;
-        await o.board.current?.apply(op);
+        await within(o.board.current?.apply(op), 4000);
         await new Promise((r) => setTimeout(r, gap * 0.4));
       }
       await talk;
@@ -164,8 +208,8 @@ export function useTutorSession(o: { board: RefObject<SmartboardHandle | null>; 
   );
 
   const playEvent = useCallback(
-    async (e: LiveEvent, my: number) => {
-      if (my !== token.current) return;
+    async (e: LiveEvent, my: number, pre?: Early | null) => {
+      if (my !== token.current) return pre?.s.end();
       played.current.push(JSON.stringify(e));
       switch (e.t) {
         case "plan":
@@ -192,20 +236,20 @@ export function useTutorSession(o: { board: RefObject<SmartboardHandle | null>; 
         case "board":
           for (const op of e.ops) {
             if (my !== token.current) return;
-            await o.board.current?.apply(op);
+            await within(o.board.current?.apply(op), 4000);
           }
           return;
         case "say":
-          return sayAndDraw(e.text, e.ops, my);
+          return sayAndDraw(e.text, e.ops, my, true, pre);
         case "hint":
-          await sayAndDraw(e.text, e.ops, my);
+          await sayAndDraw(e.text, e.ops, my, true, pre);
           if (my !== token.current) return;
           setHintWait(true);
           setCheck({ q: "", kind: "short" });
           setWaitingSince(Date.now());
           return;
         case "ask": {
-          await sayAndDraw(e.q, [], my, false);
+          await sayAndDraw(e.q, [], my, false, pre);
           if (my !== token.current) return;
           const c: CheckPoint = { q: e.q, options: e.options, kind: e.kind, board: e.kind === "board" || undefined };
           setCheck(c);
@@ -224,10 +268,12 @@ export function useTutorSession(o: { board: RefObject<SmartboardHandle | null>; 
   );
 
   /** Stop everything the tutor is doing right now; keeps what was already said in the history. */
-  const halt = useCallback(() => {
+  const halt = useCallback((drop = false) => {
     token.current++;
     abort.current?.abort();
     sp.stop();
+    early.current?.s.end();
+    early.current = null;
     echoUntil.current = performance.now() + 800;
     setTalking(false);
     setPlaying(false);
@@ -236,7 +282,9 @@ export function useTutorSession(o: { board: RefObject<SmartboardHandle | null>; 
     play.current = Promise.resolve();
     if (inFlight.current) {
       inFlight.current = false;
-      history.current.push({ role: "assistant", content: played.current.join("\n") || '{"say":"(interrupted)","ops":[]}' });
+      // drop: the student was still talking and nothing was said yet; their next words replace this message.
+      if (drop && history.current[history.current.length - 1]?.role === "user") history.current = history.current.slice(0, -1);
+      else history.current.push({ role: "assistant", content: played.current.join("\n") || '{"t":"say","text":"(interrupted before speaking)","ops":[]}' });
     }
   }, [sp]);
 
@@ -246,6 +294,8 @@ export function useTutorSession(o: { board: RefObject<SmartboardHandle | null>; 
     async (content: string, extra: { image?: LiveRequest["image"]; boardImage?: LiveRequest["boardImage"] } = {}) => {
       if (inFlight.current) halt();
       clearTimeout(resumeTimer.current);
+      lastSend.current = { content, extra };
+      latBegin();
       // Known to be switched off on this server: say so without a failing request.
       if (availableRef.current === false) {
         setError("tutor_unavailable");
@@ -264,6 +314,8 @@ export function useTutorSession(o: { board: RefObject<SmartboardHandle | null>; 
       setStreaming(true);
       setPlaying(true);
       played.current = [];
+      said.current = [];
+      early.current = null;
       // The full-screen loader holds playback (board + voice) until Kokoro is ready, so the
       // first lesson isn't narrated by the device voice; the lesson streams in meanwhile.
       if (sp.hold && sp.status === "loading") play.current = play.current.then(() => sp.settled());
@@ -287,18 +339,50 @@ export function useTutorSession(o: { board: RefObject<SmartboardHandle | null>; 
       };
       pendingAsk.current = null;
       streamingRef.current = true;
+      let spokenSeen = false;
+      const onPartial = (p: { t: "say" | "hint" | "ask"; text: string }) => {
+        if (my !== token.current || spokenSeen || opts.current.muted || sp.status !== "ready" || gotPause) return;
+        if (p.t !== "ask") setCaption(p.text);
+        let e = early.current;
+        const rest = e ? p.text.slice(e.taken.length) : p.text;
+        // First clause as soon as it is ≥ 40 chars; after that, bigger pieces (better prosody), still one ahead.
+        const cut = clauseCut(rest, e ? 30 : 40, Boolean(e));
+        if (!cut) return;
+        if (!e) {
+          e = early.current = { s: sp.stream(lang, onSaid), taken: "" };
+          setLessonReady(true);
+        }
+        e.s.push(rest.slice(0, cut));
+        e.taken += rest.slice(0, cut);
+      };
       const onEvent = (e: LiveEvent) => {
         if (e.t === "ask" && !gotPause) pendingAsk.current = { q: e.q, options: e.options, kind: e.kind, board: e.kind === "board" || undefined };
         if (isPause(e)) gotPause = true;
         if (gotPause && !isPause(e) && e.t !== "evaluate") return; // nothing may follow a pause
         setLessonReady(true);
         const spoken = e.t === "say" || e.t === "hint" ? e.text : e.t === "ask" ? e.q : "";
-        if (spoken && !opts.current.muted) sp.prefetch(spoken, lang);
-        play.current = play.current.then(() => playEvent(e, my));
+        let pre: Early | null = null;
+        if (spoken && !spokenSeen) {
+          spokenSeen = true;
+          pre = early.current;
+          early.current = null;
+        }
+        if (spoken && !pre && !opts.current.muted) sp.prefetch(spoken, lang);
+        play.current = play.current.then(() => playEvent(e, my, pre));
       };
-      let res = await streamTurn(req, opts.current.pass, onEvent, ctrl.signal);
+      let res = await streamTurn(req, opts.current.pass, onEvent, ctrl.signal, onPartial);
       // Recovery: a reply with nothing usable in it is retried once, silently.
-      if (res.ok && res.events === 0 && my === token.current) res = await streamTurn(req, opts.current.pass, onEvent, ctrl.signal);
+      if (res.ok && res.events === 0 && !early.current && my === token.current) res = await streamTurn(req, opts.current.pass, onEvent, ctrl.signal, onPartial);
+      // Speech started for an event that never completed (cut-off reply): let it finish what it has.
+      const left = early.current as Early | null;
+      if (left && my === token.current) {
+        early.current = null;
+        left.s.end();
+        play.current = play.current.then(() => left.s.done).then(() => {
+          echoUntil.current = performance.now() + 1000;
+          if (my === token.current) setTalking(false);
+        });
+      }
       if (my === token.current) streamingRef.current = false;
       if (my !== token.current) return;
       setStreaming(false);
@@ -321,15 +405,16 @@ export function useTutorSession(o: { board: RefObject<SmartboardHandle | null>; 
         setWaitingSince(Date.now());
       }
     },
-    [halt, playEvent, sp],
+    [halt, playEvent, sp, onSaid],
   );
 
   /** Route something the student said or typed, with the right tag (and a board snapshot when it's about the board). */
   const ask = useCallback(
-    (raw: string, how: { forceBoard?: boolean; tag?: string } = {}): void => {
+    (raw: string, how: AskHow = {}): void => {
       const text = raw.trim();
       if (!text && !how.tag) return;
-      const L = live.current;
+      // A merged sentence is the same turn as before, not an interruption of the reply it replaced.
+      const L = how.merged ? { ...live.current, busy: false } : live.current;
       // Explicit intents ("wait", "explain again", "slower", "in Hindi"…) get handled as such.
       const it = how.tag ? null : detectIntent(text);
       if (it) {
@@ -355,11 +440,24 @@ export function useTutorSession(o: { board: RefObject<SmartboardHandle | null>; 
           return askRef.current(`${text}${extra}`, { tag });
         }
       }
+      // Still talking: the tutor is thinking about the first half of this sentence and hasn't said anything
+      // yet, so cancel that request and send the whole sentence instead (no duplicate, no "interrupt").
+      const prev = lastAsk.current;
+      if (!how.tag && inFlight.current && !said.current.length && prev && (!prev.how.tag || prev.how.merged) && performance.now() - prev.at < 10000) {
+        lastAsk.current = null;
+        halt(true);
+        setLog((l) => (l[l.length - 1]?.who === "student" ? l.slice(0, -1) : l));
+        interrupted.current = false;
+        return askRef.current(`${prev.text} ${text}`, { ...prev.how, tag: prev.tag, note: prev.note, merged: true });
+      }
+      // The same words handed over twice (recogniser repeat): ignore.
+      if (prev && prev.text === text && performance.now() - prev.at < 3000) return;
       // Answering the question while it is still being read out is an answer, not an interruption.
       const early = L.busy && !streamingRef.current && pendingAsk.current ? pendingAsk.current : null;
       const interrupting = !early && (L.busy || interrupted.current);
       interrupted.current = false;
-      const wasSaying = recent.current[recent.current.length - 1] ?? "";
+      // What the student actually heard before cutting in (not the whole planned reply).
+      const wasSaying = (said.current.length ? said.current.slice(-2).join(" ") : recent.current[recent.current.length - 1]) ?? "";
       const board = opts.current.board.current;
       const wantsBoard = how.forceBoard || (board?.newMarks() ?? 0) > 0 || POINTING.test(text) || Boolean(L.check?.board) || Boolean(pendingAsk.current?.board && L.busy);
       const snap = wantsBoard ? board?.snapshot() : null;
@@ -367,12 +465,14 @@ export function useTutorSession(o: { board: RefObject<SmartboardHandle | null>; 
       let tag = how.tag ?? (interrupting ? "[interrupt]" : chk?.board && snap ? "[board-work]" : snap?.marks ? "[board]" : chk?.q ? (L.mode === "explainback" ? "[explanation]" : "[answer]") : "[say]");
       if (how.tag === "[board-work]" && !snap) tag = "[say]";
       let content = `${tag} ${text}`.trim();
-      if (interrupting && wasSaying) content += `\n(I interrupted you while you were saying: "${wasSaying.slice(0, 240)}")`;
+      const note = how.note ?? (interrupting && wasSaying ? `\n(I interrupted you. The last thing you actually said aloud was: "${wasSaying.slice(-300)}")` : "");
+      content += note;
+      lastAsk.current = { text, how, at: performance.now(), tag, note };
       if (snap) content += `\n\n[board snapshot attached]\nOn the board:\n${snap.desc || "(empty)"}${snap.marks ? `\nThe student's marks:\n${snap.marks}` : ""}`;
       if (text) setLog((l) => [...l.slice(-60), { who: "student", text }]);
       void send(content.slice(0, 11000), snap?.data ? { boardImage: { mediaType: snap.mediaType, data: snap.data } } : {});
     },
-    [send],
+    [send, halt],
   );
 
   const askRef = useRef(ask);
@@ -402,40 +502,56 @@ export function useTutorSession(o: { board: RefObject<SmartboardHandle | null>; 
 
   /* ---------------- voice loop ---------------- */
 
+  /**
+   * Is this the tutor's own voice coming back through the mic? Only while it speaks (or just after),
+   * and only when most of the CONTENT words match what it is saying right now.
+   */
   const isEcho = (heard: string) => {
     if (performance.now() > echoUntil.current) return false;
-    const h = norm(heard);
-    if (!h.length) return true;
-    const said = new Set(norm(recent.current.join(" ")));
-    const hits = h.filter((w) => said.has(w)).length;
-    return hits / h.length >= 0.6;
+    const content = (t: string) => norm(t).filter((w) => w.length > 2 && !FILLER.has(w));
+    const h = content(heard);
+    if (!h.length) return norm(heard).length <= 2 && echoUntil.current === Infinity;
+    // Just after the tutor stopped, a short reply ("yes", "two") is the student answering, not echo.
+    if (echoUntil.current !== Infinity && h.length < 3) return false;
+    const tutorWords = new Set(content([...said.current.slice(-3), recent.current[recent.current.length - 1] ?? ""].join(" ")));
+    const hits = h.filter((w) => tutorWords.has(w)).length;
+    return hits / h.length >= 0.7;
   };
+
+  /** The student started talking over the tutor: stop at once (audio, queued speech, the reply stream). */
+  const bargeIn = useCallback(() => {
+    if (!live.current.busy || interrupted.current || !said.current.length) return;
+    interrupted.current = true;
+    halt();
+    setCaption("");
+    // If they stop without finishing a sentence, pick the lesson back up.
+    clearTimeout(resumeTimer.current);
+    resumeTimer.current = setTimeout(() => {
+      if (interrupted.current) askRef.current("Sorry, go on — please continue.", { tag: "[say]" });
+    }, 6000);
+  }, [halt]);
 
   const onInterim = useCallback(
     (text: string) => {
-      setInterim(text);
-      // Barge-in: real student speech (not the tutor's own voice coming back through the mic) stops the tutor at once.
-      if (!live.current.busy || interrupted.current) return;
-      const n = norm(text).length;
-      if ((n >= 2 || STOP_WORDS.test(text)) && !isEcho(text)) {
-        interrupted.current = true;
-        halt();
-        setCaption("");
-        // If they stop without finishing a sentence, pick the lesson back up.
-        clearTimeout(resumeTimer.current);
-        resumeTimer.current = setTimeout(() => {
-          if (interrupted.current) ask("Sorry, go on — please continue.", { tag: "[say]" });
-        }, 6000);
+      // The tutor's own voice coming back through the mic: not a caption, and forgotten by the recogniser.
+      if (text && isEcho(text) && !interrupted.current) {
+        handsListener.current?.discard();
+        return setInterim("");
       }
+      setInterim(text);
+      if (!live.current.busy || interrupted.current) return;
+      // Barge-in on real student words (≥ 2 words ≈ 300 ms+ of speech, or "wait"/"stop"…) once the tutor is talking.
+      const n = norm(text).length;
+      if (n >= 2 || STOP_WORDS.test(text)) bargeIn();
     },
     // eslint-disable-next-line react-hooks/exhaustive-deps
-    [halt],
+    [bargeIn],
   );
   const onFinal = useCallback(
     (text: string) => {
       setInterim("");
       // The tutor's own voice picked up by the mic is not a question.
-      if (!interrupted.current && isEcho(text)) return;
+      if (!interrupted.current && isEcho(text)) return handsListener.current?.discard();
       clearTimeout(resumeTimer.current);
       ask(text);
     },
@@ -445,8 +561,8 @@ export function useTutorSession(o: { board: RefObject<SmartboardHandle | null>; 
 
   const handsListener = useRef<VoiceListener | null>(null);
   const pttListener = useRef<VoiceListener | null>(null);
-  const handlers = useRef({ onInterim, onFinal });
-  handlers.current = { onInterim, onFinal };
+  const handlers = useRef({ onInterim, onFinal, bargeIn });
+  handlers.current = { onInterim, onFinal, bargeIn };
 
   const toggleHandsFree = useCallback(() => {
     sp.unlock();
@@ -463,9 +579,12 @@ export function useTutorSession(o: { board: RefObject<SmartboardHandle | null>; 
       onInterim: (t) => handlers.current.onInterim(t),
       onFinal: (t) => handlers.current.onFinal(t),
       onActive: setHearing,
+      onStatus: setSttStatus,
+      onSpeech: () => handlers.current.bargeIn(),
       onError: (e) => {
         setMicError(e);
-        if (e !== "network") setHandsFree(false);
+        setHandsFree(false);
+        setSttStatus(null);
       },
     });
     handsListener.current = l;
@@ -495,7 +614,11 @@ export function useTutorSession(o: { board: RefObject<SmartboardHandle | null>; 
         ask(t);
       },
       onActive: setPtt,
-      onError: setMicError,
+      onStatus: setSttStatus,
+      onError: (e) => {
+        setMicError(e);
+        setSttStatus(null);
+      },
     });
     pttListener.current = l;
     l.start();
@@ -580,6 +703,13 @@ export function useTutorSession(o: { board: RefObject<SmartboardHandle | null>; 
     handsFree,
     ptt,
     micError,
+    sttStatus,
+    retryStt: () => (pttListener.current?.active ? pttListener.current : handsListener.current)?.retry(),
+    /** Send the last message again (after an error or timeout). */
+    retry: () => {
+      const l = lastSend.current;
+      if (l && !inFlight.current) void send(l.content, l.extra);
+    },
     micSupported: recognitionSupported(),
     voice,
     lessonReady,

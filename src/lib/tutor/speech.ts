@@ -1,6 +1,7 @@
 "use client";
 
 import { dataSaverOn } from "@/lib/dataSaver";
+import { latMark } from "./latency";
 import { capped, onCapChange, sarvamLang, sarvamTts, voiceConfig, voiceGender, setVoiceGender, type VoiceGender } from "./sarvam-client";
 
 /**
@@ -523,64 +524,125 @@ class Speaker {
     const list = sentences(text);
     if (this.useKokoro(text, lang)) this.prefetch(text, lang);
     for (let i = 0; i < list.length; i++) {
-      const s = list[i];
       if (my !== this.gen) return;
-      onSentence?.(s);
-      const tag = `chunk ${i + 1}/${list.length}`;
-      if (this.useSarvam(lang)) {
-        const t = speakable(s);
-        if (!/[\p{L}\p{N}]/u.test(t)) continue;
-        const t0 = performance.now();
-        const p = this.sarvamSynth(t, lang);
-        // Pipelining: synthesise sentence N+1 while N is fetched/played.
-        const next = list[i + 1] && speakable(list[i + 1]);
-        if (next && /[\p{L}\p{N}]/u.test(next)) void this.sarvamSynth(next, lang);
-        const r = await this.waitFor(p, my);
-        if (my !== this.gen) return;
-        if ("buf" in r) {
-          this.sFailures = 0;
-          console.info(`[voice] ${tag} engine=sarvam ms=${r.ms}${r.cached ? " (cached)" : ""} wait=${Math.round(performance.now() - t0)}ms audio=${Math.round(r.buf.duration * 1000)}ms "${t.slice(0, 60)}"`);
-          await this.play(r.buf);
-          continue;
-        }
-        if ("skipped" in r) return;
-        console.warn(`[voice] ${tag} sarvam error: ${r.error}`);
-        if (r.capped) this.dropSarvam("today's natural-voice allowance is used up");
-        else if (++this.sFailures >= 2) this.dropSarvam(`the server voice failed twice in a row (${r.error})`);
-        // This sentence: the device voice (below).
-      }
-      if (this.useKokoro(s, lang)) {
-        const t = speakable(s);
-        if (!/[\p{L}\p{N}]/u.test(t)) continue;
-        const t0 = performance.now();
-        let r = await this.waitFor(this.synth(t), my);
-        while ("error" in r && this.status === "ready") {
-          if (my !== this.gen) return;
-          this.failures++;
-          console.warn(`[voice] ${tag} kokoro error #${this.failures}: ${r.error}`);
-          if (this.failures >= 2) {
-            this.fail(`Kokoro failed twice in a row (${r.error})`);
-            break;
-          }
-          if (r.stuck) this.respawn(r.error);
-          this.cache.delete(t);
-          r = await this.waitFor(this.synth(t, true), my);
-        }
-        if (my !== this.gen) return;
-        if ("buf" in r) {
-          this.failures = 0;
-          console.info(`[voice] ${tag} engine=kokoro synth=${r.ms}ms wait=${Math.round(performance.now() - t0)}ms audio=${Math.round(r.buf.duration * 1000)}ms "${t.slice(0, 60)}"`);
-          await this.play(r.buf);
-          continue;
-        }
-        // Stopped mid-wait (barge-in) or Kokoro has just been given up on: fall through.
-        if ("skipped" in r) return;
-      }
-      if (my !== this.gen) return;
-      const t0 = performance.now();
-      await this.device(s, lang, my);
-      console.info(`[voice] ${tag} engine=device ms=${Math.round(performance.now() - t0)} reason=${this.status === "ready" ? `lang ${lang}` : this.reason ?? this.status}`);
+      // Pipelining: synthesise sentence N+1 while N is fetched/played.
+      if (list[i + 1]) this.prefetchOne(list[i + 1], lang);
+      if (!(await this.speakChunk(list[i], lang, my, `chunk ${i + 1}/${list.length}`, onSentence))) return;
     }
+  }
+
+  /**
+   * Speech fed piece by piece while the reply is still streaming in: `push` clauses as they become
+   * available, `end` when there are no more. Each clause is synthesised as soon as it is pushed (one
+   * ahead of playback), so the first audio starts after a single short TTS call.
+   */
+  stream(lang: string, onSentence?: (s: string) => void) {
+    const my = this.gen;
+    const queue: string[] = [];
+    let ended = false;
+    let wake: (() => void) | null = null;
+    const poke = () => {
+      const w = wake;
+      wake = null;
+      w?.();
+    };
+    const run = async () => {
+      if (this.sarvam === "checking") await Promise.race([voiceConfig(), new Promise((r) => setTimeout(r, 2500))]);
+      let n = 0;
+      for (;;) {
+        if (my !== this.gen) return;
+        if (!queue.length) {
+          if (ended) return;
+          await new Promise<void>((r) => (wake = r));
+          continue;
+        }
+        const s = queue.shift()!;
+        if (queue[0]) this.prefetchOne(queue[0], lang);
+        if (!(await this.speakChunk(s, lang, my, `stream ${++n}`, onSentence))) return;
+      }
+    };
+    const done = run();
+    return {
+      push: (t: string) => {
+        for (const c of sentences(t)) {
+          // Only the next one is synthesised ahead (no wasted cost on barge-in).
+          if (!queue.length) this.prefetchOne(c, lang);
+          queue.push(c);
+        }
+        poke();
+      },
+      end: () => {
+        ended = true;
+        poke();
+      },
+      done,
+    };
+  }
+
+  private prefetchOne(s: string, lang: string) {
+    const t = speakable(s);
+    if (!/[\p{L}\p{N}]/u.test(t)) return;
+    if (this.useSarvam(lang)) void this.sarvamSynth(t, lang);
+    else if (this.useKokoro(s, lang)) void this.synth(t);
+  }
+
+  /** One chunk through the best working engine. false = stopped (barge-in). */
+  private async speakChunk(s: string, lang: string, my: number, tag: string, onSentence?: (s: string) => void): Promise<boolean> {
+    if (my !== this.gen) return false;
+    // `onSentence` fires when this chunk's audio really starts (what the student has actually heard).
+    if (this.useSarvam(lang)) {
+      const t = speakable(s);
+      if (!/[\p{L}\p{N}]/u.test(t)) return true;
+      const t0 = performance.now();
+      const r = await this.waitFor(this.sarvamSynth(t, lang), my);
+      if (my !== this.gen) return false;
+      if ("buf" in r) {
+        this.sFailures = 0;
+        console.info(`[voice] ${tag} engine=sarvam ms=${r.ms}${r.cached ? " (cached)" : ""} wait=${Math.round(performance.now() - t0)}ms audio=${Math.round(r.buf.duration * 1000)}ms "${t.slice(0, 60)}"`);
+        onSentence?.(s);
+        await this.play(r.buf);
+        return my === this.gen;
+      }
+      if ("skipped" in r) return false;
+      console.warn(`[voice] ${tag} sarvam error: ${r.error}`);
+      if (r.capped) this.dropSarvam("today's natural-voice allowance is used up");
+      else if (++this.sFailures >= 2) this.dropSarvam(`the server voice failed twice in a row (${r.error})`);
+      // This sentence: the device voice (below).
+    }
+    if (this.useKokoro(s, lang)) {
+      const t = speakable(s);
+      if (!/[\p{L}\p{N}]/u.test(t)) return true;
+      const t0 = performance.now();
+      let r = await this.waitFor(this.synth(t), my);
+      while ("error" in r && this.status === "ready") {
+        if (my !== this.gen) return false;
+        this.failures++;
+        console.warn(`[voice] ${tag} kokoro error #${this.failures}: ${r.error}`);
+        if (this.failures >= 2) {
+          this.fail(`Kokoro failed twice in a row (${r.error})`);
+          break;
+        }
+        if (r.stuck) this.respawn(r.error);
+        this.cache.delete(t);
+        r = await this.waitFor(this.synth(t, true), my);
+      }
+      if (my !== this.gen) return false;
+      if ("buf" in r) {
+        this.failures = 0;
+        console.info(`[voice] ${tag} engine=kokoro synth=${r.ms}ms wait=${Math.round(performance.now() - t0)}ms audio=${Math.round(r.buf.duration * 1000)}ms "${t.slice(0, 60)}"`);
+        onSentence?.(s);
+        await this.play(r.buf);
+        return my === this.gen;
+      }
+      // Stopped mid-wait (barge-in) or Kokoro has just been given up on: fall through.
+      if ("skipped" in r) return false;
+    }
+    if (my !== this.gen) return false;
+    const t0 = performance.now();
+    onSentence?.(s);
+    await this.device(s, lang, my);
+    console.info(`[voice] ${tag} engine=device ms=${Math.round(performance.now() - t0)} reason=${this.status === "ready" ? `lang ${lang}` : this.reason ?? this.status}`);
+    return my === this.gen;
   }
 
   private play(buf: AudioBuffer) {
@@ -608,6 +670,7 @@ class Speaker {
       const timer = setTimeout(end, buf.duration * 1000 + 1500);
       try {
         src.start();
+        latMark("audio");
       } catch {
         end();
       }
@@ -638,6 +701,7 @@ class Speaker {
       const timer = setTimeout(end, Math.max(2500, (text.split(/\s+/).length * 520) / this.rate + 2500));
       u.onend = end;
       u.onerror = end;
+      u.onstart = () => latMark("audio");
       try {
         synth.speak(u);
       } catch {

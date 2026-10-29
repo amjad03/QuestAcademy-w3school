@@ -4,9 +4,14 @@ import { supabase } from "@/lib/supabase";
 import type { Profile } from "@/lib/store";
 import { EventStream, type LiveEvent } from "./protocol";
 import { STREAM_MARK } from "./types";
+import { latMark } from "./latency";
 import { TUTOR_PASS_HEADER, type LiveRequest, type Recap, type StudentInfo, type TutorLanguage } from "./live";
 
-export type LiveError = "tutor_unavailable" | "premium_required" | "rate_limited" | "daily_limit" | "bad_request" | "upstream_busy" | "upstream_error" | "auth_failed" | "network";
+export type LiveError = "tutor_unavailable" | "premium_required" | "rate_limited" | "daily_limit" | "bad_request" | "upstream_busy" | "upstream_error" | "auth_failed" | "network" | "timeout";
+
+/** No reply byte for this long (first byte, or between chunks) = give up and offer a retry. */
+const FIRST_BYTE_MS = 15000;
+const IDLE_MS = 15000;
 
 async function headers(pass?: string | null) {
   const h: Record<string, string> = { "Content-Type": "application/json" };
@@ -22,31 +27,63 @@ export async function streamTurn(
   pass: string | null,
   onEvent: (e: LiveEvent) => void,
   signal?: AbortSignal,
+  onPartial?: (p: { t: "say" | "hint" | "ask"; text: string }) => void,
 ): Promise<{ ok: true; raw: string; broken: boolean; events: number; bad: number } | { ok: false; code: LiveError; retryAfter?: number }> {
+  // Our own controller: aborted by the caller's signal (barge-in) or by a timeout.
+  const ctrl = new AbortController();
+  const onAbort = () => ctrl.abort();
+  signal?.addEventListener("abort", onAbort);
+  let timedOut = false;
+  let timer: ReturnType<typeof setTimeout> | undefined;
+  let reader: ReadableStreamDefaultReader<Uint8Array> | null = null;
+  const arm = (ms: number) => {
+    clearTimeout(timer);
+    timer = setTimeout(() => {
+      timedOut = true;
+      ctrl.abort();
+      void reader?.cancel().catch(() => {});
+    }, ms);
+  };
+  const disarm = () => {
+    clearTimeout(timer);
+    signal?.removeEventListener("abort", onAbort);
+  };
+  arm(FIRST_BYTE_MS);
   let res: Response;
   try {
-    res = await fetch("/api/tutor/live", { method: "POST", headers: await headers(pass), body: JSON.stringify({ ...req, kind: "turn" }), signal });
+    res = await fetch("/api/tutor/live", { method: "POST", headers: await headers(pass), body: JSON.stringify({ ...req, kind: "turn" }), signal: ctrl.signal });
   } catch {
-    return { ok: false, code: "network" };
+    disarm();
+    return { ok: false, code: timedOut ? "timeout" : "network" };
   }
   if (!res.ok || !res.body) {
+    disarm();
     const j = (await res.json().catch(() => ({}))) as { error?: LiveError; retryAfter?: number };
     return { ok: false, code: j.error ?? "upstream_error", retryAfter: j.retryAfter };
   }
-  const reader = res.body.getReader();
+  reader = res.body.getReader();
   const dec = new TextDecoder();
   let raw = "";
   let broken = false;
   let events = 0;
   const marks = (t: string) => t.split(STREAM_MARK.error).join("").split(STREAM_MARK.refusal).join("");
-  const es = new EventStream((e) => {
-    events++;
-    onEvent(e);
-  });
+  const es = new EventStream(
+    (e) => {
+      events++;
+      onEvent(e);
+    },
+    onPartial,
+  );
+  let first = true;
   try {
     for (;;) {
       const { done, value } = await reader.read();
       if (done) break;
+      arm(IDLE_MS);
+      if (first) {
+        first = false;
+        latMark("token");
+      }
       const chunk = dec.decode(value, { stream: true });
       raw += chunk;
       if (chunk.includes(STREAM_MARK.error)) broken = true;
@@ -55,6 +92,9 @@ export async function streamTurn(
   } catch {
     broken = !signal?.aborted;
   }
+  disarm();
+  if (timedOut && !events) return { ok: false, code: "timeout" };
+  if (timedOut) broken = true;
   if (raw.includes(STREAM_MARK.error)) broken = true;
   es.end(events > 0);
   return { ok: true, raw: marks(raw).trim(), broken, events, bad: es.bad };

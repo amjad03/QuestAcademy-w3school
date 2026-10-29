@@ -198,7 +198,11 @@ export class EventStream {
   private scanned = 0;
   stray = "";
   bad = 0;
-  constructor(private onEvent: (e: LiveEvent) => void) {}
+  /** `onPartial` sees the spoken text of a say/hint/ask object while it is still streaming in (so speech can start early). */
+  constructor(
+    private onEvent: (e: LiveEvent) => void,
+    private onPartial?: (p: { t: "say" | "hint" | "ask"; text: string }) => void,
+  ) {}
 
   push(chunk: string) {
     this.buf += chunk;
@@ -223,6 +227,7 @@ export class EventStream {
       } else if (this.depth === 0) this.stray += ch;
     }
     this.scanned = this.buf.length;
+    if (this.onPartial && this.depth > 0 && this.start >= 0) this.partial(this.buf.slice(this.start));
     if (this.depth === 0) {
       this.buf = "";
       this.scanned = 0;
@@ -230,6 +235,22 @@ export class EventStream {
       this.buf = this.buf.slice(this.start);
       this.scanned -= this.start;
       this.start = 0;
+    }
+  }
+
+  private partial(obj: string) {
+    const t = /"t"\s*:\s*"(say|hint|ask)"/.exec(obj)?.[1] as "say" | "hint" | "ask" | undefined;
+    if (!t) return;
+    const m = /"(?:text|q)"\s*:\s*"((?:[^"\\]|\\.)*)/.exec(obj);
+    if (!m) return;
+    // Only the event's own text (it comes before "ops"), never a board op's "text".
+    const ops = obj.indexOf('"ops"');
+    if (ops >= 0 && ops < m.index) return;
+    const raw = m[1].replace(/\\u[0-9a-fA-F]{0,3}$/, "").replace(/\\$/, "");
+    try {
+      this.onPartial!({ t, text: JSON.parse(`"${raw}"`) as string });
+    } catch {
+      /* odd escape: wait for more */
     }
   }
 

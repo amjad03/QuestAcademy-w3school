@@ -44,6 +44,25 @@ export class SarvamError extends Error {
   }
 }
 
+/**
+ * Text (≤ 500 chars) → a streaming MP3 response from Sarvam's /text-to-speech/stream (first bytes in
+ * ~0.4 s, about half the batch endpoint's wait, and a third of the bytes of WAV). Throws SarvamError
+ * when Sarvam refuses, so the caller can fall back to the batch endpoint.
+ */
+export async function sarvamTtsStream(o: { text: string; lang: VoiceLang; speaker: string; pace: number }): Promise<ReadableStream<Uint8Array>> {
+  const res = await fetch(`${BASE}/text-to-speech/stream`, {
+    method: "POST",
+    headers: { ...headers(), "Content-Type": "application/json" },
+    body: JSON.stringify({ text: o.text, language_code: o.lang, speaker: o.speaker, model: TTS_MODEL(), pace: o.pace, speech_sample_rate: 22050, enable_preprocessing: true, output_audio_codec: "mp3" }),
+    signal: AbortSignal.timeout(15000),
+  });
+  if (!res.ok || !res.body) {
+    const body = await res.text().catch(() => "");
+    throw new SarvamError(res.status, body);
+  }
+  return res.body;
+}
+
 /** Text (≤ 500 chars) → WAV bytes. */
 export async function sarvamTts(o: { text: string; lang: VoiceLang; speaker: string; pace: number }): Promise<Uint8Array> {
   const common = {

@@ -6,6 +6,7 @@ import { AudioLines, Hand, Loader2, Mic, MicOff, PenLine, Send } from "lucide-re
 import { Mascot } from "@/components/brand/Mascot";
 import { useT } from "@/i18n";
 import type { LiveError } from "@/lib/tutor/live-client";
+import { debugOn, latSubscribe, type Lat } from "@/lib/tutor/latency";
 import type { TutorSession, VoiceState } from "@/lib/tutor/useTutorSession";
 
 type T = ReturnType<typeof useT>;
@@ -22,6 +23,7 @@ export function liveErrorText(t: T, code: LiveError, retryAfter?: number | null)
     upstream_error: t("tutor.live.err.upstream", "The tutor hit a problem. Try again."),
     auth_failed: t("tutor.live.err.unavailable", "The AI tutor isn't switched on for this server yet (no model key). The board still works — ask your teacher to turn the tutor on."),
     network: t("tutor.live.err.network", "You seem to be offline. Check your connection and try again."),
+    timeout: t("tutor.live.err.timeout", "The tutor took too long to answer. Tap Try again."),
   };
   return map[code];
 }
@@ -128,6 +130,8 @@ export function VoiceDock({ s, placeholder, actions, compact, disabled }: { s: T
   const micErr =
     s.micError === "denied"
       ? t("tutor.mic.denied", "Microphone is blocked. Allow it in the browser's site settings, or type instead.")
+      : s.micError === "nomic"
+        ? t("tutor.mic.none", "No microphone found (or another app is using it). Plug one in, or type instead.")
       : s.micError === "unsupported"
         ? t("tutor.mic.unsupported", "Voice input isn't supported in this browser — type instead (Chrome works best).")
         : s.micError === "network"
@@ -231,12 +235,45 @@ export function VoiceDock({ s, placeholder, actions, compact, disabled }: { s: T
         )}
         {actions}
       </div>
-      {micErr && <p className="text-sm font-bold text-amber-700 dark:text-amber-300">{micErr}</p>}
-      {s.error && (
-        <p role="alert" className="rounded-xl bg-bad-soft px-3 py-2 text-sm font-bold text-bad-shade">
-          {liveErrorText(t, s.error, s.retryAfter)}
+      {micErr && (
+        <p className="text-sm font-bold text-amber-700 dark:text-amber-300" data-testid="mic-error">
+          {micErr}
         </p>
       )}
+      {s.sttStatus === "retry" && (
+        <p role="status" className="flex items-center justify-between gap-2 rounded-xl bg-amber-50 px-3 py-2 text-sm font-bold text-amber-800 dark:bg-amber-950 dark:text-amber-200" data-testid="stt-retry">
+          {t("tutor.mic.sttFailed", "Couldn't catch that.")}
+          <button type="button" onClick={s.retryStt} className="btn-ghost rounded-lg border-2 border-current px-2 py-0.5">
+            {t("tutor.live.retry", "Try again")}
+          </button>
+        </p>
+      )}
+      {s.error && (
+        <p role="alert" className="flex flex-wrap items-center justify-between gap-2 rounded-xl bg-bad-soft px-3 py-2 text-sm font-bold text-bad-shade" data-testid="tutor-error">
+          <span>{liveErrorText(t, s.error, s.retryAfter)}</span>
+          {s.error !== "tutor_unavailable" && s.error !== "premium_required" && s.error !== "daily_limit" && s.error !== "auth_failed" && (
+            <button type="button" onClick={() => (s.unlock(), s.retry())} className="btn-ghost rounded-lg border-2 border-current px-2 py-0.5" data-testid="tutor-retry">
+              {t("tutor.live.retry", "Try again")}
+            </button>
+          )}
+        </p>
+      )}
+      <LatencyDebug />
     </div>
+  );
+}
+
+/** `?debug=1`: per-turn voice latency (student stops → transcript → first token → first audio). */
+function LatencyDebug() {
+  const [on] = useState(debugOn);
+  const [l, setL] = useState<Lat>({});
+  useEffect(() => (on ? latSubscribe(setL) : undefined), [on]);
+  if (!on) return null;
+  const d = (a?: number, b?: number) => (a !== undefined && b !== undefined ? `${b - a} ms` : "–");
+  const from = l.speechEnd ?? l.final;
+  return (
+    <p className="rounded-lg bg-surface-2 px-2 py-1 font-mono text-[11px] text-muted" data-testid="latency-debug">
+      stt-end→final {d(l.speechEnd, l.final)} · final→token {d(l.final, l.token)} · token→audio {d(l.token, l.audio)} · <b>total {d(from, l.audio)}</b>
+    </p>
   );
 }

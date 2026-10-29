@@ -2,21 +2,24 @@
 
 import { capped, sarvamStt, voiceConfig, voiceConfigNow } from "./sarvam-client";
 import { speaker } from "./speech";
+import { latMark } from "./latency";
 
 /**
- * Hands-free listening with the Web Speech API: keeps the recogniser running
- * (restarting it after silences and Chrome's ~60 s cut-off), reports interim
- * captions as they come, and hands over a finished utterance after a short
- * pause. Android Chrome's continuous mode repeats results, so there it listens
- * one utterance at a time and restarts.
+ * Hands-free listening.
  *
- * When the server voice (Sarvam AI) is configured, it records the mic itself instead (16 kHz WAV with a
- * simple energy voice-activity detector: an utterance ends after ~800 ms of silence), shows "transcribing…"
- * and sends the clip to /api/voice/stt. While the tutor is talking, the first ~0.9 s of student speech is
- * transcribed early so barge-in works. Web Speech is the fallback when Sarvam fails or the daily cap is hit.
+ * PRIMARY (Chrome / Edge / Android Chrome): the browser's streaming recogniser (Web Speech API,
+ * continuous + interim results). Live captions while the student speaks; the turn ends on the
+ * recogniser's final result (after a 250 ms grace) or when the interim text hasn't changed for
+ * ~650 ms. It restarts itself after every end (silence, Chrome's ~60 s cut-off, errors).
+ *
+ * FALLBACK (Safari / Firefox, or Web Speech failing repeatedly): our own recording (16 kHz WAV, energy
+ * VAD: the utterance ends after 600 ms of silence) sent to /api/voice/stt (Sarvam), with a 6 s timeout
+ * and a visible retry. While the tutor speaks, ≥ 300 ms of loud speech reports `onSpeech` (barge-in).
  */
 
-export type MicError = "denied" | "unsupported" | "network";
+export type MicError = "denied" | "nomic" | "unsupported" | "network";
+/** Fallback recogniser: what the clip upload is doing ("retry" = it failed, the clip is kept for retry()). */
+export type ListenStatus = "transcribing" | "retry" | null;
 
 interface Alt {
   transcript: string;
@@ -34,6 +37,7 @@ interface Recognition {
   abort(): void;
   onresult: ((e: { resultIndex: number; results: ArrayLike<Result> }) => void) | null;
   onend: (() => void) | null;
+  onstart: (() => void) | null;
   onerror: ((e: { error: string }) => void) | null;
   onspeechstart: (() => void) | null;
 }
@@ -45,15 +49,25 @@ function webSpeechSupported() {
 }
 const recorderSupported = () => typeof window !== "undefined" && Boolean(navigator.mediaDevices?.getUserMedia) && typeof AudioContext !== "undefined";
 const sarvamReady = () => Boolean(voiceConfigNow()?.stt) && !capped.stt && recorderSupported();
+/** Web Speech failed hard this visit (network/service errors): use the fallback for the rest of it. */
+let webSpeechBroken = false;
 
-// Ask early (one tiny cached request) so the choice is ready by the time the mic is tapped.
+// Ask early (one tiny cached request) so the fallback choice is ready by the time the mic is tapped.
 if (typeof window !== "undefined") void voiceConfig();
 
 export function recognitionSupported() {
-  return webSpeechSupported() || sarvamReady();
+  return webSpeechSupported() || recorderSupported();
 }
 
 export const TRANSCRIBING = "transcribing…";
+
+/** Turn ends this long after the recogniser's last final result (with no interim words pending). */
+const FINAL_GAP = 250;
+/** …or this long after the interim text last changed. */
+const STABLE_GAP = 650;
+/** Fallback VAD: silence that ends an utterance. */
+const SILENCE_MS = 600;
+const STT_TIMEOUT = 6000;
 
 /** Float32 frames at `rate` → 16 kHz mono 16-bit WAV. */
 function encodeWav(frames: Float32Array[], rate: number): Blob {
@@ -91,6 +105,21 @@ function encodeWav(frames: Float32Array[], rate: number): Blob {
   return new Blob([buf], { type: "audio/wav" });
 }
 
+const AUDIO: MediaTrackConstraints = { echoCancellation: true, noiseSuppression: true, autoGainControl: true, channelCount: 1 };
+
+/** getUserMedia with the error mapped to what the student must do. */
+async function openMic(): Promise<MediaStream | MicError> {
+  if (!navigator.mediaDevices?.getUserMedia) return "unsupported";
+  try {
+    return await navigator.mediaDevices.getUserMedia({ audio: AUDIO });
+  } catch (e) {
+    const name = (e as { name?: string })?.name;
+    if (name === "NotAllowedError" || name === "SecurityError" || name === "PermissionDeniedError") return "denied";
+    if (name === "NotFoundError" || name === "OverconstrainedError" || name === "NotReadableError") return "nomic";
+    return "unsupported";
+  }
+}
+
 export interface ListenerOpts {
   lang: string;
   /** Stop after one utterance (push-to-talk). */
@@ -99,16 +128,33 @@ export interface ListenerOpts {
   onFinal: (text: string) => void;
   onActive: (on: boolean) => void;
   onError: (e: MicError) => void;
+  /** Fallback recogniser status (uploading / failed with a retry). */
+  onStatus?: (s: ListenStatus) => void;
+  /** ≥ 300 ms of real speech while the tutor talks (fallback VAD only; Web Speech barge-in uses interim text). */
+  onSpeech?: () => void;
 }
 
 export class VoiceListener {
   private rec: Recognition | null = null;
   private want = false;
-  private finals = "";
+  private pending = "";
+  /** Results index (in the current recogniser session) below which text was already handed over. */
+  private consumed = 0;
+  private seen = 0;
+  /** Leading words of the current text that were the tutor's own voice (dropped). */
+  private skipWords = 0;
+  /** The latest result still had interim (not final) words. */
+  private interimOpen = false;
   private flushTimer: ReturnType<typeof setTimeout> | undefined;
+  private bootTimer: ReturnType<typeof setTimeout> | undefined;
+  private watchdog: ReturnType<typeof setInterval> | undefined;
   private restarts: number[] = [];
   private netErrors = 0;
+  private startedAt = 0;
+  private gotStart = false;
+  private dead = 0;
   lastHeard = 0;
+  engine: "sarvam" | "webspeech" | null = null;
 
   constructor(private o: ListenerOpts) {}
 
@@ -125,37 +171,62 @@ export class VoiceListener {
   start() {
     this.want = true;
     this.netErrors = 0;
-    if (voiceConfigNow()) return this.choose();
-    void voiceConfig().then(() => this.want && this.choose());
+    void this.choose();
   }
 
-  private choose() {
-    if (sarvamReady()) return void this.startSarvam();
-    if (!webSpeechSupported()) {
-      this.want = false;
-      return this.o.onError("unsupported");
+  private async choose() {
+    if (webSpeechSupported() && !webSpeechBroken) {
+      // A quick permission probe gives a clear "blocked" / "no microphone" error up front.
+      const m = await openMic();
+      if (!this.want) return typeof m !== "string" && m.getTracks().forEach((t) => t.stop());
+      if (m === "denied" || m === "nomic") return this.fail(m);
+      if (typeof m !== "string") m.getTracks().forEach((t) => t.stop());
+      this.engine = "webspeech";
+      console.info("[voice] listening with engine=webspeech");
+      this.boot();
+      clearInterval(this.watchdog);
+      // Never stay deaf: if the recogniser died without an `end`, or never started, start it again.
+      this.watchdog = setInterval(() => {
+        if (!this.want || this.engine !== "webspeech") return;
+        if (!this.rec && !this.bootTimer) this.boot();
+        else if (this.rec && !this.gotStart && performance.now() - this.startedAt > 4000) {
+          // Twice in a row = this browser's recogniser doesn't work (e.g. no speech service): use the fallback.
+          if (++this.dead >= 2) return this.toSarvam("the recogniser never started");
+          console.warn("[voice] recogniser never started: restarting");
+          const r = this.rec;
+          this.rec = null;
+          try {
+            r.abort();
+          } catch {
+            /* gone */
+          }
+          this.boot();
+        }
+      }, 2000);
+      return;
     }
-    this.boot();
+    if (!voiceConfigNow()) await Promise.race([voiceConfig(), new Promise((r) => setTimeout(r, 3000))]);
+    if (!this.want) return;
+    if (sarvamReady()) return void this.startSarvam();
+    this.fail(webSpeechBroken ? "network" : "unsupported");
   }
 
-  /* ---------------- Sarvam: own recording + VAD ---------------- */
+  private fail(e: MicError) {
+    this.want = false;
+    this.cleanup();
+    this.o.onActive(false);
+    this.o.onError(e);
+  }
+
+  /* ---------------- Fallback: own recording + VAD → Sarvam ---------------- */
 
   private mic: { stream: MediaStream; ctx: AudioContext; proc: ScriptProcessorNode; src: MediaStreamAudioSourceNode } | null = null;
-  private sFails = 0;
-  engine: "sarvam" | "webspeech" | null = null;
+  private retryClip: Blob | null = null;
+  private sttBusy = false;
 
   private async startSarvam() {
-    let stream: MediaStream;
-    try {
-      stream = await navigator.mediaDevices.getUserMedia({ audio: { echoCancellation: true, noiseSuppression: true, autoGainControl: true, channelCount: 1 } });
-    } catch (e) {
-      const name = (e as { name?: string })?.name;
-      if (name === "NotAllowedError" || name === "SecurityError") {
-        this.want = false;
-        return this.o.onError("denied");
-      }
-      return this.toWebSpeech(`mic: ${String(e)}`);
-    }
+    const stream = await openMic();
+    if (typeof stream === "string") return this.fail(stream);
     if (!this.want) return stream.getTracks().forEach((t) => t.stop());
     const ctx = new AudioContext();
     if (ctx.state === "suspended") void ctx.resume().catch(() => {});
@@ -165,7 +236,7 @@ export class VoiceListener {
     proc.connect(ctx.destination);
     this.mic = { stream, ctx, proc, src };
     this.engine = "sarvam";
-    console.info("[voice] listening with engine=sarvam");
+    console.info("[voice] listening with engine=sarvam (fallback)");
     this.o.onActive(true);
 
     const rate = ctx.sampleRate;
@@ -176,7 +247,7 @@ export class VoiceListener {
     const pre: Float32Array[] = [];
     let lastLoud = 0;
     let started = 0;
-    let early = false;
+    let barged = false;
     let idleSince = performance.now();
     proc.onaudioprocess = (ev) => {
       ev.outputBuffer.getChannelData(0).fill(0);
@@ -186,8 +257,9 @@ export class VoiceListener {
       for (let i = 0; i < f.length; i++) sum += f[i] * f[i];
       const rms = Math.sqrt(sum / f.length);
       const now = performance.now();
+      const talking = speaker().speaking;
       // Higher bar while the tutor talks, so its own voice leaking past echo cancellation isn't "speech".
-      const thr = Math.max(0.012, floor * 3) * (speaker().speaking ? 2 : 1);
+      const thr = Math.max(0.012, floor * 3) * (talking ? 2.2 : 1);
       if (!speech) {
         floor = floor * 0.95 + Math.min(rms, 0.05) * 0.05;
         pre.push(f);
@@ -196,7 +268,7 @@ export class VoiceListener {
         if (loud >= 2) {
           speech = pre.splice(0);
           started = lastLoud = now;
-          early = false;
+          barged = false;
           this.lastHeard = now;
         } else if (this.o.once && now - idleSince > 10000) this.stop();
         return;
@@ -204,36 +276,48 @@ export class VoiceListener {
       speech.push(f);
       if (rms > thr * 0.7) lastLoud = this.lastHeard = now;
       const dur = now - started;
-      // Barge-in: while the tutor is speaking, transcribe the first moment of speech straight away.
-      if (!early && dur > 900 && speaker().speaking) {
-        early = true;
-        void this.transcribe(speech.slice(), rate, true);
+      // Barge-in: ≥ 300 ms of sustained speech over the tutor.
+      if (!barged && talking && dur >= 300 && now - lastLoud < 150) {
+        barged = true;
+        this.o.onSpeech?.();
       }
-      if (now - lastLoud > 800 || dur > 28000) {
+      if (now - lastLoud > SILENCE_MS || dur > 28000) {
         const clip = speech;
         speech = null;
         idleSince = now;
-        if (dur - (now - lastLoud) > 250) void this.transcribe(clip, rate, false);
+        if (dur - (now - lastLoud) > 250) {
+          latMark("speechEnd", lastLoud);
+          void this.transcribe(encodeWav(clip, rate));
+        }
       }
     };
   }
 
-  private async transcribe(frames: Float32Array[], rate: number, early: boolean) {
-    if (!early) this.o.onInterim(TRANSCRIBING);
-    const r = await sarvamStt(encodeWav(frames, rate), this.o.lang);
+  /** Send the last failed clip again. */
+  retry() {
+    const c = this.retryClip;
+    if (c && this.want) void this.transcribe(c);
+  }
+
+  private async transcribe(clip: Blob) {
+    if (this.sttBusy) return; // one upload at a time: a new clip while one is in flight is dropped (no duplicates)
+    this.sttBusy = true;
+    this.retryClip = null;
+    this.o.onStatus?.("transcribing");
+    this.o.onInterim(TRANSCRIBING);
+    const r = await sarvamStt(clip, this.o.lang, STT_TIMEOUT);
+    this.sttBusy = false;
+    if (!this.want) return;
+    this.o.onInterim("");
     if ("error" in r) {
-      if (early) return;
-      this.o.onInterim("");
       console.warn("[voice] sarvam stt error:", r.error);
-      if (r.capped || ++this.sFails >= 2) this.toWebSpeech(r.capped ? "daily allowance used" : r.error);
+      if (r.capped) return this.fail("network");
+      this.retryClip = clip;
+      this.o.onStatus?.("retry");
       return;
     }
-    this.sFails = 0;
-    if (early) {
-      if (r.transcript && this.want) this.o.onInterim(r.transcript);
-      return;
-    }
-    if (!r.transcript) return this.o.onInterim("");
+    this.o.onStatus?.(null);
+    if (!r.transcript) return;
     this.o.onFinal(r.transcript);
     if (this.o.once) this.stop();
   }
@@ -253,22 +337,32 @@ export class VoiceListener {
     void m.ctx.close().catch(() => {});
   }
 
-  private toWebSpeech(why: string) {
-    this.closeMic();
+  private toSarvam(why: string) {
+    webSpeechBroken = true;
+    this.cleanup();
     if (!this.want) return;
-    if (!webSpeechSupported()) {
-      this.want = false;
-      this.o.onActive(false);
-      return this.o.onError("network");
+    console.info("[voice] Web Speech failed, using the server recogniser:", why);
+    void this.choose();
+  }
+
+  private cleanup() {
+    clearTimeout(this.flushTimer);
+    clearTimeout(this.bootTimer);
+    this.bootTimer = undefined;
+    clearInterval(this.watchdog);
+    this.closeMic();
+    const r = this.rec;
+    this.rec = null;
+    try {
+      r?.abort();
+    } catch {
+      /* not running */
     }
-    console.info("[voice] listening falls back to Web Speech:", why);
-    this.engine = "webspeech";
-    this.boot();
   }
 
   stop() {
+    const was = this.want;
     this.want = false;
-    this.closeMic();
     clearTimeout(this.flushTimer);
     const r = this.rec;
     this.rec = null;
@@ -278,77 +372,121 @@ export class VoiceListener {
       /* not running */
     }
     this.flush();
-    this.o.onActive(false);
+    this.cleanup();
+    this.o.onStatus?.(null);
+    if (was) this.o.onActive(false);
   }
 
+  /** Forget the words heard so far without handing them over (they were the tutor's own voice). */
+  discard() {
+    clearTimeout(this.flushTimer);
+    if (this.pending) this.skipWords += this.pending.split(" ").length;
+    this.pending = "";
+  }
+
+  /* ---------------- Primary: Web Speech ---------------- */
+
   private boot() {
-    if (!this.want || this.rec) return;
+    clearTimeout(this.bootTimer);
+    this.bootTimer = undefined;
+    if (!this.want || this.rec || this.engine !== "webspeech") return;
     const w = window as unknown as Record<string, new () => Recognition>;
     const Ctor = w.SpeechRecognition || w.webkitSpeechRecognition;
-    const rec = new Ctor();
-    this.engine = "webspeech";
+    let rec: Recognition;
+    try {
+      rec = new Ctor();
+    } catch {
+      return this.toSarvam("could not create a recogniser");
+    }
     const android = /Android/i.test(navigator.userAgent);
     rec.lang = this.o.lang;
     rec.interimResults = true;
-    rec.continuous = !android && !this.o.once;
+    rec.continuous = !android;
     rec.maxAlternatives = 1;
-    let interim = "";
+    this.consumed = 0;
+    this.seen = 0;
+    this.skipWords = 0;
+    this.pending = "";
+    this.gotStart = false;
+    this.startedAt = performance.now();
+    rec.onstart = () => {
+      this.gotStart = true;
+      this.dead = 0;
+      this.o.onActive(true);
+    };
     rec.onresult = (e) => {
-      interim = "";
-      for (let i = e.resultIndex; i < e.results.length; i++) {
+      if (this.rec !== rec) return;
+      let fin = "";
+      let int = "";
+      for (let i = this.consumed; i < e.results.length; i++) {
         const r = e.results[i];
         const txt = r[0]?.transcript ?? "";
-        if (r.isFinal) this.finals = `${this.finals} ${txt}`.trim();
-        else interim += txt;
+        if (r.isFinal) fin += ` ${txt}`;
+        else int += ` ${txt}`;
       }
+      this.seen = e.results.length;
+      this.interimOpen = Boolean(int.trim());
+      this.netErrors = 0;
+      let text = `${fin} ${int}`.replace(/\s+/g, " ").trim();
+      if (this.skipWords) text = text.split(" ").slice(this.skipWords).join(" ");
+      if (!text) return;
       this.lastHeard = performance.now();
-      this.o.onInterim(`${this.finals} ${interim}`.trim());
+      const changed = text !== this.pending;
+      this.pending = text;
+      if (changed) this.o.onInterim(text);
       clearTimeout(this.flushTimer);
-      // A short pause after a final result ends the utterance.
-      if (this.finals && !interim) this.flushTimer = setTimeout(() => this.flush(), 750);
+      this.flushTimer = setTimeout(() => this.flush(), int.trim() ? STABLE_GAP : FINAL_GAP);
     };
     rec.onspeechstart = () => (this.lastHeard = performance.now());
     rec.onerror = (e) => {
-      if (e.error === "not-allowed" || e.error === "service-not-allowed" || e.error === "audio-capture") {
-        this.want = false;
-        this.o.onError("denied");
-      } else if (e.error === "network") {
-        if (++this.netErrors >= 3) {
-          this.want = false;
-          this.o.onError("network");
-        }
-      }
-      // "no-speech" / "aborted": just restart.
+      if (this.rec !== rec) return;
+      console.info("[voice] recogniser error:", e.error);
+      if (e.error === "not-allowed") return this.fail("denied");
+      if (e.error === "audio-capture") return this.fail("nomic");
+      if (e.error === "service-not-allowed" || e.error === "language-not-supported") return this.fallbackOr(e.error);
+      if (e.error === "network" && ++this.netErrors >= 2) return this.fallbackOr("network errors");
+      // "no-speech" / "aborted": the end handler restarts it.
     };
     rec.onend = () => {
-      if (this.rec === rec) this.rec = null;
-      if (interim && !this.finals) this.finals = interim; // some browsers end without a final
+      if (this.rec !== rec) return;
+      this.rec = null;
       this.flush();
-      if (this.want && !this.o.once) {
-        const now = Date.now();
-        this.restarts = this.restarts.filter((t) => now - t < 10000);
-        this.restarts.push(now);
-        setTimeout(() => this.boot(), this.restarts.length > 8 ? 2000 : 150);
-      } else {
-        this.want = false;
-        this.o.onActive(false);
-      }
+      if (!this.want) return;
+      if (this.o.once && this.consumed > 0) return this.stop();
+      const now = Date.now();
+      this.restarts = this.restarts.filter((t) => now - t < 10000);
+      this.restarts.push(now);
+      this.bootTimer = setTimeout(() => this.boot(), this.restarts.length > 8 ? 1500 : 60);
     };
     this.rec = rec;
     try {
       rec.start();
-      this.o.onActive(true);
     } catch {
       this.rec = null;
-      setTimeout(() => this.boot(), 400);
+      this.bootTimer = setTimeout(() => this.boot(), 400);
     }
+  }
+
+  /** Web Speech can't work here: the server recogniser if configured (choose() decides), else a clear error. */
+  private fallbackOr(why: string) {
+    this.toSarvam(why);
   }
 
   private flush() {
     clearTimeout(this.flushTimer);
-    const text = this.finals.trim();
-    this.finals = "";
-    if (text) this.o.onFinal(text);
-    if (this.o.once && text) this.stop();
+    const text = this.pending.trim();
+    if (!text) return;
+    this.pending = "";
+    if (this.interimOpen) {
+      // Handed over on a pause before the recogniser finalised: later words may still land in the same
+      // result, so skip what was handed over instead of skipping the result.
+      this.skipWords += text.split(" ").length;
+    } else {
+      this.consumed = this.seen;
+      this.skipWords = 0;
+    }
+    latMark("speechEnd", this.lastHeard);
+    this.o.onFinal(text);
+    if (this.o.once && this.want) this.stop();
   }
 }

@@ -1,9 +1,11 @@
 import { addVoiceUsage, voiceAllowed, voiceBurstGuard } from "@/lib/tutor/guard";
-import { SarvamError, VOICE_LANGS, sarvamConfigured, sarvamTts, speakerFor, type VoiceLang } from "@/lib/tutor/sarvam";
+import { SarvamError, VOICE_LANGS, sarvamConfigured, sarvamTts, sarvamTtsStream, speakerFor, type VoiceLang } from "@/lib/tutor/sarvam";
 import { logVoiceUsage } from "@/lib/ai-usage";
 
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
+/** Run next to the students and Sarvam (India): saves an ocean round trip on every voice call. */
+export const preferredRegion = "bom1";
 
 const MAX_CHARS = 500;
 const err = (status: number, error: string, extra?: Record<string, unknown>) => Response.json({ error, ...extra }, { status, headers: { "Cache-Control": "no-store" } });
@@ -30,8 +32,21 @@ export async function POST(req: Request) {
   if (!allow.ok) return err(429, "voice_cap", { kind: "tts", cap: allow.cap });
 
   const t0 = Date.now();
+  const speaker = speakerFor(gender, lang);
+  if (process.env.SARVAM_TTS_STREAM !== "0") {
+    try {
+      const audio = await sarvamTtsStream({ text, lang, speaker, pace });
+      addVoiceUsage("tts", g.user, g.ip, text.length);
+      void logVoiceUsage({ kind: "tts", units: text.length, user: g.user, ip: g.ip });
+      const ms = Date.now() - t0;
+      console.info(`[voice] engine=sarvam tts-stream first-byte ms=${ms} chars=${text.length} lang=${lang}`);
+      return new Response(audio, { headers: { "Content-Type": "audio/mpeg", "Cache-Control": "private, max-age=86400", "X-Voice-Ms": String(ms) } });
+    } catch (e) {
+      console.warn("[voice] tts stream failed, using batch:", e instanceof Error ? e.message.slice(0, 200) : e);
+    }
+  }
   try {
-    const wav = await sarvamTts({ text, lang, speaker: speakerFor(gender, lang), pace });
+    const wav = await sarvamTts({ text, lang, speaker, pace });
     addVoiceUsage("tts", g.user, g.ip, text.length);
     void logVoiceUsage({ kind: "tts", units: text.length, user: g.user, ip: g.ip });
     const ms = Date.now() - t0;

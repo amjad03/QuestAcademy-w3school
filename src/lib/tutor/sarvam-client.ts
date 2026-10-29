@@ -76,7 +76,7 @@ function hash(s: string) {
   return (h >>> 0).toString(16) + s.length.toString(16);
 }
 
-const CACHE = "sarvam-tts-v1";
+const CACHE = "sarvam-tts-v2";
 const lru = new Map<string, Promise<TtsResult>>();
 const LRU_MAX = 60;
 
@@ -93,7 +93,7 @@ function toCacheStorage(key: string, wav: ArrayBuffer) {
   if (typeof caches === "undefined") return;
   void caches
     .open(CACHE)
-    .then((c) => c.put(`/__voice-cache/${key}`, new Response(wav.slice(0), { headers: { "Content-Type": "audio/wav" } })))
+    .then((c) => c.put(`/__voice-cache/${key}`, new Response(wav.slice(0))))
     .catch(() => {});
 }
 
@@ -116,6 +116,8 @@ export function sarvamTts(text: string, lang: string, opts: { gender?: VoiceGend
     try {
       const res = await fetch("/api/voice/tts", {
         method: "POST",
+        // A stuck request must not hold the lesson: the speaker falls back to the device voice.
+        signal: AbortSignal.timeout(7000),
         headers: { "Content-Type": "application/json", ...(await authHeaders()) },
         body: JSON.stringify({ text: text.slice(0, 500), lang, voice: gender, pace }),
       });
@@ -145,14 +147,14 @@ export function sarvamTts(text: string, lang: string, opts: { gender?: VoiceGend
 export type SttResult = { transcript: string; ms: number } | { error: string; capped?: boolean };
 
 /** A recorded clip → transcript. */
-export async function sarvamStt(clip: Blob, lang: string): Promise<SttResult> {
+export async function sarvamStt(clip: Blob, lang: string, timeoutMs = 8000): Promise<SttResult> {
   if (capped.stt) return { error: "voice_cap", capped: true };
   const t0 = performance.now();
   const fd = new FormData();
   fd.append("file", clip, clip.type.includes("webm") ? "clip.webm" : "clip.wav");
   fd.append("lang", lang);
   try {
-    const res = await fetch("/api/voice/stt", { method: "POST", headers: await authHeaders(), body: fd });
+    const res = await fetch("/api/voice/stt", { method: "POST", headers: await authHeaders(), body: fd, signal: AbortSignal.timeout(timeoutMs) });
     const j = (await res.json().catch(() => ({}))) as { transcript?: string; error?: string };
     if (!res.ok) {
       if (res.status === 429 && j.error === "voice_cap") {
