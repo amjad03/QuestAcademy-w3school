@@ -2,7 +2,7 @@
 # deploys (and may rewrite this file); keep the subdomain in step with your project
 # (wss://<subdomain>.livekit.cloud). See docs/realtime-voice.md.
 [project]
-  subdomain = "your-project-subdomain"
+  subdomain = "zynetix-school-h94mdwzf"
 
 [agent]
   id = ""
