@@ -744,7 +744,11 @@ export function Smartboard({
       erased.current = [];
       eraseAt(p);
     } else if (SHAPES.includes(tl)) shape.current = { from: p, to: p };
-    else if (tl === "text") setTyping({ at: p, text: "" });
+    else if (tl === "text") {
+      // Keep the browser from moving focus on mousedown, which would blur (and drop) the new text box at once.
+      e.preventDefault();
+      setTyping({ at: p, text: "" });
+    }
   };
 
   const move = (e: React.PointerEvent) => {
@@ -971,11 +975,11 @@ export function Smartboard({
           </div>
         </div>
         {turn && !readOnly && (
-          <div className="pointer-events-none absolute inset-x-2 top-2 flex justify-center" data-testid="board-turn">
+          <div className="pointer-events-none absolute inset-x-2 bottom-2 flex justify-center" data-testid="board-turn">
             <div className="pointer-events-auto flex max-w-full items-center gap-2 rounded-2xl border-2 border-emerald-500 bg-white/95 px-3 py-1.5 shadow-md dark:bg-zinc-900/95" onPointerDown={(e) => e.stopPropagation()}>
               <PenLine className="h-4 w-4 shrink-0 text-emerald-600" />
               <span className="min-w-0 truncate text-sm font-extrabold text-emerald-800 dark:text-emerald-200">
-                {t("board.yourTurn", "Your turn")}: {turn}
+                {t("board.yourTurn", "Your turn")}: {turn.replace(/^your turn[:,!.\s-]*/i, "")}
               </span>
               {onTurnDone && (
                 <button type="button" onClick={onTurnDone} className="inline-flex shrink-0 items-center gap-1 rounded-xl bg-emerald-600 px-2.5 py-1 text-xs font-extrabold text-white">

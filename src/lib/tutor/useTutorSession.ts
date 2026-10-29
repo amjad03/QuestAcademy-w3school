@@ -11,8 +11,11 @@
 import { track } from "@/lib/analytics";
 import { useCallback, useEffect, useRef, useState, type RefObject } from "react";
 import type { SmartboardHandle } from "@/components/board/Smartboard";
-import type { CheckPoint, LiveRequest, LiveStep } from "./live";
+import type { BoardOp } from "@/components/board/ops";
+import type { CheckPoint, LiveRequest, TutorLanguage, TutorLevel, TutorPace } from "./live";
 import { streamTurn, type LiveError } from "./live-client";
+import { isPause, type Branch, type LiveEvent, type PlanConcept, type Stage, type Verdict } from "./protocol";
+import { detectIntent, type Intent } from "./intents";
 import { speaker, type VoiceSnapshot } from "./speech";
 import { VoiceListener, recognitionSupported, type MicError } from "./listen";
 
@@ -20,6 +23,9 @@ export type Msg = { role: "user" | "assistant"; content: string };
 export type VoiceState = "idle" | "listening" | "thinking" | "speaking";
 export type LogLine = { who: "student" | "tutor"; text: string };
 type Base = Omit<LiveRequest, "kind" | "messages" | "image" | "boardImage">;
+export type Plan = { title: string; concepts: PlanConcept[] };
+export type Progress = { concept: string; stage: Stage };
+export type Evaluation = { verdict: Verdict; note: string; misconception?: string };
 
 const words = (s: string) => s.trim().split(/\s+/).length;
 const norm = (s: string) => s.toLowerCase().replace(/[^\p{L}\p{N}\s]/gu, " ").split(/\s+/).filter(Boolean);
@@ -32,7 +38,7 @@ export function trimHistory(m: Msg[]): Msg[] {
   return m.length <= 31 ? m : [...m.slice(0, 2), ...m.slice(m.length - 29)];
 }
 
-export function useTutorSession(o: { board: RefObject<SmartboardHandle | null>; pass: string | null; base: () => Base; speechLang: string; muted: boolean }) {
+export function useTutorSession(o: { board: RefObject<SmartboardHandle | null>; pass: string | null; base: () => Base; speechLang: string; muted: boolean; onLanguage?: (l: TutorLanguage) => void }) {
   const [caption, setCaption] = useState("");
   const [check, setCheck] = useState<CheckPoint | null>(null);
   const [hintWait, setHintWait] = useState(false);
@@ -52,6 +58,21 @@ export function useTutorSession(o: { board: RefObject<SmartboardHandle | null>; 
   const [lessonReady, setLessonReady] = useState(false);
   const [log, setLog] = useState<LogLine[]>([]);
   const [available, setAvailable] = useState<boolean | null>(null);
+  const [plan, setPlan] = useState<Plan | null>(null);
+  const [progress, setProgress] = useState<Progress | null>(null);
+  const [done, setDone] = useState<string[]>([]);
+  const [evaluation, setEvaluation] = useState<Evaluation | null>(null);
+  const [branch, setBranch] = useState<Branch | null>(null);
+  const [pace, setPace] = useState<TutorPace>("normal");
+  const [level, setLevel] = useState<TutorLevel>("simple");
+  const [lastIntent, setLastIntent] = useState<Intent | null>(null);
+  const [waitingSince, setWaitingSince] = useState<number | null>(null);
+  const misconceptions = useRef<string[]>([]);
+  /** The question the current turn ends with, known as soon as it streams in (before it is read out). */
+  const pendingAsk = useRef<CheckPoint | null>(null);
+  const streamingRef = useRef(false);
+  const tuning = useRef({ pace, level, plan, progress, done });
+  tuning.current = { pace, level, plan, progress, done };
   const availableRef = useRef(available);
   availableRef.current = available;
 
@@ -119,32 +140,87 @@ export function useTutorSession(o: { board: RefObject<SmartboardHandle | null>; 
     [sp],
   );
 
-  const playStep = useCallback(
-    async (step: LiveStep, my: number) => {
-      if (my !== token.current) return;
-      played.current.push(JSON.stringify({ say: step.say, ops: step.ops, ...(step.check ? { check: step.check } : {}) }));
-      setCaption(step.say);
-      if (step.say) {
-        recent.current = [...recent.current.slice(-2), step.say];
-        setLog((l) => [...l.slice(-60), { who: "tutor", text: step.say }]);
+  /** Spoken text + its board ops, drawn across the narration like a teacher writing while talking. */
+  const sayAndDraw = useCallback(
+    async (text: string, ops: BoardOp[], my: number, caption = true) => {
+      // A question is shown in the question card, so it isn't repeated in the caption.
+      if (caption) setCaption(text);
+      if (text) {
+        recent.current = [...recent.current.slice(-2), text];
+        setLog((l) => [...l.slice(-80), { who: "tutor", text }]);
+        says.current.push({ at: Math.round(performance.now() - started.current), text });
       }
-      if (step.misconception) setMisconception(step.misconception);
-      says.current.push({ at: Math.round(performance.now() - started.current), text: step.say });
-      const talk = speak(step.say, my);
-      // Spread the drawing across the narration, like a teacher writing while talking.
-      const gap = Math.min(900, (Math.max(1200, words(step.say) * 430) * 0.7) / Math.max(1, step.ops.length));
-      for (const op of step.ops) {
+      const talk = speak(text, my);
+      const k = tuning.current.pace === "slower" ? 1.5 : tuning.current.pace === "faster" ? 0.6 : 1;
+      const gap = (Math.min(900, (Math.max(1200, words(text) * 430) * 0.7) / Math.max(1, ops.length))) * k;
+      for (const op of ops) {
         if (my !== token.current) return;
         await o.board.current?.apply(op);
         await new Promise((r) => setTimeout(r, gap * 0.4));
       }
       await talk;
-      if (my !== token.current) return;
-      if (step.check) setCheck(step.check);
-      if (step.hint) setHintWait(true);
-      if (step.end) setEnded(true);
     },
     [speak, o.board],
+  );
+
+  const playEvent = useCallback(
+    async (e: LiveEvent, my: number) => {
+      if (my !== token.current) return;
+      played.current.push(JSON.stringify(e));
+      switch (e.t) {
+        case "plan":
+          setPlan({ title: e.title, concepts: e.concepts });
+          return;
+        case "progress":
+          setProgress((prev) => {
+            if (prev && prev.concept !== e.concept) setDone((d) => (d.includes(prev.concept) ? d : [...d, prev.concept]));
+            return { concept: e.concept, stage: e.stage };
+          });
+          if (e.stage === "recap") setDone((d) => (d.includes(e.concept) ? d : [...d, e.concept]));
+          return;
+        case "evaluate":
+          setEvaluation({ verdict: e.verdict, note: e.note, misconception: e.misconception });
+          if (e.misconception) {
+            setMisconception(e.misconception);
+            misconceptions.current.push(e.misconception);
+          }
+          if (e.note) setLog((l) => [...l.slice(-80), { who: "tutor", text: `${e.verdict === "correct" ? "✓" : e.verdict === "partial" ? "½" : e.verdict === "misconception" ? "✗" : "?"} ${e.note}` }]);
+          return;
+        case "branch":
+          setBranch(e.to);
+          return;
+        case "board":
+          for (const op of e.ops) {
+            if (my !== token.current) return;
+            await o.board.current?.apply(op);
+          }
+          return;
+        case "say":
+          return sayAndDraw(e.text, e.ops, my);
+        case "hint":
+          await sayAndDraw(e.text, e.ops, my);
+          if (my !== token.current) return;
+          setHintWait(true);
+          setCheck({ q: "", kind: "short" });
+          setWaitingSince(Date.now());
+          return;
+        case "ask": {
+          await sayAndDraw(e.q, [], my, false);
+          if (my !== token.current) return;
+          const c: CheckPoint = { q: e.q, options: e.options, kind: e.kind, board: e.kind === "board" || undefined };
+          setCheck(c);
+          setWaitingSince(Date.now());
+          if (e.kind === "board") o.board.current?.setTurn(e.q);
+          return;
+        }
+        case "end":
+          setEnded(true);
+          setCheck({ q: "" });
+          if (tuning.current.progress) setDone((d) => (d.includes(tuning.current.progress!.concept) ? d : [...d, tuning.current.progress!.concept]));
+          return;
+      }
+    },
+    [sayAndDraw, o.board],
   );
 
   /** Stop everything the tutor is doing right now; keeps what was already said in the history. */
@@ -156,6 +232,7 @@ export function useTutorSession(o: { board: RefObject<SmartboardHandle | null>; 
     setTalking(false);
     setPlaying(false);
     setStreaming(false);
+    streamingRef.current = false;
     play.current = Promise.resolve();
     if (inFlight.current) {
       inFlight.current = false;
@@ -180,6 +257,10 @@ export function useTutorSession(o: { board: RefObject<SmartboardHandle | null>; 
       setCheck(null);
       setHintWait(false);
       setMisconception(null);
+      setEvaluation(null);
+      setBranch(null);
+      setWaitingSince(null);
+      opts.current.board.current?.setTurn(null);
       setStreaming(true);
       setPlaying(true);
       played.current = [];
@@ -192,17 +273,33 @@ export function useTutorSession(o: { board: RefObject<SmartboardHandle | null>; 
       abort.current = ctrl;
       let gotPause = false;
       const lang = opts.current.speechLang;
-      const res = await streamTurn(
-        { ...opts.current.base(), messages: history.current, image: extra.image, boardImage: extra.boardImage },
-        opts.current.pass,
-        (step) => {
-          if (step.check || step.hint || step.end) gotPause = true;
-          setLessonReady(true);
-          if (!opts.current.muted) sp.prefetch(step.say, lang);
-          play.current = play.current.then(() => playStep(step, my));
-        },
-        ctrl.signal,
-      );
+      const b = opts.current.base();
+      const tu = tuning.current;
+      const planLine = tu.plan
+        ? tu.plan.concepts.map((c) => `${c.id} ${c.title}${tu.done.includes(c.id) ? " ✓" : tu.progress?.concept === c.id ? ` ← ${tu.progress.stage}` : ""}`).join(", ")
+        : undefined;
+      const req = {
+        ...b,
+        session: { ...b.session, pace: tu.pace, level: tu.level, elapsed: Math.round((performance.now() - started.current) / 60000), plan: planLine },
+        messages: history.current,
+        image: extra.image,
+        boardImage: extra.boardImage,
+      };
+      pendingAsk.current = null;
+      streamingRef.current = true;
+      const onEvent = (e: LiveEvent) => {
+        if (e.t === "ask" && !gotPause) pendingAsk.current = { q: e.q, options: e.options, kind: e.kind, board: e.kind === "board" || undefined };
+        if (isPause(e)) gotPause = true;
+        if (gotPause && !isPause(e) && e.t !== "evaluate") return; // nothing may follow a pause
+        setLessonReady(true);
+        const spoken = e.t === "say" || e.t === "hint" ? e.text : e.t === "ask" ? e.q : "";
+        if (spoken && !opts.current.muted) sp.prefetch(spoken, lang);
+        play.current = play.current.then(() => playEvent(e, my));
+      };
+      let res = await streamTurn(req, opts.current.pass, onEvent, ctrl.signal);
+      // Recovery: a reply with nothing usable in it is retried once, silently.
+      if (res.ok && res.events === 0 && my === token.current) res = await streamTurn(req, opts.current.pass, onEvent, ctrl.signal);
+      if (my === token.current) streamingRef.current = false;
       if (my !== token.current) return;
       setStreaming(false);
       if (!res.ok) {
@@ -218,25 +315,56 @@ export function useTutorSession(o: { board: RefObject<SmartboardHandle | null>; 
       inFlight.current = false;
       history.current.push({ role: "assistant", content: res.raw || '{"say":"","ops":[]}' });
       setPlaying(false);
-      if (res.broken && !played.current.length) setError("upstream_error");
-      else if (!gotPause) setCheck({ q: "" });
+      if ((res.broken || res.events === 0) && !played.current.length) setError("upstream_error");
+      else if (!gotPause) {
+        setCheck({ q: "" });
+        setWaitingSince(Date.now());
+      }
     },
-    [halt, playStep, sp],
+    [halt, playEvent, sp],
   );
 
   /** Route something the student said or typed, with the right tag (and a board snapshot when it's about the board). */
   const ask = useCallback(
-    (raw: string, how: { forceBoard?: boolean; tag?: string } = {}) => {
+    (raw: string, how: { forceBoard?: boolean; tag?: string } = {}): void => {
       const text = raw.trim();
       if (!text && !how.tag) return;
       const L = live.current;
-      const interrupting = L.busy || interrupted.current;
+      // Explicit intents ("wait", "explain again", "slower", "in Hindi"…) get handled as such.
+      const it = how.tag ? null : detectIntent(text);
+      if (it) {
+        setLastIntent(it.intent);
+        if (it.intent === "wait") {
+          // Pause right here, no round trip: the tutor waits for the student's question.
+          interrupted.current = false;
+          if (L.busy) halt();
+          setCaption("");
+          setCheck({ q: "" });
+          setWaitingSince(Date.now());
+          setLog((l) => [...l.slice(-80), { who: "student", text }]);
+          return;
+        }
+        if (it.intent === "slower" || it.intent === "faster") setPace((p) => (it.intent === "slower" ? (p === "faster" ? "normal" : "slower") : p === "slower" ? "normal" : "faster"));
+        if (it.intent === "simpler") setLevel("simple");
+        if (it.intent === "exam") setLevel("exam");
+        if (it.intent === "language" && it.language) opts.current.onLanguage?.(it.language);
+        const answering = Boolean(L.check?.q) && !L.busy;
+        if (!(it.intent === "continue" && answering)) {
+          const tag = it.intent === "continue" ? "[continue]" : it.intent === "solution" ? "[solution]" : `[intent:${it.intent}]`;
+          const extra = it.intent === "language" ? ` (switch to ${it.language})` : "";
+          return askRef.current(`${text}${extra}`, { tag });
+        }
+      }
+      // Answering the question while it is still being read out is an answer, not an interruption.
+      const early = L.busy && !streamingRef.current && pendingAsk.current ? pendingAsk.current : null;
+      const interrupting = !early && (L.busy || interrupted.current);
       interrupted.current = false;
       const wasSaying = recent.current[recent.current.length - 1] ?? "";
       const board = opts.current.board.current;
-      const wantsBoard = how.forceBoard || (board?.newMarks() ?? 0) > 0 || POINTING.test(text) || Boolean(L.check?.board);
+      const wantsBoard = how.forceBoard || (board?.newMarks() ?? 0) > 0 || POINTING.test(text) || Boolean(L.check?.board) || Boolean(pendingAsk.current?.board && L.busy);
       const snap = wantsBoard ? board?.snapshot() : null;
-      let tag = how.tag ?? (interrupting ? "[interrupt]" : L.check?.board && snap ? "[board-work]" : snap?.marks ? "[board]" : L.check?.q ? (L.mode === "explainback" ? "[explanation]" : "[answer]") : "[say]");
+      const chk = early ?? L.check;
+      let tag = how.tag ?? (interrupting ? "[interrupt]" : chk?.board && snap ? "[board-work]" : snap?.marks ? "[board]" : chk?.q ? (L.mode === "explainback" ? "[explanation]" : "[answer]") : "[say]");
       if (how.tag === "[board-work]" && !snap) tag = "[say]";
       let content = `${tag} ${text}`.trim();
       if (interrupting && wasSaying) content += `\n(I interrupted you while you were saying: "${wasSaying.slice(0, 240)}")`;
@@ -245,6 +373,31 @@ export function useTutorSession(o: { board: RefObject<SmartboardHandle | null>; 
       void send(content.slice(0, 11000), snap?.data ? { boardImage: { mediaType: snap.mediaType, data: snap.data } } : {});
     },
     [send],
+  );
+
+  const askRef = useRef(ask);
+  askRef.current = ask;
+
+  /** A one-tap intent from the chips row. */
+  const intent = useCallback(
+    (i: Intent, language?: TutorLanguage) => {
+      const say: Record<Intent, string> = {
+        wait: "Wait",
+        continue: "Continue",
+        confused: "I didn't get this",
+        repeat: "Explain that again",
+        example: "Give me an example",
+        slower: "Go slower",
+        faster: "Go faster",
+        simpler: "Explain it more simply",
+        exam: "Take it to exam level",
+        hint: "Give me a hint",
+        solution: "Show the full solution",
+        language: `Explain in ${language ?? "English"}`,
+      };
+      askRef.current(say[i]);
+    },
+    [],
   );
 
   /* ---------------- voice loop ---------------- */
@@ -378,6 +531,14 @@ export function useTutorSession(o: { board: RefObject<SmartboardHandle | null>; 
     setMisconception(null);
     setError(null);
     setLog([]);
+    setPlan(null);
+    setProgress(null);
+    setDone([]);
+    setEvaluation(null);
+    setBranch(null);
+    setWaitingSince(null);
+    setLastIntent(null);
+    misconceptions.current = [];
   }, [halt]);
 
   const stopAll = useCallback(() => {
@@ -423,6 +584,20 @@ export function useTutorSession(o: { board: RefObject<SmartboardHandle | null>; 
     voice,
     lessonReady,
     log,
+    plan,
+    progress,
+    done,
+    evaluation,
+    branch,
+    pace,
+    tutorLevel: level,
+    setPace,
+    setLevel,
+    lastIntent,
+    waitingSince,
+    intent,
+    started,
+    misconceptions,
     available,
     history,
     says,
