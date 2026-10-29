@@ -40,6 +40,28 @@ export interface StudentInfo {
   memory?: string[];
 }
 
+export type TutorLevel = "simple" | "exam";
+export type TutorPace = "slower" | "normal" | "faster";
+export const SESSION_GOALS = ["understand", "exam", "revise", "homework"] as const;
+export type SessionGoal = (typeof SESSION_GOALS)[number];
+
+/** This session's settings and live state (all optional, all short). */
+export interface SessionInfo {
+  goal?: SessionGoal;
+  /** Planned length in minutes, and minutes elapsed so far. */
+  minutes?: number;
+  elapsed?: number;
+  /** "simple" = explain like to a 10-year-old; "exam" = board/entrance exam depth. */
+  level?: TutorLevel;
+  pace?: TutorPace;
+  /** The lesson plan so far and where we are ("c1 Speed ✓, c2 Velocity ← example, c3 …"). */
+  plan?: string;
+  /** What was covered / found hard on this topic in earlier sessions. */
+  previous?: string;
+  /** Chapter / syllabus outline from the link that opened the tutor. */
+  outline?: string;
+}
+
 export interface LiveRequest {
   kind: "turn" | "recap";
   mode: LiveMode;
@@ -54,11 +76,13 @@ export interface LiveRequest {
   /** A snapshot of the smartboard (with the student's marks), attached to the latest student turn. */
   boardImage?: { mediaType: "image/png" | "image/jpeg"; data: string };
   page?: PageContext;
+  session?: SessionInfo;
 }
 
 export interface CheckPoint {
   q: string;
   options?: string[];
+  kind?: "mcq" | "short" | "board" | "explain";
   /** The tutor wants the student to work it out ON THE BOARD, then send it to be checked. */
   board?: boolean;
 }
@@ -83,6 +107,10 @@ export interface Recap {
   parentSummary: string;
   /** One or two lines for the tutor's memory of this student. */
   memory: string;
+  /** Ideas the student found hard (misconceptions), for next time. */
+  struggled?: string[];
+  /** What to do next session. */
+  nextStep?: string;
 }
 
 export const LIVE_LIMITS = {
@@ -96,4 +124,4 @@ export const TUTOR_PASS_HEADER = "x-tutor-pass";
 /** The live tutor is for Class 8 and up (incl. PUC, entrance exams and beyond); null grade = adult/other tracks. */
 export const tutorEligible = (grade: string | null | undefined) => !grade || !/^(pre|[1-7])$/.test(grade);
 
-export const tutorHref = (topic: string, mode?: LiveMode) => `/tutor?${new URLSearchParams({ topic, ...(mode ? { mode } : {}) })}`;
+export const tutorHref = (topic: string, mode?: LiveMode, outline?: string) => `/tutor?${new URLSearchParams({ topic, ...(mode ? { mode } : {}), ...(outline ? { outline: outline.slice(0, 600) } : {}) })}`;

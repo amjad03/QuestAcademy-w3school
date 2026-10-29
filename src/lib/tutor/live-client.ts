@@ -2,9 +2,9 @@
 
 import { supabase } from "@/lib/supabase";
 import type { Profile } from "@/lib/store";
-import { cleanOp, type BoardOp } from "@/components/board/ops";
+import { EventStream, type LiveEvent } from "./protocol";
 import { STREAM_MARK } from "./types";
-import { TUTOR_PASS_HEADER, type LiveRequest, type LiveStep, type Recap, type StudentInfo, type TutorLanguage } from "./live";
+import { TUTOR_PASS_HEADER, type LiveRequest, type Recap, type StudentInfo, type TutorLanguage } from "./live";
 
 export type LiveError = "tutor_unavailable" | "premium_required" | "rate_limited" | "daily_limit" | "bad_request" | "upstream_busy" | "upstream_error" | "auth_failed" | "network";
 
@@ -16,33 +16,13 @@ async function headers(pass?: string | null) {
   return h;
 }
 
-/** Validate one NDJSON line from the model into a step (bad ops are dropped). */
-export function parseStep(line: string): LiveStep | null {
-  const s = line.trim().replace(/^```(json)?|```$/g, "").trim();
-  if (!s.startsWith("{")) return null;
-  try {
-    const r = JSON.parse(s) as Record<string, unknown>;
-    const ops = Array.isArray(r.ops) ? r.ops.map(cleanOp).filter((o): o is BoardOp => Boolean(o)) : [];
-    const c = r.check as Record<string, unknown> | undefined;
-    const check =
-      c && typeof c.q === "string" && c.q.trim()
-        ? { q: c.q.slice(0, 500), options: Array.isArray(c.options) ? c.options.filter((o): o is string => typeof o === "string").slice(0, 5) : undefined, board: c.board === true || undefined }
-        : undefined;
-    return {
-      say: typeof r.say === "string" ? r.say.slice(0, 600) : "",
-      ops,
-      check,
-      misconception: typeof r.misconception === "string" && r.misconception.trim() ? r.misconception.slice(0, 200) : undefined,
-      hint: r.hint === true || undefined,
-      end: r.end === true || undefined,
-    };
-  } catch {
-    return null;
-  }
-}
-
-/** Stream one tutor turn; `onStep` fires as soon as each step's line is complete. Resolves with the raw text. */
-export async function streamTurn(req: Omit<LiveRequest, "kind">, pass: string | null, onStep: (s: LiveStep) => void, signal?: AbortSignal): Promise<{ ok: true; raw: string; broken: boolean } | { ok: false; code: LiveError; retryAfter?: number }> {
+/** Stream one tutor turn; `onEvent` fires as soon as each JSON event is complete (malformed output is repaired or skipped). */
+export async function streamTurn(
+  req: Omit<LiveRequest, "kind">,
+  pass: string | null,
+  onEvent: (e: LiveEvent) => void,
+  signal?: AbortSignal,
+): Promise<{ ok: true; raw: string; broken: boolean; events: number; bad: number } | { ok: false; code: LiveError; retryAfter?: number }> {
   let res: Response;
   try {
     res = await fetch("/api/tutor/live", { method: "POST", headers: await headers(pass), body: JSON.stringify({ ...req, kind: "turn" }), signal });
@@ -56,31 +36,28 @@ export async function streamTurn(req: Omit<LiveRequest, "kind">, pass: string | 
   const reader = res.body.getReader();
   const dec = new TextDecoder();
   let raw = "";
-  let buf = "";
   let broken = false;
-  const flush = (line: string) => {
-    const st = parseStep(line);
-    if (st) onStep(st);
-  };
+  let events = 0;
+  const marks = (t: string) => t.split(STREAM_MARK.error).join("").split(STREAM_MARK.refusal).join("");
+  const es = new EventStream((e) => {
+    events++;
+    onEvent(e);
+  });
   try {
     for (;;) {
       const { done, value } = await reader.read();
       if (done) break;
       const chunk = dec.decode(value, { stream: true });
       raw += chunk;
-      buf += chunk;
-      let nl: number;
-      while ((nl = buf.indexOf("\n")) >= 0) {
-        flush(buf.slice(0, nl));
-        buf = buf.slice(nl + 1);
-      }
+      if (chunk.includes(STREAM_MARK.error)) broken = true;
+      es.push(marks(chunk));
     }
   } catch {
     broken = !signal?.aborted;
   }
-  if (buf.includes(STREAM_MARK.error) || raw.includes(STREAM_MARK.error)) broken = true;
-  flush(buf.split(STREAM_MARK.error).join("").split(STREAM_MARK.refusal).join(""));
-  return { ok: true, raw: raw.split(STREAM_MARK.error).join("").split(STREAM_MARK.refusal).join("").trim(), broken };
+  if (raw.includes(STREAM_MARK.error)) broken = true;
+  es.end(events > 0);
+  return { ok: true, raw: marks(raw).trim(), broken, events, bad: es.bad };
 }
 
 export async function fetchRecap(req: Omit<LiveRequest, "kind" | "image">, pass: string | null): Promise<Recap | null> {
@@ -112,7 +89,7 @@ export function studentInfo(p: Profile): StudentInfo {
     targetExam: per?.targetExam ?? undefined,
     weakChapters: weak || undefined,
     levels: levels || undefined,
-    memory: p.tutor?.sessions.slice(0, 5).map((s) => `${s.at.slice(0, 10)} ${s.topic}: ${s.summary}`),
+    memory: p.tutor?.sessions.slice(0, 5).map((s) => `${s.at.slice(0, 10)} ${s.topic}: ${s.summary}${s.struggled?.length ? ` (found hard: ${s.struggled.join("; ")})` : ""}`),
   };
 }
 

@@ -1,8 +1,8 @@
 import Anthropic from "@anthropic-ai/sdk";
 import { TUTOR_MODEL, burstGuard, fail, hasCredential, mapError, takeDaily } from "@/lib/tutor/guard";
 import { hasTutorAccess, paymentsEnabled, tutorOpen } from "@/lib/tutor/pass";
-import { LIVE_SYSTEM_PROMPT, RECAP_SCHEMA, RECAP_SYSTEM_PROMPT, liveContext } from "@/lib/tutor/live-prompt";
-import { LIVE_LIMITS, LIVE_MODES, TUTOR_LANGUAGES, TUTOR_PASS_HEADER, type LiveRequest, type PageContext, type Recap, type StudentInfo } from "@/lib/tutor/live";
+import { LIVE_SYSTEM_PROMPT, RECAP_SCHEMA, RECAP_SYSTEM_PROMPT, liveContext, liveState } from "@/lib/tutor/live-prompt";
+import { LIVE_LIMITS, LIVE_MODES, SESSION_GOALS, TUTOR_LANGUAGES, TUTOR_PASS_HEADER, type LiveRequest, type PageContext, type Recap, type SessionInfo, type StudentInfo } from "@/lib/tutor/live";
 import { logAiUsage } from "@/lib/ai-usage";
 import { STREAM_MARK } from "@/lib/tutor/types";
 
@@ -82,7 +82,22 @@ function parse(raw: unknown): LiveRequest | null {
       stage: str(pg.stage, 20) || undefined,
     };
   }
-  return { kind, mode, language, topic, student, explainers, messages, image, boardImage, page };
+  let session: SessionInfo | undefined;
+  if (r.session && typeof r.session === "object") {
+    const se = r.session as Record<string, unknown>;
+    const n = (v: unknown, hi: number) => (typeof v === "number" && Number.isFinite(v) ? Math.max(0, Math.min(hi, Math.round(v))) : undefined);
+    session = {
+      goal: SESSION_GOALS.find((g) => g === se.goal),
+      minutes: n(se.minutes, 120),
+      elapsed: n(se.elapsed, 600),
+      level: se.level === "exam" ? "exam" : se.level === "simple" ? "simple" : undefined,
+      pace: se.pace === "slower" || se.pace === "faster" || se.pace === "normal" ? se.pace : undefined,
+      plan: str(se.plan, 900) || undefined,
+      previous: str(se.previous, 600) || undefined,
+      outline: str(se.outline, 1500) || undefined,
+    };
+  }
+  return { kind, mode, language, topic, student, explainers, messages, image, boardImage, page, session };
 }
 
 export async function POST(req: Request) {
@@ -103,13 +118,17 @@ export async function POST(req: Request) {
 
   const ctx = liveContext(lr);
   const last = lr.messages.length - 1;
+  // Prompt caching: the static system prompt is one breakpoint; the conversation so far is a second,
+  // rolling one on the latest student message. Things that change every turn (the board snapshot and
+  // the live state) go AFTER that breakpoint, so next turn's prefix still matches.
+  const state = liveState(lr.session, lr.language);
   const apiMessages: Anthropic.MessageParam[] = lr.messages.map((m, i) => {
-    const board = i === last && lr.boardImage;
-    if (i !== 0 && !board) return { role: m.role, content: m.content };
+    if (i !== 0 && i !== last) return { role: m.role, content: m.content };
     const parts: Anthropic.ContentBlockParam[] = i === 0 ? [{ type: "text", text: ctx }] : [];
     if (i === 0 && lr.image) parts.push({ type: "image", source: { type: "base64", media_type: lr.image.mediaType, data: lr.image.data } });
-    if (board) parts.push({ type: "text", text: "Snapshot of the smartboard right now (the student's own marks are on it):" }, { type: "image", source: { type: "base64", media_type: board.mediaType, data: board.data } });
-    parts.push({ type: "text", text: m.content });
+    parts.push({ type: "text", text: m.content, ...(i === last ? { cache_control: { type: "ephemeral" as const } } : {}) });
+    if (i === last && lr.boardImage) parts.push({ type: "text", text: "Snapshot of the smartboard right now (the student's own marks are on it, in their colour):" }, { type: "image", source: { type: "base64", media_type: lr.boardImage.mediaType, data: lr.boardImage.data } });
+    if (i === last && state) parts.push({ type: "text", text: state });
     return { role: "user", content: parts };
   });
 
@@ -130,6 +149,7 @@ export async function POST(req: Request) {
       const text = msg.content.map((b) => (b.type === "text" ? b.text : "")).join("");
       const recap = JSON.parse(text) as Recap;
       recap.practice = recap.practice.slice(0, 3);
+      recap.struggled = (recap.struggled ?? []).slice(0, 4);
       return Response.json({ recap }, { headers: { "Cache-Control": "no-store" } });
     } catch (err) {
       if (err instanceof SyntaxError) return fail(502, "upstream_error");
@@ -143,7 +163,7 @@ export async function POST(req: Request) {
   try {
     stream = client.messages.stream({
       model: TUTOR_MODEL,
-      max_tokens: 4000,
+      max_tokens: 3000,
       output_config: { effort: "low" },
       system: [{ type: "text", text: LIVE_SYSTEM_PROMPT, cache_control: { type: "ephemeral" } }],
       messages: apiMessages,

@@ -63,7 +63,7 @@ export interface Profile {
 
 export interface TutorMemory {
   /** Short per-session summaries for the tutor, newest first (max 10). */
-  sessions: { at: string; topic: string; summary: string }[];
+  sessions: { at: string; topic: string; summary: string; struggled?: string[]; covered?: string[] }[];
   /** Parent-facing summaries kept for later reports, newest first (max 30). */
   parentNotes: { at: string; topic: string; text: string }[];
 }
