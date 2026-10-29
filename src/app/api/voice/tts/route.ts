@@ -40,6 +40,8 @@ export async function POST(req: Request) {
   } catch (e) {
     const status = e instanceof SarvamError ? e.status : 0;
     if (!(e instanceof SarvamError)) console.error("[voice] tts failed", e instanceof Error ? e.message : e);
-    return err(status === 429 ? 503 : 502, "upstream_error", { status });
+    // Sarvam's error text (never the key) helps diagnose a bad request or key from the browser.
+    const detail = e instanceof Error ? e.message.slice(0, 240) : "";
+    return err(status === 429 ? 503 : 502, "upstream_error", { status, detail });
   }
 }

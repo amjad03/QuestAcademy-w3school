@@ -120,7 +120,8 @@ export function sarvamTts(text: string, lang: string, opts: { gender?: VoiceGend
         body: JSON.stringify({ text: text.slice(0, 500), lang, voice: gender, pace }),
       });
       if (!res.ok) {
-        const j = (await res.json().catch(() => ({}))) as { error?: string };
+        const j = (await res.json().catch(() => ({}))) as { error?: string; status?: number; detail?: string };
+        if (j.detail) console.warn(`[voice] sarvam said (${j.status ?? res.status}): ${j.detail}`);
         if (res.status === 429 && j.error === "voice_cap") {
           setCapped("tts");
           return { error: "voice_cap", capped: true };
