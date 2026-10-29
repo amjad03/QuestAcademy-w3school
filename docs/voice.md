@@ -8,15 +8,15 @@ The live tutor, the Ask Questy panel, board lessons and "Explain by voice" speak
 1. **Sarvam AI** (server, `/api/voice/*`) when `GET /api/voice/config` reports `configured: true`.
    The 92 MB Kokoro model is never downloaded; the tutor shows a short "Connecting Questy's voice" step.
    - TTS: `POST /api/voice/tts` `{text ≤ 500 chars, lang, voice: "female"|"male", pace}` → `audio/wav`
-     (Sarvam `POST https://api.sarvam.ai/text-to-speech`, model `bulbul:v2`). Speech goes sentence by
+     (Sarvam `POST https://api.sarvam.ai/text-to-speech`, model `bulbul:v3`). Speech goes sentence by
      sentence; sentence N+1 is synthesised while N plays. Clips are cached in memory (LRU) and in Cache
      Storage (`sarvam-tts-v1`), so a repeated sentence costs nothing.
    - STT: the browser records the mic (16 kHz WAV, energy voice-activity detection, end of speech after
      ~800 ms of silence, max 28 s) and sends it to `POST /api/voice/stt` (Sarvam `speech-to-text`, model
      `saarika:v2.5`). While the tutor is talking, the first ~0.9 s of student speech is transcribed early
      so barge-in works.
-   - Teacher voice: "Didi" (female: anushka / manisha for Hindi / vidya for Kannada) or "Bhaiya" (male:
-     abhilash / karun for Hindi), chosen in the voice chip and remembered on the device.
+   - Teacher voice: "Didi" (female: priya) or "Bhaiya" (male: rahul;
+     same voice in every language), chosen in the voice chip and remembered on the device.
 2. **Kokoro** in the browser (as before) when Sarvam is not configured, fails twice in a row, or the
    learner's daily allowance is used up (it loads in the background; nothing waits for it mid-lesson).
 3. **Device voice** / Web Speech API recognition meanwhile and as the last fallback.
@@ -29,7 +29,7 @@ same with `engine=sarvam tts ms=…`).
 | Variable | Default | Meaning |
 | --- | --- | --- |
 | `SARVAM_API_KEY` | — | Sarvam subscription key (sent as `api-subscription-key`). Unset = Sarvam off. |
-| `SARVAM_TTS_MODEL` | `bulbul:v2` | TTS model (set e.g. `bulbul:v3` once its speakers are confirmed). |
+| `SARVAM_TTS_MODEL` | `bulbul:v3` | TTS model (bulbul:v2 is deprecated). |
 | `SARVAM_STT_MODEL` | `saarika:v2.5` | STT model. |
 | `SARVAM_SPEAKER_FEMALE` / `SARVAM_SPEAKER_MALE` | see above | One speaker name, or per language: `en-IN:anushka,hi-IN:manisha`. |
 | `SARVAM_DISABLED` / `SARVAM_STT_DISABLED` | — | `1` turns all / only STT off without removing the key. |

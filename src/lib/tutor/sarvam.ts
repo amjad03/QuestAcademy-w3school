@@ -9,7 +9,7 @@ import "server-only";
 
 const BASE = process.env.SARVAM_API_BASE || "https://api.sarvam.ai";
 export const sarvamConfigured = () => Boolean(process.env.SARVAM_API_KEY);
-export const TTS_MODEL = () => process.env.SARVAM_TTS_MODEL || "bulbul:v2";
+export const TTS_MODEL = () => process.env.SARVAM_TTS_MODEL || "bulbul:v3";
 export const STT_MODEL = () => process.env.SARVAM_STT_MODEL || "saarika:v2.5";
 
 /** Languages Bulbul/Saarika speak (BCP-47 with -IN). */
@@ -17,10 +17,10 @@ export const VOICE_LANGS = ["en-IN", "hi-IN", "kn-IN", "bn-IN", "ta-IN", "te-IN"
 export type VoiceLang = (typeof VOICE_LANGS)[number];
 export type VoiceGender = "female" | "male";
 
-/** Warm teacher voices (bulbul:v2 speakers). Override with SARVAM_SPEAKER_FEMALE / SARVAM_SPEAKER_MALE (one name, or "en-IN:anushka,hi-IN:manisha"). */
+/** Warm teacher voices (bulbul:v3 speakers; v2 is deprecated). Override with SARVAM_SPEAKER_FEMALE / SARVAM_SPEAKER_MALE (one name, or "en-IN:priya,hi-IN:neha"). */
 const SPEAKERS: Record<VoiceGender, Partial<Record<VoiceLang, string>> & { default: string }> = {
-  female: { default: "anushka", "en-IN": "anushka", "hi-IN": "manisha", "kn-IN": "vidya" },
-  male: { default: "abhilash", "en-IN": "abhilash", "hi-IN": "karun", "kn-IN": "abhilash" },
+  female: { default: "priya", "en-IN": "priya", "hi-IN": "priya", "kn-IN": "priya" },
+  male: { default: "rahul", "en-IN": "rahul", "hi-IN": "rahul", "kn-IN": "rahul" },
 };
 
 export function speakerFor(gender: VoiceGender, lang: VoiceLang): string {
