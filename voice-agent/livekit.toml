@@ -1,0 +1,8 @@
+# LiveKit Cloud agent config. `lk agent create` fills in [agent].id the first time it
+# deploys (and may rewrite this file); keep the subdomain in step with your project
+# (wss://<subdomain>.livekit.cloud). See docs/realtime-voice.md.
+[project]
+  subdomain = "your-project-subdomain"
+
+[agent]
+  id = ""

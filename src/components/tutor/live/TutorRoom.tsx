@@ -19,6 +19,9 @@ import { VoiceChip, VoiceDock, liveErrorText } from "./VoiceDock";
 import { TutorLoader } from "./TutorLoader";
 import { LessonProgress } from "./LessonProgress";
 import { IntentBar, VerdictBadge } from "./IntentBar";
+// [realtime] LiveKit voice path (only when NEXT_PUBLIC_LIVEKIT_URL is set) — see docs/realtime-voice.md.
+import { realtimeEnabled, useRealtimeTutor } from "@/lib/realtime/useRealtimeTutor";
+import { RealtimeDock, linesToHistory } from "@/lib/realtime/RealtimeDock";
 
 const sameTopic = (a: string, b: string) => {
   const [x, y] = [a.toLowerCase().trim(), b.toLowerCase().trim()];
@@ -74,6 +77,8 @@ export function TutorRoom({ pass }: { pass: string | null }) {
   );
   const s = useTutorSession({ board, pass, base, speechLang: speechLang(language), muted, onLanguage: setLanguage });
   const { preloadVoice } = s;
+  const rt = useRealtimeTutor({ board, pass }); // [realtime]
+  const realtime = rt.status === "connected" || rt.status === "connecting";
 
   // Start fetching the voice model while the student picks a topic.
   useEffect(() => {
@@ -88,7 +93,7 @@ export function TutorRoom({ pass }: { pass: string | null }) {
     return () => void (sp.hold = false);
   }, [muted]);
   const voiceSettled = muted || (s.voice.status !== "loading" && s.voice.status !== "off") || !speaker().capable();
-  const loading = phase === "live" && !(voiceSettled && (s.lessonReady || Boolean(s.error)));
+  const loading = phase === "live" && !realtime && !(voiceSettled && (s.lessonReady || Boolean(s.error)));
 
   // A failed first turn: back to the setup card (with the error shown there).
   useEffect(() => {
@@ -118,11 +123,14 @@ export function TutorRoom({ pass }: { pass: string | null }) {
         : mode === "explainback"
           ? `[start] I want to explain "${topic.trim()}" back to you so you can find my gaps.`
           : `[start] Teach me "${topic.trim()}".${goal === "exam" ? " I'm preparing for my exam." : goal === "revise" ? " I want a quick revision." : ""}`;
+    // [realtime] Try the LiveKit path first; on any failure (5 s timeout) fall through to the browser voice path.
+    if (realtimeEnabled() && !muted && !photo && (await rt.start({ ...base(), tutorLanguage: language, topic: topic.trim() || "My doubt" }))) return;
     void s.send(intro, photo ? { image: { mediaType: photo.mediaType, data: photo.data } } : {});
   };
 
   const onTap = (el: TappedElement) => {
     if (phase !== "live") return;
+    if (rt.status === "connected") return void rt.send({ t: "tap", text: `What is this? (I tapped "${el.label}", id ${el.id})` }); // [realtime]
     s.unlock();
     s.ask(`What is this? (I tapped "${el.label}", id ${el.id})`, { tag: "[tap]" });
   };
@@ -334,13 +342,17 @@ export function TutorRoom({ pass }: { pass: string | null }) {
             readOnly={phase === "replay" || phase === "recap"}
             name={topicName()}
             onSave={phase === "live" || phase === "recap" ? saveToNotebook : undefined}
-            onTurnDone={() => (s.unlock(), s.ask("I've done it on the board. Please check my working.", { tag: "[board-work]", forceBoard: true }))}
+            onTurnDone={() => rt.status === "connected" ? void rt.sendBoardWork("I've done it on the board. Please check my working.") : (s.unlock(), s.ask("I've done it on the board. Please check my working.", { tag: "[board-work]", forceBoard: true }))}
           />
           {savedNote && <p className="text-sm font-bold text-emerald-700 dark:text-emerald-300">{t("tutor.board.saved", "Board saved to your notebook.")}</p>}
         </div>
         {live && (
           <section className="card h-fit min-w-0 space-y-3 p-3 lg:sticky lg:top-4">
             <VerdictBadge s={s} />
+            {/* [realtime] */}
+            {rt.status === "connected" ? (
+              <RealtimeDock rt={rt} onEnd={() => ((s.history.current = linesToHistory(rt.lines, `[start] Teach me "${topicName()}".`)), rt.stop(), void finish())} />
+            ) : (
             <VoiceDock
               s={s}
               placeholder={mode === "explainback" ? t("tutor.live.explainPh", "Explain it in your own words…") : undefined}
@@ -365,7 +377,8 @@ export function TutorRoom({ pass }: { pass: string | null }) {
                 </>
               }
             />
-            <IntentBar s={s} language={language} doubt={mode === "doubt"} />
+            )}
+            {rt.status !== "connected" && <IntentBar s={s} language={language} doubt={mode === "doubt"} />}
             {showLog && (
               <ol className="max-h-64 space-y-1.5 overflow-y-auto rounded-xl border border-line p-2 text-sm">
                 {s.log.length === 0 && <li className="text-muted">{t("tutor.live.logEmpty", "Nothing yet.")}</li>}

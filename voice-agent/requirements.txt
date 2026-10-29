@@ -1,0 +1,12 @@
+# Verified together (py_compile + import) on Python 3.13; the Dockerfile uses 3.12.
+livekit-agents[silero,turn-detector,anthropic,sarvam]==1.8.10
+livekit==1.1.21
+livekit-api==1.2.2
+livekit-protocol==1.1.29
+livekit-plugins-anthropic==1.8.10
+livekit-plugins-sarvam==1.8.10
+livekit-plugins-silero==1.8.10
+livekit-plugins-turn-detector==1.8.10
+livekit-plugins-noise-cancellation==0.3.2
+anthropic==1.17.0
+python-dotenv==1.2.4
