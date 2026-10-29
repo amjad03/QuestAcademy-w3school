@@ -75,7 +75,7 @@ export async function takeDaily(req: Request, ip: string, known?: User | null): 
   if (!sb) return "ok";
   const user = known !== undefined ? known : await cachedUser(req);
   const key = user ? `u:${user.id}` : `ip:${hashIp(ip)}`;
-  const limit = user ? envInt("TUTOR_DAILY_LIMIT_USER", 60) : envInt("TUTOR_DAILY_LIMIT_GUEST", 15);
+  const limit = user ? envInt("TUTOR_DAILY_LIMIT_USER", 60) : envInt("TUTOR_DAILY_LIMIT_GUEST", 600);
   const budget = envInt("TUTOR_DAILY_BUDGET", 50000);
   const { data, error } = await sb.rpc("tutor_take", { p_key: key, p_limit: limit, p_global_limit: budget });
   if (error) {
@@ -114,7 +114,7 @@ export const VOICE_MODEL: Record<VoiceKind, string> = { tts: "sarvam-tts", stt: 
 
 /** Daily per-learner allowance: TTS characters / STT seconds. Guests (per hashed IP) get a smaller one. */
 export function voiceCap(kind: VoiceKind, signedIn: boolean) {
-  if (kind === "tts") return signedIn ? envInt("SARVAM_DAILY_TTS_CHARS", 40000) : envInt("SARVAM_GUEST_TTS_CHARS", 8000);
+  if (kind === "tts") return signedIn ? envInt("SARVAM_DAILY_TTS_CHARS", 40000) : envInt("SARVAM_GUEST_TTS_CHARS", 400000);
   return signedIn ? envInt("SARVAM_DAILY_STT_SECONDS", 1200) : envInt("SARVAM_GUEST_STT_SECONDS", 300);
 }
 
@@ -168,7 +168,7 @@ export function addVoiceUsage(kind: VoiceKind, user: User | null, ip: string, un
 export async function voiceBurstGuard(req: Request): Promise<{ ip: string; user: User | null } | Response> {
   const ip = clientIp(req);
   const user = await cachedUser(req);
-  const limited = user ? rateLimit(`v:u:${user.id}`, envInt("VOICE_RATE_USER", 90), 60_000) : rateLimit(`v:ip:${ip}`, envInt("VOICE_RATE_GUEST_IP", 240), 60_000);
+  const limited = user ? rateLimit(`v:u:${user.id}`, envInt("VOICE_RATE_USER", 90), 60_000) : rateLimit(`v:ip:${ip}`, envInt("VOICE_RATE_GUEST_IP", 6000), 60_000);
   if (!limited.ok) return fail(429, "rate_limited", { retryAfter: limited.retryAfter }, { "Retry-After": String(limited.retryAfter) });
   return { ip, user };
 }
