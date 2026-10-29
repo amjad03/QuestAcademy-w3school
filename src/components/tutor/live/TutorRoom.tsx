@@ -5,18 +5,25 @@ import Link from "next/link";
 import { useSearchParams } from "next/navigation";
 import clsx from "clsx";
 import katex from "katex";
-import { Camera, CircleHelp, Lightbulb, Loader2, MessageSquareText, Play, RotateCcw, Square, Volume2, VolumeX } from "lucide-react";
+import { Camera, Lightbulb, Loader2, MessageSquareText, Play, RotateCcw, Square, Volume2, VolumeX } from "lucide-react";
 import { useLocale, useT } from "@/i18n";
 import { useLearner } from "@/lib/store";
 import { useNotebook } from "@/lib/notebook-store";
 import { Smartboard, type SmartboardHandle, type TappedElement } from "@/components/board/Smartboard";
-import { TUTOR_LANGUAGES, type LiveMode, type Recap, type TutorLanguage } from "@/lib/tutor/live";
+import { TUTOR_LANGUAGES, type LiveMode, type Recap, type SessionGoal, type TutorLanguage, type TutorLevel } from "@/lib/tutor/live";
 import { fetchRecap, languageForLocale, photoToBase64, speechLang, studentInfo } from "@/lib/tutor/live-client";
 import { useBoards } from "@/lib/tutor/board-store";
 import { trimHistory, useTutorSession } from "@/lib/tutor/useTutorSession";
 import { speaker } from "@/lib/tutor/speech";
 import { VoiceChip, VoiceDock, liveErrorText } from "./VoiceDock";
 import { TutorLoader } from "./TutorLoader";
+import { LessonProgress } from "./LessonProgress";
+import { IntentBar, VerdictBadge } from "./IntentBar";
+
+const sameTopic = (a: string, b: string) => {
+  const [x, y] = [a.toLowerCase().trim(), b.toLowerCase().trim()];
+  return Boolean(x && y) && (x.includes(y) || y.includes(x));
+};
 
 type Phase = "setup" | "live" | "recap" | "replay";
 
@@ -38,17 +45,34 @@ export function TutorRoom({ pass }: { pass: string | null }) {
   const [recap, setRecap] = useState<Recap | null>(null);
   const [savingRecap, setSavingRecap] = useState(false);
   const [showLog, setShowLog] = useState(false);
+  const [goal, setGoal] = useState<SessionGoal>("understand");
+  const [minutes, setMinutes] = useState(20);
+  const [startLevel, setStartLevel] = useState<TutorLevel>("simple");
+  const [savedNote, setSavedNote] = useState(false);
+  const outline = params.get("outline") ?? undefined;
 
   const board = useRef<SmartboardHandle>(null);
   const explainers = useRef<{ id: string; title: string }[]>([]);
   const sessionId = useRef("");
   const topicName = () => topic.trim() || t("tutor.live.untitled", "My doubt");
 
+  /** What was covered / found hard on this topic in earlier sessions (for "last time…"). */
+  const previous = useCallback(() => {
+    const past = (useLearner.getState().profile.tutor?.sessions ?? []).filter((x) => sameTopic(x.topic, topic)).slice(0, 3);
+    return past.length ? past.map((x) => `${x.at.slice(0, 10)}: ${x.summary}${x.covered?.length ? ` Covered: ${x.covered.join(", ")}.` : ""}${x.struggled?.length ? ` Found hard: ${x.struggled.join("; ")}.` : ""}`).join(" | ").slice(0, 600) : undefined;
+  }, [topic]);
   const base = useCallback(
-    () => ({ mode, language, topic: topic.trim() || "My doubt", student: studentInfo(useLearner.getState().profile), explainers: explainers.current }),
-    [mode, language, topic],
+    () => ({
+      mode,
+      language,
+      topic: topic.trim() || "My doubt",
+      student: studentInfo(useLearner.getState().profile),
+      explainers: explainers.current,
+      session: { goal: mode === "doubt" ? ("homework" as const) : goal, minutes, level: startLevel, outline, previous: previous() },
+    }),
+    [mode, language, topic, goal, minutes, startLevel, outline, previous],
   );
-  const s = useTutorSession({ board, pass, base, speechLang: speechLang(language), muted });
+  const s = useTutorSession({ board, pass, base, speechLang: speechLang(language), muted, onLanguage: setLanguage });
   const { preloadVoice } = s;
 
   // Start fetching the voice model while the student picks a topic.
@@ -76,7 +100,9 @@ export function TutorRoom({ pass }: { pass: string | null }) {
     s.unlock();
     s.preloadVoice();
     s.reset();
+    s.setLevel(startLevel);
     board.current?.reset();
+    setSavedNote(false);
     sessionId.current = `s${Date.now().toString(36)}`;
     setRecap(null);
     setPhase("live");
@@ -91,7 +117,7 @@ export function TutorRoom({ pass }: { pass: string | null }) {
         ? `[start] ${photo ? "Here is a photo of the problem I'm stuck on." : ""} ${topic.trim()}`.trim()
         : mode === "explainback"
           ? `[start] I want to explain "${topic.trim()}" back to you so you can find my gaps.`
-          : `[start] Teach me "${topic.trim()}".`;
+          : `[start] Teach me "${topic.trim()}".${goal === "exam" ? " I'm preparing for my exam." : goal === "revise" ? " I want a quick revision." : ""}`;
     void s.send(intro, photo ? { image: { mediaType: photo.mediaType, data: photo.data } } : {});
   };
 
@@ -99,6 +125,24 @@ export function TutorRoom({ pass }: { pass: string | null }) {
     if (phase !== "live") return;
     s.unlock();
     s.ask(`What is this? (I tapped "${el.label}", id ${el.id})`, { tag: "[tap]" });
+  };
+
+  /** Save the board (its written content + a replay copy) to the notebook. */
+  const saveToNotebook = () => {
+    const tp = topicName();
+    const record = board.current?.record();
+    if (record) saveBoard({ id: sessionId.current || `s${Date.now().toString(36)}`, topic: tp, at: new Date().toISOString(), record, says: s.says.current.slice(0, 200) });
+    const pages = board.current?.outline() ?? [];
+    const md = pages
+      .map((lines, i) => (lines.length ? `**${t("tutor.board.page", "Page {n}", { n: i + 1 })}**\n${lines.map((l) => (l.startsWith("|") ? l : `- ${l}`)).join("\n")}` : ""))
+      .filter(Boolean)
+      .join("\n\n");
+    addDoubt({
+      lessonId: `tutor/${tp.toLowerCase().replace(/[^a-z0-9]+/g, "-").slice(0, 40) || "session"}`,
+      title: t("tutor.board.noteTitle", "Board: {topic}", { topic: tp }),
+      text: `${md || t("tutor.board.empty", "(The board had drawings only.)")}\n\n${t("tutor.board.replayTip", "Replay the full board from the Live tutor page.")}`,
+    });
+    setSavedNote(true);
   };
 
   const finish = async () => {
@@ -118,7 +162,16 @@ export function TutorRoom({ pass }: { pass: string | null }) {
     const mem = p.tutor ?? { sessions: [], parentNotes: [] };
     setProfile({
       tutor: {
-        sessions: [{ at: now, topic: tp, summary: r?.memory ?? `Studied ${tp} (${mode}).` }, ...mem.sessions].slice(0, 10),
+        sessions: [
+          {
+            at: now,
+            topic: tp,
+            summary: r?.memory ?? `Studied ${tp} (${mode}).`,
+            struggled: r?.struggled?.length ? r.struggled : [...new Set(s.misconceptions.current)].slice(0, 4),
+            covered: s.plan?.concepts.filter((c) => s.done.includes(c.id)).map((c) => c.title),
+          },
+          ...mem.sessions,
+        ].slice(0, 10),
         parentNotes: r ? [{ at: now, topic: tp, text: r.parentSummary }, ...mem.parentNotes].slice(0, 30) : mem.parentNotes,
       },
     });
@@ -192,6 +245,52 @@ export function TutorRoom({ pass }: { pass: string | null }) {
             <span className="mb-1 block text-sm font-extrabold">{mode === "doubt" ? t("tutor.live.problem", "Type the problem (or add a photo)") : t("tutor.live.topic", "What do you want to learn?")}</span>
             <input value={topic} onChange={(e) => setTopic(e.target.value)} onKeyDown={(e) => e.key === "Enter" && start()} placeholder={t("tutor.live.topicPh", "e.g. Newton's second law, quadratic equations, photosynthesis")} className="w-full rounded-xl border-2 border-line bg-surface px-3 py-2" maxLength={280} />
           </label>
+          {mode !== "doubt" && (
+            <div className="grid gap-3 sm:grid-cols-3">
+              <fieldset>
+                <legend className="mb-1 text-sm font-extrabold">{t("tutor.setup.goal", "Goal")}</legend>
+                <div className="flex flex-wrap gap-1.5">
+                  {(
+                    [
+                      ["understand", t("tutor.goal.understand", "Understand it")],
+                      ["exam", t("tutor.goal.exam", "Exam prep")],
+                      ["revise", t("tutor.goal.revise", "Quick revision")],
+                    ] as [SessionGoal, string][]
+                  ).map(([id, l]) => (
+                    <button key={id} type="button" onClick={() => setGoal(id)} aria-pressed={goal === id} className={clsx("rounded-xl border-2 px-2.5 py-1 text-sm font-bold", goal === id ? "border-accent bg-accent-soft text-accent" : "border-line")}>
+                      {l}
+                    </button>
+                  ))}
+                </div>
+              </fieldset>
+              <fieldset>
+                <legend className="mb-1 text-sm font-extrabold">{t("tutor.setup.duration", "Time")}</legend>
+                <div className="flex flex-wrap gap-1.5">
+                  {[10, 20, 30, 45].map((m) => (
+                    <button key={m} type="button" onClick={() => setMinutes(m)} aria-pressed={minutes === m} className={clsx("rounded-xl border-2 px-2.5 py-1 text-sm font-bold tabular-nums", minutes === m ? "border-accent bg-accent-soft text-accent" : "border-line")}>
+                      {t("tutor.setup.min", "{n} min", { n: m })}
+                    </button>
+                  ))}
+                </div>
+              </fieldset>
+              <fieldset>
+                <legend className="mb-1 text-sm font-extrabold">{t("tutor.setup.level", "Start")}</legend>
+                <div className="flex flex-wrap gap-1.5">
+                  {(
+                    [
+                      ["simple", t("tutor.level.simple", "Super simple first")],
+                      ["exam", t("tutor.level.exam", "Exam level")],
+                    ] as [TutorLevel, string][]
+                  ).map(([id, l]) => (
+                    <button key={id} type="button" onClick={() => setStartLevel(id)} aria-pressed={startLevel === id} className={clsx("rounded-xl border-2 px-2.5 py-1 text-sm font-bold", startLevel === id ? "border-accent bg-accent-soft text-accent" : "border-line")}>
+                      {l}
+                    </button>
+                  ))}
+                </div>
+              </fieldset>
+            </div>
+          )}
+          {topic.trim() && previous() && <p className="rounded-xl bg-surface-2 px-3 py-2 text-sm font-semibold">{t("tutor.setup.previous", "Questy remembers your last session on this and will start from where you struggled.")}</p>}
           {mode === "doubt" && (
             <div className="flex flex-wrap items-center gap-3">
               <label className="btn-ghost inline-flex cursor-pointer items-center gap-2 rounded-xl border-2 border-line px-3 py-2 font-bold">
@@ -227,22 +326,29 @@ export function TutorRoom({ pass }: { pass: string | null }) {
       )}
 
       <div className={clsx("grid grid-cols-[minmax(0,1fr)] gap-4", live && "lg:grid-cols-[minmax(0,1fr)_360px]", phase === "setup" && "hidden")}>
-        <div className="min-w-0">
-          <Smartboard ref={board} onTap={onTap} readOnly={phase === "replay" || phase === "recap"} />
+        <div className="min-w-0 space-y-3">
+          {live && <LessonProgress s={s} minutes={mode === "learn" ? minutes : undefined} />}
+          <Smartboard
+            ref={board}
+            onTap={onTap}
+            readOnly={phase === "replay" || phase === "recap"}
+            name={topicName()}
+            onSave={phase === "live" || phase === "recap" ? saveToNotebook : undefined}
+            onTurnDone={() => (s.unlock(), s.ask("I've done it on the board. Please check my working.", { tag: "[board-work]", forceBoard: true }))}
+          />
+          {savedNote && <p className="text-sm font-bold text-emerald-700 dark:text-emerald-300">{t("tutor.board.saved", "Board saved to your notebook.")}</p>}
         </div>
         {live && (
           <section className="card h-fit min-w-0 space-y-3 p-3 lg:sticky lg:top-4">
+            <VerdictBadge s={s} />
             <VoiceDock
               s={s}
               placeholder={mode === "explainback" ? t("tutor.live.explainPh", "Explain it in your own words…") : undefined}
               actions={
                 <>
-                  <button type="button" onClick={() => s.ask("I don't understand the last part. Please explain it more simply.", { tag: "[clarify]" })} className={chip}>
-                    <CircleHelp className="h-4 w-4" /> {t("tutor.live.clarify", "I don't get it")}
-                  </button>
                   {mode === "doubt" && (
                     <>
-                      <button type="button" onClick={() => s.ask("", { tag: "[next-hint]" })} className={chip}>
+                      <button type="button" onClick={() => s.ask("Next hint please", { tag: "[intent:hint]" })} className={chip}>
                         <Lightbulb className="h-4 w-4" /> {t("tutor.live.nextHint", "Next hint")}
                       </button>
                       <button type="button" onClick={() => s.ask("", { tag: "[solution]" })} className={chip}>
@@ -259,6 +365,7 @@ export function TutorRoom({ pass }: { pass: string | null }) {
                 </>
               }
             />
+            <IntentBar s={s} language={language} doubt={mode === "doubt"} />
             {showLog && (
               <ol className="max-h-64 space-y-1.5 overflow-y-auto rounded-xl border border-line p-2 text-sm">
                 {s.log.length === 0 && <li className="text-muted">{t("tutor.live.logEmpty", "Nothing yet.")}</li>}
@@ -302,6 +409,16 @@ export function TutorRoom({ pass }: { pass: string | null }) {
                   ))}
                 </div>
               )}
+              {recap.struggled && recap.struggled.length > 0 && (
+                <div className="rounded-xl bg-amber-50 px-3 py-2 text-sm dark:bg-amber-950">
+                  <h3 className="font-extrabold">{t("tutor.recap.struggled", "Worth another look")}</h3>
+                  <ul className="list-disc pl-5">
+                    {recap.struggled.map((x) => (
+                      <li key={x}>{x}</li>
+                    ))}
+                  </ul>
+                </div>
+              )}
               <div className="space-y-2">
                 <h3 className="font-extrabold">{t("tutor.recap.practice", "Practice")}</h3>
                 {recap.practice.map((q, i) => (
@@ -315,6 +432,7 @@ export function TutorRoom({ pass }: { pass: string | null }) {
                   </details>
                 ))}
               </div>
+              {recap.nextStep && <p className="text-sm font-bold">{t("tutor.recap.next", "Next time")}: {recap.nextStep}</p>}
               <p className="text-sm text-muted">
                 {t("tutor.recap.saved", "Saved to your notebook under Doubts.")}{" "}
                 <Link href="/notebook" className="font-bold text-accent underline">
