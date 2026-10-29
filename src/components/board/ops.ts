@@ -14,6 +14,9 @@ export const BOARD_COLORS: BoardColor[] = ["ink", "blue", "red", "green", "orang
 
 export type Pt = [number, number];
 
+export type CircuitKind = "wire" | "resistor" | "battery" | "cell" | "bulb" | "switch" | "ammeter" | "voltmeter" | "capacitor" | "ground";
+export const CIRCUIT_KINDS: CircuitKind[] = ["wire", "resistor", "battery", "cell", "bulb", "switch", "ammeter", "voltmeter", "capacitor", "ground"];
+
 export type BoardOp =
   | { op: "text"; id: string; text: string; x?: number; y?: number; size?: number; color?: BoardColor }
   | { op: "math"; id: string; tex: string; x?: number; y?: number; size?: number; color?: BoardColor }
@@ -24,6 +27,22 @@ export type BoardOp =
   | { op: "plot"; id: string; axes: string; fn: string; color?: BoardColor; label?: string }
   | { op: "point"; id: string; axes: string; at: Pt; label?: string; color?: BoardColor }
   | { op: "highlight" | "underline"; target: string; color?: BoardColor }
+  /** Marking: a tick / cross at a point, or a hand-drawn ring around an element or a region (circle the mistake). */
+  | { op: "tick" | "cross"; id: string; at: Pt; size?: number; color?: BoardColor }
+  | { op: "ring"; id: string; target?: string; x?: number; y?: number; w?: number; h?: number; color?: BoardColor; label?: string }
+  | { op: "ellipse"; id: string; x: number; y: number; rx: number; ry: number; color?: BoardColor; label?: string; fill?: boolean }
+  /** Geometry: a polygon (triangle, quadrilateral…) with optional vertex labels. */
+  | { op: "polygon"; id: string; points: Pt[]; labels?: string[]; color?: BoardColor; fill?: boolean; closed?: boolean }
+  /** A smooth free curve through points (cell outlines, waves, organs, molecule shapes). */
+  | { op: "curve"; id: string; points: Pt[]; color?: BoardColor; closed?: boolean; dashed?: boolean; label?: string }
+  /** Angle arc at a vertex between rays to `from` and `to`. */
+  | { op: "angle"; id: string; at: Pt; from: Pt; to: Pt; label?: string; color?: BoardColor; right?: boolean }
+  /** A filled dot (atom, charge, point mass, vertex). */
+  | { op: "dot"; id: string; at: Pt; r?: number; color?: BoardColor; label?: string }
+  | { op: "table"; id: string; rows: string[][]; x?: number; y?: number; colW?: number; header?: boolean; color?: BoardColor }
+  | { op: "numberline"; id: string; x: number; y: number; w: number; min: number; max: number; step?: number; marks?: { at: number; label?: string; color?: BoardColor }[]; color?: BoardColor }
+  /** Circuit symbol drawn between two terminals. */
+  | { op: "component"; id: string; kind: CircuitKind; from: Pt; to: Pt; label?: string; color?: BoardColor }
   | { op: "ink"; id: string; points: Pt[]; color?: BoardColor; width?: number; by?: "student" | "tutor"; /** Translucent highlighter stroke. */ hl?: boolean }
   /** Move the tutor's laser pointer to an element (or a point) while talking about it. */
   | { op: "laser"; target?: string; at?: Pt }
@@ -112,6 +131,59 @@ export function cleanOp(raw: unknown): BoardOp | null {
       const target = s(r.target, 40);
       const at = pt(r.at);
       return target || at ? { op: "laser", target, at } : null;
+    }
+    case "tick":
+    case "cross": {
+      const at = pt(r.at);
+      return at ? { op: r.op, id: id(r.id), at, size: num(r.size, 10, 80), color: color(r.color) } : null;
+    }
+    case "ring": {
+      const target = s(r.target, 40);
+      const [x, y, w, h] = [num(r.x), num(r.y), num(r.w, 4, BOARD_W), num(r.h, 4, BOARD_H)];
+      return target || (x !== undefined && y !== undefined && w && h) ? { op: "ring", id: id(r.id), target, x, y, w, h, color: color(r.color), label: s(r.label, 80) } : null;
+    }
+    case "ellipse": {
+      const [x, y, rx, ry] = [num(r.x), num(r.y), num(r.rx, 2, 500), num(r.ry, 2, 400)];
+      return x !== undefined && y !== undefined && rx && ry ? { op: "ellipse", id: id(r.id), x, y, rx, ry, color: color(r.color), label: s(r.label, 80), fill: r.fill === true || undefined } : null;
+    }
+    case "polygon":
+    case "curve": {
+      if (!Array.isArray(r.points)) return null;
+      const points = r.points.slice(0, 400).map(pt).filter((p): p is Pt => Boolean(p));
+      if (points.length < 2) return null;
+      if (r.op === "curve") return { op: "curve", id: id(r.id), points, color: color(r.color), closed: r.closed === true || undefined, dashed: r.dashed === true || undefined, label: s(r.label, 80) };
+      const labels = Array.isArray(r.labels) ? r.labels.slice(0, points.length).map((l) => s(l, 12) ?? "") : undefined;
+      return { op: "polygon", id: id(r.id), points, labels, color: color(r.color), fill: r.fill === true || undefined, closed: r.closed === false ? false : undefined };
+    }
+    case "angle": {
+      const [at, from, to] = [pt(r.at), pt(r.from), pt(r.to)];
+      return at && from && to ? { op: "angle", id: id(r.id), at, from, to, label: s(r.label, 20), color: color(r.color), right: r.right === true || undefined } : null;
+    }
+    case "dot": {
+      const at = pt(r.at);
+      return at ? { op: "dot", id: id(r.id), at, r: num(r.r, 2, 60), color: color(r.color), label: s(r.label, 40) } : null;
+    }
+    case "table": {
+      if (!Array.isArray(r.rows)) return null;
+      const rows = r.rows.slice(0, 12).map((row) => (Array.isArray(row) ? row.slice(0, 6).map((c) => (typeof c === "number" ? String(c) : s(c, 60) ?? "")) : [])).filter((row) => row.length);
+      return rows.length ? { op: "table", id: id(r.id), rows, x: num(r.x, 0, BOARD_W), y: num(r.y, 0, BOARD_H), colW: num(r.colW, 40, 400), header: r.header === false ? false : true, color: color(r.color) } : null;
+    }
+    case "numberline": {
+      const [x, y, w, min, max] = [num(r.x, 0, BOARD_W), num(r.y, 0, BOARD_H), num(r.w, 60, BOARD_W), num(r.min), num(r.max)];
+      if (x === undefined || y === undefined || !w || min === undefined || max === undefined || max <= min) return null;
+      const marks = Array.isArray(r.marks)
+        ? r.marks.slice(0, 20).flatMap((m) => {
+            const o = (m ?? {}) as Record<string, unknown>;
+            const at = num(o.at);
+            return at === undefined ? [] : [{ at, label: s(o.label, 20), color: color(o.color) }];
+          })
+        : undefined;
+      return { op: "numberline", id: id(r.id), x, y, w, min, max, step: num(r.step, 1e-6, 1e4), marks, color: color(r.color) };
+    }
+    case "component": {
+      const kind = CIRCUIT_KINDS.find((k) => k === r.kind);
+      const [from, to] = [pt(r.from), pt(r.to)];
+      return kind && from && to ? { op: "component", id: id(r.id), kind, from, to, label: s(r.label, 40), color: color(r.color) } : null;
     }
     case "page":
       return { op: "page" };

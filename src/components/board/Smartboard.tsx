@@ -17,16 +17,16 @@ import dynamic from "next/dynamic";
 import katex from "katex";
 import clsx from "clsx";
 import {
-  ArrowUpRight, ChevronLeft, ChevronRight, Circle, Eraser, Hand, Highlighter, Maximize2, Minimize2, Minus, MousePointer2, PenLine, Plus, Redo2, Square, Trash2, Type, Undo2, X, ZoomIn, ZoomOut,
+  ArrowUpRight, BookmarkPlus, CheckCheck, ChevronLeft, ChevronRight, Circle, Download, Eraser, FileDown, Hand, Highlighter, Maximize2, Minimize2, Minus, MousePointer2, PenLine, Plus, Redo2, Square, Trash2, Type, Undo2, X, ZoomIn, ZoomOut,
 } from "lucide-react";
 import { useT } from "@/i18n";
 import { BOARD_H, BOARD_W, compileFn, type BoardColor, type BoardOp, type BoardRecord, type Pt } from "./ops";
+import { EXTRA_OPS, HAND, INK, TABLE_ROW_H, extraBox, label, paintExtra } from "./draw-extra";
+import { download, fileSafe, jpegPdf } from "./export";
 
 const BoardExplainer = dynamic(() => import("./BoardExplainer"), { ssr: false, loading: () => <div className="h-40 animate-pulse rounded-2xl bg-surface-2" /> });
 
-const INK: Record<BoardColor, string> = { ink: "#1f2937", blue: "#2563eb", red: "#dc2626", green: "#16a34a", orange: "#ea580c", purple: "#7c3aed" };
 const HL = "#facc15";
-const HAND = '"Segoe Print","Bradley Hand","Comic Sans MS","Comic Neue","Chalkboard SE",cursive';
 const MARGIN = 40;
 const GAP = 14;
 const MAX_Z = 4;
@@ -86,6 +86,12 @@ export interface SmartboardHandle {
   /** Student marks added since the last snapshot. */
   newMarks: () => number;
   snapshot: () => BoardSnapshot | null;
+  /** Hand the board to the student ("Your turn: …"), or take it back (null). */
+  setTurn: (prompt: string | null) => void;
+  /** Every page as an image (JPEG base64, no prefix), for export and notebooks. */
+  pageImages: (type?: "image/jpeg" | "image/png") => string[];
+  /** The board's written content (text, formulas, tables) as plain lines per page. */
+  outline: () => string[][];
 }
 
 const newPage = (): Page => ({ els: [], cursor: MARGIN - 10, undo: [], redo: [] });
@@ -106,6 +112,20 @@ function describe(el: El): string {
       return `axes${o.xlabel ? ` (${o.xlabel} vs ${o.ylabel ?? "y"})` : ""}`;
     case "point":
       return `point (${o.at.join(", ")})${o.label ? ` ${o.label}` : ""}`;
+    case "table":
+      return `table: ${o.rows.map((r) => r.join(" | ")).slice(0, 4).join(" / ")}`;
+    case "numberline":
+      return `number line ${o.min} to ${o.max}${o.marks?.length ? ` marking ${o.marks.map((m) => m.label ?? m.at).join(", ")}` : ""}`;
+    case "component":
+      return `${o.kind}${o.label ? ` ${o.label}` : ""}`;
+    case "tick":
+      return "tutor's tick (correct)";
+    case "cross":
+      return "tutor's cross (mistake)";
+    case "ring":
+      return `tutor's ring${o.label ? `: ${o.label}` : ""}`;
+    case "polygon":
+      return `shape${o.labels?.length ? ` ${o.labels.join("")}` : ""}`;
     case "ink":
       return el.mine || o.by === "student" ? (o.hl ? "the student's highlight" : "the student's own drawing") : "a sketch";
     default:
@@ -258,6 +278,8 @@ function paint(ctx: CanvasRenderingContext2D, page: Page, now: number): boolean 
         }
         break;
       }
+      default:
+        if (EXTRA_OPS.has(o.op)) paintExtra(ctx, o, el, p);
     }
   }
   ctx.globalAlpha = 1;
@@ -270,11 +292,20 @@ export function Smartboard({
   onInk,
   readOnly,
   compact,
+  onTurnDone,
+  onSave,
+  name = "board",
 }: {
   ref?: Ref<SmartboardHandle>;
   onTap?: (el: TappedElement) => void;
   onInk?: (op: BoardOp) => void;
   readOnly?: boolean;
+  /** The student finished their turn on the board ("check my work"). */
+  onTurnDone?: () => void;
+  /** Save the board to the notebook (shows the button when given). */
+  onSave?: () => void;
+  /** File name stem for exports. */
+  name?: string;
   /** Fewer tools (the quick doubt panel's mini board). */
   compact?: boolean;
 }) {
@@ -298,6 +329,7 @@ export function Smartboard({
   colorRef.current = color;
   const [full, setFull] = useState(false);
   const [explainer, setExplainer] = useState<string | null>(null);
+  const [turn, setTurnState] = useState<string | null>(null);
   const [laser, setLaser] = useState<{ x: number; y: number; ms: number; on: boolean }>({ x: 500, y: 300, ms: 0, on: false });
   const laserTimer = useRef<ReturnType<typeof setTimeout>>(undefined);
   const [typing, setTyping] = useState<{ at: Pt; text: string } | null>(null);
@@ -494,6 +526,31 @@ export function Smartboard({
           pointAt(x, y + h / 2, 0, 0);
           requestAnimationFrame(() => pointAt(x + estW, y + h / 2, dur, 900));
         }
+      } else if (op.op === "table") {
+        const cols = Math.max(...op.rows.map((r) => r.length));
+        const w = Math.min(BOARD_W - 2 * MARGIN, cols * (op.colW ?? 150));
+        const h = op.rows.length * TABLE_ROW_H;
+        if (op.y === undefined && page.cursor + h > BOARD_H - 10 && page.els.length) {
+          pages.current.push(newPage());
+          goPage(pages.current.length - 1);
+          page = cur();
+        }
+        const x = Math.min(op.x ?? MARGIN, BOARD_W - w - 10);
+        const y = op.y ?? page.cursor;
+        page.cursor = Math.max(page.cursor, y + h + GAP);
+        dur = animate ? Math.min(2400, 260 * op.rows.length) : 0;
+        el = { id: op.id, op, x, y, w, h, born, dur };
+        if (animate) {
+          pointAt(x + 20, y + 20, 0, 0);
+          requestAnimationFrame(() => pointAt(x + 20, y + h - 20, dur, 700));
+        }
+      } else if (op.op === "ring") {
+        const tg = op.target ? page.els.find((e) => e.id === op.target) : null;
+        const b = tg ? { x: tg.x, y: tg.y, w: tg.w, h: tg.h } : op.x !== undefined && op.y !== undefined && op.w && op.h ? { x: op.x, y: op.y, w: op.w, h: op.h } : null;
+        if (!b) return Promise.resolve();
+        dur = animate ? 700 : 0;
+        el = { id: op.id, op, ...b, born, dur };
+        if (animate) pointAt(b.x + b.w / 2, b.y - 10, 400, dur + 900);
       } else if (op.op === "highlight" || op.op === "underline") {
         const tg = page.els.find((e) => e.id === op.target);
         if (!tg) return Promise.resolve();
@@ -502,10 +559,10 @@ export function Smartboard({
         if (animate) pointAt(tg.x + tg.w / 2, tg.y + tg.h / 2);
       } else {
         const b = bbox(op, page);
-        dur = animate ? (op.op === "plot" ? 1300 : op.op === "ink" ? (op.by === "student" ? 0 : 800) : op.op === "axes" ? 700 : 600) : 0;
+        dur = animate ? (op.op === "tick" || op.op === "cross" || op.op === "dot" ? 380 : op.op === "polygon" || op.op === "curve" || op.op === "component" || op.op === "numberline" ? 900 : op.op === "plot" ? 1300 : op.op === "ink" ? (op.by === "student" ? 0 : 800) : op.op === "axes" ? 700 : 600) : 0;
         el = { id: (op as { id: string }).id, op, ...b, born, dur };
         if (op.op === "plot") el.fn = compileFn(op.fn);
-        if (!opts.mine && op.op !== "ink" && op.op !== "point" && op.op !== "plot") page.cursor = Math.max(page.cursor, b.y + b.h + GAP + (op.op === "axes" ? 10 : 0));
+        if (!opts.mine && !EXTRA_OPS.has(op.op) && op.op !== "ink" && op.op !== "point" && op.op !== "plot") page.cursor = Math.max(page.cursor, b.y + b.h + GAP + (op.op === "axes" ? 10 : 0));
         if (animate && !opts.mine && b.w + b.h > 0) pointAt(b.x + b.w / 2, b.y + b.h / 2, 400, dur + 600);
       }
       el.mine = opts.mine;
@@ -531,6 +588,7 @@ export function Smartboard({
     t0.current = performance.now();
     marks.current = 0;
     setExplainer(null);
+    setTurnState(null);
     setView({ z: 1, x: 0, y: 0 });
     goPage(0);
     bump();
@@ -539,29 +597,11 @@ export function Smartboard({
   const snapshot = useCallback((): BoardSnapshot | null => {
     try {
       const page = cur();
-      const c = document.createElement("canvas");
-      c.width = BOARD_W;
-      c.height = BOARD_H;
-      const ctx = c.getContext("2d");
-      if (!ctx) return null;
-      ctx.fillStyle = "#fdfcf7";
-      ctx.fillRect(0, 0, BOARD_W, BOARD_H);
-      ctx.lineCap = "round";
-      ctx.lineJoin = "round";
-      paint(ctx, page, Infinity);
-      ctx.textBaseline = "top";
-      for (const el of page.els) {
-        const o = el.op;
-        if (o.op !== "text" && o.op !== "math") continue;
-        ctx.fillStyle = INK[o.color ?? "ink"];
-        const size = o.size ?? 26;
-        ctx.font = o.op === "text" ? `${size}px ${HAND}` : `italic ${size}px "Times New Roman", serif`;
-        const text = o.op === "text" ? o.text : texToPlain(o.tex);
-        wrapText(ctx, text, el.x, el.y, BOARD_W - el.x - MARGIN / 2, size * 1.3);
-      }
+      const c = rasterize(page);
+      if (!c) return null;
       const tutorEls = page.els.filter((e) => !e.mine && e.op.op !== "highlight" && e.op.op !== "underline");
       const desc = tutorEls.slice(-30).map((e) => `- [${e.id}] ${describe(e)} at (${Math.round(e.x)}, ${Math.round(e.y)})`).join("\n");
-      const recent = page.els.filter((e) => e.mine).slice(-Math.min(10, Math.max(1, marks.current)));
+      const recent = page.els.filter((e) => e.mine).slice(-Math.min(25, Math.max(1, marks.current)));
       const markLines = marks.current
         ? recent.map((m) => {
             const near = tutorEls.filter((e) => e.x < m.x + m.w + 10 && e.x + e.w > m.x - 10 && e.y < m.y + m.h + 10 && e.y + e.h > m.y - 10).map(describe);
@@ -599,6 +639,18 @@ export function Smartboard({
       },
       newMarks: () => marks.current,
       snapshot,
+      setTurn: (prompt) => {
+        setTurnState(prompt);
+        if (prompt) {
+          setTool((tl) => (tl === "ask" || tl === "hand" ? "pen" : tl));
+          setColor("blue");
+        }
+      },
+      pageImages: (type = "image/jpeg") => pages.current.flatMap((pg) => {
+        const c = pg.els.length ? rasterize(pg) : null;
+        return c ? [c.toDataURL(type, 0.85).split(",")[1] ?? ""] : [];
+      }),
+      outline: () => pages.current.map((pg) => pg.els.flatMap((e) => (e.op.op === "text" ? [e.op.text] : e.op.op === "math" ? [`$${e.op.tex}$`] : e.op.op === "table" ? e.op.rows.map((r) => `| ${r.join(" | ")} |`) : []))),
     }),
     [apply, reset, snapshot],
   );
@@ -792,6 +844,20 @@ export function Smartboard({
     onInk?.(op);
   };
 
+  /* ---------------- export ---------------- */
+
+  const exportPng = () => {
+    const c = rasterize(cur());
+    if (c) download(c.toDataURL("image/png"), `${fileSafe(name)}-p${pageRef.current + 1}.png`);
+  };
+  const exportPdf = () => {
+    const imgs = pages.current.flatMap((pg) => {
+      const c = pg.els.length ? rasterize(pg, 2) : null;
+      return c ? [{ jpegB64: c.toDataURL("image/jpeg", 0.88).split(",")[1] ?? "", w: c.width, h: c.height }] : [];
+    });
+    if (imgs.length) download(jpegPdf(imgs), `${fileSafe(name)}.pdf`);
+  };
+
   /* ---------------- fullscreen ---------------- */
 
   const toggleFull = () => {
@@ -904,6 +970,21 @@ export function Smartboard({
             )}
           </div>
         </div>
+        {turn && !readOnly && (
+          <div className="pointer-events-none absolute inset-x-2 top-2 flex justify-center" data-testid="board-turn">
+            <div className="pointer-events-auto flex max-w-full items-center gap-2 rounded-2xl border-2 border-emerald-500 bg-white/95 px-3 py-1.5 shadow-md dark:bg-zinc-900/95" onPointerDown={(e) => e.stopPropagation()}>
+              <PenLine className="h-4 w-4 shrink-0 text-emerald-600" />
+              <span className="min-w-0 truncate text-sm font-extrabold text-emerald-800 dark:text-emerald-200">
+                {t("board.yourTurn", "Your turn")}: {turn}
+              </span>
+              {onTurnDone && (
+                <button type="button" onClick={onTurnDone} className="inline-flex shrink-0 items-center gap-1 rounded-xl bg-emerald-600 px-2.5 py-1 text-xs font-extrabold text-white">
+                  <CheckCheck className="h-3.5 w-3.5" /> {t("board.checkMine", "Check my work")}
+                </button>
+              )}
+            </div>
+          </div>
+        )}
         {view.z > 1 && (
           <button type="button" onClick={() => setView({ z: 1, x: 0, y: 0 })} onPointerDown={(e) => e.stopPropagation()} className="absolute bottom-2 right-2 rounded-full bg-ink/75 px-2.5 py-1 text-xs font-bold text-white">
             {Math.round(view.z * 100)}% · {t("board.fit", "Fit")}
@@ -936,6 +1017,21 @@ export function Smartboard({
                 <button type="button" onClick={() => zoomAt(viewRef.current.z / 1.4, boxW / 2, (boxW * BOARD_H) / BOARD_W / 2)} disabled={view.z <= 1} className={iconBtn} aria-label={t("board.zoomOut", "Zoom out")} title={t("board.zoomOut", "Zoom out")}>
                   <ZoomOut className="h-[18px] w-[18px]" />
                 </button>
+              </>
+            )}
+            {!compact && (
+              <>
+                <button type="button" onClick={exportPng} className={iconBtn} aria-label={t("board.png", "Download this page (PNG)")} title={t("board.png", "Download this page (PNG)")}>
+                  <Download className="h-[18px] w-[18px]" />
+                </button>
+                <button type="button" onClick={exportPdf} className={iconBtn} aria-label={t("board.pdf", "Download all pages (PDF)")} title={t("board.pdf", "Download all pages (PDF)")}>
+                  <FileDown className="h-[18px] w-[18px]" />
+                </button>
+                {onSave && (
+                  <button type="button" onClick={onSave} className={iconBtn} aria-label={t("board.save", "Save board to notebook")} title={t("board.save", "Save board to notebook")}>
+                    <BookmarkPlus className="h-[18px] w-[18px]" />
+                  </button>
+                )}
               </>
             )}
             <button type="button" onClick={toggleFull} className={iconBtn} aria-label={full ? t("board.exitFull", "Exit full screen") : t("board.full", "Full screen")} title={full ? t("board.exitFull", "Exit full screen") : t("board.full", "Full screen")}>
@@ -1028,14 +1124,30 @@ function wrapText(ctx: CanvasRenderingContext2D, text: string, x: number, y: num
   if (line) ctx.fillText(line, x, y);
 }
 
-function label(ctx: CanvasRenderingContext2D, text: string, x: number, y: number, col: string) {
-  ctx.save();
-  ctx.font = `22px ${HAND}`;
-  ctx.fillStyle = col;
-  ctx.globalAlpha = 1;
-  ctx.textBaseline = "alphabetic";
-  ctx.fillText(text, x, y);
-  ctx.restore();
+/** Flatten one page (strokes + text + formulas) to a canvas at `k` × board size. */
+function rasterize(page: Page, k = 1): HTMLCanvasElement | null {
+  const c = document.createElement("canvas");
+  c.width = BOARD_W * k;
+  c.height = BOARD_H * k;
+  const ctx = c.getContext("2d");
+  if (!ctx) return null;
+  ctx.scale(k, k);
+  ctx.fillStyle = "#fdfcf7";
+  ctx.fillRect(0, 0, BOARD_W, BOARD_H);
+  ctx.lineCap = "round";
+  ctx.lineJoin = "round";
+  paint(ctx, page, Infinity);
+  ctx.textBaseline = "top";
+  for (const el of page.els) {
+    const o = el.op;
+    if (o.op !== "text" && o.op !== "math") continue;
+    ctx.fillStyle = INK[o.color ?? "ink"];
+    const size = o.size ?? 26;
+    ctx.font = o.op === "text" ? `${size}px ${HAND}` : `italic ${size}px "Times New Roman", serif`;
+    const text = o.op === "text" ? o.text : texToPlain(o.tex);
+    wrapText(ctx, text, el.x, el.y, BOARD_W - el.x - MARGIN / 2, size * 1.3);
+  }
+  return c;
 }
 
 function drawAxes(ctx: CanvasRenderingContext2D, o: Extract<BoardOp, { op: "axes" }>, p: number) {
@@ -1106,6 +1218,6 @@ function bbox(op: BoardOp, page: Page): { x: number; y: number; w: number; h: nu
       return { x: px - 8, y: py - 8, w: 16, h: 16 };
     }
     default:
-      return { x: 0, y: 0, w: 0, h: 0 };
+      return extraBox(op) ?? { x: 0, y: 0, w: 0, h: 0 };
   }
 }
