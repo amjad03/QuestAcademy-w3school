@@ -47,7 +47,7 @@ export class SarvamError extends Error {
 /** Text (≤ 500 chars) → WAV bytes. */
 export async function sarvamTts(o: { text: string; lang: VoiceLang; speaker: string; pace: number }): Promise<Uint8Array> {
   const common = {
-    target_language_code: o.lang,
+    language_code: o.lang,
     speaker: o.speaker,
     model: TTS_MODEL(),
     pace: o.pace,
