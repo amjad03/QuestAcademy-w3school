@@ -17,6 +17,7 @@ interface Data {
   days: number;
   usdToInr: number;
   totals: Omit<Agg, "key">;
+  voice?: { ttsChars: number; sttSeconds: number; costInr: number };
   byDay: Agg[];
   topUsers: (Agg & { guest: boolean; email: string | null })[];
   bySchool: (Agg & { name: string; users: number })[];
@@ -116,6 +117,11 @@ export function UsageDashboard() {
               </div>
             ))}
           </section>
+          {data.voice && (data.voice.ttsChars > 0 || data.voice.sttSeconds > 0) && (
+            <p className="card p-4 text-sm font-bold">
+              Voice (Sarvam): {n(data.voice.ttsChars)} TTS characters · {n(Math.round(data.voice.sttSeconds / 60))} STT minutes · {inr(data.voice.costInr)} (included in the cost above)
+            </p>
+          )}
 
           <section className="space-y-2">
             <h2 className="text-xl font-black">Daily totals</h2>

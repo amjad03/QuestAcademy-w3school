@@ -33,7 +33,17 @@ export const usdToInr = () => {
   return Number.isFinite(n) && n > 0 ? n : 88;
 };
 
+const envNum = (name: string, fallback: number) => {
+  const n = Number(process.env[name]);
+  return Number.isFinite(n) && n >= 0 ? n : fallback;
+};
+
+/** Sarvam voice: input_tokens holds TTS characters / STT seconds. Rates in INR (SARVAM_TTS_INR_PER_10K_CHARS, SARVAM_STT_INR_PER_HOUR). */
+export const voiceCostInr = (model: string, units: number) =>
+  model === "sarvam-tts" ? (units / 10000) * envNum("SARVAM_TTS_INR_PER_10K_CHARS", 15) : (units / 3600) * envNum("SARVAM_STT_INR_PER_HOUR", 30);
+
 export function costInr(model: string, t: { input: number; output: number; cacheRead: number; cacheWrite: number }) {
+  if (model.startsWith("sarvam-")) return voiceCostInr(model, t.input);
   const [i, o, cr, cw] = priceFor(model);
   return ((t.input * i + t.output * o + t.cacheRead * cr + t.cacheWrite * cw) / 1_000_000) * usdToInr();
 }
@@ -76,5 +86,26 @@ export async function logAiUsage(o: { route: string; model: string; user: User |
     if (error) console.error("[ai-usage] insert failed", error.message);
   } catch (err) {
     console.error("[ai-usage] log failed", err instanceof Error ? err.message : err);
+  }
+}
+
+/** Log one Sarvam voice call (kind tts/stt; units = characters or seconds, stored in input_tokens). */
+export async function logVoiceUsage(o: { kind: "tts" | "stt"; units: number; user: User | null; ip: string }) {
+  const sb = supabaseAdmin();
+  if (!sb || !(o.units > 0)) return;
+  try {
+    const school_id = o.user ? await schoolOf(o.user.id) : null;
+    const { error } = await sb.from("ai_usage").insert({
+      route: `voice/${o.kind}`,
+      model: `sarvam-${o.kind}`,
+      user_id: o.user?.id ?? null,
+      school_id,
+      guest_key: o.user ? null : hashIp(o.ip),
+      input_tokens: Math.ceil(o.units),
+      output_tokens: 0,
+    });
+    if (error) console.error("[ai-usage] voice insert failed", error.message);
+  } catch (err) {
+    console.error("[ai-usage] voice log failed", err instanceof Error ? err.message : err);
   }
 }

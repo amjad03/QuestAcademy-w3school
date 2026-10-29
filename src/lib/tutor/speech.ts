@@ -1,10 +1,15 @@
 "use client";
 
 import { dataSaverOn } from "@/lib/dataSaver";
+import { capped, onCapChange, sarvamLang, sarvamTts, voiceConfig, voiceGender, setVoiceGender, type VoiceGender } from "./sarvam-client";
 
 /**
  * The live tutor's voice.
  *
+ * 0. Sarvam AI (Bulbul) on the server, when GET /api/voice/config says it is configured: a native Indian
+ *    teacher voice in English, Hindi, Kannada and more, fast on any phone. The Kokoro download is skipped
+ *    entirely. Sentence N+1 is synthesised while N plays; clips are cached (memory + Cache Storage). Two
+ *    failures in a row, or the learner's daily allowance running out, fall back to 1 → 2.
  * 1. Kokoro-82M running in the browser (kokoro-js + ONNX Runtime WASM, self-hosted
  *    in /public/kokoro, in a module worker; the ~92 MB q8 model is kept in Cache
  *    Storage after the first load). Voice "hf_alpha" — Kokoro's Hindi female voice — speaking
@@ -27,7 +32,8 @@ const MODEL_URL = `https://huggingface.co/${MODEL}/resolve/main/onnx/model_quant
 /** Rough size of a first download (model + tokenizer + voice), for the loader before real totals arrive. */
 export const MODEL_MB = 92;
 
-export type VoiceStage = "idle" | "download" | "warmup" | "ready" | "device";
+export type VoiceStage = "idle" | "connect" | "download" | "warmup" | "ready" | "device";
+export type VoiceEngine = "sarvam" | "kokoro" | "device" | null;
 
 export interface VoiceSnapshot {
   status: VoiceEngineStatus;
@@ -42,6 +48,12 @@ export interface VoiceSnapshot {
   reason: string | null;
   /** Kokoro worked earlier this session and then failed (show a notice). */
   lost: boolean;
+  /** Which natural voice is (or will be) speaking. */
+  engine: VoiceEngine;
+  /** Today's server-voice allowance is used up (gentle note; on-device voice meanwhile). */
+  capped: boolean;
+  /** Server-voice teacher: female / male. */
+  gender: VoiceGender;
 }
 
 const INDIC = /[ऀ-෿]/;
@@ -135,7 +147,7 @@ export function speakable(s: string) {
 
 /** Worker reply for one chunk. */
 type Reply = { pcm?: Float32Array; rate?: number; error?: string; skipped?: boolean; ms?: number };
-type Synth = { buf: AudioBuffer; ms: number } | { error: string; stuck?: boolean } | { skipped: true };
+type Synth = { buf: AudioBuffer; ms: number; cached?: boolean } | { error: string; stuck?: boolean; capped?: boolean } | { skipped: true };
 /** No reply from a busy worker for this long = it is stuck (a normal 200-char chunk takes a few seconds). */
 const STUCK_MS = 60000;
 
@@ -173,9 +185,26 @@ class Speaker {
   private lastProgress = 0;
   private respawns = 0;
   private waiters: (() => void)[] = [];
+  /** Server voice (Sarvam): unknown until /api/voice/config answers. */
+  private sarvam: "unknown" | "checking" | "on" | "off" = "unknown";
+  engine: VoiceEngine = null;
+  private sFailures = 0;
+  gender: VoiceGender = typeof window === "undefined" ? "female" : voiceGender();
+
+  constructor() {
+    if (typeof window !== "undefined") onCapChange(() => capped.tts && this.engine === "sarvam" && this.dropSarvam("today's natural-voice allowance is used up"));
+  }
+
+  /** Female / male teacher voice (server voice only). */
+  setGender(g: VoiceGender) {
+    this.gender = g;
+    setVoiceGender(g);
+    this.cache.clear();
+    this.emit();
+  }
 
   snapshot(): VoiceSnapshot {
-    return { status: this.status, stage: this.stage, progress: this.progress, loaded: this.loaded, total: this.total, cached: this.cached, reason: this.reason, lost: this.lost };
+    return { status: this.status, stage: this.stage, progress: this.progress, loaded: this.loaded, total: this.total, cached: this.cached, reason: this.reason, lost: this.lost, engine: this.engine, capped: capped.tts, gender: this.gender };
   }
   subscribe(fn: Listener) {
     this.listeners.add(fn);
@@ -191,6 +220,8 @@ class Speaker {
     this.status = s;
     this.progress = progress;
     if (s === "ready") this.stage = "ready";
+    if (s === "ready" && this.engine !== "sarvam") this.engine = "kokoro";
+    if (s === "unavailable") this.engine = "device";
     this.emit();
   }
 
@@ -212,7 +243,8 @@ class Speaker {
     return null;
   }
   capable() {
-    return this.incapable() === null;
+    // The server voice works on any phone; while its config is pending, assume it will.
+    return this.sarvam === "on" || this.sarvam === "checking" || this.incapable() === null;
   }
 
   /** Is the model already saved in this browser? */
@@ -229,8 +261,32 @@ class Speaker {
     if (!this.cached) void navigator.storage?.persist?.().catch(() => false);
   }
 
-  /** Start downloading/compiling the model in the background (safe to call repeatedly). */
+  /** Start the voice (safe to call repeatedly): the server voice if configured, else download/compile Kokoro in the background. */
   preload() {
+    if (typeof window === "undefined") return;
+    if (this.sarvam === "unknown") {
+      this.sarvam = "checking";
+      this.stage = "connect";
+      this.set("loading", 0);
+      const t0 = performance.now();
+      void voiceConfig().then((c) => {
+        if (c.tts && !capped.tts) {
+          this.sarvam = "on";
+          this.engine = "sarvam";
+          this.reason = null;
+          console.info(`[voice] engine=sarvam (server voice, ${Math.round(performance.now() - t0)}ms): skipping the Kokoro download`);
+          this.set("ready", 100);
+        } else {
+          this.sarvam = "off";
+          this.engine = null;
+          this.stage = "idle";
+          this.set("off", 0);
+          this.preload();
+        }
+      });
+      return;
+    }
+    if (this.sarvam !== "off") return;
     if (this.worker || this.status === "unavailable") return;
     // Data saver: don't fetch the ~92 MB model just in case; it loads when the voice is actually used.
     if (dataSaverOn() && !this.cached) return;
@@ -345,8 +401,53 @@ class Speaker {
     }
   }
 
+  /** Server voice gave up (two failures in a row, or today's allowance): Kokoro in the background, device voice meanwhile. */
+  private dropSarvam(why: string) {
+    if (this.engine !== "sarvam") return;
+    console.warn("[voice] leaving the server voice:", why);
+    this.sarvam = "off";
+    this.engine = null;
+    this.reason = why;
+    if (!capped.tts) this.lost = true;
+    this.cache.clear();
+    // Mid-lesson: never make the learner wait for a 92 MB download.
+    this.hold = false;
+    this.status = "off";
+    this.stage = "idle";
+    this.preload();
+    if (this.status === "off") this.set("unavailable");
+    else this.emit();
+  }
+
+  private useSarvam(lang: string) {
+    return this.engine === "sarvam" && this.status === "ready" && !capped.tts && sarvamLang(lang) && Boolean(this.ctx);
+  }
+
+  /** One sentence from the server voice, decoded for Web Audio (shares the per-turn cache with prefetch). */
+  private sarvamSynth(text: string, lang: string): Promise<Synth> {
+    const k = `s|${lang}|${this.gender}|${this.rate}|${text}`;
+    const hit = this.cache.get(k);
+    if (hit) return hit;
+    const ctx = this.ctx;
+    if (!ctx) return Promise.resolve({ error: "no audio context" });
+    const p = sarvamTts(text, lang, { gender: this.gender, pace: this.rate }).then(async (r): Promise<Synth> => {
+      if ("error" in r) return { error: r.error, capped: r.capped };
+      try {
+        // decodeAudioData detaches its input: decode a copy so the cached bytes stay usable.
+        const buf = await ctx.decodeAudioData(r.wav.slice(0));
+        return { buf, ms: r.ms, cached: r.cached };
+      } catch (e) {
+        return { error: `bad audio: ${String(e)}` };
+      }
+    });
+    this.cache.set(k, p);
+    void p.then((r) => !("buf" in r) && this.cache.get(k) === p && this.cache.delete(k));
+    if (this.cache.size > 80) this.cache.delete(this.cache.keys().next().value as string);
+    return p;
+  }
+
   private useKokoro(text: string, lang: string) {
-    return this.status === "ready" && lang.startsWith("en") && !INDIC.test(text) && Boolean(this.ctx);
+    return this.engine === "kokoro" && this.status === "ready" && lang.startsWith("en") && !INDIC.test(text) && Boolean(this.ctx);
   }
 
   /** Queue one chunk on the worker (cached by text, so prefetch + speak share one generate() call). */
@@ -393,6 +494,14 @@ class Speaker {
 
   /** Synthesise ahead of time (call as soon as a step arrives from the stream). */
   prefetch(text: string, lang: string) {
+    if (this.useSarvam(lang)) {
+      // Only the first two sentences: the rest are fetched one ahead while speaking (no wasted cost on barge-in).
+      for (const s of sentences(text).slice(0, 2)) {
+        const t = speakable(s);
+        if (/[\p{L}\p{N}]/u.test(t)) void this.sarvamSynth(t, lang);
+      }
+      return;
+    }
     if (!this.useKokoro(text, lang)) return;
     for (const s of sentences(text)) {
       const t = speakable(s);
@@ -408,6 +517,9 @@ class Speaker {
    */
   async speak(text: string, lang: string, onSentence?: (s: string) => void): Promise<void> {
     const my = this.gen;
+    // The server-voice check is a single small request: wait for it rather than start in the device voice.
+    if (this.sarvam === "checking") await Promise.race([voiceConfig(), new Promise((r) => setTimeout(r, 2500))]);
+    if (my !== this.gen) return;
     const list = sentences(text);
     if (this.useKokoro(text, lang)) this.prefetch(text, lang);
     for (let i = 0; i < list.length; i++) {
@@ -415,6 +527,28 @@ class Speaker {
       if (my !== this.gen) return;
       onSentence?.(s);
       const tag = `chunk ${i + 1}/${list.length}`;
+      if (this.useSarvam(lang)) {
+        const t = speakable(s);
+        if (!/[\p{L}\p{N}]/u.test(t)) continue;
+        const t0 = performance.now();
+        const p = this.sarvamSynth(t, lang);
+        // Pipelining: synthesise sentence N+1 while N is fetched/played.
+        const next = list[i + 1] && speakable(list[i + 1]);
+        if (next && /[\p{L}\p{N}]/u.test(next)) void this.sarvamSynth(next, lang);
+        const r = await this.waitFor(p, my);
+        if (my !== this.gen) return;
+        if ("buf" in r) {
+          this.sFailures = 0;
+          console.info(`[voice] ${tag} engine=sarvam ms=${r.ms}${r.cached ? " (cached)" : ""} wait=${Math.round(performance.now() - t0)}ms audio=${Math.round(r.buf.duration * 1000)}ms "${t.slice(0, 60)}"`);
+          await this.play(r.buf);
+          continue;
+        }
+        if ("skipped" in r) return;
+        console.warn(`[voice] ${tag} sarvam error: ${r.error}`);
+        if (r.capped) this.dropSarvam("today's natural-voice allowance is used up");
+        else if (++this.sFailures >= 2) this.dropSarvam(`the server voice failed twice in a row (${r.error})`);
+        // This sentence: the device voice (below).
+      }
       if (this.useKokoro(s, lang)) {
         const t = speakable(s);
         if (!/[\p{L}\p{N}]/u.test(t)) continue;

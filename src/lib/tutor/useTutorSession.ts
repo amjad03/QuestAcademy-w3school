@@ -86,7 +86,7 @@ export function useTutorSession(o: { board: RefObject<SmartboardHandle | null>; 
   useEffect(() => {
     if (reportedEngine.current || (voice.status !== "ready" && voice.status !== "unavailable")) return;
     reportedEngine.current = true;
-    track("voice_engine", { engine: voice.status === "ready" ? "kokoro" : "device", cached: voice.cached ?? null });
+    track("voice_engine", { engine: voice.status === "ready" ? (voice.engine ?? "kokoro") : "device", cached: voice.cached ?? null });
   }, [voice.status, voice.cached]);
 
   // Is the tutor configured on this server? (No key → explain instead of failing on the first question.)
@@ -437,6 +437,7 @@ export function useTutorSession(o: { board: RefObject<SmartboardHandle | null>; 
     unlock: () => sp.unlock(),
     preloadVoice: () => sp.preload(),
     useDeviceVoice: () => sp.useDevice(),
+    setVoiceGender: (g: "female" | "male") => sp.setGender(g),
     level: () => sp.level(),
   };
 }

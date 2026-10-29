@@ -1,12 +1,14 @@
 "use client";
 
 import { dataSaverOn } from "@/lib/dataSaver";
+import { capped, sarvamLang, sarvamTts, voiceConfig, voiceConfigNow } from "@/lib/tutor/sarvam-client";
 
 /**
  * Questy's voice (Kokoro, af_heart).
  *
  * 1. Pre-rendered clip: /voice/<hash>.mp3, listed in /voice/manifest.json
  *    (produced by `npm run generate-voice`). Instant and works offline.
+ * 1b. The server voice (Sarvam AI, /api/voice/tts) when it is configured — then Kokoro is never downloaded.
  * 2. Live Kokoro in the browser (kokoro-js in a worker, ~90 MB model, cached by
  *    the browser) for text without a clip — only on capable devices.
  * 3. The device's built-in speech voice.
@@ -143,9 +145,21 @@ function live(text: string): Promise<string> {
 
 /** Warm up the live model in the background (call when entering Explore). */
 export function preloadLiveVoice() {
-  if (dataSaverOn()) return;
+  void voiceConfig().then((c) => {
+    if (c.tts || dataSaverOn()) return;
+    if (liveVoiceSupported()) live("Hi!").catch(() => {});
+  });
   void loadManifest();
-  if (liveVoiceSupported()) live("Hi!").catch(() => {});
+}
+
+const serverVoice = (lang: string) => Boolean(voiceConfigNow()?.tts) && !capped.tts && sarvamLang(lang);
+
+/** Server voice clip → object URL (cached by sarvam-client), or null on failure/cap. */
+async function serverClip(text: string, lang: string): Promise<string | null> {
+  const r = await sarvamTts(text.slice(0, 500), lang);
+  if ("error" in r) return null;
+  console.info(`[voice] engine=sarvam ms=${r.ms}${r.cached ? " (cached)" : ""} "${text.slice(0, 60)}"`);
+  return URL.createObjectURL(new Blob([r.wav], { type: "audio/wav" }));
 }
 
 export interface SayOptions {
@@ -179,13 +193,21 @@ export function say(text: string, opts: SayOptions = {}) {
   if (typeof window === "undefined" || !text.trim()) return;
   stopVoice();
   const lang = opts.lang ?? scriptLang(text);
-  if (lang) return device(text, { ...opts, lang });
   const my = token;
+  if (lang && !serverVoice(lang)) return device(text, { ...opts, lang });
   const run = async () => {
     const m = manifest ?? (await loadManifest());
     if (my !== token) return;
     const k = voiceKey(text);
-    if (m.has(k)) return playUrl(`/voice/${k}.mp3`, my, opts, () => device(text, opts));
+    if (!lang && m.has(k)) return playUrl(`/voice/${k}.mp3`, my, opts, () => device(text, opts));
+    await voiceConfig();
+    if (my !== token) return;
+    if (serverVoice(lang ?? "en-IN")) {
+      const url = await serverClip(text, lang ?? "en-IN");
+      if (my !== token) return;
+      if (url) return playUrl(url, my, { ...opts, onEnd: () => (URL.revokeObjectURL(url), opts.onEnd?.()) }, () => device(text, lang ? { ...opts, lang } : opts));
+      if (lang) return device(text, { ...opts, lang });
+    }
     if (opts.allowLive !== false && liveVoiceSupported()) {
       // Don't make the learner wait for a first-time model download: until the model has spoken once,
       // use the device voice if live synthesis takes longer than a few seconds. Once it is ready, always wait for it.
@@ -221,7 +243,8 @@ export function sayQueue(texts: string[], opts: Omit<SayOptions, "onEnd"> & { on
     opts.onEach?.(i);
     // Synthesise the next sentence while this one plays.
     const next = list[i + 1];
-    if (next && opts.allowLive !== false && liveReady && liveVoiceSupported() && !scriptLang(next))
+    if (next && serverVoice(opts.lang ?? scriptLang(next) ?? "en-IN")) void sarvamTts(next.slice(0, 500), opts.lang ?? scriptLang(next) ?? "en-IN");
+    else if (next && opts.allowLive !== false && liveReady && liveVoiceSupported() && !scriptLang(next))
       void loadManifest().then((m) => void (!m.has(voiceKey(next)) && live(next).catch(() => {})));
     const my = token + 1; // say() increments token via stopVoice
     say(list[i], { ...opts, onEnd: () => my === token && step(i + 1) });

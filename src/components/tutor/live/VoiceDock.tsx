@@ -76,15 +76,33 @@ export function VoiceChip({ s }: { s: TutorSession }) {
   const t = useT();
   const v = s.voice;
   const text =
-    v.status === "ready"
+    v.status === "ready" && v.engine === "sarvam"
+      ? t("tutor.voice.server", "Indian teacher voice")
+      : v.status === "ready"
       ? t("tutor.voice.ready", "Natural Indian voice")
       : v.status === "loading"
         ? t("tutor.voice.loading", "Loading natural voice… {p}%", { p: v.progress })
         : t("tutor.voice.device", "Using device voice");
-  const tip = v.status === "unavailable" && v.reason ? t("tutor.voice.why", "Natural voice unavailable: {r}", { r: v.reason }) : t("tutor.voice.tip", "Kokoro open-source voice, running on this device");
+  const tip = v.capped
+    ? t("tutor.voice.capped", "Today's natural-voice time is used up, so Questy is using this device's voice. It's back tomorrow!")
+    : v.engine === "sarvam"
+    ? t("tutor.voice.sarvamTip", "Sarvam AI Indian voice")
+    : v.status === "unavailable" && v.reason ? t("tutor.voice.why", "Natural voice unavailable: {r}", { r: v.reason }) : t("tutor.voice.tip", "Kokoro open-source voice, running on this device");
   return (
     <span className={clsx("inline-flex items-center gap-1 rounded-full px-2 py-0.5 text-[11px] font-extrabold", v.status === "ready" ? "bg-emerald-100 text-emerald-800 dark:bg-emerald-950 dark:text-emerald-200" : "bg-surface-2 text-muted")} title={tip}>
       {v.status === "loading" ? <Loader2 className="h-3 w-3 animate-spin" /> : <AudioLines className="h-3 w-3" />} {text}
+      {v.engine === "sarvam" && (
+        <select
+          value={v.gender}
+          onChange={(e) => s.setVoiceGender(e.target.value === "male" ? "male" : "female")}
+          className="ml-1 rounded bg-transparent text-[11px] font-extrabold"
+          aria-label={t("tutor.voice.choose", "Teacher voice")}
+          data-testid="voice-gender"
+        >
+          <option value="female">{t("tutor.voice.female", "Didi")}</option>
+          <option value="male">{t("tutor.voice.male", "Bhaiya")}</option>
+        </select>
+      )}
     </span>
   );
 }
@@ -126,7 +144,12 @@ export function VoiceDock({ s, placeholder, actions, compact, disabled }: { s: T
         </div>
       </div>
 
-      {s.voice.lost && (
+      {s.voice.capped && (
+        <p className="mb-2 rounded-xl bg-surface-2 px-3 py-1.5 text-xs font-bold text-muted" data-testid="voice-capped">
+          {t("tutor.voice.cappedNote", "You've used today's natural-voice time, so Questy is using this device's voice. It's back tomorrow!")}
+        </p>
+      )}
+      {s.voice.lost && !s.voice.capped && (
         <p role="status" className="rounded-xl bg-amber-50 px-3 py-2 text-xs font-bold text-amber-800 dark:bg-amber-950 dark:text-amber-200">
           {t("tutor.voice.lost", "The natural voice stopped working, so Questy is using this device's voice for the rest of this session.")}
         </p>

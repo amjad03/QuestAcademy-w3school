@@ -105,3 +105,70 @@ export function mapError(err: unknown) {
   console.error("[tutor] unexpected error", err);
   return fail(500, "upstream_error");
 }
+
+/* ---------------- voice (Sarvam) daily caps ---------------- */
+
+export type VoiceKind = "tts" | "stt";
+/** ai_usage.model for voice rows; units go in input_tokens (TTS characters, STT seconds). */
+export const VOICE_MODEL: Record<VoiceKind, string> = { tts: "sarvam-tts", stt: "sarvam-stt" };
+
+/** Daily per-learner allowance: TTS characters / STT seconds. Guests (per hashed IP) get a smaller one. */
+export function voiceCap(kind: VoiceKind, signedIn: boolean) {
+  if (kind === "tts") return signedIn ? envInt("SARVAM_DAILY_TTS_CHARS", 40000) : envInt("SARVAM_GUEST_TTS_CHARS", 8000);
+  return signedIn ? envInt("SARVAM_DAILY_STT_SECONDS", 1200) : envInt("SARVAM_GUEST_STT_SECONDS", 300);
+}
+
+/** Start of today in India (the admin page groups by IST days too). */
+function istDayStart(now = Date.now()) {
+  const d = new Date(now + 5.5 * 3600_000).toISOString().slice(0, 10);
+  return { day: d, since: `${d}T00:00:00+05:30` };
+}
+
+/** Per-instance running totals, seeded from ai_usage (shared by every instance) at most once a minute. */
+const voiceUsed = new Map<string, { used: number; seededAt: number }>();
+
+async function seedVoice(key: string, kind: VoiceKind, user: User | null, ip: string, since: string): Promise<number> {
+  const sb = supabaseAdmin();
+  if (!sb) return 0;
+  let q = sb.from("ai_usage").select("input_tokens").eq("model", VOICE_MODEL[kind]).gte("created_at", since).limit(5000);
+  q = user ? q.eq("user_id", user.id) : q.eq("guest_key", hashIp(ip));
+  const { data, error } = await q;
+  if (error) {
+    console.error("[voice] usage read failed", error.message);
+    return 0;
+  }
+  return (data ?? []).reduce((s, r) => s + Number((r as { input_tokens: number }).input_tokens || 0), 0);
+}
+
+/** Would `units` more fit in today's allowance? (Counted with `addVoiceUsage` once the call succeeds.) */
+export async function voiceAllowed(kind: VoiceKind, user: User | null, ip: string, units: number): Promise<{ ok: boolean; used: number; cap: number }> {
+  const cap = voiceCap(kind, Boolean(user));
+  if (cap === 0) return { ok: true, used: 0, cap };
+  const { day, since } = istDayStart();
+  const key = `${kind}:${day}:${user ? `u:${user.id}` : `ip:${ip}`}`;
+  let e = voiceUsed.get(key);
+  if (!e || Date.now() - e.seededAt > 60_000) {
+    const db = await seedVoice(key, kind, user, ip, since).catch(() => 0);
+    e = { used: Math.max(db, e?.used ?? 0), seededAt: Date.now() };
+    voiceUsed.set(key, e);
+    if (voiceUsed.size > 5000) for (const k of voiceUsed.keys()) if (!k.includes(`:${day}:`)) voiceUsed.delete(k);
+  }
+  return { ok: e.used + units <= cap, used: e.used, cap };
+}
+
+export function addVoiceUsage(kind: VoiceKind, user: User | null, ip: string, units: number) {
+  const { day } = istDayStart();
+  const key = `${kind}:${day}:${user ? `u:${user.id}` : `ip:${ip}`}`;
+  const e = voiceUsed.get(key) ?? { used: 0, seededAt: 0 };
+  e.used += units;
+  voiceUsed.set(key, e);
+}
+
+/** Burst limit for voice requests (one TTS call per sentence, so looser than the tutor's). */
+export async function voiceBurstGuard(req: Request): Promise<{ ip: string; user: User | null } | Response> {
+  const ip = clientIp(req);
+  const user = await cachedUser(req);
+  const limited = user ? rateLimit(`v:u:${user.id}`, envInt("VOICE_RATE_USER", 90), 60_000) : rateLimit(`v:ip:${ip}`, envInt("VOICE_RATE_GUEST_IP", 240), 60_000);
+  if (!limited.ok) return fail(429, "rate_limited", { retryAfter: limited.retryAfter }, { "Retry-After": String(limited.retryAfter) });
+  return { ip, user };
+}

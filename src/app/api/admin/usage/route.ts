@@ -23,10 +23,12 @@ function rollup<T extends Row>(rows: T[], key: (r: T) => string, extra: (r: T) =
     const k = key(r);
     const cur = out.get(k) ?? { key: k, requests: 0, inputTokens: 0, outputTokens: 0, costInr: 0, ...extra(r) };
     cur.requests += Number(r.requests);
-    cur.inputTokens += Number(r.input_tokens) + Number(r.cache_read_tokens) + Number(r.cache_write_tokens);
-    cur.outputTokens += Number(r.output_tokens);
     cur.costInr += cost(r);
     out.set(k, cur);
+    // Voice rows (sarvam-tts/stt) carry characters/seconds, not tokens: priced, but not counted as tokens.
+    if (r.model.startsWith("sarvam-")) continue;
+    cur.inputTokens += Number(r.input_tokens) + Number(r.cache_read_tokens) + Number(r.cache_write_tokens);
+    cur.outputTokens += Number(r.output_tokens);
   }
   return [...out.values()];
 }
@@ -57,8 +59,14 @@ export async function GET(req: Request) {
   const emails = await Promise.all(userRows.map((u) => (u.guest ? null : sb.auth.admin.getUserById(u.key).then((r) => r.data.user?.email ?? null, () => null))));
   const schoolRows = rollup((bySchool.data ?? []) as (Row & { school_id: string | null; school_name: string | null; users: number })[], (r) => r.school_id ?? "none", (r) => ({ name: r.school_id ? (r.school_name ?? "Unknown school") : "No school / guests", users: Number(r.users) })).sort((a, b) => b.costInr - a.costInr);
   const totals = dayRows.reduce((t, d) => ({ requests: t.requests + d.requests, inputTokens: t.inputTokens + d.inputTokens, outputTokens: t.outputTokens + d.outputTokens, costInr: t.costInr + d.costInr }), { requests: 0, inputTokens: 0, outputTokens: 0, costInr: 0 });
+  const raw = (byDay.data ?? []) as Row[];
+  const voice = {
+    ttsChars: raw.filter((r) => r.model === "sarvam-tts").reduce((a, r) => a + Number(r.input_tokens), 0),
+    sttSeconds: raw.filter((r) => r.model === "sarvam-stt").reduce((a, r) => a + Number(r.input_tokens), 0),
+    costInr: raw.filter((r) => r.model.startsWith("sarvam-")).reduce((a, r) => a + cost(r), 0),
+  };
   return Response.json(
-    { days, usdToInr: usdToInr(), totals, byDay: dayRows, topUsers: userRows.map((u, i) => ({ ...u, email: emails[i] })), bySchool: schoolRows },
+    { days, usdToInr: usdToInr(), totals, voice, byDay: dayRows, topUsers: userRows.map((u, i) => ({ ...u, email: emails[i] })), bySchool: schoolRows },
     { headers: { "Cache-Control": "no-store" } },
   );
 }

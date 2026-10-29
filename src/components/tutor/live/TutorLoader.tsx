@@ -37,8 +37,15 @@ export function TutorLoader({ s, onCancel }: { s: TutorSession; onCancel: () => 
   const pct = device ? 100 : v.stage === "download" ? v.progress : 100;
   const overall = Math.round((downloaded ? 60 : pct * 0.6) + (warm ? 25 : 0) + (lesson ? 15 : 0));
 
+  // Server voice (Sarvam): nothing to download, just a short "connecting" step.
+  const server = v.engine === "sarvam" || v.stage === "connect";
   const steps: { done: boolean; active: boolean; label: string; sub?: string }[] = [
-    {
+    server ? {
+      done: v.status === "ready" || device,
+      active: v.status === "loading",
+      label: t("tutor.loader.connect", "Connecting Questy's voice"),
+      sub: t("tutor.loader.connectSub", "Natural Indian voice, no download needed"),
+    } : {
       done: downloaded,
       active: !downloaded,
       label: t("tutor.loader.download", "Downloading Questy's voice"),
@@ -50,7 +57,7 @@ export function TutorLoader({ s, onCancel }: { s: TutorSession; onCancel: () => 
             ? t("tutor.loader.mb", "{p}% · {a} of {b} MB · saved for next time", { p: v.progress, a: mb(v.loaded), b: mb(v.total) })
             : t("tutor.loader.first", "First time only: about {n} MB, then it's saved on this device", { n: MODEL_MB }),
     },
-    { done: warm, active: downloaded && !warm, label: t("tutor.loader.warm", "Warming up the voice"), sub: !device && v.stage === "warmup" ? t("tutor.loader.warmSub", "Teaching the model to say hello…") : undefined },
+    ...(server ? [] : [{ done: warm, active: downloaded && !warm, label: t("tutor.loader.warm", "Warming up the voice"), sub: !device && v.stage === "warmup" ? t("tutor.loader.warmSub", "Teaching the model to say hello…") : undefined }]),
     { done: lesson, active: warm && !lesson, label: t("tutor.loader.lesson", "Preparing your lesson"), sub: t("tutor.loader.lessonSub", "Questy is planning the board") },
   ];
 
